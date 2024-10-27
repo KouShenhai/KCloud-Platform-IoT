@@ -31,11 +31,7 @@ public class TcpServerConfig {
 
     @Bean(name = "tcpServer", initMethod = "start", destroyMethod = "stop")
 	public Server tcpServer(SpringTcpServerProperties springTcpServerProperties, ChannelHandler tcpServerChannelInitializer) {
-        return new TcpServer(springTcpServerProperties.getIp()
-			, springTcpServerProperties.getPort()
-			, tcpServerChannelInitializer
-			, springTcpServerProperties.getBossCoreSize()
-			, springTcpServerProperties.getWorkerCoreSize());
+        return new TcpServer(tcpServerChannelInitializer, springTcpServerProperties);
     }
 
     @Bean

@@ -19,14 +19,17 @@ package org.laokou.common.mybatisplus.config;
 
 import net.sf.jsqlparser.statement.select.OrderByElement;
 import org.apache.fury.Fury;
-import org.apache.fury.ThreadLocalFury;
+import org.apache.fury.ThreadSafeFury;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
  */
 public final class FuryFactory {
 
-	private static final ThreadLocalFury FURY = Fury.builder().buildThreadLocalFury();
+	private static final ThreadSafeFury FURY = Fury.builder()
+		.buildThreadSafeFuryPool(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS);
 
 	static {
 		FURY.register(net.sf.jsqlparser.expression.Alias.class);

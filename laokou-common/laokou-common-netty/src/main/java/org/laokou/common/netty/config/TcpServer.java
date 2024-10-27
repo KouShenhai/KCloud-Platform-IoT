@@ -28,35 +28,39 @@ import io.netty.util.concurrent.DefaultThreadFactory;
 /**
  * @author laokou
  */
-public class TcpServer extends AbstractServer {
+public final class TcpServer extends AbstractServer {
 
-	public TcpServer(String ip, int port, ChannelHandler channelHandler, int bossCoreSize, int workerCoreSize) {
-		super(ip, port, channelHandler, bossCoreSize, workerCoreSize);
+	private final SpringTcpServerProperties properties;
+
+	public TcpServer(ChannelHandler channelHandler, SpringTcpServerProperties properties) {
+		super(properties.getIp(), properties.getPort(), channelHandler, properties.getBossCoreSize(),
+				properties.getWorkerCoreSize());
+		this.properties = properties;
 	}
 
 	@Override
 	protected AbstractBootstrap<?, ?> init() {
 		// boss负责监听端口
-		boss = new NioEventLoopGroup(bossCoreSize, new DefaultThreadFactory("boss", true));
+		boss = new NioEventLoopGroup(bossCoreSize, new DefaultThreadFactory("tcp-boss", true));
 		// work负责线程读写
-		worker = new NioEventLoopGroup(workerCoreSize, new DefaultThreadFactory("worker", true));
+		worker = new NioEventLoopGroup(workerCoreSize, new DefaultThreadFactory("tcp-worker", true));
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组
 		return serverBootstrap.group(boss, worker)
 			// 指定通道
 			.channel(NioServerSocketChannel.class)
-			// 延迟发送
-			.childOption(ChannelOption.TCP_NODELAY, true)
+			// 延迟发送 => true实时发送；false延迟发送
+			.childOption(ChannelOption.TCP_NODELAY, properties.isTcpNodelay())
 			// 请求队列最大长度（如果连接建立频繁，服务器处理创建新连接较慢，可以适当调整参数）
-			.option(ChannelOption.SO_BACKLOG, 1024)
+			.option(ChannelOption.SO_BACKLOG, properties.getBacklogLength())
 			// tcp处理类
 			.childHandler(channelHandler);
 	}
 
 	@Override
 	public void send(String clientId, Object obj) {
-
+		throw new UnsupportedOperationException("不支持发送操作");
 	}
 
 }

@@ -37,7 +37,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 @RequestMapping("v3/routers")
 @Tag(name = "路由管理", description = "路由管理")
-public class RoutersController {
+public class RoutersControllerV3 {
 
 	private final NacosRouteDefinitionRepository nacosRouteDefinitionRepository;
 

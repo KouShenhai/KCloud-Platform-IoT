@@ -31,11 +31,7 @@ public class WebSocketServerConfig {
 
     @Bean(name = "webSocketServer", initMethod = "start", destroyMethod = "stop")
 	public Server webSocketServer(ChannelHandler webSocketServerChannelInitializer,SpringWebSocketServerProperties springWebSocketServerProperties) {
-        return new WebSocketServer(springWebSocketServerProperties.getIp()
-			, springWebSocketServerProperties.getPort()
-			, webSocketServerChannelInitializer
-			, springWebSocketServerProperties.getBossCoreSize()
-			, springWebSocketServerProperties.getWorkerCoreSize());
+        return new WebSocketServer(webSocketServerChannelInitializer, springWebSocketServerProperties);
     }
 
     @Bean

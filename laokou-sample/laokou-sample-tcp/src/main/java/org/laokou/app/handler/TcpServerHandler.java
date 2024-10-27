@@ -17,36 +17,24 @@
 
 package org.laokou.app.handler;
 
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.codec.http.websocketx.PingWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.util.ReferenceCountUtil;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.client.dto.clientobject.SensorCO;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.netty.config.WebSocketSessionManager;
+import org.laokou.common.netty.config.SessionManager;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
-
 /**
- * WebSocket自定义处理器.
- *
  * @author laokou
  */
 @Slf4j
 @Component
 @ChannelHandler.Sharable
-@RequiredArgsConstructor
-public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
+public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 
 	/**
 	 * see
@@ -59,21 +47,17 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 		boolean release = true;
 		try {
-			if (msg instanceof WebSocketFrame frame) {
-				if (frame instanceof PingWebSocketFrame pingWebSocketFrame) {
-					ctx.writeAndFlush(new PongWebSocketFrame(pingWebSocketFrame.content().retain()));
-				}
-				else if (frame instanceof TextWebSocketFrame textWebSocketFrame) {
-					read(ctx, textWebSocketFrame);
-				}
-				else {
-					// 传递下一个处理器
-					release = false;
-					super.channelRead(ctx, msg);
-				}
+			if (msg instanceof SensorCO co) {
+				String clientId = String.valueOf(co.getId());
+				SessionManager.add(clientId, ctx.channel());
+				log.info("接收数据：{}", JacksonUtil.toJsonStr(co));
+				co.setId(co.getId());
+				co.setX((byte) (co.getX() + 1));
+				co.setY((byte) (co.getY() + 1));
+				co.setZ((byte) (co.getZ() + 1));
+				ctx.writeAndFlush(co);
 			}
 			else {
-				// 传递下一个处理器
 				release = false;
 				super.channelRead(ctx, msg);
 			}
@@ -94,20 +78,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 	public void handlerRemoved(ChannelHandlerContext ctx) {
 		String channelId = ctx.channel().id().asLongText();
 		log.info("断开连接：{}", channelId);
-		WebSocketSessionManager.remove(channelId);
-	}
-
-	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
-		Channel channel = ctx.channel();
-		String clientId = frame.text();
-		if (StringUtil.isEmpty(clientId)) {
-			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
-			ctx.close();
-		}
-		else {
-			log.info("已连接ClientID：{}", clientId);
-			WebSocketSessionManager.add(clientId, channel);
-		}
+		SessionManager.remove(channelId);
 	}
 
 }

@@ -7,10 +7,9 @@ spring:
   application:
     name: laokou-sample-websocket
   websocket-server:
-    enabled: true
     boss-core-size: 2
     core-pool-size: 16
-    worker-core-size: 16
+    worker-core-size: 32
     ip: 0.0.0.0
     port: 1112
     service-id: ${spring.application.name}-server
@@ -21,6 +20,8 @@ spring:
     consolidate-when-no-read-in-progress: true
     explicit-flush-after-flushes: 10
     websocket-path: "/ws"
+    backlog-length: 4096
+    tcp-nodelay: true
   thymeleaf:
     servlet:
       content-type: text/html
