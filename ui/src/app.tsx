@@ -132,7 +132,7 @@ export const request: {
 	},
 	// 请求拦截
 	requestInterceptors: [
-		(config: any) => {
+		async (config: any) => {
 			const headers = config.headers ? config.headers : [];
 			// 令牌过期前5分钟刷新
 			const time = 5 * 60 * 1000;
@@ -154,8 +154,14 @@ export const request: {
 	],
 	// 响应拦截
 	responseInterceptors: [
-		(response: any) => {
+		async (response: any) => {
 			const {status, data} = response;
+			if (response.request?.responseType === 'blob' || response.request?.responseType === 'arraybuffer') {
+				if(response.data.type === 'application/json') {
+					const res = await new Response(response.data).json()
+					message.error(res.msg).then();
+				}
+			}
 			if (status === 200 && data.code === undefined) {
 				response.data = {code: 'OK', msg: '请求成功', data: data};
 			} else if (status === 200 && data.code !== 'OK') {

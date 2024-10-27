@@ -35,9 +35,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @author laokou
  */
 @Slf4j
-@RestControllerAdvice
-@ResponseBody
 @Component
+@ResponseBody
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
 	/**

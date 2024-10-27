@@ -38,6 +38,7 @@ import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.LogUtil;
@@ -86,11 +87,11 @@ public class ExcelUtil {
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, int size, HttpServletResponse response,
 			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
 			ExcelConvert<DO, EXCEL> convertor) {
-		try (ServletOutputStream out = response.getOutputStream();
-				ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
-			// 设置请求头
-			header(fileName, response);
-			if (crudMapper.selectObjectCount(pageQuery) > 0) {
+		if (crudMapper.selectObjectCount(pageQuery) > 0) {
+			try (ServletOutputStream out = response.getOutputStream();
+					ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
+				// 设置请求头
+				header(fileName, response);
 				// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
 				crudMapper.selectObjectList(pageQuery, resultContext -> {
@@ -102,16 +103,15 @@ public class ExcelUtil {
 				if (list.size() % size != 0) {
 					writeSheet(list, clazz, convertor, excelWriter);
 				}
+				// 刷新数据
+				excelWriter.finish();
 			}
-			else {
-				excelWriter.write(Collections.singletonList(new Error("数据为空，导出失败")),
-						EasyExcel.writerSheet().head(Error.class).build());
+			catch (Exception e) {
+				log.error("Excel导出失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
 			}
-			// 刷新数据
-			excelWriter.finish();
 		}
-		catch (Exception e) {
-			log.error("Excel导出失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+		else {
+			throw new SystemException("S_Excel_DataIsEmpty", "Excel导出失败，数据不能为空");
 		}
 	}
 
