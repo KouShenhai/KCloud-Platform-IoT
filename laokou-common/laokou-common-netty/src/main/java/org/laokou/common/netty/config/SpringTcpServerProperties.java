@@ -61,4 +61,14 @@ public class SpringTcpServerProperties {
 	 */
 	private Integer corePoolSize = 8;
 
+	/**
+	 * 延迟发送 => true实时，false延迟.
+	 */
+	private boolean tcpNodelay = false;
+
+	/**
+	 * 请求队列最大长度.
+	 */
+	private int backlogLength = 1024;
+
 }

@@ -1,0 +1,20 @@
+server:
+  port: 9034
+
+spring:
+  application:
+    name: laokou-sample-tcp
+  profiles:
+    active: @PROFILE-ACTIVE@
+  tcp-server:
+    boss-core-size: 2
+    worker-core-size: 32
+    port: 1113
+    ip: 0.0.0.0
+    core-pool-size: 16
+    service-id: ${spring.application.name}-server
+    backlog-length: 4096
+    tcp-nodelay: false
+
+logging:
+  config: classpath:log4j2.xml

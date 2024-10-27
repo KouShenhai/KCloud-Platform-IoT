@@ -26,6 +26,8 @@ ${AnsiColor.DEFAULT}
 GitHub：https://github.com/KouShenhai
 Gitee：https://gitee.com/laokouyun
 CSDN：https://kcloud.blog.csdn.net
+Juejin：https://juejin.cn/user/160945808873534
+Website：https://laokou.org.cn
 
 版本：${laokou-version}
 
