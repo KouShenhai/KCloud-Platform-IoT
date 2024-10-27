@@ -19,6 +19,7 @@ package org.laokou.common.log.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -43,6 +44,7 @@ public class OperateLogAop {
 
 	private final SpringUtil springUtil;
 
+	@SneakyThrows
 	@Around("@annotation(operateLog)")
 	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) {
 		long startTime = IdGenerator.SystemClock.now();
@@ -57,14 +59,13 @@ public class OperateLogAop {
 		operate.decorateMethodName(className, methodName);
 		// 组装请求参数
 		operate.decorateRequestParams(args);
-		Object proceed = null;
+		Object proceed;
 		Throwable throwable = null;
 		try {
 			proceed = point.proceed();
 		}
 		catch (Throwable e) {
-			log.error("错误信息：{}", e.getMessage(), e);
-			throwable = e;
+			throw throwable = e;
 		}
 		finally {
 			// 计算消耗时间
