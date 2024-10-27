@@ -17,6 +17,7 @@
 
 package org.laokou.common.mybatisplus.config;
 
+import net.sf.jsqlparser.expression.Function;
 import net.sf.jsqlparser.statement.select.OrderByElement;
 import org.apache.fury.Fury;
 import org.apache.fury.ThreadSafeFury;
@@ -259,6 +260,7 @@ public final class FuryFactory {
 		FURY.register(net.sf.jsqlparser.statement.select.MySqlSqlCacheFlags.class);
 		FURY.register(net.sf.jsqlparser.statement.select.PlainSelect.BigQuerySelectQualifier.class);
 		FURY.register(net.sf.jsqlparser.statement.update.UpdateModifierPriority.class);
+		FURY.register(Function.NullHandling.class);
 	}
 
 	public static byte[] serialize(Object object) {
