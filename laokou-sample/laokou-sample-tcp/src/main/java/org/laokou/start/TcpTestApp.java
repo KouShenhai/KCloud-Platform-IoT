@@ -38,6 +38,7 @@ public class TcpTestApp {
 
 	@SneakyThrows
 	public static void main(String[] args) {
+		// 01 01 03 05
 		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
 		new SpringApplicationBuilder(TcpTestApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
