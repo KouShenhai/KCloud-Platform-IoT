@@ -17,15 +17,23 @@
 
 package org.laokou.app.handler;
 
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.ReferenceCountUtil;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.client.dto.clientobject.SensorCO;
+import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.netty.config.SessionManager;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component
+@ChannelHandler.Sharable
 public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 
 	/**
@@ -37,7 +45,40 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	@SneakyThrows
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
-		super.channelRead(ctx, msg);
+		boolean release = true;
+		try {
+			if (msg instanceof SensorCO co) {
+				String clientId = String.valueOf(co.getId());
+				SessionManager.add(clientId, ctx.channel());
+				log.info("接收数据：{}", JacksonUtil.toJsonStr(co));
+				co.setId(co.getId());
+				co.setX((byte) (co.getX() + 1));
+				co.setY((byte) (co.getY() + 1));
+				co.setZ((byte) (co.getZ() + 1));
+				ctx.writeAndFlush(co);
+			}
+			else {
+				release = false;
+				super.channelRead(ctx, msg);
+			}
+		}
+		finally {
+			if (release) {
+				ReferenceCountUtil.release(msg);
+			}
+		}
+	}
+
+	@Override
+	public void handlerAdded(ChannelHandlerContext ctx) {
+		log.info("建立连接：{}", ctx.channel().id().asLongText());
+	}
+
+	@Override
+	public void handlerRemoved(ChannelHandlerContext ctx) {
+		String channelId = ctx.channel().id().asLongText();
+		log.info("断开连接：{}", channelId);
+		SessionManager.remove(channelId);
 	}
 
 }

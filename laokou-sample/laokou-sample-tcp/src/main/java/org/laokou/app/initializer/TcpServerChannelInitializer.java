@@ -41,7 +41,7 @@ public class TcpServerChannelInitializer extends AbstractTcpServerChannelInitial
 	@Override
 	protected void preHandler(ChannelPipeline pipeline) {
 		// 定长截取
-		pipeline.addLast("fixedLengthFrameDecoder", new FixedLengthFrameDecoder(2));
+		pipeline.addLast("fixedLengthFrameDecoder", new FixedLengthFrameDecoder(4));
 		// 解码
 		pipeline.addLast(new TcpDecoder());
 		// 编码

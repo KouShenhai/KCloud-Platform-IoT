@@ -17,21 +17,25 @@
 
 package org.laokou.client.dto.clientobject;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SensorCO extends ClientObject {
 
-	private String id;
+	private byte id;
 
-	private Double x;
+	private byte x;
 
-	private Double y;
+	private byte y;
 
-	private Double z;
+	private byte z;
 
 }

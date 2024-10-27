@@ -20,17 +20,27 @@ package org.laokou.app.handler;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.client.dto.clientobject.SensorCO;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
+@Slf4j
 public class TcpDecoder extends ByteToMessageDecoder {
 
 	@Override
-	protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) {
+	protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> list) {
+		// 01 01 03 05
 		// 按id、x、y、z顺序解析
+		byte id = in.readByte();
+		byte x = in.readByte();
+		byte y = in.readByte();
+		byte z = in.readByte();
+		in.clear();
+		list.add(new SensorCO(id, x, y, z));
 	}
 
 }

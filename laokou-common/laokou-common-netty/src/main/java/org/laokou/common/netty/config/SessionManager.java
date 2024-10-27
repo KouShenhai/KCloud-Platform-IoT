@@ -32,9 +32,13 @@ public final class SessionManager {
 
 	private static final Map<String, String> CHANNEL_CACHE = new ConcurrentHashMap<>(4096);
 
+	private static final Object LOCK = new Object();
+
 	public static void add(String clientId, Channel channel) {
-		CLIENT_CACHE.put(clientId, channel);
-		CHANNEL_CACHE.put(channel.id().asLongText(), clientId);
+		synchronized (LOCK) {
+			CLIENT_CACHE.put(clientId, channel);
+			CHANNEL_CACHE.put(channel.id().asLongText(), clientId);
+		}
 	}
 
 	public static Channel get(String clientId) {
@@ -44,8 +48,10 @@ public final class SessionManager {
 	public static void remove(String channelId) {
 		String clientId = CHANNEL_CACHE.get(channelId);
 		if (StringUtil.isNotEmpty(clientId)) {
-			CLIENT_CACHE.remove(clientId);
-			CHANNEL_CACHE.remove(channelId);
+			synchronized (LOCK) {
+				CLIENT_CACHE.remove(clientId);
+				CHANNEL_CACHE.remove(channelId);
+			}
 		}
 	}
 

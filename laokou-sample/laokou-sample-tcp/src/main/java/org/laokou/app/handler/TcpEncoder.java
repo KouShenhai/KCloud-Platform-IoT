@@ -20,6 +20,7 @@ package org.laokou.app.handler;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
+import org.apache.fury.Fury;
 import org.laokou.client.dto.clientobject.SensorCO;
 
 /**
@@ -27,9 +28,15 @@ import org.laokou.client.dto.clientobject.SensorCO;
  */
 public class TcpEncoder extends MessageToByteEncoder<SensorCO> {
 
-	@Override
-	protected void encode(ChannelHandlerContext channelHandlerContext, SensorCO co, ByteBuf byteBuf) {
+	private static final Fury FURY = Fury.builder().build();
 
+	static {
+		FURY.register(SensorCO.class);
+	}
+
+	@Override
+	protected void encode(ChannelHandlerContext ctx, SensorCO co, ByteBuf byteBuf) {
+		byteBuf.writeBytes(FURY.serialize(co));
 	}
 
 }
