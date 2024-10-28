@@ -53,6 +53,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * {@link ServiceInstanceListSupplier} don't use cache.<br>
  * <br>
@@ -61,9 +65,9 @@ import org.springframework.core.env.Environment;
  * 2. Nacos itself supports caching.
  *
  * @author XuDaojie
- * @author laokou
  * @since 2021.1
  */
+@ConditionalOnLoadBalancerNacos
 @ConditionalOnDiscoveryEnabled
 @Configuration(proxyBeanMethods = false)
 public class NacosLoadBalancerClientConfiguration {
@@ -74,10 +78,17 @@ public class NacosLoadBalancerClientConfiguration {
 	@ConditionalOnMissingBean
 	public ReactorLoadBalancer<ServiceInstance> nacosLoadBalancer(Environment environment,
 			LoadBalancerClientFactory loadBalancerClientFactory, NacosDiscoveryProperties nacosDiscoveryProperties,
-			InetIPv6Utils inetIPv6Utils) {
+			InetIPv6Utils inetIPv6Utils, List<ServiceInstanceFilter> serviceInstanceFilters,
+			List<LoadBalancerAlgorithm> loadBalancerAlgorithms) {
 		String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
+		Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap = new HashMap<>();
+		loadBalancerAlgorithms.forEach(loadBalancerAlgorithm -> {
+			if (!loadBalancerAlgorithmMap.containsKey(loadBalancerAlgorithm.getServiceId())) {
+				loadBalancerAlgorithmMap.put(loadBalancerAlgorithm.getServiceId(), loadBalancerAlgorithm);
+			}
+		});
 		return new NacosLoadBalancer(loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class),
-				name, nacosDiscoveryProperties, inetIPv6Utils);
+				name, nacosDiscoveryProperties, inetIPv6Utils, serviceInstanceFilters, loadBalancerAlgorithmMap);
 	}
 
 	@Configuration(proxyBeanMethods = false)
