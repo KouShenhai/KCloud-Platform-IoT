@@ -15,12 +15,9 @@
  *
  */
 
-package org.laokou.common.secret.filter;
+package org.laokou.common.xss.filter;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
@@ -30,9 +27,9 @@ import org.springframework.core.annotation.Order;
 /**
  * @author laokou
  */
-@Order(10000)
-@WebFilter(filterName = "RequestFilter", urlPatterns = "/**")
-public class RequestFilter implements Filter {
+@Order(9000)
+@WebFilter(filterName = "XssFilter", urlPatterns = "/**")
+public class XssFilter implements Filter {
 
 	@Override
 	@SneakyThrows
