@@ -125,7 +125,9 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	private final Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap;
 
 	public NacosLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
-							 String serviceId, NacosDiscoveryProperties nacosDiscoveryProperties, InetIPv6Utils inetIPv6Utils, List<ServiceInstanceFilter> serviceInstanceFilters, Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap) {
+			String serviceId, NacosDiscoveryProperties nacosDiscoveryProperties, InetIPv6Utils inetIPv6Utils,
+			List<ServiceInstanceFilter> serviceInstanceFilters,
+			Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap) {
 		this.serviceId = serviceId;
 		this.inetIPv6Utils = inetIPv6Utils;
 		this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
@@ -229,7 +231,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 				}
 			}
 		}
-		return getInstanceResponse(request ,serviceInstances);
+		return getInstanceResponse(request, serviceInstances);
 	}
 
 	/**
@@ -237,7 +239,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 * @param serviceInstances 服务实例
 	 * @return 响应结果
 	 */
-	private Response<ServiceInstance> getInstanceResponse(Request<?> request ,List<ServiceInstance> serviceInstances) {
+	private Response<ServiceInstance> getInstanceResponse(Request<?> request, List<ServiceInstance> serviceInstances) {
 		if (serviceInstances.isEmpty()) {
 			log.error("No servers available for service: {}", this.serviceId);
 			return new EmptyResponse();
@@ -267,7 +269,8 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			}
 
 			ServiceInstance instance;
-			// Find the corresponding load balancing algorithm through the service ID and select the final service instance
+			// Find the corresponding load balancing algorithm through the service ID and
+			// select the final service instance
 			if (loadBalancerAlgorithmMap.containsKey(serviceId)) {
 				instance = loadBalancerAlgorithmMap.get(serviceId).getInstance(request, instancesToChoose);
 			}

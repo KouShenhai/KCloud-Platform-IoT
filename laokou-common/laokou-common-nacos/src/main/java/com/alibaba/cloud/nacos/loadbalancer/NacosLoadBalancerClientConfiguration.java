@@ -77,10 +77,8 @@ public class NacosLoadBalancerClientConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public ReactorLoadBalancer<ServiceInstance> nacosLoadBalancer(Environment environment,
-			LoadBalancerClientFactory loadBalancerClientFactory,
-			NacosDiscoveryProperties nacosDiscoveryProperties,
-			InetIPv6Utils inetIPv6Utils,
-			List<ServiceInstanceFilter> serviceInstanceFilters,
+			LoadBalancerClientFactory loadBalancerClientFactory, NacosDiscoveryProperties nacosDiscoveryProperties,
+			InetIPv6Utils inetIPv6Utils, List<ServiceInstanceFilter> serviceInstanceFilters,
 			List<LoadBalancerAlgorithm> loadBalancerAlgorithms) {
 		String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
 		Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap = new HashMap<>();
@@ -89,11 +87,8 @@ public class NacosLoadBalancerClientConfiguration {
 				loadBalancerAlgorithmMap.put(loadBalancerAlgorithm.getServiceId(), loadBalancerAlgorithm);
 			}
 		});
-		return new NacosLoadBalancer(
-				loadBalancerClientFactory.getLazyProvider(name,
-					ServiceInstanceListSupplier.class),
-				name, nacosDiscoveryProperties, inetIPv6Utils,
-				serviceInstanceFilters, loadBalancerAlgorithmMap);
+		return new NacosLoadBalancer(loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class),
+				name, nacosDiscoveryProperties, inetIPv6Utils, serviceInstanceFilters, loadBalancerAlgorithmMap);
 	}
 
 	@Configuration(proxyBeanMethods = false)
@@ -104,11 +99,11 @@ public class NacosLoadBalancerClientConfiguration {
 		@Bean
 		@ConditionalOnBean(ReactiveDiscoveryClient.class)
 		@ConditionalOnMissingBean
-		@ConditionalOnProperty(value = "spring.cloud.loadbalancer.configurations", havingValue = "default", matchIfMissing = true)
+		@ConditionalOnProperty(value = "spring.cloud.loadbalancer.configurations", havingValue = "default",
+				matchIfMissing = true)
 		public ServiceInstanceListSupplier discoveryClientServiceInstanceListSupplier(
 				ConfigurableApplicationContext context) {
-			return ServiceInstanceListSupplier.builder().withDiscoveryClient()
-					.build(context);
+			return ServiceInstanceListSupplier.builder().withDiscoveryClient().build(context);
 		}
 
 		@Bean
@@ -117,8 +112,7 @@ public class NacosLoadBalancerClientConfiguration {
 		@ConditionalOnProperty(value = "spring.cloud.loadbalancer.configurations", havingValue = "zone-preference")
 		public ServiceInstanceListSupplier zonePreferenceDiscoveryClientServiceInstanceListSupplier(
 				ConfigurableApplicationContext context) {
-			return ServiceInstanceListSupplier.builder().withDiscoveryClient()
-					.withZonePreference().build(context);
+			return ServiceInstanceListSupplier.builder().withDiscoveryClient().withZonePreference().build(context);
 		}
 
 	}
@@ -131,11 +125,11 @@ public class NacosLoadBalancerClientConfiguration {
 		@Bean
 		@ConditionalOnBean(DiscoveryClient.class)
 		@ConditionalOnMissingBean
-		@ConditionalOnProperty(value = "spring.cloud.loadbalancer.configurations", havingValue = "default", matchIfMissing = true)
+		@ConditionalOnProperty(value = "spring.cloud.loadbalancer.configurations", havingValue = "default",
+				matchIfMissing = true)
 		public ServiceInstanceListSupplier discoveryClientServiceInstanceListSupplier(
 				ConfigurableApplicationContext context) {
-			return ServiceInstanceListSupplier.builder().withBlockingDiscoveryClient()
-					.build(context);
+			return ServiceInstanceListSupplier.builder().withBlockingDiscoveryClient().build(context);
 		}
 
 		@Bean
@@ -144,8 +138,12 @@ public class NacosLoadBalancerClientConfiguration {
 		@ConditionalOnProperty(value = "spring.cloud.loadbalancer.configurations", havingValue = "zone-preference")
 		public ServiceInstanceListSupplier zonePreferenceDiscoveryClientServiceInstanceListSupplier(
 				ConfigurableApplicationContext context) {
-			return ServiceInstanceListSupplier.builder().withBlockingDiscoveryClient()
-					.withZonePreference().build(context);
+			return ServiceInstanceListSupplier.builder()
+				.withBlockingDiscoveryClient()
+				.withZonePreference()
+				.build(context);
 		}
+
 	}
+
 }

@@ -40,12 +40,13 @@ import org.springframework.core.Ordered;
 import java.util.List;
 
 /**
- * Load Balancer algorithm interface.
- * When expanding the load balancing algorithm, implement this interface and register it as a bean.
+ * Load Balancer algorithm interface. When expanding the load balancing algorithm,
+ * implement this interface and register it as a bean.
  *
  * @author <a href="mailto:zhangbin1010@qq.com">zhangbinhub</a>
  */
 public interface LoadBalancerAlgorithm extends Ordered {
+
 	/**
 	 * default service id.
 	 */
@@ -54,4 +55,5 @@ public interface LoadBalancerAlgorithm extends Ordered {
 	String getServiceId();
 
 	ServiceInstance getInstance(Request<?> request, List<ServiceInstance> serviceInstances);
+
 }

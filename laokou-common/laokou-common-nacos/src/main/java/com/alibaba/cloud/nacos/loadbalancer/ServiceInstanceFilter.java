@@ -40,11 +40,13 @@ import org.springframework.core.Ordered;
 import java.util.List;
 
 /**
- * Service Instance Filter interface.
- * When custom service instance list filter, implement this interface and register it as a bean.
+ * Service Instance Filter interface. When custom service instance list filter, implement
+ * this interface and register it as a bean.
  *
  * @author <a href="mailto:zhangbin1010@qq.com">zhangbinhub</a>
  */
 public interface ServiceInstanceFilter extends Ordered {
+
 	List<ServiceInstance> filterInstance(Request<?> request, List<ServiceInstance> serviceInstances);
+
 }

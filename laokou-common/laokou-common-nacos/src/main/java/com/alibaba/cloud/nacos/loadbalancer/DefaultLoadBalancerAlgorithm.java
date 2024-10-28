@@ -41,12 +41,13 @@ import org.springframework.core.Ordered;
 import java.util.List;
 
 /**
- * This is a default implementation of load balancing algorithm.
- * use {@link com.alibaba.cloud.nacos.balancer.NacosBalancer}
+ * This is a default implementation of load balancing algorithm. use
+ * {@link com.alibaba.cloud.nacos.balancer.NacosBalancer}
  *
  * @author <a href="mailto:zhangbin1010@qq.com">zhangbinhub</a>
  */
 public class DefaultLoadBalancerAlgorithm implements LoadBalancerAlgorithm {
+
 	@Override
 	public String getServiceId() {
 		return LoadBalancerAlgorithm.DEFAULT_SERVICE_ID;
@@ -61,4 +62,5 @@ public class DefaultLoadBalancerAlgorithm implements LoadBalancerAlgorithm {
 	public int getOrder() {
 		return Ordered.LOWEST_PRECEDENCE;
 	}
+
 }
