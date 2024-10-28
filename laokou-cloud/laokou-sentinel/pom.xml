@@ -14,7 +14,7 @@
     <!--sentinel版本-->
     <sentinel.version>1.8.8</sentinel.version>
     <!--spring-boot版本-->
-    <spring-boot.version>2.7.18</spring-boot.version>
+    <spring-boot.version>3.3.5</spring-boot.version>
     <!--curator版本-->
     <curator.version>5.7.1</curator.version>
     <!--log4j版本-->
