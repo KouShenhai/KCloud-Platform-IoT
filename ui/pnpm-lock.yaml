@@ -21,7 +21,7 @@ importers:
         specifier: ^1.3.3
         version: 1.3.3(chokidar@3.6.0)(encoding@0.1.13)(umi@4.3.27(@babel/core@7.25.9)(@types/node@22.8.1)(@types/react@18.3.12)(eslint@7.32.0)(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@3.29.5)(stylelint@13.13.1)(sugarss@2.0.0)(terser@5.36.0)(type-fest@1.4.0)(typescript@5.6.3)(webpack@5.94.0))
       antd:
-        specifier: ^5.21.6
+        specifier: ^5.4.4
         version: 5.21.6(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       js-export-excel:
         specifier: ^1.1.4
@@ -30,8 +30,8 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2
       uuid:
-        specifier: ^11.0.0
-        version: 11.0.1
+        specifier: ^11.0.2
+        version: 11.0.2
     devDependencies:
       '@types/react':
         specifier: ^18.0.33
@@ -7167,8 +7167,8 @@ packages:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
 
-  uuid@11.0.1:
-    resolution: {integrity: sha512-wt9UB5EcLhnboy1UvA1mvGPXkIIrHSu+3FmUksARfdVw9tuPf3CH/CohxO0Su1ApoKAeT6BVzAJIvjTuQVSmuQ==}
+  uuid@11.0.2:
+    resolution: {integrity: sha512-14FfcOJmqdjbBPdDjFQyk/SdT4NySW4eM0zcG+HqbHP5jzuH56xO3J1DGhgs/cEMCfwYi3HQI1gnTO62iaG+tQ==}
     hasBin: true
 
   v8-compile-cache@2.4.0:
@@ -16663,7 +16663,7 @@ snapshots:
 
   utils-merge@1.0.1: {}
 
-  uuid@11.0.1: {}
+  uuid@11.0.2: {}
 
   v8-compile-cache@2.4.0: {}
 
