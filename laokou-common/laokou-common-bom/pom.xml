@@ -107,7 +107,7 @@
     <!--liquibase-core版本-->
     <liquibase-core.version>4.29.2</liquibase-core.version>
     <!--protobuf-java版本-->
-    <protobuf-java.version>3.25.5</protobuf-java.version>
+    <protobuf-java.version>4.28.3</protobuf-java.version>
     <!--grpc版本-->
     <grpc.version>1.68.0</grpc.version>
     <!--proto-google-common-protos版本-->
