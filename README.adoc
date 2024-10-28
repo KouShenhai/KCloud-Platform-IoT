@@ -148,6 +148,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 [source]
 ----
 ├── laokou-common
+        └── laokou-common-xss                      --- XSS组件
         └── laokou-common-log                      --- 日志组件
         └── laokou-common-core                     --- 核心组件
         └── laokou-common-cors                     --- 跨域组件
