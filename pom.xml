@@ -66,11 +66,11 @@
     <spring-boot-maven-plugin.version>3.3.5</spring-boot-maven-plugin.version>
     <maven-surefire-plugin.version>3.5.1</maven-surefire-plugin.version>
     <!--spring-boot版本-->
-    <spring-boot.version>3.3.5</spring-boot.version>
+    <spring-boot.version>3.4.0-RC1</spring-boot.version>
     <!--spring-cloud版本-->
-    <spring-cloud.version>2023.0.3</spring-cloud.version>
+    <spring-cloud.version>2024.0.0-M2</spring-cloud.version>
     <!--spring-framework版本-->
-    <spring-framework.version>6.1.14</spring-framework.version>
+    <spring-framework.version>6.2.0-RC3</spring-framework.version>
     <!--cloud-alibaba版本-->
     <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
     <!--springdoc-openapi版本-->

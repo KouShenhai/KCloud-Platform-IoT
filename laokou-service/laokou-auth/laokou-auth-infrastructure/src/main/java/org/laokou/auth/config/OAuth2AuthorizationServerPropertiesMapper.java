@@ -46,7 +46,7 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 @Component("propertiesMapper")
-public final class OAuth2AuthorizationServerPropertiesMapper {
+final class OAuth2AuthorizationServerPropertiesMapper {
 
 	private final OAuth2AuthorizationServerProperties properties;
 
