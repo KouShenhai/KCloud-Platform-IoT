@@ -35,6 +35,7 @@ package com.alibaba.cloud.nacos.loadbalancer;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
+import com.alibaba.cloud.nacos.balancer.NacosBalancer;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
 import com.alibaba.nacos.client.naming.utils.CollectionUtils;
 import jakarta.annotation.PostConstruct;
@@ -120,20 +121,12 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
 	private final InetIPv6Utils inetIPv6Utils;
 
-	private final List<ServiceInstanceFilter> serviceInstanceFilters;
-
-	private final Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap;
-
 	public NacosLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
-			String serviceId, NacosDiscoveryProperties nacosDiscoveryProperties, InetIPv6Utils inetIPv6Utils,
-			List<ServiceInstanceFilter> serviceInstanceFilters,
-			Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap) {
+			String serviceId, NacosDiscoveryProperties nacosDiscoveryProperties, InetIPv6Utils inetIPv6Utils) {
 		this.serviceId = serviceId;
 		this.inetIPv6Utils = inetIPv6Utils;
 		this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
 		this.nacosDiscoveryProperties = nacosDiscoveryProperties;
-		this.serviceInstanceFilters = serviceInstanceFilters;
-		this.loadBalancerAlgorithmMap = loadBalancerAlgorithmMap;
 	}
 
 	/**
@@ -260,25 +253,9 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 				log.warn("A cross-cluster call occurs，name = {}, clusterName = {}, instance = {}", serviceId,
 						clusterName, serviceInstances);
 			}
-
 			instancesToChoose = this.filterInstanceByIpType(instancesToChoose);
-
-			// Filter the service list sequentially based on the order number
-			for (ServiceInstanceFilter filter : serviceInstanceFilters) {
-				instancesToChoose = filter.filterInstance(request, instancesToChoose);
-			}
-
-			ServiceInstance instance;
-			// Find the corresponding load balancing algorithm through the service ID and
-			// select the final service instance
-			if (loadBalancerAlgorithmMap.containsKey(serviceId)) {
-				instance = loadBalancerAlgorithmMap.get(serviceId).getInstance(request, instancesToChoose);
-			}
-			else {
-				instance = loadBalancerAlgorithmMap.get(LoadBalancerAlgorithm.DEFAULT_SERVICE_ID)
-					.getInstance(request, instancesToChoose);
-			}
-
+			// 路由权重
+			ServiceInstance instance = NacosBalancer.getHostByRandomWeight3(instancesToChoose);
 			return new DefaultResponse(instance);
 		}
 		catch (Exception e) {
