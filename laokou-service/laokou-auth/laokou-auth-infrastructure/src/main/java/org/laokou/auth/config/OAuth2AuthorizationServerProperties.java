@@ -43,7 +43,7 @@ import java.util.Set;
 @Data
 @Component
 @ConfigurationProperties(prefix = "spring.security.oauth2.authorization-server")
-public final class OAuth2AuthorizationServerProperties implements InitializingBean {
+final class OAuth2AuthorizationServerProperties implements InitializingBean {
 
 	/**
 	 * Open or close.

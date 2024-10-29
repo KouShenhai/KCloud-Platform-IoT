@@ -104,7 +104,7 @@ class OAuth2AuthorizationServerConfig {
 			AuthorizationServerSettings authorizationServerSettings,
 			OAuth2AuthorizationService authorizationService) throws Exception {
 		// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/configuration-model.html
-		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+        OAuth2AuthorizationServerConfig.applyDefaultSecurity(http);
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
 			// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
 			.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(new DelegatingAuthenticationConverter(List.of(
@@ -246,5 +246,14 @@ class OAuth2AuthorizationServerConfig {
 			throw new IllegalStateException(var2);
 		}
 	}
+
+    private static void applyDefaultSecurity(HttpSecurity http) throws Exception {
+        // @formatter:off
+        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = OAuth2AuthorizationServerConfigurer.authorizationServer();
+        http.securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
+                .with(authorizationServerConfigurer, Customizer.withDefaults())
+                .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated());
+        // @formatter:on
+    }
 
 }
