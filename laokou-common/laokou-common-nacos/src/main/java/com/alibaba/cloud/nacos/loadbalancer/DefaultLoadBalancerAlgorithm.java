@@ -40,14 +40,27 @@ import org.springframework.core.Ordered;
 import java.util.List;
 
 /**
- * Service Instance Filter interface. When custom service instance list filter, implement
- * this interface and register it as a bean.
+ * This is a default implementation of load balancing algorithm. use
+ * {@link com.alibaba.cloud.nacos.balancer.NacosBalancer}
  *
  * @author <a href="mailto:zhangbin1010@qq.com">zhangbinhub</a>
  * @author laokou
  */
-public interface ServiceInstanceFilter extends Ordered {
+public class DefaultLoadBalancerAlgorithm implements LoadBalancerAlgorithm {
 
-	List<ServiceInstance> filterInstance(Request<?> request, List<ServiceInstance> serviceInstances);
+	@Override
+	public String getServiceId() {
+		return LoadBalancerAlgorithm.DEFAULT_SERVICE_ID;
+	}
+
+	@Override
+	public ServiceInstance getInstance(Request<?> request, List<ServiceInstance> serviceInstances) {
+		return NacosBalancer.getHostByRandomWeight3(serviceInstances);
+	}
+
+	@Override
+	public int getOrder() {
+		return Ordered.LOWEST_PRECEDENCE;
+	}
 
 }

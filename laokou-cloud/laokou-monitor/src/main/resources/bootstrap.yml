@@ -16,6 +16,9 @@
 #    */
 # spring
 spring:
+  config:
+    import:
+      - optional:nacos:application-monitor.yaml?refreshEnabled=true&group=${NACOS-GROUP}
   cloud:
     # nacos
     nacos:
@@ -39,7 +42,3 @@ spring:
         file-extension: yaml
         group: ${NACOS-GROUP}
         refresh-enabled: true
-        extension-configs:
-          - data-id: application-monitor.yaml
-            group: ${NACOS-GROUP}
-            refresh: true

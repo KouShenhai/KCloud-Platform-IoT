@@ -16,6 +16,9 @@
 #    */
 # spring
 spring:
+  config:
+    import:
+      - nacos:application-common.yaml?refreshEnabled=true&group=${NACOS-GROUP}
   cloud:
     # nacos
     nacos:
@@ -29,9 +32,3 @@ spring:
         file-extension: yaml
         group: DEFAULT_GROUP
         refresh-enabled: true
-        # 读取公共配置
-        # Data Id 在默认的组 DEFAULT_GROUP,不支持配置的动态刷新
-        extension-configs:
-          - data-id: application-common.yaml
-            group: ${NACOS-GROUP}
-            refresh: true
