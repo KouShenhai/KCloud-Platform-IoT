@@ -247,13 +247,13 @@ class OAuth2AuthorizationServerConfig {
 		}
 	}
 
-    private static void applyDefaultSecurity(HttpSecurity http) throws Exception {
-        // @formatter:off
+	private static void applyDefaultSecurity(HttpSecurity http) throws Exception {
+		// @formatter:off
         OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = OAuth2AuthorizationServerConfigurer.authorizationServer();
         http.securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
                 .with(authorizationServerConfigurer, Customizer.withDefaults())
                 .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated());
         // @formatter:on
-    }
+	}
 
 }

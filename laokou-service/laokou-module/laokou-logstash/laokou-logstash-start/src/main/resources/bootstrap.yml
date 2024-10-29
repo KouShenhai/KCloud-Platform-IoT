@@ -16,6 +16,12 @@
 #    */
 # spring
 spring:
+  config:
+    import:
+      - optional:nacos:application-common-kafka.yaml?refreshEnabled=true&group=${NACOS-GROUP}
+      - optional:nacos:application-common-elasticsearch.yaml?refreshEnabled=true&group=${NACOS-GROUP}
+      - optional:nacos:application-common-rocketmq?refreshEnabled=true&group=${NACOS-GROUP}
+      - optional:nacos:application-common.yaml?refreshEnabled=true&group=${NACOS-GROUP}
   cloud:
     # nacos
     nacos:
@@ -41,18 +47,3 @@ spring:
         file-extension: yaml
         group: ${NACOS-GROUP}
         refresh-enabled: true
-        # 读取公共配置
-        # Data Id 在默认的组 DEFAULT_GROUP,不支持配置的动态刷新
-        extension-configs:
-          - data-id: application-common.yaml
-            group: ${NACOS-GROUP}
-            refresh: true
-          - data-id: application-common-elasticsearch.yaml
-            group: ${NACOS-GROUP}
-            refresh: true
-          - data-id: application-common-kafka.yaml
-            group: ${NACOS-GROUP}
-            refresh: true
-          - data-id: application-common-rocketmq.yaml
-            group: ${NACOS-GROUP}
-            refresh: true

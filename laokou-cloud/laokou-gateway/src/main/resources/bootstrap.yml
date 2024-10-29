@@ -16,6 +16,11 @@
 #    */
 # spring
 spring:
+  config:
+    import:
+      - optional:nacos:application-common-redis.yaml?refreshEnabled=true&group=${NACOS-GROUP}
+      - optional:nacos:application-gateway.yaml?refreshEnabled=true&group=${NACOS-GROUP}
+      - optional:nacos:application-common.yaml?refreshEnabled=true&group=${NACOS-GROUP}
   cloud:
     # nacos
     nacos:
@@ -39,13 +44,3 @@ spring:
         cluster-name: ${NACOS-CLUSTER-NAME}-gateway
         refresh-enabled: true
         file-extension: yaml
-        extension-configs:
-          - data-id: application-common-redis.yaml
-            group: ${NACOS-GROUP}
-            refresh: true
-          - data-id: application-common.yaml
-            group: ${NACOS-GROUP}
-            refresh: true
-          - data-id: application-gateway.yaml
-            group: ${NACOS-GROUP}
-            refresh: true

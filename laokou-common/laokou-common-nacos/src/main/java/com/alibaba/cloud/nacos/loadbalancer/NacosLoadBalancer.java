@@ -16,6 +16,23 @@
  */
 
 /*
+ * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+/*
  * Copyright 2013-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,7 +52,6 @@ package com.alibaba.cloud.nacos.loadbalancer;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
-import com.alibaba.cloud.nacos.balancer.NacosBalancer;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
 import com.alibaba.nacos.client.naming.utils.CollectionUtils;
 import jakarta.annotation.PostConstruct;
@@ -121,12 +137,20 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
 	private final InetIPv6Utils inetIPv6Utils;
 
+	private final List<ServiceInstanceFilter> serviceInstanceFilters;
+
+	private final Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap;
+
 	public NacosLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
-			String serviceId, NacosDiscoveryProperties nacosDiscoveryProperties, InetIPv6Utils inetIPv6Utils) {
+			String serviceId, NacosDiscoveryProperties nacosDiscoveryProperties, InetIPv6Utils inetIPv6Utils,
+			List<ServiceInstanceFilter> serviceInstanceFilters,
+			Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap) {
 		this.serviceId = serviceId;
 		this.inetIPv6Utils = inetIPv6Utils;
 		this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
 		this.nacosDiscoveryProperties = nacosDiscoveryProperties;
+		this.serviceInstanceFilters = serviceInstanceFilters;
+		this.loadBalancerAlgorithmMap = loadBalancerAlgorithmMap;
 	}
 
 	/**
@@ -254,8 +278,23 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 						clusterName, serviceInstances);
 			}
 			instancesToChoose = this.filterInstanceByIpType(instancesToChoose);
-			// 路由权重
-			ServiceInstance instance = NacosBalancer.getHostByRandomWeight3(instancesToChoose);
+
+			// Filter the service list sequentially based on the order number
+			for (ServiceInstanceFilter filter : serviceInstanceFilters) {
+				instancesToChoose = filter.filterInstance(request, instancesToChoose);
+			}
+
+			ServiceInstance instance;
+			// Find the corresponding load balancing algorithm through the service ID and
+			// select the final service instance
+			if (loadBalancerAlgorithmMap.containsKey(serviceId)) {
+				instance = loadBalancerAlgorithmMap.get(serviceId).getInstance(request, instancesToChoose);
+			}
+			else {
+				instance = loadBalancerAlgorithmMap.get(LoadBalancerAlgorithm.DEFAULT_SERVICE_ID)
+					.getInstance(request, instancesToChoose);
+			}
+
 			return new DefaultResponse(instance);
 		}
 		catch (Exception e) {

@@ -16,6 +16,9 @@
 #    */
 # spring
 spring:
+  config:
+    import:
+      - optional:nacos:application-common.yaml?refreshEnabled=true&group=${NACOS-GROUP}
   cloud:
     # nacos
     nacos:
