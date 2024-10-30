@@ -32,7 +32,7 @@ jobs:
         with:
           verbose: true
           fail_ci_if_error: true
-          files: ./laokou-common/laokou-common-core/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-crypto/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-i18n/target/site/jacoco/jacoco.xml
+          files: ./laokou-common/laokou-common-core/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-crypto/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-i18n/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-xss/target/site/jacoco/jacoco.xml
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Build with Maven
         run: mvn clean install -P prod -DskipTests -B
