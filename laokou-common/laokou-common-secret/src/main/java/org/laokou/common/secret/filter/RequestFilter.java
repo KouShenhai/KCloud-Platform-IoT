@@ -17,32 +17,25 @@
 
 package org.laokou.common.secret.filter;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
-import jakarta.servlet.annotation.WebFilter;
+import io.micrometer.common.lang.NonNullApi;
+import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.RequestUtil;
-import org.springframework.core.annotation.Order;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * @author laokou
  */
-@Order(10000)
-@WebFilter(filterName = "RequestFilter", urlPatterns = "/**")
-public class RequestFilter implements Filter {
+@NonNullApi
+public class RequestFilter extends OncePerRequestFilter {
 
 	@Override
 	@SneakyThrows
-	public void doFilter(ServletRequest servletRequest, ServletResponse response, FilterChain chain) {
-		if (servletRequest instanceof HttpServletRequest request) {
-			ServletRequest requestWrapper = new RequestUtil.RequestWrapper(request);
-			chain.doFilter(requestWrapper, response);
-			return;
-		}
-		chain.doFilter(servletRequest, response);
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
+		ServletRequest requestWrapper = new RequestUtil.RequestWrapper(request);
+		chain.doFilter(requestWrapper, response);
 	}
 
 }

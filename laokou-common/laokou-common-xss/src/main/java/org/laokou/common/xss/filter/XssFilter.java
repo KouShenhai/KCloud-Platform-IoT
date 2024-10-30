@@ -17,29 +17,27 @@
 
 package org.laokou.common.xss.filter;
 
+import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
-import org.laokou.common.core.utils.RequestUtil;
-import org.springframework.core.annotation.Order;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * @author laokou
  */
-@Order(9000)
-@WebFilter(filterName = "XssFilter", urlPatterns = "/**")
-public class XssFilter implements Filter {
+@NonNullApi
+public class XssFilter extends OncePerRequestFilter {
 
 	@Override
 	@SneakyThrows
-	public void doFilter(ServletRequest servletRequest, ServletResponse response, FilterChain chain) {
-		if (servletRequest instanceof HttpServletRequest request) {
-			ServletRequest requestWrapper = new RequestUtil.RequestWrapper(request);
-			chain.doFilter(requestWrapper, response);
-			return;
-		}
-		chain.doFilter(servletRequest, response);
+	protected void doFilterInternal(HttpServletRequest servletRequest, HttpServletResponse response,
+			FilterChain chain) {
+		// ServletRequest requestWrapper = new RequestUtil.RequestWrapper(request);
+		// chain.doFilter(requestWrapper, response);
+		// return;
+		// chain.doFilter(servletRequest, response);
 	}
 
 }
