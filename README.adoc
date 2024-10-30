@@ -14,12 +14,12 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 image:https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml/badge.svg?branch=master[Maven Ci Build Stauts,link=https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml]
 image:https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/node.js.yml/badge.svg?branch=master[Node.js CI Build Stauts,link=https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/node.js.yml]
 image:https://dl.circleci.com/status-badge/img/circleci/Bvmh1W3CkTV7xQCz5au73K/KgCR3Kb3gXzuxQP6YLKBUX/tree/master.svg?style=svg["CircleCI", link="https://dl.circleci.com/status-badge/redirect/circleci/Bvmh1W3CkTV7xQCz5au73K/KgCR3Kb3gXzuxQP6YLKBUX/tree/master"]
+image:https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT/branch/master/graph/badge.svg?token=49USEMX2MN[Codecov,https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT]
 
 image:https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT.svg/?label=active+issues&show_trend=true&token=dsp_7fcdb2050e509b27f5d2ab8f5f1109bcd468[DeepSource Active Issues,link=https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT]
 image:https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT.svg/?label=resolved+issues&show_trend=true&token=dsp_7fcdb2050e509b27f5d2ab8f5f1109bcd468[DeepSource Resolved Issues,link=https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT]
 image:https://app.codacy.com/project/badge/Grade/d03c1f58dcff441690b6350d0c6980d6[Codacy,link=https://app.codacy.com/gh/KouShenhai/KCloud-Platform-IoT/dashboard]
 image:https://www.codefactor.io/repository/github/KouShenhai/KCloud-Platform-IoT/badge[CodeFactor,link=https://www.codefactor.io/repository/github/KouShenhai/KCloud-Platform-IoT]
-image:https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT/branch/master/graph/badge.svg?token=49USEMX2MN[Codecov,https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT]
 
 image:https://img.shields.io/github/stars/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub stars,link=https://github.com/KouShenhai/KCloud-Platform-IoT/stargazers]
 image:https://img.shields.io/github/forks/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub forks,link=https://github.com/KouShenhai/KCloud-Platform-IoT/forks]
