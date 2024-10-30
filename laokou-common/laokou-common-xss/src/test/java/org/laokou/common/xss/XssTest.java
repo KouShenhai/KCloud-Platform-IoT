@@ -28,10 +28,45 @@ import org.laokou.common.xss.util.XssUtil;
 @Slf4j
 class XssTest {
 
+	private static final String[] XSS_ATTACK_VECTORS = { "<script>alert(1)</script>",
+			"<IMG SRC=\"javascript:alert('XSS');\">", "<svg/onload=alert(1)>",
+			"javascript:/*-/*`/*\\`/*'/*\"/**/(/* */onerror=alert(1) )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\\x3csVg/<sVg/oNloAd=alert(1)//>\\x3e" };
+
 	@Test
-	void testJsonString() {
-		String json = "{\"s\": \"<script>333333333333</script>\"}";
-		Assertions.assertTrue(json.length() > XssUtil.clear(json).length());
+	void testHtmlScripTagJsonString() {
+		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[0] + "\"}";
+		String cleaned = XssUtil.clear(json);
+		Assertions.assertEquals("{\"s\": \"alert(1)\"}", cleaned);
+		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
+		Assertions.assertFalse(cleaned.contains("<script>"));
+	}
+
+	@Test
+	void testHtmlTagJsonString() {
+		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[1] + "\"}";
+		String cleaned = XssUtil.clear(json);
+		Assertions.assertEquals("{\"s\": \"<img>\"}", cleaned);
+		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
+		Assertions.assertFalse(cleaned.contains("<script>"));
+	}
+
+	@Test
+	void testSvgJsonString() {
+		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[2] + "\"}";
+		String cleaned = XssUtil.clear(json);
+		Assertions.assertEquals("{\"s\": \"\"}", cleaned);
+		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
+		Assertions.assertFalse(cleaned.contains("<script>"));
+	}
+
+	@Test
+	void testHtmlScriptJsonString() {
+		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[3] + "\"}";
+		String cleaned = XssUtil.clear(json);
+		Assertions.assertEquals(
+				"{\"s\": \"/*-/*`/*\\`/*'/*\"/**/(/* */onerror=alert(1) )//%0D%0A%0d%0a//\\x3csVg/\\x3e\"}", cleaned);
+		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
+		Assertions.assertFalse(cleaned.contains("<script>"));
 	}
 
 }
