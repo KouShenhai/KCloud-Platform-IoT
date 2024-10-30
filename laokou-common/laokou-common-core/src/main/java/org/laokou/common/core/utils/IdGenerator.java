@@ -17,6 +17,7 @@
 
 package org.laokou.common.core.utils;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -35,6 +36,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.AT;
 
@@ -56,6 +59,10 @@ public final class IdGenerator {
 	 * 雪花算法.
 	 */
 	private static final Snowflake INSTANCE;
+
+	private static final ReentrantReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
+
+	private static final Lock READ_LOCK = READ_WRITE_LOCK.readLock();
 
 	static {
 		try {
@@ -259,51 +266,69 @@ public final class IdGenerator {
 		 * 生产雪花ID.
 		 * @return 雪花ID
 		 */
-		public synchronized long nextId() {
-			long currTimeStamp = getNewTimeStamp();
-			int maxOffset = 5;
-			// 闰秒
-			if (currTimeStamp < lastTimeStamp) {
-				long offset = lastTimeStamp - currTimeStamp;
-				if (offset <= maxOffset) {
-					try {
-						wait(offset << 1);
-						currTimeStamp = getNewTimeStamp();
-						if (currTimeStamp < lastTimeStamp) {
+		@SneakyThrows
+		public long nextId() {
+			boolean isLocked = false;
+			int retry = 3;
+			try {
+				do {
+					isLocked = READ_LOCK.tryLock(50, TimeUnit.MILLISECONDS);
+				}
+				while (!isLocked && --retry > 0);
+				if (isLocked) {
+					long currTimeStamp = getNewTimeStamp();
+					int maxOffset = 5;
+					// 闰秒
+					if (currTimeStamp < lastTimeStamp) {
+						long offset = lastTimeStamp - currTimeStamp;
+						if (offset <= maxOffset) {
+							try {
+								wait(offset << 1);
+								currTimeStamp = getNewTimeStamp();
+								if (currTimeStamp < lastTimeStamp) {
+									throw new RuntimeException(String.format(
+											"Clock moved backwards.  Refusing to generate id for %d milliseconds",
+											offset));
+								}
+							}
+							catch (Exception e) {
+								throw new RuntimeException(e);
+							}
+						}
+						else {
 							throw new RuntimeException(String
 								.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", offset));
 						}
 					}
-					catch (Exception e) {
-						throw new RuntimeException(e);
+					if (currTimeStamp == lastTimeStamp) {
+						// 相同毫秒内，序列号自增
+						sequence = (sequence + 1) & MAX_SEQUENCE;
+						// 同一毫秒的序列数已经达到最大
+						if (sequence == 0L) {
+							currTimeStamp = getNextMill();
+						}
 					}
-				}
-				else {
-					throw new RuntimeException(String
-						.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", offset));
+					else {
+						// 不同毫秒内，序列号置为 1 - 2 随机数
+						sequence = ThreadLocalRandom.current().nextLong(1, 3);
+					}
+					lastTimeStamp = currTimeStamp;
+					// 时间戳部分
+					return (currTimeStamp - START_TIMESTAMP) << TIMESTAMP_LEFT
+							// 数据标识部分
+							| DATACENTER_ID << DATACENTER_LEFT
+							// 机器标识部分
+							| MACHINE_ID << MACHINE_LEFT
+							// 序列标识部分
+							| sequence;
 				}
 			}
-			if (currTimeStamp == lastTimeStamp) {
-				// 相同毫秒内，序列号自增
-				sequence = (sequence + 1) & MAX_SEQUENCE;
-				// 同一毫秒的序列数已经达到最大
-				if (sequence == 0L) {
-					currTimeStamp = getNextMill();
+			finally {
+				if (isLocked) {
+					READ_LOCK.unlock();
 				}
 			}
-			else {
-				// 不同毫秒内，序列号置为 1 - 2 随机数
-				sequence = ThreadLocalRandom.current().nextLong(1, 3);
-			}
-			lastTimeStamp = currTimeStamp;
-			// 时间戳部分
-			return (currTimeStamp - START_TIMESTAMP) << TIMESTAMP_LEFT
-					// 数据标识部分
-					| DATACENTER_ID << DATACENTER_LEFT
-					// 机器标识部分
-					| MACHINE_ID << MACHINE_LEFT
-					// 序列标识部分
-					| sequence;
+			return SystemClock.now();
 		}
 
 	}
