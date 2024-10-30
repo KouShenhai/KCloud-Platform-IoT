@@ -19,11 +19,11 @@ image:https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT.svg/?label=ac
 image:https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT.svg/?label=resolved+issues&show_trend=true&token=dsp_7fcdb2050e509b27f5d2ab8f5f1109bcd468[DeepSource Resolved Issues,link=https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT]
 image:https://app.codacy.com/project/badge/Grade/d03c1f58dcff441690b6350d0c6980d6[Codacy,link=https://app.codacy.com/gh/KouShenhai/KCloud-Platform-IoT/dashboard]
 image:https://www.codefactor.io/repository/github/KouShenhai/KCloud-Platform-IoT/badge[CodeFactor,link=https://www.codefactor.io/repository/github/KouShenhai/KCloud-Platform-IoT]
+image:https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT/branch/master/graph/badge.svg?token=49USEMX2MN[Codecov,https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT]
 
 image:https://img.shields.io/github/stars/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub stars,link=https://github.com/KouShenhai/KCloud-Platform-IoT/stargazers]
 image:https://img.shields.io/github/forks/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub forks,link=https://github.com/KouShenhai/KCloud-Platform-IoT/forks]
 image:https://img.shields.io/github/watchers/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub watchers,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
-image:https://cla-assistant.io/readme/badge/KouShenhai/KCloud-Platform-IoT[CLA assistant,link=https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT]
 image:https://img.shields.io/github/last-commit/KouShenhai/KCloud-Platform-IoT[GitHub last commit,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
 
 image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/star.svg?theme=dark[Gitee star,link=https://gitee.com/laokouyun/KCloud-Platform-IoT/stargazers]
@@ -38,6 +38,7 @@ image:https://img.shields.io/static/v1?label=OAuth%202.1&message=1.4.0&color=blu
 image:https://img.shields.io/badge/GraalVM-21.0.1-blue.svg[GraalVM,link=https://www.graalvm.org/downloads]
 image:https://img.shields.io/badge/Maven-3.9.4-blue[Maven,link=https://maven.apache.org/]
 
+image:https://cla-assistant.io/readme/badge/KouShenhai/KCloud-Platform-IoT[CLA assistant,link=https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT]
 image:https://tokei.rs/b1/github/KouShenhai/KCloud-Platform-IoT?category=lines[代码行数,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
 image:https://wakatime.com/badge/user/587a6632-ba42-422b-84b7-628dcb839b95/project/59654e89-b082-4cf3-8cf1-7542b343b448.svg[Wakatime, link=https://wakatime.com/projects/KCloud-Platform-IoT]
 image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源交流群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
