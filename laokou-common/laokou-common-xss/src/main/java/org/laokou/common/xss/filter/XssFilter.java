@@ -22,7 +22,10 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
+import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.xss.annotation.Xss;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.method.HandlerMethod;
 
 /**
  * @author laokou
@@ -32,12 +35,15 @@ public class XssFilter extends OncePerRequestFilter {
 
 	@Override
 	@SneakyThrows
-	protected void doFilterInternal(HttpServletRequest servletRequest, HttpServletResponse response,
-			FilterChain chain) {
-		// ServletRequest requestWrapper = new RequestUtil.RequestWrapper(request);
-		// chain.doFilter(requestWrapper, response);
-		// return;
-		// chain.doFilter(servletRequest, response);
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
+		HandlerMethod handlerMethod = RequestUtil.getHandlerMethod(request);
+		if (handlerMethod != null && handlerMethod.getMethod().isAnnotationPresent(Xss.class)) {
+			ServletRequest requestWrapper = new XssRequestWrapper(request);
+			chain.doFilter(requestWrapper, response);
+		}
+		else {
+			chain.doFilter(request, response);
+		}
 	}
 
 }

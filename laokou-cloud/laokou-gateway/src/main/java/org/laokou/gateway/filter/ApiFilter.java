@@ -26,8 +26,10 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.nacos.utils.ReactiveRequestUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
+import org.laokou.gateway.annotation.Api;
 import org.laokou.gateway.config.GatewayExtProperties;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.reactive.result.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
@@ -55,6 +57,7 @@ public class ApiFilter implements WebFilter {
 
 	private final GatewayExtProperties gatewayExtProperties;
 
+	// @formatter:off
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 		return requestMappingHandlerMapping.getHandler(exchange)
@@ -62,7 +65,10 @@ public class ApiFilter implements WebFilter {
 			.flatMap(handler -> {
 				ServerHttpRequest request = exchange.getRequest();
 				String requestURL = ReactiveRequestUtil.getRequestURL(request);
-				if (ReactiveRequestUtil.pathMatcher(requestURL, API_PATTERN)) {
+				if (gatewayExtProperties.isEnabled()
+					&& ReactiveRequestUtil.pathMatcher(requestURL, API_PATTERN)
+					&& handler instanceof HandlerMethod handlerMethod
+					&& handlerMethod.hasMethodAnnotation(Api.class)) {
 					return checkUsernamePassword(exchange, request, chain);
 				}
 				return chain.filter(exchange);
@@ -76,19 +82,16 @@ public class ApiFilter implements WebFilter {
 	 * @param chain 链式过滤器
 	 * @return 响应结果
 	 */
-	private Mono<Void> checkUsernamePassword(ServerWebExchange exchange, ServerHttpRequest request,
-			WebFilterChain chain) {
+	private Mono<Void> checkUsernamePassword(ServerWebExchange exchange, ServerHttpRequest request, WebFilterChain chain) {
 		String username = ReactiveRequestUtil.getParamValue(request, USERNAME);
 		String password = ReactiveRequestUtil.getParamValue(request, PASSWORD);
 		if (StringUtil.isEmpty(username)) {
 			// 用户名不能为空
-			return ReactiveResponseUtil.responseOk(exchange,
-					Result.fail(ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE)));
+			return ReactiveResponseUtil.responseOk(exchange, Result.fail(ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE)));
 		}
 		if (StringUtil.isEmpty(password)) {
 			// 密码不能为空
-			return ReactiveResponseUtil.responseOk(exchange,
-					Result.fail(ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE)));
+			return ReactiveResponseUtil.responseOk(exchange, Result.fail(ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE)));
 		}
 		try {
 			username = RSAUtil.decryptByPrivateKey(username);
@@ -98,12 +101,13 @@ public class ApiFilter implements WebFilter {
 			// 用户名或密码错误
 			return ReactiveResponseUtil.responseOk(exchange, Result.fail(OAUTH2_USERNAME_PASSWORD_ERROR));
 		}
-		if (gatewayExtProperties.isEnabled() && (!ObjectUtil.equals(gatewayExtProperties.getPassword(), password)
-				|| !ObjectUtil.equals(gatewayExtProperties.getUsername(), username))) {
+		if (!ObjectUtil.equals(gatewayExtProperties.getPassword(), password)
+			|| !ObjectUtil.equals(gatewayExtProperties.getUsername(), username)) {
 			// 用户名或密码错误
 			return ReactiveResponseUtil.responseOk(exchange, Result.fail(OAUTH2_USERNAME_PASSWORD_ERROR));
 		}
 		return chain.filter(exchange);
 	}
+	// @formatter:on
 
 }

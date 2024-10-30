@@ -15,35 +15,7 @@
  *
  */
 
-package org.laokou.gateway.config;
-
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-
 /**
- * 网关扩展属性配置.
- *
  * @author laokou
  */
-@Data
-@Component
-@ConfigurationProperties(prefix = "spring.cloud.gateway.router.auth")
-public class GatewayExtProperties {
-
-	/**
-	 * 开启认证，true开启，false关闭.
-	 */
-	private boolean enabled = false;
-
-	/**
-	 * 用户名.
-	 */
-	private String username = "laokou";
-
-	/**
-	 * 密码.
-	 */
-	private String password = "laokou123";
-
-}
+package org.laokou.common.xss.annotation;

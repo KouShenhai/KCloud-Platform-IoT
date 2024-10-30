@@ -15,22 +15,16 @@
  *
  */
 
-package org.laokou.gateway.annotation;
-
-import org.laokou.gateway.filter.ApiFilter;
-import org.springframework.context.annotation.Import;
+package org.laokou.common.xss.annotation;
 
 import java.lang.annotation.*;
 
 /**
- * 认证开关注解.
- *
  * @author laokou
  */
 @Documented
-@Target(ElementType.TYPE)
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-@Import(ApiFilter.class)
-public @interface EnableAuth {
+public @interface Xss {
 
 }
