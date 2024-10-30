@@ -18,12 +18,12 @@
 package org.laokou.common.xss.filter;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletRequestWrapper;
+import org.laokou.common.core.utils.RequestUtil;
 
 /**
  * @author laokou
  */
-public class XssRequestWrapper extends HttpServletRequestWrapper {
+public class XssRequestWrapper extends RequestUtil.RequestWrapper {
 
 	/**
 	 * Constructs a request object wrapping the given request.

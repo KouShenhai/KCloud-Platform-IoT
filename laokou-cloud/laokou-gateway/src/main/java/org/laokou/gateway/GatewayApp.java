@@ -22,7 +22,7 @@ import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.common.nacos.annotation.EnableNacosShutDown;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
-import org.laokou.gateway.annotation.EnableAuth;
+import org.laokou.gateway.annotation.EnableApi;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration;
@@ -40,7 +40,7 @@ import java.net.InetAddress;
  *
  * @author laokou
  */
-@EnableAuth
+@EnableApi
 @EnableNacosShutDown
 @EnableDiscoveryClient
 @EnableEncryptableProperties

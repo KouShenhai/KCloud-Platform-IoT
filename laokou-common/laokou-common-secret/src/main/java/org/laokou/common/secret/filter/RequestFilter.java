@@ -18,12 +18,15 @@
 package org.laokou.common.secret.filter;
 
 import io.micrometer.common.lang.NonNullApi;
-import jakarta.servlet.*;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.secret.annotation.ApiSecret;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.method.HandlerMethod;
 
 /**
  * @author laokou
@@ -34,8 +37,14 @@ public class RequestFilter extends OncePerRequestFilter {
 	@Override
 	@SneakyThrows
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
-		ServletRequest requestWrapper = new RequestUtil.RequestWrapper(request);
-		chain.doFilter(requestWrapper, response);
+		HandlerMethod handlerMethod = RequestUtil.getHandlerMethod(request);
+		if (handlerMethod != null && handlerMethod.getMethod().isAnnotationPresent(ApiSecret.class)) {
+			ServletRequest requestWrapper = new RequestUtil.RequestWrapper(request);
+			chain.doFilter(requestWrapper, response);
+		}
+		else {
+			chain.doFilter(request, response);
+		}
 	}
 
 }

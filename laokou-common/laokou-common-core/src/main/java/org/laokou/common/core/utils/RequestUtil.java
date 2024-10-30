@@ -29,6 +29,8 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerMapping;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -85,6 +87,10 @@ public final class RequestUtil {
 	public static String getDomainName(HttpServletRequest request) {
 		String domainName = request.getHeader(DOMAIN_NAME);
 		return StringUtil.isEmpty(domainName) ? LOCAL_IPV4 : domainName;
+	}
+
+	public static HandlerMethod getHandlerMethod(HttpServletRequest request) {
+		return (HandlerMethod) request.getAttribute(HandlerMapping.BEST_MATCHING_HANDLER_ATTRIBUTE);
 	}
 
 	/**

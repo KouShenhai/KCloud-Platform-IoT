@@ -15,35 +15,22 @@
  *
  */
 
-package org.laokou.gateway.config;
+package org.laokou.gateway.annotation;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.laokou.gateway.filter.ApiFilter;
+import org.springframework.context.annotation.Import;
+
+import java.lang.annotation.*;
 
 /**
- * 网关扩展属性配置.
+ * 认证开关注解.
  *
  * @author laokou
  */
-@Data
-@Component
-@ConfigurationProperties(prefix = "spring.cloud.gateway.router.auth")
-public class GatewayExtProperties {
-
-	/**
-	 * 开启认证，true开启，false关闭.
-	 */
-	private boolean enabled = false;
-
-	/**
-	 * 用户名.
-	 */
-	private String username = "laokou";
-
-	/**
-	 * 密码.
-	 */
-	private String password = "laokou123";
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import(ApiFilter.class)
+public @interface EnableApi {
 
 }
