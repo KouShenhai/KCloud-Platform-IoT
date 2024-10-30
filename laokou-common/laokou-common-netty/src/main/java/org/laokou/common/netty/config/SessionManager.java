@@ -17,42 +17,9 @@
 
 package org.laokou.common.netty.config;
 
-import io.netty.channel.Channel;
-import org.laokou.common.i18n.utils.StringUtil;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
  * @author laokou
  */
-public final class SessionManager {
-
-	private static final Map<String, Channel> CLIENT_CACHE = new ConcurrentHashMap<>(4096);
-
-	private static final Map<String, String> CHANNEL_CACHE = new ConcurrentHashMap<>(4096);
-
-	private static final Object LOCK = new Object();
-
-	public static void add(String clientId, Channel channel) {
-		synchronized (LOCK) {
-			CLIENT_CACHE.put(clientId, channel);
-			CHANNEL_CACHE.put(channel.id().asLongText(), clientId);
-		}
-	}
-
-	public static Channel get(String clientId) {
-		return CLIENT_CACHE.get(clientId);
-	}
-
-	public static void remove(String channelId) {
-		String clientId = CHANNEL_CACHE.get(channelId);
-		if (StringUtil.isNotEmpty(clientId)) {
-			synchronized (LOCK) {
-				CLIENT_CACHE.remove(clientId);
-				CHANNEL_CACHE.remove(channelId);
-			}
-		}
-	}
+public final class SessionManager extends WebSocketSessionManager {
 
 }
