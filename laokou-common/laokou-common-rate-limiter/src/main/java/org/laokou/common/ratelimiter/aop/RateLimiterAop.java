@@ -58,9 +58,10 @@ public class RateLimiterAop {
 			.concat(UNDER)
 			.concat(rateLimiter.type().resolve(RequestUtil.getHttpServletRequest())));
 		long rate = rateLimiter.rate();
+		long ttl = rateLimiter.ttl();
 		long interval = rateLimiter.interval();
 		RateType mode = rateLimiter.mode();
-		if (!redisUtil.rateLimiter(key, mode, rate, Duration.ofSeconds(interval))) {
+		if (!redisUtil.rateLimiter(key, mode, rate, Duration.ofSeconds(interval), Duration.ofSeconds(ttl))) {
 			throw new SystemException(TOO_MANY_REQUESTS);
 		}
 		return point.proceed();

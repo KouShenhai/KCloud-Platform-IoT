@@ -17,7 +17,6 @@
 
 package org.laokou.common.data.cache.aop;
 
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -26,7 +25,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.SpringExpressionUtil;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.constant.Type;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
@@ -36,12 +38,17 @@ import org.springframework.stereotype.Component;
  *
  * @author laokou
  */
-@Component
 @Aspect
-@RequiredArgsConstructor
+@Component
 public class CacheAop {
 
-	private final CacheManager cacheManager;
+	@Autowired
+	@Qualifier("redissonCacheManager")
+	private CacheManager redissonCacheManager;
+
+	@Autowired
+	@Qualifier("caffeineCacheManager")
+	private CacheManager caffineCacheManager;
 
 	@Around("@annotation(dataCache)")
 	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) {
@@ -76,9 +83,9 @@ public class CacheAop {
 	}
 
 	private Cache cache(String name) {
-		Cache cache = cacheManager.getCache(name);
+		Cache cache = redissonCacheManager.getCache(name);
 		if (ObjectUtil.isNull(cache)) {
-			throw new RuntimeException();
+			throw new SystemException("S_Cache_NameNotExist", "缓存名称不存在");
 		}
 		return cache;
 	}

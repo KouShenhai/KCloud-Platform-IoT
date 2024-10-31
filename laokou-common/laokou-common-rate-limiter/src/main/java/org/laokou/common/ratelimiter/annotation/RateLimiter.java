@@ -43,9 +43,14 @@ public @interface RateLimiter {
 	long rate() default 1;
 
 	/**
-	 * 过期时间,单位秒.
+	 * 过期时间，单位秒.
 	 */
 	long interval() default 1;
+
+	/**
+	 * 失效时间，单位秒.
+	 */
+	long ttl() default 3600;
 
 	/**
 	 * 类型.
