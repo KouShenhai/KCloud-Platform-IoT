@@ -17,7 +17,7 @@
 
 package org.laokou.common.secret.annotation;
 
-import org.laokou.common.secret.filter.RequestFilter;
+import org.laokou.common.secret.filter.ApiSecretRequestFilter;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -25,7 +25,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ RequestFilter.class })
+@Import({ ApiSecretRequestFilter.class })
 public @interface EnableApiSecret {
 
 }

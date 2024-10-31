@@ -24,19 +24,26 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.xss.annotation.Xss;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerMapping;
 
 /**
  * @author laokou
  */
 @NonNullApi
-public class XssFilter extends OncePerRequestFilter {
+public final class XssRequestFilter extends OncePerRequestFilter {
+
+	@Autowired
+	@Qualifier("requestMappingHandlerMapping")
+	private HandlerMapping handlerMapping;
 
 	@Override
 	@SneakyThrows
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
-		HandlerMethod handlerMethod = RequestUtil.getHandlerMethod(request);
+		HandlerMethod handlerMethod = RequestUtil.getHandlerMethod(request, handlerMapping);
 		if (handlerMethod != null && handlerMethod.getMethod().isAnnotationPresent(Xss.class)) {
 			ServletRequest requestWrapper = new XssRequestWrapper(request);
 			chain.doFilter(requestWrapper, response);

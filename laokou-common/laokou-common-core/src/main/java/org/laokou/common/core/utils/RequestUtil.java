@@ -30,6 +30,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.HandlerMapping;
 
 import java.io.BufferedReader;
@@ -89,8 +90,13 @@ public final class RequestUtil {
 		return StringUtil.isEmpty(domainName) ? LOCAL_IPV4 : domainName;
 	}
 
-	public static HandlerMethod getHandlerMethod(HttpServletRequest request) {
-		return (HandlerMethod) request.getAttribute(HandlerMapping.BEST_MATCHING_HANDLER_ATTRIBUTE);
+	@SneakyThrows
+	public static HandlerMethod getHandlerMethod(HttpServletRequest request, HandlerMapping handlerMapping) {
+		HandlerExecutionChain chain = handlerMapping.getHandler(request);
+		if (chain != null && chain.getHandler() instanceof HandlerMethod handlerMethod) {
+			return handlerMethod;
+		}
+		return null;
 	}
 
 	/**
@@ -116,7 +122,7 @@ public final class RequestUtil {
 		return StreamUtils.copyToByteArray(request.getInputStream());
 	}
 
-	public static class RequestWrapper extends HttpServletRequestWrapper {
+	public final static class RequestWrapper extends HttpServletRequestWrapper {
 
 		private final byte[] REQUEST_BODY;
 
@@ -137,29 +143,7 @@ public final class RequestUtil {
 
 		@Override
 		public ServletInputStream getInputStream() {
-			ByteArrayInputStream inputStream = new ByteArrayInputStream(REQUEST_BODY);
-			return new ServletInputStream() {
-
-				@Override
-				public int read() {
-					return inputStream.read();
-				}
-
-				@Override
-				public boolean isFinished() {
-					return false;
-				}
-
-				@Override
-				public boolean isReady() {
-					return false;
-				}
-
-				@Override
-				public void setReadListener(ReadListener readListener) {
-					throw new UnsupportedOperationException();
-				}
-			};
+			return RequestUtil.getInputStream(REQUEST_BODY);
 		}
 
 		private static class ByteArrayInputStreamReader extends InputStreamReader {
@@ -170,6 +154,32 @@ public final class RequestUtil {
 
 		}
 
+	}
+
+	public static ServletInputStream getInputStream(byte[] requestBody) {
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(requestBody);
+		return new ServletInputStream() {
+
+			@Override
+			public int read() {
+				return inputStream.read();
+			}
+
+			@Override
+			public boolean isFinished() {
+				return false;
+			}
+
+			@Override
+			public boolean isReady() {
+				return false;
+			}
+
+			@Override
+			public void setReadListener(ReadListener readListener) {
+				throw new UnsupportedOperationException();
+			}
+		};
 	}
 
 }
