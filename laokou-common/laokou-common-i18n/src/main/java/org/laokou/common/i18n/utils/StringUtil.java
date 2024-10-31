@@ -45,6 +45,10 @@ public final class StringUtil {
 		return StringUtils.collectionToDelimitedString(coll, delim);
 	}
 
+	public static boolean startWith(String str, String prefix) {
+		return str.startsWith(prefix);
+	}
+
 	public static Long parseLong(String str) {
 		if (isEmpty(str)) {
 			return null;

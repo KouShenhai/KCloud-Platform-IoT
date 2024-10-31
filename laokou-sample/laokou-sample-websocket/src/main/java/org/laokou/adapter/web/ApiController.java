@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.client.dto.clientobject.ReceiveCO;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.common.trace.utils.TraceUtil;
+import org.laokou.common.xss.annotation.Xss;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +40,7 @@ public class ApiController {
 
 	private final RocketMqTemplate rocketMqTemplate;
 
+	@Xss
 	@PostMapping("send")
 	public void send(@RequestBody ReceiveCO co) {
 		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, EMPTY, co, traceUtil.getTraceId(),

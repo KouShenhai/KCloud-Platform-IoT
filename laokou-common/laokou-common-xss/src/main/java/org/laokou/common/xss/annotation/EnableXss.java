@@ -17,7 +17,7 @@
 
 package org.laokou.common.xss.annotation;
 
-import org.laokou.common.xss.filter.XssFilter;
+import org.laokou.common.xss.filter.XssRequestFilter;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -25,7 +25,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ XssFilter.class })
+@Import({ XssRequestFilter.class })
 public @interface EnableXss {
 
 }

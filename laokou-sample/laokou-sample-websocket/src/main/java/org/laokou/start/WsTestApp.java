@@ -19,6 +19,7 @@ package org.laokou.start;
 
 import lombok.SneakyThrows;
 import org.laokou.common.netty.annotation.EnableWebSocketServer;
+import org.laokou.common.xss.annotation.EnableXss;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -31,6 +32,7 @@ import java.net.InetAddress;
  *
  * @author laokou
  */
+@EnableXss
 @EnableWebSocketServer
 @EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
