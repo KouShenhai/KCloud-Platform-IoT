@@ -21,35 +21,25 @@ import org.laokou.common.redis.config.GlobalJsonJacksonCodec;
 import org.laokou.common.redis.config.RedisAutoConfig;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
 /**
  * 数据缓存自动装配类.
  *
  * @author laokou
  */
-@ConditionalOnClass(LettuceConnectionFactory.class)
 @AutoConfiguration(after = { RedisAutoConfig.class })
 public class DataCacheAutoConfig {
 
-	/**
-	 * redis 需要配置 notify-keyspace-events KEA.
-	 * @param lettuceConnectionFactory 工厂
-	 */
 	@Bean
-	public RedisMessageListenerContainer redisMessageListenerContainer(
-			LettuceConnectionFactory lettuceConnectionFactory) {
-		RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
-		redisMessageListenerContainer.setConnectionFactory(lettuceConnectionFactory);
-		return redisMessageListenerContainer;
+	public CacheManager caffeineCacheManager() {
+		return new CaffeineCacheManager();
 	}
 
 	@Bean
-	public CacheManager cacheManager(RedissonClient redissonClient) {
+	public CacheManager redissonCacheManager(RedissonClient redissonClient) {
 		return new RedissonSpringExtCacheManager(redissonClient, GlobalJsonJacksonCodec.INSTANCE);
 	}
 

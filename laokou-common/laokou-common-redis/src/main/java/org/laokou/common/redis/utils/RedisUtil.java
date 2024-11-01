@@ -96,14 +96,11 @@ public class RedisUtil {
 		return lock.tryLock(timeout, TimeUnit.MILLISECONDS);
 	}
 
-	public boolean rateLimiter(String key, RateType mode, long replenishRate, Duration rateInterval) {
+	public boolean rateLimiter(String key, RateType mode, long replenishRate, Duration rateInterval,
+			Duration ttlInterval) {
 		RRateLimiter rateLimiter = redissonClient.getRateLimiter(key);
-		rateLimiter.trySetRate(mode, replenishRate, rateInterval);
+		rateLimiter.trySetRate(mode, replenishRate, rateInterval, ttlInterval);
 		return rateLimiter.tryAcquire();
-	}
-
-	public boolean tryLock(String key, long timeout) throws InterruptedException {
-		return tryLock(getLock(key), timeout);
 	}
 
 	public void unlock(String key) {
