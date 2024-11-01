@@ -15,24 +15,30 @@
  *
  */
 
-package org.laokou.common.domain.constant;
+package org.laokou.common.domain.model;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
+
+import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CACHE_TOPIC;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * @author laokou
  */
-public final class MqConstant {
+@Data
+@NoArgsConstructor
+public class RemoveCacheDomainEvent extends DefaultDomainEvent {
 
-	public static final String REMOVE_TAG = "remove";
+	private String name;
 
-	public static final String LAOKOU_DOMAIN_EVENT_TOPIC = "laokou_domain_event_topic";
+	private String key;
 
-	public static final String LAOKOU_DOMAIN_EVENT_CONSUMER_GROUP = "laokou_domain_event_consumer_group";
-
-	public static final String LAOKOU_CACHE_TOPIC = "laokou_cache_topic";
-
-	public static final String LAOKOU_CACHE_CONSUMER_GROUP = "laokou_cache_consumer_group";
-
-	private MqConstant() {
+	public RemoveCacheDomainEvent(String name, String key) {
+		super(LAOKOU_CACHE_TOPIC, EMPTY);
+		this.name = name;
+		this.key = key;
 	}
 
 }

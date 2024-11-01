@@ -62,6 +62,11 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 		super.tenantId = tenantId;
 	}
 
+	protected DefaultDomainEvent(String topic, String tag) {
+		super.topic = topic;
+		super.tag = tag;
+	}
+
 	public DefaultDomainEvent(String serviceId) {
 		super.serviceId = serviceId;
 	}

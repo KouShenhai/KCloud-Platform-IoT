@@ -38,8 +38,8 @@ public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 					traceUtil.getTraceId(), traceUtil.getSpanId());
 		}
 		else {
-			rocketMqTemplate.sendAsyncMessage(payload.getTopic(), payload.getTag(), payload, payload.getId(),
-					traceUtil.getTraceId(), traceUtil.getSpanId());
+			rocketMqTemplate.sendAsyncMessage(payload.getTopic(), payload.getTag(), payload, traceUtil.getTraceId(),
+					traceUtil.getSpanId());
 		}
 	}
 
