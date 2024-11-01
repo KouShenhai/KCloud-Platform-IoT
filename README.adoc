@@ -44,7 +44,7 @@ image:https://wakatime.com/badge/user/587a6632-ba42-422b-84b7-628dcb839b95/proje
 image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源交流群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
 
 === 📌 作者的话
-这个项目，即使有诸多的瑕疵，也不掩盖不住它的光芒，它就像是我的孩子一样，在我的眼中它就是趋向于完美的存在！
+这个项目，即使有诸多的瑕疵，也不掩盖不住它的光芒，它就像是我的孩子，在我的眼中，它就是趋向于完美的存在！
 
 === 😋 项目背景
 
