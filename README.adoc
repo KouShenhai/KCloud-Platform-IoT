@@ -1,3 +1,9 @@
+=== 📌 作者的话
+
+即使KCloud-Platform-IoT有诸多的瑕疵，也不掩盖不住它的光芒。  
+
+它就像是我的孩子，在作者的眼中，它就是趋向于完美的存在！
+
 === 🎉 项目备注
 
 - 项目：KCloud-Platform-IoT（阻塞式）
@@ -42,12 +48,6 @@ image:https://cla-assistant.io/readme/badge/KouShenhai/KCloud-Platform-IoT[CLA a
 image:https://tokei.rs/b1/github/KouShenhai/KCloud-Platform-IoT?category=lines[代码行数,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
 image:https://wakatime.com/badge/user/587a6632-ba42-422b-84b7-628dcb839b95/project/59654e89-b082-4cf3-8cf1-7542b343b448.svg[Wakatime, link=https://wakatime.com/projects/KCloud-Platform-IoT]
 image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源交流群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
-
-=== 📌 作者的话
-
-即使KCloud-Platform-IoT有诸多的瑕疵，也不掩盖不住它的光芒。  
-
-它就像是我的孩子，在作者的眼中，它就是趋向于完美的存在！
 
 === 😋 项目背景
 
