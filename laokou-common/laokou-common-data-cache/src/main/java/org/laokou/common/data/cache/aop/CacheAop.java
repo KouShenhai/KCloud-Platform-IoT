@@ -33,6 +33,10 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 /**
  * 数据缓存切面.
  *
@@ -50,6 +54,12 @@ public class CacheAop {
 	@Qualifier("caffeineCacheManager")
 	private CacheManager caffineCacheManager;
 
+	private static final ReentrantReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
+
+	private static final Lock READ_LOCK = READ_WRITE_LOCK.readLock();
+
+	private static final Lock WRITE_LOCK = READ_WRITE_LOCK.writeLock();
+
 	@Around("@annotation(dataCache)")
 	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) {
 		MethodSignature signature = (MethodSignature) point.getSignature();
@@ -65,25 +75,73 @@ public class CacheAop {
 
 	@SneakyThrows
 	private Object get(String name, String field, ProceedingJoinPoint point) {
-		Cache cache = cache(name);
-		Cache.ValueWrapper valueWrapper = cache.get(field);
-		if (ObjectUtil.isNotNull(valueWrapper)) {
-			return valueWrapper.get();
+		boolean isLocked = false;
+		int retry = 3;
+		try {
+			do {
+				isLocked = READ_LOCK.tryLock(50, TimeUnit.MILLISECONDS);
+			}
+			while (!isLocked && --retry > 0);
+			if (isLocked) {
+				Cache caffineCache = getCaffineCache(name);
+				Cache.ValueWrapper caffineValueWrapper = caffineCache.get(field);
+				if (ObjectUtil.isNotNull(caffineValueWrapper)) {
+					return caffineValueWrapper.get();
+				}
+				Cache redissonCache = getRedissonCache(name);
+				Cache.ValueWrapper redissonValueWrapper = redissonCache.get(field);
+				if (ObjectUtil.isNotNull(redissonValueWrapper)) {
+					Object value = redissonValueWrapper.get();
+					caffineCache.putIfAbsent(field, value);
+					return value;
+				}
+				Object value = point.proceed();
+				redissonCache.putIfAbsent(field, value);
+				return value;
+			}
+			return point.proceed();
 		}
-		Object value = point.proceed();
-		cache.putIfAbsent(field, value);
-		return value;
+		finally {
+			if (isLocked) {
+				READ_LOCK.unlock();
+			}
+		}
 	}
 
 	@SneakyThrows
 	private Object del(String name, String field, ProceedingJoinPoint point) {
-		Cache cache = cache(name);
-		cache.evictIfPresent(field);
-		return point.proceed();
+		boolean isLocked = false;
+		int retry = 3;
+		try {
+			do {
+				isLocked = WRITE_LOCK.tryLock(50, TimeUnit.MILLISECONDS);
+			}
+			while (!isLocked && --retry > 0);
+			if (isLocked) {
+				Cache redissonCache = getRedissonCache(name);
+				Cache caffineCache = getCaffineCache(name);
+				redissonCache.evictIfPresent(field);
+				caffineCache.evictIfPresent(field);
+			}
+			return point.proceed();
+		}
+		finally {
+			if (isLocked) {
+				WRITE_LOCK.unlock();
+			}
+		}
 	}
 
-	private Cache cache(String name) {
+	private Cache getRedissonCache(String name) {
 		Cache cache = redissonCacheManager.getCache(name);
+		if (ObjectUtil.isNull(cache)) {
+			throw new SystemException("S_Cache_NameNotExist", "缓存名称不存在");
+		}
+		return cache;
+	}
+
+	private Cache getCaffineCache(String name) {
+		Cache cache = caffineCacheManager.getCache(name);
 		if (ObjectUtil.isNull(cache)) {
 			throw new SystemException("S_Cache_NameNotExist", "缓存名称不存在");
 		}
