@@ -26,6 +26,8 @@ import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.crypto.utils.RSAUtil;
+import org.laokou.common.domain.model.RemoveCacheDomainEvent;
+import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -51,6 +53,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.laokou.common.data.cache.constant.NameConstant.TENANT_ID;
 import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -99,6 +102,8 @@ class OAuth2ApiTest {
 	private final RestClient restClient;
 
 	private final PasswordEncoder passwordEncoder;
+
+	private final DomainEventPublisher rocketMQDomainEventPublisher;
 
 	private MockMvc mockMvc;
 
@@ -268,6 +273,11 @@ class OAuth2ApiTest {
 			.contentType(MediaType.APPLICATION_JSON)
 			.retrieve();
 		log.info("---------- 登录已注销，结束令牌清除 ----------");
+	}
+
+	@Test
+	void testRemoveCache() {
+		rocketMQDomainEventPublisher.publish(new RemoveCacheDomainEvent(TENANT_ID, "1"), false);
 	}
 
 	private Map<String, String> deviceAuthorizationCodeAuth(String deviceCode) {

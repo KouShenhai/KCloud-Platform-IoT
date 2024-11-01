@@ -66,15 +66,15 @@ public class CacheAop {
 		String[] parameterNames = signature.getParameterNames();
 		Type type = dataCache.type();
 		String name = dataCache.name();
-		String field = SpringExpressionUtil.parse(dataCache.key(), parameterNames, point.getArgs(), String.class);
+		String key = SpringExpressionUtil.parse(dataCache.key(), parameterNames, point.getArgs(), String.class);
 		return switch (type) {
-			case GET -> get(name, field, point);
-			case DEL -> del(name, field, point);
+			case GET -> get(name, key, point);
+			case DEL -> del(name, key, point);
 		};
 	}
 
 	@SneakyThrows
-	private Object get(String name, String field, ProceedingJoinPoint point) {
+	private Object get(String name, String key, ProceedingJoinPoint point) {
 		boolean isLocked = false;
 		int retry = 3;
 		try {
@@ -84,19 +84,19 @@ public class CacheAop {
 			while (!isLocked && --retry > 0);
 			if (isLocked) {
 				Cache caffineCache = getCaffineCache(name);
-				Cache.ValueWrapper caffineValueWrapper = caffineCache.get(field);
+				Cache.ValueWrapper caffineValueWrapper = caffineCache.get(key);
 				if (ObjectUtil.isNotNull(caffineValueWrapper)) {
 					return caffineValueWrapper.get();
 				}
 				Cache redissonCache = getRedissonCache(name);
-				Cache.ValueWrapper redissonValueWrapper = redissonCache.get(field);
+				Cache.ValueWrapper redissonValueWrapper = redissonCache.get(key);
 				if (ObjectUtil.isNotNull(redissonValueWrapper)) {
 					Object value = redissonValueWrapper.get();
-					caffineCache.putIfAbsent(field, value);
+					caffineCache.putIfAbsent(key, value);
 					return value;
 				}
 				Object value = point.proceed();
-				redissonCache.putIfAbsent(field, value);
+				redissonCache.putIfAbsent(key, value);
 				return value;
 			}
 			return point.proceed();
@@ -109,7 +109,7 @@ public class CacheAop {
 	}
 
 	@SneakyThrows
-	private Object del(String name, String field, ProceedingJoinPoint point) {
+	private Object del(String name, String key, ProceedingJoinPoint point) {
 		boolean isLocked = false;
 		int retry = 3;
 		try {
@@ -120,8 +120,8 @@ public class CacheAop {
 			if (isLocked) {
 				Cache redissonCache = getRedissonCache(name);
 				Cache caffineCache = getCaffineCache(name);
-				redissonCache.evictIfPresent(field);
-				caffineCache.evictIfPresent(field);
+				redissonCache.evictIfPresent(key);
+				caffineCache.evictIfPresent(key);
 			}
 			return point.proceed();
 		}
