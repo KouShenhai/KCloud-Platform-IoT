@@ -30,12 +30,13 @@ class XssTest {
 
 	private static final String[] XSS_ATTACK_VECTORS = { "<script>alert(1)</script>",
 			"<IMG SRC=\"javascript:alert('XSS');\">", "<svg/onload=alert(1)>",
-			"javascript:/*-/*`/*\\`/*'/*\"/**/(/* */onerror=alert(1) )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\\x3csVg/<sVg/oNloAd=alert(1)//>\\x3e" };
+			"javascript:/*-/*`/*\\`/*'/*\"/**/(/* */onerror=alert(1) )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\\x3csVg/<sVg/oNloAd=alert(1)//>\\x3e",
+			"select 1 from test" };
 
 	@Test
 	void testHtmlScripTagJsonString() {
 		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[0] + "\"}";
-		String cleaned = XssUtil.clear(json);
+		String cleaned = XssUtil.clearHtml(json);
 		Assertions.assertEquals("{\"s\": \"alert(1)\"}", cleaned);
 		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
 		Assertions.assertFalse(cleaned.contains("<script>"));
@@ -44,29 +45,42 @@ class XssTest {
 	@Test
 	void testHtmlTagJsonString() {
 		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[1] + "\"}";
-		String cleaned = XssUtil.clear(json);
+		String cleaned = XssUtil.clearHtml(json);
 		Assertions.assertEquals("{\"s\": \"<img>\"}", cleaned);
 		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
-		Assertions.assertFalse(cleaned.contains("<script>"));
+		Assertions.assertFalse(cleaned.contains("<IMG"));
 	}
 
 	@Test
 	void testSvgJsonString() {
 		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[2] + "\"}";
-		String cleaned = XssUtil.clear(json);
+		String cleaned = XssUtil.clearHtml(json);
 		Assertions.assertEquals("{\"s\": \"\"}", cleaned);
 		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
-		Assertions.assertFalse(cleaned.contains("<script>"));
+		Assertions.assertFalse(cleaned.contains("<svg"));
 	}
 
 	@Test
 	void testHtmlScriptJsonString() {
 		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[3] + "\"}";
-		String cleaned = XssUtil.clear(json);
+		String cleaned = XssUtil.clearHtml(json);
 		Assertions.assertEquals(
 				"{\"s\": \"/*-/*`/*\\`/*'/*\"/**/(/* */onerror=alert(1) )//%0D%0A%0d%0a//\\x3csVg/\\x3e\"}", cleaned);
 		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
-		Assertions.assertFalse(cleaned.contains("<script>"));
+		Assertions.assertFalse(cleaned.contains("javascript:"));
+	}
+
+	@Test
+	void testSqlJsonString() {
+		String json = XSS_ATTACK_VECTORS[4];
+		boolean sqlInjection = false;
+		try {
+			XssUtil.clearSql(json);
+		}
+		catch (Exception e) {
+			sqlInjection = true;
+		}
+		Assertions.assertTrue(sqlInjection);
 	}
 
 }

@@ -63,7 +63,8 @@
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log("发送成功", xhr.responseText)
+				const r = JSON.parse(xhr.responseText)
+				alert("消息提醒：" + r.msg)
             } else if (xhr.readyState === 4) {
                 console.error("发送失败", xhr.status, xhr.statusText)
             }

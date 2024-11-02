@@ -15,23 +15,21 @@
  *
  */
 
-package org.laokou.client.dto.clientobject;
+package org.laokou.common.xss.annotation;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.ClientObject;
-import org.laokou.common.xss.annotation.XssSql;
+import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import java.util.Set;
+import java.lang.annotation.*;
 
 /**
  * @author laokou
  */
-@Data
-public class ReceiveCO extends ClientObject {
-
-	@XssSql
-	private String payload;
-
-	private Set<String> receiver;
+@Documented
+@Target({ ElementType.FIELD })
+@Retention(RetentionPolicy.RUNTIME)
+@JacksonAnnotationsInside
+@JsonSerialize(using = XssSerializer.class)
+public @interface XssSql {
 
 }

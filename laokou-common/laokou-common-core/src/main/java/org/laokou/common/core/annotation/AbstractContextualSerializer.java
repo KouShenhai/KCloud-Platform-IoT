@@ -15,23 +15,14 @@
  *
  */
 
-package org.laokou.client.dto.clientobject;
+package org.laokou.common.core.annotation;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.ClientObject;
-import org.laokou.common.xss.annotation.XssSql;
-
-import java.util.Set;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 
 /**
  * @author laokou
  */
-@Data
-public class ReceiveCO extends ClientObject {
-
-	@XssSql
-	private String payload;
-
-	private Set<String> receiver;
+public abstract class AbstractContextualSerializer extends JsonSerializer<String> implements ContextualSerializer {
 
 }

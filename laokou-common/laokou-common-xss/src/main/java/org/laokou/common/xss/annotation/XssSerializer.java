@@ -15,42 +15,33 @@
  *
  */
 
-package org.laokou.common.sensitive.annotation;
+package org.laokou.common.xss.annotation;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.AbstractContextualSerializer;
 import org.laokou.common.i18n.utils.ObjectUtil;
-
-import java.io.IOException;
+import org.laokou.common.xss.util.XssUtil;
 
 /**
  * @author laokou
  */
-@NoArgsConstructor
-@AllArgsConstructor
-public class SensitiveSerializer extends AbstractContextualSerializer {
-
-	private SensitiveType sensitiveType;
-
-	private int start;
-
-	private int end;
+public class XssSerializer extends AbstractContextualSerializer {
 
 	@Override
-	public void serialize(String str, JsonGenerator generator, SerializerProvider provider) throws IOException {
-		generator.writeString(sensitiveType.format(str, start, end));
+	@SneakyThrows
+	public void serialize(String s, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) {
+		jsonGenerator.writeString(XssUtil.clearSql(s));
 	}
 
 	@Override
-	public JsonSerializer<?> createContextual(SerializerProvider provider, BeanProperty beanProperty) {
-		Sensitive sensitive = beanProperty.getAnnotation(Sensitive.class);
-		if (ObjectUtil.isNotNull(sensitive)) {
-			return new SensitiveSerializer(sensitive.type(), sensitive.start(), sensitive.end());
+	public JsonSerializer<?> createContextual(SerializerProvider serializerProvider, BeanProperty beanProperty) {
+		XssSql xssSql = beanProperty.getAnnotation(XssSql.class);
+		if (ObjectUtil.isNotNull(xssSql)) {
+			return new XssSerializer();
 		}
 		throw new RuntimeException();
 	}
