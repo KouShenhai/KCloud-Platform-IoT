@@ -63,14 +63,14 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 			return super.getInputStream();
 		}
 		// xss过滤
-		return RequestUtil.getInputStream(XssUtil.clear(json).getBytes(StandardCharsets.UTF_8));
+		return RequestUtil.getInputStream(XssUtil.clearHtml(json).getBytes(StandardCharsets.UTF_8));
 	}
 
 	@Override
 	public String getParameter(String name) {
 		String parameterValue = super.getParameter(name);
 		if (StringUtil.isNotEmpty(parameterValue)) {
-			parameterValue = XssUtil.clear(parameterValue);
+			parameterValue = XssUtil.clearHtml(parameterValue);
 		}
 		return parameterValue;
 	}
@@ -83,7 +83,7 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 		}
 		List<String> list = new ArrayList<>(parameterValues.length);
 		for (String parameterValue : parameterValues) {
-			list.add(XssUtil.clear(parameterValue));
+			list.add(XssUtil.clearHtml(parameterValue));
 		}
 		return list.toArray(String[]::new);
 	}
@@ -101,7 +101,7 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 			String[] values = entry.getValue();
 			List<String> list = new ArrayList<>(values.length);
 			for (String str : values) {
-				list.add(XssUtil.clear(str));
+				list.add(XssUtil.clearHtml(str));
 			}
 			newParameterMap.put(key, list.toArray(String[]::new));
 		}
@@ -110,9 +110,9 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 
 	@Override
 	public String getHeader(String name) {
-		String value = super.getHeader(XssUtil.clear(name));
+		String value = super.getHeader(XssUtil.clearHtml(name));
 		if (StringUtil.isNotEmpty(value)) {
-			value = XssUtil.clear(value);
+			value = XssUtil.clearHtml(value);
 		}
 		return value;
 	}
