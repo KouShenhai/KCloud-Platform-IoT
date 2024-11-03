@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.mybatisplus.handler.event;
+package org.laokou.common.mybatisplus.handler.domainevent;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +30,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @ToString
-public class SqlLogEvent extends ApplicationEvent {
+public class SqlEvent extends ApplicationEvent {
 
 	private String serviceId;
 
@@ -40,7 +40,7 @@ public class SqlLogEvent extends ApplicationEvent {
 
 	private Instant createTime;
 
-	public SqlLogEvent(Object source, String serviceId, String sql, long costTime, Instant createTime) {
+	public SqlEvent(Object source, String serviceId, String sql, long costTime, Instant createTime) {
 		super(source);
 		this.sql = sql;
 		this.serviceId = serviceId;

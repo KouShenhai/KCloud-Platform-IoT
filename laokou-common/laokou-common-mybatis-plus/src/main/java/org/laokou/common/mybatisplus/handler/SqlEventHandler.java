@@ -19,7 +19,7 @@ package org.laokou.common.mybatisplus.handler;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.mybatisplus.handler.event.SqlLogEvent;
+import org.laokou.common.mybatisplus.handler.domainevent.SqlEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
@@ -34,12 +34,12 @@ import static org.laokou.common.core.config.TaskExecutorConfig.THREAD_POOL_TASK_
 @Component
 @NonNullApi
 @RequiredArgsConstructor
-public class SqlLogHandler {
+public class SqlEventHandler {
 
 	@EventListener
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	@Retryable(retryFor = Exception.class, backoff = @Backoff(delay = 2000, multiplier = 1.5))
-	public void sqlLogMessage(SqlLogEvent sqlLogEvent) {
+	public void sqlLogMessage(SqlEvent sqlEvent) {
 
 	}
 

@@ -19,18 +19,20 @@ package org.laokou.common.domain.handler;
 
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.model.RemoveCacheDomainEvent;
+import org.laokou.common.domain.handler.domainevent.RemoveCacheEvent;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.cache.Cache;
-import org.springframework.stereotype.Component;
-import java.util.List;
 import org.springframework.cache.CacheManager;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.common.domain.constant.MqConstant.*;
+import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CACHE_CONSUMER_GROUP;
+import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CACHE_TOPIC;
 
 /**
  * @author laokou
@@ -38,11 +40,11 @@ import static org.laokou.common.domain.constant.MqConstant.*;
 @Component
 @RocketMQMessageListener(consumerGroup = LAOKOU_CACHE_CONSUMER_GROUP, topic = LAOKOU_CACHE_TOPIC,
 		messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
-public class RemoveCacheDomainEventHandler extends AbstractDomainEventHandler {
+public class RemoveCacheEventHandler extends AbstractDomainEventHandler {
 
 	private final List<CacheManager> cacheManagers;
 
-	public RemoveCacheDomainEventHandler(DomainEventPublisher rocketMQDomainEventPublisher,
+	public RemoveCacheEventHandler(DomainEventPublisher rocketMQDomainEventPublisher,
 			List<CacheManager> cacheManagers) {
 		super(rocketMQDomainEventPublisher);
 		this.cacheManagers = cacheManagers;
@@ -50,7 +52,7 @@ public class RemoveCacheDomainEventHandler extends AbstractDomainEventHandler {
 
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-		RemoveCacheDomainEvent event = (RemoveCacheDomainEvent) domainEvent;
+		RemoveCacheEvent event = (RemoveCacheEvent) domainEvent;
 		cacheManagers.forEach(item -> {
 			Cache cache = item.getCache(event.getName());
 			if (ObjectUtil.isNotNull(cache)) {
@@ -61,7 +63,7 @@ public class RemoveCacheDomainEventHandler extends AbstractDomainEventHandler {
 
 	@Override
 	protected DefaultDomainEvent convert(String msg) {
-		return JacksonUtil.toBean(msg, RemoveCacheDomainEvent.class);
+		return JacksonUtil.toBean(msg, RemoveCacheEvent.class);
 	}
 
 }
