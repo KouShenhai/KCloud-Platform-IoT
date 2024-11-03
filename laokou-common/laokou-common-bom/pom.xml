@@ -144,11 +144,23 @@
     <caffeine.version>3.1.8</caffeine.version>
     <!--jsqlparser版本-->
     <jsqlparser.version>5.0</jsqlparser.version>
+    <!--arthas版本-->
+    <arthas.version>4.0.2</arthas.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-arthas</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.taobao.arthas</groupId>
+        <artifactId>arthas-spring-boot-starter</artifactId>
+        <version>${arthas.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.github.jsqlparser</groupId>
         <artifactId>jsqlparser</artifactId>

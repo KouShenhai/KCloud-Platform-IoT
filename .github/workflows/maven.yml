@@ -32,12 +32,12 @@ jobs:
         with:
           verbose: true
           fail_ci_if_error: true
-          files: ./laokou-common/laokou-common-core/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-crypto/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-i18n/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-xss/target/site/jacoco/jacoco.xml
+          files: ./laokou-common/laokou-common-core/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-crypto/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-i18n/target/site/jacoco/jacoco.xml,./laokou-common/laokou-common-xss/target/site/jacoco/jacoco.xml,./laokou-service/laokou-admin/laokou-admin-start/target/site/jacoco/jacoco.xml,./laokou-service/laokou-auth/laokou-auth-start/target/site/jacoco/jacoco.xml,./laokou-service/laokou-generator/laokou-generator-start/target/site/jacoco/jacoco.xml,./laokou-service/laokou-module/laokou-logstash/laokou-logstash-start/target/site/jacoco/jacoco.xml
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Build with Maven
         run: mvn clean install -P prod -DskipTests -B
       - name: Build the Docker image
-        run: |        
+        run: |
           # 登录阿里云镜像仓库
           docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }} registry.cn-shenzhen.aliyuncs.com
           # ========== 构建laokou-gateway ==========
@@ -88,3 +88,9 @@ jobs:
           docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.0
           # 推送镜像到镜像仓库
           docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.0
+          # ========== 构建arthas-server ==========
+          cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/doc/tool
+          # 使用Dockerfile构建镜像
+          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-arthas-server:3.4.0
+          # 推送镜像到镜像仓库
+          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-arthas-server:3.4.0
