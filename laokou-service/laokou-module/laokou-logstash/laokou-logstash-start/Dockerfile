@@ -17,5 +17,6 @@ FROM docker.io/domenicopiol/builder-graalvm21:latest
 LABEL maintainer="laokou"
 LABEL description="laokou-logstash"
 COPY target/laokou-logstash-start.jar app.jar
+COPY arthas.jar arthas.jar
 EXPOSE 10003
 CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1

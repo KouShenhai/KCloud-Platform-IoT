@@ -20,6 +20,7 @@ LABEL maintainer="laokou"
 LABEL description="laokou-gateway"
 # 复制文件
 COPY target/laokou-gateway.jar app.jar
+COPY arthas.jar arthas.jar
 # 暴露端口
 EXPOSE 5555
 CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1
