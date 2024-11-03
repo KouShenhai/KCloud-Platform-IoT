@@ -338,6 +338,7 @@ services:
       - laokou_network
     depends_on:
       - nacos
+      - arthas-server
   auth:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.4.0
     container_name: auth
@@ -358,6 +359,7 @@ services:
       - admin
       - rocketmq-namesrv
       - rocketmq-broker
+      - arthas-server
   admin:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.4.0
     container_name: admin
@@ -378,6 +380,7 @@ services:
       - elasticsearch
       - rocketmq-namesrv
       - rocketmq-broker
+      - arthas-server
   logstash:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.0
     container_name: logstash
@@ -399,6 +402,7 @@ services:
       - kafka
       - rocketmq-namesrv
       - rocketmq-broker
+      - arthas-server
   job:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-snail-job:3.4.0
     container_name: job
@@ -415,6 +419,21 @@ services:
       - laokou_network
     depends_on:
       - postgresql
+  # web控制台 => http://127.0.0.1:8181
+  arthas-server:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-arthas-server:3.4.0
+    container_name: arthas-server
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    env_file:
+      - env/arthas-server.env
+    ports:
+      - "8181:8080"
+      - "7777:7777"
+    networks:
+      - laokou_network
   ui:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.4.0
     container_name: ui
