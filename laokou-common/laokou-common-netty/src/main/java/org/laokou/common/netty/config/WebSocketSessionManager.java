@@ -20,6 +20,6 @@ package org.laokou.common.netty.config;
 /**
  * @author laokou
  */
-public class WebSocketSessionManager extends SessionManager {
+public final class WebSocketSessionManager extends SessionManager {
 
 }
