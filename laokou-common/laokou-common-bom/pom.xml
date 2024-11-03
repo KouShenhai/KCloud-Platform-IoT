@@ -152,16 +152,6 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-arthas</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.taobao.arthas</groupId>
-        <artifactId>arthas-spring-boot-starter</artifactId>
-        <version>${arthas.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.github.jsqlparser</groupId>
         <artifactId>jsqlparser</artifactId>
         <version>${jsqlparser.version}</version>
