@@ -88,9 +88,3 @@ jobs:
           docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.0
           # 推送镜像到镜像仓库
           docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.0
-          # ========== 构建arthas-server ==========
-          cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/doc/tool
-          # 使用Dockerfile构建镜像
-          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-arthas-server:3.4.0
-          # 推送镜像到镜像仓库
-          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-arthas-server:3.4.0
