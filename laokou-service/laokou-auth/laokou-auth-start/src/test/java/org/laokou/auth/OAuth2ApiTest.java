@@ -26,7 +26,7 @@ import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.crypto.utils.RSAUtil;
-import org.laokou.common.domain.model.RemoveCacheDomainEvent;
+import org.laokou.common.domain.handler.domainevent.RemoveCacheEvent;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -277,7 +277,7 @@ class OAuth2ApiTest {
 
 	@Test
 	void testRemoveCache() {
-		rocketMQDomainEventPublisher.publish(new RemoveCacheDomainEvent(TENANT_ID, "1"), false);
+		rocketMQDomainEventPublisher.publish(new RemoveCacheEvent(TENANT_ID, "1"), false);
 	}
 
 	private Map<String, String> deviceAuthorizationCodeAuth(String deviceCode) {

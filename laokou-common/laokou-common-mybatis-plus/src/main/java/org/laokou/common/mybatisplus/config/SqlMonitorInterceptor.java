@@ -27,7 +27,7 @@ import org.apache.ibatis.plugin.Signature;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.mybatisplus.handler.event.SqlLogEvent;
+import org.laokou.common.mybatisplus.handler.domainevent.SqlEvent;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -59,7 +59,7 @@ public class SqlMonitorInterceptor implements Interceptor {
 			// 替换空格、制表符、换页符
 			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", SPACE);
 			SpringContextUtil.publishEvent(
-					new SqlLogEvent("SQL日志", SpringContextUtil.getServiceId(), sql, time, DateUtil.nowInstant()));
+					new SqlEvent("SQL日志", SpringContextUtil.getServiceId(), sql, time, DateUtil.nowInstant()));
 			log.info("Consume Time：{} ms，Execute SQL：{}", time, sql);
 		}
 		return obj;

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.domain.model;
+package org.laokou.common.domain.handler.domainevent;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,13 +29,13 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  */
 @Data
 @NoArgsConstructor
-public class RemoveCacheDomainEvent extends DefaultDomainEvent {
+public class RemoveCacheEvent extends DefaultDomainEvent {
 
 	private String name;
 
 	private String key;
 
-	public RemoveCacheDomainEvent(String name, String key) {
+	public RemoveCacheEvent(String name, String key) {
 		super(LAOKOU_CACHE_TOPIC, EMPTY);
 		this.name = name;
 		this.key = key;
