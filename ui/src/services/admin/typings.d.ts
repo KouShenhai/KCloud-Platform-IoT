@@ -274,7 +274,7 @@ declare namespace API {
 		status?: number;
 		operator?: string;
 		errorMessage?: string;
-		takeTime?: number;
+        costTime?: number;
 	};
 
 	type OperateLogExportCmd = true;

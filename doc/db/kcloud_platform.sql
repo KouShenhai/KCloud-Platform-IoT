@@ -12,15 +12,15 @@
  Target Server Version : 160002 (160002)
  File Encoding         : 65001
 
- Date: 18/10/2024 14:27:59
+ Date: 04/11/2024 09:46:24
 */
 
 
 -- ----------------------------
--- Sequence structure for boot_sys_api_log_id_seq
+-- Sequence structure for boot_sys_cluster_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."boot_sys_api_log_id_seq";
-CREATE SEQUENCE "public"."boot_sys_api_log_id_seq" 
+DROP SEQUENCE IF EXISTS "public"."boot_sys_cluster_id_seq";
+CREATE SEQUENCE "public"."boot_sys_cluster_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -28,21 +28,10 @@ START 1
 CACHE 1;
 
 -- ----------------------------
--- Sequence structure for boot_sys_api_log_status_seq
+-- Sequence structure for boot_sys_cluster_id_seq1
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."boot_sys_api_log_status_seq";
-CREATE SEQUENCE "public"."boot_sys_api_log_status_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 32767
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for boot_sys_cluster_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."boot_sys_cluster_id_seq";
-CREATE SEQUENCE "public"."boot_sys_cluster_id_seq" 
+DROP SEQUENCE IF EXISTS "public"."boot_sys_cluster_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_cluster_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -61,10 +50,32 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for boot_sys_dept_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_dept_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_dept_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for boot_sys_dict_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_dict_id_seq";
 CREATE SEQUENCE "public"."boot_sys_dict_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_sys_dict_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_dict_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_dict_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -83,10 +94,32 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for boot_sys_dict_item_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_dict_item_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_dict_item_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for boot_sys_i18n_message_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_i18n_message_id_seq";
 CREATE SEQUENCE "public"."boot_sys_i18n_message_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_sys_i18n_message_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_i18n_message_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_i18n_message_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -105,10 +138,10 @@ START 1
 CACHE 1;
 
 -- ----------------------------
--- Sequence structure for boot_sys_login_log_id_seq
+-- Sequence structure for boot_sys_ip_id_seq1
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."boot_sys_login_log_id_seq";
-CREATE SEQUENCE "public"."boot_sys_login_log_id_seq" 
+DROP SEQUENCE IF EXISTS "public"."boot_sys_ip_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_ip_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -127,10 +160,32 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for boot_sys_menu_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_menu_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_menu_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for boot_sys_message_detail_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_message_detail_id_seq";
 CREATE SEQUENCE "public"."boot_sys_message_detail_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_sys_message_detail_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_message_detail_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_message_detail_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -149,10 +204,10 @@ START 1
 CACHE 1;
 
 -- ----------------------------
--- Sequence structure for boot_sys_operate_log_id_seq
+-- Sequence structure for boot_sys_message_id_seq1
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."boot_sys_operate_log_id_seq";
-CREATE SEQUENCE "public"."boot_sys_operate_log_id_seq" 
+DROP SEQUENCE IF EXISTS "public"."boot_sys_message_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_message_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -171,10 +226,10 @@ START 1
 CACHE 1;
 
 -- ----------------------------
--- Sequence structure for boot_sys_oss_log_id_seq
+-- Sequence structure for boot_sys_oss_id_seq1
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."boot_sys_oss_log_id_seq";
-CREATE SEQUENCE "public"."boot_sys_oss_log_id_seq" 
+DROP SEQUENCE IF EXISTS "public"."boot_sys_oss_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_oss_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -193,10 +248,32 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for boot_sys_package_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_package_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_package_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for boot_sys_role_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_role_id_seq";
 CREATE SEQUENCE "public"."boot_sys_role_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_sys_role_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_role_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_role_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -215,6 +292,17 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for boot_sys_role_menu_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_role_menu_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_role_menu_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for boot_sys_source_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_source_id_seq";
@@ -226,10 +314,10 @@ START 1
 CACHE 1;
 
 -- ----------------------------
--- Sequence structure for boot_sys_sql_log_id_seq
+-- Sequence structure for boot_sys_source_id_seq1
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."boot_sys_sql_log_id_seq";
-CREATE SEQUENCE "public"."boot_sys_sql_log_id_seq" 
+DROP SEQUENCE IF EXISTS "public"."boot_sys_source_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_source_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -248,10 +336,32 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for boot_sys_tenant_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_tenant_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_tenant_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for boot_sys_user_dept_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_user_dept_id_seq";
 CREATE SEQUENCE "public"."boot_sys_user_dept_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_sys_user_dept_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_user_dept_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_user_dept_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -270,6 +380,17 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for boot_sys_user_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_user_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_user_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for boot_sys_user_role_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_user_role_id_seq";
@@ -281,49 +402,15 @@ START 1
 CACHE 1;
 
 -- ----------------------------
--- Table structure for boot_sys_api_log
+-- Sequence structure for boot_sys_user_role_id_seq1
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."boot_sys_api_log";
-CREATE TABLE "public"."boot_sys_api_log" (
-  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
+DROP SEQUENCE IF EXISTS "public"."boot_sys_user_role_id_seq1";
+CREATE SEQUENCE "public"."boot_sys_user_role_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
 START 1
-CACHE 1
-),
-  "creator" int8 DEFAULT 0,
-  "editor" int8 DEFAULT 0,
-  "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "del_flag" int2 NOT NULL DEFAULT 0,
-  "version" int4 NOT NULL DEFAULT 0,
-  "tenant_id" int8 DEFAULT 0,
-  "code" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
-  "name" varchar(200) COLLATE "pg_catalog"."default" NOT NULL,
-  "status" int2 NOT NULL DEFAULT nextval('boot_sys_api_log_status_seq'::regclass),
-  "error_message" varchar(500) COLLATE "pg_catalog"."default" NOT NULL,
-  "param" json
-)
-;
-COMMENT ON COLUMN "public"."boot_sys_api_log"."id" IS 'ID';
-COMMENT ON COLUMN "public"."boot_sys_api_log"."creator" IS '创建人';
-COMMENT ON COLUMN "public"."boot_sys_api_log"."editor" IS '编辑人';
-COMMENT ON COLUMN "public"."boot_sys_api_log"."create_time" IS '创建时间';
-COMMENT ON COLUMN "public"."boot_sys_api_log"."update_time" IS '修改时间';
-COMMENT ON COLUMN "public"."boot_sys_api_log"."del_flag" IS '删除标识 0未删除 1已删除';
-COMMENT ON COLUMN "public"."boot_sys_api_log"."version" IS '版本号';
-COMMENT ON COLUMN "public"."boot_sys_api_log"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."boot_sys_api_log"."code" IS 'Api编码';
-COMMENT ON COLUMN "public"."boot_sys_api_log"."name" IS 'Api名称';
-COMMENT ON COLUMN "public"."boot_sys_api_log"."status" IS 'Api状态 0成功 1失败';
-COMMENT ON COLUMN "public"."boot_sys_api_log"."error_message" IS '错误信息';
-COMMENT ON COLUMN "public"."boot_sys_api_log"."param" IS 'Api参数';
-COMMENT ON TABLE "public"."boot_sys_api_log" IS 'Api日志';
-
--- ----------------------------
--- Records of boot_sys_api_log
--- ----------------------------
+CACHE 1;
 
 -- ----------------------------
 -- Table structure for boot_sys_cluster
@@ -544,7 +631,7 @@ COMMENT ON COLUMN "public"."boot_sys_i18n_message"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_sys_i18n_message"."code" IS '编码';
 COMMENT ON COLUMN "public"."boot_sys_i18n_message"."zh_message" IS '中文';
 COMMENT ON COLUMN "public"."boot_sys_i18n_message"."en_message" IS '英文';
-COMMENT ON TABLE "public"."boot_sys_i18n_message" IS '国际化';
+COMMENT ON TABLE "public"."boot_sys_i18n_message" IS '国际化消息';
 
 -- ----------------------------
 -- Records of boot_sys_i18n_message
@@ -591,57 +678,6 @@ COMMENT ON TABLE "public"."boot_sys_ip" IS 'IP';
 
 -- ----------------------------
 -- Records of boot_sys_ip
--- ----------------------------
-
--- ----------------------------
--- Table structure for boot_sys_login_log
--- ----------------------------
-DROP TABLE IF EXISTS "public"."boot_sys_login_log";
-CREATE TABLE "public"."boot_sys_login_log" (
-  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1
-),
-  "creator" int8 DEFAULT 0,
-  "editor" int8 DEFAULT 0,
-  "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "del_flag" int2 NOT NULL DEFAULT 0,
-  "version" int4 NOT NULL DEFAULT 0,
-  "tenant_id" int8 NOT NULL DEFAULT 0,
-  "username" varchar(200) COLLATE "pg_catalog"."default" NOT NULL,
-  "ip" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
-  "address" varchar(200) COLLATE "pg_catalog"."default" NOT NULL,
-  "browser" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
-  "os" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
-  "status" int2 NOT NULL DEFAULT 0,
-  "error_message" varchar(500) COLLATE "pg_catalog"."default" NOT NULL,
-  "type" varchar(50) COLLATE "pg_catalog"."default" NOT NULL
-)
-;
-COMMENT ON COLUMN "public"."boot_sys_login_log"."id" IS 'ID';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."creator" IS '创建人';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."editor" IS '编辑人';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."create_time" IS '创建时间';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."update_time" IS '修改时间';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."del_flag" IS '删除标识 0未删除 1已删除';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."version" IS '版本号';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."username" IS '登录的用户名';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."ip" IS '登录的IP地址';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."address" IS '登录的归属地';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."browser" IS '登录的浏览器';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."os" IS '登录的操作系统';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."status" IS '登录状态 0登录成功 1登录失败';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."error_message" IS '错误信息';
-COMMENT ON COLUMN "public"."boot_sys_login_log"."type" IS '登录类型';
-COMMENT ON TABLE "public"."boot_sys_login_log" IS '登录日志';
-
--- ----------------------------
--- Records of boot_sys_login_log
 -- ----------------------------
 
 -- ----------------------------
@@ -712,6 +748,39 @@ INSERT INTO "public"."boot_sys_menu" VALUES (11, 1, 1, '2024-09-17 18:41:32', '2
 INSERT INTO "public"."boot_sys_menu" VALUES (12, 1, 1, '2024-09-17 18:41:32', '2024-09-17 18:41:34', 0, 0, 0, 8, 'sys:api-log:clear', 1, '清空', NULL, 'sys', 10, 0, 0, NULL);
 
 -- ----------------------------
+-- Table structure for boot_sys_menu_package
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."boot_sys_menu_package";
+CREATE TABLE "public"."boot_sys_menu_package" (
+  "id" int8 NOT NULL,
+  "creator" int8 NOT NULL DEFAULT 0,
+  "editor" int8 NOT NULL DEFAULT 0,
+  "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "del_flag" int2 NOT NULL DEFAULT 0,
+  "version" int4 NOT NULL DEFAULT 0,
+  "tenant_id" int8 NOT NULL DEFAULT 0,
+  "package_id" int8 NOT NULL,
+  "menu_id" int8 NOT NULL
+)
+;
+COMMENT ON COLUMN "public"."boot_sys_menu_package"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_sys_menu_package"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_sys_menu_package"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_sys_menu_package"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_sys_menu_package"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_sys_menu_package"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_sys_menu_package"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_sys_menu_package"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_sys_menu_package"."package_id" IS '套餐ID';
+COMMENT ON COLUMN "public"."boot_sys_menu_package"."menu_id" IS '菜单ID';
+COMMENT ON TABLE "public"."boot_sys_menu_package" IS '菜单套餐';
+
+-- ----------------------------
+-- Records of boot_sys_menu_package
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for boot_sys_message
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."boot_sys_message";
@@ -750,108 +819,6 @@ COMMENT ON TABLE "public"."boot_sys_message" IS '消息';
 
 -- ----------------------------
 -- Records of boot_sys_message
--- ----------------------------
-
--- ----------------------------
--- Table structure for boot_sys_message_detail
--- ----------------------------
-DROP TABLE IF EXISTS "public"."boot_sys_message_detail";
-CREATE TABLE "public"."boot_sys_message_detail" (
-  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1
-),
-  "creator" int8 NOT NULL DEFAULT 0,
-  "editor" int8 NOT NULL DEFAULT 0,
-  "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "del_flag" int2 NOT NULL DEFAULT 0,
-  "version" int4 NOT NULL DEFAULT 0,
-  "tenant_id" int8 NOT NULL DEFAULT 0,
-  "user_id" int8 NOT NULL,
-  "message_id" int8 NOT NULL,
-  "read_flag" int2 NOT NULL DEFAULT 0
-)
-;
-COMMENT ON COLUMN "public"."boot_sys_message_detail"."id" IS 'ID';
-COMMENT ON COLUMN "public"."boot_sys_message_detail"."creator" IS '创建人';
-COMMENT ON COLUMN "public"."boot_sys_message_detail"."editor" IS '编辑人';
-COMMENT ON COLUMN "public"."boot_sys_message_detail"."create_time" IS '创建时间';
-COMMENT ON COLUMN "public"."boot_sys_message_detail"."update_time" IS '修改时间';
-COMMENT ON COLUMN "public"."boot_sys_message_detail"."del_flag" IS '删除标识 0未删除 1已删除';
-COMMENT ON COLUMN "public"."boot_sys_message_detail"."version" IS '版本号';
-COMMENT ON COLUMN "public"."boot_sys_message_detail"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."boot_sys_message_detail"."user_id" IS '用户ID';
-COMMENT ON COLUMN "public"."boot_sys_message_detail"."message_id" IS '消息ID';
-COMMENT ON COLUMN "public"."boot_sys_message_detail"."read_flag" IS '消息已读标识 0未读 1已读';
-COMMENT ON TABLE "public"."boot_sys_message_detail" IS '消息详情';
-
--- ----------------------------
--- Records of boot_sys_message_detail
--- ----------------------------
-
--- ----------------------------
--- Table structure for boot_sys_operate_log
--- ----------------------------
-DROP TABLE IF EXISTS "public"."boot_sys_operate_log";
-CREATE TABLE "public"."boot_sys_operate_log" (
-  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1
-),
-  "creator" int8 NOT NULL DEFAULT 0,
-  "editor" int8 NOT NULL DEFAULT 0,
-  "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "del_flag" int2 NOT NULL DEFAULT 0,
-  "version" int4 NOT NULL DEFAULT 0,
-  "tenant_id" int8 NOT NULL DEFAULT 0,
-  "name" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
-  "module_name" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
-  "uri" varchar(200) COLLATE "pg_catalog"."default" NOT NULL,
-  "method_name" varchar(1000) COLLATE "pg_catalog"."default" NOT NULL,
-  "request_type" varchar(20) COLLATE "pg_catalog"."default" NOT NULL,
-  "request_params" text COLLATE "pg_catalog"."default",
-  "user_agent" varchar(500) COLLATE "pg_catalog"."default" NOT NULL,
-  "ip" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
-  "address" varchar(200) COLLATE "pg_catalog"."default" NOT NULL,
-  "status" int2 NOT NULL DEFAULT 0,
-  "operator" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
-  "error_message" varchar(500) COLLATE "pg_catalog"."default",
-  "take_time" int8 NOT NULL
-)
-;
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."id" IS 'ID';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."creator" IS '创建人';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."editor" IS '编辑人';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."create_time" IS '创建时间';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."update_time" IS '修改时间';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."del_flag" IS '删除标识 0未删除 1已删除';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."version" IS '版本号';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."name" IS '操作名称';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."module_name" IS '操作的模块名称';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."uri" IS '操作的URI';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."method_name" IS '操作的方法名';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."request_type" IS '操作的请求类型';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."request_params" IS '操作的请求参数';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."user_agent" IS '操作的浏览器';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."ip" IS '操作的IP地址';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."address" IS '操作的归属地';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."status" IS '操作状态 0成功 1失败';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."operator" IS '操作人';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."error_message" IS '错误信息';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."take_time" IS '操作的消耗时间(毫秒)';
-COMMENT ON TABLE "public"."boot_sys_operate_log" IS '操作日志';
-
--- ----------------------------
--- Records of boot_sys_operate_log
 -- ----------------------------
 
 -- ----------------------------
@@ -906,53 +873,6 @@ INSERT INTO "public"."boot_sys_oss" VALUES (1, 1341620898007281665, 134162089800
 INSERT INTO "public"."boot_sys_oss" VALUES (1537444981390794754, 1341620898007281665, 1707428076142559234, '2022-11-02 14:35:46', '2023-10-21 15:44:18', 0, 36, 0, 'Aliyun OSS', 'https://oss-cn-shenzhen.aliyuncs.com', NULL, 'LTAI5tNvAEkJJHb9Gu6uGRxf', 'zbRGqzdY1y1JFXkKzrYdIeqgC0qpcc', 'koushenhai', 0);
 
 -- ----------------------------
--- Table structure for boot_sys_oss_log
--- ----------------------------
-DROP TABLE IF EXISTS "public"."boot_sys_oss_log";
-CREATE TABLE "public"."boot_sys_oss_log" (
-  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1
-),
-  "creator" int8 NOT NULL DEFAULT 0,
-  "editor" int8 NOT NULL DEFAULT 0,
-  "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "del_flag" int2 NOT NULL DEFAULT 0,
-  "version" int4 NOT NULL DEFAULT 0,
-  "tenant_id" int8 NOT NULL DEFAULT 0,
-  "name" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
-  "md5" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
-  "url" varchar(200) COLLATE "pg_catalog"."default" NOT NULL,
-  "size" int8 NOT NULL,
-  "status" int2 NOT NULL DEFAULT 0,
-  "error_message" varchar(500) COLLATE "pg_catalog"."default"
-)
-;
-COMMENT ON COLUMN "public"."boot_sys_oss_log"."id" IS 'ID';
-COMMENT ON COLUMN "public"."boot_sys_oss_log"."creator" IS '创建人';
-COMMENT ON COLUMN "public"."boot_sys_oss_log"."editor" IS '编辑人';
-COMMENT ON COLUMN "public"."boot_sys_oss_log"."create_time" IS '创建时间';
-COMMENT ON COLUMN "public"."boot_sys_oss_log"."update_time" IS '修改时间';
-COMMENT ON COLUMN "public"."boot_sys_oss_log"."del_flag" IS '删除标识 0未删除 1已删除';
-COMMENT ON COLUMN "public"."boot_sys_oss_log"."version" IS '版本号';
-COMMENT ON COLUMN "public"."boot_sys_oss_log"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."boot_sys_oss_log"."name" IS '文件名称';
-COMMENT ON COLUMN "public"."boot_sys_oss_log"."md5" IS '文件的MD5标识';
-COMMENT ON COLUMN "public"."boot_sys_oss_log"."url" IS '文件的URL';
-COMMENT ON COLUMN "public"."boot_sys_oss_log"."size" IS '文件大小';
-COMMENT ON COLUMN "public"."boot_sys_oss_log"."status" IS '上传状态 0成功 1失败';
-COMMENT ON COLUMN "public"."boot_sys_oss_log"."error_message" IS '错误信息';
-COMMENT ON TABLE "public"."boot_sys_oss_log" IS 'OSS日志';
-
--- ----------------------------
--- Records of boot_sys_oss_log
--- ----------------------------
-
--- ----------------------------
 -- Table structure for boot_sys_package
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."boot_sys_package";
@@ -983,7 +903,7 @@ COMMENT ON COLUMN "public"."boot_sys_package"."del_flag" IS '删除标识 0未�
 COMMENT ON COLUMN "public"."boot_sys_package"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_sys_package"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_sys_package"."name" IS '套餐名称';
-COMMENT ON TABLE "public"."boot_sys_package" IS '套餐管理';
+COMMENT ON TABLE "public"."boot_sys_package" IS '套餐';
 
 -- ----------------------------
 -- Records of boot_sys_package
@@ -991,39 +911,6 @@ COMMENT ON TABLE "public"."boot_sys_package" IS '套餐管理';
 INSERT INTO "public"."boot_sys_package" VALUES (1, 1341620898007281665, 1341620898007281665, '2023-02-09 13:38:42', '2023-09-25 17:27:57', 0, 10, 0, '普通套餐');
 INSERT INTO "public"."boot_sys_package" VALUES (2, 1341620898007281665, 1707428076142559234, '2023-02-09 16:44:04', '2023-10-27 22:07:09', 0, 18, 0, '豪华套餐');
 INSERT INTO "public"."boot_sys_package" VALUES (3, 1341620898007281665, 1341620898007281665, '2023-02-09 17:09:08', '2023-09-17 16:03:47', 0, 15, 0, '免费套餐');
-
--- ----------------------------
--- Table structure for boot_sys_package_menu
--- ----------------------------
-DROP TABLE IF EXISTS "public"."boot_sys_package_menu";
-CREATE TABLE "public"."boot_sys_package_menu" (
-  "id" int8 NOT NULL,
-  "creator" int8 NOT NULL DEFAULT 0,
-  "editor" int8 NOT NULL DEFAULT 0,
-  "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "del_flag" int2 NOT NULL DEFAULT 0,
-  "version" int4 NOT NULL DEFAULT 0,
-  "tenant_id" int8 NOT NULL DEFAULT 0,
-  "package_id" int8 NOT NULL,
-  "menu_id" int8 NOT NULL
-)
-;
-COMMENT ON COLUMN "public"."boot_sys_package_menu"."id" IS 'ID';
-COMMENT ON COLUMN "public"."boot_sys_package_menu"."creator" IS '创建人';
-COMMENT ON COLUMN "public"."boot_sys_package_menu"."editor" IS '编辑人';
-COMMENT ON COLUMN "public"."boot_sys_package_menu"."create_time" IS '创建时间';
-COMMENT ON COLUMN "public"."boot_sys_package_menu"."update_time" IS '修改时间';
-COMMENT ON COLUMN "public"."boot_sys_package_menu"."del_flag" IS '删除标识 0未删除 1已删除';
-COMMENT ON COLUMN "public"."boot_sys_package_menu"."version" IS '版本号';
-COMMENT ON COLUMN "public"."boot_sys_package_menu"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."boot_sys_package_menu"."package_id" IS '套餐ID';
-COMMENT ON COLUMN "public"."boot_sys_package_menu"."menu_id" IS '菜单ID';
-COMMENT ON TABLE "public"."boot_sys_package_menu" IS '套餐菜单';
-
--- ----------------------------
--- Records of boot_sys_package_menu
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for boot_sys_role
@@ -1185,47 +1072,6 @@ COMMENT ON TABLE "public"."boot_sys_source" IS '数据源';
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for boot_sys_sql_log
--- ----------------------------
-DROP TABLE IF EXISTS "public"."boot_sys_sql_log";
-CREATE TABLE "public"."boot_sys_sql_log" (
-  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1
-),
-  "creator" int8 DEFAULT 0,
-  "editor" int8 DEFAULT 0,
-  "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "del_flag" int2 NOT NULL DEFAULT 0,
-  "version" int4 NOT NULL DEFAULT 0,
-  "tenant_id" int8 DEFAULT 0,
-  "service_id" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
-  "sql" text COLLATE "pg_catalog"."default" NOT NULL,
-  "cost_time" int8 NOT NULL DEFAULT 0
-)
-;
-COMMENT ON COLUMN "public"."boot_sys_sql_log"."id" IS 'ID';
-COMMENT ON COLUMN "public"."boot_sys_sql_log"."creator" IS '创建人';
-COMMENT ON COLUMN "public"."boot_sys_sql_log"."editor" IS '编辑人';
-COMMENT ON COLUMN "public"."boot_sys_sql_log"."create_time" IS '创建时间';
-COMMENT ON COLUMN "public"."boot_sys_sql_log"."update_time" IS '修改时间';
-COMMENT ON COLUMN "public"."boot_sys_sql_log"."del_flag" IS '删除标识 0未删除 1已删除';
-COMMENT ON COLUMN "public"."boot_sys_sql_log"."version" IS '版本号';
-COMMENT ON COLUMN "public"."boot_sys_sql_log"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."boot_sys_sql_log"."service_id" IS '服务ID';
-COMMENT ON COLUMN "public"."boot_sys_sql_log"."sql" IS 'SQL';
-COMMENT ON COLUMN "public"."boot_sys_sql_log"."cost_time" IS '消耗时间';
-COMMENT ON TABLE "public"."boot_sys_sql_log" IS 'SQL日志';
-
--- ----------------------------
--- Records of boot_sys_sql_log
--- ----------------------------
-
--- ----------------------------
 -- Table structure for boot_sys_tenant
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."boot_sys_tenant";
@@ -1371,6 +1217,47 @@ COMMENT ON TABLE "public"."boot_sys_user_dept" IS '用户部门';
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for boot_sys_user_message
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."boot_sys_user_message";
+CREATE TABLE "public"."boot_sys_user_message" (
+  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1
+),
+  "creator" int8 NOT NULL DEFAULT 0,
+  "editor" int8 NOT NULL DEFAULT 0,
+  "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "del_flag" int2 NOT NULL DEFAULT 0,
+  "version" int4 NOT NULL DEFAULT 0,
+  "tenant_id" int8 NOT NULL DEFAULT 0,
+  "user_id" int8 NOT NULL,
+  "message_id" int8 NOT NULL,
+  "read_flag" int2 NOT NULL DEFAULT 0
+)
+;
+COMMENT ON COLUMN "public"."boot_sys_user_message"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."user_id" IS '用户ID';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."message_id" IS '消息ID';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."read_flag" IS '消息已读标识 0未读 1已读';
+COMMENT ON TABLE "public"."boot_sys_user_message" IS '用户消息';
+
+-- ----------------------------
+-- Records of boot_sys_user_message
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for boot_sys_user_role
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."boot_sys_user_role";
@@ -1453,23 +1340,16 @@ INSERT INTO "public"."oauth2_registered_client" VALUES ('95TxSsTPFA3tF12TBSMmUVK
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
-ALTER SEQUENCE "public"."boot_sys_api_log_id_seq"
-OWNED BY "public"."boot_sys_api_log"."id";
-SELECT setval('"public"."boot_sys_api_log_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."boot_sys_api_log_status_seq"
-OWNED BY "public"."boot_sys_api_log"."status";
-SELECT setval('"public"."boot_sys_api_log_status_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
 ALTER SEQUENCE "public"."boot_sys_cluster_id_seq"
 OWNED BY "public"."boot_sys_cluster"."id";
 SELECT setval('"public"."boot_sys_cluster_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_cluster_id_seq1"
+OWNED BY "public"."boot_sys_cluster"."id";
+SELECT setval('"public"."boot_sys_cluster_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -1481,9 +1361,23 @@ SELECT setval('"public"."boot_sys_dept_id_seq"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_dept_id_seq1"
+OWNED BY "public"."boot_sys_dept"."id";
+SELECT setval('"public"."boot_sys_dept_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_sys_dict_id_seq"
 OWNED BY "public"."boot_sys_dict"."id";
 SELECT setval('"public"."boot_sys_dict_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_dict_id_seq1"
+OWNED BY "public"."boot_sys_dict"."id";
+SELECT setval('"public"."boot_sys_dict_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -1495,9 +1389,23 @@ SELECT setval('"public"."boot_sys_dict_item_id_seq"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_dict_item_id_seq1"
+OWNED BY "public"."boot_sys_dict_item"."id";
+SELECT setval('"public"."boot_sys_dict_item_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_sys_i18n_message_id_seq"
 OWNED BY "public"."boot_sys_i18n_message"."id";
 SELECT setval('"public"."boot_sys_i18n_message_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_i18n_message_id_seq1"
+OWNED BY "public"."boot_sys_i18n_message"."id";
+SELECT setval('"public"."boot_sys_i18n_message_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -1509,9 +1417,9 @@ SELECT setval('"public"."boot_sys_ip_id_seq"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
-ALTER SEQUENCE "public"."boot_sys_login_log_id_seq"
-OWNED BY "public"."boot_sys_login_log"."id";
-SELECT setval('"public"."boot_sys_login_log_id_seq"', 1, false);
+ALTER SEQUENCE "public"."boot_sys_ip_id_seq1"
+OWNED BY "public"."boot_sys_ip"."id";
+SELECT setval('"public"."boot_sys_ip_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -1523,9 +1431,23 @@ SELECT setval('"public"."boot_sys_menu_id_seq"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_menu_id_seq1"
+OWNED BY "public"."boot_sys_menu"."id";
+SELECT setval('"public"."boot_sys_menu_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_sys_message_detail_id_seq"
-OWNED BY "public"."boot_sys_message_detail"."id";
+OWNED BY "public"."boot_sys_user_message"."id";
 SELECT setval('"public"."boot_sys_message_detail_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_message_detail_id_seq1"
+OWNED BY "public"."boot_sys_user_message"."id";
+SELECT setval('"public"."boot_sys_message_detail_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -1537,9 +1459,9 @@ SELECT setval('"public"."boot_sys_message_id_seq"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
-ALTER SEQUENCE "public"."boot_sys_operate_log_id_seq"
-OWNED BY "public"."boot_sys_operate_log"."id";
-SELECT setval('"public"."boot_sys_operate_log_id_seq"', 1, false);
+ALTER SEQUENCE "public"."boot_sys_message_id_seq1"
+OWNED BY "public"."boot_sys_message"."id";
+SELECT setval('"public"."boot_sys_message_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -1551,9 +1473,9 @@ SELECT setval('"public"."boot_sys_oss_id_seq"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
-ALTER SEQUENCE "public"."boot_sys_oss_log_id_seq"
-OWNED BY "public"."boot_sys_oss_log"."id";
-SELECT setval('"public"."boot_sys_oss_log_id_seq"', 1, false);
+ALTER SEQUENCE "public"."boot_sys_oss_id_seq1"
+OWNED BY "public"."boot_sys_oss"."id";
+SELECT setval('"public"."boot_sys_oss_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -1565,9 +1487,23 @@ SELECT setval('"public"."boot_sys_package_id_seq"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_package_id_seq1"
+OWNED BY "public"."boot_sys_package"."id";
+SELECT setval('"public"."boot_sys_package_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_sys_role_id_seq"
 OWNED BY "public"."boot_sys_role"."id";
 SELECT setval('"public"."boot_sys_role_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_role_id_seq1"
+OWNED BY "public"."boot_sys_role"."id";
+SELECT setval('"public"."boot_sys_role_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -1579,6 +1515,13 @@ SELECT setval('"public"."boot_sys_role_menu_id_seq"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_role_menu_id_seq1"
+OWNED BY "public"."boot_sys_role_menu"."id";
+SELECT setval('"public"."boot_sys_role_menu_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_sys_source_id_seq"
 OWNED BY "public"."boot_sys_source"."id";
 SELECT setval('"public"."boot_sys_source_id_seq"', 1, false);
@@ -1586,9 +1529,9 @@ SELECT setval('"public"."boot_sys_source_id_seq"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
-ALTER SEQUENCE "public"."boot_sys_sql_log_id_seq"
-OWNED BY "public"."boot_sys_sql_log"."id";
-SELECT setval('"public"."boot_sys_sql_log_id_seq"', 1, false);
+ALTER SEQUENCE "public"."boot_sys_source_id_seq1"
+OWNED BY "public"."boot_sys_source"."id";
+SELECT setval('"public"."boot_sys_source_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -1600,9 +1543,23 @@ SELECT setval('"public"."boot_sys_tenant_id_seq"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_tenant_id_seq1"
+OWNED BY "public"."boot_sys_tenant"."id";
+SELECT setval('"public"."boot_sys_tenant_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_sys_user_dept_id_seq"
 OWNED BY "public"."boot_sys_user_dept"."id";
 SELECT setval('"public"."boot_sys_user_dept_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_user_dept_id_seq1"
+OWNED BY "public"."boot_sys_user_dept"."id";
+SELECT setval('"public"."boot_sys_user_dept_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -1614,24 +1571,28 @@ SELECT setval('"public"."boot_sys_user_id_seq"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_user_id_seq1"
+OWNED BY "public"."boot_sys_user"."id";
+SELECT setval('"public"."boot_sys_user_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_sys_user_role_id_seq"
 OWNED BY "public"."boot_sys_user_role"."id";
 SELECT setval('"public"."boot_sys_user_role_id_seq"', 1, false);
 
 -- ----------------------------
--- Auto increment value for boot_sys_api_log
+-- Alter sequences owned by
 -- ----------------------------
-SELECT setval('"public"."boot_sys_api_log_id_seq"', 1, false);
-
--- ----------------------------
--- Primary Key structure for table boot_sys_api_log
--- ----------------------------
-ALTER TABLE "public"."boot_sys_api_log" ADD CONSTRAINT "boot_sys_api_log_pkey" PRIMARY KEY ("id");
+ALTER SEQUENCE "public"."boot_sys_user_role_id_seq1"
+OWNED BY "public"."boot_sys_user_role"."id";
+SELECT setval('"public"."boot_sys_user_role_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Auto increment value for boot_sys_cluster
 -- ----------------------------
-SELECT setval('"public"."boot_sys_cluster_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_cluster_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_cluster
@@ -1641,7 +1602,7 @@ ALTER TABLE "public"."boot_sys_cluster" ADD CONSTRAINT "boot_sys_cluster_pkey" P
 -- ----------------------------
 -- Auto increment value for boot_sys_dept
 -- ----------------------------
-SELECT setval('"public"."boot_sys_dept_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_dept_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_dept
@@ -1651,7 +1612,7 @@ ALTER TABLE "public"."boot_sys_dept" ADD CONSTRAINT "boot_sys_dept_pkey" PRIMARY
 -- ----------------------------
 -- Auto increment value for boot_sys_dict
 -- ----------------------------
-SELECT setval('"public"."boot_sys_dict_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_dict_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table boot_sys_dict
@@ -1670,7 +1631,7 @@ ALTER TABLE "public"."boot_sys_dict" ADD CONSTRAINT "boot_sys_dict_pkey" PRIMARY
 -- ----------------------------
 -- Auto increment value for boot_sys_dict_item
 -- ----------------------------
-SELECT setval('"public"."boot_sys_dict_item_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_dict_item_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_dict_item
@@ -1680,7 +1641,7 @@ ALTER TABLE "public"."boot_sys_dict_item" ADD CONSTRAINT "boot_sys_dict_item_pke
 -- ----------------------------
 -- Auto increment value for boot_sys_i18n_message
 -- ----------------------------
-SELECT setval('"public"."boot_sys_i18n_message_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_i18n_message_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table boot_sys_i18n_message
@@ -1699,7 +1660,7 @@ ALTER TABLE "public"."boot_sys_i18n_message" ADD CONSTRAINT "boot_sys_i18n_messa
 -- ----------------------------
 -- Auto increment value for boot_sys_ip
 -- ----------------------------
-SELECT setval('"public"."boot_sys_ip_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_ip_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table boot_sys_ip
@@ -1714,19 +1675,9 @@ CREATE INDEX "boot_sys_ip_label_idx" ON "public"."boot_sys_ip" USING btree (
 ALTER TABLE "public"."boot_sys_ip" ADD CONSTRAINT "boot_sys_ip_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Auto increment value for boot_sys_login_log
--- ----------------------------
-SELECT setval('"public"."boot_sys_login_log_id_seq"', 1, false);
-
--- ----------------------------
--- Primary Key structure for table boot_sys_login_log
--- ----------------------------
-ALTER TABLE "public"."boot_sys_login_log" ADD CONSTRAINT "boot_sys_login_log_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
 -- Auto increment value for boot_sys_menu
 -- ----------------------------
-SELECT setval('"public"."boot_sys_menu_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_menu_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_menu
@@ -1734,9 +1685,14 @@ SELECT setval('"public"."boot_sys_menu_id_seq"', 1, false);
 ALTER TABLE "public"."boot_sys_menu" ADD CONSTRAINT "boot_sys_menu_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
+-- Primary Key structure for table boot_sys_menu_package
+-- ----------------------------
+ALTER TABLE "public"."boot_sys_menu_package" ADD CONSTRAINT "boot_sys_package_menu_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
 -- Auto increment value for boot_sys_message
 -- ----------------------------
-SELECT setval('"public"."boot_sys_message_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_message_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_message
@@ -1744,37 +1700,9 @@ SELECT setval('"public"."boot_sys_message_id_seq"', 1, false);
 ALTER TABLE "public"."boot_sys_message" ADD CONSTRAINT "boot_sys_message_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Auto increment value for boot_sys_message_detail
--- ----------------------------
-SELECT setval('"public"."boot_sys_message_detail_id_seq"', 1, false);
-
--- ----------------------------
--- Indexes structure for table boot_sys_message_detail
--- ----------------------------
-CREATE INDEX "boot_sys_message_detail_read_flag_user_id_idx" ON "public"."boot_sys_message_detail" USING btree (
-  "read_flag" "pg_catalog"."int2_ops" ASC NULLS LAST,
-  "user_id" "pg_catalog"."int8_ops" ASC NULLS LAST
-);
-
--- ----------------------------
--- Primary Key structure for table boot_sys_message_detail
--- ----------------------------
-ALTER TABLE "public"."boot_sys_message_detail" ADD CONSTRAINT "boot_sys_message_detail_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
--- Auto increment value for boot_sys_operate_log
--- ----------------------------
-SELECT setval('"public"."boot_sys_operate_log_id_seq"', 1, false);
-
--- ----------------------------
--- Primary Key structure for table boot_sys_operate_log
--- ----------------------------
-ALTER TABLE "public"."boot_sys_operate_log" ADD CONSTRAINT "boot_sys_operate_log_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
 -- Auto increment value for boot_sys_oss
 -- ----------------------------
-SELECT setval('"public"."boot_sys_oss_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_oss_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_oss
@@ -1782,19 +1710,9 @@ SELECT setval('"public"."boot_sys_oss_id_seq"', 1, false);
 ALTER TABLE "public"."boot_sys_oss" ADD CONSTRAINT "boot_sys_oss_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Auto increment value for boot_sys_oss_log
--- ----------------------------
-SELECT setval('"public"."boot_sys_oss_log_id_seq"', 1, false);
-
--- ----------------------------
--- Primary Key structure for table boot_sys_oss_log
--- ----------------------------
-ALTER TABLE "public"."boot_sys_oss_log" ADD CONSTRAINT "boot_sys_oss_log_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
 -- Auto increment value for boot_sys_package
 -- ----------------------------
-SELECT setval('"public"."boot_sys_package_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_package_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_package
@@ -1802,14 +1720,9 @@ SELECT setval('"public"."boot_sys_package_id_seq"', 1, false);
 ALTER TABLE "public"."boot_sys_package" ADD CONSTRAINT "boot_sys_package_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Primary Key structure for table boot_sys_package_menu
--- ----------------------------
-ALTER TABLE "public"."boot_sys_package_menu" ADD CONSTRAINT "boot_sys_package_menu_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
 -- Auto increment value for boot_sys_role
 -- ----------------------------
-SELECT setval('"public"."boot_sys_role_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_role_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_role
@@ -1831,7 +1744,7 @@ ALTER TABLE "public"."boot_sys_role_dept" ADD CONSTRAINT "boot_sys_role_dept_pke
 -- ----------------------------
 -- Auto increment value for boot_sys_role_menu
 -- ----------------------------
-SELECT setval('"public"."boot_sys_role_menu_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_role_menu_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table boot_sys_role_menu
@@ -1851,7 +1764,7 @@ ALTER TABLE "public"."boot_sys_role_menu" ADD CONSTRAINT "boot_sys_role_menu_pke
 -- ----------------------------
 -- Auto increment value for boot_sys_source
 -- ----------------------------
-SELECT setval('"public"."boot_sys_source_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_source_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_source
@@ -1859,26 +1772,9 @@ SELECT setval('"public"."boot_sys_source_id_seq"', 1, false);
 ALTER TABLE "public"."boot_sys_source" ADD CONSTRAINT "boot_sys_source_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Auto increment value for boot_sys_sql_log
--- ----------------------------
-SELECT setval('"public"."boot_sys_sql_log_id_seq"', 1, false);
-
--- ----------------------------
--- Indexes structure for table boot_sys_sql_log
--- ----------------------------
-CREATE INDEX "boot_sys_sql_log_service_id_idx" ON "public"."boot_sys_sql_log" USING btree (
-  "service_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
-);
-
--- ----------------------------
--- Primary Key structure for table boot_sys_sql_log
--- ----------------------------
-ALTER TABLE "public"."boot_sys_sql_log" ADD CONSTRAINT "boot_sys_sql_log_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
 -- Auto increment value for boot_sys_tenant
 -- ----------------------------
-SELECT setval('"public"."boot_sys_tenant_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_tenant_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_tenant
@@ -1888,7 +1784,7 @@ ALTER TABLE "public"."boot_sys_tenant" ADD CONSTRAINT "boot_sys_tenant_pkey" PRI
 -- ----------------------------
 -- Auto increment value for boot_sys_user
 -- ----------------------------
-SELECT setval('"public"."boot_sys_user_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_user_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table boot_sys_user
@@ -1917,7 +1813,7 @@ ALTER TABLE "public"."boot_sys_user" ADD CONSTRAINT "boot_sys_user_pkey" PRIMARY
 -- ----------------------------
 -- Auto increment value for boot_sys_user_dept
 -- ----------------------------
-SELECT setval('"public"."boot_sys_user_dept_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_user_dept_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_user_dept
@@ -1925,9 +1821,27 @@ SELECT setval('"public"."boot_sys_user_dept_id_seq"', 1, false);
 ALTER TABLE "public"."boot_sys_user_dept" ADD CONSTRAINT "boot_sys_user_dept_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
+-- Auto increment value for boot_sys_user_message
+-- ----------------------------
+SELECT setval('"public"."boot_sys_message_detail_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Indexes structure for table boot_sys_user_message
+-- ----------------------------
+CREATE INDEX "boot_sys_message_detail_read_flag_user_id_idx" ON "public"."boot_sys_user_message" USING btree (
+  "read_flag" "pg_catalog"."int2_ops" ASC NULLS LAST,
+  "user_id" "pg_catalog"."int8_ops" ASC NULLS LAST
+);
+
+-- ----------------------------
+-- Primary Key structure for table boot_sys_user_message
+-- ----------------------------
+ALTER TABLE "public"."boot_sys_user_message" ADD CONSTRAINT "boot_sys_message_detail_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
 -- Auto increment value for boot_sys_user_role
 -- ----------------------------
-SELECT setval('"public"."boot_sys_user_role_id_seq"', 1, false);
+SELECT setval('"public"."boot_sys_user_role_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table boot_sys_user_role

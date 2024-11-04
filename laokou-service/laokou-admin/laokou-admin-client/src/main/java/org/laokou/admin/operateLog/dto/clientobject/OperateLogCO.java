@@ -100,6 +100,6 @@ public class OperateLogCO extends ClientObject {
 	/**
 	 * 操作的消耗时间(毫秒).
 	 */
-	private Long takeTime;
+	private Long costTime;
 
 }
