@@ -20,7 +20,7 @@
 -- Sequence structure for boot_sys_cluster_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_cluster_id_seq";
-CREATE SEQUENCE "public"."boot_sys_cluster_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_cluster_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -31,7 +31,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_cluster_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_cluster_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_cluster_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_cluster_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -42,7 +42,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_dept_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_dept_id_seq";
-CREATE SEQUENCE "public"."boot_sys_dept_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_dept_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -53,7 +53,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_dept_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_dept_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_dept_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_dept_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -64,7 +64,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_dict_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_dict_id_seq";
-CREATE SEQUENCE "public"."boot_sys_dict_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_dict_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -75,7 +75,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_dict_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_dict_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_dict_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_dict_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -86,7 +86,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_dict_item_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_dict_item_id_seq";
-CREATE SEQUENCE "public"."boot_sys_dict_item_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_dict_item_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -97,7 +97,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_dict_item_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_dict_item_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_dict_item_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_dict_item_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -108,7 +108,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_i18n_message_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_i18n_message_id_seq";
-CREATE SEQUENCE "public"."boot_sys_i18n_message_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_i18n_message_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -119,7 +119,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_i18n_message_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_i18n_message_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_i18n_message_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_i18n_message_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -130,7 +130,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_ip_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_ip_id_seq";
-CREATE SEQUENCE "public"."boot_sys_ip_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_ip_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -141,7 +141,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_ip_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_ip_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_ip_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_ip_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -152,7 +152,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_menu_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_menu_id_seq";
-CREATE SEQUENCE "public"."boot_sys_menu_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_menu_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -163,7 +163,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_menu_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_menu_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_menu_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_menu_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -174,7 +174,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_message_detail_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_message_detail_id_seq";
-CREATE SEQUENCE "public"."boot_sys_message_detail_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_message_detail_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -185,7 +185,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_message_detail_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_message_detail_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_message_detail_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_message_detail_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -196,7 +196,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_message_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_message_id_seq";
-CREATE SEQUENCE "public"."boot_sys_message_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_message_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -207,7 +207,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_message_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_message_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_message_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_message_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -218,7 +218,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_oss_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_oss_id_seq";
-CREATE SEQUENCE "public"."boot_sys_oss_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_oss_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -229,7 +229,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_oss_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_oss_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_oss_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_oss_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -240,7 +240,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_package_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_package_id_seq";
-CREATE SEQUENCE "public"."boot_sys_package_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_package_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -251,7 +251,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_package_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_package_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_package_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_package_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -262,7 +262,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_role_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_role_id_seq";
-CREATE SEQUENCE "public"."boot_sys_role_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_role_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -273,7 +273,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_role_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_role_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_role_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_role_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -284,7 +284,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_role_menu_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_role_menu_id_seq";
-CREATE SEQUENCE "public"."boot_sys_role_menu_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_role_menu_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -295,7 +295,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_role_menu_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_role_menu_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_role_menu_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_role_menu_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -306,7 +306,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_source_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_source_id_seq";
-CREATE SEQUENCE "public"."boot_sys_source_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_source_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -317,7 +317,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_source_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_source_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_source_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_source_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -328,7 +328,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_tenant_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_tenant_id_seq";
-CREATE SEQUENCE "public"."boot_sys_tenant_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_tenant_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -339,7 +339,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_tenant_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_tenant_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_tenant_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_tenant_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -350,7 +350,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_user_dept_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_user_dept_id_seq";
-CREATE SEQUENCE "public"."boot_sys_user_dept_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_user_dept_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -361,7 +361,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_user_dept_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_user_dept_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_user_dept_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_user_dept_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -372,7 +372,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_user_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_user_id_seq";
-CREATE SEQUENCE "public"."boot_sys_user_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_user_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -383,7 +383,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_user_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_user_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_user_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_user_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -394,7 +394,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_user_role_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_user_role_id_seq";
-CREATE SEQUENCE "public"."boot_sys_user_role_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_user_role_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -405,7 +405,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_user_role_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_user_role_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_user_role_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_user_role_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -741,11 +741,11 @@ INSERT INTO "public"."boot_sys_menu" VALUES (4, 1, 1, '2024-06-04 17:27:14', '20
 INSERT INTO "public"."boot_sys_menu" VALUES (5, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 0, 3, 'sys:login-log:export', 1, '导出全部', NULL, 'sys', 10, 0, 0, NULL);
 INSERT INTO "public"."boot_sys_menu" VALUES (6, 1, 1, '2024-06-17 17:27:14', '2024-06-17 17:27:12', 0, 0, 0, 3, 'sys:login-log:remove', 1, '删除', NULL, 'sys', 10, 0, 0, NULL);
 INSERT INTO "public"."boot_sys_menu" VALUES (7, 1, 1, '2024-06-17 17:27:14', '2024-06-17 17:27:12', 0, 0, 0, 3, 'sys:login-log:clear', 1, '清空', NULL, 'sys', 10, 0, 0, NULL);
-INSERT INTO "public"."boot_sys_menu" VALUES (8, 1, 1, '2024-09-17 18:36:56', '2024-09-17 18:36:59', 0, 0, 0, 2, NULL, 0, 'Api日志', NULL, 'sys', 2000, 0, 0, NULL);
-INSERT INTO "public"."boot_sys_menu" VALUES (9, 1, 1, '2024-09-17 18:38:24', '2024-09-17 18:38:26', 0, 0, 0, 8, 'sys:api-log:page', 1, '分页查询', NULL, 'sys', 40, 0, 0, NULL);
-INSERT INTO "public"."boot_sys_menu" VALUES (10, 1, 1, '2024-09-17 18:39:34', '2024-09-17 18:39:37', 0, 0, 0, 8, 'sys:api-log:export', 1, '导出全部', NULL, 'sys', 30, 0, 0, NULL);
-INSERT INTO "public"."boot_sys_menu" VALUES (11, 1, 1, '2024-09-17 18:41:32', '2024-09-17 18:41:34', 0, 0, 0, 8, 'sys:api-log:remove', 1, '删除', NULL, 'sys', 20, 0, 0, NULL);
-INSERT INTO "public"."boot_sys_menu" VALUES (12, 1, 1, '2024-09-17 18:41:32', '2024-09-17 18:41:34', 0, 0, 0, 8, 'sys:api-log:clear', 1, '清空', NULL, 'sys', 10, 0, 0, NULL);
+INSERT INTO "public"."boot_sys_menu" VALUES (8, 1, 1, '2024-09-17 18:36:56', '2024-09-17 18:36:59', 0, 0, 0, 2, NULL, 0, '通知日志', NULL, 'sys', 2000, 0, 0, NULL);
+INSERT INTO "public"."boot_sys_menu" VALUES (9, 1, 1, '2024-09-17 18:38:24', '2024-09-17 18:38:26', 0, 0, 0, 8, 'sys:notice-log:page', 1, '分页查询', NULL, 'sys', 40, 0, 0, NULL);
+INSERT INTO "public"."boot_sys_menu" VALUES (10, 1, 1, '2024-09-17 18:39:34', '2024-09-17 18:39:37', 0, 0, 0, 8, 'sys:notice-log:export', 1, '导出全部', NULL, 'sys', 30, 0, 0, NULL);
+INSERT INTO "public"."boot_sys_menu" VALUES (11, 1, 1, '2024-09-17 18:41:32', '2024-09-17 18:41:34', 0, 0, 0, 8, 'sys:notice-log:remove', 1, '删除', NULL, 'sys', 20, 0, 0, NULL);
+INSERT INTO "public"."boot_sys_menu" VALUES (12, 1, 1, '2024-09-17 18:41:32', '2024-09-17 18:41:34', 0, 0, 0, 8, 'sys:notice-log:clear', 1, '清空', NULL, 'sys', 10, 0, 0, NULL);
 
 -- ----------------------------
 -- Table structure for boot_sys_menu_package

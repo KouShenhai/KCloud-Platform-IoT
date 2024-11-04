@@ -59,6 +59,7 @@ public enum DataType {
 	INT4("Integer"),
 	INT2("Integer"),
 	JSON("String"),
+	FLOAT8("Double"),
 	NUMERIC("BigDecimal");
 	// @formatter:on
 

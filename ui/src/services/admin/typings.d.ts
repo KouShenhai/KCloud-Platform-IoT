@@ -1,5 +1,5 @@
 declare namespace API {
-	type ApiLogCO = {
+	type NoticeLogCO = {
 		extValues?: Record<string, any>;
 		id?: number;
 		code?: string;
@@ -9,13 +9,13 @@ declare namespace API {
 		param?: string;
 	};
 
-	type ApiLogExportCmd = true;
+	type NoticeLogExportCmd = true;
 
-	type ApiLogModifyCmd = {
-		co?: ApiLogCO;
+	type NoticeLogModifyCmd = {
+		co?: NoticeLogCO;
 	};
 
-	type ApiLogPageQry = {
+	type NoticeLogPageQry = {
 		pageNum?: number;
 		pageSize?: number;
 		pageIndex?: number;
@@ -23,8 +23,8 @@ declare namespace API {
 		params?: Record<string, any>;
 	};
 
-	type ApiLogSaveCmd = {
-		co?: ApiLogCO;
+	type NoticeLogSaveCmd = {
+		co?: NoticeLogCO;
 	};
 
 	type DeptCO = {

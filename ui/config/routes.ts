@@ -43,7 +43,7 @@ export default [
 						component: './Sys/Log/login'
 					},
 					{
-						name: 'Api日志',
+						name: '通知日志',
 						path: '/sys/log/api',
 						component: './Sys/Log/api'
 					}

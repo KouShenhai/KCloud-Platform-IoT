@@ -22,9 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.RandomStringUtil;
 import org.laokou.common.core.utils.TemplateUtil;
-import org.laokou.common.i18n.dto.ApiLog;
 import org.laokou.common.i18n.dto.Cache;
-import org.laokou.common.mail.entity.SendMailApiLog;
+import org.laokou.common.i18n.dto.NoticeLog;
+import org.laokou.common.mail.entity.MailNoticeLog;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 
 import java.util.Map;
@@ -47,7 +47,7 @@ public class QQMailServiceImpl extends AbstractMailServiceImpl {
 
 	@Override
 	@SneakyThrows
-	public ApiLog send(String mail, int minute, Cache cache) {
+	public NoticeLog send(String mail, int minute, Cache cache) {
 		String remark = "QQ邮箱";
 		String subject = "验证码";
 		String captcha = RandomStringUtil.randomNumeric(6);
@@ -59,11 +59,11 @@ public class QQMailServiceImpl extends AbstractMailServiceImpl {
 			sendMail(subject, content, mail);
 			// 写入缓存
 			cache.set(captcha, (long) minute * 60 * 1000);
-			return new SendMailApiLog(params, OK, EMPTY, remark);
+			return new MailNoticeLog(params, OK, EMPTY, remark);
 		}
 		catch (Exception e) {
 			log.error("错误信息：{}", e.getMessage(), e);
-			return new SendMailApiLog(params, FAIL, e.getMessage(), remark);
+			return new MailNoticeLog(params, FAIL, e.getMessage(), remark);
 		}
 	}
 

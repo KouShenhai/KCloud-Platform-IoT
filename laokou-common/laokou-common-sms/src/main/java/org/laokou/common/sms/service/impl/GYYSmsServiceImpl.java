@@ -24,10 +24,10 @@ import org.laokou.common.core.utils.HttpUtil;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.RandomStringUtil;
 import org.laokou.common.core.utils.TemplateUtil;
-import org.laokou.common.i18n.dto.ApiLog;
+import org.laokou.common.i18n.dto.NoticeLog;
 import org.laokou.common.i18n.dto.Cache;
 import org.laokou.common.sms.config.SmsProperties;
-import org.laokou.common.sms.entity.SendSmsApiLog;
+import org.laokou.common.sms.entity.SmsNoticeLog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -71,14 +71,14 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 
 	@Override
 	@SneakyThrows
-	public ApiLog send(String mobile, int minute, Cache cache) {
+	public NoticeLog send(String mobile, int minute, Cache cache) {
 		String remark = "阿里云市场【国阳云】";
 		String signId = smsProperties.getGyy().getSignId();
 		String appcode = smsProperties.getGyy().getAppcode();
 		String templateId = smsProperties.getGyy().getTemplateId();
 		boolean isExit = TEMPLATES.containsKey(templateId);
 		if (!isExit) {
-			return new SendSmsApiLog(JacksonUtil.EMPTY_JSON, FAIL, "模板不存在", remark);
+			return new SmsNoticeLog(JacksonUtil.EMPTY_JSON, FAIL, "模板不存在", remark);
 		}
 		String captcha = RandomStringUtil.randomNumeric(6);
 		Map<String, Object> param = Map.of("captcha", captcha, "minute", minute);
@@ -100,9 +100,9 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		if (code == OK) {
 			// 写入缓存
 			cache.set(captcha, (long) minute * 60 * 1000);
-			return new SendSmsApiLog(JacksonUtil.toJsonStr(params), OK, EMPTY, remark);
+			return new SmsNoticeLog(JacksonUtil.toJsonStr(params), OK, EMPTY, remark);
 		}
-		return new SendSmsApiLog(JacksonUtil.toJsonStr(params), FAIL, jsonNode.get("msg").asText(), remark);
+		return new SmsNoticeLog(JacksonUtil.toJsonStr(params), FAIL, jsonNode.get("msg").asText(), remark);
 	}
 
 }

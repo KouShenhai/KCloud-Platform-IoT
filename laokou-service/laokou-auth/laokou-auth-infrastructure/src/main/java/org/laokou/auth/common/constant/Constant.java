@@ -48,9 +48,9 @@ public final class Constant {
 	public static final String TABLE_TENANT = "boot_sys_tenant";
 
 	/**
-	 * API日志表.
+	 * 通知日志表.
 	 */
-	public static final String TABLE_API_LOG = "boot_sys_api_log";
+	public static final String TABLE_NOTICE_LOG = "boot_sys_notice_log";
 
 	/**
 	 * 登录日志表.

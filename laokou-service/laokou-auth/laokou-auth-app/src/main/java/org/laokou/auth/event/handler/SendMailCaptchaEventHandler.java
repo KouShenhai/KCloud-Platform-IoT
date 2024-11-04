@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.i18n.dto.ApiLog;
+import org.laokou.common.i18n.dto.NoticeLog;
 import org.laokou.common.mail.service.MailService;
 import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -54,7 +54,7 @@ public class SendMailCaptchaEventHandler extends AbstractSendCaptchaEventHandler
 	}
 
 	@Override
-	protected ApiLog getApiLog(SendCaptchaEvent event) {
+	protected NoticeLog getNoticeLog(SendCaptchaEvent event) {
 		return mailService.send(event.getUuid(), 5, (value, expireTime) -> {
 			String mailCaptchaKey = RedisKeyUtil.getMailCaptchaKey(event.getUuid());
 			redisUtil.del(mailCaptchaKey);

@@ -1,6 +1,6 @@
 import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {exportV3, pageV3, removeV3} from "@/services/admin/apiLog";
+import {exportV3, pageV3, removeV3} from "@/services/admin/noticeLog";
 import {Button, message, Modal} from "antd";
 import {DeleteOutlined, ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
@@ -30,12 +30,12 @@ export default () => {
 
 	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
-	let apiLogList: TableColumns[]
+	let noticeLogList: TableColumns[]
 
-	let apiLogParam: any
+	let noticeLogParam: any
 
 	const getPageQuery = (params: any) => {
-		apiLogParam = {
+		noticeLogParam = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			name: trim(params?.name),
@@ -47,7 +47,7 @@ export default () => {
 				endDate: params?.endDate
 			}
 		};
-		return apiLogParam;
+		return noticeLogParam;
 	}
 
 	const getStatusDesc = (status: string | undefined) => {
@@ -62,7 +62,7 @@ export default () => {
 		let params: Excel
 		const list: TableColumns[] = [];
 		// 格式化数据
-		apiLogList.forEach(item => {
+		noticeLogList.forEach(item => {
 			item.status = getStatusDesc(item.status)
 			list.push(item)
 		})
@@ -70,25 +70,25 @@ export default () => {
 			sheetData: list,
 			sheetFilter: ["username", "ip", "address", "browser", "os", "status", "errorMessage", "type", "createTime"],
 			sheetHeader: ["用户名", "IP地址", "归属地", "浏览器", "操作系统", "登录状态", "错误信息", "登录类型", "登录日期"],
-			fileName: "Api日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
-			sheetName: "Api日志"
+			fileName: "通知日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
+			sheetName: "通知日志"
 		}
 		ExportToExcel(params)
 	}
 
 	const exportAllToExcel = async () => {
-		exportV3(apiLogParam)
+		exportV3(noticeLogParam)
 	}
 
-	const listApiLog = async (params: any) => {
-		apiLogList = []
+	const listNoticeLog = async (params: any) => {
+		noticeLogList = []
 		return pageV3(getPageQuery(params)).then(res => {
 			res?.data?.records?.forEach((item: TableColumns) => {
 				item.status = statusEnum[item.status as '0'];
-				apiLogList.push(item);
+				noticeLogList.push(item);
 			});
 			return Promise.resolve({
-				data: apiLogList,
+				data: noticeLogList,
 				total: parseInt(res.data.total),
 				success: true,
 			});
@@ -101,7 +101,7 @@ export default () => {
 		}
 	};
 
-	const truncateApiLog = async () => {
+	const truncateNoticeLog = async () => {
 		Modal.confirm({
 			title: '确认清空?',
 			content: '您确定要清空数据吗?',
@@ -117,7 +117,7 @@ export default () => {
 		});
 	}
 
-	const deleteApiLog = async () => {
+	const deleteNoticeLog = async () => {
 		Modal.confirm({
 			title: '确认删除?',
 			content: '您确定要删除吗?',
@@ -197,7 +197,7 @@ export default () => {
 			columns={columns}
 			request={(params) => {
 				// 表单搜索项会从 params 传入，传递给后端接口。
-				return listApiLog(params)
+				return listNoticeLog(params)
 			}}
 			rowKey="id"
 			pagination={{
@@ -211,10 +211,10 @@ export default () => {
 			}}
 			toolBarRender={
 				() => [
-					<Button key="delete" danger ghost icon={<DeleteOutlined/>} onClick={deleteApiLog}>
+					<Button key="delete" danger ghost icon={<DeleteOutlined/>} onClick={deleteNoticeLog}>
 						删除
 					</Button>,
-					<Button key="truncate" type="primary" danger icon={<DeleteOutlined/>} onClick={truncateApiLog}>
+					<Button key="truncate" type="primary" danger icon={<DeleteOutlined/>} onClick={truncateNoticeLog}>
 						清空
 					</Button>,
 					<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={exportToExcel}>
@@ -231,8 +231,8 @@ export default () => {
 			}
 			dateFormatter="string"
 			toolbar={{
-				title: 'Api日志',
-				tooltip: 'Api日志',
+				title: '通知日志',
+				tooltip: '通知日志',
 			}}
 		/>
 	);

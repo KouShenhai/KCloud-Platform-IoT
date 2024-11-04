@@ -17,7 +17,7 @@
 
 package org.laokou.common.sms.service;
 
-import org.laokou.common.i18n.dto.ApiLog;
+import org.laokou.common.i18n.dto.NoticeLog;
 import org.laokou.common.i18n.dto.Cache;
 
 /**
@@ -25,6 +25,6 @@ import org.laokou.common.i18n.dto.Cache;
  */
 public interface SmsService {
 
-	ApiLog send(String mobile, int minute, Cache cache);
+	NoticeLog send(String mobile, int minute, Cache cache);
 
 }

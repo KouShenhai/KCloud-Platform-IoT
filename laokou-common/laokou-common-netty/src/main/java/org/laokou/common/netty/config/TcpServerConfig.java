@@ -40,4 +40,3 @@ public class TcpServerConfig {
     }
 
 }
-// @formatter:on
