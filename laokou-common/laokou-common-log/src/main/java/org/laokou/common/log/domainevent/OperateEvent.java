@@ -26,54 +26,54 @@ import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import java.io.Serial;
 
 /**
+ * 操作事件.
  * @author laokou
  */
 @Data
 @NoArgsConstructor
-@Schema(name = "OperateEvent", description = "操作事件")
-public class OperateEvent extends DefaultDomainEvent {
+public final class OperateEvent extends DefaultDomainEvent {
 
 	@Serial
 	private static final long serialVersionUID = -6523521638764501311L;
 
 	@Schema(name = "name", description = "操作名称")
-	protected String name;
+	private String name;
 
 	@Schema(name = "moduleName", description = "操作的模块名称")
-	protected String moduleName;
+    private String moduleName;
 
 	@Schema(name = "uri", description = "操作的URI")
-	protected String uri;
+    private String uri;
 
 	@Schema(name = "methodName", description = "操作的方法名")
-	protected String methodName;
+    private String methodName;
 
 	@Schema(name = "requestType", description = "操作的请求类型")
-	protected String requestType;
+    private String requestType;
 
 	@Schema(name = "requestParams", description = "操作的请求参数")
-	protected String requestParams;
+    private String requestParams;
 
 	@Schema(name = "userAgent", description = "操作的浏览器")
-	protected String userAgent;
+    private String userAgent;
 
 	@Schema(name = "ip", description = "操作的IP地址")
-	protected String ip;
+    private String ip;
 
 	@Schema(name = "address", description = "操作的归属地")
-	protected String address;
+    private String address;
 
 	@Schema(name = "status", description = "操作状态 0成功 1失败")
-	protected Integer status;
+    private Integer status;
 
 	@Schema(name = "operator", description = "操作人")
-	protected String operator;
+    private String operator;
 
 	@Schema(name = "errorMessage", description = "错误信息")
-	protected String errorMessage;
+    private String errorMessage;
 
-	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
-	protected Long takeTime;
+	@Schema(name = "costTime", description = "操作的消耗时间(毫秒)")
+	private Long costTime;
 
 	@Override
 	protected void generatorId() {
