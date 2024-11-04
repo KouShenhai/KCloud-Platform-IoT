@@ -63,12 +63,12 @@ public class MybatisPlusAutoConfig {
 	}
 
 	@Bean
-	public ConfigurationCustomizer slowSqlConfigurationCustomizer() {
+	public ConfigurationCustomizer slowSqlConfigurationCustomizer(MybatisPlusExtProperties mybatisPlusExtProperties) {
 		return configuration -> {
 			// 异步查询count
 			configuration.addInterceptor(new AsyncCountInterceptor());
 			// 慢SQL
-			SqlMonitorInterceptor sqlMonitorInterceptor = new SqlMonitorInterceptor();
+			SqlMonitorInterceptor sqlMonitorInterceptor = new SqlMonitorInterceptor(mybatisPlusExtProperties);
 			configuration.addInterceptor(sqlMonitorInterceptor);
 		};
 	}

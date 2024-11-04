@@ -27,6 +27,7 @@ import java.io.Serial;
 
 /**
  * 操作事件.
+ *
  * @author laokou
  */
 @Data
@@ -40,37 +41,37 @@ public final class OperateEvent extends DefaultDomainEvent {
 	private String name;
 
 	@Schema(name = "moduleName", description = "操作的模块名称")
-    private String moduleName;
+	private String moduleName;
 
 	@Schema(name = "uri", description = "操作的URI")
-    private String uri;
+	private String uri;
 
 	@Schema(name = "methodName", description = "操作的方法名")
-    private String methodName;
+	private String methodName;
 
 	@Schema(name = "requestType", description = "操作的请求类型")
-    private String requestType;
+	private String requestType;
 
 	@Schema(name = "requestParams", description = "操作的请求参数")
-    private String requestParams;
+	private String requestParams;
 
 	@Schema(name = "userAgent", description = "操作的浏览器")
-    private String userAgent;
+	private String userAgent;
 
 	@Schema(name = "ip", description = "操作的IP地址")
-    private String ip;
+	private String ip;
 
 	@Schema(name = "address", description = "操作的归属地")
-    private String address;
+	private String address;
 
 	@Schema(name = "status", description = "操作状态 0成功 1失败")
-    private Integer status;
+	private Integer status;
 
 	@Schema(name = "operator", description = "操作人")
-    private String operator;
+	private String operator;
 
 	@Schema(name = "errorMessage", description = "错误信息")
-    private String errorMessage;
+	private String errorMessage;
 
 	@Schema(name = "costTime", description = "操作的消耗时间(毫秒)")
 	private Long costTime;

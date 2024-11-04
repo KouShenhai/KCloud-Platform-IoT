@@ -34,12 +34,23 @@ public class MybatisPlusExtProperties {
 
 	private Tenant tenant = new Tenant();
 
+	private SqlMonitor sqlMonitor = new SqlMonitor();
+
 	@Data
 	public static class Tenant {
 
 		private boolean enabled = false;
 
 		private Set<String> ignoreTables = new HashSet<>(0);
+
+	}
+
+	@Data
+	public static class SqlMonitor {
+
+		private boolean enabled = true;
+
+		private long interval = 0;
 
 	}
 

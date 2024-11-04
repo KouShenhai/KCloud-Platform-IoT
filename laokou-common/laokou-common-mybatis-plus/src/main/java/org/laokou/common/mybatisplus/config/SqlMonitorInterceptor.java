@@ -17,6 +17,7 @@
 
 package org.laokou.common.mybatisplus.config;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.logging.jdbc.PreparedStatementLogger;
@@ -32,7 +33,6 @@ import org.laokou.common.mybatisplus.handler.domainevent.SqlEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
 import static org.laokou.common.i18n.common.constant.StringConstant.SPACE;
 
 /**
@@ -44,24 +44,29 @@ import static org.laokou.common.i18n.common.constant.StringConstant.SPACE;
  * @author laokou
  * @see PreparedStatementLogger
  */
+// @formatter:off
 @Slf4j
-@Intercepts({
-		@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
+@RequiredArgsConstructor
+@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
 public class SqlMonitorInterceptor implements Interceptor {
 
-	@Override
+    private final MybatisPlusExtProperties mybatisPlusExtProperties;
+
+    @Override
 	public Object intercept(Invocation invocation) throws Throwable {
 		long start = IdGenerator.SystemClock.now();
 		Object obj = invocation.proceed();
 		long time = (IdGenerator.SystemClock.now() - start);
 		Object target = invocation.getTarget();
-		if (target instanceof StatementHandler statementHandler) {
+        MybatisPlusExtProperties.SqlMonitor sqlMonitor = mybatisPlusExtProperties.getSqlMonitor();
+        if (sqlMonitor.isEnabled()
+                && time >= sqlMonitor.getInterval()
+                && target instanceof StatementHandler statementHandler) {
 			// 替换空格、制表符、换页符
 			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", SPACE);
-			SpringContextUtil.publishEvent(
-					new SqlEvent("SQL日志", SpringContextUtil.getServiceId(), sql, time, DateUtil.nowInstant()));
-			log.info("Consume Time：{} ms，Execute SQL：{}", time, sql);
-		}
+            log.info("Consume Time：{} ms，Execute SQL：{}", time, sql);
+            SqlEvent sqlEvent = new SqlEvent(SpringContextUtil.getServiceId(), sql, time, DateUtil.nowInstant());
+        }
 		return obj;
 	}
 
@@ -75,3 +80,4 @@ public class SqlMonitorInterceptor implements Interceptor {
 	}
 
 }
+// @formatter:on

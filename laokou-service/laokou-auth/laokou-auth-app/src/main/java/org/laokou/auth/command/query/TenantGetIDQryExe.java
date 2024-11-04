@@ -64,7 +64,7 @@ public class TenantGetIDQryExe {
 			return Result.ok(DEFAULT_TENANT_ID);
 		}
 		String[] split = domainName.split(BACKSLASH + DOT);
-		if (split.length < 3 || WWW.equals(split[0])) {
+		if (split.length < 3 || ObjectUtil.equals(WWW, split[0])) {
 			return Result.ok(DEFAULT_TENANT_ID);
 		}
 		Set<String> domainNames = tenantProperties.getDomainNames();
