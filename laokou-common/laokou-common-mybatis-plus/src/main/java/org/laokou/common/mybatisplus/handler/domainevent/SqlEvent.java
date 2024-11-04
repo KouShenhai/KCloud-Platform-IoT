@@ -20,7 +20,7 @@ package org.laokou.common.mybatisplus.handler.domainevent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.context.ApplicationEvent;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 import java.time.Instant;
 
@@ -30,7 +30,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @ToString
-public class SqlEvent extends ApplicationEvent {
+public class SqlEvent extends DefaultDomainEvent {
 
 	private String serviceId;
 
@@ -40,8 +40,8 @@ public class SqlEvent extends ApplicationEvent {
 
 	private Instant createTime;
 
-	public SqlEvent(Object source, String serviceId, String sql, long costTime, Instant createTime) {
-		super(source);
+	public SqlEvent(String serviceId, String sql, long costTime, Instant createTime) {
+
 		this.sql = sql;
 		this.serviceId = serviceId;
 		this.costTime = costTime;

@@ -152,9 +152,7 @@ public final class SpringContextUtil implements ApplicationContextAware, Disposa
 	 * @param event 事件
 	 */
 	public static void publishEvent(ApplicationEvent event) {
-		if (ObjectUtil.isNotNull(applicationContext)) {
-			applicationContext.publishEvent(event);
-		}
+		applicationContext.publishEvent(event);
 	}
 
 	public static String getServiceId() {
