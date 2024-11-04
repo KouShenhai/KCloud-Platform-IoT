@@ -32,7 +32,7 @@ public final class MqConstant {
 
 	public static final String LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP = "laokou_mobile_captcha_consumer_group";
 
-	public static final String LAOKOU_API_LOG_CONSUMER_GROUP = "laokou_api_log_consumer_group";
+	public static final String LAOKOU_NOTICE_LOG_CONSUMER_GROUP = "laokou_notice_log_consumer_group";
 
 	public static final String LAOKOU_LOGIN_LOG_CONSUMER_GROUP = "laokou_login_log_consumer_group";
 
@@ -44,7 +44,7 @@ public final class MqConstant {
 
 	public static final String LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP_DLQ = DLQ + LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP;
 
-	public static final String LAOKOU_API_LOG_CONSUMER_GROUP_DLQ = DLQ + LAOKOU_API_LOG_CONSUMER_GROUP;
+	public static final String LAOKOU_NOTICE_LOG_CONSUMER_GROUP_DLQ = DLQ + LAOKOU_NOTICE_LOG_CONSUMER_GROUP;
 
 	public static final String LAOKOU_LOGIN_LOG_CONSUMER_GROUP_DLQ = DLQ + LAOKOU_LOGIN_LOG_CONSUMER_GROUP;
 

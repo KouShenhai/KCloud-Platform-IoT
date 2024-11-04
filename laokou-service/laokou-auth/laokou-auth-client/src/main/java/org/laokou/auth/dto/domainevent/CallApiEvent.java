@@ -21,7 +21,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.constant.EventType;
-import org.laokou.common.i18n.dto.ApiLog;
+import org.laokou.common.i18n.dto.NoticeLog;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 /**
@@ -41,14 +41,14 @@ public class CallApiEvent extends DefaultDomainEvent {
 
 	private String param;
 
-	public CallApiEvent(ApiLog apiLog, String topic, String tag, EventType eventType, String serviceId,
+	public CallApiEvent(NoticeLog noticeLog, String topic, String tag, EventType eventType, String serviceId,
 			String sourceName, Long aggregateId, Long tenantId) {
-		super(topic, tag, eventType, serviceId, sourceName, apiLog.getInstant(), aggregateId, tenantId);
-		this.code = apiLog.getCode();
-		this.name = apiLog.getName() + "（" + apiLog.getRemark() + "）";
-		this.status = apiLog.getStatus();
-		this.errorMessage = apiLog.getErrorMessage();
-		this.param = apiLog.getParam();
+		super(topic, tag, eventType, serviceId, sourceName, noticeLog.getInstant(), aggregateId, tenantId);
+		this.code = noticeLog.getCode();
+		this.name = noticeLog.getName() + "（" + noticeLog.getRemark() + "）";
+		this.status = noticeLog.getStatus();
+		this.errorMessage = noticeLog.getErrorMessage();
+		this.param = noticeLog.getParam();
 	}
 
 	@Override

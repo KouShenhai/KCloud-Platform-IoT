@@ -22,7 +22,7 @@ package org.laokou.auth.common.constant;
  */
 public final class MqConstant {
 
-	public static final String API_TAG = "apiLog";
+	public static final String API_TAG = "noticeLog";
 
 	public static final String LOGIN_TAG = "loginLog";
 
@@ -38,7 +38,7 @@ public final class MqConstant {
 
 	public static final String LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP = "laokou_mobile_captcha_consumer_group";
 
-	public static final String LAOKOU_API_LOG_CONSUMER_GROUP = "laokou_api_log_consumer_group";
+	public static final String LAOKOU_NOTICE_LOG_CONSUMER_GROUP = "laokou_notice_log_consumer_group";
 
 	public static final String LAOKOU_LOGIN_LOG_CONSUMER_GROUP = "laokou_login_log_consumer_group";
 

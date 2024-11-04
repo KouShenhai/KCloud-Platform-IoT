@@ -49,7 +49,7 @@ public class AuthDomainService {
 
 	private final LoginLogGateway loginLogGateway;
 
-	private final ApiLogGateway apiLogGateway;
+	private final NoticeLogGateway noticeLogGateway;
 
 	private final SpringUtil springUtil;
 
@@ -59,8 +59,8 @@ public class AuthDomainService {
 	}
 
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
-	public void recordApiLog(DefaultDomainEvent domainEvent) {
-		apiLogGateway.create(domainEvent);
+	public void recordNoticeLog(DefaultDomainEvent domainEvent) {
+		noticeLogGateway.create(domainEvent);
 	}
 
 	public void auth(AuthA auth) {

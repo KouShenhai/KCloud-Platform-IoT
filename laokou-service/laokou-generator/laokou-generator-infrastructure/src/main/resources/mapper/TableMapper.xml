@@ -26,6 +26,7 @@
     from pg_class
     where relname in (select tablename from pg_tables where schemaname = 'public' and tablename like 'boot_%')
       and relname = #{tableName}
+    SELECT '${tableName}' as name, obj_description('public.${tableName}'::regclass) as comment;
   </select>
 
 </mapper>
