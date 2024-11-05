@@ -18,6 +18,7 @@
 package org.laokou.iot.productModel.command.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.iot.productModel.dto.ProductModelPageQry;
 import org.laokou.iot.productModel.dto.clientobject.ProductModelCO;
 import org.laokou.iot.productModel.gatewayimpl.database.ProductModelMapper;
@@ -27,7 +28,6 @@ import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.productModel.convertor.ProductModelConvertor;
-import lombok.SneakyThrows;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -45,16 +45,19 @@ public class ProductModelPageQryExe {
 
 	private final ProductModelMapper productModelMapper;
 
-	@SneakyThrows
 	public Result<Page<ProductModelCO>> execute(ProductModelPageQry qry) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		CompletableFuture<List<ProductModelDO>> c1 = CompletableFuture
-			.supplyAsync(() -> productModelMapper.selectObjectPage(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> productModelMapper.selectObjectCount(qry),
-				executor);
-		return Result
-			.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(ProductModelConvertor::toClientObject).toList(),
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			CompletableFuture<List<ProductModelDO>> c1 = CompletableFuture
+				.supplyAsync(() -> productModelMapper.selectObjectPage(qry.index()), executor);
+			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> productModelMapper.selectObjectCount(qry),
+					executor);
+			return Result.ok(Page.create(
+					c1.get(30, TimeUnit.SECONDS).stream().map(ProductModelConvertor::toClientObject).toList(),
 					c2.get(30, TimeUnit.SECONDS)));
+		}
+		catch (Exception e) {
+			throw new SystemException("S_ProductModel_PageQueryTimeout", "产品模型分页查询超时");
+		}
 	}
 
 }

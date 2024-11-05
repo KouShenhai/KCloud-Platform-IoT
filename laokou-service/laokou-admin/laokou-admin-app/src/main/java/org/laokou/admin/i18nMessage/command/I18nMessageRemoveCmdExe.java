@@ -23,7 +23,7 @@ import org.laokou.admin.i18nMessage.dto.I18nMessageRemoveCmd;
 import org.springframework.stereotype.Component;
 
 /**
- * 删除国际化命令执行器.
+ * 删除国际化消息命令执行器.
  *
  * @author laokou
  */

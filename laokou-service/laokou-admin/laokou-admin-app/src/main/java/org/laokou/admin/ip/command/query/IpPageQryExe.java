@@ -18,13 +18,13 @@
 package org.laokou.admin.ip.command.query;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.laokou.admin.ip.convertor.IpConvertor;
 import org.laokou.admin.ip.dto.IpPageQry;
 import org.laokou.admin.ip.dto.clientobject.IpCO;
 import org.laokou.admin.ip.gatewayimpl.database.IpMapper;
 import org.laokou.admin.ip.gatewayimpl.database.dataobject.IpDO;
 import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -45,15 +45,19 @@ public class IpPageQryExe {
 
 	private final IpMapper ipMapper;
 
-	@SneakyThrows
 	public Result<Page<IpCO>> execute(IpPageQry qry) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		CompletableFuture<List<IpDO>> c1 = CompletableFuture
-			.supplyAsync(() -> ipMapper.selectPageByCondition(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ipMapper.selectCountByCondition(qry),
-				executor);
-		return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(IpConvertor::toClientObject).toList(),
-				c2.get(30, TimeUnit.SECONDS)));
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			CompletableFuture<List<IpDO>> c1 = CompletableFuture
+				.supplyAsync(() -> ipMapper.selectPageByCondition(qry.index()), executor);
+			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ipMapper.selectCountByCondition(qry),
+					executor);
+			return Result
+				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(IpConvertor::toClientObject).toList(),
+						c2.get(30, TimeUnit.SECONDS)));
+		}
+		catch (Exception e) {
+			throw new SystemException("S_Ip_PageQueryTimeout", "IP分页查询超时");
+		}
 	}
 
 }

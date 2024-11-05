@@ -18,13 +18,13 @@
 package org.laokou.admin.cluster.command.query;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.laokou.admin.cluster.convertor.ClusterConvertor;
 import org.laokou.admin.cluster.dto.ClusterPageQry;
 import org.laokou.admin.cluster.dto.clientobject.ClusterCO;
 import org.laokou.admin.cluster.gatewayimpl.database.ClusterMapper;
 import org.laokou.admin.cluster.gatewayimpl.database.dataobject.ClusterDO;
 import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -45,16 +45,19 @@ public class ClusterPageQryExe {
 
 	private final ClusterMapper clusterMapper;
 
-	@SneakyThrows
 	public Result<Page<ClusterCO>> execute(ClusterPageQry qry) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		CompletableFuture<List<ClusterDO>> c1 = CompletableFuture
-			.supplyAsync(() -> clusterMapper.selectObjectPage(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> clusterMapper.selectObjectCount(qry),
-				executor);
-		return Result
-			.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(ClusterConvertor::toClientObject).toList(),
-					c2.get(30, TimeUnit.SECONDS)));
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			CompletableFuture<List<ClusterDO>> c1 = CompletableFuture
+				.supplyAsync(() -> clusterMapper.selectObjectPage(qry.index()), executor);
+			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> clusterMapper.selectObjectCount(qry),
+					executor);
+			return Result
+				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(ClusterConvertor::toClientObject).toList(),
+						c2.get(30, TimeUnit.SECONDS)));
+		}
+		catch (Exception e) {
+			throw new SystemException("S_Cluster_PageQueryTimeout", "集群分页查询超时");
+		}
 	}
 
 }

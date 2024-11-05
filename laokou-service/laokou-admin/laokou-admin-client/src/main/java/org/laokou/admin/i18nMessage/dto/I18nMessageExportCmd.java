@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.PageQuery;
 
 /**
- * 导出国际化命令.
+ * 导出国际化消息命令.
  *
  * @author laokou
  */

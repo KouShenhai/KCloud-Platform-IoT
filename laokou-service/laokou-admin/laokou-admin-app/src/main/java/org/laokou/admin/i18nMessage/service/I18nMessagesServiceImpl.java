@@ -29,7 +29,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
- * 国际化接口实现类.
+ * 国际化消息接口实现类.
  *
  * @author laokou
  */

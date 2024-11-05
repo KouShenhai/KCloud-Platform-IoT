@@ -34,14 +34,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 国际化管理控制器.
+ * 国际化消息管理控制器.
  *
  * @author laokou
  */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("v3/i18n-messages")
-@Tag(name = "国际化管理", description = "国际化管理")
+@Tag(name = "国际化消息管理", description = "国际化消息管理")
 public class I18nMessagesControllerV3 {
 
 	private final I18nMessagesServiceI i18nMessagesServiceI;
@@ -49,40 +49,40 @@ public class I18nMessagesControllerV3 {
 	@Idempotent
 	@PostMapping
 	@PreAuthorize("hasAuthority('sys:i18n-message:save')")
-	@OperateLog(module = "国际化管理", operation = "保存国际化")
-	@Operation(summary = "保存国际化", description = "保存国际化")
+	@OperateLog(module = "国际化消息管理", operation = "保存国际化消息")
+	@Operation(summary = "保存国际化消息", description = "保存国际化消息")
 	public void saveV3(@RequestBody I18nMessageSaveCmd cmd) {
 		i18nMessagesServiceI.save(cmd);
 	}
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:i18n-message:modify')")
-	@OperateLog(module = "国际化管理", operation = "修改国际化")
-	@Operation(summary = "修改国际化", description = "修改国际化")
+	@OperateLog(module = "国际化消息管理", operation = "修改国际化消息")
+	@Operation(summary = "修改国际化消息", description = "修改国际化消息")
 	public void modifyV3(@RequestBody I18nMessageModifyCmd cmd) {
 		i18nMessagesServiceI.modify(cmd);
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:i18n-message:remove')")
-	@OperateLog(module = "国际化管理", operation = "删除国际化")
-	@Operation(summary = "删除国际化", description = "删除国际化")
+	@OperateLog(module = "国际化消息管理", operation = "删除国际化消息")
+	@Operation(summary = "删除国际化消息", description = "删除国际化消息")
 	public void removeV3(@RequestBody Long[] ids) {
 		i18nMessagesServiceI.remove(new I18nMessageRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:i18n-message:import')")
-	@OperateLog(module = "国际化管理", operation = "导入国际化")
-	@Operation(summary = "导入国际化", description = "导入国际化")
+	@OperateLog(module = "国际化消息管理", operation = "导入国际化消息")
+	@Operation(summary = "导入国际化消息", description = "导入国际化消息")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
 		i18nMessagesServiceI.importI(new I18nMessageImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:i18n-message:export')")
-	@OperateLog(module = "国际化管理", operation = "导出国际化")
-	@Operation(summary = "导出国际化", description = "导出国际化")
+	@OperateLog(module = "国际化消息管理", operation = "导出国际化消息")
+	@Operation(summary = "导出国际化消息", description = "导出国际化消息")
 	public void exportV3(@RequestBody I18nMessageExportCmd cmd) {
 		i18nMessagesServiceI.export(cmd);
 	}
@@ -90,14 +90,14 @@ public class I18nMessagesControllerV3 {
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:i18n-message:page')")
-	@Operation(summary = "分页查询国际化列表", description = "分页查询国际化列表")
+	@Operation(summary = "分页查询国际化消息列表", description = "分页查询国际化消息列表")
 	public Result<Page<I18nMessageCO>> pageV3(@RequestBody I18nMessagePageQry qry) {
 		return i18nMessagesServiceI.page(qry);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
-	@Operation(summary = "查看国际化详情", description = "查看国际化详情")
+	@Operation(summary = "查看国际化消息详情", description = "查看国际化消息详情")
 	public Result<I18nMessageCO> getByIdV3(@PathVariable("id") Long id) {
 		return i18nMessagesServiceI.getById(new I18nMessageGetQry(id));
 	}

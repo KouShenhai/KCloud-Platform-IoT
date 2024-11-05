@@ -24,7 +24,7 @@ import org.laokou.admin.i18nMessage.dto.I18nMessageSaveCmd;
 import org.springframework.stereotype.Component;
 
 /**
- * 保存国际化命令执行器.
+ * 保存国际化消息命令执行器.
  *
  * @author laokou
  */

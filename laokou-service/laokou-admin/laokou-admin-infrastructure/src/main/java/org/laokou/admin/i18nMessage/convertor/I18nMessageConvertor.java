@@ -24,7 +24,7 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
- * 国际化转换器.
+ * 国际化消息转换器.
  *
  * @author laokou
  */

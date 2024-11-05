@@ -26,7 +26,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
- * 查看国际化请求执行器.
+ * 查看国际化消息请求执行器.
  *
  * @author laokou
  */

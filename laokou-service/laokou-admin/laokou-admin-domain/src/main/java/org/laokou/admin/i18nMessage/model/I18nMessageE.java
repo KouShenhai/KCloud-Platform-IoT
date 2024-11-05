@@ -20,7 +20,7 @@ package org.laokou.admin.i18nMessage.model;
 import lombok.Data;
 
 /**
- * 国际化领域对象【实体】.
+ * 国际化消息领域对象【实体】.
  *
  * @author laokou
  */

@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
 /**
- * 国际化网关实现.
+ * 国际化消息网关实现.
  *
  * @author laokou
  */

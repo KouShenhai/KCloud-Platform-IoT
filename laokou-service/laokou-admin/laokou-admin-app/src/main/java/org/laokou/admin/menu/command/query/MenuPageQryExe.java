@@ -18,13 +18,13 @@
 package org.laokou.admin.menu.command.query;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuPageQry;
 import org.laokou.admin.menu.dto.clientobject.MenuCO;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -45,15 +45,19 @@ public class MenuPageQryExe {
 
 	private final MenuMapper menuMapper;
 
-	@SneakyThrows
 	public Result<Page<MenuCO>> execute(MenuPageQry qry) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		CompletableFuture<List<MenuDO>> c1 = CompletableFuture
-			.supplyAsync(() -> menuMapper.selectPageByCondition(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> menuMapper.selectCountByCondition(qry),
-				executor);
-		return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(MenuConvertor::toClientObject).toList(),
-				c2.get(30, TimeUnit.SECONDS)));
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			CompletableFuture<List<MenuDO>> c1 = CompletableFuture
+				.supplyAsync(() -> menuMapper.selectPageByCondition(qry.index()), executor);
+			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> menuMapper.selectCountByCondition(qry),
+					executor);
+			return Result
+				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(MenuConvertor::toClientObject).toList(),
+						c2.get(30, TimeUnit.SECONDS)));
+		}
+		catch (Exception e) {
+			throw new SystemException("S_Menu_PageQueryTimeout", "菜单分页查询超时");
+		}
 	}
 
 }

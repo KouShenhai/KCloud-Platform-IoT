@@ -18,13 +18,13 @@
 package org.laokou.admin.ossLog.command.query;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.laokou.admin.ossLog.convertor.OssLogConvertor;
 import org.laokou.admin.ossLog.dto.OssLogPageQry;
 import org.laokou.admin.ossLog.dto.clientobject.OssLogCO;
 import org.laokou.admin.ossLog.gatewayimpl.database.OssLogMapper;
 import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -45,16 +45,19 @@ public class OssLogPageQryExe {
 
 	private final OssLogMapper ossLogMapper;
 
-	@SneakyThrows
 	public Result<Page<OssLogCO>> execute(OssLogPageQry qry) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		CompletableFuture<List<OssLogDO>> c1 = CompletableFuture
-			.supplyAsync(() -> ossLogMapper.selectPageByCondition(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ossLogMapper.selectCountByCondition(qry),
-				executor);
-		return Result
-			.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(OssLogConvertor::toClientObject).toList(),
-					c2.get(30, TimeUnit.SECONDS)));
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			CompletableFuture<List<OssLogDO>> c1 = CompletableFuture
+				.supplyAsync(() -> ossLogMapper.selectPageByCondition(qry.index()), executor);
+			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ossLogMapper.selectCountByCondition(qry),
+					executor);
+			return Result
+				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(OssLogConvertor::toClientObject).toList(),
+						c2.get(30, TimeUnit.SECONDS)));
+		}
+		catch (Exception e) {
+			throw new SystemException("S_OssLog_PageQueryTimeout", "OSS日志分页查询超时");
+		}
 	}
 
 }
