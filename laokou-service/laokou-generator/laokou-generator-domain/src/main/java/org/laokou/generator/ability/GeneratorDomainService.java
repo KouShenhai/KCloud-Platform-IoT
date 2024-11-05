@@ -83,17 +83,18 @@ public class GeneratorDomainService {
 	}
 
 	private void generateCode(GeneratorA generatorA, TableV tableV, List<Template> templates) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		// 更新表信息
-		generatorA.updateTable(tableV);
-		// 根据模板批量生成代码
-		templates.parallelStream().map(item -> CompletableFuture.runAsync(() -> {
-			String content = getContent(generatorA.toMap(), item.getTemplatePath(TEMPLATE_PATH));
-			// 写入文件
-			String directory = SOURCE_PATH + generatorA.getModuleName() + SLASH + item.getFileDirectory(generatorA);
-			File file = FileUtil.create(directory, item.getFileName(generatorA));
-			FileUtil.write(file, content.getBytes(StandardCharsets.UTF_8));
-		}, executor)).toList().forEach(CompletableFuture::join);
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			// 更新表信息
+			generatorA.updateTable(tableV);
+			// 根据模板批量生成代码
+			templates.parallelStream().map(item -> CompletableFuture.runAsync(() -> {
+				String content = getContent(generatorA.toMap(), item.getTemplatePath(TEMPLATE_PATH));
+				// 写入文件
+				String directory = SOURCE_PATH + generatorA.getModuleName() + SLASH + item.getFileDirectory(generatorA);
+				File file = FileUtil.create(directory, item.getFileName(generatorA));
+				FileUtil.write(file, content.getBytes(StandardCharsets.UTF_8));
+			}, executor)).toList().forEach(CompletableFuture::join);
+		}
 	}
 
 	@SneakyThrows
