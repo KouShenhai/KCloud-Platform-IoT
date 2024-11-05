@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- /*
+/*
  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,12 +14,25 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.generator.gatewayimpl.database.TableMapper">
 
-  <select id="selectObjects" resultType="org.laokou.generator.gatewayimpl.database.dataobject.TableDO">
-    SELECT '${tableName}' as name, obj_description('public.${tableName}'::regclass) as comment;
-  </select>
+package org.laokou.iot.productModel.command;
 
-</mapper>
+import lombok.RequiredArgsConstructor;
+import org.laokou.iot.productModel.dto.ProductModelExportCmd;
+import org.springframework.stereotype.Component;
+
+/**
+ *
+ * 导出产品模型命令执行器.
+ *
+ * @author laokou
+ */
+@Component
+@RequiredArgsConstructor
+public class ProductModelExportCmdExe {
+
+	public void executeVoid(ProductModelExportCmd cmd) {
+		// 校验参数
+	}
+
+}

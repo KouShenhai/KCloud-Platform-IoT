@@ -15,24 +15,35 @@
  *
  */
 
-package org.laokou.auth.command.query;
+package org.laokou.iot.productModel.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.idempotent.utils.IdempotentUtil;
+import org.laokou.iot.productModel.gateway.*;
+import org.laokou.iot.productModel.model.ProductModelE;
 import org.springframework.stereotype.Component;
 
 /**
+ *
+ * 产品模型领域服务.
+ *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class TokenGetQryExe {
+public class ProductModelDomainService {
 
-	private final IdempotentUtil idempotentUtil;
+	private final ProductModelGateway productModelGateway;
 
-	public Result<String> execute() {
-		return Result.ok(idempotentUtil.getIdempotentKey());
+	public void create(ProductModelE productModelE) {
+		productModelGateway.create(productModelE);
+	}
+
+	public void update(ProductModelE productModelE) {
+		productModelGateway.update(productModelE);
+	}
+
+	public void delete(Long[] ids) {
+		productModelGateway.delete(ids);
 	}
 
 }

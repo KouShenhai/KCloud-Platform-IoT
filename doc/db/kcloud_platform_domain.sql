@@ -3,16 +3,16 @@
 
  Source Server         : 127.0.0.1
  Source Server Type    : PostgreSQL
- Source Server Version : 160003 (160003)
+ Source Server Version : 160002 (160002)
  Source Host           : 127.0.0.1:5432
  Source Catalog        : kcloud_platform_domain
  Source Schema         : public
 
  Target Server Type    : PostgreSQL
- Target Server Version : 160003 (160003)
+ Target Server Version : 160002 (160002)
  File Encoding         : 65001
 
- Date: 04/11/2024 22:31:50
+ Date: 05/11/2024 10:25:26
 */
 
 
@@ -39,6 +39,17 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for boot_domain_event_id_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_domain_event_id_seq2";
+CREATE SEQUENCE "public"."boot_domain_event_id_seq2" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for boot_iot_device_event_log_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_device_event_log_id_seq";
@@ -50,10 +61,32 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for boot_iot_device_event_log_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_iot_device_event_log_id_seq1";
+CREATE SEQUENCE "public"."boot_iot_device_event_log_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for boot_iot_device_property_log_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_device_property_log_id_seq";
 CREATE SEQUENCE "public"."boot_iot_device_property_log_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_iot_device_property_log_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_iot_device_property_log_id_seq1";
+CREATE SEQUENCE "public"."boot_iot_device_property_log_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -127,6 +160,28 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for boot_sys_login_log_id_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_login_log_id_seq2";
+CREATE SEQUENCE "public"."boot_sys_login_log_id_seq2" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_sys_notice_log_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_notice_log_id_seq";
+CREATE SEQUENCE "public"."boot_sys_notice_log_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for boot_sys_operate_log_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_operate_log_id_seq";
@@ -142,6 +197,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_operate_log_id_seq1";
 CREATE SEQUENCE "public"."boot_sys_operate_log_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_sys_operate_log_id_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_operate_log_id_seq2";
+CREATE SEQUENCE "public"."boot_sys_operate_log_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -171,6 +237,17 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for boot_sys_oss_log_id_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_oss_log_id_seq2";
+CREATE SEQUENCE "public"."boot_sys_oss_log_id_seq2" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for boot_sys_sql_log_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_sql_log_id_seq";
@@ -186,6 +263,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_sql_log_id_seq1";
 CREATE SEQUENCE "public"."boot_sys_sql_log_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_sys_sql_log_id_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_sys_sql_log_id_seq2";
+CREATE SEQUENCE "public"."boot_sys_sql_log_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -573,6 +661,13 @@ SELECT setval('"public"."boot_domain_event_id_seq1"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_domain_event_id_seq2"
+OWNED BY "public"."boot_domain_event"."id";
+SELECT setval('"public"."boot_domain_event_id_seq2"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_iot_device_event_log_id_seq"
 OWNED BY "public"."boot_iot_device_event_log"."id";
 SELECT setval('"public"."boot_iot_device_event_log_id_seq"', 1, false);
@@ -580,9 +675,23 @@ SELECT setval('"public"."boot_iot_device_event_log_id_seq"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_iot_device_event_log_id_seq1"
+OWNED BY "public"."boot_iot_device_event_log"."id";
+SELECT setval('"public"."boot_iot_device_event_log_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_iot_device_property_log_id_seq"
 OWNED BY "public"."boot_iot_device_property_log"."id";
 SELECT setval('"public"."boot_iot_device_property_log_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."boot_iot_device_property_log_id_seq1"
+OWNED BY "public"."boot_iot_device_property_log"."id";
+SELECT setval('"public"."boot_iot_device_property_log_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -629,6 +738,20 @@ SELECT setval('"public"."boot_sys_login_log_id_seq1"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_login_log_id_seq2"
+OWNED BY "public"."boot_sys_login_log"."id";
+SELECT setval('"public"."boot_sys_login_log_id_seq2"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_notice_log_id_seq"
+OWNED BY "public"."boot_sys_notice_log"."id";
+SELECT setval('"public"."boot_sys_notice_log_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_sys_operate_log_id_seq"
 OWNED BY "public"."boot_sys_operate_log"."id";
 SELECT setval('"public"."boot_sys_operate_log_id_seq"', 1, false);
@@ -639,6 +762,13 @@ SELECT setval('"public"."boot_sys_operate_log_id_seq"', 1, false);
 ALTER SEQUENCE "public"."boot_sys_operate_log_id_seq1"
 OWNED BY "public"."boot_sys_operate_log"."id";
 SELECT setval('"public"."boot_sys_operate_log_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_operate_log_id_seq2"
+OWNED BY "public"."boot_sys_operate_log"."id";
+SELECT setval('"public"."boot_sys_operate_log_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -657,6 +787,13 @@ SELECT setval('"public"."boot_sys_oss_log_id_seq1"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_oss_log_id_seq2"
+OWNED BY "public"."boot_sys_oss_log"."id";
+SELECT setval('"public"."boot_sys_oss_log_id_seq2"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_sys_sql_log_id_seq"
 OWNED BY "public"."boot_sys_sql_log"."id";
 SELECT setval('"public"."boot_sys_sql_log_id_seq"', 1, false);
@@ -669,9 +806,16 @@ OWNED BY "public"."boot_sys_sql_log"."id";
 SELECT setval('"public"."boot_sys_sql_log_id_seq1"', 1, false);
 
 -- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."boot_sys_sql_log_id_seq2"
+OWNED BY "public"."boot_sys_sql_log"."id";
+SELECT setval('"public"."boot_sys_sql_log_id_seq2"', 1, false);
+
+-- ----------------------------
 -- Auto increment value for boot_domain_event
 -- ----------------------------
-SELECT setval('"public"."boot_domain_event_id_seq1"', 1, false);
+SELECT setval('"public"."boot_domain_event_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_domain_event
@@ -681,7 +825,7 @@ ALTER TABLE "public"."boot_domain_event" ADD CONSTRAINT "boot_domain_event_pkey"
 -- ----------------------------
 -- Auto increment value for boot_iot_device_event_log
 -- ----------------------------
-SELECT setval('"public"."boot_iot_device_event_log_id_seq"', 1, false);
+SELECT setval('"public"."boot_iot_device_event_log_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_iot_device_event_log
@@ -691,7 +835,7 @@ ALTER TABLE "public"."boot_iot_device_event_log" ADD CONSTRAINT "boot_iot_device
 -- ----------------------------
 -- Auto increment value for boot_iot_device_property_log
 -- ----------------------------
-SELECT setval('"public"."boot_iot_device_property_log_id_seq"', 1, false);
+SELECT setval('"public"."boot_iot_device_property_log_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_iot_device_property_log
@@ -701,24 +845,24 @@ ALTER TABLE "public"."boot_iot_device_property_log" ADD CONSTRAINT "boot_iot_dev
 -- ----------------------------
 -- Auto increment value for boot_sys_login_log
 -- ----------------------------
-SELECT setval('"public"."boot_sys_login_log_id_seq1"', 1, false);
+SELECT setval('"public"."boot_sys_login_log_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Auto increment value for boot_sys_notice_log
 -- ----------------------------
-SELECT setval('"public"."boot_sys_api_log_id_seq2"', 1, false);
+SELECT setval('"public"."boot_sys_notice_log_id_seq"', 1, false);
 
 -- ----------------------------
 -- Auto increment value for boot_sys_operate_log
 -- ----------------------------
-SELECT setval('"public"."boot_sys_operate_log_id_seq1"', 1, false);
+SELECT setval('"public"."boot_sys_operate_log_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Auto increment value for boot_sys_oss_log
 -- ----------------------------
-SELECT setval('"public"."boot_sys_oss_log_id_seq1"', 1, false);
+SELECT setval('"public"."boot_sys_oss_log_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Auto increment value for boot_sys_sql_log
 -- ----------------------------
-SELECT setval('"public"."boot_sys_sql_log_id_seq1"', 1, false);
+SELECT setval('"public"."boot_sys_sql_log_id_seq2"', 1, false);

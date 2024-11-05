@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- /*
+/*
  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,12 +14,26 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.generator.gatewayimpl.database.TableMapper">
 
-  <select id="selectObjects" resultType="org.laokou.generator.gatewayimpl.database.dataobject.TableDO">
-    SELECT '${tableName}' as name, obj_description('public.${tableName}'::regclass) as comment;
-  </select>
+package org.laokou.iot.productModel.dto;
 
-</mapper>
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
+import org.springframework.web.multipart.MultipartFile;
+
+/**
+ *
+ * 导入产品模型命令.
+ *
+ * @author laokou
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProductModelImportCmd extends CommonCommand {
+
+	private MultipartFile[] files;
+
+}

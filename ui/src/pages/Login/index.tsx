@@ -28,8 +28,6 @@ import {getTenantIdByDomainNameV3, listTenantOptionV3} from "@/services/auth/ten
 import {ProFormInstance, ProFormSelect} from "@ant-design/pro-form"
 // @ts-ignore
 import {clearToken, setToken} from "@/access"
-// @ts-ignore
-import {getTokenV3} from "@/services/auth/tokens"
 
 type LoginType = 'usernamePassword' | 'mobile' | 'mail';
 
@@ -51,10 +49,10 @@ export default () => {
 	const [uuid, setUuid] = useState<string>('');
 	const [publicKey, setPublicKey] = useState<string>('');
 	const [tenantOptions, setTenantOptions] = useState<API.TenantOptionParam[]>([])
-	const formRef = useRef<ProFormInstance>();
-	const [requestToken, setRequestToken] = useState<string>('')
+	const [requestId, setRequestId] = useState<string>('')
+    const formRef = useRef<ProFormInstance>();
 
-	const setFormField = (form: API.LoginParam) => {
+    const setFormField = (form: API.LoginParam) => {
 		formRef?.current?.setFieldsValue(form);
 	}
 
@@ -131,11 +129,8 @@ export default () => {
 		});
 	};
 
-	const getToken = async () => {
-		// @ts-ignore
-        getTokenV3().then((res: { data: React.SetStateAction<string>; }) => {
-			setRequestToken(res.data)
-		})
+	const getRequestId = async () => {
+        setRequestId(uuidV7())
 	}
 
 	const listTenantOption = async () => {
@@ -157,7 +152,7 @@ export default () => {
 			tag: 'mailCaptcha',
 			uuid: formRef?.current?.getFieldValue("mail")
 		}
-		sendCaptchaV3(param as API.SendCaptchaParam, requestToken).catch(console.log)
+		sendCaptchaV3(param as API.SendCaptchaParam, requestId).catch(console.log)
 	}
 
 	const sendMobileCaptcha = async () => {
@@ -166,7 +161,7 @@ export default () => {
 			tag: 'mobileCaptcha',
 			uuid: formRef?.current?.getFieldValue("mobile")
 		}
-		sendCaptchaV3(param as API.SendCaptchaParam, requestToken).catch(console.log)
+		sendCaptchaV3(param as API.SendCaptchaParam, requestId).catch(console.log)
 	}
 
 	const getTenantIdByDomain = async () => {
@@ -192,7 +187,7 @@ export default () => {
 		getPublicKey().catch(console.log)
 		getCaptchaImage().catch(console.log)
 		getTenantIdByDomain().catch(console.log)
-		getToken().catch(console.log)
+		getRequestId().catch(console.log)
 	}, []);
 
 	const onSubmit = async (form: API.LoginParam) => {

@@ -15,32 +15,26 @@
  *
  */
 
-package org.laokou.auth.service;
+package org.laokou.iot.productModel.gatewayimpl.database;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.auth.api.TokensServiceI;
-import org.laokou.auth.command.TokenRemoveCmdExe;
-import org.laokou.auth.dto.TokenRemoveCmd;
-import org.springframework.stereotype.Service;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
+import org.laokou.iot.productModel.gatewayimpl.database.dataobject.ProductModelDO;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
- * 退出登录.
+ *
+ * 产品模型数据库映射.
  *
  * @author laokou
  */
-@Service
-@RequiredArgsConstructor
-public class TokensServiceImpl implements TokensServiceI {
+@Mapper
+@Repository
+public interface ProductModelMapper extends CrudMapper<Long, Integer, ProductModelDO> {
 
-	private final TokenRemoveCmdExe tokenRemoveCmdExe;
-
-	/**
-	 * 移除Token.
-	 * @param cmd 退出登录参数
-	 */
-	@Override
-	public void removeToken(TokenRemoveCmd cmd) {
-		tokenRemoveCmdExe.executeVoid(cmd);
-	}
+	List<ProductModelDO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
 
 }

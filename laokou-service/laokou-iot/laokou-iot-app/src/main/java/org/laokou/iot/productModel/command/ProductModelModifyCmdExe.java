@@ -15,30 +15,29 @@
  *
  */
 
-package org.laokou.auth.web;
+package org.laokou.iot.productModel.command;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.api.TokensServiceI;
-import org.laokou.auth.dto.TokenRemoveCmd;
-import org.springframework.web.bind.annotation.*;
+import org.laokou.iot.productModel.dto.ProductModelModifyCmd;
+import org.springframework.stereotype.Component;
+import org.laokou.iot.productModel.convertor.ProductModelConvertor;
+import org.laokou.iot.productModel.ability.ProductModelDomainService;
 
 /**
+ *
+ * 修改产品模型命令执行器.
+ *
  * @author laokou
  */
-@RestController
+@Component
 @RequiredArgsConstructor
-@RequestMapping("v3/tokens")
-@Tag(name = "令牌管理", description = "令牌管理")
-public class TokensV3Controller {
+public class ProductModelModifyCmdExe {
 
-	private final TokensServiceI tokensServiceI;
+	private final ProductModelDomainService productModelDomainService;
 
-	@DeleteMapping
-	@Operation(summary = "删除令牌", description = "删除令牌")
-	public void removeTokenV3(@RequestBody TokenRemoveCmd cmd) {
-		tokensServiceI.removeToken(cmd);
+	public void executeVoid(ProductModelModifyCmd cmd) {
+		// 校验参数
+		productModelDomainService.update(ProductModelConvertor.toEntity(cmd.getCo()));
 	}
 
 }

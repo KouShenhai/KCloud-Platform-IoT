@@ -15,32 +15,55 @@
  *
  */
 
-package org.laokou.auth.service;
+package org.laokou.iot.product.gatewayimpl.database.dataobject;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.auth.api.TokensServiceI;
-import org.laokou.auth.command.TokenRemoveCmdExe;
-import org.laokou.auth.dto.TokenRemoveCmd;
-import org.springframework.stereotype.Service;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 /**
- * 退出登录.
+ *
+ * 产品数据对象.
  *
  * @author laokou
  */
-@Service
-@RequiredArgsConstructor
-public class TokensServiceImpl implements TokensServiceI {
-
-	private final TokenRemoveCmdExe tokenRemoveCmdExe;
+@Data
+@TableName("boot_iot_product")
+public class ProductDO extends BaseDO {
 
 	/**
-	 * 移除Token.
-	 * @param cmd 退出登录参数
+	 * 产品名称.
 	 */
-	@Override
-	public void removeToken(TokenRemoveCmd cmd) {
-		tokenRemoveCmdExe.executeVoid(cmd);
-	}
+	private String name;
+
+	/**
+	 * 产品类别.
+	 */
+	private Long categoryId;
+
+	/**
+	 * 设备类型 1直连设备 2网关设备 3监控设备.
+	 */
+	private Integer deviceType;
+
+	/**
+	 * 产品图片URL.
+	 */
+	private String imgUrl;
+
+	/**
+	 * 通讯协议ID.
+	 */
+	private Long cpId;
+
+	/**
+	 * 传输协议ID.
+	 */
+	private Long tpId;
+
+	/**
+	 * 备注.
+	 */
+	private String remark;
 
 }
