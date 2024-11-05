@@ -46,13 +46,18 @@ public class ModelPageQryExe {
 	private final ModelMapper modelMapper;
 
 	public Result<Page<ModelCO>> execute(ModelPageQry qry) {
-        try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-            CompletableFuture<List<ModelDO>> c1 = CompletableFuture.supplyAsync(() -> modelMapper.selectObjectPage(qry.index()), executor);
-            CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> modelMapper.selectObjectCount(qry), executor);
-            return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(ModelConvertor::toClientObject).toList(), c2.get(30, TimeUnit.SECONDS)));
-        } catch (Exception e) {
-            throw new SystemException("S_Model_PageQueryTimeout", "模型分页查询超时");
-        }
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			CompletableFuture<List<ModelDO>> c1 = CompletableFuture
+				.supplyAsync(() -> modelMapper.selectObjectPage(qry.index()), executor);
+			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> modelMapper.selectObjectCount(qry),
+					executor);
+			return Result
+				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(ModelConvertor::toClientObject).toList(),
+						c2.get(30, TimeUnit.SECONDS)));
+		}
+		catch (Exception e) {
+			throw new SystemException("S_Model_PageQueryTimeout", "模型分页查询超时");
+		}
 	}
 
 }

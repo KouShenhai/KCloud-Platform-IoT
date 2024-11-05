@@ -27,18 +27,18 @@ import org.laokou.iot.model.model.ModelE;
  */
 public interface ModelGateway {
 
-    /**
-     * 新增模型.
-     */
+	/**
+	 * 新增模型.
+	 */
 	void create(ModelE modelE);
 
-    /**
+	/**
 	 * 修改模型.
-     */
+	 */
 	void update(ModelE modelE);
 
 	/**
-     * 删除模型.
+	 * 删除模型.
 	 */
 	void delete(Long[] ids);
 

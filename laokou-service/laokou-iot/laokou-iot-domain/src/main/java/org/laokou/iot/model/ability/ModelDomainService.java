@@ -38,7 +38,7 @@ public class ModelDomainService {
 		modelGateway.create(modelE);
 	}
 
-    public void update(ModelE modelE) {
+	public void update(ModelE modelE) {
 		modelGateway.update(modelE);
 	}
 

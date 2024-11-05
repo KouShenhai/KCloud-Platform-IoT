@@ -26,18 +26,18 @@ import org.springframework.stereotype.Component;
 import org.laokou.iot.model.convertor.ModelConvertor;
 
 /**
-* 查看模型请求执行器.
-*
-* @author laokou
-*/
+ * 查看模型请求执行器.
+ *
+ * @author laokou
+ */
 @Component
 @RequiredArgsConstructor
 public class ModelGetQryExe {
 
-    private final ModelMapper modelMapper;
+	private final ModelMapper modelMapper;
 
-    public Result<ModelCO> execute(ModelGetQry qry) {
-	    return Result.ok(ModelConvertor.toClientObject(modelMapper.selectById(qry.getId())));
+	public Result<ModelCO> execute(ModelGetQry qry) {
+		return Result.ok(ModelConvertor.toClientObject(modelMapper.selectById(qry.getId())));
 	}
 
 }

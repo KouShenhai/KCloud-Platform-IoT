@@ -36,37 +36,38 @@ import java.time.Instant;
 @Schema(name = "模型客户端对象", description = "模型客户端对象")
 public class ModelCO extends ClientObject {
 
-    @Schema(name = "ID", description = "ID")
+	@Schema(name = "ID", description = "ID")
 	private Long id;
 
-    @Schema(name = "模型名称", description = "模型名称")
+	@Schema(name = "模型名称", description = "模型名称")
 	private String name;
 
-    @Schema(name = "模型编码", description = "模型编码")
+	@Schema(name = "模型编码", description = "模型编码")
 	private String code;
 
-    @Schema(name = "数据类型 integer string decimal boolean double", description = "数据类型 integer string decimal boolean double")
+	@Schema(name = "数据类型 integer string decimal boolean double",
+			description = "数据类型 integer string decimal boolean double")
 	private String dataType;
 
-    @Schema(name = "模型类别 1属性 2事件", description = "模型类别 1属性 2事件")
+	@Schema(name = "模型类别 1属性 2事件", description = "模型类别 1属性 2事件")
 	private Integer category;
 
-    @Schema(name = "读写类型 read读 write写", description = "读写类型 read读 write写")
+	@Schema(name = "读写类型 read读 write写", description = "读写类型 read读 write写")
 	private String rwType;
 
-    @Schema(name = "表达式", description = "表达式")
+	@Schema(name = "表达式", description = "表达式")
 	private String expression;
 
-    @Schema(name = "排序", description = "排序")
+	@Schema(name = "排序", description = "排序")
 	private Integer sort;
 
-    @Schema(name = "规则说明", description = "规则说明")
+	@Schema(name = "规则说明", description = "规则说明")
 	private String specs;
 
-    @Schema(name = "备注", description = "备注")
+	@Schema(name = "备注", description = "备注")
 	private String remark;
 
-    @Schema(name = "创建时间", description = "创建时间")
-    private Instant createTime;
+	@Schema(name = "创建时间", description = "创建时间")
+	private Instant createTime;
 
 }

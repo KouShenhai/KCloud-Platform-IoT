@@ -30,17 +30,18 @@ import org.laokou.iot.model.convertor.ModelConvertor;
 import org.laokou.iot.model.gatewayimpl.database.dataobject.ModelDO;
 
 /**
-*
-* 模型网关实现.
-*
-* @author laokou
-*/
+ *
+ * 模型网关实现.
+ *
+ * @author laokou
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class ModelGatewayImpl implements ModelGateway {
 
 	private final ModelMapper modelMapper;
+
 	private final TransactionalUtil transactionalUtil;
 
 	public void create(ModelE modelE) {

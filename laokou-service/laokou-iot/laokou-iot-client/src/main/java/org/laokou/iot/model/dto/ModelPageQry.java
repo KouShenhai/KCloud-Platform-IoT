@@ -29,50 +29,49 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Data
 public class ModelPageQry extends PageQuery {
 
+	/**
+	 * 模型名称.
+	 */
+	private String name;
 
-    /**
-    * 模型名称.
-    */
-    private String name;
+	/**
+	 * 模型编码.
+	 */
+	private String code;
 
-    /**
-    * 模型编码.
-    */
-    private String code;
+	/**
+	 * 数据类型 integer string decimal boolean double.
+	 */
+	private String dataType;
 
-    /**
-    * 数据类型 integer string decimal boolean double.
-    */
-    private String dataType;
+	/**
+	 * 模型类别 1属性 2事件.
+	 */
+	private Integer category;
 
-    /**
-    * 模型类别 1属性 2事件.
-    */
-    private Integer category;
+	/**
+	 * 读写类型 read读 write写.
+	 */
+	private String rwType;
 
-    /**
-    * 读写类型 read读 write写.
-    */
-    private String rwType;
+	/**
+	 * 表达式.
+	 */
+	private String expression;
 
-    /**
-    * 表达式.
-    */
-    private String expression;
+	/**
+	 * 排序.
+	 */
+	private Integer sort;
 
-    /**
-    * 排序.
-    */
-    private Integer sort;
+	/**
+	 * 规则说明.
+	 */
+	private String specs;
 
-    /**
-    * 规则说明.
-    */
-    private String specs;
-
-    /**
-    * 备注.
-    */
-    private String remark;
+	/**
+	 * 备注.
+	 */
+	private String remark;
 
 }

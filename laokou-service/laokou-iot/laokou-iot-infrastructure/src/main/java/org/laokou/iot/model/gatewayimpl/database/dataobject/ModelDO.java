@@ -31,7 +31,6 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 @TableName("boot_iot_model")
 public class ModelDO extends BaseDO {
 
-
 	/**
 	 * 模型名称.
 	 */
@@ -76,4 +75,5 @@ public class ModelDO extends BaseDO {
 	 * 备注.
 	 */
 	private String remark;
+
 }

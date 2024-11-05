@@ -52,7 +52,6 @@ public class ModelsServiceImpl implements ModelsServiceI {
 
 	private final ModelGetQryExe modelGetQryExe;
 
-
 	@Override
 	public void save(ModelSaveCmd cmd) {
 		modelSaveCmdExe.executeVoid(cmd);

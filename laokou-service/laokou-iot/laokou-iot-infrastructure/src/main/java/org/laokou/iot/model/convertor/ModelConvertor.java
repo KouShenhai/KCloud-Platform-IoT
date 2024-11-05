@@ -30,49 +30,50 @@ import org.laokou.iot.model.model.ModelE;
 public class ModelConvertor {
 
 	public static ModelDO toDataObject(ModelE modelE, boolean isInsert) {
-        ModelDO modelDO = new ModelDO();
+		ModelDO modelDO = new ModelDO();
 		if (isInsert) {
 			modelDO.generatorId();
-		} else {
-            modelDO.setId(modelE.getId());
-        }
-        modelDO.setName(modelE.getName());
-        modelDO.setCode(modelE.getCode());
-        modelDO.setDataType(modelE.getDataType());
-        modelDO.setCategory(modelE.getCategory());
-        modelDO.setRwType(modelE.getRwType());
-        modelDO.setExpression(modelE.getExpression());
-        modelDO.setSort(modelE.getSort());
-        modelDO.setSpecs(modelE.getSpecs());
-        modelDO.setRemark(modelE.getRemark());
-        return modelDO;
+		}
+		else {
+			modelDO.setId(modelE.getId());
+		}
+		modelDO.setName(modelE.getName());
+		modelDO.setCode(modelE.getCode());
+		modelDO.setDataType(modelE.getDataType());
+		modelDO.setCategory(modelE.getCategory());
+		modelDO.setRwType(modelE.getRwType());
+		modelDO.setExpression(modelE.getExpression());
+		modelDO.setSort(modelE.getSort());
+		modelDO.setSpecs(modelE.getSpecs());
+		modelDO.setRemark(modelE.getRemark());
+		return modelDO;
 	}
 
 	public static ModelCO toClientObject(ModelDO modelDO) {
-        ModelCO modelCO = new ModelCO();
-            modelCO.setName(modelDO.getName());
-            modelCO.setCode(modelDO.getCode());
-            modelCO.setDataType(modelDO.getDataType());
-            modelCO.setCategory(modelDO.getCategory());
-            modelCO.setRwType(modelDO.getRwType());
-            modelCO.setExpression(modelDO.getExpression());
-            modelCO.setSort(modelDO.getSort());
-            modelCO.setSpecs(modelDO.getSpecs());
-            modelCO.setRemark(modelDO.getRemark());
+		ModelCO modelCO = new ModelCO();
+		modelCO.setName(modelDO.getName());
+		modelCO.setCode(modelDO.getCode());
+		modelCO.setDataType(modelDO.getDataType());
+		modelCO.setCategory(modelDO.getCategory());
+		modelCO.setRwType(modelDO.getRwType());
+		modelCO.setExpression(modelDO.getExpression());
+		modelCO.setSort(modelDO.getSort());
+		modelCO.setSpecs(modelDO.getSpecs());
+		modelCO.setRemark(modelDO.getRemark());
 		return modelCO;
 	}
 
 	public static ModelE toEntity(ModelCO modelCO) {
-        ModelE modelE = new ModelE();
-            modelE.setName(modelCO.getName());
-            modelE.setCode(modelCO.getCode());
-            modelE.setDataType(modelCO.getDataType());
-            modelE.setCategory(modelCO.getCategory());
-            modelE.setRwType(modelCO.getRwType());
-            modelE.setExpression(modelCO.getExpression());
-            modelE.setSort(modelCO.getSort());
-            modelE.setSpecs(modelCO.getSpecs());
-            modelE.setRemark(modelCO.getRemark());
+		ModelE modelE = new ModelE();
+		modelE.setName(modelCO.getName());
+		modelE.setCode(modelCO.getCode());
+		modelE.setDataType(modelCO.getDataType());
+		modelE.setCategory(modelCO.getCategory());
+		modelE.setRwType(modelCO.getRwType());
+		modelE.setExpression(modelCO.getExpression());
+		modelE.setSort(modelCO.getSort());
+		modelE.setSpecs(modelCO.getSpecs());
+		modelE.setRemark(modelCO.getRemark());
 		return modelE;
 	}
 

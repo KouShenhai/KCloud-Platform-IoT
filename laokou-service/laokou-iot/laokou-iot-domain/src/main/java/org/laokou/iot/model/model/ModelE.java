@@ -29,53 +29,53 @@ import lombok.Data;
 public class ModelE {
 
 	/**
-     * ID.
+	 * ID.
 	 */
 	private Long id;
 
 	/**
-	* 模型名称.
-	*/
+	 * 模型名称.
+	 */
 	private String name;
 
 	/**
-	* 模型编码.
-	*/
+	 * 模型编码.
+	 */
 	private String code;
 
 	/**
-	* 数据类型 integer string decimal boolean double.
-	*/
+	 * 数据类型 integer string decimal boolean double.
+	 */
 	private String dataType;
 
 	/**
-	* 模型类别 1属性 2事件.
-	*/
+	 * 模型类别 1属性 2事件.
+	 */
 	private Integer category;
 
 	/**
-	* 读写类型 read读 write写.
-	*/
+	 * 读写类型 read读 write写.
+	 */
 	private String rwType;
 
 	/**
-	* 表达式.
-	*/
+	 * 表达式.
+	 */
 	private String expression;
 
 	/**
-	* 排序.
-	*/
+	 * 排序.
+	 */
 	private Integer sort;
 
 	/**
-	* 规则说明.
-	*/
+	 * 规则说明.
+	 */
 	private String specs;
 
 	/**
-	* 备注.
-	*/
+	 * 备注.
+	 */
 	private String remark;
 
 }

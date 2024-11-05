@@ -30,39 +30,39 @@ import org.laokou.iot.model.dto.clientobject.ModelCO;
  */
 public interface ModelsServiceI {
 
-    /**
-     * 保存模型.
-     * @param cmd 保存命令
-     */
+	/**
+	 * 保存模型.
+	 * @param cmd 保存命令
+	 */
 	void save(ModelSaveCmd cmd);
 
 	/**
 	 * 修改模型.
-     * @param cmd 修改命令
+	 * @param cmd 修改命令
 	 */
 	void modify(ModelModifyCmd cmd);
 
 	/**
 	 * 删除模型.
-     * @param cmd 删除命令
+	 * @param cmd 删除命令
 	 */
 	void remove(ModelRemoveCmd cmd);
 
 	/**
 	 * 导入模型.
-     * @param cmd 导入命令
+	 * @param cmd 导入命令
 	 */
 	void importI(ModelImportCmd cmd);
 
 	/**
 	 * 导出模型.
-     * @param cmd 导出命令
+	 * @param cmd 导出命令
 	 */
 	void export(ModelExportCmd cmd);
 
 	/**
 	 * 分页查询模型.
-     * @param qry 分页查询请求
+	 * @param qry 分页查询请求
 	 */
 	Result<Page<ModelCO>> page(ModelPageQry qry);
 
