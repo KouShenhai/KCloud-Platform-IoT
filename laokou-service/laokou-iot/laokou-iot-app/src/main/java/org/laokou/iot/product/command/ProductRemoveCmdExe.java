@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- /*
+/*
  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,12 +14,29 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.generator.gatewayimpl.database.TableMapper">
 
-  <select id="selectObjects" resultType="org.laokou.generator.gatewayimpl.database.dataobject.TableDO">
-    SELECT '${tableName}' as name, obj_description('public.${tableName}'::regclass) as comment;
-  </select>
+package org.laokou.iot.product.command;
 
-</mapper>
+import lombok.RequiredArgsConstructor;
+import org.laokou.iot.product.dto.ProductRemoveCmd;
+import org.springframework.stereotype.Component;
+import org.laokou.iot.product.ability.ProductDomainService;
+
+/**
+ *
+ * 删除产品命令执行器.
+ *
+ * @author laokou
+ */
+@Component
+@RequiredArgsConstructor
+public class ProductRemoveCmdExe {
+
+	private final ProductDomainService productDomainService;
+
+	public void executeVoid(ProductRemoveCmd cmd) {
+		// 校验参数
+		productDomainService.delete(cmd.getIds());
+	}
+
+}

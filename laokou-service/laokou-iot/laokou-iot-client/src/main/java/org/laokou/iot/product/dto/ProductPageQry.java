@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- /*
+/*
  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,12 +14,54 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.generator.gatewayimpl.database.TableMapper">
 
-  <select id="selectObjects" resultType="org.laokou.generator.gatewayimpl.database.dataobject.TableDO">
-    SELECT '${tableName}' as name, obj_description('public.${tableName}'::regclass) as comment;
-  </select>
+package org.laokou.iot.product.dto;
 
-</mapper>
+import lombok.Data;
+import org.laokou.common.i18n.dto.PageQuery;
+
+/**
+ *
+ * 分页查询产品命令.
+ *
+ * @author laokou
+ */
+@Data
+public class ProductPageQry extends PageQuery {
+
+	/**
+	 * 产品名称.
+	 */
+	private String name;
+
+	/**
+	 * 产品类别.
+	 */
+	private Long categoryId;
+
+	/**
+	 * 设备类型 1直连设备 2网关设备 3监控设备.
+	 */
+	private Integer deviceType;
+
+	/**
+	 * 产品图片URL.
+	 */
+	private String imgUrl;
+
+	/**
+	 * 通讯协议ID.
+	 */
+	private Long cpId;
+
+	/**
+	 * 传输协议ID.
+	 */
+	private Long tpId;
+
+	/**
+	 * 备注.
+	 */
+	private String remark;
+
+}

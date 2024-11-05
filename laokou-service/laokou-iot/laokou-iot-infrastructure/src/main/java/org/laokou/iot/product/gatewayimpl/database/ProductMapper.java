@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- /*
+/*
  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,12 +14,27 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.generator.gatewayimpl.database.TableMapper">
 
-  <select id="selectObjects" resultType="org.laokou.generator.gatewayimpl.database.dataobject.TableDO">
-    SELECT '${tableName}' as name, obj_description('public.${tableName}'::regclass) as comment;
-  </select>
+package org.laokou.iot.product.gatewayimpl.database;
 
-</mapper>
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
+import org.laokou.iot.product.gatewayimpl.database.dataobject.ProductDO;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.laokou.common.i18n.dto.PageQuery;
+
+/**
+ *
+ * 产品数据库映射.
+ *
+ * @author laokou
+ */
+@Mapper
+@Repository
+public interface ProductMapper extends CrudMapper<Long, Integer, ProductDO> {
+
+	List<ProductDO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
+
+}

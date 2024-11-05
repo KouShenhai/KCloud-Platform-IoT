@@ -50,7 +50,7 @@ public class NoticeLogsControllerV3 {
 	@ApiSecret
 	@Idempotent
 	@PostMapping
-	@PreAuthorize("hasAuthority('sys:api-log:save')")
+	@PreAuthorize("hasAuthority('sys:notice-log:save')")
 	@OperateLog(module = "通知日志管理", operation = "保存通知日志")
 	@Operation(summary = "保存通知日志", description = "保存通知日志")
 	public void saveV3(@RequestBody NoticeLogSaveCmd cmd) {
@@ -59,7 +59,7 @@ public class NoticeLogsControllerV3 {
 
 	@ApiSecret
 	@PutMapping
-	@PreAuthorize("hasAuthority('sys:api-log:modify')")
+	@PreAuthorize("hasAuthority('sys:notice-log:modify')")
 	@OperateLog(module = "通知日志管理", operation = "修改通知日志")
 	@Operation(summary = "修改通知日志", description = "修改通知日志")
 	public void modifyV3(@RequestBody NoticeLogModifyCmd cmd) {
@@ -67,7 +67,7 @@ public class NoticeLogsControllerV3 {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('sys:api-log:remove')")
+	@PreAuthorize("hasAuthority('sys:notice-log:remove')")
 	@OperateLog(module = "通知日志管理", operation = "删除通知日志")
 	@Operation(summary = "删除通知日志", description = "删除通知日志")
 	public void removeV3(@RequestBody Long[] ids) {
@@ -76,7 +76,7 @@ public class NoticeLogsControllerV3 {
 
 	@ApiSecret
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:api-log:import')")
+	@PreAuthorize("hasAuthority('sys:notice-log:import')")
 	@OperateLog(module = "通知日志管理", operation = "导入通知日志")
 	@Operation(summary = "导入通知日志", description = "导入通知日志")
 	public void importV3(@RequestPart("file") MultipartFile[] files) {
@@ -84,7 +84,7 @@ public class NoticeLogsControllerV3 {
 	}
 
 	@PostMapping("export")
-	@PreAuthorize("hasAuthority('sys:api-log:export')")
+	@PreAuthorize("hasAuthority('sys:notice-log:export')")
 	@OperateLog(module = "通知日志管理", operation = "导出通知日志")
 	@Operation(summary = "导出通知日志", description = "导出通知日志")
 	public void exportV3(@RequestBody NoticeLogExportCmd cmd) {
@@ -93,7 +93,7 @@ public class NoticeLogsControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('sys:api-log:page')")
+	@PreAuthorize("hasAuthority('sys:notice-log:page')")
 	@Operation(summary = "分页查询通知日志列表", description = "分页查询通知日志列表")
 	public Result<Page<NoticeLogCO>> pageV3(@RequestBody NoticeLogPageQry qry) {
 		return noticeLogsServiceI.page(qry);

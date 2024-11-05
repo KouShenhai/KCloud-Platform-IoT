@@ -15,30 +15,29 @@
  *
  */
 
-package org.laokou.auth.web;
+package org.laokou.iot.product.command.query;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.api.TokensServiceI;
-import org.laokou.auth.dto.TokenRemoveCmd;
-import org.springframework.web.bind.annotation.*;
+import org.laokou.iot.product.dto.ProductGetQry;
+import org.laokou.iot.product.dto.clientobject.ProductCO;
+import org.laokou.iot.product.gatewayimpl.database.ProductMapper;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Component;
+import org.laokou.iot.product.convertor.ProductConvertor;
 
 /**
+ * 查看产品请求执行器.
+ *
  * @author laokou
  */
-@RestController
+@Component
 @RequiredArgsConstructor
-@RequestMapping("v3/tokens")
-@Tag(name = "令牌管理", description = "令牌管理")
-public class TokensV3Controller {
+public class ProductGetQryExe {
 
-	private final TokensServiceI tokensServiceI;
+	private final ProductMapper productMapper;
 
-	@DeleteMapping
-	@Operation(summary = "删除令牌", description = "删除令牌")
-	public void removeTokenV3(@RequestBody TokenRemoveCmd cmd) {
-		tokensServiceI.removeToken(cmd);
+	public Result<ProductCO> execute(ProductGetQry qry) {
+		return Result.ok(ProductConvertor.toClientObject(productMapper.selectById(qry.getId())));
 	}
 
 }
