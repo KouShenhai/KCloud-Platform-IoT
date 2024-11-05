@@ -12,15 +12,26 @@
  Target Server Version : 160002 (160002)
  File Encoding         : 65001
 
- Date: 05/11/2024 13:46:19
+ Date: 05/11/2024 17:01:00
 */
 
+
+-- ----------------------------
+-- Sequence structure for boot_iot_cp_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_iot_cp_id_seq";
+CREATE SEQUENCE "public"."boot_iot_cp_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
 
 -- ----------------------------
 -- Sequence structure for boot_iot_device_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_device_id_seq";
-CREATE SEQUENCE "public"."boot_iot_device_id_seq"
+CREATE SEQUENCE "public"."boot_iot_device_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -31,7 +42,7 @@ CACHE 1;
 -- Sequence structure for boot_iot_device_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_device_id_seq1";
-CREATE SEQUENCE "public"."boot_iot_device_id_seq1"
+CREATE SEQUENCE "public"."boot_iot_device_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -42,7 +53,18 @@ CACHE 1;
 -- Sequence structure for boot_iot_device_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_device_id_seq2";
-CREATE SEQUENCE "public"."boot_iot_device_id_seq2"
+CREATE SEQUENCE "public"."boot_iot_device_id_seq2" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_iot_device_id_seq3
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_iot_device_id_seq3";
+CREATE SEQUENCE "public"."boot_iot_device_id_seq3" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -53,7 +75,7 @@ CACHE 1;
 -- Sequence structure for boot_iot_model_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_model_id_seq";
-CREATE SEQUENCE "public"."boot_iot_model_id_seq"
+CREATE SEQUENCE "public"."boot_iot_model_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -64,7 +86,18 @@ CACHE 1;
 -- Sequence structure for boot_iot_model_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_model_id_seq1";
-CREATE SEQUENCE "public"."boot_iot_model_id_seq1"
+CREATE SEQUENCE "public"."boot_iot_model_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_iot_model_id_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_iot_model_id_seq2";
+CREATE SEQUENCE "public"."boot_iot_model_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -75,7 +108,7 @@ CACHE 1;
 -- Sequence structure for boot_iot_network_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_network_id_seq";
-CREATE SEQUENCE "public"."boot_iot_network_id_seq"
+CREATE SEQUENCE "public"."boot_iot_network_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -86,7 +119,18 @@ CACHE 1;
 -- Sequence structure for boot_iot_network_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_network_id_seq1";
-CREATE SEQUENCE "public"."boot_iot_network_id_seq1"
+CREATE SEQUENCE "public"."boot_iot_network_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_iot_product_category_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_iot_product_category_id_seq";
+CREATE SEQUENCE "public"."boot_iot_product_category_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -97,7 +141,7 @@ CACHE 1;
 -- Sequence structure for boot_iot_product_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_product_id_seq";
-CREATE SEQUENCE "public"."boot_iot_product_id_seq"
+CREATE SEQUENCE "public"."boot_iot_product_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -108,7 +152,18 @@ CACHE 1;
 -- Sequence structure for boot_iot_product_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_product_id_seq1";
-CREATE SEQUENCE "public"."boot_iot_product_id_seq1"
+CREATE SEQUENCE "public"."boot_iot_product_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_iot_product_id_seq2
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_iot_product_id_seq2";
+CREATE SEQUENCE "public"."boot_iot_product_id_seq2" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -119,7 +174,18 @@ CACHE 1;
 -- Sequence structure for boot_iot_product_model_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_product_model_id_seq";
-CREATE SEQUENCE "public"."boot_iot_product_model_id_seq"
+CREATE SEQUENCE "public"."boot_iot_product_model_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_iot_product_model_id_seq1
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_iot_product_model_id_seq1";
+CREATE SEQUENCE "public"."boot_iot_product_model_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -130,7 +196,7 @@ CACHE 1;
 -- Sequence structure for boot_iot_product_type_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_product_type_id_seq";
-CREATE SEQUENCE "public"."boot_iot_product_type_id_seq"
+CREATE SEQUENCE "public"."boot_iot_product_type_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -141,7 +207,7 @@ CACHE 1;
 -- Sequence structure for boot_iot_product_type_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_product_type_id_seq1";
-CREATE SEQUENCE "public"."boot_iot_product_type_id_seq1"
+CREATE SEQUENCE "public"."boot_iot_product_type_id_seq1" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -152,7 +218,7 @@ CACHE 1;
 -- Sequence structure for boot_iot_protocol_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_protocol_id_seq";
-CREATE SEQUENCE "public"."boot_iot_protocol_id_seq"
+CREATE SEQUENCE "public"."boot_iot_protocol_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -163,7 +229,18 @@ CACHE 1;
 -- Sequence structure for boot_iot_protocol_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_protocol_id_seq1";
-CREATE SEQUENCE "public"."boot_iot_protocol_id_seq1"
+CREATE SEQUENCE "public"."boot_iot_protocol_id_seq1" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for boot_iot_tp_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."boot_iot_tp_id_seq";
+CREATE SEQUENCE "public"."boot_iot_tp_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -225,7 +302,7 @@ CACHE 1
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
   "sn" varchar(64) COLLATE "pg_catalog"."default" NOT NULL,
-  "name" varchar(20) COLLATE "pg_catalog"."default" NOT NULL,
+  "name" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
   "status" int2 NOT NULL DEFAULT 0,
   "longitude" float8,
   "latitude" float8,
@@ -331,7 +408,7 @@ CACHE 1
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
-  "name" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
+  "name" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
   "category_id" int8 NOT NULL,
   "device_type" int2 NOT NULL,
   "img_url" varchar(400) COLLATE "pg_catalog"."default",
@@ -379,7 +456,11 @@ CACHE 1
   "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
-  "tenant_id" int8 NOT NULL DEFAULT 0
+  "tenant_id" int8 NOT NULL DEFAULT 0,
+  "name" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
+  "sort" int4 NOT NULL,
+  "pid" int8 NOT NULL,
+  "remark" varchar(400) COLLATE "pg_catalog"."default"
 )
 ;
 COMMENT ON COLUMN "public"."boot_iot_product_category"."id" IS 'ID';
@@ -390,6 +471,10 @@ COMMENT ON COLUMN "public"."boot_iot_product_category"."update_time" IS '修改�
 COMMENT ON COLUMN "public"."boot_iot_product_category"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."boot_iot_product_category"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_iot_product_category"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."name" IS '产品类别名称';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."sort" IS '排序';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."pid" IS '产品类别父节点ID';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."remark" IS '备注';
 COMMENT ON TABLE "public"."boot_iot_product_category" IS '产品类别';
 
 -- ----------------------------
@@ -473,6 +558,13 @@ COMMENT ON TABLE "public"."boot_iot_tp" IS '传输协议';
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_iot_cp_id_seq"
+OWNED BY "public"."boot_iot_cp"."id";
+SELECT setval('"public"."boot_iot_cp_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_iot_device_id_seq"
 OWNED BY "public"."boot_iot_device"."id";
 SELECT setval('"public"."boot_iot_device_id_seq"', 1, false);
@@ -494,6 +586,13 @@ SELECT setval('"public"."boot_iot_device_id_seq2"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_iot_device_id_seq3"
+OWNED BY "public"."boot_iot_device"."id";
+SELECT setval('"public"."boot_iot_device_id_seq3"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_iot_model_id_seq"
 OWNED BY "public"."boot_iot_model"."id";
 SELECT setval('"public"."boot_iot_model_id_seq"', 1, false);
@@ -504,6 +603,13 @@ SELECT setval('"public"."boot_iot_model_id_seq"', 1, false);
 ALTER SEQUENCE "public"."boot_iot_model_id_seq1"
 OWNED BY "public"."boot_iot_model"."id";
 SELECT setval('"public"."boot_iot_model_id_seq1"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."boot_iot_model_id_seq2"
+OWNED BY "public"."boot_iot_model"."id";
+SELECT setval('"public"."boot_iot_model_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -522,6 +628,13 @@ SELECT setval('"public"."boot_iot_network_id_seq1"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_iot_product_category_id_seq"
+OWNED BY "public"."boot_iot_product_category"."id";
+SELECT setval('"public"."boot_iot_product_category_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_iot_product_id_seq"
 OWNED BY "public"."boot_iot_product"."id";
 SELECT setval('"public"."boot_iot_product_id_seq"', 1, false);
@@ -536,9 +649,23 @@ SELECT setval('"public"."boot_iot_product_id_seq1"', 1, false);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."boot_iot_product_id_seq2"
+OWNED BY "public"."boot_iot_product"."id";
+SELECT setval('"public"."boot_iot_product_id_seq2"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."boot_iot_product_model_id_seq"
 OWNED BY "public"."boot_iot_product_model"."id";
 SELECT setval('"public"."boot_iot_product_model_id_seq"', 1, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."boot_iot_product_model_id_seq1"
+OWNED BY "public"."boot_iot_product_model"."id";
+SELECT setval('"public"."boot_iot_product_model_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -569,9 +696,16 @@ OWNED BY "public"."boot_iot_cp"."id";
 SELECT setval('"public"."boot_iot_protocol_id_seq1"', 1, false);
 
 -- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."boot_iot_tp_id_seq"
+OWNED BY "public"."boot_iot_tp"."id";
+SELECT setval('"public"."boot_iot_tp_id_seq"', 1, false);
+
+-- ----------------------------
 -- Auto increment value for boot_iot_cp
 -- ----------------------------
-SELECT setval('"public"."boot_iot_protocol_id_seq1"', 1, false);
+SELECT setval('"public"."boot_iot_cp_id_seq"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_iot_cp
@@ -581,7 +715,7 @@ ALTER TABLE "public"."boot_iot_cp" ADD CONSTRAINT "boot_iot_protocol_pkey" PRIMA
 -- ----------------------------
 -- Auto increment value for boot_iot_device
 -- ----------------------------
-SELECT setval('"public"."boot_iot_device_id_seq2"', 1, false);
+SELECT setval('"public"."boot_iot_device_id_seq3"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_iot_device
@@ -591,7 +725,7 @@ ALTER TABLE "public"."boot_iot_device" ADD CONSTRAINT "boot_iot_device_pkey" PRI
 -- ----------------------------
 -- Auto increment value for boot_iot_model
 -- ----------------------------
-SELECT setval('"public"."boot_iot_model_id_seq1"', 1, false);
+SELECT setval('"public"."boot_iot_model_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table boot_iot_model
@@ -611,7 +745,7 @@ ALTER TABLE "public"."boot_iot_model" ADD CONSTRAINT "boot_iot_model_pkey" PRIMA
 -- ----------------------------
 -- Auto increment value for boot_iot_product
 -- ----------------------------
-SELECT setval('"public"."boot_iot_product_id_seq1"', 1, false);
+SELECT setval('"public"."boot_iot_product_id_seq2"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_iot_product
@@ -621,7 +755,7 @@ ALTER TABLE "public"."boot_iot_product" ADD CONSTRAINT "boot_iot_product_pkey" P
 -- ----------------------------
 -- Auto increment value for boot_iot_product_category
 -- ----------------------------
-SELECT setval('"public"."boot_iot_product_type_id_seq1"', 1, false);
+SELECT setval('"public"."boot_iot_product_category_id_seq"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_iot_product_category
@@ -631,7 +765,7 @@ ALTER TABLE "public"."boot_iot_product_category" ADD CONSTRAINT "boot_iot_produc
 -- ----------------------------
 -- Auto increment value for boot_iot_product_model
 -- ----------------------------
-SELECT setval('"public"."boot_iot_product_model_id_seq"', 1, false);
+SELECT setval('"public"."boot_iot_product_model_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_iot_product_model
@@ -641,7 +775,7 @@ ALTER TABLE "public"."boot_iot_product_model" ADD CONSTRAINT "boot_iot_product_m
 -- ----------------------------
 -- Auto increment value for boot_iot_tp
 -- ----------------------------
-SELECT setval('"public"."boot_iot_network_id_seq1"', 1, false);
+SELECT setval('"public"."boot_iot_tp_id_seq"', 1, false);
 
 -- ----------------------------
 -- Primary Key structure for table boot_iot_tp
