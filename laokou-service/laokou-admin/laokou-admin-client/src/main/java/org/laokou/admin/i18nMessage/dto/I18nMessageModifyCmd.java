@@ -22,7 +22,7 @@ import org.laokou.admin.i18nMessage.dto.clientobject.I18nMessageCO;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
- * 修改国际化命令.
+ * 修改国际化消息命令.
  *
  * @author laokou
  */

@@ -22,7 +22,7 @@ import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 /**
- * 国际化数据对象.
+ * 国际化消息数据对象.
  *
  * @author laokou
  */

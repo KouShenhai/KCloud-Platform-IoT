@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * 国际化数据库映射.
+ * 国际化消息数据库映射.
  *
  * @author laokou
  */

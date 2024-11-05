@@ -18,13 +18,13 @@
 package org.laokou.admin.dict.command.query;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.laokou.admin.dict.convertor.DictConvertor;
 import org.laokou.admin.dict.dto.DictPageQry;
 import org.laokou.admin.dict.dto.clientobject.DictCO;
 import org.laokou.admin.dict.gatewayimpl.database.DictMapper;
 import org.laokou.admin.dict.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -45,15 +45,19 @@ public class DictPageQryExe {
 
 	private final DictMapper dictMapper;
 
-	@SneakyThrows
 	public Result<Page<DictCO>> execute(DictPageQry qry) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		CompletableFuture<List<DictDO>> c1 = CompletableFuture
-			.supplyAsync(() -> dictMapper.selectPageByCondition(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> dictMapper.selectCountByCondition(qry),
-				executor);
-		return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(DictConvertor::toClientObject).toList(),
-				c2.get(30, TimeUnit.SECONDS)));
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			CompletableFuture<List<DictDO>> c1 = CompletableFuture
+				.supplyAsync(() -> dictMapper.selectPageByCondition(qry.index()), executor);
+			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> dictMapper.selectCountByCondition(qry),
+					executor);
+			return Result
+				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(DictConvertor::toClientObject).toList(),
+						c2.get(30, TimeUnit.SECONDS)));
+		}
+		catch (Exception e) {
+			throw new SystemException("S_Dict_PageQueryTimeout", "字典分页查询超时");
+		}
 	}
 
 }

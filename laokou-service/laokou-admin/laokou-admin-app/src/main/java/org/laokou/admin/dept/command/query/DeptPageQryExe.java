@@ -18,13 +18,13 @@
 package org.laokou.admin.dept.command.query;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.laokou.admin.dept.convertor.DeptConvertor;
 import org.laokou.admin.dept.dto.DeptPageQry;
 import org.laokou.admin.dept.dto.clientobject.DeptCO;
 import org.laokou.admin.dept.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -45,15 +45,19 @@ public class DeptPageQryExe {
 
 	private final DeptMapper deptMapper;
 
-	@SneakyThrows
 	public Result<Page<DeptCO>> execute(DeptPageQry qry) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		CompletableFuture<List<DeptDO>> c1 = CompletableFuture
-			.supplyAsync(() -> deptMapper.selectPageByCondition(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> deptMapper.selectCountByCondition(qry),
-				executor);
-		return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(DeptConvertor::toClientObject).toList(),
-				c2.get(30, TimeUnit.SECONDS)));
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			CompletableFuture<List<DeptDO>> c1 = CompletableFuture
+				.supplyAsync(() -> deptMapper.selectPageByCondition(qry.index()), executor);
+			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> deptMapper.selectCountByCondition(qry),
+					executor);
+			return Result
+				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(DeptConvertor::toClientObject).toList(),
+						c2.get(30, TimeUnit.SECONDS)));
+		}
+		catch (Exception e) {
+			throw new SystemException("S_Dept_PageQueryTimeout", "部门分页查询超时");
+		}
 	}
 
 }

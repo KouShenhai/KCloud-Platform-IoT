@@ -22,7 +22,7 @@ import org.laokou.admin.i18nMessage.dto.I18nMessageImportCmd;
 import org.springframework.stereotype.Component;
 
 /**
- * 导入国际化命令执行器.
+ * 导入国际化消息命令执行器.
  *
  * @author laokou
  */

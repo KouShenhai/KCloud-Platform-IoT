@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
- * 国际化客户端对象.
+ * 国际化消息客户端对象.
  *
  * @author laokou
  */

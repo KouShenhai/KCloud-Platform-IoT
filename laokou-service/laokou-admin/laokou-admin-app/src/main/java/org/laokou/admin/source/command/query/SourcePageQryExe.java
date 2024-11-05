@@ -18,13 +18,13 @@
 package org.laokou.admin.source.command.query;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.laokou.admin.source.convertor.SourceConvertor;
 import org.laokou.admin.source.dto.SourcePageQry;
 import org.laokou.admin.source.dto.clientobject.SourceCO;
 import org.laokou.admin.source.gatewayimpl.database.SourceMapper;
 import org.laokou.admin.source.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -45,16 +45,19 @@ public class SourcePageQryExe {
 
 	private final SourceMapper sourceMapper;
 
-	@SneakyThrows
 	public Result<Page<SourceCO>> execute(SourcePageQry qry) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		CompletableFuture<List<SourceDO>> c1 = CompletableFuture
-			.supplyAsync(() -> sourceMapper.selectPageByCondition(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> sourceMapper.selectCountByCondition(qry),
-				executor);
-		return Result
-			.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(SourceConvertor::toClientObject).toList(),
-					c2.get(30, TimeUnit.SECONDS)));
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			CompletableFuture<List<SourceDO>> c1 = CompletableFuture
+				.supplyAsync(() -> sourceMapper.selectPageByCondition(qry.index()), executor);
+			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> sourceMapper.selectCountByCondition(qry),
+					executor);
+			return Result
+				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(SourceConvertor::toClientObject).toList(),
+						c2.get(30, TimeUnit.SECONDS)));
+		}
+		catch (Exception e) {
+			throw new SystemException("S_Source_PageQueryTimeout", "数据源分页查询超时");
+		}
 	}
 
 }

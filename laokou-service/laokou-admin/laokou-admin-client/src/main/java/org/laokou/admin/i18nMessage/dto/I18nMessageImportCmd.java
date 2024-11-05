@@ -24,7 +24,7 @@ import org.laokou.common.i18n.dto.CommonCommand;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 导入国际化命令.
+ * 导入国际化消息命令.
  *
  * @author laokou
  */

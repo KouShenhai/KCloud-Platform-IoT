@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
- * 删除国际化命令.
+ * 删除国际化消息命令.
  *
  * @author laokou
  */

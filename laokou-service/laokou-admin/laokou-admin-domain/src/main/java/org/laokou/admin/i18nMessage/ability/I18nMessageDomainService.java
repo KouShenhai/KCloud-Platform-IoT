@@ -23,7 +23,7 @@ import org.laokou.admin.i18nMessage.model.I18nMessageE;
 import org.springframework.stereotype.Component;
 
 /**
- * 国际化领域服务.
+ * 国际化消息领域服务.
  *
  * @author laokou
  */

@@ -23,50 +23,50 @@ import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
 /**
- * 国际化接口.
+ * 国际化消息接口.
  *
  * @author laokou
  */
 public interface I18nMessagesServiceI {
 
 	/**
-	 * 保存国际化.
+	 * 保存国际化消息.
 	 * @param cmd 保存命令
 	 */
 	void save(I18nMessageSaveCmd cmd);
 
 	/**
-	 * 修改国际化.
+	 * 修改国际化消息.
 	 * @param cmd 修改命令
 	 */
 	void modify(I18nMessageModifyCmd cmd);
 
 	/**
-	 * 删除国际化.
+	 * 删除国际化消息.
 	 * @param cmd 删除命令
 	 */
 	void remove(I18nMessageRemoveCmd cmd);
 
 	/**
-	 * 导入国际化.
+	 * 导入国际化消息.
 	 * @param cmd 导入命令
 	 */
 	void importI(I18nMessageImportCmd cmd);
 
 	/**
-	 * 导出国际化.
+	 * 导出国际化消息.
 	 * @param cmd 导出命令
 	 */
 	void export(I18nMessageExportCmd cmd);
 
 	/**
-	 * 分页查询国际化.
+	 * 分页查询国际化消息.
 	 * @param qry 分页查询请求
 	 */
 	Result<Page<I18nMessageCO>> page(I18nMessagePageQry qry);
 
 	/**
-	 * 查看国际化.
+	 * 查看国际化消息.
 	 * @param qry 查看请求
 	 */
 	Result<I18nMessageCO> getById(I18nMessageGetQry qry);

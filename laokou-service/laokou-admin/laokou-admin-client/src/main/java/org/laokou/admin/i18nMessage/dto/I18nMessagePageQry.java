@@ -21,7 +21,7 @@ import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 
 /**
- * 分页查询国际化命令.
+ * 分页查询国际化消息命令.
  *
  * @author laokou
  */
