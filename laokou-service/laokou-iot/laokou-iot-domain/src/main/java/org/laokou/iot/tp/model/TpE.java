@@ -29,53 +29,53 @@ import lombok.Data;
 public class TpE {
 
 	/**
-     * ID.
+	 * ID.
 	 */
 	private Long id;
 
 	/**
-	* 协议名称.
-	*/
+	 * 协议名称.
+	 */
 	private String name;
 
 	/**
-	* 协议类型 udp/tcp/websocket/mqtt_client/http/mqtt_server/coap.
-	*/
+	 * 协议类型 udp/tcp/websocket/mqtt_client/http/mqtt_server/coap.
+	 */
 	private String type;
 
 	/**
-	* 主机.
-	*/
+	 * 主机.
+	 */
 	private String host;
 
 	/**
-	* 端口.
-	*/
+	 * 端口.
+	 */
 	private String port;
 
 	/**
-	* 客户端ID.
-	*/
+	 * 客户端ID.
+	 */
 	private String clientId;
 
 	/**
-	* 主题.
-	*/
+	 * 主题.
+	 */
 	private String topic;
 
 	/**
-	* 用户名.
-	*/
+	 * 用户名.
+	 */
 	private String username;
 
 	/**
-	* 密码.
-	*/
+	 * 密码.
+	 */
 	private String password;
 
 	/**
-	* 备注.
-	*/
+	 * 备注.
+	 */
 	private String remark;
 
 }

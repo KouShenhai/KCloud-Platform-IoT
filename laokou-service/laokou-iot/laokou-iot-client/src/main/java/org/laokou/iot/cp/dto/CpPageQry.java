@@ -29,25 +29,24 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Data
 public class CpPageQry extends PageQuery {
 
+	/**
+	 * 协议名称.
+	 */
+	private String name;
 
-    /**
-    * 协议名称.
-    */
-    private String name;
+	/**
+	 * 协议编码.
+	 */
+	private String code;
 
-    /**
-    * 协议编码.
-    */
-    private String code;
+	/**
+	 * 排序.
+	 */
+	private Integer sort;
 
-    /**
-    * 排序.
-    */
-    private Integer sort;
-
-    /**
-    * 备注.
-    */
-    private String remark;
+	/**
+	 * 备注.
+	 */
+	private String remark;
 
 }

@@ -36,22 +36,22 @@ import java.time.Instant;
 @Schema(name = "通讯协议客户端对象", description = "通讯协议客户端对象")
 public class CpCO extends ClientObject {
 
-    @Schema(name = "ID", description = "ID")
+	@Schema(name = "ID", description = "ID")
 	private Long id;
 
-    @Schema(name = "协议名称", description = "协议名称")
+	@Schema(name = "协议名称", description = "协议名称")
 	private String name;
 
-    @Schema(name = "协议编码", description = "协议编码")
+	@Schema(name = "协议编码", description = "协议编码")
 	private String code;
 
-    @Schema(name = "排序", description = "排序")
+	@Schema(name = "排序", description = "排序")
 	private Integer sort;
 
-    @Schema(name = "备注", description = "备注")
+	@Schema(name = "备注", description = "备注")
 	private String remark;
 
-    @Schema(name = "创建时间", description = "创建时间")
-    private Instant createTime;
+	@Schema(name = "创建时间", description = "创建时间")
+	private Instant createTime;
 
 }

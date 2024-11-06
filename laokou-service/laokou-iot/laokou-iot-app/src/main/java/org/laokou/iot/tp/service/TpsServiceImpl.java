@@ -52,7 +52,6 @@ public class TpsServiceImpl implements TpsServiceI {
 
 	private final TpGetQryExe tpGetQryExe;
 
-
 	@Override
 	public void save(TpSaveCmd cmd) {
 		tpSaveCmdExe.executeVoid(cmd);

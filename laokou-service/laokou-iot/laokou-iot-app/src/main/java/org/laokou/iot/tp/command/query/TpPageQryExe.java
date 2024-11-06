@@ -46,13 +46,17 @@ public class TpPageQryExe {
 	private final TpMapper tpMapper;
 
 	public Result<Page<TpCO>> execute(TpPageQry qry) {
-        try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-            CompletableFuture<List<TpDO>> c1 = CompletableFuture.supplyAsync(() -> tpMapper.selectObjectPage(qry.index()), executor);
-            CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> tpMapper.selectObjectCount(qry), executor);
-            return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(TpConvertor::toClientObject).toList(), c2.get(30, TimeUnit.SECONDS)));
-        } catch (Exception e) {
-            throw new SystemException("S_Tp_PageQueryTimeout", "传输协议分页查询超时");
-        }
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			CompletableFuture<List<TpDO>> c1 = CompletableFuture
+				.supplyAsync(() -> tpMapper.selectObjectPage(qry.index()), executor);
+			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> tpMapper.selectObjectCount(qry), executor);
+			return Result
+				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(TpConvertor::toClientObject).toList(),
+						c2.get(30, TimeUnit.SECONDS)));
+		}
+		catch (Exception e) {
+			throw new SystemException("S_Tp_PageQueryTimeout", "传输协议分页查询超时");
+		}
 	}
 
 }

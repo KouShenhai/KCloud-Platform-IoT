@@ -30,39 +30,39 @@ import org.laokou.iot.tp.dto.clientobject.TpCO;
  */
 public interface TpsServiceI {
 
-    /**
-     * 保存传输协议.
-     * @param cmd 保存命令
-     */
+	/**
+	 * 保存传输协议.
+	 * @param cmd 保存命令
+	 */
 	void save(TpSaveCmd cmd);
 
 	/**
 	 * 修改传输协议.
-     * @param cmd 修改命令
+	 * @param cmd 修改命令
 	 */
 	void modify(TpModifyCmd cmd);
 
 	/**
 	 * 删除传输协议.
-     * @param cmd 删除命令
+	 * @param cmd 删除命令
 	 */
 	void remove(TpRemoveCmd cmd);
 
 	/**
 	 * 导入传输协议.
-     * @param cmd 导入命令
+	 * @param cmd 导入命令
 	 */
 	void importI(TpImportCmd cmd);
 
 	/**
 	 * 导出传输协议.
-     * @param cmd 导出命令
+	 * @param cmd 导出命令
 	 */
 	void export(TpExportCmd cmd);
 
 	/**
 	 * 分页查询传输协议.
-     * @param qry 分页查询请求
+	 * @param qry 分页查询请求
 	 */
 	Result<Page<TpCO>> page(TpPageQry qry);
 

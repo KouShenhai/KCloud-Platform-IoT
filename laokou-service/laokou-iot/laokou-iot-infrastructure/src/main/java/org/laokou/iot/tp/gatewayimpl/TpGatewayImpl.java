@@ -30,17 +30,18 @@ import org.laokou.iot.tp.convertor.TpConvertor;
 import org.laokou.iot.tp.gatewayimpl.database.dataobject.TpDO;
 
 /**
-*
-* 传输协议网关实现.
-*
-* @author laokou
-*/
+ *
+ * 传输协议网关实现.
+ *
+ * @author laokou
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class TpGatewayImpl implements TpGateway {
 
 	private final TpMapper tpMapper;
+
 	private final TransactionalUtil transactionalUtil;
 
 	public void create(TpE tpE) {

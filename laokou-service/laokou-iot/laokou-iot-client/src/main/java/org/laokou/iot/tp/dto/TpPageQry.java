@@ -29,50 +29,49 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Data
 public class TpPageQry extends PageQuery {
 
+	/**
+	 * 协议名称.
+	 */
+	private String name;
 
-    /**
-    * 协议名称.
-    */
-    private String name;
+	/**
+	 * 协议类型 udp/tcp/websocket/mqtt_client/http/mqtt_server/coap.
+	 */
+	private String type;
 
-    /**
-    * 协议类型 udp/tcp/websocket/mqtt_client/http/mqtt_server/coap.
-    */
-    private String type;
+	/**
+	 * 主机.
+	 */
+	private String host;
 
-    /**
-    * 主机.
-    */
-    private String host;
+	/**
+	 * 端口.
+	 */
+	private String port;
 
-    /**
-    * 端口.
-    */
-    private String port;
+	/**
+	 * 客户端ID.
+	 */
+	private String clientId;
 
-    /**
-    * 客户端ID.
-    */
-    private String clientId;
+	/**
+	 * 主题.
+	 */
+	private String topic;
 
-    /**
-    * 主题.
-    */
-    private String topic;
+	/**
+	 * 用户名.
+	 */
+	private String username;
 
-    /**
-    * 用户名.
-    */
-    private String username;
+	/**
+	 * 密码.
+	 */
+	private String password;
 
-    /**
-    * 密码.
-    */
-    private String password;
-
-    /**
-    * 备注.
-    */
-    private String remark;
+	/**
+	 * 备注.
+	 */
+	private String remark;
 
 }

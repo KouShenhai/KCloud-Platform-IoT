@@ -46,13 +46,17 @@ public class CpPageQryExe {
 	private final CpMapper cpMapper;
 
 	public Result<Page<CpCO>> execute(CpPageQry qry) {
-        try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-            CompletableFuture<List<CpDO>> c1 = CompletableFuture.supplyAsync(() -> cpMapper.selectObjectPage(qry.index()), executor);
-            CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> cpMapper.selectObjectCount(qry), executor);
-            return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(CpConvertor::toClientObject).toList(), c2.get(30, TimeUnit.SECONDS)));
-        } catch (Exception e) {
-            throw new SystemException("S_Cp_PageQueryTimeout", "通讯协议分页查询超时");
-        }
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			CompletableFuture<List<CpDO>> c1 = CompletableFuture
+				.supplyAsync(() -> cpMapper.selectObjectPage(qry.index()), executor);
+			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> cpMapper.selectObjectCount(qry), executor);
+			return Result
+				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(CpConvertor::toClientObject).toList(),
+						c2.get(30, TimeUnit.SECONDS)));
+		}
+		catch (Exception e) {
+			throw new SystemException("S_Cp_PageQueryTimeout", "通讯协议分页查询超时");
+		}
 	}
 
 }

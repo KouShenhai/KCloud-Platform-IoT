@@ -26,18 +26,18 @@ import org.springframework.stereotype.Component;
 import org.laokou.iot.tp.convertor.TpConvertor;
 
 /**
-* 查看传输协议请求执行器.
-*
-* @author laokou
-*/
+ * 查看传输协议请求执行器.
+ *
+ * @author laokou
+ */
 @Component
 @RequiredArgsConstructor
 public class TpGetQryExe {
 
-    private final TpMapper tpMapper;
+	private final TpMapper tpMapper;
 
-    public Result<TpCO> execute(TpGetQry qry) {
-	    return Result.ok(TpConvertor.toClientObject(tpMapper.selectById(qry.getId())));
+	public Result<TpCO> execute(TpGetQry qry) {
+		return Result.ok(TpConvertor.toClientObject(tpMapper.selectById(qry.getId())));
 	}
 
 }

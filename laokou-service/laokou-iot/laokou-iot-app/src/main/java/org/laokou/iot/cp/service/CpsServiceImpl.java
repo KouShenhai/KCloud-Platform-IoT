@@ -52,7 +52,6 @@ public class CpsServiceImpl implements CpsServiceI {
 
 	private final CpGetQryExe cpGetQryExe;
 
-
 	@Override
 	public void save(CpSaveCmd cmd) {
 		cpSaveCmdExe.executeVoid(cmd);

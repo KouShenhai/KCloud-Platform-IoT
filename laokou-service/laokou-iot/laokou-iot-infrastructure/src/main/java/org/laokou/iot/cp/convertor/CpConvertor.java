@@ -30,34 +30,35 @@ import org.laokou.iot.cp.model.CpE;
 public class CpConvertor {
 
 	public static CpDO toDataObject(CpE cpE, boolean isInsert) {
-        CpDO cpDO = new CpDO();
+		CpDO cpDO = new CpDO();
 		if (isInsert) {
 			cpDO.generatorId();
-		} else {
-            cpDO.setId(cpE.getId());
-        }
-        cpDO.setName(cpE.getName());
-        cpDO.setCode(cpE.getCode());
-        cpDO.setSort(cpE.getSort());
-        cpDO.setRemark(cpE.getRemark());
-        return cpDO;
+		}
+		else {
+			cpDO.setId(cpE.getId());
+		}
+		cpDO.setName(cpE.getName());
+		cpDO.setCode(cpE.getCode());
+		cpDO.setSort(cpE.getSort());
+		cpDO.setRemark(cpE.getRemark());
+		return cpDO;
 	}
 
 	public static CpCO toClientObject(CpDO cpDO) {
-        CpCO cpCO = new CpCO();
-            cpCO.setName(cpDO.getName());
-            cpCO.setCode(cpDO.getCode());
-            cpCO.setSort(cpDO.getSort());
-            cpCO.setRemark(cpDO.getRemark());
+		CpCO cpCO = new CpCO();
+		cpCO.setName(cpDO.getName());
+		cpCO.setCode(cpDO.getCode());
+		cpCO.setSort(cpDO.getSort());
+		cpCO.setRemark(cpDO.getRemark());
 		return cpCO;
 	}
 
 	public static CpE toEntity(CpCO cpCO) {
-        CpE cpE = new CpE();
-            cpE.setName(cpCO.getName());
-            cpE.setCode(cpCO.getCode());
-            cpE.setSort(cpCO.getSort());
-            cpE.setRemark(cpCO.getRemark());
+		CpE cpE = new CpE();
+		cpE.setName(cpCO.getName());
+		cpE.setCode(cpCO.getCode());
+		cpE.setSort(cpCO.getSort());
+		cpE.setRemark(cpCO.getRemark());
 		return cpE;
 	}
 

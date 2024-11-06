@@ -29,28 +29,28 @@ import lombok.Data;
 public class CpE {
 
 	/**
-     * ID.
+	 * ID.
 	 */
 	private Long id;
 
 	/**
-	* 协议名称.
-	*/
+	 * 协议名称.
+	 */
 	private String name;
 
 	/**
-	* 协议编码.
-	*/
+	 * 协议编码.
+	 */
 	private String code;
 
 	/**
-	* 排序.
-	*/
+	 * 排序.
+	 */
 	private Integer sort;
 
 	/**
-	* 备注.
-	*/
+	 * 备注.
+	 */
 	private String remark;
 
 }

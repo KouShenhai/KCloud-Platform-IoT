@@ -27,18 +27,18 @@ import org.laokou.iot.cp.model.CpE;
  */
 public interface CpGateway {
 
-    /**
-     * 新增通讯协议.
-     */
+	/**
+	 * 新增通讯协议.
+	 */
 	void create(CpE cpE);
 
-    /**
+	/**
 	 * 修改通讯协议.
-     */
+	 */
 	void update(CpE cpE);
 
 	/**
-     * 删除通讯协议.
+	 * 删除通讯协议.
 	 */
 	void delete(Long[] ids);
 

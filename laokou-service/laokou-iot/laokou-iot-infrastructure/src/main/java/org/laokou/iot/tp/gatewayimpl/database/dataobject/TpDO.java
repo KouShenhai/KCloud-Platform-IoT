@@ -31,7 +31,6 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 @TableName("boot_iot_tp")
 public class TpDO extends BaseDO {
 
-
 	/**
 	 * 协议名称.
 	 */
@@ -76,4 +75,5 @@ public class TpDO extends BaseDO {
 	 * 备注.
 	 */
 	private String remark;
+
 }

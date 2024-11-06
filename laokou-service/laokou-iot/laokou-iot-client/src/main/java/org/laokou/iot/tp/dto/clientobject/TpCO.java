@@ -36,37 +36,38 @@ import java.time.Instant;
 @Schema(name = "传输协议客户端对象", description = "传输协议客户端对象")
 public class TpCO extends ClientObject {
 
-    @Schema(name = "ID", description = "ID")
+	@Schema(name = "ID", description = "ID")
 	private Long id;
 
-    @Schema(name = "协议名称", description = "协议名称")
+	@Schema(name = "协议名称", description = "协议名称")
 	private String name;
 
-    @Schema(name = "协议类型 udp/tcp/websocket/mqtt_client/http/mqtt_server/coap", description = "协议类型 udp/tcp/websocket/mqtt_client/http/mqtt_server/coap")
+	@Schema(name = "协议类型 udp/tcp/websocket/mqtt_client/http/mqtt_server/coap",
+			description = "协议类型 udp/tcp/websocket/mqtt_client/http/mqtt_server/coap")
 	private String type;
 
-    @Schema(name = "主机", description = "主机")
+	@Schema(name = "主机", description = "主机")
 	private String host;
 
-    @Schema(name = "端口", description = "端口")
+	@Schema(name = "端口", description = "端口")
 	private String port;
 
-    @Schema(name = "客户端ID", description = "客户端ID")
+	@Schema(name = "客户端ID", description = "客户端ID")
 	private String clientId;
 
-    @Schema(name = "主题", description = "主题")
+	@Schema(name = "主题", description = "主题")
 	private String topic;
 
-    @Schema(name = "用户名", description = "用户名")
+	@Schema(name = "用户名", description = "用户名")
 	private String username;
 
-    @Schema(name = "密码", description = "密码")
+	@Schema(name = "密码", description = "密码")
 	private String password;
 
-    @Schema(name = "备注", description = "备注")
+	@Schema(name = "备注", description = "备注")
 	private String remark;
 
-    @Schema(name = "创建时间", description = "创建时间")
-    private Instant createTime;
+	@Schema(name = "创建时间", description = "创建时间")
+	private Instant createTime;
 
 }

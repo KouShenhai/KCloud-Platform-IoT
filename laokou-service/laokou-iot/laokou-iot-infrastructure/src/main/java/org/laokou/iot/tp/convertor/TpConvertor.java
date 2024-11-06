@@ -30,49 +30,50 @@ import org.laokou.iot.tp.model.TpE;
 public class TpConvertor {
 
 	public static TpDO toDataObject(TpE tpE, boolean isInsert) {
-        TpDO tpDO = new TpDO();
+		TpDO tpDO = new TpDO();
 		if (isInsert) {
 			tpDO.generatorId();
-		} else {
-            tpDO.setId(tpE.getId());
-        }
-        tpDO.setName(tpE.getName());
-        tpDO.setType(tpE.getType());
-        tpDO.setHost(tpE.getHost());
-        tpDO.setPort(tpE.getPort());
-        tpDO.setClientId(tpE.getClientId());
-        tpDO.setTopic(tpE.getTopic());
-        tpDO.setUsername(tpE.getUsername());
-        tpDO.setPassword(tpE.getPassword());
-        tpDO.setRemark(tpE.getRemark());
-        return tpDO;
+		}
+		else {
+			tpDO.setId(tpE.getId());
+		}
+		tpDO.setName(tpE.getName());
+		tpDO.setType(tpE.getType());
+		tpDO.setHost(tpE.getHost());
+		tpDO.setPort(tpE.getPort());
+		tpDO.setClientId(tpE.getClientId());
+		tpDO.setTopic(tpE.getTopic());
+		tpDO.setUsername(tpE.getUsername());
+		tpDO.setPassword(tpE.getPassword());
+		tpDO.setRemark(tpE.getRemark());
+		return tpDO;
 	}
 
 	public static TpCO toClientObject(TpDO tpDO) {
-        TpCO tpCO = new TpCO();
-            tpCO.setName(tpDO.getName());
-            tpCO.setType(tpDO.getType());
-            tpCO.setHost(tpDO.getHost());
-            tpCO.setPort(tpDO.getPort());
-            tpCO.setClientId(tpDO.getClientId());
-            tpCO.setTopic(tpDO.getTopic());
-            tpCO.setUsername(tpDO.getUsername());
-            tpCO.setPassword(tpDO.getPassword());
-            tpCO.setRemark(tpDO.getRemark());
+		TpCO tpCO = new TpCO();
+		tpCO.setName(tpDO.getName());
+		tpCO.setType(tpDO.getType());
+		tpCO.setHost(tpDO.getHost());
+		tpCO.setPort(tpDO.getPort());
+		tpCO.setClientId(tpDO.getClientId());
+		tpCO.setTopic(tpDO.getTopic());
+		tpCO.setUsername(tpDO.getUsername());
+		tpCO.setPassword(tpDO.getPassword());
+		tpCO.setRemark(tpDO.getRemark());
 		return tpCO;
 	}
 
 	public static TpE toEntity(TpCO tpCO) {
-        TpE tpE = new TpE();
-            tpE.setName(tpCO.getName());
-            tpE.setType(tpCO.getType());
-            tpE.setHost(tpCO.getHost());
-            tpE.setPort(tpCO.getPort());
-            tpE.setClientId(tpCO.getClientId());
-            tpE.setTopic(tpCO.getTopic());
-            tpE.setUsername(tpCO.getUsername());
-            tpE.setPassword(tpCO.getPassword());
-            tpE.setRemark(tpCO.getRemark());
+		TpE tpE = new TpE();
+		tpE.setName(tpCO.getName());
+		tpE.setType(tpCO.getType());
+		tpE.setHost(tpCO.getHost());
+		tpE.setPort(tpCO.getPort());
+		tpE.setClientId(tpCO.getClientId());
+		tpE.setTopic(tpCO.getTopic());
+		tpE.setUsername(tpCO.getUsername());
+		tpE.setPassword(tpCO.getPassword());
+		tpE.setRemark(tpCO.getRemark());
 		return tpE;
 	}
 

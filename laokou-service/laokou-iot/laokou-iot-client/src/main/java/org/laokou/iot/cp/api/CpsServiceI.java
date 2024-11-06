@@ -30,39 +30,39 @@ import org.laokou.iot.cp.dto.clientobject.CpCO;
  */
 public interface CpsServiceI {
 
-    /**
-     * 保存通讯协议.
-     * @param cmd 保存命令
-     */
+	/**
+	 * 保存通讯协议.
+	 * @param cmd 保存命令
+	 */
 	void save(CpSaveCmd cmd);
 
 	/**
 	 * 修改通讯协议.
-     * @param cmd 修改命令
+	 * @param cmd 修改命令
 	 */
 	void modify(CpModifyCmd cmd);
 
 	/**
 	 * 删除通讯协议.
-     * @param cmd 删除命令
+	 * @param cmd 删除命令
 	 */
 	void remove(CpRemoveCmd cmd);
 
 	/**
 	 * 导入通讯协议.
-     * @param cmd 导入命令
+	 * @param cmd 导入命令
 	 */
 	void importI(CpImportCmd cmd);
 
 	/**
 	 * 导出通讯协议.
-     * @param cmd 导出命令
+	 * @param cmd 导出命令
 	 */
 	void export(CpExportCmd cmd);
 
 	/**
 	 * 分页查询通讯协议.
-     * @param qry 分页查询请求
+	 * @param qry 分页查询请求
 	 */
 	Result<Page<CpCO>> page(CpPageQry qry);
 

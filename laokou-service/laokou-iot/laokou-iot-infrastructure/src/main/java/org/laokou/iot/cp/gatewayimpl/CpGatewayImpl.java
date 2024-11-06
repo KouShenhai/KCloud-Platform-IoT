@@ -30,17 +30,18 @@ import org.laokou.iot.cp.convertor.CpConvertor;
 import org.laokou.iot.cp.gatewayimpl.database.dataobject.CpDO;
 
 /**
-*
-* 通讯协议网关实现.
-*
-* @author laokou
-*/
+ *
+ * 通讯协议网关实现.
+ *
+ * @author laokou
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class CpGatewayImpl implements CpGateway {
 
 	private final CpMapper cpMapper;
+
 	private final TransactionalUtil transactionalUtil;
 
 	public void create(CpE cpE) {

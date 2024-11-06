@@ -27,18 +27,18 @@ import org.laokou.iot.tp.model.TpE;
  */
 public interface TpGateway {
 
-    /**
-     * 新增传输协议.
-     */
+	/**
+	 * 新增传输协议.
+	 */
 	void create(TpE tpE);
 
-    /**
+	/**
 	 * 修改传输协议.
-     */
+	 */
 	void update(TpE tpE);
 
 	/**
-     * 删除传输协议.
+	 * 删除传输协议.
 	 */
 	void delete(Long[] ids);
 

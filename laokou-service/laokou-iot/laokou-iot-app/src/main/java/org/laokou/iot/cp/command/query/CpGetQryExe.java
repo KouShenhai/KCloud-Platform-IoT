@@ -26,18 +26,18 @@ import org.springframework.stereotype.Component;
 import org.laokou.iot.cp.convertor.CpConvertor;
 
 /**
-* 查看通讯协议请求执行器.
-*
-* @author laokou
-*/
+ * 查看通讯协议请求执行器.
+ *
+ * @author laokou
+ */
 @Component
 @RequiredArgsConstructor
 public class CpGetQryExe {
 
-    private final CpMapper cpMapper;
+	private final CpMapper cpMapper;
 
-    public Result<CpCO> execute(CpGetQry qry) {
-	    return Result.ok(CpConvertor.toClientObject(cpMapper.selectById(qry.getId())));
+	public Result<CpCO> execute(CpGetQry qry) {
+		return Result.ok(CpConvertor.toClientObject(cpMapper.selectById(qry.getId())));
 	}
 
 }
