@@ -24,8 +24,6 @@ import org.laokou.iot.model.gateway.ModelGateway;
 import org.laokou.iot.model.gatewayimpl.database.ModelMapper;
 import java.util.Arrays;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.iot.model.convertor.ModelConvertor;
 import org.laokou.iot.model.gatewayimpl.database.dataobject.ModelDO;
 
@@ -35,7 +33,6 @@ import org.laokou.iot.model.gatewayimpl.database.dataobject.ModelDO;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ModelGatewayImpl implements ModelGateway {
@@ -44,52 +41,25 @@ public class ModelGatewayImpl implements ModelGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(ModelE modelE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				modelMapper.insert(ModelConvertor.toDataObject(modelE, true));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> modelMapper.insert(ModelConvertor.toDataObject(modelE, true)));
 	}
 
+	@Override
 	public void update(ModelE modelE) {
 		ModelDO modelDO = ModelConvertor.toDataObject(modelE, false);
 		modelDO.setVersion(modelMapper.selectVersion(modelE.getId()));
 		update(modelDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				modelMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> modelMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(ModelDO modelDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				modelMapper.updateById(modelDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> modelMapper.updateById(modelDO));
 	}
 
 }

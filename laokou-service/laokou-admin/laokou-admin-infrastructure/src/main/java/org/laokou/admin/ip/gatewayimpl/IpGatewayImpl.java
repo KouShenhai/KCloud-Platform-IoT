@@ -18,13 +18,11 @@
 package org.laokou.admin.ip.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.ip.convertor.IpConvertor;
 import org.laokou.admin.ip.gateway.IpGateway;
 import org.laokou.admin.ip.gatewayimpl.database.IpMapper;
 import org.laokou.admin.ip.gatewayimpl.database.dataobject.IpDO;
 import org.laokou.admin.ip.model.IpE;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +33,6 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class IpGatewayImpl implements IpGateway {
@@ -44,52 +41,25 @@ public class IpGatewayImpl implements IpGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(IpE ipE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				ipMapper.insert(IpConvertor.toDataObject(ipE));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> ipMapper.insert(IpConvertor.toDataObject(ipE)));
 	}
 
+	@Override
 	public void update(IpE ipE) {
 		IpDO ipDO = IpConvertor.toDataObject(ipE);
 		ipDO.setVersion(ipMapper.selectVersion(ipE.getId()));
 		update(ipDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				ipMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> ipMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(IpDO ipDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				ipMapper.updateById(ipDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> ipMapper.updateById(ipDO));
 	}
 
 }

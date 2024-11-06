@@ -26,8 +26,6 @@ import org.laokou.admin.oss.gatewayimpl.database.OssMapper;
 import java.util.Arrays;
 
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.admin.oss.convertor.OssConvertor;
 import org.laokou.admin.oss.gatewayimpl.database.dataobject.OssDO;
 
@@ -36,7 +34,6 @@ import org.laokou.admin.oss.gatewayimpl.database.dataobject.OssDO;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OssGatewayImpl implements OssGateway {
@@ -45,52 +42,25 @@ public class OssGatewayImpl implements OssGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(OssE ossE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				ossMapper.insert(OssConvertor.toDataObject(ossE));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> ossMapper.insert(OssConvertor.toDataObject(ossE)));
 	}
 
+	@Override
 	public void update(OssE ossE) {
 		OssDO ossDO = OssConvertor.toDataObject(ossE);
 		ossDO.setVersion(ossMapper.selectVersion(ossE.getId()));
 		update(ossDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				ossMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> ossMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(OssDO ossDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				ossMapper.updateById(ossDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> ossMapper.updateById(ossDO));
 	}
 
 }

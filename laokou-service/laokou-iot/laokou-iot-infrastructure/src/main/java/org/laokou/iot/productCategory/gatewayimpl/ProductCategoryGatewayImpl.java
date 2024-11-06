@@ -24,8 +24,6 @@ import org.laokou.iot.productCategory.gateway.ProductCategoryGateway;
 import org.laokou.iot.productCategory.gatewayimpl.database.ProductCategoryMapper;
 import java.util.Arrays;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 import org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO;
 
@@ -35,7 +33,6 @@ import org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCat
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ProductCategoryGatewayImpl implements ProductCategoryGateway {
@@ -44,52 +41,26 @@ public class ProductCategoryGatewayImpl implements ProductCategoryGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(ProductCategoryE productCategoryE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				productCategoryMapper.insert(ProductCategoryConvertor.toDataObject(productCategoryE, true));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(
+				() -> productCategoryMapper.insert(ProductCategoryConvertor.toDataObject(productCategoryE, true)));
 	}
 
+	@Override
 	public void update(ProductCategoryE productCategoryE) {
 		ProductCategoryDO productCategoryDO = ProductCategoryConvertor.toDataObject(productCategoryE, false);
 		productCategoryDO.setVersion(productCategoryMapper.selectVersion(productCategoryE.getId()));
 		update(productCategoryDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				productCategoryMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> productCategoryMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(ProductCategoryDO productCategoryDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				productCategoryMapper.updateById(productCategoryDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> productCategoryMapper.updateById(productCategoryDO));
 	}
 
 }

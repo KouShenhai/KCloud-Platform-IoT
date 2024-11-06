@@ -24,8 +24,6 @@ import org.laokou.iot.cp.gateway.CpGateway;
 import org.laokou.iot.cp.gatewayimpl.database.CpMapper;
 import java.util.Arrays;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.iot.cp.convertor.CpConvertor;
 import org.laokou.iot.cp.gatewayimpl.database.dataobject.CpDO;
 
@@ -35,7 +33,6 @@ import org.laokou.iot.cp.gatewayimpl.database.dataobject.CpDO;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CpGatewayImpl implements CpGateway {
@@ -44,52 +41,25 @@ public class CpGatewayImpl implements CpGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(CpE cpE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				cpMapper.insert(CpConvertor.toDataObject(cpE, true));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> cpMapper.insert(CpConvertor.toDataObject(cpE, true)));
 	}
 
+	@Override
 	public void update(CpE cpE) {
 		CpDO cpDO = CpConvertor.toDataObject(cpE, false);
 		cpDO.setVersion(cpMapper.selectVersion(cpE.getId()));
 		update(cpDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				cpMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> cpMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(CpDO cpDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				cpMapper.updateById(cpDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> cpMapper.updateById(cpDO));
 	}
 
 }

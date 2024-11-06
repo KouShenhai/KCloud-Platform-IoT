@@ -18,13 +18,11 @@
 package org.laokou.admin.noticeLog.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.noticeLog.convertor.NoticeLogConvertor;
 import org.laokou.admin.noticeLog.gateway.NoticeLogGateway;
 import org.laokou.admin.noticeLog.gatewayimpl.database.NoticeLogMapper;
 import org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.admin.noticeLog.model.NoticeLogE;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +33,6 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class NoticeLogGatewayImpl implements NoticeLogGateway {
@@ -44,52 +41,26 @@ public class NoticeLogGatewayImpl implements NoticeLogGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(NoticeLogE noticeLogE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				noticeLogMapper.insert(NoticeLogConvertor.toDataObject(noticeLogE, true));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil
+			.executeInTransaction(() -> noticeLogMapper.insert(NoticeLogConvertor.toDataObject(noticeLogE, true)));
 	}
 
+	@Override
 	public void update(NoticeLogE noticeLogE) {
 		NoticeLogDO noticeLogDO = NoticeLogConvertor.toDataObject(noticeLogE, false);
 		noticeLogDO.setVersion(noticeLogMapper.selectVersion(noticeLogE.getId()));
 		update(noticeLogDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				noticeLogMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> noticeLogMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(NoticeLogDO noticeLogDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				noticeLogMapper.updateById(noticeLogDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> noticeLogMapper.updateById(noticeLogDO));
 	}
 
 }

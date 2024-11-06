@@ -25,8 +25,6 @@ import ${packageName}.${instanceName}.gateway.${className}Gateway;
 import ${packageName}.${instanceName}.gatewayimpl.database.${className}Mapper;
 import java.util.Arrays;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import ${packageName}.${instanceName}.convertor.${className}Convertor;
 import ${packageName}.${instanceName}.gatewayimpl.database.dataobject.${className}DO;
 
@@ -36,61 +34,34 @@ import ${packageName}.${instanceName}.gatewayimpl.database.dataobject.${classNam
 *
 * @author ${author}
 */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ${className}GatewayImpl implements ${className}Gateway {
 
 	private final ${className}Mapper ${instanceName}Mapper;
-	private final TransactionalUtil transactionalUtil;
 
+    private final TransactionalUtil transactionalUtil;
+
+    @Override
 	public void create(${className}E ${instanceName}E) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				${instanceName}Mapper.insert(${className}Convertor.toDataObject(${instanceName}E, true));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+        transactionalUtil.executeInTransaction(() -> ${instanceName}Mapper.insert(${className}Convertor.toDataObject(${instanceName}E, true)));
 	}
 
+    @Override
 	public void update(${className}E ${instanceName}E) {
 		${className}DO ${instanceName}DO = ${className}Convertor.toDataObject(${instanceName}E, false);
 		${instanceName}DO.setVersion(${instanceName}Mapper.selectVersion(${instanceName}E.getId()));
 		update(${instanceName}DO);
 	}
 
+    @Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				${instanceName}Mapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+        transactionalUtil.executeInTransaction(() -> ${instanceName}Mapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(${className}DO ${instanceName}DO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				${instanceName}Mapper.updateById(${instanceName}DO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
-	}
+        transactionalUtil.executeInTransaction(() -> ${instanceName}Mapper.updateById(${instanceName}DO));
+    }
 
 }
 // @formatter:on

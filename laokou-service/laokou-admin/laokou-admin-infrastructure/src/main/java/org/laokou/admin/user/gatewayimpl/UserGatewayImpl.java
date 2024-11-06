@@ -18,13 +18,11 @@
 package org.laokou.admin.user.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.gateway.UserGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +33,6 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class UserGatewayImpl implements UserGateway {
@@ -44,52 +41,25 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(UserE userE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				userMapper.insert(UserConvertor.toDataObject(userE, true));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> userMapper.insert(UserConvertor.toDataObject(userE, true)));
 	}
 
+	@Override
 	public void update(UserE userE) {
 		UserDO userDO = UserConvertor.toDataObject(userE, false);
 		userDO.setVersion(userMapper.selectVersion(userE.getId()));
 		update(userDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				userMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> userMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(UserDO userDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				userMapper.updateById(userDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> userMapper.updateById(userDO));
 	}
 
 }

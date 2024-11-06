@@ -24,8 +24,6 @@ import org.laokou.iot.device.gateway.DeviceGateway;
 import org.laokou.iot.device.gatewayimpl.database.DeviceMapper;
 import java.util.Arrays;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.iot.device.convertor.DeviceConvertor;
 import org.laokou.iot.device.gatewayimpl.database.dataobject.DeviceDO;
 
@@ -35,7 +33,6 @@ import org.laokou.iot.device.gatewayimpl.database.dataobject.DeviceDO;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DeviceGatewayImpl implements DeviceGateway {
@@ -44,52 +41,25 @@ public class DeviceGatewayImpl implements DeviceGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(DeviceE deviceE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				deviceMapper.insert(DeviceConvertor.toDataObject(deviceE, true));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> deviceMapper.insert(DeviceConvertor.toDataObject(deviceE, true)));
 	}
 
+	@Override
 	public void update(DeviceE deviceE) {
 		DeviceDO deviceDO = DeviceConvertor.toDataObject(deviceE, false);
 		deviceDO.setVersion(deviceMapper.selectVersion(deviceE.getId()));
 		update(deviceDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				deviceMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> deviceMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(DeviceDO deviceDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				deviceMapper.updateById(deviceDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> deviceMapper.updateById(deviceDO));
 	}
 
 }

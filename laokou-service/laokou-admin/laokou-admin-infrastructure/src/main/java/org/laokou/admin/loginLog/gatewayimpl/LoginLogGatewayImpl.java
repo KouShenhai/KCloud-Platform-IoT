@@ -18,14 +18,12 @@
 package org.laokou.admin.loginLog.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.loginLog.convertor.LoginLogConvertor;
 import org.laokou.admin.loginLog.gateway.LoginLogGateway;
 import org.laokou.admin.loginLog.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.loginLog.model.LoginLogE;
 import org.laokou.common.core.utils.ArrayUtil;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +34,6 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class LoginLogGatewayImpl implements LoginLogGateway {
@@ -45,57 +42,33 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(LoginLogE loginLogE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				loginLogMapper.insert(LoginLogConvertor.toDataObject(loginLogE, true));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil
+			.executeInTransaction(() -> loginLogMapper.insert(LoginLogConvertor.toDataObject(loginLogE, true)));
 	}
 
+	@Override
 	public void update(LoginLogE loginLogE) {
 		LoginLogDO loginLogDO = LoginLogConvertor.toDataObject(loginLogE, false);
 		loginLogDO.setVersion(loginLogMapper.selectVersion(loginLogE.getId()));
 		update(loginLogDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				if (ArrayUtil.isNotEmpty(ids)) {
-					loginLogMapper.deleteByIds(Arrays.asList(ids));
-				}
-				else {
-					loginLogMapper.deleteAll();
-				}
+		transactionalUtil.executeInTransaction(() -> {
+			if (ArrayUtil.isNotEmpty(ids)) {
+				loginLogMapper.deleteByIds(Arrays.asList(ids));
 			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
+			else {
+				loginLogMapper.deleteAll();
 			}
 		});
 	}
 
 	private void update(LoginLogDO loginLogDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				loginLogMapper.updateById(loginLogDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> loginLogMapper.updateById(loginLogDO));
 	}
 
 }

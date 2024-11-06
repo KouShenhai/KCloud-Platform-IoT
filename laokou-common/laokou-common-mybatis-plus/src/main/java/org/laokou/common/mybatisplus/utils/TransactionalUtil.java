@@ -19,6 +19,9 @@ package org.laokou.common.mybatisplus.utils;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.LogUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -30,6 +33,7 @@ import java.util.function.Consumer;
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class TransactionalUtil {
@@ -38,15 +42,37 @@ public class TransactionalUtil {
 
 	private final TransactionTemplate transactionTemplate;
 
-	public void set() {
+	public void executeInTransaction(DatabaseOperation operation) {
+		defaultExecuteWithoutResult(r -> {
+			try {
+				operation.execute();
+			}
+			catch (Exception e) {
+				r.setRollbackOnly();
+				String msg = LogUtil.record(e.getMessage());
+				log.error("操作失败，错误信息：{}，详情见日志", msg, e);
+				throw new SystemException("S_Datasource_OperationError", msg);
+			}
+		});
+	}
+
+	@FunctionalInterface
+	public interface DatabaseOperation {
+
+		void execute();
+
+	}
+
+	private void set() {
 		TRANSACTION_LOCAL.set(transactionTemplate);
 	}
 
-	public void remove() {
+	private void remove() {
 		TRANSACTION_LOCAL.remove();
 	}
 
-	public <T> T execute(TransactionCallback<T> action, int propagationBehavior, int isolationLevel, boolean readOnly) {
+	private <T> T execute(TransactionCallback<T> action, int propagationBehavior, int isolationLevel,
+			boolean readOnly) {
 		try {
 			set();
 			return convert(propagationBehavior, isolationLevel, readOnly).execute(action);
@@ -56,25 +82,25 @@ public class TransactionalUtil {
 		}
 	}
 
-	public <T> T defaultExecute(TransactionCallback<T> action, int isolationLevel, boolean readOnly) {
+	private <T> T defaultExecute(TransactionCallback<T> action, int isolationLevel, boolean readOnly) {
 		return execute(action, TransactionDefinition.PROPAGATION_REQUIRED, isolationLevel, readOnly);
 	}
 
-	public <T> T defaultExecute(TransactionCallback<T> action) {
+	private <T> T defaultExecute(TransactionCallback<T> action) {
 		return execute(action, TransactionDefinition.PROPAGATION_REQUIRED,
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 	}
 
-	public <T> T newExecute(TransactionCallback<T> action, int isolationLevel, boolean readOnly) {
+	private <T> T newExecute(TransactionCallback<T> action, int isolationLevel, boolean readOnly) {
 		return execute(action, TransactionDefinition.PROPAGATION_REQUIRES_NEW, isolationLevel, readOnly);
 	}
 
-	public <T> T newExecute(TransactionCallback<T> action) {
+	private <T> T newExecute(TransactionCallback<T> action) {
 		return execute(action, TransactionDefinition.PROPAGATION_REQUIRES_NEW,
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 	}
 
-	public void executeWithoutResult(Consumer<TransactionStatus> action, int propagationBehavior, int isolationLevel,
+	private void executeWithoutResult(Consumer<TransactionStatus> action, int propagationBehavior, int isolationLevel,
 			boolean readOnly) {
 		try {
 			set();
@@ -85,21 +111,21 @@ public class TransactionalUtil {
 		}
 	}
 
-	public void defaultExecuteWithoutResult(Consumer<TransactionStatus> action, int isolationLevel, boolean readOnly) {
+	private void defaultExecuteWithoutResult(Consumer<TransactionStatus> action, int isolationLevel, boolean readOnly) {
 		executeWithoutResult(action, TransactionDefinition.PROPAGATION_REQUIRED, isolationLevel, readOnly);
 	}
 
-	public void defaultExecuteWithoutResult(Consumer<TransactionStatus> action) {
+	private void defaultExecuteWithoutResult(Consumer<TransactionStatus> action) {
 		executeWithoutResult(action, TransactionDefinition.PROPAGATION_REQUIRED,
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 	}
 
-	public void newExecuteWithoutResult(Consumer<TransactionStatus> action) {
+	private void newExecuteWithoutResult(Consumer<TransactionStatus> action) {
 		executeWithoutResult(action, TransactionDefinition.PROPAGATION_REQUIRES_NEW,
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 	}
 
-	public void newExecuteWithoutResult(Consumer<TransactionStatus> action, int isolationLevel, boolean readOnly) {
+	private void newExecuteWithoutResult(Consumer<TransactionStatus> action, int isolationLevel, boolean readOnly) {
 		executeWithoutResult(action, TransactionDefinition.PROPAGATION_REQUIRES_NEW, isolationLevel, readOnly);
 	}
 

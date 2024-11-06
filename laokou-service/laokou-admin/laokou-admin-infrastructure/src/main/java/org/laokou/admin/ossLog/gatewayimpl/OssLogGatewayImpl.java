@@ -26,8 +26,6 @@ import org.laokou.admin.ossLog.gatewayimpl.database.OssLogMapper;
 import java.util.Arrays;
 
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.admin.ossLog.convertor.OssLogConvertor;
 import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
 
@@ -36,7 +34,6 @@ import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OssLogGatewayImpl implements OssLogGateway {
@@ -45,52 +42,25 @@ public class OssLogGatewayImpl implements OssLogGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(OssLogE ossLogE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				ossLogMapper.insert(OssLogConvertor.toDataObject(ossLogE));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> ossLogMapper.insert(OssLogConvertor.toDataObject(ossLogE)));
 	}
 
+	@Override
 	public void update(OssLogE ossLogE) {
 		OssLogDO ossLogDO = OssLogConvertor.toDataObject(ossLogE);
 		ossLogDO.setVersion(ossLogMapper.selectVersion(ossLogE.getId()));
 		update(ossLogDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				ossLogMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> ossLogMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(OssLogDO ossLogDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				ossLogMapper.updateById(ossLogDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> ossLogMapper.updateById(ossLogDO));
 	}
 
 }

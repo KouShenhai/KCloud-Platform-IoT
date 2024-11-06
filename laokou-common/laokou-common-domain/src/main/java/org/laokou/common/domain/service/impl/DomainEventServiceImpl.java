@@ -26,7 +26,6 @@ import org.laokou.common.domain.entity.DomainEventDO;
 import org.laokou.common.domain.mapper.DomainEventMapper;
 import org.laokou.common.domain.model.DomainEventA;
 import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Service;
 
@@ -48,16 +47,9 @@ public class DomainEventServiceImpl implements DomainEventService {
 	public void create(DomainEventA domainEventA) {
 		try {
 			DynamicDataSourceContextHolder.push(DOMAIN);
-			transactionalUtil.defaultExecuteWithoutResult(r -> {
-				try {
-					DomainEventDO eventDO = DomainEventConvertor.toDataObject(domainEventA);
-					domainEventMapper.insert(eventDO);
-				}
-				catch (Exception e) {
-					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-					r.setRollbackOnly();
-					throw new RuntimeException(LogUtil.record(e.getMessage()));
-				}
+			transactionalUtil.executeInTransaction(() -> {
+				DomainEventDO eventDO = DomainEventConvertor.toDataObject(domainEventA);
+				domainEventMapper.insert(eventDO);
 			});
 		}
 		finally {
@@ -80,16 +72,8 @@ public class DomainEventServiceImpl implements DomainEventService {
 	public void deleteOldByServiceIdOfThreeMonths(String serviceId) {
 		try {
 			DynamicDataSourceContextHolder.push(DOMAIN);
-			transactionalUtil.defaultExecuteWithoutResult(r -> {
-				try {
-					domainEventMapper.deleteOldByServiceIdOfThreeMonths(serviceId);
-				}
-				catch (Exception e) {
-					log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-					r.setRollbackOnly();
-					throw new RuntimeException(LogUtil.record(e.getMessage()));
-				}
-			});
+			transactionalUtil
+				.executeInTransaction(() -> domainEventMapper.deleteOldByServiceIdOfThreeMonths(serviceId));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
