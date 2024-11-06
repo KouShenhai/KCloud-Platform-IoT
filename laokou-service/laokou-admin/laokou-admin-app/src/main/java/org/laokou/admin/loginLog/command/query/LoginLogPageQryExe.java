@@ -17,6 +17,7 @@
 
 package org.laokou.admin.loginLog.command.query;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.loginLog.convertor.LoginLogConvertor;
 import org.laokou.admin.loginLog.dto.LoginLogPageQry;
@@ -47,10 +48,24 @@ public class LoginLogPageQryExe {
 
 	public Result<Page<LoginLogCO>> execute(LoginLogPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture
-				.supplyAsync(() -> loginLogMapper.selectObjectPage(qry.index()), executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> loginLogMapper.selectObjectCount(qry),
-					executor);
+			CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture.supplyAsync(() -> {
+				try {
+					DynamicDataSourceContextHolder.push("domain");
+					return loginLogMapper.selectObjectPage(qry.index());
+				}
+				finally {
+					DynamicDataSourceContextHolder.clear();
+				}
+			}, executor);
+			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> {
+				try {
+					DynamicDataSourceContextHolder.push("domain");
+					return loginLogMapper.selectObjectCount(qry);
+				}
+				finally {
+					DynamicDataSourceContextHolder.clear();
+				}
+			}, executor);
 			return Result
 				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(LoginLogConvertor::toClientObject).toList(),
 						c2.get(30, TimeUnit.SECONDS)));

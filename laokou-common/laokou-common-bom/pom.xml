@@ -124,6 +124,8 @@
     <httpclient.versin>4.5.14</httpclient.versin>
     <!--commons-text版本-->
     <commons-text.version>1.12.0</commons-text.version>
+    <!--commons-lang3版本-->
+    <commons-lang3.version>3.17.0</commons-lang3.version>
     <!--zstd-jni版本-->
     <zstd-jni.version>1.5.6-7</zstd-jni.version>
     <!--snail-job版本-->
@@ -146,11 +148,23 @@
     <jsqlparser.version>5.0</jsqlparser.version>
     <!--arthas版本-->
     <arthas.version>4.0.2</arthas.version>
+    <!--objenesis版本-->
+    <objenesis.version>3.4</objenesis.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.objenesis</groupId>
+        <artifactId>objenesis</artifactId>
+        <version>${objenesis.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${commons-lang3.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.github.jsqlparser</groupId>
         <artifactId>jsqlparser</artifactId>
