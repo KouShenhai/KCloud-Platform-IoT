@@ -23,6 +23,7 @@ import ${packageName}.${instanceName}.dto.${className}ModifyCmd;
 import org.springframework.stereotype.Component;
 import ${packageName}.${instanceName}.convertor.${className}Convertor;
 import ${packageName}.${instanceName}.ability.${className}DomainService;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 
 /**
  *
@@ -36,9 +37,11 @@ public class ${className}ModifyCmdExe {
 
 	private final ${className}DomainService ${instanceName}DomainService;
 
+    private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(${className}ModifyCmd cmd) {
 		// 校验参数
-		${instanceName}DomainService.update(${className}Convertor.toEntity(cmd.getCo()));
+        transactionalUtil.executeInTransaction(() -> ${instanceName}DomainService.update(${className}Convertor.toEntity(cmd.getCo())));
 	}
 
 }
