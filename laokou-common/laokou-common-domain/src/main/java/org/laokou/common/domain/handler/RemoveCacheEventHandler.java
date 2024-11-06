@@ -31,7 +31,6 @@ import java.util.List;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
-import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
 import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CACHE_CONSUMER_GROUP;
 import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CACHE_TOPIC;
 
