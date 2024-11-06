@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
+import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
 import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CACHE_CONSUMER_GROUP;
 import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CACHE_TOPIC;
@@ -39,7 +40,7 @@ import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CACHE_TOPIC;
  */
 @Component
 @RocketMQMessageListener(consumerGroup = LAOKOU_CACHE_CONSUMER_GROUP, topic = LAOKOU_CACHE_TOPIC,
-		messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+		messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
 public class RemoveCacheEventHandler extends AbstractDomainEventHandler {
 
 	private final List<CacheManager> cacheManagers;
