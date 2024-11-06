@@ -22,10 +22,7 @@ import org.laokou.admin.tenant.model.TenantE;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.tenant.gateway.TenantGateway;
 import org.laokou.admin.tenant.gatewayimpl.database.TenantMapper;
-
 import java.util.Arrays;
-
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.admin.tenant.convertor.TenantConvertor;
 import org.laokou.admin.tenant.gatewayimpl.database.dataobject.TenantDO;
 
@@ -40,27 +37,21 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private final TenantMapper tenantMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(TenantE tenantE) {
-		transactionalUtil.executeInTransaction(() -> tenantMapper.insert(TenantConvertor.toDataObject(tenantE)));
+		tenantMapper.insert(TenantConvertor.toDataObject(tenantE));
 	}
 
 	@Override
 	public void update(TenantE tenantE) {
 		TenantDO tenantDO = TenantConvertor.toDataObject(tenantE);
 		tenantDO.setVersion(tenantMapper.selectVersion(tenantE.getId()));
-		update(tenantDO);
+		tenantMapper.updateById(tenantDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> tenantMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(TenantDO tenantDO) {
-		transactionalUtil.executeInTransaction(() -> tenantMapper.updateById(tenantDO));
+		tenantMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

@@ -20,6 +20,7 @@ package org.laokou.admin.ossLog.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.ossLog.ability.OssLogDomainService;
 import org.laokou.admin.ossLog.dto.OssLogRemoveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,9 +34,11 @@ public class OssLogRemoveCmdExe {
 
 	private final OssLogDomainService ossLogDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(OssLogRemoveCmd cmd) {
 		// 校验参数
-		ossLogDomainService.delete(cmd.getIds());
+		transactionalUtil.executeInTransaction(() -> ossLogDomainService.delete(cmd.getIds()));
 	}
 
 }

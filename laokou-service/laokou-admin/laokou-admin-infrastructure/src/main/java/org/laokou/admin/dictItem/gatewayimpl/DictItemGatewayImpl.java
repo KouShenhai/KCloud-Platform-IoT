@@ -23,7 +23,6 @@ import org.laokou.admin.dictItem.gateway.DictItemGateway;
 import org.laokou.admin.dictItem.gatewayimpl.database.DictItemMapper;
 import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
 import org.laokou.admin.dictItem.model.DictItemE;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,27 +38,21 @@ public class DictItemGatewayImpl implements DictItemGateway {
 
 	private final DictItemMapper dictItemMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(DictItemE dictItemE) {
-		transactionalUtil.executeInTransaction(() -> dictItemMapper.insert(DictItemConvertor.toDataObject(dictItemE)));
+		dictItemMapper.insert(DictItemConvertor.toDataObject(dictItemE));
 	}
 
 	@Override
 	public void update(DictItemE dictItemE) {
 		DictItemDO dictItemDO = DictItemConvertor.toDataObject(dictItemE);
 		dictItemDO.setVersion(dictItemMapper.selectVersion(dictItemE.getId()));
-		update(dictItemDO);
+		dictItemMapper.updateById(dictItemDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> dictItemMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(DictItemDO dictItemDO) {
-		transactionalUtil.executeInTransaction(() -> dictItemMapper.updateById(dictItemDO));
+		dictItemMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

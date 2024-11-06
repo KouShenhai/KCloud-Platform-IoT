@@ -22,10 +22,7 @@ import org.laokou.admin.source.model.SourceE;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.source.gateway.SourceGateway;
 import org.laokou.admin.source.gatewayimpl.database.SourceMapper;
-
 import java.util.Arrays;
-
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.admin.source.convertor.SourceConvertor;
 import org.laokou.admin.source.gatewayimpl.database.dataobject.SourceDO;
 
@@ -40,27 +37,21 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	private final SourceMapper sourceMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(SourceE sourceE) {
-		transactionalUtil.executeInTransaction(() -> sourceMapper.insert(SourceConvertor.toDataObject(sourceE)));
+		sourceMapper.insert(SourceConvertor.toDataObject(sourceE));
 	}
 
 	@Override
 	public void update(SourceE sourceE) {
 		SourceDO sourceDO = SourceConvertor.toDataObject(sourceE);
 		sourceDO.setVersion(sourceMapper.selectVersion(sourceE.getId()));
-		update(sourceDO);
+		sourceMapper.updateById(sourceDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> sourceMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(SourceDO sourceDO) {
-		transactionalUtil.executeInTransaction(() -> sourceMapper.updateById(sourceDO));
+		sourceMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

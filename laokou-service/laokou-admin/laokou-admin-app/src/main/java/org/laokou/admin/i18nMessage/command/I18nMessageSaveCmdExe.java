@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.i18nMessage.ability.I18nMessageDomainService;
 import org.laokou.admin.i18nMessage.convertor.I18nMessageConvertor;
 import org.laokou.admin.i18nMessage.dto.I18nMessageSaveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,9 +35,12 @@ public class I18nMessageSaveCmdExe {
 
 	private final I18nMessageDomainService i18nMessageDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(I18nMessageSaveCmd cmd) {
 		// 校验参数
-		i18nMessageDomainService.create(I18nMessageConvertor.toEntity(cmd.getCo()));
+		transactionalUtil
+			.executeInTransaction(() -> i18nMessageDomainService.create(I18nMessageConvertor.toEntity(cmd.getCo())));
 	}
 
 }

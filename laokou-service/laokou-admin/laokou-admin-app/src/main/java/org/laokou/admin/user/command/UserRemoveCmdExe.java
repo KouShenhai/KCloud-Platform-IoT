@@ -20,6 +20,7 @@ package org.laokou.admin.user.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.dto.UserRemoveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,9 +34,11 @@ public class UserRemoveCmdExe {
 
 	private final UserDomainService userDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(UserRemoveCmd cmd) {
 		// 校验参数
-		userDomainService.delete(cmd.getIds());
+		transactionalUtil.executeInTransaction(() -> userDomainService.delete(cmd.getIds()));
 	}
 
 }

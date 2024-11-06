@@ -23,7 +23,6 @@ import org.laokou.admin.ip.gateway.IpGateway;
 import org.laokou.admin.ip.gatewayimpl.database.IpMapper;
 import org.laokou.admin.ip.gatewayimpl.database.dataobject.IpDO;
 import org.laokou.admin.ip.model.IpE;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,27 +38,21 @@ public class IpGatewayImpl implements IpGateway {
 
 	private final IpMapper ipMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(IpE ipE) {
-		transactionalUtil.executeInTransaction(() -> ipMapper.insert(IpConvertor.toDataObject(ipE)));
+		ipMapper.insert(IpConvertor.toDataObject(ipE));
 	}
 
 	@Override
 	public void update(IpE ipE) {
 		IpDO ipDO = IpConvertor.toDataObject(ipE);
 		ipDO.setVersion(ipMapper.selectVersion(ipE.getId()));
-		update(ipDO);
+		ipMapper.updateById(ipDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> ipMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(IpDO ipDO) {
-		transactionalUtil.executeInTransaction(() -> ipMapper.updateById(ipDO));
+		ipMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.tenant.ability.TenantDomainService;
 import org.laokou.admin.tenant.convertor.TenantConvertor;
 import org.laokou.admin.tenant.dto.TenantSaveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,9 +35,11 @@ public class TenantSaveCmdExe {
 
 	private final TenantDomainService tenantDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(TenantSaveCmd cmd) {
 		// 校验参数
-		tenantDomainService.create(TenantConvertor.toEntity(cmd.getCo()));
+		transactionalUtil.executeInTransaction(() -> tenantDomainService.create(TenantConvertor.toEntity(cmd.getCo())));
 	}
 
 }

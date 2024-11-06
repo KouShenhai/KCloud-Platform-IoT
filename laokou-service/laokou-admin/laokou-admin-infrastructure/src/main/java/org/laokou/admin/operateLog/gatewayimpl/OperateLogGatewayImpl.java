@@ -24,8 +24,6 @@ import org.laokou.admin.operateLog.gateway.OperateLogGateway;
 import org.laokou.admin.operateLog.gatewayimpl.database.OperateLogMapper;
 
 import java.util.Arrays;
-
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.admin.operateLog.convertor.OperateLogConvertor;
 import org.laokou.admin.operateLog.gatewayimpl.database.dataobject.OperateLogDO;
 
@@ -40,28 +38,21 @@ public class OperateLogGatewayImpl implements OperateLogGateway {
 
 	private final OperateLogMapper operateLogMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(OperateLogE operateLogE) {
-		transactionalUtil
-			.executeInTransaction(() -> operateLogMapper.insert(OperateLogConvertor.toDataObject(operateLogE)));
+		operateLogMapper.insert(OperateLogConvertor.toDataObject(operateLogE));
 	}
 
 	@Override
 	public void update(OperateLogE operateLogE) {
 		OperateLogDO operateLogDO = OperateLogConvertor.toDataObject(operateLogE);
 		operateLogDO.setVersion(operateLogMapper.selectVersion(operateLogE.getId()));
-		update(operateLogDO);
+		operateLogMapper.updateById(operateLogDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> operateLogMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(OperateLogDO operateLogDO) {
-		transactionalUtil.executeInTransaction(() -> operateLogMapper.updateById(operateLogDO));
+		operateLogMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

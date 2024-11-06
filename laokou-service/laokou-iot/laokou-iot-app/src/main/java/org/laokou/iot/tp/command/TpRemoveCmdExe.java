@@ -18,6 +18,7 @@
 package org.laokou.iot.tp.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.tp.dto.TpRemoveCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.tp.ability.TpDomainService;
@@ -34,9 +35,11 @@ public class TpRemoveCmdExe {
 
 	private final TpDomainService tpDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(TpRemoveCmd cmd) {
 		// 校验参数
-		tpDomainService.delete(cmd.getIds());
+		transactionalUtil.executeInTransaction(() -> tpDomainService.delete(cmd.getIds()));
 	}
 
 }

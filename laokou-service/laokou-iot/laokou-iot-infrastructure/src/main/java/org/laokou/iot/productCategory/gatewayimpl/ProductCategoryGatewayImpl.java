@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component;
 import org.laokou.iot.productCategory.gateway.ProductCategoryGateway;
 import org.laokou.iot.productCategory.gatewayimpl.database.ProductCategoryMapper;
 import java.util.Arrays;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 import org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO;
 
@@ -39,28 +38,21 @@ public class ProductCategoryGatewayImpl implements ProductCategoryGateway {
 
 	private final ProductCategoryMapper productCategoryMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(ProductCategoryE productCategoryE) {
-		transactionalUtil.executeInTransaction(
-				() -> productCategoryMapper.insert(ProductCategoryConvertor.toDataObject(productCategoryE, true)));
+		productCategoryMapper.insert(ProductCategoryConvertor.toDataObject(productCategoryE, true));
 	}
 
 	@Override
 	public void update(ProductCategoryE productCategoryE) {
 		ProductCategoryDO productCategoryDO = ProductCategoryConvertor.toDataObject(productCategoryE, false);
 		productCategoryDO.setVersion(productCategoryMapper.selectVersion(productCategoryE.getId()));
-		update(productCategoryDO);
+		productCategoryMapper.updateById(productCategoryDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> productCategoryMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(ProductCategoryDO productCategoryDO) {
-		transactionalUtil.executeInTransaction(() -> productCategoryMapper.updateById(productCategoryDO));
+		productCategoryMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

@@ -23,7 +23,6 @@ import org.laokou.admin.menu.gateway.MenuGateway;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuE;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,27 +38,21 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	private final MenuMapper menuMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(MenuE menuE) {
-		transactionalUtil.executeInTransaction(() -> menuMapper.insert(MenuConvertor.toDataObject(menuE)));
+		menuMapper.insert(MenuConvertor.toDataObject(menuE));
 	}
 
 	@Override
 	public void update(MenuE menuE) {
 		MenuDO menuDO = MenuConvertor.toDataObject(menuE);
 		menuDO.setVersion(menuMapper.selectVersion(menuE.getId()));
-		update(menuDO);
+		menuMapper.updateById(menuDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> menuMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(MenuDO menuDO) {
-		transactionalUtil.executeInTransaction(() -> menuMapper.updateById(menuDO));
+		menuMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

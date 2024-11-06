@@ -23,7 +23,6 @@ import org.laokou.admin.dept.gateway.DeptGateway;
 import org.laokou.admin.dept.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.dept.model.DeptE;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,27 +38,21 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	private final DeptMapper deptMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(DeptE deptE) {
-		transactionalUtil.executeInTransaction(() -> deptMapper.insert(DeptConvertor.toDataObject(deptE)));
+		deptMapper.insert(DeptConvertor.toDataObject(deptE));
 	}
 
 	@Override
 	public void update(DeptE deptE) {
 		DeptDO deptDO = DeptConvertor.toDataObject(deptE);
 		deptDO.setVersion(deptMapper.selectVersion(deptE.getId()));
-		update(deptDO);
+		deptMapper.updateById(deptDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> deptMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(DeptDO deptDO) {
-		transactionalUtil.executeInTransaction(() -> deptMapper.updateById(deptDO));
+		deptMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

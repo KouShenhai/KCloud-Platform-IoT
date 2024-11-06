@@ -23,7 +23,6 @@ import org.laokou.admin.noticeLog.gateway.NoticeLogGateway;
 import org.laokou.admin.noticeLog.gatewayimpl.database.NoticeLogMapper;
 import org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.admin.noticeLog.model.NoticeLogE;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,28 +38,21 @@ public class NoticeLogGatewayImpl implements NoticeLogGateway {
 
 	private final NoticeLogMapper noticeLogMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(NoticeLogE noticeLogE) {
-		transactionalUtil
-			.executeInTransaction(() -> noticeLogMapper.insert(NoticeLogConvertor.toDataObject(noticeLogE, true)));
+		noticeLogMapper.insert(NoticeLogConvertor.toDataObject(noticeLogE, true));
 	}
 
 	@Override
 	public void update(NoticeLogE noticeLogE) {
 		NoticeLogDO noticeLogDO = NoticeLogConvertor.toDataObject(noticeLogE, false);
 		noticeLogDO.setVersion(noticeLogMapper.selectVersion(noticeLogE.getId()));
-		update(noticeLogDO);
+		noticeLogMapper.updateById(noticeLogDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> noticeLogMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(NoticeLogDO noticeLogDO) {
-		transactionalUtil.executeInTransaction(() -> noticeLogMapper.updateById(noticeLogDO));
+		noticeLogMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

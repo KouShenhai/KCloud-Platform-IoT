@@ -19,6 +19,7 @@ package org.laokou.admin.noticeLog.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.noticeLog.dto.NoticeLogModifyCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.noticeLog.convertor.NoticeLogConvertor;
 import org.laokou.admin.noticeLog.ability.NoticeLogDomainService;
@@ -34,9 +35,12 @@ public class NoticeLogModifyCmdExe {
 
 	private final NoticeLogDomainService noticeLogDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(NoticeLogModifyCmd cmd) {
 		// 校验参数
-		noticeLogDomainService.update(NoticeLogConvertor.toEntity(cmd.getCo()));
+		transactionalUtil
+			.executeInTransaction(() -> noticeLogDomainService.update(NoticeLogConvertor.toEntity(cmd.getCo())));
 	}
 
 }

@@ -23,7 +23,6 @@ import org.laokou.admin.domainEvent.gateway.DomainEventGateway;
 import org.laokou.admin.domainEvent.model.DomainEventE;
 import org.laokou.common.domain.entity.DomainEventDO;
 import org.laokou.common.domain.mapper.DomainEventMapper;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,28 +38,21 @@ public class DomainEventGatewayImpl implements DomainEventGateway {
 
 	private final DomainEventMapper domainEventMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(DomainEventE domainEventE) {
-		transactionalUtil.executeInTransaction(
-				() -> domainEventMapper.insert(DomainEventConvertor.toDataObject(domainEventE, true)));
+		domainEventMapper.insert(DomainEventConvertor.toDataObject(domainEventE, true));
 	}
 
 	@Override
 	public void update(DomainEventE domainEventE) {
 		DomainEventDO domainEventDO = DomainEventConvertor.toDataObject(domainEventE, false);
 		domainEventDO.setVersion(domainEventMapper.selectVersion(domainEventE.getId()));
-		update(domainEventDO);
+		domainEventMapper.updateById(domainEventDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> domainEventMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(DomainEventDO domainEventDO) {
-		transactionalUtil.executeInTransaction(() -> domainEventMapper.updateById(domainEventDO));
+		domainEventMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

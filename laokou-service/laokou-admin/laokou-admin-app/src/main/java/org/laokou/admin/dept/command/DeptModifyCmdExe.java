@@ -19,6 +19,7 @@ package org.laokou.admin.dept.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.dto.DeptModifyCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.dept.convertor.DeptConvertor;
 import org.laokou.admin.dept.ability.DeptDomainService;
@@ -34,9 +35,11 @@ public class DeptModifyCmdExe {
 
 	private final DeptDomainService deptDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(DeptModifyCmd cmd) {
 		// 校验参数
-		deptDomainService.update(DeptConvertor.toEntity(cmd.getCo()));
+		transactionalUtil.executeInTransaction(() -> deptDomainService.update(DeptConvertor.toEntity(cmd.getCo())));
 	}
 
 }

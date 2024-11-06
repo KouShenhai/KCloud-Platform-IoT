@@ -24,7 +24,6 @@ import org.laokou.admin.loginLog.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.loginLog.model.LoginLogE;
 import org.laokou.common.core.utils.ArrayUtil;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -40,35 +39,26 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 
 	private final LoginLogMapper loginLogMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(LoginLogE loginLogE) {
-		transactionalUtil
-			.executeInTransaction(() -> loginLogMapper.insert(LoginLogConvertor.toDataObject(loginLogE, true)));
+		loginLogMapper.insert(LoginLogConvertor.toDataObject(loginLogE, true));
 	}
 
 	@Override
 	public void update(LoginLogE loginLogE) {
 		LoginLogDO loginLogDO = LoginLogConvertor.toDataObject(loginLogE, false);
 		loginLogDO.setVersion(loginLogMapper.selectVersion(loginLogE.getId()));
-		update(loginLogDO);
+		loginLogMapper.updateById(loginLogDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> {
-			if (ArrayUtil.isNotEmpty(ids)) {
-				loginLogMapper.deleteByIds(Arrays.asList(ids));
-			}
-			else {
-				loginLogMapper.deleteAll();
-			}
-		});
-	}
-
-	private void update(LoginLogDO loginLogDO) {
-		transactionalUtil.executeInTransaction(() -> loginLogMapper.updateById(loginLogDO));
+		if (ArrayUtil.isNotEmpty(ids)) {
+			loginLogMapper.deleteByIds(Arrays.asList(ids));
+		}
+		else {
+			loginLogMapper.deleteAll();
+		}
 	}
 
 }

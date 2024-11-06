@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserSaveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,9 +35,12 @@ public class UserSaveCmdExe {
 
 	private final UserDomainService userDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(UserSaveCmd cmd) {
 		// 校验参数
-		userDomainService.create(UserConvertor.toEntity(cmd.getCo(), true));
+		transactionalUtil
+			.executeInTransaction(() -> userDomainService.create(UserConvertor.toEntity(cmd.getCo(), true)));
 	}
 
 }

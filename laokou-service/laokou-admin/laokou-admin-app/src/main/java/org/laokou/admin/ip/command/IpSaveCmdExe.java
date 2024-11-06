@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.ip.ability.IpDomainService;
 import org.laokou.admin.ip.convertor.IpConvertor;
 import org.laokou.admin.ip.dto.IpSaveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,9 +35,11 @@ public class IpSaveCmdExe {
 
 	private final IpDomainService ipDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(IpSaveCmd cmd) {
 		// 校验参数
-		ipDomainService.create(IpConvertor.toEntity(cmd.getCo()));
+		transactionalUtil.executeInTransaction(() -> ipDomainService.create(IpConvertor.toEntity(cmd.getCo())));
 	}
 
 }

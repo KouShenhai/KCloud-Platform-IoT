@@ -19,6 +19,7 @@ package org.laokou.admin.cluster.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.cluster.dto.ClusterModifyCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.cluster.convertor.ClusterConvertor;
 import org.laokou.admin.cluster.ability.ClusterDomainService;
@@ -35,9 +36,12 @@ public class ClusterModifyCmdExe {
 
 	private final ClusterDomainService clusterDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(ClusterModifyCmd cmd) {
 		// 校验参数
-		clusterDomainService.update(ClusterConvertor.toEntity(cmd.getCo()));
+		transactionalUtil
+			.executeInTransaction(() -> clusterDomainService.update(ClusterConvertor.toEntity(cmd.getCo())));
 	}
 
 }

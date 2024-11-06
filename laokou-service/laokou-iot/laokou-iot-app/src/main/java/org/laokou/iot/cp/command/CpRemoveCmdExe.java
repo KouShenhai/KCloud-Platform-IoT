@@ -18,6 +18,7 @@
 package org.laokou.iot.cp.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.cp.dto.CpRemoveCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.cp.ability.CpDomainService;
@@ -34,9 +35,11 @@ public class CpRemoveCmdExe {
 
 	private final CpDomainService cpDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(CpRemoveCmd cmd) {
 		// 校验参数
-		cpDomainService.delete(cmd.getIds());
+		transactionalUtil.executeInTransaction(() -> cpDomainService.delete(cmd.getIds()));
 	}
 
 }

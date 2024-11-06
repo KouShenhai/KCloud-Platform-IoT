@@ -22,10 +22,7 @@ import org.laokou.admin.oss.model.OssE;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.oss.gateway.OssGateway;
 import org.laokou.admin.oss.gatewayimpl.database.OssMapper;
-
 import java.util.Arrays;
-
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.admin.oss.convertor.OssConvertor;
 import org.laokou.admin.oss.gatewayimpl.database.dataobject.OssDO;
 
@@ -40,27 +37,21 @@ public class OssGatewayImpl implements OssGateway {
 
 	private final OssMapper ossMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(OssE ossE) {
-		transactionalUtil.executeInTransaction(() -> ossMapper.insert(OssConvertor.toDataObject(ossE)));
+		ossMapper.insert(OssConvertor.toDataObject(ossE));
 	}
 
 	@Override
 	public void update(OssE ossE) {
 		OssDO ossDO = OssConvertor.toDataObject(ossE);
 		ossDO.setVersion(ossMapper.selectVersion(ossE.getId()));
-		update(ossDO);
+		ossMapper.updateById(ossDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> ossMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(OssDO ossDO) {
-		transactionalUtil.executeInTransaction(() -> ossMapper.updateById(ossDO));
+		ossMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

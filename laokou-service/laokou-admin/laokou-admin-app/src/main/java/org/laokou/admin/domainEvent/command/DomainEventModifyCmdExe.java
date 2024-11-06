@@ -19,6 +19,7 @@ package org.laokou.admin.domainEvent.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domainEvent.dto.DomainEventModifyCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.domainEvent.convertor.DomainEventConvertor;
 import org.laokou.admin.domainEvent.ability.DomainEventDomainService;
@@ -34,9 +35,12 @@ public class DomainEventModifyCmdExe {
 
 	private final DomainEventDomainService domainEventDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(DomainEventModifyCmd cmd) {
 		// 校验参数
-		domainEventDomainService.update(DomainEventConvertor.toEntity(cmd.getCo()));
+		transactionalUtil
+			.executeInTransaction(() -> domainEventDomainService.update(DomainEventConvertor.toEntity(cmd.getCo())));
 	}
 
 }
