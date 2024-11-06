@@ -26,8 +26,6 @@ import org.laokou.admin.source.gatewayimpl.database.SourceMapper;
 import java.util.Arrays;
 
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.admin.source.convertor.SourceConvertor;
 import org.laokou.admin.source.gatewayimpl.database.dataobject.SourceDO;
 
@@ -36,7 +34,6 @@ import org.laokou.admin.source.gatewayimpl.database.dataobject.SourceDO;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class SourceGatewayImpl implements SourceGateway {
@@ -45,52 +42,25 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(SourceE sourceE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				sourceMapper.insert(SourceConvertor.toDataObject(sourceE));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> sourceMapper.insert(SourceConvertor.toDataObject(sourceE)));
 	}
 
+	@Override
 	public void update(SourceE sourceE) {
 		SourceDO sourceDO = SourceConvertor.toDataObject(sourceE);
 		sourceDO.setVersion(sourceMapper.selectVersion(sourceE.getId()));
 		update(sourceDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				sourceMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> sourceMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(SourceDO sourceDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				sourceMapper.updateById(sourceDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> sourceMapper.updateById(sourceDO));
 	}
 
 }

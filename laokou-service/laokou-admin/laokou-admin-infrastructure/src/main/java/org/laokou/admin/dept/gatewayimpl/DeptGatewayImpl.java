@@ -18,13 +18,11 @@
 package org.laokou.admin.dept.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dept.convertor.DeptConvertor;
 import org.laokou.admin.dept.gateway.DeptGateway;
 import org.laokou.admin.dept.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.dept.model.DeptE;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +33,6 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DeptGatewayImpl implements DeptGateway {
@@ -44,52 +41,25 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(DeptE deptE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				deptMapper.insert(DeptConvertor.toDataObject(deptE));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> deptMapper.insert(DeptConvertor.toDataObject(deptE)));
 	}
 
+	@Override
 	public void update(DeptE deptE) {
 		DeptDO deptDO = DeptConvertor.toDataObject(deptE);
 		deptDO.setVersion(deptMapper.selectVersion(deptE.getId()));
 		update(deptDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				deptMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> deptMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(DeptDO deptDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				deptMapper.updateById(deptDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> deptMapper.updateById(deptDO));
 	}
 
 }

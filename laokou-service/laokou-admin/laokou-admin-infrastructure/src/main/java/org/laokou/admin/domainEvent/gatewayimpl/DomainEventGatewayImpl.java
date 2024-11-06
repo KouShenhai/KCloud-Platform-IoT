@@ -18,13 +18,11 @@
 package org.laokou.admin.domainEvent.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.domainEvent.convertor.DomainEventConvertor;
 import org.laokou.admin.domainEvent.gateway.DomainEventGateway;
 import org.laokou.admin.domainEvent.model.DomainEventE;
 import org.laokou.common.domain.entity.DomainEventDO;
 import org.laokou.common.domain.mapper.DomainEventMapper;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +33,6 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DomainEventGatewayImpl implements DomainEventGateway {
@@ -44,52 +41,26 @@ public class DomainEventGatewayImpl implements DomainEventGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(DomainEventE domainEventE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				domainEventMapper.insert(DomainEventConvertor.toDataObject(domainEventE, true));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(
+				() -> domainEventMapper.insert(DomainEventConvertor.toDataObject(domainEventE, true)));
 	}
 
+	@Override
 	public void update(DomainEventE domainEventE) {
 		DomainEventDO domainEventDO = DomainEventConvertor.toDataObject(domainEventE, false);
 		domainEventDO.setVersion(domainEventMapper.selectVersion(domainEventE.getId()));
 		update(domainEventDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				domainEventMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> domainEventMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(DomainEventDO domainEventDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				domainEventMapper.updateById(domainEventDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> domainEventMapper.updateById(domainEventDO));
 	}
 
 }

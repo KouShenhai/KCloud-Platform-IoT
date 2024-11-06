@@ -26,8 +26,6 @@ import org.laokou.admin.operateLog.gatewayimpl.database.OperateLogMapper;
 import java.util.Arrays;
 
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.admin.operateLog.convertor.OperateLogConvertor;
 import org.laokou.admin.operateLog.gatewayimpl.database.dataobject.OperateLogDO;
 
@@ -36,7 +34,6 @@ import org.laokou.admin.operateLog.gatewayimpl.database.dataobject.OperateLogDO;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OperateLogGatewayImpl implements OperateLogGateway {
@@ -45,52 +42,26 @@ public class OperateLogGatewayImpl implements OperateLogGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(OperateLogE operateLogE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				operateLogMapper.insert(OperateLogConvertor.toDataObject(operateLogE));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil
+			.executeInTransaction(() -> operateLogMapper.insert(OperateLogConvertor.toDataObject(operateLogE)));
 	}
 
+	@Override
 	public void update(OperateLogE operateLogE) {
 		OperateLogDO operateLogDO = OperateLogConvertor.toDataObject(operateLogE);
 		operateLogDO.setVersion(operateLogMapper.selectVersion(operateLogE.getId()));
 		update(operateLogDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				operateLogMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> operateLogMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(OperateLogDO operateLogDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				operateLogMapper.updateById(operateLogDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> operateLogMapper.updateById(operateLogDO));
 	}
 
 }

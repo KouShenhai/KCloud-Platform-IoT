@@ -18,13 +18,11 @@
 package org.laokou.admin.dict.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dict.convertor.DictConvertor;
 import org.laokou.admin.dict.gateway.DictGateway;
 import org.laokou.admin.dict.gatewayimpl.database.DictMapper;
 import org.laokou.admin.dict.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.admin.dict.model.DictE;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +33,6 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DictGatewayImpl implements DictGateway {
@@ -44,52 +41,25 @@ public class DictGatewayImpl implements DictGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(DictE dictE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				dictMapper.insert(DictConvertor.toDataObject(dictE));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> dictMapper.insert(DictConvertor.toDataObject(dictE)));
 	}
 
+	@Override
 	public void update(DictE dictE) {
 		DictDO dictDO = DictConvertor.toDataObject(dictE);
 		dictDO.setVersion(dictMapper.selectVersion(dictE.getId()));
 		update(dictDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				dictMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> dictMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(DictDO dictDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				dictMapper.updateById(dictDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> dictMapper.updateById(dictDO));
 	}
 
 }

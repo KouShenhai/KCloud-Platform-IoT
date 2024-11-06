@@ -26,8 +26,6 @@ import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import java.util.Arrays;
 
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 
@@ -36,7 +34,6 @@ import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class RoleGatewayImpl implements RoleGateway {
@@ -45,52 +42,25 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(RoleE roleE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				roleMapper.insert(RoleConvertor.toDataObject(roleE));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> roleMapper.insert(RoleConvertor.toDataObject(roleE)));
 	}
 
+	@Override
 	public void update(RoleE roleE) {
 		RoleDO roleDO = RoleConvertor.toDataObject(roleE);
 		roleDO.setVersion(roleMapper.selectVersion(roleE.getId()));
 		update(roleDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				roleMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> roleMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(RoleDO roleDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				roleMapper.updateById(roleDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> roleMapper.updateById(roleDO));
 	}
 
 }

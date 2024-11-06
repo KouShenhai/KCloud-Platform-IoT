@@ -18,13 +18,11 @@
 package org.laokou.admin.dictItem.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dictItem.convertor.DictItemConvertor;
 import org.laokou.admin.dictItem.gateway.DictItemGateway;
 import org.laokou.admin.dictItem.gatewayimpl.database.DictItemMapper;
 import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
 import org.laokou.admin.dictItem.model.DictItemE;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +33,6 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DictItemGatewayImpl implements DictItemGateway {
@@ -44,52 +41,25 @@ public class DictItemGatewayImpl implements DictItemGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(DictItemE dictItemE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				dictItemMapper.insert(DictItemConvertor.toDataObject(dictItemE));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> dictItemMapper.insert(DictItemConvertor.toDataObject(dictItemE)));
 	}
 
+	@Override
 	public void update(DictItemE dictItemE) {
 		DictItemDO dictItemDO = DictItemConvertor.toDataObject(dictItemE);
 		dictItemDO.setVersion(dictItemMapper.selectVersion(dictItemE.getId()));
 		update(dictItemDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				dictItemMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> dictItemMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(DictItemDO dictItemDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				dictItemMapper.updateById(dictItemDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> dictItemMapper.updateById(dictItemDO));
 	}
 
 }

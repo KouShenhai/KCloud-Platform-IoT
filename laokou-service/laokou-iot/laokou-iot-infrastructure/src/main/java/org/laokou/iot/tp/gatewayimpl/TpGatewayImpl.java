@@ -24,8 +24,6 @@ import org.laokou.iot.tp.gateway.TpGateway;
 import org.laokou.iot.tp.gatewayimpl.database.TpMapper;
 import java.util.Arrays;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.iot.tp.convertor.TpConvertor;
 import org.laokou.iot.tp.gatewayimpl.database.dataobject.TpDO;
 
@@ -35,7 +33,6 @@ import org.laokou.iot.tp.gatewayimpl.database.dataobject.TpDO;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class TpGatewayImpl implements TpGateway {
@@ -44,52 +41,25 @@ public class TpGatewayImpl implements TpGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(TpE tpE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				tpMapper.insert(TpConvertor.toDataObject(tpE, true));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> tpMapper.insert(TpConvertor.toDataObject(tpE, true)));
 	}
 
+	@Override
 	public void update(TpE tpE) {
 		TpDO tpDO = TpConvertor.toDataObject(tpE, false);
 		tpDO.setVersion(tpMapper.selectVersion(tpE.getId()));
 		update(tpDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				tpMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> tpMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(TpDO tpDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				tpMapper.updateById(tpDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> tpMapper.updateById(tpDO));
 	}
 
 }

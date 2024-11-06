@@ -24,8 +24,6 @@ import org.laokou.iot.productModel.gateway.ProductModelGateway;
 import org.laokou.iot.productModel.gatewayimpl.database.ProductModelMapper;
 import java.util.Arrays;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.iot.productModel.convertor.ProductModelConvertor;
 import org.laokou.iot.productModel.gatewayimpl.database.dataobject.ProductModelDO;
 
@@ -35,7 +33,6 @@ import org.laokou.iot.productModel.gatewayimpl.database.dataobject.ProductModelD
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ProductModelGatewayImpl implements ProductModelGateway {
@@ -44,52 +41,26 @@ public class ProductModelGatewayImpl implements ProductModelGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(ProductModelE productModelE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				productModelMapper.insert(ProductModelConvertor.toDataObject(productModelE, true));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(
+				() -> productModelMapper.insert(ProductModelConvertor.toDataObject(productModelE, true)));
 	}
 
+	@Override
 	public void update(ProductModelE productModelE) {
 		ProductModelDO productModelDO = ProductModelConvertor.toDataObject(productModelE, false);
 		productModelDO.setVersion(productModelMapper.selectVersion(productModelE.getId()));
 		update(productModelDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				productModelMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> productModelMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(ProductModelDO productModelDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				productModelMapper.updateById(productModelDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> productModelMapper.updateById(productModelDO));
 	}
 
 }

@@ -26,8 +26,6 @@ import org.laokou.admin.tenant.gatewayimpl.database.TenantMapper;
 import java.util.Arrays;
 
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.admin.tenant.convertor.TenantConvertor;
 import org.laokou.admin.tenant.gatewayimpl.database.dataobject.TenantDO;
 
@@ -36,7 +34,6 @@ import org.laokou.admin.tenant.gatewayimpl.database.dataobject.TenantDO;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class TenantGatewayImpl implements TenantGateway {
@@ -45,52 +42,25 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@Override
 	public void create(TenantE tenantE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				tenantMapper.insert(TenantConvertor.toDataObject(tenantE));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> tenantMapper.insert(TenantConvertor.toDataObject(tenantE)));
 	}
 
+	@Override
 	public void update(TenantE tenantE) {
 		TenantDO tenantDO = TenantConvertor.toDataObject(tenantE);
 		tenantDO.setVersion(tenantMapper.selectVersion(tenantE.getId()));
 		update(tenantDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				tenantMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> tenantMapper.deleteByIds(Arrays.asList(ids)));
 	}
 
 	private void update(TenantDO tenantDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				tenantMapper.updateById(tenantDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		transactionalUtil.executeInTransaction(() -> tenantMapper.updateById(tenantDO));
 	}
 
 }
