@@ -18,6 +18,7 @@
 package org.laokou.iot.tp.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.tp.dto.TpModifyCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.tp.convertor.TpConvertor;
@@ -35,9 +36,11 @@ public class TpModifyCmdExe {
 
 	private final TpDomainService tpDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(TpModifyCmd cmd) {
 		// 校验参数
-		tpDomainService.update(TpConvertor.toEntity(cmd.getCo()));
+		transactionalUtil.executeInTransaction(() -> tpDomainService.update(TpConvertor.toEntity(cmd.getCo())));
 	}
 
 }

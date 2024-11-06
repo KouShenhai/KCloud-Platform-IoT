@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.oss.ability.OssDomainService;
 import org.laokou.admin.oss.convertor.OssConvertor;
 import org.laokou.admin.oss.dto.OssModifyCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,9 +35,11 @@ public class OssModifyCmdExe {
 
 	private final OssDomainService ossDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(OssModifyCmd cmd) {
 		// 校验参数
-		ossDomainService.update(OssConvertor.toEntity(cmd.getCo()));
+		transactionalUtil.executeInTransaction(() -> ossDomainService.update(OssConvertor.toEntity(cmd.getCo())));
 	}
 
 }

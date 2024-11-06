@@ -23,7 +23,6 @@ import org.laokou.admin.dict.gateway.DictGateway;
 import org.laokou.admin.dict.gatewayimpl.database.DictMapper;
 import org.laokou.admin.dict.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.admin.dict.model.DictE;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,27 +38,21 @@ public class DictGatewayImpl implements DictGateway {
 
 	private final DictMapper dictMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(DictE dictE) {
-		transactionalUtil.executeInTransaction(() -> dictMapper.insert(DictConvertor.toDataObject(dictE)));
+		dictMapper.insert(DictConvertor.toDataObject(dictE));
 	}
 
 	@Override
 	public void update(DictE dictE) {
 		DictDO dictDO = DictConvertor.toDataObject(dictE);
 		dictDO.setVersion(dictMapper.selectVersion(dictE.getId()));
-		update(dictDO);
+		dictMapper.updateById(dictDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> dictMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(DictDO dictDO) {
-		transactionalUtil.executeInTransaction(() -> dictMapper.updateById(dictDO));
+		dictMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

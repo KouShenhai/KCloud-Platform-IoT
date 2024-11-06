@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component;
 import org.laokou.iot.device.gateway.DeviceGateway;
 import org.laokou.iot.device.gatewayimpl.database.DeviceMapper;
 import java.util.Arrays;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.device.convertor.DeviceConvertor;
 import org.laokou.iot.device.gatewayimpl.database.dataobject.DeviceDO;
 
@@ -39,27 +38,21 @@ public class DeviceGatewayImpl implements DeviceGateway {
 
 	private final DeviceMapper deviceMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(DeviceE deviceE) {
-		transactionalUtil.executeInTransaction(() -> deviceMapper.insert(DeviceConvertor.toDataObject(deviceE, true)));
+		deviceMapper.insert(DeviceConvertor.toDataObject(deviceE, true));
 	}
 
 	@Override
 	public void update(DeviceE deviceE) {
 		DeviceDO deviceDO = DeviceConvertor.toDataObject(deviceE, false);
 		deviceDO.setVersion(deviceMapper.selectVersion(deviceE.getId()));
-		update(deviceDO);
+		deviceMapper.updateById(deviceDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> deviceMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(DeviceDO deviceDO) {
-		transactionalUtil.executeInTransaction(() -> deviceMapper.updateById(deviceDO));
+		deviceMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

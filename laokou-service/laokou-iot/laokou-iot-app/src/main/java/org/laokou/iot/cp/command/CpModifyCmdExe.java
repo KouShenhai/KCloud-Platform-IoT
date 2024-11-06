@@ -18,6 +18,7 @@
 package org.laokou.iot.cp.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.cp.dto.CpModifyCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.cp.convertor.CpConvertor;
@@ -35,9 +36,11 @@ public class CpModifyCmdExe {
 
 	private final CpDomainService cpDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(CpModifyCmd cmd) {
 		// 校验参数
-		cpDomainService.update(CpConvertor.toEntity(cmd.getCo()));
+		transactionalUtil.executeInTransaction(() -> cpDomainService.update(CpConvertor.toEntity(cmd.getCo())));
 	}
 
 }

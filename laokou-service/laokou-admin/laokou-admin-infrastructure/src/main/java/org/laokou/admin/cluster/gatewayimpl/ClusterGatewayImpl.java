@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component;
 import org.laokou.admin.cluster.gateway.ClusterGateway;
 import org.laokou.admin.cluster.gatewayimpl.database.ClusterMapper;
 import java.util.Arrays;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.admin.cluster.convertor.ClusterConvertor;
 import org.laokou.admin.cluster.gatewayimpl.database.dataobject.ClusterDO;
 
@@ -39,28 +38,21 @@ public class ClusterGatewayImpl implements ClusterGateway {
 
 	private final ClusterMapper clusterMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(ClusterE clusterE) {
-		transactionalUtil
-			.executeInTransaction(() -> clusterMapper.insert(ClusterConvertor.toDataObject(clusterE, true)));
+		clusterMapper.insert(ClusterConvertor.toDataObject(clusterE, true));
 	}
 
 	@Override
 	public void update(ClusterE clusterE) {
 		ClusterDO clusterDO = ClusterConvertor.toDataObject(clusterE, false);
 		clusterDO.setVersion(clusterMapper.selectVersion(clusterE.getId()));
-		update(clusterDO);
+		clusterMapper.updateById(clusterDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> clusterMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(ClusterDO clusterDO) {
-		transactionalUtil.executeInTransaction(() -> clusterMapper.updateById(clusterDO));
+		clusterMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

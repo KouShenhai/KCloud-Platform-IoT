@@ -23,7 +23,6 @@ import org.laokou.admin.i18nMessage.gateway.I18nMessageGateway;
 import org.laokou.admin.i18nMessage.gatewayimpl.database.I18nMessageMapper;
 import org.laokou.admin.i18nMessage.gatewayimpl.database.dataobject.I18nMessageDO;
 import org.laokou.admin.i18nMessage.model.I18nMessageE;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,28 +38,21 @@ public class I18nMessageGatewayImpl implements I18nMessageGateway {
 
 	private final I18nMessageMapper i18nMessageMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(I18nMessageE i18nMessageE) {
-		transactionalUtil
-			.executeInTransaction(() -> i18nMessageMapper.insert(I18nMessageConvertor.toDataObject(i18nMessageE)));
+		i18nMessageMapper.insert(I18nMessageConvertor.toDataObject(i18nMessageE));
 	}
 
 	@Override
 	public void update(I18nMessageE i18nMessageE) {
 		I18nMessageDO i18nMessageDO = I18nMessageConvertor.toDataObject(i18nMessageE);
 		i18nMessageDO.setVersion(i18nMessageMapper.selectVersion(i18nMessageE.getId()));
-		update(i18nMessageDO);
+		i18nMessageMapper.updateById(i18nMessageDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> i18nMessageMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(I18nMessageDO i18nMessageDO) {
-		transactionalUtil.executeInTransaction(() -> i18nMessageMapper.updateById(i18nMessageDO));
+		i18nMessageMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component;
 import org.laokou.iot.cp.gateway.CpGateway;
 import org.laokou.iot.cp.gatewayimpl.database.CpMapper;
 import java.util.Arrays;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.cp.convertor.CpConvertor;
 import org.laokou.iot.cp.gatewayimpl.database.dataobject.CpDO;
 
@@ -39,27 +38,21 @@ public class CpGatewayImpl implements CpGateway {
 
 	private final CpMapper cpMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(CpE cpE) {
-		transactionalUtil.executeInTransaction(() -> cpMapper.insert(CpConvertor.toDataObject(cpE, true)));
+		cpMapper.insert(CpConvertor.toDataObject(cpE, true));
 	}
 
 	@Override
 	public void update(CpE cpE) {
 		CpDO cpDO = CpConvertor.toDataObject(cpE, false);
 		cpDO.setVersion(cpMapper.selectVersion(cpE.getId()));
-		update(cpDO);
+		cpMapper.updateById(cpDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> cpMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(CpDO cpDO) {
-		transactionalUtil.executeInTransaction(() -> cpMapper.updateById(cpDO));
+		cpMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

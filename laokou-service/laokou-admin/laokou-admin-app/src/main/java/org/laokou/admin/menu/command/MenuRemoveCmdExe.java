@@ -20,6 +20,7 @@ package org.laokou.admin.menu.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.ability.MenuDomainService;
 import org.laokou.admin.menu.dto.MenuRemoveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,9 +34,11 @@ public class MenuRemoveCmdExe {
 
 	private final MenuDomainService menuDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(MenuRemoveCmd cmd) {
 		// 校验参数
-		menuDomainService.delete(cmd.getIds());
+		transactionalUtil.executeInTransaction(() -> menuDomainService.delete(cmd.getIds()));
 	}
 
 }

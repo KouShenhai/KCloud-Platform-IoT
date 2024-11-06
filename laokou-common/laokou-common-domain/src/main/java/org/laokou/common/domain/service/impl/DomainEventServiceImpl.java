@@ -47,10 +47,8 @@ public class DomainEventServiceImpl implements DomainEventService {
 	public void create(DomainEventA domainEventA) {
 		try {
 			DynamicDataSourceContextHolder.push(DOMAIN);
-			transactionalUtil.executeInTransaction(() -> {
-				DomainEventDO eventDO = DomainEventConvertor.toDataObject(domainEventA);
-				domainEventMapper.insert(eventDO);
-			});
+			transactionalUtil
+				.executeInTransaction(() -> domainEventMapper.insert(DomainEventConvertor.toDataObject(domainEventA)));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

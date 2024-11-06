@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserModifyCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,9 +35,12 @@ public class UserModifyCmdExe {
 
 	private final UserDomainService userDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(UserModifyCmd cmd) {
 		// 校验参数
-		userDomainService.update(UserConvertor.toEntity(cmd.getCo(), false));
+		transactionalUtil
+			.executeInTransaction(() -> userDomainService.update(UserConvertor.toEntity(cmd.getCo(), false)));
 	}
 
 }

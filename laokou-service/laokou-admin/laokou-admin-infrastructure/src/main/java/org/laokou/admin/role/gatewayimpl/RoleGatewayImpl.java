@@ -24,8 +24,6 @@ import org.laokou.admin.role.gateway.RoleGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 
 import java.util.Arrays;
-
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 
@@ -40,27 +38,21 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	private final RoleMapper roleMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(RoleE roleE) {
-		transactionalUtil.executeInTransaction(() -> roleMapper.insert(RoleConvertor.toDataObject(roleE)));
+		roleMapper.insert(RoleConvertor.toDataObject(roleE));
 	}
 
 	@Override
 	public void update(RoleE roleE) {
 		RoleDO roleDO = RoleConvertor.toDataObject(roleE);
 		roleDO.setVersion(roleMapper.selectVersion(roleE.getId()));
-		update(roleDO);
+		roleMapper.updateById(roleDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> roleMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(RoleDO roleDO) {
-		transactionalUtil.executeInTransaction(() -> roleMapper.updateById(roleDO));
+		roleMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

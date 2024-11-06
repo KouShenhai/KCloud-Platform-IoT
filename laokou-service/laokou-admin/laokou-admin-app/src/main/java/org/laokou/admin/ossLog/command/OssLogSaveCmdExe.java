@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.ossLog.ability.OssLogDomainService;
 import org.laokou.admin.ossLog.convertor.OssLogConvertor;
 import org.laokou.admin.ossLog.dto.OssLogSaveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,9 +35,11 @@ public class OssLogSaveCmdExe {
 
 	private final OssLogDomainService ossLogDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(OssLogSaveCmd cmd) {
 		// 校验参数
-		ossLogDomainService.create(OssLogConvertor.toEntity(cmd.getCo()));
+		transactionalUtil.executeInTransaction(() -> ossLogDomainService.create(OssLogConvertor.toEntity(cmd.getCo())));
 	}
 
 }

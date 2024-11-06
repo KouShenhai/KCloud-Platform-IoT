@@ -18,6 +18,7 @@
 package org.laokou.iot.device.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.device.dto.DeviceModifyCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.device.convertor.DeviceConvertor;
@@ -35,9 +36,11 @@ public class DeviceModifyCmdExe {
 
 	private final DeviceDomainService deviceDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(DeviceModifyCmd cmd) {
 		// 校验参数
-		deviceDomainService.update(DeviceConvertor.toEntity(cmd.getCo()));
+		transactionalUtil.executeInTransaction(() -> deviceDomainService.update(DeviceConvertor.toEntity(cmd.getCo())));
 	}
 
 }

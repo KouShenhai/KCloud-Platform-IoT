@@ -18,6 +18,7 @@
 package org.laokou.iot.product.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.product.dto.ProductModifyCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.product.convertor.ProductConvertor;
@@ -35,9 +36,12 @@ public class ProductModifyCmdExe {
 
 	private final ProductDomainService productDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(ProductModifyCmd cmd) {
 		// 校验参数
-		productDomainService.update(ProductConvertor.toEntity(cmd.getCo()));
+		transactionalUtil
+			.executeInTransaction(() -> productDomainService.update(ProductConvertor.toEntity(cmd.getCo())));
 	}
 
 }

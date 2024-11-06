@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component;
 import org.laokou.iot.tp.gateway.TpGateway;
 import org.laokou.iot.tp.gatewayimpl.database.TpMapper;
 import java.util.Arrays;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.tp.convertor.TpConvertor;
 import org.laokou.iot.tp.gatewayimpl.database.dataobject.TpDO;
 
@@ -39,27 +38,21 @@ public class TpGatewayImpl implements TpGateway {
 
 	private final TpMapper tpMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(TpE tpE) {
-		transactionalUtil.executeInTransaction(() -> tpMapper.insert(TpConvertor.toDataObject(tpE, true)));
+		tpMapper.insert(TpConvertor.toDataObject(tpE, true));
 	}
 
 	@Override
 	public void update(TpE tpE) {
 		TpDO tpDO = TpConvertor.toDataObject(tpE, false);
 		tpDO.setVersion(tpMapper.selectVersion(tpE.getId()));
-		update(tpDO);
+		tpMapper.updateById(tpDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> tpMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(TpDO tpDO) {
-		transactionalUtil.executeInTransaction(() -> tpMapper.updateById(tpDO));
+		tpMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

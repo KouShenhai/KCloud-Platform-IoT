@@ -20,6 +20,7 @@ package org.laokou.admin.i18nMessage.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.i18nMessage.ability.I18nMessageDomainService;
 import org.laokou.admin.i18nMessage.dto.I18nMessageRemoveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,9 +34,11 @@ public class I18nMessageRemoveCmdExe {
 
 	private final I18nMessageDomainService i18nMessageDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(I18nMessageRemoveCmd cmd) {
 		// 校验参数
-		i18nMessageDomainService.delete(cmd.getIds());
+		transactionalUtil.executeInTransaction(() -> i18nMessageDomainService.delete(cmd.getIds()));
 	}
 
 }

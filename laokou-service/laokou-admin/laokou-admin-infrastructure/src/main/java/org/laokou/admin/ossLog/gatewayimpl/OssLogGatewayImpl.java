@@ -24,8 +24,6 @@ import org.laokou.admin.ossLog.gateway.OssLogGateway;
 import org.laokou.admin.ossLog.gatewayimpl.database.OssLogMapper;
 
 import java.util.Arrays;
-
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.admin.ossLog.convertor.OssLogConvertor;
 import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
 
@@ -40,27 +38,21 @@ public class OssLogGatewayImpl implements OssLogGateway {
 
 	private final OssLogMapper ossLogMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(OssLogE ossLogE) {
-		transactionalUtil.executeInTransaction(() -> ossLogMapper.insert(OssLogConvertor.toDataObject(ossLogE)));
+		ossLogMapper.insert(OssLogConvertor.toDataObject(ossLogE));
 	}
 
 	@Override
 	public void update(OssLogE ossLogE) {
 		OssLogDO ossLogDO = OssLogConvertor.toDataObject(ossLogE);
 		ossLogDO.setVersion(ossLogMapper.selectVersion(ossLogE.getId()));
-		update(ossLogDO);
+		ossLogMapper.updateById(ossLogDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> ossLogMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(OssLogDO ossLogDO) {
-		transactionalUtil.executeInTransaction(() -> ossLogMapper.updateById(ossLogDO));
+		ossLogMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

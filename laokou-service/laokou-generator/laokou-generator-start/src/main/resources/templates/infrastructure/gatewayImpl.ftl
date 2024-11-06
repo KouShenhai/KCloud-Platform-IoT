@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
 import ${packageName}.${instanceName}.gateway.${className}Gateway;
 import ${packageName}.${instanceName}.gatewayimpl.database.${className}Mapper;
 import java.util.Arrays;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import ${packageName}.${instanceName}.convertor.${className}Convertor;
 import ${packageName}.${instanceName}.gatewayimpl.database.dataobject.${className}DO;
 
@@ -40,28 +39,22 @@ public class ${className}GatewayImpl implements ${className}Gateway {
 
 	private final ${className}Mapper ${instanceName}Mapper;
 
-    private final TransactionalUtil transactionalUtil;
-
     @Override
 	public void create(${className}E ${instanceName}E) {
-        transactionalUtil.executeInTransaction(() -> ${instanceName}Mapper.insert(${className}Convertor.toDataObject(${instanceName}E, true)));
+        ${instanceName}Mapper.insert(${className}Convertor.toDataObject(${instanceName}E, true));
 	}
 
     @Override
 	public void update(${className}E ${instanceName}E) {
 		${className}DO ${instanceName}DO = ${className}Convertor.toDataObject(${instanceName}E, false);
 		${instanceName}DO.setVersion(${instanceName}Mapper.selectVersion(${instanceName}E.getId()));
-		update(${instanceName}DO);
+        ${instanceName}Mapper.updateById(${instanceName}DO);
 	}
 
     @Override
 	public void delete(Long[] ids) {
-        transactionalUtil.executeInTransaction(() -> ${instanceName}Mapper.deleteByIds(Arrays.asList(ids)));
+        ${instanceName}Mapper.deleteByIds(Arrays.asList(ids));
 	}
-
-	private void update(${className}DO ${instanceName}DO) {
-        transactionalUtil.executeInTransaction(() -> ${instanceName}Mapper.updateById(${instanceName}DO));
-    }
 
 }
 // @formatter:on

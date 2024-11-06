@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component;
 import org.laokou.iot.productModel.gateway.ProductModelGateway;
 import org.laokou.iot.productModel.gatewayimpl.database.ProductModelMapper;
 import java.util.Arrays;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.productModel.convertor.ProductModelConvertor;
 import org.laokou.iot.productModel.gatewayimpl.database.dataobject.ProductModelDO;
 
@@ -39,28 +38,21 @@ public class ProductModelGatewayImpl implements ProductModelGateway {
 
 	private final ProductModelMapper productModelMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
 	@Override
 	public void create(ProductModelE productModelE) {
-		transactionalUtil.executeInTransaction(
-				() -> productModelMapper.insert(ProductModelConvertor.toDataObject(productModelE, true)));
+		productModelMapper.insert(ProductModelConvertor.toDataObject(productModelE, true));
 	}
 
 	@Override
 	public void update(ProductModelE productModelE) {
 		ProductModelDO productModelDO = ProductModelConvertor.toDataObject(productModelE, false);
 		productModelDO.setVersion(productModelMapper.selectVersion(productModelE.getId()));
-		update(productModelDO);
+		productModelMapper.updateById(productModelDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> productModelMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(ProductModelDO productModelDO) {
-		transactionalUtil.executeInTransaction(() -> productModelMapper.updateById(productModelDO));
+		productModelMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

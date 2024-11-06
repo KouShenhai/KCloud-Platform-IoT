@@ -19,6 +19,7 @@ package org.laokou.admin.domainEvent.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domainEvent.dto.DomainEventRemoveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.domainEvent.ability.DomainEventDomainService;
 
@@ -33,9 +34,11 @@ public class DomainEventRemoveCmdExe {
 
 	private final DomainEventDomainService domainEventDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(DomainEventRemoveCmd cmd) {
 		// 校验参数
-		domainEventDomainService.delete(cmd.getIds());
+		transactionalUtil.executeInTransaction(() -> domainEventDomainService.delete(cmd.getIds()));
 	}
 
 }

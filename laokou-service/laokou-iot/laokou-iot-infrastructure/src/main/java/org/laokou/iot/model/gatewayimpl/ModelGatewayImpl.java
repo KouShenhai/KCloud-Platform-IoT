@@ -43,23 +43,19 @@ public class ModelGatewayImpl implements ModelGateway {
 
 	@Override
 	public void create(ModelE modelE) {
-		transactionalUtil.executeInTransaction(() -> modelMapper.insert(ModelConvertor.toDataObject(modelE, true)));
+		modelMapper.insert(ModelConvertor.toDataObject(modelE, true));
 	}
 
 	@Override
 	public void update(ModelE modelE) {
 		ModelDO modelDO = ModelConvertor.toDataObject(modelE, false);
 		modelDO.setVersion(modelMapper.selectVersion(modelE.getId()));
-		update(modelDO);
+		modelMapper.updateById(modelDO);
 	}
 
 	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.executeInTransaction(() -> modelMapper.deleteByIds(Arrays.asList(ids)));
-	}
-
-	private void update(ModelDO modelDO) {
-		transactionalUtil.executeInTransaction(() -> modelMapper.updateById(modelDO));
+		modelMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }
