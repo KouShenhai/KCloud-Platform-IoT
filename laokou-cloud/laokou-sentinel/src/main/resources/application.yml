@@ -32,9 +32,9 @@ server:
       # 设置IO线程数，来执行非阻塞任务，负责多个连接数
       io: 16
       # 工作线程数
-      worker: 256
+      worker: 512
     # 每块buffer的空间大小
-    buffer-size: 1024
+    buffer-size: 2048
     # 分配堆外内存
     direct-buffers: true
     accesslog:
