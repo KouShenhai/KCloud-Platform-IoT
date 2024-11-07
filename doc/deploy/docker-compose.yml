@@ -358,6 +358,25 @@ services:
       - admin
       - rocketmq-namesrv
       - rocketmq-broker
+  iot:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-iot-start:3.4.0
+    container_name: iot
+    tty: true
+    env_file:
+      - env/common.env
+      - env/iot.env
+    ports:
+      - "10005:10005"
+    volumes:
+      - ./iot/logs:/opt
+    restart: always
+    privileged: true
+    networks:
+      - laokou_network
+    depends_on:
+      - nacos
+      - rocketmq-namesrv
+      - rocketmq-broker
   admin:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.4.0
     container_name: admin
