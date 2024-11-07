@@ -227,7 +227,7 @@ https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT[贡献者许可协议]
 
 KCloud-Platform-IoT 开源软件遵循 https://www.apache.org/licenses/LICENSE-2.0.html[Apache 2.0 协议] 请务必保留作者、Copyright信息
 
-=== 🐮 二次开源登记（二次开源不允许修改开源协议，否则视为侵权）
+=== 🐮 二次开源登记（二次开源不允许更换开源协议，否则视为侵权）
 
 [width=100%]
 |===
