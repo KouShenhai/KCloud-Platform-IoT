@@ -81,6 +81,7 @@ import org.apache.rocketmq.logging.org.slf4j.LoggerFactory;
 import org.laokou.common.core.config.TtlVirtualThreadFactory;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.core.utils.SpringUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
  * @author laokou
@@ -103,6 +104,8 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 
 	private final ScheduledExecutorService cleanExpireMsgExecutors;
 
+	private SpringUtil springUtil;
+
 	public ConsumeMessageConcurrentlyService(DefaultMQPushConsumerImpl defaultMQPushConsumerImpl,
 			MessageListenerConcurrently messageListener) {
 		this.defaultMQPushConsumerImpl = defaultMQPushConsumerImpl;
@@ -115,7 +118,7 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 		String consumerGroupTag = (consumerGroup.length() > 100 ? consumerGroup.substring(0, 100) : consumerGroup)
 				+ "_";
 
-		SpringUtil springUtil = SpringContextUtil.getBean(SpringUtil.class);
+		initSpringUtil();
 		if (springUtil.isVirtualThread()) {
 			this.consumeExecutor = new ThreadPoolExecutor(0, // corePoolSize为0，因为不需要保留核心线程
 					Integer.MAX_VALUE, // maximumPoolSize: 无限制，允许任意数量的虚拟线程
@@ -511,6 +514,12 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 			}
 		}
 
+	}
+
+	private void initSpringUtil() {
+		if (ObjectUtil.isNull(springUtil)) {
+			this.springUtil = SpringContextUtil.getBean(SpringUtil.class);
+		}
 	}
 
 }
