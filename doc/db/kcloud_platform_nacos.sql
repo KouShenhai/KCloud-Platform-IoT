@@ -2304,7 +2304,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2319,7 +2319,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2402,7 +2402,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2417,7 +2417,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2708,7 +2708,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2723,7 +2723,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2897,7 +2897,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -2912,7 +2912,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -3132,7 +3132,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -3147,7 +3147,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -3414,13 +3414,13 @@ dataSources:
   master:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: org.postgresql.Driver
-    jdbcUrl: jdbc:postgresql://postgresql:5432/kcloud_platform_test?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-sample-shardingsphere&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+    jdbcUrl: jdbc:postgresql://postgresql:5432/kcloud_platform_test?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-sample-shardingsphere&useSSL=false
     username: ENC(VZamSTMi224AH6RUtJGXNldiDp/XEL2ozRhBUu/o9ChodT4JEb9kE/j0EFhXKbjsfvLVacUW0AUzetA6OrNJug==)
     password: ENC(laIHkPM/z03tYjA95hES4+BhyjyhvrPjJynrC65oDyXnUTP0Tge1UxwERWFBbHoOOQZ2GzzUrRhEYJ3jFb89eQ==)
   slave:
     dataSourceClassName: com.zaxxer.hikari.HikariDataSource
     driverClassName: org.postgresql.Driver
-    jdbcUrl: jdbc:postgresql://postgresql:5432/kcloud_platform_test?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-sample-shardingsphere&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+    jdbcUrl: jdbc:postgresql://postgresql:5432/kcloud_platform_test?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-sample-shardingsphere&useSSL=false
     username: ENC(VZamSTMi224AH6RUtJGXNldiDp/XEL2ozRhBUu/o9ChodT4JEb9kE/j0EFhXKbjsfvLVacUW0AUzetA6OrNJug==)
     password: ENC(laIHkPM/z03tYjA95hES4+BhyjyhvrPjJynrC65oDyXnUTP0Tge1UxwERWFBbHoOOQZ2GzzUrRhEYJ3jFb89eQ==)
 rules:
@@ -3553,7 +3553,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -3568,7 +3568,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -4055,7 +4055,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -4070,7 +4070,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -4164,7 +4164,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -4179,7 +4179,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -4273,7 +4273,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -4288,7 +4288,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515

@@ -20,22 +20,22 @@ spring:
       datasource:
         master:
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false&reWriteBatchedInserts=true
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false
           username: root
           password: laokou123
         domain:
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false&reWriteBatchedInserts=true
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false
           username: root
           password: laokou123
         iot:
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false&reWriteBatchedInserts=true
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false
           username: root
           password: laokou123
         generator:
           driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_generator?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false&reWriteBatchedInserts=true
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_generator?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false
           username: root
           password: laokou123
 
