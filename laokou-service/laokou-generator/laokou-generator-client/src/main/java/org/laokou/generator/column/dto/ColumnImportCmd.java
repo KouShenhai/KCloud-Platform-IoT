@@ -15,10 +15,25 @@
  *
  */
 
-package org.laokou.generator.model;
+package org.laokou.generator.column.dto;
 
-public enum App {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
+import org.springframework.web.multipart.MultipartFile;
 
-	IOT, SYS, GENERATOR
+/**
+ *
+ * 导入代码生成器字段命令.
+ *
+ * @author laokou
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ColumnImportCmd extends CommonCommand {
+
+	private MultipartFile[] files;
 
 }

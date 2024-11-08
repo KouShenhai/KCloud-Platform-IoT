@@ -15,10 +15,35 @@
  *
  */
 
-package org.laokou.generator.model;
+package org.laokou.generator.column.ability;
 
-public enum App {
+import lombok.RequiredArgsConstructor;
+import org.laokou.generator.column.gateway.*;
+import org.laokou.generator.column.model.ColumnE;
+import org.springframework.stereotype.Component;
 
-	IOT, SYS, GENERATOR
+/**
+ *
+ * 代码生成器字段领域服务.
+ *
+ * @author laokou
+ */
+@Component
+@RequiredArgsConstructor
+public class ColumnDomainService {
+
+	private final ColumnGateway columnGateway;
+
+	public void create(ColumnE columnE) {
+		columnGateway.create(columnE);
+	}
+
+	public void update(ColumnE columnE) {
+		columnGateway.update(columnE);
+	}
+
+	public void delete(Long[] ids) {
+		columnGateway.delete(ids);
+	}
 
 }

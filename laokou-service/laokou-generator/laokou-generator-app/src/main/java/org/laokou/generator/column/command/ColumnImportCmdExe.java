@@ -15,10 +15,24 @@
  *
  */
 
-package org.laokou.generator.model;
+package org.laokou.generator.column.command;
 
-public enum App {
+import lombok.RequiredArgsConstructor;
+import org.laokou.generator.column.dto.ColumnImportCmd;
+import org.springframework.stereotype.Component;
 
-	IOT, SYS, GENERATOR
+/**
+ *
+ * 导入代码生成器字段命令执行器.
+ *
+ * @author laokou
+ */
+@Component
+@RequiredArgsConstructor
+public class ColumnImportCmdExe {
+
+	public void executeVoid(ColumnImportCmd cmd) {
+		// 校验参数
+	}
 
 }

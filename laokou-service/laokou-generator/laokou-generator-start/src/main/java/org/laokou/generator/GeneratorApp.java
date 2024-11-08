@@ -18,6 +18,7 @@
 package org.laokou.generator;
 
 import lombok.SneakyThrows;
+import org.laokou.common.security.annotation.EnableSecurity;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -28,6 +29,7 @@ import java.net.InetAddress;
 /**
  * @author laokou
  */
+@EnableSecurity
 @EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = "org.laokou")
 public class GeneratorApp {

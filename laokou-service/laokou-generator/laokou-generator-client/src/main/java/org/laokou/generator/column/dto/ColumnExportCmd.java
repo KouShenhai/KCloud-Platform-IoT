@@ -15,10 +15,17 @@
  *
  */
 
-package org.laokou.generator.model;
+package org.laokou.generator.column.dto;
 
-public enum App {
+import lombok.Data;
 
-	IOT, SYS, GENERATOR
+/**
+ *
+ * 导出代码生成器字段命令.
+ *
+ * @author laokou
+ */
+@Data
+public class ColumnExportCmd extends ColumnPageQry {
 
 }
