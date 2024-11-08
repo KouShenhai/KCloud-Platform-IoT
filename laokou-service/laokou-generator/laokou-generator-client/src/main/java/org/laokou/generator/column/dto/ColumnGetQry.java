@@ -15,10 +15,24 @@
  *
  */
 
-package org.laokou.generator.model;
+package org.laokou.generator.column.dto;
 
-public enum App {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
-	IOT, SYS, GENERATOR
+/**
+ *
+ * 查看代码生成器字段请求.
+ *
+ * @author laokou
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ColumnGetQry extends CommonCommand {
+
+	private Long id;
 
 }

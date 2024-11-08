@@ -138,6 +138,30 @@ class TableTest {
 		generateCode(sourceName, version, author, tablePrefix, moduleName, packageName, tableNames, app);
 	}
 
+	@Test
+	void testGeneratorGenerateCode() {
+		// 已注释代码生成【跑CI已注释】
+		// 已注释代码生成【跑CI已注释】
+		// 已注释代码生成【跑CI已注释】
+		// 数据源
+		String sourceName = "generator";
+		// 版本号
+		String version = "v3";
+		// 作者
+		String author = "laokou";
+		// 表前缀
+		String tablePrefix = "boot_generator_";
+		// 模块名
+		String moduleName = "laokou-generator";
+		// 包名
+		String packageName = "org.laokou.generator";
+		// 应用
+		App app = App.GENERATOR;
+		// 表名
+		Set<String> tableNames = Set.of("boot_generator_column");
+		generateCode(sourceName, version, author, tablePrefix, moduleName, packageName, tableNames, app);
+	}
+
 	private void generateCode(String sourceName, String version, String author, String tablePrefix, String moduleName,
 			String packageName, Set<String> tableNames, App app) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {

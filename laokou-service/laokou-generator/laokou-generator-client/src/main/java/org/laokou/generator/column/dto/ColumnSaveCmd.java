@@ -15,10 +15,21 @@
  *
  */
 
-package org.laokou.generator.model;
+package org.laokou.generator.column.dto;
 
-public enum App {
+import lombok.Data;
+import org.laokou.generator.column.dto.clientobject.ColumnCO;
+import org.laokou.common.i18n.dto.CommonCommand;
 
-	IOT, SYS, GENERATOR
+/**
+ *
+ * 保存代码生成器字段命令.
+ *
+ * @author laokou
+ */
+@Data
+public class ColumnSaveCmd extends CommonCommand {
+
+	private ColumnCO co;
 
 }

@@ -12,7 +12,7 @@
  Target Server Version : 160002 (160002)
  File Encoding         : 65001
 
- Date: 07/11/2024 19:30:19
+ Date: 08/11/2024 10:29:12
 */
 
 
@@ -67,7 +67,21 @@ CACHE 1
   "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
-  "tenant_id" int8 NOT NULL DEFAULT 0
+  "tenant_id" int8 NOT NULL DEFAULT 0,
+  "name" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
+  "comment" varchar(400) COLLATE "pg_catalog"."default",
+  "type" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
+  "required_flag" int2 NOT NULL,
+  "save_flag" int2 NOT NULL,
+  "modify_flag" int2 NOT NULL,
+  "query_flag" int2 NOT NULL,
+  "page_flag" int2 NOT NULL,
+  "query_type" varchar(50) COLLATE "pg_catalog"."default",
+  "component_type" varchar(50) COLLATE "pg_catalog"."default",
+  "dict_type" varchar(50) COLLATE "pg_catalog"."default",
+  "field_name" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
+  "field_type" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
+  "info_id" int8 NOT NULL
 )
 ;
 COMMENT ON COLUMN "public"."boot_generator_column"."id" IS 'ID';
@@ -78,6 +92,20 @@ COMMENT ON COLUMN "public"."boot_generator_column"."update_time" IS '修改时�
 COMMENT ON COLUMN "public"."boot_generator_column"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."boot_generator_column"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_generator_column"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_generator_column"."name" IS '列名';
+COMMENT ON COLUMN "public"."boot_generator_column"."comment" IS '描述';
+COMMENT ON COLUMN "public"."boot_generator_column"."type" IS '类型';
+COMMENT ON COLUMN "public"."boot_generator_column"."required_flag" IS '必填标识 0否 1是';
+COMMENT ON COLUMN "public"."boot_generator_column"."save_flag" IS '保存标识 0否 1是';
+COMMENT ON COLUMN "public"."boot_generator_column"."modify_flag" IS '修改标识 0否 1是';
+COMMENT ON COLUMN "public"."boot_generator_column"."query_flag" IS '查询标识 0否 1是';
+COMMENT ON COLUMN "public"."boot_generator_column"."page_flag" IS '分页标识 0否 1是';
+COMMENT ON COLUMN "public"."boot_generator_column"."query_type" IS '查询类型';
+COMMENT ON COLUMN "public"."boot_generator_column"."component_type" IS '组件类型';
+COMMENT ON COLUMN "public"."boot_generator_column"."dict_type" IS '字典类型';
+COMMENT ON COLUMN "public"."boot_generator_column"."field_name" IS '字段名称';
+COMMENT ON COLUMN "public"."boot_generator_column"."field_type" IS '字段类型';
+COMMENT ON COLUMN "public"."boot_generator_column"."info_id" IS '代码生成信息ID';
 COMMENT ON TABLE "public"."boot_generator_column" IS '代码生成器字段';
 
 -- ----------------------------

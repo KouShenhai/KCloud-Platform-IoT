@@ -15,10 +15,26 @@
  *
  */
 
-package org.laokou.generator.model;
+package org.laokou.generator.column.gatewayimpl.database;
 
-public enum App {
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
+import org.laokou.generator.column.gatewayimpl.database.dataobject.ColumnDO;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+import org.laokou.common.i18n.dto.PageQuery;
 
-	IOT, SYS, GENERATOR
+/**
+ *
+ * 代码生成器字段数据库映射.
+ *
+ * @author laokou
+ */
+@Mapper
+@Repository
+public interface ColumnMapper extends CrudMapper<Long, Integer, ColumnDO> {
+
+	List<ColumnDO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
 
 }

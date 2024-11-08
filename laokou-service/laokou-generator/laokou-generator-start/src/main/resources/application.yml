@@ -33,6 +33,11 @@ spring:
           url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
           username: root
           password: laokou123
+        generator:
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_generator?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
+          username: root
+          password: laokou123
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*.xml

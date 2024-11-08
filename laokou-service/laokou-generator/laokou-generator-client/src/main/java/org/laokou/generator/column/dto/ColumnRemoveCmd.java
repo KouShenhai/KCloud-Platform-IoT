@@ -15,10 +15,24 @@
  *
  */
 
-package org.laokou.generator.model;
+package org.laokou.generator.column.dto;
 
-public enum App {
+import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
-	IOT, SYS, GENERATOR
+/**
+ *
+ * 删除代码生成器字段命令.
+ *
+ * @author laokou
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ColumnRemoveCmd extends CommonCommand {
+
+	private Long[] ids;
 
 }
