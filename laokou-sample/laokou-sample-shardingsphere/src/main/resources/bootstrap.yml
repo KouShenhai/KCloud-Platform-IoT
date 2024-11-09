@@ -26,7 +26,7 @@ spring:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         username: ${NACOS-USERNAME}
         password: ${NACOS-PASSWORD}
-        cluster-name: ${NACOS-CLUSTER-NAME}-sample-shardingsphere
+        cluster-name: ${NACOS-CLUSTER-NAME}
         # https://github.com/alibaba/spring-cloud-alibaba/blob/2021.x/spring-cloud-alibaba-docs/src/main/asciidoc-zh/nacos-config.adoc
         # 指定读取的文件格式
         file-extension: yaml

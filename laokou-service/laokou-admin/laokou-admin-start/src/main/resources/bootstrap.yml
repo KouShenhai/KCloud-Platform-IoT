@@ -36,13 +36,13 @@ spring:
         secure: @SSL-ENABLED@
         # true 临时 false 持久
         ephemeral: true
-        cluster-name: ${NACOS-CLUSTER-NAME}-admin
+        cluster-name: ${NACOS-CLUSTER-NAME}
       config:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
         username: ${NACOS-USERNAME}
         password: ${NACOS-PASSWORD}
-        cluster-name: ${NACOS-CLUSTER-NAME}-admin
+        cluster-name: ${NACOS-CLUSTER-NAME}
         # https://github.com/alibaba/spring-cloud-alibaba/blob/2021.x/spring-cloud-alibaba-docs/src/main/asciidoc-zh/nacos-config.adoc
         # 指定读取的文件格式
         file-extension: yaml

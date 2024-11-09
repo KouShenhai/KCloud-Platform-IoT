@@ -11,7 +11,7 @@
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-core</artifactId>
+      <artifactId>laokou-common-mybatis-plus</artifactId>
     </dependency>
   </dependencies>
 

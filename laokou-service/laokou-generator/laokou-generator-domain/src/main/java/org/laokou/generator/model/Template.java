@@ -381,7 +381,7 @@ public enum Template {
 		}
 	},
 
-	DO {
+	DATA_OBJECT {
 		@Override
 		public String getTemplatePath(String path) {
 			return path + "/infrastructure/do.ftl";
@@ -399,7 +399,7 @@ public enum Template {
 		}
 	},
 
-	CO {
+	CLIENT_OBJECT {
 		@Override
 		public String getTemplatePath(String path) {
 			return path + "/client/co.ftl";
