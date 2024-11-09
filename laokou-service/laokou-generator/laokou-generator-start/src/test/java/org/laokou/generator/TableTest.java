@@ -171,7 +171,7 @@ class TableTest {
 				// 已注释代码生成【跑CI已注释】
 				// 已注释代码生成【跑CI已注释】
 				// 已注释代码生成【跑CI已注释】
-				generatorDomainService.generateCode(generatorA);
+				// generatorDomainService.generateCode(generatorA);
 			}, executor)).forEach(CompletableFuture::join);
 		}
 	}

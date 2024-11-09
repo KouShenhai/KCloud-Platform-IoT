@@ -87,23 +87,23 @@ public final class SpringContextUtil implements ApplicationContextAware, Disposa
 
 	/**
 	 * 根据类型获取Bean.
-	 * @param requiredType 类型
+	 * @param type 类型
 	 * @param <T> 泛型
 	 * @return Bean
 	 */
-	public static <T> T getBean(Class<T> requiredType) {
-		return applicationContext.getBean(requiredType);
+	public static <T> T getBean(Class<T> type) {
+		return applicationContext.getBean(type);
 	}
 
 	/**
 	 * 根据名称和类型获取Bean.
 	 * @param name 名称
-	 * @param requiredType 类型
+	 * @param type 类型
 	 * @param <T> 泛型
 	 * @return Bean
 	 */
-	public static <T> T getBean(String name, Class<T> requiredType) {
-		return applicationContext.getBean(name, requiredType);
+	public static <T> T getBean(String name, Class<T> type) {
+		return applicationContext.getBean(name, type);
 	}
 
 	/**
@@ -116,34 +116,34 @@ public final class SpringContextUtil implements ApplicationContextAware, Disposa
 	}
 
 	/**
-	 * 根据类型获取类.
-	 * @param requiredType 类型
+	 * 根据类型获取类【哈希表】.
+	 * @param type 类型
 	 * @param <T> 泛型
 	 * @return 类
 	 */
-	public static <T> Map<String, T> getType(Class<T> requiredType) {
-		return applicationContext.getBeansOfType(requiredType);
+	public static <T> Map<String, T> getType(Class<T> type) {
+		return applicationContext.getBeansOfType(type);
 	}
 
 	/**
 	 * 注册Bean.
 	 * @param clazz 类
-	 * @param beanName 名称
+	 * @param name 名称
 	 * @param <T> 泛型
 	 */
-	public static <T> void registerBean(Class<T> clazz, String beanName) {
+	public static <T> void registerBean(Class<T> clazz, String name) {
 		BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(clazz);
-		getFactory().registerBeanDefinition(beanName, beanDefinitionBuilder.getBeanDefinition());
+		getFactory().registerBeanDefinition(name, beanDefinitionBuilder.getBeanDefinition());
 	}
 
 	/**
-	 * 注销Bean.
-	 * @param beanName 名称
+	 * 移除Bean.
+	 * @param name 名称
 	 */
-	public static void removeBean(String beanName) {
+	public static void removeBean(String name) {
 		DefaultListableBeanFactory beanFactory = getFactory();
-		if (beanFactory.containsBeanDefinition(beanName)) {
-			beanFactory.removeBeanDefinition(beanName);
+		if (beanFactory.containsBeanDefinition(name)) {
+			beanFactory.removeBeanDefinition(name);
 		}
 	}
 

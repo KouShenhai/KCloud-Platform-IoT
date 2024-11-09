@@ -58,6 +58,9 @@ public final class ThreadUtil {
 		}
 	}
 
+	/**
+	 * 新建一个虚拟线程池.
+	 */
 	public static ExecutorService newVirtualTaskExecutor() {
 		return Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE);
 	}

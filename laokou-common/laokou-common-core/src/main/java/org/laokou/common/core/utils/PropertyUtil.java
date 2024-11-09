@@ -28,14 +28,14 @@ import org.springframework.core.io.Resource;
 import java.util.List;
 
 /**
- * properties工具类.
+ * 属性工具类.
  *
  * @author laokou
  */
 public final class PropertyUtil {
 
 	/**
-	 * 从nacos获取配置文件并转为属性.
+	 * 绑定或创建属性.
 	 * @param bindName 配置前缀
 	 * @param clazz 类
 	 * @param location 文件名称
@@ -44,7 +44,7 @@ public final class PropertyUtil {
 	 * @return 属性
 	 */
 	@SneakyThrows
-	public static <T> T getProperties(String bindName, Class<T> clazz, String location, String format) {
+	public static <T> T bindOrCreate(String bindName, Class<T> clazz, String location, String format) {
 		StandardEnvironment environment = new StandardEnvironment();
 		Resource resource = ResourceUtil.getResource(location);
 		List<PropertySource<?>> propertySourceList = new YamlPropertySourceLoader().load(format, resource);

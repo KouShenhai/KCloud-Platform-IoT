@@ -98,7 +98,7 @@ public final class TreeUtil {
 		private Long pid;
 
 		@Schema(name = "子节点", description = "子节点")
-		private List<T> children = new ArrayList<>(8);
+		private List<T> children = new ArrayList<>(16);
 
 		public TreeNode(Long id, String name, Long pid) {
 			this.id = id;

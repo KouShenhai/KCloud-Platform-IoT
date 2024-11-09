@@ -25,6 +25,11 @@ module.exports = {
 			{
 				text: '指南', link: '/pages/a2f161/', items: [
 					{
+						text: '开发手册', items: [
+							{text: '工具类-必读', link: '/pages/2332b5/'}
+						]
+					},
+					{
 						text: '环境搭建', items: [
 							{text: 'Centos7安装Mysql 8.0.33（傻瓜式安装）', link: '/pages/a2f161/'},
 							{text: 'Centos7安装Redis 7.0.11（傻瓜式安装）', link: '/pages/90401a/'},

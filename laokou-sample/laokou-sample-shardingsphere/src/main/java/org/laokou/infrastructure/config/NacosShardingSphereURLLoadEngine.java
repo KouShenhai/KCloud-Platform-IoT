@@ -96,7 +96,7 @@ public final class NacosShardingSphereURLLoadEngine {
 	 */
 	@SneakyThrows
 	public byte[] loadContent() {
-		NacosConfigProperties properties = PropertyUtil.getProperties(NACOS_CONFIG_PREFIX, NacosConfigProperties.class,
+		NacosConfigProperties properties = PropertyUtil.bindOrCreate(NACOS_CONFIG_PREFIX, NacosConfigProperties.class,
 				BIND_YAML_NAME, YAML_FORMAT_NAME);
 		String group = properties.getGroup();
 		NacosConfigManager nacosConfigManager = new NacosConfigManager(properties);

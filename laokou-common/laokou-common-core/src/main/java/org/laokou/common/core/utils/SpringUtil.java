@@ -24,6 +24,8 @@ import static org.laokou.common.core.utils.SpringContextUtil.APPLICATION_NAME;
 import static org.laokou.common.core.utils.SpringContextUtil.DEFAULT_SERVICE_ID;
 
 /**
+ * Spring工具类.
+ *
  * @author laokou
  */
 @Component
@@ -32,10 +34,16 @@ public class SpringUtil {
 
 	private final Environment environment;
 
+	/**
+	 * 获取服务ID.
+	 */
 	public String getServiceId() {
 		return environment.getProperty(APPLICATION_NAME, DEFAULT_SERVICE_ID);
 	}
 
+	/**
+	 * 判断是否开启虚拟线程.
+	 */
 	public boolean isVirtualThread() {
 		return environment.getProperty("spring.threads.virtual.enabled", Boolean.class, false);
 	}

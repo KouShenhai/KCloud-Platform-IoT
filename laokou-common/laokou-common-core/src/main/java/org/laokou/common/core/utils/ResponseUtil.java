@@ -38,7 +38,7 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 public final class ResponseUtil {
 
 	/**
-	 * 响应给视图解析.
+	 * 响应视图【状态码OK，json格式】.
 	 * @param response 响应对象
 	 * @param obj 对象
 	 */
@@ -48,7 +48,7 @@ public final class ResponseUtil {
 	}
 
 	/**
-	 * 响应给视图解析.
+	 * 响应视图【状态码OK，自定义响应类型】.
 	 * @param response 响应对象
 	 * @param str 对象
 	 */
@@ -70,7 +70,7 @@ public final class ResponseUtil {
 	}
 
 	/**
-	 * 获取请求对象.
+	 * 获取响应对象.
 	 * @return 请求对象
 	 */
 	public static HttpServletResponse getHttpServletResponse() {

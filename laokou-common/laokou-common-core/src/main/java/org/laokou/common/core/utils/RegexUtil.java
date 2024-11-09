@@ -30,14 +30,9 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 public final class RegexUtil {
 
 	/**
-	 * URL版本正则表达式.
-	 */
-	public static final String URL_VERSION_REGEX = "/(v\\d+)/";
-
-	/**
 	 * IPV4正则表达式.
 	 */
-	public static final String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
+	private static final String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
 
 	/**
 	 * 邮箱正则表达式.
@@ -91,7 +86,7 @@ public final class RegexUtil {
 	 * @param sourceName 自由名称
 	 * @return 数据源名称匹配结果
 	 */
-	public static boolean sourceRegex(String sourceName) {
+	public static boolean sourceNameRegex(String sourceName) {
 		return Pattern.matches(SOURCE_REGEX, sourceName);
 	}
 
