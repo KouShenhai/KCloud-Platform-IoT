@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -89,7 +90,7 @@ public final class FileUtil {
 		}
 	}
 
-	public static void write(File file, InputStream in, long size, long chunkSize, Executor executor)
+	public static void write(File file, InputStream in, long size, long chunkSize, ExecutorService executorService)
 			throws IOException {
 		if (in instanceof FileInputStream fis) {
 			try (FileChannel inChannel = fis.getChannel()) {
@@ -117,7 +118,7 @@ public final class FileUtil {
 						catch (IOException e) {
 							throw new RuntimeException(e);
 						}
-					}, executor));
+					}, executorService));
 				}
 				futures.forEach(CompletableFuture::join);
 			}
