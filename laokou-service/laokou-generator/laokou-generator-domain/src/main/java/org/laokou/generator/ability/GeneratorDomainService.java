@@ -126,8 +126,8 @@ public class GeneratorDomainService {
 		templates.add(Template.SERVICE_I);
 		templates.add(Template.SERVICE_IMPL);
 		templates.add(Template.DOMAIN_SERVICE);
-		templates.add(Template.DO);
-		templates.add(Template.CO);
+		templates.add(Template.DATA_OBJECT);
+		templates.add(Template.CLIENT_OBJECT);
 		templates.add(Template.GATEWAY);
 		templates.add(Template.GATEWAY_IMPL);
 		templates.add(Template.CONTROLLER);

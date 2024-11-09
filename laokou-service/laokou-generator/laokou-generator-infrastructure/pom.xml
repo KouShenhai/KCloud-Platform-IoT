@@ -19,26 +19,30 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-domain</artifactId>
     </dependency>
-      <dependency>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-security</artifactId>
-      </dependency>
-      <dependency>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-idempotent</artifactId>
-      </dependency>
-      <dependency>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-log</artifactId>
-      </dependency>
-      <dependency>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-trace</artifactId>
-      </dependency>
-      <dependency>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-generator-client</artifactId>
-      </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-idempotent</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-log</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-trace</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-generator-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-nacos</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

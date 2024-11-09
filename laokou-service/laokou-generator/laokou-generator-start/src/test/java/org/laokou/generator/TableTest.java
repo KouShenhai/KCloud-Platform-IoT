@@ -158,7 +158,7 @@ class TableTest {
 		// 应用
 		App app = App.GENERATOR;
 		// 表名
-		Set<String> tableNames = Set.of("boot_generator_column");
+		Set<String> tableNames = Set.of("boot_generator_template", "boot_generator_info");
 		generateCode(sourceName, version, author, tablePrefix, moduleName, packageName, tableNames, app);
 	}
 
@@ -171,7 +171,7 @@ class TableTest {
 				// 已注释代码生成【跑CI已注释】
 				// 已注释代码生成【跑CI已注释】
 				// 已注释代码生成【跑CI已注释】
-				// generatorDomainService.generateCode(generatorA);
+				generatorDomainService.generateCode(generatorA);
 			}, executor)).forEach(CompletableFuture::join);
 		}
 	}
