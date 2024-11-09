@@ -75,11 +75,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.core.utils.RegexUtil.IPV4_REGEX;
-import static org.laokou.common.core.utils.RegexUtil.URL_VERSION_REGEX;
 import static org.laokou.common.i18n.common.constant.StringConstant.TRUE;
 import static org.laokou.common.i18n.common.constant.TraceConstant.*;
 
@@ -160,7 +157,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	public void init() {
 		String ip = nacosDiscoveryProperties.getIp();
 		if (StringUtils.isNotEmpty(ip)) {
-			ipv6 = Pattern.matches(IPV4_REGEX, ip) ? nacosDiscoveryProperties.getMetadata().get(IPV6_KEY) : ip;
+			ipv6 = RegexUtil.ipRegex(ip) ? nacosDiscoveryProperties.getMetadata().get(IPV6_KEY) : ip;
 		}
 		else {
 			ipv6 = inetIPv6Utils.findIPv6Address();
@@ -176,7 +173,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		if (StringUtils.isNotEmpty(ipv6)) {
 			List<ServiceInstance> ipv6InstanceList = new ArrayList<>();
 			for (ServiceInstance instance : instances) {
-				if (Pattern.matches(IPV4_REGEX, instance.getHost())) {
+				if (RegexUtil.ipRegex(instance.getHost())) {
 					if (StringUtils.isNotEmpty(instance.getMetadata().get(IPV6_KEY))) {
 						ipv6InstanceList.add(instance);
 					}
@@ -188,7 +185,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			// Provider has no IPv6, should use IPv4.
 			if (ipv6InstanceList.isEmpty()) {
 				return instances.stream()
-					.filter(instance -> Pattern.matches(IPV4_REGEX, instance.getHost()))
+					.filter(instance -> RegexUtil.ipRegex(instance.getHost()))
 					.collect(Collectors.toList());
 			}
 			else {
@@ -196,7 +193,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			}
 		}
 		return instances.stream()
-			.filter(instance -> Pattern.matches(IPV4_REGEX, instance.getHost()))
+			.filter(instance -> RegexUtil.ipRegex(instance.getHost()))
 			.collect(Collectors.toList());
 	}
 
@@ -240,7 +237,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			}
 			// 服务灰度路由
 			if (isGrayRouter(headers)) {
-				String version = RegexUtil.getRegexValue(path, URL_VERSION_REGEX);
+				String version = RegexUtil.getRegexValue(path, "/(v\\d+)/");
 				if (StringUtils.isNotEmpty(version)) {
 					serviceInstances = serviceInstances.stream()
 						.filter(item -> item.getMetadata().getOrDefault(VERSION, DEFAULT_VERSION_VALUE).equals(version))

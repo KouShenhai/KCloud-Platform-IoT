@@ -19,7 +19,7 @@ package org.laokou.common.core.utils;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
+import lombok.SneakyThrows;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import java.io.IOException;
@@ -44,10 +44,9 @@ public final class TemplateUtil extends FreeMarkerTemplateUtils {
 	 * @param template 模板
 	 * @param params 参数
 	 * @return 内容
-	 * @throws IOException 异常
-	 * @throws TemplateException 异常
 	 */
-	public static String getContent(String template, Map<String, Object> params) throws IOException, TemplateException {
+	@SneakyThrows
+	public static String getContent(String template, Map<String, Object> params) {
 		Template temp = getTemplate(template);
 		return FreeMarkerTemplateUtils.processTemplateIntoString(temp, params);
 	}

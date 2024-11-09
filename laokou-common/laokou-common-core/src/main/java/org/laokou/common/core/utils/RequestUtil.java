@@ -66,13 +66,15 @@ public final class RequestUtil {
 		}
 	}
 
+	/**
+	 * 获取UserAgentParser对象.
+	 */
 	public static UserAgentParser getUserAgentParser() {
 		return PARSER;
 	}
 
 	/**
 	 * 获取请求对象.
-	 * @return 请求对象
 	 */
 	public static HttpServletRequest getHttpServletRequest() {
 		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
@@ -90,6 +92,11 @@ public final class RequestUtil {
 		return StringUtil.isEmpty(domainName) ? LOCAL_IPV4 : domainName;
 	}
 
+	/**
+	 * 获取方法处理器.
+	 * @param request 请求对象
+	 * @param handlerMapping 映射处理器
+	 */
 	@SneakyThrows
 	public static HandlerMethod getHandlerMethod(HttpServletRequest request, HandlerMapping handlerMapping) {
 		HandlerExecutionChain chain = handlerMapping.getHandler(request);
@@ -108,6 +115,11 @@ public final class RequestUtil {
 		return PARSER.parse(request.getHeader(USER_AGENT));
 	}
 
+	/**
+	 * 获取参数值.
+	 * @param request 请求对象
+	 * @param paramName 参数名称
+	 */
 	public static String getParamValue(HttpServletRequest request, String paramName) {
 		String paramValue = request.getHeader(paramName);
 		// 从参数中获取
@@ -117,9 +129,43 @@ public final class RequestUtil {
 		return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
 	}
 
+	/**
+	 * 获取请求体.
+	 * @param request 请求对象
+	 */
 	@SneakyThrows
 	public static byte[] getRequestBody(HttpServletRequest request) {
 		return StreamUtils.copyToByteArray(request.getInputStream());
+	}
+
+	/**
+	 * 获取流.
+	 * @param requestBody 请求体
+	 */
+	public static ServletInputStream getInputStream(byte[] requestBody) {
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(requestBody);
+		return new ServletInputStream() {
+
+			@Override
+			public int read() {
+				return inputStream.read();
+			}
+
+			@Override
+			public boolean isFinished() {
+				return false;
+			}
+
+			@Override
+			public boolean isReady() {
+				return false;
+			}
+
+			@Override
+			public void setReadListener(ReadListener readListener) {
+				throw new UnsupportedOperationException();
+			}
+		};
 	}
 
 	public final static class RequestWrapper extends HttpServletRequestWrapper {
@@ -154,32 +200,6 @@ public final class RequestUtil {
 
 		}
 
-	}
-
-	public static ServletInputStream getInputStream(byte[] requestBody) {
-		ByteArrayInputStream inputStream = new ByteArrayInputStream(requestBody);
-		return new ServletInputStream() {
-
-			@Override
-			public int read() {
-				return inputStream.read();
-			}
-
-			@Override
-			public boolean isFinished() {
-				return false;
-			}
-
-			@Override
-			public boolean isReady() {
-				return false;
-			}
-
-			@Override
-			public void setReadListener(ReadListener readListener) {
-				throw new UnsupportedOperationException();
-			}
-		};
 	}
 
 }

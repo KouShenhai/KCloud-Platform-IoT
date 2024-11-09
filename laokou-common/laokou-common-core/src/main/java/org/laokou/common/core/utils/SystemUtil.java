@@ -18,10 +18,15 @@
 package org.laokou.common.core.utils;
 
 /**
+ * 系统工具类.
+ *
  * @author laokou
  */
 public final class SystemUtil {
 
+	/**
+	 * 判断是否是Window系统.
+	 */
 	public static boolean isWindows() {
 		return System.getProperty("os.name").toLowerCase().contains("windows");
 	}
