@@ -81,16 +81,6 @@ public final class JacksonUtil {
 	}
 
 	/**
-	 * 创建JavaType.
-	 * @param clazz 类型
-	 * @param <T> 泛型
-	 * @return JavaType
-	 */
-	public static <T> JavaType javaType(Class<T> clazz) {
-		return MAPPER.getTypeFactory().constructType(clazz);
-	}
-
-	/**
 	 * 流转为Bean.
 	 * @param inputStream 流
 	 * @param clazz 类
@@ -113,7 +103,7 @@ public final class JacksonUtil {
 	}
 
 	/**
-	 * 序列化为字符串.
+	 * 序列化为json字符串【序列化】.
 	 * @param obj 对象
 	 * @param isFormat 是否格式化
 	 * @return json字符串
@@ -130,7 +120,7 @@ public final class JacksonUtil {
 	}
 
 	/**
-	 * json字符串转对象集合.
+	 * json字符串转集合对象.
 	 * @param json json数组
 	 * @param clazz 类型
 	 * @param <T> 泛型
@@ -139,10 +129,6 @@ public final class JacksonUtil {
 	@SneakyThrows
 	public static <T> List<T> toList(String json, Class<T> clazz) {
 		return MAPPER.readValue(json, collectionType(clazz));
-	}
-
-	public static <T> CollectionType collectionType(Class<T> clazz) {
-		return MAPPER.getTypeFactory().constructCollectionType(Collection.class, clazz);
 	}
 
 	/**
@@ -157,18 +143,6 @@ public final class JacksonUtil {
 	@SneakyThrows
 	public static <K, V> Map<K, V> toMap(String json, Class<K> keyClass, Class<V> valueClass) {
 		return MAPPER.readValue(json, mapType(keyClass, valueClass));
-	}
-
-	/**
-	 * 创建mapType.
-	 * @param keyClass 键类
-	 * @param valueClass 值类
-	 * @param <K> 键泛型
-	 * @param <V> 值泛型
-	 * @return MapType
-	 */
-	public static <K, V> MapType mapType(Class<K> keyClass, Class<V> valueClass) {
-		return MAPPER.getTypeFactory().constructMapType(Map.class, keyClass, valueClass);
 	}
 
 	/**
@@ -204,6 +178,38 @@ public final class JacksonUtil {
 	@SneakyThrows
 	public static JsonNode readTree(String json) {
 		return MAPPER.readTree(json);
+	}
+
+	/**
+	 * 创建JavaType.
+	 * @param clazz 类型
+	 * @param <T> 泛型
+	 * @return JavaType
+	 */
+	private static <T> JavaType javaType(Class<T> clazz) {
+		return MAPPER.getTypeFactory().constructType(clazz);
+	}
+
+	/**
+	 * 获取集合类型.
+	 * @param clazz 类型
+	 * @param <T> 泛型
+	 * @return 集合类型
+	 */
+	private static <T> CollectionType collectionType(Class<T> clazz) {
+		return MAPPER.getTypeFactory().constructCollectionType(Collection.class, clazz);
+	}
+
+	/**
+	 * 创建mapType.
+	 * @param keyClass 键类
+	 * @param valueClass 值类
+	 * @param <K> 键泛型
+	 * @param <V> 值泛型
+	 * @return MapType
+	 */
+	private static <K, V> MapType mapType(Class<K> keyClass, Class<V> valueClass) {
+		return MAPPER.getTypeFactory().constructMapType(Map.class, keyClass, valueClass);
 	}
 
 }
