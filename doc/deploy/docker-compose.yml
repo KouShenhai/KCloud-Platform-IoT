@@ -81,7 +81,7 @@ services:
   # web控制台地址：http://127.0.0.1:6060
   # root/taosdata
   tdengine:
-    image: tdengine/tdengine:3.3.3.0
+    image: tdengine/tdengine:3.3.4.3
     container_name: tdengine
     # 保持容器在没有守护程序的情况下运行
     tty: true
