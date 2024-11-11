@@ -41,7 +41,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.*;
 public final class MapUtil {
 
 	/**
-	 * 判端不为空.
+	 * 判断不为空.
 	 * @param map map对象
 	 * @return 判断结果
 	 */
@@ -116,9 +116,9 @@ public final class MapUtil {
 	}
 
 	/**
-	 * 字符串转为param map.
+	 * 字符串参数转为map参数.
 	 * @param params 参数
-	 * @return paramMap对象
+	 * @return map参数对象
 	 */
 	public static Map<String, String> parseParamMap(String params) {
 		String[] strings = params.split(AND);
@@ -185,6 +185,11 @@ public final class MapUtil {
 		return parameters;
 	}
 
+	/**
+	 * 获取请求参数.
+	 * @param request 请求对象
+	 * @return 请求参数Map对象
+	 */
 	public static Map<String, String> getParameters(HttpServletRequest request) {
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		if (MapUtil.isNotEmpty(parameterMap)) {

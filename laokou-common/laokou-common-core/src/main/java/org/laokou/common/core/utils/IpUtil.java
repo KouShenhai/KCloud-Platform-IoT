@@ -49,7 +49,7 @@ public final class IpUtil {
 	private static final String LOCAL_IPV6 = "0:0:0:0:0:0:0:1";
 
 	/**
-	 * 解析IP地址.
+	 * 获取IP地址.
 	 * @param request 请求对象
 	 * @return IP地址
 	 */
@@ -77,7 +77,7 @@ public final class IpUtil {
 	}
 
 	/**
-	 * 判断内部IP.
+	 * 判断是否内部IP.
 	 * @param ip IP地址
 	 * @return 判断结果
 	 */
@@ -90,49 +90,14 @@ public final class IpUtil {
 	}
 
 	/**
-	 * 判断IP不存在或未知.
-	 * @param ip IP地址
-	 * @return 判断结果
-	 */
-	private static boolean conditionNull(String ip) {
-		return StringUtil.isEmpty(ip) || UNKNOWN_IP.equalsIgnoreCase(ip);
-	}
-
-	/**
-	 * 判断内部IP.
-	 * @param addr 字节数组
-	 * @return 判断结果
-	 */
-	private static boolean internalIp(byte[] addr) {
-		final byte b0 = addr[0];
-		final byte b1 = addr[1];
-		// 10.x.x.x/8
-		final byte section1 = 0x0A;
-		// 172.16.x.x/12
-		final byte section2 = (byte) 0xAC;
-		final byte section3 = (byte) 0x10;
-		final byte section4 = (byte) 0x1F;
-		// 192.168.x.x/16
-		final byte section5 = (byte) 0xC0;
-		final byte section6 = (byte) 0xA8;
-		return switch (b0) {
-			case section1 -> true;
-			case section2 -> b1 >= section3 && b1 <= section4;
-			case section5 -> b1 == section6;
-			default -> false;
-		};
-	}
-
-	/**
 	 * 将IPv4地址转换成字节.
 	 * @param text IPv4地址
 	 * @return 字节
 	 */
-	public static byte[] textToNumericFormatV4(String text) {
+	private static byte[] textToNumericFormatV4(String text) {
 		if (text.isEmpty()) {
 			return new byte[0];
 		}
-
 		byte[] bytes = new byte[4];
 		String[] elements = text.split("\\.", -1);
 		try {
@@ -202,6 +167,40 @@ public final class IpUtil {
 			return new byte[0];
 		}
 		return bytes;
+	}
+
+	/**
+	 * 判断IP不存在或未知.
+	 * @param ip IP地址
+	 * @return 判断结果
+	 */
+	private static boolean conditionNull(String ip) {
+		return StringUtil.isEmpty(ip) || UNKNOWN_IP.equalsIgnoreCase(ip);
+	}
+
+	/**
+	 * 判断内部IP.
+	 * @param addr 字节数组
+	 * @return 判断结果
+	 */
+	private static boolean internalIp(byte[] addr) {
+		final byte b0 = addr[0];
+		final byte b1 = addr[1];
+		// 10.x.x.x/8
+		final byte section1 = 0x0A;
+		// 172.16.x.x/12
+		final byte section2 = (byte) 0xAC;
+		final byte section3 = (byte) 0x10;
+		final byte section4 = (byte) 0x1F;
+		// 192.168.x.x/16
+		final byte section5 = (byte) 0xC0;
+		final byte section6 = (byte) 0xA8;
+		return switch (b0) {
+			case section1 -> true;
+			case section2 -> b1 >= section3 && b1 <= section4;
+			case section5 -> b1 == section6;
+			default -> false;
+		};
 	}
 
 }
