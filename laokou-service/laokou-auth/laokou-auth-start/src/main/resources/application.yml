@@ -22,3 +22,16 @@ spring:
     name: ${SERVICE_ID:laokou-auth}
   profiles:
     active: @PROFILE-ACTIVE@
+  cloud:
+    # sentinel
+    sentinel:
+      datasource:
+        # 自定义名称
+        db0:
+          nacos:
+            server-addr: @NACOS-CONFIG-ADDRESS@
+            namespace: @NACOS-NAMESPACE@
+            data-id: auth-flow.json
+            data-type: json
+            group-id: @NACOS-GROUP@
+            rule-type: flow

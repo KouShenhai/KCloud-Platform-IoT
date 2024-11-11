@@ -21,3 +21,15 @@ spring:
     name: ${SERVICE_ID:laokou-admin}
   profiles:
     active: @PROFILE-ACTIVE@
+  cloud:
+    # sentinel
+    sentinel:
+      datasource:
+        db0:
+          nacos:
+            server-addr: @NACOS-CONFIG-ADDRESS@
+            namespace: @NACOS-NAMESPACE@
+            group-id: @NACOS-GROUP@
+            data-id: admin-degrade.json
+            data-type: json
+            rule-type: degrade

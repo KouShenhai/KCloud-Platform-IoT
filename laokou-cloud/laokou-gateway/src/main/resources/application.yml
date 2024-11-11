@@ -22,3 +22,16 @@ spring:
     name: ${SERVICE_ID:laokou-gateway}
   profiles:
     active: @PROFILE-ACTIVE@
+  cloud:
+    # sentinel
+    sentinel:
+      datasource:
+        # key可以自定义
+        db0:
+          nacos:
+            server-addr: @NACOS-DISCOVERY-ADDRESS@
+            namespace: @NACOS-NAMESPACE@
+            data-id: gateway-flow.json
+            rule-type: gw_flow # 网关规则
+            group-id: @NACOS-GROUP@
+            data-type: json
