@@ -2,17 +2,33 @@
   {
     "resource": "laokou-auth",
     "grade": 1,
-    "count": 300,
+    "count": 100000,
     "intervalSec": 1,
-    "burst": 1000,
+    "burst": 500000,
     "controlBehavior": 0
   },
   {
     "resource": "laokou-admin",
     "grade": 1,
-    "count": 300,
+    "count": 100000,
     "intervalSec": 1,
-    "burst": 1000,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-iot",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-generator",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
     "controlBehavior": 0
   }
 ]
