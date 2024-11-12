@@ -3,1107 +3,18 @@
 
  Source Server         : 127.0.0.1
  Source Server Type    : PostgreSQL
- Source Server Version : 160003 (160003)
+ Source Server Version : 170000 (170000)
  Source Host           : 127.0.0.1:5432
  Source Catalog        : kcloud_platform_nacos
  Source Schema         : public
 
  Target Server Type    : PostgreSQL
- Target Server Version : 160003 (160003)
+ Target Server Version : 170000 (170000)
  File Encoding         : 65001
 
- Date: 11/11/2024 21:22:45
+ Date: 12/11/2024 11:23:43
 */
 
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq1";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq10
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq10";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq10" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq2";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq3";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq4";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq5";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq6";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq7";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq8
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq8";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq8" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq9
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq9";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq9" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq";
-CREATE SEQUENCE "public"."config_info_beta_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq1";
-CREATE SEQUENCE "public"."config_info_beta_id_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq10
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq10";
-CREATE SEQUENCE "public"."config_info_beta_id_seq10" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq2";
-CREATE SEQUENCE "public"."config_info_beta_id_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq3";
-CREATE SEQUENCE "public"."config_info_beta_id_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq4";
-CREATE SEQUENCE "public"."config_info_beta_id_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq5";
-CREATE SEQUENCE "public"."config_info_beta_id_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq6";
-CREATE SEQUENCE "public"."config_info_beta_id_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq7";
-CREATE SEQUENCE "public"."config_info_beta_id_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq8
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq8";
-CREATE SEQUENCE "public"."config_info_beta_id_seq8" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq9
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq9";
-CREATE SEQUENCE "public"."config_info_beta_id_seq9" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq";
-CREATE SEQUENCE "public"."config_info_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq1";
-CREATE SEQUENCE "public"."config_info_id_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq10
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq10";
-CREATE SEQUENCE "public"."config_info_id_seq10" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq2";
-CREATE SEQUENCE "public"."config_info_id_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq3";
-CREATE SEQUENCE "public"."config_info_id_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq4";
-CREATE SEQUENCE "public"."config_info_id_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq5";
-CREATE SEQUENCE "public"."config_info_id_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq6";
-CREATE SEQUENCE "public"."config_info_id_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq7";
-CREATE SEQUENCE "public"."config_info_id_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq8
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq8";
-CREATE SEQUENCE "public"."config_info_id_seq8" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq9
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq9";
-CREATE SEQUENCE "public"."config_info_id_seq9" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq";
-CREATE SEQUENCE "public"."config_info_tag_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq1";
-CREATE SEQUENCE "public"."config_info_tag_id_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq10
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq10";
-CREATE SEQUENCE "public"."config_info_tag_id_seq10" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq2";
-CREATE SEQUENCE "public"."config_info_tag_id_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq3";
-CREATE SEQUENCE "public"."config_info_tag_id_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq4";
-CREATE SEQUENCE "public"."config_info_tag_id_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq5";
-CREATE SEQUENCE "public"."config_info_tag_id_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq6";
-CREATE SEQUENCE "public"."config_info_tag_id_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq7";
-CREATE SEQUENCE "public"."config_info_tag_id_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq8
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq8";
-CREATE SEQUENCE "public"."config_info_tag_id_seq8" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq9
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq9";
-CREATE SEQUENCE "public"."config_info_tag_id_seq9" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq1";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq10
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq10";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq10" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq2";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq3";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq4";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq5";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq6";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq7";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq8
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq8";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq8" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq9
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq9";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq9" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq";
-CREATE SEQUENCE "public"."group_capacity_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq1";
-CREATE SEQUENCE "public"."group_capacity_id_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq10
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq10";
-CREATE SEQUENCE "public"."group_capacity_id_seq10" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq2";
-CREATE SEQUENCE "public"."group_capacity_id_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq3";
-CREATE SEQUENCE "public"."group_capacity_id_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq4";
-CREATE SEQUENCE "public"."group_capacity_id_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq5";
-CREATE SEQUENCE "public"."group_capacity_id_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq6";
-CREATE SEQUENCE "public"."group_capacity_id_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq7";
-CREATE SEQUENCE "public"."group_capacity_id_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq8
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq8";
-CREATE SEQUENCE "public"."group_capacity_id_seq8" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq9
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq9";
-CREATE SEQUENCE "public"."group_capacity_id_seq9" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq";
-CREATE SEQUENCE "public"."his_config_info_nid_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq1";
-CREATE SEQUENCE "public"."his_config_info_nid_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq10
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq10";
-CREATE SEQUENCE "public"."his_config_info_nid_seq10" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq2";
-CREATE SEQUENCE "public"."his_config_info_nid_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq3";
-CREATE SEQUENCE "public"."his_config_info_nid_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq4";
-CREATE SEQUENCE "public"."his_config_info_nid_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq5";
-CREATE SEQUENCE "public"."his_config_info_nid_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq6";
-CREATE SEQUENCE "public"."his_config_info_nid_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq7";
-CREATE SEQUENCE "public"."his_config_info_nid_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq8
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq8";
-CREATE SEQUENCE "public"."his_config_info_nid_seq8" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq9
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq9";
-CREATE SEQUENCE "public"."his_config_info_nid_seq9" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq1";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq10
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq10";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq10" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq2";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq3";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq4";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq5";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq6";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq7";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq8
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq8";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq8" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq9
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq9";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq9" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq";
-CREATE SEQUENCE "public"."tenant_info_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq1";
-CREATE SEQUENCE "public"."tenant_info_id_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq10
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq10";
-CREATE SEQUENCE "public"."tenant_info_id_seq10" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq2";
-CREATE SEQUENCE "public"."tenant_info_id_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq3";
-CREATE SEQUENCE "public"."tenant_info_id_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq4";
-CREATE SEQUENCE "public"."tenant_info_id_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq5";
-CREATE SEQUENCE "public"."tenant_info_id_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq6";
-CREATE SEQUENCE "public"."tenant_info_id_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq7";
-CREATE SEQUENCE "public"."tenant_info_id_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq8
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq8";
-CREATE SEQUENCE "public"."tenant_info_id_seq8" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq9
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq9";
-CREATE SEQUENCE "public"."tenant_info_id_seq9" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
 
 -- ----------------------------
 -- Table structure for config_info
@@ -4354,37 +3265,2101 @@ INSERT INTO "public"."config_info" VALUES (8, 'auth-flow.json', 'LAOKOU_GROUP', 
 ', '2bb6ed92c98b4a1693426dadf1c96a30', '2024-11-11 21:17:33.583', '2024-11-11 21:18:04.394', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'auth sentinel flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info" VALUES (10, 'admin-flow.json', 'LAOKOU_GROUP', '[
   {
-    "resource": "/sys/user/api/userInfo",
+    "resource": "/v3/users",
     "limitApp": "default",
-    "count": 300,
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/profile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/all",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/{id}",
+    "limitApp": "default",
+    "count": 100000,
     "grade": 1,
     "strategy": 0,
     "controlBehavior": 0
   }
 ]
-', '13f9d346d7d04b5ff9b1369620729716', '2024-11-11 21:19:54.557', '2024-11-11 21:20:12.108', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel flow rule', '', '', 'json', '', '');
+', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-11 21:19:54.557', '2024-11-12 11:13:47.766', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info" VALUES (11, 'admin-flow.json', 'LAOKOU_GROUP', '[
   {
-    "resource": "/sys/user/api/userInfo",
+    "resource": "/v3/users",
     "limitApp": "default",
-    "count": 300,
+    "count": 500000,
     "grade": 1,
     "strategy": 0,
     "controlBehavior": 0
-  }
-]
-', '13f9d346d7d04b5ff9b1369620729716', '2024-11-11 21:20:18.495', '2024-11-11 21:20:41.279', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (12, 'admin-flow.json', 'LAOKOU_GROUP', '[
+  },
   {
-    "resource": "/sys/user/api/userInfo",
+    "resource": "/v3/users/import",
     "limitApp": "default",
-    "count": 300,
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/profile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/all",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/{id}",
+    "limitApp": "default",
+    "count": 100000,
     "grade": 1,
     "strategy": 0,
     "controlBehavior": 0
   }
 ]
-', '13f9d346d7d04b5ff9b1369620729716', '2024-11-11 21:20:22.47', '2024-11-11 21:20:57.294', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel flow rule', '', '', 'json', '', '');
+', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-11 21:20:18.495', '2024-11-12 11:14:01.899', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" VALUES (6, 'admin-flow.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "/v3/users",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/profile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/all",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
+', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-12 11:21:13.251', '2024-11-12 11:22:10.475', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel flow rule', '', '', 'json', '', '');
 
 -- ----------------------------
 -- Table structure for config_info_aggr
@@ -4563,9 +5538,9 @@ INSERT INTO "public"."config_tags_relation" VALUES (47, 'auth', '', 'application
 INSERT INTO "public"."config_tags_relation" VALUES (7, 'auth', '', 'auth-flow.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 19);
 INSERT INTO "public"."config_tags_relation" VALUES (8, 'auth', '', 'auth-flow.json', 'LAOKOU_GROUP', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 20);
 INSERT INTO "public"."config_tags_relation" VALUES (9, 'auth', '', 'auth-flow.json', 'LAOKOU_GROUP', '8140e92b-fb43-48f5-b63b-7506185206a5', 22);
-INSERT INTO "public"."config_tags_relation" VALUES (10, 'admin', '', 'admin-flow.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 24);
-INSERT INTO "public"."config_tags_relation" VALUES (11, 'admin', '', 'admin-flow.json', 'LAOKOU_GROUP', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 25);
-INSERT INTO "public"."config_tags_relation" VALUES (12, 'admin', '', 'admin-flow.json', 'LAOKOU_GROUP', '8140e92b-fb43-48f5-b63b-7506185206a5', 26);
+INSERT INTO "public"."config_tags_relation" VALUES (10, 'admin', '', 'admin-flow.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 2);
+INSERT INTO "public"."config_tags_relation" VALUES (11, 'admin', '', 'admin-flow.json', 'LAOKOU_GROUP', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 3);
+INSERT INTO "public"."config_tags_relation" VALUES (6, 'admin', '', 'admin-flow.json', 'LAOKOU_GROUP', '8140e92b-fb43-48f5-b63b-7506185206a5', 18);
 
 -- ----------------------------
 -- Table structure for databasechangelog
@@ -4815,1755 +5790,6 @@ INSERT INTO "public"."users" VALUES ('laokou', '$2a$10$75WIn2J5FoX9F5wEBdFsL.0cK
 INSERT INTO "public"."users" VALUES ('nacos', '$2a$10$oVX1zRtaql9Jbsyzaaovx.TU2M6Bw0ZpCbPYWOIED58d1ougzaFRm', 'f');
 
 -- ----------------------------
--- Function structure for add_compression_policy
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."add_compression_policy"("hypertable" regclass, "compress_after" any, "if_not_exists" bool, "schedule_interval" interval, "initial_start" timestamptz, "timezone" text, "compress_created_before" interval);
-CREATE OR REPLACE FUNCTION "public"."add_compression_policy"("hypertable" regclass, "compress_after" any=NULL::unknown, "if_not_exists" bool=false, "schedule_interval" interval=NULL::interval, "initial_start" timestamptz=NULL::timestamp with time zone, "timezone" text=NULL::text, "compress_created_before" interval=NULL::interval)
-  RETURNS "pg_catalog"."int4" AS '$libdir/timescaledb-2.16.1', 'ts_policy_compression_add'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for add_continuous_aggregate_policy
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."add_continuous_aggregate_policy"("continuous_aggregate" regclass, "start_offset" any, "end_offset" any, "schedule_interval" interval, "if_not_exists" bool, "initial_start" timestamptz, "timezone" text);
-CREATE OR REPLACE FUNCTION "public"."add_continuous_aggregate_policy"("continuous_aggregate" regclass, "start_offset" any, "end_offset" any, "schedule_interval" interval, "if_not_exists" bool=false, "initial_start" timestamptz=NULL::timestamp with time zone, "timezone" text=NULL::text)
-  RETURNS "pg_catalog"."int4" AS '$libdir/timescaledb-2.16.1', 'ts_policy_refresh_cagg_add'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for add_dimension
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."add_dimension"("hypertable" regclass, "dimension" "_timescaledb_internal"."dimension_info", "if_not_exists" bool);
-CREATE OR REPLACE FUNCTION "public"."add_dimension"("hypertable" regclass, "dimension" "_timescaledb_internal"."dimension_info", "if_not_exists" bool=false)
-  RETURNS TABLE("dimension_id" int4, "created" bool) AS '$libdir/timescaledb-2.16.1', 'ts_dimension_add_general'
-  LANGUAGE c VOLATILE
-  COST 1
-  ROWS 1000;
-
--- ----------------------------
--- Function structure for add_dimension
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."add_dimension"("hypertable" regclass, "column_name" name, "number_partitions" int4, "chunk_time_interval" anyelement, "partitioning_func" regproc, "if_not_exists" bool);
-CREATE OR REPLACE FUNCTION "public"."add_dimension"("hypertable" regclass, "column_name" name, "number_partitions" int4=NULL::integer, "chunk_time_interval" anyelement=NULL::bigint, "partitioning_func" regproc=NULL::regproc, "if_not_exists" bool=false)
-  RETURNS TABLE("dimension_id" int4, "schema_name" name, "table_name" name, "column_name" name, "created" bool) AS '$libdir/timescaledb-2.16.1', 'ts_dimension_add'
-  LANGUAGE c VOLATILE
-  COST 1
-  ROWS 1000;
-
--- ----------------------------
--- Function structure for add_job
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."add_job"("proc" regproc, "schedule_interval" interval, "config" jsonb, "initial_start" timestamptz, "scheduled" bool, "check_config" regproc, "fixed_schedule" bool, "timezone" text);
-CREATE OR REPLACE FUNCTION "public"."add_job"("proc" regproc, "schedule_interval" interval, "config" jsonb=NULL::jsonb, "initial_start" timestamptz=NULL::timestamp with time zone, "scheduled" bool=true, "check_config" regproc=NULL::regproc, "fixed_schedule" bool=true, "timezone" text=NULL::text)
-  RETURNS "pg_catalog"."int4" AS '$libdir/timescaledb-2.16.1', 'ts_job_add'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for add_reorder_policy
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."add_reorder_policy"("hypertable" regclass, "index_name" name, "if_not_exists" bool, "initial_start" timestamptz, "timezone" text);
-CREATE OR REPLACE FUNCTION "public"."add_reorder_policy"("hypertable" regclass, "index_name" name, "if_not_exists" bool=false, "initial_start" timestamptz=NULL::timestamp with time zone, "timezone" text=NULL::text)
-  RETURNS "pg_catalog"."int4" AS '$libdir/timescaledb-2.16.1', 'ts_policy_reorder_add'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for add_retention_policy
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."add_retention_policy"("relation" regclass, "drop_after" any, "if_not_exists" bool, "schedule_interval" interval, "initial_start" timestamptz, "timezone" text, "drop_created_before" interval);
-CREATE OR REPLACE FUNCTION "public"."add_retention_policy"("relation" regclass, "drop_after" any=NULL::unknown, "if_not_exists" bool=false, "schedule_interval" interval=NULL::interval, "initial_start" timestamptz=NULL::timestamp with time zone, "timezone" text=NULL::text, "drop_created_before" interval=NULL::interval)
-  RETURNS "pg_catalog"."int4" AS '$libdir/timescaledb-2.16.1', 'ts_policy_retention_add'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for alter_job
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."alter_job"("job_id" int4, "schedule_interval" interval, "max_runtime" interval, "max_retries" int4, "retry_period" interval, "scheduled" bool, "config" jsonb, "next_start" timestamptz, "if_exists" bool, "check_config" regproc, "fixed_schedule" bool, "initial_start" timestamptz, "timezone" text);
-CREATE OR REPLACE FUNCTION "public"."alter_job"("job_id" int4, "schedule_interval" interval=NULL::interval, "max_runtime" interval=NULL::interval, "max_retries" int4=NULL::integer, "retry_period" interval=NULL::interval, "scheduled" bool=NULL::boolean, "config" jsonb=NULL::jsonb, "next_start" timestamptz=NULL::timestamp with time zone, "if_exists" bool=false, "check_config" regproc=NULL::regproc, "fixed_schedule" bool=NULL::boolean, "initial_start" timestamptz=NULL::timestamp with time zone, "timezone" text=NULL::text)
-  RETURNS TABLE("job_id" int4, "schedule_interval" interval, "max_runtime" interval, "max_retries" int4, "retry_period" interval, "scheduled" bool, "config" jsonb, "next_start" timestamptz, "check_config" text, "fixed_schedule" bool, "initial_start" timestamptz, "timezone" text) AS '$libdir/timescaledb-2.16.1', 'ts_job_alter'
-  LANGUAGE c VOLATILE
-  COST 1
-  ROWS 1000;
-
--- ----------------------------
--- Function structure for approximate_row_count
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."approximate_row_count"("relation" regclass);
-CREATE OR REPLACE FUNCTION "public"."approximate_row_count"("relation" regclass)
-  RETURNS "pg_catalog"."int8" AS $BODY$
-DECLARE
-    mat_ht           REGCLASS = NULL;
-    local_table_name       NAME = NULL;
-    local_schema_name      NAME = NULL;
-    is_compressed    BOOL = FALSE;
-    uncompressed_row_count BIGINT = 0;
-    compressed_row_count BIGINT = 0;
-    local_compressed_hypertable_id INTEGER = 0;
-    local_compressed_chunk_id INTEGER = 0;
-    compressed_hypertable_oid  OID;
-    local_compressed_chunk_oid  OID;
-    max_compressed_row_count BIGINT = 1000;
-    is_compressed_chunk INTEGER;
-BEGIN
-    -- Check if input relation is continuous aggregate view then
-    -- get the corresponding materialized hypertable and schema name
-    SELECT format('%I.%I', ht.schema_name, ht.table_name)::regclass
-    INTO mat_ht
-    FROM pg_class c
-    JOIN pg_namespace n ON (n.OID = c.relnamespace)
-    JOIN _timescaledb_catalog.continuous_agg a ON (a.user_view_schema = n.nspname AND a.user_view_name = c.relname)
-    JOIN _timescaledb_catalog.hypertable ht ON (a.mat_hypertable_id = ht.id)
-    WHERE c.OID = relation;
-
-    IF mat_ht IS NOT NULL THEN
-        relation = mat_ht;
-    END IF;
-
-    SELECT relname, nspname FROM pg_class c
-    INNER JOIN pg_namespace n ON (n.OID = c.relnamespace)
-    INTO local_table_name, local_schema_name
-    WHERE c.OID = relation;
-
-    -- Check for input relation is Hypertable
-    IF EXISTS (SELECT 1
-               FROM _timescaledb_catalog.hypertable WHERE table_name = local_table_name AND schema_name = local_schema_name) THEN
-        SELECT compressed_hypertable_id FROM _timescaledb_catalog.hypertable INTO local_compressed_hypertable_id
-        WHERE table_name = local_table_name AND schema_name = local_schema_name;
-        IF local_compressed_hypertable_id IS NOT NULL THEN
-           uncompressed_row_count = _timescaledb_functions.get_approx_row_count(relation);
-
-           -- use the compression_chunk_size stats to fetch precompressed num rows
-           SELECT COALESCE(SUM(numrows_pre_compression), 0) FROM _timescaledb_catalog.chunk srcch,
-                _timescaledb_catalog.compression_chunk_size map, _timescaledb_catalog.hypertable srcht
-                INTO compressed_row_count
-                WHERE map.chunk_id = srcch.id
-                AND srcht.id = srcch.hypertable_id AND srcht.table_name = local_table_name
-                AND srcht.schema_name = local_schema_name;
-
-           RETURN (uncompressed_row_count + compressed_row_count);
-        ELSE
-           uncompressed_row_count = _timescaledb_functions.get_approx_row_count(relation);
-           RETURN uncompressed_row_count;
-        END IF;
-    END IF;
-    -- Check for input relation is CHUNK
-    IF EXISTS (SELECT 1 FROM _timescaledb_catalog.chunk WHERE table_name = local_table_name AND schema_name = local_schema_name) THEN
-        with compressed_chunk as (select 1 as is_compressed_chunk from _timescaledb_catalog.chunk c
-        inner join _timescaledb_catalog.hypertable h on (c.hypertable_id = h.compressed_hypertable_id)
-        where c.table_name = local_table_name and c.schema_name = local_schema_name ),
-        chunk_temp as (select compressed_chunk_id from _timescaledb_catalog.chunk c where c.table_name = local_table_name and c.schema_name = local_schema_name)
-        select ct.compressed_chunk_id, cc.is_compressed_chunk from chunk_temp ct LEFT OUTER JOIN compressed_chunk cc ON 1 = 1
-        INTO local_compressed_chunk_id, is_compressed_chunk;
-        -- 'input is chunk #1';
-        IF is_compressed_chunk IS NULL AND local_compressed_chunk_id IS NOT NULL THEN
-        -- 'Include both uncompressed  and compressed chunk #2';
-            -- use the compression_chunk_size stats to fetch precompressed num rows
-            SELECT COALESCE(numrows_pre_compression, 0) FROM _timescaledb_catalog.compression_chunk_size
-                INTO compressed_row_count
-                WHERE compressed_chunk_id = local_compressed_chunk_id;
-
-            uncompressed_row_count = _timescaledb_functions.get_approx_row_count(relation);
-            RETURN (uncompressed_row_count + compressed_row_count);
-        ELSIF is_compressed_chunk IS NULL AND local_compressed_chunk_id IS NULL THEN
-        -- 'input relation is uncompressed chunk #3';
-            uncompressed_row_count = _timescaledb_functions.get_approx_row_count(relation);
-            RETURN uncompressed_row_count;
-        ELSE
-        -- 'compressed chunk only #4';
-            -- use the compression_chunk_size stats to fetch precompressed num rows
-            SELECT COALESCE(SUM(numrows_pre_compression), 0) FROM _timescaledb_catalog.chunk srcch,
-                _timescaledb_catalog.compression_chunk_size map INTO compressed_row_count
-                WHERE map.compressed_chunk_id = srcch.id
-                AND srcch.table_name = local_table_name AND srcch.schema_name = local_schema_name;
-            RETURN compressed_row_count;
-        END IF;
-    END IF;
-    -- Check for input relation is Plain RELATION
-    uncompressed_row_count = _timescaledb_functions.get_approx_row_count(relation);
-    RETURN uncompressed_row_count;
-END;
-$BODY$
-  LANGUAGE plpgsql VOLATILE STRICT
-  COST 100
-  SET "search_path"="pg_catalog, pg_temp";
-
--- ----------------------------
--- Function structure for attach_tablespace
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."attach_tablespace"("tablespace" name, "hypertable" regclass, "if_not_attached" bool);
-CREATE OR REPLACE FUNCTION "public"."attach_tablespace"("tablespace" name, "hypertable" regclass, "if_not_attached" bool=false)
-  RETURNS "pg_catalog"."void" AS '$libdir/timescaledb-2.16.1', 'ts_tablespace_attach'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for by_hash
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."by_hash"("column_name" name, "number_partitions" int4, "partition_func" regproc);
-CREATE OR REPLACE FUNCTION "public"."by_hash"("column_name" name, "number_partitions" int4, "partition_func" regproc=NULL::regproc)
-  RETURNS "_timescaledb_internal"."dimension_info" AS '$libdir/timescaledb-2.16.1', 'ts_hash_dimension'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for by_range
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."by_range"("column_name" name, "partition_interval" anyelement, "partition_func" regproc);
-CREATE OR REPLACE FUNCTION "public"."by_range"("column_name" name, "partition_interval" anyelement=NULL::bigint, "partition_func" regproc=NULL::regproc)
-  RETURNS "_timescaledb_internal"."dimension_info" AS '$libdir/timescaledb-2.16.1', 'ts_range_dimension'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Procedure structure for cagg_migrate
--- ----------------------------
-DROP PROCEDURE IF EXISTS "public"."cagg_migrate"("cagg" regclass, "override" bool, "drop_old" bool);
-CREATE OR REPLACE PROCEDURE "public"."cagg_migrate"("cagg" regclass, "override" bool=false, "drop_old" bool=false)
- AS $BODY$
-DECLARE
-    _cagg_schema TEXT;
-    _cagg_name TEXT;
-    _cagg_name_new TEXT;
-    _cagg_data _timescaledb_catalog.continuous_agg;
-BEGIN
-    -- procedures with SET clause cannot execute transaction
-    -- control so we adjust search_path in procedure body
-    SET LOCAL search_path TO pg_catalog, pg_temp;
-
-    SELECT nspname, relname
-    INTO _cagg_schema, _cagg_name
-    FROM pg_catalog.pg_class
-    JOIN pg_catalog.pg_namespace ON pg_namespace.oid OPERATOR(pg_catalog.=) pg_class.relnamespace
-    WHERE pg_class.oid OPERATOR(pg_catalog.=) cagg::pg_catalog.oid;
-
-    -- maximum size of an identifier in Postgres is 63 characters, se we need to left space for '_new'
-    _cagg_name_new := pg_catalog.format('%s_new', pg_catalog.substr(_cagg_name, 1, 59));
-
-    -- pre-validate the migration and get some variables
-    _cagg_data := _timescaledb_functions.cagg_migrate_pre_validation(_cagg_schema, _cagg_name, _cagg_name_new);
-
-    -- create new migration plan
-    CALL _timescaledb_functions.cagg_migrate_create_plan(_cagg_data, _cagg_name_new, override, drop_old);
-    COMMIT;
-
-    -- SET LOCAL is only active until end of transaction.
-    -- While we could use SET at the start of the function we do not
-    -- want to bleed out search_path to caller, so we do SET LOCAL
-    -- again after COMMIT
-    SET LOCAL search_path TO pg_catalog, pg_temp;
-
-    -- execute the migration plan
-    CALL _timescaledb_functions.cagg_migrate_execute_plan(_cagg_data);
-
-    -- Remove chunk metadata when marked as dropped
-    PERFORM _timescaledb_functions.remove_dropped_chunk_metadata(_cagg_data.raw_hypertable_id);
-
-    -- finish the migration plan
-    UPDATE _timescaledb_catalog.continuous_agg_migrate_plan
-    SET end_ts = pg_catalog.clock_timestamp()
-    WHERE mat_hypertable_id OPERATOR(pg_catalog.=) _cagg_data.mat_hypertable_id;
-END;
-$BODY$
-  LANGUAGE plpgsql;
-
--- ----------------------------
--- Function structure for chunk_compression_stats
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."chunk_compression_stats"("hypertable" regclass);
-CREATE OR REPLACE FUNCTION "public"."chunk_compression_stats"("hypertable" regclass)
-  RETURNS TABLE("chunk_schema" name, "chunk_name" name, "compression_status" text, "before_compression_table_bytes" int8, "before_compression_index_bytes" int8, "before_compression_toast_bytes" int8, "before_compression_total_bytes" int8, "after_compression_table_bytes" int8, "after_compression_index_bytes" int8, "after_compression_toast_bytes" int8, "after_compression_total_bytes" int8, "node_name" name) AS $BODY$
-DECLARE
-    table_name name;
-    schema_name name;
-BEGIN
-    SELECT
-      relname, nspname
-    INTO
-	    table_name, schema_name
-    FROM
-        pg_class c
-        INNER JOIN pg_namespace n ON (n.OID = c.relnamespace)
-        INNER JOIN _timescaledb_catalog.hypertable ht ON (ht.schema_name = n.nspname
-                AND ht.table_name = c.relname)
-    WHERE
-        c.OID = hypertable;
-
-    IF table_name IS NULL THEN
-	    RETURN;
-	END IF;
-
-  RETURN QUERY
-  SELECT
-      *,
-      NULL::name
-  FROM
-      _timescaledb_functions.compressed_chunk_local_stats(schema_name, table_name);
-END;
-$BODY$
-  LANGUAGE plpgsql STABLE STRICT
-  COST 100
-  ROWS 1000
-  SET "search_path"="pg_catalog, pg_temp";
-
--- ----------------------------
--- Function structure for chunks_detailed_size
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."chunks_detailed_size"("hypertable" regclass);
-CREATE OR REPLACE FUNCTION "public"."chunks_detailed_size"("hypertable" regclass)
-  RETURNS TABLE("chunk_schema" name, "chunk_name" name, "table_bytes" int8, "index_bytes" int8, "toast_bytes" int8, "total_bytes" int8, "node_name" name) AS $BODY$
-DECLARE
-        table_name       NAME;
-        schema_name      NAME;
-BEGIN
-        SELECT relname, nspname
-        INTO table_name, schema_name
-        FROM pg_class c
-        INNER JOIN pg_namespace n ON (n.OID = c.relnamespace)
-        INNER JOIN _timescaledb_catalog.hypertable ht ON (ht.schema_name = n.nspname AND ht.table_name = c.relname)
-        WHERE c.OID = hypertable;
-
-        IF table_name IS NULL THEN
-            SELECT h.schema_name, h.table_name
-            INTO schema_name, table_name
-            FROM pg_class c
-            INNER JOIN pg_namespace n ON (n.OID = c.relnamespace)
-            INNER JOIN _timescaledb_catalog.continuous_agg a ON (a.user_view_schema = n.nspname AND a.user_view_name = c.relname)
-            INNER JOIN _timescaledb_catalog.hypertable h ON h.id = a.mat_hypertable_id
-            WHERE c.OID = hypertable;
-
-            IF table_name IS NULL THEN
-                RETURN;
-            END IF;
-		END IF;
-
-    RETURN QUERY SELECT chl.chunk_schema, chl.chunk_name, chl.table_bytes, chl.index_bytes,
-                        chl.toast_bytes, chl.total_bytes, NULL::NAME
-            FROM _timescaledb_functions.chunks_local_size(schema_name, table_name) chl;
-END;
-$BODY$
-  LANGUAGE plpgsql VOLATILE STRICT
-  COST 100
-  ROWS 1000
-  SET "search_path"="pg_catalog, pg_temp";
-
--- ----------------------------
--- Function structure for compress_chunk
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."compress_chunk"("uncompressed_chunk" regclass, "if_not_compressed" bool, "recompress" bool);
-CREATE OR REPLACE FUNCTION "public"."compress_chunk"("uncompressed_chunk" regclass, "if_not_compressed" bool=true, "recompress" bool=false)
-  RETURNS "pg_catalog"."regclass" AS '$libdir/timescaledb-2.16.1', 'ts_compress_chunk'
-  LANGUAGE c VOLATILE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for create_hypertable
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."create_hypertable"("relation" regclass, "time_column_name" name, "partitioning_column" name, "number_partitions" int4, "associated_schema_name" name, "associated_table_prefix" name, "chunk_time_interval" anyelement, "create_default_indexes" bool, "if_not_exists" bool, "partitioning_func" regproc, "migrate_data" bool, "chunk_target_size" text, "chunk_sizing_func" regproc, "time_partitioning_func" regproc);
-CREATE OR REPLACE FUNCTION "public"."create_hypertable"("relation" regclass, "time_column_name" name, "partitioning_column" name=NULL::name, "number_partitions" int4=NULL::integer, "associated_schema_name" name=NULL::name, "associated_table_prefix" name=NULL::name, "chunk_time_interval" anyelement=NULL::bigint, "create_default_indexes" bool=true, "if_not_exists" bool=false, "partitioning_func" regproc=NULL::regproc, "migrate_data" bool=false, "chunk_target_size" text=NULL::text, "chunk_sizing_func" regproc='_timescaledb_functions.calculate_chunk_interval'::regproc, "time_partitioning_func" regproc=NULL::regproc)
-  RETURNS TABLE("hypertable_id" int4, "schema_name" name, "table_name" name, "created" bool) AS '$libdir/timescaledb-2.16.1', 'ts_hypertable_create'
-  LANGUAGE c VOLATILE
-  COST 1
-  ROWS 1000;
-
--- ----------------------------
--- Function structure for create_hypertable
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."create_hypertable"("relation" regclass, "dimension" "_timescaledb_internal"."dimension_info", "create_default_indexes" bool, "if_not_exists" bool, "migrate_data" bool);
-CREATE OR REPLACE FUNCTION "public"."create_hypertable"("relation" regclass, "dimension" "_timescaledb_internal"."dimension_info", "create_default_indexes" bool=true, "if_not_exists" bool=false, "migrate_data" bool=false)
-  RETURNS TABLE("hypertable_id" int4, "created" bool) AS '$libdir/timescaledb-2.16.1', 'ts_hypertable_create_general'
-  LANGUAGE c VOLATILE
-  COST 1
-  ROWS 1000;
-
--- ----------------------------
--- Function structure for decompress_chunk
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."decompress_chunk"("uncompressed_chunk" regclass, "if_compressed" bool);
-CREATE OR REPLACE FUNCTION "public"."decompress_chunk"("uncompressed_chunk" regclass, "if_compressed" bool=true)
-  RETURNS "pg_catalog"."regclass" AS '$libdir/timescaledb-2.16.1', 'ts_decompress_chunk'
-  LANGUAGE c VOLATILE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for delete_job
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."delete_job"("job_id" int4);
-CREATE OR REPLACE FUNCTION "public"."delete_job"("job_id" int4)
-  RETURNS "pg_catalog"."void" AS '$libdir/timescaledb-2.16.1', 'ts_job_delete'
-  LANGUAGE c VOLATILE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for detach_tablespace
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."detach_tablespace"("tablespace" name, "hypertable" regclass, "if_attached" bool);
-CREATE OR REPLACE FUNCTION "public"."detach_tablespace"("tablespace" name, "hypertable" regclass=NULL::regclass, "if_attached" bool=false)
-  RETURNS "pg_catalog"."int4" AS '$libdir/timescaledb-2.16.1', 'ts_tablespace_detach'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for detach_tablespaces
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."detach_tablespaces"("hypertable" regclass);
-CREATE OR REPLACE FUNCTION "public"."detach_tablespaces"("hypertable" regclass)
-  RETURNS "pg_catalog"."int4" AS '$libdir/timescaledb-2.16.1', 'ts_tablespace_detach_all_from_hypertable'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for disable_chunk_skipping
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."disable_chunk_skipping"("hypertable" regclass, "column_name" name, "if_not_exists" bool);
-CREATE OR REPLACE FUNCTION "public"."disable_chunk_skipping"("hypertable" regclass, "column_name" name, "if_not_exists" bool=false)
-  RETURNS TABLE("hypertable_id" int4, "column_name" name, "disabled" bool) AS '$libdir/timescaledb-2.16.1', 'ts_chunk_column_stats_disable'
-  LANGUAGE c VOLATILE
-  COST 1
-  ROWS 1000;
-
--- ----------------------------
--- Function structure for drop_chunks
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."drop_chunks"("relation" regclass, "older_than" any, "newer_than" any, "verbose" bool, "created_before" any, "created_after" any);
-CREATE OR REPLACE FUNCTION "public"."drop_chunks"("relation" regclass, "older_than" any=NULL::unknown, "newer_than" any=NULL::unknown, "verbose" bool=false, "created_before" any=NULL::unknown, "created_after" any=NULL::unknown)
-  RETURNS SETOF "pg_catalog"."text" AS '$libdir/timescaledb-2.16.1', 'ts_chunk_drop_chunks'
-  LANGUAGE c VOLATILE
-  COST 1
-  ROWS 1000;
-
--- ----------------------------
--- Function structure for enable_chunk_skipping
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."enable_chunk_skipping"("hypertable" regclass, "column_name" name, "if_not_exists" bool);
-CREATE OR REPLACE FUNCTION "public"."enable_chunk_skipping"("hypertable" regclass, "column_name" name, "if_not_exists" bool=false)
-  RETURNS TABLE("column_stats_id" int4, "enabled" bool) AS '$libdir/timescaledb-2.16.1', 'ts_chunk_column_stats_enable'
-  LANGUAGE c VOLATILE
-  COST 1
-  ROWS 1000;
-
--- ----------------------------
--- Function structure for get_telemetry_report
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."get_telemetry_report"();
-CREATE OR REPLACE FUNCTION "public"."get_telemetry_report"()
-  RETURNS "pg_catalog"."jsonb" AS '$libdir/timescaledb-2.16.1', 'ts_telemetry_get_report_jsonb'
-  LANGUAGE c STABLE
-  COST 1;
-
--- ----------------------------
--- Function structure for hypertable_approximate_detailed_size
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."hypertable_approximate_detailed_size"("relation" regclass);
-CREATE OR REPLACE FUNCTION "public"."hypertable_approximate_detailed_size"("relation" regclass)
-  RETURNS TABLE("table_bytes" int8, "index_bytes" int8, "toast_bytes" int8, "total_bytes" int8) AS '$libdir/timescaledb-2.16.1', 'ts_hypertable_approximate_size'
-  LANGUAGE c VOLATILE
-  COST 1
-  ROWS 1000;
-
--- ----------------------------
--- Function structure for hypertable_approximate_size
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."hypertable_approximate_size"("hypertable" regclass);
-CREATE OR REPLACE FUNCTION "public"."hypertable_approximate_size"("hypertable" regclass)
-  RETURNS "pg_catalog"."int8" AS $BODY$
-   SELECT sum(total_bytes)::bigint
-   FROM public.hypertable_approximate_detailed_size(hypertable);
-$BODY$
-  LANGUAGE sql VOLATILE STRICT
-  COST 100
-  SET "search_path"="pg_catalog, pg_temp";
-
--- ----------------------------
--- Function structure for hypertable_compression_stats
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."hypertable_compression_stats"("hypertable" regclass);
-CREATE OR REPLACE FUNCTION "public"."hypertable_compression_stats"("hypertable" regclass)
-  RETURNS TABLE("total_chunks" int8, "number_compressed_chunks" int8, "before_compression_table_bytes" int8, "before_compression_index_bytes" int8, "before_compression_toast_bytes" int8, "before_compression_total_bytes" int8, "after_compression_table_bytes" int8, "after_compression_index_bytes" int8, "after_compression_toast_bytes" int8, "after_compression_total_bytes" int8, "node_name" name) AS $BODY$
-	SELECT
-        count(*)::bigint AS total_chunks,
-        (count(*) FILTER (WHERE ch.compression_status = 'Compressed'))::bigint AS number_compressed_chunks,
-        sum(ch.before_compression_table_bytes)::bigint AS before_compression_table_bytes,
-        sum(ch.before_compression_index_bytes)::bigint AS before_compression_index_bytes,
-        sum(ch.before_compression_toast_bytes)::bigint AS before_compression_toast_bytes,
-        sum(ch.before_compression_total_bytes)::bigint AS before_compression_total_bytes,
-        sum(ch.after_compression_table_bytes)::bigint AS after_compression_table_bytes,
-        sum(ch.after_compression_index_bytes)::bigint AS after_compression_index_bytes,
-        sum(ch.after_compression_toast_bytes)::bigint AS after_compression_toast_bytes,
-        sum(ch.after_compression_total_bytes)::bigint AS after_compression_total_bytes,
-        ch.node_name
-    FROM
-	    public.chunk_compression_stats(hypertable) ch
-    GROUP BY
-        ch.node_name;
-$BODY$
-  LANGUAGE sql STABLE STRICT
-  COST 100
-  ROWS 1000
-  SET "search_path"="pg_catalog, pg_temp";
-
--- ----------------------------
--- Function structure for hypertable_detailed_size
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."hypertable_detailed_size"("hypertable" regclass);
-CREATE OR REPLACE FUNCTION "public"."hypertable_detailed_size"("hypertable" regclass)
-  RETURNS TABLE("table_bytes" int8, "index_bytes" int8, "toast_bytes" int8, "total_bytes" int8, "node_name" name) AS $BODY$
-DECLARE
-        table_name       NAME = NULL;
-        schema_name      NAME = NULL;
-BEGIN
-        SELECT relname, nspname
-        INTO table_name, schema_name
-        FROM pg_class c
-        INNER JOIN pg_namespace n ON (n.OID = c.relnamespace)
-        INNER JOIN _timescaledb_catalog.hypertable ht ON (ht.schema_name = n.nspname AND ht.table_name = c.relname)
-        WHERE c.OID = hypertable;
-
-        IF table_name IS NULL THEN
-                SELECT h.schema_name, h.table_name
-                INTO schema_name, table_name
-                FROM pg_class c
-                INNER JOIN pg_namespace n ON (n.OID = c.relnamespace)
-                INNER JOIN _timescaledb_catalog.continuous_agg a ON (a.user_view_schema = n.nspname AND a.user_view_name = c.relname)
-                INNER JOIN _timescaledb_catalog.hypertable h ON h.id = a.mat_hypertable_id
-                WHERE c.OID = hypertable;
-
-	        IF table_name IS NULL THEN
-                        RETURN;
-                END IF;
-        END IF;
-
-			RETURN QUERY
-			SELECT *, NULL::name
-			FROM _timescaledb_functions.hypertable_local_size(schema_name, table_name);
-END;
-$BODY$
-  LANGUAGE plpgsql VOLATILE STRICT
-  COST 100
-  ROWS 1000
-  SET "search_path"="pg_catalog, pg_temp";
-
--- ----------------------------
--- Function structure for hypertable_index_size
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."hypertable_index_size"("index_name" regclass);
-CREATE OR REPLACE FUNCTION "public"."hypertable_index_size"("index_name" regclass)
-  RETURNS "pg_catalog"."int8" AS $BODY$
-DECLARE
-        ht_index_name       NAME;
-        ht_schema_name      NAME;
-        ht_name      NAME;
-        ht_id INTEGER;
-        index_bytes BIGINT;
-BEGIN
-   SELECT c.relname, cl.relname, nsp.nspname
-   INTO ht_index_name, ht_name, ht_schema_name
-   FROM pg_class c, pg_index cind, pg_class cl,
-        pg_namespace nsp, _timescaledb_catalog.hypertable ht
-   WHERE c.oid = cind.indexrelid AND cind.indrelid = cl.oid
-         AND cl.relnamespace = nsp.oid AND c.oid = index_name
-		 AND ht.schema_name = nsp.nspname ANd ht.table_name = cl.relname;
-
-   IF ht_index_name IS NULL THEN
-       RETURN NULL;
-   END IF;
-
-   -- get the local size or size of access node indexes
-   SELECT il.total_bytes
-   INTO index_bytes
-   FROM _timescaledb_functions.indexes_local_size(ht_schema_name, ht_index_name) il;
-
-   IF index_bytes IS NULL THEN
-       index_bytes = 0;
-   END IF;
-
-   RETURN index_bytes;
-END;
-$BODY$
-  LANGUAGE plpgsql VOLATILE STRICT
-  COST 100
-  SET "search_path"="pg_catalog, pg_temp";
-
--- ----------------------------
--- Function structure for hypertable_size
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."hypertable_size"("hypertable" regclass);
-CREATE OR REPLACE FUNCTION "public"."hypertable_size"("hypertable" regclass)
-  RETURNS "pg_catalog"."int8" AS $BODY$
-   -- One row per data node is returned (in case of a distributed
-   -- hypertable), so sum them up:
-   SELECT sum(total_bytes)::bigint
-   FROM public.hypertable_detailed_size(hypertable);
-$BODY$
-  LANGUAGE sql VOLATILE STRICT
-  COST 100
-  SET "search_path"="pg_catalog, pg_temp";
-
--- ----------------------------
--- Function structure for interpolate
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."interpolate"("value" int4, "prev" record, "next" record);
-CREATE OR REPLACE FUNCTION "public"."interpolate"("value" int4, "prev" record=NULL::record, "next" record=NULL::record)
-  RETURNS "pg_catalog"."int4" AS '$libdir/timescaledb-2.16.1', 'ts_gapfill_marker'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for interpolate
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."interpolate"("value" int8, "prev" record, "next" record);
-CREATE OR REPLACE FUNCTION "public"."interpolate"("value" int8, "prev" record=NULL::record, "next" record=NULL::record)
-  RETURNS "pg_catalog"."int8" AS '$libdir/timescaledb-2.16.1', 'ts_gapfill_marker'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for interpolate
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."interpolate"("value" float4, "prev" record, "next" record);
-CREATE OR REPLACE FUNCTION "public"."interpolate"("value" float4, "prev" record=NULL::record, "next" record=NULL::record)
-  RETURNS "pg_catalog"."float4" AS '$libdir/timescaledb-2.16.1', 'ts_gapfill_marker'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for interpolate
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."interpolate"("value" float8, "prev" record, "next" record);
-CREATE OR REPLACE FUNCTION "public"."interpolate"("value" float8, "prev" record=NULL::record, "next" record=NULL::record)
-  RETURNS "pg_catalog"."float8" AS '$libdir/timescaledb-2.16.1', 'ts_gapfill_marker'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for interpolate
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."interpolate"("value" int2, "prev" record, "next" record);
-CREATE OR REPLACE FUNCTION "public"."interpolate"("value" int2, "prev" record=NULL::record, "next" record=NULL::record)
-  RETURNS "pg_catalog"."int2" AS '$libdir/timescaledb-2.16.1', 'ts_gapfill_marker'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for locf
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."locf"("value" anyelement, "prev" anyelement, "treat_null_as_missing" bool);
-CREATE OR REPLACE FUNCTION "public"."locf"("value" anyelement, "prev" anyelement=NULL::unknown, "treat_null_as_missing" bool=false)
-  RETURNS "pg_catalog"."anyelement" AS '$libdir/timescaledb-2.16.1', 'ts_gapfill_marker'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for move_chunk
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."move_chunk"("chunk" regclass, "destination_tablespace" name, "index_destination_tablespace" name, "reorder_index" regclass, "verbose" bool);
-CREATE OR REPLACE FUNCTION "public"."move_chunk"("chunk" regclass, "destination_tablespace" name, "index_destination_tablespace" name=NULL::name, "reorder_index" regclass=NULL::regclass, "verbose" bool=false)
-  RETURNS "pg_catalog"."void" AS '$libdir/timescaledb-2.16.1', 'ts_move_chunk'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Procedure structure for recompress_chunk
--- ----------------------------
-DROP PROCEDURE IF EXISTS "public"."recompress_chunk"("chunk" regclass, "if_not_compressed" bool);
-CREATE OR REPLACE PROCEDURE "public"."recompress_chunk"("chunk" regclass, "if_not_compressed" bool=true)
- AS $BODY$
-BEGIN
-  IF current_setting('timescaledb.enable_deprecation_warnings', true)::bool THEN
-    RAISE WARNING 'procedure public.recompress_chunk(regclass,boolean) is deprecated and the functionality is now included in public.compress_chunk. this compatibility function will be removed in a future version.';
-  END IF;
-  PERFORM public.compress_chunk(chunk, if_not_compressed);
-END$BODY$
-  LANGUAGE plpgsql
-  SET "search_path"="pg_catalog, pg_temp";
-
--- ----------------------------
--- Procedure structure for refresh_continuous_aggregate
--- ----------------------------
-DROP PROCEDURE IF EXISTS "public"."refresh_continuous_aggregate"("continuous_aggregate" regclass, "window_start" any, "window_end" any);
-CREATE OR REPLACE PROCEDURE "public"."refresh_continuous_aggregate"("continuous_aggregate" regclass, "window_start" any, "window_end" any)
- AS '$libdir/timescaledb-2.16.1', 'ts_continuous_agg_refresh'
-  LANGUAGE c;
-
--- ----------------------------
--- Function structure for remove_compression_policy
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."remove_compression_policy"("hypertable" regclass, "if_exists" bool);
-CREATE OR REPLACE FUNCTION "public"."remove_compression_policy"("hypertable" regclass, "if_exists" bool=false)
-  RETURNS "pg_catalog"."bool" AS '$libdir/timescaledb-2.16.1', 'ts_policy_compression_remove'
-  LANGUAGE c VOLATILE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for remove_continuous_aggregate_policy
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."remove_continuous_aggregate_policy"("continuous_aggregate" regclass, "if_not_exists" bool, "if_exists" bool);
-CREATE OR REPLACE FUNCTION "public"."remove_continuous_aggregate_policy"("continuous_aggregate" regclass, "if_not_exists" bool=false, "if_exists" bool=NULL::boolean)
-  RETURNS "pg_catalog"."void" AS '$libdir/timescaledb-2.16.1', 'ts_policy_refresh_cagg_remove'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for remove_reorder_policy
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."remove_reorder_policy"("hypertable" regclass, "if_exists" bool);
-CREATE OR REPLACE FUNCTION "public"."remove_reorder_policy"("hypertable" regclass, "if_exists" bool=false)
-  RETURNS "pg_catalog"."void" AS '$libdir/timescaledb-2.16.1', 'ts_policy_reorder_remove'
-  LANGUAGE c VOLATILE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for remove_retention_policy
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."remove_retention_policy"("relation" regclass, "if_exists" bool);
-CREATE OR REPLACE FUNCTION "public"."remove_retention_policy"("relation" regclass, "if_exists" bool=false)
-  RETURNS "pg_catalog"."void" AS '$libdir/timescaledb-2.16.1', 'ts_policy_retention_remove'
-  LANGUAGE c VOLATILE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for reorder_chunk
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."reorder_chunk"("chunk" regclass, "index" regclass, "verbose" bool);
-CREATE OR REPLACE FUNCTION "public"."reorder_chunk"("chunk" regclass, "index" regclass=NULL::regclass, "verbose" bool=false)
-  RETURNS "pg_catalog"."void" AS '$libdir/timescaledb-2.16.1', 'ts_reorder_chunk'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Procedure structure for run_job
--- ----------------------------
-DROP PROCEDURE IF EXISTS "public"."run_job"("job_id" int4);
-CREATE OR REPLACE PROCEDURE "public"."run_job"("job_id" int4)
- AS '$libdir/timescaledb-2.16.1', 'ts_job_run'
-  LANGUAGE c;
-
--- ----------------------------
--- Function structure for set_adaptive_chunking
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."set_adaptive_chunking"("hypertable" regclass, "chunk_target_size" text, INOUT "chunk_sizing_func" regproc, OUT "chunk_target_size" int8);
-CREATE OR REPLACE FUNCTION "public"."set_adaptive_chunking"(IN "hypertable" regclass, IN "chunk_target_size" text, INOUT "chunk_sizing_func" regproc='_timescaledb_functions.calculate_chunk_interval'::regproc, OUT "chunk_target_size" int8)
-  RETURNS "pg_catalog"."record" AS '$libdir/timescaledb-2.16.1', 'ts_chunk_adaptive_set'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for set_chunk_time_interval
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."set_chunk_time_interval"("hypertable" regclass, "chunk_time_interval" anyelement, "dimension_name" name);
-CREATE OR REPLACE FUNCTION "public"."set_chunk_time_interval"("hypertable" regclass, "chunk_time_interval" anyelement, "dimension_name" name=NULL::name)
-  RETURNS "pg_catalog"."void" AS '$libdir/timescaledb-2.16.1', 'ts_dimension_set_interval'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for set_integer_now_func
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."set_integer_now_func"("hypertable" regclass, "integer_now_func" regproc, "replace_if_exists" bool);
-CREATE OR REPLACE FUNCTION "public"."set_integer_now_func"("hypertable" regclass, "integer_now_func" regproc, "replace_if_exists" bool=false)
-  RETURNS "pg_catalog"."void" AS '$libdir/timescaledb-2.16.1', 'ts_hypertable_set_integer_now_func'
-  LANGUAGE c VOLATILE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for set_number_partitions
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."set_number_partitions"("hypertable" regclass, "number_partitions" int4, "dimension_name" name);
-CREATE OR REPLACE FUNCTION "public"."set_number_partitions"("hypertable" regclass, "number_partitions" int4, "dimension_name" name=NULL::name)
-  RETURNS "pg_catalog"."void" AS '$libdir/timescaledb-2.16.1', 'ts_dimension_set_num_slices'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for set_partitioning_interval
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."set_partitioning_interval"("hypertable" regclass, "partition_interval" anyelement, "dimension_name" name);
-CREATE OR REPLACE FUNCTION "public"."set_partitioning_interval"("hypertable" regclass, "partition_interval" anyelement, "dimension_name" name=NULL::name)
-  RETURNS "pg_catalog"."void" AS '$libdir/timescaledb-2.16.1', 'ts_dimension_set_interval'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for show_chunks
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."show_chunks"("relation" regclass, "older_than" any, "newer_than" any, "created_before" any, "created_after" any);
-CREATE OR REPLACE FUNCTION "public"."show_chunks"("relation" regclass, "older_than" any=NULL::unknown, "newer_than" any=NULL::unknown, "created_before" any=NULL::unknown, "created_after" any=NULL::unknown)
-  RETURNS SETOF "pg_catalog"."regclass" AS '$libdir/timescaledb-2.16.1', 'ts_chunk_show_chunks'
-  LANGUAGE c STABLE
-  COST 1
-  ROWS 1000;
-
--- ----------------------------
--- Function structure for show_tablespaces
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."show_tablespaces"("hypertable" regclass);
-CREATE OR REPLACE FUNCTION "public"."show_tablespaces"("hypertable" regclass)
-  RETURNS SETOF "pg_catalog"."name" AS '$libdir/timescaledb-2.16.1', 'ts_tablespace_show'
-  LANGUAGE c VOLATILE STRICT
-  COST 1
-  ROWS 1000;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" int2, "ts" int2, "offset" int2);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" int2, "ts" int2, "offset" int2)
-  RETURNS "pg_catalog"."int2" AS '$libdir/timescaledb-2.16.1', 'ts_int16_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" int8, "ts" int8);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" int8, "ts" int8)
-  RETURNS "pg_catalog"."int8" AS '$libdir/timescaledb-2.16.1', 'ts_int64_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" int4, "ts" int4);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" int4, "ts" int4)
-  RETURNS "pg_catalog"."int4" AS '$libdir/timescaledb-2.16.1', 'ts_int32_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" int4, "ts" int4, "offset" int4);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" int4, "ts" int4, "offset" int4)
-  RETURNS "pg_catalog"."int4" AS '$libdir/timescaledb-2.16.1', 'ts_int32_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" int8, "ts" int8, "offset" int8);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" int8, "ts" int8, "offset" int8)
-  RETURNS "pg_catalog"."int8" AS '$libdir/timescaledb-2.16.1', 'ts_int64_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" int2, "ts" int2);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" int2, "ts" int2)
-  RETURNS "pg_catalog"."int2" AS '$libdir/timescaledb-2.16.1', 'ts_int16_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" interval, "ts" timestamptz, "timezone" text, "origin" timestamptz, "offset" interval);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" interval, "ts" timestamptz, "timezone" text, "origin" timestamptz=NULL::timestamp with time zone, "offset" interval=NULL::interval)
-  RETURNS "pg_catalog"."timestamptz" AS '$libdir/timescaledb-2.16.1', 'ts_timestamptz_timezone_bucket'
-  LANGUAGE c IMMUTABLE
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" interval, "ts" date, "offset" interval);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" interval, "ts" date, "offset" interval)
-  RETURNS "pg_catalog"."date" AS '$libdir/timescaledb-2.16.1', 'ts_date_offset_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" interval, "ts" timestamptz, "offset" interval);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" interval, "ts" timestamptz, "offset" interval)
-  RETURNS "pg_catalog"."timestamptz" AS '$libdir/timescaledb-2.16.1', 'ts_timestamptz_offset_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" interval, "ts" timestamp, "offset" interval);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" interval, "ts" timestamp, "offset" interval)
-  RETURNS "pg_catalog"."timestamp" AS '$libdir/timescaledb-2.16.1', 'ts_timestamp_offset_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" interval, "ts" date, "origin" date);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" interval, "ts" date, "origin" date)
-  RETURNS "pg_catalog"."date" AS '$libdir/timescaledb-2.16.1', 'ts_date_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" interval, "ts" timestamptz, "origin" timestamptz);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" interval, "ts" timestamptz, "origin" timestamptz)
-  RETURNS "pg_catalog"."timestamptz" AS '$libdir/timescaledb-2.16.1', 'ts_timestamptz_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" interval, "ts" timestamp, "origin" timestamp);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" interval, "ts" timestamp, "origin" timestamp)
-  RETURNS "pg_catalog"."timestamp" AS '$libdir/timescaledb-2.16.1', 'ts_timestamp_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" interval, "ts" date);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" interval, "ts" date)
-  RETURNS "pg_catalog"."date" AS '$libdir/timescaledb-2.16.1', 'ts_date_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" interval, "ts" timestamptz);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" interval, "ts" timestamptz)
-  RETURNS "pg_catalog"."timestamptz" AS '$libdir/timescaledb-2.16.1', 'ts_timestamptz_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket"("bucket_width" interval, "ts" timestamp);
-CREATE OR REPLACE FUNCTION "public"."time_bucket"("bucket_width" interval, "ts" timestamp)
-  RETURNS "pg_catalog"."timestamp" AS '$libdir/timescaledb-2.16.1', 'ts_timestamp_bucket'
-  LANGUAGE c IMMUTABLE STRICT
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket_gapfill
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket_gapfill"("bucket_width" int4, "ts" int4, "start" int4, "finish" int4);
-CREATE OR REPLACE FUNCTION "public"."time_bucket_gapfill"("bucket_width" int4, "ts" int4, "start" int4=NULL::integer, "finish" int4=NULL::integer)
-  RETURNS "pg_catalog"."int4" AS '$libdir/timescaledb-2.16.1', 'ts_gapfill_int32_bucket'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket_gapfill
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket_gapfill"("bucket_width" int2, "ts" int2, "start" int2, "finish" int2);
-CREATE OR REPLACE FUNCTION "public"."time_bucket_gapfill"("bucket_width" int2, "ts" int2, "start" int2=NULL::smallint, "finish" int2=NULL::smallint)
-  RETURNS "pg_catalog"."int2" AS '$libdir/timescaledb-2.16.1', 'ts_gapfill_int16_bucket'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket_gapfill
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket_gapfill"("bucket_width" interval, "ts" timestamptz, "timezone" text, "start" timestamptz, "finish" timestamptz);
-CREATE OR REPLACE FUNCTION "public"."time_bucket_gapfill"("bucket_width" interval, "ts" timestamptz, "timezone" text, "start" timestamptz=NULL::timestamp with time zone, "finish" timestamptz=NULL::timestamp with time zone)
-  RETURNS "pg_catalog"."timestamptz" AS '$libdir/timescaledb-2.16.1', 'ts_gapfill_timestamptz_timezone_bucket'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket_gapfill
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket_gapfill"("bucket_width" interval, "ts" timestamptz, "start" timestamptz, "finish" timestamptz);
-CREATE OR REPLACE FUNCTION "public"."time_bucket_gapfill"("bucket_width" interval, "ts" timestamptz, "start" timestamptz=NULL::timestamp with time zone, "finish" timestamptz=NULL::timestamp with time zone)
-  RETURNS "pg_catalog"."timestamptz" AS '$libdir/timescaledb-2.16.1', 'ts_gapfill_timestamptz_bucket'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket_gapfill
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket_gapfill"("bucket_width" interval, "ts" timestamp, "start" timestamp, "finish" timestamp);
-CREATE OR REPLACE FUNCTION "public"."time_bucket_gapfill"("bucket_width" interval, "ts" timestamp, "start" timestamp=NULL::timestamp without time zone, "finish" timestamp=NULL::timestamp without time zone)
-  RETURNS "pg_catalog"."timestamp" AS '$libdir/timescaledb-2.16.1', 'ts_gapfill_timestamp_bucket'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket_gapfill
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket_gapfill"("bucket_width" interval, "ts" date, "start" date, "finish" date);
-CREATE OR REPLACE FUNCTION "public"."time_bucket_gapfill"("bucket_width" interval, "ts" date, "start" date=NULL::date, "finish" date=NULL::date)
-  RETURNS "pg_catalog"."date" AS '$libdir/timescaledb-2.16.1', 'ts_gapfill_date_bucket'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for time_bucket_gapfill
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."time_bucket_gapfill"("bucket_width" int8, "ts" int8, "start" int8, "finish" int8);
-CREATE OR REPLACE FUNCTION "public"."time_bucket_gapfill"("bucket_width" int8, "ts" int8, "start" int8=NULL::bigint, "finish" int8=NULL::bigint)
-  RETURNS "pg_catalog"."int8" AS '$libdir/timescaledb-2.16.1', 'ts_gapfill_int64_bucket'
-  LANGUAGE c VOLATILE
-  COST 1;
-
--- ----------------------------
--- Function structure for timescaledb_post_restore
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."timescaledb_post_restore"();
-CREATE OR REPLACE FUNCTION "public"."timescaledb_post_restore"()
-  RETURNS "pg_catalog"."bool" AS $BODY$
-DECLARE
-    db text;
-    catalog_version text;
-BEGIN
-    SELECT m.value INTO catalog_version FROM pg_extension x
-    JOIN _timescaledb_catalog.metadata m ON m.key='timescaledb_version'
-    WHERE x.extname='timescaledb' AND x.extversion <> m.value;
-
-    -- check that a loaded dump is compatible with the currently running code
-    IF FOUND THEN
-        RAISE EXCEPTION 'catalog version mismatch, expected "%" seen "%"', '2.16.1', catalog_version;
-    END IF;
-
-    SELECT current_database() INTO db;
-    EXECUTE format($$ALTER DATABASE %I RESET timescaledb.restoring $$, db);
-    -- we cannot use reset here because the reset_val might not be off
-    SET timescaledb.restoring TO off;
-    PERFORM _timescaledb_functions.restart_background_workers();
-
-    RETURN true;
-END
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100
-  SET "search_path"="pg_catalog, pg_temp";
-
--- ----------------------------
--- Function structure for timescaledb_pre_restore
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."timescaledb_pre_restore"();
-CREATE OR REPLACE FUNCTION "public"."timescaledb_pre_restore"()
-  RETURNS "pg_catalog"."bool" AS $BODY$
-DECLARE
-    db text;
-BEGIN
-    SELECT current_database() INTO db;
-    EXECUTE format($$ALTER DATABASE %I SET timescaledb.restoring ='on'$$, db);
-    SET SESSION timescaledb.restoring = 'on';
-    PERFORM _timescaledb_functions.stop_background_workers();
-    RETURN true;
-END
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100
-  SET "search_path"="pg_catalog, pg_temp";
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq1"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq1"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq10"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq10"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq2"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq2"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq3"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq3"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq4"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq4"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq5"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq5"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq6"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq6"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq7"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq7"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq8"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq8"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq9"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq9"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq1"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq1"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq10"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq10"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq2"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq2"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq3"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq3"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq4"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq4"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq5"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq5"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq6"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq6"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq7"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq7"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq8"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq8"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq9"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq9"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq"', 6, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq1"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq1"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq10"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq10"', 12, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq2"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq2"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq3"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq3"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq4"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq4"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq5"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq5"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq6"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq6"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq7"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq7"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq8"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq8"', 2, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq9"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq9"', 4, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq1"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq1"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq10"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq10"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq2"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq2"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq3"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq3"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq4"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq4"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq5"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq5"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq6"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq6"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq7"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq7"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq8"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq8"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq9"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq9"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq"', 59, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq1"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq1"', 23, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq10"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq10"', 26, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq2"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq2"', 3, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq3"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq3"', 1, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq4"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq4"', 24, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq5"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq5"', 35, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq6"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq6"', 20, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq7"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq7"', 1, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq8"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq8"', 3, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq9"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq9"', 21, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq1"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq1"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq10"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq10"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq2"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq2"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq3"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq3"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq4"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq4"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq5"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq5"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq6"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq6"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq7"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq7"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq8"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq8"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq9"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq9"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq"', 171, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq1"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq1"', 50, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq10"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq10"', 36, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq2"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq2"', 7, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq3"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq3"', 3, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq4"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq4"', 48, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq5"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq5"', 54, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq6"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq6"', 39, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq7"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq7"', 3, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq8"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq8"', 17, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq9"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq9"', 26, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq1"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq1"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq10"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq10"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq2"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq2"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq3"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq3"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq4"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq4"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq5"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq5"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq6"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq6"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq7"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq7"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq8"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq8"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq9"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq9"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq1"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq1"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq10"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq10"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq2"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq2"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq3"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq3"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq4"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq4"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq5"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq5"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq6"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq6"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq7"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq7"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq8"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq8"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq9"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq9"', 1, false);
-
--- ----------------------------
--- Auto increment value for config_info
--- ----------------------------
-SELECT setval('"public"."config_info_id_seq10"', 12, true);
-
--- ----------------------------
 -- Indexes structure for table config_info
 -- ----------------------------
 CREATE UNIQUE INDEX "config_info_data_id_group_id_tenant_id_idx" ON "public"."config_info" USING btree (
@@ -6576,11 +5802,6 @@ CREATE UNIQUE INDEX "config_info_data_id_group_id_tenant_id_idx" ON "public"."co
 -- Primary Key structure for table config_info
 -- ----------------------------
 ALTER TABLE "public"."config_info" ADD CONSTRAINT "config_info_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
--- Auto increment value for config_info_aggr
--- ----------------------------
-SELECT setval('"public"."config_info_aggr_id_seq10"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_aggr
@@ -6598,11 +5819,6 @@ CREATE UNIQUE INDEX "config_info_aggr_data_id_group_id_tenant_id_datum_id_idx" O
 ALTER TABLE "public"."config_info_aggr" ADD CONSTRAINT "config_info_aggr_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Auto increment value for config_info_beta
--- ----------------------------
-SELECT setval('"public"."config_info_beta_id_seq10"', 1, false);
-
--- ----------------------------
 -- Indexes structure for table config_info_beta
 -- ----------------------------
 CREATE UNIQUE INDEX "config_info_beta_data_id_group_id_tenant_id_idx" ON "public"."config_info_beta" USING btree (
@@ -6615,11 +5831,6 @@ CREATE UNIQUE INDEX "config_info_beta_data_id_group_id_tenant_id_idx" ON "public
 -- Primary Key structure for table config_info_beta
 -- ----------------------------
 ALTER TABLE "public"."config_info_beta" ADD CONSTRAINT "config_info_beta_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
--- Auto increment value for config_info_tag
--- ----------------------------
-SELECT setval('"public"."config_info_tag_id_seq10"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table config_info_tag
@@ -6636,10 +5847,6 @@ CREATE UNIQUE INDEX "config_info_tag_data_id_group_id_tenant_id_tag_id_idx" ON "
 -- ----------------------------
 ALTER TABLE "public"."config_info_tag" ADD CONSTRAINT "config_info_tag_pkey" PRIMARY KEY ("id");
 
--- ----------------------------
--- Auto increment value for config_tags_relation
--- ----------------------------
-SELECT setval('"public"."config_tags_relation_nid_seq10"', 26, true);
 
 -- ----------------------------
 -- Indexes structure for table config_tags_relation
@@ -6664,11 +5871,6 @@ ALTER TABLE "public"."config_tags_relation" ADD CONSTRAINT "config_tags_relation
 ALTER TABLE "public"."databasechangeloglock" ADD CONSTRAINT "databasechangeloglock_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Auto increment value for group_capacity
--- ----------------------------
-SELECT setval('"public"."group_capacity_id_seq10"', 1, false);
-
--- ----------------------------
 -- Indexes structure for table group_capacity
 -- ----------------------------
 CREATE UNIQUE INDEX "group_capacity_group_id_idx" ON "public"."group_capacity" USING btree (
@@ -6680,10 +5882,6 @@ CREATE UNIQUE INDEX "group_capacity_group_id_idx" ON "public"."group_capacity" U
 -- ----------------------------
 ALTER TABLE "public"."group_capacity" ADD CONSTRAINT "group_capacity_pkey" PRIMARY KEY ("id");
 
--- ----------------------------
--- Auto increment value for his_config_info
--- ----------------------------
-SELECT setval('"public"."his_config_info_nid_seq10"', 36, true);
 
 -- ----------------------------
 -- Indexes structure for table his_config_info
@@ -6720,10 +5918,6 @@ CREATE UNIQUE INDEX "roles_username_role_idx" ON "public"."roles" USING btree (
   "role" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 
--- ----------------------------
--- Auto increment value for tenant_capacity
--- ----------------------------
-SELECT setval('"public"."tenant_capacity_id_seq10"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table tenant_capacity
@@ -6737,10 +5931,6 @@ CREATE UNIQUE INDEX "tenant_capacity_tenant_id_idx" ON "public"."tenant_capacity
 -- ----------------------------
 ALTER TABLE "public"."tenant_capacity" ADD CONSTRAINT "tenant_capacity_pkey" PRIMARY KEY ("id");
 
--- ----------------------------
--- Auto increment value for tenant_info
--- ----------------------------
-SELECT setval('"public"."tenant_info_id_seq10"', 1, false);
 
 -- ----------------------------
 -- Indexes structure for table tenant_info
