@@ -63,8 +63,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 		boolean release = true;
 		try {
-			if (msg instanceof WebSocketFrame frame
-				&& frame instanceof TextWebSocketFrame textWebSocketFrame) {
+			if (msg instanceof WebSocketFrame frame && frame instanceof TextWebSocketFrame textWebSocketFrame) {
 				read(ctx, textWebSocketFrame);
 			}
 			else {

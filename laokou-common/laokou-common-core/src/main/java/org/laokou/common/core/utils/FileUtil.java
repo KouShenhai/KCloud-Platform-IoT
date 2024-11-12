@@ -21,6 +21,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URLConnection;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
@@ -62,6 +64,13 @@ public final class FileUtil {
 			log.info("文件创建：{}", newFile.createNewFile());
 		}
 		return newFile;
+	}
+
+	@SneakyThrows
+	public static byte[] getBytes(String url) {
+		URI uri = URI.create(url);
+		URLConnection connection = uri.toURL().openConnection();
+		return connection.getInputStream().readAllBytes();
 	}
 
 	public static byte[] getBytes(Path path) throws IOException {

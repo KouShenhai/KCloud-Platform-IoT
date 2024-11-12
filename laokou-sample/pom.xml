@@ -18,6 +18,7 @@
       <module>laokou-sample-shardingsphere</module>
       <module>laokou-sample-tcp</module>
       <module>laokou-sample-rpc</module>
+      <module>laokou-sample-crawler</module>
   </modules>
 
 </project>
