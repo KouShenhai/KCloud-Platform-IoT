@@ -63,15 +63,8 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 		boolean release = true;
 		try {
-			if (msg instanceof WebSocketFrame frame) {
-				if (frame instanceof TextWebSocketFrame textWebSocketFrame) {
-					read(ctx, textWebSocketFrame);
-				}
-				else {
-					// 传递下一个处理器
-					release = false;
-					super.channelRead(ctx, msg);
-				}
+			if (msg instanceof WebSocketFrame frame && frame instanceof TextWebSocketFrame textWebSocketFrame) {
+				read(ctx, textWebSocketFrame);
 			}
 			else {
 				// 传递下一个处理器
@@ -117,17 +110,16 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		String str = frame.text();
 		if (ObjectUtil.equals(PONG, str)) {
 			log.info("接收{}心跳Pong", channel.id().asLongText());
+			return;
 		}
-		else {
-			if (StringUtil.isEmpty(str)) {
-				channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
-				ctx.close();
-			}
-			else {
-				log.info("已连接ClientID：{}", str);
-				WebSocketSessionManager.add(str, channel);
-			}
+		if (StringUtil.isEmpty(str)) {
+			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
+			ctx.close();
+			return;
 		}
+		log.info("已连接ClientID：{}", str);
+		WebSocketSessionManager.add(str, channel);
+
 	}
 
 }
