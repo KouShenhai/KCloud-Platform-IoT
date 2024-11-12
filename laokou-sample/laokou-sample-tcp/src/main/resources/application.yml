@@ -18,6 +18,7 @@ spring:
     all-idle-time: 0
     reader-idle-time: 60
     writer-idle-time: 0
+    keep-alive: true
 
 logging:
   config: classpath:log4j2.xml

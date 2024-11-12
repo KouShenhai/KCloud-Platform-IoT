@@ -106,4 +106,9 @@ public class SpringWebSocketServerProperties {
 	 */
 	private int backlogLength = 1024;
 
+	/**
+	 * 开启心跳包活机制.
+	 */
+	private boolean keepAlive = true;
+
 }

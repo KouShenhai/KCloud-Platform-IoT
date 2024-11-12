@@ -25,6 +25,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.DefaultThreadFactory;
 
+import static io.netty.channel.ChannelOption.SO_KEEPALIVE;
+
 /**
  * @author laokou
  */
@@ -54,6 +56,8 @@ public final class TcpServer extends AbstractServer {
 			.childOption(ChannelOption.TCP_NODELAY, properties.isTcpNodelay())
 			// 请求队列最大长度（如果连接建立频繁，服务器处理创建新连接较慢，可以适当调整参数）
 			.option(ChannelOption.SO_BACKLOG, properties.getBacklogLength())
+			// 开启心跳包活机制
+			.childOption(SO_KEEPALIVE, properties.isKeepAlive())
 			// tcp处理类
 			.childHandler(channelHandler);
 	}

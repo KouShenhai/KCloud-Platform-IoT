@@ -22,6 +22,7 @@ spring:
     websocket-path: "/ws"
     backlog-length: 4096
     tcp-nodelay: true
+    keep-alive: true
   thymeleaf:
     servlet:
       content-type: text/html
