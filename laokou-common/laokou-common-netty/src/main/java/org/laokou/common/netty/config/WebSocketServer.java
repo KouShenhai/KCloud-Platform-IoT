@@ -27,6 +27,8 @@ import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
+import static io.netty.channel.ChannelOption.SO_KEEPALIVE;
+
 /**
  * WebSocket服务器配置.
  *
@@ -63,6 +65,8 @@ public final class WebSocketServer extends AbstractServer {
 			.option(ChannelOption.SO_BACKLOG, properties.getBacklogLength())
 			// 延迟发送
 			.childOption(ChannelOption.TCP_NODELAY, properties.isTcpNodelay())
+			// 开启心跳包活机制
+			.childOption(SO_KEEPALIVE, properties.isKeepAlive())
 			// WebSocket处理类
 			.childHandler(channelHandler);
 	}

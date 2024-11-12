@@ -86,4 +86,9 @@ public class SpringTcpServerProperties {
 	 */
 	private long allIdleTime = 0;
 
+	/**
+	 * 开启心跳包活机制.
+	 */
+	private boolean keepAlive = true;
+
 }

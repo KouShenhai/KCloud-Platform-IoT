@@ -17,6 +17,7 @@
       <module>laokou-sample-websocket</module>
       <module>laokou-sample-shardingsphere</module>
       <module>laokou-sample-tcp</module>
+      <module>laokou-sample-rpc</module>
   </modules>
 
 </project>

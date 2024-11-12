@@ -21,16 +21,16 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.codec.http.websocketx.PingWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
+import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.netty.config.WebSocketSessionManager;
 import org.springframework.stereotype.Component;
@@ -48,6 +48,10 @@ import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 @RequiredArgsConstructor
 public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 
+	private static final String PING = "ping";
+
+	private static final String PONG = "pong";
+
 	/**
 	 * see
 	 * {@link io.netty.channel.SimpleChannelInboundHandler#channelRead(ChannelHandlerContext, Object)}.
@@ -60,10 +64,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		boolean release = true;
 		try {
 			if (msg instanceof WebSocketFrame frame) {
-				if (frame instanceof PingWebSocketFrame pingWebSocketFrame) {
-					ctx.writeAndFlush(new PongWebSocketFrame(pingWebSocketFrame.content().retain()));
-				}
-				else if (frame instanceof TextWebSocketFrame textWebSocketFrame) {
+				if (frame instanceof TextWebSocketFrame textWebSocketFrame) {
 					read(ctx, textWebSocketFrame);
 				}
 				else {
@@ -97,16 +98,35 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		WebSocketSessionManager.remove(channelId);
 	}
 
-	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
-		Channel channel = ctx.channel();
-		String clientId = frame.text();
-		if (StringUtil.isEmpty(clientId)) {
-			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
-			ctx.close();
+	@Override
+	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+		// 读空闲事件
+		if (evt instanceof IdleStateEvent idleStateEvent
+				&& ObjectUtil.equals(idleStateEvent.state(), IdleStateEvent.READER_IDLE_STATE_EVENT.state())) {
+			Channel channel = ctx.channel();
+			log.info("发送{}心跳Ping", channel.id().asLongText());
+			ctx.writeAndFlush(new TextWebSocketFrame(PING));
 		}
 		else {
-			log.info("已连接ClientID：{}", clientId);
-			WebSocketSessionManager.add(clientId, channel);
+			super.userEventTriggered(ctx, evt);
+		}
+	}
+
+	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
+		Channel channel = ctx.channel();
+		String str = frame.text();
+		if (ObjectUtil.equals(PONG, str)) {
+			log.info("接收{}心跳Pong", channel.id().asLongText());
+		}
+		else {
+			if (StringUtil.isEmpty(str)) {
+				channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
+				ctx.close();
+			}
+			else {
+				log.info("已连接ClientID：{}", str);
+				WebSocketSessionManager.add(str, channel);
+			}
 		}
 	}
 

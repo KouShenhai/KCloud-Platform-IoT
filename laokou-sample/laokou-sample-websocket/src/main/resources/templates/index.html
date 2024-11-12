@@ -37,9 +37,15 @@
         }
 
         socket.onmessage = function(event) {
-			const result = JSON.parse(event.data)
-			alert("接收消息：" + result.data)
-            console.log("接收消息", event.data)
+			if (event.data === 'ping') {
+				console.log('接收心跳Ping')
+				console.log('发送心跳Pong')
+				socket.send('pong')
+			} else {
+				const result = JSON.parse(event.data)
+				alert("接收消息：" + result.data)
+				console.log("接收消息", event.data)
+			}
         }
 
         socket.onerror = function(event) {
@@ -51,6 +57,7 @@
             alert("连接关闭")
             console.log("连接关闭")
         }
+
     }
 
     function send() {
