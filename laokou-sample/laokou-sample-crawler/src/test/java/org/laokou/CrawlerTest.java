@@ -16,8 +16,6 @@
  */
 
 package org.laokou;
-
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,7 +26,10 @@ import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.i18n.utils.SslUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author laokou
@@ -36,12 +37,27 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 class CrawlerTest {
 
-	private static final String DIRECTORY = "D:/crawl/data/xxx";
+	private static final Map<String, String> MAP = new LinkedHashMap<>();
+
+	static {
+		MAP.put("xxx","xxx");
+	}
+
+	private static final String DIRECTORY = "D:/crawl/data/";
 
 	@Test
-	@SneakyThrows
-	void test_learn_lianglianglee_crawl() {
-		String url = "xxx";
+	void testCrawl() {
+		MAP.forEach((name, url) -> {
+			try {
+				crawl(url, name);
+			} catch (IOException | InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+		});
+	}
+
+	private void crawl(String url, String name) throws IOException, InterruptedException {
+		String directory = DIRECTORY + name;
 		Document document = Jsoup.connect(url).get();
 		Elements links = document.select("a[href]");
 		int index = 0;
@@ -49,10 +65,14 @@ class CrawlerTest {
 			// 提取链接的文本和URL
 			String linkText = link.text();
 			String linkHref = link.attr("abs:href");
-			if (linkHref.startsWith("https://learn.lianglianglee.com/%")) {
+			if (linkHref.startsWith("https://xxx/%")) {
 				SslUtil.ignoreSSLTrust();
-				FileUtil.write(FileUtil.create(DIRECTORY, linkText.replace(".md", ".html")),
-						getContent(index, linkHref).getBytes(StandardCharsets.UTF_8));
+				try {
+					FileUtil.write(FileUtil.create(directory, linkText.replace(".md", ".html")),
+						getContent(directory, index, linkHref).getBytes(StandardCharsets.UTF_8));
+				} catch (Exception e) {
+					continue;
+				}
 				// 每10秒钟抓取一次
 				Thread.sleep(10000);
 				index++;
@@ -60,34 +80,38 @@ class CrawlerTest {
 		}
 	}
 
-	private String getImgDirectory(int index) {
-		return DIRECTORY + "/" + index;
+	private String getImgDirectory(String directory,int index) {
+		return directory + "/" + index;
 	}
 
-	private String getContent(int index, String url) {
-		return getHeadContent() + "\n" + getBodyContent(index, url);
+	private String getContent(String directory,int index, String url) throws IOException {
+		return getHeadContent() + "\n" + getBodyContent(directory,index, url);
 	}
 
-	@SneakyThrows
-	private String getBodyContent(int index, String url) {
+	private String getBodyContent(String directory,int index, String url) throws IOException {
 		Document document = Jsoup.connect(url).get();
-		// 使用选择器选择所有具有 class="book-post" 的 <div> 元素
+		// 使用选择器选择所有具有 class="book-container" 的 <div> 元素
 		Element element = document.select("div.book-container").getFirst();
 		element.select("div.book-sidebar").remove();
-		setImg(index, element);
+		setImg(directory,index, element);
 		return element.html();
 	}
 
-	private void setImg(int index, Element element) {
+	private void setImg(String directory,int index, Element element) {
 		Elements imgElement = element.select("img[src]");
 		int offset = 0;
 		for (Element e : imgElement) {
 			String src = e.attr("abs:src");
-			File file = FileUtil.create(getImgDirectory(index), offset + ".png");
+			File file = FileUtil.create(getImgDirectory(directory, index), offset + ".png");
 			FileUtil.write(file, FileUtil.getBytes(src));
-			e.attr("src", file.getAbsolutePath());
+			e.attr("style", "width: 100%;");
+			e.attr("src", getImgPath(file, index));
 			offset++;
 		}
+	}
+
+	private String getImgPath(File file, int index) {
+		return index + "/" + file.getName();
 	}
 
 	private String getHeadContent() {
