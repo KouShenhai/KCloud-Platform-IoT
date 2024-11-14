@@ -29,24 +29,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.client.dto.clientobject.MessageCO;
-import org.laokou.client.dto.clientobject.PayloadCO;
-import org.laokou.client.dto.domainevent.PublishMessageEvent;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.core.utils.SpringUtil;
-import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.netty.config.WebSocketSessionManager;
-import org.laokou.common.rocketmq.template.SendMessageType;
-import org.laokou.domain.model.MessageType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 import static org.laokou.domain.model.MessageType.PING;
-import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAGE_TOPIC;
 
 /**
  * WebSocket自定义处理器.
@@ -59,9 +51,7 @@ import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAG
 @RequiredArgsConstructor
 public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 
-	private final DomainEventPublisher rocketMQDomainEventPublisher;
-
-	private final SpringUtil springUtil;
+	private final WebSocketMessageProcessor messageProcessor;
 
 	/**
 	 * see
@@ -127,32 +117,10 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 			return;
 		}
 
-		MessageCO co = JacksonUtil.toBean(str, MessageCO.class);
-		Object payload = co.getPayload();
-		String type = co.getType();
-		Assert.notNull(payload, "payload不能为空");
-		Assert.notNull(type, "type不能为空");
-		switch (MessageType.valueOf(type.toUpperCase())) {
-			case PONG: {
-				log.info("接收{}心跳{}", channel.id().asLongText(), payload);
-				break;
-			}
-			case CONNECT: {
-				log.info("已连接ClientID：{}", payload);
-				WebSocketSessionManager.add(payload.toString(), channel);
-				break;
-			}
-			case MESSAGE: {
-				log.info("接收消息：{}", payload);
-				rocketMQDomainEventPublisher.publish(
-						new PublishMessageEvent(LAOKOU_MESSAGE_TOPIC, EMPTY,
-								JacksonUtil.toValue(payload, PayloadCO.class), springUtil.getServiceId()),
-						SendMessageType.TRANSACTION);
-				break;
-			}
-			default: {
-			}
-		}
+		MessageCO message = JacksonUtil.toBean(str, MessageCO.class);
+		Assert.notNull(message.getPayload(), "payload不能为空");
+		Assert.notNull(message.getType(), "type不能为空");
+		messageProcessor.processMessage(message, channel);
 	}
 
 }

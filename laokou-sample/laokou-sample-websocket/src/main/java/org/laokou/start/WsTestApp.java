@@ -17,6 +17,7 @@
 
 package org.laokou.start;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.netty.annotation.EnableWebSocketServer;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
@@ -34,6 +35,7 @@ import java.net.InetAddress;
  */
 @EnableRedisRepository
 @EnableWebSocketServer
+@EnableEncryptableProperties
 @EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
 public class WsTestApp {
