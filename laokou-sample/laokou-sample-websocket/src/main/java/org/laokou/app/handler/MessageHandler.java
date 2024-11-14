@@ -17,23 +17,17 @@
 
 package org.laokou.app.handler;
 
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
-import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.dto.Message;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.netty.config.Server;
 import org.laokou.common.rocketmq.handler.TraceHandler;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
@@ -58,14 +52,14 @@ public class MessageHandler extends TraceHandler implements RocketMQListener<Mes
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			putTrace(messageExt);
 			String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
-			Message msg = JacksonUtil.toBean(message, Message.class);
-			String payload = msg.getPayload();
-			Set<String> receiver = msg.getReceiver();
-			log.info("接收消息：{}", message);
-			TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.ok(payload)));
-			receiver.parallelStream()
-				.forEach(clientId -> CompletableFuture.runAsync(() -> webSocketServer.send(clientId, webSocketFrame),
-						executor));
+//			Message msg = JacksonUtil.toBean(message, Message.class);
+//			String payload = msg.getPayload();
+//			Set<String> receiver = msg.getReceiver();
+//			log.info("接收消息：{}", message);
+//			TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.ok(payload)));
+//			receiver.parallelStream()
+//				.forEach(clientId -> CompletableFuture.runAsync(() -> webSocketServer.send(clientId, webSocketFrame),
+//						executor));
 		}
 		finally {
 			clearTrace();

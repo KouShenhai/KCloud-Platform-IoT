@@ -568,11 +568,6 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-api-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
         <artifactId>laokou-logstash-infrastructure</artifactId>
         <version>${laokou.version}</version>
       </dependency>
@@ -684,11 +679,6 @@
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-auth-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-api-start</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>

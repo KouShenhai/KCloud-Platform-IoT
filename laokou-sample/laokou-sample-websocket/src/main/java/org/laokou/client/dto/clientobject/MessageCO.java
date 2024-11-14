@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
 /*
  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
@@ -16,20 +14,20 @@
  * limitations under the License.
  *
  */
--->
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <parent>
-    <artifactId>laokou-service</artifactId>
-    <groupId>org.laokou</groupId>
-    <version>3.4.0</version>
-  </parent>
-  <modelVersion>4.0.0</modelVersion>
-  <version>3.4.0</version>
-  <artifactId>laokou-module</artifactId>
-  <packaging>pom</packaging>
-  <modules>
-    <module>laokou-api</module>
-    <module>laokou-logstash</module>
-  </modules>
-</project>
+
+package org.laokou.client.dto.clientobject;
+
+import lombok.Data;
+import org.laokou.common.i18n.dto.ClientObject;
+
+/**
+ * @author laokou
+ */
+@Data
+public class MessageCO extends ClientObject {
+
+	private String type;
+
+	private Object payload;
+
+}

@@ -1,9 +1,0 @@
-server:
-  port: ${SERVER_PORT:10004}
-  shutdown: graceful
-
-spring:
-  application:
-    name: ${SERVICE_ID:laokou-api}
-  profiles:
-    active: @PROFILE-ACTIVE@
