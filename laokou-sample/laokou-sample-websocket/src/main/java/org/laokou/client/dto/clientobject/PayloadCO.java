@@ -15,15 +15,21 @@
  *
  */
 
-package org.laokou.common.i18n.common.constant;
+package org.laokou.client.dto.clientobject;
+
+import lombok.Data;
+import org.laokou.common.i18n.dto.ClientObject;
+
+import java.util.Set;
 
 /**
- * 事件类型枚举.
- *
  * @author laokou
  */
-public enum EventType {
+@Data
+public class PayloadCO extends ClientObject {
 
-	LOGIN, SEND_CAPTCHA, NOTICE, PUBLISH
+	private Set<String> receivers;
+
+	private String content;
 
 }

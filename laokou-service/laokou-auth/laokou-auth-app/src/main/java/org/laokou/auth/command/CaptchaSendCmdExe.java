@@ -30,12 +30,13 @@ import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.rocketmq.template.SendMessageType;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.auth.common.constant.MqConstant.LAOKOU_CAPTCHA_TOPIC;
 import static org.laokou.auth.dto.CaptchaSendCmd.USE_CASE_CAPTCHA;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
-import static org.laokou.common.i18n.common.constant.EventType.CAPTCHA;
+import static org.laokou.common.i18n.common.constant.EventType.SEND_CAPTCHA;
 import static org.laokou.common.i18n.common.exception.AuthException.OAUTH2_SOURCE_NOT_EXIST;
 
 /**
@@ -61,8 +62,8 @@ public class CaptchaSendCmdExe {
 		// 发布发送验证码事件
 		Long tenantId = cmd.getTenantId();
 		SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getUuid(), LAOKOU_CAPTCHA_TOPIC, cmd.getTag(),
-				CAPTCHA, springUtil.getServiceId(), getSourceName(tenantId), tenantId);
-		rocketMQDomainEventPublisher.publish(sendCaptchaEvent, false);
+				SEND_CAPTCHA, springUtil.getServiceId(), getSourceName(tenantId), tenantId);
+		rocketMQDomainEventPublisher.publish(sendCaptchaEvent, SendMessageType.TRANSACTION);
 	}
 
 	private String getSourceName(Long tenantId) {

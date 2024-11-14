@@ -34,4 +34,6 @@ spring:
             data-id: gateway-flow.json
             rule-type: gw_flow # 网关规则
             group-id: @NACOS-GROUP@
+            username: @NACOS-USERNAME@
+            password: @NACOS-PASSWORD@
             data-type: json

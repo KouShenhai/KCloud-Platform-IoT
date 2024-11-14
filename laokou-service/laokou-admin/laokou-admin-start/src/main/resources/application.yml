@@ -30,6 +30,8 @@ spring:
             server-addr: @NACOS-CONFIG-ADDRESS@
             namespace: @NACOS-NAMESPACE@
             group-id: @NACOS-GROUP@
-            data-id: admin-degrade.json
+            data-id: admin-flow.json
             data-type: json
-            rule-type: degrade
+            username: @NACOS-USERNAME@
+            password: @NACOS-PASSWORD@
+            rule-type: flow

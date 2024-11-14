@@ -29,6 +29,7 @@ import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.rocketmq.template.SendMessageType;
 import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
@@ -70,7 +71,7 @@ public class OAuth2AuthenticationProvider {
 		finally {
 			if (auth.checkNotEmptyLog()) {
 				// 发布登录事件
-				rocketMQDomainEventPublisher.publish(LoginLogConvertor.toEvent(auth), false);
+				rocketMQDomainEventPublisher.publish(LoginLogConvertor.toEvent(auth), SendMessageType.ONE_WAY);
 			}
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();

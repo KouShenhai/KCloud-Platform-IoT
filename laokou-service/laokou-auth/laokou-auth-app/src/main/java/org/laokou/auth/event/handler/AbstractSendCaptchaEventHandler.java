@@ -17,17 +17,17 @@
 
 package org.laokou.auth.event.handler;
 
-import org.laokou.auth.dto.domainevent.CallApiEvent;
+import org.laokou.auth.dto.domainevent.NoticeMessageEvent;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.laokou.common.i18n.dto.NoticeLog;
+import org.laokou.common.rocketmq.template.SendMessageType;
 
-import static org.laokou.auth.common.constant.MqConstant.API_TAG;
-import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOG_TOPIC;
-import static org.laokou.common.i18n.common.constant.EventType.API;
+import static org.laokou.auth.common.constant.MqConstant.*;
+import static org.laokou.common.i18n.common.constant.EventType.NOTICE;
 
 /**
  * @author laokou
@@ -41,9 +41,10 @@ public abstract class AbstractSendCaptchaEventHandler extends AbstractDomainEven
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
-		CallApiEvent callApiEvent = new CallApiEvent(getNoticeLog(event), LAOKOU_LOG_TOPIC, API_TAG, API,
-				event.getServiceId(), event.getSourceName(), event.getAggregateId(), event.getTenantId());
-		rocketMQDomainEventPublisher.publish(callApiEvent, true);
+		NoticeMessageEvent noticeMessageEvent = new NoticeMessageEvent(getNoticeLog(event), LAOKOU_LOG_TOPIC,
+				NOTICE_TAG, NOTICE, event.getServiceId(), event.getSourceName(), event.getAggregateId(),
+				event.getTenantId());
+		rocketMQDomainEventPublisher.publish(noticeMessageEvent, SendMessageType.ONE_WAY);
 	}
 
 	@Override

@@ -15,15 +15,13 @@
  *
  */
 
-package org.laokou.common.i18n.common.constant;
+package org.laokou.common.rocketmq.template;
 
 /**
- * 事件类型枚举.
- *
  * @author laokou
  */
-public enum EventType {
+public enum SendMessageType {
 
-	LOGIN, SEND_CAPTCHA, NOTICE, PUBLISH
+	ASYNC, SYNC, ONE_WAY, TRANSACTION
 
 }

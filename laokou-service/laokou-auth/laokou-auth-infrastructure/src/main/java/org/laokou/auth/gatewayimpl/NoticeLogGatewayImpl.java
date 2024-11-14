@@ -19,7 +19,7 @@ package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.convertor.NoticeLogConvertor;
-import org.laokou.auth.dto.domainevent.CallApiEvent;
+import org.laokou.auth.dto.domainevent.NoticeMessageEvent;
 import org.laokou.auth.gateway.NoticeLogGateway;
 import org.laokou.auth.gatewayimpl.database.NoticeLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.NoticeLogDO;
@@ -37,7 +37,7 @@ public class NoticeLogGatewayImpl implements NoticeLogGateway {
 
 	@Override
 	public void create(DefaultDomainEvent domainEvent) {
-		NoticeLogDO noticeLogDO = NoticeLogConvertor.toDataObject((CallApiEvent) domainEvent);
+		NoticeLogDO noticeLogDO = NoticeLogConvertor.toDataObject((NoticeMessageEvent) domainEvent);
 		noticeLogMapper.insert(noticeLogDO);
 	}
 

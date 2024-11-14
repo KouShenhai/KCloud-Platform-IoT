@@ -21,7 +21,7 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.ability.AuthDomainService;
-import org.laokou.auth.dto.domainevent.CallApiEvent;
+import org.laokou.auth.dto.domainevent.NoticeMessageEvent;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
@@ -39,7 +39,7 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @Component
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_NOTICE_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
-		selectorExpression = API_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+		selectorExpression = NOTICE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class NoticeEventHandler extends AbstractDomainEventHandler {
 
 	private final AuthDomainService authDomainService;
@@ -56,7 +56,7 @@ public class NoticeEventHandler extends AbstractDomainEventHandler {
 
 	@Override
 	protected DefaultDomainEvent convert(String msg) {
-		return JacksonUtil.toBean(msg, CallApiEvent.class);
+		return JacksonUtil.toBean(msg, NoticeMessageEvent.class);
 	}
 
 }

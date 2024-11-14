@@ -20,7 +20,7 @@
 -- Sequence structure for boot_domain_event_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_domain_event_id_seq";
-CREATE SEQUENCE "public"."boot_domain_event_id_seq" 
+CREATE SEQUENCE "public"."boot_domain_event_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -31,7 +31,7 @@ CACHE 1;
 -- Sequence structure for boot_domain_event_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_domain_event_id_seq1";
-CREATE SEQUENCE "public"."boot_domain_event_id_seq1" 
+CREATE SEQUENCE "public"."boot_domain_event_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -42,7 +42,7 @@ CACHE 1;
 -- Sequence structure for boot_domain_event_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_domain_event_id_seq2";
-CREATE SEQUENCE "public"."boot_domain_event_id_seq2" 
+CREATE SEQUENCE "public"."boot_domain_event_id_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -53,7 +53,7 @@ CACHE 1;
 -- Sequence structure for boot_iot_device_event_log_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_device_event_log_id_seq";
-CREATE SEQUENCE "public"."boot_iot_device_event_log_id_seq" 
+CREATE SEQUENCE "public"."boot_iot_device_event_log_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -64,7 +64,7 @@ CACHE 1;
 -- Sequence structure for boot_iot_device_event_log_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_device_event_log_id_seq1";
-CREATE SEQUENCE "public"."boot_iot_device_event_log_id_seq1" 
+CREATE SEQUENCE "public"."boot_iot_device_event_log_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -75,7 +75,7 @@ CACHE 1;
 -- Sequence structure for boot_iot_device_property_log_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_device_property_log_id_seq";
-CREATE SEQUENCE "public"."boot_iot_device_property_log_id_seq" 
+CREATE SEQUENCE "public"."boot_iot_device_property_log_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -86,7 +86,7 @@ CACHE 1;
 -- Sequence structure for boot_iot_device_property_log_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_iot_device_property_log_id_seq1";
-CREATE SEQUENCE "public"."boot_iot_device_property_log_id_seq1" 
+CREATE SEQUENCE "public"."boot_iot_device_property_log_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -97,7 +97,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_api_log_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_api_log_id_seq";
-CREATE SEQUENCE "public"."boot_sys_api_log_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_api_log_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -108,7 +108,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_api_log_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_api_log_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_api_log_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_api_log_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -119,7 +119,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_api_log_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_api_log_id_seq2";
-CREATE SEQUENCE "public"."boot_sys_api_log_id_seq2" 
+CREATE SEQUENCE "public"."boot_sys_api_log_id_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -130,7 +130,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_api_log_status_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_api_log_status_seq";
-CREATE SEQUENCE "public"."boot_sys_api_log_status_seq" 
+CREATE SEQUENCE "public"."boot_sys_api_log_status_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 32767
@@ -141,7 +141,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_login_log_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_login_log_id_seq";
-CREATE SEQUENCE "public"."boot_sys_login_log_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_login_log_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -152,7 +152,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_login_log_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_login_log_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_login_log_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_login_log_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -163,7 +163,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_login_log_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_login_log_id_seq2";
-CREATE SEQUENCE "public"."boot_sys_login_log_id_seq2" 
+CREATE SEQUENCE "public"."boot_sys_login_log_id_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -174,7 +174,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_notice_log_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_notice_log_id_seq";
-CREATE SEQUENCE "public"."boot_sys_notice_log_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_notice_log_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -185,7 +185,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_operate_log_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_operate_log_id_seq";
-CREATE SEQUENCE "public"."boot_sys_operate_log_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_operate_log_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -196,7 +196,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_operate_log_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_operate_log_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_operate_log_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_operate_log_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -207,7 +207,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_operate_log_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_operate_log_id_seq2";
-CREATE SEQUENCE "public"."boot_sys_operate_log_id_seq2" 
+CREATE SEQUENCE "public"."boot_sys_operate_log_id_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -218,7 +218,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_oss_log_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_oss_log_id_seq";
-CREATE SEQUENCE "public"."boot_sys_oss_log_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_oss_log_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -229,7 +229,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_oss_log_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_oss_log_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_oss_log_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_oss_log_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -240,7 +240,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_oss_log_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_oss_log_id_seq2";
-CREATE SEQUENCE "public"."boot_sys_oss_log_id_seq2" 
+CREATE SEQUENCE "public"."boot_sys_oss_log_id_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -251,7 +251,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_sql_log_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_sql_log_id_seq";
-CREATE SEQUENCE "public"."boot_sys_sql_log_id_seq" 
+CREATE SEQUENCE "public"."boot_sys_sql_log_id_seq"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -262,7 +262,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_sql_log_id_seq1
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_sql_log_id_seq1";
-CREATE SEQUENCE "public"."boot_sys_sql_log_id_seq1" 
+CREATE SEQUENCE "public"."boot_sys_sql_log_id_seq1"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -273,7 +273,7 @@ CACHE 1;
 -- Sequence structure for boot_sys_sql_log_id_seq2
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."boot_sys_sql_log_id_seq2";
-CREATE SEQUENCE "public"."boot_sys_sql_log_id_seq2" 
+CREATE SEQUENCE "public"."boot_sys_sql_log_id_seq2"
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 9223372036854775807
@@ -302,9 +302,9 @@ CACHE 1
   "aggregate_id" int8,
   "event_type" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
   "topic" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
-  "source_name" varchar(20) COLLATE "pg_catalog"."default" NOT NULL,
+  "source_name" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
   "attribute" json,
-  "service_id" varchar(20) COLLATE "pg_catalog"."default" NOT NULL,
+  "service_id" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
   "tag" varchar(50) COLLATE "pg_catalog"."default"
 )
 ;

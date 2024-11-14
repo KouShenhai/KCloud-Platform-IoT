@@ -17,17 +17,20 @@
 
 package org.laokou.app.handler;
 
-import lombok.RequiredArgsConstructor;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.laokou.client.dto.clientobject.PayloadCO;
+import org.laokou.client.dto.domainevent.PublishMessageEvent;
+import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.domain.handler.AbstractDomainEventHandler;
+import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.laokou.common.netty.config.Server;
-import org.laokou.common.rocketmq.handler.TraceHandler;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
@@ -35,35 +38,36 @@ import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
 import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAGE_CONSUMER_GROUP;
 import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAGE_TOPIC;
 
+// @formatter:off
 /**
  * @author laokou
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor
-@RocketMQMessageListener(consumerGroup = LAOKOU_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC,
-		messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
-public class MessageHandler extends TraceHandler implements RocketMQListener<MessageExt> {
+@RocketMQMessageListener(consumerGroup = LAOKOU_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
+public class PublishMessageEventHandler extends AbstractDomainEventHandler {
 
 	private final Server webSocketServer;
 
+	public PublishMessageEventHandler(DomainEventPublisher rocketMQDomainEventPublisher, Server webSocketServer) {
+		super(rocketMQDomainEventPublisher);
+		this.webSocketServer = webSocketServer;
+	}
+
 	@Override
-	public void onMessage(MessageExt messageExt) {
+	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			putTrace(messageExt);
-			String message = new String(messageExt.getBody(), StandardCharsets.UTF_8);
-//			Message msg = JacksonUtil.toBean(message, Message.class);
-//			String payload = msg.getPayload();
-//			Set<String> receiver = msg.getReceiver();
-//			log.info("接收消息：{}", message);
-//			TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.ok(payload)));
-//			receiver.parallelStream()
-//				.forEach(clientId -> CompletableFuture.runAsync(() -> webSocketServer.send(clientId, webSocketFrame),
-//						executor));
-		}
-		finally {
-			clearTrace();
+			PublishMessageEvent event = (PublishMessageEvent) domainEvent;
+			PayloadCO co = event.getCo();
+			TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(co.getContent()));
+			co.getReceivers().parallelStream().forEach(clientId -> CompletableFuture.runAsync(() -> webSocketServer.send(clientId, webSocketFrame), executor));
 		}
 	}
 
+	@Override
+	protected DefaultDomainEvent convert(String msg) {
+		return JacksonUtil.toBean(msg, PublishMessageEvent.class);
+	}
+
 }
+// @formatter:on

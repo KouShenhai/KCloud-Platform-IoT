@@ -13,12 +13,15 @@
 <label for="receiver">
     <input id="receiver" type="text">
 </label>
-<label for="payload">
-    <input id="payload" type="text">
+<label for="content">
+    <input id="content" type="text">
 </label>
 <button id="btn2" onclick="send()">发送</button>
 </body>
 <script>
+
+	let socket
+
     function connect() {
 
         let clientId = getClientId();
@@ -28,23 +31,23 @@
             return
         }
 
-        const socket = new WebSocket("ws://127.0.0.1:1112/ws")
+        socket = new WebSocket("ws://127.0.0.1:1112/ws")
 
         socket.onopen = function() {
             alert("连接成功")
             console.log("连接成功")
-            socket.send(clientId)
+			socket.send(JSON.stringify({type: 'connect', payload: clientId}))
         }
 
         socket.onmessage = function(event) {
-			if (event.data === 'ping') {
-				console.log('接收心跳Ping')
-				console.log('发送心跳Pong')
-				socket.send('pong')
+			const data = event.data;
+			if (data === 'ping') {
+				console.log('接收心跳ping')
+				console.log('发送心跳pong')
+				socket.send(JSON.stringify({type: 'pong', payload: 'pong'}))
 			} else {
-				const result = JSON.parse(event.data)
-				alert("接收消息：" + result.data)
-				console.log("接收消息", event.data)
+				alert("接收消息：" + data)
+				console.log("接收消息", data)
 			}
         }
 
@@ -61,23 +64,12 @@
     }
 
     function send() {
-        const data = {
-            receiver: [getReceiver()],
-            payload: getPayload()
-        }
-        const xhr = new XMLHttpRequest()
-        xhr.open("POST", "http://127.0.0.1:9032/send", true)
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-				const r = JSON.parse(xhr.responseText)
-				alert("消息提醒：" + r.msg)
-            } else if (xhr.readyState === 4) {
-                console.error("发送失败", xhr.status, xhr.statusText)
-            }
-        }
-        xhr.send(JSON.stringify(data))
-    }
+		const payload = {
+			receivers: [getReceiver()],
+			content: getContent()
+		}
+		socket.send(JSON.stringify({type: 'message', payload: payload}))
+	}
 
     function getClientId() {
         return document.getElementById("clientId").value
@@ -87,8 +79,8 @@
         return document.getElementById("receiver").value
     }
 
-    function getPayload() {
-        return document.getElementById("payload").value
+    function getContent() {
+        return document.getElementById("content").value
     }
 
 </script>

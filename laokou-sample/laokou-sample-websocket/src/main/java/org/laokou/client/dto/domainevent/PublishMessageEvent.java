@@ -15,40 +15,35 @@
  *
  */
 
-package org.laokou.auth.dto.domainevent;
+package org.laokou.client.dto.domainevent;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.client.dto.clientobject.PayloadCO;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.constant.EventType;
-import org.laokou.common.i18n.dto.NoticeLog;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
+
+import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 
 /**
  * @author laokou
  */
 @Data
 @NoArgsConstructor
-public class CallApiEvent extends DefaultDomainEvent {
+@AllArgsConstructor
+public class PublishMessageEvent extends DefaultDomainEvent {
 
-	private String code;
+	private PayloadCO co;
 
-	private String name;
-
-	private Integer status;
-
-	private String errorMessage;
-
-	private String param;
-
-	public CallApiEvent(NoticeLog noticeLog, String topic, String tag, EventType eventType, String serviceId,
-			String sourceName, Long aggregateId, Long tenantId) {
-		super(topic, tag, eventType, serviceId, sourceName, noticeLog.getInstant(), aggregateId, tenantId);
-		this.code = noticeLog.getCode();
-		this.name = noticeLog.getName() + "（" + noticeLog.getRemark() + "）";
-		this.status = noticeLog.getStatus();
-		this.errorMessage = noticeLog.getErrorMessage();
-		this.param = noticeLog.getParam();
+	public PublishMessageEvent(String topic, String tag, PayloadCO co, String serviceId) {
+		super(topic, tag);
+		this.co = co;
+		super.sourceName = MASTER;
+		super.eventType = EventType.PUBLISH;
+		super.serviceId = serviceId;
+		generatorId();
 	}
 
 	@Override

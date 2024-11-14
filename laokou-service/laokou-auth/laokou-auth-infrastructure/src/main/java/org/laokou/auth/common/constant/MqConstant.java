@@ -22,7 +22,7 @@ package org.laokou.auth.common.constant;
  */
 public final class MqConstant {
 
-	public static final String API_TAG = "noticeLog";
+	public static final String NOTICE_TAG = "noticeLog";
 
 	public static final String LOGIN_TAG = "loginLog";
 
