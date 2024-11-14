@@ -3,23 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>laokou-api</artifactId>
+    <artifactId>laokou-service</artifactId>
     <groupId>org.laokou</groupId>
     <version>3.4.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-
-  <artifactId>laokou-api-adapter</artifactId>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-secret</artifactId>
-    </dependency>
-      <dependency>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-sensitive</artifactId>
-      </dependency>
-  </dependencies>
-
+  <artifactId>laokou-logstash</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+    <module>laokou-logstash-start</module>
+    <module>laokou-logstash-app</module>
+    <module>laokou-logstash-infrastructure</module>
+  </modules>
 </project>

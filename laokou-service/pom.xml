@@ -31,7 +31,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>laokou-admin</module>
-    <module>laokou-module</module>
+    <module>laokou-logstash</module>
     <module>laokou-auth</module>
     <module>laokou-generator</module>
     <module>laokou-report</module>
