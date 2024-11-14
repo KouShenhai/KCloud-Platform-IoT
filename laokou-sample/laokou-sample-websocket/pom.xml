@@ -62,6 +62,10 @@
       <artifactId>laokou-common-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.github.ulisesbocchio</groupId>
+      <artifactId>jasypt-spring-boot-starter</artifactId>
+    </dependency>
   </dependencies>
 
 </project>
