@@ -31,6 +31,7 @@ import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.rocketmq.template.SendMessageType;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -277,7 +278,7 @@ class OAuth2ApiTest {
 
 	@Test
 	void testRemoveCache() {
-		rocketMQDomainEventPublisher.publish(new RemoveCacheEvent(TENANT_ID, "1"), false);
+		rocketMQDomainEventPublisher.publish(new RemoveCacheEvent(TENANT_ID, "1"), SendMessageType.ASYNC);
 	}
 
 	private Map<String, String> deviceAuthorizationCodeAuth(String deviceCode) {

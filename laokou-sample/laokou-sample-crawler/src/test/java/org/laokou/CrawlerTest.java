@@ -16,6 +16,7 @@
  */
 
 package org.laokou;
+
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -40,7 +41,7 @@ class CrawlerTest {
 	private static final Map<String, String> MAP = new LinkedHashMap<>();
 
 	static {
-		MAP.put("xxx","xxx");
+		MAP.put("xxx", "xxx");
 	}
 
 	private static final String DIRECTORY = "D:/crawl/data/";
@@ -50,7 +51,8 @@ class CrawlerTest {
 		MAP.forEach((name, url) -> {
 			try {
 				crawl(url, name);
-			} catch (IOException | InterruptedException e) {
+			}
+			catch (IOException | InterruptedException e) {
 				throw new RuntimeException(e);
 			}
 		});
@@ -69,8 +71,9 @@ class CrawlerTest {
 				SslUtil.ignoreSSLTrust();
 				try {
 					FileUtil.write(FileUtil.create(directory, linkText.replace(".md", ".html")),
-						getContent(directory, index, linkHref).getBytes(StandardCharsets.UTF_8));
-				} catch (Exception e) {
+							getContent(directory, index, linkHref).getBytes(StandardCharsets.UTF_8));
+				}
+				catch (Exception e) {
 					continue;
 				}
 				// 每10秒钟抓取一次
@@ -80,24 +83,24 @@ class CrawlerTest {
 		}
 	}
 
-	private String getImgDirectory(String directory,int index) {
+	private String getImgDirectory(String directory, int index) {
 		return directory + "/" + index;
 	}
 
-	private String getContent(String directory,int index, String url) throws IOException {
-		return getHeadContent() + "\n" + getBodyContent(directory,index, url);
+	private String getContent(String directory, int index, String url) throws IOException {
+		return getHeadContent() + "\n" + getBodyContent(directory, index, url);
 	}
 
-	private String getBodyContent(String directory,int index, String url) throws IOException {
+	private String getBodyContent(String directory, int index, String url) throws IOException {
 		Document document = Jsoup.connect(url).get();
 		// 使用选择器选择所有具有 class="book-container" 的 <div> 元素
 		Element element = document.select("div.book-container").getFirst();
 		element.select("div.book-sidebar").remove();
-		setImg(directory,index, element);
+		setImg(directory, index, element);
 		return element.html();
 	}
 
-	private void setImg(String directory,int index, Element element) {
+	private void setImg(String directory, int index, Element element) {
 		Elements imgElement = element.select("img[src]");
 		int offset = 0;
 		for (Element e : imgElement) {

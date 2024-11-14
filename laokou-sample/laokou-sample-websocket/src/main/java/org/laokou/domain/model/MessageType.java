@@ -15,15 +15,13 @@
  *
  */
 
-package org.laokou.common.i18n.common.constant;
+package org.laokou.domain.model;
 
 /**
- * 事件类型枚举.
- *
  * @author laokou
  */
-public enum EventType {
+public enum MessageType {
 
-	LOGIN, SEND_CAPTCHA, NOTICE, PUBLISH
+	MESSAGE, CONNECT, PING, PONG
 
 }

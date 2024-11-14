@@ -17,7 +17,7 @@
 
 package org.laokou.auth.convertor;
 
-import org.laokou.auth.dto.domainevent.CallApiEvent;
+import org.laokou.auth.dto.domainevent.NoticeMessageEvent;
 import org.laokou.auth.gatewayimpl.database.dataobject.NoticeLogDO;
 
 /**
@@ -25,19 +25,19 @@ import org.laokou.auth.gatewayimpl.database.dataobject.NoticeLogDO;
  */
 public class NoticeLogConvertor {
 
-	public static NoticeLogDO toDataObject(CallApiEvent callApiEvent) {
+	public static NoticeLogDO toDataObject(NoticeMessageEvent noticeMessageEvent) {
 		NoticeLogDO noticeLogDO = new NoticeLogDO();
-		noticeLogDO.setId(callApiEvent.getId());
-		noticeLogDO.setCreator(callApiEvent.getCreator());
-		noticeLogDO.setEditor(callApiEvent.getEditor());
-		noticeLogDO.setCreateTime(callApiEvent.getCreateTime());
-		noticeLogDO.setUpdateTime(callApiEvent.getUpdateTime());
-		noticeLogDO.setTenantId(callApiEvent.getTenantId());
-		noticeLogDO.setCode(callApiEvent.getCode());
-		noticeLogDO.setName(callApiEvent.getName());
-		noticeLogDO.setStatus(callApiEvent.getStatus());
-		noticeLogDO.setErrorMessage(callApiEvent.getErrorMessage());
-		noticeLogDO.setParam(callApiEvent.getParam());
+		noticeLogDO.setId(noticeMessageEvent.getId());
+		noticeLogDO.setCreator(noticeMessageEvent.getCreator());
+		noticeLogDO.setEditor(noticeMessageEvent.getEditor());
+		noticeLogDO.setCreateTime(noticeMessageEvent.getCreateTime());
+		noticeLogDO.setUpdateTime(noticeMessageEvent.getUpdateTime());
+		noticeLogDO.setTenantId(noticeMessageEvent.getTenantId());
+		noticeLogDO.setCode(noticeMessageEvent.getCode());
+		noticeLogDO.setName(noticeMessageEvent.getName());
+		noticeLogDO.setStatus(noticeMessageEvent.getStatus());
+		noticeLogDO.setErrorMessage(noticeMessageEvent.getErrorMessage());
+		noticeLogDO.setParam(noticeMessageEvent.getParam());
 		return noticeLogDO;
 	}
 

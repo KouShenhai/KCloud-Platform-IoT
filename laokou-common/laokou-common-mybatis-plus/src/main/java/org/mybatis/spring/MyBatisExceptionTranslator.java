@@ -33,11 +33,7 @@
 
 package org.mybatis.spring;
 
-import java.sql.SQLException;
-import java.util.function.Supplier;
-
-import javax.sql.DataSource;
-
+import io.micrometer.common.lang.NonNullApi;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.laokou.common.core.utils.SpringContextUtil;
@@ -47,6 +43,10 @@ import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
 import org.springframework.transaction.TransactionException;
+
+import javax.sql.DataSource;
+import java.sql.SQLException;
+import java.util.function.Supplier;
 
 /**
  * Default exception translator.
@@ -58,6 +58,7 @@ import org.springframework.transaction.TransactionException;
  * @author Eduardo Macarron
  * @author laokou
  */
+@NonNullApi
 public class MyBatisExceptionTranslator implements PersistenceExceptionTranslator {
 
 	private SQLExceptionTranslator exceptionTranslator;

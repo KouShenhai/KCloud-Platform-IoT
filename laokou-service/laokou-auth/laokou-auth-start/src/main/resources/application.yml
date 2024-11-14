@@ -34,4 +34,6 @@ spring:
             data-id: auth-flow.json
             data-type: json
             group-id: @NACOS-GROUP@
+            username: @NACOS-USERNAME@
+            password: @NACOS-PASSWORD@
             rule-type: flow
