@@ -18,7 +18,6 @@
 package org.laokou.adapter.web;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.client.dto.clientobject.ReceiveCO;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.common.trace.utils.TraceUtil;
 import org.laokou.common.xss.annotation.Xss;
@@ -42,7 +41,7 @@ public class ApiController {
 
 	@Xss
 	@PostMapping("send")
-	public void send(@RequestBody ReceiveCO co) {
+	public void send(@RequestBody PublishMessageCO co) {
 		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, EMPTY, co, traceUtil.getTraceId(),
 				traceUtil.getSpanId());
 	}

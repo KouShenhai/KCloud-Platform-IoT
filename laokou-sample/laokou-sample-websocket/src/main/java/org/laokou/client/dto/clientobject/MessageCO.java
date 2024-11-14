@@ -15,33 +15,19 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.client.dto.clientobject;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.util.Set;
+import org.laokou.common.i18n.dto.ClientObject;
 
 /**
- * 消息.
- *
  * @author laokou
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Message implements Serializable {
+public class MessageCO extends ClientObject {
 
-	/**
-	 * 接收者集合.
-	 */
-	private Set<String> receiver;
+	private String type;
 
-	/**
-	 * 内容.
-	 */
-	private String payload;
+	private Object payload;
 
 }

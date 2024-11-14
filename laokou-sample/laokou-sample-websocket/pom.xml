@@ -62,10 +62,6 @@
       <artifactId>laokou-common-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-xss</artifactId>
-    </dependency>
   </dependencies>
 
 </project>
