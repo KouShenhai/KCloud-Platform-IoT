@@ -109,7 +109,7 @@
     <!--grpc版本-->
     <grpc.version>1.68.1</grpc.version>
     <!--proto-google-common-protos版本-->
-    <proto-google-common-protos.version>2.48.0</proto-google-common-protos.version>
+    <proto-google-common-protos.version>2.49.0</proto-google-common-protos.version>
     <!--error_prone_annotations版本-->
     <error_prone_annotations.version>2.35.1</error_prone_annotations.version>
     <!--okio-jvm版本-->
