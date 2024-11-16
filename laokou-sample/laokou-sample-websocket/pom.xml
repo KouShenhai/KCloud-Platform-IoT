@@ -15,17 +15,11 @@
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-domain</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
+      <artifactId>laokou-common-netty</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-netty</artifactId>
+      <artifactId>laokou-common-rocketmq</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
