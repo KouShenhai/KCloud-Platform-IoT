@@ -39,6 +39,7 @@ import java.util.Map;
 class CrawlerTest {
 
 	private static final Map<String, String> MAP = new LinkedHashMap<>();
+
 	private static final String DIRECTORY = "D:/crawl/data/";
 
 	static {
@@ -117,10 +118,9 @@ class CrawlerTest {
 	}
 
 	private String getHeadContent() {
-		return "<link rel='stylesheet' href='css/index.css'>" +
-			"<link rel='stylesheet' href='css/highlight.min.css'>" +
-			"<script src='js/highlight.min.js'></script>" +
-			"<script defer src='js/script.js' data-website-id='83e5d5db-9d06-40e3-b780-cbae722fdf8c'></script>";
+		return "<link rel='stylesheet' href='css/index.css'>" + "<link rel='stylesheet' href='css/highlight.min.css'>"
+				+ "<script src='js/highlight.min.js'></script>"
+				+ "<script defer src='js/script.js' data-website-id='83e5d5db-9d06-40e3-b780-cbae722fdf8c'></script>";
 	}
 
 }
