@@ -30,29 +30,20 @@
     <property name="LOG_ROLL_SIZE" value="1 GB"/>
     <!-- 服务名称 -->
     <property name="SERVICE_ID" value="laokou-generator"/>
-    <!-- -Dlog4j.skipJansi=false -->
-    <!-- 日志格式 -->
-    <!--
-			%d 日期
-			%t 线程
-
-			对于系统参数，使用${sys:xxx}即可，例如读取-Dserver.port=1111，即${sys:server.port}
-			spanId  => %X{spanId}
-			traceId => %X{traceId}
-    -->
-    <property name="LOG_CONSOLE_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ip}:${sys:server.port}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
-    <property name="LOG_FILE_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ip}:${sys:server.port}] - [%X{traceId}] - [%X{spanId}] - [ %-5level] - [%t] - %logger : %msg%n"/>
     <!-- 日志保留30天 -->
     <property name="LOG_DAYS" value="30"/>
     <!-- 1天滚动一次 -->
     <property name="LOG_INTERVAL" value="1"/>
+    <!-- 环境 -->
+    <property name="PROFILE" value="prod"/>
   </Properties>
   <Appenders>
     <!-- 控制台输出 -->
     <Console name="console" target="SYSTEM_OUT">
-      <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
+      <JsonLayout compact="true" eventEol="true">
+        <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
+        <KeyValuePair key="profile" value="${PROFILE}" />
+      </JsonLayout>
     </Console>
     <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.log"
                              filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_%d{yyyy-MM-dd}.%i.log.gz"
@@ -60,7 +51,10 @@
       <Filters>
         <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
       </Filters>
-      <PatternLayout pattern="${LOG_FILE_PATTERN}"/>
+      <JsonLayout compact="false" eventEol="true">
+        <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
+        <KeyValuePair key="profile" value="${PROFILE}" />
+      </JsonLayout>
       <Policies>
         <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
         <SizeBasedTriggeringPolicy size="${LOG_ROLL_SIZE}"/>
@@ -73,7 +67,10 @@
       <Filters>
         <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
       </Filters>
-      <PatternLayout pattern="${LOG_FILE_PATTERN}"/>
+      <JsonLayout compact="false" eventEol="true">
+        <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
+        <KeyValuePair key="profile" value="${PROFILE}" />
+      </JsonLayout>
       <Policies>
         <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
         <SizeBasedTriggeringPolicy size="${LOG_ROLL_SIZE}"/>
@@ -92,29 +89,10 @@
       <AppenderRef ref="failover"/>
     </Async>
     <Kafka name="kafka" topic="laokou_trace_topic" ignoreExceptions="false">
-      <PatternLayout>
-        <!--
-
-           注意：真实的生产环境，日志打印的内容是五花八门，日志内容会出现一些莫名其他的特殊符号，导致json无法反序列化
-           因此，可以利用Pattern Layout 提供的标签enc，enc支持4种转义，HTML/XML/JSON/CRLF，默认进行HTML转义
-          目前，只对JSON处理，即%enc{%m}{JSON} => {"msg":"%enc{%m}{JSON}"}
-
-        -->
-        <pattern>
-          {
-          "serviceId":"${SERVICE_ID}",
-          "profile":"prod",
-          "dateTime":"%d{yyyy-MM-dd HH:mm:ss.SSS}",
-          "traceId":"%X{traceId}",
-          "spanId":"%X{spanId}",
-          "address":"${sys:ip}:${sys:server.port}]",
-          "level":"%-5level",
-          "thread":"%thread",
-          "logger":"%logger",
-          "msg":"%enc{%m}{JSON}"
-          }
-        </pattern>
-      </PatternLayout>
+      <JsonLayout compact="false" eventEol="true">
+        <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
+        <KeyValuePair key="profile" value="${PROFILE}" />
+      </JsonLayout>
       <!-- 生产者发送消息最大阻塞时间，单位为毫秒，生产者阻塞超过2秒，则抛出异常并中断发送【生产者内部缓冲区已满或元数据不可用，send()会阻塞等待】 -->
       <Property name="max.block.ms">2000</Property>
       <!-- 客户端发送请求到kafka broker超时时间，单位为毫秒，2秒内没有从kafka broker收到响应，则认为请求失败则抛出异常 -->

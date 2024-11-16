@@ -30,29 +30,20 @@
     <property name="LOG_ROLL_SIZE" value="500 MB"/>
     <!-- 服务名称 -->
     <property name="SERVICE_ID" value="laokou-auth"/>
-    <!-- -Dlog4j.skipJansi=false -->
-    <!-- 日志格式 -->
-    <!--
-			%d 日期
-			%t 线程
-
-			对于系统参数，使用${sys:xxx}即可，例如读取-Dserver.port=1111，即${sys:server.port}
-			spanId  => %X{spanId}
-			traceId => %X{traceId}
-    -->
-    <property name="LOG_CONSOLE_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ip}:${sys:server.port}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
-    <property name="LOG_FILE_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ip}:${sys:server.port}] - [%X{traceId}] - [%X{spanId}] - [ %-5level] - [%t] - %logger : %msg%n"/>
     <!-- 日志保留30天 -->
     <property name="LOG_DAYS" value="30"/>
     <!-- 1天滚动一次 -->
     <property name="LOG_INTERVAL" value="1"/>
+    <!-- 环境 -->
+    <property name="PROFILE" value="dev"/>
   </Properties>
   <Appenders>
     <!-- 控制台输出 -->
     <Console name="console" target="SYSTEM_OUT">
-      <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
+      <JsonLayout compact="true" eventEol="true">
+        <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
+        <KeyValuePair key="profile" value="${PROFILE}" />
+      </JsonLayout>
     </Console>
     <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.log"
                              filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_%d{yyyy-MM-dd}.%i.log.gz"
@@ -60,7 +51,10 @@
       <Filters>
         <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
       </Filters>
-      <PatternLayout pattern="${LOG_FILE_PATTERN}"/>
+      <JsonLayout compact="false" eventEol="true">
+        <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
+        <KeyValuePair key="profile" value="${PROFILE}" />
+      </JsonLayout>
       <Policies>
         <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
         <SizeBasedTriggeringPolicy size="${LOG_ROLL_SIZE}"/>

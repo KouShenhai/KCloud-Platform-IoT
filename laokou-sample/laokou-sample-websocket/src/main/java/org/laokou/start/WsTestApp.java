@@ -40,7 +40,8 @@ public class WsTestApp {
 
 	@SneakyThrows
 	public static void main(String[] args) {
-		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
+		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
+				System.getProperty("server.port", "9032")));
 		new SpringApplicationBuilder(WsTestApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

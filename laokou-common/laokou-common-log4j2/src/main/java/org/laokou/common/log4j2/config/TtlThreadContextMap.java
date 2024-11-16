@@ -15,16 +15,15 @@
  *
  */
 
-package org.laokou.common.log4j2;
+package org.laokou.common.log4j2.config;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
+import org.apache.logging.log4j.spi.DefaultThreadContextMap;
+import org.apache.logging.log4j.spi.ThreadContextMap;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.logging.log4j.spi.DefaultThreadContextMap;
-import org.apache.logging.log4j.spi.ThreadContextMap;
 
 /**
  * @author Jerry Lee (oldratlee at gmail dot com)

@@ -25,11 +25,11 @@
   <!-- 变量配置 -->
   <Properties>
     <!-- 存放目录 -->
-    <property name="LOG_PATH" value="./logs/iot"/>
+    <property name="LOG_PATH" value="./logs/sample-tcp"/>
     <!-- 日志文件大小 -->
     <property name="LOG_ROLL_SIZE" value="500 MB"/>
     <!-- 服务名称 -->
-    <property name="SERVICE_ID" value="laokou-iot"/>
+    <property name="SERVICE_ID" value="laokou-sample-tcp"/>
     <!-- 日志保留30天 -->
     <property name="LOG_DAYS" value="30"/>
     <!-- 1天滚动一次 -->
