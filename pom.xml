@@ -89,6 +89,7 @@
     <spring-javaformat-maven-plugin.version>0.0.43</spring-javaformat-maven-plugin.version>
     <maven-archetype-plugin.version>3.3.1</maven-archetype-plugin.version>
     <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
+    <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -500,6 +501,11 @@
             <version>${spring-asciidoctor-backends.version}</version>
           </dependency>
         </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.xolstice.maven.plugins</groupId>
+        <artifactId>protobuf-maven-plugin</artifactId>
+        <version>${protobuf-maven-plugin.version}</version>
       </plugin>
     </plugins>
     <!-- profile对资源的操作 -->

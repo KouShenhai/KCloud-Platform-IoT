@@ -22,4 +22,4 @@ spring:
     max-heart-beat-count: 5
 
 logging:
-  config: classpath:log4j2.xml
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml

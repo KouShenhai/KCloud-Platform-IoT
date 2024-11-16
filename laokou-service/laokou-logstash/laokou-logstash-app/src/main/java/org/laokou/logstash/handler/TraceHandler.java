@@ -138,13 +138,13 @@ public class TraceHandler {
 		private String level;
 
 		@Field(type = Type.KEYWORD)
-		private String thread;
+		private String threadName;
 
 		@Field(type = Type.KEYWORD)
-		private String logger;
+		private String packageName;
 
 		@Field(type = Type.KEYWORD)
-		private String msg;
+		private String message;
 
 	}
 

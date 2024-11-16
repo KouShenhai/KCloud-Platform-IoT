@@ -23,3 +23,6 @@ mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml
