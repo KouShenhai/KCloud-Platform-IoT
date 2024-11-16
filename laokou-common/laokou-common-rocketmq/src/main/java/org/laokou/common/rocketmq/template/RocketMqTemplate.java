@@ -29,6 +29,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.util.Assert;
 
 import static org.apache.rocketmq.client.producer.SendStatus.SEND_OK;
 import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
@@ -51,7 +52,7 @@ public class RocketMqTemplate {
 			// 单向发送，只负责发送消息，不会触发回调函数，即发送消息请求不等待
 			// 适用于耗时短，但对可靠性不高的场景，如日志收集
 			MDCUtil.put(traceId, spanId);
-			Message<T> message = buildMessage(traceId, spanId, payload);
+			Message<T> message = buildMessage(traceId, spanId, payload).build();
 			rocketMQTemplate.sendOneWay(getTopicTag(topic, tag), message);
 			log.info("RocketMQ单向消息发送成功【Tag标签】");
 		}
@@ -71,7 +72,7 @@ public class RocketMqTemplate {
 	public <T> void sendSyncMessage(String topic, String tag, T payload, String traceId, String spanId) {
 		try {
 			MDCUtil.put(traceId, spanId);
-			Message<T> message = buildMessage(traceId, spanId, payload);
+			Message<T> message = buildMessage(traceId, spanId, payload).build();
 			SendStatus sendStatus = rocketMQTemplate.syncSend(getTopicTag(topic, tag), message).getSendStatus();
 			if (ObjectUtil.equals(sendStatus, SEND_OK)) {
 				log.info("RocketMQ同步消息发送成功【Tag标签】");
@@ -106,7 +107,7 @@ public class RocketMqTemplate {
 	 * @param <T> 泛型
 	 */
 	public <T> void sendAsyncMessage(String topic, String tag, T payload, long timeout, String traceId, String spanId) {
-		Message<T> message = buildMessage(traceId, spanId, payload);
+		Message<T> message = buildMessage(traceId, spanId, payload).build();
 		sendAsyncMessage(topic, tag, message, timeout, traceId, spanId);
 	}
 
@@ -124,7 +125,7 @@ public class RocketMqTemplate {
 	public <T> void sendTransactionMessage(String topic, String tag, T payload, Long transactionId, String traceId,
 			String spanId) {
 		try {
-			Message<T> message = buildMessage(traceId, spanId, transactionId, payload);
+			Message<T> message = buildMessage(traceId, spanId, transactionId, payload).build();
 			SendStatus sendStatus = rocketMQTemplate.sendMessageInTransaction(getTopicTag(topic, tag), message, null).getSendStatus();
 			// 链路
 			MDCUtil.put(traceId, spanId);
@@ -161,22 +162,23 @@ public class RocketMqTemplate {
 			}
 		}, timeout);
 	}
-	// @formatter:on
 
 	private String getTopicTag(String topic, String tag) {
 		return StringUtil.isEmpty(tag) ? topic : String.format("%s:%s", topic, tag);
 	}
 
-	private <T> Message<T> buildMessage(String traceId, String spanId, Long transactionId, T payload) {
-		return MessageBuilder.withPayload(payload)
-			.setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId)
-			.setHeader(TRACE_ID, traceId)
-			.setHeader(SPAN_ID, spanId)
-			.build();
+	private <T> MessageBuilder<T> buildMessage(String traceId, String spanId, Long transactionId, T payload) {
+		return buildMessage(traceId, spanId, payload)
+			.setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId);
 	}
 
-	private <T> Message<T> buildMessage(String traceId, String spanId, T payload) {
-		return MessageBuilder.withPayload(payload).setHeader(TRACE_ID, traceId).setHeader(SPAN_ID, spanId).build();
+	private <T> MessageBuilder<T> buildMessage(String traceId, String spanId, T payload) {
+		Assert.notNull(traceId, "traceId must not be null");
+		Assert.notNull(spanId, "spanId must not be null");
+		return MessageBuilder.withPayload(payload)
+			.setHeader(TRACE_ID, traceId)
+			.setHeader(SPAN_ID, spanId);
 	}
+	// @formatter:on
 
 }

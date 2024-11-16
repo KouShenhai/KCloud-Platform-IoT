@@ -27,7 +27,7 @@ import org.laokou.common.i18n.dto.NoticeLog;
 import org.laokou.common.rocketmq.template.SendMessageType;
 
 import static org.laokou.auth.common.constant.MqConstant.*;
-import static org.laokou.common.i18n.common.constant.EventType.NOTICE;
+import static org.laokou.common.i18n.common.constant.EventType.SEND_NOTICE;
 
 /**
  * @author laokou
@@ -42,7 +42,7 @@ public abstract class AbstractSendCaptchaEventHandler extends AbstractDomainEven
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
 		NoticeMessageEvent noticeMessageEvent = new NoticeMessageEvent(getNoticeLog(event), LAOKOU_LOG_TOPIC,
-				NOTICE_TAG, NOTICE, event.getServiceId(), event.getSourceName(), event.getAggregateId(),
+				NOTICE_TAG, SEND_NOTICE, event.getServiceId(), event.getSourceName(), event.getAggregateId(),
 				event.getTenantId());
 		rocketMQDomainEventPublisher.publish(noticeMessageEvent, SendMessageType.ONE_WAY);
 	}

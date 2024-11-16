@@ -20,7 +20,6 @@ package org.laokou.start;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.netty.annotation.EnableWebSocketServer;
-import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -33,7 +32,6 @@ import java.net.InetAddress;
  *
  * @author laokou
  */
-@EnableRedisRepository
 @EnableWebSocketServer
 @EnableEncryptableProperties
 @EnableConfigurationProperties

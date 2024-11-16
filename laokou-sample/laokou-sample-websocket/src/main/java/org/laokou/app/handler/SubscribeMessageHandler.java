@@ -19,17 +19,17 @@ package org.laokou.app.handler;
 
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.client.dto.clientobject.PayloadCO;
-import org.laokou.client.dto.domainevent.PublishMessageEvent;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.domain.handler.AbstractDomainEventHandler;
-import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.laokou.common.netty.config.Server;
+import org.laokou.common.rocketmq.handler.TraceHandler;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 
@@ -45,29 +45,23 @@ import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAG
 @Slf4j
 @Component
 @RocketMQMessageListener(consumerGroup = LAOKOU_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
-public class PublishMessageEventHandler extends AbstractDomainEventHandler {
+public class SubscribeMessageHandler extends TraceHandler implements RocketMQListener<MessageExt> {
 
 	private final Server webSocketServer;
 
-	public PublishMessageEventHandler(DomainEventPublisher rocketMQDomainEventPublisher, Server webSocketServer) {
-		super(rocketMQDomainEventPublisher);
+	public SubscribeMessageHandler(Server webSocketServer) {
 		this.webSocketServer = webSocketServer;
 	}
 
 	@Override
-	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
+	public void onMessage(MessageExt message) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			PublishMessageEvent event = (PublishMessageEvent) domainEvent;
-			PayloadCO co = event.getCo();
+			String msg = new String(message.getBody(), StandardCharsets.UTF_8);
+			PayloadCO co = JacksonUtil.toBean(msg, PayloadCO.class);
 			TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(co.getContent()));
 			co.getReceivers().parallelStream().forEach(clientId -> CompletableFuture.runAsync(() -> webSocketServer.send(clientId, webSocketFrame), executor));
 		}
-	}
-
-	@Override
-	protected DefaultDomainEvent convert(String msg) {
-		return JacksonUtil.toBean(msg, PublishMessageEvent.class);
-	}
+    }
 
 }
 // @formatter:on

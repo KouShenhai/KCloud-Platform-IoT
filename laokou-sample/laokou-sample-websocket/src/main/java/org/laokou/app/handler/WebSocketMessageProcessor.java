@@ -22,12 +22,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.client.dto.clientobject.MessageCO;
 import org.laokou.client.dto.clientobject.PayloadCO;
-import org.laokou.client.dto.domainevent.PublishMessageEvent;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.core.utils.SpringUtil;
-import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.netty.config.WebSocketSessionManager;
-import org.laokou.common.rocketmq.template.SendMessageType;
+import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.domain.model.MessageType;
 import org.springframework.stereotype.Component;
 
@@ -42,9 +39,7 @@ import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAG
 @RequiredArgsConstructor
 final class WebSocketMessageProcessor {
 
-	private final DomainEventPublisher rocketMQDomainEventPublisher;
-
-	private final SpringUtil springUtil;
+	private final RocketMqTemplate rocketMqTemplate;
 
 	public void processMessage(MessageCO message, Channel channel) {
 		switch (MessageType.valueOf(message.getType().toUpperCase())) {
@@ -61,8 +56,7 @@ final class WebSocketMessageProcessor {
 	}
 
 	private void publishMessage(Object payload) {
-		rocketMQDomainEventPublisher.publish(new PublishMessageEvent(LAOKOU_MESSAGE_TOPIC, EMPTY,
-				JacksonUtil.toValue(payload, PayloadCO.class), springUtil.getServiceId()), SendMessageType.TRANSACTION);
+		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, EMPTY, JacksonUtil.toValue(payload, PayloadCO.class), "0","0");
 	}
 
 }

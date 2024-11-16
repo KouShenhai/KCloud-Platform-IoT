@@ -24,6 +24,6 @@ package org.laokou.common.i18n.common.constant;
  */
 public enum EventType {
 
-	LOGIN, SEND_CAPTCHA, NOTICE, PUBLISH
+	LOGIN, SEND_CAPTCHA, SEND_NOTICE
 
 }
