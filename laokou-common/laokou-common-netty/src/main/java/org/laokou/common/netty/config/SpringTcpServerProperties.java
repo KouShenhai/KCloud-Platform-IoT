@@ -91,4 +91,9 @@ public class SpringTcpServerProperties {
 	 */
 	private boolean keepAlive = true;
 
+	/**
+	 * 最大心跳次数.
+	 */
+	private int maxHeartBeatCount = 5;
+
 }

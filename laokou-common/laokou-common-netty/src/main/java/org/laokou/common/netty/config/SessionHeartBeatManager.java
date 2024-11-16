@@ -19,24 +19,33 @@ package org.laokou.common.netty.config;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author laokou
  */
 public class SessionHeartBeatManager {
 
-	private static final Map<String, Integer> HEART_BEAT_MAP = new ConcurrentHashMap<>(4096);
+	private static final Map<String, AtomicInteger> HEART_BEAT_MAP = new ConcurrentHashMap<>(4096);
 
-	public static void increase(String clientId) {
-		HEART_BEAT_MAP.put(clientId, getHeartBeatCount(clientId) + 1);
+	public static void incrementHeartBeat(String clientId) {
+		HEART_BEAT_MAP.get(clientId).incrementAndGet();
 	}
 
-	public static void decrease(String clientId) {
-		HEART_BEAT_MAP.put(clientId, getHeartBeatCount(clientId) - 1);
+	public static void decrementHeartBeat(String clientId) {
+		HEART_BEAT_MAP.get(clientId).decrementAndGet();
 	}
 
-	public static int getHeartBeatCount(String clientId) {
-		return HEART_BEAT_MAP.getOrDefault(clientId, 0);
+	public static int getHeartBeat(String clientId) {
+		return HEART_BEAT_MAP.get(clientId).get();
+	}
+
+	public static void removeHeartBeat(String clientId) {
+		HEART_BEAT_MAP.remove(clientId);
+	}
+
+	public static void initHeartbeat(String clientId) {
+		HEART_BEAT_MAP.putIfAbsent(clientId, new AtomicInteger(0));
 	}
 
 }

@@ -27,6 +27,7 @@ spring:
     backlog-length: 4096
     tcp-nodelay: true
     keep-alive: true
+    max-heart-beat-count: 5
   thymeleaf:
     servlet:
       content-type: text/html

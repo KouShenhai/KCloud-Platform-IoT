@@ -47,11 +47,12 @@ final class WebSocketMessageProcessor {
 		switch (MessageType.valueOf(message.getType().toUpperCase())) {
 			case PONG -> {
 				log.info("接收{}心跳{}", clientId, message.getPayload());
-				WebSocketSessionHeartBeatManager.decrease(clientId);
+				WebSocketSessionHeartBeatManager.decrementHeartBeat(clientId);
 			}
 			case CONNECT -> {
 				log.info("已连接ClientID：{}", message.getPayload());
 				WebSocketSessionManager.add(message.getPayload().toString(), channel);
+				WebSocketSessionHeartBeatManager.initHeartbeat(clientId);
 			}
 			case MESSAGE -> {
 				log.info("接收消息：{}", message.getPayload());
