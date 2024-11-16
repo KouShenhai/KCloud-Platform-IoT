@@ -278,18 +278,22 @@ public final class JsonLayout extends AbstractJacksonLayout {
 		}
 	}
 
+	// @formatter:off
 	private Map<String, String> getFieldsMap(LogEvent event) {
 		LogEvent evt = convertMutableToLog4jEvent(event);
 		Map<String, String> additionalFieldsMap = resolveAdditionalFields(evt);
-		additionalFieldsMap.put("address", System.getProperty("address", ""));
-		additionalFieldsMap.put("dateTime", FORMATTER.format(getLocalDateTimeOfTimestamp(evt.getTimeMillis())));
 		additionalFieldsMap.putAll(evt.getContextData().toMap());
-		additionalFieldsMap.put("level", evt.getLevel().name());
-		additionalFieldsMap.put("threadName", evt.getThreadName());
-		additionalFieldsMap.put("packageName", evt.getLoggerName());
-		additionalFieldsMap.put("message", evt.getMessage().getFormattedMessage());
+		additionalFieldsMap.putAll(Map.of(
+			"address", System.getProperty("address", ""),
+			"dateTime", FORMATTER.format(getLocalDateTimeOfTimestamp(evt.getTimeMillis())),
+			"level", evt.getLevel().name(),
+			"threadName", evt.getThreadName(),
+			"packageName", evt.getLoggerName(),
+			"message", evt.getMessage().getFormattedMessage())
+		);
 		return additionalFieldsMap;
 	}
+	// @formatter:on
 
 	public static class Builder<B extends Builder<B>> extends AbstractJacksonLayout.Builder<B>
 			implements org.apache.logging.log4j.core.util.Builder<JsonLayout> {

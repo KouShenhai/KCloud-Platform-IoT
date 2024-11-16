@@ -49,7 +49,7 @@ public class ShardingTestApp {
 	public static void main(String[] args) {
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
-		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
+		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "9033")));
 		new SpringApplicationBuilder(ShardingTestApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
