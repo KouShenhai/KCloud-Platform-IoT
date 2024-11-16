@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.client.dto.clientobject.MessageCO;
 import org.laokou.client.dto.clientobject.PayloadCO;
 import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.netty.config.WebSocketSessionHeartBeatManager;
 import org.laokou.common.netty.config.WebSocketSessionManager;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.domain.model.MessageType;
@@ -42,8 +43,12 @@ final class WebSocketMessageProcessor {
 	private final RocketMqTemplate rocketMqTemplate;
 
 	public void processMessage(MessageCO message, Channel channel) {
+		String clientId = channel.id().asLongText();
 		switch (MessageType.valueOf(message.getType().toUpperCase())) {
-			case PONG -> log.info("接收{}心跳{}", channel.id().asLongText(), message.getPayload());
+			case PONG -> {
+				log.info("接收{}心跳{}", clientId, message.getPayload());
+				WebSocketSessionHeartBeatManager.decrease(clientId);
+			}
 			case CONNECT -> {
 				log.info("已连接ClientID：{}", message.getPayload());
 				WebSocketSessionManager.add(message.getPayload().toString(), channel);
@@ -56,7 +61,8 @@ final class WebSocketMessageProcessor {
 	}
 
 	private void publishMessage(Object payload) {
-		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, EMPTY, JacksonUtil.toValue(payload, PayloadCO.class), "0","0");
+		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, EMPTY, JacksonUtil.toValue(payload, PayloadCO.class),
+				"0", "0");
 	}
 
 }

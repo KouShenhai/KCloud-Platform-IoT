@@ -19,6 +19,7 @@
       <module>laokou-sample-tcp</module>
       <module>laokou-sample-rpc</module>
       <module>laokou-sample-crawler</module>
+    <module>laokou-sample-grpc</module>
   </modules>
 
 </project>

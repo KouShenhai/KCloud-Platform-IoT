@@ -33,6 +33,7 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.netty.config.WebSocketSessionHeartBeatManager;
 import org.laokou.common.netty.config.WebSocketSessionManager;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -98,9 +99,17 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		if (evt instanceof IdleStateEvent idleStateEvent
 				&& ObjectUtil.equals(idleStateEvent.state(), IdleStateEvent.READER_IDLE_STATE_EVENT.state())) {
 			Channel channel = ctx.channel();
+			String clientId = channel.id().asLongText();
+			int maxPingNum = 5;
+			if (WebSocketSessionHeartBeatManager.getHeartBeatCount(clientId) > maxPingNum) {
+				log.info("关闭连接，超过{}次未接收{}心跳pong", maxPingNum, clientId);
+				ctx.close();
+				return;
+			}
 			String ping = PING.name().toLowerCase();
-			log.info("发送{}心跳{}", channel.id().asLongText(), ping);
+			log.info("发送{}心跳{}", clientId, ping);
 			ctx.writeAndFlush(new TextWebSocketFrame(ping));
+			WebSocketSessionHeartBeatManager.increase(clientId);
 		}
 		else {
 			super.userEventTriggered(ctx, evt);
@@ -110,13 +119,11 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
 		Channel channel = ctx.channel();
 		String str = frame.text();
-
 		if (StringUtil.isEmpty(str)) {
 			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
 			ctx.close();
 			return;
 		}
-
 		MessageCO message = JacksonUtil.toBean(str, MessageCO.class);
 		Assert.notNull(message.getPayload(), "payload不能为空");
 		Assert.notNull(message.getType(), "type不能为空");
