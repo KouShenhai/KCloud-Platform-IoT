@@ -51,7 +51,7 @@ public class MonitorApp {
     /// ```
 	@SneakyThrows
 	public static void main(String[] args) {
-		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
+		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "5000")));
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		// 忽略SSL认证
