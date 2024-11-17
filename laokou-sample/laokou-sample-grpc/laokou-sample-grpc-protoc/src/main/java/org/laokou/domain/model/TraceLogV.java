@@ -15,27 +15,10 @@
  *
  */
 
-package org.laokou.infrastructure.config;
-
-import io.grpc.BindableService;
-import io.grpc.Server;
-import io.grpc.ServerBuilder;
-import org.laokou.common.grpc.config.SpringGrpcServerProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+package org.laokou.domain.model;
 
 /**
  * @author laokou
  */
-@Configuration
-public class GrpcServerConfig {
-
-	@Bean(initMethod = "start", destroyMethod = "shutdown")
-	public Server grpcServer(SpringGrpcServerProperties springGrpcServerProperties, BindableService grpcService) {
-		return ServerBuilder.forPort(springGrpcServerProperties.getPort())
-			.intercept(new GrpcServerInterceptor())
-			.addService(grpcService)
-			.build();
-	}
-
+public record TraceLogV(String traceId, String spanId) {
 }
