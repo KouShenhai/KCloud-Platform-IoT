@@ -7,6 +7,8 @@ server:
 spring:
   application:
     name: laokou-sample-grpc-server
+  profiles:
+    active: @PROFILE-ACTIVE@
   grpc-server:
     port: 1114
   lifecycle:
