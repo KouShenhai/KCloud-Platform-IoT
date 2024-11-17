@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package user;
+
+option java_multiple_files = true;
+option java_string_check_utf8 = true;
+option java_package = "org.laokou.grpc.user";
+option java_outer_classname = "UserServiceProto";
+
+service UserService {
+	rpc getUserById(UserGetQry) returns (Result);
+}
+
+message UserGetQry {
+	uint64 id = 1;
+}
+
+message User {
+	uint64 id = 1;
+	string username = 2;
+	string password = 3;
+}
+
+message Result {
+	string code = 1;
+	string msg = 2;
+	User data = 3;
+}
+
+

@@ -82,14 +82,13 @@
     <docker.password>password</docker.password>
     <docker-maven-plugin.version>0.45.1</docker-maven-plugin.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
-    <native-maven-plugin.version>0.10.3</native-maven-plugin.version>
+    <native-maven-plugin.version>0.10.2</native-maven-plugin.version>
     <versions-maven-plugin.version>2.18.0</versions-maven-plugin.version>
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <asciidoctor-maven-plugin.version>3.1.1</asciidoctor-maven-plugin.version>
     <spring-javaformat-maven-plugin.version>0.0.43</spring-javaformat-maven-plugin.version>
     <maven-archetype-plugin.version>3.3.1</maven-archetype-plugin.version>
     <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
-    <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -512,11 +511,6 @@
             <version>${spring-asciidoctor-backends.version}</version>
           </dependency>
         </dependencies>
-      </plugin>
-      <plugin>
-        <groupId>org.xolstice.maven.plugins</groupId>
-        <artifactId>protobuf-maven-plugin</artifactId>
-        <version>${protobuf-maven-plugin.version}</version>
       </plugin>
     </plugins>
     <!-- profile对资源的操作 -->

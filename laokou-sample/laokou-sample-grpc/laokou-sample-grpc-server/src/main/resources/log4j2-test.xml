@@ -27,7 +27,7 @@
     <!-- 存放目录 -->
     <property name="LOG_PATH" value="./logs/sample-grpc-server"/>
     <!-- 日志文件大小 -->
-    <property name="LOG_ROLL_SIZE" value="500 MB"/>
+    <property name="LOG_ROLL_SIZE" value="100 M"/>
     <!-- 服务名称 -->
     <property name="SERVICE_ID" value="laokou-sample-grpc-server"/>
     <!-- 日志保留30天 -->
@@ -45,13 +45,13 @@
         <KeyValuePair key="profile" value="${PROFILE}" />
       </JsonLayout>
     </Console>
-    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.log"
-                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_%d{yyyy-MM-dd}.%i.log.gz"
+    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.json"
+                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_%d{yyyy-MM-dd}.%i.json.gz"
                              immediateFlush="false">
       <Filters>
         <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
       </Filters>
-      <JsonLayout complete="false" compact="false" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
+      <JsonLayout complete="true" compact="false" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
         <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
         <KeyValuePair key="profile" value="${PROFILE}" />
       </JsonLayout>

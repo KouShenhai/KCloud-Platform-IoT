@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.laokou</groupId>
+    <artifactId>laokou-sample-grpc</artifactId>
+    <version>3.4.0</version>
+  </parent>
+
+  <artifactId>laokou-sample-grpc-protoc</artifactId>
+  <version>3.4.0</version>
+
+  <properties>
+    <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
+    <protoc.version>3.25.1</protoc.version>
+    <grpc.version>1.68.1</grpc.version>
+    <os.maven.plugin.version>1.7.1</os.maven.plugin.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-grpc</artifactId>
+    </dependency>
+        <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-trace</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <extensions>
+      <extension>
+        <groupId>kr.motd.maven</groupId>
+        <artifactId>os-maven-plugin</artifactId>
+        <version>${os.maven.plugin.version}</version>
+      </extension>
+    </extensions>
+    <plugins>
+      <plugin>
+        <groupId>org.xolstice.maven.plugins</groupId>
+        <artifactId>protobuf-maven-plugin</artifactId>
+        <version>${protobuf-maven-plugin.version}</version>
+        <configuration>
+          <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
+          <pluginId>grpc-java</pluginId>
+          <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}</pluginArtifact>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>compile-custom</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

@@ -18,7 +18,6 @@
 package org.laokou.start;
 
 import lombok.SneakyThrows;
-import org.laokou.common.grpc.annotation.EnableGrpcServer;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -28,7 +27,6 @@ import java.net.InetAddress;
 /**
  * @author laokou
  */
-@EnableGrpcServer
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
 public class GrpcServerTestApp {
 

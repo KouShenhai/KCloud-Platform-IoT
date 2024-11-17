@@ -15,20 +15,26 @@
  *
  */
 
-package org.laokou.common.grpc.annotation;
+package org.laokou.start;
 
-import org.laokou.common.grpc.config.GrpcServerConfig;
-import org.springframework.context.annotation.Import;
+import lombok.SneakyThrows;
+import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
-import java.lang.annotation.*;
+import java.net.InetAddress;
 
 /**
  * @author laokou
  */
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({ GrpcServerConfig.class })
-public @interface EnableGrpcServer {
+@SpringBootApplication(scanBasePackages = { "org.laokou" })
+public class GrpcClientTestApp {
+
+	@SneakyThrows
+	public static void main(String[] args) {
+		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
+				System.getProperty("server.port", "9036")));
+		new SpringApplicationBuilder(GrpcClientTestApp.class).web(WebApplicationType.SERVLET).run(args);
+	}
 
 }

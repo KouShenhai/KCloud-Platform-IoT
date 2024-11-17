@@ -38,11 +38,8 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-grpc</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-log4j2</artifactId>
+      <artifactId>laokou-sample-grpc-protoc</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
   </dependencies>
 

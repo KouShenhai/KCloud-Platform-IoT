@@ -27,7 +27,7 @@
     <!-- 存放目录 -->
     <property name="LOG_PATH" value="/opt/gateway"/>
     <!-- 日志文件大小 -->
-    <property name="LOG_ROLL_SIZE" value="1 GB"/>
+    <property name="LOG_ROLL_SIZE" value="500 M"/>
     <!-- 日志保留30天 -->
     <property name="LOG_DAYS" value="30"/>
     <!-- 1天滚动一次 -->
