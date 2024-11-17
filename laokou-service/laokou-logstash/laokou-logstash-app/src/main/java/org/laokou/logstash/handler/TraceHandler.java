@@ -146,6 +146,9 @@ public class TraceHandler {
 		@Field(type = Type.KEYWORD)
 		private String message;
 
+		@Field(type = Type.KEYWORD)
+		private String stacktrace;
+
 	}
 
 }
