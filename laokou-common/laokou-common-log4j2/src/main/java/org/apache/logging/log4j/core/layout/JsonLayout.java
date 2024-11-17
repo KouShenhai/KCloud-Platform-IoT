@@ -277,6 +277,9 @@ public final class JsonLayout extends AbstractJacksonLayout {
 			}
 		}
 		else {
+			if (complete && eventCount > 0) {
+				writer.append(", ");
+			}
 			super.toSerializable(event, writer);
 		}
 	}

@@ -30,4 +30,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Import({ GrpcServerConfig.class })
 public @interface EnableGrpcServer {
+
 }

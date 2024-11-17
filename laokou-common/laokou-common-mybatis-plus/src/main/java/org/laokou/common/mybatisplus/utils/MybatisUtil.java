@@ -84,7 +84,7 @@ public class MybatisUtil {
 				.toList()
 				.forEach(CompletableFuture::join);
 			if (rollback.get()) {
-				throw new SystemException("S_Datasource_TransactionRolledBack","事务已回滚");
+				throw new SystemException("S_Datasource_TransactionRolledBack", "事务已回滚");
 			}
 		}
 	}

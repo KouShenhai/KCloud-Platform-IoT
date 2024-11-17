@@ -35,7 +35,7 @@ public class GrpcServerTestApp {
 	@SneakyThrows
 	public static void main(String[] args) {
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
-			System.getProperty("server.port", "9035")));
+				System.getProperty("server.port", "9035")));
 		new SpringApplicationBuilder(GrpcServerTestApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 

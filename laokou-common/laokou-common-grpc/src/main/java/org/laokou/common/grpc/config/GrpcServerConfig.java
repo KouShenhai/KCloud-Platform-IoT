@@ -28,8 +28,7 @@ public class GrpcServerConfig {
 
 	@Bean(initMethod = "start", destroyMethod = "shutdown")
 	public Server grpcServer(SpringGrpcServerProperties springGrpcServerProperties) {
-		return ServerBuilder.forPort(springGrpcServerProperties.getPort())
-			.build();
+		return ServerBuilder.forPort(springGrpcServerProperties.getPort()).build();
 	}
 
 }
