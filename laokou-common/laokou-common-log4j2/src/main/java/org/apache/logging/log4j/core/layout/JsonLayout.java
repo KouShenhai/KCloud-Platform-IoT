@@ -265,6 +265,7 @@ public final class JsonLayout extends AbstractJacksonLayout {
 		if (complete && eventCount > 0) {
 			writer.append(", ");
 		}
+		// 判断是否定义<KeyValuePair>
 		if (additionalFields.length > 0) {
 			objectWriter.writeValue(writer, getFieldsMap(event));
 			writer.write(eol);

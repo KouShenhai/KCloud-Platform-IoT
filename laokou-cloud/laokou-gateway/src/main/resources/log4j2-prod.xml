@@ -38,18 +38,18 @@
   <Appenders>
     <!-- 控制台输出 -->
     <Console name="console" target="SYSTEM_OUT">
-      <JsonLayout compact="true" eventEol="true">
+      <JsonLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="false" includeStacktrace="true" stacktraceAsString="true" objectMessageAsJsonObject="true">
         <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
         <KeyValuePair key="profile" value="${PROFILE}" />
       </JsonLayout>
     </Console>
-    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.log"
-                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_%d{yyyy-MM-dd}.%i.log.gz"
+    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.json"
+                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_%d{yyyy-MM-dd}.%i.json.gz"
                              immediateFlush="false">
       <Filters>
         <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
       </Filters>
-      <JsonLayout compact="false" eventEol="true">
+      <JsonLayout complete="true" compact="false" eventEol="true" properties="true" locationInfo="false" includeStacktrace="true" stacktraceAsString="true" objectMessageAsJsonObject="true">
         <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
         <KeyValuePair key="profile" value="${PROFILE}" />
       </JsonLayout>
@@ -59,13 +59,13 @@
       </Policies>
       <DefaultRolloverStrategy max="${LOG_DAYS}"/>
     </RollingRandomAccessFile>
-    <RollingRandomAccessFile name="failover_kafka" fileName="${LOG_PATH}/${SERVICE_ID}_kafka.log"
-                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_kafka_%d{yyyy-MM-dd}.%i.log.gz"
+    <RollingRandomAccessFile name="failover_kafka" fileName="${LOG_PATH}/${SERVICE_ID}_kafka.json"
+                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_kafka_%d{yyyy-MM-dd}.%i.json.gz"
                              immediateFlush="false">
       <Filters>
         <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
       </Filters>
-      <JsonLayout compact="false" eventEol="true">
+      <JsonLayout complete="true" compact="false" eventEol="true" properties="true" locationInfo="false" includeStacktrace="true" stacktraceAsString="true" objectMessageAsJsonObject="true">
         <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
         <KeyValuePair key="profile" value="${PROFILE}" />
       </JsonLayout>
@@ -87,7 +87,7 @@
       <AppenderRef ref="failover"/>
     </Async>
     <Kafka name="kafka" topic="laokou_trace_topic" ignoreExceptions="false">
-      <JsonLayout compact="false" eventEol="true">
+      <JsonLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="false" includeStacktrace="true" stacktraceAsString="true" objectMessageAsJsonObject="true">
         <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
         <KeyValuePair key="profile" value="${PROFILE}" />
       </JsonLayout>

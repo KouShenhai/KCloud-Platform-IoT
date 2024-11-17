@@ -40,18 +40,18 @@
   <Appenders>
     <!-- 控制台输出 -->
     <Console name="console" target="SYSTEM_OUT">
-      <JsonLayout compact="true" eventEol="true">
+      <JsonLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
         <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
         <KeyValuePair key="profile" value="${PROFILE}" />
       </JsonLayout>
     </Console>
-    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.log"
-                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_%d{yyyy-MM-dd}.%i.log.gz"
+    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.json"
+                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_%d{yyyy-MM-dd}.%i.json.gz"
                              immediateFlush="false">
       <Filters>
         <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
       </Filters>
-      <JsonLayout compact="false" eventEol="true">
+      <JsonLayout complete="true" compact="false" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
         <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
         <KeyValuePair key="profile" value="${PROFILE}" />
       </JsonLayout>
