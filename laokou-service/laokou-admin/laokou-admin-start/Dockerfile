@@ -19,4 +19,4 @@ LABEL description="laokou-admin"
 COPY target/laokou-admin-start.jar app.jar
 COPY arthas.jar arthas.jar
 EXPOSE 9990
-CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1
+CMD java $JVM_OPTS -jar app.jar > /dev/null 2>&1

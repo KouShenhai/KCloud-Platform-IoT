@@ -19,4 +19,4 @@ LABEL description="laokou-logstash"
 COPY target/laokou-logstash-start.jar app.jar
 COPY arthas.jar arthas.jar
 EXPOSE 10003
-CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1
+CMD java $JVM_OPTS -jar app.jar > /dev/null 2>&1

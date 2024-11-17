@@ -19,4 +19,4 @@ LABEL description="laokou-auth"
 COPY target/laokou-auth-start.jar app.jar
 COPY arthas.jar arthas.jar
 EXPOSE 1111
-CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1
+CMD java $JVM_OPTS -jar app.jar > /dev/null 2>&1
