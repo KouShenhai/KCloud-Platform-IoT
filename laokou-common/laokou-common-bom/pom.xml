@@ -157,6 +157,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-grpc</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.objenesis</groupId>
         <artifactId>objenesis</artifactId>
         <version>${objenesis.version}</version>
@@ -522,8 +527,8 @@
         <version>${jackson.version}</version>
       </dependency>
       <dependency>
-<groupId>com.fasterxml.jackson.datatype</groupId>
-<artifactId>jackson-datatype-jsr310</artifactId>
+        <groupId>com.fasterxml.jackson.datatype</groupId>
+        <artifactId>jackson-datatype-jsr310</artifactId>
         <version>${jackson.version}</version>
       </dependency>
       <dependency>

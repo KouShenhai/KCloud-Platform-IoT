@@ -26,6 +26,7 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -83,7 +84,7 @@ public class MybatisUtil {
 				.toList()
 				.forEach(CompletableFuture::join);
 			if (rollback.get()) {
-				throw new RuntimeException("事务已回滚");
+				throw new SystemException("S_Datasource_TransactionRolledBack","事务已回滚");
 			}
 		}
 	}

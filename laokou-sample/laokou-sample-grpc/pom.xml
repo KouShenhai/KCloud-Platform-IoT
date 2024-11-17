@@ -11,7 +11,10 @@
 
   <artifactId>laokou-sample-grpc</artifactId>
   <version>3.4.0</version>
+  <packaging>pom</packaging>
 
-
+  <modules>
+    <module>laokou-sample-grpc-server</module>
+  </modules>
 
 </project>

@@ -67,7 +67,7 @@ import java.util.Map;
  *
  * <h2>Complete well-formed JSON vs. fragment JSON</h2>
  * <p>
- * If you configure {@code complete="true"}, the appender outputs a well-formed JSON
+ * If you configure {@code complete="false"}, the appender outputs a well-formed JSON
  * document. By default, with {@code complete="false"}, you should include the output as
  * an <em>external file</em> in a separate file to form a well-formed JSON document.
  * </p>
@@ -100,7 +100,7 @@ public final class JsonLayout extends AbstractJacksonLayout {
 
 	static final String CONTENT_TYPE = "application/json";
 
-	private static final String DEFAULT_FOOTER = "]";
+	private static final String DEFAULT_FOOTER = "";
 
 	private static final String DEFAULT_HEADER = "[";
 
@@ -265,17 +265,16 @@ public final class JsonLayout extends AbstractJacksonLayout {
 
 	@Override
 	public void toSerializable(final LogEvent event, final Writer writer) throws IOException {
-		if (complete && eventCount > 0) {
-			writer.append(", ");
-		}
 		// 判断是否定义<KeyValuePair>
 		if (additionalFields.length > 0) {
 			objectWriter.writeValue(writer, getFieldsMap(event));
+			if (complete) {
+				writer.append(",");
+			}
 			writer.write(eol);
 			if (includeNullDelimiter) {
 				writer.write('\0');
 			}
-			markEvent();
 		}
 		else {
 			super.toSerializable(event, writer);

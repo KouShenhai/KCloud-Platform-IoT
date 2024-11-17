@@ -55,13 +55,6 @@ public class TransactionalUtil {
 		});
 	}
 
-	@FunctionalInterface
-	public interface DatabaseOperation {
-
-		void execute();
-
-	}
-
 	// @formatter:off
 	private <T> T execute(TransactionCallback<T> action, int propagationBehavior, int isolationLevel, boolean readOnly) {
         return convert(propagationBehavior, isolationLevel, readOnly).execute(action);
@@ -105,12 +98,19 @@ public class TransactionalUtil {
 
 	private TransactionTemplate convert(int propagationBehavior, int isolationLevel, boolean readOnly) {
         PlatformTransactionManager transactionManager = transactionTemplate.getTransactionManager();
-        Assert.notNull(transactionManager, "事务管理不为空");
+        Assert.notNull(transactionManager, "transactionManager must not null");
         TransactionTemplate tranTemplate = new TransactionTemplate(transactionManager);
         tranTemplate.setPropagationBehavior(propagationBehavior);
         tranTemplate.setIsolationLevel(isolationLevel);
         tranTemplate.setReadOnly(readOnly);
 		return tranTemplate;
+	}
+
+	@FunctionalInterface
+	public interface DatabaseOperation {
+
+		void execute();
+
 	}
     // @formatter:on
 
