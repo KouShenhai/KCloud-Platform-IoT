@@ -56,16 +56,17 @@ public class GrpcClientInterceptor implements ClientInterceptor {
 				public void start(Listener<S> responseListener, Metadata metadata) {
 					metadata.put(Metadata.Key.of(TRACE_ID, Metadata.ASCII_STRING_MARSHALLER), traceLog.traceId());
 					metadata.put(Metadata.Key.of(SPAN_ID, Metadata.ASCII_STRING_MARSHALLER), traceLog.spanId());
-					super.start(new WrapperStart<>(responseListener), metadata);
+					super.start(new WrapperTraceListener<>(responseListener), metadata);
 				}
 			});
 		}
 
 	}
 
-	private static class WrapperStart<S> extends ForwardingClientCallListener.SimpleForwardingClientCallListener<S> {
+	private static class WrapperTraceListener<S>
+			extends ForwardingClientCallListener.SimpleForwardingClientCallListener<S> {
 
-		protected WrapperStart(ClientCall.Listener<S> listener) {
+		protected WrapperTraceListener(ClientCall.Listener<S> listener) {
 			super(listener);
 		}
 

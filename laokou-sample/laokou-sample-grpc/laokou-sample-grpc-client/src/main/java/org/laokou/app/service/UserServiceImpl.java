@@ -15,33 +15,28 @@
  *
  */
 
-package org.laokou.adapter.web;
+package org.laokou.app.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.laokou.app.command.query.UserGetQryExe;
 import org.laokou.client.api.UserServiceI;
 import org.laokou.client.dto.UserGetQry;
 import org.laokou.client.dto.clientobject.UserCO;
 import org.laokou.common.i18n.dto.Result;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
-@Slf4j
-@RestController
-@RequestMapping("/user")
+@Service
 @RequiredArgsConstructor
-public class UserController {
+public class UserServiceImpl implements UserServiceI {
 
-	private final UserServiceI userServiceI;
+	private final UserGetQryExe userGetQryExe;
 
-	@GetMapping(value = "{id}", produces = { "application/json;charset=utf-8" })
-	public Result<UserCO> getById(@PathVariable("id") Long id) {
-		return userServiceI.getById(new UserGetQry(id));
+	@Override
+	public Result<UserCO> getById(UserGetQry qry) {
+		return userGetQryExe.execute(qry);
 	}
 
 }

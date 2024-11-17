@@ -31,6 +31,16 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 @Slf4j
 public class GrpcServerInterceptor implements ServerInterceptor {
 
+	private static void executeWithTrace(TraceLogV traceLog, Runnable action) {
+		try {
+			MDCUtil.put(traceLog.traceId(), traceLog.traceId());
+			action.run();
+		}
+		finally {
+			MDCUtil.clear();
+		}
+	}
+
 	@Override
 	public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> serverCall, Metadata metadata,
 			ServerCallHandler<ReqT, RespT> serverCallHandler) {
@@ -38,64 +48,53 @@ public class GrpcServerInterceptor implements ServerInterceptor {
 			String traceId = metadata.get(Metadata.Key.of(TRACE_ID, Metadata.ASCII_STRING_MARSHALLER));
 			String spanId = metadata.get(Metadata.Key.of(SPAN_ID, Metadata.ASCII_STRING_MARSHALLER));
 			MDCUtil.put(traceId, spanId);
-			return new WrapperTrace<>(serverCall, serverCallHandler, metadata, new TraceLogV(traceId, spanId));
+			return new WrapperTraceListener<>(serverCall, serverCallHandler, metadata, new TraceLogV(traceId, spanId));
 		}
 		finally {
 			MDCUtil.clear();
 		}
 	}
 
-	private static class WrapperTrace<R, S> extends ForwardingServerCallListener.SimpleForwardingServerCallListener<R> {
+	private static class WrapperTraceListener<R, S>
+			extends ForwardingServerCallListener.SimpleForwardingServerCallListener<R> {
 
 		private final TraceLogV traceLog;
 
-		protected WrapperTrace(ServerCall<R, S> serverCall, ServerCallHandler<R, S> serverCallHandler,
+		protected WrapperTraceListener(ServerCall<R, S> serverCall, ServerCallHandler<R, S> serverCallHandler,
 				Metadata metadata, TraceLogV traceLog) {
-			super(serverCallHandler.startCall(new WrapperListener<>(serverCall), metadata));
+			super(serverCallHandler.startCall(new Wrapper<>(serverCall), metadata));
 			this.traceLog = traceLog;
 		}
 
 		@Override
 		public void onMessage(R message) {
-			try {
-				MDCUtil.put(traceLog.traceId(), traceLog.spanId());
+			executeWithTrace(traceLog, () -> {
 				log.info("onMessage...");
 				super.onMessage(message);
-			}
-			finally {
-				MDCUtil.clear();
-			}
+			});
 		}
 
 		@Override
 		public void onHalfClose() {
-			try {
-				MDCUtil.put(traceLog.traceId(), traceLog.spanId());
+			executeWithTrace(traceLog, () -> {
 				log.info("onHalfClose...");
 				super.onHalfClose();
-			}
-			finally {
-				MDCUtil.clear();
-			}
+			});
 		}
 
 		@Override
 		public void onComplete() {
-			try {
-				MDCUtil.put(traceLog.traceId(), traceLog.spanId());
+			executeWithTrace(traceLog, () -> {
 				log.info("onComplete...");
 				super.onComplete();
-			}
-			finally {
-				MDCUtil.clear();
-			}
+			});
 		}
 
 	}
 
-	private static class WrapperListener<R, S> extends ForwardingServerCall.SimpleForwardingServerCall<R, S> {
+	private static class Wrapper<R, S> extends ForwardingServerCall.SimpleForwardingServerCall<R, S> {
 
-		protected WrapperListener(ServerCall<R, S> serverCall) {
+		protected Wrapper(ServerCall<R, S> serverCall) {
 			super(serverCall);
 		}
 

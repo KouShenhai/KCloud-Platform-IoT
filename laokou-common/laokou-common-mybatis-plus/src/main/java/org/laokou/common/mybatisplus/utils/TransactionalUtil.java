@@ -50,7 +50,7 @@ public class TransactionalUtil {
 				r.setRollbackOnly();
 				String msg = LogUtil.record(e.getMessage());
 				log.error("操作失败，错误信息：{}，详情见日志", msg, e);
-				throw new SystemException("S_Datasource_OperationError", msg);
+				throw new SystemException("S_DS_OperationError", msg);
 			}
 		});
 	}

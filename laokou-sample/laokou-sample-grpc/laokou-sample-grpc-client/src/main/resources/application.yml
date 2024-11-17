@@ -7,6 +7,8 @@ server:
 spring:
   application:
     name: laokou-sample-grpc-client
+  profiles:
+    active: @PROFILE-ACTIVE@
   grpc-client:
     ip: 127.0.0.1
     port: 1114

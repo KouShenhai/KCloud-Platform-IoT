@@ -17,6 +17,7 @@
 
 package org.laokou.app.service;
 
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.grpc.user.Result;
 import org.laokou.grpc.user.User;
 import org.laokou.grpc.user.UserGetQry;
@@ -30,9 +31,16 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 
 	@Override
-	public void getUserById(UserGetQry request, io.grpc.stub.StreamObserver<Result> responseObserver) {
-		User user = User.newBuilder().setId(1).setUsername("laokou").setPassword("laokou123").build();
-		Result result = Result.newBuilder().setMsg("请求成功").setCode("OK").setData(user).build();
+	public void getUserById(UserGetQry qry, io.grpc.stub.StreamObserver<Result> responseObserver) {
+		Result result;
+		if (ObjectUtil.equals(qry.getId(), 1L)) {
+			User user = User.newBuilder().setId(1).setUsername("laokou").setPassword("laokou123").build();
+			result = Result.newBuilder().setMsg("请求成功").setCode("OK").setData(user).build();
+		}
+		else {
+			User user = User.newBuilder().build();
+			result = Result.newBuilder().setMsg("用户不存在").setCode("B_User_NotExist").setData(user).build();
+		}
 		responseObserver.onNext(result);
 		responseObserver.onCompleted();
 	}
