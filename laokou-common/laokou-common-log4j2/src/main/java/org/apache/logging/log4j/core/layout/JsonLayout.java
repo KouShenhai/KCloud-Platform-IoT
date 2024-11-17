@@ -44,8 +44,11 @@ import org.apache.logging.log4j.core.config.plugins.PluginBuilderAttribute;
 import org.apache.logging.log4j.core.config.plugins.PluginBuilderFactory;
 import org.apache.logging.log4j.core.config.plugins.PluginElement;
 import org.apache.logging.log4j.core.util.KeyValuePair;
+import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -265,6 +268,7 @@ public final class JsonLayout extends AbstractJacksonLayout {
 		if (complete && eventCount > 0) {
 			writer.append(", ");
 		}
+		// 判断是否定义<KeyValuePair>
 		if (additionalFields.length > 0) {
 			objectWriter.writeValue(writer, getFieldsMap(event));
 			writer.write(eol);
@@ -289,11 +293,23 @@ public final class JsonLayout extends AbstractJacksonLayout {
 			"level", evt.getLevel().name(),
 			"threadName", evt.getThreadName(),
 			"packageName", evt.getLoggerName(),
-			"message", evt.getMessage().getFormattedMessage())
+			"message", evt.getMessage().getFormattedMessage(),
+			"stacktrace", getStackTraceAsString(evt.getThrown()))
 		);
 		return additionalFieldsMap;
 	}
 	// @formatter:on
+
+	private String getStackTraceAsString(Throwable throwable) {
+		if (ObjectUtils.isEmpty(throwable)) {
+			return "";
+		}
+		StringWriter stringWriter = new StringWriter();
+		try (PrintWriter printWriter = new PrintWriter(stringWriter)) {
+			throwable.printStackTrace(printWriter);
+		}
+		return stringWriter.toString();
+	}
 
 	public static class Builder<B extends Builder<B>> extends AbstractJacksonLayout.Builder<B>
 			implements org.apache.logging.log4j.core.util.Builder<JsonLayout> {
