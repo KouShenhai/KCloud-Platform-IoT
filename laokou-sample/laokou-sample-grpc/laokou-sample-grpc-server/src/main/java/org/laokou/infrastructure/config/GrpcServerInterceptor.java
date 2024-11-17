@@ -33,7 +33,7 @@ public class GrpcServerInterceptor implements ServerInterceptor {
 
 	private static void executeWithTrace(TraceLogV traceLog, Runnable action) {
 		try {
-			MDCUtil.put(traceLog.traceId(), traceLog.traceId());
+			MDCUtil.put(traceLog.traceId(), traceLog.spanId());
 			action.run();
 		}
 		finally {
