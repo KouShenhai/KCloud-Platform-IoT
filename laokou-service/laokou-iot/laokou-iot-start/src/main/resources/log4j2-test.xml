@@ -27,7 +27,7 @@
     <!-- 存放目录 -->
     <property name="LOG_PATH" value="./logs/iot"/>
     <!-- 日志文件大小 -->
-    <property name="LOG_ROLL_SIZE" value="500 MB"/>
+    <property name="LOG_ROLL_SIZE" value="100 M"/>
     <!-- 服务名称 -->
     <property name="SERVICE_ID" value="laokou-iot"/>
     <!-- 日志保留30天 -->

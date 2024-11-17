@@ -17,6 +17,8 @@
 
 package org.laokou.common.core.utils;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -27,6 +29,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
@@ -45,6 +48,8 @@ public final class JacksonUtil {
 	 * 空JSON字符串.
 	 */
 	public static final String EMPTY_JSON = "{}";
+
+	private static final JsonFactory FACTORY = new JsonFactory();
 
 	/**
 	 * 映射器配置.
@@ -178,6 +183,11 @@ public final class JacksonUtil {
 	@SneakyThrows
 	public static JsonNode readTree(String json) {
 		return MAPPER.readTree(json);
+	}
+
+	@SneakyThrows
+	public static JsonParser createParser(String filePath) {
+		return FACTORY.createParser(new File(filePath));
 	}
 
 	/**

@@ -18,4 +18,4 @@ LABEL maintainer="laokou"
 LABEL description="laokou-sentinel"
 COPY target/laokou-sentinel.jar app.jar
 EXPOSE 8972
-CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1
+CMD java $JVM_OPTS -jar app.jar > /dev/null 2>&1

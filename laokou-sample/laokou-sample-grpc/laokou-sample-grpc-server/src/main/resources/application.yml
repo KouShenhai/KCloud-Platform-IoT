@@ -1,0 +1,11 @@
+server:
+  port: 9035
+
+spring:
+  application:
+    name: laokou-sample-grpc-server
+  grpc-server:
+    port: 1114
+
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml

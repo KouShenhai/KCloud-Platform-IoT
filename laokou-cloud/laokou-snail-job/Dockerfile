@@ -18,4 +18,4 @@ LABEL maintainer="laokou"
 LABEL description="laokou-snail-job"
 COPY target/laokou-snail-job.jar app.jar
 EXPOSE 8088
-CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1
+CMD java $JVM_OPTS -jar app.jar > /dev/null 2>&1
