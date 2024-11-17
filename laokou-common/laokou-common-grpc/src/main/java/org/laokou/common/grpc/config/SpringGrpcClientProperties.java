@@ -15,27 +15,28 @@
  *
  */
 
-package org.laokou.infrastructure.config;
+package org.laokou.common.grpc.config;
 
-import io.grpc.BindableService;
-import io.grpc.Server;
-import io.grpc.ServerBuilder;
-import org.laokou.common.grpc.config.SpringGrpcServerProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Configuration
-public class GrpcServerConfig {
+@Data
+@Component
+@ConfigurationProperties(prefix = "spring.grpc-client")
+public class SpringGrpcClientProperties {
 
-	@Bean(initMethod = "start", destroyMethod = "shutdown")
-	public Server grpcServer(SpringGrpcServerProperties springGrpcServerProperties, BindableService grpcService) {
-		return ServerBuilder.forPort(springGrpcServerProperties.getPort())
-			.intercept(new GrpcServerInterceptor())
-			.addService(grpcService)
-			.build();
-	}
+	/**
+	 * IP.
+	 */
+	private String ip;
+
+	/**
+	 * 端口.
+	 */
+	private int port;
 
 }

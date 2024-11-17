@@ -1,9 +1,17 @@
 server:
   port: 9036
+  http2:
+    enabled: true
+  shutdown: graceful
 
 spring:
   application:
     name: laokou-sample-grpc-client
+  grpc-client:
+    ip: 127.0.0.1
+    port: 1114
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml

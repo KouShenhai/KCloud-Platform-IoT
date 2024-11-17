@@ -17,25 +17,35 @@
 
 package org.laokou.infrastructure.config;
 
-import io.grpc.BindableService;
-import io.grpc.Server;
-import io.grpc.ServerBuilder;
-import org.laokou.common.grpc.config.SpringGrpcServerProperties;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import org.laokou.common.grpc.config.SpringGrpcClientProperties;
+import org.laokou.common.trace.utils.TraceUtil;
+import org.laokou.grpc.user.UserServiceGrpc;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
  */
 @Configuration
-public class GrpcServerConfig {
+public class GrpcClientConfig {
 
-	@Bean(initMethod = "start", destroyMethod = "shutdown")
-	public Server grpcServer(SpringGrpcServerProperties springGrpcServerProperties, BindableService grpcService) {
-		return ServerBuilder.forPort(springGrpcServerProperties.getPort())
-			.intercept(new GrpcServerInterceptor())
-			.addService(grpcService)
+	@Bean
+	public ManagedChannel managedChannel(SpringGrpcClientProperties springGrpcClientProperties, TraceUtil traceUtil) {
+		return ManagedChannelBuilder
+			.forAddress(springGrpcClientProperties.getIp(), springGrpcClientProperties.getPort())
+			.usePlaintext()
+			.idleTimeout(10, TimeUnit.MINUTES)
+			.intercept(new GrpcClientInterceptor(traceUtil))
 			.build();
+	}
+
+	@Bean
+	public UserServiceGrpc.UserServiceBlockingStub userServiceBlockingStub(ManagedChannel managedChannel) {
+		return UserServiceGrpc.newBlockingStub(managedChannel);
 	}
 
 }

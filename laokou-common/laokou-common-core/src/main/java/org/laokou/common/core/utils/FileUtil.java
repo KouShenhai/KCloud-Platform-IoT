@@ -226,31 +226,26 @@ public final class FileUtil {
 		}
 	}
 
-	public static void replaceAll(String sourcePath, Character o, Character n) {
-		replace(sourcePath, false, o, n);
+	public static void replaceFirstFromEnd(String sourcePath, char oldChar, char newChar) {
+		replaceFromEnd(sourcePath, oldChar, newChar, true);
 	}
 
-	public static void replace(String sourcePath, Character o, Character n) {
-		replace(sourcePath, true, o, n);
+	public static void replaceAllFromEnd(String sourcePath, char oldChar, char newChar) {
+		replaceFromEnd(sourcePath, oldChar, newChar, false);
 	}
 
 	@SneakyThrows
-	private static void replace(String sourcePath, boolean skip, Character o, Character n) {
+	private static void replaceFromEnd(String sourcePath, char oldChar, char newChar, boolean stopAfterFirst) {
 		try (RandomAccessFile raf = new RandomAccessFile(sourcePath, RW)) {
-			long fileLength = raf.length();
-			long pointer = fileLength - 1;
-			// 从末尾开始读取
-			while (pointer >= 0) {
-				raf.seek(pointer);
-				char c = (char) raf.read();
-				if (c == o) {
-					raf.seek(pointer);
-					raf.write(n);
-					if (skip) {
+			for (long pos = raf.length() - 1; pos >= 0; pos--) {
+				raf.seek(pos);
+				if ((char) raf.read() == oldChar) {
+					raf.seek(pos);
+					raf.write(newChar);
+					if (stopAfterFirst) {
 						break;
 					}
 				}
-				pointer--;
 			}
 		}
 	}
