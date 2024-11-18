@@ -98,7 +98,7 @@ public class TransactionalUtil {
 
 	private TransactionTemplate convert(int propagationBehavior, int isolationLevel, boolean readOnly) {
         PlatformTransactionManager transactionManager = transactionTemplate.getTransactionManager();
-        Assert.notNull(transactionManager, "transactionManager must not null");
+        Assert.notNull(transactionManager, "transactionManager must not be null");
         TransactionTemplate tranTemplate = new TransactionTemplate(transactionManager);
         tranTemplate.setPropagationBehavior(propagationBehavior);
         tranTemplate.setIsolationLevel(isolationLevel);

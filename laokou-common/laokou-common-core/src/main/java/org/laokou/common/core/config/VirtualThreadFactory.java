@@ -26,15 +26,15 @@ import java.util.concurrent.ThreadFactory;
  *
  * @author laokou
  */
-public final class TtlVirtualThreadFactory implements ThreadFactory {
+public final class VirtualThreadFactory implements ThreadFactory {
 
-	public static final TtlVirtualThreadFactory INSTANCE = new TtlVirtualThreadFactory();
+	public static final VirtualThreadFactory INSTANCE = new VirtualThreadFactory();
 
 	@Override
 	public Thread newThread(@NonNull Runnable r) {
 		Thread.Builder.OfVirtual ofVirtualBuilder = Thread.ofVirtual();
 		if (r instanceof Thread thread) {
-			ofVirtualBuilder.name("ttl-virtual-task-".concat(thread.getName()));
+			ofVirtualBuilder.name("virtual-task-".concat(thread.getName()));
 		}
 		return ofVirtualBuilder.inheritInheritableThreadLocals(true).unstarted(r);
 	}

@@ -33,27 +33,24 @@ public class SpringTaskExecutionProperties {
 
 	private Pool pool = new Pool();
 
-	private ForkJoinPool forkJoinPool = new ForkJoinPool();
-
-	@Data
-	public static class ForkJoinPool {
-
-		private int coreSize = 17;
-
-	}
-
 	@Data
 	public static class Pool {
 
-		private int queueCapacity = Integer.MAX_VALUE;
+		private int queueCapacity = 500;
 
-		private int coreSize = 17;
+		private int corePoolSize = 32;
 
-		private int maxSize = Integer.MAX_VALUE;
+		private int maxPoolSize = 64;
 
-		private boolean allowCoreThreadTimeout = true;
+		private boolean allowCoreThreadTimeout = false;
+
+		private int threadPriority = 5;
 
 		private Duration keepAlive = Duration.ofSeconds(60L);
+
+		private String threadNamePrefix = "ttl-task-";
+
+		private boolean daemon = false;
 
 	}
 
