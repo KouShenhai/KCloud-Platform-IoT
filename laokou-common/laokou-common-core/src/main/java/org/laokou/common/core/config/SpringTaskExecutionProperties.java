@@ -48,10 +48,6 @@ public class SpringTaskExecutionProperties {
 
 		private Duration keepAlive = Duration.ofSeconds(60L);
 
-		private String threadNamePrefix = "ttl-task-";
-
-		private boolean daemon = false;
-
 	}
 
 }

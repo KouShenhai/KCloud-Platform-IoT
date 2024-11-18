@@ -1451,8 +1451,6 @@ spring:
       core-pool-size: 32
       max-pool-size: 64
       keep-alive: 60s
-      daemon: false
-      thread-name-prefix: "ttl-task-"
       thread-priority: 10
       allow-core-thread-timeout: false
       queue-capacity: 500
@@ -2862,8 +2860,6 @@ spring:
       core-pool-size: 32
       max-pool-size: 64
       keep-alive: 60s
-      daemon: false
-      thread-name-prefix: "ttl-task-"
       thread-priority: 10
       allow-core-thread-timeout: false
       queue-capacity: 500
@@ -5289,8 +5285,6 @@ spring:
       core-pool-size: 32
       max-pool-size: 64
       keep-alive: 60s
-      daemon: false
-      thread-name-prefix: "ttl-task-"
       thread-priority: 10
       allow-core-thread-timeout: false
       queue-capacity: 500
