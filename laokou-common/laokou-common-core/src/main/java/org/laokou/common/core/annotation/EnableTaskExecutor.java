@@ -17,7 +17,7 @@
 
 package org.laokou.common.core.annotation;
 
-import org.laokou.common.core.config.TaskExecutorConfig;
+import org.laokou.common.core.config.SpringTaskExecutorConfig;
 import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableAsync;
 
@@ -27,7 +27,7 @@ import java.lang.annotation.*;
 @EnableAsync
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ TaskExecutorConfig.class })
+@Import({ SpringTaskExecutorConfig.class })
 public @interface EnableTaskExecutor {
 
 }
