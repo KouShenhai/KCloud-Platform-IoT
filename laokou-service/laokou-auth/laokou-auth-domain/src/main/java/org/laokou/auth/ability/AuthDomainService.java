@@ -64,7 +64,6 @@ public class AuthDomainService {
 	}
 
 	public void auth(AuthA auth) {
-		auth.updateServiceId(springUtil.getServiceId());
 		auth.updateSource(sourceGateway.getName(auth.getUser()));
 		// 校验验证码
 		checkCaptcha(auth);

@@ -22,12 +22,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.*;
-import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.Instant;
 import java.util.*;
 
 import static org.laokou.common.core.utils.JacksonUtil.EMPTY_JSON;
@@ -40,7 +40,7 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
  * @author laokou
  */
 @Getter
-public class LogA extends AggregateRoot<Long> {
+public class LogE {
 
 	private static final Set<String> REMOVE_PARAMS = Set.of("username", "password", "mail", "mobile");
 
@@ -62,59 +62,64 @@ public class LogA extends AggregateRoot<Long> {
 	 * 操作的URI.
 	 */
 	private final String uri;
-
-	/**
-	 * 操作的方法名.
-	 */
-	private String methodName;
-
 	/**
 	 * 操作的请求类型.
 	 */
 	private final String requestType;
-
-	/**
-	 * 操作的请求参数.
-	 */
-	private String requestParams;
-
 	/**
 	 * 操作的浏览器.
 	 */
 	private final String userAgent;
-
 	/**
 	 * 操作的IP地址.
 	 */
 	private final String ip;
-
 	/**
 	 * 操作的归属地.
 	 */
 	private final String address;
-
 	/**
 	 * 操作人.
 	 */
 	private final String operator;
-
+	/**
+	 * 服务ID.
+	 */
+	private final String serviceId;
+	/**
+	 * 创建人.
+	 */
+	private final Long creator;
+	/**
+	 * 创建时间.
+	 */
+	private final Instant createTime;
+	/**
+	 * 租户ID.
+	 */
+	private final Long tenantId;
+	/**
+	 * 操作的方法名.
+	 */
+	private String methodName;
+	/**
+	 * 操作的请求参数.
+	 */
+	private String requestParams;
 	/**
 	 * 错误信息.
 	 */
 	private String errorMessage;
-
 	/**
 	 * 操作状态 0成功 1失败.
 	 */
 	private Integer status;
-
 	/**
 	 * 操作的消耗时间(毫秒).
 	 */
 	private Long costTime;
 
-	public LogA(String moduleName, String name, HttpServletRequest request, String serviceId) {
-		super(IdGenerator.defaultSnowflakeId());
+	public LogE(String moduleName, String name, HttpServletRequest request, String serviceId) {
 		UserContextHolder.User user = UserContextHolder.get();
 		this.moduleName = moduleName;
 		this.name = name;
@@ -125,11 +130,8 @@ public class LogA extends AggregateRoot<Long> {
 		this.address = AddressUtil.getRealAddress(ip);
 		this.tenantId = user.getTenantId();
 		this.createTime = DateUtil.nowInstant();
-		this.updateTime = this.createTime;
 		this.creator = user.getId();
-		this.editor = this.creator;
 		this.serviceId = serviceId;
-		this.sourceName = user.getSourceName();
 		this.operator = user.getUsername();
 	}
 

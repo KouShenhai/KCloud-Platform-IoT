@@ -27,7 +27,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.log.annotation.OperateLog;
-import org.laokou.common.log.model.LogA;
+import org.laokou.common.log.model.LogE;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
@@ -52,7 +52,7 @@ public class OperateLogAop {
 		// 服务ID
 		String serviceId = springUtil.getServiceId();
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
-		LogA operate = new LogA(operateLog.module(), operateLog.operation(), request, serviceId);
+		LogE operate = new LogE(operateLog.module(), operateLog.operation(), request, serviceId);
 		String className = point.getTarget().getClass().getName();
 		String methodName = point.getSignature().getName();
 		Object[] args = point.getArgs();

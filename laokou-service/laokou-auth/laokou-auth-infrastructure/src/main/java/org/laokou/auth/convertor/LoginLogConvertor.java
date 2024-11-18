@@ -24,7 +24,6 @@ import org.laokou.auth.model.LogV;
 
 import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOG_TOPIC;
 import static org.laokou.auth.common.constant.MqConstant.LOGIN_TAG;
-import static org.laokou.common.i18n.common.constant.EventType.LOGIN;
 
 /**
  * @author laokou
@@ -34,16 +33,16 @@ public class LoginLogConvertor {
 	public static LoginEvent toEvent(AuthA authA) {
 		LogV logV = authA.getLog();
 		return new LoginEvent(logV.type(), logV.errorMessage(), logV.status(), logV.browser(), logV.os(), logV.ip(),
-				logV.address(), logV.username(), authA, LAOKOU_LOG_TOPIC, LOGIN_TAG, LOGIN, logV.instant());
+				logV.address(), logV.username(), logV.instant(), authA.getTenantId(), LAOKOU_LOG_TOPIC, LOGIN_TAG);
 	}
 
 	public static LoginLogDO toDataObject(LoginEvent loginEvent) {
 		LoginLogDO loginLogDO = new LoginLogDO();
 		loginLogDO.setId(loginEvent.getId());
 		loginLogDO.setCreator(loginEvent.getCreator());
-		loginLogDO.setEditor(loginEvent.getEditor());
+		loginLogDO.setEditor(loginEvent.getCreator());
 		loginLogDO.setCreateTime(loginEvent.getCreateTime());
-		loginLogDO.setUpdateTime(loginEvent.getUpdateTime());
+		loginLogDO.setUpdateTime(loginEvent.getCreateTime());
 		loginLogDO.setTenantId(loginEvent.getTenantId());
 		loginLogDO.setUsername(loginEvent.getUsername());
 		loginLogDO.setIp(loginEvent.getIp());
