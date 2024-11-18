@@ -19,6 +19,7 @@ package org.laokou.auth;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.utils.SslUtil;
@@ -35,6 +36,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StopWatch;
 
 import java.net.InetAddress;
 
@@ -43,6 +45,7 @@ import java.net.InetAddress;
  *
  * @author laokou
  */
+@Slf4j
 @EnableRouter
 @EnableWarmUp
 @EnableScheduling
@@ -74,6 +77,8 @@ public class AuthApp {
     /// ```
 	@SneakyThrows
 	public static void main(String[] args) {
+		StopWatch stopWatch = new StopWatch("Auth应用程序");
+		stopWatch.start();
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "1111")));
@@ -83,6 +88,8 @@ public class AuthApp {
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
 		new SpringApplicationBuilder(AuthApp.class).web(WebApplicationType.SERVLET).run(args);
+		stopWatch.stop();
+		log.info("{}", stopWatch.prettyPrint());
 	}
     // @formatter:on
 

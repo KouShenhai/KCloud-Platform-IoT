@@ -54,7 +54,7 @@ public class CorsAutoConfig {
 		config.setMaxAge(3600L);
 		UrlBasedCorsConfigurationSource configurationSource = new UrlBasedCorsConfigurationSource();
 		configurationSource.registerCorsConfiguration("/**", config);
-		log.info("cors加载完毕");
+		log.info("{} => cors加载完毕", Thread.currentThread().getName());
 		return new CorsFilter(configurationSource);
 	}
 

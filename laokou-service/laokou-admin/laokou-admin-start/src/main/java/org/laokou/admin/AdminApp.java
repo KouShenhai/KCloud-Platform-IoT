@@ -19,6 +19,7 @@ package org.laokou.admin;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.utils.SslUtil;
@@ -37,6 +38,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StopWatch;
 
 import java.net.InetAddress;
 
@@ -45,6 +47,7 @@ import java.net.InetAddress;
  *
  * @author laokou
  */
+@Slf4j
 @EnableWarmUp
 @EnableRouter
 @EnableSecurity
@@ -78,6 +81,8 @@ public class AdminApp {
     /// ```
 	@SneakyThrows
 	public static void main(String[] args) {
+		StopWatch stopWatch = new StopWatch("Admin应用程序");
+		stopWatch.start();
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "9990")));
 		// SpringSecurity 子线程读取父线程的上下文
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.TTL_MODE_INHERITABLETHREADLOCAL);
@@ -86,6 +91,8 @@ public class AdminApp {
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
 		new SpringApplicationBuilder(AdminApp.class).web(WebApplicationType.SERVLET).run(args);
+		stopWatch.stop();
+		log.info("{}", stopWatch.prettyPrint());
 	}
     // @formatter:on
 

@@ -17,6 +17,7 @@
 
 package org.laokou.common.core.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,12 +30,14 @@ import static org.laokou.common.core.utils.HttpUtil.getHttpClient;
 /**
  * @author laokou
  */
+@Slf4j
 @Configuration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class RestClientConfig {
 
-	@Bean
+	@Bean(bootstrap = Bean.Bootstrap.BACKGROUND)
 	public RestClient restClient() {
+		log.info("{} => Initializing RestClient", Thread.currentThread().getName());
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
 		factory.setHttpClient(getHttpClient(true));
 		RestTemplate restTemplate = new RestTemplate(factory);
