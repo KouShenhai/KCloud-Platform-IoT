@@ -82,7 +82,7 @@ public class HttpMessageConverterAutoConfig {
 		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
 		mapper.registerModule(javaTimeModule);
 		converter.setObjectMapper(mapper);
-		log.info("jackson配置加载完毕");
+		log.info("{} => jackson配置加载完毕", Thread.currentThread().getName());
 		return converter;
 	}
 	// @formatter:on

@@ -19,6 +19,8 @@ package org.laokou.gateway;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.common.nacos.annotation.EnableNacosShutDown;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
@@ -31,6 +33,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.util.StopWatch;
 import reactor.core.publisher.Hooks;
 
 import java.net.InetAddress;
@@ -40,7 +43,9 @@ import java.net.InetAddress;
  *
  * @author laokou
  */
+@Slf4j
 @EnableApi
+@EnableTaskExecutor
 @EnableNacosShutDown
 @EnableDiscoveryClient
 @EnableEncryptableProperties
@@ -67,6 +72,8 @@ public class GatewayApp {
     /// ```
 	@SneakyThrows
 	public static void main(String[] args) {
+		StopWatch stopWatch = new StopWatch("Gateway应用程序");
+		stopWatch.start();
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "5555")));
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
@@ -75,6 +82,8 @@ public class GatewayApp {
 		// 开启reactor的上下文传递
 		Hooks.enableAutomaticContextPropagation();
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
+		stopWatch.stop();
+		log.info("{}", stopWatch.prettyPrint());
 	}
     // @formatter:on
 

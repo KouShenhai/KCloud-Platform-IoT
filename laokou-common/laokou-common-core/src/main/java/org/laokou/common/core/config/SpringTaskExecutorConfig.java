@@ -17,6 +17,7 @@
 
 package org.laokou.common.core.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import java.util.concurrent.Executor;
 
@@ -25,6 +26,7 @@ import java.util.concurrent.Executor;
  *
  * @author laokou
  */
+@Slf4j
 public class SpringTaskExecutorConfig {
 
 	/**
@@ -32,8 +34,9 @@ public class SpringTaskExecutorConfig {
 	 */
 	public static final String THREAD_POOL_TASK_EXECUTOR_NAME = "ttl-task-executor";
 
-	@Bean(value = THREAD_POOL_TASK_EXECUTOR_NAME)
+	@Bean(value = THREAD_POOL_TASK_EXECUTOR_NAME, bootstrap = Bean.Bootstrap.BACKGROUND)
 	public Executor executor(SpringTaskExecutionProperties properties) {
+		log.info("{} => Initializing Executor", Thread.currentThread().getName());
 		return new SpringTaskExecutorBuilder().withPool(properties.getPool())
 			.disableDaemon()
 			.withPrefix("ttl-task-")
@@ -42,6 +45,7 @@ public class SpringTaskExecutorConfig {
 
 	@Bean
 	public Executor bootstrapExecutor(SpringTaskExecutionProperties properties) {
+		log.info("{} => Initializing BootstrapExecutor", Thread.currentThread().getName());
 		return new SpringTaskExecutorBuilder().withPool(properties.getPool())
 			.enableDaemon()
 			.withPriority(5)

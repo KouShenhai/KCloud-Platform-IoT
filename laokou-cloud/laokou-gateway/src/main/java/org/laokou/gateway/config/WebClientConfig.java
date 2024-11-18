@@ -20,6 +20,7 @@ package org.laokou.gateway.config;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
@@ -28,11 +29,13 @@ import reactor.netty.http.client.HttpClient;
 
 import javax.net.ssl.SSLException;
 
+@Slf4j
 @Configuration
 public class WebClientConfig {
 
-	@Bean
+	@Bean(bootstrap = Bean.Bootstrap.BACKGROUND)
 	public WebClient webClient() throws SSLException {
+		log.info("{} => Initializing WebClient", Thread.currentThread().getName());
 		WebClient.Builder builder = WebClient.builder();
 		SslContext context = SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build();
 		HttpClient httpClient = HttpClient.create().secure(t -> t.sslContext(context));
