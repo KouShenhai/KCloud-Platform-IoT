@@ -27,7 +27,7 @@ import java.util.concurrent.Executor;
  */
 public class SpringTaskExecutorBuilder {
 
-	private static final ThreadPoolTaskExecutor EXECUTOR = new ThreadPoolTaskExecutor();
+	private final ThreadPoolTaskExecutor EXECUTOR = new ThreadPoolTaskExecutor();
 
 	public SpringTaskExecutorBuilder withPool(SpringTaskExecutionProperties.Pool pool) {
 		// 核心池大小
