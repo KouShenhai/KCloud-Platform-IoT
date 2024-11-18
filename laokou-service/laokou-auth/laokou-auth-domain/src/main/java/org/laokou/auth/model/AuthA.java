@@ -117,10 +117,6 @@ public class AuthA extends AggregateRoot<Long> {
 		this.request = request;
 	}
 
-	public void updateServiceId(String serviceId) {
-		this.serviceId = serviceId;
-	}
-
 	public void createUserByPassword() {
 		currentUser = this.username;
 		this.user = new UserE(currentUser, EMPTY, EMPTY, this.tenantId);
@@ -138,7 +134,7 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void createUserByAuthorizationCode() {
 		currentUser = this.username;
-		this.user = new UserE(currentUser, EMPTY, EMPTY, 0L);
+		this.user = new UserE(currentUser, EMPTY, EMPTY, this.tenantId);
 	}
 
 	public void updateUser(UserE user) {

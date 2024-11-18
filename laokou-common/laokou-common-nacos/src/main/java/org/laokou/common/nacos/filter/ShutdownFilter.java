@@ -95,7 +95,7 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 				NEWED_SCHEDULED_THREAD_POOL.scheduleWithFixedDelay(() -> {
 					// 一分钟内没完成 或 计数器为0 -> 结束
 					if (IdGenerator.SystemClock.now() - start >= second || ShutdownHolder.get() == 0) {
-						ThreadUtil.shutdown(NEWED_SCHEDULED_THREAD_POOL, 10);
+						ThreadUtil.shutdown(NEWED_SCHEDULED_THREAD_POOL, 30);
 						log.info("关闭应用");
 						int exitCode = SpringApplication.exit(SpringContextUtil.getApplicationContext(),
 								new ExitCodeGeneratorImpl());

@@ -20,8 +20,6 @@ package org.laokou.auth.dto.domainevent;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.common.constant.EventType;
-import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 import java.io.Serial;
@@ -80,9 +78,8 @@ public class LoginEvent extends DefaultDomainEvent {
 	private String type;
 
 	public LoginEvent(String type, String errorMessage, Integer status, String browser, String os, String ip,
-			String address, String username, AggregateRoot<Long> aggregateRoot, String topic, String tag,
-			EventType eventType, Instant instant) {
-		super(aggregateRoot, topic, tag, eventType, instant);
+			String address, String username, Instant instant, Long tenantId, String topic, String tag) {
+		super(topic, tag);
 		this.type = type;
 		this.errorMessage = errorMessage;
 		this.status = status;
@@ -91,6 +88,8 @@ public class LoginEvent extends DefaultDomainEvent {
 		this.ip = ip;
 		this.address = address;
 		this.username = username;
+		this.tenantId = tenantId;
+		this.createTime = instant;
 	}
 
 	@Override

@@ -63,6 +63,7 @@ public class DefaultDomainEvent extends DomainEvent<Long> {
 	}
 
 	protected DefaultDomainEvent(String topic, String tag) {
+		generatorId();
 		super.topic = topic;
 		super.tag = tag;
 	}
