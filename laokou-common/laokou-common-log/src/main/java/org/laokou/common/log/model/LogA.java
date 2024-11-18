@@ -25,6 +25,7 @@ import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
@@ -146,8 +147,9 @@ public class LogA extends AggregateRoot<Long> {
 		this.methodName = className + DOT + methodName + LEFT + RIGHT;
 	}
 
-	public void calculateTaskTime(long startTime) {
-		this.costTime = IdGenerator.SystemClock.now() - startTime;
+	public void calculateTaskTime(StopWatch stopWatch) {
+		stopWatch.stop();
+		this.costTime = stopWatch.getTotalTimeMillis();
 	}
 
 	public void decorateRequestParams(Object[] args) {

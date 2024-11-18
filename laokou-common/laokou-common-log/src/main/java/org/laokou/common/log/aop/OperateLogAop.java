@@ -24,12 +24,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.model.LogA;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
 /**
  * 操作日志切面.
@@ -47,7 +47,8 @@ public class OperateLogAop {
 	@SneakyThrows
 	@Around("@annotation(operateLog)")
 	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) {
-		long startTime = IdGenerator.SystemClock.now();
+		StopWatch stopWatch = new StopWatch("操作日志");
+		stopWatch.start();
 		// 服务ID
 		String serviceId = springUtil.getServiceId();
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
@@ -69,7 +70,7 @@ public class OperateLogAop {
 		}
 		finally {
 			// 计算消耗时间
-			operate.calculateTaskTime(startTime);
+			operate.calculateTaskTime(stopWatch);
 			// 修改错误
 			operate.updateThrowable(throwable);
 		}

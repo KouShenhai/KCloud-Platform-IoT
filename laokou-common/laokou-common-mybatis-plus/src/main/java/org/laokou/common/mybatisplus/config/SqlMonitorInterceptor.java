@@ -25,26 +25,31 @@ import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.mybatisplus.handler.domainevent.SqlEvent;
+import org.springframework.util.StopWatch;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import static org.laokou.common.i18n.common.constant.StringConstant.SPACE;
 
+// @formatter:off
 /**
- * 4种@Signature type. Executor => 拦截内部SQL执行. ParameterHandler => 拦截参数的处理. StatementHandler
- * => 拦截SQL的构建. ResultSetHandler => 拦截结果的处理.
+ * 4种@Signature type.
+ * Executor 		=> 拦截内部SQL执行.
+ * ParameterHandler => 拦截参数的处理.
+ * StatementHandler => 拦截SQL的构建.
+ * ResultSetHandler => 拦截结果的处理.
  * <p>
- * method => 真实的方法，请自行查看并复制 args => method入参
+ * method => 真实的方法，请自行查看并复制
+ * <p>
+ * args => method入参
  *
  * @author laokou
  * @see PreparedStatementLogger
  */
-// @formatter:off
 @Slf4j
 @RequiredArgsConstructor
 @Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
@@ -54,18 +59,20 @@ public class SqlMonitorInterceptor implements Interceptor {
 
     @Override
 	public Object intercept(Invocation invocation) throws Throwable {
-		long start = IdGenerator.SystemClock.now();
+		StopWatch stopWatch = new StopWatch("SQL查询");
+		stopWatch.start();
 		Object obj = invocation.proceed();
-		long time = (IdGenerator.SystemClock.now() - start);
+		stopWatch.stop();
+		long costTime = stopWatch.getTotalTimeMillis();
 		Object target = invocation.getTarget();
         MybatisPlusExtProperties.SqlMonitor sqlMonitor = mybatisPlusExtProperties.getSqlMonitor();
         if (sqlMonitor.isEnabled()
-                && time >= sqlMonitor.getInterval()
+                && costTime >= sqlMonitor.getInterval()
                 && target instanceof StatementHandler statementHandler) {
 			// 替换空格、制表符、换页符
 			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", SPACE);
-            log.info("Consume Time：{} ms，Execute SQL：{}", time, sql);
-            SqlEvent sqlEvent = new SqlEvent(SpringContextUtil.getServiceId(), sql, time, DateUtil.nowInstant());
+            log.info("Consume Time：{} ms，Execute SQL：{}", costTime, sql);
+            SqlEvent sqlEvent = new SqlEvent(SpringContextUtil.getServiceId(), sql, costTime, DateUtil.nowInstant());
         }
 		return obj;
 	}

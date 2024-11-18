@@ -19,7 +19,6 @@ package org.laokou.common.mongodb.template;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.mongodb.clientobject.SearchCO;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -51,14 +50,10 @@ public class MongodbTemplate {
 	}
 
 	public Object get(Class<?> clazz, String id) {
-		long startTime = IdGenerator.SystemClock.now();
-		final Object obj = mongoTemplate.findById(id, clazz);
-		log.info("消耗时间：{}ms", (IdGenerator.SystemClock.now() - startTime));
-		return obj;
+		return mongoTemplate.findById(id, clazz);
 	}
 
-	public Page<Map> query(SearchCO queryCO) {
-		final long startTime = IdGenerator.SystemClock.now();
+	public Page<Map<?, ?>> query(SearchCO queryCO) {
 		final Query query = new Query();
 		final String collectionName = queryCO.getCollectionName();
 		final Criteria criteria = new Criteria();
