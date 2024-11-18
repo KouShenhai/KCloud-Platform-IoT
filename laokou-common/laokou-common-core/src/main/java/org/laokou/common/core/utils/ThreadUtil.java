@@ -19,7 +19,7 @@ package org.laokou.common.core.utils;
 
 import com.alibaba.ttl.threadpool.TtlExecutors;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.config.TtlVirtualThreadFactory;
+import org.laokou.common.core.config.VirtualThreadFactory;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.concurrent.ExecutorService;
@@ -62,7 +62,7 @@ public final class ThreadUtil {
 	 * 新建一个虚拟线程池.
 	 */
 	public static ExecutorService newVirtualTaskExecutor() {
-		return Executors.newThreadPerTaskExecutor(TtlVirtualThreadFactory.INSTANCE);
+		return Executors.newThreadPerTaskExecutor(VirtualThreadFactory.INSTANCE);
 	}
 
 	public static ExecutorService newTtlVirtualTaskExecutor() {

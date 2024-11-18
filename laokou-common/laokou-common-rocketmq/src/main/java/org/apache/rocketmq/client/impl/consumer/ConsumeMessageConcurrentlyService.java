@@ -78,7 +78,7 @@ import org.apache.rocketmq.remoting.protocol.body.CMResult;
 import org.apache.rocketmq.remoting.protocol.body.ConsumeMessageDirectlyResult;
 import org.apache.rocketmq.logging.org.slf4j.Logger;
 import org.apache.rocketmq.logging.org.slf4j.LoggerFactory;
-import org.laokou.common.core.config.TtlVirtualThreadFactory;
+import org.laokou.common.core.config.VirtualThreadFactory;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -125,7 +125,7 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 					60L, // keepAliveTime: 虚拟线程不需要保持存活时间
 					TimeUnit.SECONDS, // 时间单位
 					new SynchronousQueue<>(), // 使用SynchronousQueue以确保每个任务都会创建一个新线程
-					TtlVirtualThreadFactory.INSTANCE // 使用虚拟线程工厂
+					VirtualThreadFactory.INSTANCE // 使用虚拟线程工厂
 			);
 		}
 		else {
