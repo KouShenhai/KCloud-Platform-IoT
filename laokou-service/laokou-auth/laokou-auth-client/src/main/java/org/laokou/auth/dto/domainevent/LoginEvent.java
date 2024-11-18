@@ -78,7 +78,7 @@ public class LoginEvent extends DefaultDomainEvent {
 	private String type;
 
 	public LoginEvent(String type, String errorMessage, Integer status, String browser, String os, String ip,
-					  String address, String username, Instant instant, Long tenantId, String topic, String tag) {
+			String address, String username, Instant instant, Long tenantId, String topic, String tag) {
 		super(topic, tag);
 		this.type = type;
 		this.errorMessage = errorMessage;

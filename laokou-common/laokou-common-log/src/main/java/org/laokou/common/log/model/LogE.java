@@ -62,58 +62,72 @@ public class LogE {
 	 * 操作的URI.
 	 */
 	private final String uri;
+
 	/**
 	 * 操作的请求类型.
 	 */
 	private final String requestType;
+
 	/**
 	 * 操作的浏览器.
 	 */
 	private final String userAgent;
+
 	/**
 	 * 操作的IP地址.
 	 */
 	private final String ip;
+
 	/**
 	 * 操作的归属地.
 	 */
 	private final String address;
+
 	/**
 	 * 操作人.
 	 */
 	private final String operator;
+
 	/**
 	 * 服务ID.
 	 */
 	private final String serviceId;
+
 	/**
 	 * 创建人.
 	 */
 	private final Long creator;
+
 	/**
 	 * 创建时间.
 	 */
 	private final Instant createTime;
+
 	/**
 	 * 租户ID.
 	 */
 	private final Long tenantId;
+
 	/**
 	 * 操作的方法名.
 	 */
 	private String methodName;
+
 	/**
 	 * 操作的请求参数.
 	 */
 	private String requestParams;
+
 	/**
 	 * 错误信息.
 	 */
 	private String errorMessage;
+
 	/**
 	 * 操作状态 0成功 1失败.
 	 */
 	private Integer status;
+
 	/**
 	 * 操作的消耗时间(毫秒).
 	 */
