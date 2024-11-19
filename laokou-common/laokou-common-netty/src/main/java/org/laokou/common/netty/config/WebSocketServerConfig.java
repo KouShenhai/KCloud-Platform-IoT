@@ -22,6 +22,9 @@ import io.netty.util.concurrent.DefaultThreadFactory;
 import io.netty.util.concurrent.EventExecutorGroup;
 import io.netty.util.concurrent.UnorderedThreadPoolEventExecutor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.util.Assert;
+
+import java.util.List;
 
 // @formatter:off
 /**
@@ -30,8 +33,10 @@ import org.springframework.context.annotation.Bean;
 public class WebSocketServerConfig {
 
     @Bean(name = "webSocketServer", initMethod = "start", destroyMethod = "stop")
-	public Server webSocketServer(ChannelHandler webSocketServerChannelInitializer,SpringWebSocketServerProperties springWebSocketServerProperties) {
-        return new WebSocketServer(webSocketServerChannelInitializer, springWebSocketServerProperties);
+	public Server webSocketServer(List<ChannelHandler> channelHandlers, SpringWebSocketServerProperties springWebSocketServerProperties) {
+		List<ChannelHandler> webSocketServerList = channelHandlers.stream().filter(item -> item.getClass().isAnnotationPresent(org.laokou.common.netty.annotation.WebSocketServer.class)).toList();
+		Assert.noNullElements(webSocketServerList, "WebSocket Server Not Found");
+		return new WebSocketServer(webSocketServerList.getFirst(), springWebSocketServerProperties);
     }
 
     @Bean
@@ -40,3 +45,4 @@ public class WebSocketServerConfig {
     }
 
 }
+// @formatter:on
