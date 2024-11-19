@@ -17,12 +17,12 @@
 
 package org.laokou.auth.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.gateway.LoginLogGateway;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
-import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
 
@@ -35,10 +35,10 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 
 	private final LoginLogMapper loginLogMapper;
 
+	@DS("domain")
 	@Override
 	public void create(DefaultDomainEvent domainEvent) {
-		LoginLogDO loginLogDO = LoginLogConvertor.toDataObject((LoginEvent) domainEvent);
-		loginLogMapper.insert(loginLogDO);
+		loginLogMapper.insert(LoginLogConvertor.toDataObject((LoginEvent) domainEvent));
 	}
 
 }
