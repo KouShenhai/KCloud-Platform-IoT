@@ -32,8 +32,8 @@ public class SessionHeartBeatManager {
 		HEART_BEAT_MAP.get(clientId).incrementAndGet();
 	}
 
-	public static void decrementHeartBeat(String clientId) {
-		HEART_BEAT_MAP.get(clientId).decrementAndGet();
+	public static void resetHeartbeat(String clientId) {
+		HEART_BEAT_MAP.get(clientId).set(0);
 	}
 
 	public static int getHeartBeat(String clientId) {
