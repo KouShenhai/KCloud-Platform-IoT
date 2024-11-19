@@ -20,7 +20,6 @@ package org.laokou.auth.ability;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.AuthA;
-import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -51,8 +50,6 @@ public class AuthDomainService {
 
 	private final NoticeLogGateway noticeLogGateway;
 
-	private final SpringUtil springUtil;
-
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void recordLoginLog(DefaultDomainEvent domainEvent) {
 		loginLogGateway.create(domainEvent);
@@ -64,17 +61,21 @@ public class AuthDomainService {
 	}
 
 	public void auth(AuthA auth) {
-		auth.updateSource(sourceGateway.getName(auth.getUser()));
 		// 校验验证码
 		checkCaptcha(auth);
+		// 修改数据源
+		auth.updateSource(sourceGateway.getName(auth.getUser()));
+		// 修改用户
 		auth.updateUser(userGateway.getProfile(auth.getUser()));
 		// 校验密码
 		auth.checkUserPassword(passwordEncoder);
 		// 校验用户状态
 		auth.checkUserStatus();
+		// 修改菜单
 		auth.updateMenu(menuGateway.getPermissions(auth.getUser()));
 		// 校验权限
 		auth.checkMenuPermissions();
+		// 修改部门
 		auth.updateDept(deptGateway.getPaths(auth.getUser()));
 		// 认证成功
 		auth.ok();
