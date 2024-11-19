@@ -278,6 +278,7 @@ class OAuth2ApiTest {
 
 	@Test
 	void testRemoveCache() {
+		MDCUtil.put("0", "0");
 		rocketMQDomainEventPublisher.publish(new RemoveCacheEvent(TENANT_ID, "1"), SendMessageType.ASYNC);
 	}
 
