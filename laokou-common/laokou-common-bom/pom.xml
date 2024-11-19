@@ -111,7 +111,7 @@
     <!--proto-google-common-protos版本-->
     <proto-google-common-protos.version>2.49.0</proto-google-common-protos.version>
     <!--error_prone_annotations版本-->
-    <error_prone_annotations.version>2.35.1</error_prone_annotations.version>
+    <error_prone_annotations.version>2.36.0</error_prone_annotations.version>
     <!--okio-jvm版本-->
     <okio-jvm.version>3.9.1</okio-jvm.version>
     <!--checker-qual版本-->
