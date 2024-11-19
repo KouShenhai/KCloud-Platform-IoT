@@ -1,0 +1,10 @@
+=== golang通过grpc调用grpc-java-server
+1.安装protobuf
+
+2.定义protoc
+
+3.运行 `protoc --go_out=./ *.proto` 生成
+
+4.运行 `protoc --go-grpc_out=./ *.proto` 生成
+
+5.运行 `go mod tidy`
