@@ -35,7 +35,7 @@ public class WebSocketServerConfig {
     @Bean(name = "webSocketServer", initMethod = "start", destroyMethod = "stop")
 	public Server webSocketServer(List<ChannelHandler> channelHandlers, SpringWebSocketServerProperties springWebSocketServerProperties) {
 		List<ChannelHandler> webSocketServerList = channelHandlers.stream().filter(item -> item.getClass().isAnnotationPresent(org.laokou.common.netty.annotation.WebSocketServer.class)).toList();
-		Assert.noNullElements(webSocketServerList, "WebSocket Server Not Found");
+		Assert.noNullElements(webSocketServerList, "WebSocketServer not found");
 		return new WebSocketServer(webSocketServerList.getFirst(), springWebSocketServerProperties);
     }
 
