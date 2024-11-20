@@ -40,8 +40,8 @@ public final class WebSocketServer extends AbstractServer {
 	private final SpringWebSocketServerProperties properties;
 
 	public WebSocketServer(ChannelHandler channelHandler, SpringWebSocketServerProperties properties) {
-		super(properties.getIp(), properties.getPort(), channelHandler, properties.getBossCoreSize(),
-				properties.getWorkerCoreSize());
+		super(properties.getIp(), properties.getPort(), channelHandler, properties.getBossCorePoolSize(),
+				properties.getWorkerCorePoolSize());
 		this.properties = properties;
 	}
 
@@ -52,9 +52,9 @@ public final class WebSocketServer extends AbstractServer {
 	@Override
 	protected AbstractBootstrap<ServerBootstrap, ServerChannel> init() {
 		// boss负责监听端口
-		boss = new NioEventLoopGroup(bossCoreSize, new DefaultThreadFactory("websocket-boss", true));
+		boss = new NioEventLoopGroup(bossCorePoolSize, new DefaultThreadFactory("websocket-boss", true));
 		// work负责线程读写
-		worker = new NioEventLoopGroup(workerCoreSize, new DefaultThreadFactory("websocket-worker", true));
+		worker = new NioEventLoopGroup(workerCorePoolSize, new DefaultThreadFactory("websocket-worker", true));
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组

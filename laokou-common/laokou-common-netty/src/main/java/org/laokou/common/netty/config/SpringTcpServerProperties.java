@@ -21,6 +21,9 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * TcpServer属性配置.
  *
@@ -32,68 +35,75 @@ import org.springframework.stereotype.Component;
 public class SpringTcpServerProperties {
 
 	/**
-	 * IP.
-	 */
-	private String ip;
-
-	/**
-	 * 端口.
-	 */
-	private int port;
-
-	/**
-	 * 服务ID.
-	 */
-	private String serviceId;
-
-	/**
-	 * 监听核心线程数.
-	 */
-	private Integer bossCoreSize = 1;
-
-	/**
-	 * 读写核心线程数.
-	 */
-	private Integer workerCoreSize = 8;
-
-	/**
 	 * 线程池数.
 	 */
-	private Integer corePoolSize = 8;
+	private Integer groupCorePoolSize = 16;
 
-	/**
-	 * 延迟发送 => true实时，false延迟.
-	 */
-	private boolean tcpNodelay = false;
+	private Map<String, Config> configs = new HashMap<>();
 
-	/**
-	 * 请求队列最大长度.
-	 */
-	private int backlogLength = 1024;
+	@Data
+	public static class Config {
 
-	/**
-	 * 读取空闲时间.
-	 */
-	private long readerIdleTime = 60;
+		/**
+		 * IP.
+		 */
+		private String ip;
 
-	/**
-	 * 写入空闲时间.
-	 */
-	private long writerIdleTime = 0;
+		/**
+		 * 端口.
+		 */
+		private int port;
 
-	/**
-	 * 全部时间.
-	 */
-	private long allIdleTime = 0;
+		/**
+		 * 服务ID.
+		 */
+		private String serviceId;
 
-	/**
-	 * 开启心跳包活机制.
-	 */
-	private boolean keepAlive = true;
+		/**
+		 * 监听核心线程数.
+		 */
+		private Integer bossCorePoolSize = 1;
 
-	/**
-	 * 最大心跳次数.
-	 */
-	private int maxHeartBeatCount = 5;
+		/**
+		 * 读写核心线程数.
+		 */
+		private Integer workerCorePoolSize = 8;
+
+		/**
+		 * 延迟发送 => true实时，false延迟.
+		 */
+		private boolean tcpNodelay = false;
+
+		/**
+		 * 请求队列最大长度.
+		 */
+		private int backlogLength = 1024;
+
+		/**
+		 * 读取空闲时间.
+		 */
+		private long readerIdleTime = 60;
+
+		/**
+		 * 写入空闲时间.
+		 */
+		private long writerIdleTime = 0;
+
+		/**
+		 * 全部时间.
+		 */
+		private long allIdleTime = 0;
+
+		/**
+		 * 开启心跳包活机制.
+		 */
+		private boolean keepAlive = true;
+
+		/**
+		 * 最大心跳次数.
+		 */
+		private int maxHeartBeatCount = 5;
+
+	}
 
 }

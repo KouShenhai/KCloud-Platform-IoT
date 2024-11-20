@@ -31,16 +31,16 @@ public abstract class AbstractTcpServerChannelInitializer extends AbstractChanne
 	@Override
 	protected void initChannel(SocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
-		SpringTcpServerProperties properties = getProperties();
+		SpringTcpServerProperties.Config config = getConfig();
 		// 前置处理
 		preHandler(pipeline);
 		// 心跳检测
-		pipeline.addLast("idleStateHandler", new IdleStateHandler(properties.getReaderIdleTime(),
-				properties.getWriterIdleTime(), properties.getAllIdleTime(), TimeUnit.SECONDS));
+		pipeline.addLast("idleStateHandler", new IdleStateHandler(config.getReaderIdleTime(),
+				config.getWriterIdleTime(), config.getAllIdleTime(), TimeUnit.SECONDS));
 		// 后置处理
 		postHandler(pipeline);
 	}
 
-	protected abstract SpringTcpServerProperties getProperties();
+	protected abstract SpringTcpServerProperties.Config getConfig();
 
 }

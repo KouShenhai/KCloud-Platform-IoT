@@ -37,9 +37,9 @@ public abstract class AbstractServer implements Server {
 
 	protected final ChannelHandler channelHandler;
 
-	protected final int bossCoreSize;
+	protected final int bossCorePoolSize;
 
-	protected final int workerCoreSize;
+	protected final int workerCorePoolSize;
 
 	/**
 	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源（对其他线程可见）.
@@ -56,12 +56,13 @@ public abstract class AbstractServer implements Server {
 	 */
 	private volatile boolean running;
 
-	protected AbstractServer(String ip, int port, ChannelHandler channelHandler, int bossCoreSize, int workerCoreSize) {
+	protected AbstractServer(String ip, int port, ChannelHandler channelHandler, int bossCorePoolSize,
+			int workerCorePoolSize) {
 		this.ip = ip;
 		this.port = port;
 		this.channelHandler = channelHandler;
-		this.bossCoreSize = bossCoreSize;
-		this.workerCoreSize = workerCoreSize;
+		this.bossCorePoolSize = bossCorePoolSize;
+		this.workerCorePoolSize = workerCorePoolSize;
 	}
 
 	/**

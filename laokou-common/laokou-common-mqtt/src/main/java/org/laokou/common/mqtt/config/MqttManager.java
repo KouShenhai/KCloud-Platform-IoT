@@ -39,21 +39,15 @@ public class MqttManager {
 	}
 
 	public synchronized void open() {
-		springMqttBrokerProperties.getConfigs().forEach((k, v) -> {
-			MqttClient client = new MqttClient(v, mqttLoadBalancer);
-			if (client.open()) {
-				MQTT_SESSION_MAP.put(k, client);
-			}
-		});
+		for (Map.Entry<String, MqttBrokerProperties> entry : springMqttBrokerProperties.getConfigs().entrySet()) {
+			MqttClient client = new MqttClient(entry.getValue(), mqttLoadBalancer);
+			MQTT_SESSION_MAP.putIfAbsent(entry.getKey(), client);
+		}
+		MQTT_SESSION_MAP.values().forEach(MqttClient::open);
 	}
 
 	public synchronized void close() {
-		springMqttBrokerProperties.getConfigs().forEach((k, v) -> {
-			MqttClient client = new MqttClient(v, mqttLoadBalancer);
-			if (client.close()) {
-				MQTT_SESSION_MAP.remove(k);
-			}
-		});
+		MQTT_SESSION_MAP.values().forEach(MqttClient::close);
 	}
 
 }
