@@ -32,20 +32,20 @@ import static io.netty.channel.ChannelOption.SO_KEEPALIVE;
  */
 public final class TcpServer extends AbstractServer {
 
-	private final SpringTcpServerProperties properties;
+	private final SpringTcpServerProperties.Config config;
 
-	public TcpServer(ChannelHandler channelHandler, SpringTcpServerProperties properties) {
-		super(properties.getIp(), properties.getPort(), channelHandler, properties.getBossCoreSize(),
-				properties.getWorkerCoreSize());
-		this.properties = properties;
+	public TcpServer(ChannelHandler channelHandler, SpringTcpServerProperties.Config config) {
+		super(config.getIp(), config.getPort(), channelHandler, config.getBossCorePoolSize(),
+				config.getWorkerCorePoolSize());
+		this.config = config;
 	}
 
 	@Override
 	protected AbstractBootstrap<?, ?> init() {
 		// boss负责监听端口
-		boss = new NioEventLoopGroup(bossCoreSize, new DefaultThreadFactory("tcp-boss", true));
+		boss = new NioEventLoopGroup(bossCorePoolSize, new DefaultThreadFactory("tcp-boss", true));
 		// work负责线程读写
-		worker = new NioEventLoopGroup(workerCoreSize, new DefaultThreadFactory("tcp-worker", true));
+		worker = new NioEventLoopGroup(workerCorePoolSize, new DefaultThreadFactory("tcp-worker", true));
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组
@@ -53,11 +53,11 @@ public final class TcpServer extends AbstractServer {
 			// 指定通道
 			.channel(NioServerSocketChannel.class)
 			// 延迟发送 => true实时发送；false延迟发送
-			.childOption(ChannelOption.TCP_NODELAY, properties.isTcpNodelay())
+			.childOption(ChannelOption.TCP_NODELAY, config.isTcpNodelay())
 			// 请求队列最大长度（如果连接建立频繁，服务器处理创建新连接较慢，可以适当调整参数）
-			.option(ChannelOption.SO_BACKLOG, properties.getBacklogLength())
+			.option(ChannelOption.SO_BACKLOG, config.getBacklogLength())
 			// 开启心跳包活机制
-			.childOption(SO_KEEPALIVE, properties.isKeepAlive())
+			.childOption(SO_KEEPALIVE, config.isKeepAlive())
 			// tcp处理类
 			.childHandler(channelHandler);
 	}

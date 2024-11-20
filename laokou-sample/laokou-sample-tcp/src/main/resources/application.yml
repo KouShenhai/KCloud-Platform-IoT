@@ -7,19 +7,21 @@ spring:
   profiles:
     active: @PROFILE-ACTIVE@
   tcp-server:
-    boss-core-size: 2
-    worker-core-size: 32
-    port: 1113
-    ip: 0.0.0.0
-    core-pool-size: 16
-    service-id: ${spring.application.name}-server
-    backlog-length: 4096
-    tcp-nodelay: false
-    all-idle-time: 0
-    reader-idle-time: 60
-    writer-idle-time: 0
-    keep-alive: true
-    max-heart-beat-count: 5
+    group-core-pool-size: 32
+    configs:
+      tcp1:
+        boss-core-pool-size: 2
+        worker-core-pool-size: 32
+        port: 1113
+        ip: 0.0.0.0
+        service-id: ${spring.application.name}-server
+        backlog-length: 4096
+        tcp-nodelay: false
+        all-idle-time: 0
+        reader-idle-time: 60
+        writer-idle-time: 0
+        keep-alive: true
+        max-heart-beat-count: 5
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml

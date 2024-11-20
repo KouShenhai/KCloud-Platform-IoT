@@ -41,7 +41,7 @@ public class WebSocketServerConfig {
 
     @Bean
     public EventExecutorGroup webSocketEventExecutorGroup(SpringWebSocketServerProperties springWebSocketServerProperties) {
-        return new UnorderedThreadPoolEventExecutor(springWebSocketServerProperties.getCorePoolSize(), new DefaultThreadFactory("webSocketHandler"));
+        return new UnorderedThreadPoolEventExecutor(springWebSocketServerProperties.getGroupCorePoolSize(), new DefaultThreadFactory("webSocketHandler"));
     }
 
 }

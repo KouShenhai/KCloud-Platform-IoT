@@ -27,12 +27,16 @@ import org.laokou.common.netty.annotation.TcpServer;
 import org.laokou.common.netty.config.AbstractTcpServerChannelInitializer;
 import org.laokou.common.netty.config.SpringTcpServerProperties;
 
+import static org.laokou.app.initializer.TcpServerChannelInitializer.KEY;
+
 /**
  * @author laokou
  */
-@TcpServer
+@TcpServer(key = KEY)
 @RequiredArgsConstructor
 public class TcpServerChannelInitializer extends AbstractTcpServerChannelInitializer {
+
+	protected static final String KEY = "tcp1";
 
 	private final SpringTcpServerProperties springTcpServerProperties;
 
@@ -54,8 +58,8 @@ public class TcpServerChannelInitializer extends AbstractTcpServerChannelInitial
 	}
 
 	@Override
-	protected SpringTcpServerProperties getProperties() {
-		return springTcpServerProperties;
+	protected SpringTcpServerProperties.Config getConfig() {
+		return springTcpServerProperties.getConfigs().get(KEY);
 	}
 
 }

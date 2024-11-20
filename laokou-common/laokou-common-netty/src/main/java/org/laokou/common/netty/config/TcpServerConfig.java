@@ -23,20 +23,22 @@ import io.netty.util.concurrent.EventExecutorGroup;
 import io.netty.util.concurrent.UnorderedThreadPoolEventExecutor;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 // @formatter:off
 /**
  * @author laokou
  */
 public class TcpServerConfig {
 
-    @Bean(name = "tcpServer", initMethod = "start", destroyMethod = "stop")
-	public Server tcpServer(SpringTcpServerProperties springTcpServerProperties, ChannelHandler tcpServerChannelInitializer) {
-        return new TcpServer(tcpServerChannelInitializer, springTcpServerProperties);
+    @Bean(name = "tcpServerManager", initMethod = "start", destroyMethod = "stop")
+	public TcpServerManager tcpServerManager(SpringTcpServerProperties springTcpServerProperties, List<ChannelHandler> channelHandlers) {
+        return new TcpServerManager(springTcpServerProperties, channelHandlers);
     }
 
     @Bean
     public EventExecutorGroup tcpServerEventExecutorGroup(SpringTcpServerProperties springTcpServerProperties) {
-        return new UnorderedThreadPoolEventExecutor(springTcpServerProperties.getCorePoolSize(), new DefaultThreadFactory("tcpServerHandler"));
+        return new UnorderedThreadPoolEventExecutor(springTcpServerProperties.getGroupCorePoolSize(), new DefaultThreadFactory("tcpServerHandler"));
     }
 
 }
