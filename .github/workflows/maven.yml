@@ -26,7 +26,7 @@ jobs:
       - name: Test with Maven
         run: mvn clean test -P prod
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5.0.4
+        uses: codecov/codecov-action@v5.0.6
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
