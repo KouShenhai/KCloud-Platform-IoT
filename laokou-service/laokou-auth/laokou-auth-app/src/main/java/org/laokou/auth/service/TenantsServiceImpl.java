@@ -22,11 +22,8 @@ import org.laokou.auth.api.TenantsServiceI;
 import org.laokou.auth.command.query.TenantGetIDQryExe;
 import org.laokou.auth.command.query.TenantListOptionQryExe;
 import org.laokou.auth.dto.TenantIDGetQry;
-import org.laokou.common.i18n.dto.Option;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * 租户管理.
@@ -45,10 +42,10 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	 * 查询租户下拉框选择项列表.
 	 * @return 租户下拉框选择项列表
 	 */
-	@Override
-	public Result<List<Option>> listOption() {
-		return tenantListOptionQryExe.execute();
-	}
+	// @Override
+	// public Result<List<Option>> listOption() {
+	// return tenantListOptionQryExe.execute();
+	// }
 
 	/**
 	 * 根据域名查看租户ID.

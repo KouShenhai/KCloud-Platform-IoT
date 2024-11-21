@@ -39,8 +39,6 @@ public interface CrudMapper<ID, VERSION, DO> extends BaseMapper<DO> {
 
 	long selectObjectCount(@Param(PAGE_QUERY) PageQuery pageQuery);
 
-	void truncateTable();
-
 	void deleteAll();
 
 }

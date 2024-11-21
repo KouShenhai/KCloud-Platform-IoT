@@ -24,14 +24,12 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.TenantsServiceI;
 import org.laokou.auth.dto.TenantIDGetQry;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.i18n.dto.Option;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @author laokou
@@ -45,10 +43,10 @@ public class TenantsV3Controller {
 	private final TenantsServiceI tenantsServiceI;
 
 	@TraceLog
-	@GetMapping("options")
+	@GetMapping("page")
 	@Operation(summary = "查询租户下拉选择项列表", description = "查询租户下拉选择项列表")
-	public Result<List<Option>> listOptionV3() {
-		return tenantsServiceI.listOption();
+	public Result<Page<Option>> pageV3() {
+		return tenantsServiceI.page();
 	}
 
 	@TraceLog

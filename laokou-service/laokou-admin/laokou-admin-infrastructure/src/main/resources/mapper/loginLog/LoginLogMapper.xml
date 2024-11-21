@@ -157,10 +157,6 @@
     order by id desc
   </select>
 
-  <delete id="truncateTable">
-    truncate boot_sys_login_log
-  </delete>
-
   <update id="deleteAll">
     update boot_sys_login_log
     set del_flag = 1

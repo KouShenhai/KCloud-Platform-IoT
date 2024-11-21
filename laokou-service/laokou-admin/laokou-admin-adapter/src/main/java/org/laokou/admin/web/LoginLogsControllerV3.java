@@ -107,12 +107,4 @@ public class LoginLogsControllerV3 {
 		return loginLogsServiceI.getById(new LoginLogGetQry(id));
 	}
 
-	@DeleteMapping("all")
-	@PreAuthorize("hasAuthority('sys:login-log:clear')")
-	@OperateLog(module = "登录日志管理", operation = "清空登录日志")
-	@Operation(summary = "清空登录日志", description = "清空登录日志")
-	public void clearV3() {
-		loginLogsServiceI.clear();
-	}
-
 }
