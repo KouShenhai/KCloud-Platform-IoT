@@ -48,7 +48,7 @@ public class IpPageQryExe {
 	public Result<Page<IpCO>> execute(IpPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<IpDO>> c1 = CompletableFuture
-				.supplyAsync(() -> ipMapper.selectPageByCondition(qry.index()), executor);
+				.supplyAsync(() -> ipMapper.selectPageByCondition(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ipMapper.selectCountByCondition(qry),
 					executor);
 			return Result

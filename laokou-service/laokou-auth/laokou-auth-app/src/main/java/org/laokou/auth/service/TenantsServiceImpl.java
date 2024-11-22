@@ -20,8 +20,11 @@ package org.laokou.auth.service;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.TenantsServiceI;
 import org.laokou.auth.command.query.TenantGetIDQryExe;
-import org.laokou.auth.command.query.TenantListOptionQryExe;
+import org.laokou.auth.command.query.TenantPageQryExe;
 import org.laokou.auth.dto.TenantIDGetQry;
+import org.laokou.auth.dto.TenantPageQry;
+import org.laokou.auth.dto.clientobject.TenantCO;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
@@ -34,18 +37,17 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TenantsServiceImpl implements TenantsServiceI {
 
-	private final TenantListOptionQryExe tenantListOptionQryExe;
+	private final TenantPageQryExe tenantPageQryExe;
 
 	private final TenantGetIDQryExe tenantGetIDQryExe;
 
 	/**
-	 * 查询租户下拉框选择项列表.
-	 * @return 租户下拉框选择项列表
+	 * 分页查询租户列表.
 	 */
-	// @Override
-	// public Result<List<Option>> listOption() {
-	// return tenantListOptionQryExe.execute();
-	// }
+	 @Override
+	 public Result<Page<TenantCO>> page(TenantPageQry qry) {
+	 return tenantPageQryExe.execute(qry);
+	 }
 
 	/**
 	 * 根据域名查看租户ID.

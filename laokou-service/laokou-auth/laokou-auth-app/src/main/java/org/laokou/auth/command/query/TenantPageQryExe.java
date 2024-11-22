@@ -16,33 +16,34 @@
  */
 
 package org.laokou.auth.command.query;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.laokou.auth.convertor.TenantConvertor;
+import org.laokou.auth.dto.TenantPageQry;
+import org.laokou.auth.dto.clientobject.TenantCO;
 import org.laokou.auth.gatewayimpl.database.TenantMapper;
+import org.laokou.auth.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
- * 查询租户下拉框选择项列表执行器.
- *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class TenantListOptionQryExe {
+public class TenantPageQryExe {
 
 	private final TenantMapper tenantMapper;
 
-	/**
-	 * 执行查询租户下拉框选择项列表.
-	 * @return 租户下拉框选择项列表
-	 */
-	// public Result<Page<TenantDO>> execute() {
-	// List<TenantDO> list = tenantMapper.selectList(Wrappers.lambdaQuery(TenantDO.class)
-	// .select(TenantDO::getId, TenantDO::getName)
-	// .orderByDesc(TenantDO::getId));
-	// return Result.ok(list.stream().map(item -> new Option(item.getName(),
-	// String.valueOf(item.getId()))).toList());
-	// }
+	 public Result<Page<TenantCO>> execute(TenantPageQry qry) {
+		 com.baomidou.mybatisplus.extension.plugins.pagination.Page<TenantDO> page = tenantMapper.selectPage(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(qry.getPageNum(), qry.getPageSize()), Wrappers.lambdaQuery(TenantDO.class)
+			 .select(TenantDO::getId, TenantDO::getName)
+			 .orderByDesc(TenantDO::getId));
+		 List<TenantCO> list = page.getRecords().stream().map(TenantConvertor::toClientObject).toList();
+		 return Result.ok(Page.create(list, page.getTotal()));
+	 }
 
 }

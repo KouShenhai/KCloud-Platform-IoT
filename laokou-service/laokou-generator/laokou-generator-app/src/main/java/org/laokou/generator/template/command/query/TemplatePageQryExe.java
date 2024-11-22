@@ -48,7 +48,7 @@ public class TemplatePageQryExe {
 	public Result<Page<TemplateCO>> execute(TemplatePageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<TemplateDO>> c1 = CompletableFuture
-				.supplyAsync(() -> templateMapper.selectObjectPage(qry.index()), executor);
+				.supplyAsync(() -> templateMapper.selectObjectPage(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> templateMapper.selectObjectCount(qry),
 					executor);
 			return Result

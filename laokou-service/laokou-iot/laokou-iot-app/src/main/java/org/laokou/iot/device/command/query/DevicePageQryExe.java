@@ -47,7 +47,7 @@ public class DevicePageQryExe {
 	public Result<Page<DeviceCO>> execute(DevicePageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<DeviceDO>> c1 = CompletableFuture
-				.supplyAsync(() -> deviceMapper.selectObjectPage(qry.index()), executor);
+				.supplyAsync(() -> deviceMapper.selectObjectPage(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> deviceMapper.selectObjectCount(qry),
 					executor);
 			return Result

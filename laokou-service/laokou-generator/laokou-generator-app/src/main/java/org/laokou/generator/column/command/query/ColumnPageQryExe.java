@@ -48,7 +48,7 @@ public class ColumnPageQryExe {
 	public Result<Page<ColumnCO>> execute(ColumnPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<ColumnDO>> c1 = CompletableFuture
-				.supplyAsync(() -> columnMapper.selectObjectPage(qry.index()), executor);
+				.supplyAsync(() -> columnMapper.selectObjectPage(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> columnMapper.selectObjectCount(qry),
 					executor);
 			return Result

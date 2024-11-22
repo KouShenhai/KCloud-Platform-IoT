@@ -48,7 +48,7 @@ public class ProductModelPageQryExe {
 	public Result<Page<ProductModelCO>> execute(ProductModelPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<ProductModelDO>> c1 = CompletableFuture
-				.supplyAsync(() -> productModelMapper.selectObjectPage(qry.index()), executor);
+				.supplyAsync(() -> productModelMapper.selectObjectPage(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> productModelMapper.selectObjectCount(qry),
 					executor);
 			return Result.ok(Page.create(

@@ -41,9 +41,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.Data;
-import org.laokou.auth.api.TenantsServiceI;
-import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -100,10 +97,6 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 	private Map<String, String> oauth2AuthenticationUrlToClientName;
 
 	private Map<String, String> saml2AuthenticationUrlToProviderName;
-
-	private volatile TenantsServiceI tenantsServiceI;
-
-	private static final Object LOCK = new Object();
 
 	private Function<HttpServletRequest, Map<String, String>> resolveHiddenInputs = (request) -> Collections.emptyMap();
 
@@ -164,8 +157,6 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 	}
 
 	private String generateLoginPageHtml(HttpServletRequest request, boolean loginError, boolean logoutSuccess) {
-		initTenantsServiceI();
-		// Result<List<Option>> result = tenantsServiceI.listOption();
 		String errorMsg = loginError ? getLoginErrorMessage(request) : "Invalid credentials";
 		String contextPath = request.getContextPath();
 		StringBuilder sb = new StringBuilder();
@@ -317,16 +308,6 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 			return uri.equals(url);
 		}
 		return uri.equals(request.getContextPath() + url);
-	}
-
-	private void initTenantsServiceI() {
-		if (ObjectUtil.isNull(tenantsServiceI)) {
-			synchronized (LOCK) {
-				if (ObjectUtil.isNull(tenantsServiceI)) {
-					tenantsServiceI = SpringContextUtil.getBean(TenantsServiceI.class);
-				}
-			}
-		}
 	}
 
 }

@@ -48,7 +48,7 @@ public class DeptPageQryExe {
 	public Result<Page<DeptCO>> execute(DeptPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<DeptDO>> c1 = CompletableFuture
-				.supplyAsync(() -> deptMapper.selectPageByCondition(qry.index()), executor);
+				.supplyAsync(() -> deptMapper.selectPageByCondition(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> deptMapper.selectCountByCondition(qry),
 					executor);
 			return Result
