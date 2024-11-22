@@ -18,7 +18,7 @@
     <!--curator版本-->
     <curator.version>5.7.1</curator.version>
     <!--log4j版本-->
-    <log4j.version>2.24.1</log4j.version>
+    <log4j.version>2.24.2</log4j.version>
     <!--commons-lang版本-->
     <commons-lang.version>2.6</commons-lang.version>
     <!--httpasyncclient版本-->
