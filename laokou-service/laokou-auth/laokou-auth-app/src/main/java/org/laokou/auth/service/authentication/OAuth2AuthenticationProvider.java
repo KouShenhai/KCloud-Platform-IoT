@@ -22,12 +22,13 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.AuthDomainService;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.convertor.UserConvertor;
-import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
+import org.laokou.auth.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.i18n.common.exception.AuthException;
+import org.laokou.common.i18n.common.exception.ParamException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.rocketmq.template.SendMessageType;
 import org.laokou.common.security.utils.UserDetail;
@@ -55,7 +56,7 @@ public class OAuth2AuthenticationProvider {
 	public UsernamePasswordAuthenticationToken authentication(AuthA auth) {
 		try {
 			// 校验
-			extensionExecutor.executeVoid(AuthValidatorExtPt.class,
+			extensionExecutor.executeVoid(AuthParamValidatorExtPt.class,
 					BizScenario.valueOf(auth.getGrantType().getCode(), USE_CASE_AUTH, SCENARIO),
 					extension -> extension.validate(auth));
 			// 认证
@@ -65,7 +66,7 @@ public class OAuth2AuthenticationProvider {
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
 					userDetail.getAuthorities());
 		}
-		catch (AuthException | SystemException e) {
+		catch (AuthException | ParamException | SystemException e) {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 		finally {

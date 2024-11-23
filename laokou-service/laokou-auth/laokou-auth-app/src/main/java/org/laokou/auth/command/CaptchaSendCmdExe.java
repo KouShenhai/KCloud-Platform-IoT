@@ -20,7 +20,7 @@ package org.laokou.auth.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
-import org.laokou.auth.extensionpoint.CaptchaValidatorExtPt;
+import org.laokou.auth.extensionpoint.CaptchaParamValidatorExtPt;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
@@ -44,7 +44,7 @@ public class CaptchaSendCmdExe {
 
 	public void executeVoid(CaptchaSendCmd cmd) {
 		// 校验
-		extensionExecutor.executeVoid(CaptchaValidatorExtPt.class,
+		extensionExecutor.executeVoid(CaptchaParamValidatorExtPt.class,
 				BizScenario.valueOf(cmd.getTag(), USE_CASE_CAPTCHA, SCENARIO),
 				extension -> extension.validate(cmd.getUuid()));
 		// 发布发送验证码事件
