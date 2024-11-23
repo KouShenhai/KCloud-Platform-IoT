@@ -1433,8 +1433,6 @@ spring:
               - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
               - /actuator/**=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
               - /error=laokou-admin,laokou-auth,laokou-iot
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
               - /favicon.ico=laokou-gateway
               - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
               - /v3/secrets=laokou-gateway,laokou-auth
@@ -1546,11 +1544,6 @@ feign:
           timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
           statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
           minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
 
 # knife4j的增强配置，不需要增强可以不配
 knife4j:
@@ -2842,8 +2835,6 @@ spring:
               - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
               - /actuator/**=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
               - /error=laokou-admin,laokou-auth,laokou-iot
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
               - /favicon.ico=laokou-gateway
               - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
               - /v3/secrets=laokou-gateway,laokou-auth
@@ -2954,11 +2945,6 @@ feign:
           timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
           statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
           minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
 
 # knife4j的增强配置，不需要增强可以不配
 knife4j:
@@ -3239,22 +3225,6 @@ INSERT INTO "public"."config_info" VALUES (9, 'auth-flow.json', 'LAOKOU_GROUP', 
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/tenants/options",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/tenants/id",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
     "resource": "/v3/tokens",
     "limitApp": "default",
     "count": 100000,
@@ -3290,22 +3260,6 @@ INSERT INTO "public"."config_info" VALUES (7, 'auth-flow.json', 'LAOKOU_GROUP', 
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/tenants/options",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/tenants/id",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
     "resource": "/v3/tokens",
     "limitApp": "default",
     "count": 100000,
@@ -3334,22 +3288,6 @@ INSERT INTO "public"."config_info" VALUES (8, 'auth-flow.json', 'LAOKOU_GROUP', 
   },
   {
     "resource": "/v3/secrets",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/tenants/options",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/tenants/id",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -3433,22 +3371,6 @@ INSERT INTO "public"."config_info" VALUES (10, 'admin-flow.json', 'LAOKOU_GROUP'
   },
   {
     "resource": "/v3/tenants/export",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/tenants/page",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/tenants/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -5267,8 +5189,6 @@ spring:
               - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
               - /actuator/**=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
               - /error=laokou-admin,laokou-auth,laokou-iot
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
               - /favicon.ico=laokou-gateway
               - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
               - /v3/secrets=laokou-gateway,laokou-auth
@@ -5379,11 +5299,6 @@ feign:
           timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
           statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
           minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
 
 # knife4j的增强配置，不需要增强可以不配
 knife4j:

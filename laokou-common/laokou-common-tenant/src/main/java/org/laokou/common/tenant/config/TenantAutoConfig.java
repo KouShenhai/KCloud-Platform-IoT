@@ -15,29 +15,16 @@
  *
  */
 
-package org.laokou.admin.source.gatewayimpl.database;
+package org.laokou.common.tenant.config;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.laokou.admin.source.gatewayimpl.database.dataobject.SourceDO;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.i18n.dto.PageQuery;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 
 /**
- * 数据源数据库映射.
- *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface SourceMapper extends CrudMapper<Long, Integer, SourceDO> {
-
-	List<SourceDO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
-
-	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
+@AutoConfiguration
+@MapperScan(basePackages = { "org.laokou.common.tenant.mapper" })
+public class TenantAutoConfig {
 
 }

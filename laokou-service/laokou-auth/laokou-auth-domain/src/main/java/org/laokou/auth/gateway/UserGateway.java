@@ -31,6 +31,6 @@ public interface UserGateway {
 	 * @param user 用户对象
 	 * @return 用户信息
 	 */
-	UserE getProfile(UserE user);
+	UserE getProfile(UserE user, String tenantCode);
 
 }

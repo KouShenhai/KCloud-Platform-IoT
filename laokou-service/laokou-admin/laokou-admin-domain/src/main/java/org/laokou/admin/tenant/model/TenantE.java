@@ -38,9 +38,9 @@ public class TenantE {
 	private String name;
 
 	/**
-	 * 租户标签.
+	 * 租户编号.
 	 */
-	private String label;
+	private String code;
 
 	/**
 	 * 数据源ID.

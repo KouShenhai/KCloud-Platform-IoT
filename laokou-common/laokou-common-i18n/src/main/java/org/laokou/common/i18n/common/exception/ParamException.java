@@ -57,7 +57,7 @@ public final class ParamException extends GlobalException {
 	/**
 	 * 租户ID不能为空.
 	 */
-	public static final String OAUTH2_TENANT_ID_REQUIRE = "P_OAuth2_TenantIdIsNull";
+	public static final String OAUTH2_TENANT_CODE_REQUIRE = "P_OAuth2_TenantCodeIsNull";
 
 	/**
 	 * ID不能为空.

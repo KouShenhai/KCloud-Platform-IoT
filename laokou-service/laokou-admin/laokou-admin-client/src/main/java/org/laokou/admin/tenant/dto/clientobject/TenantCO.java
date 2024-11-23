@@ -43,9 +43,9 @@ public class TenantCO extends ClientObject {
 	private String name;
 
 	/**
-	 * 租户标签.
+	 * 租户编码.
 	 */
-	private String label;
+	private String code;
 
 	/**
 	 * 数据源ID.

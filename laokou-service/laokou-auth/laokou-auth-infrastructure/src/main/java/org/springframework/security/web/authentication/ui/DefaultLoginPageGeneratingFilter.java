@@ -183,18 +183,10 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 			sb.append("        <h3 class=\"form-signin-heading\">老寇IoT云平台统一认证</h3>\n");
 			sb.append(createError(loginError, errorMsg)).append(createLogoutSuccess(logoutSuccess));
 			sb.append("        <p>\n");
-			sb.append("          <label for=\"tenant_id\" class=\"sr-only\">租户</label>\n");
-			sb.append(
-					"			  <select style=\"height:100%;\" name=\"tenant_id\" id=\"tenant_id\" class=\"form-control\">\n");
-			sb.append("           	<option value=\"0\" selected=\"selected\">老寇云集团</option>");
-			// for (Option option : result.getData()) {
-			// sb.append(" <option value=\"")
-			// .append(option.getValue())
-			// .append("\">\n")
-			// .append(option.getLabel())
-			// .append("</option>");
-			// }
-			sb.append("           </select>\n");
+			sb.append("          <label for=\"tenant_code\" class=\"sr-only\">租户编号</label>\n");
+			sb.append("          <input autoComplete=\"off\" type=\"text\" id=\"tenant_code\" name=\"")
+				.append("tenant_code")
+				.append("\" class=\"form-control\" placeholder=\"租户编号\" required autofocus>\n");
 			sb.append("        </p>\n");
 			sb.append("        <p>\n");
 			sb.append("          <label for=\"username\" class=\"sr-only\">用户名</label>\n");

@@ -15,46 +15,44 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.database.dataobject;
+package org.laokou.common.tenant.mapper;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
-import java.io.Serial;
-
-import static org.laokou.auth.common.constant.Constant.TABLE_TENANT;
-
 /**
- * 租户.
+ * 数据源数据对象.
  *
  * @author laokou
  */
 @Data
-@TableName(TABLE_TENANT)
-public class TenantDO extends BaseDO {
-
-	@Serial
-	private static final long serialVersionUID = -6290324458980136421L;
+@TableName("boot_sys_source")
+public class SourceDO extends BaseDO {
 
 	/**
-	 * 租户名称.
+	 * 数据源名称.
 	 */
 	private String name;
 
 	/**
-	 * 租户标签.
+	 * 数据源的驱动名称.
 	 */
-	private String label;
+	private String driverClassName;
 
 	/**
-	 * 数据源ID.
+	 * 数据源的连接信息.
 	 */
-	private Long sourceId;
+	private String url;
 
 	/**
-	 * 套餐ID.
+	 * 数据源的用户名.
 	 */
-	private Long packageId;
+	private String username;
+
+	/**
+	 * 数据源的密码.
+	 */
+	private String password;
 
 }

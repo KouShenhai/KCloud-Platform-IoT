@@ -20,9 +20,7 @@ package org.laokou.auth.dto.domainevent;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.common.constant.EventType;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
-import org.laokou.common.i18n.utils.DateUtil;
 
 /**
  * @author laokou
@@ -33,10 +31,8 @@ public class SendCaptchaEvent extends DefaultDomainEvent {
 
 	private String uuid;
 
-	public SendCaptchaEvent(String uuid, String topic, String tag, EventType eventType, String serviceId,
-			String sourceName, Long tenantId) {
-		super(topic, tag, eventType, serviceId, sourceName, DateUtil.nowInstant(), IdGenerator.defaultSnowflakeId(),
-				tenantId);
+	public SendCaptchaEvent(String uuid, String topic, String tag) {
+		super(topic, tag);
 		this.uuid = uuid;
 	}
 

@@ -164,6 +164,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
         └── laokou-common-redis                    --- 缓存组件
         └── laokou-common-kafka                    --- 消息组件
         └── laokou-common-log4j2                   --- 日志组件
+        └── laokou-common-tenant                   --- 租户组件
         └── laokou-common-mongodb                  --- 报表组件
         └── laokou-common-rocketmq                 --- 消息组件
         └── laokou-common-algorithm                --- 算法组件

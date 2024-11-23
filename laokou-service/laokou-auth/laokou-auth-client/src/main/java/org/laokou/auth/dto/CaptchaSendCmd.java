@@ -19,7 +19,6 @@ package org.laokou.auth.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,14 +37,14 @@ import org.laokou.common.i18n.dto.CommonCommand;
 public class CaptchaSendCmd extends CommonCommand {
 
 	/**
-	 * 验证码标签表达式.
-	 */
-	private static final String CAPTCHA_TAG = "(mail|mobile)Captcha";
-
-	/**
 	 * 业务用例.
 	 */
 	public static final String USE_CASE_CAPTCHA = "captcha";
+
+	/**
+	 * 验证码标签表达式.
+	 */
+	private static final String CAPTCHA_TAG = "(mail|mobile)Captcha";
 
 	@NotBlank(message = "UUID不能为空")
 	private String uuid;
@@ -54,7 +53,7 @@ public class CaptchaSendCmd extends CommonCommand {
 	@Pattern(regexp = CAPTCHA_TAG, message = "标签错误")
 	private String tag;
 
-	@NotNull(message = "租户ID不能为空")
-	private Long tenantId;
+	@NotBlank(message = "租户编号不能为空")
+	private String tenantCode;
 
 }

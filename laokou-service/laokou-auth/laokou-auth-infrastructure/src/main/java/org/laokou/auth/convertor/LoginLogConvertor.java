@@ -33,7 +33,8 @@ public class LoginLogConvertor {
 	public static LoginEvent toEvent(AuthA authA) {
 		LogV logV = authA.getLog();
 		return new LoginEvent(logV.type(), logV.errorMessage(), logV.status(), logV.browser(), logV.os(), logV.ip(),
-				logV.address(), logV.username(), logV.instant(), authA.getTenantId(), LAOKOU_LOG_TOPIC, LOGIN_TAG);
+				logV.address(), logV.username(), logV.instant(), authA.getUser().getTenantId(), LAOKOU_LOG_TOPIC,
+				LOGIN_TAG);
 	}
 
 	public static LoginLogDO toDataObject(LoginEvent loginEvent) {

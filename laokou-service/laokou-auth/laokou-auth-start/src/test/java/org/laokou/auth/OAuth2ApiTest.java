@@ -54,7 +54,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.laokou.common.data.cache.constant.NameConstant.TENANT_ID;
+import static org.laokou.common.data.cache.constant.NameConstant.TENANTS;
 import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -237,20 +237,6 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void testTenantOptionsApi() {
-		String apiUrl = getTenantOptionsApiUrlV3();
-		String json = HttpUtil.doGet(apiUrl, Collections.emptyMap(), Collections.emptyMap(), disabledSsl());
-		log.info("查询租户下拉选择项列表，返回信息：{}", json);
-	}
-
-	@Test
-	void testTenantIdByDomainNameApi() {
-		String apiUrl = getTenantIdByDomainNameApiUrlV3();
-		String json = HttpUtil.doGet(apiUrl, Collections.emptyMap(), Collections.emptyMap(), disabledSsl());
-		log.info("根据域名查看租户ID，返回信息：{}", json);
-	}
-
-	@Test
 	void testGetTokenApi() {
 		log.info("---------- 获取令牌 ----------");
 		String apiUrl = getTokenUrlV3();
@@ -272,14 +258,15 @@ class OAuth2ApiTest {
 			.uri(apiUrl)
 			.body(new TokenRemoveCmd(TOKEN))
 			.contentType(MediaType.APPLICATION_JSON)
-			.retrieve();
+			.retrieve()
+			.toBodilessEntity();
 		log.info("---------- 登录已注销，结束令牌清除 ----------");
 	}
 
 	@Test
 	void testRemoveCache() {
 		MDCUtil.put("0", "0");
-		rocketMQDomainEventPublisher.publish(new RemoveCacheEvent(TENANT_ID, "1"), SendMessageType.ASYNC);
+		rocketMQDomainEventPublisher.publish(new RemoveCacheEvent(TENANTS, "1"), SendMessageType.ASYNC);
 	}
 
 	private Map<String, String> deviceAuthorizationCodeAuth(String deviceCode) {
@@ -344,7 +331,7 @@ class OAuth2ApiTest {
 	private Map<String, String> mobileAuth(String code) {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("code", code, "mobile", MOBILE, "tenant_id", "0", "grant_type",
+			Map<String, String> params = Map.of("code", code, "mobile", MOBILE, "tenant_code", "laokou", "grant_type",
 					"mobile");
 			Map<String, String> headers = Map.of("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "User-Agent",
@@ -364,7 +351,8 @@ class OAuth2ApiTest {
 	private Map<String, String> mailAuth(String code) {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("code", code, "mail", MAIL, "tenant_id", "0", "grant_type", "mail");
+			Map<String, String> params = Map.of("code", code, "mail", MAIL, "tenant_code", "laokou", "grant_type",
+					"mail");
 			Map<String, String> headers = Map.of("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "User-Agent",
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
@@ -384,8 +372,8 @@ class OAuth2ApiTest {
 	private Map<String, String> usernamePasswordAuth(String captcha, String username, String password) {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("uuid", UUID, "username", username, "password", password, "tenant_id",
-					"0", "grant_type", "password", "captcha", captcha);
+			Map<String, String> params = Map.of("uuid", UUID, "username", username, "password", password, "tenant_code",
+					"laokou", "grant_type", "password", "captcha", captcha);
 			Map<String, String> headers = Map.of("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "trace-id",
 					String.valueOf(IdGenerator.defaultSnowflakeId()), "User-Agent",
@@ -470,14 +458,6 @@ class OAuth2ApiTest {
 
 	private String getSecretApiUrlV3() {
 		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/secrets";
-	}
-
-	private String getTenantOptionsApiUrlV3() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/tenants/options";
-	}
-
-	private String getTenantIdByDomainNameApiUrlV3() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/tenants/id";
 	}
 
 	private String getTokenUrlV3() {

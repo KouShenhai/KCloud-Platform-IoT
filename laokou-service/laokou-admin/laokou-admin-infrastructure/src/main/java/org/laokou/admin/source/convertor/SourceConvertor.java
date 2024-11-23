@@ -17,7 +17,7 @@
 
 package org.laokou.admin.source.convertor;
 
-import org.laokou.admin.source.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.common.tenant.mapper.SourceDO;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.admin.source.dto.clientobject.SourceCO;

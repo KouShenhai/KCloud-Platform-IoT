@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.source.convertor.SourceConvertor;
 import org.laokou.admin.source.dto.SourceGetQry;
 import org.laokou.admin.source.dto.clientobject.SourceCO;
-import org.laokou.admin.source.gatewayimpl.database.SourceMapper;
+import org.laokou.common.tenant.mapper.SourceMapper;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 

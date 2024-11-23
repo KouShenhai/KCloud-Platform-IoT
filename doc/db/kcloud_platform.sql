@@ -1091,7 +1091,7 @@ CACHE 1
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
   "name" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
-  "label" varchar(30) COLLATE "pg_catalog"."default" NOT NULL,
+  "code" varchar(30) COLLATE "pg_catalog"."default" NOT NULL,
   "source_id" int8 NOT NULL,
   "package_id" int8 NOT NULL
 )
@@ -1105,7 +1105,7 @@ COMMENT ON COLUMN "public"."boot_sys_tenant"."del_flag" IS '删除标识 0未删
 COMMENT ON COLUMN "public"."boot_sys_tenant"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_sys_tenant"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_sys_tenant"."name" IS '租户名称';
-COMMENT ON COLUMN "public"."boot_sys_tenant"."label" IS '租户标签';
+COMMENT ON COLUMN "public"."boot_sys_tenant"."code" IS '租户编号';
 COMMENT ON COLUMN "public"."boot_sys_tenant"."source_id" IS '数据源ID';
 COMMENT ON COLUMN "public"."boot_sys_tenant"."package_id" IS '套餐ID';
 COMMENT ON TABLE "public"."boot_sys_tenant" IS '租户';

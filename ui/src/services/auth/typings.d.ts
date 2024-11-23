@@ -17,7 +17,7 @@ declare namespace API {
 	type SendCaptchaParam = {
 		uuid: string;
 		tag: string;
-		tenantId: number;
+		tenantCode: string;
 	};
 
 	type OAuth2Param = {
@@ -26,7 +26,7 @@ declare namespace API {
 		uuid?: string;
 		captcha?: string;
 		grant_type?: string;
-		tenant_id?: number;
+		tenant_code?: string;
 		code?: string;
 		mail?: string;
 		mobile?: string;

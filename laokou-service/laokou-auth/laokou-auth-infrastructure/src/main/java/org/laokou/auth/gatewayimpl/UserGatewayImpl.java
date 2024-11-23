@@ -52,9 +52,9 @@ public class UserGatewayImpl implements UserGateway {
 	 * @return 用户信息
 	 */
 	@Override
-	public UserE getProfile(UserE user) {
+	public UserE getProfile(UserE user, String tenantCode) {
 		try {
-			UserDO userDO = userMapper.selectOneByCondition(UserConvertor.toDataObject(user));
+			UserDO userDO = userMapper.selectOneByCondition(UserConvertor.toDataObject(user), tenantCode);
 			return ObjectUtil.isNotNull(userDO) ? UserConvertor.toEntity(userDO) : null;
 		}
 		catch (BadSqlGrammarException e) {

@@ -64,9 +64,9 @@ public class AuthDomainService {
 		// 校验验证码
 		checkCaptcha(auth);
 		// 修改数据源
-		auth.updateSource(sourceGateway.getName(auth.getUser()));
+		auth.updateSource(sourceGateway.getName(auth.getTenantCode()));
 		// 修改用户
-		auth.updateUser(userGateway.getProfile(auth.getUser()));
+		auth.updateUser(userGateway.getProfile(auth.getUser(), auth.getTenantCode()));
 		// 校验密码
 		auth.checkUserPassword(passwordEncoder);
 		// 校验用户状态

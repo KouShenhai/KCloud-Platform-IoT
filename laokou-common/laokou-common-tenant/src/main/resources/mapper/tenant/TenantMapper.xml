@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- /*
+/*
  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,18 +18,27 @@
  */
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.auth.gatewayimpl.database.SourceMapper">
+<mapper namespace="org.laokou.common.tenant.mapper.TenantMapper">
 
-  <select id="selectOneByTenantId" resultType="org.laokou.auth.gatewayimpl.database.dataobject.SourceDO">
-    select name
-         , driver_class_name
-         , url
-         , username
-         , password
-    from boot_sys_source
-    where id in
-          (select source_id from boot_sys_tenant where id = #{tenantId})
-      and del_flag = 0
-  </select>
+	<select id="selectPageByCondition"
+			resultType="org.laokou.common.tenant.mapper.TenantDO">
+		SELECT *
+		from boot_sys_tenant
+		where del_flag = 0
+		order by id desc
+		limit ${pageQuery.pageSize} OFFSET ${pageQuery.pageIndex}
+	</select>
+
+	<select id="selectCountByCondition" resultType="long">
+		SELECT count(1)
+		from boot_sys_tenant
+		where del_flag = 0
+	</select>
+
+	<select id="selectVersion" resultType="integer">
+		select version
+		from boot_sys_tenant
+		where id = #{id}
+	</select>
 
 </mapper>

@@ -18,13 +18,14 @@
 package org.laokou.admin.source.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.source.model.SourceE;
-import org.springframework.stereotype.Component;
-import org.laokou.admin.source.gateway.SourceGateway;
-import org.laokou.admin.source.gatewayimpl.database.SourceMapper;
-import java.util.Arrays;
 import org.laokou.admin.source.convertor.SourceConvertor;
-import org.laokou.admin.source.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.admin.source.gateway.SourceGateway;
+import org.laokou.admin.source.model.SourceE;
+import org.laokou.common.tenant.mapper.SourceDO;
+import org.laokou.common.tenant.mapper.SourceMapper;
+import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 /**
  * 数据源网关实现.

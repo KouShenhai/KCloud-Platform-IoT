@@ -39,9 +39,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-import static org.laokou.common.core.utils.IpUtil.LOCAL_IPV4;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.constant.TraceConstant.DOMAIN_NAME;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 /**
@@ -80,16 +78,6 @@ public final class RequestUtil {
 		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
 		Assert.notNull(requestAttributes, "requestAttributes not be null");
 		return ((ServletRequestAttributes) requestAttributes).getRequest();
-	}
-
-	/**
-	 * 根据请求获取域名.
-	 * @param request 请求对象
-	 * @return 域名
-	 */
-	public static String getDomainName(HttpServletRequest request) {
-		String domainName = request.getHeader(DOMAIN_NAME);
-		return StringUtil.isEmpty(domainName) ? LOCAL_IPV4 : domainName;
 	}
 
 	/**

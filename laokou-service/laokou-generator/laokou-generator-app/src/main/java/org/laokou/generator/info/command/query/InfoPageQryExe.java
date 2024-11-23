@@ -47,8 +47,8 @@ public class InfoPageQryExe {
 
 	public Result<Page<InfoCO>> execute(InfoPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<InfoDO>> c1 = CompletableFuture
-				.supplyAsync(() -> infoMapper.selectObjectPage(qry), executor);
+			CompletableFuture<List<InfoDO>> c1 = CompletableFuture.supplyAsync(() -> infoMapper.selectObjectPage(qry),
+					executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> infoMapper.selectObjectCount(qry),
 					executor);
 			return Result

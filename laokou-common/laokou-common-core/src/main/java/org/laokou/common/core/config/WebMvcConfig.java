@@ -44,6 +44,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		return new I18nRequestContextFilter();
 	}
 
+	@Bean(initMethod = "init", bootstrap = Bean.Bootstrap.BACKGROUND)
+	public WarmUpConfig warmUpConfig() {
+		log.info("{} => Initializing WarmUpConfig", Thread.currentThread().getName());
+		return new WarmUpConfig();
+	}
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new I18nInterceptor()).addPathPatterns("/**");

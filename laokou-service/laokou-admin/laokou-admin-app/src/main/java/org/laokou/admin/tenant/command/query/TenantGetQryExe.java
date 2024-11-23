@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.tenant.convertor.TenantConvertor;
 import org.laokou.admin.tenant.dto.TenantGetQry;
 import org.laokou.admin.tenant.dto.clientobject.TenantCO;
-import org.laokou.admin.tenant.gatewayimpl.database.TenantMapper;
+import org.laokou.common.tenant.mapper.TenantMapper;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 

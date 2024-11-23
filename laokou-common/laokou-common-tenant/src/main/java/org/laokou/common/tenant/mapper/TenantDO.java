@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.tenant.gatewayimpl.database.dataobject;
+package org.laokou.common.tenant.mapper;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -36,9 +36,9 @@ public class TenantDO extends BaseDO {
 	private String name;
 
 	/**
-	 * 租户标签.
+	 * 租户编号.
 	 */
-	private String label;
+	private String code;
 
 	/**
 	 * 数据源ID.
