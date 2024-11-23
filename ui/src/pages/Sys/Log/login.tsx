@@ -1,6 +1,6 @@
 import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {clearV3, exportV3, pageV3, removeV3} from "@/services/admin/loginLog";
+import {exportV3, pageV3, removeV3} from "@/services/admin/loginLog";
 import {Button, message, Modal} from "antd";
 import {DeleteOutlined, ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
@@ -127,22 +127,6 @@ export default () => {
 			setSelectedRowKeys(selectedRowKeys);
 		}
 	};
-
-	const clearLoginLog = async () => {
-		Modal.confirm({
-			title: '确认清空?',
-			content: '您确定要清空数据吗?',
-			okText: '确认',
-			cancelText: '取消',
-			onOk: async () => {
-				clearV3().then(() => {
-					message.success("数据已清空").then()
-					// @ts-ignore
-					actionRef?.current?.reload();
-				})
-			},
-		});
-	}
 
 	const deleteLoginLog = async () => {
 		Modal.confirm({
@@ -295,9 +279,6 @@ export default () => {
 				() => [
 					<Button key="delete" danger ghost icon={<DeleteOutlined/>} onClick={deleteLoginLog}>
 						删除
-					</Button>,
-					<Button key="truncate" type="primary" danger icon={<DeleteOutlined/>} onClick={clearLoginLog}>
-						清空
 					</Button>,
 					<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={exportToExcel}>
 						导出

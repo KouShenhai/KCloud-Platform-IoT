@@ -6,6 +6,7 @@ import {
 	MobileOutlined,
 	QqOutlined,
 	SafetyCertificateOutlined,
+	TeamOutlined,
 	UserOutlined,
 	WechatOutlined,
 } from '@ant-design/icons';
@@ -24,8 +25,7 @@ import {JSEncrypt} from 'jsencrypt';
 // @ts-ignore
 import {v7 as uuidV7} from 'uuid';
 // @ts-ignore
-import {getTenantIdByDomainNameV3, listTenantOptionV3} from "@/services/auth/tenant"
-import {ProFormInstance, ProFormSelect} from "@ant-design/pro-form"
+import {ProFormInstance} from "@ant-design/pro-form"
 // @ts-ignore
 import {clearToken, setToken} from "@/access"
 
@@ -48,7 +48,6 @@ export default () => {
 	const [captchaImage, setCaptchaImage] = useState<string>('');
 	const [uuid, setUuid] = useState<string>('');
 	const [publicKey, setPublicKey] = useState<string>('');
-	const [tenantOptions, setTenantOptions] = useState<API.TenantOptionParam[]>([])
 	const [requestId, setRequestId] = useState<string>('')
     const formRef = useRef<ProFormInstance>();
 
@@ -85,7 +84,7 @@ export default () => {
 					password: encodeURIComponent(
 						encrypt.encrypt(form.password as string),
 					),
-					tenant_id: form.tenant_id,
+					tenant_code: form.tenant_code,
 					grant_type: 'password',
 				};
 			}
@@ -93,14 +92,14 @@ export default () => {
 				return {
 					mail: form.mail,
 					code: form.mail_captcha,
-					tenant_id: form.tenant_id,
+					tenant_code: form.tenant_code,
 					grant_type: 'mail'
 				};
 			case 'mobile':
 				return {
 					mobile: form.mobile,
 					code: form.mobile_captcha,
-					tenant_id: form.tenant_id,
+					tenant_code: form.tenant_code,
 					grant_type: 'mobile'
 				};
 		}
@@ -133,22 +132,9 @@ export default () => {
         setRequestId(uuidV7())
 	}
 
-	const listTenantOption = async () => {
-		// @ts-ignore
-        listTenantOptionV3().then((res: { code: string; data: API.TenantOptionParam[]; }) => {
-			if (res.code === 'OK') {
-				const options = []
-				const defaultOption = {label: '老寇云集团', value: '0'}
-				options.push(defaultOption)
-				res.data?.forEach((item: API.TenantOptionParam) => options.push(item))
-				setTenantOptions(options)
-			}
-		})
-	}
-
 	const sendMailCaptcha = async () => {
 		const param = {
-			tenantId: formRef?.current?.getFieldValue("tenant_id"),
+			tenantCode: formRef?.current?.getFieldValue("tenant_code"),
 			tag: 'mailCaptcha',
 			uuid: formRef?.current?.getFieldValue("mail")
 		}
@@ -157,20 +143,11 @@ export default () => {
 
 	const sendMobileCaptcha = async () => {
 		const param = {
-			tenantId: formRef?.current?.getFieldValue("tenant_id"),
+			tenantCode: formRef?.current?.getFieldValue("tenant_code"),
 			tag: 'mobileCaptcha',
 			uuid: formRef?.current?.getFieldValue("mobile")
 		}
 		sendCaptchaV3(param as API.SendCaptchaParam, requestId).catch(console.log)
-	}
-
-	const getTenantIdByDomain = async () => {
-		// @ts-ignore
-        getTenantIdByDomainNameV3().then((res: { code: string; data: any; }) => {
-			if (res.code === 'OK') {
-				setFormField({tenant_id: res.data})
-			}
-		})
 	}
 
 	const clearMailCaptcha = () => {
@@ -183,10 +160,8 @@ export default () => {
 
 	useEffect(() => {
 		clearToken()
-		listTenantOption().catch(console.log)
 		getPublicKey().catch(console.log)
 		getCaptchaImage().catch(console.log)
-		getTenantIdByDomain().catch(console.log)
 		getRequestId().catch(console.log)
 	}, []);
 
@@ -316,19 +291,18 @@ export default () => {
 					onChange={(activeKey) => setLoginType(activeKey as LoginType)}
 				></Tabs>
 
-				<ProFormSelect
-					name="tenant_id"
-					showSearch
+				<ProFormText
+					name="tenant_code"
 					fieldProps={{
-						size: 'large'
+						size: 'large',
+						prefix: <TeamOutlined className={'prefixIcon'}/>,
+						autoComplete: 'new-password',
 					}}
-					options={tenantOptions}
-					debounceTime={300}
-					placeholder="请选择租户"
+					placeholder={'请输入租户编号'}
 					rules={[
 						{
 							required: true,
-							message: '请选择租户',
+							message: '请输入租户编号',
 						},
 					]}
 				/>

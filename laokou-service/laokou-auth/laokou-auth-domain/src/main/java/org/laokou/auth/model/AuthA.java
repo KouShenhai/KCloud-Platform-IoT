@@ -26,7 +26,6 @@ import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -60,6 +59,11 @@ public class AuthA extends AggregateRoot<Long> {
 	 * 密码.
 	 */
 	private String password;
+
+	/**
+	 * 租户编号.
+	 */
+	private String tenantCode;
 
 	/**
 	 * 认证类型 mail邮箱 mobile手机号 password密码 authorization_code授权码.
@@ -105,14 +109,13 @@ public class AuthA extends AggregateRoot<Long> {
 		super(IdGenerator.defaultSnowflakeId());
 	}
 
-	public AuthA(String username, String password, String tenantId, GrantType grantType, String uuid, String captcha,
+	public AuthA(String username, String password, String tenantCode, GrantType grantType, String uuid, String captcha,
 			HttpServletRequest request) {
 		super(IdGenerator.defaultSnowflakeId());
 		this.username = username;
 		this.password = password;
+		this.tenantCode = tenantCode;
 		this.grantType = grantType;
-		// 用于tenantId判空
-		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : null;
 		this.captcha = new CaptchaV(uuid, captcha);
 		this.request = request;
 	}

@@ -48,7 +48,7 @@ public class ClusterPageQryExe {
 	public Result<Page<ClusterCO>> execute(ClusterPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<ClusterDO>> c1 = CompletableFuture
-				.supplyAsync(() -> clusterMapper.selectObjectPage(qry.index()), executor);
+				.supplyAsync(() -> clusterMapper.selectObjectPage(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> clusterMapper.selectObjectCount(qry),
 					executor);
 			return Result

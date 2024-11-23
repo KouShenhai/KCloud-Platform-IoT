@@ -15,39 +15,27 @@
  *
  */
 
-package org.laokou.admin.tenant.gatewayimpl.database.dataobject;
+package org.laokou.common.tenant.mapper;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
- * 租户数据对象.
+ * 租户数据库映射.
  *
  * @author laokou
  */
-@Data
-@TableName("boot_sys_tenant")
-public class TenantDO extends BaseDO {
+@Mapper
+@Repository
+public interface TenantMapper extends CrudMapper<Long, Integer, TenantDO> {
 
-	/**
-	 * 租户名称.
-	 */
-	private String name;
+	List<TenantDO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
 
-	/**
-	 * 租户标签.
-	 */
-	private String label;
-
-	/**
-	 * 数据源ID.
-	 */
-	private Long sourceId;
-
-	/**
-	 * 套餐ID.
-	 */
-	private Long packageId;
+	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
 
 }

@@ -41,6 +41,9 @@
       <if test="user.mobile != null and user.mobile != ''">
         and mobile = #{user.mobile}
       </if>
+      <if test="tenantCode != 'laokou'">
+        and tenant_id in (select id from boot_sys_tenant where code = #{tenantCode} and del_flag = 0)
+      </if>
       and del_flag = 0
     </where>
     limit 1

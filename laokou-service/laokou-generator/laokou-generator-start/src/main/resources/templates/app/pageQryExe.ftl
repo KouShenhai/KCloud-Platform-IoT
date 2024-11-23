@@ -48,7 +48,7 @@ public class ${className}PageQryExe {
 
 	public Result<Page<${className}CO>> execute(${className}PageQry qry) {
         try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-            CompletableFuture<List<${className}DO>> c1 = CompletableFuture.supplyAsync(() -> ${instanceName}Mapper.selectObjectPage(qry.index()), executor);
+            CompletableFuture<List<${className}DO>> c1 = CompletableFuture.supplyAsync(() -> ${instanceName}Mapper.selectObjectPage(qry), executor);
             CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ${instanceName}Mapper.selectObjectCount(qry), executor);
             return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(${className}Convertor::toClientObject).toList(), c2.get(30, TimeUnit.SECONDS)));
         } catch (Exception e) {

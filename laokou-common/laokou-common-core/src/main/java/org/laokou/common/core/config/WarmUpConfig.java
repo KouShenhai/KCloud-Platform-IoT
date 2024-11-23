@@ -19,7 +19,6 @@ package org.laokou.common.core.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RequestUtil;
-import org.springframework.beans.factory.InitializingBean;
 
 /**
  * 预热.
@@ -27,12 +26,11 @@ import org.springframework.beans.factory.InitializingBean;
  * @author laokou
  */
 @Slf4j
-public class WarmUpConfig implements InitializingBean {
+public class WarmUpConfig {
 
 	private static final String DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3";
 
-	@Override
-	public void afterPropertiesSet() {
+	public void init() {
 		log.info("加载Browscap预热...");
 		// 预热
 		RequestUtil.getUserAgentParser().parse(DEFAULT_USER_AGENT);

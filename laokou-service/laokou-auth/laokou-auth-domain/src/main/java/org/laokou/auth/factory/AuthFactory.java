@@ -71,38 +71,38 @@ public class AuthFactory {
 	public static final String CODE = "code";
 
 	/**
-	 * 租户ID.
+	 * 租户编号.
 	 */
-	public static final String TENANT_ID = "tenant_id";
+	public static final String TENANT_CODE = "tenant_code";
 
 	public static AuthA mail(HttpServletRequest request) {
-		String tenantId = request.getParameter(TENANT_ID);
 		String code = request.getParameter(CODE);
 		String mail = request.getParameter(MAIL);
-		return new AuthA(EMPTY, EMPTY, tenantId, GrantType.MAIL, mail, code, request);
+		String tenantCode = request.getParameter(TENANT_CODE);
+		return new AuthA(EMPTY, EMPTY, tenantCode, GrantType.MAIL, mail, code, request);
 	}
 
 	public static AuthA mobile(HttpServletRequest request) {
-		String tenantId = request.getParameter(TENANT_ID);
 		String code = request.getParameter(CODE);
 		String mobile = request.getParameter(MOBILE);
-		return new AuthA(EMPTY, EMPTY, tenantId, GrantType.MOBILE, mobile, code, request);
+		String tenantCode = request.getParameter(TENANT_CODE);
+		return new AuthA(EMPTY, EMPTY, tenantCode, GrantType.MOBILE, mobile, code, request);
 	}
 
 	public static AuthA password(HttpServletRequest request) {
-		String tenantId = request.getParameter(TENANT_ID);
 		String uuid = request.getParameter(UUID);
 		String captcha = request.getParameter(CAPTCHA);
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
-		return new AuthA(username, password, tenantId, GrantType.PASSWORD, uuid, captcha, request);
+		String tenantCode = request.getParameter(TENANT_CODE);
+		return new AuthA(username, password, tenantCode, GrantType.PASSWORD, uuid, captcha, request);
 	}
 
 	public static AuthA authorizationCode(HttpServletRequest request) {
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
-		String tenantId = request.getParameter(TENANT_ID);
-		return new AuthA(username, password, tenantId, GrantType.AUTHORIZATION_CODE, EMPTY, EMPTY, request);
+		String tenantCode = request.getParameter(TENANT_CODE);
+		return new AuthA(username, password, tenantCode, GrantType.AUTHORIZATION_CODE, EMPTY, EMPTY, request);
 	}
 
 }

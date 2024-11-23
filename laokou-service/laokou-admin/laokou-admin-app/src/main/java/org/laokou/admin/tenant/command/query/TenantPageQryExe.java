@@ -21,8 +21,8 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.tenant.convertor.TenantConvertor;
 import org.laokou.admin.tenant.dto.TenantPageQry;
 import org.laokou.admin.tenant.dto.clientobject.TenantCO;
-import org.laokou.admin.tenant.gatewayimpl.database.TenantMapper;
-import org.laokou.admin.tenant.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.common.tenant.mapper.TenantMapper;
+import org.laokou.common.tenant.mapper.TenantDO;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
@@ -48,7 +48,7 @@ public class TenantPageQryExe {
 	public Result<Page<TenantCO>> execute(TenantPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<TenantDO>> c1 = CompletableFuture
-				.supplyAsync(() -> tenantMapper.selectPageByCondition(qry.index()), executor);
+				.supplyAsync(() -> tenantMapper.selectPageByCondition(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> tenantMapper.selectCountByCondition(qry),
 					executor);
 			return Result

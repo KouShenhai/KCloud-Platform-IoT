@@ -25,7 +25,7 @@ Content-Disposition: form-data; name="captcha"
 
 
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
 
 --WebAppBoundary
@@ -59,7 +59,7 @@ Content-Disposition: form-data; name="captcha"
 
 
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
 
 --WebAppBoundary
@@ -94,9 +94,9 @@ Content-Disposition: form-data; name="captcha"
 
 
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
-0
+laokou
 --WebAppBoundary
 
 ###
@@ -128,9 +128,9 @@ Content-Disposition: form-data; name="captcha"
 
 
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
-0
+laokou
 --WebAppBoundary
 
 ###
@@ -162,7 +162,7 @@ Content-Disposition: form-data; name="captcha"
 
 1
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
 0
 --WebAppBoundary
@@ -196,7 +196,7 @@ Content-Disposition: form-data; name="captcha"
 
 1
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
 0
 --WebAppBoundary
@@ -230,7 +230,7 @@ Content-Disposition: form-data; name="captcha"
 
 
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
 
 --WebAppBoundary
@@ -259,9 +259,9 @@ Content-Disposition: form-data; name="code"
 
 
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
-0
+laokou
 --WebAppBoundary
 
 ###
@@ -285,9 +285,9 @@ Content-Disposition: form-data; name="code"
 
 
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
-0
+laokou
 --WebAppBoundary
 
 ###
@@ -311,9 +311,9 @@ Content-Disposition: form-data; name="code"
 
 1
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
-0
+laokou
 --WebAppBoundary
 
 ###
@@ -345,7 +345,7 @@ Content-Disposition: form-data; name="captcha"
 
 
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
 
 --WebAppBoundary
@@ -373,9 +373,9 @@ Content-Disposition: form-data; name="code"
 
 
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
-0
+laokou
 --WebAppBoundary
 
 ###
@@ -399,9 +399,9 @@ Content-Disposition: form-data; name="code"
 
 
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
-0
+laokou
 --WebAppBoundary
 
 ###
@@ -425,7 +425,7 @@ Content-Disposition: form-data; name="code"
 
 1
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
 0
 --WebAppBoundary

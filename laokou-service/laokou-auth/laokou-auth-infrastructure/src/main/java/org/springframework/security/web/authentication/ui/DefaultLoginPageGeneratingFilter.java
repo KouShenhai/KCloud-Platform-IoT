@@ -41,11 +41,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.Data;
-import org.laokou.auth.api.TenantsServiceI;
-import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.common.i18n.dto.Option;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -58,7 +53,6 @@ import org.springframework.web.util.HtmlUtils;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -103,8 +97,6 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 	private Map<String, String> oauth2AuthenticationUrlToClientName;
 
 	private Map<String, String> saml2AuthenticationUrlToProviderName;
-
-	private TenantsServiceI tenantsServiceI;
 
 	private Function<HttpServletRequest, Map<String, String>> resolveHiddenInputs = (request) -> Collections.emptyMap();
 
@@ -165,8 +157,6 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 	}
 
 	private String generateLoginPageHtml(HttpServletRequest request, boolean loginError, boolean logoutSuccess) {
-		initTenantsServiceI();
-		Result<List<Option>> result = tenantsServiceI.listOption();
 		String errorMsg = loginError ? getLoginErrorMessage(request) : "Invalid credentials";
 		String contextPath = request.getContextPath();
 		StringBuilder sb = new StringBuilder();
@@ -193,18 +183,10 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 			sb.append("        <h3 class=\"form-signin-heading\">老寇IoT云平台统一认证</h3>\n");
 			sb.append(createError(loginError, errorMsg)).append(createLogoutSuccess(logoutSuccess));
 			sb.append("        <p>\n");
-			sb.append("          <label for=\"tenant_id\" class=\"sr-only\">租户</label>\n");
-			sb.append(
-					"			  <select style=\"height:100%;\" name=\"tenant_id\" id=\"tenant_id\" class=\"form-control\">\n");
-			sb.append("           	<option value=\"0\" selected=\"selected\">老寇云集团</option>");
-			for (Option option : result.getData()) {
-				sb.append("         <option value=\"")
-					.append(option.getValue())
-					.append("\">\n")
-					.append(option.getLabel())
-					.append("</option>");
-			}
-			sb.append("           </select>\n");
+			sb.append("          <label for=\"tenant_code\" class=\"sr-only\">租户编号</label>\n");
+			sb.append("          <input autoComplete=\"off\" type=\"text\" id=\"tenant_code\" name=\"")
+				.append("tenant_code")
+				.append("\" class=\"form-control\" placeholder=\"租户编号\" required autofocus>\n");
 			sb.append("        </p>\n");
 			sb.append("        <p>\n");
 			sb.append("          <label for=\"username\" class=\"sr-only\">用户名</label>\n");
@@ -318,12 +300,6 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 			return uri.equals(url);
 		}
 		return uri.equals(request.getContextPath() + url);
-	}
-
-	private void initTenantsServiceI() {
-		if (ObjectUtil.isNull(tenantsServiceI)) {
-			tenantsServiceI = SpringContextUtil.getBean(TenantsServiceI.class);
-		}
 	}
 
 }

@@ -51,7 +51,7 @@ public class UserPageQryExe {
 	public Result<Page<UserCO>> execute(UserPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<UserDO>> c1 = CompletableFuture
-				.supplyAsync(() -> userMapper.selectPageByCondition(qry.index()), executor);
+				.supplyAsync(() -> userMapper.selectPageByCondition(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> userMapper.selectCountByCondition(qry),
 					executor);
 			return Result

@@ -48,7 +48,7 @@ public class RolePageQryExe {
 	public Result<Page<RoleCO>> execute(RolePageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<RoleDO>> c1 = CompletableFuture
-				.supplyAsync(() -> roleMapper.selectPageByCondition(qry.index()), executor);
+				.supplyAsync(() -> roleMapper.selectPageByCondition(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> roleMapper.selectCountByCondition(qry),
 					executor);
 			return Result

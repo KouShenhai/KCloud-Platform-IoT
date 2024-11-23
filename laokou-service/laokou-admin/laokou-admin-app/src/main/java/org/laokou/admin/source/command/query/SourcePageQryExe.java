@@ -21,8 +21,8 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.source.convertor.SourceConvertor;
 import org.laokou.admin.source.dto.SourcePageQry;
 import org.laokou.admin.source.dto.clientobject.SourceCO;
-import org.laokou.admin.source.gatewayimpl.database.SourceMapper;
-import org.laokou.admin.source.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.common.tenant.mapper.SourceMapper;
+import org.laokou.common.tenant.mapper.SourceDO;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
@@ -48,7 +48,7 @@ public class SourcePageQryExe {
 	public Result<Page<SourceCO>> execute(SourcePageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<SourceDO>> c1 = CompletableFuture
-				.supplyAsync(() -> sourceMapper.selectPageByCondition(qry.index()), executor);
+				.supplyAsync(() -> sourceMapper.selectPageByCondition(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> sourceMapper.selectCountByCondition(qry),
 					executor);
 			return Result

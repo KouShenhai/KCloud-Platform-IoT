@@ -38,9 +38,9 @@ public class PasswordAuthValidator implements AuthValidatorExtPt {
 
 	@Override
 	public void validate(AuthA auth) {
-		// 租户ID判空
-		if (ObjectUtil.isNull(auth.getTenantId())) {
-			throw new AuthException(OAUTH2_TENANT_ID_REQUIRE, ValidatorUtil.getMessage(OAUTH2_TENANT_ID_REQUIRE));
+		// 租户编号判空
+		if (ObjectUtil.isNull(auth.getTenantCode())) {
+			throw new AuthException(OAUTH2_TENANT_CODE_REQUIRE, ValidatorUtil.getMessage(OAUTH2_TENANT_CODE_REQUIRE));
 		}
 		// UUID判空
 		if (StringUtil.isEmpty(auth.getCaptcha().uuid())) {

@@ -48,7 +48,7 @@ public class CommunicationProtocolPageQryExe {
 	public Result<Page<CommunicationProtocolCO>> execute(CommunicationProtocolPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<CommunicationProtocolDO>> c1 = CompletableFuture
-				.supplyAsync(() -> communicationProtocolMapper.selectObjectPage(qry.index()), executor);
+				.supplyAsync(() -> communicationProtocolMapper.selectObjectPage(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture
 				.supplyAsync(() -> communicationProtocolMapper.selectObjectCount(qry), executor);
 			return Result.ok(Page.create(

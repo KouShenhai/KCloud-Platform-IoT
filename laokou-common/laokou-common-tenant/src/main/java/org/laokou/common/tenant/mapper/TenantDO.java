@@ -15,32 +15,39 @@
  *
  */
 
-package org.laokou.auth.api;
+package org.laokou.common.tenant.mapper;
 
-import org.laokou.auth.dto.TenantIDGetQry;
-import org.laokou.common.i18n.dto.Option;
-import org.laokou.common.i18n.dto.Result;
-
-import java.util.List;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 /**
- * 租户管理.
+ * 租户数据对象.
  *
  * @author laokou
  */
-public interface TenantsServiceI {
+@Data
+@TableName("boot_sys_tenant")
+public class TenantDO extends BaseDO {
 
 	/**
-	 * 查询租户下拉框选择项列表.
-	 * @return 租户下拉框选择项列表
+	 * 租户名称.
 	 */
-	Result<List<Option>> listOption();
+	private String name;
 
 	/**
-	 * 根据域名查看租户ID.
-	 * @param qry 根据域名查看租户ID
-	 * @return 租户ID
+	 * 租户编号.
 	 */
-	Result<Long> getIdByDomainName(TenantIDGetQry qry);
+	private String code;
+
+	/**
+	 * 数据源ID.
+	 */
+	private Long sourceId;
+
+	/**
+	 * 套餐ID.
+	 */
+	private Long packageId;
 
 }

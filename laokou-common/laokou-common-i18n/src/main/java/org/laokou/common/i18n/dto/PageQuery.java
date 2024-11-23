@@ -61,16 +61,14 @@ public class PageQuery extends Query {
 	@Min(0)
 	private Integer pageIndex = 0;
 
+	/**
+	 * SQL过滤.
+	 */
 	private String sqlFilter;
 
 	/**
 	 * 参数.
 	 */
 	private Map<String, Object> params;
-
-	public PageQuery index() {
-		this.pageIndex = (pageNum - 1) * pageSize;
-		return this;
-	}
 
 }

@@ -21,10 +21,10 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.tenant.model.TenantE;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.tenant.gateway.TenantGateway;
-import org.laokou.admin.tenant.gatewayimpl.database.TenantMapper;
+import org.laokou.common.tenant.mapper.TenantMapper;
 import java.util.Arrays;
 import org.laokou.admin.tenant.convertor.TenantConvertor;
-import org.laokou.admin.tenant.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.common.tenant.mapper.TenantDO;
 
 /**
  * 租户网关实现.

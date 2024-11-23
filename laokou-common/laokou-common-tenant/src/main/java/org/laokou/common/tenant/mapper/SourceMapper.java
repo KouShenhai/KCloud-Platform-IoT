@@ -15,16 +15,18 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.database;
+package org.laokou.common.tenant.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.laokou.auth.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
- * 数据源.
+ * 数据源数据库映射.
  *
  * @author laokou
  */
@@ -32,11 +34,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SourceMapper extends CrudMapper<Long, Integer, SourceDO> {
 
-	/**
-	 * 根据租户ID查询数据源.
-	 * @param tenantId 租户ID
-	 * @return 数据源
-	 */
-	SourceDO selectOneByTenantId(@Param("tenantId") Long tenantId);
+	List<SourceDO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
+
+	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
+
+	SourceDO selectOneByTenantCode(@Param("tenantCode") String tenantCode);
 
 }

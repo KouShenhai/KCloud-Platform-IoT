@@ -30,11 +30,6 @@ public final class TraceConstant {
 	public static final String TRACE_ID = "trace-id";
 
 	/**
-	 * 域名.
-	 */
-	public static final String DOMAIN_NAME = "domain-name";
-
-	/**
 	 * 请求ID.
 	 */
 	public static final String REQUEST_ID = "request-id";

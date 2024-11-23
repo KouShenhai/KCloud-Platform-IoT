@@ -18,7 +18,7 @@
 package org.laokou.admin.tenant.convertor;
 
 import org.laokou.admin.tenant.dto.clientobject.TenantCO;
-import org.laokou.admin.tenant.gatewayimpl.database.dataobject.TenantDO;
+import org.laokou.common.tenant.mapper.TenantDO;
 import org.laokou.admin.tenant.model.TenantE;
 import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;

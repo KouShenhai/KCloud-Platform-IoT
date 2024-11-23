@@ -18,7 +18,6 @@
 package org.laokou.auth.gateway;
 
 import org.laokou.auth.model.SourceV;
-import org.laokou.auth.model.UserE;
 
 /**
  * 数据源.
@@ -29,9 +28,9 @@ public interface SourceGateway {
 
 	/**
 	 * 查看数据源名称.
-	 * @param user 用户信息
+	 * @param tenantCode 租户编号
 	 * @return 数据源名称
 	 */
-	SourceV getName(UserE user);
+	SourceV getName(String tenantCode);
 
 }

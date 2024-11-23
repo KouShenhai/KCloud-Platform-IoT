@@ -48,7 +48,7 @@ public class OssPageQryExe {
 	public Result<Page<OssCO>> execute(OssPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<OssDO>> c1 = CompletableFuture
-				.supplyAsync(() -> ossMapper.selectPageByCondition(qry.index()), executor);
+				.supplyAsync(() -> ossMapper.selectPageByCondition(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ossMapper.selectCountByCondition(qry),
 					executor);
 			return Result
