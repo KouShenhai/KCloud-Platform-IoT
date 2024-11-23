@@ -48,7 +48,7 @@ public class TransportProtocolPageQryExe {
 	public Result<Page<TransportProtocolCO>> execute(TransportProtocolPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<TransportProtocolDO>> c1 = CompletableFuture
-				.supplyAsync(() -> transportProtocolMapper.selectObjectPage(qry.index()), executor);
+				.supplyAsync(() -> transportProtocolMapper.selectObjectPage(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture
 				.supplyAsync(() -> transportProtocolMapper.selectObjectCount(qry), executor);
 			return Result.ok(Page.create(

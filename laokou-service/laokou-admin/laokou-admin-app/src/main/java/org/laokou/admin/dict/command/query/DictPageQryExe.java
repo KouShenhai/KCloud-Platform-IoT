@@ -48,7 +48,7 @@ public class DictPageQryExe {
 	public Result<Page<DictCO>> execute(DictPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<DictDO>> c1 = CompletableFuture
-				.supplyAsync(() -> dictMapper.selectPageByCondition(qry.index()), executor);
+				.supplyAsync(() -> dictMapper.selectPageByCondition(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> dictMapper.selectCountByCondition(qry),
 					executor);
 			return Result

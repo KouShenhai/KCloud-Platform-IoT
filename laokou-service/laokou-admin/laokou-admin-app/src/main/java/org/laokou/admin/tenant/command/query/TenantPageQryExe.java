@@ -48,7 +48,7 @@ public class TenantPageQryExe {
 	public Result<Page<TenantCO>> execute(TenantPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<TenantDO>> c1 = CompletableFuture
-				.supplyAsync(() -> tenantMapper.selectPageByCondition(qry.index()), executor);
+				.supplyAsync(() -> tenantMapper.selectPageByCondition(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> tenantMapper.selectCountByCondition(qry),
 					executor);
 			return Result

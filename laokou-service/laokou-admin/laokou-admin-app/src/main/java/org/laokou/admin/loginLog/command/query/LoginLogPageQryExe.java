@@ -54,7 +54,7 @@ public class LoginLogPageQryExe {
 			CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture.supplyAsync(() -> {
 				try {
 					DynamicDataSourceContextHolder.push("domain");
-					return loginLogMapper.selectObjectPage(qry.index());
+					return loginLogMapper.selectObjectPage(qry);
 				}
 				finally {
 					DynamicDataSourceContextHolder.clear();

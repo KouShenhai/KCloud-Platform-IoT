@@ -48,7 +48,7 @@ public class ProductCategoryPageQryExe {
 	public Result<Page<ProductCategoryCO>> execute(ProductCategoryPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<ProductCategoryDO>> c1 = CompletableFuture
-				.supplyAsync(() -> productCategoryMapper.selectObjectPage(qry.index()), executor);
+				.supplyAsync(() -> productCategoryMapper.selectObjectPage(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture
 				.supplyAsync(() -> productCategoryMapper.selectObjectCount(qry), executor);
 			return Result.ok(Page.create(

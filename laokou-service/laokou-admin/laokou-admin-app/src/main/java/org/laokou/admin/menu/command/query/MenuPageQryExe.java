@@ -48,7 +48,7 @@ public class MenuPageQryExe {
 	public Result<Page<MenuCO>> execute(MenuPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<MenuDO>> c1 = CompletableFuture
-				.supplyAsync(() -> menuMapper.selectPageByCondition(qry.index()), executor);
+				.supplyAsync(() -> menuMapper.selectPageByCondition(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> menuMapper.selectCountByCondition(qry),
 					executor);
 			return Result

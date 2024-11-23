@@ -48,7 +48,7 @@ public class SourcePageQryExe {
 	public Result<Page<SourceCO>> execute(SourcePageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<SourceDO>> c1 = CompletableFuture
-				.supplyAsync(() -> sourceMapper.selectPageByCondition(qry.index()), executor);
+				.supplyAsync(() -> sourceMapper.selectPageByCondition(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> sourceMapper.selectCountByCondition(qry),
 					executor);
 			return Result

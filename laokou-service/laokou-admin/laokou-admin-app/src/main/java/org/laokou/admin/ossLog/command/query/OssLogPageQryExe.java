@@ -48,7 +48,7 @@ public class OssLogPageQryExe {
 	public Result<Page<OssLogCO>> execute(OssLogPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<OssLogDO>> c1 = CompletableFuture
-				.supplyAsync(() -> ossLogMapper.selectPageByCondition(qry.index()), executor);
+				.supplyAsync(() -> ossLogMapper.selectPageByCondition(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ossLogMapper.selectCountByCondition(qry),
 					executor);
 			return Result

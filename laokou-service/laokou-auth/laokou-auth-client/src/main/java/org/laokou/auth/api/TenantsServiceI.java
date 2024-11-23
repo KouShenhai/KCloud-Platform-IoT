@@ -18,6 +18,9 @@
 package org.laokou.auth.api;
 
 import org.laokou.auth.dto.TenantIDGetQry;
+import org.laokou.auth.dto.TenantPageQry;
+import org.laokou.auth.dto.clientobject.TenantCO;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
 /**
@@ -28,10 +31,9 @@ import org.laokou.common.i18n.dto.Result;
 public interface TenantsServiceI {
 
 	/**
-	 * 查询租户下拉框选择项列表.
-	 * @return 租户下拉框选择项列表
+	 * 分页查询租户列表.
 	 */
-	// Result<Page<TenantCO>> page();
+	 Result<Page<TenantCO>> page(TenantPageQry qry);
 
 	/**
 	 * 根据域名查看租户ID.

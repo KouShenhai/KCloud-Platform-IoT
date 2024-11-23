@@ -48,7 +48,7 @@ public class NoticeLogPageQryExe {
 	public Result<Page<NoticeLogCO>> execute(NoticeLogPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<NoticeLogDO>> c1 = CompletableFuture
-				.supplyAsync(() -> noticeLogMapper.selectObjectPage(qry.index()), executor);
+				.supplyAsync(() -> noticeLogMapper.selectObjectPage(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> noticeLogMapper.selectObjectCount(qry),
 					executor);
 			return Result

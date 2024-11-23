@@ -48,7 +48,7 @@ public class DomainEventPageQryExe {
 	public Result<Page<DomainEventCO>> execute(DomainEventPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			CompletableFuture<List<DomainEventDO>> c1 = CompletableFuture
-				.supplyAsync(() -> domainEventMapper.selectPageByCondition(qry.index()), executor);
+				.supplyAsync(() -> domainEventMapper.selectPageByCondition(qry), executor);
 			CompletableFuture<Long> c2 = CompletableFuture
 				.supplyAsync(() -> domainEventMapper.selectCountByCondition(qry), executor);
 			return Result.ok(Page.create(
