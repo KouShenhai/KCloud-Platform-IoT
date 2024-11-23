@@ -17,13 +17,9 @@
 
 package org.laokou.auth.extensionpoint.extension;
 
-import org.laokou.auth.extensionpoint.AuthValidatorExtPt;
+import org.laokou.auth.extensionpoint.AbstractAuthParamValidator;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.extension.Extension;
-import org.laokou.common.i18n.common.exception.AuthException;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.i18n.utils.ValidatorUtil;
 
 import static org.laokou.auth.factory.AuthFactory.PASSWORD;
 import static org.laokou.auth.model.AuthA.USE_CASE_AUTH;
@@ -34,30 +30,20 @@ import static org.laokou.common.i18n.common.exception.ParamException.*;
  * @author laokou
  */
 @Extension(bizId = PASSWORD, useCase = USE_CASE_AUTH, scenario = SCENARIO)
-public class PasswordAuthValidator implements AuthValidatorExtPt {
+public class PasswordAuthParamValidator extends AbstractAuthParamValidator {
 
 	@Override
 	public void validate(AuthA auth) {
 		// 租户编号判空
-		if (ObjectUtil.isNull(auth.getTenantCode())) {
-			throw new AuthException(OAUTH2_TENANT_CODE_REQUIRE, ValidatorUtil.getMessage(OAUTH2_TENANT_CODE_REQUIRE));
-		}
+		validateNotEmpty(auth.getTenantCode(), OAUTH2_TENANT_CODE_REQUIRE);
 		// UUID判空
-		if (StringUtil.isEmpty(auth.getCaptcha().uuid())) {
-			throw new AuthException(OAUTH2_UUID_REQUIRE, ValidatorUtil.getMessage(OAUTH2_UUID_REQUIRE));
-		}
+		validateNotEmpty(auth.getCaptcha().uuid(), OAUTH2_UUID_REQUIRE);
 		// 验证码判空
-		if (StringUtil.isEmpty(auth.getCaptcha().captcha())) {
-			throw new AuthException(OAUTH2_CAPTCHA_REQUIRE, ValidatorUtil.getMessage(OAUTH2_CAPTCHA_REQUIRE));
-		}
+		validateNotEmpty(auth.getCaptcha().captcha(), OAUTH2_CAPTCHA_REQUIRE);
 		// 用户名判空
-		if (StringUtil.isEmpty(auth.getUsername())) {
-			throw new AuthException(OAUTH2_USERNAME_REQUIRE, ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE));
-		}
+		validateNotEmpty(auth.getUsername(), OAUTH2_USERNAME_REQUIRE);
 		// 密码判空
-		if (StringUtil.isEmpty(auth.getPassword())) {
-			throw new AuthException(OAUTH2_PASSWORD_REQUIRE, ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE));
-		}
+		validateNotEmpty(auth.getPassword(), OAUTH2_PASSWORD_REQUIRE);
 	}
 
 }

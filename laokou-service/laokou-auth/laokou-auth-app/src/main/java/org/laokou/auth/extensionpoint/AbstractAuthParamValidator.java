@@ -17,14 +17,26 @@
 
 package org.laokou.auth.extensionpoint;
 
-import org.laokou.auth.model.AuthA;
-import org.laokou.common.extension.ExtensionPointI;
+import org.laokou.common.core.utils.RegexUtil;
+import org.laokou.common.i18n.common.exception.ParamException;
+import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.utils.ValidatorUtil;
 
 /**
  * @author laokou
  */
-public interface AuthValidatorExtPt extends ExtensionPointI {
+public abstract class AbstractAuthParamValidator implements AuthParamValidatorExtPt {
 
-	void validate(AuthA auth);
+	protected void validateNotEmpty(String value, String errorCode) {
+		if (StringUtil.isEmpty(value)) {
+			throw new ParamException(errorCode, ValidatorUtil.getMessage(errorCode));
+		}
+	}
+
+	protected void validateRegex(String value, String errorCode) {
+		if (!RegexUtil.mobileRegex(value)) {
+			throw new ParamException(errorCode, ValidatorUtil.getMessage(errorCode));
+		}
+	}
 
 }

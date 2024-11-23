@@ -17,13 +17,14 @@
 
 package org.laokou.auth.extensionpoint;
 
+import org.laokou.auth.model.AuthA;
 import org.laokou.common.extension.ExtensionPointI;
 
 /**
  * @author laokou
  */
-public interface CaptchaValidatorExtPt extends ExtensionPointI {
+public interface AuthParamValidatorExtPt extends ExtensionPointI {
 
-	void validate(String uuid);
+	void validate(AuthA auth);
 
 }

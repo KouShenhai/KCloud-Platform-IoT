@@ -17,29 +17,29 @@
 
 package org.laokou.auth.extensionpoint.extension;
 
-import org.laokou.auth.extensionpoint.CaptchaValidatorExtPt;
-import org.laokou.common.core.utils.RegexUtil;
+import org.laokou.auth.extensionpoint.AbstractAuthParamValidator;
+import org.laokou.auth.model.AuthA;
 import org.laokou.common.extension.Extension;
-import org.laokou.common.i18n.common.exception.AuthException;
-import org.laokou.common.i18n.utils.ValidatorUtil;
 
-import static org.laokou.auth.common.constant.MqConstant.MAIL_TAG;
-import static org.laokou.auth.dto.CaptchaSendCmd.USE_CASE_CAPTCHA;
+import static org.laokou.auth.factory.AuthFactory.AUTHORIZATION_CODE;
+import static org.laokou.auth.model.AuthA.USE_CASE_AUTH;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
-import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_MAIL_ERROR;
+import static org.laokou.common.i18n.common.exception.ParamException.*;
 
 /**
  * @author laokou
  */
-@Extension(bizId = MAIL_TAG, useCase = USE_CASE_CAPTCHA, scenario = SCENARIO)
-public class MailCaptchaValidator implements CaptchaValidatorExtPt {
+@Extension(bizId = AUTHORIZATION_CODE, useCase = USE_CASE_AUTH, scenario = SCENARIO)
+public class AuthorizationCodeAuthParamValidator extends AbstractAuthParamValidator {
 
 	@Override
-	public void validate(String uuid) {
-		// 邮箱格式判断
-		if (!RegexUtil.mailRegex(uuid)) {
-			throw new AuthException(OAUTH2_MAIL_ERROR, ValidatorUtil.getMessage(OAUTH2_MAIL_ERROR));
-		}
+	public void validate(AuthA auth) {
+		// 租户编号判空
+		validateNotEmpty(auth.getTenantCode(), OAUTH2_TENANT_CODE_REQUIRE);
+		// 用户名判空
+		validateNotEmpty(auth.getUsername(), OAUTH2_USERNAME_REQUIRE);
+		// 密码判空
+		validateNotEmpty(auth.getPassword(), OAUTH2_PASSWORD_REQUIRE);
 	}
 
 }
