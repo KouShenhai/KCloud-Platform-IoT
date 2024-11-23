@@ -17,10 +17,11 @@
 
 package org.laokou.auth.extensionpoint.extension;
 
-import org.laokou.auth.extensionpoint.AbstractAuthParamValidator;
+import org.laokou.auth.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.extension.Extension;
 
+import static org.laokou.auth.common.util.ParamValidatorUtil.validateNotEmpty;
 import static org.laokou.auth.factory.AuthFactory.PASSWORD;
 import static org.laokou.auth.model.AuthA.USE_CASE_AUTH;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
@@ -30,7 +31,7 @@ import static org.laokou.common.i18n.common.exception.ParamException.*;
  * @author laokou
  */
 @Extension(bizId = PASSWORD, useCase = USE_CASE_AUTH, scenario = SCENARIO)
-public class PasswordAuthParamValidator extends AbstractAuthParamValidator {
+public class PasswordAuthParamValidator implements AuthParamValidatorExtPt {
 
 	@Override
 	public void validate(AuthA auth) {
