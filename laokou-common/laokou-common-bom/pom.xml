@@ -27,7 +27,7 @@
   <properties>
     <laokou.version>3.4.0</laokou.version>
     <!--spring-boot版本-->
-    <spring-boot.version>3.4.0-RC1</spring-boot.version>
+    <spring-boot.version>3.4.0</spring-boot.version>
     <!--lombok版本-->
     <lombok.version>1.18.36</lombok.version>
     <!--postgresql版本-->
@@ -49,7 +49,7 @@
     <!--oshi版本-->
     <oshi.version>6.6.5</oshi.version>
     <!--elasticsearch版本-->
-    <elasticsearch.version>8.16.0</elasticsearch.version>
+    <elasticsearch.version>8.16.1</elasticsearch.version>
     <!--rocketmq-spring版本-->
     <rocketmq-spring.version>2.3.1</rocketmq-spring.version>
     <!--rocketmq版本-->
@@ -61,7 +61,7 @@
     <!--spring-security-oauth2-authorization-server版本-->
     <spring-security-oauth2-authorization-server.version>1.4.0</spring-security-oauth2-authorization-server.version>
     <!--spring-boot-starter-oauth2版本-->
-    <spring-boot-starter-oauth2.version>3.4.0-RC1</spring-boot-starter-oauth2.version>
+    <spring-boot-starter-oauth2.version>3.4.0</spring-boot-starter-oauth2.version>
     <!--aws-java-sdk-s3版本-->
     <aws-java-sdk-s3.version>1.12.778</aws-java-sdk-s3.version>
     <!--dynamic-datasource版本-->
