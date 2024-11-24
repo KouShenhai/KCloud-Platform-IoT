@@ -49,7 +49,7 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.exception.AuthException.*;
+import static org.laokou.common.i18n.common.exception.SystemException.*;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
@@ -63,11 +63,11 @@ import static org.springframework.security.oauth2.server.authorization.OAuth2Tok
 @RequiredArgsConstructor
 public abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationProvider {
 
+	private static final OAuth2TokenType ID_TOKEN_TOKEN_TYPE = new OAuth2TokenType(ID_TOKEN);
+
 	private final OAuth2AuthorizationService authorizationService;
 
 	private final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
-
-	private static final OAuth2TokenType ID_TOKEN_TOKEN_TYPE = new OAuth2TokenType(ID_TOKEN);
 
 	private final OAuth2AuthenticationProvider authProvider;
 

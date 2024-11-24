@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 
 import static org.laokou.auth.common.constant.Constant.TABLE_MENU;
-import static org.laokou.common.i18n.common.exception.SystemException.TABLE_NOT_EXIST;
+import static org.laokou.common.i18n.common.exception.SystemException.OAUTH2_DATA_TABLE_NOT_EXIST;
 
 /**
  * 菜单.
@@ -61,8 +61,8 @@ public class MenuGatewayImpl implements MenuGateway {
 		}
 		catch (BadSqlGrammarException e) {
 			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_MENU, LogUtil.record(e.getMessage()), e);
-			throw new SystemException(TABLE_NOT_EXIST,
-					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { TABLE_MENU }));
+			throw new SystemException(OAUTH2_DATA_TABLE_NOT_EXIST,
+					MessageUtil.getMessage(OAUTH2_DATA_TABLE_NOT_EXIST, new String[] { TABLE_MENU }));
 		}
 	}
 

@@ -67,7 +67,7 @@ public final class SystemException extends GlobalException {
 	/**
 	 * 表不存在.
 	 */
-	public static final String TABLE_NOT_EXIST = "S_DS_TableNotExist";
+	public static final String OAUTH2_DATA_TABLE_NOT_EXIST = "S_OAuth2_DataTableNotExist";
 
 	/**
 	 * 用户名解密失败.
@@ -83,6 +83,71 @@ public final class SystemException extends GlobalException {
 	 * 邮箱解密失败.
 	 */
 	public static final String MAIL_AES_DECRYPT_FAIL = "S_User_MailAESDecryptFail";
+
+	/**
+	 * 数据源不存在.
+	 */
+	public static final String OAUTH2_DATA_SOURCE_NOT_EXIST = "S_OAuth2_DataSourceNotExist";
+
+	/**
+	 * 令牌生成器无法生成标识令牌.
+	 */
+	public static final String OAUTH2_GENERATE_ID_TOKEN_FAIL = "S_OAuth2_GenerateIdTokenFail";
+
+	/**
+	 * 令牌生成器无法生成刷新令牌.
+	 */
+	public static final String OAUTH2_GENERATE_REFRESH_TOKEN_FAIL = "S_OAuth2_GenerateRefreshTokenFail";
+
+	/**
+	 * 令牌生成器无法生成访问令牌.
+	 */
+	public static final String OAUTH2_GENERATE_ACCESS_TOKEN_FAIL = "S_OAuth2_GenerateAccessTokenFail";
+
+	/**
+	 * 注册客户端不存在.
+	 */
+	public static final String OAUTH2_REGISTERED_CLIENT_NOT_EXIST = "S_OAuth2_RegisteredClientNotExist";
+
+	/**
+	 * 无效客户端.
+	 */
+	public static final String OAUTH2_INVALID_CLIENT = "S_OAuth2_InvalidClient";
+
+	/**
+	 * 无效作用域.
+	 */
+	public static final String OAUTH2_INVALID_SCOPE = "S_OAuth2_InvalidScope";
+
+	/**
+	 * 用户已禁用.
+	 */
+	public static final String OAUTH2_USER_DISABLED = "S_OAuth2_UserDisabled";
+
+	/**
+	 * 验证码已过期.
+	 */
+	public static final String OAUTH2_CAPTCHA_EXPIRED = "S_OAuth2_CaptchaExpired";
+
+	/**
+	 * 验证码错误.
+	 */
+	public static final String OAUTH2_CAPTCHA_ERROR = "S_OAuth2_CaptchaError";
+
+	/**
+	 * 用户名或密码错误.
+	 */
+	public static final String OAUTH2_USERNAME_PASSWORD_ERROR = "S_OAuth2_UsernamePasswordError";
+
+	/**
+	 * 手机号未注册.
+	 */
+	public static final String OAUTH2_MOBILE_NOT_REGISTERED = "S_OAuth2_MobileNotRegistered";
+
+	/**
+	 * 邮箱未注册.
+	 */
+	public static final String OAUTH2_MAIL_NOT_REGISTERED = "S_OAuth2_MailNotRegistered";
 
 	public SystemException(String code) {
 		super(code);

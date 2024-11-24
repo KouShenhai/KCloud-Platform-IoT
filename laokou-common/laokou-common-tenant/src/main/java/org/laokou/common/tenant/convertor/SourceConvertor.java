@@ -15,17 +15,23 @@
  *
  */
 
-package org.laokou.common.tenant.annotation;
+package org.laokou.common.tenant.convertor;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
-import org.laokou.common.tenant.constant.Constant;
+import com.baomidou.dynamic.datasource.creator.DataSourceProperty;
+import org.laokou.common.tenant.mapper.SourceDO;
 
-import java.lang.annotation.*;
+/**
+ * @author laokou
+ */
+public final class SourceConvertor {
 
-@Documented
-@DS(Constant.MASTER)
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Master {
+	public static DataSourceProperty toDataSourceProperty(SourceDO sourceDO) {
+		DataSourceProperty properties = new DataSourceProperty();
+		properties.setUsername(sourceDO.getUsername());
+		properties.setPassword(sourceDO.getPassword());
+		properties.setUrl(sourceDO.getUrl());
+		properties.setDriverClassName(sourceDO.getDriverClassName());
+		return properties;
+	}
 
 }

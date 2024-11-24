@@ -21,10 +21,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.SourceGateway;
 import org.laokou.auth.model.SourceV;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.tenant.mapper.SourceDO;
 import org.laokou.common.tenant.mapper.SourceMapper;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.i18n.common.exception.SystemException.OAUTH2_DATA_SOURCE_NOT_EXIST;
 
 /**
  * 数据源.
@@ -46,15 +49,17 @@ public class SourceGatewayImpl implements SourceGateway {
 	@Override
 	public SourceV getName(String tenantCode) {
 		SourceDO sourceDO = sourceMapper.selectOneByTenantCode(tenantCode);
-		return ObjectUtil.isNotNull(sourceDO) ? new SourceV(sourceDO.getName()) : null;
+		checkSource(sourceDO);
+		return new SourceV(sourceDO.getName());
 	}
 
-	// private void checkNullSource(SourceDO sourceDO) {
-	// if (ObjectUtil.isNull(sourceDO)) {
-	// throw new SystemException("数据不存在");
-	// }
-	// }
-	//
+	private void checkSource(SourceDO sourceDO) {
+		if (ObjectUtil.isNull(sourceDO)) {
+			throw new SystemException(OAUTH2_DATA_SOURCE_NOT_EXIST);
+		}
+
+	}
+
 	// /**
 	// * 根据租户ID查看数据源名称.
 	// * @param sourceDO 数据源数据模型
@@ -78,22 +83,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	//
 	// private DataSource toDataSource(DataSourceProperty properties) {
 	// HikariDataSourceCreator hikariDataSourceCreator =
-	// dynamicUtil.getHikariDataSourceCreator();
 	// return hikariDataSourceCreator.createDataSource(properties);
-	// }
-	//
-	// /**
-	// * 构建数据源属性配置.
-	// * @param sourceDO 数据源数据模型
-	// * @return 数据源属性配置
-	// */
-	// private DataSourceProperty properties(SourceDO sourceDO) {
-	// DataSourceProperty properties = new DataSourceProperty();
-	// properties.setUsername(sourceDO.getUsername());
-	// properties.setPassword(sourceDO.getPassword());
-	// properties.setUrl(sourceDO.getUrl());
-	// properties.setDriverClassName(sourceDO.getDriverClassName());
-	// return properties;
 	// }
 	//
 	// /**

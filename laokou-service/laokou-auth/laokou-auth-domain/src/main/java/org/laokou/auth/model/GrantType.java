@@ -20,7 +20,7 @@ package org.laokou.auth.model;
 import lombok.Getter;
 import org.laokou.auth.factory.AuthFactory;
 
-import static org.laokou.common.i18n.common.exception.AuthException.*;
+import static org.laokou.common.i18n.common.exception.SystemException.*;
 
 /**
  * @author laokou

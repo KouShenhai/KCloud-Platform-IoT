@@ -60,11 +60,6 @@ public final class ParamException extends GlobalException {
 	public static final String OAUTH2_TENANT_CODE_REQUIRE = "P_OAuth2_TenantCodeIsNull";
 
 	/**
-	 * ID不能为空.
-	 */
-	public static final String SYSTEM_ID_REQUIRE = "P_System_IdIsNull";
-
-	/**
 	 * 邮箱错误.
 	 */
 	public static final String OAUTH2_MAIL_ERROR = "A_OAuth2_MailError";
