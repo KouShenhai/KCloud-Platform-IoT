@@ -63,8 +63,8 @@ public class AuthDomainService {
 	public void auth(AuthA auth) {
 		// 校验验证码
 		checkCaptcha(auth);
-		// 修改数据源
-		auth.updateSource(sourceGateway.getName(auth.getTenantCode()));
+		// 修改数据源前缀
+		auth.updateSourcePrefix(sourceGateway.getPrefix(auth.getTenantCode()));
 		// 修改用户
 		auth.updateUser(userGateway.getProfile(auth.getUser(), auth.getTenantCode()));
 		// 校验密码

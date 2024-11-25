@@ -42,8 +42,8 @@ public class NoticeMessageEvent extends DefaultDomainEvent {
 	private String param;
 
 	public NoticeMessageEvent(NoticeLog noticeLog, String topic, String tag, EventType eventType, String serviceId,
-			String sourceName, Long aggregateId, Long tenantId) {
-		super(topic, tag, eventType, serviceId, sourceName, noticeLog.getInstant(), aggregateId, tenantId);
+			String sourcePrefix, Long aggregateId, Long tenantId) {
+		super(topic, tag, eventType, serviceId, sourcePrefix, noticeLog.getInstant(), aggregateId, tenantId);
 		this.code = noticeLog.getCode();
 		this.name = noticeLog.getName() + "（" + noticeLog.getRemark() + "）";
 		this.status = noticeLog.getStatus();

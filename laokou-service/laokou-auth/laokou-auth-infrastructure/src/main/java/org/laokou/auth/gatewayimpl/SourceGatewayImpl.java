@@ -47,7 +47,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	 * @return 数据源
 	 */
 	@Override
-	public SourceV getName(String tenantCode) {
+	public SourceV getPrefix(String tenantCode) {
 		SourceDO sourceDO = sourceMapper.selectOneByTenantCode(tenantCode);
 		checkSource(sourceDO);
 		return new SourceV(sourceDO.getName());

@@ -42,7 +42,7 @@ public abstract class AbstractSendCaptchaEventHandler extends AbstractDomainEven
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
 		NoticeMessageEvent noticeMessageEvent = new NoticeMessageEvent(getNoticeLog(event), LAOKOU_LOG_TOPIC,
-				NOTICE_TAG, SEND_NOTICE, event.getServiceId(), event.getSourceName(), event.getAggregateId(),
+				NOTICE_TAG, SEND_NOTICE, event.getServiceId(), event.getSourcePrefix(), event.getAggregateId(),
 				event.getTenantId());
 		rocketMQDomainEventPublisher.publish(noticeMessageEvent, SendMessageType.ONE_WAY);
 	}

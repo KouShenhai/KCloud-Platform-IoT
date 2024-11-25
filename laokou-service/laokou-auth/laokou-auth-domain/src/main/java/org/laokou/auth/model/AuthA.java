@@ -155,8 +155,8 @@ public class AuthA extends AggregateRoot<Long> {
 		return ObjectUtil.isNotNull(this.log);
 	}
 
-	public void updateSource(SourceV source) {
-		this.sourceName = source.name();
+	public void updateSourcePrefix(SourceV source) {
+		this.sourcePrefix = source.prefix();
 	}
 
 	public void updateMenu(MenuV menu) {
