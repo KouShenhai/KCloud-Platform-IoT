@@ -20,9 +20,9 @@ package org.laokou.auth.model;
 /**
  * 数据源值对象.
  *
- * @param name 数据源名称.
+ * @param prefix 前缀.
  * @author laokou
  */
-public record SourceV(String name) {
+public record SourceV(String prefix) {
 
 }

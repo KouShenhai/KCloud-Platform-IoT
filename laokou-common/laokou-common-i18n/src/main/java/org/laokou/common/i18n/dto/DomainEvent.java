@@ -65,9 +65,9 @@ public abstract class DomainEvent<ID> implements Serializable {
 	protected String tag;
 
 	/**
-	 * 数据源名称.
+	 * 数据源前缀.
 	 */
-	protected String sourceName;
+	protected String sourcePrefix;
 
 	/**
 	 * 应用服务ID.

@@ -36,10 +36,6 @@ public class UserUtil {
 		}
 	}
 
-	public static Authentication getAuthentication() {
-		return SecurityContextHolder.getContext().getAuthentication();
-	}
-
 	/**
 	 * 用户ID.
 	 * @return Long
@@ -73,11 +69,15 @@ public class UserUtil {
 	}
 
 	/**
-	 * 数据源名称.
+	 * 数据源前缀.
 	 * @return String
 	 */
-	public static String getSourceName() {
-		return user().getSourceName();
+	public static String getSourcePrefix() {
+		return user().getSourcePrefix();
+	}
+
+	private static Authentication getAuthentication() {
+		return SecurityContextHolder.getContext().getAuthentication();
 	}
 
 }
