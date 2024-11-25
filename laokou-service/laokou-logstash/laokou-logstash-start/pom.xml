@@ -13,7 +13,7 @@
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-logstash-app</artifactId>
+      <artifactId>laokou-logstash-adapter</artifactId>
     </dependency>
     <dependency>
       <groupId>com.github.ulisesbocchio</groupId>

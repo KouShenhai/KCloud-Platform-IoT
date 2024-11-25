@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.AuthDomainService;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.convertor.UserConvertor;
-import org.laokou.auth.extensionpoint.AuthParamValidatorExtPt;
+import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;

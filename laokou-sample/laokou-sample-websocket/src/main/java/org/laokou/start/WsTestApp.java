@@ -19,6 +19,7 @@ package org.laokou.start;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
+import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.netty.annotation.EnableWebSocketServer;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,6 +33,7 @@ import java.net.InetAddress;
  *
  * @author laokou
  */
+@EnableTaskExecutor
 @EnableWebSocketServer
 @EnableEncryptableProperties
 @EnableConfigurationProperties

@@ -17,7 +17,7 @@
 
 package org.laokou.common.domain.service;
 
-import org.laokou.common.domain.model.DomainEventA;
+import org.laokou.common.domain.entity.DomainEventA;
 
 /**
  * 领域事件Service.
