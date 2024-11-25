@@ -22,12 +22,11 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.AuthDomainService;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.convertor.UserConvertor;
-import org.laokou.auth.extensionpoint.AuthParamValidatorExtPt;
+import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
-import org.laokou.common.i18n.common.exception.AuthException;
 import org.laokou.common.i18n.common.exception.ParamException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.rocketmq.template.SendMessageType;
@@ -66,7 +65,7 @@ public class OAuth2AuthenticationProvider {
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
 					userDetail.getAuthorities());
 		}
-		catch (AuthException | ParamException | SystemException e) {
+		catch (ParamException | SystemException e) {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 		finally {

@@ -20,7 +20,7 @@ package org.laokou.auth.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
-import org.laokou.auth.extensionpoint.CaptchaParamValidatorExtPt;
+import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;

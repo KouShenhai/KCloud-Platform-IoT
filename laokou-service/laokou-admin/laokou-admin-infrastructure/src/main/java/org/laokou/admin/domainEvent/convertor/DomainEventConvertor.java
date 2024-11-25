@@ -20,7 +20,7 @@ package org.laokou.admin.domainEvent.convertor;
 import org.laokou.admin.domainEvent.dto.clientobject.DomainEventCO;
 import org.laokou.admin.domainEvent.model.DomainEventE;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.domain.entity.DomainEventDO;
+import org.laokou.common.domain.mapper.DomainEventDO;
 
 /**
  * 领域事件转换器.

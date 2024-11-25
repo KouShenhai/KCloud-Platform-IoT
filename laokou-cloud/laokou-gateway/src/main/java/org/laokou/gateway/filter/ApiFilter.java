@@ -36,9 +36,9 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-import static org.laokou.common.i18n.common.exception.AuthException.OAUTH2_USERNAME_PASSWORD_ERROR;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_PASSWORD_REQUIRE;
 import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_USERNAME_REQUIRE;
+import static org.laokou.common.i18n.common.exception.SystemException.OAUTH2_USERNAME_PASSWORD_ERROR;
 import static org.laokou.gateway.filter.AuthFilter.PASSWORD;
 import static org.laokou.gateway.filter.AuthFilter.USERNAME;
 

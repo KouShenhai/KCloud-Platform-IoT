@@ -56,17 +56,6 @@ public class GlobalExceptionHandler {
 	 * @param ex 异常
 	 * @return 响应结果
 	 */
-	@ExceptionHandler(AuthException.class)
-	public Result<?> handle(AuthException ex) {
-		log.error("认证异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
-		return Result.fail(ex.getCode(), ex.getMsg());
-	}
-
-	/**
-	 * 异常处理并响应.
-	 * @param ex 异常
-	 * @return 响应结果
-	 */
 	@ExceptionHandler(BizException.class)
 	public Result<?> handle(BizException ex) {
 		log.error("业务异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());

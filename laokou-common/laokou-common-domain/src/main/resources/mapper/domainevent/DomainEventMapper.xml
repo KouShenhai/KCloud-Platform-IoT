@@ -28,7 +28,7 @@
   </delete>
 
   <select id="selectPageByCondition"
-          resultType="org.laokou.common.domain.entity.DomainEventDO">
+          resultType="org.laokou.common.domain.mapper.DomainEventDO">
     SELECT *
     from boot_domain_event
     where del_flag = 0

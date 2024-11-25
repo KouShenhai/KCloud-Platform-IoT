@@ -21,7 +21,7 @@ import com.blueconic.browscap.Capabilities;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import org.laokou.common.core.utils.*;
-import org.laokou.common.i18n.common.exception.AuthException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
@@ -34,8 +34,8 @@ import static org.laokou.auth.model.GrantType.*;
 import static org.laokou.common.i18n.common.constant.Constant.FAIL;
 import static org.laokou.common.i18n.common.constant.Constant.OK;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.exception.AuthException.*;
 import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
+import static org.laokou.common.i18n.common.exception.SystemException.*;
 
 /**
  * 认证聚合.
@@ -156,9 +156,6 @@ public class AuthA extends AggregateRoot<Long> {
 	}
 
 	public void updateSourcePrefix(SourceV source) {
-		if (ObjectUtil.isNull(source)) {
-			fail(OAUTH2_SOURCE_NOT_EXIST);
-		}
 		this.sourcePrefix = source.prefix();
 	}
 
@@ -208,7 +205,7 @@ public class AuthA extends AggregateRoot<Long> {
 	private void fail(String code) {
 		String errorMessage = MessageUtil.getMessage(code);
 		createLog(FAIL, errorMessage);
-		throw new AuthException(code, errorMessage);
+		throw new SystemException(code, errorMessage);
 	}
 
 	private void createLog(Integer status, String errorMessage) {

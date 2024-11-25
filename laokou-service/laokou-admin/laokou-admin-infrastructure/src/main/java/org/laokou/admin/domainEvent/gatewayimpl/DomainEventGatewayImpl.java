@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.domainEvent.convertor.DomainEventConvertor;
 import org.laokou.admin.domainEvent.gateway.DomainEventGateway;
 import org.laokou.admin.domainEvent.model.DomainEventE;
-import org.laokou.common.domain.entity.DomainEventDO;
+import org.laokou.common.domain.mapper.DomainEventDO;
 import org.laokou.common.domain.mapper.DomainEventMapper;
 import org.springframework.stereotype.Component;
 

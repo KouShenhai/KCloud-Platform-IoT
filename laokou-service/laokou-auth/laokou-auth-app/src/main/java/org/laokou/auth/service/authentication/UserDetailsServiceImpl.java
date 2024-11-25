@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.factory.AuthFactory;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.i18n.common.exception.AuthException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -53,7 +53,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			auth.createUserByAuthorizationCode();
 			return (UserDetails) authProvider.authentication(auth).getPrincipal();
 		}
-		catch (AuthException e) {
+		catch (SystemException e) {
 			throw new UsernameNotFoundException(e.getMsg(), e);
 		}
 	}

@@ -18,6 +18,7 @@
 package org.laokou.start;
 
 import lombok.SneakyThrows;
+import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.i18n.utils.SslUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
@@ -31,6 +32,7 @@ import java.net.InetAddress;
 /**
  * @author laokou
  */
+@EnableTaskExecutor
 @EnableConfigurationProperties
 @EnableDiscoveryClient(autoRegister = false)
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
