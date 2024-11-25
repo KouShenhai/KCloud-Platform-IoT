@@ -46,7 +46,7 @@ public class UserContextInterceptor implements AsyncHandlerInterceptor {
 
 	private UserContextHolder.User convert(UserDetail userDetail) {
 		return new UserContextHolder.User(userDetail.getId(), userDetail.getUsername(), userDetail.getTenantId(),
-				userDetail.getSourceName());
+				userDetail.getSourcePrefix());
 	}
 
 }

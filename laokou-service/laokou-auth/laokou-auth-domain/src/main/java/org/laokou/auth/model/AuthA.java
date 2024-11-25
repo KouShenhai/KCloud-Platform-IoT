@@ -155,11 +155,11 @@ public class AuthA extends AggregateRoot<Long> {
 		return ObjectUtil.isNotNull(this.log);
 	}
 
-	public void updateSource(SourceV source) {
+	public void updateSourcePrefix(SourceV source) {
 		if (ObjectUtil.isNull(source)) {
 			fail(OAUTH2_SOURCE_NOT_EXIST);
 		}
-		this.sourceName = source.name();
+		this.sourcePrefix = source.prefix();
 	}
 
 	public void updateMenu(MenuV menu) {

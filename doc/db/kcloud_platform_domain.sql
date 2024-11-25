@@ -302,7 +302,7 @@ CACHE 1
   "aggregate_id" int8,
   "event_type" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
   "topic" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
-  "source_name" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
+  "source_prefix" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
   "attribute" json,
   "service_id" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
   "tag" varchar(50) COLLATE "pg_catalog"."default"
@@ -319,7 +319,7 @@ COMMENT ON COLUMN "public"."boot_domain_event"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_domain_event"."aggregate_id" IS '聚合根ID';
 COMMENT ON COLUMN "public"."boot_domain_event"."event_type" IS '事件类型';
 COMMENT ON COLUMN "public"."boot_domain_event"."topic" IS 'MQ主题';
-COMMENT ON COLUMN "public"."boot_domain_event"."source_name" IS '数据源名称';
+COMMENT ON COLUMN "public"."boot_domain_event"."source_prefix" IS '数据源前缀';
 COMMENT ON COLUMN "public"."boot_domain_event"."attribute" IS '扩展属性';
 COMMENT ON COLUMN "public"."boot_domain_event"."service_id" IS '服务ID';
 COMMENT ON COLUMN "public"."boot_domain_event"."tag" IS '标签';

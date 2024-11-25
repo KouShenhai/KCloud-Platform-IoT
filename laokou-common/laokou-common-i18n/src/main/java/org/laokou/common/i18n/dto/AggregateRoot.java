@@ -55,9 +55,9 @@ public abstract class AggregateRoot<ID> extends Identifier<ID> {
 	protected Instant updateTime;
 
 	/**
-	 * 数据源名称.
+	 * 数据源前缀.
 	 */
-	protected String sourceName;
+	protected String sourcePrefix;
 
 	/**
 	 * 服务ID.

@@ -83,9 +83,9 @@ public class UserContextHolder {
 		private Long tenantId;
 
 		/**
-		 * 数据源名称.
+		 * 数据源前缀.
 		 */
-		private String sourceName;
+		private String sourcePrefix;
 
 	}
 
