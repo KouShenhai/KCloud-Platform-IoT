@@ -107,9 +107,9 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	private Long tenantId;
 
 	/**
-	 * 数据源名称.
+	 * 数据源前缀.
 	 */
-	private String sourceName;
+	private String sourcePrefix;
 
 	public UserDetail() {
 		super(IdGenerator.defaultSnowflakeId());
@@ -119,7 +119,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 
 	public UserDetail(Long id, String username, String password, String avatar, Integer superAdmin, Integer status,
 			String mail, String mobile, Set<String> deptPaths, Set<String> permissions, Long tenantId,
-			String sourceName) {
+			String sourcePrefix) {
 		super(id);
 		this.username = username;
 		this.password = password;
@@ -131,7 +131,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		this.deptPaths = deptPaths;
 		this.permissions = permissions;
 		this.tenantId = tenantId;
-		this.sourceName = sourceName;
+		this.sourcePrefix = sourcePrefix;
 	}
 
 	@Override
@@ -167,7 +167,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		if (!tenantId.equals(that.tenantId)) {
 			return false;
 		}
-		if (!sourceName.equals(that.sourceName)) {
+		if (!sourcePrefix.equals(that.sourcePrefix)) {
 			return false;
 		}
 		if (!mobile.equals(that.mobile)) {
@@ -186,7 +186,7 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		result = 31 * result + deptPaths.hashCode();
 		result = 31 * result + permissions.hashCode();
 		result = 31 * result + tenantId.hashCode();
-		result = 31 * result + sourceName.hashCode();
+		result = 31 * result + sourcePrefix.hashCode();
 		result = 31 * result + mail.hashCode();
 		result = 31 * result + mobile.hashCode();
 		return result;

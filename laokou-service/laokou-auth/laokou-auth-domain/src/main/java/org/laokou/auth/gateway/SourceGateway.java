@@ -31,6 +31,6 @@ public interface SourceGateway {
 	 * @param tenantCode 租户编号
 	 * @return 数据源名称
 	 */
-	SourceV getName(String tenantCode);
+	SourceV getPrefix(String tenantCode);
 
 }

@@ -38,9 +38,9 @@ public class DomainEventDO extends BaseDO {
 	private String eventType;
 
 	/**
-	 * 数据源名称.
+	 * 数据源前缀.
 	 */
-	private String sourceName;
+	private String sourcePrefix;
 
 	/**
 	 * MQ主题.
