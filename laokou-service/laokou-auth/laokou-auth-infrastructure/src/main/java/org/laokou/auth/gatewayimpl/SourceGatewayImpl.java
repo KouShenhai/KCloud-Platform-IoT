@@ -27,7 +27,7 @@ import org.laokou.common.tenant.mapper.SourceDO;
 import org.laokou.common.tenant.mapper.SourceMapper;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.exception.SystemException.OAUTH2_DATA_SOURCE_NOT_EXIST;
+import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.DATA_SOURCE_NOT_EXIST;
 
 /**
  * 数据源.
@@ -55,7 +55,7 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	private void checkSource(SourceDO sourceDO) {
 		if (ObjectUtil.isNull(sourceDO)) {
-			throw new SystemException(OAUTH2_DATA_SOURCE_NOT_EXIST);
+			throw new SystemException(DATA_SOURCE_NOT_EXIST);
 		}
 
 	}

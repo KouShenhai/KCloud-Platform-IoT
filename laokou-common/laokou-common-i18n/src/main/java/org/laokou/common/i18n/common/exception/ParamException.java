@@ -24,50 +24,54 @@ package org.laokou.common.i18n.common.exception;
  */
 public final class ParamException extends GlobalException {
 
-	/**
-	 * UUID不能为空.
-	 */
-	public static final String OAUTH2_UUID_REQUIRE = "P_OAuth2_UuidIsNull";
+	public final static class OAuth2 {
 
-	/**
-	 * 验证码不能为空.
-	 */
-	public static final String OAUTH2_CAPTCHA_REQUIRE = "P_OAuth2_CaptchaIsNull";
+		/**
+		 * UUID不能为空.
+		 */
+		public static final String UUID_REQUIRE = "P_OAuth2_UuidIsNull";
 
-	/**
-	 * 用户名不能为空.
-	 */
-	public static final String OAUTH2_USERNAME_REQUIRE = "P_OAuth2_UsernameIsNull";
+		/**
+		 * 验证码不能为空.
+		 */
+		public static final String CAPTCHA_REQUIRE = "P_OAuth2_CaptchaIsNull";
 
-	/**
-	 * 密码不能为空.
-	 */
-	public static final String OAUTH2_PASSWORD_REQUIRE = "P_OAuth2_PasswordIsNull";
+		/**
+		 * 用户名不能为空.
+		 */
+		public static final String USERNAME_REQUIRE = "P_OAuth2_UsernameIsNull";
 
-	/**
-	 * 手机号不能为空.
-	 */
-	public static final String OAUTH2_MOBILE_REQUIRE = "P_OAuth2_MobileIsNUll";
+		/**
+		 * 密码不能为空.
+		 */
+		public static final String PASSWORD_REQUIRE = "P_OAuth2_PasswordIsNull";
 
-	/**
-	 * 邮箱不能为空.
-	 */
-	public static final String OAUTH2_MAIL_REQUIRE = "P_OAuth2_MailIsNull";
+		/**
+		 * 手机号不能为空.
+		 */
+		public static final String MOBILE_REQUIRE = "P_OAuth2_MobileIsNUll";
 
-	/**
-	 * 租户ID不能为空.
-	 */
-	public static final String OAUTH2_TENANT_CODE_REQUIRE = "P_OAuth2_TenantCodeIsNull";
+		/**
+		 * 邮箱不能为空.
+		 */
+		public static final String MAIL_REQUIRE = "P_OAuth2_MailIsNull";
 
-	/**
-	 * 邮箱错误.
-	 */
-	public static final String OAUTH2_MAIL_ERROR = "A_OAuth2_MailError";
+		/**
+		 * 租户编号不能为空.
+		 */
+		public static final String TENANT_CODE_REQUIRE = "P_OAuth2_TenantCodeIsNull";
 
-	/**
-	 * 手机号错误.
-	 */
-	public static final String OAUTH2_MOBILE_ERROR = "A_OAuth2_MobileError";
+		/**
+		 * 邮箱错误.
+		 */
+		public static final String MAIL_ERROR = "P_OAuth2_MailError";
+
+		/**
+		 * 手机号错误.
+		 */
+		public static final String MOBILE_ERROR = "P_OAuth2_MobileError";
+
+	}
 
 	public ParamException(String code) {
 		super(code);

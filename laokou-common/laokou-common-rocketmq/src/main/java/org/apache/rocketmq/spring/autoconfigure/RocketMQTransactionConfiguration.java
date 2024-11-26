@@ -40,7 +40,6 @@ import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQUtil;
 import org.jetbrains.annotations.NotNull;
-import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,8 +53,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
 @Configuration
@@ -95,19 +92,9 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
 			throw new IllegalStateException(
 					annotation.rocketMQTemplateBeanName() + " already exists RocketMQLocalTransactionListener");
 		}
-
-		SpringUtil springUtil = this.applicationContext.getBean(SpringUtil.class);
-		if (springUtil.isVirtualThread()) {
-			((TransactionMQProducer) rocketMQTemplate.getProducer())
-				.setExecutorService(ThreadUtil.newVirtualTaskExecutor());
-		}
-		else {
-			ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(annotation.corePoolSize(),
-					annotation.maximumPoolSize(), annotation.keepAliveTime(), annotation.keepAliveTimeUnit(),
-					new LinkedBlockingDeque<>(annotation.blockingQueueSize()));
-			((TransactionMQProducer) rocketMQTemplate.getProducer()).setExecutorService(threadPoolExecutor);
-		}
-
+		// 虚拟线程
+		((TransactionMQProducer) rocketMQTemplate.getProducer())
+			.setExecutorService(ThreadUtil.newVirtualTaskExecutor());
 		((TransactionMQProducer) rocketMQTemplate.getProducer())
 			.setTransactionListener(RocketMQUtil.convert((RocketMQLocalTransactionListener) bean));
 		log.debug("RocketMQLocalTransactionListener {} register to {} success", clazz.getName(),

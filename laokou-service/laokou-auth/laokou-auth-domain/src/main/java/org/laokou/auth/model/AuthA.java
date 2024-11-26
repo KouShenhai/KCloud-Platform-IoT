@@ -36,6 +36,7 @@ import static org.laokou.common.i18n.common.constant.Constant.OK;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
 import static org.laokou.common.i18n.common.exception.SystemException.*;
+import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
 
 /**
  * 认证聚合.
@@ -173,22 +174,22 @@ public class AuthA extends AggregateRoot<Long> {
 
 	public void checkCaptcha(Boolean result) {
 		if (ObjectUtil.isNull(result)) {
-			fail(OAUTH2_CAPTCHA_EXPIRED);
+			fail(CAPTCHA_EXPIRED);
 		}
 		if (!result) {
-			fail(OAUTH2_CAPTCHA_ERROR);
+			fail(CAPTCHA_ERROR);
 		}
 	}
 
 	public void checkUserPassword(PasswordEncoder passwordEncoder) {
 		if (PASSWORD.equals(this.grantType) && !passwordEncoder.matches(this.password, user.getPassword())) {
-			fail(OAUTH2_USERNAME_PASSWORD_ERROR);
+			fail(USERNAME_PASSWORD_ERROR);
 		}
 	}
 
 	public void checkUserStatus() {
 		if (ObjectUtil.equals(UserStatus.DISABLE.ordinal(), this.user.getStatus())) {
-			fail(OAUTH2_USER_DISABLED);
+			fail(USER_DISABLED);
 		}
 	}
 

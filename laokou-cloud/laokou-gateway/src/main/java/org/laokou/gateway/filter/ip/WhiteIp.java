@@ -35,7 +35,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.InetSocketAddress;
 
-import static org.laokou.common.i18n.common.exception.SystemException.IP_RESTRICTED;
+import static org.laokou.common.i18n.common.exception.SystemException.Gateway.IP_RESTRICTED;
 
 /**
  * 白名单IP.

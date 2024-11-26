@@ -79,9 +79,6 @@ import org.apache.rocketmq.remoting.protocol.body.ConsumeMessageDirectlyResult;
 import org.apache.rocketmq.logging.org.slf4j.Logger;
 import org.apache.rocketmq.logging.org.slf4j.LoggerFactory;
 import org.laokou.common.core.config.VirtualThreadFactory;
-import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.common.core.utils.SpringUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
  * @author laokou
@@ -104,8 +101,6 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 
 	private final ScheduledExecutorService cleanExpireMsgExecutors;
 
-	private SpringUtil springUtil;
-
 	public ConsumeMessageConcurrentlyService(DefaultMQPushConsumerImpl defaultMQPushConsumerImpl,
 			MessageListenerConcurrently messageListener) {
 		this.defaultMQPushConsumerImpl = defaultMQPushConsumerImpl;
@@ -118,21 +113,14 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 		String consumerGroupTag = (consumerGroup.length() > 100 ? consumerGroup.substring(0, 100) : consumerGroup)
 				+ "_";
 
-		initSpringUtil();
-		if (springUtil.isVirtualThread()) {
-			this.consumeExecutor = new ThreadPoolExecutor(0, // corePoolSize为0，因为不需要保留核心线程
-					Integer.MAX_VALUE, // maximumPoolSize: 无限制，允许任意数量的虚拟线程
-					60L, // keepAliveTime: 虚拟线程不需要保持存活时间
-					TimeUnit.SECONDS, // 时间单位
-					new SynchronousQueue<>(), // 使用SynchronousQueue以确保每个任务都会创建一个新线程
-					VirtualThreadFactory.INSTANCE // 使用虚拟线程工厂
-			);
-		}
-		else {
-			this.consumeExecutor = new ThreadPoolExecutor(this.defaultMQPushConsumer.getConsumeThreadMin(),
-					this.defaultMQPushConsumer.getConsumeThreadMax(), 1000 * 60, TimeUnit.MILLISECONDS,
-					consumeRequestQueue, new ThreadFactoryImpl("ConsumeMessageThread_" + consumerGroupTag));
-		}
+		// 虚拟线程
+		this.consumeExecutor = new ThreadPoolExecutor(0, // corePoolSize为0，因为不需要保留核心线程
+				Integer.MAX_VALUE, // maximumPoolSize: 无限制，允许任意数量的虚拟线程
+				60L, // keepAliveTime: 虚拟线程不需要保持存活时间
+				TimeUnit.SECONDS, // 时间单位
+				new SynchronousQueue<>(), // 使用SynchronousQueue以确保每个任务都会创建一个新线程
+				VirtualThreadFactory.INSTANCE // 使用虚拟线程工厂
+		);
 
 		this.scheduledExecutorService = Executors.newSingleThreadScheduledExecutor(
 				new ThreadFactoryImpl("ConsumeMessageScheduledThread_" + consumerGroupTag));
@@ -514,12 +502,6 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 			}
 		}
 
-	}
-
-	private void initSpringUtil() {
-		if (ObjectUtil.isNull(springUtil)) {
-			this.springUtil = SpringContextUtil.getBean(SpringUtil.class);
-		}
 	}
 
 }
