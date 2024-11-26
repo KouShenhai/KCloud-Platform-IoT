@@ -40,11 +40,10 @@ public class RestClientConfig {
 	public RestClient restClient() {
 		log.info("{} => Initializing RestClient", Thread.currentThread().getName());
 		// 虚拟线程
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			HttpClient httpClient = HttpClient.newBuilder().sslContext(sslContext()).executor(executor).build();
-			JdkClientHttpRequestFactory factory = new JdkClientHttpRequestFactory(httpClient);
-			return RestClient.builder().requestFactory(factory).build();
-		}
+		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
+		HttpClient httpClient = HttpClient.newBuilder().sslContext(sslContext()).executor(executor).build();
+		JdkClientHttpRequestFactory factory = new JdkClientHttpRequestFactory(httpClient);
+		return RestClient.builder().requestFactory(factory).build();
 	}
 
 }
