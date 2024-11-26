@@ -40,7 +40,7 @@ import reactor.core.publisher.Mono;
 import java.util.Collection;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.exception.SystemException.ROUTER_NOT_EXIST;
+import static org.laokou.common.i18n.common.exception.SystemException.Gateway.ROUTER_NOT_EXIST;
 
 // @formatter:off
 /**

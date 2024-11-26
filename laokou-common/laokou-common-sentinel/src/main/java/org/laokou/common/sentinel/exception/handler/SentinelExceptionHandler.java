@@ -30,8 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.LogUtil;
-
-import static org.laokou.common.i18n.common.exception.SystemException.*;
+import static org.laokou.common.i18n.common.exception.SystemException.Sentinel.*;
 
 /**
  * @author laokou

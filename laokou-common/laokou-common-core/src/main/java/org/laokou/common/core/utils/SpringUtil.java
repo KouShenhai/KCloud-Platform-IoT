@@ -41,11 +41,4 @@ public class SpringUtil {
 		return environment.getProperty(APPLICATION_NAME, DEFAULT_SERVICE_ID);
 	}
 
-	/**
-	 * 判断是否开启虚拟线程.
-	 */
-	public boolean isVirtualThread() {
-		return environment.getProperty("spring.threads.virtual.enabled", Boolean.class, false);
-	}
-
 }

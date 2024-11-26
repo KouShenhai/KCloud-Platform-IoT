@@ -21,10 +21,10 @@ import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
 import org.laokou.common.extension.Extension;
 
 import static org.laokou.auth.common.constant.MqConstant.MAIL_TAG;
-import static org.laokou.auth.common.util.ParamValidatorUtil.validateRegex;
+import static org.laokou.common.domain.utils.ParamValidatorUtil.validateRegex;
 import static org.laokou.auth.dto.CaptchaSendCmd.USE_CASE_CAPTCHA;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
-import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_MAIL_ERROR;
+import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.MAIL_ERROR;
 
 /**
  * @author laokou
@@ -35,7 +35,7 @@ public class MailCaptchaParamValidator implements CaptchaParamValidatorExtPt {
 	@Override
 	public void validate(String uuid) {
 		// 邮箱格式判断
-		validateRegex(uuid, OAUTH2_MAIL_ERROR);
+		validateRegex(uuid, MAIL_ERROR);
 	}
 
 }

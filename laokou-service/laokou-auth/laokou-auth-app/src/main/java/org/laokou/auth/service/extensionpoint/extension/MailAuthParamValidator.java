@@ -21,12 +21,12 @@ import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.extension.Extension;
 
-import static org.laokou.auth.common.util.ParamValidatorUtil.validateNotEmpty;
-import static org.laokou.auth.common.util.ParamValidatorUtil.validateRegex;
+import static org.laokou.common.domain.utils.ParamValidatorUtil.validateNotEmpty;
+import static org.laokou.common.domain.utils.ParamValidatorUtil.validateRegex;
 import static org.laokou.auth.factory.AuthFactory.MAIL;
 import static org.laokou.auth.model.AuthA.USE_CASE_AUTH;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
-import static org.laokou.common.i18n.common.exception.ParamException.*;
+import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.*;
 
 /**
  * @author laokou
@@ -37,13 +37,13 @@ public class MailAuthParamValidator implements AuthParamValidatorExtPt {
 	@Override
 	public void validate(AuthA auth) {
 		// 租户编号判空
-		validateNotEmpty(auth.getTenantCode(), OAUTH2_TENANT_CODE_REQUIRE);
+		validateNotEmpty(auth.getTenantCode(), TENANT_CODE_REQUIRE);
 		// 邮箱判空
-		validateNotEmpty(auth.getCaptcha().uuid(), OAUTH2_MAIL_REQUIRE);
+		validateNotEmpty(auth.getCaptcha().uuid(), MAIL_REQUIRE);
 		// 验证码判空
-		validateNotEmpty(auth.getCaptcha().captcha(), OAUTH2_CAPTCHA_REQUIRE);
+		validateNotEmpty(auth.getCaptcha().captcha(), CAPTCHA_REQUIRE);
 		// 邮箱格式判断
-		validateRegex(auth.getCaptcha().uuid(), OAUTH2_MAIL_ERROR);
+		validateRegex(auth.getCaptcha().uuid(), MAIL_ERROR);
 	}
 
 }

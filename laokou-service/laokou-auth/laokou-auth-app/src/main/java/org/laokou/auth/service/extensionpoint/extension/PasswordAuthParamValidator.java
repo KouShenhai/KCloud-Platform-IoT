@@ -21,11 +21,12 @@ import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.extension.Extension;
 
-import static org.laokou.auth.common.util.ParamValidatorUtil.validateNotEmpty;
+import static org.laokou.common.domain.utils.ParamValidatorUtil.validateNotEmpty;
 import static org.laokou.auth.factory.AuthFactory.PASSWORD;
 import static org.laokou.auth.model.AuthA.USE_CASE_AUTH;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 import static org.laokou.common.i18n.common.exception.ParamException.*;
+import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.*;
 
 /**
  * @author laokou
@@ -36,15 +37,15 @@ public class PasswordAuthParamValidator implements AuthParamValidatorExtPt {
 	@Override
 	public void validate(AuthA auth) {
 		// 租户编号判空
-		validateNotEmpty(auth.getTenantCode(), OAUTH2_TENANT_CODE_REQUIRE);
+		validateNotEmpty(auth.getTenantCode(), TENANT_CODE_REQUIRE);
 		// UUID判空
-		validateNotEmpty(auth.getCaptcha().uuid(), OAUTH2_UUID_REQUIRE);
+		validateNotEmpty(auth.getCaptcha().uuid(), UUID_REQUIRE);
 		// 验证码判空
-		validateNotEmpty(auth.getCaptcha().captcha(), OAUTH2_CAPTCHA_REQUIRE);
+		validateNotEmpty(auth.getCaptcha().captcha(), CAPTCHA_REQUIRE);
 		// 用户名判空
-		validateNotEmpty(auth.getUsername(), OAUTH2_USERNAME_REQUIRE);
+		validateNotEmpty(auth.getUsername(), USERNAME_REQUIRE);
 		// 密码判空
-		validateNotEmpty(auth.getPassword(), OAUTH2_PASSWORD_REQUIRE);
+		validateNotEmpty(auth.getPassword(), PASSWORD_REQUIRE);
 	}
 
 }

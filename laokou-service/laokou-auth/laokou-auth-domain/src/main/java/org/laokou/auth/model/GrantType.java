@@ -21,6 +21,7 @@ import lombok.Getter;
 import org.laokou.auth.factory.AuthFactory;
 
 import static org.laokou.common.i18n.common.exception.SystemException.*;
+import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
 
 /**
  * @author laokou
@@ -34,7 +35,7 @@ public enum GrantType {
 	PASSWORD(AuthFactory.PASSWORD) {
 		@Override
 		public String getErrorCode() {
-			return OAUTH2_USERNAME_PASSWORD_ERROR;
+			return USERNAME_PASSWORD_ERROR;
 		}
 	},
 
@@ -44,7 +45,7 @@ public enum GrantType {
 	AUTHORIZATION_CODE(AuthFactory.AUTHORIZATION_CODE) {
 		@Override
 		public String getErrorCode() {
-			return OAUTH2_USERNAME_PASSWORD_ERROR;
+			return USERNAME_PASSWORD_ERROR;
 		}
 	},
 
@@ -54,7 +55,7 @@ public enum GrantType {
 	MOBILE(AuthFactory.MOBILE) {
 		@Override
 		public String getErrorCode() {
-			return OAUTH2_MOBILE_NOT_REGISTERED;
+			return MOBILE_NOT_REGISTERED;
 		}
 	},
 
@@ -64,7 +65,7 @@ public enum GrantType {
 	MAIL(AuthFactory.MAIL) {
 		@Override
 		public String getErrorCode() {
-			return OAUTH2_MAIL_NOT_REGISTERED;
+			return MAIL_NOT_REGISTERED;
 		}
 	};
 

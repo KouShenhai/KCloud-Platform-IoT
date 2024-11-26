@@ -18,14 +18,15 @@
 package org.laokou.common.core.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.JdkClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestTemplate;
-
-import static org.laokou.common.core.utils.HttpUtil.getHttpClient;
+import java.net.http.HttpClient;
+import java.util.concurrent.ExecutorService;
+import static org.laokou.common.i18n.utils.SslUtil.sslContext;
 
 /**
  * @author laokou
@@ -38,10 +39,12 @@ public class RestClientConfig {
 	@Bean(bootstrap = Bean.Bootstrap.BACKGROUND)
 	public RestClient restClient() {
 		log.info("{} => Initializing RestClient", Thread.currentThread().getName());
-		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-		factory.setHttpClient(getHttpClient(true));
-		RestTemplate restTemplate = new RestTemplate(factory);
-		return RestClient.create(restTemplate);
+		// 虚拟线程
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			HttpClient httpClient = HttpClient.newBuilder().sslContext(sslContext()).executor(executor).build();
+			JdkClientHttpRequestFactory factory = new JdkClientHttpRequestFactory(httpClient);
+			return RestClient.builder().requestFactory(factory).build();
+		}
 	}
 
 }

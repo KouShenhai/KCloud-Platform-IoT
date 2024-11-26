@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.laokou.auth.common.constant.Constant.TABLE_DEPT;
-import static org.laokou.common.i18n.common.exception.SystemException.OAUTH2_DATA_TABLE_NOT_EXIST;
+import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.DATA_TABLE_NOT_EXIST;
 
 /**
  * 部门.
@@ -64,8 +64,8 @@ public class DeptGatewayImpl implements DeptGateway {
 		}
 		catch (BadSqlGrammarException e) {
 			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_DEPT, LogUtil.record(e.getMessage()), e);
-			throw new SystemException(OAUTH2_DATA_TABLE_NOT_EXIST,
-					MessageUtil.getMessage(OAUTH2_DATA_TABLE_NOT_EXIST, new String[] { TABLE_DEPT }));
+			throw new SystemException(DATA_TABLE_NOT_EXIST,
+					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { TABLE_DEPT }));
 		}
 	}
 

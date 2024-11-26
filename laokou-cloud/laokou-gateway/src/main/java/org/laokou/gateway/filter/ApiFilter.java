@@ -35,10 +35,9 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
-
-import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_PASSWORD_REQUIRE;
-import static org.laokou.common.i18n.common.exception.ParamException.OAUTH2_USERNAME_REQUIRE;
-import static org.laokou.common.i18n.common.exception.SystemException.OAUTH2_USERNAME_PASSWORD_ERROR;
+import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.PASSWORD_REQUIRE;
+import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.USERNAME_REQUIRE;
+import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.USERNAME_PASSWORD_ERROR;
 import static org.laokou.gateway.filter.AuthFilter.PASSWORD;
 import static org.laokou.gateway.filter.AuthFilter.USERNAME;
 
@@ -87,11 +86,11 @@ public class ApiFilter implements WebFilter {
 		String password = ReactiveRequestUtil.getParamValue(request, PASSWORD);
 		if (StringUtil.isEmpty(username)) {
 			// 用户名不能为空
-			return ReactiveResponseUtil.responseOk(exchange, Result.fail(ValidatorUtil.getMessage(OAUTH2_USERNAME_REQUIRE)));
+			return ReactiveResponseUtil.responseOk(exchange, Result.fail(ValidatorUtil.getMessage(USERNAME_REQUIRE)));
 		}
 		if (StringUtil.isEmpty(password)) {
 			// 密码不能为空
-			return ReactiveResponseUtil.responseOk(exchange, Result.fail(ValidatorUtil.getMessage(OAUTH2_PASSWORD_REQUIRE)));
+			return ReactiveResponseUtil.responseOk(exchange, Result.fail(ValidatorUtil.getMessage(PASSWORD_REQUIRE)));
 		}
 		try {
 			username = RSAUtil.decryptByPrivateKey(username);
@@ -99,12 +98,12 @@ public class ApiFilter implements WebFilter {
 		}
 		catch (Exception e) {
 			// 用户名或密码错误
-			return ReactiveResponseUtil.responseOk(exchange, Result.fail(OAUTH2_USERNAME_PASSWORD_ERROR));
+			return ReactiveResponseUtil.responseOk(exchange, Result.fail(USERNAME_PASSWORD_ERROR));
 		}
 		if (!ObjectUtil.equals(gatewayExtProperties.getPassword(), password)
 			|| !ObjectUtil.equals(gatewayExtProperties.getUsername(), username)) {
 			// 用户名或密码错误
-			return ReactiveResponseUtil.responseOk(exchange, Result.fail(OAUTH2_USERNAME_PASSWORD_ERROR));
+			return ReactiveResponseUtil.responseOk(exchange, Result.fail(USERNAME_PASSWORD_ERROR));
 		}
 		return chain.filter(exchange);
 	}

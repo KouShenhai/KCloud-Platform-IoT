@@ -41,6 +41,7 @@ import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.constant.SuperAdmin.YES;
 import static org.laokou.common.i18n.common.exception.SystemException.*;
+import static org.laokou.common.i18n.common.exception.SystemException.User.*;
 
 /**
  * 用户详细信息. JsonTypeInfo.Id.NAME => 多态子类与抽象类绑定.

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.common.util;
+package org.laokou.common.domain.utils;
 
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.common.exception.ParamException;
