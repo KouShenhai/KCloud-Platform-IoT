@@ -26,7 +26,7 @@ import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.crypto.utils.RSAUtil;
-import org.laokou.common.domain.handler.domainevent.RemoveCacheEvent;
+import org.laokou.common.domain.event.RemoveCacheEvent;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;

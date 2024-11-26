@@ -17,8 +17,8 @@
 
 package org.laokou.common.domain.convertor;
 
-import org.laokou.common.domain.entity.DomainEventDO;
-import org.laokou.common.domain.model.DomainEventA;
+import org.laokou.common.domain.mapper.DomainEventDO;
+import org.laokou.common.domain.entity.DomainEventA;
 
 /**
  * @author laokou

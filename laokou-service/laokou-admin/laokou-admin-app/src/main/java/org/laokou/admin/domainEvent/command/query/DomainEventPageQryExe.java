@@ -22,7 +22,7 @@ import org.laokou.admin.domainEvent.convertor.DomainEventConvertor;
 import org.laokou.admin.domainEvent.dto.DomainEventPageQry;
 import org.laokou.admin.domainEvent.dto.clientobject.DomainEventCO;
 import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.domain.entity.DomainEventDO;
+import org.laokou.common.domain.mapper.DomainEventDO;
 import org.laokou.common.domain.mapper.DomainEventMapper;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
