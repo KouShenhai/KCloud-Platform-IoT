@@ -39,7 +39,7 @@
     <!--redisson版本-->
     <redisson.version>3.39.0</redisson.version>
     <!--jsoup版本-->
-    <jsoup.version>1.18.1</jsoup.version>
+    <jsoup.version>1.18.2</jsoup.version>
     <!--jasypt版本-->
     <jasypt.version>3.0.5</jasypt.version>
     <!--captcha版本-->
