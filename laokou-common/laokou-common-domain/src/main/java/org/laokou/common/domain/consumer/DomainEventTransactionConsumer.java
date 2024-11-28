@@ -34,7 +34,7 @@ import org.springframework.util.Assert;
  */
 @Component
 @RequiredArgsConstructor
-@RocketMQTransactionListener(corePoolSize = 16, maximumPoolSize = 32)
+@RocketMQTransactionListener(corePoolSize = 32, maximumPoolSize = 64)
 public class DomainEventTransactionConsumer extends AbstractTransactionConsumer {
 
 	private final DomainEventService domainEventService;
@@ -48,7 +48,7 @@ public class DomainEventTransactionConsumer extends AbstractTransactionConsumer 
 	@Override
 	protected boolean checkExtLocalTransaction(Message message) {
 		Object obj = message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID);
-		Assert.notNull(obj, "事务ID不为空");
+		Assert.notNull(obj, "Transaction ID must not null");
 		return domainEventService.countById(Long.parseLong(obj.toString())) > 0;
 	}
 
