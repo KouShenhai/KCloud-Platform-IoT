@@ -16,6 +16,9 @@ server:
   forward-headers-strategy: framework
   shutdown: graceful
 spring:
+  threads:
+    virtual:
+      enabled: true
   application:
     name: ${SERVICE_ID:laokou-generator}
   datasource:

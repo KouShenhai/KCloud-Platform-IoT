@@ -2,6 +2,9 @@ server:
   port: 9034
 
 spring:
+  threads:
+    virtual:
+      enabled: true
   application:
     name: laokou-sample-tcp
   profiles:

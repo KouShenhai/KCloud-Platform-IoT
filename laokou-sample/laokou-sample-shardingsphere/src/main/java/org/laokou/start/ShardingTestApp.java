@@ -51,6 +51,8 @@ public class ShardingTestApp {
 	public static void main(String[] args) {
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
+		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
+		System.setProperty("nacos.logging.default.config.enabled", "false");
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
 				System.getProperty("server.port", "9033")));
 		new SpringApplicationBuilder(ShardingTestApp.class).web(WebApplicationType.SERVLET).run(args);

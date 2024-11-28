@@ -34,6 +34,9 @@ spring:
     cache: false
     suffix: .html
     prefix: classpath:/templates/
+  threads:
+    virtual:
+      enabled: true
 
 rocketmq:
   producer:
