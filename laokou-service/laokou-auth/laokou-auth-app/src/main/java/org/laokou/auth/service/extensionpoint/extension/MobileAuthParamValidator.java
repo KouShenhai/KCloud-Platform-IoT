@@ -19,6 +19,7 @@ package org.laokou.auth.service.extensionpoint.extension;
 
 import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.auth.model.AuthA;
+import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.extension.Extension;
 
 import static org.laokou.common.domain.utils.ParamValidatorUtil.validateNotEmpty;
@@ -44,7 +45,7 @@ public class MobileAuthParamValidator implements AuthParamValidatorExtPt {
 		// 验证码判空
 		validateNotEmpty(auth.getCaptcha().captcha(), CAPTCHA_REQUIRE);
 		// 手机号格式正则匹配
-		validateRegex(auth.getCaptcha().uuid(), MOBILE_ERROR);
+		validateRegex(RegexUtil.Type.MOBILE, auth.getCaptcha().uuid(), MOBILE_ERROR);
 	}
 
 }

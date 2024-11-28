@@ -36,13 +36,13 @@ import org.laokou.common.rocketmq.template.SendMessageType;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestClient;
@@ -53,13 +53,14 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.laokou.common.data.cache.constant.NameConstant.TENANTS;
+import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
 import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -403,33 +404,23 @@ class OAuth2ApiTest {
 		return captcha;
 	}
 
-	@SneakyThrows
-	private String getPublicKey() {
-		MvcResult mvcResult = mockMvc.perform(get(getSecretApiUrlV3()).contentType(MediaType.APPLICATION_JSON))
-			.andExpect(status().isOk())
-			// 打印到控制台
-			.andDo(print())
-			.andReturn();
-		String publicKey = JacksonUtil.readTree(mvcResult.getResponse().getContentAsString())
-			.get("data")
-			.get("publicKey")
-			.asText();
-		Assert.isTrue(StringUtil.isNotEmpty(publicKey), "publicKey is empty");
-		return publicKey;
-	}
-
 	private String getDeviceCode() {
 		try {
-			String apiUrl = getDeviceCodeApiUrl();
-			Map<String, String> params = Collections.emptyMap();
-			Map<String, String> headers = Collections.singletonMap("Authorization",
-					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
-			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			String json = restClient.method(POST)
+				.uri(getDeviceCodeApiUrl())
+				.headers(getHeaders())
+				.contentType(MediaType.MULTIPART_FORM_DATA)
+				.retrieve()
+				.body(String.class);
 			return JacksonUtil.readTree(json).get(DEVICE_CODE).asText();
 		}
 		catch (Exception e) {
 			return null;
 		}
+	}
+
+	private Consumer<HttpHeaders> getHeaders() {
+		return headers -> headers.add(AUTHORIZATION, "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 	}
 
 	private String getOAuthApiUrl() {
@@ -442,10 +433,6 @@ class OAuth2ApiTest {
 
 	private String getCaptchaApiUrlV3(String uuid) {
 		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/captchas/" + uuid;
-	}
-
-	private String getSecretApiUrlV3() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/secrets";
 	}
 
 	private String getTokenUrlV3() {

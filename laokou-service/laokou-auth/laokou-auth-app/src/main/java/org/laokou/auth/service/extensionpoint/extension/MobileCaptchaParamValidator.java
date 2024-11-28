@@ -18,6 +18,7 @@
 package org.laokou.auth.service.extensionpoint.extension;
 
 import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
+import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.extension.Extension;
 
 import static org.laokou.auth.common.constant.MqConstant.MOBILE_TAG;
@@ -35,7 +36,7 @@ public class MobileCaptchaParamValidator implements CaptchaParamValidatorExtPt {
 	@Override
 	public void validate(String uuid) {
 		// 手机号格式判断
-		validateRegex(uuid, MOBILE_ERROR);
+		validateRegex(RegexUtil.Type.MOBILE, uuid, MOBILE_ERROR);
 	}
 
 }

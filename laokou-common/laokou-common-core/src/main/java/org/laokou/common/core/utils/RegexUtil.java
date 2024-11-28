@@ -114,4 +114,10 @@ public final class RegexUtil {
 		return EMPTY;
 	}
 
+	public enum Type {
+
+		MAIL, MOBILE
+
+	}
+
 }

@@ -33,10 +33,17 @@ public final class ParamValidatorUtil {
 		}
 	}
 
-	public static void validateRegex(String value, String errorCode) {
-		if (!RegexUtil.mobileRegex(value)) {
+	public static void validateRegex(RegexUtil.Type type, String value, String errorCode) {
+		if (validateRegex(type, value)) {
 			throw new ParamException(errorCode, ValidatorUtil.getMessage(errorCode));
 		}
+	}
+
+	public static boolean validateRegex(RegexUtil.Type type, String value) {
+		return switch (type) {
+			case MAIL -> !RegexUtil.mailRegex(value);
+			case MOBILE -> !RegexUtil.mobileRegex(value);
+		};
 	}
 
 }

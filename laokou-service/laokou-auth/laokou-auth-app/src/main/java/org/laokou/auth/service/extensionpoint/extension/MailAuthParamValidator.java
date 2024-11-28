@@ -19,6 +19,7 @@ package org.laokou.auth.service.extensionpoint.extension;
 
 import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.auth.model.AuthA;
+import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.extension.Extension;
 
 import static org.laokou.common.domain.utils.ParamValidatorUtil.validateNotEmpty;
@@ -43,7 +44,7 @@ public class MailAuthParamValidator implements AuthParamValidatorExtPt {
 		// 验证码判空
 		validateNotEmpty(auth.getCaptcha().captcha(), CAPTCHA_REQUIRE);
 		// 邮箱格式判断
-		validateRegex(auth.getCaptcha().uuid(), MAIL_ERROR);
+		validateRegex(RegexUtil.Type.MAIL, auth.getCaptcha().uuid(), MAIL_ERROR);
 	}
 
 }
