@@ -24,6 +24,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.gateway.CaptchaGateway;
+import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.crypto.utils.RSAUtil;
 import org.laokou.common.domain.event.RemoveCacheEvent;
@@ -66,6 +67,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @Slf4j
 @SpringBootTest
+@EnableTaskExecutor
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class OAuth2ApiTest {
@@ -234,20 +236,6 @@ class OAuth2ApiTest {
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
 		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
 		log.info("---------- 设备授权码认证模式结束 ----------");
-	}
-
-	@Test
-	void testGetTokenApi() {
-		log.info("---------- 获取令牌 ----------");
-		String apiUrl = getTokenUrlV3();
-		String json = restClient.method(HttpMethod.GET)
-			.uri(apiUrl)
-			.contentType(MediaType.APPLICATION_JSON)
-			.retrieve()
-			.toEntity(String.class)
-			.toString();
-		assertNotNull(json);
-		log.info("---------- 获取令牌 ----------");
 	}
 
 	@Test

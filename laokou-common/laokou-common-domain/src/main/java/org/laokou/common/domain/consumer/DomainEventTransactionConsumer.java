@@ -48,7 +48,7 @@ public class DomainEventTransactionConsumer extends AbstractTransactionConsumer 
 	@Override
 	protected boolean checkExtLocalTransaction(Message message) {
 		Object obj = message.getHeaders().get(RocketMQHeaders.TRANSACTION_ID);
-		Assert.notNull(obj, "Transaction ID must not null");
+		Assert.notNull(obj, "Transaction ID must not be null");
 		return domainEventService.countById(Long.parseLong(obj.toString())) > 0;
 	}
 
