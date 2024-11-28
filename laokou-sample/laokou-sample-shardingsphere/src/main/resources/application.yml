@@ -2,6 +2,9 @@ server:
   port: 9033
 
 spring:
+  threads:
+    virtual:
+      enabled: true
   profiles:
     active: @PROFILE-ACTIVE@
   application:

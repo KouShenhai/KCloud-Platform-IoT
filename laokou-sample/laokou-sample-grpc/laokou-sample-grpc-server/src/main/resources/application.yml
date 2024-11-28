@@ -13,6 +13,8 @@ spring:
     port: 1114
   lifecycle:
     timeout-per-shutdown-phase: "2m"
-
+  threads:
+    virtual:
+      enabled: true
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
