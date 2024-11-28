@@ -23,7 +23,6 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 
 /**
@@ -34,7 +33,7 @@ public final class SslUtil {
 	/**
 	 * TLS协议版本.
 	 */
-	public static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
+	private static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
 
 	/**
 	 * ssl上下文.
@@ -49,7 +48,7 @@ public final class SslUtil {
 		// 怎么选择加密协议，请看 ProtocolVersion
 		// 为什么能找到对应的加密协议 请查看 SSLContextSpi
 		SSLContext sslContext = SSLContext.getInstance(TLS_PROTOCOL_VERSION);
-		sslContext.init(null, trustManagers, new SecureRandom());
+		sslContext.init(null, trustManagers, null);
 		return sslContext;
 	}
 

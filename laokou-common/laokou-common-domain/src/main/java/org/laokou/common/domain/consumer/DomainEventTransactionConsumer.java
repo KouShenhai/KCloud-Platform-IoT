@@ -41,6 +41,7 @@ public class DomainEventTransactionConsumer extends AbstractTransactionConsumer 
 
 	@Override
 	protected void executeExtLocalTransaction(Message message, Object args) {
+		// rocketmq内部返回字节数组
 		byte[] payload = (byte[]) message.getPayload();
 		domainEventService.create(new DomainEventA(payload, JacksonUtil.toBean(payload, DefaultDomainEvent.class)));
 	}

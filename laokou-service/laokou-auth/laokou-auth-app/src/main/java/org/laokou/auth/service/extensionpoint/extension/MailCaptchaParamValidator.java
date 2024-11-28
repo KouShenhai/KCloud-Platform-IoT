@@ -18,6 +18,7 @@
 package org.laokou.auth.service.extensionpoint.extension;
 
 import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
+import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.extension.Extension;
 
 import static org.laokou.auth.common.constant.MqConstant.MAIL_TAG;
@@ -35,7 +36,7 @@ public class MailCaptchaParamValidator implements CaptchaParamValidatorExtPt {
 	@Override
 	public void validate(String uuid) {
 		// 邮箱格式判断
-		validateRegex(uuid, MAIL_ERROR);
+		validateRegex(RegexUtil.Type.MAIL, uuid, MAIL_ERROR);
 	}
 
 }
