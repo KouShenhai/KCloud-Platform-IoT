@@ -64,7 +64,7 @@ public class UserGatewayImpl implements UserGateway {
 		}
 		catch (Exception e) {
 			log.error("查询用户失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-			throw new SystemException("S_User_QueryFail", "查询用户失败");
+			throw new SystemException(SystemException.User.QUERY_FAILED);
 		}
 	}
 

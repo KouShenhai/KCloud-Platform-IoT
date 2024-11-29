@@ -24,6 +24,14 @@ package org.laokou.common.i18n.common.exception;
  */
 public final class SystemException extends GlobalException {
 
+	public SystemException(String code) {
+		super(code);
+	}
+
+	public SystemException(String code, String msg) {
+		super(code, msg);
+	}
+
 	public final static class Gateway {
 
 		/**
@@ -88,6 +96,29 @@ public final class SystemException extends GlobalException {
 		 * 邮箱解密失败.
 		 */
 		public static final String MAIL_AES_DECRYPT_FAIL = "S_User_MailAESDecryptFail";
+
+		/**
+		 * 查询用户失败.
+		 */
+		public static final String QUERY_FAILED = "S_User_QueryFailed";
+
+	}
+
+	public final static class Menu {
+
+		/**
+		 * 查询用户失败.
+		 */
+		public static final String QUERY_FAILED = "S_Menu_QueryFailed";
+
+	}
+
+	public final static class Dept {
+
+		/**
+		 * 查询用户失败.
+		 */
+		public static final String QUERY_FAILED = "S_Dept_QueryFailed";
 
 	}
 
@@ -173,14 +204,6 @@ public final class SystemException extends GlobalException {
 		 */
 		public static final String SESSION_EXPIRED = "S_OAuth2_SessionExpired";
 
-	}
-
-	public SystemException(String code) {
-		super(code);
-	}
-
-	public SystemException(String code, String msg) {
-		super(code, msg);
 	}
 
 }

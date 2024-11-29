@@ -69,7 +69,7 @@ public class DeptGatewayImpl implements DeptGateway {
 		}
 		catch (Exception e) {
 			log.error("查询部门失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-			throw new SystemException("S_Dept_QueryFail", "查询部门失败");
+			throw new SystemException(SystemException.Dept.QUERY_FAILED);
 		}
 	}
 
