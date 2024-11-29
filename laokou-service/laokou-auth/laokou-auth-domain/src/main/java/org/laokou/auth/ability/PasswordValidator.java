@@ -23,6 +23,6 @@ package org.laokou.auth.ability;
 @FunctionalInterface
 public interface PasswordValidator {
 
-	boolean validate(String pwd1, String pwd2);
+	boolean validate(CharSequence rawPassword, String encodedPassword);
 
 }
