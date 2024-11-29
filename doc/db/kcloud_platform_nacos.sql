@@ -1637,7 +1637,7 @@ management:
       probability: 1
   otlp:
     tracing:
-      endpoint: http://otel-collector:4318/v1/traces
+      endpoint: http://otel-collector:4317/v1/traces
       compression: gzip
       timeout: 10s
       transport: grpc
@@ -2083,7 +2083,7 @@ management:
       probability: 1
   otlp:
     tracing:
-      endpoint: http://otel-collector:4318/v1/traces
+      endpoint: http://otel-collector:4317/v1/traces
       compression: gzip
       timeout: 10s
       transport: grpc
@@ -3485,7 +3485,7 @@ management:
       probability: 1
   otlp:
     tracing:
-      endpoint: http://otel-collector:4318/v1/traces
+      endpoint: http://otel-collector:4317/v1/traces
       compression: gzip
       timeout: 10s
       transport: grpc
