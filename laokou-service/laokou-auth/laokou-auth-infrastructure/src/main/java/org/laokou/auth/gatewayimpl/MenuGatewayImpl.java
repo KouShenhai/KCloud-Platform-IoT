@@ -66,7 +66,7 @@ public class MenuGatewayImpl implements MenuGateway {
 		}
 		catch (Exception e) {
 			log.error("查询菜单失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
-			throw new SystemException("S_Menu_QueryFail", "查询菜单失败");
+			throw new SystemException(SystemException.Menu.QUERY_FAILED);
 		}
 	}
 
