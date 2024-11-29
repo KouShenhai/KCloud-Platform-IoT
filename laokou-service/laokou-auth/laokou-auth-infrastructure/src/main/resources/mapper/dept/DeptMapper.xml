@@ -28,14 +28,13 @@
   </select>
 
   <select id="selectDeptPathsByUserId" resultType="string">
-    select path
-    from boot_sys_dept
-    where id in
-          (select dept_id
-           from boot_sys_role_dept
-           where role_id in (select role_id from boot_sys_user_role where user_id = #{userId}))
-      and del_flag = 0
-    group by path
+    SELECT d.path
+    FROM boot_sys_dept d
+    INNER JOIN boot_sys_role_dept rd ON d.id = rd.dept_id
+    INNER JOIN boot_sys_user_role ur ON rd.role_id = ur.role_id
+    WHERE ur.user_id = #{userId}
+        AND d.del_flag = 0
+    group by d.path
   </select>
 
 </mapper>

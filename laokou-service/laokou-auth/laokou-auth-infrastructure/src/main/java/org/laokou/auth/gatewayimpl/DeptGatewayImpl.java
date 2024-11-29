@@ -67,6 +67,10 @@ public class DeptGatewayImpl implements DeptGateway {
 			throw new SystemException(DATA_TABLE_NOT_EXIST,
 					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { TABLE_DEPT }));
 		}
+		catch (Exception e) {
+			log.error("查询部门失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+			throw new SystemException("S_Dept_QueryFail", "查询部门失败");
+		}
 	}
 
 	private Set<String> getPaths(List<String> list) {

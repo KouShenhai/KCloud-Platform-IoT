@@ -139,7 +139,7 @@ public class AuthA extends AggregateRoot<Long> {
 		this.user = new UserE(currentUser, EMPTY, EMPTY, this.tenantId);
 	}
 
-	public void updateUser(UserE user) {
+	public void updateUserInfo(UserE user) {
 		if (ObjectUtil.isNotNull(user)) {
 			this.user = user;
 			this.creator = user.getId();
@@ -158,11 +158,17 @@ public class AuthA extends AggregateRoot<Long> {
 		this.sourcePrefix = source.prefix();
 	}
 
-	public void updateMenu(MenuV menu) {
+	public void updateMenuPermissions(MenuV menu) {
+		if (CollectionUtil.isEmpty(menu.permissions())) {
+			fail(FORBIDDEN);
+		}
 		this.menu = menu;
 	}
 
-	public void updateDept(DeptV dept) {
+	public void updateDeptPaths(DeptV dept) {
+		if (CollectionUtil.isEmpty(dept.deptPaths())) {
+			fail(FORBIDDEN);
+		}
 		this.dept = dept;
 	}
 
@@ -191,13 +197,7 @@ public class AuthA extends AggregateRoot<Long> {
 		}
 	}
 
-	public void checkMenuPermissions() {
-		if (CollectionUtil.isEmpty(this.menu.permissions())) {
-			fail(FORBIDDEN);
-		}
-	}
-
-	public void ok() {
+	public void success() {
 		createLog(OK, EMPTY);
 	}
 

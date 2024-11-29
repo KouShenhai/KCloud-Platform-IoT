@@ -28,13 +28,13 @@
   </select>
 
   <select id="selectPermissionsByUserId" resultType="string">
-    select permission
-    from boot_sys_menu
-    where id in (select menu_id
-                 from boot_sys_role_menu
-                 where role_id in (select role_id from boot_sys_user_role where user_id = #{userId}))
-      and del_flag = 0
-    GROUP BY permission
+    SELECT m.permission
+    FROM boot_sys_menu m
+    INNER JOIN boot_sys_role_menu rm ON m.id = rm.menu_id
+    INNER JOIN boot_sys_user_role ur ON rm.role_id = ur.role_id
+    WHERE ur.user_id = #{userId}
+        AND m.del_flag = 0
+    GROUP BY m.permission;
   </select>
 
 </mapper>
