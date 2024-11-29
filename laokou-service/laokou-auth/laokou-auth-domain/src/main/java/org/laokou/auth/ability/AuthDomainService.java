@@ -64,20 +64,18 @@ public class AuthDomainService {
 		checkCaptcha(auth);
 		// 修改数据源前缀
 		auth.updateSourcePrefix(sourceGateway.getPrefix(auth.getTenantCode()));
-		// 修改用户
-		auth.updateUser(userGateway.getProfile(auth.getUser(), auth.getTenantCode()));
+		// 修改用户信息
+		auth.updateUserInfo(userGateway.getProfile(auth.getUser(), auth.getTenantCode()));
 		// 校验密码
 		auth.checkUserPassword(passwordValidator);
 		// 校验用户状态
 		auth.checkUserStatus();
-		// 修改菜单
-		auth.updateMenu(menuGateway.getPermissions(auth.getUser()));
-		// 校验权限
-		auth.checkMenuPermissions();
-		// 修改部门
-		auth.updateDept(deptGateway.getPaths(auth.getUser()));
+		// 修改菜单权限
+		auth.updateMenuPermissions(menuGateway.getPermissions(auth.getUser()));
+		// 修改部门路径
+		auth.updateDeptPaths(deptGateway.getPaths(auth.getUser()));
 		// 认证成功
-		auth.ok();
+		auth.success();
 	}
 
 	private void checkCaptcha(AuthA auth) {

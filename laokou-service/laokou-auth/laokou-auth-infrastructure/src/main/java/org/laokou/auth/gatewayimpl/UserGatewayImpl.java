@@ -62,6 +62,10 @@ public class UserGatewayImpl implements UserGateway {
 			throw new SystemException(DATA_TABLE_NOT_EXIST,
 					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { TABLE_USER }));
 		}
+		catch (Exception e) {
+			log.error("查询用户失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+			throw new SystemException("S_User_QueryFail", "查询用户失败");
+		}
 	}
 
 }
