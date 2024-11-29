@@ -22,7 +22,6 @@ import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.core.config.SpringTaskExecutorConfig.THREAD_POOL_TASK_EXECUTOR_NAME;
@@ -44,11 +43,11 @@ public class AuthDomainService {
 
 	private final CaptchaGateway captchaGateway;
 
-	private final PasswordEncoder passwordEncoder;
-
 	private final LoginLogGateway loginLogGateway;
 
 	private final NoticeLogGateway noticeLogGateway;
+
+	private final PasswordValidator passwordValidator;
 
 	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void recordLoginLog(DefaultDomainEvent domainEvent) {
@@ -68,7 +67,7 @@ public class AuthDomainService {
 		// 修改用户
 		auth.updateUser(userGateway.getProfile(auth.getUser(), auth.getTenantCode()));
 		// 校验密码
-		auth.checkUserPassword(passwordEncoder);
+		auth.checkUserPassword(passwordValidator);
 		// 校验用户状态
 		auth.checkUserStatus();
 		// 修改菜单
@@ -83,8 +82,7 @@ public class AuthDomainService {
 
 	private void checkCaptcha(AuthA auth) {
 		if (auth.isUseCaptcha()) {
-			Boolean result = captchaGateway.checkValue(auth.getCaptcha().uuid(), auth.getCaptcha().captcha());
-			auth.checkCaptcha(result);
+			auth.checkCaptcha(captchaGateway.checkValue(auth.getCaptcha().uuid(), auth.getCaptcha().captcha()));
 		}
 	}
 
