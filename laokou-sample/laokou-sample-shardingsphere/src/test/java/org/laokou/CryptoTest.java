@@ -40,8 +40,8 @@ class CryptoTest {
 		log.info("密码加密后：{}", encryptPassword);
 		String decryptUsername = CryptoUtils.decrypt(encryptUsername);
 		String decryptPassword = CryptoUtils.decrypt(encryptPassword);
-		Assertions.assertEquals(decryptUsername, username);
-		Assertions.assertEquals(decryptPassword, password);
+		Assertions.assertEquals(username, decryptUsername);
+		Assertions.assertEquals(password, decryptPassword);
 	}
 
 }
