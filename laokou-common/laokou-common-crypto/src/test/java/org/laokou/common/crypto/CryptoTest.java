@@ -37,15 +37,15 @@ class CryptoTest {
 		String encryptPassword = RSAUtil.encryptByPublicKey(PASSWORD);
 		String decryptUsername = RSAUtil.decryptByPrivateKey(encryptUsername);
 		String decryptPassword = RSAUtil.decryptByPrivateKey(encryptPassword);
-		Assertions.assertEquals(decryptUsername, USERNAME);
-		Assertions.assertEquals(decryptPassword, PASSWORD);
+		Assertions.assertEquals(USERNAME, decryptUsername);
+		Assertions.assertEquals(PASSWORD, decryptPassword);
 	}
 
 	@Test
 	void testAES() {
 		String encryptUsername = AESUtil.encrypt(USERNAME);
 		String decryptUsername = AESUtil.decrypt(encryptUsername);
-		Assertions.assertEquals(decryptUsername, USERNAME);
+		Assertions.assertEquals(USERNAME, decryptUsername);
 	}
 
 }
