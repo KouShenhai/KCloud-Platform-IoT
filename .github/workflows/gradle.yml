@@ -26,4 +26,5 @@ jobs:
       - name: Gradle Run Build
         run: |
           cd laokou-gradle
+          chmod +x gradlew
           ./gradlew build
