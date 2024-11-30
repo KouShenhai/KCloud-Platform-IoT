@@ -1,4 +1,13 @@
+[[kcloud-platform-iot-doc]]
 = 老寇IoT云平台课程
+:revdate: {docdate}
+:toc: left
+:Author: laokou
+:doctype: document
+:toclevels: 4
+:tabsize: 4
+
+:numbered:
 
 == 课程-介绍
 

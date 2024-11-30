@@ -1,6 +1,13 @@
-:toc:
-
+[[github-ci-dependency-robot]]
 = Github CI之依赖机器人
+:revdate: {docdate}
+:toc: left
+:Author: laokou
+:doctype: document
+:toclevels: 4
+:tabsize: 4
+
+:numbered:
 
 == Dependabot
 

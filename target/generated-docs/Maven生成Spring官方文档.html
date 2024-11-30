@@ -5,12 +5,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
+<meta name="author" content="laokou">
 <title>Maven生成Spring官方文档</title>
 <link rel="stylesheet" href="css/site.css">
 <script src="js/setup.js"></script><script defer src="js/site.js"></script>
 
 </head>
-<body class="article"><div id="banner-container" class="container" role="banner">
+<body id="maven-spring-asciidoctor-backends" class="document toc2 toc-left"><div id="banner-container" class="container" role="banner">
   <div id="banner" class="contained" role="banner">
     <div id="switch-theme">
       <input type="checkbox" id="switch-theme-checkbox" />
@@ -28,33 +29,37 @@
     <div id="doc" class="doc">
 <div id="header">
 <h1>Maven生成Spring官方文档</h1>
-<div id="toc" class="toc">
+<div class="details">
+<span id="author" class="author">laokou</span><br>
+<span id="revdate">2024-11-30</span>
+</div>
+<div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <span id="back-to-index"><a href="index.html">Back to index</a></span><ul class="sectlevel1">
-<li><a href="#_介绍">介绍</a></li>
-<li><a href="#_html文档生成">HTML文档生成</a>
+<li><a href="#_介绍">1. 介绍</a></li>
+<li><a href="#_html文档生成">2. HTML文档生成</a>
 <ul class="sectlevel2">
-<li><a href="#_导入依赖">导入依赖</a></li>
-<li><a href="#_创建目录">创建目录</a></li>
-<li><a href="#_编写asciidoc">编写AsciiDoc</a></li>
-<li><a href="#_执行命令">执行命令</a></li>
+<li><a href="#_导入依赖">2.1. 导入依赖</a></li>
+<li><a href="#_创建目录">2.2. 创建目录</a></li>
+<li><a href="#_编写asciidoc">2.3. 编写AsciiDoc</a></li>
+<li><a href="#_执行命令">2.4. 执行命令</a></li>
 </ul>
 </li>
-<li><a href="#_带目录的html页面生成">带目录的HTML页面生成</a>
+<li><a href="#_带目录的html页面生成">3. 带目录的HTML页面生成</a>
 <ul class="sectlevel2">
-<li><a href="#_创建首页">创建首页</a></li>
-<li><a href="#_执行命令_2">执行命令</a></li>
-<li><a href="#_查看页面">查看页面</a></li>
+<li><a href="#_创建首页">3.1. 创建首页</a></li>
+<li><a href="#_执行命令_2">3.2. 执行命令</a></li>
+<li><a href="#_查看页面">3.3. 查看页面</a></li>
 </ul>
 </li>
-<li><a href="#_替换logo">替换logo</a></li>
-<li><a href="#_源码地址">源码地址</a></li>
+<li><a href="#_替换logo">4. 替换logo</a></li>
+<li><a href="#_源码地址">5. 源码地址</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_介绍"><a class="anchor" href="#_介绍"></a>介绍</h2>
+<h2 id="_介绍"><a class="anchor" href="#_介绍"></a>1. 介绍</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>通过该插件可以将 <code>Asciidoctor</code> 转换成 <code>Spring</code> 风格的HTML页面</p>
@@ -62,41 +67,41 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_html文档生成"><a class="anchor" href="#_html文档生成"></a>HTML文档生成</h2>
+<h2 id="_html文档生成"><a class="anchor" href="#_html文档生成"></a>2. HTML文档生成</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_导入依赖"><a class="anchor" href="#_导入依赖"></a>导入依赖</h3>
+<h3 id="_导入依赖"><a class="anchor" href="#_导入依赖"></a>2.1. 导入依赖</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-xml" data-lang="xml">&lt;plugin&gt;
-	&lt;groupId&gt;org.asciidoctor&lt;/groupId&gt;
-	&lt;artifactId&gt;asciidoctor-maven-plugin&lt;/artifactId&gt;
-	&lt;version&gt;3.0.0&lt;/version&gt;
-	&lt;executions&gt;
-		&lt;execution&gt;
-			&lt;id&gt;generate-html-documentation&lt;/id&gt;
-			&lt;phase&gt;prepare-package&lt;/phase&gt;
-			&lt;goals&gt;
-				&lt;goal&gt;process-asciidoc&lt;/goal&gt;
-			&lt;/goals&gt;
-			&lt;configuration&gt;
-				&lt;backend&gt;spring-html&lt;/backend&gt;
-			&lt;/configuration&gt;
-		&lt;/execution&gt;
-	&lt;/executions&gt;
-	&lt;dependencies&gt;
-		&lt;dependency&gt;
-			&lt;groupId&gt;io.spring.asciidoctor.backends&lt;/groupId&gt;
-			&lt;artifactId&gt;spring-asciidoctor-backends&lt;/artifactId&gt;
-			&lt;version&gt;0.0.7&lt;/version&gt;
-		&lt;/dependency&gt;
-	&lt;/dependencies&gt;
+    &lt;groupId&gt;org.asciidoctor&lt;/groupId&gt;
+    &lt;artifactId&gt;asciidoctor-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;3.0.0&lt;/version&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;id&gt;generate-html-documentation&lt;/id&gt;
+            &lt;phase&gt;prepare-package&lt;/phase&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;process-asciidoc&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;configuration&gt;
+                &lt;backend&gt;spring-html&lt;/backend&gt;
+            &lt;/configuration&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.spring.asciidoctor.backends&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-asciidoctor-backends&lt;/artifactId&gt;
+            &lt;version&gt;0.0.7&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
 &lt;/plugin&gt;</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_创建目录"><a class="anchor" href="#_创建目录"></a>创建目录</h3>
+<h3 id="_创建目录"><a class="anchor" href="#_创建目录"></a>2.2. 创建目录</h3>
 <div class="paragraph">
 <p>使用 <a href="https://github.com/asciidoctor/asciidoctor-maven-plugin">Asciidoctor Maven</a> 插件来生成文档</p>
 </div>
@@ -111,13 +116,13 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="_编写asciidoc"><a class="anchor" href="#_编写asciidoc"></a>编写AsciiDoc</h3>
+<h3 id="_编写asciidoc"><a class="anchor" href="#_编写asciidoc"></a>2.3. 编写AsciiDoc</h3>
 <div class="paragraph">
 <p>在 <code>src/docs/asciidoc</code> 新建文档 <code>test.adoc</code> 文档里面随便写一段话</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_执行命令"><a class="anchor" href="#_执行命令"></a>执行命令</h3>
+<h3 id="_执行命令"><a class="anchor" href="#_执行命令"></a>2.4. 执行命令</h3>
 <div class="paragraph">
 <p>在 <code>根目录</code> 执行命令 <code>mvn prepare-package</code> 转换成 <code>HTML</code> 页面</p>
 </div>
@@ -134,10 +139,10 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_带目录的html页面生成"><a class="anchor" href="#_带目录的html页面生成"></a>带目录的HTML页面生成</h2>
+<h2 id="_带目录的html页面生成"><a class="anchor" href="#_带目录的html页面生成"></a>3. 带目录的HTML页面生成</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_创建首页"><a class="anchor" href="#_创建首页"></a>创建首页</h3>
+<h3 id="_创建首页"><a class="anchor" href="#_创建首页"></a>3.1. 创建首页</h3>
 <div class="paragraph">
 <p>在 <code>src/docs/asciidoc</code> 新建 <code>index.adoc</code> 文档里面填写如下内容</p>
 </div>
@@ -149,13 +154,13 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="_执行命令_2"><a class="anchor" href="#_执行命令_2"></a>执行命令</h3>
+<h3 id="_执行命令_2"><a class="anchor" href="#_执行命令_2"></a>3.2. 执行命令</h3>
 <div class="paragraph">
 <p>略，同上文</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_查看页面"><a class="anchor" href="#_查看页面"></a>查看页面</h3>
+<h3 id="_查看页面"><a class="anchor" href="#_查看页面"></a>3.3. 查看页面</h3>
 <div class="paragraph">
 <p>找到 <code>index.html</code> 打开</p>
 </div>
@@ -166,7 +171,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_替换logo"><a class="anchor" href="#_替换logo"></a>替换logo</h2>
+<h2 id="_替换logo"><a class="anchor" href="#_替换logo"></a>4. 替换logo</h2>
 <div class="sectionbody">
 <div class="openblock">
 <div class="content">
@@ -185,7 +190,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_源码地址"><a class="anchor" href="#_源码地址"></a>源码地址</h2>
+<h2 id="_源码地址"><a class="anchor" href="#_源码地址"></a>5. 源码地址</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://github.com/KouShenhai/KCloud-Platform-IoT/blob/master/pom.xml">本项目已集成，直接使用即可</a></p>
@@ -195,7 +200,7 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-07-14 22:09:23 +0800
+Last updated 2024-11-30 14:02:49 +0800
 </div>
 </div>
 </div>

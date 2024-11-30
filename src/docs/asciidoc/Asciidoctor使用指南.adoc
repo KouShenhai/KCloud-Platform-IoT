@@ -1,5 +1,13 @@
-:toc:
+[[asciidoctor-use-guide]]
 = Asciidoctor使用指南
+:revdate: {docdate}
+:toc: left
+:Author: laokou
+:doctype: document
+:toclevels: 4
+:tabsize: 4
+
+:numbered:
 
 == 介绍
 
