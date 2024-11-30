@@ -1,0 +1,21 @@
+== 安装Kubernetes Dashboard
+
+[source%nowrap,shell]
+----
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+
+kubectl proxy
+
+# 生成token【长期】
+# https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
+kubectl apply -f dashboard-admin-user.yaml
+kubectl apply -f cluster-role-binding-admin-user.yaml
+kubectl apply -f dashboard-secret-admin-user.yaml
+kubectl -n kubernetes-dashboard create token admin-user
+
+# 浏览器 
+# http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
+
+----
+
