@@ -5,12 +5,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
+<meta name="author" content="laokou">
 <title>Asciidoctor使用指南</title>
 <link rel="stylesheet" href="css/site.css">
 <script src="js/setup.js"></script><script defer src="js/site.js"></script>
 
 </head>
-<body class="article"><div id="banner-container" class="container" role="banner">
+<body id="asciidoctor-use-guide" class="document toc2 toc-left"><div id="banner-container" class="container" role="banner">
   <div id="banner" class="contained" role="banner">
     <div id="switch-theme">
       <input type="checkbox" id="switch-theme-checkbox" />
@@ -28,22 +29,26 @@
     <div id="doc" class="doc">
 <div id="header">
 <h1>Asciidoctor使用指南</h1>
-<div id="toc" class="toc">
+<div class="details">
+<span id="author" class="author">laokou</span><br>
+<span id="revdate">2024-11-30</span>
+</div>
+<div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <span id="back-to-index"><a href="index.html">Back to index</a></span><ul class="sectlevel1">
-<li><a href="#_介绍">介绍</a></li>
-<li><a href="#_官方地址">官方地址</a></li>
-<li><a href="#_应用场景">应用场景</a></li>
-<li><a href="#_快速入门">快速入门</a>
+<li><a href="#_介绍">1. 介绍</a></li>
+<li><a href="#_官方地址">2. 官方地址</a></li>
+<li><a href="#_应用场景">3. 应用场景</a></li>
+<li><a href="#_快速入门">4. 快速入门</a>
 <ul class="sectlevel2">
-<li><a href="#_标题">标题</a></li>
-<li><a href="#_无序列表">无序列表</a></li>
-<li><a href="#_图片">图片</a></li>
-<li><a href="#_网络链接">网络链接</a></li>
-<li><a href="#_文件链接">文件链接</a></li>
-<li><a href="#_表格">表格</a></li>
-<li><a href="#_代码块">代码块</a></li>
-<li><a href="#_小技巧">小技巧</a></li>
+<li><a href="#_标题">4.1. 标题</a></li>
+<li><a href="#_无序列表">4.2. 无序列表</a></li>
+<li><a href="#_图片">4.3. 图片</a></li>
+<li><a href="#_网络链接">4.4. 网络链接</a></li>
+<li><a href="#_文件链接">4.5. 文件链接</a></li>
+<li><a href="#_表格">4.6. 表格</a></li>
+<li><a href="#_代码块">4.7. 代码块</a></li>
+<li><a href="#_小技巧">4.8. 小技巧</a></li>
 </ul>
 </li>
 </ul>
@@ -51,7 +56,7 @@
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_介绍"><a class="anchor" href="#_介绍"></a>介绍</h2>
+<h2 id="_介绍"><a class="anchor" href="#_介绍"></a>1. 介绍</h2>
 <div class="sectionbody">
 <div class="openblock">
 <div class="content">
@@ -65,7 +70,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_官方地址"><a class="anchor" href="#_官方地址"></a>官方地址</h2>
+<h2 id="_官方地址"><a class="anchor" href="#_官方地址"></a>2. 官方地址</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://asciidoctor.org">Asciidoctor官方地址</a></p>
@@ -73,7 +78,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_应用场景"><a class="anchor" href="#_应用场景"></a>应用场景</h2>
+<h2 id="_应用场景"><a class="anchor" href="#_应用场景"></a>3. 应用场景</h2>
 <div class="sectionbody">
 <div class="openblock">
 <div class="content">
@@ -89,10 +94,10 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_快速入门"><a class="anchor" href="#_快速入门"></a>快速入门</h2>
+<h2 id="_快速入门"><a class="anchor" href="#_快速入门"></a>4. 快速入门</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_标题"><a class="anchor" href="#_标题"></a>标题</h3>
+<h3 id="_标题"><a class="anchor" href="#_标题"></a>4.1. 标题</h3>
 <div class="openblock">
 <div class="content">
 <div class="literalblock">
@@ -109,7 +114,7 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="_无序列表"><a class="anchor" href="#_无序列表"></a>无序列表</h3>
+<h3 id="_无序列表"><a class="anchor" href="#_无序列表"></a>4.2. 无序列表</h3>
 <div class="openblock">
 <div class="content">
 <div class="literalblock">
@@ -142,7 +147,7 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="_图片"><a class="anchor" href="#_图片"></a>图片</h3>
+<h3 id="_图片"><a class="anchor" href="#_图片"></a>4.3. 图片</h3>
 <div class="openblock">
 <div class="content">
 <div class="literalblock">
@@ -242,7 +247,7 @@ image:image/tools/img.png[目录,100,role=related,title="role=related"]</pre>
 <br style="clear: both;">
 </div>
 <div class="sect2">
-<h3 id="_网络链接"><a class="anchor" href="#_网络链接"></a>网络链接</h3>
+<h3 id="_网络链接"><a class="anchor" href="#_网络链接"></a>4.4. 网络链接</h3>
 <div class="openblock">
 <div class="content">
 <div class="literalblock">
@@ -266,7 +271,7 @@ image:image/tools/img.png[目录,100,role=related,title="role=related"]</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_文件链接"><a class="anchor" href="#_文件链接"></a>文件链接</h3>
+<h3 id="_文件链接"><a class="anchor" href="#_文件链接"></a>4.5. 文件链接</h3>
 <div class="openblock">
 <div class="content">
 <div class="literalblock">
@@ -290,7 +295,7 @@ image:image/tools/img.png[目录,100,role=related,title="role=related"]</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_表格"><a class="anchor" href="#_表格"></a>表格</h3>
+<h3 id="_表格"><a class="anchor" href="#_表格"></a>4.6. 表格</h3>
 <div class="openblock">
 <div class="content">
 <div class="literalblock">
@@ -329,7 +334,7 @@ image:image/tools/img.png[目录,100,role=related,title="role=related"]</pre>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_代码块"><a class="anchor" href="#_代码块"></a>代码块</h3>
+<h3 id="_代码块"><a class="anchor" href="#_代码块"></a>4.7. 代码块</h3>
 <div class="openblock">
 <div class="content">
 <div class="literalblock">
@@ -395,14 +400,14 @@ public static void test() {
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-java" data-lang="java">public static void test() {
-	String str = "1234567890qwertyuiopasdfghjklzxcvbnm";
+    String str = "1234567890qwertyuiopasdfghjklzxcvbnm";
 }
 </code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_小技巧"><a class="anchor" href="#_小技巧"></a>小技巧</h3>
+<h3 id="_小技巧"><a class="anchor" href="#_小技巧"></a>4.8. 小技巧</h3>
 <div class="openblock">
 <div class="content">
 <div class="literalblock">
@@ -421,7 +426,7 @@ public static void test() {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-07-14 22:09:23 +0800
+Last updated 2024-11-30 14:02:34 +0800
 </div>
 </div>
 </div>

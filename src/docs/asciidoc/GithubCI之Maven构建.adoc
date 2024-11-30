@@ -1,6 +1,13 @@
-:toc:
-
+[[github-ci-maven-build]]
 = Github CI之Maven构建
+:revdate: {docdate}
+:toc: left
+:Author: laokou
+:doctype: document
+:toclevels: 4
+:tabsize: 4
+
+:numbered:
 
 == 介绍
 

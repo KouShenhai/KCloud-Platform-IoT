@@ -1,5 +1,13 @@
-:toc:
+[[first-doc]]
 = 开篇
+:revdate: {docdate}
+:toc: left
+:Author: laokou
+:doctype: document
+:toclevels: 4
+:tabsize: 4
+
+:numbered:
 
 == 作者的话
 
