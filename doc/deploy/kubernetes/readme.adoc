@@ -3,6 +3,9 @@
 [source%nowrap,shell]
 ----
 
+# master => apiserver、ectd、scheduler、controller-manager
+# worker => kubelet、kube-proxy、container-runtime
+
 # 切换集群
 kubectl config use-context docker-desktop
 
@@ -15,15 +18,28 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/a
 
 kubectl proxy
 
+# 生成临时token
+kubectl -n kubernetes-dashboard create token admin-user
+
 # 生成token【长期】
 # https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md
 kubectl apply -f dashboard-admin-user.yaml
 kubectl apply -f cluster-role-binding-admin-user.yaml
 kubectl apply -f dashboard-secret-admin-user.yaml
-kubectl -n kubernetes-dashboard create token admin-user
+# 获取长期token
+# 通过工具进行Base64解码
+# https://www.base64decode.org
+kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath={".data.token"}
 
 # 浏览器 
 # http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/login
+
+# 清除
+# kubectl -n kubernetes-dashboard delete serviceaccount admin-user
+# kubectl -n kubernetes-dashboard delete clusterrolebinding admin-user
+
+# 查看pod
+kubectl get pod -n kube-system
 
 ----
 
