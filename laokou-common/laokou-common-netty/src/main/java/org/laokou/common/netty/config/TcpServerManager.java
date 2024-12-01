@@ -47,12 +47,12 @@ public final class TcpServerManager {
 		Assert.isTrue(tcpServerList.stream()
 			.allMatch(handler -> configs.containsKey(
 					handler.getClass().getAnnotation(org.laokou.common.netty.annotation.TcpServer.class).key())),
-				"Some TcpServer handlers do not have corresponding config entries");
+				"Some Tcp Server handlers do not have corresponding config entries");
 		for (ChannelHandler channelHandler : tcpServerList) {
 			TcpServer tcpServer = channelHandler.getClass().getAnnotation(TcpServer.class);
 			String key = tcpServer.key();
 			SpringTcpServerProperties.Config config = configs.get(key);
-			Assert.notNull(config, "TcpServer Config not found");
+			Assert.notNull(config, "Tcp Server Config not found");
 			org.laokou.common.netty.config.TcpServer server = new org.laokou.common.netty.config.TcpServer(
 					channelHandler, config);
 			SERVER_MAP.putIfAbsent(key, server);

@@ -1,8 +1,16 @@
-== 安装Kubernetes Dashboard
+== 安装Kubernetes Dashboard[Docker-Desktop]
 
 [source%nowrap,shell]
 ----
 
+# 切换集群
+kubectl config use-context docker-desktop
+
+# 查看集群
+kubectl cluster-info
+kubectl get nodes
+
+# Kubernetes Version => v1.29.1
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
 
 kubectl proxy

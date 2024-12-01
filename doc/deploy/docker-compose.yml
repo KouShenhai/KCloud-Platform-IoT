@@ -123,7 +123,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./postgresql16/data:/var/lib/postgresql/data
+      - ./postgresql17/data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=laokou123
