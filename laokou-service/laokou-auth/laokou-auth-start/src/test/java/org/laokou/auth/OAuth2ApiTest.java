@@ -42,13 +42,12 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.test.context.TestConstructor;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.Serializable;
+import java.net.URI;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
@@ -60,8 +59,6 @@ import static org.laokou.common.data.cache.constant.NameConstant.TENANTS;
 import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
 import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
 import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author laokou
@@ -109,11 +106,8 @@ class OAuth2ApiTest {
 
 	private final DomainEventPublisher rocketMQDomainEventPublisher;
 
-	private MockMvc mockMvc;
-
 	@BeforeEach
 	void setUp() {
-		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
 
 	@Test
@@ -396,8 +390,7 @@ class OAuth2ApiTest {
 
 	@SneakyThrows
 	private String getCaptcha(String uuid) {
-		mockMvc.perform(get(getCaptchaApiUrlV3(uuid)).contentType(MediaType.APPLICATION_JSON))
-			.andExpect(status().isOk());
+		restClient.get().uri(URI.create(getCaptchaApiUrlV3(uuid))).retrieve().toBodilessEntity();
 		String key = captchaGateway.getKey(uuid);
 		String captcha = redisUtil.get(key).toString();
 		Assert.isTrue(StringUtil.isNotEmpty(captcha), "captcha is empty");
@@ -424,19 +417,20 @@ class OAuth2ApiTest {
 	}
 
 	private String getOAuthApiUrl() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/oauth2/token";
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/api/oauth2/token";
 	}
 
 	private String getDeviceCodeApiUrl() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/oauth2/device_authorization";
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort()
+				+ "/api/oauth2/device_authorization";
 	}
 
 	private String getCaptchaApiUrlV3(String uuid) {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/captchas/" + uuid;
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/api/v3/captchas/" + uuid;
 	}
 
 	private String getTokenUrlV3() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/tokens";
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/api/v3/tokens";
 	}
 
 	private String getSchema(boolean disabled) {
