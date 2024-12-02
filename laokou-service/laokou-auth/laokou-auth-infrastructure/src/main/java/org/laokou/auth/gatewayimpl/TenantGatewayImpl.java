@@ -15,35 +15,25 @@
  *
  */
 
-package org.laokou.auth.gateway;
+package org.laokou.auth.gatewayimpl;
+
+import lombok.RequiredArgsConstructor;
+import org.laokou.auth.gateway.TenantGateway;
+import org.laokou.common.tenant.mapper.TenantMapper;
+import org.springframework.stereotype.Component;
 
 /**
- * 验证码.
- *
  * @author laokou
  */
-public interface CaptchaGateway {
+@Component
+@RequiredArgsConstructor
+public class TenantGatewayImpl implements TenantGateway {
 
-	/**
-	 * 写入Redis.
-	 * @param uuid UUID
-	 * @param captcha 验证码
-	 */
-	void set(String uuid, String captcha);
+	private final TenantMapper tenantMapper;
 
-	/**
-	 * 检查验证码.
-	 * @param uuid UUID
-	 * @param code 验证码
-	 * @return 校验结果
-	 */
-	Boolean validate(String uuid, String code);
-
-	/**
-	 * 获取key.
-	 * @param uuid UUID
-	 * @return key
-	 */
-	String getKey(String uuid);
+	@Override
+	public long count(String tenantCode) {
+		return tenantMapper.selectCountByTenantCode(tenantCode);
+	}
 
 }

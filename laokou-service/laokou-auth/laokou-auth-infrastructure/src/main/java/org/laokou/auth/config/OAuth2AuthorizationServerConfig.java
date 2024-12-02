@@ -79,6 +79,16 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.security.oauth2.authorization-server", name = "enabled")
 class OAuth2AuthorizationServerConfig {
 
+	private static void applyDefaultSecurity(HttpSecurity http) throws Exception {
+		// @formatter:off
+        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = OAuth2AuthorizationServerConfigurer.authorizationServer();
+        http.securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
+                .with(authorizationServerConfigurer, Customizer.withDefaults())
+                .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated());
+        // @formatter:on
+	}
+	// @formatter:on
+
 	/**
 	 * OAuth2AuthorizationServer核心配置.
 	 * @param http http配置
@@ -96,22 +106,19 @@ class OAuth2AuthorizationServerConfig {
 	@Bean
 	@Order(HIGHEST_PRECEDENCE)
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
-			AuthenticationProvider passwordAuthenticationProvider,
-			AuthenticationProvider mailAuthenticationProvider,
+			AuthenticationProvider passwordAuthenticationProvider, AuthenticationProvider mailAuthenticationProvider,
 			AuthenticationProvider mobileAuthenticationProvider,
 			AuthenticationConverter passwordAuthenticationConverter,
-			AuthenticationConverter mailAuthenticationConverter,
-			AuthenticationConverter mobileAuthenticationConverter,
-			AuthorizationServerSettings authorizationServerSettings,
-			OAuth2AuthorizationService authorizationService) throws Exception {
+			AuthenticationConverter mailAuthenticationConverter, AuthenticationConverter mobileAuthenticationConverter,
+			AuthorizationServerSettings authorizationServerSettings, OAuth2AuthorizationService authorizationService)
+			throws Exception {
 		// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/configuration-model.html
-        OAuth2AuthorizationServerConfig.applyDefaultSecurity(http);
-        http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+		OAuth2AuthorizationServerConfig.applyDefaultSecurity(http);
+		http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
 			// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
-			.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(new DelegatingAuthenticationConverter(List.of(
-						passwordAuthenticationConverter,
-						mobileAuthenticationConverter,
-						mailAuthenticationConverter)))
+			.tokenEndpoint((tokenEndpoint) -> tokenEndpoint
+				.accessTokenRequestConverter(new DelegatingAuthenticationConverter(List
+					.of(passwordAuthenticationConverter, mobileAuthenticationConverter, mailAuthenticationConverter)))
 				.authenticationProvider(passwordAuthenticationProvider)
 				.authenticationProvider(mobileAuthenticationProvider)
 				.authenticationProvider(mailAuthenticationProvider))
@@ -119,10 +126,10 @@ class OAuth2AuthorizationServerConfig {
 			.authorizationService(authorizationService)
 			.authorizationServerSettings(authorizationServerSettings);
 		return http.addFilterBefore(UsernamePasswordFilter.INSTANCE, UsernamePasswordAuthenticationFilter.class)
-			.exceptionHandling(configurer -> configurer
-				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))).build();
+			.exceptionHandling(
+					configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")))
+			.build();
 	}
-	// @formatter:on
 
 	/**
 	 * 构造注册信息.
@@ -251,15 +258,6 @@ class OAuth2AuthorizationServerConfig {
 		catch (Exception var2) {
 			throw new IllegalStateException(var2);
 		}
-	}
-
-	private static void applyDefaultSecurity(HttpSecurity http) throws Exception {
-		// @formatter:off
-        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = OAuth2AuthorizationServerConfigurer.authorizationServer();
-        http.securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
-                .with(authorizationServerConfigurer, Customizer.withDefaults())
-                .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated());
-        // @formatter:on
 	}
 
 }

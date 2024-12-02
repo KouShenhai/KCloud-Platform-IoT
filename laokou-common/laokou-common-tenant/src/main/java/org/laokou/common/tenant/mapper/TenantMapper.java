@@ -38,4 +38,6 @@ public interface TenantMapper extends CrudMapper<Long, Integer, TenantDO> {
 
 	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
 
+	long selectCountByTenantCode(@Param("tenantCode") String tenantCode);
+
 }

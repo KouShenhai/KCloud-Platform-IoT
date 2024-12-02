@@ -39,6 +39,8 @@ public class AuthDomainService {
 
 	private final DeptGateway deptGateway;
 
+	private final TenantGateway tenantGateway;
+
 	private final SourceGateway sourceGateway;
 
 	private final CaptchaGateway captchaGateway;
@@ -61,27 +63,23 @@ public class AuthDomainService {
 
 	public void auth(AuthA auth) {
 		// 校验验证码
-		checkCaptcha(auth);
+		auth.checkCaptcha(captchaGateway::validate);
+		// 检查租户是否存在
+		auth.checkTenantExist(tenantGateway.count(auth.getTenantCode()));
 		// 修改数据源前缀
 		auth.updateSourcePrefix(sourceGateway.getPrefix(auth.getTenantCode()));
-		// 修改用户信息
-		auth.updateUserInfo(userGateway.getProfile(auth.getUser(), auth.getTenantCode()));
+		// 校验用户信息
+		auth.checkUserInfo(userGateway.getProfile(auth.getUser(), auth.getTenantCode()));
 		// 校验密码
 		auth.checkUserPassword(passwordValidator);
 		// 校验用户状态
 		auth.checkUserStatus();
-		// 修改菜单权限
-		auth.updateMenuPermissions(menuGateway.getPermissions(auth.getUser()));
-		// 修改部门路径
-		auth.updateDeptPaths(deptGateway.getPaths(auth.getUser()));
+		// 校验菜单权限
+		auth.checkMenuPermissions(menuGateway.getPermissions(auth.getUser()));
+		// 校验部门路径
+		auth.checkDeptPaths(deptGateway.getPaths(auth.getUser()));
 		// 认证成功
 		auth.success();
-	}
-
-	private void checkCaptcha(AuthA auth) {
-		if (auth.isUseCaptcha()) {
-			auth.checkCaptcha(captchaGateway.checkValue(auth.getCaptcha().uuid(), auth.getCaptcha().captcha()));
-		}
 	}
 
 }

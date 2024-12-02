@@ -18,32 +18,10 @@
 package org.laokou.auth.gateway;
 
 /**
- * 验证码.
- *
  * @author laokou
  */
-public interface CaptchaGateway {
+public interface TenantGateway {
 
-	/**
-	 * 写入Redis.
-	 * @param uuid UUID
-	 * @param captcha 验证码
-	 */
-	void set(String uuid, String captcha);
-
-	/**
-	 * 检查验证码.
-	 * @param uuid UUID
-	 * @param code 验证码
-	 * @return 校验结果
-	 */
-	Boolean validate(String uuid, String code);
-
-	/**
-	 * 获取key.
-	 * @param uuid UUID
-	 * @return key
-	 */
-	String getKey(String uuid);
+	long count(String tenantCode);
 
 }

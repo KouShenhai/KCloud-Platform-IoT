@@ -48,7 +48,7 @@ public class CaptchaGetQryExe {
 		Captcha ca = generate();
 		String captcha = ca.text();
 		String base64 = ca.toBase64();
-		captchaGateway.setValue(uuid, captcha);
+		captchaGateway.set(uuid, captcha);
 		return Result.ok(base64);
 	}
 
