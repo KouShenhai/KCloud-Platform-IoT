@@ -20,6 +20,7 @@ package org.laokou.auth.model;
 import com.blueconic.browscap.Capabilities;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
+import org.laokou.auth.ability.CaptchaValidator;
 import org.laokou.auth.ability.PasswordValidator;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -139,7 +140,7 @@ public class AuthA extends AggregateRoot<Long> {
 		this.user = new UserE(currentUser, EMPTY, EMPTY, this.tenantId);
 	}
 
-	public void updateUserInfo(UserE user) {
+	public void checkUserInfo(UserE user) {
 		if (ObjectUtil.isNotNull(user)) {
 			this.user = user;
 			this.creator = user.getId();
@@ -154,34 +155,39 @@ public class AuthA extends AggregateRoot<Long> {
 		return ObjectUtil.isNotNull(this.log);
 	}
 
+	public void checkTenantExist(long count) {
+		if (count == 0) {
+			fail(TENANT_NOT_EXIST);
+		}
+	}
+
 	public void updateSourcePrefix(SourceV source) {
 		this.sourcePrefix = source.prefix();
 	}
 
-	public void updateMenuPermissions(MenuV menu) {
+	public void checkMenuPermissions(MenuV menu) {
 		if (CollectionUtil.isEmpty(menu.permissions())) {
 			fail(FORBIDDEN);
 		}
 		this.menu = menu;
 	}
 
-	public void updateDeptPaths(DeptV dept) {
+	public void checkDeptPaths(DeptV dept) {
 		if (CollectionUtil.isEmpty(dept.deptPaths())) {
 			fail(FORBIDDEN);
 		}
 		this.dept = dept;
 	}
 
-	public boolean isUseCaptcha() {
-		return List.of(PASSWORD, MOBILE, MAIL).contains(grantType);
-	}
-
-	public void checkCaptcha(Boolean result) {
-		if (ObjectUtil.isNull(result)) {
-			fail(CAPTCHA_EXPIRED);
-		}
-		if (!result) {
-			fail(CAPTCHA_ERROR);
+	public void checkCaptcha(CaptchaValidator captchaValidator) {
+		if (isUseCaptcha()) {
+			Boolean result = captchaValidator.validate(captcha.uuid(), captcha.captcha());
+			if (ObjectUtil.isNull(result)) {
+				fail(CAPTCHA_EXPIRED);
+			}
+			if (!result) {
+				fail(CAPTCHA_ERROR);
+			}
 		}
 	}
 
@@ -215,6 +221,10 @@ public class AuthA extends AggregateRoot<Long> {
 		String browser = capabilities.getBrowser();
 		this.log = new LogV(currentUser, os, ip, address, browser, status, errorMessage, grantType.getCode(),
 				DateUtil.nowInstant());
+	}
+
+	private boolean isUseCaptcha() {
+		return List.of(PASSWORD, MOBILE, MAIL).contains(grantType);
 	}
 
 }

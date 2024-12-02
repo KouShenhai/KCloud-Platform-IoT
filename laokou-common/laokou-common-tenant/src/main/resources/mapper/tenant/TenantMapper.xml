@@ -41,4 +41,18 @@
 		where id = #{id}
 	</select>
 
+  <select id="selectCountByTenantCode" resultType="java.lang.Long">
+    <choose>
+      <when test="tenantCode == 'laokou'">
+        select 1
+      </when>
+      <otherwise>
+        select count(1)
+        from boot_sys_tenant
+        where code = #{tenantCode}
+        and del_flag = 0
+      </otherwise>
+    </choose>
+  </select>
+
 </mapper>

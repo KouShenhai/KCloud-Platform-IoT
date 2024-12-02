@@ -2228,8 +2228,6 @@ server:
     enabled: true
   forward-headers-strategy: framework
   shutdown: graceful
-  servlet:
-    context-path: /api
 # spring
 spring:
   lifecycle:
@@ -2409,8 +2407,6 @@ server:
     enabled: true
   forward-headers-strategy: framework
   shutdown: graceful
-  servlet:
-    context-path: /api
 # spring
 spring:
   lifecycle:
@@ -2535,8 +2531,6 @@ server:
     enabled: false
   forward-headers-strategy: framework
   shutdown: graceful
-  servlet:
-    context-path: /api
 # spring
 spring:
   lifecycle:
@@ -2716,8 +2710,6 @@ server:
     enabled: true
   forward-headers-strategy: framework
   shutdown: graceful
-  servlet:
-    context-path: /api
 # spring
 spring:
   lifecycle:
@@ -2897,8 +2889,6 @@ server:
     enabled: true
   forward-headers-strategy: framework
   shutdown: graceful
-  servlet:
-    context-path: /api
 # spring
 spring:
   lifecycle:
@@ -4634,8 +4624,6 @@ server:
     enabled: false
   forward-headers-strategy: framework
   shutdown: graceful
-  servlet:
-    context-path: /api
 # spring
 spring:
   lifecycle:
@@ -5008,8 +4996,6 @@ server:
     enabled: true
   forward-headers-strategy: framework
   shutdown: graceful
-  servlet:
-    context-path: /api
 # spring
 spring:
   lifecycle:
@@ -5121,8 +5107,6 @@ server:
     enabled: true
   forward-headers-strategy: framework
   shutdown: graceful
-  servlet:
-    context-path: /api
 # spring
 spring:
   lifecycle:
@@ -5234,8 +5218,6 @@ server:
     enabled: false
   forward-headers-strategy: framework
   shutdown: graceful
-  servlet:
-    context-path: /api
 # spring
 spring:
   lifecycle:

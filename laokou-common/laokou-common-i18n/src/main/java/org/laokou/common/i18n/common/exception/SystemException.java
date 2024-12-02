@@ -125,6 +125,11 @@ public final class SystemException extends GlobalException {
 	public final static class OAuth2 {
 
 		/**
+		 * 租户不存在.
+		 */
+		public static final String TENANT_NOT_EXIST = "S_OAuth2_TenantNotExist";
+
+		/**
 		 * 表不存在.
 		 */
 		public static final String DATA_TABLE_NOT_EXIST = "S_OAuth2_DataTableNotExist";

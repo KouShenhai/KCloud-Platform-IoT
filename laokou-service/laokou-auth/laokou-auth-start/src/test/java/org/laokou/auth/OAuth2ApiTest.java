@@ -119,18 +119,6 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void testRestClientToSendJsonPostRequest() {
-		String url = "https://jsonplaceholder.typicode.com/posts";
-		String json = restClient.method(POST)
-			.uri(url)
-			.contentType(MediaType.APPLICATION_JSON)
-			.retrieve()
-			.toEntity(String.class)
-			.toString();
-		assertNotNull(json);
-	}
-
-	@Test
 	void testSetInstantObj() {
 		String key = "test:instant:obj";
 		redisUtil.set(key, new InstantTest(DateUtil.nowInstant()));
@@ -417,20 +405,19 @@ class OAuth2ApiTest {
 	}
 
 	private String getOAuthApiUrl() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/api/oauth2/token";
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/oauth2/token";
 	}
 
 	private String getDeviceCodeApiUrl() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort()
-				+ "/api/oauth2/device_authorization";
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/oauth2/device_authorization";
 	}
 
 	private String getCaptchaApiUrlV3(String uuid) {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/api/v3/captchas/" + uuid;
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/captchas/" + uuid;
 	}
 
 	private String getTokenUrlV3() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/api/v3/tokens";
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/tokens";
 	}
 
 	private String getSchema(boolean disabled) {
