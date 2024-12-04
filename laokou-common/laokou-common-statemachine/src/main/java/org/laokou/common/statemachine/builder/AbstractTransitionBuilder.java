@@ -1,8 +1,8 @@
 package org.laokou.common.statemachine.builder;
 
-import com.alibaba.cola.statemachine.State;
-import com.alibaba.cola.statemachine.impl.StateHelper;
-import com.alibaba.cola.statemachine.impl.TransitionType;
+import org.laokou.common.statemachine.State;
+import org.laokou.common.statemachine.impl.StateHelper;
+import org.laokou.common.statemachine.impl.TransitionType;
 
 import java.util.Map;
 
@@ -20,10 +20,9 @@ import java.util.Map;
  * say a we are not suitable). With the abstract class, multi-flow and single-flow
  * only use to focus on their respective functions are single-flow,
  * or multi-flow. Conform to a single duty.
- * @author welliem
- * @date 2023-07-14 12:13
+ * @author welliem 2023-07-14 12:13
  */
- abstract class AbstractTransitionBuilder<S,E,C> implements  From<S,E,C>,On<S,E,C>,To<S,E,C>{
+ abstract class AbstractTransitionBuilder<S,E,C> implements From<S,E,C>,On<S,E,C>, To<S,E,C>{
 
     final Map<S, State<S, E, C>> stateMap;
     final TransitionType transitionType;

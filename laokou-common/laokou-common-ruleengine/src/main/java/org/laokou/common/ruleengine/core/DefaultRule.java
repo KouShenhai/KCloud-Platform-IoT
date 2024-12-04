@@ -29,7 +29,9 @@ import org.laokou.common.ruleengine.api.Facts;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author cola
+ */
 public class DefaultRule extends AbstractRule {
 
     private final Condition condition;

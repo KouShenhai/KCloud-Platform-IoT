@@ -1,7 +1,9 @@
 package org.laokou.common.ruleengine.api;
 
 import java.util.*;
-
+/**
+ * @author cola
+ */
 public class Facts implements Iterable<Fact<?>> {
 
     private final Set<Fact<?>> facts = new HashSet<>();

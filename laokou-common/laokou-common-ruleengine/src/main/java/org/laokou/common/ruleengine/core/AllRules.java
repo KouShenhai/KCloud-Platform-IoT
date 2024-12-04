@@ -6,7 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
-
+/**
+ * @author cola
+ */
 public class AllRules  extends CompositeRule{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AllRules.class);

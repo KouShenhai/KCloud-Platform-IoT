@@ -4,7 +4,9 @@ import org.laokou.common.ruleengine.api.Facts;
 import org.laokou.common.ruleengine.api.Rule;
 
 import java.util.Collections;
-
+/**
+ * @author cola
+ */
 public class AnyRules extends CompositeRule{
 
     public static CompositeRule anyOf(Rule... rules) {

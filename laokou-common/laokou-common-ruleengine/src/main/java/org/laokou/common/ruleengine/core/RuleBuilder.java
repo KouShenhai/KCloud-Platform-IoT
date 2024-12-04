@@ -6,7 +6,9 @@ import org.laokou.common.ruleengine.api.Rule;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author cola
+ */
 public class RuleBuilder {
 
     private final List<Action> actions = new ArrayList<>();

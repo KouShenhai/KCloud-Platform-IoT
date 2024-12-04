@@ -5,7 +5,9 @@ import org.laokou.common.ruleengine.api.Rule;
 import org.laokou.common.ruleengine.api.RuleEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * @author cola
+ */
 public class DefaultRuleEngine implements RuleEngine {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultRuleEngine.class);
 

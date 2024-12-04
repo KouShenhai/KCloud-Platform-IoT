@@ -1,6 +1,5 @@
 package org.laokou.common.statemachine.impl;
 
-import com.alibaba.cola.statemachine.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +8,7 @@ import java.util.Map;
 /**
  * StateHelper
  *
- * @author Frank Zhang
- * @date 2020-02-08 4:23 PM
+ * @author Frank Zhang 2020-02-08 4:23 PM
  */
 public class StateHelper {
     public static <S, E, C> State<S, E, C> getState(Map<S, State<S, E, C>> stateMap, S stateId){

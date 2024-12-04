@@ -1,7 +1,9 @@
 package org.laokou.common.ruleengine.api;
 
 import java.util.Objects;
-
+/**
+ * @author cola
+ */
 @FunctionalInterface
 public interface Condition {
 

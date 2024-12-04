@@ -1,5 +1,7 @@
 package org.laokou.common.ruleengine.api;
-
+/**
+ * @author cola
+ */
 public interface Rule extends Comparable<Rule> {
 
     /**

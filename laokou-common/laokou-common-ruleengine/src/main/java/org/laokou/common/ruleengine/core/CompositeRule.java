@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+/**
+ * @author cola
+ */
 public abstract class CompositeRule extends AbstractRule {
     private static final Logger LOGGER = LoggerFactory.getLogger(CompositeRule.class);
 

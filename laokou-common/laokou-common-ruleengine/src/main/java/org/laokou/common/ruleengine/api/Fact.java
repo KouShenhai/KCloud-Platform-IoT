@@ -1,7 +1,9 @@
 package org.laokou.common.ruleengine.api;
 
 import java.util.Objects;
-
+/**
+ * @author cola
+ */
 public class Fact<T> {
 
     private final String name;

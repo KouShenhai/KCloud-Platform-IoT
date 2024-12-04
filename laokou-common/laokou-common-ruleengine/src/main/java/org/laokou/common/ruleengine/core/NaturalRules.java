@@ -9,6 +9,7 @@ import java.util.Collections;
 
 /**
  * This is Natural Rules
+ * @author cola
  */
 public class NaturalRules extends CompositeRule{
     private static final Logger LOGGER = LoggerFactory.getLogger(NaturalRules.class);
