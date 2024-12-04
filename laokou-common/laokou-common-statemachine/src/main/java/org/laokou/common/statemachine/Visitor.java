@@ -11,25 +11,25 @@ public interface Visitor {
 
     /**
      * @param visitable the element to be visited.
-     * @return
+     * @return 字符串
      */
     String visitOnEntry(StateMachine<?, ?, ?> visitable);
 
     /**
      * @param visitable the element to be visited.
-     * @return
+     * @return 字符串
      */
     String visitOnExit(StateMachine<?, ?, ?> visitable);
 
     /**
      * @param visitable the element to be visited.
-     * @return
+     * @return 字符串
      */
     String visitOnEntry(State<?, ?, ?> visitable);
 
     /**
      * @param visitable the element to be visited.
-     * @return
+     * @return 字符串
      */
     String visitOnExit(State<?, ?, ?> visitable);
 }
