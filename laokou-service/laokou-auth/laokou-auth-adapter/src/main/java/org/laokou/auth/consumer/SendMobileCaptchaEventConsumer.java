@@ -22,8 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.i18n.dto.NoticeLog;
-import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.sms.service.SmsService;
 import org.springframework.stereotype.Component;
@@ -55,11 +53,7 @@ public class SendMobileCaptchaEventConsumer extends AbstractSendCaptchaEventCons
 
 	@Override
 	protected NoticeLog getNoticeLog(SendCaptchaEvent event) {
-		return smsService.send(event.getUuid(), 5, (value, expireTime) -> {
-			String mobileCaptchaKey = RedisKeyUtil.getMobileCaptchaKey(event.getUuid());
-			redisUtil.del(mobileCaptchaKey);
-			redisUtil.set(mobileCaptchaKey, value, expireTime);
-		});
+		return smsService.send(event.getUuid(), 5);
 	}
 
 }

@@ -17,14 +17,11 @@
 
 package org.laokou.common.mail.service;
 
-import org.laokou.common.i18n.dto.NoticeLog;
-import org.laokou.common.i18n.dto.Cache;
-
 /**
  * @author laokou
  */
 public interface MailService {
 
-	NoticeLog send(String mail, int minute, Cache cache);
+//	NoticeLog send(String mail, int minute);
 
 }

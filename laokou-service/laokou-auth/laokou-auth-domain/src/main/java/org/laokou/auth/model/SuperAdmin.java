@@ -15,13 +15,23 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.auth.model;
 
 /**
+ * 超级管理员枚举.
+ *
  * @author laokou
  */
-public interface Cache {
+public enum SuperAdmin {
 
-	void set(Object value, long expireTime);
+	/**
+	 * 否.
+	 */
+	NO,
+
+	/**
+	 * 是.
+	 */
+	YES
 
 }

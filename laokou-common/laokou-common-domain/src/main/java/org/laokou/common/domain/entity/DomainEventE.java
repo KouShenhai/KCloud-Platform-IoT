@@ -18,7 +18,6 @@
 package org.laokou.common.domain.entity;
 
 import lombok.Getter;
-import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 import java.nio.charset.StandardCharsets;
@@ -55,9 +54,7 @@ public class DomainEventE {
 	private final String attribute;
 
 	public DomainEventE(byte[] payload, DefaultDomainEvent domainEvent) {
-		this.tenantId = domainEvent.getTenantId();
 		this.eventType = domainEvent.getEventType().name();
-		this.serviceId = domainEvent.getServiceId();
 		this.aggregateId = domainEvent.getAggregateId();
 		this.tag = domainEvent.getTag();
 		this.topic = domainEvent.getTopic();

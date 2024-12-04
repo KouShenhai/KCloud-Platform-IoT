@@ -21,7 +21,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.utils.IdGenerator;
 import org.laokou.common.i18n.common.constant.EventType;
-import org.laokou.common.i18n.dto.NoticeLog;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 /**
@@ -41,14 +40,14 @@ public class NoticeMessageEvent extends DefaultDomainEvent {
 
 	private String param;
 
-	public NoticeMessageEvent(NoticeLog noticeLog, String topic, String tag, EventType eventType, String serviceId,
+	public NoticeMessageEvent( String topic, String tag, EventType eventType, String serviceId,
 			String sourcePrefix, Long aggregateId, Long tenantId) {
-		super(topic, tag, eventType, serviceId, sourcePrefix, noticeLog.getInstant(), aggregateId, tenantId);
+/*		super(topic, tag, eventType, serviceId, sourcePrefix, noticeLog.getInstant(), aggregateId, tenantId);
 		this.code = noticeLog.getCode();
 		this.name = noticeLog.getName() + "（" + noticeLog.getRemark() + "）";
 		this.status = noticeLog.getStatus();
 		this.errorMessage = noticeLog.getErrorMessage();
-		this.param = noticeLog.getParam();
+		this.param = noticeLog.getParam();*/
 	}
 
 	@Override

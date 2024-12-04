@@ -22,13 +22,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import org.laokou.auth.ability.CaptchaValidator;
 import org.laokou.auth.ability.PasswordValidator;
-import org.laokou.common.core.utils.*;
+import org.laokou.common.core.utils.AddressUtil;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.IpUtil;
+import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.IdGenerator;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
+
 import java.util.List;
 
 import static org.laokou.auth.model.GrantType.*;
@@ -54,65 +56,54 @@ public class AuthA extends AggregateRoot {
 	/**
 	 * 用户名.
 	 */
-	private String username;
+	private final String username;
 
 	/**
 	 * 密码.
 	 */
-	private String password;
+	private final String password;
 
 	/**
 	 * 租户编号.
 	 */
-	private String tenantCode;
+	private final String tenantCode;
 
 	/**
 	 * 认证类型 mail邮箱 mobile手机号 password密码 authorization_code授权码.
 	 */
-	private GrantType grantType;
+	private final GrantType grantType;
 
 	/**
 	 * 验证码值对象.
 	 */
-	private CaptchaV captcha;
-
+	private final CaptchaV captcha;
+	/**
+	 * 请求对象.
+	 */
+	private final HttpServletRequest request;
 	/**
 	 * 用户实体.
 	 */
 	private UserE user;
-
 	/**
 	 * 菜单值对象.
 	 */
 	private MenuV menu;
-
 	/**
 	 * 部门值对象.
 	 */
 	private DeptV dept;
-
 	/**
 	 * 日志值对象.
 	 */
 	private LogV log;
-
-	/**
-	 * 请求对象.
-	 */
-	private HttpServletRequest request;
-
 	/**
 	 * 当前用户.
 	 */
 	private String currentUser;
 
-	public AuthA() {
-		super(IdGenerator.defaultSnowflakeId());
-	}
-
 	public AuthA(String username, String password, String tenantCode, GrantType grantType, String uuid, String captcha,
 			HttpServletRequest request) {
-		super(IdGenerator.defaultSnowflakeId());
 		this.username = username;
 		this.password = password;
 		this.tenantCode = tenantCode;
@@ -144,8 +135,6 @@ public class AuthA extends AggregateRoot {
 	public void checkUserInfo(UserE user) {
 		if (ObjectUtil.isNotNull(user)) {
 			this.user = user;
-			this.creator = user.getId();
-			this.editor = user.getId();
 		}
 		else {
 			fail(grantType.getErrorCode());
@@ -162,8 +151,10 @@ public class AuthA extends AggregateRoot {
 		}
 	}
 
-	public void updateSourcePrefix(SourceV source) {
-		this.sourcePrefix = source.prefix();
+	public void checkSourcePrefix(SourceV source) {
+		if (ObjectUtil.isNull(source)) {
+			fail(DATA_SOURCE_NOT_EXIST);
+		}
 	}
 
 	public void checkMenuPermissions(MenuV menu) {
@@ -220,8 +211,7 @@ public class AuthA extends AggregateRoot {
 		Capabilities capabilities = RequestUtil.getCapabilities(request);
 		String os = capabilities.getPlatform();
 		String browser = capabilities.getBrowser();
-		this.log = new LogV(currentUser, os, ip, address, browser, status, errorMessage, grantType.getCode(),
-				DateUtil.nowInstant());
+		this.log = new LogV(currentUser, os, ip, address, browser, status, errorMessage, grantType.getCode());
 	}
 
 	private boolean isUseCaptcha() {

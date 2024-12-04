@@ -66,8 +66,8 @@ public class AuthDomainService {
 		auth.checkCaptcha(captchaGateway::validate);
 		// 检查租户是否存在
 		auth.checkTenantExist(tenantGateway.count(auth.getTenantCode()));
-		// 修改数据源前缀
-		auth.updateSourcePrefix(sourceGateway.getPrefix(auth.getTenantCode()));
+		// 校验数据源前缀
+		auth.checkSourcePrefix(sourceGateway.getPrefix(auth.getTenantCode()));
 		// 校验用户信息
 		auth.checkUserInfo(userGateway.getProfile(auth.getUser(), auth.getTenantCode()));
 		// 校验密码

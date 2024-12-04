@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
-import static org.laokou.common.i18n.common.constant.SuperAdmin.YES;
+import static org.laokou.auth.model.SuperAdmin.YES;
 
 /**
  * 用户实体.
@@ -87,16 +87,8 @@ public class UserE {
 		this.tenantId = tenantId;
 	}
 
-	public UserE(Long tenantId) {
-		this.tenantId = tenantId;
-	}
-
 	public boolean isSuperAdministrator() {
 		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
-	}
-
-	public boolean isDefaultTenant() {
-		return ObjectUtil.equals(0L, this.tenantId);
 	}
 
 }

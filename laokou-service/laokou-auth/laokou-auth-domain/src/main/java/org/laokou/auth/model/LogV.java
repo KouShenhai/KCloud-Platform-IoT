@@ -17,8 +17,6 @@
 
 package org.laokou.auth.model;
 
-import java.time.Instant;
-
 /**
  * 日志值对象.
  *
@@ -30,9 +28,8 @@ import java.time.Instant;
  * @param status 登录状态 0登录成功 1登录失败
  * @param errorMessage 错误信息
  * @param type 类型
- * @param instant 日期
  */
 public record LogV(String username, String os, String ip, String address, String browser, Integer status,
-		String errorMessage, String type, Instant instant) {
+		String errorMessage, String type) {
 
 }

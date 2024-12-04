@@ -21,13 +21,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.SourceGateway;
 import org.laokou.auth.model.SourceV;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.tenant.mapper.SourceDO;
 import org.laokou.common.tenant.mapper.SourceMapper;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.DATA_SOURCE_NOT_EXIST;
 
 /**
  * 数据源.
@@ -49,15 +46,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	@Override
 	public SourceV getPrefix(String tenantCode) {
 		SourceDO sourceDO = sourceMapper.selectOneByTenantCode(tenantCode);
-		checkSource(sourceDO);
-		return new SourceV(sourceDO.getName());
-	}
-
-	private void checkSource(SourceDO sourceDO) {
-		if (ObjectUtil.isNull(sourceDO)) {
-			throw new SystemException(DATA_SOURCE_NOT_EXIST);
-		}
-
+		return ObjectUtil.isNull(sourceDO) ? null : new SourceV(sourceDO.getName());
 	}
 
 	// /**

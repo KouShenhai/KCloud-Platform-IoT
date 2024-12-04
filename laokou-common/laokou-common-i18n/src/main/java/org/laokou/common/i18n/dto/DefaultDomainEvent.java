@@ -30,16 +30,13 @@ import java.time.Instant;
  */
 @Data
 @NoArgsConstructor
-public class DefaultDomainEvent extends DomainEvent<Long> {
+public class DefaultDomainEvent extends DomainEvent {
 
 	protected DefaultDomainEvent(AggregateRoot aggregateRoot, String topic, String tag, EventType eventType,
                                  Instant instant) {
 		generatorId();
 		super.tenantId = aggregateRoot.getTenantId();
-		super.creator = aggregateRoot.getCreator();
-		super.editor = aggregateRoot.getEditor();
 		super.eventType = eventType;
-		super.sourcePrefix = aggregateRoot.getSourcePrefix();
 		super.serviceId = aggregateRoot.getServiceId();
 		super.aggregateId = aggregateRoot.getId();
 		super.tag = tag;

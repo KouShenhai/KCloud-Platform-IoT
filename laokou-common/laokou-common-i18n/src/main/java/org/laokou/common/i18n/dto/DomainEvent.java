@@ -23,7 +23,6 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.common.constant.EventType;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.Instant;
 
 /**
@@ -34,7 +33,7 @@ import java.time.Instant;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class DomainEvent implements Serializable {
+public abstract class DomainEvent extends AggregateRoot {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;

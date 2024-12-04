@@ -23,7 +23,6 @@ import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.consumer.AbstractDomainEventConsumer;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
-import org.laokou.common.i18n.dto.NoticeLog;
 import org.laokou.common.rocketmq.template.SendMessageType;
 
 import static org.laokou.auth.common.constant.MqConstant.*;
@@ -41,7 +40,7 @@ public abstract class AbstractSendCaptchaEventConsumer extends AbstractDomainEve
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
-		NoticeMessageEvent noticeMessageEvent = new NoticeMessageEvent(getNoticeLog(event), LAOKOU_LOG_TOPIC,
+		NoticeMessageEvent noticeMessageEvent = new NoticeMessageEvent(LAOKOU_LOG_TOPIC,
 				NOTICE_TAG, SEND_NOTICE, event.getServiceId(), event.getSourcePrefix(), event.getAggregateId(),
 				event.getTenantId());
 		rocketMQDomainEventPublisher.publish(noticeMessageEvent, SendMessageType.ONE_WAY);
@@ -52,6 +51,8 @@ public abstract class AbstractSendCaptchaEventConsumer extends AbstractDomainEve
 		return JacksonUtil.toBean(msg, SendCaptchaEvent.class);
 	}
 
+/*
 	protected abstract NoticeLog getNoticeLog(SendCaptchaEvent event);
+*/
 
 }

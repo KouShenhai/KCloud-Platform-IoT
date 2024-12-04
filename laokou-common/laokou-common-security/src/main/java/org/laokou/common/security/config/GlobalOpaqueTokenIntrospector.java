@@ -85,8 +85,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 	private UserDetail decryptInfo(UserDetail userDetail) {
 		try {
 			// 解密
-			userDetail.decrypt();
-			return userDetail;
+			return userDetail.getDecryptInfo();
 		}
 		catch (GlobalException e) {
 			throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg(), ERROR_URL);

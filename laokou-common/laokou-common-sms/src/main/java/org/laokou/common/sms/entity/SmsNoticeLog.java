@@ -19,7 +19,6 @@ package org.laokou.common.sms.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.NoticeLog;
 
 @Data
 @NoArgsConstructor
