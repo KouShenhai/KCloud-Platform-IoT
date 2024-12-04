@@ -34,7 +34,7 @@ import java.time.Instant;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class DomainEvent<ID> implements Serializable {
+public abstract class DomainEvent implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
@@ -42,12 +42,12 @@ public abstract class DomainEvent<ID> implements Serializable {
 	/**
 	 * ID.
 	 */
-	protected ID id;
+	protected Long id;
 
 	/**
 	 * 聚合根ID.
 	 */
-	protected ID aggregateId;
+	protected Long aggregateId;
 
 	/**
 	 * 事件类型.
@@ -77,17 +77,17 @@ public abstract class DomainEvent<ID> implements Serializable {
 	/**
 	 * 创建人.
 	 */
-	protected ID creator;
+	protected Long creator;
 
 	/**
 	 * 编辑人.
 	 */
-	protected ID editor;
+	protected Long editor;
 
 	/**
 	 * 租户ID.
 	 */
-	protected ID tenantId;
+	protected Long tenantId;
 
 	/**
 	 * 创建时间.

@@ -27,7 +27,7 @@ import java.nio.charset.StandardCharsets;
  * @author laokou
  */
 @Getter
-public class DomainEventA extends AggregateRoot<Long> {
+public class DomainEventE {
 
 	/**
 	 * 事件类型.
@@ -54,13 +54,9 @@ public class DomainEventA extends AggregateRoot<Long> {
 	 */
 	private final String attribute;
 
-	public DomainEventA(byte[] payload, DefaultDomainEvent domainEvent) {
-		super(domainEvent.getId());
+	public DomainEventE(byte[] payload, DefaultDomainEvent domainEvent) {
 		this.tenantId = domainEvent.getTenantId();
-		this.creator = domainEvent.getCreator();
-		this.editor = domainEvent.getEditor();
 		this.eventType = domainEvent.getEventType().name();
-		this.sourcePrefix = domainEvent.getSourcePrefix();
 		this.serviceId = domainEvent.getServiceId();
 		this.aggregateId = domainEvent.getAggregateId();
 		this.tag = domainEvent.getTag();

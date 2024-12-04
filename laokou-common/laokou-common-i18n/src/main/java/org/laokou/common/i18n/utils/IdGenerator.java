@@ -15,13 +15,9 @@
  *
  */
 
-package org.laokou.common.core.utils;
+package org.laokou.common.i18n.utils;
 
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.Assert;
 
 import java.lang.management.ManagementFactory;
@@ -49,7 +45,6 @@ import static org.laokou.common.i18n.common.constant.StringConstant.AT;
  * @author laokou
  * @since 2016-08-18
  */
-@Slf4j
 public final class IdGenerator {
 
 	/**
@@ -179,7 +174,7 @@ public final class IdGenerator {
 		 * @param dataCenterId 数据中心ID
 		 * @param machineId 机器标志ID
 		 */
-		Snowflake(final long dataCenterId, final long machineId) {
+		private Snowflake(final long dataCenterId, final long machineId) {
 			Assert.isTrue(machineId <= MAX_MACHINE && machineId >= 0,
 					String.format("MachineId can't be greater than %s or less than 0", MAX_MACHINE));
 			Assert.isTrue(dataCenterId <= MAX_DATACENTER && dataCenterId >= 0,
@@ -188,7 +183,7 @@ public final class IdGenerator {
 			this.DATACENTER_ID = dataCenterId;
 		}
 
-		Snowflake(InetAddress inetAddress) {
+		private Snowflake(InetAddress inetAddress) {
 			this.inetAddress = inetAddress;
 			DATACENTER_ID = getDatacenterId();
 			MACHINE_ID = getMaxMachineId(DATACENTER_ID);
@@ -229,7 +224,7 @@ public final class IdGenerator {
 				}
 			}
 			catch (Exception e) {
-				log.error("Error message：{}", e.getMessage(), e);
+				throw new RuntimeException(e);
 			}
 			return id;
 		}
@@ -338,11 +333,14 @@ public final class IdGenerator {
 	 */
 	public final static class SystemClock {
 
+		private final long initialDelay;
+
 		private final long period;
 
 		private final AtomicLong now;
 
-		private SystemClock(long period) {
+		private SystemClock(long initialDelay, long period) {
+			this.initialDelay = initialDelay;
 			this.period = period;
 			this.now = new AtomicLong(System.currentTimeMillis());
 			scheduleClockUpdating();
@@ -363,7 +361,7 @@ public final class IdGenerator {
 				thread.setDaemon(false);
 				return thread;
 			});
-			scheduler.scheduleAtFixedRate(() -> now.set(System.currentTimeMillis()), period, period,
+			scheduler.scheduleAtFixedRate(() -> now.set(System.currentTimeMillis()), initialDelay, period,
 					TimeUnit.MILLISECONDS);
 		}
 
@@ -373,7 +371,7 @@ public final class IdGenerator {
 
 		private static class InstanceHolder {
 
-			public static final SystemClock INSTANCE = new SystemClock(1);
+			public static final SystemClock INSTANCE = new SystemClock(1, 1);
 
 		}
 

@@ -19,7 +19,7 @@ package org.laokou.auth.dto.domainevent;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.IdGenerator;
 import org.laokou.common.i18n.common.constant.EventType;
 import org.laokou.common.i18n.dto.NoticeLog;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;

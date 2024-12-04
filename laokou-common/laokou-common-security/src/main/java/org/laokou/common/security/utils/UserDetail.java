@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.IdGenerator;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Identifier;
@@ -40,7 +40,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.laokou.common.i18n.common.constant.SuperAdmin.YES;
-import static org.laokou.common.i18n.common.exception.SystemException.*;
 import static org.laokou.common.i18n.common.exception.SystemException.User.*;
 
 /**
@@ -51,7 +50,7 @@ import static org.laokou.common.i18n.common.exception.SystemException.User.*;
 @Getter
 @Setter
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
-public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2AuthenticatedPrincipal {
+public class UserDetail extends Identifier implements UserDetails, OAuth2AuthenticatedPrincipal {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;

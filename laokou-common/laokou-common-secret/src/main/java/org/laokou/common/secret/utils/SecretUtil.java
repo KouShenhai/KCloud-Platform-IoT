@@ -17,7 +17,7 @@
 
 package org.laokou.common.secret.utils;
 
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.IdGenerator;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.StringUtil;

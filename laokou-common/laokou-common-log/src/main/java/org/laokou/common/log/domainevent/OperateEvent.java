@@ -20,7 +20,7 @@ package org.laokou.common.log.domainevent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.IdGenerator;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 import java.io.Serial;

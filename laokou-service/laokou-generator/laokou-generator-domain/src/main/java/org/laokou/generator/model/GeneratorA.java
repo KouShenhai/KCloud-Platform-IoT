@@ -18,7 +18,7 @@
 package org.laokou.generator.model;
 
 import lombok.Getter;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.AggregateRoot;
 
@@ -30,7 +30,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
  * @author laokou
  */
 @Getter
-public class GeneratorA extends AggregateRoot<Long> {
+public class GeneratorA extends AggregateRoot {
 
 	private final String author;
 

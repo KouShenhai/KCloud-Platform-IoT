@@ -26,6 +26,7 @@ import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.IdGenerator;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import java.util.List;
@@ -43,7 +44,7 @@ import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
  * @author laokou
  */
 @Getter
-public class AuthA extends AggregateRoot<Long> {
+public class AuthA extends AggregateRoot {
 
 	/**
 	 * 业务用例.

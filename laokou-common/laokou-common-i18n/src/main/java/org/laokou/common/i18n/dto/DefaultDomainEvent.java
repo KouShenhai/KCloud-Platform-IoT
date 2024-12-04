@@ -32,8 +32,8 @@ import java.time.Instant;
 @NoArgsConstructor
 public class DefaultDomainEvent extends DomainEvent<Long> {
 
-	protected DefaultDomainEvent(AggregateRoot<Long> aggregateRoot, String topic, String tag, EventType eventType,
-			Instant instant) {
+	protected DefaultDomainEvent(AggregateRoot aggregateRoot, String topic, String tag, EventType eventType,
+                                 Instant instant) {
 		generatorId();
 		super.tenantId = aggregateRoot.getTenantId();
 		super.creator = aggregateRoot.getCreator();
