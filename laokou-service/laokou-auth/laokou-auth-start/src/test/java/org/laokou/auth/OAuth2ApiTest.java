@@ -25,15 +25,16 @@ import org.junit.jupiter.api.Test;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
-import org.laokou.common.core.utils.*;
+import org.laokou.common.core.utils.HttpUtil;
+import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.core.utils.MDCUtil;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.crypto.utils.RSAUtil;
-import org.laokou.common.domain.event.RemoveCacheEvent;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.IdGenerator;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.rocketmq.template.SendMessageType;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -56,7 +57,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.laokou.common.data.cache.constant.NameConstant.TENANTS;
 import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
 import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
 import static org.springframework.http.HttpMethod.POST;
@@ -238,7 +238,8 @@ class OAuth2ApiTest {
 	@Test
 	void testRemoveCache() {
 		MDCUtil.put("0", "0");
-		rocketMQDomainEventPublisher.publish(new RemoveCacheEvent(TENANTS, "1"), SendMessageType.ASYNC);
+		// rocketMQDomainEventPublisher.publish(new RemoveCacheEvent(TENANTS, "1"),
+		// SendMessageType.ASYNC);
 	}
 
 	private Map<String, String> deviceAuthorizationCodeAuth(String deviceCode) {

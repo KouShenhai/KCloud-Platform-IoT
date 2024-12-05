@@ -25,14 +25,12 @@ import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
-import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.mybatisplus.handler.domainevent.SqlEvent;
 import org.springframework.util.StopWatch;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 import static org.laokou.common.i18n.common.constant.StringConstant.SPACE;
 
 // @formatter:off
@@ -72,7 +70,7 @@ public class SqlMonitorInterceptor implements Interceptor {
 			// 替换空格、制表符、换页符
 			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", SPACE);
             log.info("Consume Time：{} ms，Execute SQL：{}", costTime, sql);
-            SqlEvent sqlEvent = new SqlEvent(SpringContextUtil.getServiceId(), sql, costTime, DateUtil.nowInstant());
+            //SqlEvent sqlEvent = new SqlEvent(SpringContextUtil.getServiceId(), sql, costTime, DateUtil.nowInstant());
         }
 		return obj;
 	}

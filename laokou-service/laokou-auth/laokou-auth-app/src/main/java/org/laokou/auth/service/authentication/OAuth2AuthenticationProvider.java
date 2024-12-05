@@ -20,16 +20,14 @@ package org.laokou.auth.service.authentication;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.AuthDomainService;
-import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.convertor.UserConvertor;
-import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.i18n.common.exception.ParamException;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.rocketmq.template.SendMessageType;
 import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
@@ -71,7 +69,8 @@ public class OAuth2AuthenticationProvider {
 		finally {
 			if (auth.checkNotEmptyLog()) {
 				// 发布登录事件
-				rocketMQDomainEventPublisher.publish(LoginLogConvertor.toEvent(auth), SendMessageType.ONE_WAY);
+				// rocketMQDomainEventPublisher.publish(LoginLogConvertor.toEvent(auth),
+				// SendMessageType.ONE_WAY);
 			}
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();

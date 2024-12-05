@@ -17,28 +17,22 @@
 
 package org.laokou.common.domain.event;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
-
-import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CACHE_TOPIC;
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * @author laokou
  */
-@Data
-@NoArgsConstructor
+@Getter
 public class RemoveCacheEvent extends DefaultDomainEvent {
 
 	private String name;
 
 	private String key;
 
-	public RemoveCacheEvent(String name, String key) {
-		super(LAOKOU_CACHE_TOPIC, EMPTY);
-		this.name = name;
-		this.key = key;
+	protected RemoveCacheEvent(String serviceId, Long tenantId, Long userId, Long aggregateId, String sourcePrefix,
+			String topic, String tag) {
+		super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
 	}
 
 }

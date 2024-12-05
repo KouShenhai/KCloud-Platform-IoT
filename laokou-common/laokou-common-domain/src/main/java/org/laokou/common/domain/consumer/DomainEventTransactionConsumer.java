@@ -20,14 +20,13 @@ package org.laokou.common.domain.consumer;
 import lombok.RequiredArgsConstructor;
 import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.entity.DomainEventE;
 import org.laokou.common.domain.service.DomainEventService;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.laokou.common.rocketmq.consumer.AbstractTransactionConsumer;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author laokou
@@ -42,8 +41,9 @@ public class DomainEventTransactionConsumer extends AbstractTransactionConsumer 
 	@Override
 	protected void executeExtLocalTransaction(Message message, Object args) {
 		// rocketmq内部返回字节数组
-		byte[] payload = (byte[]) message.getPayload();
-		domainEventService.create(new DomainEventE(payload, JacksonUtil.toBean(payload, DefaultDomainEvent.class)));
+		String payload = new String((byte[]) message.getPayload(), StandardCharsets.UTF_8);
+		// domainEventService.create(new DomainEventE(payload, JacksonUtil.toBean(payload,
+		// DefaultDomainEvent.class)));
 	}
 
 	@Override

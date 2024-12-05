@@ -27,7 +27,7 @@ public class DomainEventConvertor {
 
 	public static DomainEventDO toDataObject(DomainEventE domainEventA) {
 		DomainEventDO domainEventDO = new DomainEventDO();
-		domainEventDO.setEventType(domainEventA.getEventType());
+		// domainEventDO.setEventType(domainEventA.getEventType());
 		domainEventDO.setTopic(domainEventA.getTopic());
 		domainEventDO.setTag(domainEventA.getTag());
 		domainEventDO.setAggregateId(domainEventA.getAggregateId());

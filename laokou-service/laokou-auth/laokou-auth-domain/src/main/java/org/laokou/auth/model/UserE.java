@@ -80,11 +80,10 @@ public class UserE {
 	 */
 	private Long tenantId;
 
-	public UserE(String username, String mail, String mobile, Long tenantId) {
+	public UserE(String username, String mail, String mobile) {
 		this.username = AESUtil.encrypt(username);
 		this.mail = AESUtil.encrypt(mail);
 		this.mobile = AESUtil.encrypt(mobile);
-		this.tenantId = tenantId;
 	}
 
 	public boolean isSuperAdministrator() {

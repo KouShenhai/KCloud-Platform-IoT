@@ -120,27 +120,29 @@ public class AuthA extends AggregateRoot {
 
 	public void createUserByPassword() {
 		currentUser = this.username;
-		this.user = new UserE(currentUser, EMPTY, EMPTY, this.tenantId);
+		this.user = new UserE(currentUser, EMPTY, EMPTY);
 	}
 
 	public void createUserByMobile() {
 		currentUser = this.captcha.uuid();
-		this.user = new UserE(EMPTY, EMPTY, currentUser, this.tenantId);
+		this.user = new UserE(EMPTY, EMPTY, currentUser);
 	}
 
 	public void createUserByMail() {
 		currentUser = this.captcha.uuid();
-		this.user = new UserE(EMPTY, currentUser, EMPTY, this.tenantId);
+		this.user = new UserE(EMPTY, currentUser, EMPTY);
 	}
 
 	public void createUserByAuthorizationCode() {
 		currentUser = this.username;
-		this.user = new UserE(currentUser, EMPTY, EMPTY, this.tenantId);
+		this.user = new UserE(currentUser, EMPTY, EMPTY);
 	}
 
 	public void checkUserInfo(UserE user) {
 		if (ObjectUtil.isNotNull(user)) {
 			this.user = user;
+			super.tenantId = user.getTenantId();
+			super.userId = user.getId();
 		}
 		else {
 			recordFail(grantType.getErrorCode());

@@ -51,7 +51,7 @@ public class NoticeEventConsumer extends AbstractDomainEventConsumer {
 
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-		authDomainService.recordNoticeLog(domainEvent);
+		// authDomainService.recordNoticeLog(domainEvent);
 	}
 
 	@Override

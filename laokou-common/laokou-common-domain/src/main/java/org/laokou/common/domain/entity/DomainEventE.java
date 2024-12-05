@@ -31,7 +31,7 @@ public class DomainEventE {
 	/**
 	 * 事件类型.
 	 */
-	private final String eventType;
+	// private final String eventType;
 
 	/**
 	 * MQ主题.
@@ -53,11 +53,13 @@ public class DomainEventE {
 	 */
 	private final String attribute;
 
-	public DomainEventE(byte[] payload, DefaultDomainEvent domainEvent) {
-		this.eventType = domainEvent.getEventType().name();
+	public DomainEventE(String topic, String tag, byte[] payload, DefaultDomainEvent domainEvent) {
+		this.topic = topic;
+		this.tag = tag;
+		// this.eventType = domainEvent.getEventType().name();
 		this.aggregateId = domainEvent.getAggregateId();
-		this.tag = domainEvent.getTag();
-		this.topic = domainEvent.getTopic();
+		// this.tag = domainEvent.getTag();
+		// this.topic = domainEvent.getTopic();
 		this.attribute = new String(payload, StandardCharsets.UTF_8);
 	}
 

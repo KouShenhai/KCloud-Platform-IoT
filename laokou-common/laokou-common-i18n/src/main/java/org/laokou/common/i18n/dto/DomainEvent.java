@@ -17,10 +17,8 @@
 
 package org.laokou.common.i18n.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.common.constant.EventType;
+import lombok.Getter;
+import org.laokou.common.i18n.utils.DateUtil;
 
 import java.io.Serial;
 import java.time.Instant;
@@ -30,74 +28,61 @@ import java.time.Instant;
  *
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public abstract class DomainEvent extends AggregateRoot {
+@Getter
+public abstract class DomainEvent extends Identifier {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
 
 	/**
-	 * ID.
+	 * 服务ID.
 	 */
-	protected Long id;
-
-	/**
-	 * 聚合根ID.
-	 */
-	protected Long aggregateId;
-
-	/**
-	 * 事件类型.
-	 */
-	protected EventType eventType;
-
-	/**
-	 * MQ主题.
-	 */
-	protected String topic;
-
-	/**
-	 * 标签.
-	 */
-	protected String tag;
-
-	/**
-	 * 数据源前缀.
-	 */
-	protected String sourcePrefix;
-
-	/**
-	 * 应用服务ID.
-	 */
-	protected String serviceId;
-
-	/**
-	 * 创建人.
-	 */
-	protected Long creator;
-
-	/**
-	 * 编辑人.
-	 */
-	protected Long editor;
+	protected final String serviceId;
 
 	/**
 	 * 租户ID.
 	 */
-	protected Long tenantId;
+	protected final Long tenantId;
 
 	/**
-	 * 创建时间.
+	 * 用户ID.
 	 */
-	protected Instant createTime;
+	protected final Long userId;
 
 	/**
-	 * 修改时间.
+	 * 聚合根ID.
 	 */
-	protected Instant updateTime;
+	protected final Long aggregateId;
 
-	protected abstract void generatorId();
+	/**
+	 * 数据源前缀.
+	 */
+	protected final String sourcePrefix;
+
+	/**
+	 * MQ主题.
+	 */
+	protected final String topic;
+
+	/**
+	 * 标签.
+	 */
+	protected final String tag;
+
+	/**
+	 * 操作时间.
+	 */
+	protected final Instant instant = DateUtil.nowInstant();
+
+	protected DomainEvent(String serviceId, Long tenantId, Long userId, Long aggregateId, String sourcePrefix,
+			String topic, String tag) {
+		this.serviceId = serviceId;
+		this.tenantId = tenantId;
+		this.userId = userId;
+		this.aggregateId = aggregateId;
+		this.sourcePrefix = sourcePrefix;
+		this.topic = topic;
+		this.tag = tag;
+	}
 
 }

@@ -17,61 +17,19 @@
 
 package org.laokou.common.i18n.dto;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.common.constant.EventType;
-
-import java.time.Instant;
+import lombok.Getter;
 
 /**
  * 默认领域事件.
  *
  * @author laokou
  */
-@Data
-@NoArgsConstructor
+@Getter
 public class DefaultDomainEvent extends DomainEvent {
 
-	protected DefaultDomainEvent(AggregateRoot aggregateRoot, String topic, String tag, EventType eventType,
-			Instant instant) {
-		generatorId();
-		super.tenantId = aggregateRoot.getTenantId();
-		super.eventType = eventType;
-		super.serviceId = aggregateRoot.getServiceId();
-		super.aggregateId = aggregateRoot.getId();
-		super.tag = tag;
-		super.topic = topic;
-		super.createTime = instant;
-		super.updateTime = instant;
-	}
-
-	protected DefaultDomainEvent(String topic, String tag, EventType eventType, String serviceId, String sourcePrefix,
-			Instant instant, Long aggregateId, Long tenantId) {
-		generatorId();
-		super.aggregateId = aggregateId;
-		super.eventType = eventType;
-		super.tag = tag;
-		super.topic = topic;
-		super.createTime = instant;
-		super.updateTime = instant;
-		super.serviceId = serviceId;
-		super.sourcePrefix = sourcePrefix;
-		super.tenantId = tenantId;
-	}
-
-	protected DefaultDomainEvent(String topic, String tag) {
-		generatorId();
-		super.topic = topic;
-		super.tag = tag;
-	}
-
-	public DefaultDomainEvent(String serviceId) {
-		super.serviceId = serviceId;
-	}
-
-	@Override
-	protected void generatorId() {
-		super.id = System.currentTimeMillis();
+	protected DefaultDomainEvent(String serviceId, Long tenantId, Long userId, Long aggregateId, String sourcePrefix,
+			String topic, String tag) {
+		super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
 	}
 
 }

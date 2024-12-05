@@ -31,9 +31,9 @@ import java.time.Instant;
 public abstract class AggregateRoot extends Identifier {
 
 	/**
-	 * 服务ID.
+	 * 操作时间.
 	 */
-	protected String serviceId;
+	protected final Instant instant = DateUtil.nowInstant();
 
 	/**
 	 * 租户ID.
@@ -44,10 +44,5 @@ public abstract class AggregateRoot extends Identifier {
 	 * 用户ID.
 	 */
 	protected Long userId;
-
-	/**
-	 * 操作时间.
-	 */
-	protected final Instant instant = DateUtil.nowInstant();
 
 }
