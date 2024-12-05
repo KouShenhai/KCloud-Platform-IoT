@@ -48,7 +48,6 @@ public class StateMachineImpl<S, E, C> implements StateMachine<S, E, C> {
         Transition<S, E, C> transition = routeTransition(sourceStateId, event, ctx);
 
         if (transition == null) {
-            Debugger.debug("There is no Transition for " + event);
             failCallback.onFail(sourceStateId, event, ctx);
             return sourceStateId;
         }
@@ -61,7 +60,6 @@ public class StateMachineImpl<S, E, C> implements StateMachine<S, E, C> {
         List<Transition<S, E, C>> transitions = routeTransitions(sourceState, event, context);
         List<S> result = new ArrayList<>();
         if (transitions == null||transitions.isEmpty()) {
-            Debugger.debug("There is no Transition for " + event);
             failCallback.onFail(sourceState, event, context);
             result.add(sourceState);
             return result;

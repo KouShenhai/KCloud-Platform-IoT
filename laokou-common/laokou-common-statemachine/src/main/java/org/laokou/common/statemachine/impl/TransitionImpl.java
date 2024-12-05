@@ -83,7 +83,6 @@ public class TransitionImpl<S,E,C> implements Transition<S,E,C> {
 
     @Override
     public State<S, E, C> transit(C ctx, boolean checkCondition) {
-        Debugger.debug("Do transition: "+this);
         this.verify();
         if (!checkCondition || condition == null || condition.isSatisfied(ctx)) {
             if(action != null){
@@ -91,9 +90,7 @@ public class TransitionImpl<S,E,C> implements Transition<S,E,C> {
             }
             return target;
         }
-
-        Debugger.debug("Condition is not satisfied, stay at the "+source+" state ");
-        return source;
+		return source;
     }
 
     @Override
@@ -103,13 +100,10 @@ public class TransitionImpl<S,E,C> implements Transition<S,E,C> {
 
     @Override
     public boolean equals(Object anObject){
-        if(anObject instanceof Transition){
-            Transition other = (Transition)anObject;
-            if(this.event.equals(other.getEvent())
-                    && this.source.equals(other.getSource())
-                    && this.target.equals(other.getTarget())){
-                return true;
-            }
+        if(anObject instanceof Transition<?, ?, ?> other){
+			return this.event.equals(other.getEvent())
+				&& this.source.equals(other.getSource())
+				&& this.target.equals(other.getTarget());
         }
         return false;
     }
