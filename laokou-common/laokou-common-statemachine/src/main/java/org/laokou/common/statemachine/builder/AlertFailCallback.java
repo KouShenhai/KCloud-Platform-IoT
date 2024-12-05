@@ -1,12 +1,12 @@
 package org.laokou.common.statemachine.builder;
 
-import com.alibaba.cola.statemachine.exception.TransitionFailException;
+
+import org.laokou.common.statemachine.exception.TransitionFailException;
 
 /**
  * Alert fail callback, throw an {@code TransitionFailException}
  *
- * @author 龙也
- * @date 2022/9/15 12:02 PM
+ * @author 龙也 2022/9/15 12:02 PM
  */
 public class AlertFailCallback<S, E, C> implements FailCallback<S, E, C> {
 

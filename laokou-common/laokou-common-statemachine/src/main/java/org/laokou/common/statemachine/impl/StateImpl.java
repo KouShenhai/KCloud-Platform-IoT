@@ -1,22 +1,22 @@
 package org.laokou.common.statemachine.impl;
 
-import com.alibaba.cola.statemachine.State;
-import com.alibaba.cola.statemachine.Transition;
-import com.alibaba.cola.statemachine.Visitor;
+import org.laokou.common.statemachine.State;
+import org.laokou.common.statemachine.Transition;
+import org.laokou.common.statemachine.Visitor;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * StateImpl
  *
- * @author Frank Zhang
- * @date 2020-02-07 11:19 PM
+ * @author Frank Zhang 2020-02-07 11:19 PM
  */
 public class StateImpl<S,E,C> implements State<S,E,C> {
     protected final S stateId;
-    private EventTransitions eventTransitions = new EventTransitions();
+    private final EventTransitions<S,E,C> eventTransitions = new EventTransitions<>();
 
     StateImpl(S stateId){
         this.stateId = stateId;
@@ -70,14 +70,12 @@ public class StateImpl<S,E,C> implements State<S,E,C> {
     }
 
     @Override
-    public boolean equals(Object anObject){
-        if(anObject instanceof State){
-            State other = (State)anObject;
-            if(this.stateId.equals(other.getId()))
-                return true;
-        }
-        return false;
-    }
+	public boolean equals(Object anObject){
+		if(anObject instanceof State<?,?,?> state){
+			return Objects.equals(this.stateId, state.getId());
+		}
+		return false;
+	}
 
     @Override
     public String toString(){

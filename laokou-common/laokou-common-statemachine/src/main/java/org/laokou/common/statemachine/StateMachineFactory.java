@@ -1,6 +1,7 @@
 package org.laokou.common.statemachine;
 
-import com.alibaba.cola.statemachine.impl.StateMachineException;
+
+import org.laokou.common.statemachine.impl.StateMachineException;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -8,13 +9,12 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * StateMachineFactory
  *
- * @author Frank Zhang
- * @date 2020-02-08 10:21 PM
+ * @author Frank Zhang 2020-02-08 10:21 PM
  */
 public class StateMachineFactory {
-    static Map<String /* machineId */, StateMachine> stateMachineMap = new ConcurrentHashMap<>();
+    static Map<String /* machineId */, StateMachine<?, ?, ?>> stateMachineMap = new ConcurrentHashMap<>();
 
-    public static <S, E, C> void register(StateMachine<S, E, C> stateMachine){
+    public static void register(StateMachine<?, ?, ?> stateMachine){
         String machineId = stateMachine.getMachineId();
         if(stateMachineMap.get(machineId) != null){
             throw new StateMachineException("The state machine with id ["+machineId+"] is already built, no need to build again");
@@ -22,8 +22,8 @@ public class StateMachineFactory {
         stateMachineMap.put(stateMachine.getMachineId(), stateMachine);
     }
 
-    public static <S, E, C> StateMachine<S, E, C> get(String machineId){
-        StateMachine stateMachine = stateMachineMap.get(machineId);
+    public static StateMachine<?, ?, ?> get(String machineId){
+        StateMachine<?, ?, ?> stateMachine = stateMachineMap.get(machineId);
         if(stateMachine == null){
             throw new StateMachineException("There is no stateMachine instance for "+machineId+", please build it first");
         }

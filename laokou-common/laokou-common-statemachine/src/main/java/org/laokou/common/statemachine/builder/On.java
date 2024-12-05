@@ -1,12 +1,11 @@
 package org.laokou.common.statemachine.builder;
 
-import com.alibaba.cola.statemachine.Condition;
+import org.laokou.common.statemachine.Condition;
 
 /**
  * On
  *
- * @author Frank Zhang
- * @date 2020-02-07 6:14 PM
+ * @author Frank Zhang 2020-02-07 6:14 PM
  */
 public interface On<S, E, C> extends When<S, E, C>{
     /**

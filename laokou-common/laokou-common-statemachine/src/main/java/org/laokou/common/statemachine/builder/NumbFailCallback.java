@@ -3,8 +3,7 @@ package org.laokou.common.statemachine.builder;
 /**
  * Default fail callback, do nothing.
  *
- * @author 龙也
- * @date 2022/9/15 12:02 PM
+ * @author 龙也 2022/9/15 12:02 PM
  */
 public class NumbFailCallback<S, E, C> implements FailCallback<S, E, C> {
 

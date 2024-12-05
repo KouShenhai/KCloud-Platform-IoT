@@ -1,14 +1,14 @@
 package org.laokou.common.statemachine.impl;
 
+import org.laokou.common.statemachine.State;
+import org.laokou.common.statemachine.StateMachine;
+import org.laokou.common.statemachine.Transition;
+import org.laokou.common.statemachine.Visitor;
+import org.laokou.common.statemachine.builder.FailCallback;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import com.alibaba.cola.statemachine.State;
-import com.alibaba.cola.statemachine.StateMachine;
-import com.alibaba.cola.statemachine.Transition;
-import com.alibaba.cola.statemachine.Visitor;
-import com.alibaba.cola.statemachine.builder.FailCallback;
 
 /**
  * For performance consideration,
@@ -17,8 +17,7 @@ import com.alibaba.cola.statemachine.builder.FailCallback;
  * <p>
  * One side effect is since the state machine is stateless, we can not get current state from State Machine.
  *
- * @author Frank Zhang
- * @date 2020-02-07 5:40 PM
+ * @author Frank Zhang 2020-02-07 5:40 PM
  */
 public class StateMachineImpl<S, E, C> implements StateMachine<S, E, C> {
 
@@ -36,11 +35,11 @@ public class StateMachineImpl<S, E, C> implements StateMachine<S, E, C> {
     public boolean verify(S sourceStateId, E event) {
         isReady();
 
-        State sourceState = getState(sourceStateId);
+        State<S,E,C> sourceState = getState(sourceStateId);
 
         List<Transition<S, E, C>> transitions = sourceState.getEventTransitions(event);
 
-        return transitions != null && transitions.size() != 0;
+        return transitions != null && !transitions.isEmpty();
     }
 
     @Override
@@ -75,11 +74,9 @@ public class StateMachineImpl<S, E, C> implements StateMachine<S, E, C> {
     }
 
     private Transition<S, E, C> routeTransition(S sourceStateId, E event, C ctx) {
-        State sourceState = getState(sourceStateId);
-
+        State<S,E,C> sourceState = getState(sourceStateId);
         List<Transition<S, E, C>> transitions = sourceState.getEventTransitions(event);
-
-        if (transitions == null || transitions.size() == 0) {
+        if (transitions == null || transitions.isEmpty()) {
             return null;
         }
 
@@ -96,10 +93,10 @@ public class StateMachineImpl<S, E, C> implements StateMachine<S, E, C> {
         return transit;
     }
     private List<Transition<S,E,C>> routeTransitions(S sourceStateId, E event, C context) {
-        State sourceState = getState(sourceStateId);
+        State<S,E,C> sourceState = getState(sourceStateId);
         List<Transition<S, E, C>> result = new ArrayList<>();
         List<Transition<S, E, C>> transitions = sourceState.getEventTransitions(event);
-        if (transitions == null || transitions.size() == 0) {
+        if (transitions == null || transitions.isEmpty()) {
             return null;
         }
 
@@ -115,13 +112,8 @@ public class StateMachineImpl<S, E, C> implements StateMachine<S, E, C> {
         return result;
     }
 
-    private State getState(S currentStateId) {
-        State state = StateHelper.getState(stateMap, currentStateId);
-        if (state == null) {
-            showStateMachine();
-            throw new StateMachineException(currentStateId + " is not found, please check state machine");
-        }
-        return state;
+    private State<S,E,C> getState(S currentStateId) {
+		return StateHelper.getState(stateMap, currentStateId);
     }
 
     private void isReady() {
@@ -134,7 +126,7 @@ public class StateMachineImpl<S, E, C> implements StateMachine<S, E, C> {
     public String accept(Visitor visitor) {
         StringBuilder sb = new StringBuilder();
         sb.append(visitor.visitOnEntry(this));
-        for (State state : stateMap.values()) {
+        for (State<S,E,C> state : stateMap.values()) {
             sb.append(state.accept(visitor));
         }
         sb.append(visitor.visitOnExit(this));

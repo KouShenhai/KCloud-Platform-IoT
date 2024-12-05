@@ -5,20 +5,16 @@ import java.util.List;
 /**
  * StateMachine
  *
- * @author Frank Zhang
+ * @author Frank Zhang 2020-02-07 2:13 PM
  *
  * @param <S> the type of state
  * @param <E> the type of event
  * @param <C> the user defined context
- * @date 2020-02-07 2:13 PM
  */
 public interface StateMachine<S, E, C> extends Visitable{
 
     /**
      * Verify if an event {@code E} can be fired from current state {@code S}
-     * @param sourceStateId
-     * @param event
-     * @return
      */
     boolean verify(S sourceStateId,E event);
 
@@ -36,7 +32,6 @@ public interface StateMachine<S, E, C> extends Visitable{
 
     /**
      * MachineId is the identifier for a State Machine
-     * @return
      */
     String getMachineId();
 

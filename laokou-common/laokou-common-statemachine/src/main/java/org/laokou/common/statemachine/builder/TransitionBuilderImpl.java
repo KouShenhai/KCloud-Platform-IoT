@@ -1,11 +1,11 @@
 package org.laokou.common.statemachine.builder;
 
-import com.alibaba.cola.statemachine.Action;
-import com.alibaba.cola.statemachine.Condition;
-import com.alibaba.cola.statemachine.State;
-import com.alibaba.cola.statemachine.Transition;
-import com.alibaba.cola.statemachine.impl.StateHelper;
-import com.alibaba.cola.statemachine.impl.TransitionType;
+import org.laokou.common.statemachine.Action;
+import org.laokou.common.statemachine.Condition;
+import org.laokou.common.statemachine.State;
+import org.laokou.common.statemachine.Transition;
+import org.laokou.common.statemachine.impl.StateHelper;
+import org.laokou.common.statemachine.impl.TransitionType;
 
 import java.util.Map;
 

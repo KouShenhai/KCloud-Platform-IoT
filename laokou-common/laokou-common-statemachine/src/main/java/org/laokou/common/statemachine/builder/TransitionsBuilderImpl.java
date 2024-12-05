@@ -1,5 +1,12 @@
 package org.laokou.common.statemachine.builder;
 
+import org.laokou.common.statemachine.Action;
+import org.laokou.common.statemachine.Condition;
+import org.laokou.common.statemachine.State;
+import org.laokou.common.statemachine.Transition;
+import org.laokou.common.statemachine.impl.StateHelper;
+import org.laokou.common.statemachine.impl.TransitionType;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,16 +20,17 @@ public class TransitionsBuilderImpl<S,E,C> extends AbstractTransitionBuilder<S,E
     /**
      * This is for fromAmong where multiple sources can be configured to point to one target
      */
-    private List<State<S, E, C>> sources = new ArrayList<>();
+    private final List<State<S, E, C>> sources = new ArrayList<>();
 
-    private List<Transition<S, E, C>> transitions = new ArrayList<>();
+    private final List<Transition<S, E, C>> transitions = new ArrayList<>();
 
     public TransitionsBuilderImpl(Map<S, State<S, E, C>> stateMap, TransitionType transitionType) {
         super(stateMap, transitionType);
     }
 
-    @Override
-    public From<S, E, C> fromAmong(S... stateIds) {
+    @SafeVarargs
+	@Override
+    public final From<S, E, C> fromAmong(S... stateIds) {
         for(S stateId : stateIds) {
             sources.add(StateHelper.getState(super.stateMap, stateId));
         }
@@ -31,8 +39,8 @@ public class TransitionsBuilderImpl<S,E,C> extends AbstractTransitionBuilder<S,E
 
     @Override
     public On<S, E, C> on(E event) {
-        for(State source : sources) {
-            Transition transition = source.addTransition(event, super.target, super.transitionType);
+        for(State<S, E, C> source : sources) {
+            Transition<S, E, C> transition = source.addTransition(event, super.target, super.transitionType);
             transitions.add(transition);
         }
         return this;
@@ -40,7 +48,7 @@ public class TransitionsBuilderImpl<S,E,C> extends AbstractTransitionBuilder<S,E
 
     @Override
     public When<S, E, C> when(Condition<C> condition) {
-        for(Transition transition : transitions){
+        for(Transition<S, E, C> transition : transitions){
             transition.setCondition(condition);
         }
         return this;
@@ -48,7 +56,7 @@ public class TransitionsBuilderImpl<S,E,C> extends AbstractTransitionBuilder<S,E
 
     @Override
     public void perform(Action<S, E, C> action) {
-        for(Transition transition : transitions){
+        for(Transition<S, E, C> transition : transitions){
             transition.setAction(action);
         }
     }

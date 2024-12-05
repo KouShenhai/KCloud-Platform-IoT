@@ -1,6 +1,6 @@
 package org.laokou.common.statemachine.impl;
 
-import com.alibaba.cola.statemachine.Transition;
+import org.laokou.common.statemachine.Transition;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,14 +8,13 @@ import java.util.List;
 
 /**
  * EventTransitions
+ * <p>
+ * 同一个Event可以触发多个Transitions，<a href="https://github.com/alibaba/COLA/pull/158">...</a>
  *
- * 同一个Event可以触发多个Transitions，https://github.com/alibaba/COLA/pull/158
- *
- * @author Frank Zhang
- * @date 2021-05-28 5:17 PM
+ * @author Frank Zhang 2021-05-28 5:17 PM
  */
 public class EventTransitions<S,E,C> {
-    private HashMap<E, List<Transition<S,E,C>>> eventTransitions;
+    private final HashMap<E, List<Transition<S,E,C>>> eventTransitions;
 
     public EventTransitions(){
         eventTransitions = new HashMap<>();
@@ -28,7 +27,7 @@ public class EventTransitions<S,E,C> {
             eventTransitions.put(event, transitions);
         }
         else{
-            List existingTransitions = eventTransitions.get(event);
+			List<Transition<S,E,C>> existingTransitions = eventTransitions.get(event);
             verify(existingTransitions, transition);
             existingTransitions.add(transition);
         }
@@ -36,11 +35,9 @@ public class EventTransitions<S,E,C> {
 
     /**
      * Per one source and target state, there is only one transition is allowed
-     * @param existingTransitions
-     * @param newTransition
-     */
+	 */
     private void verify(List<Transition<S,E,C>> existingTransitions, Transition<S,E,C> newTransition) {
-        for (Transition transition : existingTransitions) {
+        for (Transition<S,E,C> transition : existingTransitions) {
             if (transition.equals(newTransition)) {
                 throw new StateMachineException(transition + " already Exist, you can not add another one");
             }

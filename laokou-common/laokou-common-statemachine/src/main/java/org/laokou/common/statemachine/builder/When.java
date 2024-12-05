@@ -1,5 +1,7 @@
 package org.laokou.common.statemachine.builder;
 
+import org.laokou.common.statemachine.Action;
+
 /**
  * When
  *

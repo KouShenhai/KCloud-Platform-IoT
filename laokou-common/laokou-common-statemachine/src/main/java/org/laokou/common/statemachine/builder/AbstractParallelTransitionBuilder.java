@@ -1,5 +1,9 @@
 package org.laokou.common.statemachine.builder;
 
+import org.laokou.common.statemachine.State;
+import org.laokou.common.statemachine.impl.StateHelper;
+import org.laokou.common.statemachine.impl.TransitionType;
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,8 +17,10 @@ abstract class AbstractParallelTransitionBuilder<S,E,C> implements  ParallelFrom
         this.stateMap = stateMap;
         this.transitionType = transitionType;
     }
-    @Override
-    public To<S, E, C> toAmong(S ... stateIds) {
+
+    @SafeVarargs
+	@Override
+    public final To<S, E, C> toAmong(S... stateIds) {
         targets = StateHelper.getStates(stateMap, stateIds);
         return this;
     }

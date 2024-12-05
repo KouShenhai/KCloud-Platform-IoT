@@ -1,17 +1,16 @@
 package org.laokou.common.statemachine.impl;
 
-import com.alibaba.cola.statemachine.Action;
-import com.alibaba.cola.statemachine.Condition;
-import com.alibaba.cola.statemachine.State;
-import com.alibaba.cola.statemachine.Transition;
+import org.laokou.common.statemachine.Action;
+import org.laokou.common.statemachine.Condition;
+import org.laokou.common.statemachine.State;
+import org.laokou.common.statemachine.Transition;
 
 /**
  * TransitionImpl。
- *
+ * <p>
  * This should be designed to be immutable, so that there is no thread-safe risk
  *
- * @author Frank Zhang
- * @date 2020-02-07 10:32 PM
+ * @author Frank Zhang 2020-02-07 10:32 PM
  */
 public class TransitionImpl<S,E,C> implements Transition<S,E,C> {
 

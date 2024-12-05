@@ -130,8 +130,8 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 			return;
 		}
 		MessageCO message = JacksonUtil.toBean(str, MessageCO.class);
-		Assert.notNull(message.getPayload(), "payload不能为空");
-		Assert.notNull(message.getType(), "type不能为空");
+		Assert.notNull(message.getPayload(), "payload must not be null");
+		Assert.notNull(message.getType(), "type must not bee null");
 		messageProcessor.processMessage(message, channel);
 	}
 

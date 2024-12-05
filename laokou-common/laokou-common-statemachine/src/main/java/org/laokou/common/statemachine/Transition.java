@@ -1,5 +1,7 @@
 package org.laokou.common.statemachine;
 
+import org.laokou.common.statemachine.impl.TransitionType;
+
 /**
  * {@code Transition} is something what a state machine associates with a state
  * changes.

@@ -1,5 +1,7 @@
 package org.laokou.common.statemachine.builder;
 
+import org.laokou.common.statemachine.StateMachine;
+
 /**
  * StateMachineBuilder
  *
@@ -36,7 +38,6 @@ public interface StateMachineBuilder<S, E, C> {
     /**
      * set up fail callback, default do nothing {@code NumbFailCallbackImpl}
      *
-     * @param callback
      */
     void setFailCallback(FailCallback<S, E, C> callback);
 

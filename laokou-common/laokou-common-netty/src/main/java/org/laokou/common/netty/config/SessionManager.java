@@ -19,6 +19,8 @@ package org.laokou.common.netty.config;
 
 import io.netty.channel.Channel;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
 import java.util.HashMap;
@@ -30,6 +32,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
  * @author laokou
  */
+@Slf4j
 public class SessionManager {
 
 	private static final Map<String, Channel> CLIENT_CACHE = new HashMap<>(4096);
@@ -52,6 +55,19 @@ public class SessionManager {
 			}
 			while (!isLocked && --retry > 0);
 			if (isLocked) {
+				// 关闭channel
+				Channel ch = CLIENT_CACHE.get(clientId);
+				if (ObjectUtil.isNotNull(ch)) {
+					String channelId = ch.id().asLongText();
+					ch.close().addListener(future -> {
+						if (future.isSuccess()) {
+							log.info("{} = > Channel closed successfully", channelId);
+						} else {
+							log.error("{} = > Channel close failed", channelId);
+						}
+					});
+				}
+				// 替换channel
 				CLIENT_CACHE.put(clientId, channel);
 				CHANNEL_CACHE.put(channel.id().asLongText(), clientId);
 			}

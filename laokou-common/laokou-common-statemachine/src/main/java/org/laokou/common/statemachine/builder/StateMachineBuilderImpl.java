@@ -1,13 +1,13 @@
 package org.laokou.common.statemachine.builder;
 
+import org.laokou.common.statemachine.State;
+import org.laokou.common.statemachine.StateMachine;
+import org.laokou.common.statemachine.StateMachineFactory;
+import org.laokou.common.statemachine.impl.StateMachineImpl;
+import org.laokou.common.statemachine.impl.TransitionType;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import com.alibaba.cola.statemachine.State;
-import com.alibaba.cola.statemachine.StateMachine;
-import com.alibaba.cola.statemachine.StateMachineFactory;
-import com.alibaba.cola.statemachine.impl.StateMachineImpl;
-import com.alibaba.cola.statemachine.impl.TransitionType;
 
 /**
  * StateMachineBuilderImpl
