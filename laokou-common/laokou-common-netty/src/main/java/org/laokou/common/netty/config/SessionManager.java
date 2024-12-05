@@ -62,7 +62,8 @@ public class SessionManager {
 					ch.close().addListener(future -> {
 						if (future.isSuccess()) {
 							log.info("{} = > Channel closed successfully", channelId);
-						} else {
+						}
+						else {
 							log.error("{} = > Channel close failed", channelId);
 						}
 					});

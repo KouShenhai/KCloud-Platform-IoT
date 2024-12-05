@@ -40,9 +40,8 @@ public abstract class AbstractSendCaptchaEventConsumer extends AbstractDomainEve
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
 		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
-		NoticeMessageEvent noticeMessageEvent = new NoticeMessageEvent(LAOKOU_LOG_TOPIC,
-				NOTICE_TAG, SEND_NOTICE, event.getServiceId(), event.getSourcePrefix(), event.getAggregateId(),
-				event.getTenantId());
+		NoticeMessageEvent noticeMessageEvent = new NoticeMessageEvent(LAOKOU_LOG_TOPIC, NOTICE_TAG, SEND_NOTICE,
+				event.getServiceId(), event.getSourcePrefix(), event.getAggregateId(), event.getTenantId());
 		rocketMQDomainEventPublisher.publish(noticeMessageEvent, SendMessageType.ONE_WAY);
 	}
 
@@ -51,8 +50,8 @@ public abstract class AbstractSendCaptchaEventConsumer extends AbstractDomainEve
 		return JacksonUtil.toBean(msg, SendCaptchaEvent.class);
 	}
 
-/*
-	protected abstract NoticeLog getNoticeLog(SendCaptchaEvent event);
-*/
+	/*
+	 * protected abstract NoticeLog getNoticeLog(SendCaptchaEvent event);
+	 */
 
 }

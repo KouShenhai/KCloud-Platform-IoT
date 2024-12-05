@@ -32,24 +32,24 @@ public class QQMailServiceImpl extends AbstractMailServiceImpl {
 		super(mailProperties);
 	}
 
-//	@Override
-//	@SneakyThrows
-//	public NoticeLog send(String mail, int minute) {
-//		String remark = "QQ邮箱";
-//		String subject = "验证码";
-//		String captcha = RandomStringUtil.randomNumeric(6);
-//		Map<String, Object> param = Map.of("captcha", captcha, "minute", minute);
-//		String content = TemplateUtil.getContent(CAPTCHA_TEMPLATE, param);
-//		String params = JacksonUtil.toJsonStr(Map.of("mail", mail, "content", content));
-//		try {
-//			// 发送邮件
-//			sendMail(subject, content, mail);
-//			return new MailNoticeLog(params, OK, EMPTY, remark);
-//		}
-//		catch (Exception e) {
-//			log.error("错误信息：{}", e.getMessage(), e);
-//			return new MailNoticeLog(params, FAIL, e.getMessage(), remark);
-//		}
-//	}
+	// @Override
+	// @SneakyThrows
+	// public NoticeLog send(String mail, int minute) {
+	// String remark = "QQ邮箱";
+	// String subject = "验证码";
+	// String captcha = RandomStringUtil.randomNumeric(6);
+	// Map<String, Object> param = Map.of("captcha", captcha, "minute", minute);
+	// String content = TemplateUtil.getContent(CAPTCHA_TEMPLATE, param);
+	// String params = JacksonUtil.toJsonStr(Map.of("mail", mail, "content", content));
+	// try {
+	// // 发送邮件
+	// sendMail(subject, content, mail);
+	// return new MailNoticeLog(params, OK, EMPTY, remark);
+	// }
+	// catch (Exception e) {
+	// log.error("错误信息：{}", e.getMessage(), e);
+	// return new MailNoticeLog(params, FAIL, e.getMessage(), remark);
+	// }
+	// }
 
 }

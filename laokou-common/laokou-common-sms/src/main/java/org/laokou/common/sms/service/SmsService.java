@@ -22,8 +22,8 @@ package org.laokou.common.sms.service;
  */
 public interface SmsService {
 
-/*
-	NoticeLog send(String mobile, int minute);
-*/
+	/*
+	 * NoticeLog send(String mobile, int minute);
+	 */
 
 }

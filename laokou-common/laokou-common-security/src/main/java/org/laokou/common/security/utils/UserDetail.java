@@ -130,7 +130,9 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 		this.sourcePrefix = EMPTY;
 	}
 
-	public UserDetail(Long id, String username, String password, String avatar, Boolean superAdmin, Integer status, String mail, String mobile, Set<String> deptPaths, Set<String> permissions, Long tenantId, String sourcePrefix) {
+	public UserDetail(Long id, String username, String password, String avatar, Boolean superAdmin, Integer status,
+			String mail, String mobile, Set<String> deptPaths, Set<String> permissions, Long tenantId,
+			String sourcePrefix) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
@@ -250,7 +252,9 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 	}
 
 	public UserDetail getDecryptInfo() {
-		return new UserDetail(this.id, this.getDecryptUsername(), this.password, this.avatar, this.superAdmin, this.status, this.getDecryptMail(), this.getDecryptMobile(), this.deptPaths, this.permissions, this.tenantId, this.sourcePrefix);
+		return new UserDetail(this.id, this.getDecryptUsername(), this.password, this.avatar, this.superAdmin,
+				this.status, this.getDecryptMail(), this.getDecryptMobile(), this.deptPaths, this.permissions,
+				this.tenantId, this.sourcePrefix);
 	}
 
 	private String getDecryptUsername() {

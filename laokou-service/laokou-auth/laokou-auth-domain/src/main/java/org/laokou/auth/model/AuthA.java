@@ -77,26 +77,32 @@ public class AuthA extends AggregateRoot {
 	 * 验证码值对象.
 	 */
 	private final CaptchaV captcha;
+
 	/**
 	 * 请求对象.
 	 */
 	private final HttpServletRequest request;
+
 	/**
 	 * 用户实体.
 	 */
 	private UserE user;
+
 	/**
 	 * 菜单值对象.
 	 */
 	private MenuV menu;
+
 	/**
 	 * 部门值对象.
 	 */
 	private DeptV dept;
+
 	/**
 	 * 日志值对象.
 	 */
 	private LogV log;
+
 	/**
 	 * 当前用户.
 	 */

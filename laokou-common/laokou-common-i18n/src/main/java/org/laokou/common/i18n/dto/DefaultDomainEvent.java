@@ -33,7 +33,7 @@ import java.time.Instant;
 public class DefaultDomainEvent extends DomainEvent {
 
 	protected DefaultDomainEvent(AggregateRoot aggregateRoot, String topic, String tag, EventType eventType,
-                                 Instant instant) {
+			Instant instant) {
 		generatorId();
 		super.tenantId = aggregateRoot.getTenantId();
 		super.eventType = eventType;

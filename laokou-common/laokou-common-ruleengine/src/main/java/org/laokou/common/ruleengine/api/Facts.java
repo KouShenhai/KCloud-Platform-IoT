@@ -1,157 +1,166 @@
+/*
+ * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package org.laokou.common.ruleengine.api;
 
 import java.util.*;
+
 /**
  * @author cola
  */
 public class Facts implements Iterable<Fact<?>> {
 
-    private final Set<Fact<?>> facts = new HashSet<>();
+	private final Set<Fact<?>> facts = new HashSet<>();
 
-    /**
-     * Add a fact, replacing any fact with the same name.
-     *
-     * @param name of the fact to add, must not be null
-     * @param value of the fact to add, must not be null
-     */
-    public <T> void put(String name, T value) {
-        Objects.requireNonNull(name, "fact name must not be null");
-        Objects.requireNonNull(value, "fact value must not be null");
-        Fact<?> retrievedFact = getFact(name);
-        if (retrievedFact != null) {
-            remove(retrievedFact);
-        }
-        add(new Fact<>(name, value));
-    }
+	/**
+	 * Add a fact, replacing any fact with the same name.
+	 * @param name of the fact to add, must not be null
+	 * @param value of the fact to add, must not be null
+	 */
+	public <T> void put(String name, T value) {
+		Objects.requireNonNull(name, "fact name must not be null");
+		Objects.requireNonNull(value, "fact value must not be null");
+		Fact<?> retrievedFact = getFact(name);
+		if (retrievedFact != null) {
+			remove(retrievedFact);
+		}
+		add(new Fact<>(name, value));
+	}
 
-    /**
-     * Add a fact, replacing any fact with the same name.
-     *
-     * @param fact to add, must not be null
-     */
-    public <T> void add(Fact<T> fact) {
-        Objects.requireNonNull(fact, "fact must not be null");
-        Fact<?> retrievedFact = getFact(fact.getName());
-        if (retrievedFact != null) {
-            remove(retrievedFact);
-        }
-        facts.add(fact);
-    }
+	/**
+	 * Add a fact, replacing any fact with the same name.
+	 * @param fact to add, must not be null
+	 */
+	public <T> void add(Fact<T> fact) {
+		Objects.requireNonNull(fact, "fact must not be null");
+		Fact<?> retrievedFact = getFact(fact.getName());
+		if (retrievedFact != null) {
+			remove(retrievedFact);
+		}
+		facts.add(fact);
+	}
 
-    /**
-     * Remove a fact by name.
-     *
-     * @param factName name of the fact to remove, must not be null
-     */
-    public void remove(String factName) {
-        Objects.requireNonNull(factName, "fact name must not be null");
-        Fact<?> fact = getFact(factName);
-        if (fact != null) {
-            remove(fact);
-        }
-    }
+	/**
+	 * Remove a fact by name.
+	 * @param factName name of the fact to remove, must not be null
+	 */
+	public void remove(String factName) {
+		Objects.requireNonNull(factName, "fact name must not be null");
+		Fact<?> fact = getFact(factName);
+		if (fact != null) {
+			remove(fact);
+		}
+	}
 
-    /**
-     * Remove a fact.
-     *
-     * @param fact to remove, must not be null
-     */
-    public <T> void remove(Fact<T> fact) {
-        Objects.requireNonNull(fact, "fact must not be null");
-        facts.remove(fact);
-    }
+	/**
+	 * Remove a fact.
+	 * @param fact to remove, must not be null
+	 */
+	public <T> void remove(Fact<T> fact) {
+		Objects.requireNonNull(fact, "fact must not be null");
+		facts.remove(fact);
+	}
 
-    /**
-     * Get the value of a fact by its name. This is a convenience method provided
-     * as a short version of {@code getFact(factName).getValue()}.
-     *
-     * @param factName name of the fact, must not be null
-     * @param <T> type of the fact's value
-     * @return the value of the fact having the given name, or null if there is
-     * no fact with the given name
-     */
-    @SuppressWarnings("unchecked")
-    public <T> T get(String factName) {
-        Objects.requireNonNull(factName, "fact name must not be null");
-        Fact<?> fact = getFact(factName);
-        if (fact != null) {
-            return (T) fact.getValue();
-        }
-        return null;
-    }
+	/**
+	 * Get the value of a fact by its name. This is a convenience method provided as a
+	 * short version of {@code getFact(factName).getValue()}.
+	 * @param factName name of the fact, must not be null
+	 * @param <T> type of the fact's value
+	 * @return the value of the fact having the given name, or null if there is no fact
+	 * with the given name
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> T get(String factName) {
+		Objects.requireNonNull(factName, "fact name must not be null");
+		Fact<?> fact = getFact(factName);
+		if (fact != null) {
+			return (T) fact.getValue();
+		}
+		return null;
+	}
 
-    /**
-     * Get a fact by name.
-     *
-     * @param factName name of the fact, must not be null
-     * @return the fact having the given name, or null if there is no fact with the given name
-     */
-    public Fact<?> getFact(String factName) {
-        Objects.requireNonNull(factName, "fact name must not be null");
-        return facts.stream()
-                .filter(fact -> fact.getName().equals(factName))
-                .findFirst()
-                .orElse(null);
-    }
+	/**
+	 * Get a fact by name.
+	 * @param factName name of the fact, must not be null
+	 * @return the fact having the given name, or null if there is no fact with the given
+	 * name
+	 */
+	public Fact<?> getFact(String factName) {
+		Objects.requireNonNull(factName, "fact name must not be null");
+		return facts.stream().filter(fact -> fact.getName().equals(factName)).findFirst().orElse(null);
+	}
 
-    public boolean contains(String factName){
-        return getFact(factName) != null;
-    }
+	public boolean contains(String factName) {
+		return getFact(factName) != null;
+	}
 
-    public boolean contains(Fact<?> fact){
-        if(fact == null){
-            return false;
-        }
-        return getFact(fact.getName()) != null;
-    }
+	public boolean contains(Fact<?> fact) {
+		if (fact == null) {
+			return false;
+		}
+		return getFact(fact.getName()) != null;
+	}
 
-    public int size(){
-        return facts.size();
-    }
+	public int size() {
+		return facts.size();
+	}
 
-    /**
-     * Return a copy of the facts as a map. It is not intended to manipulate
-     * facts outside of the rules engine (aka other than manipulating them through rules).
-     *
-     * @return a copy of the current facts as a {@link HashMap}
-     */
-    public Map<String, Object> asMap() {
-        Map<String, Object> map = new HashMap<>();
-        for (Fact<?> fact : facts) {
-            map.put(fact.getName(), fact.getValue());
-        }
-        return map;
-    }
+	/**
+	 * Return a copy of the facts as a map. It is not intended to manipulate facts outside
+	 * of the rules engine (aka other than manipulating them through rules).
+	 * @return a copy of the current facts as a {@link HashMap}
+	 */
+	public Map<String, Object> asMap() {
+		Map<String, Object> map = new HashMap<>();
+		for (Fact<?> fact : facts) {
+			map.put(fact.getName(), fact.getValue());
+		}
+		return map;
+	}
 
-    /**
-     * Return an iterator on the set of facts. It is not intended to remove
-     * facts using this iterator outside of the rules engine (aka other than doing it through rules)
-     *
-     * @return an iterator on the set of facts
-     */
-    @Override
-    public Iterator<Fact<?>> iterator() {
-        return facts.iterator();
-    }
+	/**
+	 * Return an iterator on the set of facts. It is not intended to remove facts using
+	 * this iterator outside of the rules engine (aka other than doing it through rules)
+	 * @return an iterator on the set of facts
+	 */
+	@Override
+	public Iterator<Fact<?>> iterator() {
+		return facts.iterator();
+	}
 
-    /**
-     * Clear facts.
-     */
-    public void clear() {
-        facts.clear();
-    }
+	/**
+	 * Clear facts.
+	 */
+	public void clear() {
+		facts.clear();
+	}
 
-    @Override
-    public String toString() {
-        Iterator<Fact<?>> iterator = facts.iterator();
-        StringBuilder stringBuilder = new StringBuilder("[");
-        while (iterator.hasNext()) {
-            stringBuilder.append(iterator.next().toString());
-            if (iterator.hasNext()) {
-                stringBuilder.append(",");
-            }
-        }
-        stringBuilder.append("]");
-        return stringBuilder.toString();
-    }
+	@Override
+	public String toString() {
+		Iterator<Fact<?>> iterator = facts.iterator();
+		StringBuilder stringBuilder = new StringBuilder("[");
+		while (iterator.hasNext()) {
+			stringBuilder.append(iterator.next().toString());
+			if (iterator.hasNext()) {
+				stringBuilder.append(",");
+			}
+		}
+		stringBuilder.append("]");
+		return stringBuilder.toString();
+	}
+
 }

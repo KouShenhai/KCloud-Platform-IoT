@@ -20,7 +20,6 @@ package org.laokou.auth.consumer;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.mail.service.MailService;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -50,10 +49,9 @@ public class SendMailCaptchaEventConsumer extends AbstractSendCaptchaEventConsum
 		this.mailService = mailService;
 		this.redisUtil = redisUtil;
 	}
-/*
-	@Override
-	protected NoticeLog getNoticeLog(SendCaptchaEvent event) {
-		return mailService.send(event.getUuid(), 5);
-	}*/
+	/*
+	 * @Override protected NoticeLog getNoticeLog(SendCaptchaEvent event) { return
+	 * mailService.send(event.getUuid(), 5); }
+	 */
 
 }

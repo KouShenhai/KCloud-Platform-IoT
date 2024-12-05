@@ -34,7 +34,7 @@ public class UserConvertor {
 		MenuV menuV = authA.getMenu();
 		DeptV deptV = authA.getDept();
 		return new UserDetail(userE.getId(), userE.getUsername(), userE.getPassword(), userE.getAvatar(),
-			userE.isSuperAdministrator(), userE.getStatus(), userE.getMail(), userE.getMobile(), deptV.deptPaths(),
+				userE.isSuperAdministrator(), userE.getStatus(), userE.getMail(), userE.getMobile(), deptV.deptPaths(),
 				menuV.permissions(), userE.getTenantId(), "");
 	}
 

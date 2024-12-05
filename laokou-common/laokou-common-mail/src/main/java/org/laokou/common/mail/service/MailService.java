@@ -22,6 +22,6 @@ package org.laokou.common.mail.service;
  */
 public interface MailService {
 
-//	NoticeLog send(String mail, int minute);
+	// NoticeLog send(String mail, int minute);
 
 }
