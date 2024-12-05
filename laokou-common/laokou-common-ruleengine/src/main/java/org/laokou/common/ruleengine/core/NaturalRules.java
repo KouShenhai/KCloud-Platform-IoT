@@ -2,8 +2,6 @@ package org.laokou.common.ruleengine.core;
 
 import org.laokou.common.ruleengine.api.Facts;
 import org.laokou.common.ruleengine.api.Rule;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 
@@ -12,7 +10,6 @@ import java.util.Collections;
  * @author cola
  */
 public class NaturalRules extends CompositeRule{
-    private static final Logger LOGGER = LoggerFactory.getLogger(NaturalRules.class);
 
     public static CompositeRule of(Rule... rules) {
         CompositeRule instance = new NaturalRules();
@@ -34,7 +31,6 @@ public class NaturalRules extends CompositeRule{
 
     @Override
     protected boolean doApply(Facts facts) {
-        LOGGER.debug("start Natural composite rule apply");
         for (Rule rule : rules) {
             rule.apply(facts);
         }

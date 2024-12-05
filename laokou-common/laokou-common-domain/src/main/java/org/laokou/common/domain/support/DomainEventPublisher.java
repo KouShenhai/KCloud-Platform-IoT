@@ -32,6 +32,6 @@ public interface DomainEventPublisher {
 	 * @param payload 内容
 	 * @param type 发送消息类型
 	 */
-	void publish(DomainEvent<Long> payload, SendMessageType type);
+	void publish(DomainEvent payload, SendMessageType type);
 
 }

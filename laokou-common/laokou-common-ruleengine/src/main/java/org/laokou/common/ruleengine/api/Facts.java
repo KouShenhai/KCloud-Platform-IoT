@@ -98,7 +98,7 @@ public class Facts implements Iterable<Fact<?>> {
         return getFact(factName) != null;
     }
 
-    public boolean contains(Fact fact){
+    public boolean contains(Fact<?> fact){
         if(fact == null){
             return false;
         }

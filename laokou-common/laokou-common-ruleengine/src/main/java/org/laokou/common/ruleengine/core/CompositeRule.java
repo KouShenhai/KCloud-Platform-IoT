@@ -2,8 +2,6 @@ package org.laokou.common.ruleengine.core;
 
 import org.laokou.common.ruleengine.api.Facts;
 import org.laokou.common.ruleengine.api.Rule;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +10,6 @@ import java.util.List;
  * @author cola
  */
 public abstract class CompositeRule extends AbstractRule {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CompositeRule.class);
 
     protected List<Rule> rules = new ArrayList<>();
 
@@ -42,9 +39,7 @@ public abstract class CompositeRule extends AbstractRule {
 
     protected void sort(){
         if(!isSorted){
-            LOGGER.debug(this.name+" before sort:" + rules);
             Collections.sort(rules);
-            LOGGER.debug(this.name+" after sort:" + rules);
             isSorted = true;
         }
     }

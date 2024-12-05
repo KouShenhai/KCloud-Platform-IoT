@@ -79,7 +79,7 @@ public class AuthDomainService {
 		// 校验部门路径
 		auth.checkDeptPaths(deptGateway.getPaths(auth.getUser()));
 		// 认证成功
-		auth.success();
+		auth.recordSuccess();
 	}
 
 }

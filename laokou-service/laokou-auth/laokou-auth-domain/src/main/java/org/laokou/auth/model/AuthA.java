@@ -137,7 +137,7 @@ public class AuthA extends AggregateRoot {
 			this.user = user;
 		}
 		else {
-			fail(grantType.getErrorCode());
+			recordFail(grantType.getErrorCode());
 		}
 	}
 
@@ -147,26 +147,26 @@ public class AuthA extends AggregateRoot {
 
 	public void checkTenantExist(long count) {
 		if (count == 0) {
-			fail(TENANT_NOT_EXIST);
+			recordFail(TENANT_NOT_EXIST);
 		}
 	}
 
 	public void checkSourcePrefix(SourceV source) {
 		if (ObjectUtil.isNull(source)) {
-			fail(DATA_SOURCE_NOT_EXIST);
+			recordFail(DATA_SOURCE_NOT_EXIST);
 		}
 	}
 
 	public void checkMenuPermissions(MenuV menu) {
 		if (CollectionUtil.isEmpty(menu.permissions())) {
-			fail(FORBIDDEN);
+			recordFail(FORBIDDEN);
 		}
 		this.menu = menu;
 	}
 
 	public void checkDeptPaths(DeptV dept) {
 		if (CollectionUtil.isEmpty(dept.deptPaths())) {
-			fail(FORBIDDEN);
+			recordFail(FORBIDDEN);
 		}
 		this.dept = dept;
 	}
@@ -175,31 +175,31 @@ public class AuthA extends AggregateRoot {
 		if (isUseCaptcha()) {
 			Boolean result = captchaValidator.validate(captcha.uuid(), captcha.captcha());
 			if (ObjectUtil.isNull(result)) {
-				fail(CAPTCHA_EXPIRED);
+				recordFail(CAPTCHA_EXPIRED);
 			}
 			if (!result) {
-				fail(CAPTCHA_ERROR);
+				recordFail(CAPTCHA_ERROR);
 			}
 		}
 	}
 
 	public void checkUserPassword(PasswordValidator passwordValidator) {
 		if (PASSWORD.equals(this.grantType) && !passwordValidator.validate(this.password, user.getPassword())) {
-			fail(USERNAME_PASSWORD_ERROR);
+			recordFail(USERNAME_PASSWORD_ERROR);
 		}
 	}
 
 	public void checkUserStatus() {
 		if (ObjectUtil.equals(UserStatus.DISABLE.ordinal(), this.user.getStatus())) {
-			fail(USER_DISABLED);
+			recordFail(USER_DISABLED);
 		}
 	}
 
-	public void success() {
+	public void recordSuccess() {
 		createLog(OK, EMPTY);
 	}
 
-	private void fail(String code) {
+	public void recordFail(String code) {
 		String errorMessage = MessageUtil.getMessage(code);
 		createLog(FAIL, errorMessage);
 		throw new SystemException(code, errorMessage);

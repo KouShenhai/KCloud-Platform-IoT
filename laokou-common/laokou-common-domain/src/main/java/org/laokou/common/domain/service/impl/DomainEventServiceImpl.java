@@ -22,9 +22,9 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.domain.convertor.DomainEventConvertor;
+import org.laokou.common.domain.entity.DomainEventE;
 import org.laokou.common.domain.mapper.DomainEventDO;
 import org.laokou.common.domain.mapper.DomainEventMapper;
-import org.laokou.common.domain.entity.DomainEventA;
 import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class DomainEventServiceImpl implements DomainEventService {
 	private final TransactionalUtil transactionalUtil;
 
 	@Override
-	public void create(DomainEventA domainEventA) {
+	public void create(DomainEventE domainEventA) {
 		try {
 			DynamicDataSourceContextHolder.push(DOMAIN);
 			transactionalUtil

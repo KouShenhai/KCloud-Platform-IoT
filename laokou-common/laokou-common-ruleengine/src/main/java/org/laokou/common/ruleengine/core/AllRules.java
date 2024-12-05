@@ -2,17 +2,12 @@ package org.laokou.common.ruleengine.core;
 
 import org.laokou.common.ruleengine.api.Facts;
 import org.laokou.common.ruleengine.api.Rule;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Collections;
+
 /**
  * @author cola
  */
 public class AllRules  extends CompositeRule{
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AllRules.class);
-
 
     public static CompositeRule allOf(Rule... rules) {
         CompositeRule instance = new AllRules();
@@ -22,10 +17,8 @@ public class AllRules  extends CompositeRule{
 
     @Override
     public boolean evaluate(Facts facts) {
-        if (rules.stream().allMatch(rule -> rule.evaluate(facts)))
-            return true;
-        return false;
-    }
+		return rules.stream().allMatch(rule -> rule.evaluate(facts));
+	}
 
     @Override
     public void execute(Facts facts) {
@@ -36,7 +29,6 @@ public class AllRules  extends CompositeRule{
 
     @Override
     protected boolean doApply(Facts facts) {
-        LOGGER.debug("start AND composite rule apply");
         if (evaluate(facts)) {
             for (Rule rule : rules) {
                 //所有的rules都执行

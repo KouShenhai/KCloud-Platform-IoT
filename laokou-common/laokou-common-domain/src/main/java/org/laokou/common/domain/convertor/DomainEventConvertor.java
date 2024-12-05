@@ -17,27 +17,19 @@
 
 package org.laokou.common.domain.convertor;
 
+import org.laokou.common.domain.entity.DomainEventE;
 import org.laokou.common.domain.mapper.DomainEventDO;
-import org.laokou.common.domain.entity.DomainEventA;
 
 /**
  * @author laokou
  */
 public class DomainEventConvertor {
 
-	public static DomainEventDO toDataObject(DomainEventA domainEventA) {
+	public static DomainEventDO toDataObject(DomainEventE domainEventA) {
 		DomainEventDO domainEventDO = new DomainEventDO();
-		domainEventDO.setId(domainEventA.getId());
-		domainEventDO.setCreator(domainEventA.getCreator());
-		domainEventDO.setEditor(domainEventA.getEditor());
-		domainEventDO.setCreateTime(domainEventA.getCreateTime());
-		domainEventDO.setUpdateTime(domainEventA.getUpdateTime());
-		domainEventDO.setTenantId(domainEventA.getTenantId());
 		domainEventDO.setEventType(domainEventA.getEventType());
-		domainEventDO.setSourcePrefix(domainEventA.getSourcePrefix());
 		domainEventDO.setTopic(domainEventA.getTopic());
 		domainEventDO.setTag(domainEventA.getTag());
-		domainEventDO.setServiceId(domainEventA.getServiceId());
 		domainEventDO.setAggregateId(domainEventA.getAggregateId());
 		domainEventDO.setAttribute(domainEventA.getAttribute());
 		return domainEventDO;
