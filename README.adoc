@@ -329,6 +329,7 @@ image::doc/image/jb_beam.png[jb_beam,100,100,link=https://www.jetbrains.com/comm
 [width=100%]
 |===
 |时间         |网名        |赞助           |备注
+|2024/12/08  |t*          |￥49.00      |无
 |2024/12/02  |'c*         |￥399.00      |无
 |2024/11/25  |tio*        |￥520.00      |希望KCloud飞起，实现专精特新!
 |2024/08/01  |*ckai       |￥88.00       |加油~
