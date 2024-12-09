@@ -157,9 +157,4 @@
     order by id desc
   </select>
 
-  <update id="deleteAll">
-    update boot_sys_login_log
-    set del_flag = 1
-  </update>
-
 </mapper>

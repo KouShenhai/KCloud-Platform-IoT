@@ -27,9 +27,11 @@ import org.apache.fury.ThreadLocalFury;
  */
 public final class FuryFactory {
 
-	private static final ThreadLocalFury FURY = Fury.builder().buildThreadLocalFury();
+	private static final FuryFactory FACTORY = new FuryFactory();
 
-	static {
+	private final ThreadLocalFury FURY = Fury.builder().buildThreadLocalFury();
+
+	public FuryFactory() {
 		FURY.register(net.sf.jsqlparser.expression.Alias.class);
 		FURY.register(net.sf.jsqlparser.expression.Alias.AliasColumn.class);
 		FURY.register(net.sf.jsqlparser.expression.AllValue.class);
@@ -260,14 +262,18 @@ public final class FuryFactory {
 		FURY.register(Function.NullHandling.class);
 	}
 
-	public static byte[] serialize(Object object) {
+	public static FuryFactory getFuryFactory() {
+		return FACTORY;
+	}
+
+	public byte[] serialize(Object object) {
 		if (object == null) {
 			return new byte[0];
 		}
 		return FURY.serialize(object);
 	}
 
-	public static Object deserialize(byte[] bytes) {
+	public Object deserialize(byte[] bytes) {
 		if (bytes == null) {
 			return null;
 		}

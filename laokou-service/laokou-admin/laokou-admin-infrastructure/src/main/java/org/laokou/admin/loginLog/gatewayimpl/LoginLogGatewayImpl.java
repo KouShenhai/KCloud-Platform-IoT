@@ -23,7 +23,6 @@ import org.laokou.admin.loginLog.gateway.LoginLogGateway;
 import org.laokou.admin.loginLog.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.loginLog.model.LoginLogE;
-import org.laokou.common.core.utils.ArrayUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -53,12 +52,7 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 
 	@Override
 	public void delete(Long[] ids) {
-		if (ArrayUtil.isNotEmpty(ids)) {
-			loginLogMapper.deleteByIds(Arrays.asList(ids));
-		}
-		else {
-			loginLogMapper.deleteAll();
-		}
+		loginLogMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

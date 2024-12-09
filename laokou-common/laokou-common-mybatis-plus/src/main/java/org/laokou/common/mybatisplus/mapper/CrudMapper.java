@@ -33,12 +33,8 @@ public interface CrudMapper<ID, VERSION, DO> extends BaseMapper<DO> {
 
 	VERSION selectVersion(ID id);
 
-	void insertOne(DO Do);
-
 	void selectObjectList(@Param(PAGE_QUERY) PageQuery pageQuery, ResultHandler<DO> handler);
 
 	long selectObjectCount(@Param(PAGE_QUERY) PageQuery pageQuery);
-
-	void deleteAll();
 
 }
