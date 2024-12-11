@@ -81,7 +81,7 @@
     <!--gson版本-->
     <gson.version>2.11.0</gson.version>
     <!--swagger-annotations-jakarta版本-->
-    <swagger-annotations-jakarta.version>2.2.26</swagger-annotations-jakarta.version>
+    <swagger-annotations-jakarta.version>2.2.27</swagger-annotations-jakarta.version>
     <!--disruptor版本-->
     <disruptor.version>4.0.0</disruptor.version>
     <!--transmittable-thread-local版本-->
