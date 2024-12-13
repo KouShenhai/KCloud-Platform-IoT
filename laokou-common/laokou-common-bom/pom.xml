@@ -69,7 +69,7 @@
     <!--httpclient5版本-->
     <httpclient5.version>5.4.1</httpclient5.version>
     <!--hibernate-validator版本-->
-    <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
+    <hibernate-validator.version>8.0.2.Final</hibernate-validator.version>
     <!--ip2region版本-->
     <ip2region.version>2.7.0</ip2region.version>
     <!--jackson版本-->
