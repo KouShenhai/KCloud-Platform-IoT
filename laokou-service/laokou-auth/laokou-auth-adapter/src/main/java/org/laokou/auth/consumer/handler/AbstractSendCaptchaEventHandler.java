@@ -15,20 +15,20 @@
  *
  */
 
-package org.laokou.auth.consumer;
+package org.laokou.auth.consumer.handler;
 
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.consumer.AbstractDomainEventConsumer;
+import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 /**
  * @author laokou
  */
-public abstract class AbstractSendCaptchaEventConsumer extends AbstractDomainEventConsumer {
+public abstract class AbstractSendCaptchaEventHandler extends AbstractDomainEventHandler {
 
-	protected AbstractSendCaptchaEventConsumer(DomainEventPublisher domainEventPublisher) {
+	protected AbstractSendCaptchaEventHandler(DomainEventPublisher domainEventPublisher) {
 		super(domainEventPublisher);
 	}
 
