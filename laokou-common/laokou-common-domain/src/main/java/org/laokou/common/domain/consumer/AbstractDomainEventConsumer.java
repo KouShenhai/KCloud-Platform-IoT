@@ -49,7 +49,7 @@ public abstract class AbstractDomainEventConsumer implements RocketMQListener<Me
 		}
 		catch (Exception e) {
 			log.error("消费失败，主题Topic：{}，偏移量Offset：{}，错误信息：{}", messageExt.getTopic(), messageExt.getCommitLogOffset(),
-				StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
+					StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
 			throw e;
 		}
 		finally {

@@ -24,14 +24,14 @@ import org.springframework.stereotype.Component;
 import java.lang.annotation.*;
 
 /**
- * Entity, Entity Object is prototype and is not thread-safe
+ * Entity, Entity Object is prototype and is not thread-safe.
  *
  * @author Frank Zhang 2019-01-03 2:53 PM
  */
 @Component
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public @interface Entity {
 

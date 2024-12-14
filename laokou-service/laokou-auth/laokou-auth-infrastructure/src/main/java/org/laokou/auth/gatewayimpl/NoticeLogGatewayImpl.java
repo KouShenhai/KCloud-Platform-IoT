@@ -31,10 +31,11 @@ public class NoticeLogGatewayImpl implements NoticeLogGateway {
 
 	private final NoticeLogMapper noticeLogMapper;
 
-//	@Override
-//	public void create(DefaultDomainEvent domainEvent) {
-//		NoticeLogDO noticeLogDO = NoticeLogConvertor.toDataObject((NoticeMessageEvent) domainEvent);
-//		noticeLogMapper.insert(noticeLogDO);
-//	}
+	// @Override
+	// public void create(DefaultDomainEvent domainEvent) {
+	// NoticeLogDO noticeLogDO = NoticeLogConvertor.toDataObject((NoticeMessageEvent)
+	// domainEvent);
+	// noticeLogMapper.insert(noticeLogDO);
+	// }
 
 }

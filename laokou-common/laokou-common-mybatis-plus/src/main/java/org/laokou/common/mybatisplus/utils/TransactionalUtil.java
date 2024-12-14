@@ -49,7 +49,8 @@ public class TransactionalUtil {
 			catch (Exception e) {
 				r.setRollbackOnly();
 				log.error("操作失败，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
-				throw new SystemException("S_DS_OperationError", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage());
+				throw new SystemException("S_DS_OperationError",
+						StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage());
 			}
 		});
 	}

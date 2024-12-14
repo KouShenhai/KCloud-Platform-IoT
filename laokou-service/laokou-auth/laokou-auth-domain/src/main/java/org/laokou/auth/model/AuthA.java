@@ -90,7 +90,8 @@ public class AuthA extends AggregateRoot {
 	 */
 	private Set<String> deptPaths;
 
-	public AuthA(String username, String password, String tenantCode, GrantType grantType, String uuid, String captcha) {
+	public AuthA(String username, String password, String tenantCode, GrantType grantType, String uuid,
+			String captcha) {
 		this.username = username;
 		this.password = password;
 		this.tenantCode = tenantCode;

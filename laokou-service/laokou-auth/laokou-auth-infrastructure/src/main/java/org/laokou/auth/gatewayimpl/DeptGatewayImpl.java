@@ -59,7 +59,8 @@ public class DeptGatewayImpl implements DeptGateway {
 			return deptMapper.selectDeptPathsByUserId(user.getId());
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_DEPT, StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
+			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_DEPT,
+					StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
 			throw new SystemException(DATA_TABLE_NOT_EXIST,
 					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { TABLE_DEPT }));
 		}

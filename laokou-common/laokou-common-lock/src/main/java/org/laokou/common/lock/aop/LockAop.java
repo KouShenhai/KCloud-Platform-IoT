@@ -81,7 +81,8 @@ public class LockAop {
 			return joinPoint.proceed();
 		}
 		catch (Throwable throwable) {
-			log.error("错误信息：{}，详情见日志", StringUtil.isEmpty(throwable.getMessage()) ? "暂无错误信息" : throwable.getMessage(), throwable);
+			log.error("错误信息：{}，详情见日志", StringUtil.isEmpty(throwable.getMessage()) ? "暂无错误信息" : throwable.getMessage(),
+					throwable);
 			throw throwable;
 		}
 		finally {

@@ -51,7 +51,7 @@ public class LoginEventConsumer extends AbstractDomainEventConsumer {
 
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-		//domainService.recordLoginLog(domainEvent);
+		// domainService.recordLoginLog(domainEvent);
 	}
 
 	@Override

@@ -22,6 +22,6 @@ package org.laokou.auth.gateway;
  */
 public interface NoticeLogGateway {
 
-//	void create(DefaultDomainEvent domainEvent);
+	// void create(DefaultDomainEvent domainEvent);
 
 }

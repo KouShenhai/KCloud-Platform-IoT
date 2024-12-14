@@ -80,7 +80,8 @@ public class UserE {
 	 */
 	private Long tenantId;
 
-	public UserE() {}
+	public UserE() {
+	}
 
 	public UserE(String username, String mail, String mobile) {
 		this.username = AESUtil.encrypt(username);

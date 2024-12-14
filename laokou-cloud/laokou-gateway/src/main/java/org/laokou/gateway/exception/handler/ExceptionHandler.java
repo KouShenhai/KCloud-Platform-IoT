@@ -57,7 +57,8 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 			// 国际化
 			ReactiveI18nUtil.set(exchange);
 			if (e instanceof NotFoundException) {
-				log.error("服务正在维护，请联系管理员，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
+				log.error("服务正在维护，请联系管理员，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(),
+						e);
 				return ReactiveResponseUtil.responseOk(exchange, Result.fail(SERVICE_UNAVAILABLE));
 			}
 			if (e instanceof ResponseStatusException responseStatusException) {
@@ -69,11 +70,13 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 					return ReactiveResponseUtil.responseOk(exchange, Result.fail(NOT_FOUND));
 				}
 				else if (statusCode == HttpStatus.BAD_REQUEST.value()) {
-					log.error("状态码：{}，错误请求，错误信息：{}，详情见日志", statusCode, StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
+					log.error("状态码：{}，错误请求，错误信息：{}，详情见日志", statusCode,
+							StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
 					return ReactiveResponseUtil.responseOk(exchange, Result.fail(BAD_REQUEST));
 				}
 				else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-					log.error("状态码：{}，服务器内部错误，无法完成请求，错误信息：{}，详情见日志", statusCode, StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
+					log.error("状态码：{}，服务器内部错误，无法完成请求，错误信息：{}，详情见日志", statusCode,
+							StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
 					return ReactiveResponseUtil.responseOk(exchange, Result.fail(INTERNAL_SERVER_ERROR));
 				}
 			}

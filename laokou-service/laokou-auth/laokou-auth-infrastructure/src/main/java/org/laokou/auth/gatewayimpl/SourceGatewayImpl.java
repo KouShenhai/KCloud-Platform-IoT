@@ -85,7 +85,8 @@ public class SourceGatewayImpl implements SourceGateway {
 	// Class.forName(properties.getDriverClassName());
 	// }
 	// catch (Exception e) {
-	// log.error("加载数据源驱动失败，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
+	// log.error("加载数据源驱动失败，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息"
+	// : e.getMessage(), e);
 	// // throw new DataSourceException(CUSTOM_SERVER_ERROR, "加载数据源驱动失败");
 	// }
 	// try {
@@ -96,7 +97,8 @@ public class SourceGatewayImpl implements SourceGateway {
 	// properties.getPassword());
 	// }
 	// catch (Exception e) {
-	// log.error("数据源连接超时，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
+	// log.error("数据源连接超时，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" :
+	// e.getMessage(), e);
 	// // throw new DataSourceException(CUSTOM_SERVER_ERROR, "数据源连接超时");
 	// }
 	// finally {

@@ -202,7 +202,8 @@ public class ExcelUtil {
 
 		@Override
 		public void onException(Exception exception, AnalysisContext context) {
-			log.error("Excel导入异常，错误信息：{}，详情见日志", StringUtil.isEmpty(exception.getMessage()) ? "暂无错误信息" : exception.getMessage(), exception);
+			log.error("Excel导入异常，错误信息：{}，详情见日志",
+					StringUtil.isEmpty(exception.getMessage()) ? "暂无错误信息" : exception.getMessage(), exception);
 		}
 
 		@SneakyThrows
