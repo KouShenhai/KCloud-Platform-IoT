@@ -15,14 +15,16 @@
  *
  */
 
-package org.laokou.auth.consumer;
+package org.laokou.auth.consumer.handler;
 
 import io.micrometer.common.lang.NonNullApi;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.laokou.auth.ability.DomainService;
+import org.laokou.auth.dto.domainevent.LoginEvent;
+import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.mail.service.MailService;
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
@@ -30,28 +32,31 @@ import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
 import static org.laokou.auth.common.constant.MqConstant.*;
 
 /**
+ * 登录日志处理器.
+ *
  * @author laokou
  */
-@Slf4j
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
-		selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
-public class SendMailCaptchaEventConsumer extends AbstractSendCaptchaEventConsumer {
+@RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
+		selectorExpression = LOGIN_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+public class LoginEventHandler extends AbstractDomainEventHandler {
 
-	private final MailService mailService;
+	private final DomainService domainService;
 
-	private final RedisUtil redisUtil;
-
-	public SendMailCaptchaEventConsumer(DomainEventPublisher domainEventPublisher, MailService mailService,
-			RedisUtil redisUtil) {
+	public LoginEventHandler(DomainEventPublisher domainEventPublisher, DomainService domainService) {
 		super(domainEventPublisher);
-		this.mailService = mailService;
-		this.redisUtil = redisUtil;
+		this.domainService = domainService;
 	}
-	/*
-	 * @Override protected NoticeLog getNoticeLog(SendCaptchaEvent event) { return
-	 * mailService.send(event.getUuid(), 5); }
-	 */
+
+	@Override
+	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
+		// domainService.recordLoginLog(domainEvent);
+	}
+
+	@Override
+	protected DefaultDomainEvent convert(String msg) {
+		return JacksonUtil.toBean(msg, LoginEvent.class);
+	}
 
 }

@@ -15,20 +15,19 @@
  *
  */
 
-package org.laokou.common.domain.consumer;
+package org.laokou.auth.consumer.handler;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.service.DomainEventService;
 import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.sms.service.SmsService;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.common.domain.constant.MqConstant.*;
+import static org.laokou.auth.common.constant.MqConstant.*;
 
 /**
  * @author laokou
@@ -36,26 +35,24 @@ import static org.laokou.common.domain.constant.MqConstant.*;
 @Slf4j
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_DOMAIN_EVENT_CONSUMER_GROUP, topic = LAOKOU_DOMAIN_EVENT_TOPIC,
-		selectorExpression = REMOVE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
-public class RemoveDomainEventConsumer extends AbstractDomainEventConsumer {
+@RocketMQMessageListener(consumerGroup = LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
+		selectorExpression = MOBILE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+public class SendMobileCaptchaEventHandler extends AbstractSendCaptchaEventHandler {
 
-	private final DomainEventService domainEventService;
+	private final SmsService smsService;
 
-	public RemoveDomainEventConsumer(DomainEventPublisher rocketMQDomainEventPublisher,
-			DomainEventService domainEventService) {
-		super(rocketMQDomainEventPublisher);
-		this.domainEventService = domainEventService;
+	private final RedisUtil redisUtil;
+
+	public SendMobileCaptchaEventHandler(DomainEventPublisher domainEventPublisher, SmsService smsService,
+			RedisUtil redisUtil) {
+		super(domainEventPublisher);
+		this.smsService = smsService;
+		this.redisUtil = redisUtil;
 	}
 
-	@Override
-	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-		domainEventService.deleteOldByServiceIdOfThreeMonths(domainEvent.getServiceId());
-	}
-
-	@Override
-	protected DefaultDomainEvent convert(String msg) {
-		return JacksonUtil.toBean(msg, DefaultDomainEvent.class);
-	}
+	// @Override
+	// protected NoticeLog getNoticeLog(SendCaptchaEvent event) {
+	// return smsService.send(event.getUuid(), 5);
+	// }
 
 }

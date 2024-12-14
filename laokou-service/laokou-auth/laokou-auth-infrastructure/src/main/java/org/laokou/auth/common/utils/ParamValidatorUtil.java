@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.domain.utils;
+package org.laokou.auth.common.utils;
 
 import org.laokou.common.core.utils.RegexUtil;
 import org.laokou.common.i18n.common.exception.ParamException;
@@ -39,7 +39,7 @@ public final class ParamValidatorUtil {
 		}
 	}
 
-	public static boolean validateRegex(RegexUtil.Type type, String value) {
+	private static boolean validateRegex(RegexUtil.Type type, String value) {
 		return switch (type) {
 			case MAIL -> !RegexUtil.mailRegex(value);
 			case MOBILE -> !RegexUtil.mobileRegex(value);

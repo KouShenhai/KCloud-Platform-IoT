@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.domain.consumer;
+package org.laokou.common.domain.handler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
  */
 @Slf4j
 @RequiredArgsConstructor
-public abstract class AbstractDomainEventConsumer implements RocketMQListener<MessageExt> {
+public abstract class AbstractDomainEventHandler implements RocketMQListener<MessageExt> {
 
 	protected final DomainEventPublisher rocketMQDomainEventPublisher;
 

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.domain.consumer;
+package org.laokou.common.domain.handler;
 
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.common.core.utils.JacksonUtil;
@@ -40,11 +40,11 @@ import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CACHE_TOPIC;
 @Component
 @RocketMQMessageListener(consumerGroup = LAOKOU_CACHE_CONSUMER_GROUP, topic = LAOKOU_CACHE_TOPIC,
 		messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
-public class RemoveCacheEventConsumer extends AbstractDomainEventConsumer {
+public class RemoveCacheEventHandler extends AbstractDomainEventHandler {
 
 	private final List<CacheManager> cacheManagers;
 
-	public RemoveCacheEventConsumer(DomainEventPublisher rocketMQDomainEventPublisher,
+	public RemoveCacheEventHandler(DomainEventPublisher rocketMQDomainEventPublisher,
 			List<CacheManager> cacheManagers) {
 		super(rocketMQDomainEventPublisher);
 		this.cacheManagers = cacheManagers;
