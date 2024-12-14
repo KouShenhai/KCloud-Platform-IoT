@@ -59,9 +59,4 @@
     where id = #{id}
   </select>
 
-  <update id="deleteAll">
-    update boot_sys_api_log
-    set del_flag = 1
-  </update>
-
 </mapper>

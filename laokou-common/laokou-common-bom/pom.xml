@@ -33,11 +33,11 @@
     <!--postgresql版本-->
     <postgresql.version>42.7.4</postgresql.version>
     <!--admin版本-->
-    <spring-boot-admin.version>3.4.0</spring-boot-admin.version>
+    <spring-boot-admin.version>3.4.1</spring-boot-admin.version>
     <!--mybatis-plus版本 -->
     <mybatis-plus.version>3.5.9</mybatis-plus.version>
     <!--redisson版本-->
-    <redisson.version>3.40.0</redisson.version>
+    <redisson.version>3.40.2</redisson.version>
     <!--jsoup版本-->
     <jsoup.version>1.18.3</jsoup.version>
     <!--jasypt版本-->
@@ -49,7 +49,7 @@
     <!--oshi版本-->
     <oshi.version>6.6.5</oshi.version>
     <!--elasticsearch版本-->
-    <elasticsearch.version>8.16.1</elasticsearch.version>
+    <elasticsearch.version>8.17.0</elasticsearch.version>
     <!--rocketmq-spring版本-->
     <rocketmq-spring.version>2.3.1</rocketmq-spring.version>
     <!--rocketmq版本-->
@@ -63,13 +63,13 @@
     <!--spring-boot-starter-oauth2版本-->
     <spring-boot-starter-oauth2.version>3.4.0</spring-boot-starter-oauth2.version>
     <!--aws-java-sdk-s3版本-->
-    <aws-java-sdk-s3.version>1.12.779</aws-java-sdk-s3.version>
+    <aws-java-sdk-s3.version>1.12.780</aws-java-sdk-s3.version>
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
     <!--httpclient5版本-->
     <httpclient5.version>5.4.1</httpclient5.version>
     <!--hibernate-validator版本-->
-    <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
+    <hibernate-validator.version>8.0.2.Final</hibernate-validator.version>
     <!--ip2region版本-->
     <ip2region.version>2.7.0</ip2region.version>
     <!--jackson版本-->
@@ -81,7 +81,7 @@
     <!--gson版本-->
     <gson.version>2.11.0</gson.version>
     <!--swagger-annotations-jakarta版本-->
-    <swagger-annotations-jakarta.version>2.2.26</swagger-annotations-jakarta.version>
+    <swagger-annotations-jakarta.version>2.2.27</swagger-annotations-jakarta.version>
     <!--disruptor版本-->
     <disruptor.version>4.0.0</disruptor.version>
     <!--transmittable-thread-local版本-->
@@ -91,7 +91,7 @@
     <!--mockito版本-->
     <mockito.version>5.14.2</mockito.version>
     <!--retry版本-->
-    <retry.version>2.0.10</retry.version>
+    <retry.version>2.0.11</retry.version>
     <!--nacos版本-->
     <nacos.version>2.4.3</nacos.version>
     <!--knife4j版本-->
@@ -107,9 +107,9 @@
     <!--protobuf-java版本-->
     <protobuf-java.version>3.25.5</protobuf-java.version>
     <!--grpc版本-->
-    <grpc.version>1.68.2</grpc.version>
+    <grpc.version>1.69.0</grpc.version>
     <!--proto-google-common-protos版本-->
-    <proto-google-common-protos.version>2.49.0</proto-google-common-protos.version>
+    <proto-google-common-protos.version>2.50.0</proto-google-common-protos.version>
     <!--error_prone_annotations版本-->
     <error_prone_annotations.version>2.36.0</error_prone_annotations.version>
     <!--okio-jvm版本-->
@@ -123,7 +123,7 @@
     <!--httpclient版本-->
     <httpclient.versin>4.5.14</httpclient.versin>
     <!--commons-text版本-->
-    <commons-text.version>1.12.0</commons-text.version>
+    <commons-text.version>1.13.0</commons-text.version>
     <!--commons-lang3版本-->
     <commons-lang3.version>3.17.0</commons-lang3.version>
     <!--zstd-jni版本-->
@@ -137,7 +137,7 @@
     <!--nimbus-jose-jwt版本-->
     <nimbus-jose-jwt.version>9.47</nimbus-jose-jwt.version>
     <!--opentelemetry-api-incubator版本-->
-    <opentelemetry-api-incubator.version>1.44.1-alpha</opentelemetry-api-incubator.version>
+    <opentelemetry-api-incubator.version>1.45.0-alpha</opentelemetry-api-incubator.version>
     <!--opentelemetry-exporter-jaeger版本-->
     <opentelemetry-exporter-jaeger.version>1.34.1</opentelemetry-exporter-jaeger.version>
     <!--shardingsphere版本-->
