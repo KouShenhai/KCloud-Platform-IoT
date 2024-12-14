@@ -19,7 +19,7 @@ package org.laokou.auth.consumer;
 
 import io.micrometer.common.lang.NonNullApi;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.laokou.auth.ability.AuthDomainService;
+import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.domain.consumer.AbstractDomainEventConsumer;
@@ -42,16 +42,16 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 		selectorExpression = LOGIN_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class LoginEventConsumer extends AbstractDomainEventConsumer {
 
-	private final AuthDomainService authDomainService;
+	private final DomainService domainService;
 
-	public LoginEventConsumer(DomainEventPublisher domainEventPublisher, AuthDomainService authDomainService) {
+	public LoginEventConsumer(DomainEventPublisher domainEventPublisher, DomainService domainService) {
 		super(domainEventPublisher);
-		this.authDomainService = authDomainService;
+		this.domainService = domainService;
 	}
 
 	@Override
 	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-		authDomainService.recordLoginLog(domainEvent);
+		//domainService.recordLoginLog(domainEvent);
 	}
 
 	@Override

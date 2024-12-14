@@ -22,6 +22,6 @@ package org.laokou.auth.gateway;
  */
 public interface TenantGateway {
 
-	long count(String tenantCode);
+	Long getId(String tenantCode);
 
 }

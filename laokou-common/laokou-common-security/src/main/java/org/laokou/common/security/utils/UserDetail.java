@@ -116,7 +116,7 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 	private final String sourcePrefix;
 
 	public UserDetail() {
-		this.id = 0L;
+		this.id = 1L;
 		this.username = EMPTY;
 		this.avatar = EMPTY;
 		this.superAdmin = false;
@@ -251,12 +251,14 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 		return this.username;
 	}
 
+	@JsonIgnore
 	public UserDetail getDecryptInfo() {
 		return new UserDetail(this.id, this.getDecryptUsername(), this.password, this.avatar, this.superAdmin,
 				this.status, this.getDecryptMail(), this.getDecryptMobile(), this.deptPaths, this.permissions,
 				this.tenantId, this.sourcePrefix);
 	}
 
+	@JsonIgnore
 	private String getDecryptUsername() {
 		if (StringUtil.isNotEmpty(this.username)) {
 			try {
@@ -269,6 +271,7 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 		return this.username;
 	}
 
+	@JsonIgnore
 	private String getDecryptMail() {
 		if (StringUtil.isNotEmpty(this.mail)) {
 			try {
@@ -281,6 +284,7 @@ public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Se
 		return this.mail;
 	}
 
+	@JsonIgnore
 	private String getDecryptMobile() {
 		if (StringUtil.isNotEmpty(this.mobile)) {
 			try {

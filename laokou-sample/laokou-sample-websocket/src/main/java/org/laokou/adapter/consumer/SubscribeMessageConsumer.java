@@ -26,7 +26,6 @@ import org.laokou.client.dto.clientobject.PayloadCO;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.netty.config.Server;
-import org.laokou.common.rocketmq.consumer.AbstractTraceConsumer;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -45,7 +44,7 @@ import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAG
 @Slf4j
 @Component
 @RocketMQMessageListener(consumerGroup = LAOKOU_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
-public class SubscribeMessageConsumer extends AbstractTraceConsumer implements RocketMQListener<MessageExt> {
+public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 
 	private final Server webSocketServer;
 

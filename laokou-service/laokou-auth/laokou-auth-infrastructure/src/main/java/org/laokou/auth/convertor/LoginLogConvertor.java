@@ -19,23 +19,11 @@ package org.laokou.auth.convertor;
 
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.LogV;
 
 /**
  * @author laokou
  */
 public class LoginLogConvertor {
-
-	public static LoginEvent toEvent(AuthA authA) {
-		LogV logV = authA.getLog();
-		// return new LoginEvent(logV.type(), logV.errorMessage(), logV.status(),
-		// logV.browser(), logV.os(), logV.ip(),
-		// logV.address(), logV.username(), authA.getInstant(),
-		// authA.getUser().getTenantId(), LAOKOU_LOG_TOPIC,
-		// LOGIN_TAG);
-		return null;
-	}
 
 	public static LoginLogDO toDataObject(LoginEvent loginEvent) {
 		LoginLogDO loginLogDO = new LoginLogDO();

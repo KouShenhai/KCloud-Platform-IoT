@@ -19,7 +19,6 @@ package org.laokou.auth.service.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.utils.RequestUtil;
@@ -27,7 +26,6 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.*;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -49,7 +47,6 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.exception.SystemException.*;
 import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
@@ -70,16 +67,20 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 
 	private final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
 
-	private final OAuth2AuthenticationProvider authProvider;
+	private final OAuth2AuthenticationProcessor authProcessor;
 
 	/**
 	 * 认证.
 	 * @param authentication 认证对象
 	 */
-	@SneakyThrows
 	public Authentication authenticate(Authentication authentication) {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
-		return authenticate(authentication, principal(request));
+		try {
+			return authenticate(authentication, principal(request));
+		} catch (IOException e) {
+			log.error("错误信息：{}", e.getMessage(), e);
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
@@ -110,7 +111,6 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 	 * @return 令牌
 	 */
 	protected Authentication authenticate(Authentication authentication, Authentication principal) {
-		try {
 			// 仿照授权码模式
 			// 生成token（access_token + refresh_token）
 			AbstractOAuth2AuthenticationToken auth2BaseAuthenticationToken = (AbstractOAuth2AuthenticationToken) authentication;
@@ -186,11 +186,6 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 			authorizationService.save(authorization);
 			return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken,
 					refreshToken, Collections.emptyMap());
-		}
-		finally {
-			// 清空上下文
-			SecurityContextHolder.clearContext();
-		}
 	}
 
 	/**
@@ -199,7 +194,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 	 * @return 用户信息
 	 */
 	protected UsernamePasswordAuthenticationToken authentication(AuthA auth) {
-		return authProvider.authentication(auth);
+		return authProcessor.authentication(auth);
 	}
 
 	private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(

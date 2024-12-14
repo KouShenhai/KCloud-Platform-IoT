@@ -17,25 +17,17 @@
 
 package org.laokou.auth.model;
 
-import com.blueconic.browscap.Capabilities;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import org.laokou.auth.ability.CaptchaValidator;
 import org.laokou.auth.ability.PasswordValidator;
-import org.laokou.common.core.utils.AddressUtil;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.IpUtil;
-import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
-import java.util.List;
+import java.util.*;
 
 import static org.laokou.auth.model.GrantType.*;
-import static org.laokou.common.i18n.common.constant.Constant.FAIL;
-import static org.laokou.common.i18n.common.constant.Constant.OK;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
 import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
@@ -79,151 +71,149 @@ public class AuthA extends AggregateRoot {
 	private final CaptchaV captcha;
 
 	/**
-	 * 请求对象.
-	 */
-	private final HttpServletRequest request;
-
-	/**
 	 * 用户实体.
 	 */
 	private UserE user;
 
 	/**
-	 * 菜单值对象.
+	 * 数据源前缀.
 	 */
-	private MenuV menu;
+	private String sourcePrefix;
 
 	/**
-	 * 部门值对象.
+	 * 菜单权限标识.
 	 */
-	private DeptV dept;
+	private Set<String> permissions;
 
 	/**
-	 * 日志值对象.
+	 * 部门路径.
 	 */
-	private LogV log;
+	private Set<String> deptPaths;
 
-	/**
-	 * 当前用户.
-	 */
-	private String currentUser;
-
-	public AuthA(String username, String password, String tenantCode, GrantType grantType, String uuid, String captcha,
-			HttpServletRequest request) {
+	public AuthA(String username, String password, String tenantCode, GrantType grantType, String uuid, String captcha) {
 		this.username = username;
 		this.password = password;
 		this.tenantCode = tenantCode;
 		this.grantType = grantType;
 		this.captcha = new CaptchaV(uuid, captcha);
-		this.request = request;
 	}
 
 	public void createUserByPassword() {
-		currentUser = this.username;
-		this.user = new UserE(currentUser, EMPTY, EMPTY);
+		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 
 	public void createUserByMobile() {
-		currentUser = this.captcha.uuid();
-		this.user = new UserE(EMPTY, EMPTY, currentUser);
+		this.user = new UserE(EMPTY, EMPTY, this.captcha.uuid());
 	}
 
 	public void createUserByMail() {
-		currentUser = this.captcha.uuid();
-		this.user = new UserE(EMPTY, currentUser, EMPTY);
+		this.user = new UserE(EMPTY, this.captcha.uuid(), EMPTY);
 	}
 
 	public void createUserByAuthorizationCode() {
-		currentUser = this.username;
-		this.user = new UserE(currentUser, EMPTY, EMPTY);
+		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 
-	public void checkUserInfo(UserE user) {
-		if (ObjectUtil.isNotNull(user)) {
-			this.user = user;
-			super.tenantId = user.getTenantId();
-			super.userId = user.getId();
-		}
-		else {
-			recordFail(grantType.getErrorCode());
-		}
+	public void getTenantId(Long tenantId) {
+		super.tenantId = tenantId;
 	}
 
-	public boolean checkNotEmptyLog() {
-		return ObjectUtil.isNotNull(this.log);
+	public void getSourcePrefix(String sourcePrefix) {
+		this.sourcePrefix = sourcePrefix;
 	}
 
-	public void checkTenantExist(long count) {
-		if (count == 0) {
-			recordFail(TENANT_NOT_EXIST);
-		}
+	public void getUserInfo(UserE user) {
+		this.user = user;
+		super.userId = ObjectUtil.isNotNull(this.user) ? this.user.getId() : null;
 	}
 
-	public void checkSourcePrefix(SourceV source) {
-		if (ObjectUtil.isNull(source)) {
-			recordFail(DATA_SOURCE_NOT_EXIST);
-		}
+	public void getMenuPermissions(Set<String> permissions) {
+		this.permissions = permissions;
 	}
 
-	public void checkMenuPermissions(MenuV menu) {
-		if (CollectionUtil.isEmpty(menu.permissions())) {
-			recordFail(FORBIDDEN);
-		}
-		this.menu = menu;
+	public void getDeptPaths(List<String> deptPaths) {
+		this.deptPaths = getPaths(deptPaths);
 	}
 
-	public void checkDeptPaths(DeptV dept) {
-		if (CollectionUtil.isEmpty(dept.deptPaths())) {
-			recordFail(FORBIDDEN);
+	public void checkTenantId() {
+		if (ObjectUtil.isNull(super.tenantId)) {
+			throw new SystemException(TENANT_NOT_EXIST);
 		}
-		this.dept = dept;
 	}
 
 	public void checkCaptcha(CaptchaValidator captchaValidator) {
 		if (isUseCaptcha()) {
-			Boolean result = captchaValidator.validate(captcha.uuid(), captcha.captcha());
-			if (ObjectUtil.isNull(result)) {
-				recordFail(CAPTCHA_EXPIRED);
+			Boolean validate = captchaValidator.validate(captcha.uuid(), captcha.captcha());
+			if (ObjectUtil.isNull(validate)) {
+				throw new SystemException(CAPTCHA_EXPIRED);
 			}
-			if (!result) {
-				recordFail(CAPTCHA_ERROR);
+			if (!validate) {
+				throw new SystemException(CAPTCHA_ERROR);
 			}
 		}
 	}
 
-	public void checkUserPassword(PasswordValidator passwordValidator) {
+	public void checkSourcePrefix() {
+		if (ObjectUtil.isNull(sourcePrefix)) {
+			throw new SystemException(DATA_SOURCE_NOT_EXIST);
+		}
+	}
+
+	public void checkUsername() {
+		if (ObjectUtil.isNull(this.user)) {
+			this.grantType.checkUsernameNotExist();
+		}
+	}
+
+	public void checkPassword(PasswordValidator passwordValidator) {
 		if (PASSWORD.equals(this.grantType) && !passwordValidator.validate(this.password, user.getPassword())) {
-			recordFail(USERNAME_PASSWORD_ERROR);
+			throw new SystemException(USERNAME_PASSWORD_ERROR);
 		}
 	}
 
 	public void checkUserStatus() {
 		if (ObjectUtil.equals(UserStatus.DISABLE.ordinal(), this.user.getStatus())) {
-			recordFail(USER_DISABLED);
+			throw new SystemException(USER_DISABLED);
 		}
 	}
 
-	public void recordSuccess() {
-		createLog(OK, EMPTY);
+	public void checkMenuPermissions() {
+		if (CollectionUtil.isEmpty(this.permissions)) {
+			throw new SystemException(FORBIDDEN);
+		}
 	}
 
-	public void recordFail(String code) {
-		String errorMessage = MessageUtil.getMessage(code);
-		createLog(FAIL, errorMessage);
-		throw new SystemException(code, errorMessage);
-	}
-
-	private void createLog(Integer status, String errorMessage) {
-		String ip = IpUtil.getIpAddr(request);
-		String address = AddressUtil.getRealAddress(ip);
-		Capabilities capabilities = RequestUtil.getCapabilities(request);
-		String os = capabilities.getPlatform();
-		String browser = capabilities.getBrowser();
-		this.log = new LogV(currentUser, os, ip, address, browser, status, errorMessage, grantType.getCode());
+	public void checkDeptPaths() {
+		if (CollectionUtil.isEmpty(this.deptPaths)) {
+			throw new SystemException(FORBIDDEN);
+		}
 	}
 
 	private boolean isUseCaptcha() {
 		return List.of(PASSWORD, MOBILE, MAIL).contains(grantType);
+	}
+
+	private Set<String> getPaths(List<String> list) {
+		if (CollectionUtil.isEmpty(list)) {
+			return Collections.emptySet();
+		}
+		// 字符串长度排序
+		list.sort(Comparator.comparingInt(String::length));
+		Set<String> paths = new HashSet<>(list.size());
+		paths.add(list.getFirst());
+		for (String path : list.subList(1, list.size())) {
+			int find = paths.size();
+			for (String p : paths) {
+				if (path.contains(p)) {
+					break;
+				}
+				find--;
+			}
+			if (find == 0) {
+				paths.add(path);
+			}
+		}
+		return paths;
 	}
 
 }

@@ -28,7 +28,7 @@ import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.LogUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -59,7 +59,7 @@ public class UserPageQryExe {
 						c2.get(30, TimeUnit.SECONDS)));
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+			log.error("错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
 			throw new SystemException("S_User_PageQueryTimeout", "用户分页查询超时");
 		}
 	}

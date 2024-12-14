@@ -17,13 +17,11 @@
 
 package org.laokou.auth.service.authentication;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.ability.AuthDomainService;
+import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
-import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.i18n.common.exception.ParamException;
@@ -41,12 +39,10 @@ import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getExcep
  * @author laokou
  */
 @RequiredArgsConstructor
-@Component("authProvider")
-public class OAuth2AuthenticationProvider {
+@Component("authProcessor")
+public class OAuth2AuthenticationProcessor {
 
-	private final AuthDomainService authDomainService;
-
-	private final DomainEventPublisher rocketMQDomainEventPublisher;
+	private final DomainService domainService;
 
 	private final ExtensionExecutor extensionExecutor;
 
@@ -57,7 +53,7 @@ public class OAuth2AuthenticationProvider {
 					BizScenario.valueOf(auth.getGrantType().getCode(), USE_CASE_AUTH, SCENARIO),
 					extension -> extension.validate(auth));
 			// 认证
-			authDomainService.auth(auth);
+			domainService.auth(auth);
 			// 转换
 			UserDetail userDetail = UserConvertor.to(auth);
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
@@ -65,15 +61,6 @@ public class OAuth2AuthenticationProvider {
 		}
 		catch (ParamException | SystemException e) {
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
-		}
-		finally {
-			if (auth.checkNotEmptyLog()) {
-				// 发布登录事件
-				// rocketMQDomainEventPublisher.publish(LoginLogConvertor.toEvent(auth),
-				// SendMessageType.ONE_WAY);
-			}
-			// 清除数据源上下文
-			DynamicDataSourceContextHolder.clear();
 		}
 	}
 

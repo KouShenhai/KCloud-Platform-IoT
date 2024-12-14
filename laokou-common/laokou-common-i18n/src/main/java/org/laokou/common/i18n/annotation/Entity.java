@@ -15,16 +15,24 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.common.i18n.annotation;
 
-import java.util.Set;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import java.lang.annotation.*;
 
 /**
- * 部门值对象.
+ * Entity, Entity Object is prototype and is not thread-safe
  *
- * @param deptPaths 部门PATH集合.
- * @author laokou
+ * @author Frank Zhang 2019-01-03 2:53 PM
  */
-public record DeptV(Set<String> deptPaths) {
+@Component
+@Inherited
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE})
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+public @interface Entity {
 
 }

@@ -20,18 +20,14 @@ package org.laokou.auth.ability;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.AuthA;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.core.config.SpringTaskExecutorConfig.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class AuthDomainService {
+public class DomainService {
 
 	private final UserGateway userGateway;
 
@@ -45,41 +41,35 @@ public class AuthDomainService {
 
 	private final CaptchaGateway captchaGateway;
 
-	private final LoginLogGateway loginLogGateway;
-
-	private final NoticeLogGateway noticeLogGateway;
-
 	private final PasswordValidator passwordValidator;
-
-	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
-	public void recordLoginLog(DefaultDomainEvent domainEvent) {
-		loginLogGateway.create(domainEvent);
-	}
-
-	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
-	public void recordNoticeLog(DefaultDomainEvent domainEvent) {
-		noticeLogGateway.create(domainEvent);
-	}
 
 	public void auth(AuthA auth) {
 		// 校验验证码
 		auth.checkCaptcha(captchaGateway::validate);
-		// 检查租户是否存在
-		auth.checkTenantExist(tenantGateway.count(auth.getTenantCode()));
+		// 获取租户ID
+		auth.getTenantId(tenantGateway.getId(auth.getTenantCode()));
+		// 校验租户ID
+		auth.checkTenantId();
+		// 获取数据源前缀
+		auth.getSourcePrefix(sourceGateway.getPrefix(auth.getTenantCode()));
 		// 校验数据源前缀
-		auth.checkSourcePrefix(sourceGateway.getPrefix(auth.getTenantCode()));
-		// 校验用户信息
-		auth.checkUserInfo(userGateway.getProfile(auth.getUser(), auth.getTenantCode()));
+		auth.checkSourcePrefix();
+		// 获取用户信息
+		auth.getUserInfo(userGateway.getProfile(auth.getUser(), auth.getTenantCode()));
+		// 校验用户名
+		auth.checkUsername();
 		// 校验密码
-		auth.checkUserPassword(passwordValidator);
+		auth.checkPassword(passwordValidator);
 		// 校验用户状态
 		auth.checkUserStatus();
-		// 校验菜单权限
-		auth.checkMenuPermissions(menuGateway.getPermissions(auth.getUser()));
-		// 校验部门路径
-		auth.checkDeptPaths(deptGateway.getPaths(auth.getUser()));
-		// 认证成功
-		auth.recordSuccess();
+		// 获取菜单标识集合
+		auth.getMenuPermissions(menuGateway.getPermissions(auth.getUser()));
+		// 校验菜单权限集合
+		auth.checkMenuPermissions();
+		// 获取部门路径集合
+		auth.getDeptPaths(deptGateway.getPaths(auth.getUser()));
+		// 校验部门路径集合
+		auth.checkDeptPaths();
 	}
 
 }

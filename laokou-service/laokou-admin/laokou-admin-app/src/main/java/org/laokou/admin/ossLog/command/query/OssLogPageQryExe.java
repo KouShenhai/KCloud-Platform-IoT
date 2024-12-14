@@ -18,6 +18,7 @@
 package org.laokou.admin.ossLog.command.query;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.ossLog.convertor.OssLogConvertor;
 import org.laokou.admin.ossLog.dto.OssLogPageQry;
 import org.laokou.admin.ossLog.dto.clientobject.OssLogCO;
@@ -27,6 +28,7 @@ import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -39,6 +41,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OssLogPageQryExe {
@@ -56,6 +59,7 @@ public class OssLogPageQryExe {
 						c2.get(30, TimeUnit.SECONDS)));
 		}
 		catch (Exception e) {
+			log.error("错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
 			throw new SystemException("S_OssLog_PageQueryTimeout", "OSS日志分页查询超时");
 		}
 	}

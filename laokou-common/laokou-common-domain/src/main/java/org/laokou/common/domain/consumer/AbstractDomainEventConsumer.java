@@ -21,19 +21,22 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.laokou.common.core.utils.MDCUtil;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
-import org.laokou.common.rocketmq.consumer.AbstractTraceConsumer;
+import org.laokou.common.i18n.utils.StringUtil;
 
 import java.nio.charset.StandardCharsets;
+
+import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
+import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
 /**
  * @author laokou
  */
 @Slf4j
 @RequiredArgsConstructor
-public abstract class AbstractDomainEventConsumer extends AbstractTraceConsumer
-		implements RocketMQListener<MessageExt> {
+public abstract class AbstractDomainEventConsumer implements RocketMQListener<MessageExt> {
 
 	protected final DomainEventPublisher rocketMQDomainEventPublisher;
 
@@ -46,7 +49,7 @@ public abstract class AbstractDomainEventConsumer extends AbstractTraceConsumer
 		}
 		catch (Exception e) {
 			log.error("消费失败，主题Topic：{}，偏移量Offset：{}，错误信息：{}", messageExt.getTopic(), messageExt.getCommitLogOffset(),
-					e.getMessage(), e);
+				StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
 			throw e;
 		}
 		finally {
@@ -57,5 +60,15 @@ public abstract class AbstractDomainEventConsumer extends AbstractTraceConsumer
 	protected abstract void handleDomainEvent(DefaultDomainEvent domainEvent);
 
 	protected abstract DefaultDomainEvent convert(String msg);
+
+	private void putTrace(MessageExt messageExt) {
+		String traceId = messageExt.getProperty(TRACE_ID);
+		String spanId = messageExt.getProperty(SPAN_ID);
+		MDCUtil.put(traceId, spanId);
+	}
+
+	private void clearTrace() {
+		MDCUtil.clear();
+	}
 
 }

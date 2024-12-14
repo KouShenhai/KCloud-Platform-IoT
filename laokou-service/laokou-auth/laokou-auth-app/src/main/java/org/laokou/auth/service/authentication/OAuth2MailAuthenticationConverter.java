@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static org.laokou.auth.factory.AuthFactory.MAIL;
+import static org.laokou.auth.factory.DomainFactory.MAIL;
 
 /**
  * 邮箱转换器.

@@ -17,10 +17,10 @@
 
 package org.laokou.auth.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.laokou.common.crypto.utils.AESUtil;
+import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import static org.laokou.auth.model.SuperAdmin.YES;
@@ -30,9 +30,9 @@ import static org.laokou.auth.model.SuperAdmin.YES;
  *
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Setter
+@Getter
 public class UserE {
 
 	/**
@@ -79,6 +79,8 @@ public class UserE {
 	 * 租户ID.
 	 */
 	private Long tenantId;
+
+	public UserE() {}
 
 	public UserE(String username, String mail, String mobile) {
 		this.username = AESUtil.encrypt(username);

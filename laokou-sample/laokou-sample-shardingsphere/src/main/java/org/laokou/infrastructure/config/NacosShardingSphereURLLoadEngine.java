@@ -44,7 +44,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.infra.url.core.ShardingSphereURL;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.PropertyUtil;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.StringUtils;
@@ -146,7 +145,7 @@ public final class NacosShardingSphereURLLoadEngine {
 			}
 		}
 		catch (IOException e) {
-			log.error("错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+			log.error("错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
 		}
 		return list;
 	}

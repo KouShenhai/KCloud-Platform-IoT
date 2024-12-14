@@ -22,10 +22,9 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.common.extension.Extension;
 
 import static org.laokou.common.domain.utils.ParamValidatorUtil.validateNotEmpty;
-import static org.laokou.auth.factory.AuthFactory.AUTHORIZATION_CODE;
+import static org.laokou.auth.factory.DomainFactory.AUTHORIZATION_CODE;
 import static org.laokou.auth.model.AuthA.USE_CASE_AUTH;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
-import static org.laokou.common.i18n.common.exception.ParamException.*;
 import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.*;
 
 /**

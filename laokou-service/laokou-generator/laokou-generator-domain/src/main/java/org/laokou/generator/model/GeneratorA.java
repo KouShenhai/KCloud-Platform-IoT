@@ -18,7 +18,6 @@
 package org.laokou.generator.model;
 
 import lombok.Getter;
-import org.laokou.common.i18n.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.AggregateRoot;
 
@@ -47,7 +46,6 @@ public class GeneratorA extends AggregateRoot {
 	private TableV tableV;
 
 	public GeneratorA(String author, String packageName, String moduleName, String version, TableE tableE, App app) {
-		super(IdGenerator.defaultSnowflakeId());
 		this.author = author;
 		this.packageName = packageName;
 		this.moduleName = moduleName;

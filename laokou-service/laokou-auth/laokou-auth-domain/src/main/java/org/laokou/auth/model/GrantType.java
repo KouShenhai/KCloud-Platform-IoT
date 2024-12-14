@@ -18,9 +18,9 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
-import org.laokou.auth.factory.AuthFactory;
+import org.laokou.auth.factory.DomainFactory;
+import org.laokou.common.i18n.common.exception.SystemException;
 
-import static org.laokou.common.i18n.common.exception.SystemException.*;
 import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
 
 /**
@@ -32,40 +32,40 @@ public enum GrantType {
 	/**
 	 * 用户名密码.
 	 */
-	PASSWORD(AuthFactory.PASSWORD) {
+	PASSWORD(DomainFactory.PASSWORD) {
 		@Override
-		public String getErrorCode() {
-			return USERNAME_PASSWORD_ERROR;
+		public void checkUsernameNotExist() {
+			throw new SystemException(USERNAME_PASSWORD_ERROR);
 		}
 	},
 
 	/**
 	 * 授权码.
 	 */
-	AUTHORIZATION_CODE(AuthFactory.AUTHORIZATION_CODE) {
+	AUTHORIZATION_CODE(DomainFactory.AUTHORIZATION_CODE) {
 		@Override
-		public String getErrorCode() {
-			return USERNAME_PASSWORD_ERROR;
+		public void checkUsernameNotExist() {
+			throw new SystemException(USERNAME_PASSWORD_ERROR);
 		}
 	},
 
 	/**
 	 * 手机号.
 	 */
-	MOBILE(AuthFactory.MOBILE) {
+	MOBILE(DomainFactory.MOBILE) {
 		@Override
-		public String getErrorCode() {
-			return MOBILE_NOT_REGISTERED;
+		public void checkUsernameNotExist() {
+			throw new SystemException(MOBILE_NOT_REGISTERED);
 		}
 	},
 
 	/**
 	 * 邮箱.
 	 */
-	MAIL(AuthFactory.MAIL) {
+	MAIL(DomainFactory.MAIL) {
 		@Override
-		public String getErrorCode() {
-			return MAIL_NOT_REGISTERED;
+		public void checkUsernameNotExist() {
+			throw new SystemException(MAIL_NOT_REGISTERED);
 		}
 	};
 
@@ -75,6 +75,6 @@ public enum GrantType {
 		this.code = code;
 	}
 
-	public abstract String getErrorCode();
+	public abstract void checkUsernameNotExist();
 
 }
