@@ -17,23 +17,11 @@
 
 package org.laokou.common.sms.service.impl;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.HttpUtil;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.core.utils.RandomStringUtil;
-import org.laokou.common.core.utils.TemplateUtil;
-import org.laokou.common.i18n.dto.NoticeLog;
-import org.laokou.common.i18n.dto.Cache;
 import org.laokou.common.sms.config.SmsProperties;
-import org.laokou.common.sms.entity.SmsNoticeLog;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.laokou.common.i18n.common.constant.Constant.*;
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * @author laokou
@@ -69,40 +57,36 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		super(smsProperties);
 	}
 
-	@Override
-	@SneakyThrows
-	public NoticeLog send(String mobile, int minute, Cache cache) {
-		String remark = "阿里云市场【国阳云】";
-		String signId = smsProperties.getGyy().getSignId();
-		String appcode = smsProperties.getGyy().getAppcode();
-		String templateId = smsProperties.getGyy().getTemplateId();
-		boolean isExit = TEMPLATES.containsKey(templateId);
-		if (!isExit) {
-			return new SmsNoticeLog(JacksonUtil.EMPTY_JSON, FAIL, "模板不存在", remark);
-		}
-		String captcha = RandomStringUtil.randomNumeric(6);
-		Map<String, Object> param = Map.of("captcha", captcha, "minute", minute);
-		String paramValue = TemplateUtil.getContent(PARAMS_TEMPLATE, param);
-		// 最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
-		Map<String, String> headers = Map.of(AUTHORIZATION, "APPCODE " + appcode);
-		// smsSignId（短信前缀）和templateId（短信模板），可登录国阳云控制台自助申请。参考文档：http://help.guoyangyun.com/Problem/Qm.html
-		Map<String, String> params = Map.of("mobile", mobile, "param", paramValue, "smsSignId", signId, "templateId",
-				templateId);
-		/*
+	/*
+	 * @Override
+	 *
+	 * @SneakyThrows public NoticeLog send(String mobile, int minute) { String remark =
+	 * "阿里云市场【国阳云】"; String signId = smsProperties.getGyy().getSignId(); String appcode =
+	 * smsProperties.getGyy().getAppcode(); String templateId =
+	 * smsProperties.getGyy().getTemplateId(); boolean isExit =
+	 * TEMPLATES.containsKey(templateId); if (!isExit) { return new
+	 * SmsNoticeLog(JacksonUtil.EMPTY_JSON, FAIL, "模板不存在", remark); } String captcha =
+	 * RandomStringUtil.randomNumeric(6); Map<String, Object> param = Map.of("captcha",
+	 * captcha, "minute", minute); String paramValue =
+	 * TemplateUtil.getContent(PARAMS_TEMPLATE, param); //
+	 * 最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
+	 * Map<String, String> headers = Map.of(AUTHORIZATION, "APPCODE " + appcode); //
+	 * smsSignId（短信前缀）和templateId（短信模板），可登录国阳云控制台自助申请。参考文档：http://help.guoyangyun.com/
+	 * Problem/Qm.html Map<String, String> params = Map.of("mobile", mobile, "param",
+	 * paramValue, "smsSignId", signId, "templateId", templateId);
+	 *//*
 		 * 重要提示如下: HttpUtils请从
 		 * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/src/main/java/
 		 * com/aliyun/api/gateway/demo/util/HttpUtils.java 下载 <p> 相应的依赖请参照
 		 * https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/pom.xml
-		 */
-		String json = HttpUtil.doFormDataPost(URL, params, headers, true);
-		JsonNode jsonNode = JacksonUtil.readTree(json);
-		int code = jsonNode.get("code").asInt();
-		if (code == OK) {
-			// 写入缓存
-			cache.set(captcha, (long) minute * 60 * 1000);
-			return new SmsNoticeLog(JacksonUtil.toJsonStr(params), OK, EMPTY, remark);
-		}
-		return new SmsNoticeLog(JacksonUtil.toJsonStr(params), FAIL, jsonNode.get("msg").asText(), remark);
-	}
+		 *//*
+			 * String json = HttpUtil.doFormDataPost(URL, params, headers, true); JsonNode
+			 * jsonNode = JacksonUtil.readTree(json); int code =
+			 * jsonNode.get("code").asInt(); if (code == OK) { // 写入缓存
+			 * //cache.set(captcha, (long) minute * 60 * 1000); return new
+			 * SmsNoticeLog(JacksonUtil.toJsonStr(params), OK, EMPTY, remark); } return
+			 * new SmsNoticeLog(JacksonUtil.toJsonStr(params), FAIL,
+			 * jsonNode.get("msg").asText(), remark); }
+			 */
 
 }

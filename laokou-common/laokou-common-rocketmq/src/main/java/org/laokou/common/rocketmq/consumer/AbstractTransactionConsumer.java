@@ -20,14 +20,20 @@ package org.laokou.common.rocketmq.consumer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionState;
+import org.laokou.common.core.utils.MDCUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.messaging.Message;
+
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
+import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
 /**
  * @author laokou
  */
 @Slf4j
-public abstract class AbstractTransactionConsumer extends AbstractTraceConsumer
-		implements RocketMQLocalTransactionListener {
+public abstract class AbstractTransactionConsumer implements RocketMQLocalTransactionListener {
 
 	@Override
 	public RocketMQLocalTransactionState executeLocalTransaction(Message message, Object args) {
@@ -58,7 +64,7 @@ public abstract class AbstractTransactionConsumer extends AbstractTraceConsumer
 			return RocketMQLocalTransactionState.ROLLBACK;
 		}
 		catch (Exception e) {
-			log.error("事务回查异常，事务回滚，错误信息：{}", e.getMessage(), e);
+			log.error("事务回查异常，事务回滚，错误信息：{}", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
 			return RocketMQLocalTransactionState.ROLLBACK;
 		}
 		finally {
@@ -79,5 +85,17 @@ public abstract class AbstractTransactionConsumer extends AbstractTraceConsumer
 	 * @return boolean
 	 */
 	protected abstract boolean checkExtLocalTransaction(Message message);
+
+	private void putTrace(Message message) {
+		Object obj1 = message.getHeaders().get(TRACE_ID);
+		Object obj2 = message.getHeaders().get(SPAN_ID);
+		String traceId = ObjectUtil.isNull(obj1) ? EMPTY : obj1.toString();
+		String spanId = ObjectUtil.isNull(obj2) ? EMPTY : obj2.toString();
+		MDCUtil.put(traceId, spanId);
+	}
+
+	private void clearTrace() {
+		MDCUtil.clear();
+	}
 
 }

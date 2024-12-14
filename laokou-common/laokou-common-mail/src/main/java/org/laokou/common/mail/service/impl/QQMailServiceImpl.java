@@ -17,21 +17,8 @@
 
 package org.laokou.common.mail.service.impl;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.core.utils.RandomStringUtil;
-import org.laokou.common.core.utils.TemplateUtil;
-import org.laokou.common.i18n.dto.Cache;
-import org.laokou.common.i18n.dto.NoticeLog;
-import org.laokou.common.mail.entity.MailNoticeLog;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
-
-import java.util.Map;
-
-import static org.laokou.common.i18n.common.constant.Constant.FAIL;
-import static org.laokou.common.i18n.common.constant.Constant.OK;
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * @author laokou
@@ -45,26 +32,24 @@ public class QQMailServiceImpl extends AbstractMailServiceImpl {
 		super(mailProperties);
 	}
 
-	@Override
-	@SneakyThrows
-	public NoticeLog send(String mail, int minute, Cache cache) {
-		String remark = "QQ邮箱";
-		String subject = "验证码";
-		String captcha = RandomStringUtil.randomNumeric(6);
-		Map<String, Object> param = Map.of("captcha", captcha, "minute", minute);
-		String content = TemplateUtil.getContent(CAPTCHA_TEMPLATE, param);
-		String params = JacksonUtil.toJsonStr(Map.of("mail", mail, "content", content));
-		try {
-			// 发送邮件
-			sendMail(subject, content, mail);
-			// 写入缓存
-			cache.set(captcha, (long) minute * 60 * 1000);
-			return new MailNoticeLog(params, OK, EMPTY, remark);
-		}
-		catch (Exception e) {
-			log.error("错误信息：{}", e.getMessage(), e);
-			return new MailNoticeLog(params, FAIL, e.getMessage(), remark);
-		}
-	}
+	// @Override
+	// @SneakyThrows
+	// public NoticeLog send(String mail, int minute) {
+	// String remark = "QQ邮箱";
+	// String subject = "验证码";
+	// String captcha = RandomStringUtil.randomNumeric(6);
+	// Map<String, Object> param = Map.of("captcha", captcha, "minute", minute);
+	// String content = TemplateUtil.getContent(CAPTCHA_TEMPLATE, param);
+	// String params = JacksonUtil.toJsonStr(Map.of("mail", mail, "content", content));
+	// try {
+	// // 发送邮件
+	// sendMail(subject, content, mail);
+	// return new MailNoticeLog(params, OK, EMPTY, remark);
+	// }
+	// catch (Exception e) {
+	// log.error("错误信息：{}", e.getMessage(), e);
+	// return new MailNoticeLog(params, FAIL, e.getMessage(), remark);
+	// }
+	// }
 
 }

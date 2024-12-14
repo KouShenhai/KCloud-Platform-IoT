@@ -22,8 +22,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
-import java.time.Instant;
-
 /**
  * @author laokou
  */
@@ -32,20 +30,21 @@ import java.time.Instant;
 @ToString
 public class SqlEvent extends DefaultDomainEvent {
 
-	private String serviceId;
-
 	private String sql;
 
 	private long costTime;
 
-	private Instant createTime;
-
-	public SqlEvent(String serviceId, String sql, long costTime, Instant createTime) {
-
-		this.sql = sql;
-		this.serviceId = serviceId;
-		this.costTime = costTime;
-		this.createTime = createTime;
+	protected SqlEvent(String serviceId, Long tenantId, Long userId, Long aggregateId, String sourcePrefix,
+			String topic, String tag) {
+		super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
 	}
+
+	// public SqlEvent(String serviceId, String sql, long costTime, Instant createTime) {
+	//
+	// this.sql = sql;
+	// this.serviceId = serviceId;
+	// this.costTime = costTime;
+	// this.createTime = createTime;
+	// }
 
 }

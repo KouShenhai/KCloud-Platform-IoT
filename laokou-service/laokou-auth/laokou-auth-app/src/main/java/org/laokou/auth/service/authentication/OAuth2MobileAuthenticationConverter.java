@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static org.laokou.auth.factory.AuthFactory.MOBILE;
+import static org.laokou.auth.factory.DomainFactory.MOBILE;
 
 /**
  * 手机号转换器.

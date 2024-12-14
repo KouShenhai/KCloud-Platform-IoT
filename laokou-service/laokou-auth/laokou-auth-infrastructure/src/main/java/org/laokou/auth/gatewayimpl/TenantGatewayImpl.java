@@ -32,8 +32,8 @@ public class TenantGatewayImpl implements TenantGateway {
 	private final TenantMapper tenantMapper;
 
 	@Override
-	public long count(String tenantCode) {
-		return tenantMapper.selectCountByTenantCode(tenantCode);
+	public Long getId(String tenantCode) {
+		return tenantMapper.selectIdTenantCode(tenantCode);
 	}
 
 }

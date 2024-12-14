@@ -21,10 +21,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,14 +31,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.constant.SuperAdmin.YES;
-import static org.laokou.common.i18n.common.exception.SystemException.*;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.exception.SystemException.User.*;
 
 /**
@@ -51,10 +49,56 @@ import static org.laokou.common.i18n.common.exception.SystemException.User.*;
 @Getter
 @Setter
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
-public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2AuthenticatedPrincipal {
+public class UserDetail implements UserDetails, OAuth2AuthenticatedPrincipal, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
+
+	/**
+	 * 用户ID.
+	 */
+	private final Long id;
+
+	/**
+	 * 用户名.
+	 */
+	private final String username;
+
+	/**
+	 * 头像.
+	 */
+	private final String avatar;
+
+	/**
+	 * 超级管理员标识.
+	 */
+	private final Boolean superAdmin;
+
+	/**
+	 * 用户状态 0启用 1禁用.
+	 */
+	private final Integer status;
+
+	/**
+	 * 邮箱.
+	 */
+	private final String mail;
+
+	/**
+	 * 手机号.
+	 */
+	private final String mobile;
+
+	/**
+	 * 密码.
+	 */
+	@JsonIgnore
+	private final transient String password;
+
+	/**
+	 * 租户ID.
+	 */
+	private final Long tenantId;
 
 	/**
 	 * 部门PATHS.
@@ -67,61 +111,29 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 	private final Set<String> permissions;
 
 	/**
-	 * 用户名.
-	 */
-	private String username;
-
-	/**
-	 * 头像.
-	 */
-	private String avatar;
-
-	/**
-	 * 超级管理员标识 0否 1是.
-	 */
-	private Integer superAdmin;
-
-	/**
-	 * 用户状态 0启用 1禁用.
-	 */
-	private Integer status;
-
-	/**
-	 * 邮箱.
-	 */
-	private String mail;
-
-	/**
-	 * 手机号.
-	 */
-	private String mobile;
-
-	/**
-	 * 密码.
-	 */
-	@JsonIgnore
-	private transient String password;
-
-	/**
-	 * 租户ID.
-	 */
-	private Long tenantId;
-
-	/**
 	 * 数据源前缀.
 	 */
-	private String sourcePrefix;
+	private final String sourcePrefix;
 
 	public UserDetail() {
-		super(IdGenerator.defaultSnowflakeId());
+		this.id = 1L;
+		this.username = EMPTY;
+		this.avatar = EMPTY;
+		this.superAdmin = false;
+		this.status = 0;
+		this.mail = EMPTY;
+		this.mobile = EMPTY;
+		this.password = EMPTY;
+		this.tenantId = 0L;
 		this.deptPaths = Collections.emptySet();
 		this.permissions = Collections.emptySet();
+		this.sourcePrefix = EMPTY;
 	}
 
-	public UserDetail(Long id, String username, String password, String avatar, Integer superAdmin, Integer status,
+	public UserDetail(Long id, String username, String password, String avatar, Boolean superAdmin, Integer status,
 			String mail, String mobile, Set<String> deptPaths, Set<String> permissions, Long tenantId,
 			String sourcePrefix) {
-		super(id);
+		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.avatar = avatar;
@@ -129,9 +141,9 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		this.status = status;
 		this.mail = mail;
 		this.mobile = mobile;
+		this.tenantId = tenantId;
 		this.deptPaths = deptPaths;
 		this.permissions = permissions;
-		this.tenantId = tenantId;
 		this.sourcePrefix = sourcePrefix;
 	}
 
@@ -193,11 +205,6 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		return result;
 	}
 
-	@JsonIgnore
-	public boolean isSuperAdministrator() {
-		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
-	}
-
 	@Override
 	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -244,43 +251,50 @@ public class UserDetail extends Identifier<Long> implements UserDetails, OAuth2A
 		return this.username;
 	}
 
-	public void decrypt() {
-		decryptMail();
-		decryptMobile();
-		decryptUsername();
+	@JsonIgnore
+	public UserDetail getDecryptInfo() {
+		return new UserDetail(this.id, this.getDecryptUsername(), this.password, this.avatar, this.superAdmin,
+				this.status, this.getDecryptMail(), this.getDecryptMobile(), this.deptPaths, this.permissions,
+				this.tenantId, this.sourcePrefix);
 	}
 
-	private void decryptUsername() {
+	@JsonIgnore
+	private String getDecryptUsername() {
 		if (StringUtil.isNotEmpty(this.username)) {
 			try {
-				this.username = AESUtil.decrypt(this.username);
+				return AESUtil.decrypt(this.username);
 			}
 			catch (Exception e) {
 				throw new SystemException(USERNAME_AES_DECRYPT_FAIL);
 			}
 		}
+		return this.username;
 	}
 
-	private void decryptMail() {
+	@JsonIgnore
+	private String getDecryptMail() {
 		if (StringUtil.isNotEmpty(this.mail)) {
 			try {
-				this.mail = AESUtil.decrypt(this.mail);
+				return AESUtil.decrypt(this.mail);
 			}
 			catch (Exception e) {
 				throw new SystemException(MAIL_AES_DECRYPT_FAIL);
 			}
 		}
+		return this.mail;
 	}
 
-	private void decryptMobile() {
+	@JsonIgnore
+	private String getDecryptMobile() {
 		if (StringUtil.isNotEmpty(this.mobile)) {
 			try {
-				this.mobile = AESUtil.decrypt(this.mobile);
+				return AESUtil.decrypt(this.mobile);
 			}
 			catch (Exception e) {
 				throw new SystemException(MOBILE_AES_DECRYPT_FAIL);
 			}
 		}
+		return this.mobile;
 	}
 
 }

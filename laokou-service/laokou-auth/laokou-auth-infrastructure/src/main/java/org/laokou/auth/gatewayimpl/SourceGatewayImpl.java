@@ -20,14 +20,10 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.SourceGateway;
-import org.laokou.auth.model.SourceV;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.tenant.mapper.SourceDO;
 import org.laokou.common.tenant.mapper.SourceMapper;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.DATA_SOURCE_NOT_EXIST;
 
 /**
  * 数据源.
@@ -47,17 +43,9 @@ public class SourceGatewayImpl implements SourceGateway {
 	 * @return 数据源
 	 */
 	@Override
-	public SourceV getPrefix(String tenantCode) {
+	public String getPrefix(String tenantCode) {
 		SourceDO sourceDO = sourceMapper.selectOneByTenantCode(tenantCode);
-		checkSource(sourceDO);
-		return new SourceV(sourceDO.getName());
-	}
-
-	private void checkSource(SourceDO sourceDO) {
-		if (ObjectUtil.isNull(sourceDO)) {
-			throw new SystemException(DATA_SOURCE_NOT_EXIST);
-		}
-
+		return ObjectUtil.isNull(sourceDO) ? null : sourceDO.getName();
 	}
 
 	// /**
@@ -97,7 +85,8 @@ public class SourceGatewayImpl implements SourceGateway {
 	// Class.forName(properties.getDriverClassName());
 	// }
 	// catch (Exception e) {
-	// log.error("加载数据源驱动失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+	// log.error("加载数据源驱动失败，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息"
+	// : e.getMessage(), e);
 	// // throw new DataSourceException(CUSTOM_SERVER_ERROR, "加载数据源驱动失败");
 	// }
 	// try {
@@ -108,7 +97,8 @@ public class SourceGatewayImpl implements SourceGateway {
 	// properties.getPassword());
 	// }
 	// catch (Exception e) {
-	// log.error("数据源连接超时，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+	// log.error("数据源连接超时，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" :
+	// e.getMessage(), e);
 	// // throw new DataSourceException(CUSTOM_SERVER_ERROR, "数据源连接超时");
 	// }
 	// finally {

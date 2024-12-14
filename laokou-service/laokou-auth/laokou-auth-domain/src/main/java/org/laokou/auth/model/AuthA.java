@@ -17,22 +17,17 @@
 
 package org.laokou.auth.model;
 
-import com.blueconic.browscap.Capabilities;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import org.laokou.auth.ability.CaptchaValidator;
 import org.laokou.auth.ability.PasswordValidator;
-import org.laokou.common.core.utils.*;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import java.util.List;
+
+import java.util.*;
 
 import static org.laokou.auth.model.GrantType.*;
-import static org.laokou.common.i18n.common.constant.Constant.FAIL;
-import static org.laokou.common.i18n.common.constant.Constant.OK;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
 import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
@@ -43,7 +38,7 @@ import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
  * @author laokou
  */
 @Getter
-public class AuthA extends AggregateRoot<Long> {
+public class AuthA extends AggregateRoot {
 
 	/**
 	 * 业务用例.
@@ -53,27 +48,27 @@ public class AuthA extends AggregateRoot<Long> {
 	/**
 	 * 用户名.
 	 */
-	private String username;
+	private final String username;
 
 	/**
 	 * 密码.
 	 */
-	private String password;
+	private final String password;
 
 	/**
 	 * 租户编号.
 	 */
-	private String tenantCode;
+	private final String tenantCode;
 
 	/**
 	 * 认证类型 mail邮箱 mobile手机号 password密码 authorization_code授权码.
 	 */
-	private GrantType grantType;
+	private final GrantType grantType;
 
 	/**
 	 * 验证码值对象.
 	 */
-	private CaptchaV captcha;
+	private final CaptchaV captcha;
 
 	/**
 	 * 用户实体.
@@ -81,150 +76,145 @@ public class AuthA extends AggregateRoot<Long> {
 	private UserE user;
 
 	/**
-	 * 菜单值对象.
+	 * 数据源前缀.
 	 */
-	private MenuV menu;
+	private String sourcePrefix;
 
 	/**
-	 * 部门值对象.
+	 * 菜单权限标识.
 	 */
-	private DeptV dept;
+	private Set<String> permissions;
 
 	/**
-	 * 日志值对象.
+	 * 部门路径.
 	 */
-	private LogV log;
+	private Set<String> deptPaths;
 
-	/**
-	 * 请求对象.
-	 */
-	private HttpServletRequest request;
-
-	/**
-	 * 当前用户.
-	 */
-	private String currentUser;
-
-	public AuthA() {
-		super(IdGenerator.defaultSnowflakeId());
-	}
-
-	public AuthA(String username, String password, String tenantCode, GrantType grantType, String uuid, String captcha,
-			HttpServletRequest request) {
-		super(IdGenerator.defaultSnowflakeId());
+	public AuthA(String username, String password, String tenantCode, GrantType grantType, String uuid,
+			String captcha) {
 		this.username = username;
 		this.password = password;
 		this.tenantCode = tenantCode;
 		this.grantType = grantType;
 		this.captcha = new CaptchaV(uuid, captcha);
-		this.request = request;
 	}
 
 	public void createUserByPassword() {
-		currentUser = this.username;
-		this.user = new UserE(currentUser, EMPTY, EMPTY, this.tenantId);
+		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 
 	public void createUserByMobile() {
-		currentUser = this.captcha.uuid();
-		this.user = new UserE(EMPTY, EMPTY, currentUser, this.tenantId);
+		this.user = new UserE(EMPTY, EMPTY, this.captcha.uuid());
 	}
 
 	public void createUserByMail() {
-		currentUser = this.captcha.uuid();
-		this.user = new UserE(EMPTY, currentUser, EMPTY, this.tenantId);
+		this.user = new UserE(EMPTY, this.captcha.uuid(), EMPTY);
 	}
 
 	public void createUserByAuthorizationCode() {
-		currentUser = this.username;
-		this.user = new UserE(currentUser, EMPTY, EMPTY, this.tenantId);
+		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 
-	public void checkUserInfo(UserE user) {
-		if (ObjectUtil.isNotNull(user)) {
-			this.user = user;
-			this.creator = user.getId();
-			this.editor = user.getId();
+	public void getTenantId(Long tenantId) {
+		super.tenantId = tenantId;
+	}
+
+	public void getSourcePrefix(String sourcePrefix) {
+		this.sourcePrefix = sourcePrefix;
+	}
+
+	public void getUserInfo(UserE user) {
+		this.user = user;
+		super.userId = ObjectUtil.isNotNull(this.user) ? this.user.getId() : null;
+	}
+
+	public void getMenuPermissions(Set<String> permissions) {
+		this.permissions = permissions;
+	}
+
+	public void getDeptPaths(List<String> deptPaths) {
+		this.deptPaths = getPaths(deptPaths);
+	}
+
+	public void checkTenantId() {
+		if (ObjectUtil.isNull(super.tenantId)) {
+			throw new SystemException(TENANT_NOT_EXIST);
 		}
-		else {
-			fail(grantType.getErrorCode());
-		}
-	}
-
-	public boolean checkNotEmptyLog() {
-		return ObjectUtil.isNotNull(this.log);
-	}
-
-	public void checkTenantExist(long count) {
-		if (count == 0) {
-			fail(TENANT_NOT_EXIST);
-		}
-	}
-
-	public void updateSourcePrefix(SourceV source) {
-		this.sourcePrefix = source.prefix();
-	}
-
-	public void checkMenuPermissions(MenuV menu) {
-		if (CollectionUtil.isEmpty(menu.permissions())) {
-			fail(FORBIDDEN);
-		}
-		this.menu = menu;
-	}
-
-	public void checkDeptPaths(DeptV dept) {
-		if (CollectionUtil.isEmpty(dept.deptPaths())) {
-			fail(FORBIDDEN);
-		}
-		this.dept = dept;
 	}
 
 	public void checkCaptcha(CaptchaValidator captchaValidator) {
 		if (isUseCaptcha()) {
-			Boolean result = captchaValidator.validate(captcha.uuid(), captcha.captcha());
-			if (ObjectUtil.isNull(result)) {
-				fail(CAPTCHA_EXPIRED);
+			Boolean validate = captchaValidator.validate(captcha.uuid(), captcha.captcha());
+			if (ObjectUtil.isNull(validate)) {
+				throw new SystemException(CAPTCHA_EXPIRED);
 			}
-			if (!result) {
-				fail(CAPTCHA_ERROR);
+			if (!validate) {
+				throw new SystemException(CAPTCHA_ERROR);
 			}
 		}
 	}
 
-	public void checkUserPassword(PasswordValidator passwordValidator) {
+	public void checkSourcePrefix() {
+		if (ObjectUtil.isNull(sourcePrefix)) {
+			throw new SystemException(DATA_SOURCE_NOT_EXIST);
+		}
+	}
+
+	public void checkUsername() {
+		if (ObjectUtil.isNull(this.user)) {
+			this.grantType.checkUsernameNotExist();
+		}
+	}
+
+	public void checkPassword(PasswordValidator passwordValidator) {
 		if (PASSWORD.equals(this.grantType) && !passwordValidator.validate(this.password, user.getPassword())) {
-			fail(USERNAME_PASSWORD_ERROR);
+			throw new SystemException(USERNAME_PASSWORD_ERROR);
 		}
 	}
 
 	public void checkUserStatus() {
 		if (ObjectUtil.equals(UserStatus.DISABLE.ordinal(), this.user.getStatus())) {
-			fail(USER_DISABLED);
+			throw new SystemException(USER_DISABLED);
 		}
 	}
 
-	public void success() {
-		createLog(OK, EMPTY);
+	public void checkMenuPermissions() {
+		if (CollectionUtil.isEmpty(this.permissions)) {
+			throw new SystemException(FORBIDDEN);
+		}
 	}
 
-	private void fail(String code) {
-		String errorMessage = MessageUtil.getMessage(code);
-		createLog(FAIL, errorMessage);
-		throw new SystemException(code, errorMessage);
-	}
-
-	private void createLog(Integer status, String errorMessage) {
-		String ip = IpUtil.getIpAddr(request);
-		String address = AddressUtil.getRealAddress(ip);
-		Capabilities capabilities = RequestUtil.getCapabilities(request);
-		String os = capabilities.getPlatform();
-		String browser = capabilities.getBrowser();
-		this.log = new LogV(currentUser, os, ip, address, browser, status, errorMessage, grantType.getCode(),
-				DateUtil.nowInstant());
+	public void checkDeptPaths() {
+		if (CollectionUtil.isEmpty(this.deptPaths)) {
+			throw new SystemException(FORBIDDEN);
+		}
 	}
 
 	private boolean isUseCaptcha() {
 		return List.of(PASSWORD, MOBILE, MAIL).contains(grantType);
+	}
+
+	private Set<String> getPaths(List<String> list) {
+		if (CollectionUtil.isEmpty(list)) {
+			return Collections.emptySet();
+		}
+		// 字符串长度排序
+		list.sort(Comparator.comparingInt(String::length));
+		Set<String> paths = new HashSet<>(list.size());
+		paths.add(list.getFirst());
+		for (String path : list.subList(1, list.size())) {
+			int find = paths.size();
+			for (String p : paths) {
+				if (path.contains(p)) {
+					break;
+				}
+				find--;
+			}
+			if (find == 0) {
+				paths.add(path);
+			}
+		}
+		return paths;
 	}
 
 }

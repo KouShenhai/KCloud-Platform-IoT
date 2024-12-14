@@ -24,7 +24,6 @@ import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.crypto.utils.RSAUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
@@ -193,7 +192,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 					}
 				}
 				catch (Exception e) {
-					log.error("用户名密码认证模式，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+					log.error("用户名密码认证模式，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
 				}
 			}
 			return Mono.just(MapUtil.parseParams(paramMap));

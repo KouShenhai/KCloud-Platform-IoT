@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static org.laokou.auth.factory.AuthFactory.PASSWORD;
+import static org.laokou.auth.factory.DomainFactory.PASSWORD;
 
 /**
  * 密码转换器.

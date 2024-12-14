@@ -18,6 +18,7 @@
 package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
+import org.laokou.common.i18n.utils.DateUtil;
 
 import java.time.Instant;
 
@@ -27,45 +28,21 @@ import java.time.Instant;
  * @author laokou
  */
 @Getter
-public abstract class AggregateRoot<ID> extends Identifier<ID> {
+public abstract class AggregateRoot extends Identifier {
 
 	/**
-	 * 创建人.
+	 * 操作时间.
 	 */
-	protected ID creator;
-
-	/**
-	 * 编辑人.
-	 */
-	protected ID editor;
+	protected final Instant instant = DateUtil.nowInstant();
 
 	/**
 	 * 租户ID.
 	 */
-	protected ID tenantId;
+	protected Long tenantId;
 
 	/**
-	 * 创建时间.
+	 * 用户ID.
 	 */
-	protected Instant createTime;
-
-	/**
-	 * 修改时间.
-	 */
-	protected Instant updateTime;
-
-	/**
-	 * 数据源前缀.
-	 */
-	protected String sourcePrefix;
-
-	/**
-	 * 服务ID.
-	 */
-	protected String serviceId;
-
-	protected AggregateRoot(ID id) {
-		super(id);
-	}
+	protected Long userId;
 
 }

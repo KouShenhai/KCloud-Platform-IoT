@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.context.ShutdownHolder;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.IdGenerator;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.core.utils.ThreadUtil;

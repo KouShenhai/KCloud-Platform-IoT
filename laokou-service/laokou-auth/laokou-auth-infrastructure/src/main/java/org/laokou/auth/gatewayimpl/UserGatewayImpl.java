@@ -25,9 +25,9 @@ import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.UserE;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
 
@@ -58,12 +58,13 @@ public class UserGatewayImpl implements UserGateway {
 			return ObjectUtil.isNotNull(userDO) ? UserConvertor.toEntity(userDO) : null;
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_USER, LogUtil.record(e.getMessage()), e);
+			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_USER,
+					StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
 			throw new SystemException(DATA_TABLE_NOT_EXIST,
 					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { TABLE_USER }));
 		}
 		catch (Exception e) {
-			log.error("查询用户失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+			log.error("查询用户失败，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
 			throw new SystemException(SystemException.User.QUERY_FAILED);
 		}
 	}

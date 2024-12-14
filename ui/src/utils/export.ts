@@ -38,7 +38,7 @@ export function ExportAllToExcel(fileName: string, url: string, method: string, 
 		data: body,
 		...(options || {}),
 	}).then((res: any) => {
-		if(res.data.type !== 'application/json') {
+		if (res.data.type !== 'application/json') {
 			const blob = new Blob([res.data])
 			//将blob格式的响应数据转换为原本的格式，方便判断接口是否返回报错信息
 			let reader = new FileReader()

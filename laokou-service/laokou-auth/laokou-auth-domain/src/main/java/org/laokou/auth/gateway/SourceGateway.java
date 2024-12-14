@@ -17,8 +17,6 @@
 
 package org.laokou.auth.gateway;
 
-import org.laokou.auth.model.SourceV;
-
 /**
  * 数据源.
  *
@@ -31,6 +29,6 @@ public interface SourceGateway {
 	 * @param tenantCode 租户编号
 	 * @return 数据源名称
 	 */
-	SourceV getPrefix(String tenantCode);
+	String getPrefix(String tenantCode);
 
 }

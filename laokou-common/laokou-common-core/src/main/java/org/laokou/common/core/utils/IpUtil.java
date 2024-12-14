@@ -19,7 +19,6 @@ package org.laokou.common.core.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
@@ -163,7 +162,7 @@ public final class IpUtil {
 			}
 		}
 		catch (NumberFormatException e) {
-			log.error("格式化失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+			log.error("格式化失败，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
 			return new byte[0];
 		}
 		return bytes;

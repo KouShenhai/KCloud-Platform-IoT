@@ -19,7 +19,7 @@ package org.laokou.auth.service.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.factory.AuthFactory;
+import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -28,7 +28,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.factory.AuthFactory.MOBILE;
+import static org.laokou.auth.factory.DomainFactory.MOBILE;
 
 /**
  * 手机号处理器.
@@ -40,8 +40,8 @@ import static org.laokou.auth.factory.AuthFactory.MOBILE;
 public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2MobileAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProvider authProvider) {
-		super(authorizationService, tokenGenerator, authProvider);
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor) {
+		super(authorizationService, tokenGenerator, authProcessor);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authentica
 
 	@Override
 	Authentication principal(HttpServletRequest request) {
-		AuthA auth = AuthFactory.mobile(request);
+		AuthA auth = DomainFactory.getMobileAuth(request);
 		auth.createUserByMobile();
 		return authentication(auth);
 	}

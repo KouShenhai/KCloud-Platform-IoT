@@ -17,22 +17,22 @@
 
 package org.laokou.auth.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.laokou.common.crypto.utils.AESUtil;
+import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
-import static org.laokou.common.i18n.common.constant.SuperAdmin.YES;
+import static org.laokou.auth.model.SuperAdmin.YES;
 
 /**
  * 用户实体.
  *
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Setter
+@Getter
 public class UserE {
 
 	/**
@@ -80,23 +80,17 @@ public class UserE {
 	 */
 	private Long tenantId;
 
-	public UserE(String username, String mail, String mobile, Long tenantId) {
+	public UserE() {
+	}
+
+	public UserE(String username, String mail, String mobile) {
 		this.username = AESUtil.encrypt(username);
 		this.mail = AESUtil.encrypt(mail);
 		this.mobile = AESUtil.encrypt(mobile);
-		this.tenantId = tenantId;
-	}
-
-	public UserE(Long tenantId) {
-		this.tenantId = tenantId;
 	}
 
 	public boolean isSuperAdministrator() {
 		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
-	}
-
-	public boolean isDefaultTenant() {
-		return ObjectUtil.equals(0L, this.tenantId);
 	}
 
 }

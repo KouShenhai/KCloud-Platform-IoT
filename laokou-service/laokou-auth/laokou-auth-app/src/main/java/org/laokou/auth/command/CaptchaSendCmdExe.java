@@ -19,15 +19,12 @@ package org.laokou.auth.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.CaptchaSendCmd;
-import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
-import org.laokou.common.rocketmq.template.SendMessageType;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.common.constant.MqConstant.LAOKOU_CAPTCHA_TOPIC;
 import static org.laokou.auth.dto.CaptchaSendCmd.USE_CASE_CAPTCHA;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
@@ -48,8 +45,9 @@ public class CaptchaSendCmdExe {
 				BizScenario.valueOf(cmd.getTag(), USE_CASE_CAPTCHA, SCENARIO),
 				extension -> extension.validate(cmd.getUuid()));
 		// 发布发送验证码事件
-		SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getUuid(), LAOKOU_CAPTCHA_TOPIC, cmd.getTag());
-		rocketMQDomainEventPublisher.publish(sendCaptchaEvent, SendMessageType.ASYNC);
+		// SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getUuid(),
+		// LAOKOU_CAPTCHA_TOPIC, cmd.getTag());
+		// rocketMQDomainEventPublisher.publish(sendCaptchaEvent, SendMessageType.ASYNC);
 	}
 
 }

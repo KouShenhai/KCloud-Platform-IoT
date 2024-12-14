@@ -31,7 +31,7 @@ import java.util.Map;
 public abstract class AbstractOAuth2AuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
 
 	/**
-	 * Sub-class constructor.
+	 * Subclass constructor.
 	 * @param authorizationGrantType the authorization grant type
 	 * @param clientPrincipal the authenticated client principal
 	 * @param additionalParameters the additional parameters

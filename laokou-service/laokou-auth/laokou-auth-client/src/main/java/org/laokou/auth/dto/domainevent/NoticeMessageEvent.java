@@ -17,18 +17,13 @@
 
 package org.laokou.auth.dto.domainevent;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.common.constant.EventType;
-import org.laokou.common.i18n.dto.NoticeLog;
+import lombok.Getter;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 /**
  * @author laokou
  */
-@Data
-@NoArgsConstructor
+@Getter
 public class NoticeMessageEvent extends DefaultDomainEvent {
 
 	private String code;
@@ -41,19 +36,21 @@ public class NoticeMessageEvent extends DefaultDomainEvent {
 
 	private String param;
 
-	public NoticeMessageEvent(NoticeLog noticeLog, String topic, String tag, EventType eventType, String serviceId,
-			String sourcePrefix, Long aggregateId, Long tenantId) {
-		super(topic, tag, eventType, serviceId, sourcePrefix, noticeLog.getInstant(), aggregateId, tenantId);
-		this.code = noticeLog.getCode();
-		this.name = noticeLog.getName() + "（" + noticeLog.getRemark() + "）";
-		this.status = noticeLog.getStatus();
-		this.errorMessage = noticeLog.getErrorMessage();
-		this.param = noticeLog.getParam();
+	protected NoticeMessageEvent(String serviceId, Long tenantId, Long userId, Long aggregateId, String sourcePrefix,
+			String topic, String tag) {
+		super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
 	}
 
-	@Override
-	protected void generatorId() {
-		super.id = IdGenerator.defaultSnowflakeId();
-	}
+	// public NoticeMessageEvent(String topic, String tag, EventType eventType, String
+	// serviceId, String sourcePrefix,
+	// Long aggregateId, Long tenantId) {
+	// /*
+	// * super(topic, tag, eventType, serviceId, sourcePrefix, noticeLog.getInstant(),
+	// * aggregateId, tenantId); this.code = noticeLog.getCode(); this.name =
+	// * noticeLog.getName() + "（" + noticeLog.getRemark() + "）"; this.status =
+	// * noticeLog.getStatus(); this.errorMessage = noticeLog.getErrorMessage();
+	// * this.param = noticeLog.getParam();
+	// */
+	// }
 
 }

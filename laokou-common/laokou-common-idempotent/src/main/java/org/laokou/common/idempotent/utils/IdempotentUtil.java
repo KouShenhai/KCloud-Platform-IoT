@@ -19,7 +19,7 @@ package org.laokou.common.idempotent.utils;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.IdGenerator;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.stereotype.Component;
 

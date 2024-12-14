@@ -19,31 +19,19 @@ package org.laokou.auth.convertor;
 
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.LogV;
-
-import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOG_TOPIC;
-import static org.laokou.auth.common.constant.MqConstant.LOGIN_TAG;
 
 /**
  * @author laokou
  */
 public class LoginLogConvertor {
 
-	public static LoginEvent toEvent(AuthA authA) {
-		LogV logV = authA.getLog();
-		return new LoginEvent(logV.type(), logV.errorMessage(), logV.status(), logV.browser(), logV.os(), logV.ip(),
-				logV.address(), logV.username(), logV.instant(), authA.getUser().getTenantId(), LAOKOU_LOG_TOPIC,
-				LOGIN_TAG);
-	}
-
 	public static LoginLogDO toDataObject(LoginEvent loginEvent) {
 		LoginLogDO loginLogDO = new LoginLogDO();
 		loginLogDO.setId(loginEvent.getId());
-		loginLogDO.setCreator(loginEvent.getCreator());
-		loginLogDO.setEditor(loginEvent.getCreator());
-		loginLogDO.setCreateTime(loginEvent.getCreateTime());
-		loginLogDO.setUpdateTime(loginEvent.getCreateTime());
+		// loginLogDO.setCreator(loginEvent.getCreator());
+		// loginLogDO.setEditor(loginEvent.getCreator());
+		// loginLogDO.setCreateTime(loginEvent.getCreateTime());
+		// loginLogDO.setUpdateTime(loginEvent.getCreateTime());
 		loginLogDO.setTenantId(loginEvent.getTenantId());
 		loginLogDO.setUsername(loginEvent.getUsername());
 		loginLogDO.setIp(loginEvent.getIp());

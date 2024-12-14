@@ -34,7 +34,7 @@ public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 	private final TraceUtil traceUtil;
 
 	@Override
-	public void publish(DomainEvent<Long> payload, SendMessageType type) {
+	public void publish(DomainEvent payload, SendMessageType type) {
 		switch (type) {
 			case SYNC -> rocketMqTemplate.sendSyncMessage(payload.getTopic(), payload.getTag(), payload, traceUtil.getTraceId(), traceUtil.getSpanId());
 			case ASYNC -> rocketMqTemplate.sendAsyncMessage(payload.getTopic(), payload.getTag(), payload, traceUtil.getTraceId(), traceUtil.getSpanId());

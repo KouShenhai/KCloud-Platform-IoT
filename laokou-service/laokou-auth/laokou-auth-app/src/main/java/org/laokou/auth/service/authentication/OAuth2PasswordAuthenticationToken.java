@@ -22,7 +22,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 import java.util.Map;
 
-import static org.laokou.auth.factory.AuthFactory.PASSWORD;
+import static org.laokou.auth.factory.DomainFactory.PASSWORD;
 
 /**
  * 密码令牌.
@@ -32,7 +32,7 @@ import static org.laokou.auth.factory.AuthFactory.PASSWORD;
 public class OAuth2PasswordAuthenticationToken extends AbstractOAuth2AuthenticationToken {
 
 	/**
-	 * Sub-class constructor.
+	 * Subclass constructor.
 	 * @param clientPrincipal the authenticated client principal
 	 * @param additionalParameters the additional parameters
 	 */

@@ -49,9 +49,9 @@ export default () => {
 	const [uuid, setUuid] = useState<string>('');
 	const [publicKey, setPublicKey] = useState<string>('');
 	const [requestId, setRequestId] = useState<string>('')
-    const formRef = useRef<ProFormInstance>();
+	const formRef = useRef<ProFormInstance>();
 
-    const setFormField = (form: API.LoginParam) => {
+	const setFormField = (form: API.LoginParam) => {
 		formRef?.current?.setFieldsValue(form);
 	}
 
@@ -111,7 +111,7 @@ export default () => {
 		// 调用验证码API
 		const uuid = uuidV7();
 		// @ts-ignore
-        getCaptchaImageByUuidV3({uuid: uuid}).then((res: { code: string; data: React.SetStateAction<string>; }) => {
+		getCaptchaImageByUuidV3({uuid: uuid}).then((res: { code: string; data: React.SetStateAction<string>; }) => {
 			if (res.code === 'OK') {
 				setCaptchaImage(res.data);
 			}
@@ -121,7 +121,7 @@ export default () => {
 
 	const getPublicKey = async () => {
 		// @ts-ignore
-        getSecretInfoV3().then((res: { code: string; data: { publicKey: React.SetStateAction<string>; }; }) => {
+		getSecretInfoV3().then((res: { code: string; data: { publicKey: React.SetStateAction<string>; }; }) => {
 			if (res.code === 'OK') {
 				setPublicKey(res.data.publicKey);
 			}
@@ -129,7 +129,7 @@ export default () => {
 	};
 
 	const getRequestId = async () => {
-        setRequestId(uuidV7())
+		setRequestId(uuidV7())
 	}
 
 	const sendMailCaptcha = async () => {
@@ -167,9 +167,12 @@ export default () => {
 
 	const onSubmit = async (form: API.LoginParam) => {
 		const params = getParams(form);
-        login({...params})
-            // @ts-ignore
-            .then((res: { code: string; data: { access_token: string; refresh_token: string; expires_in: number; }; }) => {
+		login({...params})
+			// @ts-ignore
+			.then((res: {
+				code: string;
+				data: { access_token: string; refresh_token: string; expires_in: number; };
+			}) => {
 				if (res.code === 'OK') {
 					// 登录成功【令牌过期前5分钟，自动刷新令牌】
 					clearToken()

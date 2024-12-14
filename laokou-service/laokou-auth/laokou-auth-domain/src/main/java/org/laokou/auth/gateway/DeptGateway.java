@@ -17,8 +17,9 @@
 
 package org.laokou.auth.gateway;
 
-import org.laokou.auth.model.DeptV;
 import org.laokou.auth.model.UserE;
+
+import java.util.List;
 
 /**
  * 部门.
@@ -28,10 +29,10 @@ import org.laokou.auth.model.UserE;
 public interface DeptGateway {
 
 	/**
-	 * 查询部门PATHS列表.
+	 * 查询部门路径集合.
 	 * @param user 用户对象
-	 * @return 部门PATHS列表
+	 * @return 部门路径集合
 	 */
-	DeptV getPaths(UserE user);
+	List<String> getPaths(UserE user);
 
 }

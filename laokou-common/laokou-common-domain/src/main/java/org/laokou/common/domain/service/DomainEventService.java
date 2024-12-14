@@ -17,7 +17,7 @@
 
 package org.laokou.common.domain.service;
 
-import org.laokou.common.domain.entity.DomainEventA;
+import org.laokou.common.domain.entity.DomainEventE;
 
 /**
  * 领域事件Service.
@@ -26,7 +26,7 @@ import org.laokou.common.domain.entity.DomainEventA;
  */
 public interface DomainEventService {
 
-	void create(DomainEventA domainEventA);
+	void create(DomainEventE domainEventE);
 
 	Long countById(Long id);
 

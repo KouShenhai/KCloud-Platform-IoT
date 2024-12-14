@@ -72,6 +72,8 @@
     <module>laokou-common-prometheus</module>
     <module>laokou-common-xss</module>
     <module>laokou-common-grpc</module>
+    <module>laokou-common-statemachine</module>
+    <module>laokou-common-ruleengine</module>
   </modules>
 
 </project>

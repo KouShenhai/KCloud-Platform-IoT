@@ -18,9 +18,7 @@
 package org.laokou.common.log.domainevent;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.core.utils.IdGenerator;
+import lombok.Getter;
 import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 import java.io.Serial;
@@ -30,8 +28,7 @@ import java.io.Serial;
  *
  * @author laokou
  */
-@Data
-@NoArgsConstructor
+@Getter
 public final class OperateEvent extends DefaultDomainEvent {
 
 	@Serial
@@ -76,9 +73,9 @@ public final class OperateEvent extends DefaultDomainEvent {
 	@Schema(name = "costTime", description = "操作的消耗时间(毫秒)")
 	private Long costTime;
 
-	@Override
-	protected void generatorId() {
-		super.id = IdGenerator.defaultSnowflakeId();
+	protected OperateEvent(String serviceId, Long tenantId, Long userId, Long aggregateId, String sourcePrefix,
+			String topic, String tag) {
+		super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
 	}
 
 }
