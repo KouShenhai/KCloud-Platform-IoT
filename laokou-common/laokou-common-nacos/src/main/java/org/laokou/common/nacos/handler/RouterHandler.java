@@ -21,15 +21,14 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.core.utils.TemplateUtil;
-import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.util.Assert;
 
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,10 +65,10 @@ public class RouterHandler implements ApplicationListener<ApplicationReadyEvent>
 	 */
 	@SneakyThrows
 	private String getRouter(Map<String, Object> dataMap) {
-		try (InputStream inputStream = ResourceUtil.getResource("templates/router_template.json").getInputStream()) {
-			String template = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-			return TemplateUtil.getContent(template, dataMap);
-		}
+		String template = ResourceUtil.getResource("templates/router_template.json")
+			.getContentAsString(StandardCharsets.UTF_8)
+			.trim();
+		return TemplateUtil.getContent(template, dataMap);
 	}
 
 }

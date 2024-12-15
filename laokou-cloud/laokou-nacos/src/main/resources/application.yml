@@ -119,6 +119,8 @@ server:
     enabled: @SSL-ENABLED@
   shutdown: graceful
 spring:
+  main:
+    banner-mode: console
   application:
     name: ${SERVICE_ID:laokou-nacos}
   profiles:

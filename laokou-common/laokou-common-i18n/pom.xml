@@ -51,6 +51,10 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-banner</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
       <scope>test</scope>
     </dependency>

@@ -119,7 +119,7 @@
     <!--commons-io版本-->
     <commons-io.version>2.18.0</commons-io.version>
     <!--fastjson版本-->
-    <fastjson.version>2.0.53.android8</fastjson.version>
+    <fastjson.version>2.0.53</fastjson.version>
     <!--httpclient版本-->
     <httpclient.versin>4.5.14</httpclient.versin>
     <!--commons-text版本-->
@@ -161,6 +161,11 @@
         <groupId>org.apache.tomcat</groupId>
         <artifactId>annotations-api</artifactId>
         <version>${annotations-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-banner</artifactId>
+        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>

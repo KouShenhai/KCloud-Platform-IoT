@@ -21,7 +21,7 @@ spring:
   application:
     name: ${SERVICE_ID:laokou-snail-job}
   main:
-    banner-mode: off
+    banner-mode: console
   profiles:
     active: @PROFILE-ACTIVE@
   datasource:

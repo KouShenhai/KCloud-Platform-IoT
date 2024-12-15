@@ -141,6 +141,10 @@
       <artifactId>scala-library</artifactId>
       <version>${scala-library.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-banner</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

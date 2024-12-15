@@ -46,8 +46,7 @@ public class Knife4jFilter extends OncePerRequestFilter {
 
 	static {
 		try {
-			HTML_CONTENT = new String(ResourceUtil.getResource("oauth2.html").getInputStream().readAllBytes(),
-					StandardCharsets.UTF_8);
+			HTML_CONTENT = ResourceUtil.getResource("oauth2.html").getContentAsString(StandardCharsets.UTF_8).trim();
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);
