@@ -38,8 +38,8 @@ public class StartListener implements ApplicationListener<ContextRefreshedEvent>
 			SnailJobLog.LOCAL.info("snail-job server already started v{}", SnailJobVersion.getVersion());
 			return;
 		}
-		String bannerContent = ResourceUtil.getResource("banner.txt").getContentAsString(StandardCharsets.UTF_8).trim();
-		log.info("{}\n", MessageFormatter.format(bannerContent, "").getMessage());
+		String bannerContent = ResourceUtil.getResource("banner.txt").getContentAsString(StandardCharsets.UTF_8);
+		log.info(MessageFormatter.format(bannerContent, "").getMessage());
 		log.info(MessageFormatter.format(SystemConstants.LOGO, SnailJobVersion.getVersion()).getMessage());
 		SnailJobLog.LOCAL.info("snail-job server is preparing to start... v{}", SnailJobVersion.getVersion());
 		lifecycleList.forEach(Lifecycle::start);
