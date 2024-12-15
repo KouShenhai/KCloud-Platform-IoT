@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -80,7 +81,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 		}
 		catch (IOException e) {
 			log.error("认证授权失败，错误信息：{}", e.getMessage(), e);
-			throw new RuntimeException(e);
+			throw new SystemException("S_UnKnow_Error", e.getMessage());
 		}
 	}
 

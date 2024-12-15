@@ -113,7 +113,8 @@ public class DomainFactory {
 	}
 
 	public static LogE getLog(AuthA authA, HttpServletRequest request, GlobalException ex) {
-		return new LogE(authA.getLoginName(), authA.getLoginType(), authA.getInstant(), ex, request);
+		return new LogE(authA.getLoginName(), authA.getLoginType(), authA.getInstant(), authA.getTenantId(), ex,
+				request);
 	}
 
 }

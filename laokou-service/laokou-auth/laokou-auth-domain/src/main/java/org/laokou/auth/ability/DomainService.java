@@ -22,7 +22,10 @@ import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.LogE;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.core.config.SpringTaskExecutorConfig.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * @author laokou
@@ -47,6 +50,7 @@ public class DomainService {
 
 	private final PasswordValidator passwordValidator;
 
+	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void recordLog(LogE logE) {
 		loginLogGateway.create(logE);
 	}

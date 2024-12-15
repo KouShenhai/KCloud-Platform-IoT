@@ -42,6 +42,8 @@ public class LogE extends Identifier {
 
 	private final Instant instant;
 
+	private final Long tenantId;
+
 	private final String os;
 
 	private final String ip;
@@ -54,7 +56,8 @@ public class LogE extends Identifier {
 
 	private String errorMessage;
 
-	public LogE(String username, String type, Instant instant, GlobalException ex, HttpServletRequest request) {
+	public LogE(String username, String type, Instant instant, Long tenantId, GlobalException ex,
+			HttpServletRequest request) {
 		Capabilities capabilities = RequestUtil.getCapabilities(request);
 		handleException(ex);
 		this.username = username;
@@ -64,6 +67,7 @@ public class LogE extends Identifier {
 		this.address = AddressUtil.getRealAddress(ip);
 		this.os = capabilities.getPlatform();
 		this.browser = capabilities.getBrowser();
+		this.tenantId = tenantId;
 	}
 
 	private void handleException(GlobalException ex) {
