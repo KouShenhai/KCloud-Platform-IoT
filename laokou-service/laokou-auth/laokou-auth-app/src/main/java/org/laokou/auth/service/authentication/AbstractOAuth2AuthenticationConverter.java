@@ -33,8 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.INVALID_SCOPE;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
+import static org.laokou.common.security.handler.OAuth2ExceptionHandler.*;
 
 /**
  * 抽象认证转换器.
@@ -83,7 +82,7 @@ public abstract class AbstractOAuth2AuthenticationConverter implements Authentic
 			return convert(clientPrincipal, additionalParameters);
 		}
 		catch (SystemException e) {
-			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
+			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 	}
 
