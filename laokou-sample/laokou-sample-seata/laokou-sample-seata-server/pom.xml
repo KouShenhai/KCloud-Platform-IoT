@@ -27,7 +27,7 @@
     <!--jcommander版本-->
     <jcommander.version>1.82</jcommander.version>
     <!--jraft-core版本-->
-    <jraft-core.version>1.3.14</jraft-core.version>
+    <jraft-core.version>1.3.15.bugfix</jraft-core.version>
     <!--netty版本-->
     <netty.version>4.1.112.Final</netty.version>
   </properties>
