@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * 模型领域服务.
+ * 物模型领域服务.
  *
  * @author laokou
  */

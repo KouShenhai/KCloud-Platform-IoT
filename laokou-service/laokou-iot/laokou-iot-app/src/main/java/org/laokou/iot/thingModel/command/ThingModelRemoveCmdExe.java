@@ -25,7 +25,7 @@ import org.laokou.iot.thingModel.ability.ThingModelDomainService;
 
 /**
  *
- * 删除模型命令执行器.
+ * 删除物模型命令执行器.
  *
  * @author laokou
  */

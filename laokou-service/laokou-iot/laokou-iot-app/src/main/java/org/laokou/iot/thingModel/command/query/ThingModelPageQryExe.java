@@ -35,7 +35,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 分页查询模型请求执行器.
+ * 分页物查询模型请求执行器.
  *
  * @author laokou
  */
@@ -56,7 +56,7 @@ public class ThingModelPageQryExe {
 						c2.get(30, TimeUnit.SECONDS)));
 		}
 		catch (Exception e) {
-			throw new SystemException("S_Model_PageQueryTimeout", "模型分页查询超时");
+			throw new SystemException("S_ThingModel_PageQueryTimeout", "物模型分页查询超时");
 		}
 	}
 

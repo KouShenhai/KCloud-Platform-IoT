@@ -23,7 +23,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 /**
  *
- * 模型数据对象.
+ * 物模型数据对象.
  *
  * @author laokou
  */

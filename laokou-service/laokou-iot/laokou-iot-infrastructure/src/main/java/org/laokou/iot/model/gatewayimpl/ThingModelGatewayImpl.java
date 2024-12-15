@@ -29,7 +29,7 @@ import java.util.Arrays;
 
 /**
  *
- * 模型网关实现.
+ * 物模型网关实现.
  *
  * @author laokou
  */

@@ -26,7 +26,7 @@ import org.laokou.iot.thingModel.ability.ThingModelDomainService;
 
 /**
  *
- * 保存模型命令执行器.
+ * 保存物模型命令执行器.
  *
  * @author laokou
  */

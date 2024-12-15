@@ -21,24 +21,24 @@ import org.laokou.iot.thingModel.model.ThingModelE;
 
 /**
  *
- * 模型网关【防腐】.
+ * 物模型网关【防腐】.
  *
  * @author laokou
  */
 public interface ThingModelGateway {
 
 	/**
-	 * 新增模型.
+	 * 新增物模型.
 	 */
 	void create(ThingModelE thingModelE);
 
 	/**
-	 * 修改模型.
+	 * 修改物模型.
 	 */
 	void update(ThingModelE thingModelE);
 
 	/**
-	 * 删除模型.
+	 * 删除物模型.
 	 */
 	void delete(Long[] ids);
 

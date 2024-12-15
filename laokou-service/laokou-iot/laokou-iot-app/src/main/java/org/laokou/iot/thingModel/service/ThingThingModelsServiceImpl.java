@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * 模型接口实现类.
+ * 物模型接口实现类.
  *
  * @author laokou
  */
