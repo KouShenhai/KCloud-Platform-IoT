@@ -133,8 +133,8 @@ class TableTest {
 		// 应用
 		App app = App.IOT;
 		// 表名
-		Set<String> tableNames = Set.of("boot_iot_device", "boot_iot_model", "boot_iot_network", "boot_iot_product",
-				"boot_iot_product_type", "boot_iot_protocol");
+		Set<String> tableNames = Set.of("boot_iot_device", "boot_iot_thing_model", "boot_iot_network",
+				"boot_iot_product", "boot_iot_product_type", "boot_iot_protocol");
 		generateCode(sourceName, version, author, tablePrefix, moduleName, packageName, tableNames, app);
 	}
 
