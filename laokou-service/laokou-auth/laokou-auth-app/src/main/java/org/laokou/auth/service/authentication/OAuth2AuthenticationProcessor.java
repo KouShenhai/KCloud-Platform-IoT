@@ -35,8 +35,7 @@ import org.springframework.stereotype.Component;
 
 import static org.laokou.auth.model.AuthA.USE_CASE_AUTH;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
+import static org.laokou.common.security.handler.OAuth2ExceptionHandler.*;
 
 /**
  * @author laokou
@@ -69,7 +68,7 @@ public class OAuth2AuthenticationProcessor {
 			// 记录日志
 			domainService.recordLog(DomainFactory.getLog(auth, request, e));
 			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
-			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
+			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 		finally {
 			// 清除数据源上下文

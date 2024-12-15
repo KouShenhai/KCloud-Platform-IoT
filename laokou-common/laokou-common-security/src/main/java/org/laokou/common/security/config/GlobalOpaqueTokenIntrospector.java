@@ -39,6 +39,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.security.Principal;
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
+import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getOAuth2AuthenticationException;
 
 /**
  * @author laokou
@@ -88,7 +89,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 			return userDetail.getDecryptInfo();
 		}
 		catch (GlobalException e) {
-			throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg(), ERROR_URL);
+			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 	}
 
