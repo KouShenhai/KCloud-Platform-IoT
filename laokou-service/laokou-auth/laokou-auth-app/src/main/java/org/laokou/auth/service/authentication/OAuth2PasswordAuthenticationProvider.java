@@ -50,10 +50,10 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
 	}
 
 	@Override
-	Authentication principal(HttpServletRequest request) {
+	Authentication getPrincipal(HttpServletRequest request) {
 		AuthA auth = DomainFactory.getPasswordAuth(request);
 		auth.createUserByPassword();
-		return authentication(auth);
+		return authenticationToken(auth, request);
 	}
 
 	@Override

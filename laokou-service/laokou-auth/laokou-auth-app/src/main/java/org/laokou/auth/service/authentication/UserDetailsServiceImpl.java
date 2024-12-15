@@ -17,6 +17,7 @@
 
 package org.laokou.auth.service.authentication;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.factory.DomainFactory;
@@ -49,9 +50,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
-			AuthA auth = DomainFactory.getAuthorizationCodeAuth(RequestUtil.getHttpServletRequest());
+			HttpServletRequest request = RequestUtil.getHttpServletRequest();
+			AuthA auth = DomainFactory.getAuthorizationCodeAuth(request);
 			auth.createUserByAuthorizationCode();
-			return (UserDetails) authProcessor.authentication(auth).getPrincipal();
+			return (UserDetails) authProcessor.authenticationToken(auth, request).getPrincipal();
 		}
 		catch (SystemException e) {
 			throw new UsernameNotFoundException(e.getMsg(), e);

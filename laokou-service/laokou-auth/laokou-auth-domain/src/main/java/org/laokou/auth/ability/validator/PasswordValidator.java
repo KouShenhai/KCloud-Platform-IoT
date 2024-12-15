@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.ability;
+package org.laokou.auth.ability.validator;
 
 /**
  * @author laokou

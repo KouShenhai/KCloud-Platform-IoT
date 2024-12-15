@@ -70,16 +70,16 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 	private final OAuth2AuthenticationProcessor authProcessor;
 
 	/**
-	 * 认证.
+	 * 认证授权.
 	 * @param authentication 认证对象
 	 */
 	public Authentication authenticate(Authentication authentication) {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
 		try {
-			return authenticate(authentication, principal(request));
+			return authentication(authentication, getPrincipal(request));
 		}
 		catch (IOException e) {
-			log.error("错误信息：{}", e.getMessage(), e);
+			log.error("认证授权失败，错误信息：{}", e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -97,7 +97,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 	 * 认证.
 	 * @param request 请求对象
 	 */
-	abstract Authentication principal(HttpServletRequest request) throws IOException;
+	abstract Authentication getPrincipal(HttpServletRequest request) throws IOException;
 
 	/**
 	 * 获取认证类型.
@@ -111,7 +111,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 	 * @param principal 认证对象
 	 * @return 令牌
 	 */
-	protected Authentication authenticate(Authentication authentication, Authentication principal) {
+	protected Authentication authentication(Authentication authentication, Authentication principal) {
 		// 仿照授权码模式
 		// 生成token（access_token + refresh_token）
 		AbstractOAuth2AuthenticationToken auth2BaseAuthenticationToken = (AbstractOAuth2AuthenticationToken) authentication;
@@ -193,8 +193,8 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 	 * @param auth 认证聚合根
 	 * @return 用户信息
 	 */
-	protected UsernamePasswordAuthenticationToken authentication(AuthA auth) {
-		return authProcessor.authentication(auth);
+	protected UsernamePasswordAuthenticationToken authenticationToken(AuthA auth, HttpServletRequest request) {
+		return authProcessor.authenticationToken(auth, request);
 	}
 
 	private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(
