@@ -8,13 +8,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.laokou.common.banner.utils.ResourceUtil;
 import org.slf4j.helpers.MessageFormatter;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -38,8 +36,6 @@ public class StartListener implements ApplicationListener<ContextRefreshedEvent>
 			SnailJobLog.LOCAL.info("snail-job server already started v{}", SnailJobVersion.getVersion());
 			return;
 		}
-		String bannerContent = ResourceUtil.getResource("banner.txt").getContentAsString(StandardCharsets.UTF_8);
-		log.info(MessageFormatter.format(bannerContent, "").getMessage());
 		log.info(MessageFormatter.format(SystemConstants.LOGO, SnailJobVersion.getVersion()).getMessage());
 		SnailJobLog.LOCAL.info("snail-job server is preparing to start... v{}", SnailJobVersion.getVersion());
 		lifecycleList.forEach(Lifecycle::start);

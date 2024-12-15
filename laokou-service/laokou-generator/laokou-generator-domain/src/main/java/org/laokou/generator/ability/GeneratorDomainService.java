@@ -19,7 +19,7 @@ package org.laokou.generator.ability;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.common.banner.utils.ResourceUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.core.utils.ThreadUtil;

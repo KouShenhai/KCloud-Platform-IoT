@@ -18,7 +18,7 @@
 package org.laokou.common.crypto.utils;
 
 import lombok.SneakyThrows;
-import org.laokou.common.banner.utils.ResourceUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.Assert;
 
@@ -53,7 +53,9 @@ public final class AESUtil {
 
 	static {
 		try {
-			String key = ResourceUtil.getResource("conf/secretKey.b256").getContentAsString(StandardCharsets.UTF_8).trim();
+			String key = ResourceUtil.getResource("conf/secretKey.b256")
+				.getContentAsString(StandardCharsets.UTF_8)
+				.trim();
 			Assert.isTrue(key.length() == 32, "密钥长度必须32位");
 			String iv = ResourceUtil.getResource("conf/secretIV.b12").getContentAsString(StandardCharsets.UTF_8).trim();
 			SECRET_KEY = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), AES);

@@ -21,7 +21,7 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.banner.utils.ResourceUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -65,7 +65,9 @@ public class RouterHandler implements ApplicationListener<ApplicationReadyEvent>
 	 */
 	@SneakyThrows
 	private String getRouter(Map<String, Object> dataMap) {
-		String template = ResourceUtil.getResource("templates/router_template.json").getContentAsString(StandardCharsets.UTF_8).trim();
+		String template = ResourceUtil.getResource("templates/router_template.json")
+			.getContentAsString(StandardCharsets.UTF_8)
+			.trim();
 		return TemplateUtil.getContent(template, dataMap);
 	}
 

@@ -19,7 +19,7 @@ package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.banner.utils.ResourceUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.lionsoul.ip2region.xdb.Searcher;
 
 import java.io.IOException;

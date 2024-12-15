@@ -19,7 +19,7 @@ package org.laokou.common.crypto.utils;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.banner.utils.ResourceUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -60,8 +60,12 @@ public final class RSAUtil {
 
 	static {
 		try {
-			PUBLIC_KEY = ResourceUtil.getResource("/conf/publicKey.scr").getContentAsString(StandardCharsets.UTF_8).trim();
-			PRIVATE_KEY = ResourceUtil.getResource("/conf/privateKey.scr").getContentAsString(StandardCharsets.UTF_8).trim();
+			PUBLIC_KEY = ResourceUtil.getResource("/conf/publicKey.scr")
+				.getContentAsString(StandardCharsets.UTF_8)
+				.trim();
+			PRIVATE_KEY = ResourceUtil.getResource("/conf/privateKey.scr")
+				.getContentAsString(StandardCharsets.UTF_8)
+				.trim();
 		}
 		catch (IOException e) {
 			log.error("读取私钥或密钥失败，错误信息：{}", e.getMessage(), e);

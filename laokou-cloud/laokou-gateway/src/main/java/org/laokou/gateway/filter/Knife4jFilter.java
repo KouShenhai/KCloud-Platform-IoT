@@ -18,7 +18,7 @@
 package org.laokou.gateway.filter;
 
 import io.micrometer.common.lang.NonNullApi;
-import org.laokou.common.banner.utils.ResourceUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;

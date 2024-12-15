@@ -24,7 +24,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.laokou.common.core.utils.ResponseUtil;
-import org.laokou.common.banner.utils.ResourceUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
