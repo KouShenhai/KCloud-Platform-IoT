@@ -50,10 +50,10 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authentica
 	}
 
 	@Override
-	Authentication principal(HttpServletRequest request) {
+	Authentication getPrincipal(HttpServletRequest request) {
 		AuthA auth = DomainFactory.getMobileAuth(request);
 		auth.createUserByMobile();
-		return authentication(auth);
+		return authenticationToken(auth, request);
 	}
 
 	@Override

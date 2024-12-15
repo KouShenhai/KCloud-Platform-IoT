@@ -50,10 +50,10 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticati
 	}
 
 	@Override
-	Authentication principal(HttpServletRequest request) {
+	Authentication getPrincipal(HttpServletRequest request) {
 		AuthA auth = DomainFactory.getMailAuth(request);
 		auth.createUserByMail();
-		return authentication(auth);
+		return authenticationToken(auth, request);
 	}
 
 	@Override

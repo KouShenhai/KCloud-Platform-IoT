@@ -18,8 +18,10 @@
 package org.laokou.auth.ability;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.LogE;
 import org.springframework.stereotype.Component;
 
 /**
@@ -41,7 +43,13 @@ public class DomainService {
 
 	private final CaptchaGateway captchaGateway;
 
+	private final LoginLogGateway loginLogGateway;
+
 	private final PasswordValidator passwordValidator;
+
+	public void recordLog(LogE logE) {
+		loginLogGateway.create(logE);
+	}
 
 	public void auth(AuthA auth) {
 		// 校验验证码

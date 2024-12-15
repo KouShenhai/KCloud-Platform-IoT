@@ -18,8 +18,8 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
-import org.laokou.auth.ability.CaptchaValidator;
-import org.laokou.auth.ability.PasswordValidator;
+import org.laokou.auth.ability.validator.CaptchaValidator;
+import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
@@ -134,6 +134,17 @@ public class AuthA extends AggregateRoot {
 
 	public void getDeptPaths(List<String> deptPaths) {
 		this.deptPaths = getPaths(deptPaths);
+	}
+
+	public String getLoginName() {
+		if (List.of(PASSWORD, AUTHORIZATION_CODE).contains(grantType)) {
+			return this.username;
+		}
+		return this.captcha.uuid();
+	}
+
+	public String getLoginType() {
+		return this.grantType.getCode();
 	}
 
 	public void checkTenantId() {

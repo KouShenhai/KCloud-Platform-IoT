@@ -15,18 +15,13 @@
  *
  */
 
-package org.laokou.auth.gateway;
-
-import org.laokou.auth.model.LogE;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
+package org.laokou.auth.model;
 
 /**
  * @author laokou
  */
-public interface LoginLogGateway {
+public enum LoginStatus {
 
-	void create(DefaultDomainEvent domainEvent);
-
-	void create(LogE logE);
+	OK, FAIL,
 
 }

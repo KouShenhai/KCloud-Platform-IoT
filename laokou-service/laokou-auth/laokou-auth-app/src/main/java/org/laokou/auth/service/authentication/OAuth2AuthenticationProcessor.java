@@ -17,9 +17,12 @@
 
 package org.laokou.auth.service.authentication;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.UserConvertor;
+import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.common.extension.BizScenario;
@@ -46,21 +49,31 @@ public class OAuth2AuthenticationProcessor {
 
 	private final ExtensionExecutor extensionExecutor;
 
-	public UsernamePasswordAuthenticationToken authentication(AuthA auth) {
+	public UsernamePasswordAuthenticationToken authenticationToken(AuthA auth, HttpServletRequest request) {
 		try {
-			// 校验
+			// 校验参数
 			extensionExecutor.executeVoid(AuthParamValidatorExtPt.class,
 					BizScenario.valueOf(auth.getGrantType().getCode(), USE_CASE_AUTH, SCENARIO),
 					extension -> extension.validate(auth));
-			// 认证
+			// 认证授权
 			domainService.auth(auth);
-			// 转换
+			// 记录日志
+			domainService.recordLog(DomainFactory.getLog(auth, request, null));
+			// 登录成功，转换成用户对象【业务】
 			UserDetail userDetail = UserConvertor.to(auth);
+			// 认证成功，转换成认证对象【系统】
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
 					userDetail.getAuthorities());
 		}
 		catch (ParamException | SystemException e) {
+			// 记录日志
+			domainService.recordLog(DomainFactory.getLog(auth, request, e));
+			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
 			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
+		}
+		finally {
+			// 清除数据源上下文
+			DynamicDataSourceContextHolder.clear();
 		}
 	}
 

@@ -21,7 +21,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.GrantType;
+import org.laokou.auth.model.LogE;
 import org.laokou.auth.model.UserE;
+import org.laokou.common.i18n.common.exception.GlobalException;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
@@ -108,6 +110,10 @@ public class DomainFactory {
 
 	public static UserE getUser() {
 		return new UserE();
+	}
+
+	public static LogE getLog(AuthA authA, HttpServletRequest request, GlobalException ex) {
+		return new LogE(authA.getLoginName(), authA.getLoginType(), authA.getInstant(), ex, request);
 	}
 
 }
