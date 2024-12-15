@@ -24,50 +24,50 @@ import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
 
 /**
  *
- * 模型接口.
+ * 物模型接口.
  *
  * @author laokou
  */
 public interface ThingModelsServiceI {
 
 	/**
-	 * 保存模型.
+	 * 保存物模型.
 	 * @param cmd 保存命令
 	 */
 	void save(ThingModelSaveCmd cmd);
 
 	/**
-	 * 修改模型.
+	 * 修改物模型.
 	 * @param cmd 修改命令
 	 */
 	void modify(ThingModelModifyCmd cmd);
 
 	/**
-	 * 删除模型.
+	 * 删除物模型.
 	 * @param cmd 删除命令
 	 */
 	void remove(ThingModelRemoveCmd cmd);
 
 	/**
-	 * 导入模型.
+	 * 导入物模型.
 	 * @param cmd 导入命令
 	 */
 	void importI(ThingModelImportCmd cmd);
 
 	/**
-	 * 导出模型.
+	 * 导出物模型.
 	 * @param cmd 导出命令
 	 */
 	void export(ThingThingModelExportCmd cmd);
 
 	/**
-	 * 分页查询模型.
+	 * 分页查询物模型.
 	 * @param qry 分页查询请求
 	 */
 	Result<Page<ThingModelCO>> page(ThingModelPageQry qry);
 
 	/**
-	 * 查看模型.
+	 * 查看物模型.
 	 * @param qry 查看请求
 	 */
 	Result<ThingModelCO> getById(ThingModelGetQry qry);

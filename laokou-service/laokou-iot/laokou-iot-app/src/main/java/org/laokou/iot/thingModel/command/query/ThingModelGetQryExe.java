@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 import org.laokou.iot.model.convertor.ModelConvertor;
 
 /**
- * 查看模型请求执行器.
+ * 查看物模型请求执行器.
  *
  * @author laokou
  */

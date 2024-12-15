@@ -23,7 +23,7 @@ import org.laokou.iot.thingModel.model.ThingModelE;
 
 /**
  *
- * 模型转换器.
+ * 物模型转换器.
  *
  * @author laokou
  */

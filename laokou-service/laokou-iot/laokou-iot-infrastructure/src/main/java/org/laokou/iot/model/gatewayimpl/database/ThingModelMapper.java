@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  *
- * 模型数据库映射.
+ * 物模型数据库映射.
  *
  * @author laokou
  */

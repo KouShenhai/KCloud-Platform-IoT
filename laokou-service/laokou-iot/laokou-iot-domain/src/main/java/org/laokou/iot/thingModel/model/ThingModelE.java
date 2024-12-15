@@ -21,7 +21,7 @@ import lombok.Data;
 
 /**
  *
- * 模型领域对象【实体】.
+ * 物模型领域对象【实体】.
  *
  * @author laokou
  */

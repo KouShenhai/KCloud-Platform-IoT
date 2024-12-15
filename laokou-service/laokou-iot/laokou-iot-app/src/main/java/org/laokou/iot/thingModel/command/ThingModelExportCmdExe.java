@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * 导出模型命令执行器.
+ * 导出物模型命令执行器.
  *
  * @author laokou
  */
