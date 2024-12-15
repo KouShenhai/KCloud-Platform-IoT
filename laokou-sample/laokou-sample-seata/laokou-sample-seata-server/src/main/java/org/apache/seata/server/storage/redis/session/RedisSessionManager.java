@@ -38,111 +38,109 @@ import org.slf4j.LoggerFactory;
 /**
  */
 @LoadLevel(name = "redis", scope = Scope.PROTOTYPE)
-public class RedisSessionManager extends AbstractSessionManager
-    implements Initialize {
-    /**
-     * The constant LOGGER.
-     */
-    protected static final Logger LOGGER = LoggerFactory.getLogger(RedisSessionManager.class);
-    
+public class RedisSessionManager extends AbstractSessionManager implements Initialize {
 
-    /**
-     * Instantiates a new Data base session manager.
-     */
-    public RedisSessionManager() {
-        super();
-    }
-    
+	/**
+	 * The constant LOGGER.
+	 */
+	protected static final Logger LOGGER = LoggerFactory.getLogger(RedisSessionManager.class);
 
-    @Override
-    public void init() {
-        transactionStoreManager = RedisTransactionStoreManagerFactory.getInstance();
-    }
+	/**
+	 * Instantiates a new Data base session manager.
+	 */
+	public RedisSessionManager() {
+		super();
+	}
 
-    @Override
-    public void addGlobalSession(GlobalSession session) throws TransactionException {
-        boolean ret = transactionStoreManager.writeSession(LogOperation.GLOBAL_ADD, session);
-        if (!ret) {
-            throw new StoreException("addGlobalSession failed.");
-        }
-    }
+	@Override
+	public void init() {
+		transactionStoreManager = RedisTransactionStoreManagerFactory.getInstance();
+	}
 
-    @Override
-    public void updateGlobalSessionStatus(GlobalSession session, GlobalStatus status) throws TransactionException {
-        session.setStatus(status);
-        boolean ret = transactionStoreManager.writeSession(LogOperation.GLOBAL_UPDATE, session);
-        if (!ret) {
-            throw new StoreException("updateGlobalSessionStatus failed.");
-        }
-    }
+	@Override
+	public void addGlobalSession(GlobalSession session) throws TransactionException {
+		boolean ret = transactionStoreManager.writeSession(LogOperation.GLOBAL_ADD, session);
+		if (!ret) {
+			throw new StoreException("addGlobalSession failed.");
+		}
+	}
 
-    /**
-     * remove globalSession 1. rootSessionManager remove normal globalSession 2. retryCommitSessionManager and
-     * retryRollbackSessionManager remove retry expired globalSession
-     *
-     * @param session
-     *            the session
-     * @throws TransactionException
-     */
-    @Override
-    public void removeGlobalSession(GlobalSession session) throws TransactionException {
-        boolean ret = transactionStoreManager.writeSession(LogOperation.GLOBAL_REMOVE, session);
-        if (!ret) {
-            throw new StoreException("removeGlobalSession failed.");
-        }
-    }
+	@Override
+	public void updateGlobalSessionStatus(GlobalSession session, GlobalStatus status) throws TransactionException {
+		session.setStatus(status);
+		boolean ret = transactionStoreManager.writeSession(LogOperation.GLOBAL_UPDATE, session);
+		if (!ret) {
+			throw new StoreException("updateGlobalSessionStatus failed.");
+		}
+	}
 
-    @Override
-    public void addBranchSession(GlobalSession globalSession, BranchSession session) throws TransactionException {
-        boolean ret = transactionStoreManager.writeSession(LogOperation.BRANCH_ADD, session);
-        if (!ret) {
-            throw new StoreException("addBranchSession failed.");
-        }
-    }
+	/**
+	 * remove globalSession 1. rootSessionManager remove normal globalSession 2.
+	 * retryCommitSessionManager and retryRollbackSessionManager remove retry expired
+	 * globalSession
+	 * @param session the session
+	 * @throws TransactionException
+	 */
+	@Override
+	public void removeGlobalSession(GlobalSession session) throws TransactionException {
+		boolean ret = transactionStoreManager.writeSession(LogOperation.GLOBAL_REMOVE, session);
+		if (!ret) {
+			throw new StoreException("removeGlobalSession failed.");
+		}
+	}
 
-    @Override
-    public void updateBranchSessionStatus(BranchSession session, BranchStatus status) throws TransactionException {
-        boolean ret = transactionStoreManager.writeSession(LogOperation.BRANCH_UPDATE, session);
-        if (!ret) {
-            throw new StoreException("updateBranchSessionStatus failed.");
-        }
-    }
+	@Override
+	public void addBranchSession(GlobalSession globalSession, BranchSession session) throws TransactionException {
+		boolean ret = transactionStoreManager.writeSession(LogOperation.BRANCH_ADD, session);
+		if (!ret) {
+			throw new StoreException("addBranchSession failed.");
+		}
+	}
 
-    @Override
-    public void removeBranchSession(GlobalSession globalSession, BranchSession session) throws TransactionException {
-        boolean ret = transactionStoreManager.writeSession(LogOperation.BRANCH_REMOVE, session);
-        if (!ret) {
-            throw new StoreException("removeBranchSession failed.");
-        }
-    }
+	@Override
+	public void updateBranchSessionStatus(BranchSession session, BranchStatus status) throws TransactionException {
+		boolean ret = transactionStoreManager.writeSession(LogOperation.BRANCH_UPDATE, session);
+		if (!ret) {
+			throw new StoreException("updateBranchSessionStatus failed.");
+		}
+	}
 
-    @Override
-    public GlobalSession findGlobalSession(String xid) {
-        return this.findGlobalSession(xid, true);
-    }
+	@Override
+	public void removeBranchSession(GlobalSession globalSession, BranchSession session) throws TransactionException {
+		boolean ret = transactionStoreManager.writeSession(LogOperation.BRANCH_REMOVE, session);
+		if (!ret) {
+			throw new StoreException("removeBranchSession failed.");
+		}
+	}
 
-    @Override
-    public GlobalSession findGlobalSession(String xid, boolean withBranchSessions) {
-        return transactionStoreManager.readSession(xid, withBranchSessions);
-    }
+	@Override
+	public GlobalSession findGlobalSession(String xid) {
+		return this.findGlobalSession(xid, true);
+	}
 
-    @Override
-    public Collection<GlobalSession> allSessions() {
-        return findGlobalSessions(
-            new SessionCondition(GlobalStatus.UnKnown, GlobalStatus.Begin, GlobalStatus.Committing,
-                GlobalStatus.CommitRetrying, GlobalStatus.Rollbacking, GlobalStatus.RollbackRetrying,
-                GlobalStatus.TimeoutRollbacking, GlobalStatus.TimeoutRollbackRetrying, GlobalStatus.AsyncCommitting));
-    }
+	@Override
+	public GlobalSession findGlobalSession(String xid, boolean withBranchSessions) {
+		return transactionStoreManager.readSession(xid, withBranchSessions);
+	}
 
-    @Override
-    public List<GlobalSession> findGlobalSessions(SessionCondition condition) {
-        // nothing need to do
-        return transactionStoreManager.readSession(condition);
-    }
+	@Override
+	public Collection<GlobalSession> allSessions() {
+		return findGlobalSessions(new SessionCondition(GlobalStatus.UnKnown, GlobalStatus.Begin,
+				GlobalStatus.Committing, GlobalStatus.CommitRetrying, GlobalStatus.Rollbacking,
+				GlobalStatus.RollbackRetrying, GlobalStatus.TimeoutRollbacking, GlobalStatus.TimeoutRollbackRetrying,
+				GlobalStatus.AsyncCommitting));
+	}
 
-    @Override
-    public <T> T lockAndExecute(GlobalSession globalSession, GlobalSession.LockCallable<T> lockCallable)
-        throws TransactionException {
-        return lockCallable.call();
-    }
+	@Override
+	public List<GlobalSession> findGlobalSessions(SessionCondition condition) {
+		// nothing need to do
+		return transactionStoreManager.readSession(condition);
+	}
+
+	@Override
+	public <T> T lockAndExecute(GlobalSession globalSession, GlobalSession.LockCallable<T> lockCallable)
+			throws TransactionException {
+		return lockCallable.call();
+	}
+
 }

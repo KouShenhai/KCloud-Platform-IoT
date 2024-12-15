@@ -57,106 +57,108 @@ import static org.apache.seata.common.DefaultValues.DEFAULT_STORE_DB_GLOBAL_TABL
 @ConditionalOnExpression("#{'db'.equals('${sessionMode}')}")
 public class GlobalSessionDBServiceImpl implements GlobalSessionService {
 
-    private String globalTable;
+	private String globalTable;
 
-    private String dbType;
+	private String dbType;
 
-    private DataSource dataSource;
+	private DataSource dataSource;
 
-    @Resource(type = BranchSessionService.class)
-    private BranchSessionService branchSessionService;
+	@Resource(type = BranchSessionService.class)
+	private BranchSessionService branchSessionService;
 
-    public GlobalSessionDBServiceImpl() {
-        Configuration configuration = ConfigurationFactory.getInstance();
-        globalTable = configuration.getConfig(ConfigurationKeys.STORE_DB_GLOBAL_TABLE, DEFAULT_STORE_DB_GLOBAL_TABLE);
-        dbType = configuration.getConfig(ConfigurationKeys.STORE_DB_TYPE);
-        if (StringUtils.isBlank(dbType)) {
-            throw new IllegalArgumentException(ConfigurationKeys.STORE_DB_TYPE + " should not be blank");
-        }
-        String dbDataSource = configuration.getConfig(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE);
-        if (StringUtils.isBlank(dbDataSource)) {
-            throw new IllegalArgumentException(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE + " should not be blank");
-        }
-        dataSource = EnhancedServiceLoader.load(DataSourceProvider.class, dbDataSource).provide();
-    }
+	public GlobalSessionDBServiceImpl() {
+		Configuration configuration = ConfigurationFactory.getInstance();
+		globalTable = configuration.getConfig(ConfigurationKeys.STORE_DB_GLOBAL_TABLE, DEFAULT_STORE_DB_GLOBAL_TABLE);
+		dbType = configuration.getConfig(ConfigurationKeys.STORE_DB_TYPE);
+		if (StringUtils.isBlank(dbType)) {
+			throw new IllegalArgumentException(ConfigurationKeys.STORE_DB_TYPE + " should not be blank");
+		}
+		String dbDataSource = configuration.getConfig(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE);
+		if (StringUtils.isBlank(dbDataSource)) {
+			throw new IllegalArgumentException(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE + " should not be blank");
+		}
+		dataSource = EnhancedServiceLoader.load(DataSourceProvider.class, dbDataSource).provide();
+	}
 
-    @Override
-    public PageResult<GlobalSessionVO> query(GlobalSessionParam param) {
-        PageUtil.checkParam(param.getPageNum(), param.getPageSize());
+	@Override
+	public PageResult<GlobalSessionVO> query(GlobalSessionParam param) {
+		PageUtil.checkParam(param.getPageNum(), param.getPageSize());
 
-        List<Object> sqlParamList = new ArrayList<>();
-        String whereCondition = getWhereConditionByParam(param, sqlParamList);
+		List<Object> sqlParamList = new ArrayList<>();
+		String whereCondition = getWhereConditionByParam(param, sqlParamList);
 
-        String sourceSql = LogStoreSqlsFactory.getLogStoreSqls(dbType).getAllGlobalSessionSql(globalTable, whereCondition);
-        String querySessionSql = PageUtil.pageSql(sourceSql, dbType, param.getPageNum(), param.getPageSize());
-        String sessionCountSql = PageUtil.countSql(sourceSql, dbType);
+		String sourceSql = LogStoreSqlsFactory.getLogStoreSqls(dbType)
+			.getAllGlobalSessionSql(globalTable, whereCondition);
+		String querySessionSql = PageUtil.pageSql(sourceSql, dbType, param.getPageNum(), param.getPageSize());
+		String sessionCountSql = PageUtil.countSql(sourceSql, dbType);
 
-        List<GlobalSessionVO> list = new ArrayList<>();
-        int count = 0;
+		List<GlobalSessionVO> list = new ArrayList<>();
+		int count = 0;
 
+		Connection conn = null;
+		PreparedStatement ps = null;
+		PreparedStatement countPs = null;
+		ResultSet rs = null;
+		ResultSet countRs = null;
+		try {
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement(querySessionSql);
+			countPs = conn.prepareStatement(sessionCountSql);
+			PageUtil.setObject(ps, sqlParamList);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				list.add(GlobalSessionVO.convert(rs));
+			}
 
-        Connection conn = null;
-        PreparedStatement ps = null;
-        PreparedStatement countPs = null;
-        ResultSet rs = null;
-        ResultSet countRs = null;
-        try {
-            conn = dataSource.getConnection();
-            ps = conn.prepareStatement(querySessionSql);
-            countPs = conn.prepareStatement(sessionCountSql);
-            PageUtil.setObject(ps, sqlParamList);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(GlobalSessionVO.convert(rs));
-            }
+			PageUtil.setObject(countPs, sqlParamList);
+			countRs = countPs.executeQuery();
+			if (countRs.next()) {
+				count = countRs.getInt(1);
+			}
+			if (param.isWithBranch()) {
+				for (GlobalSessionVO globalSessionVO : list) {
+					PageResult<BranchSessionVO> pageResp = branchSessionService.queryByXid(globalSessionVO.getXid());
+					globalSessionVO.setBranchSessionVOs(new HashSet<>(pageResp.getData()));
+				}
+			}
+		}
+		catch (SQLException e) {
+			throw new StoreException(e);
+		}
+		finally {
+			IOUtil.close(rs, countRs, ps, countPs, conn);
+		}
+		return PageResult.success(list, count, param.getPageNum(), param.getPageSize());
+	}
 
-            PageUtil.setObject(countPs, sqlParamList);
-            countRs = countPs.executeQuery();
-            if (countRs.next()) {
-                count = countRs.getInt(1);
-            }
-            if (param.isWithBranch()) {
-                for (GlobalSessionVO globalSessionVO : list) {
-                    PageResult<BranchSessionVO> pageResp = branchSessionService.queryByXid(globalSessionVO.getXid());
-                    globalSessionVO.setBranchSessionVOs(new HashSet<>(pageResp.getData()));
-                }
-            }
-        } catch (SQLException e) {
-            throw new StoreException(e);
-        } finally {
-            IOUtil.close(rs, countRs, ps, countPs, conn);
-        }
-        return PageResult.success(list, count, param.getPageNum(), param.getPageSize());
-    }
-
-    private String getWhereConditionByParam(GlobalSessionParam param, List<Object> sqlParamList) {
-        StringBuilder whereConditionBuilder = new StringBuilder();
-        if (StringUtils.isNotBlank(param.getXid())) {
-            whereConditionBuilder.append(" and xid = ? ");
-            sqlParamList.add(param.getXid());
-        }
-        if (StringUtils.isNotBlank(param.getApplicationId())) {
-            whereConditionBuilder.append(" and application_id = ? ");
-            sqlParamList.add(param.getApplicationId());
-        }
-        if (param.getStatus() != null) {
-            whereConditionBuilder.append(" and status = ? ");
-            sqlParamList.add(param.getStatus());
-        }
-        if (StringUtils.isNotBlank(param.getTransactionName())) {
-            whereConditionBuilder.append(" and transaction_name = ? ");
-            sqlParamList.add(param.getTransactionName());
-        }
-        if (param.getTimeStart() != null) {
-            whereConditionBuilder.append(PageUtil.getTimeStartSql(this.dbType, "begin_time"));
-            sqlParamList.add(param.getTimeStart() / 1000);
-        }
-        if (param.getTimeEnd() != null) {
-            whereConditionBuilder.append(PageUtil.getTimeEndSql(this.dbType, "begin_time"));
-            sqlParamList.add(param.getTimeEnd() / 1000);
-        }
-        String whereCondition = whereConditionBuilder.toString();
-        return whereCondition.replaceFirst("and", "where");
-    }
+	private String getWhereConditionByParam(GlobalSessionParam param, List<Object> sqlParamList) {
+		StringBuilder whereConditionBuilder = new StringBuilder();
+		if (StringUtils.isNotBlank(param.getXid())) {
+			whereConditionBuilder.append(" and xid = ? ");
+			sqlParamList.add(param.getXid());
+		}
+		if (StringUtils.isNotBlank(param.getApplicationId())) {
+			whereConditionBuilder.append(" and application_id = ? ");
+			sqlParamList.add(param.getApplicationId());
+		}
+		if (param.getStatus() != null) {
+			whereConditionBuilder.append(" and status = ? ");
+			sqlParamList.add(param.getStatus());
+		}
+		if (StringUtils.isNotBlank(param.getTransactionName())) {
+			whereConditionBuilder.append(" and transaction_name = ? ");
+			sqlParamList.add(param.getTransactionName());
+		}
+		if (param.getTimeStart() != null) {
+			whereConditionBuilder.append(PageUtil.getTimeStartSql(this.dbType, "begin_time"));
+			sqlParamList.add(param.getTimeStart() / 1000);
+		}
+		if (param.getTimeEnd() != null) {
+			whereConditionBuilder.append(PageUtil.getTimeEndSql(this.dbType, "begin_time"));
+			sqlParamList.add(param.getTimeEnd() / 1000);
+		}
+		String whereCondition = whereConditionBuilder.toString();
+		return whereCondition.replaceFirst("and", "where");
+	}
 
 }

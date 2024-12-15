@@ -23,29 +23,29 @@ import org.apache.seata.server.cluster.raft.sync.msg.dto.GlobalTransactionDTO;
  */
 public class RaftGlobalSessionSyncMsg extends RaftBaseMsg {
 
-    private static final long serialVersionUID = -8577994371969898054L;
-    private GlobalTransactionDTO globalSession;
+	private static final long serialVersionUID = -8577994371969898054L;
 
-    public RaftGlobalSessionSyncMsg(RaftSyncMsgType msgType, GlobalTransactionDTO globalSession) {
-        this.msgType = msgType;
-        this.globalSession = globalSession;
-    }
+	private GlobalTransactionDTO globalSession;
 
-    public RaftGlobalSessionSyncMsg() {
-    }
+	public RaftGlobalSessionSyncMsg(RaftSyncMsgType msgType, GlobalTransactionDTO globalSession) {
+		this.msgType = msgType;
+		this.globalSession = globalSession;
+	}
 
-    public GlobalTransactionDTO getGlobalSession() {
-        return globalSession;
-    }
+	public RaftGlobalSessionSyncMsg() {
+	}
 
-    public void setGlobalSession(GlobalTransactionDTO globalSession) {
-        this.globalSession = globalSession;
-    }
+	public GlobalTransactionDTO getGlobalSession() {
+		return globalSession;
+	}
 
-    @Override
-    public String toString() {
-        return StringUtils.toString(this);
-    }
+	public void setGlobalSession(GlobalTransactionDTO globalSession) {
+		this.globalSession = globalSession;
+	}
 
+	@Override
+	public String toString() {
+		return StringUtils.toString(this);
+	}
 
 }

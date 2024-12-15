@@ -40,59 +40,56 @@ import static org.apache.seata.common.ConfigurationKeys.NAMING_SERVER;
 @RequestMapping("/vgroup/v1")
 public class VGroupMappingController {
 
-    private VGroupMappingStoreManager vGroupMappingStoreManager;
+	private VGroupMappingStoreManager vGroupMappingStoreManager;
 
-    protected static final Configuration CONFIG = ConfigurationFactory.getInstance();
+	protected static final Configuration CONFIG = ConfigurationFactory.getInstance();
 
-    @PostConstruct
-    private void init() {
-        String type =
-            ConfigurationFactory.getInstance().getConfig(FILE_ROOT_REGISTRY + FILE_CONFIG_SPLIT_CHAR + FILE_ROOT_TYPE);
-        if (StringUtils.equals(type, NAMING_SERVER)) {
-            vGroupMappingStoreManager = SessionHolder.getRootVGroupMappingManager();
-        }
-    }
+	@PostConstruct
+	private void init() {
+		String type = ConfigurationFactory.getInstance()
+			.getConfig(FILE_ROOT_REGISTRY + FILE_CONFIG_SPLIT_CHAR + FILE_ROOT_TYPE);
+		if (StringUtils.equals(type, NAMING_SERVER)) {
+			vGroupMappingStoreManager = SessionHolder.getRootVGroupMappingManager();
+		}
+	}
 
-    /**
-     * add vGroup in cluster
-     *
-     * @param vGroup
-     * @return
-     */
-    @GetMapping("/addVGroup")
-    public Result<?> addVGroup(@RequestParam String vGroup, @RequestParam String unit) {
-        Result<?> result = new Result<>();
-        MappingDO mappingDO = new MappingDO();
-        mappingDO.setNamespace(Instance.getInstance().getNamespace());
-        mappingDO.setCluster(Instance.getInstance().getClusterName());
-        mappingDO.setUnit(unit);
-        mappingDO.setVGroup(vGroup);
-        boolean rst = vGroupMappingStoreManager.addVGroup(mappingDO);
-        Instance.getInstance().setTerm(System.currentTimeMillis());
-        if (!rst) {
-            result.setCode("500");
-            result.setMessage("add vGroup failed!");
-        }
-        return result;
-    }
+	/**
+	 * add vGroup in cluster
+	 * @param vGroup
+	 * @return
+	 */
+	@GetMapping("/addVGroup")
+	public Result<?> addVGroup(@RequestParam String vGroup, @RequestParam String unit) {
+		Result<?> result = new Result<>();
+		MappingDO mappingDO = new MappingDO();
+		mappingDO.setNamespace(Instance.getInstance().getNamespace());
+		mappingDO.setCluster(Instance.getInstance().getClusterName());
+		mappingDO.setUnit(unit);
+		mappingDO.setVGroup(vGroup);
+		boolean rst = vGroupMappingStoreManager.addVGroup(mappingDO);
+		Instance.getInstance().setTerm(System.currentTimeMillis());
+		if (!rst) {
+			result.setCode("500");
+			result.setMessage("add vGroup failed!");
+		}
+		return result;
+	}
 
-    /**
-     * remove vGroup in cluster
-     *
-     * @param vGroup
-     * @return
-     */
-    @GetMapping("/removeVGroup")
-    public Result<?> removeVGroup(@RequestParam String vGroup) {
-        Result<?> result = new Result<>();
-        boolean rst = vGroupMappingStoreManager.removeVGroup(vGroup);
-        Instance.getInstance().setTerm(System.currentTimeMillis());
-        if (!rst) {
-            result.setCode("500");
-            result.setMessage("remove vGroup failed!");
-        }
-        return result;
-    }
-
+	/**
+	 * remove vGroup in cluster
+	 * @param vGroup
+	 * @return
+	 */
+	@GetMapping("/removeVGroup")
+	public Result<?> removeVGroup(@RequestParam String vGroup) {
+		Result<?> result = new Result<>();
+		boolean rst = vGroupMappingStoreManager.removeVGroup(vGroup);
+		Instance.getInstance().setTerm(System.currentTimeMillis());
+		if (!rst) {
+			result.setCode("500");
+			result.setMessage("remove vGroup failed!");
+		}
+		return result;
+	}
 
 }

@@ -26,16 +26,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HealthController {
 
-    private static final String OK = "ok";
-    private static final String NOT_OK = "not_ok";
+	private static final String OK = "ok";
 
-    @Autowired
-    private ServerRunner serverRunner;
+	private static final String NOT_OK = "not_ok";
 
+	@Autowired
+	private ServerRunner serverRunner;
 
-    @RequestMapping("/health")
-    String healthCheck() {
-        return serverRunner.started() ? OK : NOT_OK;
-    }
+	@RequestMapping("/health")
+	String healthCheck() {
+		return serverRunner.started() ? OK : NOT_OK;
+	}
 
 }

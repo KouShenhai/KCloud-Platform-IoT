@@ -33,55 +33,60 @@ import org.slf4j.LoggerFactory;
 /**
  */
 public class LeaderMetadataSnapshotFile implements Serializable, StoreSnapshotFile {
-    private static final long serialVersionUID = 78637164618855724L;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LeaderMetadataSnapshotFile.class);
+	private static final long serialVersionUID = 78637164618855724L;
 
-    private final String group;
+	private static final Logger LOGGER = LoggerFactory.getLogger(LeaderMetadataSnapshotFile.class);
 
-    private final String fileName = "leader_metadata";
+	private final String group;
 
-    public LeaderMetadataSnapshotFile(String group) {
-        this.group = group;
-    }
+	private final String fileName = "leader_metadata";
 
-    @Override
-    public Status save(SnapshotWriter writer) {
-        RaftSnapshot raftSnapshot = new RaftSnapshot();
-        RaftClusterMetadata raftClusterMetadata =
-            RaftServerManager.getRaftServer(group).getRaftStateMachine().getRaftLeaderMetadata();
-        raftSnapshot.setBody(raftClusterMetadata);
-        raftSnapshot.setType(RaftSnapshot.SnapshotType.leader_metadata);
-        String path = new StringBuilder(writer.getPath()).append(File.separator).append(fileName).toString();
-        try {
-            if (save(raftSnapshot, path)) {
-                if (writer.addFile(fileName)) {
-                    return Status.OK();
-                } else {
-                    return new Status(RaftError.EIO, "Fail to add file to writer");
-                }
-            }
-        } catch (IOException e) {
-            LOGGER.error("Fail to save groupId: {} snapshot {}", group, path, e);
-        }
-        return new Status(RaftError.EIO, "Fail to save groupId: " + group + " snapshot %s", path);
-    }
+	public LeaderMetadataSnapshotFile(String group) {
+		this.group = group;
+	}
 
-    @Override
-    public boolean load(SnapshotReader reader) {
-        if (reader.getFileMeta(fileName) == null) {
-            LOGGER.error("Fail to find data file in {}", reader.getPath());
-            return false;
-        }
-        String path = new StringBuilder(reader.getPath()).append(File.separator).append(fileName).toString();
-        try {
-            RaftClusterMetadata raftClusterMetadata = (RaftClusterMetadata)load(path);
-            RaftServerManager.getRaftServer(group).getRaftStateMachine()
-                .setRaftLeaderMetadata(raftClusterMetadata);
-            return true;
-        } catch (final Exception e) {
-            LOGGER.error("fail to load snapshot from {}", path, e);
-            return false;
-        }
-    }
+	@Override
+	public Status save(SnapshotWriter writer) {
+		RaftSnapshot raftSnapshot = new RaftSnapshot();
+		RaftClusterMetadata raftClusterMetadata = RaftServerManager.getRaftServer(group)
+			.getRaftStateMachine()
+			.getRaftLeaderMetadata();
+		raftSnapshot.setBody(raftClusterMetadata);
+		raftSnapshot.setType(RaftSnapshot.SnapshotType.leader_metadata);
+		String path = new StringBuilder(writer.getPath()).append(File.separator).append(fileName).toString();
+		try {
+			if (save(raftSnapshot, path)) {
+				if (writer.addFile(fileName)) {
+					return Status.OK();
+				}
+				else {
+					return new Status(RaftError.EIO, "Fail to add file to writer");
+				}
+			}
+		}
+		catch (IOException e) {
+			LOGGER.error("Fail to save groupId: {} snapshot {}", group, path, e);
+		}
+		return new Status(RaftError.EIO, "Fail to save groupId: " + group + " snapshot %s", path);
+	}
+
+	@Override
+	public boolean load(SnapshotReader reader) {
+		if (reader.getFileMeta(fileName) == null) {
+			LOGGER.error("Fail to find data file in {}", reader.getPath());
+			return false;
+		}
+		String path = new StringBuilder(reader.getPath()).append(File.separator).append(fileName).toString();
+		try {
+			RaftClusterMetadata raftClusterMetadata = (RaftClusterMetadata) load(path);
+			RaftServerManager.getRaftServer(group).getRaftStateMachine().setRaftLeaderMetadata(raftClusterMetadata);
+			return true;
+		}
+		catch (final Exception e) {
+			LOGGER.error("fail to load snapshot from {}", path, e);
+			return false;
+		}
+	}
+
 }

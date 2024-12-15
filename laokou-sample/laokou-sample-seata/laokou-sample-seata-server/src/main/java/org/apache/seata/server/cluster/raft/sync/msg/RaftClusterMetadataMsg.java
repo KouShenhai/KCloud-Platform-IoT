@@ -23,28 +23,29 @@ import org.apache.seata.server.cluster.raft.sync.msg.dto.RaftClusterMetadata;
  */
 public class RaftClusterMetadataMsg extends RaftBaseMsg {
 
-    private static final long serialVersionUID = 6208583637662412658L;
+	private static final long serialVersionUID = 6208583637662412658L;
 
-    private RaftClusterMetadata raftClusterMetadata;
+	private RaftClusterMetadata raftClusterMetadata;
 
-    public RaftClusterMetadataMsg(RaftClusterMetadata raftClusterMetadata) {
-        this.msgType = RaftSyncMsgType.REFRESH_CLUSTER_METADATA;
-        this.raftClusterMetadata = raftClusterMetadata;
-    }
+	public RaftClusterMetadataMsg(RaftClusterMetadata raftClusterMetadata) {
+		this.msgType = RaftSyncMsgType.REFRESH_CLUSTER_METADATA;
+		this.raftClusterMetadata = raftClusterMetadata;
+	}
 
-    public RaftClusterMetadataMsg() {
-    }
+	public RaftClusterMetadataMsg() {
+	}
 
-    public RaftClusterMetadata getRaftClusterMetadata() {
-        return raftClusterMetadata;
-    }
+	public RaftClusterMetadata getRaftClusterMetadata() {
+		return raftClusterMetadata;
+	}
 
-    public void setRaftClusterMetadata(RaftClusterMetadata raftClusterMetadata) {
-        this.raftClusterMetadata = raftClusterMetadata;
-    }
+	public void setRaftClusterMetadata(RaftClusterMetadata raftClusterMetadata) {
+		this.raftClusterMetadata = raftClusterMetadata;
+	}
 
-    @Override
-    public String toString() {
-        return StringUtils.toString(this);
-    }
+	@Override
+	public String toString() {
+		return StringUtils.toString(this);
+	}
+
 }

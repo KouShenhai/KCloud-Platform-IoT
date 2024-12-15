@@ -38,106 +38,112 @@ import static org.apache.seata.common.ConfigurationKeys.VGROUP_TABLE_NAME;
 import static org.apache.seata.common.ConfigurationKeys.REGISTRY_NAMINGSERVER_CLUSTER;
 import static org.apache.seata.common.NamingServerConstants.DEFAULT_VGROUP_MAPPING;
 
-
 public class VGroupMappingDataBaseDAO {
-    private static final Logger LOGGER = LoggerFactory.getLogger(VGroupMappingDataBaseDAO.class);
 
-    protected DataSource vGroupMappingDataSource;
+	private static final Logger LOGGER = LoggerFactory.getLogger(VGroupMappingDataBaseDAO.class);
 
-    protected final String vMapping;
+	protected DataSource vGroupMappingDataSource;
 
-    protected static final Configuration CONFIG = ConfigurationFactory.getInstance();
+	protected final String vMapping;
 
-    public VGroupMappingDataBaseDAO(DataSource vGroupMappingDataSource) {
-        this.vGroupMappingDataSource = vGroupMappingDataSource;
-        this.vMapping = CONFIG.getConfig(VGROUP_TABLE_NAME, DEFAULT_VGROUP_MAPPING);
-    }
+	protected static final Configuration CONFIG = ConfigurationFactory.getInstance();
 
-    public boolean insertMappingDO(MappingDO mappingDO) {
-        String sql = "INSERT INTO " + vMapping + " (vgroup,namespace, cluster) VALUES (?, ?, ?)";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        try {
-            int index = 1;
-            conn = vGroupMappingDataSource.getConnection();
-            conn.setAutoCommit(true);
-            ps = conn.prepareStatement(sql);
-            ps.setString(index++, mappingDO.getVGroup());
-            ps.setString(index++, mappingDO.getNamespace());
-            ps.setString(index++, mappingDO.getCluster());
+	public VGroupMappingDataBaseDAO(DataSource vGroupMappingDataSource) {
+		this.vGroupMappingDataSource = vGroupMappingDataSource;
+		this.vMapping = CONFIG.getConfig(VGROUP_TABLE_NAME, DEFAULT_VGROUP_MAPPING);
+	}
 
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new SeataRuntimeException(ErrorCode.ERR_CONFIG, e);
-        } finally {
-            IOUtil.close(ps, conn);
-        }
-    }
+	public boolean insertMappingDO(MappingDO mappingDO) {
+		String sql = "INSERT INTO " + vMapping + " (vgroup,namespace, cluster) VALUES (?, ?, ?)";
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			int index = 1;
+			conn = vGroupMappingDataSource.getConnection();
+			conn.setAutoCommit(true);
+			ps = conn.prepareStatement(sql);
+			ps.setString(index++, mappingDO.getVGroup());
+			ps.setString(index++, mappingDO.getNamespace());
+			ps.setString(index++, mappingDO.getCluster());
 
-    public boolean clearMappingDOByVGroup(String vGroup) {
-        String sql = "DELETE FROM " + vMapping + " WHERE vGroup = ?";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        try {
-            conn = vGroupMappingDataSource.getConnection();
-            conn.setAutoCommit(true);
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, vGroup);
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new SeataRuntimeException(ErrorCode.ERR_CONFIG, e);
-        } finally {
-            IOUtil.close(ps, conn);
-        }
-    }
+			return ps.executeUpdate() > 0;
+		}
+		catch (SQLException e) {
+			throw new SeataRuntimeException(ErrorCode.ERR_CONFIG, e);
+		}
+		finally {
+			IOUtil.close(ps, conn);
+		}
+	}
 
-    public boolean deleteMappingDOByVGroup(String vGroup) {
-        String sql = "DELETE FROM " + vMapping + " WHERE vGroup = ? and cluster = ?";
-        Instance instance = Instance.getInstance();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        try {
-            conn = vGroupMappingDataSource.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, vGroup);
-            ps.setString(2, instance.getClusterName());
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new SeataRuntimeException(ErrorCode.ERROR_SQL, e);
-        } finally {
-            IOUtil.close(ps, conn);
-        }
-    }
+	public boolean clearMappingDOByVGroup(String vGroup) {
+		String sql = "DELETE FROM " + vMapping + " WHERE vGroup = ?";
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			conn = vGroupMappingDataSource.getConnection();
+			conn.setAutoCommit(true);
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, vGroup);
+			return ps.executeUpdate() > 0;
+		}
+		catch (SQLException e) {
+			throw new SeataRuntimeException(ErrorCode.ERR_CONFIG, e);
+		}
+		finally {
+			IOUtil.close(ps, conn);
+		}
+	}
 
-    public List<MappingDO> queryMappingDO() {
-        String sql = "SELECT vgroup,namespace, cluster FROM " + vMapping
-                + " WHERE cluster = ?";
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        List<MappingDO> result = new ArrayList<>();
+	public boolean deleteMappingDOByVGroup(String vGroup) {
+		String sql = "DELETE FROM " + vMapping + " WHERE vGroup = ? and cluster = ?";
+		Instance instance = Instance.getInstance();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			conn = vGroupMappingDataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, vGroup);
+			ps.setString(2, instance.getClusterName());
+			return ps.executeUpdate() > 0;
+		}
+		catch (SQLException e) {
+			throw new SeataRuntimeException(ErrorCode.ERROR_SQL, e);
+		}
+		finally {
+			IOUtil.close(ps, conn);
+		}
+	}
 
-        try {
-            conn = vGroupMappingDataSource.getConnection();
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, CONFIG.getConfig(REGISTRY_NAMINGSERVER_CLUSTER));
-            rs = ps.executeQuery();
+	public List<MappingDO> queryMappingDO() {
+		String sql = "SELECT vgroup,namespace, cluster FROM " + vMapping + " WHERE cluster = ?";
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<MappingDO> result = new ArrayList<>();
 
-            while (rs.next()) {
-                MappingDO mappingDO = new MappingDO();
-                mappingDO.setNamespace(rs.getString("namespace"));
-                mappingDO.setCluster(rs.getString("cluster"));
-                mappingDO.setVGroup(rs.getString("vGroup"));
-                result.add(mappingDO);
-            }
-        } catch (SQLException e) {
-            throw new SeataRuntimeException(ErrorCode.ERR_CONFIG, e);
-        } finally {
-            IOUtil.close(rs, ps, conn);
-        }
+		try {
+			conn = vGroupMappingDataSource.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, CONFIG.getConfig(REGISTRY_NAMINGSERVER_CLUSTER));
+			rs = ps.executeQuery();
 
-        return result;
-    }
+			while (rs.next()) {
+				MappingDO mappingDO = new MappingDO();
+				mappingDO.setNamespace(rs.getString("namespace"));
+				mappingDO.setCluster(rs.getString("cluster"));
+				mappingDO.setVGroup(rs.getString("vGroup"));
+				result.add(mappingDO);
+			}
+		}
+		catch (SQLException e) {
+			throw new SeataRuntimeException(ErrorCode.ERR_CONFIG, e);
+		}
+		finally {
+			IOUtil.close(rs, ps, conn);
+		}
 
+		return result;
+	}
 
 }

@@ -48,179 +48,190 @@ import static org.apache.seata.server.cluster.raft.sync.msg.RaftSyncMsgType.UPDA
 @LoadLevel(name = "raft", scope = Scope.PROTOTYPE)
 public class RaftSessionManager extends FileSessionManager {
 
-    public RaftSessionManager(String name) throws IOException {
-        super(name);
-    }
+	public RaftSessionManager(String name) throws IOException {
+		super(name);
+	}
 
-    @Override
-    public void addGlobalSession(GlobalSession globalSession) throws TransactionException {
-        super.addGlobalSession(globalSession);
-    }
+	@Override
+	public void addGlobalSession(GlobalSession globalSession) throws TransactionException {
+		super.addGlobalSession(globalSession);
+	}
 
-    @Override
-    public GlobalSession findGlobalSession(String xid) {
-        return super.findGlobalSession(xid);
-    }
+	@Override
+	public GlobalSession findGlobalSession(String xid) {
+		return super.findGlobalSession(xid);
+	}
 
-    @Override
-    public void onBegin(GlobalSession globalSession) throws TransactionException {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
-        Closure closure = status -> {
-            if (status.isOk()) {
-                try {
-                    super.addGlobalSession(globalSession);
-                    completableFuture.complete(true);
-                } catch (TransactionException e) {
-                    completableFuture.completeExceptionally(e);
-                }
-            } else {
-                try {
-                    completableFuture.completeExceptionally(
-                        new TransactionException(TransactionExceptionCode.NotRaftLeader,
-                            "seata raft state machine exception: " + status.getErrorMsg()));
-                } finally {
-                    try {
-                        super.removeGlobalSession(globalSession);
-                    } catch (TransactionException e) {
-                        completableFuture.completeExceptionally(e);
-                    }
-                }
-            }
-        };
-        GlobalTransactionDTO globalTransactionDTO = new GlobalTransactionDTO();
-        SessionConverter.convertGlobalTransactionDO(globalTransactionDTO, globalSession);
-        RaftGlobalSessionSyncMsg raftSyncMsg = new RaftGlobalSessionSyncMsg(ADD_GLOBAL_SESSION, globalTransactionDTO);
-        RaftTaskUtil.createTask(closure, raftSyncMsg, completableFuture);
-    }
+	@Override
+	public void onBegin(GlobalSession globalSession) throws TransactionException {
+		CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+		Closure closure = status -> {
+			if (status.isOk()) {
+				try {
+					super.addGlobalSession(globalSession);
+					completableFuture.complete(true);
+				}
+				catch (TransactionException e) {
+					completableFuture.completeExceptionally(e);
+				}
+			}
+			else {
+				try {
+					completableFuture
+						.completeExceptionally(new TransactionException(TransactionExceptionCode.NotRaftLeader,
+								"seata raft state machine exception: " + status.getErrorMsg()));
+				}
+				finally {
+					try {
+						super.removeGlobalSession(globalSession);
+					}
+					catch (TransactionException e) {
+						completableFuture.completeExceptionally(e);
+					}
+				}
+			}
+		};
+		GlobalTransactionDTO globalTransactionDTO = new GlobalTransactionDTO();
+		SessionConverter.convertGlobalTransactionDO(globalTransactionDTO, globalSession);
+		RaftGlobalSessionSyncMsg raftSyncMsg = new RaftGlobalSessionSyncMsg(ADD_GLOBAL_SESSION, globalTransactionDTO);
+		RaftTaskUtil.createTask(closure, raftSyncMsg, completableFuture);
+	}
 
-    @Override
-    public void onStatusChange(GlobalSession globalSession, GlobalStatus globalStatus) throws TransactionException {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
-        Closure closure = closureStatus -> {
-            if (closureStatus.isOk()) {
-                globalSession.setStatus(globalStatus);
-                if (GlobalStatus.RollbackRetrying.equals(globalSession.getStatus())
-                    || GlobalStatus.Rollbacking.equals(globalSession.getStatus())
-                    || GlobalStatus.TimeoutRollbacking.equals(globalSession.getStatus())) {
-                    globalSession.getBranchSessions().parallelStream()
-                        .forEach(branchSession -> branchSession.setLockStatus(LockStatus.Rollbacking));
-                }
-                completableFuture.complete(true);
-            } else {
-                completableFuture.completeExceptionally(
-                    new TransactionException(TransactionExceptionCode.NotRaftLeader,
-                        "seata raft state machine exception: " + closureStatus.getErrorMsg()));
-            }
-        };
-        GlobalTransactionDTO globalTransactionDO = new GlobalTransactionDTO(globalSession.getXid());
-        globalTransactionDO.setStatus(globalStatus.getCode());
-        RaftGlobalSessionSyncMsg raftSyncMsg =
-            new RaftGlobalSessionSyncMsg(UPDATE_GLOBAL_SESSION_STATUS, globalTransactionDO);
-        RaftTaskUtil.createTask(closure, raftSyncMsg, completableFuture);
-    }
+	@Override
+	public void onStatusChange(GlobalSession globalSession, GlobalStatus globalStatus) throws TransactionException {
+		CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+		Closure closure = closureStatus -> {
+			if (closureStatus.isOk()) {
+				globalSession.setStatus(globalStatus);
+				if (GlobalStatus.RollbackRetrying.equals(globalSession.getStatus())
+						|| GlobalStatus.Rollbacking.equals(globalSession.getStatus())
+						|| GlobalStatus.TimeoutRollbacking.equals(globalSession.getStatus())) {
+					globalSession.getBranchSessions()
+						.parallelStream()
+						.forEach(branchSession -> branchSession.setLockStatus(LockStatus.Rollbacking));
+				}
+				completableFuture.complete(true);
+			}
+			else {
+				completableFuture.completeExceptionally(new TransactionException(TransactionExceptionCode.NotRaftLeader,
+						"seata raft state machine exception: " + closureStatus.getErrorMsg()));
+			}
+		};
+		GlobalTransactionDTO globalTransactionDO = new GlobalTransactionDTO(globalSession.getXid());
+		globalTransactionDO.setStatus(globalStatus.getCode());
+		RaftGlobalSessionSyncMsg raftSyncMsg = new RaftGlobalSessionSyncMsg(UPDATE_GLOBAL_SESSION_STATUS,
+				globalTransactionDO);
+		RaftTaskUtil.createTask(closure, raftSyncMsg, completableFuture);
+	}
 
-    @Override
-    public void onBranchStatusChange(GlobalSession globalSession, BranchSession branchSession,
-        BranchStatus branchStatus) throws TransactionException {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
-        Closure closure = closureStatus -> {
-            if (closureStatus.isOk()) {
-                branchSession.setStatus(branchStatus);
-                completableFuture.complete(true);
-            } else {
-                completableFuture.completeExceptionally(
-                    new TransactionException(TransactionExceptionCode.NotRaftLeader,
-                        "seata raft state machine exception: " + closureStatus.getErrorMsg()));
-            }
-        };
-        BranchTransactionDTO branchTransactionDO = new BranchTransactionDTO(globalSession.getXid(), branchSession.getBranchId());
-        branchTransactionDO.setStatus(branchStatus.getCode());
-        RaftBranchSessionSyncMsg raftSyncMsg =
-                new RaftBranchSessionSyncMsg(UPDATE_BRANCH_SESSION_STATUS, branchTransactionDO);
-        RaftTaskUtil.createTask(closure, raftSyncMsg, completableFuture);
-    }
+	@Override
+	public void onBranchStatusChange(GlobalSession globalSession, BranchSession branchSession,
+			BranchStatus branchStatus) throws TransactionException {
+		CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+		Closure closure = closureStatus -> {
+			if (closureStatus.isOk()) {
+				branchSession.setStatus(branchStatus);
+				completableFuture.complete(true);
+			}
+			else {
+				completableFuture.completeExceptionally(new TransactionException(TransactionExceptionCode.NotRaftLeader,
+						"seata raft state machine exception: " + closureStatus.getErrorMsg()));
+			}
+		};
+		BranchTransactionDTO branchTransactionDO = new BranchTransactionDTO(globalSession.getXid(),
+				branchSession.getBranchId());
+		branchTransactionDO.setStatus(branchStatus.getCode());
+		RaftBranchSessionSyncMsg raftSyncMsg = new RaftBranchSessionSyncMsg(UPDATE_BRANCH_SESSION_STATUS,
+				branchTransactionDO);
+		RaftTaskUtil.createTask(closure, raftSyncMsg, completableFuture);
+	}
 
-    @Override
-    public void onAddBranch(GlobalSession globalSession, BranchSession branchSession) throws TransactionException {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
-        branchSession.setStatus(BranchStatus.Registered);
-        Closure closure = status -> {
-            if (status.isOk()) {
-                completableFuture.complete(globalSession.add(branchSession));
-            } else {
-                try {
-                    completableFuture.completeExceptionally(
-                        new TransactionException(TransactionExceptionCode.NotRaftLeader,
-                            "seata raft state machine exception: " + status.getErrorMsg()));
-                } finally {
-                    try {
-                        globalSession.removeBranch(branchSession);
-                    } catch (TransactionException e) {
-                        completableFuture.completeExceptionally(e);
-                    }
-                }
-            }
-        };
-        BranchTransactionDTO branchTransactionDTO = new BranchTransactionDTO();
-        SessionConverter.convertBranchTransaction(branchTransactionDTO, branchSession);
-        RaftBranchSessionSyncMsg raftSyncMsg = new RaftBranchSessionSyncMsg(ADD_BRANCH_SESSION, branchTransactionDTO);
-        RaftTaskUtil.createTask(closure, raftSyncMsg, completableFuture);
-    }
+	@Override
+	public void onAddBranch(GlobalSession globalSession, BranchSession branchSession) throws TransactionException {
+		CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+		branchSession.setStatus(BranchStatus.Registered);
+		Closure closure = status -> {
+			if (status.isOk()) {
+				completableFuture.complete(globalSession.add(branchSession));
+			}
+			else {
+				try {
+					completableFuture
+						.completeExceptionally(new TransactionException(TransactionExceptionCode.NotRaftLeader,
+								"seata raft state machine exception: " + status.getErrorMsg()));
+				}
+				finally {
+					try {
+						globalSession.removeBranch(branchSession);
+					}
+					catch (TransactionException e) {
+						completableFuture.completeExceptionally(e);
+					}
+				}
+			}
+		};
+		BranchTransactionDTO branchTransactionDTO = new BranchTransactionDTO();
+		SessionConverter.convertBranchTransaction(branchTransactionDTO, branchSession);
+		RaftBranchSessionSyncMsg raftSyncMsg = new RaftBranchSessionSyncMsg(ADD_BRANCH_SESSION, branchTransactionDTO);
+		RaftTaskUtil.createTask(closure, raftSyncMsg, completableFuture);
+	}
 
-    @Override
-    public void onRemoveBranch(GlobalSession globalSession, BranchSession branchSession) throws TransactionException {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
-        Closure closure = closureStatus -> {
-            if (closureStatus.isOk()) {
-                completableFuture.complete(globalSession.remove(branchSession));
-            } else {
-                completableFuture.completeExceptionally(
-                    new TransactionException(TransactionExceptionCode.NotRaftLeader,
-                        "seata raft state machine exception: " + closureStatus.getErrorMsg()));
-            }
-        };
-        BranchTransactionDTO branchTransactionDO =
-            new BranchTransactionDTO(globalSession.getXid(), branchSession.getBranchId());
-        RaftBranchSessionSyncMsg raftSyncMsg = new RaftBranchSessionSyncMsg(REMOVE_BRANCH_SESSION, branchTransactionDO);
-        RaftTaskUtil.createTask(closure, raftSyncMsg, completableFuture);
-    }
+	@Override
+	public void onRemoveBranch(GlobalSession globalSession, BranchSession branchSession) throws TransactionException {
+		CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+		Closure closure = closureStatus -> {
+			if (closureStatus.isOk()) {
+				completableFuture.complete(globalSession.remove(branchSession));
+			}
+			else {
+				completableFuture.completeExceptionally(new TransactionException(TransactionExceptionCode.NotRaftLeader,
+						"seata raft state machine exception: " + closureStatus.getErrorMsg()));
+			}
+		};
+		BranchTransactionDTO branchTransactionDO = new BranchTransactionDTO(globalSession.getXid(),
+				branchSession.getBranchId());
+		RaftBranchSessionSyncMsg raftSyncMsg = new RaftBranchSessionSyncMsg(REMOVE_BRANCH_SESSION, branchTransactionDO);
+		RaftTaskUtil.createTask(closure, raftSyncMsg, completableFuture);
+	}
 
-    @Override
-    public void onSuccessEnd(GlobalSession globalSession) throws TransactionException {
-        CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
-        Closure closure = status -> {
-            if (status.isOk()) {
-                try {
-                    super.removeGlobalSession(globalSession);
-                    completableFuture.complete(true);
-                } catch (TransactionException e) {
-                    completableFuture.completeExceptionally(e);
-                }
-            } else {
-                completableFuture.completeExceptionally(
-                    new TransactionException(TransactionExceptionCode.NotRaftLeader,
-                        "seata raft state machine exception: " + status.getErrorMsg()));
-            }
-        };
-        GlobalTransactionDTO globalTransactionDO = new GlobalTransactionDTO(globalSession.getXid());
-        RaftGlobalSessionSyncMsg raftSyncMsg = new RaftGlobalSessionSyncMsg(REMOVE_GLOBAL_SESSION, globalTransactionDO);
-        RaftTaskUtil.createTask(closure, raftSyncMsg, completableFuture);
-    }
+	@Override
+	public void onSuccessEnd(GlobalSession globalSession) throws TransactionException {
+		CompletableFuture<Boolean> completableFuture = new CompletableFuture<>();
+		Closure closure = status -> {
+			if (status.isOk()) {
+				try {
+					super.removeGlobalSession(globalSession);
+					completableFuture.complete(true);
+				}
+				catch (TransactionException e) {
+					completableFuture.completeExceptionally(e);
+				}
+			}
+			else {
+				completableFuture.completeExceptionally(new TransactionException(TransactionExceptionCode.NotRaftLeader,
+						"seata raft state machine exception: " + status.getErrorMsg()));
+			}
+		};
+		GlobalTransactionDTO globalTransactionDO = new GlobalTransactionDTO(globalSession.getXid());
+		RaftGlobalSessionSyncMsg raftSyncMsg = new RaftGlobalSessionSyncMsg(REMOVE_GLOBAL_SESSION, globalTransactionDO);
+		RaftTaskUtil.createTask(closure, raftSyncMsg, completableFuture);
+	}
 
-    @Override
-    public void onFailEnd(GlobalSession globalSession) throws TransactionException {
-        super.onFailEnd(globalSession);
-    }
+	@Override
+	public void onFailEnd(GlobalSession globalSession) throws TransactionException {
+		super.onFailEnd(globalSession);
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @Override
-    public void destroy() {}
+	@Override
+	public void destroy() {
+	}
 
 }

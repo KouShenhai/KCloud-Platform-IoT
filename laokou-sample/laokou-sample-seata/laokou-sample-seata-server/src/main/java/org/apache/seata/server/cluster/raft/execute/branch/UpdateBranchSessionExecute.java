@@ -29,18 +29,19 @@ import org.apache.seata.server.storage.raft.session.RaftSessionManager;
  */
 public class UpdateBranchSessionExecute extends AbstractRaftMsgExecute {
 
-    @Override
-    public Boolean execute(RaftBaseMsg syncMsg) throws Throwable {
-        RaftBranchSessionSyncMsg sessionSyncMsg = (RaftBranchSessionSyncMsg)syncMsg;
-        RaftSessionManager raftSessionManager = (RaftSessionManager) SessionHolder.getRootSessionManager(sessionSyncMsg.getGroup());
-        GlobalSession globalSession = raftSessionManager.findGlobalSession(sessionSyncMsg.getBranchSession().getXid());
-        BranchSession branchSession = globalSession.getBranch(sessionSyncMsg.getBranchSession().getBranchId());
-        BranchStatus status = BranchStatus.get(sessionSyncMsg.getBranchSession().getStatus());
-        branchSession.setStatus(status);
-        if (logger.isDebugEnabled()) {
-            logger.debug("update branch: {} , status: {}", branchSession.getBranchId(), branchSession.getStatus());
-        }
-        return true;
-    }
+	@Override
+	public Boolean execute(RaftBaseMsg syncMsg) throws Throwable {
+		RaftBranchSessionSyncMsg sessionSyncMsg = (RaftBranchSessionSyncMsg) syncMsg;
+		RaftSessionManager raftSessionManager = (RaftSessionManager) SessionHolder
+			.getRootSessionManager(sessionSyncMsg.getGroup());
+		GlobalSession globalSession = raftSessionManager.findGlobalSession(sessionSyncMsg.getBranchSession().getXid());
+		BranchSession branchSession = globalSession.getBranch(sessionSyncMsg.getBranchSession().getBranchId());
+		BranchStatus status = BranchStatus.get(sessionSyncMsg.getBranchSession().getStatus());
+		branchSession.setStatus(status);
+		if (logger.isDebugEnabled()) {
+			logger.debug("update branch: {} , status: {}", branchSession.getBranchId(), branchSession.getStatus());
+		}
+		return true;
+	}
 
 }

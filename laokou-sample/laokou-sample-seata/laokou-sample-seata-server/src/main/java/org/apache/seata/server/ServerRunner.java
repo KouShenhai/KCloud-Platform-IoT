@@ -32,74 +32,80 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-
 /**
  */
 @Component
-public class ServerRunner implements CommandLineRunner, DisposableBean,
-    ApplicationListener<ApplicationEvent>, Ordered {
+public class ServerRunner implements CommandLineRunner, DisposableBean, ApplicationListener<ApplicationEvent>, Ordered {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ServerRunner.class);
-    private static final List<Disposable> DISPOSABLE_LIST = new CopyOnWriteArrayList<>();
-    @Resource
-    Server seataServer;
-    private boolean started = Boolean.FALSE;
-    private int port;
-    @Value("${logging.file.path}")
-    private String logPath;
+	private static final Logger LOGGER = LoggerFactory.getLogger(ServerRunner.class);
 
-    public static void addDisposable(Disposable disposable) {
-        DISPOSABLE_LIST.add(disposable);
-    }
+	private static final List<Disposable> DISPOSABLE_LIST = new CopyOnWriteArrayList<>();
 
-    @Override
-    public void run(String... args) {
-        try {
-            long start = System.currentTimeMillis();
-            seataServer.start(args);
-            started = true;
+	@Resource
+	Server seataServer;
 
-            long cost = System.currentTimeMillis() - start;
-			LOGGER.info("\r\n you can visit seata console UI 【https】 on https://127.0.0.1:{}. \r\n log path: {}.", this.port, this.logPath);
-			LOGGER.info("\r\n you can visit seata console UI 【http】 on http://127.0.0.1:{}. \r\n log path: {}.", this.port, this.logPath);
-            LOGGER.info("seata server started in {} millSeconds", cost);
-        } catch (Throwable e) {
-            started = Boolean.FALSE;
-            LOGGER.error("seata server start error: {} ", e.getMessage(), e);
-            System.exit(-1);
-        }
-    }
+	private boolean started = Boolean.FALSE;
 
+	private int port;
 
-    public boolean started() {
-        return started;
-    }
+	@Value("${logging.file.path}")
+	private String logPath;
 
-    @Override
-    public void destroy() throws Exception {
+	public static void addDisposable(Disposable disposable) {
+		DISPOSABLE_LIST.add(disposable);
+	}
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("destoryAll starting");
-        }
+	@Override
+	public void run(String... args) {
+		try {
+			long start = System.currentTimeMillis();
+			seataServer.start(args);
+			started = true;
 
-        for (Disposable disposable : DISPOSABLE_LIST) {
-            disposable.destroy();
-        }
+			long cost = System.currentTimeMillis() - start;
+			LOGGER.info("\r\n you can visit seata console UI 【https】 on https://127.0.0.1:{}. \r\n log path: {}.",
+					this.port, this.logPath);
+			LOGGER.info("\r\n you can visit seata console UI 【http】 on http://127.0.0.1:{}. \r\n log path: {}.",
+					this.port, this.logPath);
+			LOGGER.info("seata server started in {} millSeconds", cost);
+		}
+		catch (Throwable e) {
+			started = Boolean.FALSE;
+			LOGGER.error("seata server start error: {} ", e.getMessage(), e);
+			System.exit(-1);
+		}
+	}
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("destoryAll finish");
-        }
-    }
+	public boolean started() {
+		return started;
+	}
 
-    @Override
-    public void onApplicationEvent(ApplicationEvent event) {
-        if (event instanceof WebServerInitializedEvent) {
-            this.port = ((WebServerInitializedEvent)event).getWebServer().getPort();
-        }
-    }
+	@Override
+	public void destroy() throws Exception {
 
-    @Override
-    public int getOrder() {
-        return Ordered.LOWEST_PRECEDENCE;
-    }
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("destoryAll starting");
+		}
+
+		for (Disposable disposable : DISPOSABLE_LIST) {
+			disposable.destroy();
+		}
+
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("destoryAll finish");
+		}
+	}
+
+	@Override
+	public void onApplicationEvent(ApplicationEvent event) {
+		if (event instanceof WebServerInitializedEvent) {
+			this.port = ((WebServerInitializedEvent) event).getWebServer().getPort();
+		}
+	}
+
+	@Override
+	public int getOrder() {
+		return Ordered.LOWEST_PRECEDENCE;
+	}
+
 }

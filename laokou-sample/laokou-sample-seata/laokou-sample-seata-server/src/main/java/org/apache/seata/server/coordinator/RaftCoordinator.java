@@ -35,44 +35,46 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class RaftCoordinator extends DefaultCoordinator implements ApplicationListener<ClusterChangeEvent> {
 
-    protected static final Map<String, Boolean> GROUP_PREVENT = new ConcurrentHashMap<>();
+	protected static final Map<String, Boolean> GROUP_PREVENT = new ConcurrentHashMap<>();
 
-    public RaftCoordinator(RemotingServer remotingServer) {
-        super(remotingServer);
-    }
+	public RaftCoordinator(RemotingServer remotingServer) {
+		super(remotingServer);
+	}
 
-    @Override
-    public <T extends AbstractTransactionRequest, S extends AbstractTransactionResponse> void exceptionHandleTemplate(Callback<T, S> callback, T request, S response) {
-        String group = SeataClusterContext.bindGroup();
-        try {
-            if (!isPass(group)) {
-                throw new TransactionException(TransactionExceptionCode.NotRaftLeader,
-                        " The current TC is not a leader node, interrupt processing !");
-            }
-            super.exceptionHandleTemplate(callback,request,response);
-        } catch (TransactionException tex) {
-            LOGGER.error("Catch TransactionException while do RPC, request: {}", request, tex);
-            callback.onTransactionException(request, response, tex);
-        } finally {
-            SeataClusterContext.unbindGroup();
-        }
-    }
+	@Override
+	public <T extends AbstractTransactionRequest, S extends AbstractTransactionResponse> void exceptionHandleTemplate(
+			Callback<T, S> callback, T request, S response) {
+		String group = SeataClusterContext.bindGroup();
+		try {
+			if (!isPass(group)) {
+				throw new TransactionException(TransactionExceptionCode.NotRaftLeader,
+						" The current TC is not a leader node, interrupt processing !");
+			}
+			super.exceptionHandleTemplate(callback, request, response);
+		}
+		catch (TransactionException tex) {
+			LOGGER.error("Catch TransactionException while do RPC, request: {}", request, tex);
+			callback.onTransactionException(request, response, tex);
+		}
+		finally {
+			SeataClusterContext.unbindGroup();
+		}
+	}
 
-    private boolean isPass(String group) {
-        // Non-raft mode always allows requests
-        return Optional.ofNullable(GROUP_PREVENT.get(group)).orElse(false);
-    }
+	private boolean isPass(String group) {
+		// Non-raft mode always allows requests
+		return Optional.ofNullable(GROUP_PREVENT.get(group)).orElse(false);
+	}
 
-    public static void setPrevent(String group, boolean prevent) {
-        if (StoreConfig.getSessionMode() == StoreConfig.SessionMode.RAFT) {
-            GROUP_PREVENT.put(group, prevent);
-        }
-    }
+	public static void setPrevent(String group, boolean prevent) {
+		if (StoreConfig.getSessionMode() == StoreConfig.SessionMode.RAFT) {
+			GROUP_PREVENT.put(group, prevent);
+		}
+	}
 
-
-    @Override
-    public void onApplicationEvent(ClusterChangeEvent event) {
-        setPrevent(event.getGroup(), event.isLeader());
-    }
+	@Override
+	public void onApplicationEvent(ClusterChangeEvent event) {
+		setPrevent(event.getGroup(), event.isLeader());
+	}
 
 }

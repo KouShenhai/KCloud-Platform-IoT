@@ -22,26 +22,26 @@ import static org.apache.seata.common.DefaultValues.DEFAULT_SEATA_GROUP;
  */
 public class RaftBaseMsg implements java.io.Serializable {
 
-    private static final long serialVersionUID = -1439073440621259777L;
+	private static final long serialVersionUID = -1439073440621259777L;
 
-    protected RaftSyncMsgType msgType;
+	protected RaftSyncMsgType msgType;
 
-    protected String group = DEFAULT_SEATA_GROUP;
+	protected String group = DEFAULT_SEATA_GROUP;
 
-    public RaftSyncMsgType getMsgType() {
-        return msgType;
-    }
+	public RaftSyncMsgType getMsgType() {
+		return msgType;
+	}
 
-    public void setMsgType(RaftSyncMsgType msgType) {
-        this.msgType = msgType;
-    }
+	public void setMsgType(RaftSyncMsgType msgType) {
+		this.msgType = msgType;
+	}
 
-    public String getGroup() {
-        return group;
-    }
+	public String getGroup() {
+		return group;
+	}
 
-    public void setGroup(String group) {
-        this.group = group;
-    }
+	public void setGroup(String group) {
+		this.group = group;
+	}
 
 }

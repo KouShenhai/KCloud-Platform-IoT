@@ -27,27 +27,28 @@ import org.apache.seata.server.cluster.raft.processor.response.PutNodeMetadataRe
 
 public class PutNodeInfoRequestProcessor implements RpcProcessor<PutNodeMetadataRequest> {
 
-    public PutNodeInfoRequestProcessor() {
-        super();
-    }
+	public PutNodeInfoRequestProcessor() {
+		super();
+	}
 
-    @Override
-    public void handleRequest(RpcContext rpcCtx, PutNodeMetadataRequest request) {
-        Node node = request.getNode();
-        String group = node.getGroup();
-        if (RaftServerManager.isLeader(group)) {
-            RaftServer raftServer = RaftServerManager.getRaftServer(group);
-            RaftStateMachine raftStateMachine = raftServer.getRaftStateMachine();
-            raftStateMachine.changeNodeMetadata(node);
-            rpcCtx.sendResponse(new PutNodeMetadataResponse(true));
-        } else {
-            rpcCtx.sendResponse(new PutNodeMetadataResponse(false));
-        }
-    }
+	@Override
+	public void handleRequest(RpcContext rpcCtx, PutNodeMetadataRequest request) {
+		Node node = request.getNode();
+		String group = node.getGroup();
+		if (RaftServerManager.isLeader(group)) {
+			RaftServer raftServer = RaftServerManager.getRaftServer(group);
+			RaftStateMachine raftStateMachine = raftServer.getRaftStateMachine();
+			raftStateMachine.changeNodeMetadata(node);
+			rpcCtx.sendResponse(new PutNodeMetadataResponse(true));
+		}
+		else {
+			rpcCtx.sendResponse(new PutNodeMetadataResponse(false));
+		}
+	}
 
-    @Override
-    public String interest() {
-        return PutNodeMetadataRequest.class.getName();
-    }
+	@Override
+	public String interest() {
+		return PutNodeMetadataRequest.class.getName();
+	}
 
 }

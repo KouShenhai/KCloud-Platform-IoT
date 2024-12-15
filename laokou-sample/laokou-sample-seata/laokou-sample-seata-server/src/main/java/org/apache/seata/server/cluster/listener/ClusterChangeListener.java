@@ -20,9 +20,10 @@ package org.apache.seata.server.cluster.listener;
  */
 public interface ClusterChangeListener {
 
-    /**
-     * cluster change event
-     * @param event event
-     */
-    void onChangeEvent(ClusterChangeEvent event);
+	/**
+	 * cluster change event
+	 * @param event event
+	 */
+	void onChangeEvent(ClusterChangeEvent event);
+
 }

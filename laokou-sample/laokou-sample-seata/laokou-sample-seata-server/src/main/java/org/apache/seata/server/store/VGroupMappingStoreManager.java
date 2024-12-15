@@ -27,46 +27,45 @@ import java.util.HashMap;
 import java.util.Map;
 
 public interface VGroupMappingStoreManager {
-    /**
-     * add VGroup Mapping relationship in cluster
-     *
-     * @param mappingDO the relationship between vGroup and Cluster
-     */
-    boolean addVGroup(MappingDO mappingDO);
 
-    /**
-     * remove VGroup Mapping relationship in cluster
-     *
-     * @param vGroup
-     */
-    boolean removeVGroup(String vGroup);
+	/**
+	 * add VGroup Mapping relationship in cluster
+	 * @param mappingDO the relationship between vGroup and Cluster
+	 */
+	boolean addVGroup(MappingDO mappingDO);
 
-    /**
-     * get VGroup Mapping relationship in cluster
-     *
-     * @return Key:vGroup,Value:unit
-     */
-    HashMap<String, Object> loadVGroups();
+	/**
+	 * remove VGroup Mapping relationship in cluster
+	 * @param vGroup
+	 */
+	boolean removeVGroup(String vGroup);
 
-    default HashMap<String, Object> readVGroups() {
-        return loadVGroups();
-    }
+	/**
+	 * get VGroup Mapping relationship in cluster
+	 * @return Key:vGroup,Value:unit
+	 */
+	HashMap<String, Object> loadVGroups();
 
-    /**
-     * notify mapping relationship to all namingserver nodes
-     */
-    default void notifyMapping() {
-        Instance instance = Instance.getInstance();
-        Map<String, Object> map = this.readVGroups();
-        instance.addMetadata("vGroup", map);
-        try {
-            InetSocketAddress address = new InetSocketAddress(XID.getIpAddress(), XID.getPort());
-            for (RegistryService<?> registryService : MultiRegistryFactory.getInstances()) {
-                registryService.register(address);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("vGroup mapping relationship notified failed! ", e);
-        }
-    }
+	default HashMap<String, Object> readVGroups() {
+		return loadVGroups();
+	}
+
+	/**
+	 * notify mapping relationship to all namingserver nodes
+	 */
+	default void notifyMapping() {
+		Instance instance = Instance.getInstance();
+		Map<String, Object> map = this.readVGroups();
+		instance.addMetadata("vGroup", map);
+		try {
+			InetSocketAddress address = new InetSocketAddress(XID.getIpAddress(), XID.getPort());
+			for (RegistryService<?> registryService : MultiRegistryFactory.getInstances()) {
+				registryService.register(address);
+			}
+		}
+		catch (Exception e) {
+			throw new RuntimeException("vGroup mapping relationship notified failed! ", e);
+		}
+	}
 
 }

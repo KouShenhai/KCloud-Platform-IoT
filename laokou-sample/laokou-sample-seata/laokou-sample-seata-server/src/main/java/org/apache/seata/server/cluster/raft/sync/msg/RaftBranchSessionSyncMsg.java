@@ -25,38 +25,39 @@ import org.apache.seata.server.cluster.raft.sync.msg.dto.BranchTransactionDTO;
  */
 public class RaftBranchSessionSyncMsg extends RaftBaseMsg {
 
-    private static final long serialVersionUID = -8577994371969898054L;
+	private static final long serialVersionUID = -8577994371969898054L;
 
-    private BranchTransactionDTO branchSession;
+	private BranchTransactionDTO branchSession;
 
-    private String group = DEFAULT_SEATA_GROUP;
+	private String group = DEFAULT_SEATA_GROUP;
 
-    public RaftBranchSessionSyncMsg(RaftSyncMsgType msgType, BranchTransactionDTO branchSession) {
-        this.msgType = msgType;
-        this.branchSession = branchSession;
-    }
+	public RaftBranchSessionSyncMsg(RaftSyncMsgType msgType, BranchTransactionDTO branchSession) {
+		this.msgType = msgType;
+		this.branchSession = branchSession;
+	}
 
-    public RaftBranchSessionSyncMsg() {}
+	public RaftBranchSessionSyncMsg() {
+	}
 
-    public BranchTransactionDTO getBranchSession() {
-        return branchSession;
-    }
+	public BranchTransactionDTO getBranchSession() {
+		return branchSession;
+	}
 
-    public void setBranchSession(BranchTransactionDTO branchSession) {
-        this.branchSession = branchSession;
-    }
+	public void setBranchSession(BranchTransactionDTO branchSession) {
+		this.branchSession = branchSession;
+	}
 
-    public String getGroup() {
-        return group;
-    }
+	public String getGroup() {
+		return group;
+	}
 
-    public void setGroup(String group) {
-        this.group = group;
-    }
+	public void setGroup(String group) {
+		this.group = group;
+	}
 
-    @Override
-    public String toString() {
-        return StringUtils.toString(this);
-    }
+	@Override
+	public String toString() {
+		return StringUtils.toString(this);
+	}
 
 }

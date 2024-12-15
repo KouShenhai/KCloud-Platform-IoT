@@ -20,7 +20,6 @@ import static org.apache.seata.common.DefaultValues.DEFAULT_RAFT_COMPRESSOR;
 import static org.apache.seata.common.DefaultValues.DEFAULT_RAFT_SERIALIZATION;
 import static org.apache.seata.core.constants.ConfigurationKeys.SERVER_RAFT_COMPRESSOR;
 
-
 import org.apache.seata.common.util.StringUtils;
 import org.apache.seata.config.ConfigurationFactory;
 import org.apache.seata.core.compressor.CompressorType;
@@ -30,86 +29,81 @@ import org.apache.seata.core.serializer.SerializerType;
 @Deprecated
 public class RaftSyncMessage implements java.io.Serializable {
 
-    private static final long serialVersionUID = 8225279734319945365L;
-    private byte codec = SerializerType.getByName(DEFAULT_RAFT_SERIALIZATION).getCode();
+	private static final long serialVersionUID = 8225279734319945365L;
 
-    private byte compressor = CompressorType
-        .getByName(ConfigurationFactory.getInstance().getConfig(SERVER_RAFT_COMPRESSOR, DEFAULT_RAFT_COMPRESSOR))
-        .getCode();
+	private byte codec = SerializerType.getByName(DEFAULT_RAFT_SERIALIZATION).getCode();
 
-    private Object body;
+	private byte compressor = CompressorType
+		.getByName(ConfigurationFactory.getInstance().getConfig(SERVER_RAFT_COMPRESSOR, DEFAULT_RAFT_COMPRESSOR))
+		.getCode();
 
-    private String version = Version.getCurrent();
+	private Object body;
 
-    /**
-     * Gets body.
-     *
-     * @return the body
-     */
-    public Object getBody() {
-        return body;
-    }
+	private String version = Version.getCurrent();
 
-    /**
-     * Sets body.
-     *
-     * @param body the body
-     */
-    public void setBody(Object body) {
-        this.body = body;
-    }
+	/**
+	 * Gets body.
+	 * @return the body
+	 */
+	public Object getBody() {
+		return body;
+	}
 
-    /**
-     * Gets codec.
-     *
-     * @return the codec
-     */
-    public byte getCodec() {
-        return codec;
-    }
+	/**
+	 * Sets body.
+	 * @param body the body
+	 */
+	public void setBody(Object body) {
+		this.body = body;
+	}
 
-    /**
-     * Sets codec.
-     *
-     * @param codec the codec
-     * @return the codec
-     */
-    public RaftSyncMessage setCodec(byte codec) {
-        this.codec = codec;
-        return this;
-    }
+	/**
+	 * Gets codec.
+	 * @return the codec
+	 */
+	public byte getCodec() {
+		return codec;
+	}
 
-    /**
-     * Gets compressor.
-     *
-     * @return the compressor
-     */
-    public byte getCompressor() {
-        return compressor;
-    }
+	/**
+	 * Sets codec.
+	 * @param codec the codec
+	 * @return the codec
+	 */
+	public RaftSyncMessage setCodec(byte codec) {
+		this.codec = codec;
+		return this;
+	}
 
-    /**
-     * Sets compressor.
-     *
-     * @param compressor the compressor
-     * @return the compressor
-     */
-    public RaftSyncMessage setCompressor(byte compressor) {
-        this.compressor = compressor;
-        return this;
-    }
+	/**
+	 * Gets compressor.
+	 * @return the compressor
+	 */
+	public byte getCompressor() {
+		return compressor;
+	}
 
-    public String getVersion() {
-        return version;
-    }
+	/**
+	 * Sets compressor.
+	 * @param compressor the compressor
+	 * @return the compressor
+	 */
+	public RaftSyncMessage setCompressor(byte compressor) {
+		this.compressor = compressor;
+		return this;
+	}
 
-    public void setVersion(String version) {
-        this.version = version;
-    }
+	public String getVersion() {
+		return version;
+	}
 
-    @Override
-    public String toString() {
-        return StringUtils.toString(this);
-    }
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	@Override
+	public String toString() {
+		return StringUtils.toString(this);
+	}
 
 }

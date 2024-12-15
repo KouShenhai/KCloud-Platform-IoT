@@ -31,54 +31,59 @@ import java.util.Map;
 @LoadLevel(name = "redis")
 public class RedisVGroupMappingStoreManager implements VGroupMappingStoreManager {
 
-    private static final String REDIS_PREFIX = "SEATA_NAMINGSERVER_NAMESPACE_";
+	private static final String REDIS_PREFIX = "SEATA_NAMINGSERVER_NAMESPACE_";
 
-    @Override
-    public boolean addVGroup(MappingDO mappingDO) {
-        String vGroup = mappingDO.getVGroup();
-        String namespace = REDIS_PREFIX + mappingDO.getNamespace();
-        String clusterName = mappingDO.getCluster();
-        try (Jedis jedis = JedisPooledFactory.getJedisInstance()) {
-            jedis.hset(namespace, vGroup, clusterName);
-            return true;
-        } catch (Exception ex) {
-            throw new RedisException(ex);
-        }
-    }
+	@Override
+	public boolean addVGroup(MappingDO mappingDO) {
+		String vGroup = mappingDO.getVGroup();
+		String namespace = REDIS_PREFIX + mappingDO.getNamespace();
+		String clusterName = mappingDO.getCluster();
+		try (Jedis jedis = JedisPooledFactory.getJedisInstance()) {
+			jedis.hset(namespace, vGroup, clusterName);
+			return true;
+		}
+		catch (Exception ex) {
+			throw new RedisException(ex);
+		}
+	}
 
-    @Override
-    public boolean removeVGroup(String vGroup) {
-        Instance instance = Instance.getInstance();
-        String namespace = REDIS_PREFIX + instance.getNamespace();
-        try (Jedis jedis = JedisPooledFactory.getJedisInstance()) {
-            String currentVgroup = jedis.hget(namespace, vGroup);
-            if (StringUtils.equalsIgnoreCase(currentVgroup, instance.getClusterName())) {
-                jedis.hdel(namespace, vGroup);
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception ex) {
-            throw new RedisException(ex);
-        }
-    }
+	@Override
+	public boolean removeVGroup(String vGroup) {
+		Instance instance = Instance.getInstance();
+		String namespace = REDIS_PREFIX + instance.getNamespace();
+		try (Jedis jedis = JedisPooledFactory.getJedisInstance()) {
+			String currentVgroup = jedis.hget(namespace, vGroup);
+			if (StringUtils.equalsIgnoreCase(currentVgroup, instance.getClusterName())) {
+				jedis.hdel(namespace, vGroup);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		catch (Exception ex) {
+			throw new RedisException(ex);
+		}
+	}
 
-    @Override
-    public HashMap<String, Object> loadVGroups() {
-        Instance instance = Instance.getInstance();
-        String namespace = REDIS_PREFIX + instance.getNamespace();
-        String clusterName = instance.getClusterName();
-        try (Jedis jedis = JedisPooledFactory.getJedisInstance()) {
-            Map<String, String> mappingKeyMap = jedis.hgetAll(namespace);
-            HashMap<String, Object> result = new HashMap<>();
-            mappingKeyMap.forEach((vgroup,clusterNameValue) -> {
-                if (StringUtils.equals(clusterName, clusterNameValue)) {
-                    result.put(vgroup, null);
-                }
-            });
-            return result;
-        } catch (Exception ex) {
-            throw new RedisException(ex);
-        }
-    }
+	@Override
+	public HashMap<String, Object> loadVGroups() {
+		Instance instance = Instance.getInstance();
+		String namespace = REDIS_PREFIX + instance.getNamespace();
+		String clusterName = instance.getClusterName();
+		try (Jedis jedis = JedisPooledFactory.getJedisInstance()) {
+			Map<String, String> mappingKeyMap = jedis.hgetAll(namespace);
+			HashMap<String, Object> result = new HashMap<>();
+			mappingKeyMap.forEach((vgroup, clusterNameValue) -> {
+				if (StringUtils.equals(clusterName, clusterNameValue)) {
+					result.put(vgroup, null);
+				}
+			});
+			return result;
+		}
+		catch (Exception ex) {
+			throw new RedisException(ex);
+		}
+	}
+
 }

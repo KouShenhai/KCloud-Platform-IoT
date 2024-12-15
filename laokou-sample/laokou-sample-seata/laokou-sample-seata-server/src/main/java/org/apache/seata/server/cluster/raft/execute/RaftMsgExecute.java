@@ -22,13 +22,12 @@ import org.apache.seata.server.cluster.raft.sync.msg.RaftBaseMsg;
  */
 public interface RaftMsgExecute<T> {
 
-    /**
-     * Execute t.
-     *
-     * @param syncMsg the sessionSyncMsg
-     * @return the t
-     * @throws Throwable the throwable
-     */
-    T execute(RaftBaseMsg syncMsg) throws Throwable;
+	/**
+	 * Execute t.
+	 * @param syncMsg the sessionSyncMsg
+	 * @return the t
+	 * @throws Throwable the throwable
+	 */
+	T execute(RaftBaseMsg syncMsg) throws Throwable;
 
 }

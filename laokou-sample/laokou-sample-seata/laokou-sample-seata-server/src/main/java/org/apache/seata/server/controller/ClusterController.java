@@ -58,80 +58,82 @@ import static org.apache.seata.common.DefaultValues.DEFAULT_SEATA_GROUP;
 @RequestMapping("/metadata/v1")
 public class ClusterController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClusterController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ClusterController.class);
 
-    @Resource
-    private ClusterWatcherManager clusterWatcherManager;
+	@Resource
+	private ClusterWatcherManager clusterWatcherManager;
 
-    private ServerProperties serverProperties;
+	private ServerProperties serverProperties;
 
-    @Resource
-    ApplicationContext applicationContext;
+	@Resource
+	ApplicationContext applicationContext;
 
-    @PostConstruct
-    private void init() {
-        this.serverProperties = applicationContext.getBean(ServerProperties.class);
-    }
+	@PostConstruct
+	private void init() {
+		this.serverProperties = applicationContext.getBean(ServerProperties.class);
+	}
 
-    @PostMapping("/changeCluster")
-    public Result<?> changeCluster(@RequestParam String raftClusterStr) {
-        Result<?> result = new Result<>();
-        final Configuration newConf = new Configuration();
-        if (!newConf.parse(raftClusterStr)) {
-            result.setMessage("fail to parse initConf:" + raftClusterStr);
-        } else {
-            RaftServerManager.groups().forEach(group -> {
-                RaftServerManager.getCliServiceInstance().changePeers(group,
-                    RouteTable.getInstance().getConfiguration(group), newConf);
-                RouteTable.getInstance().updateConfiguration(group, newConf);
-            });
-        }
-        return result;
-    }
+	@PostMapping("/changeCluster")
+	public Result<?> changeCluster(@RequestParam String raftClusterStr) {
+		Result<?> result = new Result<>();
+		final Configuration newConf = new Configuration();
+		if (!newConf.parse(raftClusterStr)) {
+			result.setMessage("fail to parse initConf:" + raftClusterStr);
+		}
+		else {
+			RaftServerManager.groups().forEach(group -> {
+				RaftServerManager.getCliServiceInstance()
+					.changePeers(group, RouteTable.getInstance().getConfiguration(group), newConf);
+				RouteTable.getInstance().updateConfiguration(group, newConf);
+			});
+		}
+		return result;
+	}
 
-    @GetMapping("/cluster")
-    public MetadataResponse cluster(String group) {
-        MetadataResponse metadataResponse = new MetadataResponse();
-        if (StringUtils.isBlank(group)) {
-            group =
-                ConfigurationFactory.getInstance().getConfig(ConfigurationKeys.SERVER_RAFT_GROUP, DEFAULT_SEATA_GROUP);
-        }
-        RaftServer raftServer = RaftServerManager.getRaftServer(group);
-        if (raftServer != null) {
-            String mode = ConfigurationFactory.getInstance().getConfig(STORE_MODE);
-            metadataResponse.setStoreMode(mode);
-            RouteTable routeTable = RouteTable.getInstance();
-            try {
-                routeTable.refreshLeader(RaftServerManager.getCliClientServiceInstance(), group, 1000);
-                PeerId leader = routeTable.selectLeader(group);
-                if (leader != null) {
-                    Set<Node> nodes = new HashSet<>();
-                    RaftClusterMetadata raftClusterMetadata = raftServer.getRaftStateMachine().getRaftLeaderMetadata();
-                    Node leaderNode = raftServer.getRaftStateMachine().getRaftLeaderMetadata().getLeader();
-                    leaderNode.setGroup(group);
-                    nodes.add(leaderNode);
-                    nodes.addAll(raftClusterMetadata.getLearner());
-                    nodes.addAll(raftClusterMetadata.getFollowers());
-                    metadataResponse.setTerm(raftClusterMetadata.getTerm());
-                    metadataResponse.setNodes(new ArrayList<>(nodes));
-                }
-            } catch (Exception e) {
-                LOGGER.error("there is an exception to getting the leader address: {}", e.getMessage(), e);
-            }
-        }
-        return metadataResponse;
-    }
+	@GetMapping("/cluster")
+	public MetadataResponse cluster(String group) {
+		MetadataResponse metadataResponse = new MetadataResponse();
+		if (StringUtils.isBlank(group)) {
+			group = ConfigurationFactory.getInstance()
+				.getConfig(ConfigurationKeys.SERVER_RAFT_GROUP, DEFAULT_SEATA_GROUP);
+		}
+		RaftServer raftServer = RaftServerManager.getRaftServer(group);
+		if (raftServer != null) {
+			String mode = ConfigurationFactory.getInstance().getConfig(STORE_MODE);
+			metadataResponse.setStoreMode(mode);
+			RouteTable routeTable = RouteTable.getInstance();
+			try {
+				routeTable.refreshLeader(RaftServerManager.getCliClientServiceInstance(), group, 1000);
+				PeerId leader = routeTable.selectLeader(group);
+				if (leader != null) {
+					Set<Node> nodes = new HashSet<>();
+					RaftClusterMetadata raftClusterMetadata = raftServer.getRaftStateMachine().getRaftLeaderMetadata();
+					Node leaderNode = raftServer.getRaftStateMachine().getRaftLeaderMetadata().getLeader();
+					leaderNode.setGroup(group);
+					nodes.add(leaderNode);
+					nodes.addAll(raftClusterMetadata.getLearner());
+					nodes.addAll(raftClusterMetadata.getFollowers());
+					metadataResponse.setTerm(raftClusterMetadata.getTerm());
+					metadataResponse.setNodes(new ArrayList<>(nodes));
+				}
+			}
+			catch (Exception e) {
+				LOGGER.error("there is an exception to getting the leader address: {}", e.getMessage(), e);
+			}
+		}
+		return metadataResponse;
+	}
 
-    @PostMapping("/watch")
-    public void watch(HttpServletRequest request, @RequestParam Map<String, Object> groupTerms,
-        @RequestParam(defaultValue = "28000") int timeout) {
-        AsyncContext context = request.startAsync();
-        context.setTimeout(0L);
-        groupTerms.forEach((group, term) -> {
-            Watcher<AsyncContext> watcher =
-                new Watcher<>(group, context, timeout, Long.parseLong(String.valueOf(term)));
-            clusterWatcherManager.registryWatcher(watcher);
-        });
-    }
+	@PostMapping("/watch")
+	public void watch(HttpServletRequest request, @RequestParam Map<String, Object> groupTerms,
+			@RequestParam(defaultValue = "28000") int timeout) {
+		AsyncContext context = request.startAsync();
+		context.setTimeout(0L);
+		groupTerms.forEach((group, term) -> {
+			Watcher<AsyncContext> watcher = new Watcher<>(group, context, timeout,
+					Long.parseLong(String.valueOf(term)));
+			clusterWatcherManager.registryWatcher(watcher);
+		});
+	}
 
 }

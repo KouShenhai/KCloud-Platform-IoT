@@ -26,7 +26,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author spilledyear@outlook.com
  */
 @EnableEncryptableProperties
-@SpringBootApplication(scanBasePackages = {"org.apache.seata"})
+@SpringBootApplication(scanBasePackages = { "org.apache.seata" })
 public class SeataApp {
 
 	/// ```properties

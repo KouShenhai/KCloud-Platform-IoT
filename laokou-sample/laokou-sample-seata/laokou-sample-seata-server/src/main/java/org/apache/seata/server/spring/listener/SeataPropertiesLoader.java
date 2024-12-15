@@ -45,37 +45,38 @@ import static org.apache.seata.common.ConfigurationKeys.TRANSPORT_PREFIX;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SeataPropertiesLoader implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-    
-    List<String> prefixList = Arrays.asList(FILE_ROOT_PREFIX_CONFIG, FILE_ROOT_PREFIX_REGISTRY, SERVER_PREFIX,
-        STORE_PREFIX, METRICS_PREFIX, TRANSPORT_PREFIX);
 
-    @Override
-    public void initialize(ConfigurableApplicationContext applicationContext) {
-        ConfigurableEnvironment environment = applicationContext.getEnvironment();
-        FileConfiguration configuration = ConfigurationFactory.getOriginFileInstanceRegistry();
-        FileConfig fileConfig = configuration.getFileConfig();
-        Map<String, Object> configs = fileConfig.getAllConfig();
-        if (CollectionUtils.isNotEmpty(configs)) {
-            Optional<FileConfiguration> originFileInstance = ConfigurationFactory.getOriginFileInstance();
-            originFileInstance
-                .ifPresent(fileConfiguration -> configs.putAll(fileConfiguration.getFileConfig().getAllConfig()));
-            Properties properties = new Properties();
-            configs.forEach((k, v) -> {
-                if (v instanceof String) {
-                    if (StringUtils.isEmpty((String)v)) {
-                        return;
-                    }
-                }
-                // Convert the configuration name to the configuration name under Spring Boot
-                if (prefixList.stream().anyMatch(k::startsWith)) {
-                    properties.put(SEATA_FILE_PREFIX_ROOT_CONFIG + k, v);
-                }
-            });
-            environment.getPropertySources().addLast(new PropertiesPropertySource("seataOldConfig", properties));
-        }
-        // Load by priority
-        System.setProperty("sessionMode", StoreConfig.getSessionMode().getName());
-        System.setProperty("lockMode", StoreConfig.getLockMode().getName());
-    }
+	List<String> prefixList = Arrays.asList(FILE_ROOT_PREFIX_CONFIG, FILE_ROOT_PREFIX_REGISTRY, SERVER_PREFIX,
+			STORE_PREFIX, METRICS_PREFIX, TRANSPORT_PREFIX);
+
+	@Override
+	public void initialize(ConfigurableApplicationContext applicationContext) {
+		ConfigurableEnvironment environment = applicationContext.getEnvironment();
+		FileConfiguration configuration = ConfigurationFactory.getOriginFileInstanceRegistry();
+		FileConfig fileConfig = configuration.getFileConfig();
+		Map<String, Object> configs = fileConfig.getAllConfig();
+		if (CollectionUtils.isNotEmpty(configs)) {
+			Optional<FileConfiguration> originFileInstance = ConfigurationFactory.getOriginFileInstance();
+			originFileInstance
+				.ifPresent(fileConfiguration -> configs.putAll(fileConfiguration.getFileConfig().getAllConfig()));
+			Properties properties = new Properties();
+			configs.forEach((k, v) -> {
+				if (v instanceof String) {
+					if (StringUtils.isEmpty((String) v)) {
+						return;
+					}
+				}
+				// Convert the configuration name to the configuration name under Spring
+				// Boot
+				if (prefixList.stream().anyMatch(k::startsWith)) {
+					properties.put(SEATA_FILE_PREFIX_ROOT_CONFIG + k, v);
+				}
+			});
+			environment.getPropertySources().addLast(new PropertiesPropertySource("seataOldConfig", properties));
+		}
+		// Load by priority
+		System.setProperty("sessionMode", StoreConfig.getSessionMode().getName());
+		System.setProperty("lockMode", StoreConfig.getLockMode().getName());
+	}
 
 }

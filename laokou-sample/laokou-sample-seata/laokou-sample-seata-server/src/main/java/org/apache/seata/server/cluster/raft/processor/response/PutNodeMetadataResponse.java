@@ -20,23 +20,23 @@ import java.io.Serializable;
 
 public class PutNodeMetadataResponse implements Serializable {
 
-    private boolean success;
+	private boolean success;
 
-    public PutNodeMetadataResponse(boolean success) {
-        this.success = success;
-    }
+	public PutNodeMetadataResponse(boolean success) {
+		this.success = success;
+	}
 
-    public boolean isSuccess() {
-        return success;
-    }
+	public boolean isSuccess() {
+		return success;
+	}
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
 
-    @Override
-    public String toString() {
-        return "PutNodeMetadataResponse{" + "success=" + success + '}';
-    }
+	@Override
+	public String toString() {
+		return "PutNodeMetadataResponse{" + "success=" + success + '}';
+	}
 
 }

@@ -44,127 +44,137 @@ import redis.clients.jedis.exceptions.JedisNoScriptException;
  *
  */
 public class LuaParser {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LuaParser.class);
 
-    private static final String WHITE_SPACE = " ";
+	private static final Logger LOGGER = LoggerFactory.getLogger(LuaParser.class);
 
-    private static final String ANNOTATION_LUA = "--";
+	private static final String WHITE_SPACE = " ";
 
-    private static final Map<String, String> LUA_FILE_MAP = new HashMap<>();
+	private static final String ANNOTATION_LUA = "--";
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+	private static final Map<String, String> LUA_FILE_MAP = new HashMap<>();
 
-    public final static class LuaResult implements Serializable {
-        private static final long serialVersionUID = -4160065043902060730L;
-        private Boolean success;
-        private String status;
-        private String data;
+	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-        public Boolean getSuccess() {
-            return success;
-        }
+	public final static class LuaResult implements Serializable {
 
-        public void setSuccess(Boolean success) {
-            this.success = success;
-        }
+		private static final long serialVersionUID = -4160065043902060730L;
 
-        public String getStatus() {
-            return status;
-        }
+		private Boolean success;
 
-        public void setStatus(String status) {
-            this.status = status;
-        }
+		private String status;
 
-        public String getData() {
-            return data;
-        }
+		private String data;
 
-        public void setData(String data) {
-            this.data = data;
-        }
+		public Boolean getSuccess() {
+			return success;
+		}
 
-        @Override public String toString() {
-            return "LuaResult{" +
-                "success=" + success +
-                ", type='" + status + '\'' +
-                ", data='" + data + '\'' +
-                '}';
-        }
-    }
+		public void setSuccess(Boolean success) {
+			this.success = success;
+		}
 
-    public final static class LuaErrorStatus {
+		public String getStatus() {
+			return status;
+		}
 
-        public static final String ANOTHER_ROLLBACKING = "AnotherRollbackIng";
+		public void setStatus(String status) {
+			this.status = status;
+		}
 
-        public static final String ANOTHER_HOLDING = "AnotherHoldIng";
+		public String getData() {
+			return data;
+		}
 
-        public static final String XID_NOT_EXISTED = "NotExisted";
+		public void setData(String data) {
+			this.data = data;
+		}
 
-        public static final String ILLEGAL_CHANGE_STATUS = "ChangeStatusFail";
-    }
+		@Override
+		public String toString() {
+			return "LuaResult{" + "success=" + success + ", type='" + status + '\'' + ", data='" + data + '\'' + '}';
+		}
 
-    /**
-     * get lua string from lua file.
-     *
-     * @param fileName
-     * @return
-     * @throws IOException
-     */
-    public static Map<String, String> getEvalShaMapFromFile(String fileName) throws IOException {
-        File luaFile = FileLoader.load(fileName);
-        if (luaFile == null) {
-            throw new IOException("no lua file: " + fileName);
-        }
-        StringBuilder luaByFile = new StringBuilder();
-        try (FileInputStream fis = new FileInputStream(luaFile)) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (line.trim().startsWith(ANNOTATION_LUA)) {
-                    continue;
-                }
-                luaByFile.append(line);
-                luaByFile.append(WHITE_SPACE);
-            }
-        } catch (IOException e) {
-            throw new IOException(e);
-        }
-        LUA_FILE_MAP.put(fileName, luaByFile.toString());
-        Map<String, String> resultMap = new ConcurrentHashMap<>(1);
-        try (Jedis jedis = JedisPooledFactory.getJedisInstance()) {
-            resultMap.put(fileName, jedis.scriptLoad(luaByFile.toString()));
-            return resultMap;
-        } catch (UnsupportedOperationException | JedisDataException e) {
-            throw new IOException(e);
-        }
-    }
+	}
 
-    public static <T> T getObjectFromJson(String json, Class<T> classz) {
-        try {
-            return OBJECT_MAPPER.readValue(json, classz);
-        } catch (JsonProcessingException e) {
-            throw new StoreException(e.getMessage());
-        }
-    }
+	public final static class LuaErrorStatus {
 
-    public static <T> List<T> getListFromJson(String json, Class<T> classz) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.readValue(json, new TypeReference<List<T>>() {
-            });
-        } catch (JsonProcessingException e) {
-            throw new StoreException(e.getMessage());
-        }
-    }
+		public static final String ANOTHER_ROLLBACKING = "AnotherRollbackIng";
 
-    public static Object jedisEvalSha(Jedis jedis, String luaSHA, String luaFileName, List<String> keys, List<String> args) {
-        try {
-            return jedis.evalsha(luaSHA, keys, args);
-        } catch (JedisNoScriptException e) {
-            LOGGER.warn("try to reload the lua script and execute,jedis ex: " + e.getMessage());
-            jedis.scriptLoad(LUA_FILE_MAP.get(luaFileName));
-            return jedis.evalsha(luaSHA, keys, args);
-        }
-    }
+		public static final String ANOTHER_HOLDING = "AnotherHoldIng";
+
+		public static final String XID_NOT_EXISTED = "NotExisted";
+
+		public static final String ILLEGAL_CHANGE_STATUS = "ChangeStatusFail";
+
+	}
+
+	/**
+	 * get lua string from lua file.
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 */
+	public static Map<String, String> getEvalShaMapFromFile(String fileName) throws IOException {
+		File luaFile = FileLoader.load(fileName);
+		if (luaFile == null) {
+			throw new IOException("no lua file: " + fileName);
+		}
+		StringBuilder luaByFile = new StringBuilder();
+		try (FileInputStream fis = new FileInputStream(luaFile)) {
+			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+			String line;
+			while ((line = br.readLine()) != null) {
+				if (line.trim().startsWith(ANNOTATION_LUA)) {
+					continue;
+				}
+				luaByFile.append(line);
+				luaByFile.append(WHITE_SPACE);
+			}
+		}
+		catch (IOException e) {
+			throw new IOException(e);
+		}
+		LUA_FILE_MAP.put(fileName, luaByFile.toString());
+		Map<String, String> resultMap = new ConcurrentHashMap<>(1);
+		try (Jedis jedis = JedisPooledFactory.getJedisInstance()) {
+			resultMap.put(fileName, jedis.scriptLoad(luaByFile.toString()));
+			return resultMap;
+		}
+		catch (UnsupportedOperationException | JedisDataException e) {
+			throw new IOException(e);
+		}
+	}
+
+	public static <T> T getObjectFromJson(String json, Class<T> classz) {
+		try {
+			return OBJECT_MAPPER.readValue(json, classz);
+		}
+		catch (JsonProcessingException e) {
+			throw new StoreException(e.getMessage());
+		}
+	}
+
+	public static <T> List<T> getListFromJson(String json, Class<T> classz) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			return objectMapper.readValue(json, new TypeReference<List<T>>() {
+			});
+		}
+		catch (JsonProcessingException e) {
+			throw new StoreException(e.getMessage());
+		}
+	}
+
+	public static Object jedisEvalSha(Jedis jedis, String luaSHA, String luaFileName, List<String> keys,
+			List<String> args) {
+		try {
+			return jedis.evalsha(luaSHA, keys, args);
+		}
+		catch (JedisNoScriptException e) {
+			LOGGER.warn("try to reload the lua script and execute,jedis ex: " + e.getMessage());
+			jedis.scriptLoad(LUA_FILE_MAP.get(luaFileName));
+			return jedis.evalsha(luaSHA, keys, args);
+		}
+	}
+
 }

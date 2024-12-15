@@ -20,40 +20,41 @@ package org.apache.seata.server.cluster.raft.sync.msg;
  */
 public enum RaftSyncMsgType {
 
-    /**
-     * addGlobalSession
-     */
-    ADD_GLOBAL_SESSION,
-    /**
-     * removeGlobalSession
-     */
-    REMOVE_GLOBAL_SESSION,
-    /**
-     *
-     */
-    ADD_BRANCH_SESSION,
-    /**
-     * addBranchSession
-     */
-    REMOVE_BRANCH_SESSION,
-    /**
-     * updateGlobalSessionStatus
-     */
-    UPDATE_GLOBAL_SESSION_STATUS,
-    /**
-     * updateBranchSessionStatus
-     */
-    UPDATE_BRANCH_SESSION_STATUS,
-    /**
-     * releaseGlobalSessionLock
-     */
-    RELEASE_GLOBAL_SESSION_LOCK,
-    /**
-     * releaseBranchSessionLock
-     */
-    RELEASE_BRANCH_SESSION_LOCK,
-    /**
-     * refresh cluster metadata
-     */
-    REFRESH_CLUSTER_METADATA;
+	/**
+	 * addGlobalSession
+	 */
+	ADD_GLOBAL_SESSION,
+	/**
+	 * removeGlobalSession
+	 */
+	REMOVE_GLOBAL_SESSION,
+	/**
+	 *
+	 */
+	ADD_BRANCH_SESSION,
+	/**
+	 * addBranchSession
+	 */
+	REMOVE_BRANCH_SESSION,
+	/**
+	 * updateGlobalSessionStatus
+	 */
+	UPDATE_GLOBAL_SESSION_STATUS,
+	/**
+	 * updateBranchSessionStatus
+	 */
+	UPDATE_BRANCH_SESSION_STATUS,
+	/**
+	 * releaseGlobalSessionLock
+	 */
+	RELEASE_GLOBAL_SESSION_LOCK,
+	/**
+	 * releaseBranchSessionLock
+	 */
+	RELEASE_BRANCH_SESSION_LOCK,
+	/**
+	 * refresh cluster metadata
+	 */
+	REFRESH_CLUSTER_METADATA;
+
 }

@@ -31,36 +31,41 @@ import org.apache.seata.server.storage.raft.session.RaftSessionManager;
 /**
  */
 public class RemoveGlobalSessionExecute extends AbstractRaftMsgExecute {
-    
-    private static final ThreadPoolExecutor EXECUTOR =
-        new ThreadPoolExecutor(1, 1, Integer.MAX_VALUE, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(2048),
-            new NamedThreadFactory("RemoveGlobalSessionExecute", 1), new ThreadPoolExecutor.CallerRunsPolicy());
 
-    @Override
-    public Boolean execute(RaftBaseMsg syncMsg) throws Throwable {
-        RaftGlobalSessionSyncMsg sessionSyncMsg = (RaftGlobalSessionSyncMsg)syncMsg;
-        // when the global transaction needs to be deleted, it does not affect any consistency issues, and can be
-        // deleted in an asynchronous thread to improve the throughput of the state machine
-        RaftSessionManager raftSessionManager = (RaftSessionManager) SessionHolder.getRootSessionManager(sessionSyncMsg.getGroup());
-        Optional.ofNullable(raftSessionManager.findGlobalSession(sessionSyncMsg.getGlobalSession().getXid()))
-            .ifPresent(globalSession -> {
-                try {
-                    raftLockManager.localReleaseGlobalSessionLock(globalSession);
-                    EXECUTOR.execute(() -> {
-                        try {
-                            raftSessionManager.removeGlobalSession(globalSession);
-                            if (logger.isDebugEnabled()) {
-                                logger.debug("remove session xid: {}", globalSession.getXid());
-                            }
-                        } catch (TransactionException e) {
-                            logger.error("remove global fail error:{}", e.getMessage());
-                        }
-                    });
-                } catch (TransactionException e) {
-                    logger.error(e.getMessage(), e);
-                }
-            });
-        return true;
-    }
+	private static final ThreadPoolExecutor EXECUTOR = new ThreadPoolExecutor(1, 1, Integer.MAX_VALUE,
+			TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(2048),
+			new NamedThreadFactory("RemoveGlobalSessionExecute", 1), new ThreadPoolExecutor.CallerRunsPolicy());
+
+	@Override
+	public Boolean execute(RaftBaseMsg syncMsg) throws Throwable {
+		RaftGlobalSessionSyncMsg sessionSyncMsg = (RaftGlobalSessionSyncMsg) syncMsg;
+		// when the global transaction needs to be deleted, it does not affect any
+		// consistency issues, and can be
+		// deleted in an asynchronous thread to improve the throughput of the state
+		// machine
+		RaftSessionManager raftSessionManager = (RaftSessionManager) SessionHolder
+			.getRootSessionManager(sessionSyncMsg.getGroup());
+		Optional.ofNullable(raftSessionManager.findGlobalSession(sessionSyncMsg.getGlobalSession().getXid()))
+			.ifPresent(globalSession -> {
+				try {
+					raftLockManager.localReleaseGlobalSessionLock(globalSession);
+					EXECUTOR.execute(() -> {
+						try {
+							raftSessionManager.removeGlobalSession(globalSession);
+							if (logger.isDebugEnabled()) {
+								logger.debug("remove session xid: {}", globalSession.getXid());
+							}
+						}
+						catch (TransactionException e) {
+							logger.error("remove global fail error:{}", e.getMessage());
+						}
+					});
+				}
+				catch (TransactionException e) {
+					logger.error(e.getMessage(), e);
+				}
+			});
+		return true;
+	}
 
 }

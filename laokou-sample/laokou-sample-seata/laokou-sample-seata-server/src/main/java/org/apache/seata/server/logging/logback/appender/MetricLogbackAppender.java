@@ -16,7 +16,6 @@
  */
 package org.apache.seata.server.logging.logback.appender;
 
-
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.ThrowableProxy;
@@ -32,23 +31,25 @@ import org.apache.seata.server.event.EventBusManager;
  */
 public class MetricLogbackAppender extends AppenderBase<ILoggingEvent> {
 
-    private EventBus eventBus = EventBusManager.get();
+	private EventBus eventBus = EventBusManager.get();
 
-    @Override
-    protected void append(ILoggingEvent event) {
-        try {
-            Level level = event.getLevel();
+	@Override
+	protected void append(ILoggingEvent event) {
+		try {
+			Level level = event.getLevel();
 
-            if (level.isGreaterOrEqual(Level.ERROR)) {
-                ThrowableProxy info = (ThrowableProxy)event.getThrowableProxy();
+			if (level.isGreaterOrEqual(Level.ERROR)) {
+				ThrowableProxy info = (ThrowableProxy) event.getThrowableProxy();
 
-                if (info != null) {
-                    Throwable throwable = info.getThrowable();
-                    eventBus.post(new ExceptionEvent(throwable.getClass().getName()));
-                }
-            }
-        } catch (Exception ex) {
-            throw new LogbackException(event.getFormattedMessage(), ex);
-        }
-    }
+				if (info != null) {
+					Throwable throwable = info.getThrowable();
+					eventBus.post(new ExceptionEvent(throwable.getClass().getName()));
+				}
+			}
+		}
+		catch (Exception ex) {
+			throw new LogbackException(event.getFormattedMessage(), ex);
+		}
+	}
+
 }

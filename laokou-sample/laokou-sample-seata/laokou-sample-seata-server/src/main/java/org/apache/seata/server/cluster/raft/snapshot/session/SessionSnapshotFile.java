@@ -35,69 +35,73 @@ import org.slf4j.LoggerFactory;
 
 /**
  */
-public class SessionSnapshotFile implements Serializable,StoreSnapshotFile {
+public class SessionSnapshotFile implements Serializable, StoreSnapshotFile {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SessionSnapshotFile.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SessionSnapshotFile.class);
 
-    private static final long serialVersionUID = 7942307427240595916L;
+	private static final long serialVersionUID = 7942307427240595916L;
 
-    String group;
+	String group;
 
-    String fileName = "session";
+	String fileName = "session";
 
-    public SessionSnapshotFile(String group) {
-        this.group = group;
-    }
+	public SessionSnapshotFile(String group) {
+		this.group = group;
+	}
 
-    @Override
-    public Status save(SnapshotWriter writer) {
-        RaftSessionManager raftSessionManager = (RaftSessionManager)SessionHolder.getRootSessionManager(group);
-        Map<String, GlobalSession> sessionMap = raftSessionManager.getSessionMap();
-        RaftSessionSnapshot sessionSnapshot = new RaftSessionSnapshot();
-        sessionMap.forEach((xid, session) -> sessionSnapshot.convert2GlobalSessionByte(session));
-        RaftSnapshot raftSnapshot = new RaftSnapshot();
-        raftSnapshot.setBody(sessionSnapshot);
-        raftSnapshot.setType(RaftSnapshot.SnapshotType.session);
-        LOGGER.info("groupId: {}, global session size: {}", group, sessionSnapshot.getGlobalsessions().size());
-        String path = new StringBuilder(writer.getPath()).append(File.separator).append(fileName).toString();
-        try {
-            if (save(raftSnapshot, path)) {
-                if (writer.addFile(fileName)) {
-                    return Status.OK();
-                } else {
-                    return new Status(RaftError.EIO, "Fail to add file to writer");
-                }
-            }
-        } catch (IOException e) {
-            LOGGER.error("Fail to save groupId: {} snapshot {}", group, path, e);
-        }
-        return new Status(RaftError.EIO, "Fail to save groupId: " + group + " snapshot %s", path);
-    }
+	@Override
+	public Status save(SnapshotWriter writer) {
+		RaftSessionManager raftSessionManager = (RaftSessionManager) SessionHolder.getRootSessionManager(group);
+		Map<String, GlobalSession> sessionMap = raftSessionManager.getSessionMap();
+		RaftSessionSnapshot sessionSnapshot = new RaftSessionSnapshot();
+		sessionMap.forEach((xid, session) -> sessionSnapshot.convert2GlobalSessionByte(session));
+		RaftSnapshot raftSnapshot = new RaftSnapshot();
+		raftSnapshot.setBody(sessionSnapshot);
+		raftSnapshot.setType(RaftSnapshot.SnapshotType.session);
+		LOGGER.info("groupId: {}, global session size: {}", group, sessionSnapshot.getGlobalsessions().size());
+		String path = new StringBuilder(writer.getPath()).append(File.separator).append(fileName).toString();
+		try {
+			if (save(raftSnapshot, path)) {
+				if (writer.addFile(fileName)) {
+					return Status.OK();
+				}
+				else {
+					return new Status(RaftError.EIO, "Fail to add file to writer");
+				}
+			}
+		}
+		catch (IOException e) {
+			LOGGER.error("Fail to save groupId: {} snapshot {}", group, path, e);
+		}
+		return new Status(RaftError.EIO, "Fail to save groupId: " + group + " snapshot %s", path);
+	}
 
-    @Override
-    public boolean load(SnapshotReader reader) {
-        if (reader.getFileMeta(fileName) == null) {
-            LOGGER.error("Fail to find data file in {}", reader.getPath());
-            return false;
-        }
-        String path = new StringBuilder(reader.getPath()).append(File.separator).append(fileName).toString();
-        try {
-            LOGGER.info("on snapshot load start index: {}", reader.load().getLastIncludedIndex());
-            RaftSessionSnapshot sessionSnapshot = (RaftSessionSnapshot)load(path);
-            RaftSessionManager raftSessionManager = (RaftSessionManager)SessionHolder.getRootSessionManager(group);
-            Map<String, GlobalSession> rootSessionMap = raftSessionManager.getSessionMap();
-            // be sure to clear the data before loading it, because this is a full overwrite update
-            LockerManagerFactory.getLockManager().cleanAllLocks();
-            rootSessionMap.clear();
-            rootSessionMap.putAll(sessionSnapshot.convert2GlobalSession());
-            if (LOGGER.isInfoEnabled()) {
-                LOGGER.info("on snapshot load end index: {}", reader.load().getLastIncludedIndex());
-            }
-            return true;
-        } catch (final Exception e) {
-            LOGGER.error("fail to load snapshot from {}", path, e);
-            return false;
-        }
-    }
+	@Override
+	public boolean load(SnapshotReader reader) {
+		if (reader.getFileMeta(fileName) == null) {
+			LOGGER.error("Fail to find data file in {}", reader.getPath());
+			return false;
+		}
+		String path = new StringBuilder(reader.getPath()).append(File.separator).append(fileName).toString();
+		try {
+			LOGGER.info("on snapshot load start index: {}", reader.load().getLastIncludedIndex());
+			RaftSessionSnapshot sessionSnapshot = (RaftSessionSnapshot) load(path);
+			RaftSessionManager raftSessionManager = (RaftSessionManager) SessionHolder.getRootSessionManager(group);
+			Map<String, GlobalSession> rootSessionMap = raftSessionManager.getSessionMap();
+			// be sure to clear the data before loading it, because this is a full
+			// overwrite update
+			LockerManagerFactory.getLockManager().cleanAllLocks();
+			rootSessionMap.clear();
+			rootSessionMap.putAll(sessionSnapshot.convert2GlobalSession());
+			if (LOGGER.isInfoEnabled()) {
+				LOGGER.info("on snapshot load end index: {}", reader.load().getLastIncludedIndex());
+			}
+			return true;
+		}
+		catch (final Exception e) {
+			LOGGER.error("fail to load snapshot from {}", path, e);
+			return false;
+		}
+	}
 
 }

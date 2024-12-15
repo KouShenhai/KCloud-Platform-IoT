@@ -27,19 +27,19 @@ import org.apache.seata.server.session.SessionHolder;
  */
 public class BranchReleaseLockExecute extends AbstractRaftMsgExecute {
 
-    @Override
-    public Boolean execute(RaftBaseMsg syncMsg) throws Throwable {
-        RaftBranchSessionSyncMsg sessionSyncMsg = (RaftBranchSessionSyncMsg)syncMsg;
-        GlobalSession globalSession =
-            SessionHolder.getRootSessionManager().findGlobalSession(sessionSyncMsg.getBranchSession().getXid());
-        BranchSession branchSession = globalSession.getBranch(sessionSyncMsg.getBranchSession().getBranchId());
-        if (branchSession != null) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("releaseBranchSessionLock xid: {}", globalSession.getXid());
-            }
-            return raftLockManager.localReleaseLock(branchSession);
-        }
-        return false;
-    }
+	@Override
+	public Boolean execute(RaftBaseMsg syncMsg) throws Throwable {
+		RaftBranchSessionSyncMsg sessionSyncMsg = (RaftBranchSessionSyncMsg) syncMsg;
+		GlobalSession globalSession = SessionHolder.getRootSessionManager()
+			.findGlobalSession(sessionSyncMsg.getBranchSession().getXid());
+		BranchSession branchSession = globalSession.getBranch(sessionSyncMsg.getBranchSession().getBranchId());
+		if (branchSession != null) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("releaseBranchSessionLock xid: {}", globalSession.getXid());
+			}
+			return raftLockManager.localReleaseLock(branchSession);
+		}
+		return false;
+	}
 
 }

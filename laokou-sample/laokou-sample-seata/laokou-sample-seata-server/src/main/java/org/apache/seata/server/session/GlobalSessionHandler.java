@@ -26,11 +26,11 @@ import org.apache.seata.core.exception.TransactionException;
 @FunctionalInterface
 public interface GlobalSessionHandler {
 
-    /**
-     * Handle global session.
-     *
-     * @param globalSession the global session
-     * @throws TransactionException the transaction exception
-     */
-    void handle(GlobalSession globalSession) throws TransactionException;
+	/**
+	 * Handle global session.
+	 * @param globalSession the global session
+	 * @throws TransactionException the transaction exception
+	 */
+	void handle(GlobalSession globalSession) throws TransactionException;
+
 }

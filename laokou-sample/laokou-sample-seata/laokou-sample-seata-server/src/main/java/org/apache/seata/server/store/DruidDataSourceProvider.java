@@ -30,29 +30,30 @@ import java.sql.Connection;
 @LoadLevel(name = "druid")
 public class DruidDataSourceProvider extends AbstractDataSourceProvider {
 
-    @Override
-    public DataSource doGenerate() {
-        DruidDataSource ds = new DruidDataSource();
-        ds.setDriverClassName(getDriverClassName());
-        ds.setDriverClassLoader(getDriverClassLoader());
-        ds.setUrl(getUrl());
-        ds.setUsername(getUser());
-        ds.setPassword(getPassword());
-        ds.setInitialSize(getMinConn());
-        ds.setMaxActive(getMaxConn());
-        ds.setMinIdle(getMinConn());
-        ds.setMaxWait(getMaxWait());
-        ds.setTimeBetweenEvictionRunsMillis(120000);
-        ds.setMinEvictableIdleTimeMillis(300000);
-        ds.setTestWhileIdle(true);
-        ds.setTestOnBorrow(false);
-        ds.setPoolPreparedStatements(true);
-        ds.setMaxPoolPreparedStatementPerConnectionSize(20);
-        ds.setValidationQuery(getValidationQuery(getDBType()));
-        ds.setDefaultAutoCommit(true);
-        // fix issue 5030
-        ds.setUseOracleImplicitCache(false);
-        ds.setDefaultTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-        return ds;
-    }
+	@Override
+	public DataSource doGenerate() {
+		DruidDataSource ds = new DruidDataSource();
+		ds.setDriverClassName(getDriverClassName());
+		ds.setDriverClassLoader(getDriverClassLoader());
+		ds.setUrl(getUrl());
+		ds.setUsername(getUser());
+		ds.setPassword(getPassword());
+		ds.setInitialSize(getMinConn());
+		ds.setMaxActive(getMaxConn());
+		ds.setMinIdle(getMinConn());
+		ds.setMaxWait(getMaxWait());
+		ds.setTimeBetweenEvictionRunsMillis(120000);
+		ds.setMinEvictableIdleTimeMillis(300000);
+		ds.setTestWhileIdle(true);
+		ds.setTestOnBorrow(false);
+		ds.setPoolPreparedStatements(true);
+		ds.setMaxPoolPreparedStatementPerConnectionSize(20);
+		ds.setValidationQuery(getValidationQuery(getDBType()));
+		ds.setDefaultAutoCommit(true);
+		// fix issue 5030
+		ds.setUseOracleImplicitCache(false);
+		ds.setDefaultTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+		return ds;
+	}
+
 }

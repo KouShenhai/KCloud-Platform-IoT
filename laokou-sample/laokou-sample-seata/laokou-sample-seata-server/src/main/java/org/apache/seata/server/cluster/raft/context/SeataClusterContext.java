@@ -30,47 +30,46 @@ import static org.apache.seata.common.DefaultValues.DEFAULT_SEATA_GROUP;
  */
 public class SeataClusterContext {
 
-    private static final String GROUP = ConfigurationFactory.getInstance().getConfig(ConfigurationKeys.SERVER_RAFT_GROUP, DEFAULT_SEATA_GROUP);
+	private static final String GROUP = ConfigurationFactory.getInstance()
+		.getConfig(ConfigurationKeys.SERVER_RAFT_GROUP, DEFAULT_SEATA_GROUP);
 
-    private SeataClusterContext() {
-    }
+	private SeataClusterContext() {
+	}
 
-    /**
-     * The constant KEY_GROUP.
-     */
-    public static final String KEY_GROUP = "TX_GROUP";
+	/**
+	 * The constant KEY_GROUP.
+	 */
+	public static final String KEY_GROUP = "TX_GROUP";
 
-    private static ContextCore CONTEXT_HOLDER = ContextCoreLoader.load();
+	private static ContextCore CONTEXT_HOLDER = ContextCoreLoader.load();
 
-    /**
-     * Bind group.
-     *
-     * @param group the group
-     */
-    public static void bindGroup(@Nonnull String group) {
-        CONTEXT_HOLDER.put(KEY_GROUP, group);
-    }
+	/**
+	 * Bind group.
+	 * @param group the group
+	 */
+	public static void bindGroup(@Nonnull String group) {
+		CONTEXT_HOLDER.put(KEY_GROUP, group);
+	}
 
-    /**
-     * Bind group.
-     *
-     */
-    public static String bindGroup() {
-        CONTEXT_HOLDER.put(KEY_GROUP, GROUP);
-        return GROUP;
-    }
+	/**
+	 * Bind group.
+	 *
+	 */
+	public static String bindGroup() {
+		CONTEXT_HOLDER.put(KEY_GROUP, GROUP);
+		return GROUP;
+	}
 
-    /**
-     * Unbind group.
-     */
-    public static void unbindGroup() {
-        CONTEXT_HOLDER.remove(KEY_GROUP);
-    }
+	/**
+	 * Unbind group.
+	 */
+	public static void unbindGroup() {
+		CONTEXT_HOLDER.remove(KEY_GROUP);
+	}
 
-    @Nullable
-    public static String getGroup() {
-        return (String) CONTEXT_HOLDER.get(KEY_GROUP);
-    }
-
+	@Nullable
+	public static String getGroup() {
+		return (String) CONTEXT_HOLDER.get(KEY_GROUP);
+	}
 
 }

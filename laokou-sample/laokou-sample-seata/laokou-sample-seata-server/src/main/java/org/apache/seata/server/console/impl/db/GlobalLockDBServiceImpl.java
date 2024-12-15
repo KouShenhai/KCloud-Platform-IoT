@@ -44,7 +44,6 @@ import org.springframework.stereotype.Component;
 
 import static org.apache.seata.common.DefaultValues.DEFAULT_LOCK_DB_TABLE;
 
-
 /**
  * Global Lock DB ServiceImpl
  *
@@ -54,95 +53,97 @@ import static org.apache.seata.common.DefaultValues.DEFAULT_LOCK_DB_TABLE;
 @ConditionalOnExpression("#{'db'.equals('${lockMode}')}")
 public class GlobalLockDBServiceImpl implements GlobalLockService {
 
-    private String lockTable;
+	private String lockTable;
 
-    private String dbType;
+	private String dbType;
 
-    private DataSource dataSource;
+	private DataSource dataSource;
 
-    public GlobalLockDBServiceImpl() {
-        Configuration configuration = ConfigurationFactory.getInstance();
-        lockTable = configuration.getConfig(ConfigurationKeys.LOCK_DB_TABLE, DEFAULT_LOCK_DB_TABLE);
-        dbType = configuration.getConfig(ConfigurationKeys.STORE_DB_TYPE);
-        if (StringUtils.isBlank(dbType)) {
-            throw new IllegalArgumentException(ConfigurationKeys.STORE_DB_TYPE + " should not be blank");
-        }
-        String dbDataSource = configuration.getConfig(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE);
-        if (StringUtils.isBlank(dbDataSource)) {
-            throw new IllegalArgumentException(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE + " should not be blank");
-        }
-        dataSource = EnhancedServiceLoader.load(DataSourceProvider.class, dbDataSource).provide();
-    }
+	public GlobalLockDBServiceImpl() {
+		Configuration configuration = ConfigurationFactory.getInstance();
+		lockTable = configuration.getConfig(ConfigurationKeys.LOCK_DB_TABLE, DEFAULT_LOCK_DB_TABLE);
+		dbType = configuration.getConfig(ConfigurationKeys.STORE_DB_TYPE);
+		if (StringUtils.isBlank(dbType)) {
+			throw new IllegalArgumentException(ConfigurationKeys.STORE_DB_TYPE + " should not be blank");
+		}
+		String dbDataSource = configuration.getConfig(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE);
+		if (StringUtils.isBlank(dbDataSource)) {
+			throw new IllegalArgumentException(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE + " should not be blank");
+		}
+		dataSource = EnhancedServiceLoader.load(DataSourceProvider.class, dbDataSource).provide();
+	}
 
-    @Override
-    public PageResult<GlobalLockVO> query(GlobalLockParam param) {
-        PageUtil.checkParam(param.getPageNum(), param.getPageSize());
+	@Override
+	public PageResult<GlobalLockVO> query(GlobalLockParam param) {
+		PageUtil.checkParam(param.getPageNum(), param.getPageSize());
 
-        List<Object> sqlParamList = new ArrayList<>();
-        String whereCondition = this.getWhereConditionByParam(param, sqlParamList);
+		List<Object> sqlParamList = new ArrayList<>();
+		String whereCondition = this.getWhereConditionByParam(param, sqlParamList);
 
-        String sourceSql = LockStoreSqlFactory.getLogStoreSql(dbType).getAllLockSql(lockTable, whereCondition);
-        String queryLockSql = PageUtil.pageSql(sourceSql, dbType, param.getPageNum(), param.getPageSize());
-        String lockCountSql = PageUtil.countSql(sourceSql, dbType);
+		String sourceSql = LockStoreSqlFactory.getLogStoreSql(dbType).getAllLockSql(lockTable, whereCondition);
+		String queryLockSql = PageUtil.pageSql(sourceSql, dbType, param.getPageNum(), param.getPageSize());
+		String lockCountSql = PageUtil.countSql(sourceSql, dbType);
 
-        List<GlobalLockVO> list = new ArrayList<>();
-        int count = 0;
+		List<GlobalLockVO> list = new ArrayList<>();
+		int count = 0;
 
-        Connection conn = null;
-        PreparedStatement ps = null;
-        PreparedStatement countPs = null;
-        ResultSet rs = null;
-        ResultSet countRs = null;
-        try {
-            conn = dataSource.getConnection();
-            ps = conn.prepareStatement(queryLockSql);
-            countPs = conn.prepareStatement(lockCountSql);
-            PageUtil.setObject(ps, sqlParamList);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(GlobalLockVO.convert(rs));
-            }
-            PageUtil.setObject(countPs, sqlParamList);
-            countRs = countPs.executeQuery();
-            if (countRs.next()) {
-                count = countRs.getInt(1);
-            }
-        } catch (SQLException e) {
-            throw new StoreException(e);
-        } finally {
-            IOUtil.close(rs, countRs, ps, countPs, conn);
-        }
-        return PageResult.success(list, count, param.getPageNum(), param.getPageSize());
-    }
+		Connection conn = null;
+		PreparedStatement ps = null;
+		PreparedStatement countPs = null;
+		ResultSet rs = null;
+		ResultSet countRs = null;
+		try {
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement(queryLockSql);
+			countPs = conn.prepareStatement(lockCountSql);
+			PageUtil.setObject(ps, sqlParamList);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				list.add(GlobalLockVO.convert(rs));
+			}
+			PageUtil.setObject(countPs, sqlParamList);
+			countRs = countPs.executeQuery();
+			if (countRs.next()) {
+				count = countRs.getInt(1);
+			}
+		}
+		catch (SQLException e) {
+			throw new StoreException(e);
+		}
+		finally {
+			IOUtil.close(rs, countRs, ps, countPs, conn);
+		}
+		return PageResult.success(list, count, param.getPageNum(), param.getPageSize());
+	}
 
-    private String getWhereConditionByParam(GlobalLockParam param, List<Object> sqlParamList) {
-        StringBuilder whereConditionBuilder = new StringBuilder();
-        if (StringUtils.isNotBlank(param.getXid())) {
-            whereConditionBuilder.append(" and xid = ? ");
-            sqlParamList.add(param.getXid());
-        }
-        if (StringUtils.isNotBlank(param.getTableName())) {
-            whereConditionBuilder.append(" and table_name = ? ");
-            sqlParamList.add(param.getTableName());
-        }
-        if (StringUtils.isNotBlank(param.getTransactionId())) {
-            whereConditionBuilder.append(" and transaction_id = ? ");
-            sqlParamList.add(param.getTransactionId());
-        }
-        if (StringUtils.isNotBlank(param.getBranchId())) {
-            whereConditionBuilder.append(" and branch_id = ? ");
-            sqlParamList.add(param.getBranchId());
-        }
-        if (param.getTimeStart() != null) {
-            whereConditionBuilder.append(PageUtil.getTimeStartSql(this.dbType, "gmt_create"));
-            sqlParamList.add(param.getTimeStart() / 1000);
-        }
-        if (param.getTimeEnd() != null) {
-            whereConditionBuilder.append(PageUtil.getTimeEndSql(this.dbType, "gmt_create"));
-            sqlParamList.add(param.getTimeEnd() / 1000);
-        }
-        String whereCondition = whereConditionBuilder.toString();
-        return whereCondition.replaceFirst("and", "where");
-    }
+	private String getWhereConditionByParam(GlobalLockParam param, List<Object> sqlParamList) {
+		StringBuilder whereConditionBuilder = new StringBuilder();
+		if (StringUtils.isNotBlank(param.getXid())) {
+			whereConditionBuilder.append(" and xid = ? ");
+			sqlParamList.add(param.getXid());
+		}
+		if (StringUtils.isNotBlank(param.getTableName())) {
+			whereConditionBuilder.append(" and table_name = ? ");
+			sqlParamList.add(param.getTableName());
+		}
+		if (StringUtils.isNotBlank(param.getTransactionId())) {
+			whereConditionBuilder.append(" and transaction_id = ? ");
+			sqlParamList.add(param.getTransactionId());
+		}
+		if (StringUtils.isNotBlank(param.getBranchId())) {
+			whereConditionBuilder.append(" and branch_id = ? ");
+			sqlParamList.add(param.getBranchId());
+		}
+		if (param.getTimeStart() != null) {
+			whereConditionBuilder.append(PageUtil.getTimeStartSql(this.dbType, "gmt_create"));
+			sqlParamList.add(param.getTimeStart() / 1000);
+		}
+		if (param.getTimeEnd() != null) {
+			whereConditionBuilder.append(PageUtil.getTimeEndSql(this.dbType, "gmt_create"));
+			sqlParamList.add(param.getTimeEnd() / 1000);
+		}
+		String whereCondition = whereConditionBuilder.toString();
+		return whereCondition.replaceFirst("and", "where");
+	}
 
 }

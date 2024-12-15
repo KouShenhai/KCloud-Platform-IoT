@@ -41,82 +41,92 @@ import static org.apache.seata.common.ConfigurationKeys.SERVER_RAFT_REPORTER_INI
  */
 public class RaftServer implements Disposable, Closeable {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final RaftStateMachine raftStateMachine;
-    private final String groupId;
-    private final String groupPath;
-    private final NodeOptions nodeOptions;
-    private final PeerId serverId;
-    private final RpcServer rpcServer;
-    private RaftGroupService raftGroupService;
-    private Node node;
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public RaftServer(final String dataPath, final String groupId, final PeerId serverId, final NodeOptions nodeOptions, final RpcServer rpcServer)
-        throws IOException {
-        this.groupId = groupId;
-        this.groupPath = dataPath + File.separator + groupId;
-        // Initialize the state machine
-        this.raftStateMachine = new RaftStateMachine(groupId);
-        this.nodeOptions = nodeOptions;
-        this.serverId = serverId;
-        this.rpcServer = rpcServer;
-    }
+	private final RaftStateMachine raftStateMachine;
 
-    public void start() throws IOException {
-        // Initialization path
-        FileUtils.forceMkdir(new File(groupPath));
-        // Set the state machine to startup parameters
-        nodeOptions.setFsm(this.raftStateMachine);
-        // Set the storage path
-        // Log, must
-        nodeOptions.setLogUri(groupPath + File.separator + "log");
-        // Meta information, must
-        nodeOptions.setRaftMetaUri(groupPath + File.separator + "raft_meta");
-        // Snapshot, optional, is generally recommended
-        nodeOptions.setSnapshotUri(groupPath + File.separator + "snapshot");
-        boolean reporterEnabled = ConfigurationFactory.getInstance().getBoolean(SERVER_RAFT_REPORTER_ENABLED, false);
-        nodeOptions.setEnableMetrics(reporterEnabled);
-        // Initialize the raft Group service framework
-        this.raftGroupService = new RaftGroupService(groupId, serverId, nodeOptions, rpcServer, true);
-        this.node = this.raftGroupService.start(false);
-        RouteTable.getInstance().updateConfiguration(groupId, node.getOptions().getInitialConf());
-        if (reporterEnabled) {
-            final Slf4jReporter reporter = Slf4jReporter.forRegistry(node.getNodeMetrics().getMetricRegistry())
-                .outputTo(logger).convertRatesTo(TimeUnit.SECONDS)
-                .convertDurationsTo(TimeUnit.MILLISECONDS).build();
-            reporter.start(ConfigurationFactory.getInstance().getInt(SERVER_RAFT_REPORTER_INITIAL_DELAY, 60),
-                TimeUnit.MINUTES);
-        }
-    }
+	private final String groupId;
 
-    public Node getNode() {
-        return this.node;
-    }
+	private final String groupPath;
 
+	private final NodeOptions nodeOptions;
 
-    public RaftStateMachine getRaftStateMachine() {
-        return raftStateMachine;
-    }
+	private final PeerId serverId;
 
-    public PeerId getServerId() {
-        return serverId;
-    }
+	private final RpcServer rpcServer;
 
-    @Override
-    public void close() {
-        destroy();
-    }
+	private RaftGroupService raftGroupService;
 
-    @Override
-    public void destroy() {
-        Optional.ofNullable(raftGroupService).ifPresent(r -> {
-            r.shutdown();
-            try {
-                r.join();
-            } catch (InterruptedException e) {
-                logger.warn("Interrupted when RaftServer destroying", e);
-            }
-        });
-    }
+	private Node node;
+
+	public RaftServer(final String dataPath, final String groupId, final PeerId serverId, final NodeOptions nodeOptions,
+			final RpcServer rpcServer) throws IOException {
+		this.groupId = groupId;
+		this.groupPath = dataPath + File.separator + groupId;
+		// Initialize the state machine
+		this.raftStateMachine = new RaftStateMachine(groupId);
+		this.nodeOptions = nodeOptions;
+		this.serverId = serverId;
+		this.rpcServer = rpcServer;
+	}
+
+	public void start() throws IOException {
+		// Initialization path
+		FileUtils.forceMkdir(new File(groupPath));
+		// Set the state machine to startup parameters
+		nodeOptions.setFsm(this.raftStateMachine);
+		// Set the storage path
+		// Log, must
+		nodeOptions.setLogUri(groupPath + File.separator + "log");
+		// Meta information, must
+		nodeOptions.setRaftMetaUri(groupPath + File.separator + "raft_meta");
+		// Snapshot, optional, is generally recommended
+		nodeOptions.setSnapshotUri(groupPath + File.separator + "snapshot");
+		boolean reporterEnabled = ConfigurationFactory.getInstance().getBoolean(SERVER_RAFT_REPORTER_ENABLED, false);
+		nodeOptions.setEnableMetrics(reporterEnabled);
+		// Initialize the raft Group service framework
+		this.raftGroupService = new RaftGroupService(groupId, serverId, nodeOptions, rpcServer, true);
+		this.node = this.raftGroupService.start(false);
+		RouteTable.getInstance().updateConfiguration(groupId, node.getOptions().getInitialConf());
+		if (reporterEnabled) {
+			final Slf4jReporter reporter = Slf4jReporter.forRegistry(node.getNodeMetrics().getMetricRegistry())
+				.outputTo(logger)
+				.convertRatesTo(TimeUnit.SECONDS)
+				.convertDurationsTo(TimeUnit.MILLISECONDS)
+				.build();
+			reporter.start(ConfigurationFactory.getInstance().getInt(SERVER_RAFT_REPORTER_INITIAL_DELAY, 60),
+					TimeUnit.MINUTES);
+		}
+	}
+
+	public Node getNode() {
+		return this.node;
+	}
+
+	public RaftStateMachine getRaftStateMachine() {
+		return raftStateMachine;
+	}
+
+	public PeerId getServerId() {
+		return serverId;
+	}
+
+	@Override
+	public void close() {
+		destroy();
+	}
+
+	@Override
+	public void destroy() {
+		Optional.ofNullable(raftGroupService).ifPresent(r -> {
+			r.shutdown();
+			try {
+				r.join();
+			}
+			catch (InterruptedException e) {
+				logger.warn("Interrupted when RaftServer destroying", e);
+			}
+		});
+	}
 
 }

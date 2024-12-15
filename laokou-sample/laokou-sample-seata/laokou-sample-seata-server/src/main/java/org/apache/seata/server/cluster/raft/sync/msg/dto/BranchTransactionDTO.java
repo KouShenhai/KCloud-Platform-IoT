@@ -22,23 +22,24 @@ import org.apache.seata.core.store.BranchTransactionDO;
  */
 public class BranchTransactionDTO extends BranchTransactionDO {
 
-    private static final long serialVersionUID = 4550610938263777969L;
-    private String lockKey;
+	private static final long serialVersionUID = 4550610938263777969L;
 
-    public BranchTransactionDTO(String xid, long branchId) {
-        super(xid, branchId);
-    }
+	private String lockKey;
 
-    public BranchTransactionDTO() {
-        super();
-    }
+	public BranchTransactionDTO(String xid, long branchId) {
+		super(xid, branchId);
+	}
 
-    public String getLockKey() {
-        return lockKey;
-    }
+	public BranchTransactionDTO() {
+		super();
+	}
 
-    public void setLockKey(String lockKey) {
-        this.lockKey = lockKey;
-    }
+	public String getLockKey() {
+		return lockKey;
+	}
+
+	public void setLockKey(String lockKey) {
+		this.lockKey = lockKey;
+	}
 
 }

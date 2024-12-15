@@ -26,23 +26,25 @@ import static org.apache.seata.common.Constants.STORE_REDIS_TYPE_PIPELINE;
  */
 public class RedisTransactionStoreManagerFactory {
 
-    protected static final Configuration CONFIG = ConfigurationFactory.getInstance();
+	protected static final Configuration CONFIG = ConfigurationFactory.getInstance();
 
-    private static volatile RedisTransactionStoreManager instance;
+	private static volatile RedisTransactionStoreManager instance;
 
-    /**
-     * Get the instance.
-     */
-    public static RedisTransactionStoreManager getInstance() {
-        if (instance == null) {
-            synchronized (RedisTransactionStoreManagerFactory.class) {
-                if (instance == null) {
-                    String storeRedisType = CONFIG.getConfig(ConfigurationKeys.STORE_REDIS_TYPE, STORE_REDIS_TYPE_PIPELINE);
-                    instance = STORE_REDIS_TYPE_PIPELINE.equals(storeRedisType) ?
-                        new RedisTransactionStoreManager() : new RedisLuaTransactionStoreManager();
-                }
-            }
-        }
-        return instance;
-    }
+	/**
+	 * Get the instance.
+	 */
+	public static RedisTransactionStoreManager getInstance() {
+		if (instance == null) {
+			synchronized (RedisTransactionStoreManagerFactory.class) {
+				if (instance == null) {
+					String storeRedisType = CONFIG.getConfig(ConfigurationKeys.STORE_REDIS_TYPE,
+							STORE_REDIS_TYPE_PIPELINE);
+					instance = STORE_REDIS_TYPE_PIPELINE.equals(storeRedisType) ? new RedisTransactionStoreManager()
+							: new RedisLuaTransactionStoreManager();
+				}
+			}
+		}
+		return instance;
+	}
+
 }

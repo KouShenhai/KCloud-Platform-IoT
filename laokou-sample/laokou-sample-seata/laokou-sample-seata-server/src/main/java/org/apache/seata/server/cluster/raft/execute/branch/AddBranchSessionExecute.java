@@ -30,20 +30,21 @@ import org.apache.seata.server.storage.raft.session.RaftSessionManager;
  */
 public class AddBranchSessionExecute extends AbstractRaftMsgExecute {
 
-    @Override
-    public Boolean execute(RaftBaseMsg syncMsg) throws Throwable {
-        RaftBranchSessionSyncMsg sessionSyncMsg = (RaftBranchSessionSyncMsg)syncMsg;
-        RaftSessionManager raftSessionManager = (RaftSessionManager) SessionHolder.getRootSessionManager(sessionSyncMsg.getGroup());
-        BranchTransactionDTO branchTransactionDTO = sessionSyncMsg.getBranchSession();
-        GlobalSession globalSession = raftSessionManager.findGlobalSession(branchTransactionDTO.getXid());
-        BranchSession branchSession = SessionConverter.convertBranchSession(branchTransactionDTO);
-        branchSession.lock();
-        globalSession.add(branchSession);
-        if (logger.isDebugEnabled()) {
-            logger.debug("addBranch xid: {},branchId: {}", branchTransactionDTO.getXid(),
-                branchTransactionDTO.getBranchId());
-        }
-        return true;
-    }
+	@Override
+	public Boolean execute(RaftBaseMsg syncMsg) throws Throwable {
+		RaftBranchSessionSyncMsg sessionSyncMsg = (RaftBranchSessionSyncMsg) syncMsg;
+		RaftSessionManager raftSessionManager = (RaftSessionManager) SessionHolder
+			.getRootSessionManager(sessionSyncMsg.getGroup());
+		BranchTransactionDTO branchTransactionDTO = sessionSyncMsg.getBranchSession();
+		GlobalSession globalSession = raftSessionManager.findGlobalSession(branchTransactionDTO.getXid());
+		BranchSession branchSession = SessionConverter.convertBranchSession(branchTransactionDTO);
+		branchSession.lock();
+		globalSession.add(branchSession);
+		if (logger.isDebugEnabled()) {
+			logger.debug("addBranch xid: {},branchId: {}", branchTransactionDTO.getXid(),
+					branchTransactionDTO.getBranchId());
+		}
+		return true;
+	}
 
 }

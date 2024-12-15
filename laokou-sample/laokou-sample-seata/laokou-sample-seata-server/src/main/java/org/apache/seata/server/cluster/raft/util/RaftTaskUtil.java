@@ -34,46 +34,50 @@ import org.apache.seata.server.cluster.raft.sync.msg.RaftSyncMessage;
  */
 public class RaftTaskUtil {
 
-    public static boolean createTask(Closure done, Object data, CompletableFuture<Boolean> completableFuture)
-        throws TransactionException {
-        final Task task = new Task();
-        if (data != null) {
-            RaftSyncMessage raftSyncMessage = new RaftSyncMessage();
-            raftSyncMessage.setBody(data);
-            try {
-                task.setData(ByteBuffer.wrap(RaftSyncMessageSerializer.encode(raftSyncMessage)));
-            } catch (IOException e) {
-                throw new TransactionException(e);
-            }
-        }
-        task.setDone(done == null ? status -> {
-        } : done);
-        RaftServerManager.getRaftServer(SeataClusterContext.getGroup()).getNode().apply(task);
-        if (completableFuture != null) {
-            return futureGet(completableFuture);
-        }
-        return true;
-    }
+	public static boolean createTask(Closure done, Object data, CompletableFuture<Boolean> completableFuture)
+			throws TransactionException {
+		final Task task = new Task();
+		if (data != null) {
+			RaftSyncMessage raftSyncMessage = new RaftSyncMessage();
+			raftSyncMessage.setBody(data);
+			try {
+				task.setData(ByteBuffer.wrap(RaftSyncMessageSerializer.encode(raftSyncMessage)));
+			}
+			catch (IOException e) {
+				throw new TransactionException(e);
+			}
+		}
+		task.setDone(done == null ? status -> {
+		} : done);
+		RaftServerManager.getRaftServer(SeataClusterContext.getGroup()).getNode().apply(task);
+		if (completableFuture != null) {
+			return futureGet(completableFuture);
+		}
+		return true;
+	}
 
-    public static boolean createTask(Closure done, CompletableFuture<Boolean> completableFuture)
-        throws TransactionException {
-        return createTask(done, null, completableFuture);
-    }
+	public static boolean createTask(Closure done, CompletableFuture<Boolean> completableFuture)
+			throws TransactionException {
+		return createTask(done, null, completableFuture);
+	}
 
-    public static boolean futureGet(CompletableFuture<Boolean> completableFuture) throws TransactionException {
-        try {
-            return completableFuture.get();
-        } catch (InterruptedException e) {
-            throw new GlobalTransactionException(TransactionExceptionCode.FailedWriteSession,
-                "Fail to store global session: " + e.getMessage());
-        } catch (ExecutionException e) {
-            if (e.getCause() instanceof TransactionException) {
-                throw (TransactionException)e.getCause();
-            } else {
-                throw new GlobalTransactionException(TransactionExceptionCode.FailedWriteSession,
-                    "Fail to store global session: " + e.getMessage());
-            }
-        }
-    }
+	public static boolean futureGet(CompletableFuture<Boolean> completableFuture) throws TransactionException {
+		try {
+			return completableFuture.get();
+		}
+		catch (InterruptedException e) {
+			throw new GlobalTransactionException(TransactionExceptionCode.FailedWriteSession,
+					"Fail to store global session: " + e.getMessage());
+		}
+		catch (ExecutionException e) {
+			if (e.getCause() instanceof TransactionException) {
+				throw (TransactionException) e.getCause();
+			}
+			else {
+				throw new GlobalTransactionException(TransactionExceptionCode.FailedWriteSession,
+						"Fail to store global session: " + e.getMessage());
+			}
+		}
+	}
 
 }

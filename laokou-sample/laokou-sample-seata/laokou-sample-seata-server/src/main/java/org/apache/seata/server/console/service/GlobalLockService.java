@@ -20,18 +20,16 @@ import org.apache.seata.common.result.PageResult;
 import org.apache.seata.server.console.param.GlobalLockParam;
 import org.apache.seata.server.console.vo.GlobalLockVO;
 
-
 /**
  * Global lock service
  */
 public interface GlobalLockService {
 
-    /**
-     * Query locks by param
-     * @param param the param
-     * @return the list of GlobalLockVO
-     */
-    PageResult<GlobalLockVO> query(GlobalLockParam param);
-
+	/**
+	 * Query locks by param
+	 * @param param the param
+	 * @return the list of GlobalLockVO
+	 */
+	PageResult<GlobalLockVO> query(GlobalLockParam param);
 
 }

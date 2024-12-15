@@ -34,31 +34,29 @@ import static org.apache.seata.common.DefaultValues.DEFAULT_SEATA_GROUP;
 @LoadLevel(name = "raft")
 public class RaftDistributedLocker implements DistributedLocker {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(
-            RedisDistributedLocker.class);
+	protected static final Logger LOGGER = LoggerFactory.getLogger(RedisDistributedLocker.class);
 
-    private final String group = ConfigurationFactory.getInstance().getConfig(ConfigurationKeys.SERVER_RAFT_GROUP, DEFAULT_SEATA_GROUP);
+	private final String group = ConfigurationFactory.getInstance()
+		.getConfig(ConfigurationKeys.SERVER_RAFT_GROUP, DEFAULT_SEATA_GROUP);
 
-    /**
-     * Acquire the distributed lock
-     *
-     * @param distributedLockDO distributedLockDO
-     * @return boolean
-     */
-    @Override
-    public boolean acquireLock(DistributedLockDO distributedLockDO) {
-        return RaftServerManager.isLeader(group);
-    }
+	/**
+	 * Acquire the distributed lock
+	 * @param distributedLockDO distributedLockDO
+	 * @return boolean
+	 */
+	@Override
+	public boolean acquireLock(DistributedLockDO distributedLockDO) {
+		return RaftServerManager.isLeader(group);
+	}
 
-    /**
-     * Release the distributed lock
-     *
-     * @param distributedLockDO distributedLockDO
-     * @return boolean
-     */
-    @Override
-    public boolean releaseLock(DistributedLockDO distributedLockDO) {
-        return true;
-    }
-    
+	/**
+	 * Release the distributed lock
+	 * @param distributedLockDO distributedLockDO
+	 * @return boolean
+	 */
+	@Override
+	public boolean releaseLock(DistributedLockDO distributedLockDO) {
+		return true;
+	}
+
 }

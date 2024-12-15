@@ -25,11 +25,11 @@ import org.apache.seata.common.result.PageResult;
  */
 public interface GlobalSessionService {
 
-    /**
-     * Query global session
-     * @param param the param
-     * @return the GlobalSessionVO list
-     */
-    PageResult<GlobalSessionVO> query(GlobalSessionParam param);
+	/**
+	 * Query global session
+	 * @param param the param
+	 * @return the GlobalSessionVO list
+	 */
+	PageResult<GlobalSessionVO> query(GlobalSessionParam param);
 
 }

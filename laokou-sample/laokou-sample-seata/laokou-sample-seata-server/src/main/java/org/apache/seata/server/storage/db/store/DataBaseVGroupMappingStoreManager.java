@@ -32,39 +32,40 @@ import java.util.List;
 
 @LoadLevel(name = "db")
 public class DataBaseVGroupMappingStoreManager implements VGroupMappingStoreManager {
-    protected VGroupMappingDataBaseDAO vGroupMappingDataBaseDAO;
 
-    protected static final Configuration CONFIG = ConfigurationFactory.getInstance();
+	protected VGroupMappingDataBaseDAO vGroupMappingDataBaseDAO;
 
-    public DataBaseVGroupMappingStoreManager() {
-        String datasourceType = CONFIG.getConfig(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE);
-        //init dataSource
-        DataSource vGroupMappingDataSource = EnhancedServiceLoader.load(DataSourceProvider.class, datasourceType).provide();
-        vGroupMappingDataBaseDAO = new VGroupMappingDataBaseDAO(vGroupMappingDataSource);
-    }
+	protected static final Configuration CONFIG = ConfigurationFactory.getInstance();
 
-    @Override
-    public boolean addVGroup(MappingDO mappingDO) {
-        return vGroupMappingDataBaseDAO.insertMappingDO(mappingDO);
-    }
+	public DataBaseVGroupMappingStoreManager() {
+		String datasourceType = CONFIG.getConfig(ConfigurationKeys.STORE_DB_DATASOURCE_TYPE);
+		// init dataSource
+		DataSource vGroupMappingDataSource = EnhancedServiceLoader.load(DataSourceProvider.class, datasourceType)
+			.provide();
+		vGroupMappingDataBaseDAO = new VGroupMappingDataBaseDAO(vGroupMappingDataSource);
+	}
 
-    @Override
-    public boolean removeVGroup(String vGroup) {
-        return vGroupMappingDataBaseDAO.deleteMappingDOByVGroup(vGroup);
-    }
+	@Override
+	public boolean addVGroup(MappingDO mappingDO) {
+		return vGroupMappingDataBaseDAO.insertMappingDO(mappingDO);
+	}
 
-    @Override
-    public HashMap<String, Object> loadVGroups() {
-        List<MappingDO> mappingDOS = vGroupMappingDataBaseDAO.queryMappingDO();
-        Instance instance = Instance.getInstance();
-        HashMap<String, Object> mappings = new HashMap<>();
-        for (MappingDO mappingDO : mappingDOS) {
-            if (mappingDO.getCluster() != null && mappingDO.getCluster().equals(instance.getClusterName())) {
-                mappings.put(mappingDO.getVGroup(), null);
-            }
-        }
-        return mappings;
-    }
+	@Override
+	public boolean removeVGroup(String vGroup) {
+		return vGroupMappingDataBaseDAO.deleteMappingDOByVGroup(vGroup);
+	}
 
+	@Override
+	public HashMap<String, Object> loadVGroups() {
+		List<MappingDO> mappingDOS = vGroupMappingDataBaseDAO.queryMappingDO();
+		Instance instance = Instance.getInstance();
+		HashMap<String, Object> mappings = new HashMap<>();
+		for (MappingDO mappingDO : mappingDOS) {
+			if (mappingDO.getCluster() != null && mappingDO.getCluster().equals(instance.getClusterName())) {
+				mappings.put(mappingDO.getVGroup(), null);
+			}
+		}
+		return mappings;
+	}
 
 }

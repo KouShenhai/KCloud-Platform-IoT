@@ -27,35 +27,31 @@ import org.apache.commons.io.FileUtils;
  */
 public interface StoreSnapshotFile {
 
-    /**
-     * Save a snapshot .
-     *
-     * @param writer snapshot writer
-     * @return true if save succeed
-     */
-    Status save(final SnapshotWriter writer);
+	/**
+	 * Save a snapshot .
+	 * @param writer snapshot writer
+	 * @return true if save succeed
+	 */
+	Status save(final SnapshotWriter writer);
 
-    /**
-     * Load snapshot for the specified region.
-     *
-     * @param reader snapshot reader
-     * @return true if load succeed
-     */
-    boolean load(final SnapshotReader reader);
+	/**
+	 * Load snapshot for the specified region.
+	 * @param reader snapshot reader
+	 * @return true if load succeed
+	 */
+	boolean load(final SnapshotReader reader);
 
-    default boolean save(final RaftSnapshot value, String path) throws IOException {
-        FileUtils.writeByteArrayToFile(new File(path), RaftSnapshotSerializer.encode(value));
-        return true;
-    }
+	default boolean save(final RaftSnapshot value, String path) throws IOException {
+		FileUtils.writeByteArrayToFile(new File(path), RaftSnapshotSerializer.encode(value));
+		return true;
+	}
 
-    /**
-     * Save value to snapshot file.
-     */
-    default Object load(String path) throws IOException {
-        RaftSnapshot raftSnapshot = RaftSnapshotSerializer.decode(FileUtils.readFileToByteArray(new File(path)));
-        return raftSnapshot.getBody();
-    }
-
-
+	/**
+	 * Save value to snapshot file.
+	 */
+	default Object load(String path) throws IOException {
+		RaftSnapshot raftSnapshot = RaftSnapshotSerializer.decode(FileUtils.readFileToByteArray(new File(path)));
+		return raftSnapshot.getBody();
+	}
 
 }

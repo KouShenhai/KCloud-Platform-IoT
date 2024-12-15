@@ -26,14 +26,14 @@ import org.apache.seata.core.exception.TransactionException;
 @FunctionalInterface
 public interface BranchSessionHandler {
 
-    Boolean CONTINUE = null;
+	Boolean CONTINUE = null;
 
-    /**
-     * Handle branch session.
-     *
-     * @param branchSession the branch session
-     * @return the handle result
-     * @throws TransactionException the transaction exception
-     */
-    Boolean handle(BranchSession branchSession) throws TransactionException;
+	/**
+	 * Handle branch session.
+	 * @param branchSession the branch session
+	 * @return the handle result
+	 * @throws TransactionException the transaction exception
+	 */
+	Boolean handle(BranchSession branchSession) throws TransactionException;
+
 }
