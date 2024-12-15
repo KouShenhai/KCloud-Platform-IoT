@@ -545,7 +545,7 @@ COMMENT ON COLUMN "public"."boot_iot_thing_model"."expression" IS '表达式';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."sort" IS '排序';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."specs" IS '规则说明';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."remark" IS '备注';
-COMMENT ON TABLE "public"."boot_iot_thing_model" IS '模型';
+COMMENT ON TABLE "public"."boot_iot_thing_model" IS '物模型';
 
 -- ----------------------------
 -- Records of boot_iot_thing_model
