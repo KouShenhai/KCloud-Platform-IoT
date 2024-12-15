@@ -19,13 +19,13 @@ package org.laokou.common.crypto.utils;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.banner.utils.ResourceUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
 import javax.crypto.Cipher;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.KeyFactory;
@@ -59,13 +59,13 @@ public final class RSAUtil {
 	private static final String PRIVATE_KEY;
 
 	static {
-		try (InputStream inputStream1 = ResourceUtil.getResource("/conf/publicKey.scr").getInputStream();
-				InputStream inputStream2 = ResourceUtil.getResource("/conf/privateKey.scr").getInputStream()) {
-			PUBLIC_KEY = new String(inputStream1.readAllBytes(), StandardCharsets.UTF_8).trim();
-			PRIVATE_KEY = new String(inputStream2.readAllBytes(), StandardCharsets.UTF_8).trim();
+		try {
+			PUBLIC_KEY = ResourceUtil.getResource("/conf/publicKey.scr").getContentAsString(StandardCharsets.UTF_8).trim();
+			PRIVATE_KEY = ResourceUtil.getResource("/conf/privateKey.scr").getContentAsString(StandardCharsets.UTF_8).trim();
 		}
 		catch (IOException e) {
-			throw new RuntimeException(e);
+			log.error("读取私钥或密钥失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_UnKnow_Error", e.getMessage());
 		}
 	}
 

@@ -18,7 +18,7 @@
 package org.laokou.gateway.filter;
 
 import io.micrometer.common.lang.NonNullApi;
-import org.laokou.common.i18n.utils.ResourceUtil;
+import org.laokou.common.banner.utils.ResourceUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -55,8 +55,7 @@ public class Knife4jFilter implements WebFilter {
 
 	static {
 		try {
-			HTML_CONTENT = new String(ResourceUtil.getResource("oauth2.html").getInputStream().readAllBytes(),
-					StandardCharsets.UTF_8);
+			HTML_CONTENT = ResourceUtil.getResource("oauth2.html").getContentAsString(StandardCharsets.UTF_8).trim();
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);

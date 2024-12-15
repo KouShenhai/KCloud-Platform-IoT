@@ -164,6 +164,11 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-banner</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-common-statemachine</artifactId>
         <version>${laokou.version}</version>
       </dependency>

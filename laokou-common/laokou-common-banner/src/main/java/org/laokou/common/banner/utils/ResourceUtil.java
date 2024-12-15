@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.i18n.utils;
+package org.laokou.common.banner.utils;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;

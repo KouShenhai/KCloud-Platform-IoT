@@ -24,7 +24,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.laokou.common.core.utils.ResponseUtil;
-import org.laokou.common.i18n.utils.ResourceUtil;
+import org.laokou.common.banner.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
@@ -46,8 +46,7 @@ public class Knife4jFilter extends OncePerRequestFilter {
 
 	static {
 		try {
-			HTML_CONTENT = new String(ResourceUtil.getResource("oauth2.html").getInputStream().readAllBytes(),
-					StandardCharsets.UTF_8);
+			HTML_CONTENT = ResourceUtil.getResource("oauth2.html").getContentAsString(StandardCharsets.UTF_8).trim();
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);

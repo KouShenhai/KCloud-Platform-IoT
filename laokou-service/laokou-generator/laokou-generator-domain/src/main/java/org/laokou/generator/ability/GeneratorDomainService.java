@@ -19,10 +19,10 @@ package org.laokou.generator.ability;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.laokou.common.banner.utils.ResourceUtil;
 import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.generator.gateway.TableGateway;
 import org.laokou.generator.model.GeneratorA;
 import org.laokou.generator.model.TableV;
@@ -30,7 +30,6 @@ import org.laokou.generator.model.Template;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,10 +98,8 @@ public class GeneratorDomainService {
 
 	@SneakyThrows
 	private String getContent(Map<String, Object> map, String templatePath) {
-		try (InputStream inputStream = ResourceUtil.getResource(templatePath).getInputStream()) {
-			String template = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-			return TemplateUtil.getContent(template, map);
-		}
+		String template = ResourceUtil.getResource(templatePath).getContentAsString(StandardCharsets.UTF_8).trim();
+		return TemplateUtil.getContent(template, map);
 	}
 
 	private List<Template> getTemplates() {

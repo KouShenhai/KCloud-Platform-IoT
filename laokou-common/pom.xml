@@ -74,6 +74,7 @@
     <module>laokou-common-grpc</module>
     <module>laokou-common-statemachine</module>
     <module>laokou-common-ruleengine</module>
+    <module>laokou-common-banner</module>
   </modules>
 
 </project>

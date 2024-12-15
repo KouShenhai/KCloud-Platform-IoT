@@ -18,7 +18,7 @@
 package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
-import org.laokou.common.i18n.utils.ResourceUtil;
+import org.laokou.common.banner.utils.ResourceUtil;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.boot.env.YamlPropertySourceLoader;
 import org.springframework.core.env.PropertySource;
