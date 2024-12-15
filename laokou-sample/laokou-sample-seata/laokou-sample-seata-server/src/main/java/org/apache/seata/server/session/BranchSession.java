@@ -51,18 +51,31 @@ public class BranchSession implements Lockable, Comparable<BranchSession>, Sessi
 
 	private static final ThreadLocal<ByteBuffer> byteBufferThreadLocal = ThreadLocal
 		.withInitial(() -> ByteBuffer.allocate(MAX_BRANCH_SESSION_SIZE));
+
 	private final Map<FileLocker.BucketLockMap, Set<String>> lockHolder;
+
 	private final LockManager lockManager = LockerManagerFactory.getLockManager();
+
 	private String xid;
+
 	private long transactionId;
+
 	private long branchId;
+
 	private String resourceGroupId;
+
 	private String resourceId;
+
 	private String lockKey;
+
 	private BranchType branchType;
+
 	private BranchStatus status = BranchStatus.Unknown;
+
 	private String clientId;
+
 	private String applicationData;
+
 	private LockStatus lockStatus = Locked;
 
 	public BranchSession() {
