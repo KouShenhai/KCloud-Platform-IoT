@@ -16,13 +16,6 @@
  */
 package org.apache.seata.server.session;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.apache.seata.common.util.BufferUtils;
 import org.apache.seata.common.util.CompressUtil;
 import org.apache.seata.core.exception.TransactionException;
@@ -37,6 +30,13 @@ import org.apache.seata.server.store.StoreConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 import static org.apache.seata.core.model.LockStatus.Locked;
 
 /**
@@ -49,34 +49,21 @@ public class BranchSession implements Lockable, Comparable<BranchSession>, Sessi
 
 	private static final int MAX_BRANCH_SESSION_SIZE = StoreConfig.getMaxBranchSessionSize();
 
-	private static ThreadLocal<ByteBuffer> byteBufferThreadLocal = ThreadLocal
+	private static final ThreadLocal<ByteBuffer> byteBufferThreadLocal = ThreadLocal
 		.withInitial(() -> ByteBuffer.allocate(MAX_BRANCH_SESSION_SIZE));
-
-	private String xid;
-
-	private long transactionId;
-
-	private long branchId;
-
-	private String resourceGroupId;
-
-	private String resourceId;
-
-	private String lockKey;
-
-	private BranchType branchType;
-
-	private BranchStatus status = BranchStatus.Unknown;
-
-	private String clientId;
-
-	private String applicationData;
-
-	private LockStatus lockStatus = Locked;
-
 	private final Map<FileLocker.BucketLockMap, Set<String>> lockHolder;
-
 	private final LockManager lockManager = LockerManagerFactory.getLockManager();
+	private String xid;
+	private long transactionId;
+	private long branchId;
+	private String resourceGroupId;
+	private String resourceId;
+	private String lockKey;
+	private BranchType branchType;
+	private BranchStatus status = BranchStatus.Unknown;
+	private String clientId;
+	private String applicationData;
+	private LockStatus lockStatus = Locked;
 
 	public BranchSession() {
 		lockHolder = new ConcurrentHashMap<>(2);
