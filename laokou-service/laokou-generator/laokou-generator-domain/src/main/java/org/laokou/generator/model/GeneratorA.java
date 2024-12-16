@@ -37,7 +37,7 @@ public class GeneratorA extends AggregateRoot {
 
 	private final String moduleName;
 
-	private final String version;
+	// private final String version;
 
 	private final TableE tableE;
 
@@ -49,7 +49,7 @@ public class GeneratorA extends AggregateRoot {
 		this.author = author;
 		this.packageName = packageName;
 		this.moduleName = moduleName;
-		this.version = version;
+		// this.version = version;
 		this.tableE = tableE;
 		this.app = app;
 	}
@@ -70,7 +70,7 @@ public class GeneratorA extends AggregateRoot {
 		Map<String, Object> map = JacksonUtil.toMap(tableV, String.class, Object.class);
 		map.put("id", "#{id}");
 		map.put("author", author);
-		map.put("version", version);
+		// map.put("version", version);
 		map.put("pageQuery", "${pageQuery");
 		map.put("packageName", packageName);
 		map.put("app", app.name());

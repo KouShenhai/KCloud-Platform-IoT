@@ -20,6 +20,15 @@
       <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-auth-client</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

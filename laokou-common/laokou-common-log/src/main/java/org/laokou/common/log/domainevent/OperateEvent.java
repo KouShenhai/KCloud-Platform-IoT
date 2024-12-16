@@ -19,7 +19,6 @@ package org.laokou.common.log.domainevent;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 import java.io.Serial;
 
@@ -29,7 +28,7 @@ import java.io.Serial;
  * @author laokou
  */
 @Getter
-public final class OperateEvent extends DefaultDomainEvent {
+public final class OperateEvent {
 
 	@Serial
 	private static final long serialVersionUID = -6523521638764501311L;
@@ -73,9 +72,10 @@ public final class OperateEvent extends DefaultDomainEvent {
 	@Schema(name = "costTime", description = "操作的消耗时间(毫秒)")
 	private Long costTime;
 
-	protected OperateEvent(String serviceId, Long tenantId, Long userId, Long aggregateId, String sourcePrefix,
-			String topic, String tag) {
-		super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
-	}
+	// protected OperateEvent(String serviceId, Long tenantId, Long userId, Long
+	// aggregateId, String sourcePrefix,
+	// String topic, String tag) {
+	// super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
+	// }
 
 }

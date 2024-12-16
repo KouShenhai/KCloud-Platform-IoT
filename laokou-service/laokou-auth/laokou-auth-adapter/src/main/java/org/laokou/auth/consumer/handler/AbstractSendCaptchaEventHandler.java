@@ -17,36 +17,31 @@
 
 package org.laokou.auth.consumer.handler;
 
-import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.handler.AbstractDomainEventHandler;
-import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
-
 /**
  * @author laokou
  */
-public abstract class AbstractSendCaptchaEventHandler extends AbstractDomainEventHandler {
+public abstract class AbstractSendCaptchaEventHandler {
 
-	protected AbstractSendCaptchaEventHandler(DomainEventPublisher domainEventPublisher) {
-		super(domainEventPublisher);
-	}
+	// protected AbstractSendCaptchaEventHandler(DomainEventPublisher
+	// domainEventPublisher) {
+	// super(domainEventPublisher);
+	// }
 
-	@Override
-	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-		SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
-		// NoticeMessageEvent noticeMessageEvent = new
-		// NoticeMessageEvent(LAOKOU_LOG_TOPIC, NOTICE_TAG, SEND_NOTICE,
-		// event.getServiceId(), event.getSourcePrefix(), event.getAggregateId(),
-		// event.getTenantId());
-		// rocketMQDomainEventPublisher.publish(noticeMessageEvent,
-		// SendMessageType.ONE_WAY);
-	}
+	// @Override
+	// protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
+	// SendCaptchaEvent event = (SendCaptchaEvent) domainEvent;
+	// NoticeMessageEvent noticeMessageEvent = new
+	// NoticeMessageEvent(LAOKOU_LOG_TOPIC, NOTICE_TAG, SEND_NOTICE,
+	// event.getServiceId(), event.getSourcePrefix(), event.getAggregateId(),
+	// event.getTenantId());
+	// rocketMQDomainEventPublisher.publish(noticeMessageEvent,
+	// SendMessageType.ONE_WAY);
+	// }
 
-	@Override
-	protected DefaultDomainEvent convert(String msg) {
-		return JacksonUtil.toBean(msg, SendCaptchaEvent.class);
-	}
+	// @Override
+	// protected DefaultDomainEvent convert(String msg) {
+	// return JacksonUtil.toBean(msg, SendCaptchaEvent.class);
+	// }
 
 	/*
 	 * protected abstract NoticeLog getNoticeLog(SendCaptchaEvent event);

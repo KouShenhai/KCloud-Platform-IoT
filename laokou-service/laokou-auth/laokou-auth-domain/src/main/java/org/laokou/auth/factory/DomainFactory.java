@@ -21,9 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.GrantType;
-import org.laokou.auth.model.LogE;
 import org.laokou.auth.model.UserE;
-import org.laokou.common.i18n.common.exception.GlobalException;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
@@ -78,43 +76,38 @@ public class DomainFactory {
 	 */
 	private static final String TENANT_CODE = "tenant_code";
 
-	public static AuthA getMailAuth(HttpServletRequest request) {
+	public static AuthA getMailAuth(Long aggregateId, HttpServletRequest request) {
 		String code = request.getParameter(CODE);
 		String mail = request.getParameter(MAIL);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		return new AuthA(EMPTY, EMPTY, tenantCode, GrantType.MAIL, mail, code);
+		return new AuthA(aggregateId, EMPTY, EMPTY, tenantCode, GrantType.MAIL, mail, code);
 	}
 
-	public static AuthA getMobileAuth(HttpServletRequest request) {
+	public static AuthA getMobileAuth(Long aggregateId, HttpServletRequest request) {
 		String code = request.getParameter(CODE);
 		String mobile = request.getParameter(MOBILE);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		return new AuthA(EMPTY, EMPTY, tenantCode, GrantType.MOBILE, mobile, code);
+		return new AuthA(aggregateId, EMPTY, EMPTY, tenantCode, GrantType.MOBILE, mobile, code);
 	}
 
-	public static AuthA getPasswordAuth(HttpServletRequest request) {
+	public static AuthA getPasswordAuth(Long aggregateId, HttpServletRequest request) {
 		String uuid = request.getParameter(UUID);
 		String captcha = request.getParameter(CAPTCHA);
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		return new AuthA(username, password, tenantCode, GrantType.PASSWORD, uuid, captcha);
+		return new AuthA(aggregateId, username, password, tenantCode, GrantType.PASSWORD, uuid, captcha);
 	}
 
-	public static AuthA getAuthorizationCodeAuth(HttpServletRequest request) {
+	public static AuthA getAuthorizationCodeAuth(Long aggregateId, HttpServletRequest request) {
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		return new AuthA(username, password, tenantCode, GrantType.AUTHORIZATION_CODE, EMPTY, EMPTY);
+		return new AuthA(aggregateId, username, password, tenantCode, GrantType.AUTHORIZATION_CODE, EMPTY, EMPTY);
 	}
 
 	public static UserE getUser() {
 		return new UserE();
-	}
-
-	public static LogE getLog(AuthA authA, HttpServletRequest request, GlobalException ex) {
-		return new LogE(authA.getLoginName(), authA.getLoginType(), authA.getInstant(), authA.getTenantId(), ex,
-				request);
 	}
 
 }

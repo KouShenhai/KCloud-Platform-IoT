@@ -19,7 +19,7 @@ package org.laokou.common.mybatisplus.mapper;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-import org.laokou.common.i18n.utils.IdGenerator;
+import org.laokou.common.core.utils.IdGenerator;
 
 import java.io.Serial;
 import java.io.Serializable;

@@ -17,16 +17,11 @@
 
 package org.laokou.auth.gateway;
 
-import org.laokou.auth.model.LogE;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
-
 /**
  * @author laokou
  */
 public interface LoginLogGateway {
 
-	void create(DefaultDomainEvent domainEvent);
-
-	void create(LogE logE);
+	// void create(DefaultDomainEvent domainEvent);
 
 }

@@ -54,10 +54,6 @@
       <artifactId>laokou-common-sensitive</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-auth-client</artifactId>
-    </dependency>
-    <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>

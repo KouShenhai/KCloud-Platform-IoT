@@ -20,7 +20,6 @@ package org.laokou.common.mybatisplus.handler.domainevent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 /**
  * @author laokou
@@ -28,16 +27,17 @@ import org.laokou.common.i18n.dto.DefaultDomainEvent;
 @Getter
 @Setter
 @ToString
-public class SqlEvent extends DefaultDomainEvent {
+public class SqlEvent {
 
 	private String sql;
 
 	private long costTime;
 
-	protected SqlEvent(String serviceId, Long tenantId, Long userId, Long aggregateId, String sourcePrefix,
-			String topic, String tag) {
-		super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
-	}
+	// protected SqlEvent(String serviceId, Long tenantId, Long userId, Long aggregateId,
+	// String sourcePrefix,
+	// String topic, String tag) {
+	// super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
+	// }
 
 	// public SqlEvent(String serviceId, String sql, long costTime, Instant createTime) {
 	//

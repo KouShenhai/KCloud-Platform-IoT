@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import static org.laokou.auth.model.SuperAdmin.YES;
@@ -33,12 +34,7 @@ import static org.laokou.auth.model.SuperAdmin.YES;
 @Entity
 @Setter
 @Getter
-public class UserE {
-
-	/**
-	 * ID.
-	 */
-	private Long id;
+public class UserE extends Identifier {
 
 	/**
 	 * 用户名.

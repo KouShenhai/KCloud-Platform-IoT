@@ -27,12 +27,12 @@ public class NoticeLogConvertor {
 
 	public static NoticeLogDO toDataObject(NoticeMessageEvent noticeMessageEvent) {
 		NoticeLogDO noticeLogDO = new NoticeLogDO();
-		noticeLogDO.setId(noticeMessageEvent.getId());
+		// noticeLogDO.setId(noticeMessageEvent.getId());
 		// noticeLogDO.setCreator(noticeMessageEvent.getCreator());
 		// noticeLogDO.setEditor(noticeMessageEvent.getEditor());
 		// noticeLogDO.setCreateTime(noticeMessageEvent.getCreateTime());
 		// noticeLogDO.setUpdateTime(noticeMessageEvent.getUpdateTime());
-		noticeLogDO.setTenantId(noticeMessageEvent.getTenantId());
+		// noticeLogDO.setTenantId(noticeMessageEvent.getTenantId());
 		noticeLogDO.setCode(noticeMessageEvent.getCode());
 		noticeLogDO.setName(noticeMessageEvent.getName());
 		noticeLogDO.setStatus(noticeMessageEvent.getStatus());

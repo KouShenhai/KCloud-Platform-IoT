@@ -20,7 +20,7 @@ package org.laokou.logstash.consumer;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.IdGenerator;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.JacksonUtil;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.ThreadUtil;
