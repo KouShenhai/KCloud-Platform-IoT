@@ -19,9 +19,9 @@ package org.laokou.common.crypto.utils;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
 import javax.crypto.Cipher;
@@ -32,9 +32,7 @@ import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-
-import static org.laokou.common.core.utils.Base64Util.decodeOfMime;
-import static org.laokou.common.core.utils.Base64Util.encodeToString;
+import java.util.Base64;
 
 /**
  * RSA加密与解密.
@@ -139,7 +137,7 @@ public final class RSAUtil {
 	 * @return 解密后的字符串
 	 */
 	private static byte[] decryptBase64(String str) {
-		return decodeOfMime(str);
+		return Base64.getMimeDecoder().decode(str);
 	}
 
 	/**
@@ -148,7 +146,7 @@ public final class RSAUtil {
 	 * @return 加密后的字符串
 	 */
 	private static String encryptBase64(byte[] strBytes) {
-		return encodeToString(strBytes);
+		return Base64.getEncoder().encodeToString(strBytes);
 	}
 
 	/**

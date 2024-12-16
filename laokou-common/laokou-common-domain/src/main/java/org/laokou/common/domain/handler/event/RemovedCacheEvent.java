@@ -15,17 +15,24 @@
  *
  */
 
-package org.laokou.admin.domainEvent.dto;
+package org.laokou.common.domain.handler.event;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
+import lombok.Getter;
 
 /**
- * 导出领域事件命令.
- *
  * @author laokou
  */
-@Data
-public class DomainEventExportCmd extends PageQuery {
+@Getter
+public class RemovedCacheEvent {
+
+	private String name;
+
+	private String key;
+
+	// protected RemovedCacheEvent(String serviceId, Long tenantId, Long userId, Long
+	// aggregateId, String sourcePrefix,
+	// String topic, String tag) {
+	// super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
+	// }
 
 }

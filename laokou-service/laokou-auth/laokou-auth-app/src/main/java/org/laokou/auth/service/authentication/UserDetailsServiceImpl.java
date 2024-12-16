@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -51,7 +52,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
 			HttpServletRequest request = RequestUtil.getHttpServletRequest();
-			AuthA auth = DomainFactory.getAuthorizationCodeAuth(request);
+			AuthA auth = DomainFactory.getAuthorizationCodeAuth(IdGenerator.defaultSnowflakeId(), request);
 			auth.createUserByAuthorizationCode();
 			return (UserDetails) authProcessor.authenticationToken(auth, request).getPrincipal();
 		}

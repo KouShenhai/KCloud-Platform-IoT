@@ -17,65 +17,26 @@
 
 package org.laokou.auth.dto.domainevent;
 
-import lombok.Getter;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
-
 import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * 登录事件.
  *
+ * @param username 登录的用户名.
+ * @param ip 登录的IP地址.
+ * @param address 登录的归属地.
+ * @param browser 登录的浏览器.
+ * @param os 登录的操作系统.
+ * @param status 登录状态 0登录成功 1登录失败.
+ * @param errorMessage 错误信息.
+ * @param type 登录类型.
  * @author laokou
  */
-@Getter
-public class LoginEvent extends DefaultDomainEvent {
+public record LoginEvent(String username, String ip, String address, String browser, String os, Integer status,
+		String errorMessage, String type) implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -325094951800650353L;
-
-	/**
-	 * 登录的用户名.
-	 */
-	private String username;
-
-	/**
-	 * 登录的IP地址.
-	 */
-	private String ip;
-
-	/**
-	 * 登录的归属地.
-	 */
-	private String address;
-
-	/**
-	 * 登录的浏览器.
-	 */
-	private String browser;
-
-	/**
-	 * 登录的操作系统.
-	 */
-	private String os;
-
-	/**
-	 * 登录状态 0登录成功 1登录失败.
-	 */
-	private Integer status;
-
-	/**
-	 * 错误信息.
-	 */
-	private String errorMessage;
-
-	/**
-	 * 登录类型.
-	 */
-	private String type;
-
-	protected LoginEvent(String serviceId, Long tenantId, Long userId, Long aggregateId, String sourcePrefix,
-			String topic, String tag) {
-		super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
-	}
 
 }

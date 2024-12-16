@@ -15,24 +15,11 @@
  *
  */
 
-package org.laokou.common.domain.event;
-
-import lombok.Getter;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
+package org.laokou.auth.model;
 
 /**
  * @author laokou
  */
-@Getter
-public class RemoveCacheEvent extends DefaultDomainEvent {
-
-	private String name;
-
-	private String key;
-
-	protected RemoveCacheEvent(String serviceId, Long tenantId, Long userId, Long aggregateId, String sourcePrefix,
-			String topic, String tag) {
-		super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
-	}
+public record InfoV(String os, String ip, String address, String browser) {
 
 }

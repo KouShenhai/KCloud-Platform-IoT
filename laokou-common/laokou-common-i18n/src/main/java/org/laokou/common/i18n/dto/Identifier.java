@@ -18,7 +18,7 @@
 package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
-import org.laokou.common.i18n.utils.IdGenerator;
+import lombok.Setter;
 
 import java.io.Serializable;
 
@@ -28,11 +28,12 @@ import java.io.Serializable;
  * @author laokou
  */
 @Getter
+@Setter
 public abstract class Identifier implements Serializable {
 
 	/**
 	 * ID.
 	 */
-	protected final Long id = IdGenerator.defaultSnowflakeId();
+	protected Long id;
 
 }

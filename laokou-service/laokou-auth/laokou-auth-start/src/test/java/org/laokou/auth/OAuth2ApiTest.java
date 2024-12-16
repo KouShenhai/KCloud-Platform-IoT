@@ -32,7 +32,7 @@ import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.crypto.utils.RSAUtil;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.IdGenerator;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;

@@ -466,7 +466,7 @@ public enum Template {
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return generatorA.getTableV().className() + "sController" + generatorA.getVersion().toUpperCase() + ".java";
+			return generatorA.getTableV().className() + "sController" + "-" + ".java";
 		}
 	},
 

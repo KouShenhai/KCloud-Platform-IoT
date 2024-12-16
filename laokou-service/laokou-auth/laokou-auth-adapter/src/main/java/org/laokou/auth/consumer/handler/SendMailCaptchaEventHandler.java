@@ -45,7 +45,7 @@ public class SendMailCaptchaEventHandler extends AbstractSendCaptchaEventHandler
 
 	public SendMailCaptchaEventHandler(DomainEventPublisher domainEventPublisher, MailService mailService,
 			RedisUtil redisUtil) {
-		super(domainEventPublisher);
+		// super(domainEventPublisher);
 		this.mailService = mailService;
 		this.redisUtil = redisUtil;
 	}

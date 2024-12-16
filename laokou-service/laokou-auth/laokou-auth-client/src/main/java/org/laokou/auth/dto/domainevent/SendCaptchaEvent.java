@@ -18,19 +18,19 @@
 package org.laokou.auth.dto.domainevent;
 
 import lombok.Getter;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 /**
  * @author laokou
  */
 @Getter
-public class SendCaptchaEvent extends DefaultDomainEvent {
+public class SendCaptchaEvent {
 
-	private String uuid;
-
-	protected SendCaptchaEvent(String serviceId, Long tenantId, Long userId, Long aggregateId, String sourcePrefix,
-			String topic, String tag) {
-		super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
-	}
+	// private String uuid;
+	//
+	// protected SendCaptchaEvent(String serviceId, Long tenantId, Long userId, Long
+	// aggregateId, String sourcePrefix,
+	// String topic, String tag) {
+	// super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
+	// }
 
 }

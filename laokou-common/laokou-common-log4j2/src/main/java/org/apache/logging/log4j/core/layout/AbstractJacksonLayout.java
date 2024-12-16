@@ -38,8 +38,6 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.Getter;
@@ -208,8 +206,7 @@ public abstract class AbstractJacksonLayout extends AbstractStringLayout {
 		return additionalFieldsMap;
 	}
 
-	protected void toSerializable(final LogEvent event, final Writer writer)
-			throws IOException {
+	protected void toSerializable(final LogEvent event, final Writer writer) throws IOException {
 		Object o = wrapLogEvent(convertMutableToLog4jEvent(event));
 		objectWriter.writeValue(writer, o);
 		writer.write(eol);

@@ -19,7 +19,7 @@ package org.laokou.common.core;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.i18n.utils.IdGenerator;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.DateUtil;
 
 import java.time.Instant;

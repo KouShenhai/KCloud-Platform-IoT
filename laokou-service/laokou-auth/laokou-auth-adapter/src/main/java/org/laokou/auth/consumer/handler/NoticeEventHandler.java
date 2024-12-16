@@ -20,12 +20,6 @@ package org.laokou.auth.consumer.handler;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.laokou.auth.ability.DomainService;
-import org.laokou.auth.dto.domainevent.NoticeMessageEvent;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.domain.handler.AbstractDomainEventHandler;
-import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
@@ -40,23 +34,24 @@ import static org.laokou.auth.common.constant.MqConstant.*;
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_NOTICE_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
 		selectorExpression = NOTICE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
-public class NoticeEventHandler extends AbstractDomainEventHandler {
+public class NoticeEventHandler {
 
-	private final DomainService domainService;
+	// private final DomainService domainService;
+	//
+	// public NoticeEventHandler(DomainEventPublisher domainEventPublisher, DomainService
+	// domainService) {
+	// super(domainEventPublisher);
+	// this.domainService = domainService;
+	// }
 
-	public NoticeEventHandler(DomainEventPublisher domainEventPublisher, DomainService domainService) {
-		super(domainEventPublisher);
-		this.domainService = domainService;
-	}
+	// @Override
+	// protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
+	// // authDomainService.recordNoticeLog(domainEvent);
+	// }
 
-	@Override
-	protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-		// authDomainService.recordNoticeLog(domainEvent);
-	}
-
-	@Override
-	protected DefaultDomainEvent convert(String msg) {
-		return JacksonUtil.toBean(msg, NoticeMessageEvent.class);
-	}
+	// @Override
+	// protected DefaultDomainEvent convert(String msg) {
+	// return JacksonUtil.toBean(msg, NoticeMessageEvent.class);
+	// }
 
 }
