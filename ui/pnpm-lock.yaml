@@ -40,8 +40,8 @@ importers:
         specifier: ^18.0.11
         version: 18.3.5(@types/react@18.3.16)
       '@umijs/lint':
-        specifier: ^4.4.0
-        version: 4.4.0(eslint@7.32.0)(stylelint@13.13.1)(typescript@5.7.2)
+        specifier: ^4.4.1
+        version: 4.4.1(eslint@7.32.0)(stylelint@13.13.1)(typescript@5.7.2)
       husky:
         specifier: ^9
         version: 9.1.7
@@ -2007,8 +2007,8 @@ packages:
   '@umijs/babel-preset-umi@4.3.36':
     resolution: {integrity: sha512-PDfolJ8nEkB6LojJnGQghDwTcFzKQrAttGhMIUvaxi4gO/Ft3boHuGfMPVpIKNOKrWLkkeSvi9kjm8mTgYw84A==}
 
-  '@umijs/babel-preset-umi@4.4.0':
-    resolution: {integrity: sha512-Ost0PcDmkWXDEgQHdJ2+hUG3NPQzOVfX+gbxDcDnaRw1NSQwBUaAOLN6tLBposvTnXEPngPOStBg/ftqOw3x/w==}
+  '@umijs/babel-preset-umi@4.4.1':
+    resolution: {integrity: sha512-qzdjtFl+48Qv9ePzHPv/e/+nltUAEIdJeVyi/2cmji4MG41xEhBqmOnz8PqKyJMvAEVM/01BeiOMVjBGGS7g9g==}
 
   '@umijs/bundler-esbuild@4.3.36':
     resolution: {integrity: sha512-h1roU2MM0shRzpEdUANTtC030Tig7cB/ywSdrTqtGWJ48CH89owEAnlNeKzLUcnXHVmVkltWW4fbRwcRQlqt0A==}
@@ -2020,8 +2020,8 @@ packages:
   '@umijs/bundler-utils@4.3.36':
     resolution: {integrity: sha512-iVOWBc2F9Ng9P6dygkcFFWZ9+trmz6OOqdq3LS0tbTEAvLlLIA9dzcmfjLqQpwkc+gF3Cx1Gk+kgLLxK3OiXyg==}
 
-  '@umijs/bundler-utils@4.4.0':
-    resolution: {integrity: sha512-zp3yApW8mRdFDVqUxTNOl6FOmkEKvkSrQAS0NRN74jX3kFBKdD0+58+PZEHamS6qCs8YXE/Rs6w6n99Uuq0+MA==}
+  '@umijs/bundler-utils@4.4.1':
+    resolution: {integrity: sha512-9yAM3MT+Z06tWGh2z4cKTHoNy3xOJUeFE8Gll92NUMtgbczfusV4LHnIWjRQAaD0+Qvsb9UjyibpTckGXK3/Jw==}
 
   '@umijs/bundler-vite@4.3.36':
     resolution: {integrity: sha512-hiLzx0ighMLsiPnMZdTQPDl0bE/Ldal4o9FEJg0XD/fU8lT3lD0oOuudIebT8sjj7qmRUWDhAA5h76i4vkrSTg==}
@@ -2112,8 +2112,8 @@ packages:
   '@umijs/lint@4.3.36':
     resolution: {integrity: sha512-EkyQsLY0Ih+d5q9mXey54Fcr/LjDBMJ1vIHSeiO7er53+op0UrO7g0MIktz+roulpJd3SfBPhgpLf3WGSq8saw==}
 
-  '@umijs/lint@4.4.0':
-    resolution: {integrity: sha512-z6ELYSph89ri+ct70TqFTJ+cSsMB8xAdTOnFpq+rc/UH1xeQea6dkNVp4snfJQAsJz+HdIIYMF5H/i4UVcYn9A==}
+  '@umijs/lint@4.4.1':
+    resolution: {integrity: sha512-hW5dsqN6YdAiiaggurWQ/Aob6Iv5pycZq/ZH5NTLXxFP9tMdLa+53FABgSEJKCSzsCCFvr3QAFiDKi/V4u3/+Q==}
 
   '@umijs/mako-darwin-arm64@0.9.8':
     resolution: {integrity: sha512-o3i1riPkaqPUhl6PGl0Nam3qhX/MDqX/82k37u+SWpd7g7vMgGswVnvUDMNnvaJ24wlknZhk4pKInsohwTK0rg==}
@@ -2248,8 +2248,8 @@ packages:
   '@umijs/utils@4.3.36':
     resolution: {integrity: sha512-LfkqxUyF52Fe/LpvkL5m0KkIu+8P6KU3fX6s9dFmO8MUIb/6GAyOVoIGwNxtq1Etc33ElwlEAIIOKfT5Sfj18g==}
 
-  '@umijs/utils@4.4.0':
-    resolution: {integrity: sha512-R3HQCRUBi7eQ460fjd+umjGj024JGa6mPE0FWa57qHRP/pHF1oV8Au/03jNCqkvkkNEGYr4vbYhVi6QeJn7o4Q==}
+  '@umijs/utils@4.4.1':
+    resolution: {integrity: sha512-pMNskPmOx7AwewRohfRrjCUWLCpkV8moBgND2chwBoLuesRXSJ/ZJOKv9NAEa4iWoEa1ZOvBkYxAWy1qhAsATw==}
 
   '@umijs/valtio@1.0.4':
     resolution: {integrity: sha512-2PmAU4rNQbBqrWpJ86Si9UGC23JapkYw8k7Hna6V8DHLaEYJENdp2e/IKLPHSPghzrdQtbUHSoOAUsBd4i4OzQ==}
@@ -7377,6 +7377,10 @@ packages:
     resolution: {integrity: sha512-Ei7Miu/AXe2JJ4iNF5j/UphAgRoma4trE6PtisM09bPygb3egMH3YLW/befsWb1A1AxvNSFidOFTB18XtnIIng==}
     engines: {node: '>= 0.4'}
 
+  which-boxed-primitive@1.1.1:
+    resolution: {integrity: sha512-TbX3mj8n0odCBFVlY8AxkqcHASw3L60jIuF8jFP78az3C2YhmGvqbHBpAjTRH2/xqYunrJ9g1jSyjCjpoWzIAA==}
+    engines: {node: '>= 0.4'}
+
   which-builtin-type@1.2.1:
     resolution: {integrity: sha512-6iBczoX+kDQ7a3+YJBnh3T+KZRxM/iYNPXicqk66/Qfm1b93iu+yOImkg0zHbj5LNOcNv1TEADiZ0xa34B4q6Q==}
     engines: {node: '>= 0.4'}
@@ -10076,12 +10080,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@umijs/babel-preset-umi@4.4.0':
+  '@umijs/babel-preset-umi@4.4.1':
     dependencies:
       '@babel/runtime': 7.23.6
       '@bloomberg/record-tuple-polyfill': 0.0.4
-      '@umijs/bundler-utils': 4.4.0
-      '@umijs/utils': 4.4.0
+      '@umijs/bundler-utils': 4.4.1
+      '@umijs/utils': 4.4.1
       core-js: 3.34.0
     transitivePeerDependencies:
       - supports-color
@@ -10124,9 +10128,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@umijs/bundler-utils@4.4.0':
+  '@umijs/bundler-utils@4.4.1':
     dependencies:
-      '@umijs/utils': 4.4.0
+      '@umijs/utils': 4.4.1
       esbuild: 0.21.4
       regenerate: 1.4.2
       regenerate-unicode-properties: 10.1.1
@@ -10335,14 +10339,14 @@ snapshots:
       - supports-color
       - typescript
 
-  '@umijs/lint@4.4.0(eslint@7.32.0)(stylelint@13.13.1)(typescript@5.7.2)':
+  '@umijs/lint@4.4.1(eslint@7.32.0)(stylelint@13.13.1)(typescript@5.7.2)':
     dependencies:
       '@babel/core': 7.23.6
       '@babel/eslint-parser': 7.23.3(@babel/core@7.23.6)(eslint@7.32.0)
       '@stylelint/postcss-css-in-js': 0.38.0(postcss-syntax@0.36.2(postcss-html@0.36.0)(postcss-less@3.1.4)(postcss-scss@2.1.1)(postcss@7.0.39))(postcss@8.4.49)
       '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint@7.32.0)(typescript@5.7.2)
       '@typescript-eslint/parser': 5.62.0(eslint@7.32.0)(typescript@5.7.2)
-      '@umijs/babel-preset-umi': 4.4.0
+      '@umijs/babel-preset-umi': 4.4.1
       eslint-plugin-jest: 27.2.3(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@7.32.0)(typescript@4.9.5))(eslint@7.32.0)(typescript@4.9.5))(eslint@7.32.0)(typescript@5.7.2)
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
@@ -10672,7 +10676,7 @@ snapshots:
       chokidar: 3.5.3
       pino: 7.11.0
 
-  '@umijs/utils@4.4.0':
+  '@umijs/utils@4.4.1':
     dependencies:
       chokidar: 3.5.3
       pino: 7.11.0
@@ -16765,7 +16769,7 @@ snapshots:
       call-bind: 1.0.8
       has-bigints: 1.0.2
       has-symbols: 1.1.0
-      which-boxed-primitive: 1.1.0
+      which-boxed-primitive: 1.1.1
 
   undici-types@6.20.0: {}
 
@@ -16991,6 +16995,14 @@ snapshots:
       is-boolean-object: 1.2.1
       is-number-object: 1.1.1
       is-string: 1.1.1
+      is-symbol: 1.1.0
+
+  which-boxed-primitive@1.1.1:
+    dependencies:
+      is-bigint: 1.1.0
+      is-boolean-object: 1.2.1
+      is-number-object: 1.1.1
+      is-string: 1.1.1
       is-symbol: 1.1.1
 
   which-builtin-type@1.2.1:
@@ -17005,7 +17017,7 @@ snapshots:
       is-regex: 1.2.1
       is-weakref: 1.1.0
       isarray: 2.0.5
-      which-boxed-primitive: 1.1.0
+      which-boxed-primitive: 1.1.1
       which-collection: 1.0.2
       which-typed-array: 1.1.16
 
