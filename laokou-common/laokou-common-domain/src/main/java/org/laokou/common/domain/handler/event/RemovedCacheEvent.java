@@ -29,9 +29,10 @@ public class RemovedCacheEvent {
 
 	private String key;
 
-	protected RemovedCacheEvent(String serviceId, Long tenantId, Long userId, Long aggregateId, String sourcePrefix,
-			String topic, String tag) {
-		super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
-	}
+	// protected RemovedCacheEvent(String serviceId, Long tenantId, Long userId, Long
+	// aggregateId, String sourcePrefix,
+	// String topic, String tag) {
+	// super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
+	// }
 
 }

@@ -45,7 +45,7 @@ public class SendMobileCaptchaEventHandler extends AbstractSendCaptchaEventHandl
 
 	public SendMobileCaptchaEventHandler(DomainEventPublisher domainEventPublisher, SmsService smsService,
 			RedisUtil redisUtil) {
-		super(domainEventPublisher);
+		// super(domainEventPublisher);
 		this.smsService = smsService;
 		this.redisUtil = redisUtil;
 	}
