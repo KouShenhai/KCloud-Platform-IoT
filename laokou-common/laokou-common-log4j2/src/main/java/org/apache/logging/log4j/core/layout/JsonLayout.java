@@ -333,8 +333,8 @@ public final class JsonLayout extends AbstractJacksonLayout {
 		@Override
 		public JsonLayout build() {
 			final boolean encodeThreadContextAsList = isProperties() && propertiesAsList;
-			final String headerPattern = toStringOrNull(getHeader());
-			final String footerPattern = toStringOrNull(getFooter());
+			final String headerPattern = toStringOrNull(super.getHeader());
+			final String footerPattern = toStringOrNull(super.getFooter());
 			return new JsonLayout(getConfiguration(), isLocationInfo(), isProperties(), encodeThreadContextAsList,
 					isComplete(), isCompact(), getEventEol(), getEndOfLine(), headerPattern, footerPattern,
 					getCharset(), isIncludeStacktrace(), isStacktraceAsString(), isIncludeNullDelimiter(),
