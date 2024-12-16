@@ -36,6 +36,11 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-i18n</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.github.ulisesbocchio</groupId>
+      <artifactId>jasypt-spring-boot-starter</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
 </project>
