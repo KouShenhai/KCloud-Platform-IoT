@@ -15,9 +15,13 @@
  *
  */
 
-package org.laokou.common.i18n.utils;
+package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.Assert;
 
 import java.lang.management.ManagementFactory;
@@ -45,6 +49,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.AT;
  * @author laokou
  * @since 2016-08-18
  */
+@Slf4j
 public final class IdGenerator {
 
 	/**

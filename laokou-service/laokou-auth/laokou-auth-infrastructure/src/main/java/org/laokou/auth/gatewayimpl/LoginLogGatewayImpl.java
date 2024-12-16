@@ -17,15 +17,10 @@
 
 package org.laokou.auth.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.convertor.LoginLogConvertor;
-import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.gateway.LoginLogGateway;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
-import org.laokou.auth.model.LogE;
 import org.laokou.common.domain.support.RocketMQDomainEventPublisher;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,15 +34,11 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 
 	private final RocketMQDomainEventPublisher rocketMQDomainEventPublisher;
 
-	@DS("domain")
-	@Override
-	public void create(DefaultDomainEvent domainEvent) {
-		loginLogMapper.insert(LoginLogConvertor.toDataObject((LoginEvent) domainEvent));
-	}
-
-	@Override
-	public void create(LogE logE) {
-		// TODO 发送领域对象
-	}
+	//
+	// @DS("domain")
+	// @Override
+	// public void create(DefaultDomainEvent domainEvent) {
+	// //loginLogMapper.insert(LoginLogConvertor.toDataObject((LoginEvent) domainEvent));
+	// }
 
 }

@@ -18,13 +18,12 @@
 package org.laokou.auth.dto.domainevent;
 
 import lombok.Getter;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
 
 /**
  * @author laokou
  */
 @Getter
-public class NoticeMessageEvent extends DefaultDomainEvent {
+public class NoticeMessageEvent {
 
 	private String code;
 
@@ -36,10 +35,11 @@ public class NoticeMessageEvent extends DefaultDomainEvent {
 
 	private String param;
 
-	protected NoticeMessageEvent(String serviceId, Long tenantId, Long userId, Long aggregateId, String sourcePrefix,
-			String topic, String tag) {
-		super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
-	}
+	// protected NoticeMessageEvent(String serviceId, Long tenantId, Long userId, Long
+	// aggregateId, String sourcePrefix,
+	// String topic, String tag) {
+	// super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
+	// }
 
 	// public NoticeMessageEvent(String topic, String tag, EventType eventType, String
 	// serviceId, String sourcePrefix,

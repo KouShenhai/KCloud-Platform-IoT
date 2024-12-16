@@ -20,10 +20,13 @@ package org.laokou.auth.model;
 import lombok.Getter;
 import org.laokou.auth.ability.validator.CaptchaValidator;
 import org.laokou.auth.ability.validator.PasswordValidator;
-import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.auth.dto.domainevent.LoginEvent;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -90,8 +93,14 @@ public class AuthA extends AggregateRoot {
 	 */
 	private Set<String> deptPaths;
 
-	public AuthA(String username, String password, String tenantCode, GrantType grantType, String uuid,
-			String captcha) {
+	/**
+	 * 扩展信息.
+	 */
+	private InfoV info;
+
+	public AuthA(Long aggregateId, String username, String password, String tenantCode, GrantType grantType,
+			String uuid, String captcha) {
+		super.id = aggregateId;
 		this.username = username;
 		this.password = password;
 		this.tenantCode = tenantCode;
@@ -115,6 +124,10 @@ public class AuthA extends AggregateRoot {
 		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 
+	public void getExtInfo(InfoV info) {
+		this.info = info;
+	}
+
 	public void getTenantId(Long tenantId) {
 		super.tenantId = tenantId;
 	}
@@ -134,17 +147,6 @@ public class AuthA extends AggregateRoot {
 
 	public void getDeptPaths(List<String> deptPaths) {
 		this.deptPaths = getPaths(deptPaths);
-	}
-
-	public String getLoginName() {
-		if (List.of(PASSWORD, AUTHORIZATION_CODE).contains(grantType)) {
-			return this.username;
-		}
-		return this.captcha.uuid();
-	}
-
-	public String getLoginType() {
-		return this.grantType.getCode();
 	}
 
 	public void checkTenantId() {
@@ -190,15 +192,20 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void checkMenuPermissions() {
-		if (CollectionUtil.isEmpty(this.permissions)) {
+		if (CollectionUtils.isEmpty(this.permissions)) {
 			throw new SystemException(FORBIDDEN);
 		}
 	}
 
 	public void checkDeptPaths() {
-		if (CollectionUtil.isEmpty(this.deptPaths)) {
+		if (CollectionUtils.isEmpty(this.deptPaths)) {
 			throw new SystemException(FORBIDDEN);
 		}
+	}
+
+	public void recordLog(Long eventId, SystemException ex) {
+		addEvent(new DomainEvent(eventId, null, null, null, null, null, super.version, null));
+		super.version++;
 	}
 
 	private boolean isUseCaptcha() {
@@ -206,7 +213,7 @@ public class AuthA extends AggregateRoot {
 	}
 
 	private Set<String> getPaths(List<String> list) {
-		if (CollectionUtil.isEmpty(list)) {
+		if (CollectionUtils.isEmpty(list)) {
 			return Collections.emptySet();
 		}
 		// 字符串长度排序
@@ -226,6 +233,28 @@ public class AuthA extends AggregateRoot {
 			}
 		}
 		return paths;
+	}
+
+	private String getLoginName() {
+		if (List.of(PASSWORD, AUTHORIZATION_CODE).contains(grantType)) {
+			return this.username;
+		}
+		return this.captcha.uuid();
+	}
+
+	private String getLoginType() {
+		return this.grantType.getCode();
+	}
+
+	private LoginEvent getEvent(GlobalException ex) {
+		if (ObjectUtil.isNull(ex)) {
+			return null;
+		}
+		if (ex instanceof SystemException) {
+			int status = LoginStatus.FAIL.ordinal();
+			String errorMessage = ex.getMessage();
+		}
+		return null;
 	}
 
 }

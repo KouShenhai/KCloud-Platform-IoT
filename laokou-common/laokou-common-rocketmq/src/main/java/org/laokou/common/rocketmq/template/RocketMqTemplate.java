@@ -46,6 +46,12 @@ public class RocketMqTemplate {
 
 	/**
 	 * 发送单向消息.
+	 * @param topic 主题
+	 * @param tag 标签
+	 * @param payload 消息内容
+	 * @param traceId 链路ID
+	 * @param spanId 标签ID
+	 * @param <T> 泛型
 	 */
 	public <T> void sendOneWayMessage(String topic, String tag, T payload, String traceId, String spanId) {
 		try {
@@ -65,8 +71,9 @@ public class RocketMqTemplate {
 	 * 发送同步消息.
 	 * @param topic 主题
 	 * @param tag 标签
-	 * @param payload 消息
+	 * @param payload 消息内容
 	 * @param traceId 链路ID
+	 * @param spanId 标签ID
 	 * @param <T> 泛型
 	 */
 	public <T> void sendSyncMessage(String topic, String tag, T payload, String traceId, String spanId) {
@@ -90,8 +97,9 @@ public class RocketMqTemplate {
 	 * 发送异步消息.
 	 * @param topic 主题
 	 * @param tag 标签
-	 * @param payload 消息
+	 * @param payload 消息内容
 	 * @param traceId 链路ID
+	 * @param spanId 标签ID
 	 * @param <T> 泛型
 	 */
 	public <T> void sendAsyncMessage(String topic, String tag, T payload, String traceId, String spanId) {
@@ -102,8 +110,9 @@ public class RocketMqTemplate {
 	 * 发送异步消息.
 	 * @param topic 主题
 	 * @param tag 标签
-	 * @param payload 消息
+	 * @param payload 消息内容
 	 * @param traceId 链路ID
+	 * @param spanId 标签ID
 	 * @param <T> 泛型
 	 */
 	public <T> void sendAsyncMessage(String topic, String tag, T payload, long timeout, String traceId, String spanId) {
@@ -115,7 +124,7 @@ public class RocketMqTemplate {
 	/**
 	 * 发送事务消息.
 	 * @param topic 主题
-	 * @param payload 消息
+	 * @param payload 消息内容
 	 * @param transactionId 事务ID
 	 * @param traceId 链路ID
 	 * @param spanId 标签ID

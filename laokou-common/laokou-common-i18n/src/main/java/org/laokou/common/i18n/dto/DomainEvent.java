@@ -29,60 +29,61 @@ import java.time.Instant;
  * @author laokou
  */
 @Getter
-public abstract class DomainEvent extends Identifier {
+public class DomainEvent extends Identifier {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
 
 	/**
-	 * 服务ID.
-	 */
-	protected final String serviceId;
-
-	/**
 	 * 租户ID.
 	 */
-	protected final Long tenantId;
+	private final Long tenantId;
 
 	/**
 	 * 用户ID.
 	 */
-	protected final Long userId;
+	private final Long userId;
 
 	/**
 	 * 聚合根ID.
 	 */
-	protected final Long aggregateId;
-
-	/**
-	 * 数据源前缀.
-	 */
-	protected final String sourcePrefix;
+	private final Long aggregateId;
 
 	/**
 	 * MQ主题.
 	 */
-	protected final String topic;
+	private final String topic;
 
 	/**
 	 * 标签.
 	 */
-	protected final String tag;
+	private final String tag;
 
 	/**
 	 * 操作时间.
 	 */
-	protected final Instant instant = DateUtil.nowInstant();
+	private final Instant instant = DateUtil.nowInstant();
 
-	protected DomainEvent(String serviceId, Long tenantId, Long userId, Long aggregateId, String sourcePrefix,
-			String topic, String tag) {
-		this.serviceId = serviceId;
+	/**
+	 * 版本号【乐观锁】.
+	 */
+	private final int version;
+
+	/**
+	 * 事件内容.
+	 */
+	private final String payload;
+
+	public DomainEvent(Long eventId, Long tenantId, Long userId, Long aggregateId, String topic, String tag,
+			int version, String payload) {
+		this.payload = payload;
+		this.id = eventId;
 		this.tenantId = tenantId;
 		this.userId = userId;
 		this.aggregateId = aggregateId;
-		this.sourcePrefix = sourcePrefix;
 		this.topic = topic;
 		this.tag = tag;
+		this.version = version;
 	}
 
 }

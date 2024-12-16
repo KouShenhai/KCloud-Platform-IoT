@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
+import org.laokou.common.core.utils.IdGenerator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -51,7 +52,7 @@ public class OAuth2PasswordAuthenticationProvider extends AbstractOAuth2Authenti
 
 	@Override
 	Authentication getPrincipal(HttpServletRequest request) {
-		AuthA auth = DomainFactory.getPasswordAuth(request);
+		AuthA auth = DomainFactory.getPasswordAuth(IdGenerator.defaultSnowflakeId(), request);
 		auth.createUserByPassword();
 		return authenticationToken(auth, request);
 	}
