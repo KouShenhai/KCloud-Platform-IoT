@@ -45,7 +45,7 @@ public class DomainService {
 
 	private final PasswordValidator passwordValidator;
 
-	public void auth(Long eventId, AuthA auth, InfoV info) {
+	public void auth(AuthA auth, InfoV info) {
 		// 获取扩展信息
 		auth.getExtInfo(info);
 		// 校验验证码
@@ -74,8 +74,6 @@ public class DomainService {
 		auth.getDeptPaths(deptGateway.getPaths(auth.getUser()));
 		// 校验部门路径集合
 		auth.checkDeptPaths();
-		// 记录日志
-		auth.recordLog(eventId, null);
 	}
 
 }
