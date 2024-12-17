@@ -87,6 +87,11 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	public static final String PASSWORD = "password";
 
 	/**
+	 * 用户名密码.
+	 */
+	private static final String USERNAME_PASSWORD = "username_password";
+
+	/**
 	 * 令牌URL.
 	 */
 	private static final String TOKEN_URL = "/oauth2/token";
@@ -179,7 +184,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		return s -> {
 			// 获取请求密码并解密
 			Map<String, String> paramMap = MapUtil.parseParamMap(s);
-			if (ObjectUtil.equals(PASSWORD, paramMap.getOrDefault(GRANT_TYPE, EMPTY)) && paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
+			if (ObjectUtil.equals(USERNAME_PASSWORD, paramMap.getOrDefault(GRANT_TYPE, EMPTY)) && paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
 				try {
 					String password = paramMap.get(PASSWORD);
 					String username = paramMap.get(USERNAME);

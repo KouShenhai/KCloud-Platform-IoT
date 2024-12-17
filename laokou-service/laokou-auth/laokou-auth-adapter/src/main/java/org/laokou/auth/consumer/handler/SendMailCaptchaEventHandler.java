@@ -17,27 +17,20 @@
 
 package org.laokou.auth.consumer.handler;
 
-import io.micrometer.common.lang.NonNullApi;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.mail.service.MailService;
 import org.laokou.common.redis.utils.RedisUtil;
-import org.springframework.stereotype.Component;
-
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.auth.common.constant.MqConstant.*;
 
 /**
  * @author laokou
  */
-@Slf4j
-@Component
-@NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
-		selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
-public class SendMailCaptchaEventHandler extends AbstractSendCaptchaEventHandler {
+// @Slf4j
+// @Component
+// @NonNullApi
+// @RocketMQMessageListener(consumerGroup = LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP, topic =
+// LAOKOU_CAPTCHA_TOPIC,
+// selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+public class SendMailCaptchaEventHandler {
 
 	private final MailService mailService;
 

@@ -14,6 +14,22 @@
 #  * limitations under the License.
 #  */
 services:
+  # admin/laokou123
+  influxdb:
+    image: influxdb:2.7.11
+    container_name: influxdb
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "8086:8086"
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./influxdb:/var/lib/influxdb2
+    networks:
+      - laokou_network
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus

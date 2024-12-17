@@ -42,9 +42,9 @@ public class DomainFactory {
 	public static final String MOBILE = "mobile";
 
 	/**
-	 * 密码.
+	 * 用户名密码.
 	 */
-	public static final String PASSWORD = "password";
+	public static final String USERNAME_PASSWORD = "username_password";
 
 	/**
 	 * 授权码.
@@ -55,6 +55,11 @@ public class DomainFactory {
 	 * 用户名.
 	 */
 	private static final String USERNAME = "username";
+
+	/**
+	 * 密码.
+	 */
+	private static final String PASSWORD = "password";
 
 	/**
 	 * 验证码.
@@ -90,13 +95,13 @@ public class DomainFactory {
 		return new AuthA(aggregateId, EMPTY, EMPTY, tenantCode, GrantType.MOBILE, mobile, code);
 	}
 
-	public static AuthA getPasswordAuth(Long aggregateId, HttpServletRequest request) {
+	public static AuthA getUsernamePasswordAuth(Long aggregateId, HttpServletRequest request) {
 		String uuid = request.getParameter(UUID);
 		String captcha = request.getParameter(CAPTCHA);
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		return new AuthA(aggregateId, username, password, tenantCode, GrantType.PASSWORD, uuid, captcha);
+		return new AuthA(aggregateId, username, password, tenantCode, GrantType.USERNAME_PASSWORD, uuid, captcha);
 	}
 
 	public static AuthA getAuthorizationCodeAuth(Long aggregateId, HttpServletRequest request) {

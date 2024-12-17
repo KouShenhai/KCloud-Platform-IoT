@@ -32,11 +32,7 @@ public final class VirtualThreadFactory implements ThreadFactory {
 
 	@Override
 	public Thread newThread(@NonNull Runnable r) {
-		Thread.Builder.OfVirtual ofVirtualBuilder = Thread.ofVirtual();
-		if (r instanceof Thread thread) {
-			ofVirtualBuilder.name("virtual-task-".concat(thread.getName()));
-		}
-		return ofVirtualBuilder.inheritInheritableThreadLocals(true).unstarted(r);
+		return Thread.ofVirtual().inheritInheritableThreadLocals(true).unstarted(r);
 	}
 
 }

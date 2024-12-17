@@ -18,27 +18,28 @@
 package org.laokou.auth.service.authentication;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static org.laokou.auth.factory.DomainFactory.PASSWORD;
+import static org.laokou.auth.factory.DomainFactory.USERNAME_PASSWORD;
 
 /**
- * 密码令牌.
+ * 用户名密码转换器.
  *
  * @author laokou
  */
-public class OAuth2PasswordAuthenticationToken extends AbstractOAuth2AuthenticationToken {
+@Component("usernamePasswordAuthenticationConverter")
+public class OAuth2UsernamePasswordAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
 
-	/**
-	 * Subclass constructor.
-	 * @param clientPrincipal the authenticated client principal
-	 * @param additionalParameters the additional parameters
-	 */
-	protected OAuth2PasswordAuthenticationToken(Authentication clientPrincipal,
-			Map<String, Object> additionalParameters) {
-		super(new AuthorizationGrantType(PASSWORD), clientPrincipal, additionalParameters);
+	@Override
+	String getGrantType() {
+		return USERNAME_PASSWORD;
+	}
+
+	@Override
+	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
+		return new OAuth2UsernamePasswordAuthenticationToken(clientPrincipal, additionalParameters);
 	}
 
 }

@@ -25,14 +25,9 @@ import org.junit.jupiter.api.Test;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
-import org.laokou.common.core.utils.HttpUtil;
-import org.laokou.common.core.utils.JacksonUtil;
-import org.laokou.common.core.utils.MDCUtil;
-import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.core.utils.*;
 import org.laokou.common.crypto.utils.RSAUtil;
-import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
@@ -46,7 +41,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.test.context.TestConstructor;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.io.Serializable;
 import java.net.URI;
@@ -95,8 +89,6 @@ class OAuth2ApiTest {
 
 	private final RedisUtil redisUtil;
 
-	private final WebApplicationContext webApplicationContext;
-
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 
 	private final ServerProperties serverProperties;
@@ -104,8 +96,6 @@ class OAuth2ApiTest {
 	private final RestClient restClient;
 
 	private final PasswordEncoder passwordEncoder;
-
-	private final DomainEventPublisher rocketMQDomainEventPublisher;
 
 	@BeforeEach
 	void setUp() {
@@ -346,7 +336,7 @@ class OAuth2ApiTest {
 		try {
 			String apiUrl = getOAuthApiUrl();
 			Map<String, String> params = Map.of("uuid", UUID, "username", username, "password", password, "tenant_code",
-					"laokou", "grant_type", "password", "captcha", captcha);
+					"laokou", "grant_type", "username_password", "captcha", captcha);
 			Map<String, String> headers = Map.of("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "trace-id",
 					String.valueOf(IdGenerator.defaultSnowflakeId()), "User-Agent",

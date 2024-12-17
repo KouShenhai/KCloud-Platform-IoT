@@ -64,7 +64,7 @@ public class AuthA extends AggregateRoot {
 	private final String tenantCode;
 
 	/**
-	 * 认证类型 mail邮箱 mobile手机号 password密码 authorization_code授权码.
+	 * 认证类型 mail邮箱 mobile手机号 username_password用户名密码 authorization_code授权码.
 	 */
 	private final GrantType grantType;
 
@@ -108,7 +108,7 @@ public class AuthA extends AggregateRoot {
 		this.captcha = new CaptchaV(uuid, captcha);
 	}
 
-	public void createUserByPassword() {
+	public void createUserByUsernamePassword() {
 		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 
@@ -180,7 +180,8 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void checkPassword(PasswordValidator passwordValidator) {
-		if (PASSWORD.equals(this.grantType) && !passwordValidator.validate(this.password, user.getPassword())) {
+		if (USERNAME_PASSWORD.equals(this.grantType)
+				&& !passwordValidator.validate(this.password, user.getPassword())) {
 			throw new SystemException(USERNAME_PASSWORD_ERROR);
 		}
 	}
@@ -209,7 +210,7 @@ public class AuthA extends AggregateRoot {
 	}
 
 	private boolean isUseCaptcha() {
-		return List.of(PASSWORD, MOBILE, MAIL).contains(grantType);
+		return List.of(USERNAME_PASSWORD, MOBILE, MAIL).contains(grantType);
 	}
 
 	private Set<String> getPaths(List<String> list) {
@@ -236,7 +237,7 @@ public class AuthA extends AggregateRoot {
 	}
 
 	private String getLoginName() {
-		if (List.of(PASSWORD, AUTHORIZATION_CODE).contains(grantType)) {
+		if (List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE).contains(grantType)) {
 			return this.username;
 		}
 		return this.captcha.uuid();

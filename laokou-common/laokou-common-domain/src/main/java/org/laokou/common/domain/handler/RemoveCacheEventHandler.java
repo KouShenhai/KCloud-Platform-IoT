@@ -17,20 +17,13 @@
 
 package org.laokou.common.domain.handler;
 
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.springframework.stereotype.Component;
-
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
-import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CACHE_CONSUMER_GROUP;
-import static org.laokou.common.domain.constant.MqConstant.LAOKOU_CACHE_TOPIC;
-
 /**
  * @author laokou
  */
-@Component
-@RocketMQMessageListener(consumerGroup = LAOKOU_CACHE_CONSUMER_GROUP, topic = LAOKOU_CACHE_TOPIC,
-		messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
+// @Component
+// @RocketMQMessageListener(consumerGroup = LAOKOU_CACHE_CONSUMER_GROUP, topic =
+// LAOKOU_CACHE_TOPIC,
+// messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
 public class RemoveCacheEventHandler {
 
 	// private final List<CacheManager> cacheManagers;

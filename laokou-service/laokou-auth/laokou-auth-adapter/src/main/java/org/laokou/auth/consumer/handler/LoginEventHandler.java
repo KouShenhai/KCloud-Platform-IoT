@@ -17,23 +17,16 @@
 
 package org.laokou.auth.consumer.handler;
 
-import io.micrometer.common.lang.NonNullApi;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.springframework.stereotype.Component;
-
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.auth.common.constant.MqConstant.*;
-
 /**
  * 登录日志处理器.
  *
  * @author laokou
  */
-@Component
-@NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
-		selectorExpression = LOGIN_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+// @Component
+// @NonNullApi
+// @RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_LOG_CONSUMER_GROUP, topic =
+// LAOKOU_LOG_TOPIC,
+// selectorExpression = LOGIN_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class LoginEventHandler {
 
 	// private final DomainService domainService;

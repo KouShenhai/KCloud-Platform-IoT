@@ -15,50 +15,39 @@
  *
  */
 
-package org.laokou.common.mongodb.clientobject;
+package org.laokou.common.influxdb.config;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.laokou.common.i18n.dto.Query;
-
-import java.util.List;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
 @Data
-public class SearchCO extends Query {
+@Component
+@ConfigurationProperties(prefix = "spring.influx-db")
+public class SpringInfluxDBProperties {
 
-	/**
-	 * 页码.
-	 */
-	private Integer pageNum = 1;
+	public Type type = Type.TOKEN;
 
-	/**
-	 * 条数.
-	 */
-	private Integer pageSize = 10;
+	@NotNull
+	private String url;
 
-	/**
-	 * 模糊条件查询.
-	 */
-	private List<Search> likeSearchList;
+	private String username;
 
-	/**
-	 * 表名.
-	 */
-	private String collectionName;
+	private String password;
 
-	/**
-	 * 是否分页.
-	 */
-	private boolean needPage = false;
+	private String token;
 
-	@Data
-	public static class Search {
+	private String org;
 
-		private String field;
+	private String bucket;
 
-		private String value;
+	public enum Type {
+
+		TOKEN, USERNAME_PASSWORD
 
 	}
 
