@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Bean;
 public class InfluxDBAutoConfig {
 
 	@Bean
-	@ConditionalOnProperty(prefix = "spring.influx-db", name = "type", havingValue = "TOKEN")
+	@ConditionalOnProperty(prefix = "spring.influx-db", matchIfMissing = true, name = "type", havingValue = "TOKEN")
 	public InfluxDBClient tokenInfluxDBClient(SpringInfluxDBProperties springInfluxDBProperties) {
 		return InfluxDBClientFactory.create(springInfluxDBProperties.getUrl(),
 				springInfluxDBProperties.getToken().toCharArray(), springInfluxDBProperties.getOrg(),
@@ -38,7 +38,7 @@ public class InfluxDBAutoConfig {
 	}
 
 	@Bean
-	@ConditionalOnProperty(prefix = "spring.influx-db", name = "type", havingValue = "USERNAME_PASSWORD")
+	@ConditionalOnProperty(prefix = "spring.influx-db", matchIfMissing = true, name = "type", havingValue = "USERNAME_PASSWORD")
 	public InfluxDBClient usernamePasswordInfluxDBClient(SpringInfluxDBProperties springInfluxDBProperties) {
 		return InfluxDBClientFactory.create(springInfluxDBProperties.getUrl(), springInfluxDBProperties.getUsername(),
 				springInfluxDBProperties.getPassword().toCharArray());
