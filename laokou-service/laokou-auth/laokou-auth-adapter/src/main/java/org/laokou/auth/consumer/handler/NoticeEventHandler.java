@@ -17,23 +17,15 @@
 
 package org.laokou.auth.consumer.handler;
 
-import io.micrometer.common.lang.NonNullApi;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.springframework.stereotype.Component;
-
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.auth.common.constant.MqConstant.*;
-
 /**
  * @author laokou
  */
-@Slf4j
-@Component
-@NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_NOTICE_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
-		selectorExpression = NOTICE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+// @Slf4j
+// @Component
+// @NonNullApi
+// @RocketMQMessageListener(consumerGroup = LAOKOU_NOTICE_LOG_CONSUMER_GROUP, topic =
+// LAOKOU_LOG_TOPIC,
+// selectorExpression = NOTICE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class NoticeEventHandler {
 
 	// private final DomainService domainService;

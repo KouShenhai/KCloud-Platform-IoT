@@ -41,7 +41,7 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 --WebAppBoundary
 Content-Disposition: form-data; name="grant_type"
 
-password
+username_password
 --WebAppBoundary
 Content-Disposition: form-data; name="username"
 
@@ -76,7 +76,7 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 --WebAppBoundary
 Content-Disposition: form-data; name="grant_type"
 
-password
+username_password
 --WebAppBoundary
 Content-Disposition: form-data; name="username"
 
@@ -110,7 +110,7 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 --WebAppBoundary
 Content-Disposition: form-data; name="grant_type"
 
-password
+username_password
 --WebAppBoundary
 Content-Disposition: form-data; name="username"
 
@@ -144,7 +144,7 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 --WebAppBoundary
 Content-Disposition: form-data; name="grant_type"
 
-password
+username_password
 --WebAppBoundary
 Content-Disposition: form-data; name="username"
 
@@ -178,7 +178,7 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 --WebAppBoundary
 Content-Disposition: form-data; name="grant_type"
 
-password
+username_password
 --WebAppBoundary
 Content-Disposition: form-data; name="username"
 

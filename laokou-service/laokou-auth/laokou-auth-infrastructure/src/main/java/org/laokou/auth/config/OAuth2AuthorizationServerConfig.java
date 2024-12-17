@@ -92,23 +92,23 @@ class OAuth2AuthorizationServerConfig {
 	/**
 	 * OAuth2AuthorizationServer核心配置.
 	 * @param http http配置
-	 * @param passwordAuthenticationProvider 密码认证Provider
+	 * @param usernamePasswordAuthenticationProvider 用户名密码认证Provider
 	 * @param mailAuthenticationProvider 邮箱认证Provider
 	 * @param mobileAuthenticationProvider 手机号认证Provider
 	 * @param authorizationServerSettings OAuth2配置
 	 * @param authorizationService 认证配置
 	 * @param mailAuthenticationConverter 邮箱认证Converter
 	 * @param mobileAuthenticationConverter 手机号认证Converter
-	 * @param passwordAuthenticationConverter 密码认证Converter
+	 * @param usernamePasswordAuthenticationConverter 用户名密码认证Converter
 	 * @return 认证过滤器
 	 * @throws Exception 异常
 	 */
 	@Bean
 	@Order(HIGHEST_PRECEDENCE)
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
-			AuthenticationProvider passwordAuthenticationProvider, AuthenticationProvider mailAuthenticationProvider,
-			AuthenticationProvider mobileAuthenticationProvider,
-			AuthenticationConverter passwordAuthenticationConverter,
+			AuthenticationProvider usernamePasswordAuthenticationProvider,
+			AuthenticationProvider mailAuthenticationProvider, AuthenticationProvider mobileAuthenticationProvider,
+			AuthenticationConverter usernamePasswordAuthenticationConverter,
 			AuthenticationConverter mailAuthenticationConverter, AuthenticationConverter mobileAuthenticationConverter,
 			AuthorizationServerSettings authorizationServerSettings, OAuth2AuthorizationService authorizationService)
 			throws Exception {
@@ -117,9 +117,10 @@ class OAuth2AuthorizationServerConfig {
 		http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
 			// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
 			.tokenEndpoint((tokenEndpoint) -> tokenEndpoint
-				.accessTokenRequestConverter(new DelegatingAuthenticationConverter(List
-					.of(passwordAuthenticationConverter, mobileAuthenticationConverter, mailAuthenticationConverter)))
-				.authenticationProvider(passwordAuthenticationProvider)
+				.accessTokenRequestConverter(
+						new DelegatingAuthenticationConverter(List.of(usernamePasswordAuthenticationConverter,
+								mobileAuthenticationConverter, mailAuthenticationConverter)))
+				.authenticationProvider(usernamePasswordAuthenticationProvider)
 				.authenticationProvider(mobileAuthenticationProvider)
 				.authenticationProvider(mailAuthenticationProvider))
 			.oidc(Customizer.withDefaults())

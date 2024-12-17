@@ -1,12 +1,12 @@
 import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {exportV3, pageV3, removeV3} from "@/services/admin/loginLog";
-import {Button, message, Modal} from "antd";
-import {DeleteOutlined, ExportOutlined} from "@ant-design/icons";
+import {exportV3, pageV3} from "@/services/admin/loginLog";
+import {Button} from "antd";
+import {ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
 import {Excel, ExportToExcel} from "@/utils/export";
 import moment from "moment";
-import {useRef, useState} from "react";
+import {useRef} from "react";
 
 export default () => {
 
@@ -16,7 +16,7 @@ export default () => {
 	};
 
 	const typeEnum = {
-		'password': 'password',
+		'username_password': 'username_password',
 		'mobile': 'mobile',
 		'mail': 'mail',
 		'authorization_code': 'authorization_code'
@@ -36,8 +36,6 @@ export default () => {
 	};
 
 	const actionRef = useRef();
-
-	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
 	let loginLogList: TableColumns[]
 
@@ -72,7 +70,7 @@ export default () => {
 	}
 
 	const getTypeDesc = (type: string | undefined) => {
-		if (type === "password") {
+		if (type === "username_password") {
 			return "用户名密码登录";
 		} else if (type === "mail") {
 			return "邮箱登录"
@@ -111,7 +109,7 @@ export default () => {
 		return pageV3(getPageQuery(params)).then(res => {
 			res?.data?.records?.forEach((item: TableColumns) => {
 				item.status = statusEnum[item.status as '0'];
-				item.type = typeEnum[item.type as 'password'];
+				item.type = typeEnum[item.type as 'username_password'];
 				loginLogList.push(item);
 			});
 			return Promise.resolve({
@@ -120,29 +118,6 @@ export default () => {
 				success: true,
 			});
 		})
-	}
-
-	const rowSelection = {
-		onChange: (selectedRowKeys: any) => {
-			setSelectedRowKeys(selectedRowKeys);
-		}
-	};
-
-	const deleteLoginLog = async () => {
-		Modal.confirm({
-			title: '确认删除?',
-			content: '您确定要删除吗?',
-			okText: '确认',
-			cancelText: '取消',
-			onOk: async () => {
-				removeV3(selectedRowKeys).then(() => {
-					message.success("删除成功").then()
-					// @ts-ignore
-					actionRef?.current?.reload();
-				})
-				setSelectedRowKeys([])
-			},
-		});
 	}
 
 	const columns: ProColumns<TableColumns>[] = [
@@ -195,7 +170,7 @@ export default () => {
 			title: '登录类型',
 			dataIndex: 'type',
 			valueEnum: {
-				password: {text: '用户名密码登录', status: 'Processing'},
+				username_password: {text: '用户名密码登录', status: 'Processing'},
 				mobile: {text: '手机号登录', status: 'Default'},
 				mail: {text: '邮箱登录', status: 'Success'},
 				authorization_code: {text: '授权码登录', status: 'Error'}
@@ -225,34 +200,7 @@ export default () => {
 					};
 				},
 			}
-		},
-		{
-			title: '操作',
-			valueType: 'option',
-			key: 'option',
-			render: (_, record) => [
-				<a key="editable"
-				   onClick={() => {
-					   Modal.confirm({
-						   title: '确认删除?',
-						   content: '您确定要删除吗?',
-						   okText: '确认',
-						   cancelText: '取消',
-						   onOk: async () => {
-							   // @ts-ignore
-							   removeV3([record.id]).then(() => {
-								   message.success("删除成功").then()
-								   // @ts-ignore
-								   actionRef?.current?.reload();
-							   })
-						   },
-					   });
-				   }}
-				>
-					删除
-				</a>
-			],
-		},
+		}
 	];
 
 	// @ts-ignore
@@ -277,9 +225,6 @@ export default () => {
 			}}
 			toolBarRender={
 				() => [
-					<Button key="delete" danger ghost icon={<DeleteOutlined/>} onClick={deleteLoginLog}>
-						删除
-					</Button>,
 					<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={exportToExcel}>
 						导出
 					</Button>,
@@ -287,10 +232,6 @@ export default () => {
 						导出全部
 					</Button>
 				]
-			}
-			rowSelection={
-				// 自定义选择项参考: https://ant.design/components/table-cn/#components-table-demo-row-selection-custom
-				rowSelection
 			}
 			dateFormatter="string"
 			toolbar={{

@@ -41,22 +41,6 @@ export default [
 						name: '登录日志',
 						path: '/sys/log/login',
 						component: './Sys/Log/login'
-					},
-					{
-						name: '通知日志',
-						path: '/sys/log/api',
-						component: './Sys/Log/api'
-					}
-				]
-			},
-			{
-				name: '事件管理',
-				path: '/sys/event',
-				routes: [
-					{
-						name: '领域事件',
-						path: '/sys/event/domain',
-						component: './Sys/Event/domain'
 					}
 				]
 			}

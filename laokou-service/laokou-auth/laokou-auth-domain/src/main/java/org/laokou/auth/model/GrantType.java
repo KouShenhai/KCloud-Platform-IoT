@@ -32,7 +32,7 @@ public enum GrantType {
 	/**
 	 * 用户名密码.
 	 */
-	PASSWORD(DomainFactory.PASSWORD) {
+	USERNAME_PASSWORD(DomainFactory.USERNAME_PASSWORD) {
 		@Override
 		public void checkUsernameNotExist() {
 			throw new SystemException(USERNAME_PASSWORD_ERROR);

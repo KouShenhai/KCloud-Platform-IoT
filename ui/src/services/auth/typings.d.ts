@@ -40,7 +40,7 @@ declare namespace API {
 		mobile?: string;
 		mail_captcha?: string;
 		mobile_captcha?: string;
-		tenant_id?: number
+		tenant_code?: string
 	};
 
 	// @ts-ignore

@@ -85,7 +85,7 @@ export default () => {
 						encrypt.encrypt(form.password as string),
 					),
 					tenant_code: form.tenant_code,
-					grant_type: 'password',
+					grant_type: 'username_password',
 				};
 			}
 			case 'mail':

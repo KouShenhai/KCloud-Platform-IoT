@@ -15,24 +15,40 @@
  *
  */
 
-package org.laokou.common.core.config;
+package org.laokou.common.influxdb.config;
 
-import org.springframework.lang.NonNull;
-
-import java.util.concurrent.ThreadFactory;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
- * 自定义线程工厂【虚拟】.
- *
  * @author laokou
  */
-public final class VirtualThreadFactory implements ThreadFactory {
+@Data
+@Component
+@ConfigurationProperties(prefix = "spring.influx-db")
+public class SpringInfluxDBProperties {
 
-	public static final VirtualThreadFactory INSTANCE = new VirtualThreadFactory();
+	public Type type = Type.TOKEN;
 
-	@Override
-	public Thread newThread(@NonNull Runnable r) {
-		return Thread.ofVirtual().inheritInheritableThreadLocals(true).unstarted(r);
+	@NotNull
+	private String url;
+
+	private String username;
+
+	private String password;
+
+	private String token;
+
+	private String org;
+
+	private String bucket;
+
+	public enum Type {
+
+		TOKEN, USERNAME_PASSWORD
+
 	}
 
 }
