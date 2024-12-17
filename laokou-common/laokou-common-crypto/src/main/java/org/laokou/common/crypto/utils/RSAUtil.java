@@ -20,6 +20,7 @@ package org.laokou.common.crypto.utils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
@@ -80,7 +81,7 @@ public final class RSAUtil {
 		try {
 			byte[] privateKey = StringUtil.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PRIVATE_KEY);
 			byte[] bytes = decryptByPrivateKey(decryptBase64(str), privateKey);
-			return new String(bytes, StandardCharsets.UTF_8);
+			return new String(ObjectUtil.requireNotNull(bytes), StandardCharsets.UTF_8);
 		}
 		catch (Exception e) {
 			return str;
