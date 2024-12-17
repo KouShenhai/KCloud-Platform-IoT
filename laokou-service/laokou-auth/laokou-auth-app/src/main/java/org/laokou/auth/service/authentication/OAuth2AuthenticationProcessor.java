@@ -55,13 +55,16 @@ public class OAuth2AuthenticationProcessor {
 	private final ExtensionExecutor extensionExecutor;
 
 	public UsernamePasswordAuthenticationToken authenticationToken(AuthA auth, HttpServletRequest request) {
+		long eventId = IdGenerator.defaultSnowflakeId();
 		try {
 			// 校验参数
 			extensionExecutor.executeVoid(AuthParamValidatorExtPt.class,
 					BizScenario.valueOf(auth.getGrantType().getCode(), USE_CASE_AUTH, SCENARIO),
 					extension -> extension.validate(auth));
 			// 认证授权
-			domainService.auth(IdGenerator.defaultSnowflakeId(), auth, getInfo(request));
+			domainService.auth(auth, getInfo(request));
+			// 记录日志
+			auth.recordLog(eventId, null);
 			// 登录成功，转换成用户对象【业务】
 			UserDetail userDetail = UserConvertor.to(auth);
 			// 认证成功，转换成认证对象【系统】
@@ -70,6 +73,7 @@ public class OAuth2AuthenticationProcessor {
 		}
 		catch (ParamException | SystemException e) {
 			// 记录日志
+			auth.recordLog(eventId, e);
 			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
 			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
 		}

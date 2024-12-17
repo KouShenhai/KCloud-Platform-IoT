@@ -19,6 +19,7 @@ package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.exception.SystemException;
 
 import java.io.*;
 import java.net.URI;
@@ -29,7 +30,7 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -98,17 +99,17 @@ public final class FileUtil {
 		}
 	}
 
-	public static void write(File file, InputStream in, long size, long chunkSize, ExecutorService executorService)
-			throws IOException {
+	public static void write(File file, InputStream in, long size, long chunkSize) throws IOException {
 		if (in instanceof FileInputStream fis) {
-			try (FileChannel inChannel = fis.getChannel()) {
+			try (FileChannel inChannel = fis.getChannel();
+					ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 				long chunkCount = (size / chunkSize) + (size % chunkSize == 0 ? 0 : 1);
-				List<CompletableFuture<Void>> futures = new ArrayList<>((int) chunkCount);
+				List<Callable<Boolean>> futures = new ArrayList<>((int) chunkCount);
 				// position指针
 				for (long index = 0, position = 0,
 						endSize = position + chunkSize; index < chunkCount; index++, position = index * chunkSize) {
 					long finalPosition = position;
-					futures.add(CompletableFuture.runAsync(() -> {
+					futures.add(() -> {
 						try (RandomAccessFile accessFile = new RandomAccessFile(file, RW);
 								FileChannel outChannel = accessFile.getChannel()) {
 							// 结束位置
@@ -124,11 +125,15 @@ public final class FileUtil {
 							inChannel.transferTo(finalPosition, finalEndSize, outChannel);
 						}
 						catch (IOException e) {
-							throw new RuntimeException(e);
+							throw new SystemException("S_UnKnow_Error", e.getMessage());
 						}
-					}, executorService));
+						return true;
+					});
 				}
-				futures.forEach(CompletableFuture::join);
+				executor.invokeAll(futures);
+			}
+			catch (InterruptedException e) {
+				throw new SystemException("S_UnKnow_Error", e.getMessage());
 			}
 		}
 	}
@@ -142,13 +147,11 @@ public final class FileUtil {
 		return fileName.substring(fileName.lastIndexOf(DOT));
 	}
 
-	@SneakyThrows
-	public static void copy(Path source, OutputStream out) {
+	public static void copy(Path source, OutputStream out) throws IOException {
 		Files.copy(source, out);
 	}
 
-	@SneakyThrows
-	public static void delete(Path path) {
+	public static void delete(Path path) throws IOException {
 		Files.delete(path);
 	}
 
@@ -156,20 +159,19 @@ public final class FileUtil {
 		return Files.exists(path);
 	}
 
-	@SneakyThrows
 	public static void delete(String directory) {
 		Path path = Path.of(directory);
 		if (isExist(path)) {
 			walkFileTree(path, new SimpleFileVisitor<>() {
 
 				@Override
-				public FileVisitResult visitFile(Path filePath, BasicFileAttributes attrs) {
+				public FileVisitResult visitFile(Path filePath, BasicFileAttributes attrs) throws IOException {
 					delete(filePath);
 					return FileVisitResult.CONTINUE;
 				}
 
 				@Override
-				public FileVisitResult postVisitDirectory(Path dirPath, IOException exc) {
+				public FileVisitResult postVisitDirectory(Path dirPath, IOException exc) throws IOException {
 					delete(dirPath);
 					return FileVisitResult.CONTINUE;
 				}
@@ -182,8 +184,7 @@ public final class FileUtil {
 		}
 	}
 
-	@SneakyThrows
-	public static void zip(String sourcePath, String targetPath) {
+	public static void zip(String sourcePath, String targetPath) throws IOException {
 		zip(sourcePath, new FileOutputStream(targetPath));
 	}
 
@@ -192,14 +193,13 @@ public final class FileUtil {
 	 * @param sourcePath 源路径
 	 * @param out 输出流
 	 */
-	@SneakyThrows
-	public static void zip(String sourcePath, OutputStream out) {
+	public static void zip(String sourcePath, OutputStream out) throws IOException {
 		try (ZipOutputStream zos = new ZipOutputStream(out)) {
 			Path sourceDir = Path.of(sourcePath);
 			walkFileTree(sourceDir, new SimpleFileVisitor<>() {
+
 				@Override
-				@SneakyThrows
-				public FileVisitResult visitFile(Path filePath, BasicFileAttributes attrs) {
+				public FileVisitResult visitFile(Path filePath, BasicFileAttributes attrs) throws IOException {
 					// 对于每个文件，创建一个 ZipEntry 并写入
 					Path targetPath = sourceDir.relativize(filePath);
 					zos.putNextEntry(new ZipEntry(sourceDir.getFileName() + SLASH + targetPath));
@@ -209,8 +209,7 @@ public final class FileUtil {
 				}
 
 				@Override
-				@SneakyThrows
-				public FileVisitResult preVisitDirectory(Path dirPath, BasicFileAttributes attrs) {
+				public FileVisitResult preVisitDirectory(Path dirPath, BasicFileAttributes attrs) throws IOException {
 					// 对于每个目录，创建一个 ZipEntry（目录也需要在 ZIP 中存在）
 					Path targetPath = sourceDir.relativize(dirPath);
 					zos.putNextEntry(new ZipEntry(sourceDir.getFileName() + SLASH + targetPath + SLASH));
@@ -234,7 +233,6 @@ public final class FileUtil {
 		replaceFromEnd(sourcePath, oldChar, newChar, false);
 	}
 
-	@SneakyThrows
 	private static void replaceFromEnd(String sourcePath, char oldChar, char newChar, boolean stopAfterFirst) {
 		try (RandomAccessFile raf = new RandomAccessFile(sourcePath, RW)) {
 			for (long pos = raf.length() - 1; pos >= 0; pos--) {
@@ -247,6 +245,9 @@ public final class FileUtil {
 					}
 				}
 			}
+		}
+		catch (IOException e) {
+			throw new SystemException("S_UnKnow_Error", e.getMessage());
 		}
 	}
 

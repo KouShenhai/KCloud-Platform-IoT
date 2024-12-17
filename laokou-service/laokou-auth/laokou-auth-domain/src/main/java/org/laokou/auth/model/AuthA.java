@@ -203,8 +203,8 @@ public class AuthA extends AggregateRoot {
 		}
 	}
 
-	public void recordLog(Long eventId, SystemException ex) {
-		addEvent(new DomainEvent(eventId, null, null, null, null, null, super.version, null));
+	public void recordLog(Long eventId, GlobalException e) {
+		addEvent(new DomainEvent(eventId, null, null, null, null, null, super.version, null, null));
 		super.version++;
 	}
 
@@ -246,13 +246,13 @@ public class AuthA extends AggregateRoot {
 		return this.grantType.getCode();
 	}
 
-	private LoginEvent getEvent(GlobalException ex) {
-		if (ObjectUtil.isNull(ex)) {
+	private LoginEvent getEvent(GlobalException e) {
+		if (ObjectUtil.isNull(e)) {
 			return null;
 		}
-		if (ex instanceof SystemException) {
+		if (e instanceof SystemException) {
 			int status = LoginStatus.FAIL.ordinal();
-			String errorMessage = ex.getMessage();
+			String errorMessage = e.getMessage();
 		}
 		return null;
 	}
