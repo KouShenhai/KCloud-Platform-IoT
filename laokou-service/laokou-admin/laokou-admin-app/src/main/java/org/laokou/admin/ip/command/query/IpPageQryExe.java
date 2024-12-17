@@ -30,8 +30,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -47,13 +47,11 @@ public class IpPageQryExe {
 
 	public Result<Page<IpCO>> execute(IpPageQry qry) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<IpDO>> c1 = CompletableFuture.supplyAsync(() -> ipMapper.selectPageByCondition(qry),
-					executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ipMapper.selectCountByCondition(qry),
-					executor);
+			Future<List<IpDO>> future1 = executor.submit(() -> ipMapper.selectPageByCondition(qry));
+			Future<Long> future2 = executor.submit(() -> ipMapper.selectCountByCondition(qry));
 			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(IpConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
+				.ok(Page.create(future1.get(30, TimeUnit.SECONDS).stream().map(IpConvertor::toClientObject).toList(),
+						future2.get(30, TimeUnit.SECONDS)));
 		}
 		catch (Exception e) {
 			throw new SystemException("S_Ip_PageQueryTimeout", "IP分页查询超时");

@@ -55,12 +55,12 @@ public class DomainEvent extends Identifier {
 	private final String topic;
 
 	/**
-	 * 标签.
+	 * MQ标签.
 	 */
 	private final String tag;
 
 	/**
-	 * 操作时间.
+	 * 时间.
 	 */
 	private final Instant instant = DateUtil.nowInstant();
 
@@ -70,13 +70,19 @@ public class DomainEvent extends Identifier {
 	private final int version;
 
 	/**
-	 * 事件内容.
+	 * 内容.
 	 */
 	private final String payload;
 
+	/**
+	 * 类型.
+	 */
+	private final String type;
+
 	public DomainEvent(Long eventId, Long tenantId, Long userId, Long aggregateId, String topic, String tag,
-			int version, String payload) {
+			int version, String payload, String type) {
 		this.payload = payload;
+		this.type = type;
 		this.id = eventId;
 		this.tenantId = tenantId;
 		this.userId = userId;
