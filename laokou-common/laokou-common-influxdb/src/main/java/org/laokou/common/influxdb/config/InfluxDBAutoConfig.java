@@ -38,7 +38,8 @@ public class InfluxDBAutoConfig {
 	}
 
 	@Bean(destroyMethod = "close")
-	@ConditionalOnProperty(prefix = "spring.influx-db", matchIfMissing = true, name = "type", havingValue = "USERNAME_PASSWORD")
+	@ConditionalOnProperty(prefix = "spring.influx-db", matchIfMissing = true, name = "type",
+			havingValue = "USERNAME_PASSWORD")
 	public InfluxDBClient usernamePasswordInfluxDBClient(SpringInfluxDBProperties springInfluxDBProperties) {
 		return InfluxDBClientFactory.create(springInfluxDBProperties.getUrl(), springInfluxDBProperties.getUsername(),
 				springInfluxDBProperties.getPassword().toCharArray());
