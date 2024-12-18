@@ -25,9 +25,9 @@
   <version>3.4.1</version>
   <packaging>pom</packaging>
   <properties>
-    <laokou.version>3.4.0</laokou.version>
+    <laokou.version>3.4.1</laokou.version>
     <!--spring-boot版本-->
-    <spring-boot.version>3.4.1-SNAPSHOT</spring-boot.version>
+    <spring-boot.version>3.4.0</spring-boot.version>
     <!--lombok版本-->
     <lombok.version>1.18.36</lombok.version>
     <!--postgresql版本-->
