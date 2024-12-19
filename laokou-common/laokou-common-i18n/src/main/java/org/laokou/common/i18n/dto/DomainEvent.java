@@ -79,10 +79,16 @@ public class DomainEvent extends Identifier {
 	 */
 	private final String type;
 
+	/**
+	 * 数据源前缀.
+	 */
+	private final String sourcePrefix;
+
 	public DomainEvent(Long eventId, Long tenantId, Long userId, Long aggregateId, String topic, String tag,
-			int version, String payload, String type) {
+			int version, String payload, String type, String sourcePrefix) {
 		this.payload = payload;
 		this.type = type;
+		this.sourcePrefix = sourcePrefix;
 		this.id = eventId;
 		this.tenantId = tenantId;
 		this.userId = userId;
