@@ -18,6 +18,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgresql-deployment
+  namespace: laokou
 spec:
   strategy:
     # 创建新 Pod 之前，所有现有的 Pod 会被杀死

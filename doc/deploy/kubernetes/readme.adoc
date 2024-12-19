@@ -43,4 +43,7 @@ kubectl get pod -n kube-system
 
 # 创建命名空间
 kubectl create ns laokou
+
+# 删除命名空间
+# kubectl delete namespace laokou
 ----
