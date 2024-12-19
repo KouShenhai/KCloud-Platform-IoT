@@ -2,7 +2,7 @@
 <!-- https://docs.gradle.com/enterprise/maven-build-cache/#getting_started -->
 <develocity>
   <server>
-    <url>https://gradle.company.com</url>
+    <url>https://develocity.mycompany.com</url>
   </server>
   <buildCache>
     <local>

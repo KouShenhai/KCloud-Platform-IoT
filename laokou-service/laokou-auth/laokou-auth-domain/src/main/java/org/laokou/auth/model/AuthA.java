@@ -205,7 +205,7 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void recordLog(Long eventId, GlobalException e) {
-		addEvent(new DomainEvent(eventId, null, null, null, null, null, super.version, null, null));
+		addEvent(new DomainEvent(eventId, null, null, null, null, null, super.version, null, null, null));
 		super.version++;
 	}
 
