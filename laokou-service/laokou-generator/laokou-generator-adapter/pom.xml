@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-generator</artifactId>
-    <version>3.4.0</version>
+    <version>3.4.1</version>
   </parent>
 
   <artifactId>laokou-generator-adapter</artifactId>

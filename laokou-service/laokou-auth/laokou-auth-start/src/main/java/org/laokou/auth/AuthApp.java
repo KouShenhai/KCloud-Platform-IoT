@@ -85,6 +85,8 @@ public class AuthApp {
 		// SpringSecurity 子线程读取父线程的上下文
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.TTL_MODE_INHERITABLETHREADLOCAL);
 		// nacos认证 => HttpLoginProcessor，https://github.com/alibaba/nacos/pull/3654
+		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494
+		System.setProperty("management.health.sentinel.enabled", "false");
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
 		new SpringApplicationBuilder(AuthApp.class).web(WebApplicationType.SERVLET).run(args);

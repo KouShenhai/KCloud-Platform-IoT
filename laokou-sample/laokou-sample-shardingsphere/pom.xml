@@ -6,11 +6,11 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-sample</artifactId>
-    <version>3.4.0</version>
+    <version>3.4.1</version>
   </parent>
 
   <artifactId>laokou-sample-shardingsphere</artifactId>
-  <version>3.4.0</version>
+  <version>3.4.1</version>
 
   <dependencies>
     <dependency>
