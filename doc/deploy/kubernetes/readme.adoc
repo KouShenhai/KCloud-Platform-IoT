@@ -41,5 +41,6 @@ kubectl get secret admin-user -n kubernetes-dashboard -o jsonpath={".data.token"
 # 查看pod
 kubectl get pod -n kube-system
 
+# 创建命名空间
+kubectl create ns laokou
 ----
-

@@ -1,0 +1,9 @@
+== 部署Postgresql
+
+[source%nowrap,shell]
+----
+# 创建Postgresql ConfigMap资源
+kubectl create -f postgresql-config-map.yaml
+
+# 
+----

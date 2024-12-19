@@ -1,0 +1,487 @@
+# /*
+#  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+#  * <p>
+#  * Licensed under the Apache License, Version 2.0 (the "License");
+#  * you may not use this file except in compliance with the License.
+#  * You may obtain a copy of the License at
+#  * <p>
+#  *   http://www.apache.org/licenses/LICENSE-2.0
+#  * <p>
+#  * Unless required by applicable law or agreed to in writing, software
+#  * distributed under the License is distributed on an "AS IS" BASIS,
+#  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  * See the License for the specific language governing permissions and
+#  * limitations under the License.
+#  */
+services:
+  # admin/laokou123
+  influxdb:
+    image: influxdb:2.7.11
+    container_name: influxdb
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "8086:8086"
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./influxdb:/var/lib/influxdb2
+    networks:
+      - laokou_network
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    volumes:
+      - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - laokou_network
+  # ui => http://ip:16686
+  jaeger-query:
+    image: jaegertracing/jaeger-query:1.60
+    container_name: jaeger-query
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "16685:16685"
+      - "16686:16686"
+      - "16687:16687"
+    environment:
+      - TZ=Asia/Shanghai
+      - SPAN_STORAGE_TYPE=elasticsearch
+      - ES_SERVER_URLS=https://elasticsearch:9200
+      - ES_USERNAME=elastic
+      - ES_PASSWORD=laokou123
+      - ES_TLS_ENABLED=true
+      - ES_TLS_SKIP_HOST_VERIFY=true
+    networks:
+      - laokou_network
+    depends_on:
+      - elasticsearch
+  jaeger-collector:
+    image: jaegertracing/jaeger-collector:1.60
+    container_name: jaeger-collector
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      # grpc
+      - "4317:4317"
+      - "14250:14250"
+      # http
+      - "4318:4318"
+      - "14268:14268"
+      - "14269:14269"
+    environment:
+      - TZ=Asia/Shanghai
+      - SPAN_STORAGE_TYPE=elasticsearch
+      - ES_SERVER_URLS=https://elasticsearch:9200
+      - ES_USERNAME=elastic
+      - ES_PASSWORD=laokou123
+      - ES_TLS_ENABLED=true
+      - ES_TLS_SKIP_HOST_VERIFY=true
+    networks:
+      - laokou_network
+    depends_on:
+      - elasticsearch
+  # web控制台地址：http://127.0.0.1:6060
+  # root/taosdata
+  tdengine:
+    image: tdengine/tdengine:3.3.4.8
+    container_name: tdengine
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "6030-6060:6030-6060/udp"
+      - "6030-6060:6030-6060"
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./tdengine/data:/var/lib/taos
+      - ./tdengine/logs:/var/log/taos
+    networks:
+      - laokou_network
+  emqx:
+    image: emqx/emqx:5.8.3
+    container_name: emqx
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "1883:1883"
+      - "8083:8083"
+      - "8883:8883"
+      - "18083:18083"
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      - laokou_network
+  postgresql:
+    image: timescale/timescaledb:latest-pg17
+    container_name: postgresql
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresql17/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=laokou123
+      - TZ=Asia/Shanghai
+    networks:
+      - laokou_network
+  redis:
+    image: redis:7.4.1
+    container_name: redis
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis7/conf/redis.conf:/etc/redis/redis.conf
+      - ./redis7/data:/data
+    command: redis-server --appendonly yes --requirepass 'laokou123'
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      - laokou_network
+  kafka:
+    image: bitnami/kafka:3.9.0
+    container_name: kafka
+    tty: true
+    ports:
+      - '9092:9092'
+      - '9093:9093'
+    environment:
+      # 节点ID
+      - KAFKA_BROKER_ID=1
+      # 允许使用kraft，即Kafka替代Zookeeper
+      - KAFKA_ENABLE_KRAFT=yes
+      # kafka角色，做broker，也要做controller
+      - KAFKA_CFG_PROCESS_ROLES=broker,controller
+      # 指定供外部使用的控制类请求信息
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      # 定义安全协议
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      # 定义kafka服务端socket监听端口
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      # 外网访问地址
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      # 允许使用PLAINTEXT监听器，默认false，不建议在生产环境使用
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      # 设置broker最大内存，和初始内存
+      - KAFKA_HEAP_OPTS=-Xmx512M -Xms512M
+      # 集群地址
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
+      # 节点ID
+      - KAFKA_CFG_NODE_ID=1
+    restart: always
+    privileged: true
+    networks:
+      - laokou_network
+  rocketmq-namesrv:
+    image: apache/rocketmq:5.3.1
+    container_name: rocketmq-namesrv
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "9876:9876"
+    command: sh mqnamesrv
+    environment:
+      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
+      - TZ=Asia/Shanghai
+    networks:
+      - laokou_network
+  rocketmq-broker:
+    image: apache/rocketmq:5.3.1
+    container_name: rocketmq-broker
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "10909:10909"
+      - "10911:10911"
+      - "10912:10912"
+    # 自动创建主题
+    command: sh mqbroker -n rocketmq-namesrv:9876 -c /home/rocketmq/conf/broker.conf autoCreateTopicEnable=true
+    environment:
+      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./rocketmq5/broker/conf/broker.conf:/home/rocketmq/conf/broker.conf
+    networks:
+      - laokou_network
+    depends_on:
+      - rocketmq-namesrv
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+    container_name: elasticsearch
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - ./elasticsearch8/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./elasticsearch8/data:/usr/share/elasticsearch/data
+      - ./elasticsearch8/logs:/usr/share/elasticsearch/logs
+      - ./elasticsearch8/plugins:/usr/share/elasticsearch/plugins
+      - ./elasticsearch8/config/certs/elastic-certificates.p12:/usr/share/elasticsearch/config/certs/elastic-certificates.p12
+    environment:
+      - TZ=Asia/Shanghai
+      - ES_JAVA_OPTS=-Xmx1g -Xms1g
+      - ELASTIC_PASSWORD=laokou123
+    networks:
+      - laokou_network
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+  # ./bin/elasticsearch-setup-passwords interactive
+  kibana:
+    image: kibana:8.17.0
+    container_name: kibana
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - "5601:5601"
+    volumes:
+      - ./kibana8/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    networks:
+      - laokou_network
+    depends_on:
+      - elasticsearch
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1G
+  nacos:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-nacos:3.4.1
+    container_name: nacos
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
+    volumes:
+      - ./nacos/logs:/opt
+    env_file:
+      - env/nacos.env
+    networks:
+      - laokou_network
+    depends_on:
+      - postgresql
+  sentinel:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sentinel:3.4.1
+    container_name: sentinel
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "8972:8972"
+    volumes:
+      - ./sentinel/logs:/opt
+    env_file:
+      - env/sentinel.env
+    networks:
+      - laokou_network
+  monitor:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.4.1
+    container_name: monitor
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./monitor/logs:/opt
+    env_file:
+      - env/monitor.env
+    depends_on:
+      - admin
+      - auth
+      - logstash
+      - gateway
+    networks:
+      - laokou_network
+  gateway:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.4.1
+    container_name: gateway
+    tty: true
+    env_file:
+      - env/common.env
+      - env/gateway.env
+    ports:
+      - "5555:5555"
+    volumes:
+      - ./gateway/logs:/opt
+    restart: always
+    privileged: true
+    networks:
+      - laokou_network
+    depends_on:
+      - nacos
+  auth:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.4.1
+    container_name: auth
+    tty: true
+    env_file:
+      - env/common.env
+      - env/auth.env
+    ports:
+      - "1111:1111"
+    volumes:
+      - ./auth/logs:/opt
+    restart: always
+    privileged: true
+    networks:
+      - laokou_network
+    depends_on:
+      - nacos
+      - admin
+      - rocketmq-namesrv
+      - rocketmq-broker
+  iot:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-iot-start:3.4.1
+    container_name: iot
+    tty: true
+    env_file:
+      - env/common.env
+      - env/iot.env
+    ports:
+      - "10005:10005"
+    volumes:
+      - ./iot/logs:/opt
+    restart: always
+    privileged: true
+    networks:
+      - laokou_network
+    depends_on:
+      - nacos
+      - rocketmq-namesrv
+      - rocketmq-broker
+  admin:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.4.1
+    container_name: admin
+    tty: true
+    env_file:
+      - env/common.env
+      - env/admin.env
+    ports:
+      - "9990:9990"
+    volumes:
+      - ./admin/logs:/opt
+    restart: always
+    privileged: true
+    networks:
+      - laokou_network
+    depends_on:
+      - nacos
+      - elasticsearch
+      - rocketmq-namesrv
+      - rocketmq-broker
+  logstash:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.1
+    container_name: logstash
+    tty: true
+    env_file:
+      - env/common.env
+      - env/logstash.env
+    ports:
+      - "10003:10003"
+    volumes:
+      - ./logstash/logs:/opt
+    restart: always
+    privileged: true
+    networks:
+      - laokou_network
+    depends_on:
+      - nacos
+      - elasticsearch
+      - kafka
+      - rocketmq-namesrv
+      - rocketmq-broker
+  job:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-snail-job:3.4.1
+    container_name: job
+    tty: true
+    env_file:
+      - env/job.env
+    ports:
+      - "8088:8088"
+    volumes:
+      - ./job/logs:/opt
+    restart: always
+    privileged: true
+    networks:
+      - laokou_network
+    depends_on:
+      - postgresql
+  ui:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.4.1
+    container_name: ui
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "443:443"
+    volumes:
+      - ./nginx/logs:/var/log/nginx
+    networks:
+      - laokou_network
+    depends_on:
+      - gateway
+      - auth
+      - admin
+  # 控制台 => admin/laokou123456789
+  portainer:
+   image: portainer/portainer-ce:latest
+   container_name: portainer
+   # 保持容器在没有守护程序的情况下运行
+   tty: true
+   restart: always
+   privileged: true
+   ports:
+     - "9010:9000"
+   volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+     - ./portainer/data:/data
+   networks:
+     - laokou_network
+networks:
+  laokou_network:
+    driver: bridge
