@@ -2,16 +2,24 @@
 
 [source%nowrap,shell]
 ----
-# 创建Postgresql ConfigMap资源
-kubectl create -f postgresql-config-map.yaml
-
 # 创建
+kubectl create -f postgresql-config-map.yaml
 kubectl create -f postgresql-persistent-volume-claim.yaml
+kubectl create -f postgresql-persistent-volume.yaml
 kubectl create -f postgresql-deployment.yaml
 kubectl create -f postgresql-service.yaml
 
 # 删除
 kubectl delete -n laokou persistentvolumeclaim postgresql-persistent-volume-claim
+kubectl delete -n laokou persistentvolume postgresql-persistent-volume
 kubectl delete -n laokou deployment postgresql-deployment
 kubectl delete -n laokou service postgresql-service
+kubectl delete -n laokou configmap postgresql-config-map
+
+# 查看
+kubectl get pods -n laokou
+kubectl get svc -n laokou
+
+# 转发 
+kubectl port-forward svc/postgresql-service 5432:5432 -n laokou
 ----
