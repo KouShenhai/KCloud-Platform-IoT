@@ -15,16 +15,20 @@
 #  */
 # https://kubernetes.io/zh-cn/docs/concepts/storage/persistent-volumes/
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolume
 metadata:
-  name: postgresql-persistent-volume-claim
+  name: postgresql-persistent-volume
   namespace: laokou
   labels:
+    type: local
     app: postgresql
 spec:
   storageClassName: manual
+  # 容量
+  capacity:
+    storage: 5Gi
   accessModes:
     - ReadWriteMany
-  resources:
-    requests:
-      storage: 5Gi
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/opt/data"
