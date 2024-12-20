@@ -3,6 +3,9 @@
 [source%nowrap,shell]
 ----
 
+# 版本
+kubectl version
+
 # master => apiserver、ectd、scheduler、controller-manager
 # worker => kubelet、kube-proxy、container-runtime
 
