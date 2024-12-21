@@ -41,16 +41,11 @@ public class CaptchaSendCmd extends CommonCommand {
 	 */
 	public static final String USE_CASE_CAPTCHA = "captcha";
 
-	/**
-	 * 验证码标签表达式.
-	 */
-	private static final String CAPTCHA_TAG = "(mail|mobile)Captcha";
-
 	@NotBlank(message = "UUID不能为空")
 	private String uuid;
 
 	@NotBlank(message = "标签不能为空")
-	@Pattern(regexp = CAPTCHA_TAG, message = "标签错误")
+	@Pattern(regexp = "(mail|mobile)Captcha", message = "标签错误")
 	private String tag;
 
 	@NotBlank(message = "租户编号不能为空")

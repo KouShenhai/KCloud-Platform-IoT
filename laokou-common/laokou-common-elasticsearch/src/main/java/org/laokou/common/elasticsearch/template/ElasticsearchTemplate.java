@@ -35,7 +35,7 @@ import co.elastic.clients.transport.endpoints.BooleanResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.annotation.*;
 import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.i18n.dto.Page;

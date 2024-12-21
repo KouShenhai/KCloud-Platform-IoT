@@ -15,26 +15,64 @@
  *
  */
 
-package org.laokou.auth.dto;
+package org.laokou.auth.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import lombok.Setter;
+import org.laokou.common.i18n.dto.Identifier;
+
+import java.time.Instant;
 
 /**
- * 查看验证码命令请求.
- *
  * @author laokou
  */
+@Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class CaptchaGetQry extends CommonCommand {
+public class LoginLogE extends Identifier {
 
 	/**
-	 * 唯一标识.
+	 * 登录的用户名.
 	 */
-	private String uuid;
+	private String username;
+
+	/**
+	 * 登录的IP地址.
+	 */
+	private String ip;
+
+	/**
+	 * 登录的归属地.
+	 */
+	private String address;
+
+	/**
+	 * 登录的浏览器.
+	 */
+	private String browser;
+
+	/**
+	 * 登录的操作系统.
+	 */
+	private String os;
+
+	/**
+	 * 登录状态 0登录成功 1登录失败.
+	 */
+	private Integer status;
+
+	/**
+	 * 错误信息.
+	 */
+	private String errorMessage;
+
+	/**
+	 * 登录类型.
+	 */
+	private String type;
+
+	/**
+	 * 登录时间.
+	 */
+	private Instant instant;
 
 }

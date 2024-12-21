@@ -30,10 +30,12 @@ import org.laokou.common.core.utils.AddressUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.IpUtil;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.i18n.common.exception.ParamException;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.rocketmq.template.SendMessageType;
 import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
@@ -53,6 +55,8 @@ public class OAuth2AuthenticationProcessor {
 	private final DomainService domainService;
 
 	private final ExtensionExecutor extensionExecutor;
+
+	private final DomainEventPublisher rocketMQDomainEventPublisher;
 
 	public UsernamePasswordAuthenticationToken authenticationToken(AuthA auth, HttpServletRequest request) {
 		long eventId = IdGenerator.defaultSnowflakeId();
@@ -80,6 +84,8 @@ public class OAuth2AuthenticationProcessor {
 		finally {
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();
+			// 发布事件
+			auth.releaseEvents().forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageType.ONE_WAY));
 		}
 	}
 

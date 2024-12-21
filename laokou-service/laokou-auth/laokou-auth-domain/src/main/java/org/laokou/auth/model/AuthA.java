@@ -25,12 +25,16 @@ import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
+import static org.laokou.auth.model.Constant.LAOKOU_LOG_TOPIC;
+import static org.laokou.auth.model.Constant.LOGIN_TAG;
 import static org.laokou.auth.model.GrantType.*;
+import static org.laokou.common.i18n.common.constant.EventType.LOGIN;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
 import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
@@ -205,8 +209,12 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void recordLog(Long eventId, GlobalException e) {
-		addEvent(new DomainEvent(eventId, null, null, null, null, null, super.version, null, null, null));
-		super.version++;
+		LoginEvent event = getEvent(e);
+		if (ObjectUtil.isNotNull(event)) {
+			addEvent(new DomainEvent(eventId, super.tenantId, super.userId, super.id, LAOKOU_LOG_TOPIC, LOGIN_TAG,
+					super.version, JacksonUtil.toJsonStr(event), LOGIN, sourcePrefix));
+			super.version++;
+		}
 	}
 
 	private boolean isUseCaptcha() {
@@ -243,17 +251,14 @@ public class AuthA extends AggregateRoot {
 		return this.captcha.uuid();
 	}
 
-	private String getLoginType() {
-		return this.grantType.getCode();
-	}
-
 	private LoginEvent getEvent(GlobalException e) {
 		if (ObjectUtil.isNull(e)) {
-			return null;
+			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
+					LoginStatus.OK.ordinal(), EMPTY, grantType.getCode(), super.instant);
 		}
-		if (e instanceof SystemException) {
-			int status = LoginStatus.FAIL.ordinal();
-			String errorMessage = e.getMessage();
+		else if (e instanceof SystemException) {
+			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
+					LoginStatus.FAIL.ordinal(), e.getMessage(), grantType.getCode(), super.instant);
 		}
 		return null;
 	}

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.dto.domainevent;
+package org.laokou.common.data.cache.domainevent;
 
 import lombok.Getter;
 
@@ -23,34 +23,16 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public class NoticeMessageEvent {
-
-	private String code;
+public class RemovedCacheEvent {
 
 	private String name;
 
-	private Integer status;
+	private String key;
 
-	private String errorMessage;
-
-	private String param;
-
-	// protected NoticeMessageEvent(String serviceId, Long tenantId, Long userId, Long
+	// protected RemovedCacheEvent(String serviceId, Long tenantId, Long userId, Long
 	// aggregateId, String sourcePrefix,
 	// String topic, String tag) {
 	// super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
-	// }
-
-	// public NoticeMessageEvent(String topic, String tag, EventType eventType, String
-	// serviceId, String sourcePrefix,
-	// Long aggregateId, Long tenantId) {
-	// /*
-	// * super(topic, tag, eventType, serviceId, sourcePrefix, noticeLog.getInstant(),
-	// * aggregateId, tenantId); this.code = noticeLog.getCode(); this.name =
-	// * noticeLog.getName() + "（" + noticeLog.getRemark() + "）"; this.status =
-	// * noticeLog.getStatus(); this.errorMessage = noticeLog.getErrorMessage();
-	// * this.param = noticeLog.getParam();
-	// */
 	// }
 
 }

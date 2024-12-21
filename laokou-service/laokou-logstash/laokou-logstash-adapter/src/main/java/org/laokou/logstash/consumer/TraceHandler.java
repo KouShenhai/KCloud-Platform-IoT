@@ -21,7 +21,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.elasticsearch.annotation.Field;

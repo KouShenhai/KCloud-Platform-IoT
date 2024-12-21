@@ -23,9 +23,12 @@ import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.core.utils.MDCUtil;
 import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
-import java.nio.charset.StandardCharsets;
+import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
+import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 
 /**
  * @author laokou
@@ -39,9 +42,8 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 	@Override
 	public void onMessage(MessageExt messageExt) {
 		try {
-			// putTrace(messageExt);
-			String msg = new String(messageExt.getBody(), StandardCharsets.UTF_8);
-			// handleDomainEvent(convert(msg));
+			putTrace(messageExt);
+			handleDomainEvent(JacksonUtil.toBean(messageExt.getBody(), DomainEvent.class));
 		}
 		catch (Exception e) {
 			log.error("消费失败，主题Topic：{}，偏移量Offset：{}，错误信息：{}", messageExt.getTopic(), messageExt.getCommitLogOffset(),
@@ -53,15 +55,13 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 		}
 	}
 
-	// protected abstract void handleDomainEvent(DefaultDomainEvent domainEvent);
-	//
-	// protected abstract DefaultDomainEvent convert(String msg);
-	//
-	// private void putTrace(MessageExt messageExt) {
-	// String traceId = messageExt.getProperty(TRACE_ID);
-	// String spanId = messageExt.getProperty(SPAN_ID);
-	// MDCUtil.put(traceId, spanId);
-	// }
+	protected abstract void handleDomainEvent(DomainEvent domainEvent);
+
+	private void putTrace(MessageExt messageExt) {
+		String traceId = messageExt.getProperty(TRACE_ID);
+		String spanId = messageExt.getProperty(SPAN_ID);
+		MDCUtil.put(traceId, spanId);
+	}
 
 	private void clearTrace() {
 		MDCUtil.clear();

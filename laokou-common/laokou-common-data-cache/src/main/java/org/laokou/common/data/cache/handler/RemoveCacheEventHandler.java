@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.domain.handler;
+package org.laokou.common.data.cache.handler;
 
 /**
  * @author laokou

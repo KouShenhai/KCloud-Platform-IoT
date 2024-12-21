@@ -15,15 +15,11 @@
  *
  */
 
-package org.laokou.auth.gateway;
-
-import org.laokou.auth.model.LoginLogE;
+package org.laokou.auth.api;
 
 /**
  * @author laokou
  */
-public interface LoginLogGateway {
-
-	void create(LoginLogE loginLog);
+public interface LoginLogServiceI {
 
 }

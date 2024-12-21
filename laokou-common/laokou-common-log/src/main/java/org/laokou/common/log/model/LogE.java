@@ -23,6 +23,7 @@ import lombok.Getter;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.Instant;
 import java.util.*;
 
-import static org.laokou.common.core.utils.JacksonUtil.EMPTY_JSON;
+import static org.laokou.common.i18n.utils.JacksonUtil.EMPTY_JSON;
 import static org.laokou.common.i18n.common.constant.StringConstant.*;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 

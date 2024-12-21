@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.core.utils;
+package org.laokou.common.i18n.utils;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;

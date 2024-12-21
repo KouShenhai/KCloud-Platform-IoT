@@ -22,6 +22,8 @@ import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.InfoV;
+import org.laokou.auth.model.LoginLogE;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -43,7 +45,14 @@ public class DomainService {
 
 	private final CaptchaGateway captchaGateway;
 
+	private final LoginLogGateway loginLogGateway;
+
 	private final PasswordValidator passwordValidator;
+
+	@Async("ttl-task-executor")
+	public void createLoginLog(LoginLogE loginLog) {
+
+	}
 
 	public void auth(AuthA auth, InfoV info) {
 		// 获取扩展信息

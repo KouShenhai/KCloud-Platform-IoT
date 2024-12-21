@@ -18,7 +18,9 @@
 package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
+import org.laokou.common.i18n.common.constant.EventType;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 
 import java.io.Serial;
 import java.time.Instant;
@@ -85,9 +87,9 @@ public class DomainEvent extends Identifier {
 	private final String sourcePrefix;
 
 	public DomainEvent(Long eventId, Long tenantId, Long userId, Long aggregateId, String topic, String tag,
-			int version, String payload, String type, String sourcePrefix) {
+			int version, String payload, EventType type, String sourcePrefix) {
 		this.payload = payload;
-		this.type = type;
+		this.type = StringUtil.convertUnder(type.name().toLowerCase());
 		this.sourcePrefix = sourcePrefix;
 		this.id = eventId;
 		this.tenantId = tenantId;

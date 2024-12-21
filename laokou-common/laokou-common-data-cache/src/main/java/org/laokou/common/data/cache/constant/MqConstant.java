@@ -15,24 +15,18 @@
  *
  */
 
-package org.laokou.common.domain.handler.event;
-
-import lombok.Getter;
+package org.laokou.common.data.cache.constant;
 
 /**
  * @author laokou
  */
-@Getter
-public class RemovedCacheEvent {
+public final class MqConstant {
 
-	private String name;
+	public static final String LAOKOU_CACHE_TOPIC = "laokou_cache_topic";
 
-	private String key;
+	public static final String LAOKOU_CACHE_CONSUMER_GROUP = "laokou_cache_consumer_group";
 
-	// protected RemovedCacheEvent(String serviceId, Long tenantId, Long userId, Long
-	// aggregateId, String sourcePrefix,
-	// String topic, String tag) {
-	// super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
-	// }
+	private MqConstant() {
+	}
 
 }

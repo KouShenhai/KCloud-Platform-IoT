@@ -222,22 +222,3 @@ COMMENT ON COLUMN "public"."boot_generator_template"."api" IS 'API';
 COMMENT ON COLUMN "public"."boot_generator_template"."view" IS '页面';
 COMMENT ON COLUMN "public"."boot_generator_template"."form_view" IS '表单页面';
 COMMENT ON TABLE "public"."boot_generator_template" IS '代码生成器模板';
-
--- ----------------------------
--- Records of boot_generator_template
--- ----------------------------
-
--- ----------------------------
--- Auto increment value for boot_generator_column
--- ----------------------------
-SELECT setval('"public"."boot_generator_column_id_seq2"', 1, false);
-
--- ----------------------------
--- Auto increment value for boot_generator_info
--- ----------------------------
-SELECT setval('"public"."boot_generator_info_id_seq2"', 1, false);
-
--- ----------------------------
--- Auto increment value for boot_generator_template
--- ----------------------------
-SELECT setval('"public"."boot_generator_template_id_seq2"', 1, false);

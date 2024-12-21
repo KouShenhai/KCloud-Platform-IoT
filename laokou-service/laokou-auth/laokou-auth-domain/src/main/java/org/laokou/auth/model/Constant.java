@@ -15,18 +15,15 @@
  *
  */
 
-package org.laokou.common.domain.constant;
+package org.laokou.auth.model;
 
 /**
  * @author laokou
  */
-public final class MqConstant {
+public final class Constant {
 
-	public static final String LAOKOU_CACHE_TOPIC = "laokou_cache_topic";
+	public static final String LOGIN_TAG = "loginLog";
 
-	public static final String LAOKOU_CACHE_CONSUMER_GROUP = "laokou_cache_consumer_group";
-
-	private MqConstant() {
-	}
+	public static final String LAOKOU_LOG_TOPIC = "laokou_log_topic";
 
 }

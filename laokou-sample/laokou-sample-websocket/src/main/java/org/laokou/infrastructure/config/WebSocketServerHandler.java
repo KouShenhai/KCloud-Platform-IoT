@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.client.dto.clientobject.MessageCO;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
