@@ -107,7 +107,7 @@ public class DomainEvent extends Identifier {
 		this.payload = payload;
 		this.type = StringUtil.convertUnder(type.name().toLowerCase());
 		this.sourcePrefix = sourcePrefix;
-		this.id = eventId;
+		super.id = eventId;
 		this.tenantId = tenantId;
 		this.userId = userId;
 		this.aggregateId = aggregateId;
