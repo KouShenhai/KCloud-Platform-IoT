@@ -18,6 +18,7 @@
 package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.laokou.common.i18n.common.constant.EventType;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -25,11 +26,14 @@ import org.laokou.common.i18n.utils.StringUtil;
 import java.io.Serial;
 import java.time.Instant;
 
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+
 /**
  * 领域事件.
  *
  * @author laokou
  */
+@Setter
 @Getter
 public class DomainEvent extends Identifier {
 
@@ -85,6 +89,18 @@ public class DomainEvent extends Identifier {
 	 * 数据源前缀.
 	 */
 	private final String sourcePrefix;
+
+	public DomainEvent() {
+		this.payload = EMPTY;
+		this.type = EMPTY;
+		this.sourcePrefix = EMPTY;
+		this.tenantId = 0L;
+		this.userId = 0L;
+		this.aggregateId = 0L;
+		this.topic = EMPTY;
+		this.tag = EMPTY;
+		this.version = 0;
+	}
 
 	public DomainEvent(Long eventId, Long tenantId, Long userId, Long aggregateId, String topic, String tag,
 			int version, String payload, EventType type, String sourcePrefix) {

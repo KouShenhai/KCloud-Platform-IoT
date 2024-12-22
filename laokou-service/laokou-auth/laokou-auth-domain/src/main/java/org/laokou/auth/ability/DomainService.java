@@ -51,7 +51,7 @@ public class DomainService {
 
 	@Async("ttl-task-executor")
 	public void createLoginLog(LoginLogE loginLog) {
-
+		loginLogGateway.create(loginLog);
 	}
 
 	public void auth(AuthA auth, InfoV info) {

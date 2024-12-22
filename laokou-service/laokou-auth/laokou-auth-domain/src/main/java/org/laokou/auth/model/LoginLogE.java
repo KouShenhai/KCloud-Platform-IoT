@@ -75,4 +75,9 @@ public class LoginLogE extends Identifier {
 	 */
 	private Instant instant;
 
+	/**
+	 * 租户ID.
+	 */
+	private Long tenantId;
+
 }

@@ -27,8 +27,6 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.File;
 import java.io.InputStream;
 import java.util.Collection;
@@ -41,7 +39,6 @@ import java.util.Map;
  * @author livk
  * @author laokou
  */
-@Slf4j
 public final class JacksonUtil {
 
 	/**

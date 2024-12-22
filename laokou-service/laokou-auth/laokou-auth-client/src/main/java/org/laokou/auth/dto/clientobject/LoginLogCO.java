@@ -33,6 +33,11 @@ import java.time.Instant;
 public class LoginLogCO extends ClientObject {
 
 	/**
+	 * ID.
+	 */
+	private Long id;
+
+	/**
 	 * 登录的用户名.
 	 */
 	private String username;
@@ -76,5 +81,10 @@ public class LoginLogCO extends ClientObject {
 	 * 登录时间.
 	 */
 	private Instant instant;
+
+	/**
+	 * 租户ID.
+	 */
+	private Long tenantId;
 
 }

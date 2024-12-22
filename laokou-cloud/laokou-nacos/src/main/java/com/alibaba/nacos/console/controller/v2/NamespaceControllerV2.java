@@ -57,21 +57,21 @@ import java.util.regex.Pattern;
 @ExtractorManager.Extractor(httpExtractor = ConsoleDefaultHttpParamExtractor.class)
 public class NamespaceControllerV2 {
 
+	private static final int NAMESPACE_ID_MAX_LENGTH = 128;
+
 	private final NamespaceOperationService namespaceOperationService;
 
-	private NamespacePersistService namespacePersistService;
+	private final NamespacePersistService namespacePersistService;
+
+	private final Pattern namespaceIdCheckPattern = Pattern.compile("^[\\w-]+");
+
+	private final Pattern namespaceNameCheckPattern = Pattern.compile("^[^@#$%^&*]+$");
 
 	public NamespaceControllerV2(NamespaceOperationService namespaceOperationService,
 			NamespacePersistService namespacePersistService) {
 		this.namespaceOperationService = namespaceOperationService;
 		this.namespacePersistService = namespacePersistService;
 	}
-
-	private final Pattern namespaceIdCheckPattern = Pattern.compile("^[\\w-]+");
-
-	private final Pattern namespaceNameCheckPattern = Pattern.compile("^[^@#$%^&*]+$");
-
-	private static final int NAMESPACE_ID_MAX_LENGTH = 128;
 
 	/**
 	 * Get namespace list.

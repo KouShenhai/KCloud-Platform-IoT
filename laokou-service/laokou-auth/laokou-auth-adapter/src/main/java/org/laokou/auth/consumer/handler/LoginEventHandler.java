@@ -19,8 +19,9 @@ package org.laokou.auth.consumer.handler;
 
 import io.micrometer.common.lang.NonNullApi;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.api.LoginLogServiceI;
+import org.laokou.auth.convertor.LoginLogConvertor;
+import org.laokou.auth.dto.LoginLogSaveCmd;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DomainEvent;
@@ -45,15 +46,14 @@ public class LoginEventHandler extends AbstractDomainEventHandler {
 
 	private final LoginLogServiceI loginLogServiceI;
 
-	public LoginEventHandler(DomainEventPublisher rocketMQDomainEventPublisher, DomainService domainService,
-			LoginLogServiceI loginLogServiceI) {
+	public LoginEventHandler(DomainEventPublisher rocketMQDomainEventPublisher, LoginLogServiceI loginLogServiceI) {
 		super(rocketMQDomainEventPublisher);
 		this.loginLogServiceI = loginLogServiceI;
 	}
 
 	@Override
 	protected void handleDomainEvent(DomainEvent domainEvent) {
-
+		loginLogServiceI.save(new LoginLogSaveCmd(LoginLogConvertor.toClientObject(domainEvent)));
 	}
 
 }

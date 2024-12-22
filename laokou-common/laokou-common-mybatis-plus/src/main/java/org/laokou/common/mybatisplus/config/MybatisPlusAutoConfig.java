@@ -57,11 +57,9 @@ import java.util.concurrent.TimeUnit;
 public class MybatisPlusAutoConfig {
 
 	static {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			JsqlParserGlobal.setJsqlParseCache(new FurySerialCaffeineJsqlParseCache(
-					Caffeine.newBuilder().maximumSize(4096).expireAfterWrite(10, TimeUnit.MINUTES).build(), executor,
-					true));
-		}
+		JsqlParserGlobal.setJsqlParseCache(new FurySerialCaffeineJsqlParseCache(
+				Caffeine.newBuilder().maximumSize(4096).expireAfterWrite(10, TimeUnit.MINUTES).build(),
+				ThreadUtil.newVirtualTaskExecutor(), true));
 	}
 
 	@Bean
