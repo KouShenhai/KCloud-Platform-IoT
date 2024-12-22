@@ -20,7 +20,7 @@ package org.laokou.generator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.generator.ability.GeneratorDomainService;
 import org.laokou.generator.gatewayimpl.database.TableColumnMapper;

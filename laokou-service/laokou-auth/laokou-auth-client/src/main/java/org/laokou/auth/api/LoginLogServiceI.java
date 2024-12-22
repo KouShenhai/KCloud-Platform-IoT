@@ -15,24 +15,15 @@
  *
  */
 
-package org.laokou.common.domain.handler.event;
+package org.laokou.auth.api;
 
-import lombok.Getter;
+import org.laokou.auth.dto.LoginLogSaveCmd;
 
 /**
  * @author laokou
  */
-@Getter
-public class RemovedCacheEvent {
+public interface LoginLogServiceI {
 
-	private String name;
-
-	private String key;
-
-	// protected RemovedCacheEvent(String serviceId, Long tenantId, Long userId, Long
-	// aggregateId, String sourcePrefix,
-	// String topic, String tag) {
-	// super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
-	// }
+	void save(LoginLogSaveCmd cmd);
 
 }

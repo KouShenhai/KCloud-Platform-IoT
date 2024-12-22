@@ -17,35 +17,43 @@
 
 package org.laokou.auth.consumer.handler;
 
+import io.micrometer.common.lang.NonNullApi;
+import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.laokou.auth.api.LoginLogServiceI;
+import org.laokou.auth.convertor.LoginLogConvertor;
+import org.laokou.auth.dto.LoginLogSaveCmd;
+import org.laokou.common.domain.handler.AbstractDomainEventHandler;
+import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.i18n.dto.DomainEvent;
+import org.springframework.stereotype.Component;
+
+import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
+import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
+import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOGIN_LOG_CONSUMER_GROUP;
+import static org.laokou.auth.model.Constant.LAOKOU_LOG_TOPIC;
+import static org.laokou.auth.model.Constant.LOGIN_TAG;
+
 /**
  * 登录日志处理器.
  *
  * @author laokou
  */
-// @Component
-// @NonNullApi
-// @RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_LOG_CONSUMER_GROUP, topic =
-// LAOKOU_LOG_TOPIC,
-// selectorExpression = LOGIN_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
-public class LoginEventHandler {
+@Component
+@NonNullApi
+@RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
+		selectorExpression = LOGIN_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+public class LoginEventHandler extends AbstractDomainEventHandler {
 
-	// private final DomainService domainService;
-	//
-	// public LoginEventHandler(DomainEventPublisher domainEventPublisher, DomainService
-	// domainService) {
-	// super(domainEventPublisher);
-	// this.domainService = domainService;
-	// }
-	//
-	// @Override
-	// protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-	// // domainService.recordLoginLog(domainEvent);
-	// }
-	//
-	// @Override
-	// protected DefaultDomainEvent convert(String msg) {
-	// //return JacksonUtil.toBean(msg, LoginEvent.class);
-	// return null;
-	// }
+	private final LoginLogServiceI loginLogServiceI;
+
+	public LoginEventHandler(DomainEventPublisher rocketMQDomainEventPublisher, LoginLogServiceI loginLogServiceI) {
+		super(rocketMQDomainEventPublisher);
+		this.loginLogServiceI = loginLogServiceI;
+	}
+
+	@Override
+	protected void handleDomainEvent(DomainEvent domainEvent) {
+		loginLogServiceI.save(new LoginLogSaveCmd(LoginLogConvertor.toClientObject(domainEvent)));
+	}
 
 }

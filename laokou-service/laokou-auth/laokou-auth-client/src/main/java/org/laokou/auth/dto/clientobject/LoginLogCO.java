@@ -15,40 +15,76 @@
  *
  */
 
-package org.laokou.auth.dto;
+package org.laokou.auth.dto.clientobject;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.i18n.dto.ClientObject;
+
+import java.time.Instant;
 
 /**
- * 发送验证码命令请求.
- *
  * @author laokou
  */
 @Data
-@Valid
 @NoArgsConstructor
 @AllArgsConstructor
-public class CaptchaSendCmd extends CommonCommand {
+public class LoginLogCO extends ClientObject {
 
 	/**
-	 * 业务用例.
+	 * ID.
 	 */
-	public static final String USE_CASE_CAPTCHA = "captcha";
+	private Long id;
 
-	@NotBlank(message = "UUID不能为空")
-	private String uuid;
+	/**
+	 * 登录的用户名.
+	 */
+	private String username;
 
-	@NotBlank(message = "标签不能为空")
-	@Pattern(regexp = "(mail|mobile)Captcha", message = "标签错误")
-	private String tag;
+	/**
+	 * 登录的IP地址.
+	 */
+	private String ip;
 
-	@NotBlank(message = "租户编号不能为空")
-	private String tenantCode;
+	/**
+	 * 登录的归属地.
+	 */
+	private String address;
+
+	/**
+	 * 登录的浏览器.
+	 */
+	private String browser;
+
+	/**
+	 * 登录的操作系统.
+	 */
+	private String os;
+
+	/**
+	 * 登录状态 0登录成功 1登录失败.
+	 */
+	private Integer status;
+
+	/**
+	 * 错误信息.
+	 */
+	private String errorMessage;
+
+	/**
+	 * 登录类型.
+	 */
+	private String type;
+
+	/**
+	 * 登录时间.
+	 */
+	private Instant instant;
+
+	/**
+	 * 租户ID.
+	 */
+	private Long tenantId;
 
 }

@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.client.dto.clientobject.MessageCO;
 import org.laokou.client.dto.clientobject.PayloadCO;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.netty.config.WebSocketSessionHeartBeatManager;
 import org.laokou.common.netty.config.WebSocketSessionManager;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;

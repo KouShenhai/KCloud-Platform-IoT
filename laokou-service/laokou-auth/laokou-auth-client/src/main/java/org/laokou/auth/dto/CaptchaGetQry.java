@@ -17,22 +17,24 @@
 
 package org.laokou.auth.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
+ * 查看验证码命令请求.
+ *
  * @author laokou
  */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "查看验证码命令请求", description = "查看验证码命令请求")
 public class CaptchaGetQry extends CommonCommand {
 
-	@Schema(name = "UUID", description = "UUID")
+	/**
+	 * 唯一标识.
+	 */
 	private String uuid;
 
 }

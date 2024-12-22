@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.domain.constant;
+package org.laokou.common.data.cache.constant;
 
 /**
  * @author laokou

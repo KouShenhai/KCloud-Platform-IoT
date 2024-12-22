@@ -15,15 +15,26 @@
  *
  */
 
-package org.laokou.auth.gateway;
+package org.laokou.auth.service;
 
-import org.laokou.auth.model.LoginLogE;
+import lombok.RequiredArgsConstructor;
+import org.laokou.auth.api.LoginLogServiceI;
+import org.laokou.auth.command.LoginLogSaveCmdExe;
+import org.laokou.auth.dto.LoginLogSaveCmd;
+import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
-public interface LoginLogGateway {
+@Service
+@RequiredArgsConstructor
+public class LoginLogServiceImpl implements LoginLogServiceI {
 
-	void create(LoginLogE loginLog);
+	private final LoginLogSaveCmdExe loginLogSaveCmdExe;
+
+	@Override
+	public void save(LoginLogSaveCmd cmd) {
+		loginLogSaveCmdExe.executeVoid(cmd);
+	}
 
 }

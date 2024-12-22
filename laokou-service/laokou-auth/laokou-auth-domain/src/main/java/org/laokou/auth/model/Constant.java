@@ -15,15 +15,15 @@
  *
  */
 
-package org.laokou.auth.gateway;
-
-import org.laokou.auth.model.LoginLogE;
+package org.laokou.auth.model;
 
 /**
  * @author laokou
  */
-public interface LoginLogGateway {
+public final class Constant {
 
-	void create(LoginLogE loginLog);
+	public static final String LOGIN_TAG = "loginLog";
+
+	public static final String LAOKOU_LOG_TOPIC = "laokou_log_topic";
 
 }

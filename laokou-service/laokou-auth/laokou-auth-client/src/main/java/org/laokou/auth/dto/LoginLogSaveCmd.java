@@ -15,15 +15,22 @@
  *
  */
 
-package org.laokou.auth.gateway;
+package org.laokou.auth.dto;
 
-import org.laokou.auth.model.LoginLogE;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.auth.dto.clientobject.LoginLogCO;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-public interface LoginLogGateway {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class LoginLogSaveCmd extends CommonCommand {
 
-	void create(LoginLogE loginLog);
+	private LoginLogCO co;
 
 }

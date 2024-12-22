@@ -23,11 +23,6 @@ package org.laokou.auth.common.constant;
 public final class Constant {
 
 	/**
-	 * 数据源表.
-	 */
-	public static final String TABLE_SOURCE = "boot_sys_source";
-
-	/**
 	 * 菜单表.
 	 */
 	public static final String TABLE_MENU = "boot_sys_menu";
@@ -41,11 +36,6 @@ public final class Constant {
 	 * 部门表.
 	 */
 	public static final String TABLE_DEPT = "boot_sys_dept";
-
-	/**
-	 * 租户表.
-	 */
-	public static final String TABLE_TENANT = "boot_sys_tenant";
 
 	/**
 	 * 通知日志表.

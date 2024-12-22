@@ -18,7 +18,7 @@
 package org.laokou.generator.model;
 
 import lombok.Getter;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.dto.AggregateRoot;
 
 import java.util.Map;

@@ -23,7 +23,7 @@ import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.client.dto.clientobject.PayloadCO;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.netty.config.Server;
 import org.springframework.stereotype.Component;

@@ -15,15 +15,25 @@
  *
  */
 
-package org.laokou.auth.gateway;
+package org.laokou.auth.command;
 
-import org.laokou.auth.model.LoginLogE;
+import lombok.RequiredArgsConstructor;
+import org.laokou.auth.ability.DomainService;
+import org.laokou.auth.convertor.LoginLogConvertor;
+import org.laokou.auth.dto.LoginLogSaveCmd;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface LoginLogGateway {
+@Component
+@RequiredArgsConstructor
+public class LoginLogSaveCmdExe {
 
-	void create(LoginLogE loginLog);
+	private final DomainService domainService;
+
+	public void executeVoid(LoginLogSaveCmd cmd) {
+		domainService.createLoginLog(LoginLogConvertor.toEntity(cmd.getCo()));
+	}
 
 }

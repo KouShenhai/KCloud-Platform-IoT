@@ -24,7 +24,7 @@ import io.netty.util.ReferenceCountUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.client.dto.clientobject.SensorCO;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.netty.config.SessionManager;
 import org.springframework.stereotype.Component;
 

@@ -17,14 +17,12 @@
 
 package org.laokou.common.domain.config;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 
 /**
  * @author laokou
  */
 @AutoConfiguration
-@MapperScan("org.laokou.common.domain.mapper")
 public class DomainAutoConfig {
 
 }

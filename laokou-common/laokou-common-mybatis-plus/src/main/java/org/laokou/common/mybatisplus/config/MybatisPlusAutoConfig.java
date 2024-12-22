@@ -144,14 +144,15 @@ public class MybatisPlusAutoConfig {
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor = new AsyncPaginationInnerInterceptor(
-				DbType.POSTGRE_SQL, dataSource, executor);
-		// -1表示不受限制
-		asyncPaginationInnerInterceptor.setMaxLimit(-1L);
-		// 溢出总页数后是进行处理，查看源码就知道是干啥的
-		asyncPaginationInnerInterceptor.setOverflow(true);
-		return asyncPaginationInnerInterceptor;
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor = new AsyncPaginationInnerInterceptor(
+					DbType.POSTGRE_SQL, dataSource, executor);
+			// -1表示不受限制
+			asyncPaginationInnerInterceptor.setMaxLimit(-1L);
+			// 溢出总页数后是进行处理，查看源码就知道是干啥的
+			asyncPaginationInnerInterceptor.setOverflow(true);
+			return asyncPaginationInnerInterceptor;
+		}
 	}
 
 }

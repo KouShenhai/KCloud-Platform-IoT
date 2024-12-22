@@ -20,7 +20,7 @@ package org.laokou.gateway.repository;
 import com.alibaba.nacos.api.config.ConfigService;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;

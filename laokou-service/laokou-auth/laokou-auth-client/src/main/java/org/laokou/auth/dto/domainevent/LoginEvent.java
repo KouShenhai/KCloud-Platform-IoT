@@ -19,6 +19,7 @@ package org.laokou.auth.dto.domainevent;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
 
 /**
  * 登录事件.
@@ -31,10 +32,11 @@ import java.io.Serializable;
  * @param status 登录状态 0登录成功 1登录失败.
  * @param errorMessage 错误信息.
  * @param type 登录类型.
+ * @param instant 登录时间
  * @author laokou
  */
 public record LoginEvent(String username, String ip, String address, String browser, String os, Integer status,
-		String errorMessage, String type) implements Serializable {
+		String errorMessage, String type, Instant instant) implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -325094951800650353L;

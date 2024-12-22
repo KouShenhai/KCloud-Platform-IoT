@@ -28,6 +28,7 @@ import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.core.utils.*;
 import org.laokou.common.crypto.utils.RSAUtil;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
