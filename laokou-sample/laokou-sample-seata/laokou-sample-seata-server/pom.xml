@@ -15,7 +15,7 @@
     <!--spring-boot版本-->
     <spring-boot.version>2.7.18</spring-boot.version>
     <!--kafka-appender版本-->
-    <kafka-appender.version>0.2.0-RC2</kafka-appender.version>
+    <kafka-appender.version>0.2.0-SNAPSHOT</kafka-appender.version>
     <!--jedis版本-->
     <jedis.version>3.10.0</jedis.version>
     <!--fastjson版本-->
