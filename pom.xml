@@ -144,9 +144,20 @@
   </dependencyManagement>
   <repositories>
     <repository>
-      <id>mirror</id>
-      <name>AliYun Maven Central</name>
-      <url>https://maven.aliyun.com/nexus/content/groups/public</url>
+      <id>tencent-cloud-mirror</id>
+      <name>TenantCloud Maven Central</name>
+      <url>https://mirrors.cloud.tencent.com/nexus/repository/maven-public</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
+    <repository>
+      <id>tencent-mirror</id>
+      <name>Tenant Maven Central</name>
+      <url>https://mirrors.tencent.com/nexus/repository/maven-public</url>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
