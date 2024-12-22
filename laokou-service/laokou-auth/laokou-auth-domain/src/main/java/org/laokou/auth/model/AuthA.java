@@ -34,7 +34,7 @@ import java.util.*;
 import static org.laokou.auth.model.Constant.LAOKOU_LOG_TOPIC;
 import static org.laokou.auth.model.Constant.LOGIN_TAG;
 import static org.laokou.auth.model.GrantType.*;
-import static org.laokou.common.i18n.common.constant.EventType.LOGIN;
+import static org.laokou.common.i18n.common.constant.EventType.LOGIN_EVENT;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
 import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
@@ -212,7 +212,7 @@ public class AuthA extends AggregateRoot {
 		LoginEvent event = getEvent(e);
 		if (ObjectUtil.isNotNull(event)) {
 			addEvent(new DomainEvent(eventId, super.tenantId, super.userId, super.id, LAOKOU_LOG_TOPIC, LOGIN_TAG,
-					super.version, JacksonUtil.toJsonStr(event), LOGIN, sourcePrefix));
+					super.version, JacksonUtil.toJsonStr(event), LOGIN_EVENT, sourcePrefix));
 			super.version++;
 		}
 	}
