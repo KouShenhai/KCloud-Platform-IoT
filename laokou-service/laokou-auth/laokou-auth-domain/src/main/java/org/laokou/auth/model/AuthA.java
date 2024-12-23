@@ -21,6 +21,8 @@ import lombok.Getter;
 import org.laokou.auth.ability.validator.CaptchaValidator;
 import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.dto.domainevent.LoginEvent;
+import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
+import org.laokou.common.i18n.common.constant.EventType;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.AggregateRoot;
@@ -31,8 +33,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
-import static org.laokou.auth.model.Constant.LAOKOU_LOG_TOPIC;
-import static org.laokou.auth.model.Constant.LOGIN_TAG;
+import static org.laokou.auth.model.Constant.*;
 import static org.laokou.auth.model.GrantType.*;
 import static org.laokou.common.i18n.common.constant.EventType.LOGIN_EVENT;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
@@ -107,7 +108,8 @@ public class AuthA extends AggregateRoot {
 	 */
 	private CaptchaE captchaE;
 
-	public AuthA() {
+	public AuthA(Long id) {
+		super.id = id;
 		this.username = EMPTY;
 		this.password = EMPTY;
 		this.tenantCode = EMPTY;
@@ -115,9 +117,9 @@ public class AuthA extends AggregateRoot {
 		this.captcha = new CaptchaV(EMPTY, EMPTY);
 	}
 
-	public AuthA(Long aggregateId, String username, String password, String tenantCode, GrantType grantType,
-			String uuid, String captcha) {
-		super.id = aggregateId;
+	public AuthA(Long id, String username, String password, String tenantCode, GrantType grantType, String uuid,
+			String captcha) {
+		super.id = id;
 		this.username = username;
 		this.password = password;
 		this.tenantCode = tenantCode;
@@ -141,8 +143,11 @@ public class AuthA extends AggregateRoot {
 		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 
-	public void createCaptcha() {
-		version++;
+	public void createCaptcha(Long eventId) {
+		addEvent(new DomainEvent(eventId, tenantId, null, super.id, LAOKOU_CAPTCHA_TOPIC, captchaE.getTag(),
+				super.version, JacksonUtil.toJsonStr(new SendCaptchaEvent(captchaE.getUuid())),
+				EventType.SEND_CAPTCHA_EVENT, sourcePrefix));
+		super.version++;
 	}
 
 	public void getExtInfo(InfoV info) {

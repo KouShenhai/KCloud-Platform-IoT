@@ -26,4 +26,6 @@ public final class Constant {
 
 	public static final String LAOKOU_LOG_TOPIC = "laokou_log_topic";
 
+	public static final String LAOKOU_CAPTCHA_TOPIC = "laokou_captcha_topic";
+
 }

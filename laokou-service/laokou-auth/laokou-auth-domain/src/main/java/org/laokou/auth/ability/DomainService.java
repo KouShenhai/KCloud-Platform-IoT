@@ -55,13 +55,13 @@ public class DomainService {
 		loginLogGateway.create(loginLog);
 	}
 
-	public void createCaptcha(AuthA auth, CaptchaE captcha) {
+	public void createCaptcha(Long eventId, AuthA auth, CaptchaE captcha) {
 		// 获取验证码信息
 		auth.getCaptcha(captcha);
 		// 校验租户
 		checkTenant(auth);
 		// 创建验证码
-		auth.createCaptcha();
+		auth.createCaptcha(eventId);
 	}
 
 	public void auth(AuthA auth, InfoV info) {

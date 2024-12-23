@@ -79,8 +79,8 @@ public class DomainFactory {
 	 */
 	private static final String TENANT_CODE = "tenant_code";
 
-	public static AuthA getAuth() {
-		return new AuthA();
+	public static AuthA getAuth(Long aggregateId) {
+		return new AuthA(aggregateId);
 	}
 
 	public static AuthA getMailAuth(Long aggregateId, HttpServletRequest request) {

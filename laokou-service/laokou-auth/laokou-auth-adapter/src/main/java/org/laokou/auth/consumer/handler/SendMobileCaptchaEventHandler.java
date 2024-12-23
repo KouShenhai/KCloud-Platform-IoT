@@ -17,35 +17,37 @@
 
 package org.laokou.auth.consumer.handler;
 
+import io.micrometer.common.lang.NonNullApi;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.redis.utils.RedisUtil;
-import org.laokou.common.sms.service.SmsService;
+import org.laokou.common.i18n.dto.DomainEvent;
+import org.springframework.stereotype.Component;
+
+import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
+import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
+import static org.laokou.auth.common.constant.MqConstant.LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP;
+import static org.laokou.auth.common.constant.MqConstant.MOBILE_TAG;
+import static org.laokou.auth.model.Constant.LAOKOU_CAPTCHA_TOPIC;
 
 /**
  * @author laokou
  */
-// @Slf4j
-// @Component
-// @NonNullApi
-// @RocketMQMessageListener(consumerGroup = LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP, topic =
-// LAOKOU_CAPTCHA_TOPIC,
-// selectorExpression = MOBILE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
-public class SendMobileCaptchaEventHandler {
+@Slf4j
+@Component
+@NonNullApi
+@RocketMQMessageListener(consumerGroup = LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
+		selectorExpression = MOBILE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+public class SendMobileCaptchaEventHandler extends AbstractDomainEventHandler {
 
-	private final SmsService smsService;
-
-	private final RedisUtil redisUtil;
-
-	public SendMobileCaptchaEventHandler(DomainEventPublisher domainEventPublisher, SmsService smsService,
-			RedisUtil redisUtil) {
-		// super(domainEventPublisher);
-		this.smsService = smsService;
-		this.redisUtil = redisUtil;
+	public SendMobileCaptchaEventHandler(DomainEventPublisher rocketMQDomainEventPublisher) {
+		super(rocketMQDomainEventPublisher);
 	}
 
-	// @Override
-	// protected NoticeLog getNoticeLog(SendCaptchaEvent event) {
-	// return smsService.send(event.getUuid(), 5);
-	// }
+	@Override
+	protected void handleDomainEvent(DomainEvent domainEvent) {
+
+	}
 
 }

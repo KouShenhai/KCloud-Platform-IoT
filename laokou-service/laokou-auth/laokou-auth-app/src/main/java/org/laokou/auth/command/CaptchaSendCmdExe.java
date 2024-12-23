@@ -25,6 +25,7 @@ import org.laokou.auth.dto.clientobject.CaptchaCO;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
@@ -54,9 +55,9 @@ public class CaptchaSendCmdExe {
 		extensionExecutor.executeVoid(CaptchaParamValidatorExtPt.class,
 				BizScenario.valueOf(co.getTag(), USE_CASE_CAPTCHA, SCENARIO),
 				extension -> extension.validate(co.getUuid()));
-		AuthA auth = DomainFactory.getAuth();
+		AuthA auth = DomainFactory.getAuth(IdGenerator.defaultSnowflakeId());
 		// 创建验证码
-		domainService.createCaptcha(auth, CaptchaConvertor.toEntity(co));
+		domainService.createCaptcha(IdGenerator.defaultSnowflakeId(), auth, CaptchaConvertor.toEntity(co));
 		// 发布事件
 		auth.releaseEvents().forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageType.ASYNC));
 	}
