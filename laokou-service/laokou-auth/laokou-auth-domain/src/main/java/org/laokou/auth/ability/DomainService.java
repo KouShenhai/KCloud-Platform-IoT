@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.CaptchaE;
 import org.laokou.auth.model.InfoV;
 import org.laokou.auth.model.LoginLogE;
 import org.springframework.scheduling.annotation.Async;
@@ -54,19 +55,22 @@ public class DomainService {
 		loginLogGateway.create(loginLog);
 	}
 
+	public void createCaptcha(AuthA auth, CaptchaE captcha) {
+		// 获取验证码信息
+		auth.getCaptcha(captcha);
+		// 校验租户
+		checkTenant(auth);
+		// 创建验证码
+		auth.createCaptcha();
+	}
+
 	public void auth(AuthA auth, InfoV info) {
 		// 获取扩展信息
 		auth.getExtInfo(info);
 		// 校验验证码
 		auth.checkCaptcha(captchaGateway::validate);
-		// 获取租户ID
-		auth.getTenantId(tenantGateway.getId(auth.getTenantCode()));
-		// 校验租户ID
-		auth.checkTenantId();
-		// 获取数据源前缀
-		auth.getSourcePrefix(sourceGateway.getPrefix(auth.getTenantCode()));
-		// 校验数据源前缀
-		auth.checkSourcePrefix();
+		// 校验租户
+		checkTenant(auth);
 		// 获取用户信息
 		auth.getUserInfo(userGateway.getProfile(auth.getUser(), auth.getTenantCode()));
 		// 校验用户名
@@ -83,6 +87,17 @@ public class DomainService {
 		auth.getDeptPaths(deptGateway.getPaths(auth.getUser()));
 		// 校验部门路径集合
 		auth.checkDeptPaths();
+	}
+
+	private void checkTenant(AuthA auth) {
+		// 获取租户ID
+		auth.getTenantId(tenantGateway.getId(auth.getTenantCode()));
+		// 校验租户ID
+		auth.checkTenantId();
+		// 获取数据源前缀
+		auth.getSourcePrefix(sourceGateway.getPrefix(auth.getTenantCode()));
+		// 校验数据源前缀
+		auth.checkSourcePrefix();
 	}
 
 }

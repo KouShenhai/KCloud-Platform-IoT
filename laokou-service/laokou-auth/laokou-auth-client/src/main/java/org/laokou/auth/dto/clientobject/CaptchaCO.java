@@ -15,26 +15,36 @@
  *
  */
 
-package org.laokou.auth.dto;
+package org.laokou.auth.dto.clientobject;
 
-import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.auth.dto.clientobject.CaptchaCO;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.i18n.dto.ClientObject;
 
 /**
- * 发送验证码命令请求.
- *
  * @author laokou
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CaptchaSendCmd extends CommonCommand {
+public class CaptchaCO extends ClientObject {
 
-	@Valid
-	private CaptchaCO co;
+	/**
+	 * 业务用例.
+	 */
+	public static final String USE_CASE_CAPTCHA = "captcha";
+
+	@NotBlank(message = "UUID不能为空")
+	private String uuid;
+
+	@NotBlank(message = "标签不能为空")
+	@Pattern(regexp = "(mail|mobile)Captcha", message = "标签错误")
+	private String tag;
+
+	@NotBlank(message = "租户编号不能为空")
+	private String tenantCode;
 
 }

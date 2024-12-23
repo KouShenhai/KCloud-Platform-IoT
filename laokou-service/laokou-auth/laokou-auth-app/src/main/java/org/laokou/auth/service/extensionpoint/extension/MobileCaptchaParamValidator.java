@@ -23,7 +23,7 @@ import org.laokou.common.extension.Extension;
 
 import static org.laokou.auth.common.constant.MqConstant.MOBILE_TAG;
 import static org.laokou.auth.common.utils.ParamValidatorUtil.validateRegex;
-import static org.laokou.auth.dto.CaptchaSendCmd.USE_CASE_CAPTCHA;
+import static org.laokou.auth.dto.clientobject.CaptchaCO.USE_CASE_CAPTCHA;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.MOBILE_ERROR;
 

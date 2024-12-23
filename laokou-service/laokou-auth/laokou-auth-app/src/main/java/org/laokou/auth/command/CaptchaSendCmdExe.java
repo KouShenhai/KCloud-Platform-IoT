@@ -18,14 +18,20 @@
 package org.laokou.auth.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.auth.ability.DomainService;
+import org.laokou.auth.convertor.CaptchaConvertor;
 import org.laokou.auth.dto.CaptchaSendCmd;
+import org.laokou.auth.dto.clientobject.CaptchaCO;
+import org.laokou.auth.factory.DomainFactory;
+import org.laokou.auth.model.AuthA;
 import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
+import org.laokou.common.rocketmq.template.SendMessageType;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.dto.CaptchaSendCmd.USE_CASE_CAPTCHA;
+import static org.laokou.auth.dto.clientobject.CaptchaCO.USE_CASE_CAPTCHA;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
@@ -39,15 +45,20 @@ public class CaptchaSendCmdExe {
 
 	private final ExtensionExecutor extensionExecutor;
 
+	private final DomainService domainService;
+
 	public void executeVoid(CaptchaSendCmd cmd) {
-		// 校验
+		// 获取对象
+		CaptchaCO co = cmd.getCo();
+		// 校验参数
 		extensionExecutor.executeVoid(CaptchaParamValidatorExtPt.class,
-				BizScenario.valueOf(cmd.getTag(), USE_CASE_CAPTCHA, SCENARIO),
-				extension -> extension.validate(cmd.getUuid()));
-		// 发布发送验证码事件
-		// SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getUuid(),
-		// LAOKOU_CAPTCHA_TOPIC, cmd.getTag());
-		// rocketMQDomainEventPublisher.publish(sendCaptchaEvent, SendMessageType.ASYNC);
+				BizScenario.valueOf(co.getTag(), USE_CASE_CAPTCHA, SCENARIO),
+				extension -> extension.validate(co.getUuid()));
+		AuthA auth = DomainFactory.getAuth();
+		// 创建验证码
+		domainService.createCaptcha(auth, CaptchaConvertor.toEntity(co));
+		// 发布事件
+		auth.releaseEvents().forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageType.ASYNC));
 	}
 
 }

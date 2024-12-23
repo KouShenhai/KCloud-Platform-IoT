@@ -19,9 +19,7 @@ package org.laokou.auth.factory;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.GrantType;
-import org.laokou.auth.model.UserE;
+import org.laokou.auth.model.*;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
@@ -81,6 +79,10 @@ public class DomainFactory {
 	 */
 	private static final String TENANT_CODE = "tenant_code";
 
+	public static AuthA getAuth() {
+		return new AuthA();
+	}
+
 	public static AuthA getMailAuth(Long aggregateId, HttpServletRequest request) {
 		String code = request.getParameter(CODE);
 		String mail = request.getParameter(MAIL);
@@ -113,6 +115,14 @@ public class DomainFactory {
 
 	public static UserE getUser() {
 		return new UserE();
+	}
+
+	public static LoginLogE getLoginLog() {
+		return new LoginLogE();
+	}
+
+	public static CaptchaE getCaptcha() {
+		return new CaptchaE();
 	}
 
 }
