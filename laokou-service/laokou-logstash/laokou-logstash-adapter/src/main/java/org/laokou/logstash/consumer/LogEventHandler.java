@@ -49,9 +49,9 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class TraceHandler {
+public class LogEventHandler {
 
-	private static final String TRACE = "laokou_trace";
+	private static final String TRACE_INDEX = "laokou_trace";
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
@@ -65,7 +65,7 @@ public class TraceHandler {
 				.stream()
 				.collect(Collectors.toMap(TraceIndex::getId, traceIndex -> traceIndex));
 			if (MapUtil.isNotEmpty(dataMap)) {
-				elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE, TraceIndex.class, executor)
+				elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceIndex.class, executor)
 					.thenAcceptAsync(
 							res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap, executor),
 							executor);
@@ -104,7 +104,7 @@ public class TraceHandler {
 	}
 
 	private String getIndexName() {
-		return TRACE + StringConstant.UNDER + DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMMDD);
+		return TRACE_INDEX + StringConstant.UNDER + DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMMDD);
 	}
 
 	@Data
