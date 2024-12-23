@@ -15,13 +15,23 @@
  *
  */
 
-package org.laokou.auth.dto.domainevent;
+package org.laokou.auth.convertor;
 
-import java.io.Serializable;
+import org.laokou.auth.dto.clientobject.CaptchaCO;
+import org.laokou.auth.factory.DomainFactory;
+import org.laokou.auth.model.CaptchaE;
 
 /**
  * @author laokou
  */
-public record SendCaptchaEvent(String uuid) implements Serializable {
+public class CaptchaConvertor {
+
+	public static CaptchaE toEntity(CaptchaCO co) {
+		CaptchaE entity = DomainFactory.getCaptcha();
+		entity.setUuid(co.getUuid());
+		entity.setTag(co.getTag());
+		entity.setTenantCode(co.getTenantCode());
+		return entity;
+	}
 
 }

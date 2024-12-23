@@ -102,6 +102,19 @@ public class AuthA extends AggregateRoot {
 	 */
 	private InfoV info;
 
+	/**
+	 * 验证码实体.
+	 */
+	private CaptchaE captchaE;
+
+	public AuthA() {
+		this.username = EMPTY;
+		this.password = EMPTY;
+		this.tenantCode = EMPTY;
+		this.grantType = USERNAME_PASSWORD;
+		this.captcha = new CaptchaV(EMPTY, EMPTY);
+	}
+
 	public AuthA(Long aggregateId, String username, String password, String tenantCode, GrantType grantType,
 			String uuid, String captcha) {
 		super.id = aggregateId;
@@ -128,6 +141,10 @@ public class AuthA extends AggregateRoot {
 		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 
+	public void createCaptcha() {
+		version++;
+	}
+
 	public void getExtInfo(InfoV info) {
 		this.info = info;
 	}
@@ -151,6 +168,10 @@ public class AuthA extends AggregateRoot {
 
 	public void getDeptPaths(List<String> deptPaths) {
 		this.deptPaths = getPaths(deptPaths);
+	}
+
+	public void getCaptcha(CaptchaE captcha) {
+		this.captchaE = captcha;
 	}
 
 	public void checkTenantId() {

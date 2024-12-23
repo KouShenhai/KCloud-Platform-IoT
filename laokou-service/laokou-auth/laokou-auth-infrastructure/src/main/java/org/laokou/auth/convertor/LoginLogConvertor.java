@@ -19,6 +19,7 @@ package org.laokou.auth.convertor;
 
 import org.laokou.auth.dto.clientobject.LoginLogCO;
 import org.laokou.auth.dto.domainevent.LoginEvent;
+import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.auth.model.LoginLogE;
 import org.laokou.common.i18n.dto.DomainEvent;
@@ -30,7 +31,7 @@ import org.laokou.common.i18n.utils.JacksonUtil;
 public class LoginLogConvertor {
 
 	public static LoginLogE toEntity(LoginLogCO co) {
-		LoginLogE loginLogE = new LoginLogE();
+		LoginLogE loginLogE = DomainFactory.getLoginLog();
 		loginLogE.setId(co.getId());
 		loginLogE.setUsername(co.getUsername());
 		loginLogE.setIp(co.getIp());

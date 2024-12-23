@@ -15,13 +15,25 @@
  *
  */
 
-package org.laokou.auth.dto.domainevent;
+package org.laokou.auth.model;
 
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.Setter;
+import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.dto.Identifier;
 
 /**
  * @author laokou
  */
-public record SendCaptchaEvent(String uuid) implements Serializable {
+@Entity
+@Getter
+@Setter
+public class CaptchaE extends Identifier {
+
+	private String uuid;
+
+	private String tag;
+
+	private String tenantCode;
 
 }
