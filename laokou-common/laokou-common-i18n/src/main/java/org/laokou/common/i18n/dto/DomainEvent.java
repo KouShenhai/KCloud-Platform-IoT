@@ -102,12 +102,12 @@ public class DomainEvent extends Identifier {
 		this.version = 0;
 	}
 
-	public DomainEvent(Long eventId, Long tenantId, Long userId, Long aggregateId, String topic, String tag,
-			int version, String payload, EventType type, String sourcePrefix) {
+	public DomainEvent(Long id, Long tenantId, Long userId, Long aggregateId, String topic, String tag, int version,
+			String payload, EventType type, String sourcePrefix) {
+		super.id = id;
 		this.payload = payload;
 		this.type = StringUtil.convertUnder(type.name().toLowerCase());
 		this.sourcePrefix = sourcePrefix;
-		super.id = eventId;
 		this.tenantId = tenantId;
 		this.userId = userId;
 		this.aggregateId = aggregateId;

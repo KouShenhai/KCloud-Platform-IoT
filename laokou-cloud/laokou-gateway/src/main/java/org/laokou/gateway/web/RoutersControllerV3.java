@@ -45,14 +45,14 @@ public class RoutersControllerV3 {
 	@Api
 	@PostMapping
 	@Operation(summary = "保存路由", description = "保存路由")
-	public Flux<Boolean> saveRouter() {
+	public Flux<Boolean> saveV3() {
 		return nacosRouteDefinitionRepository.saveRouters();
 	}
 
 	@Api
 	@DeleteMapping
 	@Operation(summary = "删除路由", description = "删除路由")
-	public Mono<Boolean> removeRouter() {
+	public Mono<Boolean> removeV3() {
 		return nacosRouteDefinitionRepository.removeRouters();
 	}
 

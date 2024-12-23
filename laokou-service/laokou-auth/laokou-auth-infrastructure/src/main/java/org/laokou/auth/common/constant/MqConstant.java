@@ -26,8 +26,6 @@ public final class MqConstant {
 
 	public static final String MOBILE_TAG = "mobileCaptcha";
 
-	public static final String LAOKOU_CAPTCHA_TOPIC = "laokou_captcha_topic";
-
 	public static final String LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP = "laokou_mail_captcha_consumer_group";
 
 	public static final String LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP = "laokou_mobile_captcha_consumer_group";
