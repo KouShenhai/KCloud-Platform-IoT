@@ -30,11 +30,11 @@ import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
  * @author laokou
  */
 @Extension(bizId = MOBILE, useCase = USE_CASE_AUTH, scenario = SCENARIO)
-public class MobileAuthParamValidator extends ParamValidator implements AuthParamValidatorExtPt {
+public class MobileAuthParamValidator implements AuthParamValidatorExtPt {
 
 	@Override
 	public void validate(AuthA auth) {
-		super.validate(
+		ParamValidator.validate(
 				// 校验租户编号
 				OAuth2ParamValidator.validateTenantCode(auth.getTenantCode()),
 				// 校验验证码

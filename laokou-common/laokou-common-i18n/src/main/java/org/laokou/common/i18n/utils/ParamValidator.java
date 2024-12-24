@@ -32,7 +32,7 @@ import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.VALI
  */
 public class ParamValidator {
 
-	protected void validate(Validate... validates) {
+	public static void validate(Validate... validates) {
 		List<String> validateList = Stream.of(validates)
 			.filter(item -> StringUtil.isNotEmpty(item.value))
 			.map(item -> item.value)
@@ -40,6 +40,14 @@ public class ParamValidator {
 		if (!CollectionUtils.isEmpty(validateList)) {
 			throw new ParamException(VALIDATE_FAILED, StringUtil.collectionToDelimitedString(validateList, COMMA));
 		}
+	}
+
+	public static Validate validate() {
+		return new Validate();
+	}
+
+	public static Validate invalidate(String value) {
+		return new Validate(value);
 	}
 
 	public static class Validate {

@@ -30,11 +30,11 @@ import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
  * @author laokou
  */
 @Extension(bizId = MOBILE_TAG, useCase = USE_CASE_CAPTCHA, scenario = SCENARIO)
-public class MobileCaptchaParamValidator extends ParamValidator implements CaptchaParamValidatorExtPt {
+public class MobileCaptchaParamValidator implements CaptchaParamValidatorExtPt {
 
 	@Override
 	public void validate(CaptchaE captcha) {
-		super.validate(
+		ParamValidator.validate(
 				// 校验租户编号
 				OAuth2ParamValidator.validateTenantCode(captcha.getTenantCode()),
 				// 校验手机号
