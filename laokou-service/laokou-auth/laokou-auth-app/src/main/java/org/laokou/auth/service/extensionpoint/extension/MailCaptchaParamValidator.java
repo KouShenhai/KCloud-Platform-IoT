@@ -17,15 +17,14 @@
 
 package org.laokou.auth.service.extensionpoint.extension;
 
+import org.laokou.auth.model.CaptchaE;
 import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
-import org.laokou.common.core.utils.RegexUtil;
+import org.laokou.common.i18n.utils.ParamValidator;
 import org.laokou.common.extension.Extension;
 
 import static org.laokou.auth.common.constant.MqConstant.MAIL_TAG;
-import static org.laokou.auth.common.utils.ParamValidatorUtil.validateRegex;
 import static org.laokou.auth.dto.clientobject.CaptchaCO.USE_CASE_CAPTCHA;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
-import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.MAIL_ERROR;
 
 /**
  * @author laokou
@@ -34,9 +33,12 @@ import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.MAIL
 public class MailCaptchaParamValidator implements CaptchaParamValidatorExtPt {
 
 	@Override
-	public void validate(String uuid) {
-		// 邮箱格式判断
-		validateRegex(RegexUtil.Type.MAIL, uuid, MAIL_ERROR);
+	public void validate(CaptchaE captcha) {
+		ParamValidator.validate(
+				// 校验租户编号
+				OAuth2ParamValidator.validateTenantCode(captcha.getTenantCode()),
+				// 校验手邮箱
+				OAuth2ParamValidator.validateMail(captcha.getUuid()));
 	}
 
 }

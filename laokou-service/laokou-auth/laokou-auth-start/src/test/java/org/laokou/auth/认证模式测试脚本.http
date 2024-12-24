@@ -40,7 +40,7 @@ Content-Disposition: form-data; name="uuid"
 --WebAppBoundary
 Content-Disposition: form-data; name="captcha"
 
-{{captcha}}
+
 --WebAppBoundary
 Content-Disposition: form-data; name="tenant_code"
 

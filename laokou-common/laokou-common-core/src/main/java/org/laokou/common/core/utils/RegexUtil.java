@@ -42,7 +42,7 @@ public final class RegexUtil {
 	/**
 	 * 手机号正则表达式.
 	 */
-	private static final String MOBILE_REGEX = "^((13[0-9])|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[0-9])|(18[0-9])|(19[1,8,9]))\\d{8}$";
+	private static final String MOBILE_REGEX = "^(1[3-9])\\d{9}$";
 
 	/**
 	 * 数据源名称正则表达式.
@@ -112,12 +112,6 @@ public final class RegexUtil {
 			return matcher.group(1);
 		}
 		return EMPTY;
-	}
-
-	public enum Type {
-
-		MAIL, MOBILE
-
 	}
 
 }

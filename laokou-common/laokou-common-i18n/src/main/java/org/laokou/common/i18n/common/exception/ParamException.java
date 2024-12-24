@@ -24,6 +24,14 @@ package org.laokou.common.i18n.common.exception;
  */
 public final class ParamException extends GlobalException {
 
+	public ParamException(String code) {
+		super(code);
+	}
+
+	public ParamException(String code, String msg) {
+		super(code, msg);
+	}
+
 	public final static class OAuth2 {
 
 		/**
@@ -71,14 +79,11 @@ public final class ParamException extends GlobalException {
 		 */
 		public static final String MOBILE_ERROR = "P_OAuth2_MobileError";
 
-	}
+		/**
+		 * 校验失败.
+		 */
+		public static final String VALIDATE_FAILED = "P_OAuth2_ValidateFailed";
 
-	public ParamException(String code) {
-		super(code);
-	}
-
-	public ParamException(String code, String msg) {
-		super(code, msg);
 	}
 
 }

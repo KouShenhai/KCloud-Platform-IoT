@@ -17,7 +17,6 @@
 
 package org.laokou.auth.dto;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,7 +33,6 @@ import org.laokou.common.i18n.dto.CommonCommand;
 @AllArgsConstructor
 public class CaptchaSendCmd extends CommonCommand {
 
-	@Valid
 	private CaptchaCO co;
 
 }

@@ -21,9 +21,9 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.CaptchaConvertor;
 import org.laokou.auth.dto.CaptchaSendCmd;
-import org.laokou.auth.dto.clientobject.CaptchaCO;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.CaptchaE;
 import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.domain.support.DomainEventPublisher;
@@ -49,15 +49,14 @@ public class CaptchaSendCmdExe {
 	private final DomainService domainService;
 
 	public void executeVoid(CaptchaSendCmd cmd) {
-		// 获取对象
-		CaptchaCO co = cmd.getCo();
 		// 校验参数
+		CaptchaE entity = CaptchaConvertor.toEntity(cmd.getCo());
 		extensionExecutor.executeVoid(CaptchaParamValidatorExtPt.class,
-				BizScenario.valueOf(co.getTag(), USE_CASE_CAPTCHA, SCENARIO),
-				extension -> extension.validate(co.getUuid()));
+				BizScenario.valueOf(entity.getTag(), USE_CASE_CAPTCHA, SCENARIO),
+				extension -> extension.validate(entity));
 		AuthA auth = DomainFactory.getAuth(IdGenerator.defaultSnowflakeId());
 		// 创建验证码
-		domainService.createCaptcha(IdGenerator.defaultSnowflakeId(), auth, CaptchaConvertor.toEntity(co));
+		domainService.createCaptcha(IdGenerator.defaultSnowflakeId(), auth, entity);
 		// 发布事件
 		auth.releaseEvents().forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageType.ASYNC));
 	}
