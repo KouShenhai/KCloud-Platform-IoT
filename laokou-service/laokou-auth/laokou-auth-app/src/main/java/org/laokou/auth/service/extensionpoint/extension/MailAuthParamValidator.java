@@ -40,11 +40,11 @@ public class MailAuthParamValidator implements AuthParamValidatorExtPt {
 		// 租户编号判空
 		validateNotEmpty(auth.getTenantCode(), TENANT_CODE_REQUIRE);
 		// 邮箱判空
-		validateNotEmpty(auth.getCaptcha().uuid(), MAIL_REQUIRE);
+		validateNotEmpty(auth.getCaptcha().uuid(), );
 		// 验证码判空
 		validateNotEmpty(auth.getCaptcha().captcha(), CAPTCHA_REQUIRE);
 		// 邮箱格式判断
-		validateRegex(RegexUtil.Type.MAIL, auth.getCaptcha().uuid(), MAIL_ERROR);
+		//validateRegex(RegexUtil.Type.MAIL, auth.getCaptcha().uuid(), );
 	}
 
 }

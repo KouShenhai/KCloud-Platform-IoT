@@ -34,16 +34,9 @@ public final class ParamValidatorUtil {
 	}
 
 	public static void validateRegex(RegexUtil.Type type, String value, String errorCode) {
-		if (validateRegex(type, value)) {
-			throw new ParamException(errorCode, ValidatorUtil.getMessage(errorCode));
-		}
-	}
-
-	private static boolean validateRegex(RegexUtil.Type type, String value) {
-		return switch (type) {
-			case MAIL -> !RegexUtil.mailRegex(value);
-			case MOBILE -> !RegexUtil.mobileRegex(value);
-		};
+//		if (validateRegex(type, value)) {
+//			throw new ParamException(errorCode, ValidatorUtil.getMessage(errorCode));
+//		}
 	}
 
 }

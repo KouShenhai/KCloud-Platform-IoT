@@ -17,8 +17,6 @@
 
 package org.laokou.auth.dto.clientobject;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,14 +35,10 @@ public class CaptchaCO extends ClientObject {
 	 */
 	public static final String USE_CASE_CAPTCHA = "captcha";
 
-	@NotBlank(message = "UUID不能为空")
 	private String uuid;
 
-	@NotBlank(message = "标签不能为空")
-	@Pattern(regexp = "(mail|mobile)Captcha", message = "标签错误")
 	private String tag;
 
-	@NotBlank(message = "租户编号不能为空")
 	private String tenantCode;
 
 }

@@ -17,6 +17,7 @@
 
 package org.laokou.auth.service.extensionpoint;
 
+import org.laokou.auth.model.CaptchaE;
 import org.laokou.common.extension.ExtensionPointI;
 
 /**
@@ -24,6 +25,6 @@ import org.laokou.common.extension.ExtensionPointI;
  */
 public interface CaptchaParamValidatorExtPt extends ExtensionPointI {
 
-	void validate(String uuid);
+	void validate(CaptchaE captcha);
 
 }

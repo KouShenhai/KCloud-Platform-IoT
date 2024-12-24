@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.service.extensionpoint.extension;
+package org.laokou.common.core.validator;
 
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.ParamException;
@@ -25,19 +25,34 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.COMMA;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.VALIDATE_FAILED;
 
 /**
  * @author laokou
  */
-public abstract class AbstractParamValidator {
+public class ParamValidator {
 
-	protected void validate(String...validates) {
-		List<String> validateList = Stream.of(validates).filter(StringUtil::isNotEmpty).toList();
+	protected void validate(Validate...validates) {
+		List<String> validateList = Stream.of(validates).filter(item -> StringUtil.isNotEmpty(item.value)).map(item -> item.value).toList();
 		if (CollectionUtil.isNotEmpty(validateList)) {
 			throw new ParamException(VALIDATE_FAILED,
 				StringUtil.collectionToDelimitedString(validateList, COMMA));
 		}
+	}
+
+	public static class Validate {
+
+		private final String value;
+
+		public Validate() {
+			value = EMPTY;
+		}
+
+		public Validate(String value) {
+			this.value = value;
+		}
+
 	}
 
 }
