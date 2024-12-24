@@ -40,7 +40,7 @@ public class AuthorizationCodeAuthParamValidator implements AuthParamValidatorEx
 				// 校验用户名
 				OAuth2ParamValidator.validateUsername(auth.getUsername()),
 				// 校验密码
-				OAuth2ParamValidator.validatePassword(auth.getUsername()));
+				OAuth2ParamValidator.validatePassword(auth.getPassword()));
 	}
 
 }
