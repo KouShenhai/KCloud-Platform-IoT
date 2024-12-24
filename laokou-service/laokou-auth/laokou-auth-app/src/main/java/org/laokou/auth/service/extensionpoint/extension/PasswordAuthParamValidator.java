@@ -19,7 +19,7 @@ package org.laokou.auth.service.extensionpoint.extension;
 
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
-import org.laokou.common.core.validator.ParamValidator;
+import org.laokou.common.i18n.utils.ParamValidator;
 import org.laokou.common.extension.Extension;
 
 import static org.laokou.auth.factory.DomainFactory.USERNAME_PASSWORD;
@@ -35,17 +35,16 @@ public class PasswordAuthParamValidator extends ParamValidator implements AuthPa
 	@Override
 	public void validate(AuthA auth) {
 		super.validate(
-			// 校验租户编号
-			OAuth2ParamValidator.validateTenantCode(auth.getTenantCode()),
-			// 校验UUID
-			OAuth2ParamValidator.validateUuid(auth.getCaptcha().uuid()),
-			// 校验验证码
-			OAuth2ParamValidator.validateCaptcha(auth.getCaptcha().captcha()),
-			// 校验用户名
-			OAuth2ParamValidator.validateUsername(auth.getUsername()),
-			// 校验密码
-			OAuth2ParamValidator.validatePassword(auth.getUsername())
-		);
+				// 校验租户编号
+				OAuth2ParamValidator.validateTenantCode(auth.getTenantCode()),
+				// 校验UUID
+				OAuth2ParamValidator.validateUuid(auth.getCaptcha().uuid()),
+				// 校验验证码
+				OAuth2ParamValidator.validateCaptcha(auth.getCaptcha().captcha()),
+				// 校验用户名
+				OAuth2ParamValidator.validateUsername(auth.getUsername()),
+				// 校验密码
+				OAuth2ParamValidator.validatePassword(auth.getUsername()));
 	}
 
 }

@@ -19,7 +19,7 @@ package org.laokou.auth.service.extensionpoint.extension;
 
 import org.laokou.auth.model.CaptchaE;
 import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
-import org.laokou.common.core.validator.ParamValidator;
+import org.laokou.common.i18n.utils.ParamValidator;
 import org.laokou.common.extension.Extension;
 
 import static org.laokou.auth.common.constant.MqConstant.MOBILE_TAG;
@@ -35,11 +35,10 @@ public class MobileCaptchaParamValidator extends ParamValidator implements Captc
 	@Override
 	public void validate(CaptchaE captcha) {
 		super.validate(
-			// 校验租户编号
-			OAuth2ParamValidator.validateTenantCode(captcha.getTenantCode()),
-			// 校验手机号
-			OAuth2ParamValidator.validateMobile(captcha.getUuid())
-		);
+				// 校验租户编号
+				OAuth2ParamValidator.validateTenantCode(captcha.getTenantCode()),
+				// 校验手机号
+				OAuth2ParamValidator.validateMobile(captcha.getUuid()));
 	}
 
 }

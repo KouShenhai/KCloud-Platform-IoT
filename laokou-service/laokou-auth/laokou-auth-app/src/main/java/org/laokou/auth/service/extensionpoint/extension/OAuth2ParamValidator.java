@@ -18,7 +18,7 @@
 package org.laokou.auth.service.extensionpoint.extension;
 
 import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.core.validator.ParamValidator;
+import org.laokou.common.i18n.utils.ParamValidator;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 
@@ -46,7 +46,8 @@ public class OAuth2ParamValidator {
 	public static ParamValidator.Validate validateMail(String mail) {
 		if (StringUtil.isEmpty(mail)) {
 			return new ParamValidator.Validate(ValidatorUtil.getMessage(MAIL_REQUIRE));
-		} else if (RegexUtil.mailRegex(mail)) {
+		}
+		else if (RegexUtil.mailRegex(mail)) {
 			return new ParamValidator.Validate();
 		}
 		return new ParamValidator.Validate(ValidatorUtil.getMessage(MAIL_ERROR));
@@ -55,7 +56,8 @@ public class OAuth2ParamValidator {
 	public static ParamValidator.Validate validateMobile(String mobile) {
 		if (StringUtil.isEmpty(mobile)) {
 			return new ParamValidator.Validate(ValidatorUtil.getMessage(MOBILE_REQUIRE));
-		} else if (RegexUtil.mobileRegex(mobile)) {
+		}
+		else if (RegexUtil.mobileRegex(mobile)) {
 			return new ParamValidator.Validate();
 		}
 		return new ParamValidator.Validate(ValidatorUtil.getMessage(MOBILE_ERROR));
