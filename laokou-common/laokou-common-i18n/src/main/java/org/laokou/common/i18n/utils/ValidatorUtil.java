@@ -20,6 +20,7 @@ package org.laokou.common.i18n.utils;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
@@ -58,13 +59,15 @@ public final class ValidatorUtil {
 	 * 校验对象.
 	 * @param obj 待校验对象
 	 */
-	public static Set<String> validateEntity(Object obj) {
-		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-		Set<ConstraintViolation<Object>> violationSet = validator.validate(obj);
-		if (!violationSet.isEmpty()) {
-			return violationSet.stream().map(ConstraintViolation::getMessage).collect(Collectors.toSet());
+	public static Set<String> validateEntity(Object obj, Class<?>... groups) {
+		try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
+			Validator validator = validatorFactory.getValidator();
+			Set<ConstraintViolation<Object>> violationSet = validator.validate(obj, groups);
+			if (!violationSet.isEmpty()) {
+				return violationSet.stream().map(ConstraintViolation::getMessage).collect(Collectors.toSet());
+			}
+			return Collections.emptySet();
 		}
-		return Collections.emptySet();
 	}
 
 }
