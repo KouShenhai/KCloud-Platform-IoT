@@ -20,6 +20,7 @@ package org.laokou.auth.model;
 import lombok.Getter;
 
 /**
+ * 登录状态枚举.
  * @author laokou
  */
 @Getter
