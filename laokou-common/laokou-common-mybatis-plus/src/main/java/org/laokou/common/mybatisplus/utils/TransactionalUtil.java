@@ -20,7 +20,6 @@ package org.laokou.common.mybatisplus.utils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -48,9 +47,8 @@ public class TransactionalUtil {
 			}
 			catch (Exception e) {
 				r.setRollbackOnly();
-				log.error("操作失败，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
-				throw new SystemException("S_DS_OperationError",
-						StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage());
+				log.error("操作失败，错误信息：{}，详情见日志", e.getMessage(), e);
+				throw new SystemException("S_DS_OperationError", e.getMessage());
 			}
 		});
 	}

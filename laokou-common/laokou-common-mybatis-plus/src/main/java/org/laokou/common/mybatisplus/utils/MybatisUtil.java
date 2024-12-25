@@ -30,7 +30,10 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 
@@ -71,23 +74,29 @@ public class MybatisUtil {
 	 * @param consumer 函数
 	 * @param ds 数据源名称
 	 */
-	@SneakyThrows
 	public <T, M> void batch(List<T> dataList, int batchNum, int timeout, Class<M> clazz, String ds,
 			BiConsumer<M, T> consumer) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			// 数据分组
-			List<List<T>> partition = Lists.partition(dataList, batchNum);
-			AtomicBoolean rollback = new AtomicBoolean(false);
-			CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
-			// 虚拟线程
-			List<Callable<Boolean>> futures = partition.parallelStream().map(item -> (Callable<Boolean>) () -> {
-				handleBatch(timeout, item, clazz, consumer, rollback, ds, cyclicBarrier);
-				return true;
-			}).toList();
-			// 执行任务
-			executor.invokeAll(futures);
-			if (rollback.get()) {
-				throw new SystemException("S_DS_TransactionRolledBack", "事务已回滚");
+			try {
+				// 数据分组
+				List<List<T>> partition = Lists.partition(dataList, batchNum);
+				AtomicBoolean rollback = new AtomicBoolean(false);
+				CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
+				// 虚拟线程
+				List<Callable<Boolean>> futures = partition.stream().map(item -> (Callable<Boolean>) () -> {
+					handleBatch(timeout, item, clazz, consumer, rollback, ds, cyclicBarrier);
+					return true;
+				}).toList();
+				// 执行任务
+				executor.invokeAll(futures);
+				if (rollback.get()) {
+					throw new SystemException("S_DS_TransactionRolledBack", "事务已回滚");
+				}
+			}
+			catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+				log.error("错误信息：{}，详情见日志", e.getMessage(), e);
+				throw new SystemException("S_UnKnow_Error", e.getMessage());
 			}
 		}
 	}

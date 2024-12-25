@@ -61,12 +61,14 @@ public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 				String msg = new String(message.getBody(), StandardCharsets.UTF_8);
 				PayloadCO co = JacksonUtil.toBean(msg, PayloadCO.class);
 				TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(co.getContent());
-				List<Callable<Boolean>> callableList = co.getReceivers().parallelStream().map(clientId -> (Callable<Boolean>) () -> {
+				List<Callable<Boolean>> callableList = co.getReceivers().stream().map(clientId -> (Callable<Boolean>) () -> {
 					webSocketServer.send(clientId, webSocketFrame);
 					return true;
 				}).toList();
 				executor.invokeAll(callableList);
 			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+				log.error("错误信息：{}", e.getMessage(), e);
 				throw new SystemException("S_UnKnow_Error", e.getMessage());
 			}
 		}

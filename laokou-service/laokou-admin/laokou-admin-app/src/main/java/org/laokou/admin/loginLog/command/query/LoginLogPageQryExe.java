@@ -29,7 +29,6 @@ import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -74,7 +73,7 @@ public class LoginLogPageQryExe {
 						c2.get(30, TimeUnit.SECONDS)));
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
+			log.error("错误信息：{}，详情见日志", e.getMessage(), e);
 			throw new SystemException("S_LoginLog_PageQueryTimeout", "登录日志分页查询超时");
 		}
 	}

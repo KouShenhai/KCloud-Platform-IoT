@@ -25,7 +25,6 @@ import org.laokou.common.core.utils.MDCUtil;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.JacksonUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 
 import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
 import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
@@ -47,7 +46,7 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 		}
 		catch (Exception e) {
 			log.error("消费失败，主题Topic：{}，偏移量Offset：{}，错误信息：{}", messageExt.getTopic(), messageExt.getCommitLogOffset(),
-					StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
+					e.getMessage(), e);
 			throw e;
 		}
 		finally {
