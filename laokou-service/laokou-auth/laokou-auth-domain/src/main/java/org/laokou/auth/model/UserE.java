@@ -84,7 +84,7 @@ public class UserE extends Identifier {
 	}
 
 	public boolean isSuperAdministrator() {
-		return ObjectUtil.equals(YES.ordinal(), this.superAdmin);
+		return ObjectUtil.equals(YES.getCode(), this.superAdmin);
 	}
 
 }

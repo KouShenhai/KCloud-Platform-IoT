@@ -17,13 +17,33 @@
 
 package org.laokou.common.i18n.common.constant;
 
+import lombok.Getter;
+
 /**
  * 事件类型枚举.
  *
  * @author laokou
  */
+@Getter
 public enum EventType {
 
-	SEND_CAPTCHA_EVENT, LOGIN_EVENT
+	/**
+	 * 发送验证码事件.
+	 */
+	SEND_CAPTCHA_EVENT("sendCaptchaEvent", "发送验证码事件"),
+
+	/**
+	 * 登录事件.
+	 */
+	LOGIN_EVENT("loginEvent", "登录事件");
+
+	private final String code;
+
+	private final String desc;
+
+	EventType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }
