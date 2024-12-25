@@ -21,7 +21,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.common.constant.EventType;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 
 import java.io.Serial;
 import java.time.Instant;
@@ -106,7 +105,7 @@ public class DomainEvent extends Identifier {
 			String payload, EventType type, String sourcePrefix) {
 		super.id = id;
 		this.payload = payload;
-		this.type = StringUtil.convertUnder(type.name().toLowerCase());
+		this.type = type.getCode();
 		this.sourcePrefix = sourcePrefix;
 		this.tenantId = tenantId;
 		this.userId = userId;

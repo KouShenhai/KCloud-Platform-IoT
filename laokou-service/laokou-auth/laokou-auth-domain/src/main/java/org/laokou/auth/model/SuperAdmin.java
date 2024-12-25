@@ -17,21 +17,33 @@
 
 package org.laokou.auth.model;
 
+import lombok.Getter;
+
 /**
  * 超级管理员枚举.
  *
  * @author laokou
  */
+@Getter
 public enum SuperAdmin {
 
 	/**
 	 * 否.
 	 */
-	NO,
+	NO(0, "否"),
 
 	/**
 	 * 是.
 	 */
-	YES
+	YES(1, "是");
+
+	private final int code;
+
+	private final String desc;
+
+	SuperAdmin(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

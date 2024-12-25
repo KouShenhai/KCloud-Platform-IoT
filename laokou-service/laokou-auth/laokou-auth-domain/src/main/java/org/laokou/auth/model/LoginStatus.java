@@ -17,11 +17,31 @@
 
 package org.laokou.auth.model;
 
+import lombok.Getter;
+
 /**
  * @author laokou
  */
+@Getter
 public enum LoginStatus {
 
-	OK, FAIL,
+	/**
+	 * 成功.
+	 */
+	OK(0, "成功"),
+
+	/**
+	 * 失败.
+	 */
+	FAIL(1, "失败");
+
+	private final int code;
+
+	private final String desc;
+
+	LoginStatus(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

@@ -30,9 +30,9 @@ import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
 public enum GrantType {
 
 	/**
-	 * 用户名密码.
+	 * 用户名密码登录.
 	 */
-	USERNAME_PASSWORD(DomainFactory.USERNAME_PASSWORD) {
+	USERNAME_PASSWORD(DomainFactory.USERNAME_PASSWORD, "用户名密码登录") {
 		@Override
 		public void checkUsernameNotExist() {
 			throw new SystemException(USERNAME_PASSWORD_ERROR);
@@ -40,9 +40,9 @@ public enum GrantType {
 	},
 
 	/**
-	 * 授权码.
+	 * 授权码登录.
 	 */
-	AUTHORIZATION_CODE(DomainFactory.AUTHORIZATION_CODE) {
+	AUTHORIZATION_CODE(DomainFactory.AUTHORIZATION_CODE, "授权码登录") {
 		@Override
 		public void checkUsernameNotExist() {
 			throw new SystemException(USERNAME_PASSWORD_ERROR);
@@ -50,9 +50,9 @@ public enum GrantType {
 	},
 
 	/**
-	 * 手机号.
+	 * 手机号登录.
 	 */
-	MOBILE(DomainFactory.MOBILE) {
+	MOBILE(DomainFactory.MOBILE, "手机号登录") {
 		@Override
 		public void checkUsernameNotExist() {
 			throw new SystemException(MOBILE_NOT_REGISTERED);
@@ -60,9 +60,9 @@ public enum GrantType {
 	},
 
 	/**
-	 * 邮箱.
+	 * 邮箱登录.
 	 */
-	MAIL(DomainFactory.MAIL) {
+	MAIL(DomainFactory.MAIL, "邮箱登录") {
 		@Override
 		public void checkUsernameNotExist() {
 			throw new SystemException(MAIL_NOT_REGISTERED);
@@ -71,8 +71,11 @@ public enum GrantType {
 
 	private final String code;
 
-	GrantType(String code) {
+	private final String desc;
+
+	GrantType(String code, String desc) {
 		this.code = code;
+		this.desc = desc;
 	}
 
 	public abstract void checkUsernameNotExist();

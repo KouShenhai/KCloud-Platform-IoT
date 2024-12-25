@@ -21,7 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionState;
 import org.laokou.common.core.utils.MDCUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;import org.springframework.messaging.Message;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.springframework.messaging.Message;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;

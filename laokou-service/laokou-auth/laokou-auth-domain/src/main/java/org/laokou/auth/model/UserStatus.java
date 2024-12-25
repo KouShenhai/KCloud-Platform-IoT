@@ -17,21 +17,33 @@
 
 package org.laokou.auth.model;
 
+import lombok.Getter;
+
 /**
  * 用户状态常量.
  *
  * @author laokou
  */
+@Getter
 public enum UserStatus {
 
 	/**
 	 * 启用.
 	 */
-	ENABLE,
+	ENABLE(0, "启用"),
 
 	/**
 	 * 禁用.
 	 */
-	DISABLE
+	DISABLE(1, "禁用");
+
+	private final int code;
+
+	private final String desc;
+
+	UserStatus(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

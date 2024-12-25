@@ -217,7 +217,7 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void checkUserStatus() {
-		if (ObjectUtil.equals(UserStatus.DISABLE.ordinal(), this.user.getStatus())) {
+		if (ObjectUtil.equals(UserStatus.DISABLE.getCode(), this.user.getStatus())) {
 			throw new SystemException(USER_DISABLED);
 		}
 	}
@@ -280,11 +280,11 @@ public class AuthA extends AggregateRoot {
 	private LoginEvent getEvent(GlobalException e) {
 		if (ObjectUtil.isNull(e)) {
 			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
-					LoginStatus.OK.ordinal(), EMPTY, grantType.getCode(), super.instant);
+					LoginStatus.OK.getCode(), EMPTY, grantType.getCode(), super.instant);
 		}
 		else if (e instanceof SystemException) {
 			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
-					LoginStatus.FAIL.ordinal(), e.getMessage(), grantType.getCode(), super.instant);
+					LoginStatus.FAIL.getCode(), e.getMessage(), grantType.getCode(), super.instant);
 		}
 		return null;
 	}
