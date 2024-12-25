@@ -19,7 +19,6 @@ package org.laokou.auth.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
 
 import java.time.Instant;
@@ -27,7 +26,6 @@ import java.time.Instant;
 /**
  * @author laokou
  */
-@Entity
 @Setter
 @Getter
 public class LoginLogE extends Identifier {

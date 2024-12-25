@@ -53,7 +53,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
 @Configuration
@@ -94,9 +93,8 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
 					annotation.rocketMQTemplateBeanName() + " already exists RocketMQLocalTransactionListener");
 		}
 		// 虚拟线程
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			((TransactionMQProducer) rocketMQTemplate.getProducer()).setExecutorService(executor);
-		}
+		((TransactionMQProducer) rocketMQTemplate.getProducer())
+			.setExecutorService(ThreadUtil.newVirtualTaskExecutor());
 		((TransactionMQProducer) rocketMQTemplate.getProducer())
 			.setTransactionListener(RocketMQUtil.convert((RocketMQLocalTransactionListener) bean));
 		log.debug("RocketMQLocalTransactionListener {} register to {} success", clazz.getName(),

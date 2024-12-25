@@ -20,7 +20,6 @@ package org.laokou.auth.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.crypto.utils.AESUtil;
-import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
@@ -31,7 +30,6 @@ import static org.laokou.auth.model.SuperAdmin.YES;
  *
  * @author laokou
  */
-@Entity
 @Setter
 @Getter
 public class UserE extends Identifier {
