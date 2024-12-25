@@ -29,7 +29,6 @@ import org.apache.hc.client5.http.ssl.DefaultClientTlsStrategy;
 import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.laokou.common.i18n.utils.StringUtil;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -75,7 +74,7 @@ public final class HttpUtil {
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
 			catch (IOException e) {
-				log.error("调用失败，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
+				log.error("调用失败，错误信息：{}，详情见日志", e.getMessage(), e);
 			}
 			return resultString;
 		}

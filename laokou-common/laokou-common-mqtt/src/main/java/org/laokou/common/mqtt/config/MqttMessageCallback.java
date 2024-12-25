@@ -26,7 +26,6 @@ import org.eclipse.paho.mqttv5.client.MqttDisconnectResponse;
 import org.eclipse.paho.mqttv5.common.MqttException;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
-import org.laokou.common.i18n.utils.StringUtil;
 
 /**
  * @author laokou
@@ -48,7 +47,7 @@ public class MqttMessageCallback implements MqttCallback {
 
 	@Override
 	public void mqttErrorOccurred(MqttException ex) {
-		log.error("MQTT报错，错误信息：{}，详情见日志", StringUtil.isEmpty(ex.getMessage()) ? "暂无错误信息" : ex.getMessage(), ex);
+		log.error("MQTT报错，错误信息：{}，详情见日志", ex.getMessage(), ex);
 	}
 
 	@Override

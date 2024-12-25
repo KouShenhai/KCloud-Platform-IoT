@@ -162,7 +162,7 @@ public final class IpUtil {
 			}
 		}
 		catch (NumberFormatException e) {
-			log.error("格式化失败，错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
+			log.error("格式化失败，错误信息：{}，详情见日志", e.getMessage(), e);
 			return new byte[0];
 		}
 		return bytes;

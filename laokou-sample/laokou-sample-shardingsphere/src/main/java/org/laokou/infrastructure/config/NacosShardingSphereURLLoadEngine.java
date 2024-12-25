@@ -145,7 +145,7 @@ public final class NacosShardingSphereURLLoadEngine {
 			}
 		}
 		catch (IOException e) {
-			log.error("错误信息：{}，详情见日志", StringUtil.isEmpty(e.getMessage()) ? "暂无错误信息" : e.getMessage(), e);
+			log.error("错误信息：{}，详情见日志", e.getMessage(), e);
 		}
 		return list;
 	}
