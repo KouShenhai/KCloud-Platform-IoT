@@ -63,8 +63,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import java.util.concurrent.ExecutorService;
-
 /**
  * rocketmq支持虚拟线程池.
  *
@@ -205,9 +203,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 		}
 		rocketMQTemplate.setMessageConverter(rocketMQMessageConverter.getMessageConverter());
 		// 虚拟线程
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			rocketMQTemplate.setAsyncSenderExecutor(executor);
-		}
+		rocketMQTemplate.setAsyncSenderExecutor(ThreadUtil.newVirtualTaskExecutor());
 		return rocketMQTemplate;
 	}
 

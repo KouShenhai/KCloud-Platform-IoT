@@ -19,13 +19,11 @@ package org.laokou.auth.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
 
 /**
  * @author laokou
  */
-@Entity
 @Getter
 @Setter
 public class CaptchaE extends Identifier {

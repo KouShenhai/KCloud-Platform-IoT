@@ -23,13 +23,15 @@ import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.client.dto.clientobject.PayloadCO;
-import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.netty.config.Server;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.CompletableFuture;
+import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
@@ -55,10 +57,18 @@ public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 	@Override
 	public void onMessage(MessageExt message) {
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			String msg = new String(message.getBody(), StandardCharsets.UTF_8);
-			PayloadCO co = JacksonUtil.toBean(msg, PayloadCO.class);
-			TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(JacksonUtil.toJsonStr(co.getContent()));
-			co.getReceivers().parallelStream().forEach(clientId -> CompletableFuture.runAsync(() -> webSocketServer.send(clientId, webSocketFrame), executor));
+			try {
+				String msg = new String(message.getBody(), StandardCharsets.UTF_8);
+				PayloadCO co = JacksonUtil.toBean(msg, PayloadCO.class);
+				TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(co.getContent());
+				List<Callable<Boolean>> callableList = co.getReceivers().parallelStream().map(clientId -> (Callable<Boolean>) () -> {
+					webSocketServer.send(clientId, webSocketFrame);
+					return true;
+				}).toList();
+				executor.invokeAll(callableList);
+			} catch (InterruptedException e) {
+				throw new SystemException("S_UnKnow_Error", e.getMessage());
+			}
 		}
     }
 
