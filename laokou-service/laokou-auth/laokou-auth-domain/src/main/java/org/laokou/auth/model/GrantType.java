@@ -24,6 +24,7 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
 
 /**
+ * 登录类型枚举.
  * @author laokou
  */
 @Getter

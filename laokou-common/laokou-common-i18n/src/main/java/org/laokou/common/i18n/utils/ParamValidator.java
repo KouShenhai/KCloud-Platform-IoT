@@ -30,7 +30,7 @@ import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.VALI
 /**
  * @author laokou
  */
-public class ParamValidator {
+public final class ParamValidator {
 
 	public static void validate(Validate... validates) {
 		List<String> validateList = Stream.of(validates)

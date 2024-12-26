@@ -15,35 +15,25 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.common.i18n.utils;
 
-import lombok.Getter;
+import java.util.Arrays;
+import java.util.function.Function;
 
 /**
- * 用户状态枚举.
- *
  * @author laokou
  */
-@Getter
-public enum UserStatus {
+public final class EnumParser {
 
-	/**
-	 * 启用.
-	 */
-	ENABLE(0, "启用"),
-
-	/**
-	 * 禁用.
-	 */
-	DISABLE(1, "禁用");
-
-	private final int code;
-
-	private final String desc;
-
-	UserStatus(int code, String desc) {
-		this.code = code;
-		this.desc = desc;
+	public static <E extends Enum<E>, O> E parse(Class<E> clazz, Function<E, O> field, O value) {
+		if (value == null) {
+			return null;
+		}
+		return Arrays.stream(clazz.getEnumConstants())
+			.filter(e -> ObjectUtil.equals(field.apply(e), value))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException(
+					"No enum constant " + clazz.getCanonicalName() + " with " + field + " = " + value));
 	}
 
 }
