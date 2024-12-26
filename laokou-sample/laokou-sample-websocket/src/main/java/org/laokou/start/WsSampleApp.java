@@ -17,9 +17,10 @@
 
 package org.laokou.start;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
-import org.laokou.common.netty.annotation.EnableTcpServer;
+import org.laokou.common.netty.annotation.EnableWebSocketServer;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -32,18 +33,18 @@ import java.net.InetAddress;
  *
  * @author laokou
  */
-@EnableTcpServer
 @EnableTaskExecutor
+@EnableWebSocketServer
+@EnableEncryptableProperties
 @EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
-public class TcpTestApp {
+public class WsSampleApp {
 
 	@SneakyThrows
 	public static void main(String[] args) {
-		// 01 01 03 05
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
-				System.getProperty("server.port", "9034")));
-		new SpringApplicationBuilder(TcpTestApp.class).web(WebApplicationType.SERVLET).run(args);
+				System.getProperty("server.port", "9032")));
+		new SpringApplicationBuilder(WsSampleApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }

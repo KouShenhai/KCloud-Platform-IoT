@@ -28,13 +28,13 @@ import java.net.InetAddress;
  * @author laokou
  */
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
-public class GrpcClientTestApp {
+public class GrpcClientSampleApp {
 
 	@SneakyThrows
 	public static void main(String[] args) {
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
 				System.getProperty("server.port", "9036")));
-		new SpringApplicationBuilder(GrpcClientTestApp.class).web(WebApplicationType.SERVLET).run(args);
+		new SpringApplicationBuilder(GrpcClientSampleApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }

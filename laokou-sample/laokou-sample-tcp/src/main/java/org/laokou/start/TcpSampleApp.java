@@ -18,23 +18,32 @@
 package org.laokou.start;
 
 import lombok.SneakyThrows;
+import org.laokou.common.core.annotation.EnableTaskExecutor;
+import org.laokou.common.netty.annotation.EnableTcpServer;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import java.net.InetAddress;
 
 /**
+ * 系统服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
+ *
  * @author laokou
  */
+@EnableTcpServer
+@EnableTaskExecutor
+@EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
-public class GrpcServerTestApp {
+public class TcpSampleApp {
 
 	@SneakyThrows
 	public static void main(String[] args) {
+		// 01 01 03 05
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
-				System.getProperty("server.port", "9035")));
-		new SpringApplicationBuilder(GrpcServerTestApp.class).web(WebApplicationType.SERVLET).run(args);
+				System.getProperty("server.port", "9034")));
+		new SpringApplicationBuilder(TcpSampleApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }

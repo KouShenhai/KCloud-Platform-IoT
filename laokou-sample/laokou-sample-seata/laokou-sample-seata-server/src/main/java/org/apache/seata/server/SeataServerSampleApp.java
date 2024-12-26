@@ -27,7 +27,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @EnableEncryptableProperties
 @SpringBootApplication(scanBasePackages = { "org.apache.seata" })
-public class SeataServerTestApp {
+public class SeataServerSampleApp {
 
 	/// ```properties
 	/// -Dnacos.remote.client.rpc.tls.enable=true
@@ -42,7 +42,7 @@ public class SeataServerTestApp {
 		SslUtil.ignoreSSLTrust();
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
-		SpringApplication.run(SeataServerTestApp.class, args);
+		SpringApplication.run(SeataServerSampleApp.class, args);
 	}
 
 }
