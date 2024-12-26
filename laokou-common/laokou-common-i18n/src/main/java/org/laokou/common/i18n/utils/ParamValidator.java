@@ -18,13 +18,10 @@
 package org.laokou.common.i18n.utils;
 
 import org.laokou.common.i18n.common.exception.ParamException;
-import org.springframework.util.CollectionUtils;
-
-import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.COMMA;
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstant.*;
 import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.VALIDATE_FAILED;
 
 /**
@@ -33,12 +30,12 @@ import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.VALI
 public final class ParamValidator {
 
 	public static void validate(Validate... validates) {
-		List<String> validateList = Stream.of(validates)
+		String validateString = Stream.of(validates)
 			.filter(item -> StringUtil.isNotEmpty(item.value))
 			.map(item -> item.value)
-			.toList();
-		if (!CollectionUtils.isEmpty(validateList)) {
-			throw new ParamException(VALIDATE_FAILED, StringUtil.collectionToDelimitedString(validateList, COMMA));
+			.collect(Collectors.joining(DROP));
+		if (StringUtil.isNotEmpty(validateString)) {
+			throw new ParamException(VALIDATE_FAILED, validateString);
 		}
 	}
 

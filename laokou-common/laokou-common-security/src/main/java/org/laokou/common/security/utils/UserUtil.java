@@ -20,6 +20,7 @@ package org.laokou.common.security.utils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -28,12 +29,9 @@ import java.util.Set;
 public class UserUtil {
 
 	public static UserDetail user() {
-		try {
-			return (UserDetail) getAuthentication().getPrincipal();
-		}
-		catch (Exception e) {
-			return new UserDetail();
-		}
+		return Optional.ofNullable(getAuthentication())
+			.map(authentication -> (UserDetail) authentication.getPrincipal())
+			.orElse(new UserDetail());
 	}
 
 	/**

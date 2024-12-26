@@ -32,8 +32,7 @@ public final class EnumParser {
 		return Arrays.stream(clazz.getEnumConstants())
 			.filter(e -> ObjectUtil.equals(field.apply(e), value))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException(
-					"No enum constant " + clazz.getCanonicalName() + " with " + field + " = " + value));
+			.orElse(null);
 	}
 
 }
