@@ -120,8 +120,6 @@
     <commons-io.version>2.18.0</commons-io.version>
     <!--fastjson版本-->
     <fastjson.version>2.0.53</fastjson.version>
-    <!--httpclient版本-->
-    <httpclient.versin>4.5.14</httpclient.versin>
     <!--commons-text版本-->
     <commons-text.version>1.13.0</commons-text.version>
     <!--commons-lang3版本-->
@@ -383,11 +381,6 @@
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-text</artifactId>
         <version>${commons-text.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.httpcomponents</groupId>
-        <artifactId>httpclient</artifactId>
-        <version>${httpclient.versin}</version>
       </dependency>
       <dependency>
         <groupId>com.alibaba</groupId>
