@@ -257,7 +257,7 @@
         <configuration>
           <finalName>${project.artifactId}</finalName>
           <!-- main方法的地址 只需要修改这个地址-->
-          <mainClass>org.apache.seata.server.SeataServerTestApp</mainClass>
+          <mainClass>org.apache.seata.server.SeataServerSampleApp</mainClass>
         </configuration>
         <executions>
           <execution>

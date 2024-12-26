@@ -37,7 +37,7 @@ import java.net.InetAddress;
 @EnableDiscoveryClient(autoRegister = false)
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
 @MapperScan(basePackages = "org.laokou.infrastructure.gatewayimpl.database")
-public class ShardingTestApp {
+public class ShardingSampleApp {
 
 	/// ```properties
 	/// -Dnacos.remote.client.rpc.tls.enable=true
@@ -55,7 +55,7 @@ public class ShardingTestApp {
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
 				System.getProperty("server.port", "9033")));
-		new SpringApplicationBuilder(ShardingTestApp.class).web(WebApplicationType.SERVLET).run(args);
+		new SpringApplicationBuilder(ShardingSampleApp.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }
