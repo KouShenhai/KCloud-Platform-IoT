@@ -32,7 +32,7 @@ import static org.laokou.common.i18n.common.exception.StatusCode.OK;
  */
 @Data
 @Schema(name = "请求响应统一格式", description = "请求响应统一格式")
-public class Result<T> implements Serializable {
+public final class Result<T> implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -1286769110881865369L;

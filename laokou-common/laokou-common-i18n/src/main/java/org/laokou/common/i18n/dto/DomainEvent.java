@@ -34,7 +34,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  */
 @Setter
 @Getter
-public class DomainEvent extends Identifier {
+public final class DomainEvent extends Identifier {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
