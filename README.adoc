@@ -39,7 +39,7 @@ image:https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.1&co
 image:https://img.shields.io/static/v1?label=Spring%20Boot&message=3.4.1&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud&message=2024.0.0&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.3.2&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
-image:https://img.shields.io/static/v1?label=OAuth%202.1&message=1.4.0&color=blue[OAuth 2.1,link=https://spring.io/projects/spring-authorization-server]
+image:https://img.shields.io/static/v1?label=OAuth%202.1&message=1.4.1&color=blue[OAuth 2.1,link=https://spring.io/projects/spring-authorization-server]
 
 image:https://img.shields.io/badge/GraalVM-21.0.1-blue.svg[GraalVM,link=https://www.graalvm.org/downloads]
 image:https://img.shields.io/badge/Maven-3.9.4-blue[Maven,link=https://maven.apache.org/]
@@ -107,7 +107,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 |Spring Cloud                |2024.0.0
 |Spring Cloud Alibaba        |2023.0.3.2
 |Spring Boot Admin           |3.4.0
-|Spring Authorization Server |1.4.0
+|Spring Authorization Server |1.4.1
 |Mybatis Plus                |3.5.9
 |Nacos                       |2.4.3
 |Sentinel                    |1.8.8
