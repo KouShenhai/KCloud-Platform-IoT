@@ -36,7 +36,7 @@ import static org.laokou.auth.model.AuthA.USE_CASE_AUTH;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
- * 测试扩展执行器.
+ * 测试扩展点执行器.
  *
  * @author laokou
  */

@@ -30,7 +30,7 @@ import org.laokou.auth.service.extensionpoint.extension.MobileCaptchaParamValida
  *
  * @author laokou
  */
-public class CaptchaParamValidatorTest {
+class CaptchaParamValidatorTest {
 
 	@Test
 	void testMailCaptchaParamValidator() {

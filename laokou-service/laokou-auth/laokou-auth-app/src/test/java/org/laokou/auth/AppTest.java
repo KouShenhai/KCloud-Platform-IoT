@@ -25,7 +25,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
  * @author laokou
  */
 @SpringBootApplication
-public class AppTest {
+class AppTest {
 
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
