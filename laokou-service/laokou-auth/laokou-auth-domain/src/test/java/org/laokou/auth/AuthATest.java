@@ -22,10 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.factory.DomainFactory;
-import org.laokou.auth.gateway.CaptchaGateway;
-import org.laokou.auth.gateway.SourceGateway;
-import org.laokou.auth.gateway.TenantGateway;
-import org.laokou.auth.gateway.UserGateway;
+import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.CaptchaE;
 import org.laokou.auth.model.InfoV;
@@ -204,17 +201,46 @@ class AuthATest {
 
 	@Test
 	void testCheckUserStatus() {
+		Assertions.assertNotNull(auth);
 
+		// 创建用户【用户名密码】
+		auth.createUserByUsernamePassword();
+		Assertions.assertNotNull(auth.getUser());
+
+		// 校验用户状态
+		auth.checkUserStatus();
 	}
 
 	@Test
 	void testCheckMenuPermissions() {
+		Assertions.assertNotNull(auth);
 
+		MenuGateway menuGateway = new MenuGatewayImplTest();
+		Assertions.assertNotNull(menuGateway);
+
+		// 创建用户【用户名密码】
+		auth.createUserByUsernamePassword();
+		Assertions.assertNotNull(auth.getUser());
+		auth.getMenuPermissions(menuGateway.getPermissions(auth.getUser()));
+
+		// 校验菜单权限集合
+		auth.checkMenuPermissions();
 	}
 
 	@Test
 	void testCheckDeptPaths() {
+		Assertions.assertNotNull(auth);
 
+		DeptGateway deptGateway = new DeptGatewayImplTest();
+		Assertions.assertNotNull(deptGateway);
+
+		// 创建用户【用户名密码】
+		auth.createUserByUsernamePassword();
+		Assertions.assertNotNull(auth.getUser());
+		auth.getDeptPaths(deptGateway.getPaths(auth.getUser()));
+
+		// 校验部门路径集合
+		auth.checkDeptPaths();
 	}
 
 	@Test
