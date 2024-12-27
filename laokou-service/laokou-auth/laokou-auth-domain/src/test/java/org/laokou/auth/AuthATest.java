@@ -43,6 +43,7 @@ import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.USE
 class AuthATest {
 
 	private AuthA auth;
+
 	private InfoV info;
 
 	@BeforeEach
