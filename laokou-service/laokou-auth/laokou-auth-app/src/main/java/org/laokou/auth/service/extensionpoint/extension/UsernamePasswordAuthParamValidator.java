@@ -30,7 +30,7 @@ import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
  * @author laokou
  */
 @Extension(bizId = USERNAME_PASSWORD, useCase = USE_CASE_AUTH, scenario = SCENARIO)
-public class PasswordAuthParamValidator implements AuthParamValidatorExtPt {
+public class UsernamePasswordAuthParamValidator implements AuthParamValidatorExtPt {
 
 	@Override
 	public void validate(AuthA auth) {
