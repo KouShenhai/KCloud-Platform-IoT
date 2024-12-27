@@ -15,26 +15,20 @@
  *
  */
 
-package org.laokou.common.i18n.common.constant;
+package org.laokou.auth;
+
+import org.laokou.auth.gateway.TenantGateway;
 
 /**
- * 请求头常量.
+ * 租户网关测试.
  *
  * @author laokou
  */
-public final class Constant {
+class TenantGatewayImplTest implements TenantGateway {
 
-	/**
-	 * 场景标识.
-	 */
-	public static final String SCENARIO = "iot";
-
-	/**
-	 * 认证标识.
-	 */
-	public static final String AUTHORIZATION = "Authorization";
-
-	private Constant() {
+	@Override
+	public Long getId(String tenantCode) {
+		return 0L;
 	}
 
 }

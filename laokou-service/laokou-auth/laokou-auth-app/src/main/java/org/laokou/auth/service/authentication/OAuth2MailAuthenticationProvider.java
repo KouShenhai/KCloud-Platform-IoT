@@ -29,7 +29,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.factory.DomainFactory.MAIL;
+import static org.laokou.auth.factory.DomainFactory.*;
 
 /**
  * 邮箱处理器.
@@ -52,7 +52,10 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticati
 
 	@Override
 	Authentication getPrincipal(HttpServletRequest request) {
-		AuthA auth = DomainFactory.getMailAuth(IdGenerator.defaultSnowflakeId(), request);
+		String code = request.getParameter(CODE);
+		String mail = request.getParameter(MAIL);
+		String tenantCode = request.getParameter(TENANT_CODE);
+		AuthA auth = DomainFactory.getMailAuth(IdGenerator.defaultSnowflakeId(), mail, code, tenantCode);
 		auth.createUserByMail();
 		return authenticationToken(auth, request);
 	}

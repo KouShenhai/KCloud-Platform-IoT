@@ -30,6 +30,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.auth.factory.DomainFactory.PASSWORD;
+import static org.laokou.auth.factory.DomainFactory.TENANT_CODE;
+
 /**
  * 用户认证.
  *
@@ -52,7 +55,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
 			HttpServletRequest request = RequestUtil.getHttpServletRequest();
-			AuthA auth = DomainFactory.getAuthorizationCodeAuth(IdGenerator.defaultSnowflakeId(), request);
+			String password = request.getParameter(PASSWORD);
+			String tenantCode = request.getParameter(TENANT_CODE);
+			AuthA auth = DomainFactory.getAuthorizationCodeAuth(IdGenerator.defaultSnowflakeId(), username, password,
+					tenantCode);
 			auth.createUserByAuthorizationCode();
 			return (UserDetails) authProcessor.authenticationToken(auth, request).getPrincipal();
 		}

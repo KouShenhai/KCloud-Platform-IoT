@@ -15,26 +15,32 @@
  *
  */
 
-package org.laokou.common.i18n.common.constant;
+package org.laokou.auth;
+
+import org.laokou.auth.gateway.CaptchaGateway;
+
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
- * 请求头常量.
+ * 验证码网关测试.
  *
  * @author laokou
  */
-public final class Constant {
+class CaptchaGatewayImplTest implements CaptchaGateway {
 
-	/**
-	 * 场景标识.
-	 */
-	public static final String SCENARIO = "iot";
+	@Override
+	public void set(String uuid, String captcha) {
 
-	/**
-	 * 认证标识.
-	 */
-	public static final String AUTHORIZATION = "Authorization";
+	}
 
-	private Constant() {
+	@Override
+	public Boolean validate(String uuid, String code) {
+		return true;
+	}
+
+	@Override
+	public String getKey(String uuid) {
+		return EMPTY;
 	}
 
 }

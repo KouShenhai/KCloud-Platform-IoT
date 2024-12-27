@@ -29,7 +29,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.factory.DomainFactory.MOBILE;
+import static org.laokou.auth.factory.DomainFactory.*;
 
 /**
  * 手机号处理器.
@@ -52,7 +52,10 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authentica
 
 	@Override
 	Authentication getPrincipal(HttpServletRequest request) {
-		AuthA auth = DomainFactory.getMobileAuth(IdGenerator.defaultSnowflakeId(), request);
+		String code = request.getParameter(CODE);
+		String mobile = request.getParameter(MOBILE);
+		String tenantCode = request.getParameter(TENANT_CODE);
+		AuthA auth = DomainFactory.getMobileAuth(IdGenerator.defaultSnowflakeId(), mobile, code, tenantCode);
 		auth.createUserByMobile();
 		return authenticationToken(auth, request);
 	}

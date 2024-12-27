@@ -17,7 +17,6 @@
 
 package org.laokou.auth.factory;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.*;
 
@@ -52,64 +51,52 @@ public class DomainFactory {
 	/**
 	 * 用户名.
 	 */
-	private static final String USERNAME = "username";
+	public static final String USERNAME = "username";
 
 	/**
 	 * 密码.
 	 */
-	private static final String PASSWORD = "password";
+	public static final String PASSWORD = "password";
 
 	/**
 	 * 验证码.
 	 */
-	private static final String CAPTCHA = "captcha";
+	public static final String CAPTCHA = "captcha";
 
 	/**
 	 * UUID.
 	 */
-	private static final String UUID = "uuid";
+	public static final String UUID = "uuid";
 
 	/**
 	 * 验证码.
 	 */
-	private static final String CODE = "code";
+	public static final String CODE = "code";
 
 	/**
 	 * 租户编号.
 	 */
-	private static final String TENANT_CODE = "tenant_code";
+	public static final String TENANT_CODE = "tenant_code";
 
 	public static AuthA getAuth(Long aggregateId) {
 		return new AuthA(aggregateId);
 	}
 
-	public static AuthA getMailAuth(Long aggregateId, HttpServletRequest request) {
-		String code = request.getParameter(CODE);
-		String mail = request.getParameter(MAIL);
-		String tenantCode = request.getParameter(TENANT_CODE);
+	public static AuthA getMailAuth(Long aggregateId, String mail, String code, String tenantCode) {
 		return new AuthA(aggregateId, EMPTY, EMPTY, tenantCode, GrantType.MAIL, mail, code);
 	}
 
-	public static AuthA getMobileAuth(Long aggregateId, HttpServletRequest request) {
-		String code = request.getParameter(CODE);
-		String mobile = request.getParameter(MOBILE);
-		String tenantCode = request.getParameter(TENANT_CODE);
+	public static AuthA getMobileAuth(Long aggregateId, String mobile, String code, String tenantCode) {
 		return new AuthA(aggregateId, EMPTY, EMPTY, tenantCode, GrantType.MOBILE, mobile, code);
 	}
 
-	public static AuthA getUsernamePasswordAuth(Long aggregateId, HttpServletRequest request) {
-		String uuid = request.getParameter(UUID);
-		String captcha = request.getParameter(CAPTCHA);
-		String username = request.getParameter(USERNAME);
-		String password = request.getParameter(PASSWORD);
-		String tenantCode = request.getParameter(TENANT_CODE);
+	public static AuthA getUsernamePasswordAuth(Long aggregateId, String username, String password, String tenantCode,
+			String uuid, String captcha) {
 		return new AuthA(aggregateId, username, password, tenantCode, GrantType.USERNAME_PASSWORD, uuid, captcha);
 	}
 
-	public static AuthA getAuthorizationCodeAuth(Long aggregateId, HttpServletRequest request) {
-		String username = request.getParameter(USERNAME);
-		String password = request.getParameter(PASSWORD);
-		String tenantCode = request.getParameter(TENANT_CODE);
+	public static AuthA getAuthorizationCodeAuth(Long aggregateId, String username, String password,
+			String tenantCode) {
 		return new AuthA(aggregateId, username, password, tenantCode, GrantType.AUTHORIZATION_CODE, EMPTY, EMPTY);
 	}
 

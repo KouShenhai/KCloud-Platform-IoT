@@ -15,26 +15,21 @@
  *
  */
 
-package org.laokou.common.i18n.common.constant;
+package org.laokou.auth;
+
+import org.laokou.auth.gateway.UserGateway;
+import org.laokou.auth.model.UserE;
 
 /**
- * 请求头常量.
+ * 用户网关测试.
  *
  * @author laokou
  */
-public final class Constant {
+class UserGatewayImplTest implements UserGateway {
 
-	/**
-	 * 场景标识.
-	 */
-	public static final String SCENARIO = "iot";
-
-	/**
-	 * 认证标识.
-	 */
-	public static final String AUTHORIZATION = "Authorization";
-
-	private Constant() {
+	@Override
+	public UserE getProfile(UserE user, String tenantCode) {
+		return user;
 	}
 
 }

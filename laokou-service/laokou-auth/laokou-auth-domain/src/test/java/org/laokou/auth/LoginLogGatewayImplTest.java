@@ -15,26 +15,21 @@
  *
  */
 
-package org.laokou.common.i18n.common.constant;
+package org.laokou.auth;
+
+import org.laokou.auth.gateway.LoginLogGateway;
+import org.laokou.auth.model.LoginLogE;
 
 /**
- * 请求头常量.
+ * 登录日志网关测试.
  *
  * @author laokou
  */
-public final class Constant {
+class LoginLogGatewayImplTest implements LoginLogGateway {
 
-	/**
-	 * 场景标识.
-	 */
-	public static final String SCENARIO = "iot";
+	@Override
+	public void create(LoginLogE loginLog) {
 
-	/**
-	 * 认证标识.
-	 */
-	public static final String AUTHORIZATION = "Authorization";
-
-	private Constant() {
 	}
 
 }

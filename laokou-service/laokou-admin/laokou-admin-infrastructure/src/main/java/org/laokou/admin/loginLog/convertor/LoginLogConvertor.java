@@ -26,8 +26,6 @@ import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.List;
-
-import static org.laokou.common.i18n.common.constant.Constant.FAIL;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
@@ -38,6 +36,8 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 public class LoginLogConvertor implements ExcelUtil.ExcelConvert<LoginLogDO, LoginLogExcel> {
 
 	public static final LoginLogConvertor INSTANCE = new LoginLogConvertor();
+
+	private static final int FAIL = 1;
 
 	public static LoginLogDO toDataObject(LoginLogE loginLogE, boolean isInsert) {
 		LoginLogDO loginLogDO = new LoginLogDO();

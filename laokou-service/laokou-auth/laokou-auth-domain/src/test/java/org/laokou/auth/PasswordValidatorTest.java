@@ -15,26 +15,28 @@
  *
  */
 
-package org.laokou.common.i18n.common.constant;
+package org.laokou.auth;
+
+import org.laokou.auth.ability.validator.PasswordValidator;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.springframework.util.DigestUtils;
+
+import java.nio.charset.StandardCharsets;
 
 /**
- * 请求头常量.
+ * 密码验证器测试.
  *
  * @author laokou
  */
-public final class Constant {
+class PasswordValidatorTest implements PasswordValidator {
 
-	/**
-	 * 场景标识.
-	 */
-	public static final String SCENARIO = "iot";
+	@Override
+	public boolean validate(CharSequence rawPassword, String encodedPassword) {
+		return ObjectUtil.equals(getEncodePassword(rawPassword.toString()), encodedPassword);
+	}
 
-	/**
-	 * 认证标识.
-	 */
-	public static final String AUTHORIZATION = "Authorization";
-
-	private Constant() {
+	static String getEncodePassword(String password) {
+		return DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
 	}
 
 }

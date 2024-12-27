@@ -62,7 +62,8 @@ public abstract class AggregateRoot extends Identifier {
 	}
 
 	public List<DomainEvent> releaseEvents() {
-		ArrayList<DomainEvent> events = new ArrayList<>(EVENTS);
+		List<DomainEvent> events = new ArrayList<>(EVENTS.size());
+		events.addAll(EVENTS);
 		EVENTS.clear();
 		return events;
 	}
