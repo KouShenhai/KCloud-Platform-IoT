@@ -17,10 +17,17 @@
 
 package org.laokou.auth;
 
+import org.junit.jupiter.api.BeforeEach;
+
 /**
  * 认证聚合根测试.
  * @author laokou
  */
-public class AuthATest {
+class AuthATest {
+
+	@BeforeEach
+	void testAuth() {
+
+	}
 
 }

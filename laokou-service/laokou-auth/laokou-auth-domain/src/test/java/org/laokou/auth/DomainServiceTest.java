@@ -24,10 +24,7 @@ import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gateway.*;
-import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.InfoV;
-import org.laokou.auth.model.LoginLogE;
-import org.laokou.auth.model.UserE;
+import org.laokou.auth.model.*;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.util.DigestUtils;
 
@@ -77,19 +74,101 @@ class DomainServiceTest {
 		Assertions.assertNotNull(domainService);
 		Assertions.assertNotNull(infoV);
 
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "master", "1", "1234");
+		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 
-		// 创建用户密码登录
+		// 创建用户【用户名密码】
 		auth.createUserByUsernamePassword();
 
 		Assertions.assertNotNull(auth);
 		Assertions.assertNotNull(auth.getUser());
 
 		// 构建密码
-		auth.getUser().setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes()));
+		auth.getUser().setPassword(getEncodePassword(auth.getPassword()));
 		Assertions.assertNotNull(auth.getUser().getPassword());
 
+		// 用户名密码登录
 		domainService.auth(auth, infoV);
+	}
+
+	@Test
+	void testMailAuth() {
+
+		Assertions.assertNotNull(domainService);
+		Assertions.assertNotNull(infoV);
+
+		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
+
+		// 创建用户【邮箱】
+		auth.createUserByMail();
+
+		Assertions.assertNotNull(auth);
+		Assertions.assertNotNull(auth.getUser());
+
+		// 邮箱登录
+		domainService.auth(auth, infoV);
+	}
+
+	@Test
+	void testMobileAuth() {
+
+		Assertions.assertNotNull(domainService);
+		Assertions.assertNotNull(infoV);
+
+		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
+
+		// 创建用户【手机号】
+		auth.createUserByMobile();
+
+		Assertions.assertNotNull(auth);
+		Assertions.assertNotNull(auth.getUser());
+
+		// 手机号登录
+		domainService.auth(auth, infoV);
+	}
+
+	@Test
+	void testAuthorizationCodeAuth() {
+
+		Assertions.assertNotNull(domainService);
+		Assertions.assertNotNull(infoV);
+
+		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
+
+		// 创建用户【授权码】
+		auth.createUserByAuthorizationCode();
+
+		Assertions.assertNotNull(auth);
+		Assertions.assertNotNull(auth.getUser());
+
+		// 授权码登录
+		domainService.auth(auth, infoV);
+	}
+
+	@Test
+	void testCreateCaptcha() {
+
+		Assertions.assertNotNull(domainService);
+
+		CaptchaE captcha = DomainFactory.getCaptcha();
+		Assertions.assertNotNull(captcha);
+
+		AuthA auth = DomainFactory.getAuth(1L);
+		Assertions.assertNotNull(auth);
+
+		// 创建验证码
+		domainService.createCaptcha(1L, auth, captcha);
+	}
+
+	@Test
+	void testCreateLoginLog() {
+
+		Assertions.assertNotNull(domainService);
+
+		LoginLogE loginLog = DomainFactory.getLoginLog();
+		Assertions.assertNotNull(loginLog);
+
+		// 创建登录日志
+		domainService.createLoginLog(loginLog);
 	}
 
 	static class UserGatewayImplTest implements UserGateway {
@@ -169,11 +248,13 @@ class DomainServiceTest {
 
 		@Override
 		public boolean validate(CharSequence rawPassword, String encodedPassword) {
-			return ObjectUtil.equals(
-					DigestUtils.md5DigestAsHex(rawPassword.toString().getBytes(StandardCharsets.UTF_8)),
-					encodedPassword);
+			return ObjectUtil.equals(getEncodePassword(rawPassword.toString()), encodedPassword);
 		}
 
+	}
+
+	private static String getEncodePassword(String password) {
+		return DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
 	}
 
 }
