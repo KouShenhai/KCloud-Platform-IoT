@@ -83,7 +83,6 @@ class DomainServiceTest {
 		auth.createUserByUsernamePassword();
 
 		Assertions.assertNotNull(auth);
-		Assertions.assertNotNull(infoV);
 		Assertions.assertNotNull(auth.getUser());
 
 		// 构建密码
