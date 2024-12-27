@@ -15,26 +15,23 @@
  *
  */
 
-package org.laokou.common.i18n.common.constant;
+package org.laokou.auth;
+
+import org.laokou.auth.gateway.MenuGateway;
+import org.laokou.auth.model.UserE;
+
+import java.util.Set;
 
 /**
- * 请求头常量.
+ * 菜单网关测试.
  *
  * @author laokou
  */
-public final class Constant {
+class MenuGatewayImplTest implements MenuGateway {
 
-	/**
-	 * 场景标识.
-	 */
-	public static final String SCENARIO = "iot";
-
-	/**
-	 * 认证标识.
-	 */
-	public static final String AUTHORIZATION = "Authorization";
-
-	private Constant() {
+	@Override
+	public Set<String> getPermissions(UserE user) {
+		return Set.of("sys:user:page");
 	}
 
 }

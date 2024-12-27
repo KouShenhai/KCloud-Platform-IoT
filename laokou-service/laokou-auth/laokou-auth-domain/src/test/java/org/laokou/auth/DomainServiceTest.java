@@ -25,16 +25,12 @@ import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.*;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.springframework.util.DigestUtils;
 
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import static org.laokou.auth.PasswordValidatorTest.getEncodePassword;
 
 /**
  * 领域服务测试.
+ *
  * @author laokou
  */
 class DomainServiceTest {
@@ -70,7 +66,6 @@ class DomainServiceTest {
 
 	@Test
 	void testUsernamePasswordAuth() {
-
 		Assertions.assertNotNull(domainService);
 		Assertions.assertNotNull(infoV);
 
@@ -92,7 +87,6 @@ class DomainServiceTest {
 
 	@Test
 	void testMailAuth() {
-
 		Assertions.assertNotNull(domainService);
 		Assertions.assertNotNull(infoV);
 
@@ -110,7 +104,6 @@ class DomainServiceTest {
 
 	@Test
 	void testMobileAuth() {
-
 		Assertions.assertNotNull(domainService);
 		Assertions.assertNotNull(infoV);
 
@@ -128,7 +121,6 @@ class DomainServiceTest {
 
 	@Test
 	void testAuthorizationCodeAuth() {
-
 		Assertions.assertNotNull(domainService);
 		Assertions.assertNotNull(infoV);
 
@@ -146,7 +138,6 @@ class DomainServiceTest {
 
 	@Test
 	void testCreateCaptcha() {
-
 		Assertions.assertNotNull(domainService);
 
 		CaptchaE captcha = DomainFactory.getCaptcha();
@@ -161,7 +152,6 @@ class DomainServiceTest {
 
 	@Test
 	void testCreateLoginLog() {
-
 		Assertions.assertNotNull(domainService);
 
 		LoginLogE loginLog = DomainFactory.getLoginLog();
@@ -169,92 +159,6 @@ class DomainServiceTest {
 
 		// 创建登录日志
 		domainService.createLoginLog(loginLog);
-	}
-
-	static class UserGatewayImplTest implements UserGateway {
-
-		@Override
-		public UserE getProfile(UserE user, String tenantCode) {
-			return user;
-		}
-
-	}
-
-	static class MenuGatewayImplTest implements MenuGateway {
-
-		@Override
-		public Set<String> getPermissions(UserE user) {
-			return Set.of("sys:user:page");
-		}
-
-	}
-
-	static class DeptGatewayImplTest implements DeptGateway {
-
-		@Override
-		public List<String> getPaths(UserE user) {
-			return new ArrayList<>(List.of("0", "0,1"));
-		}
-
-	}
-
-	static class TenantGatewayImplTest implements TenantGateway {
-
-		@Override
-		public Long getId(String tenantCode) {
-			return 0L;
-		}
-
-	}
-
-	static class SourceGatewayImplTest implements SourceGateway {
-
-		@Override
-		public String getPrefix(String tenantCode) {
-			return "master";
-		}
-
-	}
-
-	static class CaptchaGatewayImplTest implements CaptchaGateway {
-
-		@Override
-		public void set(String uuid, String captcha) {
-
-		}
-
-		@Override
-		public Boolean validate(String uuid, String code) {
-			return true;
-		}
-
-		@Override
-		public String getKey(String uuid) {
-			return "";
-		}
-
-	}
-
-	static class LoginLogGatewayImplTest implements LoginLogGateway {
-
-		@Override
-		public void create(LoginLogE loginLog) {
-
-		}
-
-	}
-
-	static class PasswordValidatorTest implements PasswordValidator {
-
-		@Override
-		public boolean validate(CharSequence rawPassword, String encodedPassword) {
-			return ObjectUtil.equals(getEncodePassword(rawPassword.toString()), encodedPassword);
-		}
-
-	}
-
-	private static String getEncodePassword(String password) {
-		return DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
 	}
 
 }
