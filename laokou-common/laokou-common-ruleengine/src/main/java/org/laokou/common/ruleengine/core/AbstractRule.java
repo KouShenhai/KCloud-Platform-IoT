@@ -74,7 +74,7 @@ public abstract class AbstractRule implements Rule {
 	/**
 	 * Create a new {@link AbstractRule}.
 	 */
-	public AbstractRule() {
+	protected AbstractRule() {
 		this(Rule.DEFAULT_NAME, Rule.DEFAULT_DESCRIPTION, Rule.DEFAULT_PRIORITY);
 	}
 
@@ -82,11 +82,11 @@ public abstract class AbstractRule implements Rule {
 	 * Create a new {@link AbstractRule}.
 	 * @param name rule name
 	 */
-	public AbstractRule(final String name) {
+	protected AbstractRule(final String name) {
 		this(name, Rule.DEFAULT_DESCRIPTION, Rule.DEFAULT_PRIORITY);
 	}
 
-	public AbstractRule(final int priority) {
+	protected AbstractRule(final int priority) {
 		this(Rule.DEFAULT_NAME, Rule.DEFAULT_DESCRIPTION, priority);
 	}
 
@@ -95,7 +95,7 @@ public abstract class AbstractRule implements Rule {
 	 * @param name rule name
 	 * @param description rule description
 	 */
-	public AbstractRule(final String name, final String description) {
+	protected AbstractRule(final String name, final String description) {
 		this(name, description, Rule.DEFAULT_PRIORITY);
 	}
 
@@ -105,7 +105,7 @@ public abstract class AbstractRule implements Rule {
 	 * @param description rule description
 	 * @param priority rule priority
 	 */
-	public AbstractRule(final String name, final String description, final int priority) {
+	protected AbstractRule(final String name, final String description, final int priority) {
 		this.name = name;
 		this.description = description;
 		this.priority = priority;

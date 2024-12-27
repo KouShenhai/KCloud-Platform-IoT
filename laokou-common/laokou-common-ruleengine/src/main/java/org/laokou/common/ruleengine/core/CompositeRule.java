@@ -33,7 +33,7 @@ public abstract class CompositeRule extends AbstractRule {
 
 	private boolean isSorted = false;
 
-	public CompositeRule() {
+	protected CompositeRule() {
 
 	}
 

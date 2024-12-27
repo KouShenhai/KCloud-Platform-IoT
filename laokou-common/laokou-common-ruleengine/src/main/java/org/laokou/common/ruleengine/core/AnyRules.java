@@ -35,9 +35,7 @@ public class AnyRules extends CompositeRule {
 
 	@Override
 	public boolean evaluate(Facts facts) {
-		if (rules.stream().anyMatch(rule -> rule.evaluate(facts)))
-			return true;
-		return false;
+		return rules.stream().anyMatch(rule -> rule.evaluate(facts));
 	}
 
 	@Override
