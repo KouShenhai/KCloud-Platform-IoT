@@ -29,7 +29,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.factory.DomainFactory.USERNAME_PASSWORD;
+import static org.laokou.auth.factory.DomainFactory.*;
 
 /**
  * 密码处理器.
@@ -52,7 +52,13 @@ public class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2
 
 	@Override
 	Authentication getPrincipal(HttpServletRequest request) {
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(IdGenerator.defaultSnowflakeId(), request);
+		String uuid = request.getParameter(UUID);
+		String captcha = request.getParameter(CAPTCHA);
+		String username = request.getParameter(USERNAME);
+		String password = request.getParameter(PASSWORD);
+		String tenantCode = request.getParameter(TENANT_CODE);
+		AuthA auth = DomainFactory.getUsernamePasswordAuth(IdGenerator.defaultSnowflakeId(), username, password,
+				tenantCode, uuid, captcha);
 		auth.createUserByUsernamePassword();
 		return authenticationToken(auth, request);
 	}
