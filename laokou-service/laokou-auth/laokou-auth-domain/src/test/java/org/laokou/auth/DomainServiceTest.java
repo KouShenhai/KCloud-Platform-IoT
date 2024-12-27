@@ -37,7 +37,7 @@ class DomainServiceTest {
 
 	private DomainService domainService;
 
-	private InfoV infoV;
+	private InfoV info;
 
 	@BeforeEach
 	void testDomainService() {
@@ -59,15 +59,15 @@ class DomainServiceTest {
 		Assertions.assertNotNull(passwordValidator);
 		domainService = new DomainService(userGateway, menuGateway, deptGateway, tenantGateway, sourceGateway,
 				captchaGateway, loginLogGateway, passwordValidator);
-		infoV = new InfoV("Windows", "127.0.0.1", "中国 广东 深圳", "Chrome");
+		info = new InfoV("Windows", "127.0.0.1", "中国 广东 深圳", "Chrome");
 		Assertions.assertNotNull(domainService);
-		Assertions.assertNotNull(infoV);
+		Assertions.assertNotNull(info);
 	}
 
 	@Test
 	void testUsernamePasswordAuth() {
 		Assertions.assertNotNull(domainService);
-		Assertions.assertNotNull(infoV);
+		Assertions.assertNotNull(info);
 
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 
@@ -82,13 +82,13 @@ class DomainServiceTest {
 		Assertions.assertNotNull(auth.getUser().getPassword());
 
 		// 用户名密码登录
-		domainService.auth(auth, infoV);
+		domainService.auth(auth, info);
 	}
 
 	@Test
 	void testMailAuth() {
 		Assertions.assertNotNull(domainService);
-		Assertions.assertNotNull(infoV);
+		Assertions.assertNotNull(info);
 
 		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
 
@@ -99,13 +99,13 @@ class DomainServiceTest {
 		Assertions.assertNotNull(auth.getUser());
 
 		// 邮箱登录
-		domainService.auth(auth, infoV);
+		domainService.auth(auth, info);
 	}
 
 	@Test
 	void testMobileAuth() {
 		Assertions.assertNotNull(domainService);
-		Assertions.assertNotNull(infoV);
+		Assertions.assertNotNull(info);
 
 		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
 
@@ -116,13 +116,13 @@ class DomainServiceTest {
 		Assertions.assertNotNull(auth.getUser());
 
 		// 手机号登录
-		domainService.auth(auth, infoV);
+		domainService.auth(auth, info);
 	}
 
 	@Test
 	void testAuthorizationCodeAuth() {
 		Assertions.assertNotNull(domainService);
-		Assertions.assertNotNull(infoV);
+		Assertions.assertNotNull(info);
 
 		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
 
@@ -133,7 +133,7 @@ class DomainServiceTest {
 		Assertions.assertNotNull(auth.getUser());
 
 		// 授权码登录
-		domainService.auth(auth, infoV);
+		domainService.auth(auth, info);
 	}
 
 	@Test
