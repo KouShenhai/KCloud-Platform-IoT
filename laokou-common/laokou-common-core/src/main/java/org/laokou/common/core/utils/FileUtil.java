@@ -101,6 +101,8 @@ public final class FileUtil {
 
 	public static void write(File file, InputStream in, long size, long chunkSize) throws IOException {
 		if (in instanceof FileInputStream fis) {
+			// 最大偏移量2G【2^31】数据
+			chunkSize = Math.min(chunkSize, 2L * 1024 * 1024 * 1024);
 			try (FileChannel inChannel = fis.getChannel();
 					ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 				long chunkCount = (size / chunkSize) + (size % chunkSize == 0 ? 0 : 1);
