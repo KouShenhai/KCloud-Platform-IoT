@@ -17,7 +17,8 @@
 
 package org.laokou.auth;
 
-import lombok.*;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +26,10 @@ import org.junit.jupiter.api.Test;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
-import org.laokou.common.core.utils.*;
+import org.laokou.common.core.utils.HttpUtil;
+import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.utils.MDCUtil;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.crypto.utils.RSAUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.JacksonUtil;
@@ -43,9 +47,7 @@ import org.springframework.test.context.TestConstructor;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestClient;
 
-import java.io.Serializable;
 import java.net.URI;
-import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -224,13 +226,6 @@ class OAuth2ApiTest {
 			.retrieve()
 			.toBodilessEntity();
 		log.info("---------- 登录已注销，结束令牌清除 ----------");
-	}
-
-	@Test
-	void testRemoveCache() {
-		MDCUtil.put("0", "0");
-		// rocketMQDomainEventPublisher.publish(new RemoveCacheEvent(TENANTS, "1"),
-		// SendMessageType.ASYNC);
 	}
 
 	private Map<String, String> deviceAuthorizationCodeAuth(String deviceCode) {
@@ -419,15 +414,6 @@ class OAuth2ApiTest {
 
 	private boolean disabledSsl() {
 		return serverProperties.getSsl().isEnabled();
-	}
-
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	static class InstantTest implements Serializable {
-
-		private Instant instant;
-
 	}
 
 }
