@@ -45,7 +45,8 @@ public class LoginLogSaveCmdExe {
 			DynamicDataSourceContextHolder.push("domain");
 			transactionalUtil
 				.executeInTransaction(() -> domainService.createLoginLog(LoginLogConvertor.toEntity(cmd.getCo())));
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

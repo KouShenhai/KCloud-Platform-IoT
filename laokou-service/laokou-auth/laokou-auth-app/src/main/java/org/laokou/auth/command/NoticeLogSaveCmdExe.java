@@ -45,7 +45,8 @@ public class NoticeLogSaveCmdExe {
 			DynamicDataSourceContextHolder.push("domain");
 			transactionalUtil
 				.executeInTransaction(() -> domainService.createNoticeLog(NoticeLogConvertor.toEntity(cmd.getCo())));
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
