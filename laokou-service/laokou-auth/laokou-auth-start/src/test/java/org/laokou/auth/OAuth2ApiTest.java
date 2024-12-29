@@ -34,6 +34,7 @@ import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.crypto.utils.RSAUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.RedisKeyUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
@@ -152,7 +153,7 @@ class OAuth2ApiTest {
 	@Test
 	void testUsernamePasswordAuthApi() {
 		log.info("---------- 用户名密码认证模式开始 ----------");
-		String captcha = getCaptcha(UUID);
+		String captcha = getCaptcha(UUID, RedisKeyUtil.getUsernamePasswordAuthCaptchaKey(UUID));
 		String encryptUsername = RSAUtil.encryptByPublicKey(USERNAME);
 		String encryptPassword = RSAUtil.encryptByPublicKey(PASSWORD);
 		String decryptUsername = RSAUtil.decryptByPrivateKey(encryptUsername);
@@ -178,7 +179,7 @@ class OAuth2ApiTest {
 	@Test
 	void testMailAuthApi() {
 		log.info("---------- 邮箱认证开始 ----------");
-		String code = getCodeApi(MAIL);
+		String code = getCode(RedisKeyUtil.getMailAuthCaptchaKey(MAIL));
 		Map<String, String> tokenMap = mailAuth(code);
 		log.info("验证码：{}", code);
 		log.info("验证码：{}", MAIL);
@@ -190,7 +191,7 @@ class OAuth2ApiTest {
 	@Test
 	void testMobileAuthApi() {
 		log.info("---------- 手机号认证开始 ----------");
-		String code = getCodeApi(MOBILE);
+		String code = getCode(RedisKeyUtil.getMobileAuthCaptchaKey(MOBILE));
 		Map<String, String> tokenMap = mobileAuth(code);
 		log.info("验证码：{}", code);
 		log.info("手机号：{}", MOBILE);
@@ -297,8 +298,10 @@ class OAuth2ApiTest {
 		}
 	}
 
-	private String getCodeApi(String uuid) {
-		return getCaptcha(uuid);
+	private String getCode(String key) {
+		String value = "123456";
+		redisUtil.set(key, value, RedisUtil.FIVE_MINUTE_EXPIRE);
+		return value;
 	}
 
 	private Map<String, String> mobileAuth(String code) {
@@ -379,9 +382,8 @@ class OAuth2ApiTest {
 	}
 
 	@SneakyThrows
-	private String getCaptcha(String uuid) {
+	private String getCaptcha(String uuid, String key) {
 		restClient.get().uri(URI.create(getCaptchaApiUrlV3(uuid))).retrieve().toBodilessEntity();
-		String key = captchaGateway.getKey(uuid);
 		String captcha = redisUtil.get(key).toString();
 		Assert.isTrue(StringUtil.isNotEmpty(captcha), "captcha is empty");
 		return captcha;

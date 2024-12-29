@@ -24,6 +24,7 @@ import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.auth.model.LoginLogE;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 
 /**
  * @author laokou
@@ -73,7 +74,7 @@ public class LoginLogConvertor {
 		loginLogCO.setBrowser(loginEvent.browser());
 		loginLogCO.setOs(loginEvent.os());
 		loginLogCO.setStatus(loginEvent.status());
-		loginLogCO.setErrorMessage(loginEvent.errorMessage());
+		loginLogCO.setErrorMessage(StringUtil.isNotEmpty(loginEvent.errorMessage()) ? loginEvent.errorMessage().substring(0, 2000) : null);
 		loginLogCO.setType(loginEvent.type());
 		loginLogCO.setInstant(loginEvent.instant());
 		loginLogCO.setTenantId(domainEvent.getTenantId());

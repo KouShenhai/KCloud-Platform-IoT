@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.CaptchaGetQry;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.utils.RedisKeyUtil;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -44,11 +45,10 @@ public class CaptchaGetQryExe {
 	 * @return 验证码
 	 */
 	public Result<String> execute(CaptchaGetQry qry) {
-		String uuid = qry.getUuid();
 		Captcha ca = generate();
 		String captcha = ca.text();
 		String base64 = ca.toBase64();
-		captchaGateway.set(uuid, captcha);
+		captchaGateway.set(RedisKeyUtil.getUsernamePasswordAuthCaptchaKey(qry.getUuid()), captcha);
 		return Result.ok(base64);
 	}
 

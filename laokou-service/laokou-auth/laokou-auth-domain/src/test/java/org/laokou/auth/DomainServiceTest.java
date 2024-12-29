@@ -24,10 +24,7 @@ import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gateway.*;
-import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.CaptchaE;
-import org.laokou.auth.model.InfoV;
-import org.laokou.auth.model.LoginLogE;
+import org.laokou.auth.model.*;
 
 import static org.laokou.auth.PasswordValidatorTest.getEncodePassword;
 
@@ -164,6 +161,32 @@ class DomainServiceTest {
 
 		// 创建登录日志
 		domainService.createLoginLog(loginLog);
+	}
+
+	@Test
+	void testCreateMailCaptchaNoticeLog() {
+		Assertions.assertNotNull(domainService);
+
+		// 创建通知日志
+		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
+		Assertions.assertNotNull(noticeLog);
+
+		noticeLog.setCode("sendMailCaptcha");
+		noticeLog.setStatus(SendCaptchaStatus.OK.getCode());
+		domainService.createNoticeLog(noticeLog);
+	}
+
+	@Test
+	void testCreateMobileCaptchaNoticeLog() {
+		Assertions.assertNotNull(domainService);
+
+		// 创建通知日志
+		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
+		Assertions.assertNotNull(noticeLog);
+
+		noticeLog.setCode("sendMobileCaptcha");
+		noticeLog.setStatus(SendCaptchaStatus.OK.getCode());
+		domainService.createNoticeLog(noticeLog);
 	}
 
 }

@@ -27,7 +27,7 @@ import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.laokou.common.i18n.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 

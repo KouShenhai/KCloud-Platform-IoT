@@ -22,6 +22,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.auth.model.NoticeLogE;
 import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mail.dto.MailResult;
 
 /**
@@ -29,17 +30,18 @@ import org.laokou.common.mail.dto.MailResult;
  */
 public class NoticeLogConvertor {
 
-	public static NoticeLogCO toClientObject(DomainEvent domainEvent, MailResult result, String mail) {
+	public static NoticeLogCO toClientObject(DomainEvent domainEvent, MailResult result, String uuid) {
 		NoticeLogCO co = new NoticeLogCO();
   co.setCode(result.getCode());
   co.setName(result.getName());
   co.setStatus(result.getStatus());
-  co.setErrorMessage(result.getErrorMessage());
+  co.setErrorMessage(StringUtil.isNotEmpty(result.getErrorMessage()) ? result.getErrorMessage().substring(0,2000) : null);
   co.setParam(result.getParam());
   co.setTenantId(domainEvent.getTenantId());
 		co.setId(domainEvent.getAggregateId());
 		co.setInstant(domainEvent.getInstant());
-		co.setMail(mail);
+		co.setUuid(uuid);
+		co.setCaptcha(result.getCaptcha());
 		return co;
 	}
 
@@ -53,7 +55,8 @@ public class NoticeLogConvertor {
 		noticeLogE.setParam(noticeLogCO.getParam());
 		noticeLogE.setTenantId(noticeLogCO.getTenantId());
 		noticeLogE.setInstant(noticeLogCO.getInstant());
-		noticeLogE.setMail(noticeLogCO.getMail());
+		noticeLogE.setUuid(noticeLogCO.getUuid());
+		noticeLogE.setCaptcha(noticeLogCO.getCaptcha());
 		return noticeLogE;
 	}
 

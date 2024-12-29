@@ -45,7 +45,6 @@ public class QQMailServiceImpl extends AbstractMailServiceImpl {
 	@Override
 	public MailResult send(String mail) {
 		String subject = "验证码";
-		String code = "sendMailCaptcha";
 		String name = "QQ邮箱" + subject;
 		String captcha = RandomStringUtil.randomNumeric(6);
 		// 默认5分钟有效
@@ -56,11 +55,11 @@ public class QQMailServiceImpl extends AbstractMailServiceImpl {
 		try {
 			// 发送邮件
 			sendMail(subject, content, mail);
-			return new MailResult(code, name, SendStatus.OK.getCode(), EMPTY, params);
+			return new MailResult(name, SendStatus.OK.getCode(), EMPTY, params, captcha);
 		}
 		catch (Exception e) {
 			log.error("错误信息：{}", e.getMessage());
-			return new MailResult(code, name, SendStatus.FAIL.getCode(), e.getMessage(), params);
+			return new MailResult(name, SendStatus.FAIL.getCode(), e.getMessage(), params, captcha);
 		}
 	}
 

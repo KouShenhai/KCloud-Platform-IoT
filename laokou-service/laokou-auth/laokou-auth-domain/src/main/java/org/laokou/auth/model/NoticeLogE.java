@@ -62,8 +62,13 @@ public class NoticeLogE extends Identifier {
 	private Long tenantId;
 
 	/**
-	 * 邮箱.
+	 * 唯一标识.
 	 */
-	private String mail;
+	private String uuid;
+
+	/**
+	 * 验证码.
+	 */
+	private String captcha;
 
 }

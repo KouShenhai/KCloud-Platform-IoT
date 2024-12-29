@@ -15,45 +15,25 @@
  *
  */
 
-package org.laokou.common.mail.dto;
+package org.laokou.auth.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 /**
  * @author laokou
  */
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class MailResult implements Serializable {
+public enum SendCaptchaStatus {
 
-	/**
-	 * 编码.
-	 */
-	private final String code = "sendMailCaptcha";
-	/**
-	 * 名称.
-	 */
-	private String name;
-	/**
-	 * 状态 0成功 1失败.
-	 */
-	private int status;
-	/**
-	 * 错误信息.
-	 */
-	private String errorMessage;
-	/**
-	 * 参数.
-	 */
-	private String param;
-	/**
-	 * 验证码.
-	 */
-	private String captcha;
+	OK(0, "发送成功"),
+	FAIL(1, "发送失败");
+
+	private final int code;
+	private final String desc;
+
+	SendCaptchaStatus(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
@@ -43,27 +42,35 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	/**
 	 * 写入Redis.
-	 * @param uuid UUID
+	 * @param key 标识
 	 * @param captcha 验证码
 	 */
 	@Override
-	public void set(String uuid, String captcha) {
-		String key = getKey(uuid);
-		// 保存五分钟
+	public void set(String key, String captcha) {
+		set(key, captcha, FIVE_MINUTE_EXPIRE);
+	}
+
+	/**
+	 * 写入Redis.
+	 * @param key 标识
+	 * @param captcha 验证码
+	 */
+	@Override
+	public void set(String key, String captcha, long expireTime) {
 		redisUtil.del(key);
-		redisUtil.set(key, captcha, FIVE_MINUTE_EXPIRE);
+		redisUtil.set(key, captcha, expireTime);
 	}
 
 	/**
 	 * 检查验证码.
-	 * @param uuid UUID
+	 * @param key 标识
 	 * @param code 验证码
 	 * @return 校验结果
 	 */
 	@Override
-	public Boolean validate(String uuid, String code) {
+	public Boolean validate(String key, String code) {
 		// 获取验证码
-		String captcha = getValue(uuid);
+		String captcha = getValue(key);
 		if (StringUtil.isEmpty(captcha)) {
 			return null;
 		}
@@ -71,22 +78,11 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	}
 
 	/**
-	 * 获取key（MD5加密）.
-	 * @param uuid UUID
-	 * @return key
-	 */
-	@Override
-	public String getKey(String uuid) {
-		return RedisKeyUtil.getUserCaptchaKey(uuid);
-	}
-
-	/**
 	 * 从Redis根据UUID查看验证码.
-	 * @param uuid UUID
+	 * @param key 标识
 	 * @return 验证码
 	 */
-	private String getValue(String uuid) {
-		String key = getKey(uuid);
+	private String getValue(String key) {
 		Object captcha = redisUtil.get(key);
 		if (ObjectUtil.isNotNull(captcha)) {
 			redisUtil.del(key);

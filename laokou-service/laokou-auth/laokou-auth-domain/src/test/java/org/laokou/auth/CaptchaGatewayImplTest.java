@@ -19,8 +19,6 @@ package org.laokou.auth;
 
 import org.laokou.auth.gateway.CaptchaGateway;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-
 /**
  * 验证码网关测试.
  *
@@ -29,18 +27,18 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 class CaptchaGatewayImplTest implements CaptchaGateway {
 
 	@Override
-	public void set(String uuid, String captcha) {
+	public void set(String key, String captcha) {
 
 	}
 
 	@Override
-	public Boolean validate(String uuid, String code) {
+	public void set(String key, String captcha, long expireTime) {
+
+	}
+
+	@Override
+	public Boolean validate(String key, String code) {
 		return true;
-	}
-
-	@Override
-	public String getKey(String uuid) {
-		return EMPTY;
 	}
 
 }

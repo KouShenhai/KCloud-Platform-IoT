@@ -51,12 +51,16 @@ public class DomainService {
 
 	@Async("ttl-task-executor")
 	public void createLoginLog(LoginLogE loginLog) {
+		// 保存登录日志
 		loginLogGateway.create(loginLog);
 	}
 
 	@Async("ttl-task-executor")
 	public void createNoticeLog(NoticeLogE noticeLog) {
+		// 保存通知日志
 		noticeLogGateway.create(noticeLog);
+		// 缓存验证码
+		createCaptchaCache(noticeLog);
 	}
 
 	public void createCaptcha(Long eventId, AuthA auth, CaptchaE captcha) {
@@ -102,6 +106,14 @@ public class DomainService {
 		auth.getSourcePrefix(sourceGateway.getPrefix(auth.getTenantCode()));
 		// 校验数据源前缀
 		auth.checkSourcePrefix();
+	}
+
+	private void createCaptchaCache(NoticeLogE noticeLog) {
+		if (noticeLog.getStatus() == SendCaptchaStatus.OK.getCode()) {
+			String captchaCacheKey = SendCaptchaType.getByCode(noticeLog.getCode()).getCaptchaCacheKey(noticeLog.getUuid());
+			// 5分钟有效
+			captchaGateway.set(captchaCacheKey, noticeLog.getCaptcha());
+		}
 	}
 
 }

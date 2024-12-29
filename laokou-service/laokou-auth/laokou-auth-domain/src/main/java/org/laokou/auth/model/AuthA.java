@@ -29,6 +29,7 @@ import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.RedisKeyUtil;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -187,7 +188,7 @@ public class AuthA extends AggregateRoot {
 
 	public void checkCaptcha(CaptchaValidator captchaValidator) {
 		if (isUseCaptcha()) {
-			Boolean validate = captchaValidator.validate(captcha.uuid(), captcha.captcha());
+			Boolean validate = captchaValidator.validate(getCaptchaCacheKey(), captcha.captcha());
 			if (ObjectUtil.isNull(validate)) {
 				throw new SystemException(CAPTCHA_EXPIRED);
 			}
@@ -287,6 +288,14 @@ public class AuthA extends AggregateRoot {
 					LoginStatus.FAIL.getCode(), e.getMessage(), grantType.getCode(), super.instant);
 		}
 		return null;
+	}
+
+	private String getCaptchaCacheKey() {
+		return switch (grantType) {
+			case MOBILE -> RedisKeyUtil.getMobileAuthCaptchaKey(captcha.uuid());
+			case MAIL -> RedisKeyUtil.getMailAuthCaptchaKey(captcha.uuid());
+			case USERNAME_PASSWORD, AUTHORIZATION_CODE -> RedisKeyUtil.getUsernamePasswordAuthCaptchaKey(captcha.uuid());
+		};
 	}
 
 }
