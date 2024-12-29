@@ -18,7 +18,7 @@
 package org.laokou.common.redis.config;
 
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.laokou.common.i18n.utils.RedisKeyUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;

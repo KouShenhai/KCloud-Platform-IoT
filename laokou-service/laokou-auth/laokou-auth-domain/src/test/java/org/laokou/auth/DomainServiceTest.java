@@ -48,6 +48,7 @@ class DomainServiceTest {
 		SourceGateway sourceGateway = new SourceGatewayImplTest();
 		CaptchaGateway captchaGateway = new CaptchaGatewayImplTest();
 		LoginLogGateway loginLogGateway = new LoginLogGatewayImplTest();
+		NoticeLogGateway noticeLogGateway = new NoticeLogGatewayImplTest();
 		PasswordValidator passwordValidator = new PasswordValidatorTest();
 		Assertions.assertNotNull(userGateway);
 		Assertions.assertNotNull(menuGateway);
@@ -56,9 +57,10 @@ class DomainServiceTest {
 		Assertions.assertNotNull(sourceGateway);
 		Assertions.assertNotNull(captchaGateway);
 		Assertions.assertNotNull(loginLogGateway);
+		Assertions.assertNotNull(noticeLogGateway);
 		Assertions.assertNotNull(passwordValidator);
 		domainService = new DomainService(userGateway, menuGateway, deptGateway, tenantGateway, sourceGateway,
-				captchaGateway, loginLogGateway, passwordValidator);
+				captchaGateway, loginLogGateway, noticeLogGateway, passwordValidator);
 		info = new InfoV("Windows", "127.0.0.1", "中国 广东 深圳", "Chrome");
 		Assertions.assertNotNull(domainService);
 		Assertions.assertNotNull(info);
@@ -143,7 +145,7 @@ class DomainServiceTest {
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		Assertions.assertNotNull(captcha);
 
-		AuthA auth = DomainFactory.getAuth(1L);
+		AuthA auth = DomainFactory.getAuth(1L, "laokou");
 		Assertions.assertNotNull(auth);
 
 		// 创建验证码
@@ -159,6 +161,32 @@ class DomainServiceTest {
 
 		// 创建登录日志
 		domainService.createLoginLog(loginLog);
+	}
+
+	@Test
+	void testCreateMailCaptchaNoticeLog() {
+		Assertions.assertNotNull(domainService);
+
+		// 创建通知日志
+		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
+		Assertions.assertNotNull(noticeLog);
+
+		noticeLog.setCode("sendMailCaptcha");
+		noticeLog.setStatus(SendCaptchaStatus.OK.getCode());
+		domainService.createNoticeLog(noticeLog);
+	}
+
+	@Test
+	void testCreateMobileCaptchaNoticeLog() {
+		Assertions.assertNotNull(domainService);
+
+		// 创建通知日志
+		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
+		Assertions.assertNotNull(noticeLog);
+
+		noticeLog.setCode("sendMobileCaptcha");
+		noticeLog.setStatus(SendCaptchaStatus.OK.getCode());
+		domainService.createNoticeLog(noticeLog);
 	}
 
 }

@@ -43,7 +43,7 @@ public abstract class AbstractTransactionConsumer implements RocketMQLocalTransa
 			return RocketMQLocalTransactionState.COMMIT;
 		}
 		catch (Exception e) {
-			log.error("执行本地事务，事务回滚，错误信息：{}", e.getMessage(), e);
+			log.error("执行本地事务，事务回滚，错误信息：{}", e.getMessage());
 			return RocketMQLocalTransactionState.ROLLBACK;
 		}
 		finally {
@@ -63,7 +63,7 @@ public abstract class AbstractTransactionConsumer implements RocketMQLocalTransa
 			return RocketMQLocalTransactionState.ROLLBACK;
 		}
 		catch (Exception e) {
-			log.error("事务回查异常，事务回滚，错误信息：{}", e.getMessage(), e);
+			log.error("事务回查异常，事务回滚，错误信息：{}", e.getMessage());
 			return RocketMQLocalTransactionState.ROLLBACK;
 		}
 		finally {

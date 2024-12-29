@@ -74,7 +74,7 @@ public class MqttClient {
 			log.info("MQTT连接成功");
 		}
 		catch (Exception e) {
-			log.error("MQTT连接失败，错误信息：{}", e.getMessage(), e);
+			log.error("MQTT连接失败，错误信息：{}", e.getMessage());
 		}
 	}
 

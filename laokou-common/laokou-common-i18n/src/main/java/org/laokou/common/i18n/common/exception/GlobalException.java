@@ -17,7 +17,8 @@
 
 package org.laokou.common.i18n.common.exception;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.laokou.common.i18n.utils.MessageUtil;
 
 import java.io.Serial;
@@ -27,7 +28,8 @@ import java.io.Serial;
  *
  * @author laokou
  */
-@Data
+@Getter
+@Setter
 public abstract class GlobalException extends RuntimeException {
 
 	@Serial

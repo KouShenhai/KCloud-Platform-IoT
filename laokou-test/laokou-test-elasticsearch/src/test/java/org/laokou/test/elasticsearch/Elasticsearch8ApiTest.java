@@ -101,7 +101,7 @@ class Elasticsearch8ApiTest {
 			log.info("索引信息：{}", JacksonUtil.toJsonStr(result));
 		}
 		catch (Exception e) {
-			log.error("{}", e.getMessage(), e);
+			log.error("错误信息：{}", e.getMessage());
 		}
 	}
 
@@ -115,7 +115,7 @@ class Elasticsearch8ApiTest {
 			log.info("{}", results);
 		}
 		catch (Exception e) {
-			log.error("{}", e.getMessage(), e);
+			log.error("错误信息：{}", e.getMessage());
 		}
 	}
 

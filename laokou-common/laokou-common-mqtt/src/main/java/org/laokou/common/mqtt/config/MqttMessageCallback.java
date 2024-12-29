@@ -47,7 +47,7 @@ public class MqttMessageCallback implements MqttCallback {
 
 	@Override
 	public void mqttErrorOccurred(MqttException ex) {
-		log.error("MQTT报错，错误信息：{}，详情见日志", ex.getMessage(), ex);
+		log.error("MQTT报错，错误信息：{}", ex.getMessage());
 	}
 
 	@Override

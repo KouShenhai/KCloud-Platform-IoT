@@ -15,15 +15,25 @@
  *
  */
 
-package org.laokou.auth.gateway;
+package org.laokou.auth.model;
 
-import org.laokou.auth.model.NoticeLogE;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-public interface NoticeLogGateway {
+@Getter
+public enum SendCaptchaStatus {
 
-	void create(NoticeLogE noticeLog);
+	OK(0, "发送成功"), FAIL(1, "发送失败");
+
+	private final int code;
+
+	private final String desc;
+
+	SendCaptchaStatus(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

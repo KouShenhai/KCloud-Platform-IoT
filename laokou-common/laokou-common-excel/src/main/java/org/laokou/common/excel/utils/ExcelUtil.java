@@ -106,7 +106,7 @@ public class ExcelUtil {
 				excelWriter.finish();
 			}
 			catch (Exception e) {
-				log.error("Excel导出失败，错误信息：{}，详情见日志", e.getMessage(), e);
+				log.error("Excel导出失败，错误信息：{}", e.getMessage());
 			}
 		}
 		else {
@@ -202,7 +202,7 @@ public class ExcelUtil {
 
 		@Override
 		public void onException(Exception e, AnalysisContext context) {
-			log.error("Excel导入异常，错误信息：{}，详情见日志", e.getMessage(), e);
+			log.error("Excel导入异常，错误信息：{}", e.getMessage());
 		}
 
 		@SneakyThrows

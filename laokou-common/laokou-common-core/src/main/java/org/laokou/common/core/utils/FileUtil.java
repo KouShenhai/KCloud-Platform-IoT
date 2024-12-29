@@ -101,9 +101,11 @@ public final class FileUtil {
 
 	public static void write(File file, InputStream in, long size, long chunkSize) throws IOException {
 		if (in instanceof FileInputStream fis) {
+			// 最大偏移量2G【2^31】数据
+			chunkSize = Math.min(chunkSize, 2L * 1024 * 1024 * 1024);
+			long chunkCount = (size / chunkSize) + (size % chunkSize == 0 ? 0 : 1);
 			try (FileChannel inChannel = fis.getChannel();
 					ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-				long chunkCount = (size / chunkSize) + (size % chunkSize == 0 ? 0 : 1);
 				List<Callable<Boolean>> futures = new ArrayList<>((int) chunkCount);
 				// position指针
 				for (long index = 0, position = 0,
@@ -134,7 +136,7 @@ public final class FileUtil {
 			}
 			catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
-				log.error("错误信息：{}", e.getMessage(), e);
+				log.error("错误信息：{}", e.getMessage());
 				throw new SystemException("S_UnKnow_Error", e.getMessage());
 			}
 		}

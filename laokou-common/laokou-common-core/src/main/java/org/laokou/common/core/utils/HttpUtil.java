@@ -74,7 +74,7 @@ public final class HttpUtil {
 						handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 			}
 			catch (IOException e) {
-				log.error("调用失败，错误信息：{}，详情见日志", e.getMessage(), e);
+				log.error("调用失败，错误信息：{}", e.getMessage());
 			}
 			return resultString;
 		}

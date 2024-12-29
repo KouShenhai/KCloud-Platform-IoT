@@ -15,15 +15,25 @@
  *
  */
 
-package org.laokou.auth.gateway;
+package org.laokou.auth.command;
 
-import org.laokou.auth.model.NoticeLogE;
+import lombok.RequiredArgsConstructor;
+import org.laokou.auth.ability.DomainService;
+import org.laokou.auth.convertor.NoticeLogConvertor;
+import org.laokou.auth.dto.NoticeLogSaveCmd;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface NoticeLogGateway {
+@Component
+@RequiredArgsConstructor
+public class NoticeLogSaveCmdExe {
 
-	void create(NoticeLogE noticeLog);
+	private final DomainService domainService;
+
+	public void executeVoid(NoticeLogSaveCmd cmd) {
+		domainService.createNoticeLog(NoticeLogConvertor.toEntity(cmd.getCo()));
+	}
 
 }

@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.nacos.utils.ConfigUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.laokou.common.i18n.utils.RedisKeyUtil;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
@@ -137,7 +137,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			return JacksonUtil.toList(configInfo, RouteDefinition.class);
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", e.getMessage(), e);
+			log.error("错误信息：{}", e.getMessage());
 			throw new SystemException(ROUTER_NOT_EXIST);
 		}
 	}

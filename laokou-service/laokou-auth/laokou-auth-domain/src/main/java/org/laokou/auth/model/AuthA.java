@@ -29,6 +29,7 @@ import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.RedisKeyUtil;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -108,11 +109,11 @@ public class AuthA extends AggregateRoot {
 	 */
 	private CaptchaE captchaE;
 
-	public AuthA(Long id) {
+	public AuthA(Long id, String tenantCode) {
 		super.id = id;
 		this.username = EMPTY;
 		this.password = EMPTY;
-		this.tenantCode = EMPTY;
+		this.tenantCode = tenantCode;
 		this.grantType = USERNAME_PASSWORD;
 		this.captcha = new CaptchaV(EMPTY, EMPTY);
 	}
@@ -187,7 +188,7 @@ public class AuthA extends AggregateRoot {
 
 	public void checkCaptcha(CaptchaValidator captchaValidator) {
 		if (isUseCaptcha()) {
-			Boolean validate = captchaValidator.validate(captcha.uuid(), captcha.captcha());
+			Boolean validate = captchaValidator.validate(getCaptchaCacheKey(), captcha.captcha());
 			if (ObjectUtil.isNull(validate)) {
 				throw new SystemException(CAPTCHA_EXPIRED);
 			}
@@ -284,9 +285,18 @@ public class AuthA extends AggregateRoot {
 		}
 		else if (e instanceof SystemException) {
 			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
-					LoginStatus.FAIL.getCode(), e.getMessage(), grantType.getCode(), super.instant);
+					LoginStatus.FAIL.getCode(), e.getMsg(), grantType.getCode(), super.instant);
 		}
 		return null;
+	}
+
+	private String getCaptchaCacheKey() {
+		return switch (grantType) {
+			case MOBILE -> RedisKeyUtil.getMobileAuthCaptchaKey(captcha.uuid());
+			case MAIL -> RedisKeyUtil.getMailAuthCaptchaKey(captcha.uuid());
+			case USERNAME_PASSWORD, AUTHORIZATION_CODE ->
+				RedisKeyUtil.getUsernamePasswordAuthCaptchaKey(captcha.uuid());
+		};
 	}
 
 }

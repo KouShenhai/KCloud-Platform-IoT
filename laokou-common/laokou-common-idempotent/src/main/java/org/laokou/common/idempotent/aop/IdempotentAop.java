@@ -27,12 +27,12 @@ import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.laokou.common.i18n.utils.RedisKeyUtil;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.constant.TraceConstant.REQUEST_ID;
-import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
+import static org.laokou.common.redis.utils.RedisUtil.FIVE_MINUTE_EXPIRE;
 
 /**
  * 幂等性Aop.
@@ -54,7 +54,7 @@ public class IdempotentAop {
 			throw new SystemException("S_Idempotent_RequestIDIsNull", "请求ID不能为空");
 		}
 		String apiIdempotentKey = RedisKeyUtil.getApiIdempotentKey(requestId);
-		if (!redisUtil.setIfAbsent(apiIdempotentKey, 0, MINUTE_FIVE_EXPIRE)) {
+		if (!redisUtil.setIfAbsent(apiIdempotentKey, 0, FIVE_MINUTE_EXPIRE)) {
 			throw new SystemException("S_Idempotent_RequestRepeatedSubmit", "不可重复提交请求");
 		}
 		doBefore();

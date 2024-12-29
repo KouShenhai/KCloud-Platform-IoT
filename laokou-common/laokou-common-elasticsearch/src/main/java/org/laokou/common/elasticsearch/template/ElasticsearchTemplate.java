@@ -176,7 +176,7 @@ public class ElasticsearchTemplate {
 			}
 		}
 		catch (Throwable e) {
-			log.error("批量同步索引失败，错误信息：{}", e.getMessage(), e);
+			log.error("批量同步索引失败，错误信息：{}", e.getMessage());
 		}
 	}
 
@@ -241,7 +241,7 @@ public class ElasticsearchTemplate {
 			ReflectionUtils.setField(field, source, id);
 		}
 		catch (Exception e) {
-			log.error("ID赋值失败，错误信息：{}", e.getMessage(), e);
+			log.error("ID赋值失败，错误信息：{}", e.getMessage());
 		}
 	}
 

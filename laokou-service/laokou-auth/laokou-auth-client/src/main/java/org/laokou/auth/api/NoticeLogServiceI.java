@@ -15,15 +15,15 @@
  *
  */
 
-package org.laokou.auth.gateway;
+package org.laokou.auth.api;
 
-import org.laokou.auth.model.NoticeLogE;
+import org.laokou.auth.dto.NoticeLogSaveCmd;
 
 /**
  * @author laokou
  */
-public interface NoticeLogGateway {
+public interface NoticeLogServiceI {
 
-	void create(NoticeLogE noticeLog);
+	void save(NoticeLogSaveCmd cmd);
 
 }

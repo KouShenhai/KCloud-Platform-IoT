@@ -58,12 +58,12 @@ public class DeptGatewayImpl implements DeptGateway {
 			return deptMapper.selectDeptPathsByUserId(user.getId());
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_DEPT, e.getMessage(), e);
+			log.error("表 {} 不存在，错误信息：{}", TABLE_DEPT, e.getMessage());
 			throw new SystemException(DATA_TABLE_NOT_EXIST,
 					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { TABLE_DEPT }));
 		}
 		catch (Exception e) {
-			log.error("查询部门失败，错误信息：{}，详情见日志", e.getMessage(), e);
+			log.error("查询部门失败，错误信息：{}", e.getMessage());
 			throw new SystemException(SystemException.Dept.QUERY_FAILED);
 		}
 	}

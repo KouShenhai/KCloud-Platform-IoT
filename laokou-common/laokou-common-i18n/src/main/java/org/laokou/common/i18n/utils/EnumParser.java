@@ -17,6 +17,8 @@
 
 package org.laokou.common.i18n.utils;
 
+import org.laokou.common.i18n.common.exception.SystemException;
+
 import java.util.Arrays;
 import java.util.function.Function;
 
@@ -32,7 +34,7 @@ public final class EnumParser {
 		return Arrays.stream(clazz.getEnumConstants())
 			.filter(e -> ObjectUtil.equals(field.apply(e), value))
 			.findFirst()
-			.orElse(null);
+			.orElseThrow(() -> new SystemException("S_Enum_TypeNotExist", "枚举类型不存在"));
 	}
 
 }

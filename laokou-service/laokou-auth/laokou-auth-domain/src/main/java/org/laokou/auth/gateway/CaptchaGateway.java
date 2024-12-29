@@ -26,24 +26,25 @@ public interface CaptchaGateway {
 
 	/**
 	 * 写入Redis.
-	 * @param uuid UUID
+	 * @param key 标识
 	 * @param captcha 验证码
 	 */
-	void set(String uuid, String captcha);
+	void set(String key, String captcha);
+
+	/**
+	 * 写入Redis.
+	 * @param key 标识
+	 * @param expireTime 过期时间
+	 * @param captcha 验证码
+	 */
+	void set(String key, String captcha, long expireTime);
 
 	/**
 	 * 检查验证码.
-	 * @param uuid UUID
+	 * @param key 标识
 	 * @param code 验证码
 	 * @return 校验结果
 	 */
-	Boolean validate(String uuid, String code);
-
-	/**
-	 * 获取key.
-	 * @param uuid UUID
-	 * @return key
-	 */
-	String getKey(String uuid);
+	Boolean validate(String key, String code);
 
 }

@@ -15,15 +15,64 @@
  *
  */
 
-package org.laokou.auth.gateway;
+package org.laokou.auth.model;
 
-import org.laokou.auth.model.NoticeLogE;
+import lombok.Getter;
+import lombok.Setter;
+import org.laokou.common.i18n.dto.Identifier;
+
+import java.time.Instant;
 
 /**
  * @author laokou
  */
-public interface NoticeLogGateway {
+@Setter
+@Getter
+public class NoticeLogE extends Identifier {
 
-	void create(NoticeLogE noticeLog);
+	/**
+	 * 编码.
+	 */
+	private String code;
+
+	/**
+	 * 名称.
+	 */
+	private String name;
+
+	/**
+	 * 状态 0成功 1失败.
+	 */
+	private int status;
+
+	/**
+	 * 错误信息.
+	 */
+	private String errorMessage;
+
+	/**
+	 * 参数.
+	 */
+	private String param;
+
+	/**
+	 * 发送时间.
+	 */
+	private Instant instant;
+
+	/**
+	 * 租户ID.
+	 */
+	private Long tenantId;
+
+	/**
+	 * 唯一标识.
+	 */
+	private String uuid;
+
+	/**
+	 * 验证码.
+	 */
+	private String captcha;
 
 }

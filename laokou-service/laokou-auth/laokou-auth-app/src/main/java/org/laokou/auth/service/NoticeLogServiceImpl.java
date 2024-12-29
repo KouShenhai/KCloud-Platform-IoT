@@ -15,15 +15,26 @@
  *
  */
 
-package org.laokou.auth.gateway;
+package org.laokou.auth.service;
 
-import org.laokou.auth.model.NoticeLogE;
+import lombok.RequiredArgsConstructor;
+import org.laokou.auth.api.NoticeLogServiceI;
+import org.laokou.auth.command.NoticeLogSaveCmdExe;
+import org.laokou.auth.dto.NoticeLogSaveCmd;
+import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
-public interface NoticeLogGateway {
+@Service
+@RequiredArgsConstructor
+public class NoticeLogServiceImpl implements NoticeLogServiceI {
 
-	void create(NoticeLogE noticeLog);
+	private final NoticeLogSaveCmdExe noticeLogSaveCmdExe;
+
+	@Override
+	public void save(NoticeLogSaveCmd cmd) {
+		noticeLogSaveCmdExe.executeVoid(cmd);
+	}
 
 }

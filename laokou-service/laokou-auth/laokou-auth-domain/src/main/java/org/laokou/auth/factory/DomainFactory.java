@@ -78,8 +78,8 @@ public class DomainFactory {
 	 */
 	public static final String TENANT_CODE = "tenant_code";
 
-	public static AuthA getAuth(Long aggregateId) {
-		return new AuthA(aggregateId);
+	public static AuthA getAuth(Long aggregateId, String tenantCode) {
+		return new AuthA(aggregateId, tenantCode);
 	}
 
 	public static AuthA getMailAuth(Long aggregateId, String mail, String code, String tenantCode) {
@@ -110,6 +110,10 @@ public class DomainFactory {
 
 	public static CaptchaE getCaptcha() {
 		return new CaptchaE();
+	}
+
+	public static NoticeLogE getNoticeLog() {
+		return new NoticeLogE();
 	}
 
 }

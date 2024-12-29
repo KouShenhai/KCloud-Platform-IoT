@@ -15,15 +15,22 @@
  *
  */
 
-package org.laokou.auth.gateway;
+package org.laokou.auth.dto;
 
-import org.laokou.auth.model.NoticeLogE;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.auth.dto.clientobject.NoticeLogCO;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-public interface NoticeLogGateway {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class NoticeLogSaveCmd extends CommonCommand {
 
-	void create(NoticeLogE noticeLog);
+	private NoticeLogCO co;
 
 }

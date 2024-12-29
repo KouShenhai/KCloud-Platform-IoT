@@ -59,12 +59,12 @@ public class MenuGatewayImpl implements MenuGateway {
 			return new HashSet<>(menuMapper.selectPermissionsByUserId(user.getId()));
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_MENU, e.getMessage(), e);
+			log.error("表 {} 不存在，错误信息：{}", TABLE_MENU, e.getMessage());
 			throw new SystemException(DATA_TABLE_NOT_EXIST,
 					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { TABLE_MENU }));
 		}
 		catch (Exception e) {
-			log.error("查询菜单失败，错误信息：{}，详情见日志", e.getMessage(), e);
+			log.error("查询菜单失败，错误信息：{}", e.getMessage());
 			throw new SystemException(SystemException.Menu.QUERY_FAILED);
 		}
 	}

@@ -80,7 +80,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 			return authentication(authentication, getPrincipal(request));
 		}
 		catch (IOException e) {
-			log.error("认证授权失败，错误信息：{}", e.getMessage(), e);
+			log.error("认证授权失败，错误信息：{}", e.getMessage());
 			throw new SystemException("S_UnKnow_Error", e.getMessage());
 		}
 	}

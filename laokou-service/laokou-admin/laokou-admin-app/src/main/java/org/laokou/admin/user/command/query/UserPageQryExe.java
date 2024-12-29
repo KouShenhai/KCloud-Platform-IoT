@@ -58,7 +58,7 @@ public class UserPageQryExe {
 						c2.get(30, TimeUnit.SECONDS)));
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", e.getMessage(), e);
+			log.error("错误信息：{}", e.getMessage());
 			throw new SystemException("S_User_PageQueryTimeout", "用户分页查询超时");
 		}
 	}

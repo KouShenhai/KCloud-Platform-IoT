@@ -47,7 +47,7 @@ public class SendMobileCaptchaEventHandler extends AbstractDomainEventHandler {
 
 	@Override
 	protected void handleDomainEvent(DomainEvent domainEvent) {
-
+		log.info("{}", domainEvent.getPayload());
 	}
 
 }
