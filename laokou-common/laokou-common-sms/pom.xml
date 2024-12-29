@@ -18,6 +18,10 @@
       <artifactId>spring-boot-configuration-processor</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-sensitive</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

@@ -17,7 +17,6 @@
 
 package org.laokou.auth.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.gateway.LoginLogGateway;
@@ -35,7 +34,6 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 	private final LoginLogMapper loginLogMapper;
 
 	@Override
-	@DS("domain")
 	public void create(LoginLogE loginLog) {
 		loginLogMapper.insert(LoginLogConvertor.toDataObject(loginLog));
 	}

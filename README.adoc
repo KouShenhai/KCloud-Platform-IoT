@@ -356,7 +356,7 @@ https://kcloud.blog.csdn.net[博客：https://kcloud.blog.csdn.net]
 
 https://mail.qq.com[邮箱：2413176044@qq.com]
 
-http://wpa.qq.com/msgrd?v=3&uin=2413176044&Site=gitee&Menu=yes[QQ：243176044]
+http://wpa.qq.com/msgrd?v=3&uin=2413176044&Site=gitee&Menu=yes[QQ：2413176044]
 
 image::https://img.shields.io/badge/Q群-465450496-blue.svg[QQ群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
 

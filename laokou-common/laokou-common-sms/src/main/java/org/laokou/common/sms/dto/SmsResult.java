@@ -15,25 +15,50 @@
  *
  */
 
-package org.laokou.common.mail.config;
+package org.laokou.common.sms.dto;
 
-import org.laokou.common.mail.service.MailService;
-import org.laokou.common.mail.service.impl.MailServiceImpl;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.mail.MailProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-@AutoConfiguration
-@EnableConfigurationProperties(MailProperties.class)
-public class MailAutoConfig {
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class SmsResult implements Serializable {
 
-	@Bean
-	public MailService mailService(MailProperties mailProperties) {
-		return new MailServiceImpl(mailProperties);
-	}
+	/**
+	 * 编码.
+	 */
+	private final String code = "sendMobileCaptcha";
+
+	/**
+	 * 名称.
+	 */
+	private String name;
+
+	/**
+	 * 状态 0成功 1失败.
+	 */
+	private int status;
+
+	/**
+	 * 错误信息.
+	 */
+	private String errorMessage;
+
+	/**
+	 * 参数.
+	 */
+	private String param;
+
+	/**
+	 * 验证码.
+	 */
+	private String captcha;
 
 }

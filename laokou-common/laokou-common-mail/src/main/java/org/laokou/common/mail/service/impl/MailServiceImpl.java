@@ -34,32 +34,32 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  * @author laokou
  */
 @Slf4j
-public class QQMailServiceImpl extends AbstractMailServiceImpl {
+public class MailServiceImpl extends AbstractMailServiceImpl {
 
 	private static final String CAPTCHA_TEMPLATE = "验证码：${captcha}，${minute}分钟内容有效，您正在登录，若非本人操作，请勿泄露。";
 
-	public QQMailServiceImpl(MailProperties mailProperties) {
+	public MailServiceImpl(MailProperties mailProperties) {
 		super(mailProperties);
 	}
 
 	@Override
 	public MailResult send(String mail) {
 		String subject = "验证码";
-		String name = "QQ邮箱" + subject;
+		String name = "邮箱" + subject;
 		String captcha = RandomStringUtil.randomNumeric(6);
 		// 默认5分钟有效
 		Map<String, Object> param = Map.of("captcha", captcha, "minute", 5);
 		String content = TemplateUtil.getContent(CAPTCHA_TEMPLATE, param);
 		// 敏感信息过滤
-		String params = JacksonUtil.toJsonStr(Map.of("mail", SensitiveUtil.formatMail(mail), "content", content));
+		String paramString = JacksonUtil.toJsonStr(Map.of("mail", SensitiveUtil.formatMail(mail), "content", content));
 		try {
 			// 发送邮件
 			sendMail(subject, content, mail);
-			return new MailResult(name, SendStatus.OK.getCode(), EMPTY, params, captcha);
+			return new MailResult(name, SendStatus.OK.getCode(), EMPTY, paramString, captcha);
 		}
 		catch (Exception e) {
 			log.error("错误信息：{}", e.getMessage());
-			return new MailResult(name, SendStatus.FAIL.getCode(), e.getMessage(), params, captcha);
+			return new MailResult(name, SendStatus.FAIL.getCode(), e.getMessage(), paramString, captcha);
 		}
 	}
 

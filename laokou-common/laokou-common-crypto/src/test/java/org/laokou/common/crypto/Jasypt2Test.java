@@ -37,8 +37,8 @@ class Jasypt2Test {
 		String plainText = "laokou";
 		String encryptWithMD5AndDESStr = encryptWithMD5AndDES(plainText, factor);
 		String decryptWithMD5AndDESStr = decryptWithMD5AndDES(encryptWithMD5AndDESStr, factor);
-		log.info("采用PBEWithMD5AndDES加密前原文密文：{}", encryptWithMD5AndDESStr);
-		log.info("采用PBEWithMD5AndDES解密后密文原文：{}", decryptWithMD5AndDESStr);
+		log.info("采用PBEWithMD5AndDES加密后：{}", encryptWithMD5AndDESStr);
+		log.info("采用PBEWithMD5AndDES解密后：{}", decryptWithMD5AndDESStr);
 		Assertions.assertEquals(decryptWithMD5AndDESStr, plainText);
 	}
 

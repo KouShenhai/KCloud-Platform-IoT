@@ -15,50 +15,22 @@
  *
  */
 
-package org.laokou.common.sms.config;
+package org.laokou.common.sms.dto;
 
-import lombok.Data;
 import lombok.Getter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
-/**
- * @author laokou
- */
-@Data
-@Component
-@ConfigurationProperties(prefix = "sms")
-public class SmsProperties {
+@Getter
+public enum SendStatus {
 
-	private GYY gyy = new GYY();
+	OK(0, "发送成功"), FAIL(1, "发送失败");
 
-	private Type type = Type.GYY;
+	private final int code;
 
-	@Getter
-	public enum Type {
+	private final String desc;
 
-		GYY("gyy", "国阳云");
-
-		private final String code;
-
-		private final String desc;
-
-		Type(String code, String desc) {
-			this.code = code;
-			this.desc = desc;
-		}
-
-	}
-
-	@Data
-	public static class GYY {
-
-		private String templateId;
-
-		private String signId;
-
-		private String appcode;
-
+	SendStatus(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }
