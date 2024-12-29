@@ -22,8 +22,9 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.auth.model.NoticeLogE;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.mail.dto.MailResult;
+
+import static org.laokou.common.i18n.utils.StringUtil.truncate;
 
 /**
  * @author laokou
@@ -31,13 +32,11 @@ import org.laokou.common.mail.dto.MailResult;
 public class NoticeLogConvertor {
 
 	public static NoticeLogCO toClientObject(DomainEvent domainEvent, MailResult result, String uuid) {
-		String errorMessage = result.getErrorMessage();
 		NoticeLogCO noticeLogCO = new NoticeLogCO();
 		noticeLogCO.setCode(result.getCode());
 		noticeLogCO.setName(result.getName());
 		noticeLogCO.setStatus(result.getStatus());
-		noticeLogCO.setErrorMessage(StringUtil.isNotEmpty(errorMessage)
-				? errorMessage.length() > 2000 ? errorMessage.substring(0, 2000) : errorMessage : null);
+		noticeLogCO.setErrorMessage(truncate(result.getErrorMessage(), 2000));
 		noticeLogCO.setParam(result.getParam());
 		noticeLogCO.setTenantId(domainEvent.getTenantId());
 		noticeLogCO.setId(domainEvent.getAggregateId());

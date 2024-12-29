@@ -145,4 +145,11 @@ public final class StringUtil {
 		return sb.toString();
 	}
 
+	public static String truncate(String str, int maxLength) {
+		if (!StringUtil.isNotEmpty(str)) {
+			return null;
+		}
+		return str.length() > maxLength ? str.substring(0, maxLength) : str;
+	}
+
 }

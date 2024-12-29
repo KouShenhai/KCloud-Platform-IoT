@@ -34,7 +34,8 @@ public final class EnumParser {
 		return Arrays.stream(clazz.getEnumConstants())
 			.filter(e -> ObjectUtil.equals(field.apply(e), value))
 			.findFirst()
-			.orElseThrow(() -> new SystemException("S_Enum_TypeNotExist", "枚举类型不存在"));
+			.orElseThrow(() -> new SystemException("S_Enum_TypeNotExist",
+					String.format("枚举类型不存在 - enum class: %s, invalid value: %s", clazz.getName(), value)));
 	}
 
 }
