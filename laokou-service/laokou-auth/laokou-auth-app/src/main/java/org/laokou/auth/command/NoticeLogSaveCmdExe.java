@@ -17,13 +17,16 @@
 
 package org.laokou.auth.command;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.NoticeLogConvertor;
 import org.laokou.auth.dto.NoticeLogSaveCmd;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.core.config.SpringTaskExecutorConfig.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * @author laokou
@@ -36,10 +39,16 @@ public class NoticeLogSaveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
-	@DS("domain")
+	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void executeVoid(NoticeLogSaveCmd cmd) {
-		transactionalUtil
-			.executeInTransaction(() -> domainService.createNoticeLog(NoticeLogConvertor.toEntity(cmd.getCo())));
+		try {
+			DynamicDataSourceContextHolder.push("domain");
+			transactionalUtil
+				.executeInTransaction(() -> domainService.createNoticeLog(NoticeLogConvertor.toEntity(cmd.getCo())));
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }
