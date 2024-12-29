@@ -17,13 +17,16 @@
 
 package org.laokou.auth.command;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.dto.LoginLogSaveCmd;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.core.config.SpringTaskExecutorConfig.THREAD_POOL_TASK_EXECUTOR_NAME;
 
 /**
  * @author laokou
@@ -36,10 +39,15 @@ public class LoginLogSaveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
-	@DS("domain")
+	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
 	public void executeVoid(LoginLogSaveCmd cmd) {
-		transactionalUtil
-			.executeInTransaction(() -> domainService.createLoginLog(LoginLogConvertor.toEntity(cmd.getCo())));
+		try {
+			DynamicDataSourceContextHolder.push("domain");
+			transactionalUtil
+				.executeInTransaction(() -> domainService.createLoginLog(LoginLogConvertor.toEntity(cmd.getCo())));
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }
