@@ -34,18 +34,18 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  * @author laokou
  */
 @Slf4j
-public class QQMailServiceImpl extends AbstractMailServiceImpl {
+public class MailServiceImpl extends AbstractMailServiceImpl {
 
 	private static final String CAPTCHA_TEMPLATE = "验证码：${captcha}，${minute}分钟内容有效，您正在登录，若非本人操作，请勿泄露。";
 
-	public QQMailServiceImpl(MailProperties mailProperties) {
+	public MailServiceImpl(MailProperties mailProperties) {
 		super(mailProperties);
 	}
 
 	@Override
 	public MailResult send(String mail) {
 		String subject = "验证码";
-		String name = "QQ邮箱" + subject;
+		String name = "邮箱" + subject;
 		String captcha = RandomStringUtil.randomNumeric(6);
 		// 默认5分钟有效
 		Map<String, Object> param = Map.of("captcha", captcha, "minute", 5);

@@ -727,14 +727,9 @@ jasypt:
 spring:
   # mail
   mail:
-	properties.mail.smtp.auth: true
-    properties.mail.smtp.port: 465
-    properties.mail.smtp.starttls.enable: true
-    properties.mail.smtp.starttls.required: true
-    properties.mail.smtp.ssl.enable: true
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(f59eMZTlDign/pXa05K6NXvbNAopK8YSAoskm9WJC8UVbWxbTfCOHn6jfFSnZrH1ww+iFeTfmdxvlyA8I+IUIg==)
+    host: smtp.163.com
+    username: koushenhai@163.com
+    password: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
     default-encoding: UTF-8', '3e16e7d481fcc41559736dc5f7258251', '2024-05-25 18:12:47.354', '2024-07-16 21:51:27.174', 'nacos', '127.0.0.1', 'laokou-mail', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'mail配置', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (39, 'application-report.yaml', 'LAOKOU_GROUP', 'server:
   port: 8088', '89f7b26715cf760d099a258200381fe0', '2024-05-25 18:13:10.644', '2024-05-25 18:13:10.644', NULL, '127.0.0.1', 'laokou-report', '8140e92b-fb43-48f5-b63b-7506185206a5', '', NULL, NULL, 'yaml', NULL, '');
@@ -745,14 +740,9 @@ jasypt:
 spring:
   # mail
   mail:
-	properties.mail.smtp.auth: true
-    properties.mail.smtp.port: 465
-    properties.mail.smtp.starttls.enable: true
-    properties.mail.smtp.starttls.required: true
-    properties.mail.smtp.ssl.enable: true
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(f59eMZTlDign/pXa05K6NXvbNAopK8YSAoskm9WJC8UVbWxbTfCOHn6jfFSnZrH1ww+iFeTfmdxvlyA8I+IUIg==)
+    host: smtp.163.com
+    username: koushenhai@163.com
+    password: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
     default-encoding: UTF-8', '3e16e7d481fcc41559736dc5f7258251', '2023-02-13 20:00:32', '2024-07-16 21:52:10.149', 'nacos', '127.0.0.1', 'laokou-mail', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'mail配置', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (90, 'application-report.yaml', 'LAOKOU_GROUP', 'server:
   port: 8088', '89f7b26715cf760d099a258200381fe0', '2023-10-01 04:56:06', '2024-05-01 00:45:57', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-report', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
@@ -917,14 +907,9 @@ jasypt:
 spring:
   # mail
   mail:
-	properties.mail.smtp.auth: true
-    properties.mail.smtp.port: 465
-    properties.mail.smtp.starttls.enable: true
-    properties.mail.smtp.starttls.required: true
-    properties.mail.smtp.ssl.enable: true
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(f59eMZTlDign/pXa05K6NXvbNAopK8YSAoskm9WJC8UVbWxbTfCOHn6jfFSnZrH1ww+iFeTfmdxvlyA8I+IUIg==)
+    host: smtp.163.com
+    username: koushenhai@163.com
+    password: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
     default-encoding: UTF-8', '3e16e7d481fcc41559736dc5f7258251', '2024-05-25 18:13:10.594', '2024-07-16 21:52:24.67', 'nacos', '127.0.0.1', 'laokou-mail', '8140e92b-fb43-48f5-b63b-7506185206a5', 'mail配置', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" VALUES (61, 'application-report.yaml', 'LAOKOU_GROUP', 'server:
   port: 8088', '89f7b26715cf760d099a258200381fe0', '2024-05-25 18:13:33.406', '2024-05-25 18:13:33.406', NULL, '127.0.0.1', 'laokou-report', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', NULL, NULL, 'yaml', NULL, '');
@@ -1855,7 +1840,7 @@ spring:
     admin:
       notify:
         mail:
-          from: 2413176044@qq.com
+          from: koushenhai@163.com
           to: 2413176044@qq.com
           template: META-INF/spring-boot-admin-server/mail/status-changed.html
   # security
@@ -1867,14 +1852,9 @@ spring:
       password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
   # mail
   mail:
-	properties.mail.smtp.auth: true
-    properties.mail.smtp.port: 465
-    properties.mail.smtp.starttls.enable: true
-    properties.mail.smtp.starttls.required: true
-    properties.mail.smtp.ssl.enable: true
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(f59eMZTlDign/pXa05K6NXvbNAopK8YSAoskm9WJC8UVbWxbTfCOHn6jfFSnZrH1ww+iFeTfmdxvlyA8I+IUIg==)
+    host: smtp.163.com
+    username: koushenhai@163.com
+    password: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
     default-encoding: UTF-8
 
 logging:
@@ -1922,7 +1902,7 @@ spring:
     admin:
       notify:
         mail:
-          from: 2413176044@qq.com
+          from: koushenhai@163.com
           to: 2413176044@qq.com
           template: META-INF/spring-boot-admin-server/mail/status-changed.html
   # security
@@ -1934,14 +1914,9 @@ spring:
       password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
   # mail
   mail:
-	properties.mail.smtp.auth: true
-    properties.mail.smtp.port: 465
-    properties.mail.smtp.starttls.enable: true
-    properties.mail.smtp.starttls.required: true
-    properties.mail.smtp.ssl.enable: true
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(f59eMZTlDign/pXa05K6NXvbNAopK8YSAoskm9WJC8UVbWxbTfCOHn6jfFSnZrH1ww+iFeTfmdxvlyA8I+IUIg==)
+    host: smtp.163.com
+    username: koushenhai@163.com
+    password: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
     default-encoding: UTF-8
 
 logging:
@@ -2258,7 +2233,7 @@ spring:
     admin:
       notify:
         mail:
-          from: 2413176044@qq.com
+          from: koushenhai@163.com
           to: 2413176044@qq.com
           template: META-INF/spring-boot-admin-server/mail/status-changed.html
   # security
@@ -2270,14 +2245,9 @@ spring:
       password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
   # mail
   mail:
-	properties.mail.smtp.auth: true
-    properties.mail.smtp.port: 465
-    properties.mail.smtp.starttls.enable: true
-    properties.mail.smtp.starttls.required: true
-    properties.mail.smtp.ssl.enable: true
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(f59eMZTlDign/pXa05K6NXvbNAopK8YSAoskm9WJC8UVbWxbTfCOHn6jfFSnZrH1ww+iFeTfmdxvlyA8I+IUIg==)
+    host: smtp.163.com
+    username: koushenhai@163.com
+    password: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
     default-encoding: UTF-8
 
 logging:
