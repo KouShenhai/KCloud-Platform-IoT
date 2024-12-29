@@ -15,15 +15,21 @@
  *
  */
 
-package org.laokou.auth.gateway;
+package org.laokou.auth;
 
+import org.laokou.auth.gateway.NoticeLogGateway;
 import org.laokou.auth.model.NoticeLogE;
 
 /**
+ * 通知日志网关测试.
+ *
  * @author laokou
  */
-public interface NoticeLogGateway {
+public class NoticeLogGatewayImplTest implements NoticeLogGateway {
 
-	void create(NoticeLogE noticeLog);
+	@Override
+	public void create(NoticeLogE noticeLog) {
+
+	}
 
 }

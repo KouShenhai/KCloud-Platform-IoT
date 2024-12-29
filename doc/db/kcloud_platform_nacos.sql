@@ -1652,7 +1652,8 @@ spring:
               - /doc.html=laokou-gateway,laokou-auth,laokou-admin,laokou-iot
               - /webjars/**=laokou-auth,laokou-admin,laokou-gateway,laokou-iot
             POST:
-              - /v3/captchas=laokou-auth,laokou-gateway
+              - /v3/captchas/send/mail=laokou-auth,laokou-gateway
+              - /v3/captchas/send/mobile=laokou-auth,laokou-gateway
             DELETE:
               - /v3/tokens=laokou-auth,laokou-gateway
   # task
@@ -2087,7 +2088,8 @@ spring:
               - /doc.html=laokou-gateway,laokou-auth,laokou-admin,laokou-iot
               - /webjars/**=laokou-auth,laokou-admin,laokou-gateway,laokou-iot
             POST:
-              - /v3/captchas=laokou-auth,laokou-gateway
+              - /v3/captchas/send/mail=laokou-auth,laokou-gateway
+              - /v3/captchas/send/mobile=laokou-auth,laokou-gateway
             DELETE:
               - /v3/tokens=laokou-auth,laokou-gateway
   # task
@@ -2594,7 +2596,8 @@ spring:
               - /doc.html=laokou-gateway,laokou-auth,laokou-admin,laokou-iot
               - /webjars/**=laokou-auth,laokou-admin,laokou-gateway,laokou-iot
             POST:
-              - /v3/captchas=laokou-auth,laokou-gateway
+              - /v3/captchas/send/mail=laokou-auth,laokou-gateway
+              - /v3/captchas/send/mobile=laokou-auth,laokou-gateway
             DELETE:
               - /v3/tokens=laokou-auth,laokou-gateway
   # task
@@ -3499,7 +3502,15 @@ INSERT INTO "public"."config_info" VALUES (9, 'auth-flow.json', 'LAOKOU_GROUP', 
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/captchas",
+    "resource": "/v3/captchas/send/mobile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+    {
+    "resource": "/v3/captchas/send/mail",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -3534,7 +3545,15 @@ INSERT INTO "public"."config_info" VALUES (7, 'auth-flow.json', 'LAOKOU_GROUP', 
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/captchas",
+    "resource": "/v3/captchas/send/mobile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+    {
+    "resource": "/v3/captchas/send/mail",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -5075,7 +5094,15 @@ INSERT INTO "public"."config_info" VALUES (100, 'auth-flow.json', 'LAOKOU_GROUP'
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/captchas",
+    "resource": "/v3/captchas/send/mobile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+    {
+    "resource": "/v3/captchas/send/mail",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,

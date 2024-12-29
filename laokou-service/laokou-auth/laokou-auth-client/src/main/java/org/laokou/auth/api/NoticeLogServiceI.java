@@ -14,16 +14,15 @@
  * limitations under the License.
  *
  */
+package org.laokou.auth.api;
 
-package org.laokou.auth.gateway;
-
-import org.laokou.auth.model.NoticeLogE;
+import org.laokou.auth.dto.NoticeLogSaveCmd;
 
 /**
  * @author laokou
  */
-public interface NoticeLogGateway {
+public interface NoticeLogServiceI {
 
-	void create(NoticeLogE noticeLog);
+	void save(NoticeLogSaveCmd cmd);
 
 }

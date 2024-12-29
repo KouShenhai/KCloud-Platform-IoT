@@ -15,15 +15,41 @@
  *
  */
 
-package org.laokou.auth.gateway;
+package org.laokou.common.mail.dto;
 
-import org.laokou.auth.model.NoticeLogE;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-public interface NoticeLogGateway {
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class MailResult implements Serializable {
 
-	void create(NoticeLogE noticeLog);
+	/**
+	 * 编码.
+	 */
+	private String code;
+	/**
+	 * 名称.
+	 */
+	private String name;
+	/**
+	 * 状态 0成功 1失败.
+	 */
+	private int status;
+	/**
+	 * 错误信息.
+	 */
+	private String errorMessage;
+	/**
+	 * 参数.
+	 */
+	private String param;
 
 }

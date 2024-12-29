@@ -57,12 +57,12 @@ public class UserGatewayImpl implements UserGateway {
 			return ObjectUtil.isNotNull(userDO) ? UserConvertor.toEntity(userDO) : null;
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_USER, e.getMessage(), e);
+			log.error("表 {} 不存在，错误信息：{}", TABLE_USER, e.getMessage());
 			throw new SystemException(DATA_TABLE_NOT_EXIST,
 					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { TABLE_USER }));
 		}
 		catch (Exception e) {
-			log.error("查询用户失败，错误信息：{}，详情见日志", e.getMessage(), e);
+			log.error("查询用户失败，错误信息：{}", e.getMessage());
 			throw new SystemException(SystemException.User.QUERY_FAILED);
 		}
 	}

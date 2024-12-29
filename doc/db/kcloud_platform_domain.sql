@@ -204,12 +204,12 @@ CACHE 1
   "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
-  "tenant_id" int8 DEFAULT 0,
+  "tenant_id" int8 NOT NULL DEFAULT 0,
   "code" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
   "name" varchar(200) COLLATE "pg_catalog"."default" NOT NULL,
   "status" int2 NOT NULL DEFAULT 0,
-  "error_message" varchar(500) COLLATE "pg_catalog"."default" NOT NULL,
-  "param" json
+  "error_message" varchar(500),
+  "param" json NOT NULL
 )
 ;
 COMMENT ON COLUMN "public"."boot_sys_notice_log"."id" IS 'ID';

@@ -73,7 +73,7 @@ public class LoginLogPageQryExe {
 						c2.get(30, TimeUnit.SECONDS)));
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}，详情见日志", e.getMessage(), e);
+			log.error("错误信息：{}", e.getMessage());
 			throw new SystemException("S_LoginLog_PageQueryTimeout", "登录日志分页查询超时");
 		}
 	}

@@ -146,7 +146,7 @@ public class RocketMqTemplate {
 			}
 		}
 		catch (Exception e) {
-			log.error("RocketMQ事务消息发送失败【Tag标签】，报错信息：{}", e.getMessage(), e);
+			log.error("RocketMQ事务消息发送失败【Tag标签】，报错信息：{}", e.getMessage());
 		}
 		finally {
 			MDCUtil.clear();

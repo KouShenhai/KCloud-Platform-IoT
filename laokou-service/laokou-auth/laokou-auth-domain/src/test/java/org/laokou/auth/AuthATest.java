@@ -45,7 +45,7 @@ class AuthATest {
 
 	@BeforeEach
 	void testAuth() {
-		auth = DomainFactory.getAuth(1L);
+		auth = DomainFactory.getAuth(1L, "laokou");
 		info = new InfoV("Windows", "127.0.0.1", "中国 广东 深圳", "Chrome");
 		Assertions.assertNotNull(auth);
 	}

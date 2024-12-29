@@ -54,7 +54,7 @@ public class CaptchaSendCmdExe {
 		extensionExecutor.executeVoid(CaptchaParamValidatorExtPt.class,
 				BizScenario.valueOf(entity.getTag(), USE_CASE_CAPTCHA, SCENARIO),
 				extension -> extension.validate(entity));
-		AuthA auth = DomainFactory.getAuth(IdGenerator.defaultSnowflakeId());
+		AuthA auth = DomainFactory.getAuth(IdGenerator.defaultSnowflakeId(), entity.getTenantCode());
 		// 创建验证码
 		domainService.createCaptcha(IdGenerator.defaultSnowflakeId(), auth, entity);
 		// 发布事件

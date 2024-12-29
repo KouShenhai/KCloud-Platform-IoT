@@ -27,7 +27,7 @@ import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-import static org.laokou.common.redis.utils.RedisUtil.MINUTE_FIVE_EXPIRE;
+import static org.laokou.common.redis.utils.RedisUtil.FIVE_MINUTE_EXPIRE;
 
 /**
  * 验证码.
@@ -51,7 +51,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 		String key = getKey(uuid);
 		// 保存五分钟
 		redisUtil.del(key);
-		redisUtil.set(key, captcha, MINUTE_FIVE_EXPIRE);
+		redisUtil.set(key, captcha, FIVE_MINUTE_EXPIRE);
 	}
 
 	/**

@@ -20,10 +20,7 @@ package org.laokou.auth.ability;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.gateway.*;
-import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.CaptchaE;
-import org.laokou.auth.model.InfoV;
-import org.laokou.auth.model.LoginLogE;
+import org.laokou.auth.model.*;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -48,11 +45,18 @@ public class DomainService {
 
 	private final LoginLogGateway loginLogGateway;
 
+	private final NoticeLogGateway noticeLogGateway;
+
 	private final PasswordValidator passwordValidator;
 
 	@Async("ttl-task-executor")
 	public void createLoginLog(LoginLogE loginLog) {
 		loginLogGateway.create(loginLog);
+	}
+
+	@Async("ttl-task-executor")
+	public void createNoticeLog(NoticeLogE noticeLog) {
+		noticeLogGateway.create(noticeLog);
 	}
 
 	public void createCaptcha(Long eventId, AuthA auth, CaptchaE captcha) {

@@ -43,34 +43,31 @@ public class SentinelExceptionHandler implements BlockExceptionHandler {
 			BlockException e) {
 		// 限流
 		if (e instanceof FlowException flowException) {
-			log.error("FlowException -> 已限流，错误信息：{}，详情见日志", flowException.getMessage(), flowException);
+			log.error("FlowException -> 已限流，错误信息：{}", flowException.getMessage());
 			ResponseUtil.responseOk(response, Result.fail(FLOWED));
 			return;
 		}
 		// 降级
 		if (e instanceof DegradeException degradeException) {
-			log.error("DegradeException -> 已降级，错误信息：{}，详情见日志", degradeException.getMessage(), degradeException);
+			log.error("DegradeException -> 已降级，错误信息：{}", degradeException.getMessage());
 			ResponseUtil.responseOk(response, Result.fail(DEGRADED));
 			return;
 		}
 		// 热点参数限流
 		if (e instanceof ParamFlowException paramFlowException) {
-			log.error("ParamFlowException -> 热点参数已限流，错误信息：{}，详情见日志", paramFlowException.getMessage(),
-					paramFlowException);
+			log.error("ParamFlowException -> 热点参数已限流，错误信息：{}", paramFlowException.getMessage());
 			ResponseUtil.responseOk(response, Result.fail(PARAM_FLOWED));
 			return;
 		}
 		// 系统规则
 		if (e instanceof SystemBlockException systemBlockException) {
-			log.error("SystemBlockException -> 系统规则错误，错误信息：{}，详情见日志", systemBlockException.getMessage(),
-					systemBlockException);
+			log.error("SystemBlockException -> 系统规则错误，错误信息：{}", systemBlockException.getMessage());
 			ResponseUtil.responseOk(response, Result.fail(SYSTEM_BLOCKED));
 			return;
 		}
 		// 授权规则
 		if (e instanceof AuthorityException authorityException) {
-			log.error("AuthorityException -> 授权规则错误，错误信息：{}，详情见日志", authorityException.getMessage(),
-					authorityException);
+			log.error("AuthorityException -> 授权规则错误，错误信息：{}", authorityException.getMessage());
 			ResponseUtil.responseOk(response, Result.fail(AUTHORITY));
 		}
 	}

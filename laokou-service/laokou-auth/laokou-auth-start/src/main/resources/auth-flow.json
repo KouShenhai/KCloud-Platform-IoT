@@ -8,7 +8,15 @@
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/captchas",
+    "resource": "/v3/captchas/send/mobile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/captchas/send/mail",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,

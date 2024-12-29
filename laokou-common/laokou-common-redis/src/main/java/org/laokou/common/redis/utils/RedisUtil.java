@@ -51,17 +51,17 @@ public class RedisUtil {
 	/**
 	 * 1小时过期，单位：秒.
 	 */
-	public final static long HOUR_ONE_EXPIRE = 60 * 60;
+	public final static long ONE_HOUR_EXPIRE = 60 * 60;
 
 	/**
 	 * 6小时过期，单位：秒.
 	 */
-	public final static long HOUR_SIX_EXPIRE = 60 * 60 * 6;
+	public final static long SIX_HOUR_EXPIRE = 60 * 60 * 6;
 
 	/**
 	 * 5分钟过期，单位：秒.
 	 */
-	public final static long MINUTE_FIVE_EXPIRE = 5 * 60;
+	public final static long FIVE_MINUTE_EXPIRE = 5 * 60;
 
 	/**
 	 * 永不过期.
@@ -218,19 +218,19 @@ public class RedisUtil {
 
 	public long incrementAndGet(String key) {
 		RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
-		atomicLong.expireIfNotSet(Duration.ofSeconds(HOUR_ONE_EXPIRE));
+		atomicLong.expireIfNotSet(Duration.ofSeconds(ONE_HOUR_EXPIRE));
 		return atomicLong.incrementAndGet();
 	}
 
 	public long decrementAndGet(String key) {
 		RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
-		atomicLong.expireIfNotSet(Duration.ofSeconds(HOUR_ONE_EXPIRE));
+		atomicLong.expireIfNotSet(Duration.ofSeconds(ONE_HOUR_EXPIRE));
 		return atomicLong.decrementAndGet();
 	}
 
 	public long addAndGet(String key, long value) {
 		RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
-		atomicLong.expireIfNotSet(Duration.ofSeconds(HOUR_ONE_EXPIRE));
+		atomicLong.expireIfNotSet(Duration.ofSeconds(ONE_HOUR_EXPIRE));
 		return atomicLong.addAndGet(value);
 	}
 

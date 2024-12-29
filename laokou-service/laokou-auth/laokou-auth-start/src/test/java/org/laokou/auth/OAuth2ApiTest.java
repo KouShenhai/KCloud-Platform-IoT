@@ -21,9 +21,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.dto.TokenRemoveCmd;
+import org.laokou.auth.dto.clientobject.CaptchaCO;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.core.utils.HttpUtil;
@@ -56,6 +57,7 @@ import java.util.function.Consumer;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
 import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
+import static org.laokou.common.i18n.common.constant.TraceConstant.REQUEST_ID;
 import static org.springframework.http.HttpMethod.POST;
 
 /**
@@ -78,7 +80,7 @@ class OAuth2ApiTest {
 
 	private static final String MAIL = "2413176044@qq.com";
 
-	private static final String MOBILE = "xxx";
+	private static final String MOBILE = "18888888888";
 
 	private static final String DEVICE_CODE = "device_code";
 
@@ -100,8 +102,20 @@ class OAuth2ApiTest {
 
 	private final PasswordEncoder passwordEncoder;
 
-	@BeforeEach
-	void setUp() {
+	@Test
+	void testSendMailCaptcha() {
+		CaptchaCO co = new CaptchaCO();
+		co.setTenantCode("laokou");
+		co.setUuid(MAIL);
+		restClient.post().uri(getSendMailCaptchaUrl()).header(REQUEST_ID, String.valueOf(IdGenerator.defaultSnowflakeId())).body(new CaptchaSendCmd(co)).accept(MediaType.APPLICATION_JSON).retrieve().toBodilessEntity();
+	}
+
+	@Test
+	void testSendMobileCaptcha() {
+		CaptchaCO co = new CaptchaCO();
+		co.setTenantCode("laokou");
+		co.setUuid(MOBILE);
+		restClient.post().uri(getSendMobileCaptchaUrl()).header(REQUEST_ID, String.valueOf(IdGenerator.defaultSnowflakeId())).body(new CaptchaSendCmd(co)).accept(MediaType.APPLICATION_JSON).retrieve().toBodilessEntity();
 	}
 
 	@Test
@@ -406,6 +420,14 @@ class OAuth2ApiTest {
 
 	private String getTokenUrlV3() {
 		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/tokens";
+	}
+
+	public String getSendMailCaptchaUrl() {
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/captchas/send/mail";
+	}
+
+	public String getSendMobileCaptchaUrl() {
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/captchas/send/mobile";
 	}
 
 	private String getSchema(boolean disabled) {

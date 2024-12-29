@@ -46,7 +46,7 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 		}
 		catch (Exception e) {
 			log.error("消费失败，主题Topic：{}，偏移量Offset：{}，错误信息：{}", messageExt.getTopic(), messageExt.getCommitLogOffset(),
-					e.getMessage(), e);
+					e.getMessage());
 			throw e;
 		}
 		finally {

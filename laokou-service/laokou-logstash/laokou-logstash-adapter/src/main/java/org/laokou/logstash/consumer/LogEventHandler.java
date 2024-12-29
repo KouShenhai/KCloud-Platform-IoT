@@ -72,7 +72,7 @@ public class LogEventHandler {
 			}
 		}
 		catch (Throwable e) {
-			log.error("分布式链路写入失败，错误信息：{}", e.getMessage(), e);
+			log.error("分布式链路写入失败，错误信息：{}", e.getMessage());
 		}
 		finally {
 			ack.acknowledge();
@@ -90,7 +90,7 @@ public class LogEventHandler {
 			}
 		}
 		catch (Exception ex) {
-			log.error("分布式链路日志JSON转换失败，错误信息：{}", ex.getMessage(), ex);
+			log.error("分布式链路日志JSON转换失败，错误信息：{}", ex.getMessage());
 		}
 		return null;
 	}

@@ -108,11 +108,11 @@ public class AuthA extends AggregateRoot {
 	 */
 	private CaptchaE captchaE;
 
-	public AuthA(Long id) {
+	public AuthA(Long id, String tenantCode) {
 		super.id = id;
 		this.username = EMPTY;
 		this.password = EMPTY;
-		this.tenantCode = EMPTY;
+		this.tenantCode = tenantCode;
 		this.grantType = USERNAME_PASSWORD;
 		this.captcha = new CaptchaV(EMPTY, EMPTY);
 	}

@@ -24,7 +24,10 @@ import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gateway.*;
-import org.laokou.auth.model.*;
+import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.CaptchaE;
+import org.laokou.auth.model.InfoV;
+import org.laokou.auth.model.LoginLogE;
 
 import static org.laokou.auth.PasswordValidatorTest.getEncodePassword;
 
@@ -48,6 +51,7 @@ class DomainServiceTest {
 		SourceGateway sourceGateway = new SourceGatewayImplTest();
 		CaptchaGateway captchaGateway = new CaptchaGatewayImplTest();
 		LoginLogGateway loginLogGateway = new LoginLogGatewayImplTest();
+		NoticeLogGateway noticeLogGateway = new NoticeLogGatewayImplTest();
 		PasswordValidator passwordValidator = new PasswordValidatorTest();
 		Assertions.assertNotNull(userGateway);
 		Assertions.assertNotNull(menuGateway);
@@ -56,9 +60,10 @@ class DomainServiceTest {
 		Assertions.assertNotNull(sourceGateway);
 		Assertions.assertNotNull(captchaGateway);
 		Assertions.assertNotNull(loginLogGateway);
+		Assertions.assertNotNull(noticeLogGateway);
 		Assertions.assertNotNull(passwordValidator);
 		domainService = new DomainService(userGateway, menuGateway, deptGateway, tenantGateway, sourceGateway,
-				captchaGateway, loginLogGateway, passwordValidator);
+				captchaGateway, loginLogGateway, noticeLogGateway, passwordValidator);
 		info = new InfoV("Windows", "127.0.0.1", "中国 广东 深圳", "Chrome");
 		Assertions.assertNotNull(domainService);
 		Assertions.assertNotNull(info);
@@ -143,7 +148,7 @@ class DomainServiceTest {
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		Assertions.assertNotNull(captcha);
 
-		AuthA auth = DomainFactory.getAuth(1L);
+		AuthA auth = DomainFactory.getAuth(1L, "laokou");
 		Assertions.assertNotNull(auth);
 
 		// 创建验证码
