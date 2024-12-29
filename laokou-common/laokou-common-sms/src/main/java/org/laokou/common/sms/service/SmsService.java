@@ -17,13 +17,13 @@
 
 package org.laokou.common.sms.service;
 
+import org.laokou.common.sms.dto.SmsResult;
+
 /**
  * @author laokou
  */
 public interface SmsService {
 
-	/*
-	 * NoticeLog send(String mobile, int minute);
-	 */
+	SmsResult send(String mobile);
 
 }

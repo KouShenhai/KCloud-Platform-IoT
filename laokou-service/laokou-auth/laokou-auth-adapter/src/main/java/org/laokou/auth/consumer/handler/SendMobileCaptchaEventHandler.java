@@ -20,9 +20,15 @@ package org.laokou.auth.consumer.handler;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.laokou.auth.api.NoticeLogServiceI;
+import org.laokou.auth.convertor.NoticeLogConvertor;
+import org.laokou.auth.dto.NoticeLogSaveCmd;
+import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.sms.service.SmsService;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
@@ -41,13 +47,22 @@ import static org.laokou.auth.model.Constant.LAOKOU_CAPTCHA_TOPIC;
 		selectorExpression = MOBILE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class SendMobileCaptchaEventHandler extends AbstractDomainEventHandler {
 
-	public SendMobileCaptchaEventHandler(DomainEventPublisher rocketMQDomainEventPublisher) {
+	private final SmsService smsService;
+
+	private final NoticeLogServiceI noticeLogServiceI;
+
+	public SendMobileCaptchaEventHandler(DomainEventPublisher rocketMQDomainEventPublisher, SmsService smsService,
+			NoticeLogServiceI noticeLogServiceI) {
 		super(rocketMQDomainEventPublisher);
+		this.smsService = smsService;
+		this.noticeLogServiceI = noticeLogServiceI;
 	}
 
 	@Override
 	protected void handleDomainEvent(DomainEvent domainEvent) {
-		log.info("{}", domainEvent.getPayload());
+		SendCaptchaEvent evt = JacksonUtil.toBean(domainEvent.getPayload(), SendCaptchaEvent.class);
+		noticeLogServiceI.save(new NoticeLogSaveCmd(
+				NoticeLogConvertor.toClientObject(domainEvent, smsService.send(evt.uuid()), evt.uuid())));
 	}
 
 }

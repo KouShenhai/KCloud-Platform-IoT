@@ -51,15 +51,15 @@ public class MailServiceImpl extends AbstractMailServiceImpl {
 		Map<String, Object> param = Map.of("captcha", captcha, "minute", 5);
 		String content = TemplateUtil.getContent(CAPTCHA_TEMPLATE, param);
 		// 敏感信息过滤
-		String params = JacksonUtil.toJsonStr(Map.of("mail", SensitiveUtil.formatMail(mail), "content", content));
+		String paramString = JacksonUtil.toJsonStr(Map.of("mail", SensitiveUtil.formatMail(mail), "content", content));
 		try {
 			// 发送邮件
 			sendMail(subject, content, mail);
-			return new MailResult(name, SendStatus.OK.getCode(), EMPTY, params, captcha);
+			return new MailResult(name, SendStatus.OK.getCode(), EMPTY, paramString, captcha);
 		}
 		catch (Exception e) {
 			log.error("错误信息：{}", e.getMessage());
-			return new MailResult(name, SendStatus.FAIL.getCode(), e.getMessage(), params, captcha);
+			return new MailResult(name, SendStatus.FAIL.getCode(), e.getMessage(), paramString, captcha);
 		}
 	}
 

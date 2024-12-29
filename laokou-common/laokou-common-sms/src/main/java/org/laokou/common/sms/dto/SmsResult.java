@@ -15,50 +15,50 @@
  *
  */
 
-package org.laokou.common.sms.config;
+package org.laokou.common.sms.dto;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-@Data
-@Component
-@ConfigurationProperties(prefix = "sms")
-public class SmsProperties {
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class SmsResult implements Serializable {
 
-	private GYY gyy = new GYY();
+	/**
+	 * 编码.
+	 */
+	private final String code = "sendMobileCaptcha";
 
-	private Type type = Type.GYY;
+	/**
+	 * 名称.
+	 */
+	private String name;
 
-	@Getter
-	public enum Type {
+	/**
+	 * 状态 0成功 1失败.
+	 */
+	private int status;
 
-		GYY("gyy", "国阳云");
+	/**
+	 * 错误信息.
+	 */
+	private String errorMessage;
 
-		private final String code;
+	/**
+	 * 参数.
+	 */
+	private String param;
 
-		private final String desc;
-
-		Type(String code, String desc) {
-			this.code = code;
-			this.desc = desc;
-		}
-
-	}
-
-	@Data
-	public static class GYY {
-
-		private String templateId;
-
-		private String signId;
-
-		private String appcode;
-
-	}
+	/**
+	 * 验证码.
+	 */
+	private String captcha;
 
 }

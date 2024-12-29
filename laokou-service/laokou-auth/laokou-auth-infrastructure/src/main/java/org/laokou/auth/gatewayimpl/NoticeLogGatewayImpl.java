@@ -17,7 +17,6 @@
 
 package org.laokou.auth.gatewayimpl;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.convertor.NoticeLogConvertor;
 import org.laokou.auth.gateway.NoticeLogGateway;
@@ -35,7 +34,6 @@ public class NoticeLogGatewayImpl implements NoticeLogGateway {
 	private final NoticeLogMapper noticeLogMapper;
 
 	@Override
-	@DS("domain")
 	public void create(NoticeLogE noticeLog) {
 		noticeLogMapper.insert(NoticeLogConvertor.toDataObject(noticeLog));
 	}

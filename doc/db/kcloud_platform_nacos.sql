@@ -895,8 +895,8 @@ jasypt:
   encryptor:
     password: 5201314wumeihua
 sms:
+  type: gyy
   gyy:
-    enabled: true
     template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
     sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
     appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)', '3adcbf9b68966d16ac2136f236f2f919', '2024-05-25 18:13:10.588', '2024-07-16 21:50:44.322', 'nacos', '127.0.0.1', 'laokou-sms', '8140e92b-fb43-48f5-b63b-7506185206a5', 'sms配置', '', '', 'yaml', '', '');
@@ -1802,8 +1802,8 @@ jasypt:
   encryptor:
     password: 5201314wumeihua
 sms:
+  type: gyy
   gyy:
-    enabled: true
     template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
     sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
     appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)', '3adcbf9b68966d16ac2136f236f2f919', '2024-05-25 18:12:47.349', '2024-07-16 21:51:04.709', 'nacos', '127.0.0.1', 'laokou-sms', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'sms配置', '', '', 'yaml', '', '');
@@ -5719,8 +5719,8 @@ jasypt:
   encryptor:
     password: 5201314wumeihua
 sms:
+  type: gyy
   gyy:
-    enabled: true
     template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
     sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
     appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)', '3adcbf9b68966d16ac2136f236f2f919', '2023-02-13 19:59:35', '2024-07-16 21:50:25.922', 'nacos', '127.0.0.1', 'laokou-sms', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'sms配置', '', '', 'yaml', '', '');

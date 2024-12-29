@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.*;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -49,13 +48,11 @@ public class DomainService {
 
 	private final PasswordValidator passwordValidator;
 
-	@Async("ttl-task-executor")
 	public void createLoginLog(LoginLogE loginLog) {
 		// 保存登录日志
 		loginLogGateway.create(loginLog);
 	}
 
-	@Async("ttl-task-executor")
 	public void createNoticeLog(NoticeLogE noticeLog) {
 		// 保存通知日志
 		noticeLogGateway.create(noticeLog);

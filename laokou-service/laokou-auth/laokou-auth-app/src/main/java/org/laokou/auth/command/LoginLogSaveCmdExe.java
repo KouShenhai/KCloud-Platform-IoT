@@ -17,10 +17,12 @@
 
 package org.laokou.auth.command;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.dto.LoginLogSaveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,8 +34,12 @@ public class LoginLogSaveCmdExe {
 
 	private final DomainService domainService;
 
+	private final TransactionalUtil transactionalUtil;
+
+	@DS("domain")
 	public void executeVoid(LoginLogSaveCmd cmd) {
-		domainService.createLoginLog(LoginLogConvertor.toEntity(cmd.getCo()));
+		transactionalUtil
+			.executeInTransaction(() -> domainService.createLoginLog(LoginLogConvertor.toEntity(cmd.getCo())));
 	}
 
 }
