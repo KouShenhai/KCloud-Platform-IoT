@@ -65,14 +65,14 @@ snail-job:
     auth: true
     connectionTimeout: 0
     enabled: true
-    from: 2413176044@qq.com
-    host: smtp.qq.com
-    pass: ENC(f59eMZTlDign/pXa05K6NXvbNAopK8YSAoskm9WJC8UVbWxbTfCOHn6jfFSnZrH1ww+iFeTfmdxvlyA8I+IUIg==)
+    from: koushenhai@163.com
+    host: smtp.163.com
+    pass: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
     port: 465
     sslEnable: false
     starttlsEnable: false
     timeout: 0
-    user: 2413176044@qq.com
+    user: koushenhai@163.com
   retry-pull-page-size: 1000 # 拉取重试数据的每批次的大小
   job-pull-page-size: 1000 # 拉取重试数据的每批次的大小
   netty-port: 1788  # 服务端netty端口
