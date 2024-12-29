@@ -72,17 +72,8 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 	@Override
 	public SmsResult send(String mobile) {
 		String name = "手机号验证码【国阳云】";
-		String signId = smsProperties.getGyy().getSignId();
-		String appcode = smsProperties.getGyy().getAppcode();
-		String templateId = smsProperties.getGyy().getTemplateId();
 		String captcha = RandomStringUtil.randomNumeric(6);
-		Map<String, Object> param = Map.of("captcha", captcha, "minute", 5);
-		String paramValue = TemplateUtil.getContent(PARAMS_TEMPLATE, param);
-		// 最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
-		Map<String, String> headers = Map.of(AUTHORIZATION, "APPCODE " + appcode);
-		// smsSignId（短信前缀）和templateId（短信模板），可登录国阳云控制台自助申请。参考文档：http://help.guoyangyun.com/Problem/Qm.html
-		Map<String, String> params = Map.of("mobile", mobile, "param", paramValue, "smsSignId", signId, "templateId",
-			templateId);
+		String templateId = smsProperties.getGyy().getTemplateId();
 		if (!TEMPLATES.containsKey(templateId)) {
 			return new SmsResult(name, SendStatus.FAIL.getCode(), "模板不存在", JacksonUtil.EMPTY_JSON, captcha);
 		}
@@ -91,6 +82,15 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		 *
 		 * 相应的依赖请参照 => https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/pom.xml
 		 */
+		String signId = smsProperties.getGyy().getSignId();
+		String appcode = smsProperties.getGyy().getAppcode();
+		Map<String, Object> param = Map.of("captcha", captcha, "minute", 5);
+		String paramValue = TemplateUtil.getContent(PARAMS_TEMPLATE, param);
+		// 最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
+		Map<String, String> headers = Map.of(AUTHORIZATION, "APPCODE " + appcode);
+		// smsSignId（短信前缀）和templateId（短信模板），可登录国阳云控制台自助申请。参考文档：http://help.guoyangyun.com/Problem/Qm.html
+		Map<String, String> params = Map.of("mobile", mobile, "param", paramValue, "smsSignId", signId, "templateId",
+			templateId);
 		String paramString = JacksonUtil.toJsonStr(Map.of("mobile", SensitiveUtil.formatMobile(mobile,3, 6), "content", TemplateUtil.getContent(TEMPLATES.get(templateId), param)));
 		String json = HttpUtil.doFormDataPost(URL, params, headers, true);
 		JsonNode jsonNode = JacksonUtil.readTree(json);
