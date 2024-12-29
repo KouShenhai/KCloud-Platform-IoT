@@ -18,7 +18,6 @@
 package org.laokou.auth;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.core.annotation.EnableWarmUp;
@@ -39,6 +38,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StopWatch;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * 认证服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
@@ -75,8 +75,7 @@ public class AuthApp {
     /// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
     /// client_secret => FpHwIfw4wY92dO
     /// ```
-	@SneakyThrows
-	public static void main(String[] args) {
+	public static void main(String[] args)throws UnknownHostException {
 		StopWatch stopWatch = new StopWatch("Auth应用程序");
 		stopWatch.start();
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题

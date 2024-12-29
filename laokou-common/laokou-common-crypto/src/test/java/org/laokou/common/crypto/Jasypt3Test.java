@@ -37,8 +37,8 @@ class Jasypt3Test {
 		String plainText = "laokou";
 		String encryptWithMD5ANDAES256Str = encryptWithHMACSHA512ANDAES256(plainText, factor);
 		String decryptWithMD5ANDAES256Str = decryptWithHMACSHA512ANDAES256(encryptWithMD5ANDAES256Str, factor);
-		log.info("采用PBEWITHHMACSHA512ANDAES_256加密前原文密文：{}", encryptWithMD5ANDAES256Str);
-		log.info("采用PBEWITHHMACSHA512ANDAES_256解密后密文原文：{}", decryptWithMD5ANDAES256Str);
+		log.info("采用PBEWITHHMACSHA512ANDAES_256加密后：{}", encryptWithMD5ANDAES256Str);
+		log.info("采用PBEWITHHMACSHA512ANDAES_256解密后：{}", decryptWithMD5ANDAES256Str);
 		Assertions.assertEquals(decryptWithMD5ANDAES256Str, plainText);
 	}
 
