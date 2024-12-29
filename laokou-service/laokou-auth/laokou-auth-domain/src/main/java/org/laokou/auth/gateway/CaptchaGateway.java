@@ -39,7 +39,6 @@ public interface CaptchaGateway {
 	 */
 	void set(String key, String captcha, long expireTime);
 
-
 	/**
 	 * 检查验证码.
 	 * @param key 标识

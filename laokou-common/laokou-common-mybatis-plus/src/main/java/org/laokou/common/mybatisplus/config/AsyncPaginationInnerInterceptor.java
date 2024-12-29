@@ -99,33 +99,40 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 	protected static final Map<String, MappedStatement> countMsCache = new ConcurrentHashMap<>();
 
 	private static final ThreadLocal<CompletableFuture<Void>> COUNT_LOCAL = new TransmittableThreadLocal<>();
+
 	/**
 	 * 溢出总页数后是否进行处理.
 	 */
 	protected boolean overflow;
+
 	/**
 	 * 单页分页条数限制.
 	 */
 	protected Long maxLimit;
+
 	/**
 	 * 生成 countSql 优化掉 join 现在只支持 left join.
 	 *
 	 * @since 3.4.2
 	 */
 	protected boolean optimizeJoin = true;
+
 	/**
 	 * 数据库类型.
 	 * <p>
 	 * 查看 {@link #findIDialect(Executor)} 逻辑.
 	 */
 	private DbType dbType;
+
 	/**
 	 * 方言实现类.
 	 * <p>
 	 * 查看 {@link #findIDialect(Executor)} 逻辑.
 	 */
 	private IDialect dialect;
+
 	private DataSource dataSource;
+
 	private java.util.concurrent.Executor executor;
 
 	public AsyncPaginationInnerInterceptor(DbType dbType, DataSource dataSource,

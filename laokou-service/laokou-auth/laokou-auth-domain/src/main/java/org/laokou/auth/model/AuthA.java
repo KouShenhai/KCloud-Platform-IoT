@@ -285,7 +285,7 @@ public class AuthA extends AggregateRoot {
 		}
 		else if (e instanceof SystemException) {
 			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
-					LoginStatus.FAIL.getCode(), e.getMessage(), grantType.getCode(), super.instant);
+					LoginStatus.FAIL.getCode(), e.getMsg(), grantType.getCode(), super.instant);
 		}
 		return null;
 	}
@@ -294,7 +294,8 @@ public class AuthA extends AggregateRoot {
 		return switch (grantType) {
 			case MOBILE -> RedisKeyUtil.getMobileAuthCaptchaKey(captcha.uuid());
 			case MAIL -> RedisKeyUtil.getMailAuthCaptchaKey(captcha.uuid());
-			case USERNAME_PASSWORD, AUTHORIZATION_CODE -> RedisKeyUtil.getUsernamePasswordAuthCaptchaKey(captcha.uuid());
+			case USERNAME_PASSWORD, AUTHORIZATION_CODE ->
+				RedisKeyUtil.getUsernamePasswordAuthCaptchaKey(captcha.uuid());
 		};
 	}
 

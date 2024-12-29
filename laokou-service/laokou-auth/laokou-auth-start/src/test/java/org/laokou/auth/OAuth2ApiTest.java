@@ -108,7 +108,13 @@ class OAuth2ApiTest {
 		CaptchaCO co = new CaptchaCO();
 		co.setTenantCode("laokou");
 		co.setUuid(MAIL);
-		restClient.post().uri(getSendMailCaptchaUrl()).header(REQUEST_ID, String.valueOf(IdGenerator.defaultSnowflakeId())).body(new CaptchaSendCmd(co)).accept(MediaType.APPLICATION_JSON).retrieve().toBodilessEntity();
+		restClient.post()
+			.uri(getSendMailCaptchaUrl())
+			.header(REQUEST_ID, String.valueOf(IdGenerator.defaultSnowflakeId()))
+			.body(new CaptchaSendCmd(co))
+			.accept(MediaType.APPLICATION_JSON)
+			.retrieve()
+			.toBodilessEntity();
 	}
 
 	@Test
@@ -116,7 +122,13 @@ class OAuth2ApiTest {
 		CaptchaCO co = new CaptchaCO();
 		co.setTenantCode("laokou");
 		co.setUuid(MOBILE);
-		restClient.post().uri(getSendMobileCaptchaUrl()).header(REQUEST_ID, String.valueOf(IdGenerator.defaultSnowflakeId())).body(new CaptchaSendCmd(co)).accept(MediaType.APPLICATION_JSON).retrieve().toBodilessEntity();
+		restClient.post()
+			.uri(getSendMobileCaptchaUrl())
+			.header(REQUEST_ID, String.valueOf(IdGenerator.defaultSnowflakeId()))
+			.body(new CaptchaSendCmd(co))
+			.accept(MediaType.APPLICATION_JSON)
+			.retrieve()
+			.toBodilessEntity();
 	}
 
 	@Test

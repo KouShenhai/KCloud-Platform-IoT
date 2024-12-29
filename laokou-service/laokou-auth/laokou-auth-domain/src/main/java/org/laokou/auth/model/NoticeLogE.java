@@ -34,18 +34,22 @@ public class NoticeLogE extends Identifier {
 	 * 编码.
 	 */
 	private String code;
+
 	/**
 	 * 名称.
 	 */
 	private String name;
+
 	/**
 	 * 状态 0成功 1失败.
 	 */
 	private int status;
+
 	/**
 	 * 错误信息.
 	 */
 	private String errorMessage;
+
 	/**
 	 * 参数.
 	 */

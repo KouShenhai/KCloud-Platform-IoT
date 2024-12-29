@@ -66,15 +66,17 @@ public class LoginLogConvertor {
 
 	public static LoginLogCO toClientObject(DomainEvent domainEvent) {
 		LoginEvent loginEvent = JacksonUtil.toBean(domainEvent.getPayload(), LoginEvent.class);
+		String errorMessage = loginEvent.errorMessage();
 		LoginLogCO loginLogCO = new LoginLogCO();
-		loginLogCO.setId(domainEvent.getId());
+		loginLogCO.setId(domainEvent.getAggregateId());
 		loginLogCO.setUsername(loginEvent.username());
 		loginLogCO.setIp(loginEvent.ip());
 		loginLogCO.setAddress(loginEvent.address());
 		loginLogCO.setBrowser(loginEvent.browser());
 		loginLogCO.setOs(loginEvent.os());
 		loginLogCO.setStatus(loginEvent.status());
-		loginLogCO.setErrorMessage(StringUtil.isNotEmpty(loginEvent.errorMessage()) ? loginEvent.errorMessage().substring(0, 2000) : null);
+		loginLogCO.setErrorMessage(StringUtil.isNotEmpty(errorMessage)
+				? errorMessage.length() > 2000 ? errorMessage.substring(0, 2000) : errorMessage : null);
 		loginLogCO.setType(loginEvent.type());
 		loginLogCO.setInstant(loginEvent.instant());
 		loginLogCO.setTenantId(domainEvent.getTenantId());

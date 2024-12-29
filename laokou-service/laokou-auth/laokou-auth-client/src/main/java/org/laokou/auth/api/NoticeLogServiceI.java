@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+
 package org.laokou.auth.api;
 
 import org.laokou.auth.dto.NoticeLogSaveCmd;

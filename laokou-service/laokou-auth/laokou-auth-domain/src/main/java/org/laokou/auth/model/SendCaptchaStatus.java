@@ -25,10 +25,10 @@ import lombok.Getter;
 @Getter
 public enum SendCaptchaStatus {
 
-	OK(0, "发送成功"),
-	FAIL(1, "发送失败");
+	OK(0, "发送成功"), FAIL(1, "发送失败");
 
 	private final int code;
+
 	private final String desc;
 
 	SendCaptchaStatus(int code, String desc) {

@@ -41,6 +41,7 @@ public enum SendCaptchaType {
 	};
 
 	private final String code;
+
 	private final String desc;
 
 	SendCaptchaType(String code, String desc) {

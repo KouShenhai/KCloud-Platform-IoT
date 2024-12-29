@@ -35,22 +35,27 @@ public class MailResult implements Serializable {
 	 * 编码.
 	 */
 	private final String code = "sendMailCaptcha";
+
 	/**
 	 * 名称.
 	 */
 	private String name;
+
 	/**
 	 * 状态 0成功 1失败.
 	 */
 	private int status;
+
 	/**
 	 * 错误信息.
 	 */
 	private String errorMessage;
+
 	/**
 	 * 参数.
 	 */
 	private String param;
+
 	/**
 	 * 验证码.
 	 */

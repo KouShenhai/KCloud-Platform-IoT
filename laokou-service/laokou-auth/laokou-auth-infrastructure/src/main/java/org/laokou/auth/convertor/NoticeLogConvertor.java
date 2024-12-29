@@ -31,18 +31,20 @@ import org.laokou.common.mail.dto.MailResult;
 public class NoticeLogConvertor {
 
 	public static NoticeLogCO toClientObject(DomainEvent domainEvent, MailResult result, String uuid) {
-		NoticeLogCO co = new NoticeLogCO();
-  co.setCode(result.getCode());
-  co.setName(result.getName());
-  co.setStatus(result.getStatus());
-  co.setErrorMessage(StringUtil.isNotEmpty(result.getErrorMessage()) ? result.getErrorMessage().substring(0,2000) : null);
-  co.setParam(result.getParam());
-  co.setTenantId(domainEvent.getTenantId());
-		co.setId(domainEvent.getAggregateId());
-		co.setInstant(domainEvent.getInstant());
-		co.setUuid(uuid);
-		co.setCaptcha(result.getCaptcha());
-		return co;
+		String errorMessage = result.getErrorMessage();
+		NoticeLogCO noticeLogCO = new NoticeLogCO();
+		noticeLogCO.setCode(result.getCode());
+		noticeLogCO.setName(result.getName());
+		noticeLogCO.setStatus(result.getStatus());
+		noticeLogCO.setErrorMessage(StringUtil.isNotEmpty(errorMessage)
+				? errorMessage.length() > 2000 ? errorMessage.substring(0, 2000) : errorMessage : null);
+		noticeLogCO.setParam(result.getParam());
+		noticeLogCO.setTenantId(domainEvent.getTenantId());
+		noticeLogCO.setId(domainEvent.getAggregateId());
+		noticeLogCO.setInstant(domainEvent.getInstant());
+		noticeLogCO.setUuid(uuid);
+		noticeLogCO.setCaptcha(result.getCaptcha());
+		return noticeLogCO;
 	}
 
 	public static NoticeLogE toEntity(NoticeLogCO noticeLogCO) {

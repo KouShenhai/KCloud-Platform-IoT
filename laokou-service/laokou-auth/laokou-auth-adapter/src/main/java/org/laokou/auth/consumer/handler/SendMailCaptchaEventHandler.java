@@ -48,9 +48,11 @@ import static org.laokou.auth.model.Constant.LAOKOU_CAPTCHA_TOPIC;
 public class SendMailCaptchaEventHandler extends AbstractDomainEventHandler {
 
 	private final MailService mailService;
+
 	private final NoticeLogServiceI noticeLogServiceI;
 
-	public SendMailCaptchaEventHandler(DomainEventPublisher rocketMQDomainEventPublisher, MailService mailService, NoticeLogServiceI noticeLogServiceI) {
+	public SendMailCaptchaEventHandler(DomainEventPublisher rocketMQDomainEventPublisher, MailService mailService,
+			NoticeLogServiceI noticeLogServiceI) {
 		super(rocketMQDomainEventPublisher);
 		this.mailService = mailService;
 		this.noticeLogServiceI = noticeLogServiceI;
@@ -59,7 +61,8 @@ public class SendMailCaptchaEventHandler extends AbstractDomainEventHandler {
 	@Override
 	protected void handleDomainEvent(DomainEvent domainEvent) {
 		SendCaptchaEvent evt = JacksonUtil.toBean(domainEvent.getPayload(), SendCaptchaEvent.class);
-		noticeLogServiceI.save(new NoticeLogSaveCmd(NoticeLogConvertor.toClientObject(domainEvent, mailService.send(evt.uuid()), evt.uuid())));
+		noticeLogServiceI.save(new NoticeLogSaveCmd(
+				NoticeLogConvertor.toClientObject(domainEvent, mailService.send(evt.uuid()), evt.uuid())));
 	}
 
 }
