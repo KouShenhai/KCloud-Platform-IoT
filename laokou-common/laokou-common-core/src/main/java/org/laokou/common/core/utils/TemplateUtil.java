@@ -19,7 +19,6 @@ package org.laokou.common.core.utils;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
@@ -52,7 +51,8 @@ public final class TemplateUtil extends FreeMarkerTemplateUtils {
 		try {
 			Template temp = getTemplate(template);
 			return FreeMarkerTemplateUtils.processTemplateIntoString(temp, params);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("错误信息：{}", e.getMessage());
 			throw new SystemException("S_UnKnow_Error", e.getMessage());
 		}

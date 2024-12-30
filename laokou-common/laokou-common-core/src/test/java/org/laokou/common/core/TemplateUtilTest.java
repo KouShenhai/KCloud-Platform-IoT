@@ -30,7 +30,7 @@ class TemplateUtilTest {
 
 	@Test
 	void testTemplate() {
-		Assertions.assertEquals("1234", TemplateUtil.getContent("123${code}", Map.of("code","4")));
+		Assertions.assertEquals("1234", TemplateUtil.getContent("123${code}", Map.of("code", "4")));
 	}
 
 }
