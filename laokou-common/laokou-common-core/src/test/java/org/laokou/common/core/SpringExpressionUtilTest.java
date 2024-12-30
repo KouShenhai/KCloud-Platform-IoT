@@ -28,7 +28,8 @@ class SpringExpressionUtilTest {
 
 	@Test
 	void testSpringExpression() {
-		Assertions.assertEquals("1", SpringExpressionUtil.parse("#id", new String[] {"id"}, new String[]{"1"}, String.class));
+		Assertions.assertEquals("1",
+				SpringExpressionUtil.parse("#id", new String[] { "id" }, new String[] { "1" }, String.class));
 	}
 
 }
