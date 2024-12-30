@@ -55,7 +55,7 @@ import java.net.UnknownHostException;
 @EnableDiscoveryClient
 @EnableEncryptableProperties
 @EnableConfigurationProperties
-@EnableAspectJAutoProxy(exposeProxy = true)
+@EnableAspectJAutoProxy
 @SpringBootApplication(scanBasePackages = "org.laokou", exclude = { OAuth2AuthorizationServerAutoConfiguration.class,
 		OAuth2AuthorizationServerJwtAutoConfiguration.class })
 public class AuthApp {

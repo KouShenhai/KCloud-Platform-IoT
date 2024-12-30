@@ -17,11 +17,15 @@
 
 package org.laokou.common.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.utils.TreeUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class TreeUtilTest {
@@ -34,8 +38,15 @@ class TreeUtilTest {
 		Assertions.assertEquals(node.getId(), node.getChildren().getFirst().getPid());
 	}
 
+	@Data
 	@NoArgsConstructor
 	static class Node extends TreeUtil.TreeNode<Node> {
+
+		@JsonIgnore
+		private Long id;
+
+		@JsonProperty("routers")
+		private List<Node> children = new ArrayList<>(16);
 
 		public Node(Long id, String name, Long pid) {
 			super(id, name, pid);
