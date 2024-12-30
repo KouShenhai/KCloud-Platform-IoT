@@ -19,22 +19,16 @@ package org.laokou.common.core;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.utils.ArrayUtil;
+import org.laokou.common.core.utils.SystemUtil;
 
-class ArrayTest {
-
-	@Test
-	void testStrArray() {
-		String[] str = { "1" };
-		Assertions.assertTrue(ArrayUtil.isNotEmpty(str));
-		Assertions.assertFalse(ArrayUtil.isEmpty(str));
-	}
+/**
+ * @author laokou
+ */
+class SystemUtilTest {
 
 	@Test
-	void testObjArray() {
-		Object[] obj = { "1" };
-		Assertions.assertTrue(ArrayUtil.isNotEmpty(obj));
-		Assertions.assertFalse(ArrayUtil.isEmpty(obj));
+	void testWindows() {
+		Assertions.assertTrue(SystemUtil.isWindows());
 	}
 
 }
