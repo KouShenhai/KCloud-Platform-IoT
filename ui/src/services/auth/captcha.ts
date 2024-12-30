@@ -16,30 +16,13 @@ export async function getCaptchaImageByUuidV3(
 	});
 }
 
-/** 根据UUID发送邮箱验证码 根据UUID发送邮箱验证码 POST /v3/captchas/send/mail */
-export async function sendMailCaptchaV3(
+export async function sendCaptchaV3(
+	type: string,
 	body: API.SendCaptchaCO,
 	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/auth/v3/captchas/send/mail', {
-		method: 'POST',
-		headers: {
-			'request-id': requestId,
-			'Content-Type': 'application/json'
-		},
-		data: body,
-		...(options || {}),
-	});
-}
-
-/** 根据UUID发送手机号验证码 根据UUID发送手机号验证码 POST /v3/captchas/send/mobile */
-export async function sendMobileCaptchaV3(
-	body: API.SendCaptchaCO,
-	requestId: string,
-	options?: { [key: string]: any },
-) {
-	return request<any>('/api/auth/v3/captchas/send/mobile', {
+	return request<any>(`/api/auth/v3/captchas/send/${type}`, {
 		method: 'POST',
 		headers: {
 			'request-id': requestId,

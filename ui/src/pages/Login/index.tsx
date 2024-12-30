@@ -16,7 +16,7 @@ import {CSSProperties, useEffect, useRef, useState} from 'react';
 // @ts-ignore
 import {login} from '@/services/auth/auth';
 // @ts-ignore
-import {getCaptchaImageByUuidV3, sendMailCaptchaV3, sendMobileCaptchaV3} from '@/services/auth/captcha';
+import {getCaptchaImageByUuidV3, sendCaptchaV3 } from '@/services/auth/captcha';
 // @ts-ignore
 import {history} from 'umi';
 // @ts-ignore
@@ -136,7 +136,7 @@ export default () => {
 			uuid: formRef?.current?.getFieldValue("mail")
 		}
 		const co = { co : param }
-		sendMailCaptchaV3(co as API.SendCaptchaCO, uuidV7()).then(res => {
+		sendCaptchaV3('mail', co as API.SendCaptchaCO, uuidV7()).then(res => {
 			if (res.code !== "OK") {
 				mailCaptchaRef.current?.endTiming()
 			}
@@ -149,7 +149,7 @@ export default () => {
 			uuid: formRef?.current?.getFieldValue("mobile")
 		}
 		const co = { co : param }
-		sendMobileCaptchaV3(co as API.SendCaptchaCO, uuidV7()).then(res => {
+		sendCaptchaV3('mobile', co as API.SendCaptchaCO, uuidV7()).then(res => {
 			if (res.code !== "OK") {
 				mobileCaptchaRef.current?.endTiming()
 			}
