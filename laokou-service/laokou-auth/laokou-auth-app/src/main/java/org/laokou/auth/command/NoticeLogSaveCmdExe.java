@@ -26,8 +26,6 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.core.config.SpringTaskExecutorConfig.THREAD_POOL_TASK_EXECUTOR_NAME;
-
 /**
  * @author laokou
  */
@@ -39,7 +37,7 @@ public class NoticeLogSaveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
-	@Async(THREAD_POOL_TASK_EXECUTOR_NAME)
+	@Async
 	public void executeVoid(NoticeLogSaveCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push("domain");
