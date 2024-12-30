@@ -17,30 +17,16 @@
 
 package org.laokou.common.core;
 
-import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.utils.TreeUtil;
+import org.laokou.common.core.utils.AddressUtil;
 
-import java.util.List;
-
-class TreeTest {
+class AddressUtilTest {
 
 	@Test
-	void testTree() {
-		Node n1 = new Node(1L, "节点1", 0L);
-		Node n2 = new Node(11L, "节点1-1", 1L);
-		Node node = TreeUtil.buildTreeNode(List.of(n1, n2), Node.class);
-		Assertions.assertEquals(node.getId(), node.getChildren().getFirst().getPid());
-	}
-
-	@NoArgsConstructor
-	static class Node extends TreeUtil.TreeNode<Node> {
-
-		public Node(Long id, String name, Long pid) {
-			super(id, name, pid);
-		}
-
+	void testAddress() {
+		String address = "127.0.0.1";
+		Assertions.assertEquals("内网IP", AddressUtil.getRealAddress(address));
 	}
 
 }
