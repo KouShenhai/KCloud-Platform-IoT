@@ -107,6 +107,7 @@ public class ExcelUtil {
 			}
 			catch (Exception e) {
 				log.error("Excel导出失败，错误信息：{}", e.getMessage());
+				throw new SystemException("S_Excel_UnKnowError", "Excel导出失败，系统繁忙", e);
 			}
 		}
 		else {
