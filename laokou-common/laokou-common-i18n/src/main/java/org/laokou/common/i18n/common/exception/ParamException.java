@@ -32,6 +32,10 @@ public final class ParamException extends GlobalException {
 		super(code, msg);
 	}
 
+	public ParamException(String code, String msg, Throwable throwable) {
+		super(code, msg, throwable);
+	}
+
 	public final static class OAuth2 {
 
 		/**

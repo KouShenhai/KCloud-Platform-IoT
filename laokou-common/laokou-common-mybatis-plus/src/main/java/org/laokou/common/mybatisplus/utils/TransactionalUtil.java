@@ -48,7 +48,7 @@ public class TransactionalUtil {
 			catch (Exception e) {
 				r.setRollbackOnly();
 				log.error("操作失败，错误信息：{}", e.getMessage());
-				throw new SystemException("S_DS_OperationError", e.getMessage());
+				throw new SystemException("S_DS_OperationError", e.getMessage(), e);
 			}
 		});
 	}

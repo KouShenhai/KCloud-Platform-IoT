@@ -54,7 +54,7 @@ public final class TemplateUtil extends FreeMarkerTemplateUtils {
 		}
 		catch (Exception e) {
 			log.error("错误信息：{}", e.getMessage());
-			throw new SystemException("S_UnKnow_Error", e.getMessage());
+			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 	}
 

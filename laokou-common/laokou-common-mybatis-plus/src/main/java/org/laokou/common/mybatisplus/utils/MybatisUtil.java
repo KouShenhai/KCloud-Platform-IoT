@@ -96,7 +96,7 @@ public class MybatisUtil {
 			catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 				log.error("错误信息：{}", e.getMessage());
-				throw new SystemException("S_UnKnow_Error", e.getMessage());
+				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 			}
 		}
 	}
