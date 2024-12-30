@@ -49,4 +49,10 @@ public abstract class GlobalException extends RuntimeException {
 		this.msg = msg;
 	}
 
+	protected GlobalException(String code, String msg, Throwable throwable) {
+		super(msg, throwable);
+		this.code = code;
+		this.msg = msg;
+	}
+
 }

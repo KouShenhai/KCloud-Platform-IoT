@@ -67,7 +67,7 @@ public final class RSAUtil {
 		}
 		catch (IOException e) {
 			log.error("读取私钥或密钥失败，错误信息：{}", e.getMessage());
-			throw new SystemException("S_UnKnow_Error", e.getMessage());
+			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 	}
 

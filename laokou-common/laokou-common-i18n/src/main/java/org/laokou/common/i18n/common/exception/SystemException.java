@@ -32,6 +32,10 @@ public final class SystemException extends GlobalException {
 		super(code, msg);
 	}
 
+	public SystemException(String code, String msg, Throwable throwable) {
+		super(code, msg, throwable);
+	}
+
 	public final static class Gateway {
 
 		/**
