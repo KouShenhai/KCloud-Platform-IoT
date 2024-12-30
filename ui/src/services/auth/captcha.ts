@@ -17,7 +17,7 @@ export async function getCaptchaImageByUuidV3(
 }
 
 export async function sendCaptchaV3(
-	type: string,
+	type: 'mail' | 'mobile',
 	body: API.SendCaptchaCO,
 	requestId: string,
 	options?: { [key: string]: any },
