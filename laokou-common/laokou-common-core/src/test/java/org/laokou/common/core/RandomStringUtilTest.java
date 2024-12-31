@@ -15,20 +15,20 @@
  *
  */
 
-package org.laokou.common.core.utils;
+package org.laokou.common.core;
 
-import java.security.SecureRandom;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.core.utils.RandomStringUtil;
 
-public final class RandomStringUtil {
+/**
+ * @author laokou
+ */
+class RandomStringUtilTest {
 
-	private static final SecureRandom RANDOM = new SecureRandom();
-
-	public static String randomNumeric(int length) {
-		StringBuilder stringBuilder = new StringBuilder(length);
-		for (int i = 0; i < length; i++) {
-			stringBuilder.append(RANDOM.nextInt(10));
-		}
-		return stringBuilder.toString();
+	@Test
+	void testRandomNumeric() {
+		Assertions.assertNotNull(RandomStringUtil.randomNumeric(6));
 	}
 
 }
