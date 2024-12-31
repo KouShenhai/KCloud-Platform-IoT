@@ -1,0 +1,8 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: laokou-common-core
+  profiles:
+    active: test

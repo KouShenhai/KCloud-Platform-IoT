@@ -15,22 +15,25 @@
  *
  */
 
-package org.laokou.logstash.common.support;
+package org.laokou.common.core;
 
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.constant.StringConstant;
-import org.laokou.common.i18n.utils.DateUtil;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.ExecutorService;
+import static org.laokou.common.core.utils.RandomIdGenerator.generateBase64RandomId;
+import static org.laokou.common.core.utils.RandomIdGenerator.generateRandomId;
 
-public abstract class AbstractTraceLogStorage implements TraceLogStorage {
+/**
+ * @author laokou
+ */
+class RandomIdGeneratorTest {
 
-	protected static final String TRACE_INDEX = "laokou_trace";
-
-	protected static final ExecutorService EXECUTOR = ThreadUtil.newVirtualTaskExecutor();
-
-	protected String getIndexName() {
-		return TRACE_INDEX + StringConstant.UNDER + DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMMDD);
+	@Test
+	void testGenerateRandomId() {
+		Assertions.assertNotNull(generateRandomId());
+		Assertions.assertNotNull(generateRandomId(16));
+		Assertions.assertNotNull(generateBase64RandomId());
+		Assertions.assertNotNull(generateBase64RandomId(16));
 	}
 
 }

@@ -15,22 +15,20 @@
  *
  */
 
-package org.laokou.logstash.common.support;
+package org.laokou.common.crypto;
 
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.constant.StringConstant;
-import org.laokou.common.i18n.utils.DateUtil;
+import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
-import java.util.concurrent.ExecutorService;
+/**
+ * @author laokou
+ */
+@SpringBootApplication
+class AppTest {
 
-public abstract class AbstractTraceLogStorage implements TraceLogStorage {
-
-	protected static final String TRACE_INDEX = "laokou_trace";
-
-	protected static final ExecutorService EXECUTOR = ThreadUtil.newVirtualTaskExecutor();
-
-	protected String getIndexName() {
-		return TRACE_INDEX + StringConstant.UNDER + DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMMDD);
+	public static void main(String[] args) {
+		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }

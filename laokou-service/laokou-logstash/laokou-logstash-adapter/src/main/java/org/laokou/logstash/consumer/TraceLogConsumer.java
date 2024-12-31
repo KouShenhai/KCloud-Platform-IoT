@@ -19,15 +19,11 @@ package org.laokou.logstash.consumer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.UniqueIdGenerator;
 import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
-import org.laokou.common.i18n.common.constant.StringConstant;
-import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.logstash.common.support.TraceLogStorage;
 import org.laokou.logstash.gateway.database.dataobject.TraceLogIndex;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -36,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
 /**
@@ -47,6 +42,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TraceLogConsumer {
 
+	private final TraceLogStorage traceLogStorage;
+
 	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_trace_consumer_group")
 	public CompletableFuture<Void> kafkaConsumer(List<String> messages, Acknowledgment ack) {
 		try {
@@ -55,7 +52,7 @@ public class TraceLogConsumer {
 				.filter(Objects::nonNull)
 				.collect(Collectors.toMap(TraceLogIndex::getId, traceLogIndex -> traceLogIndex));
 			if (MapUtil.isNotEmpty(dataMap)) {
-
+				return traceLogStorage.batchSave(dataMap);
 			}
 		}
 		catch (Exception e) {

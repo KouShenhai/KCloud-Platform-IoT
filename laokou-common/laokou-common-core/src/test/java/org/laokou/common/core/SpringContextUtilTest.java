@@ -15,22 +15,26 @@
  *
  */
 
-package org.laokou.logstash.common.support;
+package org.laokou.common.core;
 
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.constant.StringConstant;
-import org.laokou.common.i18n.utils.DateUtil;
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.core.utils.SpringContextUtil;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestConstructor;
 
-import java.util.concurrent.ExecutorService;
+/**
+ * @author laokou
+ */
+@SpringBootTest
+@RequiredArgsConstructor
+@ContextConfiguration(classes = { SpringContextUtil.class })
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+class SpringContextUtilTest {
 
-public abstract class AbstractTraceLogStorage implements TraceLogStorage {
-
-	protected static final String TRACE_INDEX = "laokou_trace";
-
-	protected static final ExecutorService EXECUTOR = ThreadUtil.newVirtualTaskExecutor();
-
-	protected String getIndexName() {
-		return TRACE_INDEX + StringConstant.UNDER + DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMMDD);
+	@Test
+	void test() {
 	}
 
 }

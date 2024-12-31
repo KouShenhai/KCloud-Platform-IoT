@@ -41,8 +41,8 @@ public class LoginLogExportCmdExe {
 	public void executeVoid(LoginLogExportCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push("domain");
-			ExcelUtil.doExport("登录日志", ResponseUtil.getHttpServletResponse(), cmd, loginLogMapper,
-				LoginLogExcel.class, LoginLogConvertor.INSTANCE);
+			ExcelUtil.doExport("登录日志", ResponseUtil.getHttpServletResponse(), cmd, loginLogMapper, LoginLogExcel.class,
+					LoginLogConvertor.INSTANCE);
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

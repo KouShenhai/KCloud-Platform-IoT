@@ -22,6 +22,7 @@ import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * 只针对 spring-boot 3.x.x.
@@ -29,6 +30,7 @@ import org.junit.jupiter.api.Test;
  * @author laokou
  */
 @Slf4j
+@SpringBootTest
 class Jasypt3Test {
 
 	@Test
@@ -39,7 +41,7 @@ class Jasypt3Test {
 		String decryptWithMD5ANDAES256Str = decryptWithHMACSHA512ANDAES256(encryptWithMD5ANDAES256Str, factor);
 		log.info("采用PBEWITHHMACSHA512ANDAES_256加密后：{}", encryptWithMD5ANDAES256Str);
 		log.info("采用PBEWITHHMACSHA512ANDAES_256解密后：{}", decryptWithMD5ANDAES256Str);
-		Assertions.assertEquals(decryptWithMD5ANDAES256Str, plainText);
+		Assertions.assertEquals(plainText, decryptWithMD5ANDAES256Str);
 	}
 
 	/**

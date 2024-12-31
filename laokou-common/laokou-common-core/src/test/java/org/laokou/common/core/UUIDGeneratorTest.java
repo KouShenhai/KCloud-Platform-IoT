@@ -15,22 +15,20 @@
  *
  */
 
-package org.laokou.logstash.common.support;
+package org.laokou.common.core;
 
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.constant.StringConstant;
-import org.laokou.common.i18n.utils.DateUtil;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.core.utils.UUIDGenerator;
 
-import java.util.concurrent.ExecutorService;
+/**
+ * @author laokou
+ */
+class UUIDGeneratorTest {
 
-public abstract class AbstractTraceLogStorage implements TraceLogStorage {
-
-	protected static final String TRACE_INDEX = "laokou_trace";
-
-	protected static final ExecutorService EXECUTOR = ThreadUtil.newVirtualTaskExecutor();
-
-	protected String getIndexName() {
-		return TRACE_INDEX + StringConstant.UNDER + DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMMDD);
+	@Test
+	void testGenerateUUID() {
+		Assertions.assertNotNull(UUIDGenerator.generateUUID());
 	}
 
 }
