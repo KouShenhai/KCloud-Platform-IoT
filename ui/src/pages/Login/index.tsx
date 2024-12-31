@@ -16,7 +16,7 @@ import {CSSProperties, useEffect, useRef, useState} from 'react';
 // @ts-ignore
 import {login} from '@/services/auth/auth';
 // @ts-ignore
-import {getCaptchaImageByUuidV3, sendCaptchaV3} from '@/services/auth/captcha';
+import {getCaptchaImageByUuidV3, sendCaptchaV3 } from '@/services/auth/captcha';
 // @ts-ignore
 import {history} from 'umi';
 // @ts-ignore
@@ -28,6 +28,7 @@ import {v7 as uuidV7} from 'uuid';
 import {ProFormInstance} from "@ant-design/pro-form"
 // @ts-ignore
 import {clearToken, setToken} from "@/access"
+import {CaptFieldRef} from "@ant-design/pro-form/lib";
 
 type LoginType = 'usernamePassword' | 'mobile' | 'mail';
 
@@ -48,8 +49,9 @@ export default () => {
 	const [captchaImage, setCaptchaImage] = useState<string>('');
 	const [uuid, setUuid] = useState<string>('');
 	const [publicKey, setPublicKey] = useState<string>('');
-	const [requestId, setRequestId] = useState<string>('')
 	const formRef = useRef<ProFormInstance>();
+	const mailCaptchaRef = useRef<CaptFieldRef | null | undefined>();
+	const mobileCaptchaRef = useRef<CaptFieldRef | null | undefined>();
 
 	const setFormField = (form: API.LoginParam) => {
 		formRef?.current?.setFieldsValue(form);
@@ -128,26 +130,30 @@ export default () => {
 		});
 	};
 
-	const getRequestId = async () => {
-		setRequestId(uuidV7())
-	}
-
 	const sendMailCaptcha = async () => {
 		const param = {
 			tenantCode: formRef?.current?.getFieldValue("tenant_code"),
-			tag: 'mailCaptcha',
 			uuid: formRef?.current?.getFieldValue("mail")
 		}
-		sendCaptchaV3(param as API.SendCaptchaParam, requestId).catch(console.log)
+		const co = { co : param }
+		sendCaptchaV3('mail', co as API.SendCaptchaCO, uuidV7()).then(res => {
+			if (res.code !== "OK") {
+				mailCaptchaRef.current?.endTiming()
+			}
+		}).catch(console.log)
 	}
 
 	const sendMobileCaptcha = async () => {
 		const param = {
 			tenantCode: formRef?.current?.getFieldValue("tenant_code"),
-			tag: 'mobileCaptcha',
 			uuid: formRef?.current?.getFieldValue("mobile")
 		}
-		sendCaptchaV3(param as API.SendCaptchaParam, requestId).catch(console.log)
+		const co = { co : param }
+		sendCaptchaV3('mobile', co as API.SendCaptchaCO, uuidV7()).then(res => {
+			if (res.code !== "OK") {
+				mobileCaptchaRef.current?.endTiming()
+			}
+		}).catch(console.log)
 	}
 
 	const clearMailCaptcha = () => {
@@ -162,7 +168,6 @@ export default () => {
 		clearToken()
 		getPublicKey().catch(console.log)
 		getCaptchaImage().catch(console.log)
-		getRequestId().catch(console.log)
 	}, []);
 
 	const onSubmit = async (form: API.LoginParam) => {
@@ -410,6 +415,7 @@ export default () => {
 								prefix: <SafetyCertificateOutlined className={'prefixIcon'}/>,
 								autoComplete: 'new-password',
 							}}
+							fieldRef={mobileCaptchaRef}
 							captchaProps={{
 								size: 'large',
 							}}
@@ -462,6 +468,7 @@ export default () => {
 								prefix: <SafetyCertificateOutlined className={'prefixIcon'}/>,
 								autoComplete: 'new-password',
 							}}
+							fieldRef={mailCaptchaRef}
 							captchaProps={{
 								size: 'large',
 							}}

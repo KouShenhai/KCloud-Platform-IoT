@@ -45,7 +45,7 @@ public class SecretsV3Controller {
 	@TraceLog
 	@GetMapping
 	@Operation(summary = "获取密钥", description = "获取密钥")
-	@RateLimiter(key = "AUTH_SECRET", type = IP, interval = 1800, rate = 100)
+	@RateLimiter(key = "AUTH_SECRET", type = IP)
 	public Result<SecretCO> getInfoV3() {
 		return secretsServiceI.getInfo();
 	}

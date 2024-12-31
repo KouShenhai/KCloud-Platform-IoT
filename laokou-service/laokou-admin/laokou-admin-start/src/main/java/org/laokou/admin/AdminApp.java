@@ -60,7 +60,7 @@ import java.net.InetAddress;
 @EnableDiscoveryClient
 @EnableEncryptableProperties
 @EnableConfigurationProperties
-@EnableAspectJAutoProxy(exposeProxy = true)
+@EnableAspectJAutoProxy
 @SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
 public class AdminApp {
 

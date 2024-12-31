@@ -15,20 +15,23 @@
  *
  */
 
-package org.laokou.common.core.annotation;
+package org.laokou.common.core.config;
 
-import org.laokou.common.core.config.AsyncConfig;
-import org.laokou.common.core.config.SpringTaskExecutorConfig;
-import org.springframework.context.annotation.Import;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.laokou.common.core.utils.ThreadUtil;
+import org.springframework.lang.Nullable;
+import org.springframework.scheduling.annotation.AsyncConfigurer;
 
-import java.lang.annotation.*;
+import java.util.concurrent.Executor;
 
-@Documented
-@EnableAsync
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({ SpringTaskExecutorConfig.class, AsyncConfig.class })
-public @interface EnableTaskExecutor {
+/**
+ * @author laokou
+ */
+public class AsyncConfig implements AsyncConfigurer {
+
+	@Nullable
+	@Override
+	public Executor getAsyncExecutor() {
+		return ThreadUtil.newVirtualTaskExecutor();
+	}
 
 }

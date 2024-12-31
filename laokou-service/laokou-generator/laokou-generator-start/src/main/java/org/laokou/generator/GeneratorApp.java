@@ -48,7 +48,7 @@ import java.net.InetAddress;
 @EnableRedisRepository
 @EnableDiscoveryClient
 @EnableConfigurationProperties
-@EnableAspectJAutoProxy(exposeProxy = true)
+@EnableAspectJAutoProxy
 @SpringBootApplication(scanBasePackages = "org.laokou")
 public class GeneratorApp {
 

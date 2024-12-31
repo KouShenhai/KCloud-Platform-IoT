@@ -49,7 +49,7 @@ import java.net.UnknownHostException;
 @EnableRedisRepository
 @EnableDiscoveryClient
 @EnableConfigurationProperties
-@EnableAspectJAutoProxy(exposeProxy = true)
+@EnableAspectJAutoProxy
 @SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
 public class IotApp {
 

@@ -31,7 +31,7 @@ import java.net.UnknownHostException;
 @EnableTaskExecutor
 @EnableEncryptableProperties
 @EnableConfigurationProperties
-@EnableAspectJAutoProxy(exposeProxy = true)
+@EnableAspectJAutoProxy
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
 public class EsTestApp {
 
