@@ -17,29 +17,25 @@
 
 package org.laokou.logstash.consumer;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.utils.UniqueIdGenerator;
 import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.elasticsearch.annotation.Field;
-import org.laokou.common.elasticsearch.annotation.Index;
-import org.laokou.common.elasticsearch.annotation.Setting;
-import org.laokou.common.elasticsearch.annotation.Type;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.common.constant.StringConstant;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.logstash.gateway.database.dataobject.TraceLogIndex;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
-
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
@@ -49,44 +45,36 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class LogEventHandler {
-
-	private static final String TRACE_INDEX = "laokou_trace";
-
-	private final ElasticsearchTemplate elasticsearchTemplate;
+public class TraceLogConsumer {
 
 	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_trace_consumer_group")
-	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+	public CompletableFuture<Void> kafkaConsumer(List<String> messages, Acknowledgment ack) {
+		try {
 			Map<String, Object> dataMap = messages.stream()
-				.map(this::getTraceIndex)
+				.map(this::getTraceLogIndex)
 				.filter(Objects::nonNull)
-				.toList()
-				.stream()
-				.collect(Collectors.toMap(TraceIndex::getId, traceIndex -> traceIndex));
+				.collect(Collectors.toMap(TraceLogIndex::getId, traceLogIndex -> traceLogIndex));
 			if (MapUtil.isNotEmpty(dataMap)) {
-				elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceIndex.class, executor)
-					.thenAcceptAsync(
-							res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap, executor),
-							executor);
+
 			}
 		}
-		catch (Throwable e) {
+		catch (Exception e) {
 			log.error("分布式链路写入失败，错误信息：{}", e.getMessage());
 		}
 		finally {
 			ack.acknowledge();
 		}
+		return null;
 	}
 
-	private TraceIndex getTraceIndex(String str) {
+	private TraceLogIndex getTraceLogIndex(String str) {
 		try {
-			TraceIndex traceIndex = JacksonUtil.toBean(str, TraceIndex.class);
-			String traceId = traceIndex.getTraceId();
-			String spanId = traceIndex.getSpanId();
+			TraceLogIndex traceLogIndex = JacksonUtil.toBean(str, TraceLogIndex.class);
+			String traceId = traceLogIndex.getTraceId();
+			String spanId = traceLogIndex.getSpanId();
 			if (isTraceLog(traceId, spanId)) {
-				traceIndex.setId(String.valueOf(IdGenerator.defaultSnowflakeId()));
-				return traceIndex;
+				traceLogIndex.setId(UniqueIdGenerator.generateId());
+				return traceLogIndex;
 			}
 		}
 		catch (Exception ex) {
@@ -101,52 +89,6 @@ public class LogEventHandler {
 
 	private boolean isTraceLog(String str) {
 		return StringUtil.isNotEmpty(str) && !str.startsWith("${") && !str.endsWith("}");
-	}
-
-	private String getIndexName() {
-		return TRACE_INDEX + StringConstant.UNDER + DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMMDD);
-	}
-
-	@Data
-	@Index(setting = @Setting(refreshInterval = "-1"))
-	public final static class TraceIndex implements Serializable {
-
-		@Field(type = Type.LONG)
-		private String id;
-
-		@Field(type = Type.KEYWORD)
-		private String serviceId;
-
-		@Field(type = Type.KEYWORD)
-		private String profile;
-
-		@Field(type = Type.DATE, format = DateUtil.Constant.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS_SSS)
-		private String dateTime;
-
-		@Field(type = Type.KEYWORD, index = true)
-		private String traceId;
-
-		@Field(type = Type.KEYWORD, index = true)
-		private String spanId;
-
-		@Field(type = Type.KEYWORD)
-		private String address;
-
-		@Field(type = Type.KEYWORD)
-		private String level;
-
-		@Field(type = Type.KEYWORD)
-		private String threadName;
-
-		@Field(type = Type.KEYWORD)
-		private String packageName;
-
-		@Field(type = Type.KEYWORD)
-		private String message;
-
-		@Field(type = Type.KEYWORD)
-		private String stacktrace;
-
 	}
 
 }
