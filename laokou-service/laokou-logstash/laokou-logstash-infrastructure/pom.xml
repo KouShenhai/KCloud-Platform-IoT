@@ -19,10 +19,6 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-trace</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-rocketmq</artifactId>
-    </dependency>
   </dependencies>
 
 </project>

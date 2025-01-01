@@ -46,7 +46,7 @@ public class MailServiceImpl extends AbstractMailServiceImpl {
 	public MailResult send(String mail) {
 		String subject = "验证码";
 		String name = "邮箱" + subject;
-		String captcha = RandomStringUtil.randomNumeric(6);
+		String captcha = RandomStringUtil.randomNumeric();
 		// 默认5分钟有效
 		Map<String, Object> param = Map.of("captcha", captcha, "minute", 5);
 		String content = TemplateUtil.getContent(CAPTCHA_TEMPLATE, param);

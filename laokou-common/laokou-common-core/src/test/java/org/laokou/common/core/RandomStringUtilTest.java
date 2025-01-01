@@ -29,6 +29,12 @@ class RandomStringUtilTest {
 	@Test
 	void testRandomNumeric() {
 		Assertions.assertNotNull(RandomStringUtil.randomNumeric(6));
+		Assertions.assertNotNull(RandomStringUtil.randomNumeric());
+		// 验证长度正确
+		Assertions.assertEquals(6, RandomStringUtil.randomNumeric().length());
+		Assertions.assertEquals(7, RandomStringUtil.randomNumeric(7).length());
+		// 验证字符串仅包含数字
+		Assertions.assertTrue(RandomStringUtil.randomNumeric().matches("\\d+"), "生成的字符串应仅包含数字字符");
 	}
 
 }

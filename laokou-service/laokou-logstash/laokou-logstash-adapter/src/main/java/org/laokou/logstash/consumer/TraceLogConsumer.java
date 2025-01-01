@@ -19,15 +19,16 @@ package org.laokou.logstash.consumer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.UniqueIdGenerator;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.logstash.common.support.TraceLogStorage;
 import org.laokou.logstash.gateway.database.dataobject.TraceLogIndex;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -70,7 +71,7 @@ public class TraceLogConsumer {
 			String traceId = traceLogIndex.getTraceId();
 			String spanId = traceLogIndex.getSpanId();
 			if (isTraceLog(traceId, spanId)) {
-				traceLogIndex.setId(UniqueIdGenerator.generateId());
+				traceLogIndex.setId(String.valueOf(IdGenerator.defaultSnowflakeId()));
 				return traceLogIndex;
 			}
 		}
