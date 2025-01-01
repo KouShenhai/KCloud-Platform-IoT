@@ -17,13 +17,22 @@
 
 package org.laokou.common.core.utils;
 
+import org.laokou.common.i18n.common.exception.SystemException;
+
 import java.security.SecureRandom;
 
 public final class RandomStringUtil {
 
 	private static final SecureRandom RANDOM = new SecureRandom();
 
+	public static String randomNumeric() {
+		return randomNumeric(6);
+	}
+
 	public static String randomNumeric(int length) {
+		if (length < 1) {
+			throw new SystemException("S_String_InvalidLength", "随机字符串长度不能小于1");
+		}
 		StringBuilder stringBuilder = new StringBuilder(length);
 		for (int i = 0; i < length; i++) {
 			stringBuilder.append(RANDOM.nextInt(10));
