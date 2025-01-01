@@ -76,12 +76,12 @@ public class MybatisUtil {
 	 */
 	public <T, M> void batch(List<T> dataList, int batchNum, int timeout, Class<M> clazz, String ds,
 			BiConsumer<M, T> consumer) {
+		// 数据分组
+		List<List<T>> partition = Lists.partition(dataList, batchNum);
+		AtomicBoolean rollback = new AtomicBoolean(false);
+		CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
 		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			try {
-				// 数据分组
-				List<List<T>> partition = Lists.partition(dataList, batchNum);
-				AtomicBoolean rollback = new AtomicBoolean(false);
-				CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
 				// 虚拟线程
 				List<Callable<Boolean>> futures = partition.stream().map(item -> (Callable<Boolean>) () -> {
 					handleBatch(timeout, item, clazz, consumer, rollback, ds, cyclicBarrier);

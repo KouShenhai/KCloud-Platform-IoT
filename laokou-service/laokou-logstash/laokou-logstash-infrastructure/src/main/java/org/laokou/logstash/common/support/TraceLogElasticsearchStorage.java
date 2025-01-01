@@ -18,11 +18,13 @@
 package org.laokou.logstash.common.support;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.logstash.gateway.database.dataobject.TraceLogIndex;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 
 @RequiredArgsConstructor
 public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
@@ -31,9 +33,11 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 
 	@Override
 	public CompletableFuture<Void> batchSave(Map<String, Object> map) {
-		return elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, EXECUTOR)
-			.thenAcceptAsync(res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), map, EXECUTOR),
-					EXECUTOR);
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			return elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, executor)
+				.thenAcceptAsync(res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), map, executor),
+						executor);
+		}
 	}
 
 	@Override
