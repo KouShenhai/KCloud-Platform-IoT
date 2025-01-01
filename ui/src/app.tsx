@@ -198,3 +198,7 @@ export const antd: (memo: { theme: { algorithm?: any }; appConfig: { message: { 
 
 	return memo;
 };
+
+export function patchClientRoutes({ routes }) {
+	console.log(routes)
+}
