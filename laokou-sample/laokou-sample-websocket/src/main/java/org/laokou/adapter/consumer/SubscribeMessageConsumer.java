@@ -48,8 +48,6 @@ import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAG
 @RocketMQMessageListener(consumerGroup = LAOKOU_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
 public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 
-	private static final ExecutorService EXECUTOR = ThreadUtil.newVirtualTaskExecutor();
-
 	private final Server webSocketServer;
 
 	public SubscribeMessageConsumer(Server webSocketServer) {
@@ -58,7 +56,7 @@ public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 
 	@Override
 	public void onMessage(MessageExt message) {
-		try {
+		try (ExecutorService executor =  ThreadUtil.newVirtualTaskExecutor()) {
 			String msg = new String(message.getBody(), StandardCharsets.UTF_8);
 			PayloadCO co = JacksonUtil.toBean(msg, PayloadCO.class);
 			TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(co.getContent());
@@ -66,7 +64,7 @@ public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 				webSocketServer.send(clientId, webSocketFrame);
 				return true;
 			}).toList();
-			EXECUTOR.invokeAll(callableList);
+			executor.invokeAll(callableList);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 			log.error("错误信息：{}", e.getMessage());

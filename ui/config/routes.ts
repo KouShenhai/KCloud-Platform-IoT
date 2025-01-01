@@ -20,7 +20,7 @@ export default [
 		name: '首页',
 		path: '/home',
 		component: './Home',
-		icon: 'HomeOutlined'
+		icon: 'home'
 	},
 	{
 		name: 'Login',

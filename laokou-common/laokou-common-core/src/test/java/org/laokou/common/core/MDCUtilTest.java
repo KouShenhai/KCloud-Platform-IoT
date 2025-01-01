@@ -15,17 +15,25 @@
  *
  */
 
-package org.laokou.logstash.common.support;
+package org.laokou.common.core;
 
-import org.laokou.common.i18n.common.constant.StringConstant;
-import org.laokou.common.i18n.utils.DateUtil;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.core.utils.MDCUtil;
 
-public abstract class AbstractTraceLogStorage implements TraceLogStorage {
+/**
+ * @author laokou
+ */
+class MDCUtilTest {
 
-	protected static final String TRACE_INDEX = "laokou_trace";
-
-	protected String getIndexName() {
-		return TRACE_INDEX + StringConstant.UNDER + DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMMDD);
+	@Test
+	void testMDC() {
+		MDCUtil.put("111", "222");
+		Assertions.assertNotNull(MDCUtil.getTraceId());
+		Assertions.assertNotNull(MDCUtil.getSpanId());
+		MDCUtil.clear();
+		Assertions.assertNull(MDCUtil.getTraceId());
+		Assertions.assertNull(MDCUtil.getSpanId());
 	}
 
 }

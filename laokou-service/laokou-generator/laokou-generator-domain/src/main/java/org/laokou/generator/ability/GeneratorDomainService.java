@@ -49,8 +49,6 @@ import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
 @RequiredArgsConstructor
 public class GeneratorDomainService {
 
-	private static final ExecutorService EXECUTOR = ThreadUtil.newVirtualTaskExecutor();
-
 	/**
 	 * 代码生成路径.
 	 */
@@ -87,7 +85,7 @@ public class GeneratorDomainService {
 	}
 
 	private void generateCode(GeneratorA generatorA, TableV tableV, List<Template> templates) {
-		try {
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 			// 更新表信息
 			generatorA.updateTable(tableV);
 			// 根据模板批量生成代码
@@ -99,7 +97,7 @@ public class GeneratorDomainService {
 				FileUtil.write(file, content.getBytes(StandardCharsets.UTF_8));
 				return true;
 			}).toList();
-			EXECUTOR.invokeAll(list);
+			executor.invokeAll(list);
 		}
 		catch (InterruptedException e) {
 			Thread.currentThread().interrupt();

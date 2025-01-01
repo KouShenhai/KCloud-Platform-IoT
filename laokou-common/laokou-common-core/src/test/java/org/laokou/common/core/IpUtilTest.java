@@ -15,17 +15,28 @@
  *
  */
 
-package org.laokou.logstash.common.support;
+package org.laokou.common.core;
 
-import org.laokou.common.i18n.common.constant.StringConstant;
-import org.laokou.common.i18n.utils.DateUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.core.utils.IpUtil;
 
-public abstract class AbstractTraceLogStorage implements TraceLogStorage {
+import static org.mockito.Mockito.mock;
 
-	protected static final String TRACE_INDEX = "laokou_trace";
+/**
+ * @author laokou
+ */
+class IpUtilTest {
 
-	protected String getIndexName() {
-		return TRACE_INDEX + StringConstant.UNDER + DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMMDD);
+	@Test
+	void testIp() {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		Assertions.assertNotNull(request);
+		String ip = IpUtil.getIpAddr(request);
+		Assertions.assertEquals("127.0.0.1", ip);
+		ip = IpUtil.getIpAddr(null);
+		Assertions.assertEquals("unknown", ip);
 	}
 
 }

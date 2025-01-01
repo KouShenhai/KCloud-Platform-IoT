@@ -48,8 +48,6 @@ public final class FileUtil {
 
 	private static final String RW = "rw";
 
-	private static final ExecutorService EXECUTOR = ThreadUtil.newVirtualTaskExecutor();
-
 	/**
 	 * 创建目录及文件.
 	 * @param directory 目录
@@ -106,7 +104,8 @@ public final class FileUtil {
 			// 最大偏移量2G【2^31】数据
 			chunkSize = Math.min(chunkSize, 2L * 1024 * 1024 * 1024);
 			long chunkCount = (size / chunkSize) + (size % chunkSize == 0 ? 0 : 1);
-			try (FileChannel inChannel = fis.getChannel()) {
+			try (FileChannel inChannel = fis.getChannel();
+					ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 				List<Callable<Boolean>> futures = new ArrayList<>((int) chunkCount);
 				// position指针
 				for (long index = 0, position = 0,
@@ -133,7 +132,7 @@ public final class FileUtil {
 						return true;
 					});
 				}
-				EXECUTOR.invokeAll(futures);
+				executor.invokeAll(futures);
 			}
 			catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
