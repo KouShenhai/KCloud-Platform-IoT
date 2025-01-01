@@ -23,16 +23,11 @@ import org.laokou.admin.role.dto.RolePageQry;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询角色请求执行器.
@@ -46,18 +41,9 @@ public class RolePageQryExe {
 	private final RoleMapper roleMapper;
 
 	public Result<Page<RoleCO>> execute(RolePageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<RoleDO>> c1 = CompletableFuture
-				.supplyAsync(() -> roleMapper.selectPageByCondition(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> roleMapper.selectCountByCondition(qry),
-					executor);
-			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(RoleConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_Role_PageQueryTimeout", "角色分页查询超时");
-		}
+		List<RoleDO> list = roleMapper.selectObjectPage(qry);
+		long total = roleMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(RoleConvertor::toClientObject).toList(), total));
 	}
 
 }

@@ -18,13 +18,9 @@
 package org.laokou.admin.noticeLog.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * 通知日志数据库映射.
@@ -34,7 +30,5 @@ import java.util.List;
 @Mapper
 @Repository
 public interface NoticeLogMapper extends CrudMapper<Long, Integer, NoticeLogDO> {
-
-	List<NoticeLogDO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
 
 }

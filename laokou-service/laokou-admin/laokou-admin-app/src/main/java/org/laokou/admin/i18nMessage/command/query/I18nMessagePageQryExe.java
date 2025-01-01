@@ -23,16 +23,11 @@ import org.laokou.admin.i18nMessage.dto.I18nMessagePageQry;
 import org.laokou.admin.i18nMessage.dto.clientobject.I18nMessageCO;
 import org.laokou.admin.i18nMessage.gatewayimpl.database.I18nMessageMapper;
 import org.laokou.admin.i18nMessage.gatewayimpl.database.dataobject.I18nMessageDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询国际化消息请求执行器.
@@ -46,18 +41,9 @@ public class I18nMessagePageQryExe {
 	private final I18nMessageMapper i18nMessageMapper;
 
 	public Result<Page<I18nMessageCO>> execute(I18nMessagePageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<I18nMessageDO>> c1 = CompletableFuture
-				.supplyAsync(() -> i18nMessageMapper.selectPageByCondition(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture
-				.supplyAsync(() -> i18nMessageMapper.selectCountByCondition(qry), executor);
-			return Result.ok(Page.create(
-					c1.get(30, TimeUnit.SECONDS).stream().map(I18nMessageConvertor::toClientObject).toList(),
-					c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_I18nMessage_PageQueryTimeout", "国际化消息分页查询超时");
-		}
+		List<I18nMessageDO> list = i18nMessageMapper.selectObjectPage(qry);
+		long total = i18nMessageMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(I18nMessageConvertor::toClientObject).toList(), total));
 	}
 
 }

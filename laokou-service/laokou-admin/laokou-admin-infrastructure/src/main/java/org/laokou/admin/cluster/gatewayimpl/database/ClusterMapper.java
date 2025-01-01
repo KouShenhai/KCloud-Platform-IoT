@@ -18,12 +18,9 @@
 package org.laokou.admin.cluster.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.laokou.admin.cluster.gatewayimpl.database.dataobject.ClusterDO;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  *
@@ -34,7 +31,5 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Mapper
 @Repository
 public interface ClusterMapper extends CrudMapper<Long, Integer, ClusterDO> {
-
-	List<ClusterDO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
 
 }

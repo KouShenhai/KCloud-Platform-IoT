@@ -48,7 +48,7 @@ public class TraceLogConsumer {
 	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_trace_consumer_group")
 	public CompletableFuture<Void> kafkaConsumer(List<String> messages, Acknowledgment ack) {
 		try {
-			Map<String, Object> dataMap = messages.stream()
+			Map<String, Object> dataMap = messages.parallelStream()
 				.map(this::getTraceLogIndex)
 				.filter(Objects::nonNull)
 				.collect(Collectors.toMap(TraceLogIndex::getId, traceLogIndex -> traceLogIndex));

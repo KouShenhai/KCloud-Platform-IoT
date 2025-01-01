@@ -20,10 +20,10 @@ package org.laokou.iot.thingModel.command.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.iot.thingModel.dto.ThingModelGetQry;
 import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
-import org.laokou.iot.model.gatewayimpl.database.ThingModelMapper;
+import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.model.convertor.ModelConvertor;
+import org.laokou.iot.thingModel.convertor.ModelConvertor;
 
 /**
  * 查看物模型请求执行器.

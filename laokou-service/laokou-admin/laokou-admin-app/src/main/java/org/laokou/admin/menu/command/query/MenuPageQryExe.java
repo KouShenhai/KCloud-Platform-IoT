@@ -23,16 +23,11 @@ import org.laokou.admin.menu.dto.MenuPageQry;
 import org.laokou.admin.menu.dto.clientobject.MenuCO;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询菜单请求执行器.
@@ -46,18 +41,9 @@ public class MenuPageQryExe {
 	private final MenuMapper menuMapper;
 
 	public Result<Page<MenuCO>> execute(MenuPageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<MenuDO>> c1 = CompletableFuture
-				.supplyAsync(() -> menuMapper.selectPageByCondition(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> menuMapper.selectCountByCondition(qry),
-					executor);
-			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(MenuConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_Menu_PageQueryTimeout", "菜单分页查询超时");
-		}
+		List<MenuDO> list = menuMapper.selectObjectPage(qry);
+		long total = menuMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(MenuConvertor::toClientObject).toList(), total));
 	}
 
 }

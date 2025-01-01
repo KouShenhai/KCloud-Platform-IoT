@@ -18,10 +18,10 @@
  */
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.iot.model.gatewayimpl.database.ThingModelMapper">
+<mapper namespace="org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper">
 
 	<select id="selectObjectPage"
-			resultType="org.laokou.iot.model.gatewayimpl.database.dataobject.ThingModelDO">
+			resultType="org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO">
 		SELECT id,
                  name,
                  code,

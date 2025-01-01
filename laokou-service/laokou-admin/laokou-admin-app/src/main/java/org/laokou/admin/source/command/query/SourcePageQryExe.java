@@ -21,18 +21,13 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.source.convertor.SourceConvertor;
 import org.laokou.admin.source.dto.SourcePageQry;
 import org.laokou.admin.source.dto.clientobject.SourceCO;
-import org.laokou.common.tenant.mapper.SourceMapper;
-import org.laokou.common.tenant.mapper.SourceDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.tenant.mapper.SourceDO;
+import org.laokou.common.tenant.mapper.SourceMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询数据源请求执行器.
@@ -46,18 +41,9 @@ public class SourcePageQryExe {
 	private final SourceMapper sourceMapper;
 
 	public Result<Page<SourceCO>> execute(SourcePageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<SourceDO>> c1 = CompletableFuture
-				.supplyAsync(() -> sourceMapper.selectPageByCondition(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> sourceMapper.selectCountByCondition(qry),
-					executor);
-			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(SourceConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_Source_PageQueryTimeout", "数据源分页查询超时");
-		}
+		List<SourceDO> list = sourceMapper.selectObjectPage(qry);
+		long total = sourceMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(SourceConvertor::toClientObject).toList(), total));
 	}
 
 }

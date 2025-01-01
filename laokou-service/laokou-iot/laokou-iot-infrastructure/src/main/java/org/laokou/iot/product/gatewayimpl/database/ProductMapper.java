@@ -21,9 +21,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.laokou.iot.product.gatewayimpl.database.dataobject.ProductDO;
 import org.springframework.stereotype.Repository;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  *
@@ -34,7 +31,5 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Mapper
 @Repository
 public interface ProductMapper extends CrudMapper<Long, Integer, ProductDO> {
-
-	List<ProductDO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
 
 }

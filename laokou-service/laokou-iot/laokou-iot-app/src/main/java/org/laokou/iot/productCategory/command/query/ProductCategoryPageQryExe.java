@@ -18,21 +18,16 @@
 package org.laokou.iot.productCategory.command.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 import org.laokou.iot.productCategory.dto.ProductCategoryPageQry;
 import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
 import org.laokou.iot.productCategory.gatewayimpl.database.ProductCategoryMapper;
 import org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询产品类别请求执行器.
@@ -46,18 +41,9 @@ public class ProductCategoryPageQryExe {
 	private final ProductCategoryMapper productCategoryMapper;
 
 	public Result<Page<ProductCategoryCO>> execute(ProductCategoryPageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<ProductCategoryDO>> c1 = CompletableFuture
-				.supplyAsync(() -> productCategoryMapper.selectObjectPage(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture
-				.supplyAsync(() -> productCategoryMapper.selectObjectCount(qry), executor);
-			return Result.ok(Page.create(
-					c1.get(30, TimeUnit.SECONDS).stream().map(ProductCategoryConvertor::toClientObject).toList(),
-					c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_ProductCategory_PageQueryTimeout", "产品类别分页查询超时");
-		}
+		List<ProductCategoryDO> list = productCategoryMapper.selectObjectPage(qry);
+		long total = productCategoryMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(ProductCategoryConvertor::toClientObject).toList(), total));
 	}
 
 }

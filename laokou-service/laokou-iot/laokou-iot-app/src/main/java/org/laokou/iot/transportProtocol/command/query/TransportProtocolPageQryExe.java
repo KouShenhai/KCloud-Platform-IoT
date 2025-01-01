@@ -18,21 +18,16 @@
 package org.laokou.iot.transportProtocol.command.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.transportProtocol.convertor.TransportProtocolConvertor;
 import org.laokou.iot.transportProtocol.dto.TransportProtocolPageQry;
 import org.laokou.iot.transportProtocol.dto.clientobject.TransportProtocolCO;
 import org.laokou.iot.transportProtocol.gatewayimpl.database.TransportProtocolMapper;
 import org.laokou.iot.transportProtocol.gatewayimpl.database.dataobject.TransportProtocolDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.transportProtocol.convertor.TransportProtocolConvertor;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询传输协议请求执行器.
@@ -46,18 +41,9 @@ public class TransportProtocolPageQryExe {
 	private final TransportProtocolMapper transportProtocolMapper;
 
 	public Result<Page<TransportProtocolCO>> execute(TransportProtocolPageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<TransportProtocolDO>> c1 = CompletableFuture
-				.supplyAsync(() -> transportProtocolMapper.selectObjectPage(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture
-				.supplyAsync(() -> transportProtocolMapper.selectObjectCount(qry), executor);
-			return Result.ok(Page.create(
-					c1.get(30, TimeUnit.SECONDS).stream().map(TransportProtocolConvertor::toClientObject).toList(),
-					c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_Tp_PageQueryTimeout", "传输协议分页查询超时");
-		}
+		List<TransportProtocolDO> list = transportProtocolMapper.selectObjectPage(qry);
+		long total = transportProtocolMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(TransportProtocolConvertor::toClientObject).toList(), total));
 	}
 
 }

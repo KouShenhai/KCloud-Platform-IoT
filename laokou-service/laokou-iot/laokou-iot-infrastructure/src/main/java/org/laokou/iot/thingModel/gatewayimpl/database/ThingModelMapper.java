@@ -15,16 +15,12 @@
  *
  */
 
-package org.laokou.iot.model.gatewayimpl.database;
+package org.laokou.iot.thingModel.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.laokou.iot.model.gatewayimpl.database.dataobject.ThingModelDO;
+import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  *
@@ -35,7 +31,5 @@ import java.util.List;
 @Mapper
 @Repository
 public interface ThingModelMapper extends CrudMapper<Long, Integer, ThingModelDO> {
-
-	List<ThingModelDO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
 
 }

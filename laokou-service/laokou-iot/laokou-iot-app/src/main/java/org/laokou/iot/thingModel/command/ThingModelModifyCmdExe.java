@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.thingModel.dto.ThingModelModifyCmd;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.model.convertor.ModelConvertor;
+import org.laokou.iot.thingModel.convertor.ModelConvertor;
 import org.laokou.iot.thingModel.ability.ThingModelDomainService;
 
 /**

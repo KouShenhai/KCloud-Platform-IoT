@@ -23,16 +23,11 @@ import org.laokou.admin.oss.dto.OssPageQry;
 import org.laokou.admin.oss.dto.clientobject.OssCO;
 import org.laokou.admin.oss.gatewayimpl.database.OssMapper;
 import org.laokou.admin.oss.gatewayimpl.database.dataobject.OssDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询OSS请求执行器.
@@ -46,18 +41,9 @@ public class OssPageQryExe {
 	private final OssMapper ossMapper;
 
 	public Result<Page<OssCO>> execute(OssPageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<OssDO>> c1 = CompletableFuture
-				.supplyAsync(() -> ossMapper.selectPageByCondition(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ossMapper.selectCountByCondition(qry),
-					executor);
-			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(OssConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_Oss_PageQueryTimeout", "OSS分页查询超时");
-		}
+		List<OssDO> list = ossMapper.selectObjectPage(qry);
+		long total = ossMapper.selectCountByCondition(qry);
+		return Result.ok(Page.create(list.stream().map(OssConvertor::toClientObject).toList(), total));
 	}
 
 }

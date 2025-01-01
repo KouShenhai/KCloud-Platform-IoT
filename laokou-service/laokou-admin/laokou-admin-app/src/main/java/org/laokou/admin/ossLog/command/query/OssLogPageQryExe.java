@@ -17,6 +17,7 @@
 
 package org.laokou.admin.ossLog.command.query;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.ossLog.convertor.OssLogConvertor;
@@ -24,16 +25,11 @@ import org.laokou.admin.ossLog.dto.OssLogPageQry;
 import org.laokou.admin.ossLog.dto.clientobject.OssLogCO;
 import org.laokou.admin.ossLog.gatewayimpl.database.OssLogMapper;
 import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询OSS日志请求执行器.
@@ -48,18 +44,14 @@ public class OssLogPageQryExe {
 	private final OssLogMapper ossLogMapper;
 
 	public Result<Page<OssLogCO>> execute(OssLogPageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<OssLogDO>> c1 = CompletableFuture
-				.supplyAsync(() -> ossLogMapper.selectPageByCondition(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ossLogMapper.selectCountByCondition(qry),
-					executor);
-			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(OssLogConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
+		try {
+			DynamicDataSourceContextHolder.push("domain");
+			List<OssLogDO> list = ossLogMapper.selectObjectPage(qry);
+			long total = ossLogMapper.selectObjectCount(qry);
+			return Result.ok(Page.create(list.stream().map(OssLogConvertor::toClientObject).toList(), total));
 		}
-		catch (Exception e) {
-			log.error("错误信息：{}", e.getMessage());
-			throw new SystemException("S_OssLog_PageQueryTimeout", "OSS日志分页查询超时");
+		finally {
+			DynamicDataSourceContextHolder.clear();
 		}
 	}
 

@@ -18,13 +18,9 @@
 package org.laokou.admin.dept.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * 部门数据库映射.
@@ -34,9 +30,5 @@ import java.util.List;
 @Mapper
 @Repository
 public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
-
-	List<DeptDO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
-
-	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
 
 }

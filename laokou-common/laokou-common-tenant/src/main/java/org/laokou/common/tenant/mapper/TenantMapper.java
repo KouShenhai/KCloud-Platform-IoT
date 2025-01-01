@@ -19,11 +19,8 @@ package org.laokou.common.tenant.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * 租户数据库映射.
@@ -34,10 +31,6 @@ import java.util.List;
 @Repository
 public interface TenantMapper extends CrudMapper<Long, Integer, TenantDO> {
 
-	List<TenantDO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
-
-	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
-
-	Long selectIdTenantCode(@Param("tenantCode") String tenantCode);
+	Long selectIdByCode(@Param("code") String code);
 
 }

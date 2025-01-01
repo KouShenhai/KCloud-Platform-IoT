@@ -18,21 +18,16 @@
 package org.laokou.generator.template.command.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.generator.template.convertor.TemplateConvertor;
 import org.laokou.generator.template.dto.TemplatePageQry;
 import org.laokou.generator.template.dto.clientobject.TemplateCO;
 import org.laokou.generator.template.gatewayimpl.database.TemplateMapper;
 import org.laokou.generator.template.gatewayimpl.database.dataobject.TemplateDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.generator.template.convertor.TemplateConvertor;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询代码生成器模板请求执行器.
@@ -46,18 +41,9 @@ public class TemplatePageQryExe {
 	private final TemplateMapper templateMapper;
 
 	public Result<Page<TemplateCO>> execute(TemplatePageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<TemplateDO>> c1 = CompletableFuture
-				.supplyAsync(() -> templateMapper.selectObjectPage(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> templateMapper.selectObjectCount(qry),
-					executor);
-			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(TemplateConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_Template_PageQueryTimeout", "代码生成器模板分页查询超时");
-		}
+		List<TemplateDO> list = templateMapper.selectObjectPage(qry);
+		long total = templateMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(TemplateConvertor::toClientObject).toList(), total));
 	}
 
 }

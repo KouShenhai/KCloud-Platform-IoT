@@ -18,20 +18,16 @@
 package org.laokou.iot.device.command.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.device.convertor.DeviceConvertor;
 import org.laokou.iot.device.dto.DevicePageQry;
 import org.laokou.iot.device.dto.clientobject.DeviceCO;
 import org.laokou.iot.device.gatewayimpl.database.DeviceMapper;
 import org.laokou.iot.device.gatewayimpl.database.dataobject.DeviceDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.device.convertor.DeviceConvertor;
+
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询设备请求执行器.
@@ -45,18 +41,9 @@ public class DevicePageQryExe {
 	private final DeviceMapper deviceMapper;
 
 	public Result<Page<DeviceCO>> execute(DevicePageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<DeviceDO>> c1 = CompletableFuture
-				.supplyAsync(() -> deviceMapper.selectObjectPage(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> deviceMapper.selectObjectCount(qry),
-					executor);
-			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(DeviceConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_Device_PageQueryTimeout", "设备分页查询超时");
-		}
+		List<DeviceDO> list = deviceMapper.selectObjectPage(qry);
+		long total = deviceMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(DeviceConvertor::toClientObject).toList(), total));
 	}
 
 }
