@@ -17,22 +17,18 @@
 
 package org.laokou.admin.noticeLog.command.query;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.noticeLog.convertor.NoticeLogConvertor;
 import org.laokou.admin.noticeLog.dto.NoticeLogPageQry;
 import org.laokou.admin.noticeLog.dto.clientobject.NoticeLogCO;
 import org.laokou.admin.noticeLog.gatewayimpl.database.NoticeLogMapper;
 import org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询通知日志请求执行器.
@@ -46,17 +42,14 @@ public class NoticeLogPageQryExe {
 	private final NoticeLogMapper noticeLogMapper;
 
 	public Result<Page<NoticeLogCO>> execute(NoticeLogPageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<NoticeLogDO>> c1 = CompletableFuture
-				.supplyAsync(() -> noticeLogMapper.selectObjectPage(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> noticeLogMapper.selectObjectCount(qry),
-					executor);
-			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(NoticeLogConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
+		try {
+			DynamicDataSourceContextHolder.push("domain");
+			List<NoticeLogDO> list = noticeLogMapper.selectObjectPage(qry);
+			long total = noticeLogMapper.selectObjectCount(qry);
+			return Result.ok(Page.create(list.stream().map(NoticeLogConvertor::toClientObject).toList(), total));
 		}
-		catch (Exception e) {
-			throw new SystemException("S_NoticeLog_PageQueryTimeout", "通知日志分页查询超时");
+		finally {
+			DynamicDataSourceContextHolder.clear();
 		}
 	}
 

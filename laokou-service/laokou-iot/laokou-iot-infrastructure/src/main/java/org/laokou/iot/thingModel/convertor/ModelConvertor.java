@@ -15,9 +15,9 @@
  *
  */
 
-package org.laokou.iot.model.convertor;
+package org.laokou.iot.thingModel.convertor;
 
-import org.laokou.iot.model.gatewayimpl.database.dataobject.ThingModelDO;
+import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
 import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
 import org.laokou.iot.thingModel.model.ThingModelE;
 

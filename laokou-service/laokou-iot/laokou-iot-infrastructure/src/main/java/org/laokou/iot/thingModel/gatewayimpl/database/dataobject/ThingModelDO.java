@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.model.gatewayimpl.database.dataobject;
+package org.laokou.iot.thingModel.gatewayimpl.database.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

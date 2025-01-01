@@ -18,21 +18,16 @@
 package org.laokou.iot.productModel.command.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.productModel.convertor.ProductModelConvertor;
 import org.laokou.iot.productModel.dto.ProductModelPageQry;
 import org.laokou.iot.productModel.dto.clientobject.ProductModelCO;
 import org.laokou.iot.productModel.gatewayimpl.database.ProductModelMapper;
 import org.laokou.iot.productModel.gatewayimpl.database.dataobject.ProductModelDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.productModel.convertor.ProductModelConvertor;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询产品模型请求执行器.
@@ -46,18 +41,9 @@ public class ProductModelPageQryExe {
 	private final ProductModelMapper productModelMapper;
 
 	public Result<Page<ProductModelCO>> execute(ProductModelPageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<ProductModelDO>> c1 = CompletableFuture
-				.supplyAsync(() -> productModelMapper.selectObjectPage(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> productModelMapper.selectObjectCount(qry),
-					executor);
-			return Result.ok(Page.create(
-					c1.get(30, TimeUnit.SECONDS).stream().map(ProductModelConvertor::toClientObject).toList(),
-					c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_ProductModel_PageQueryTimeout", "产品模型分页查询超时");
-		}
+		List<ProductModelDO> list = productModelMapper.selectObjectPage(qry);
+		long total = productModelMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(ProductModelConvertor::toClientObject).toList(), total));
 	}
 
 }

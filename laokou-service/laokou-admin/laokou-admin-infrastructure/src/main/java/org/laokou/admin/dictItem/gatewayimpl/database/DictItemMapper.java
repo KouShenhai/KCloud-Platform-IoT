@@ -18,13 +18,9 @@
 package org.laokou.admin.dictItem.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * 字典项数据库映射.
@@ -34,9 +30,5 @@ import java.util.List;
 @Mapper
 @Repository
 public interface DictItemMapper extends CrudMapper<Long, Integer, DictItemDO> {
-
-	List<DictItemDO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
-
-	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
 
 }

@@ -25,16 +25,11 @@ import org.laokou.admin.loginLog.dto.LoginLogPageQry;
 import org.laokou.admin.loginLog.dto.clientobject.LoginLogCO;
 import org.laokou.admin.loginLog.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询登录日志请求执行器.
@@ -49,32 +44,14 @@ public class LoginLogPageQryExe {
 	private final LoginLogMapper loginLogMapper;
 
 	public Result<Page<LoginLogCO>> execute(LoginLogPageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<LoginLogDO>> c1 = CompletableFuture.supplyAsync(() -> {
-				try {
-					DynamicDataSourceContextHolder.push("domain");
-					return loginLogMapper.selectObjectPage(qry);
-				}
-				finally {
-					DynamicDataSourceContextHolder.clear();
-				}
-			}, executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> {
-				try {
-					DynamicDataSourceContextHolder.push("domain");
-					return loginLogMapper.selectObjectCount(qry);
-				}
-				finally {
-					DynamicDataSourceContextHolder.clear();
-				}
-			}, executor);
-			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(LoginLogConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
+		try {
+			DynamicDataSourceContextHolder.push("domain");
+			List<LoginLogDO> list = loginLogMapper.selectObjectPage(qry);
+			long total = loginLogMapper.selectObjectCount(qry);
+			return Result.ok(Page.create(list.stream().map(LoginLogConvertor::toClientObject).toList(), total));
 		}
-		catch (Exception e) {
-			log.error("错误信息：{}", e.getMessage());
-			throw new SystemException("S_LoginLog_PageQueryTimeout", "登录日志分页查询超时");
+		finally {
+			DynamicDataSourceContextHolder.clear();
 		}
 	}
 

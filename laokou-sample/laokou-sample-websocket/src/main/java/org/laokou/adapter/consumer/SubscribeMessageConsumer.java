@@ -48,6 +48,8 @@ import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAG
 @RocketMQMessageListener(consumerGroup = LAOKOU_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
 public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 
+	private static final ExecutorService EXECUTOR = ThreadUtil.newVirtualTaskExecutor();
+
 	private final Server webSocketServer;
 
 	public SubscribeMessageConsumer(Server webSocketServer) {
@@ -56,21 +58,19 @@ public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 
 	@Override
 	public void onMessage(MessageExt message) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			try {
-				String msg = new String(message.getBody(), StandardCharsets.UTF_8);
-				PayloadCO co = JacksonUtil.toBean(msg, PayloadCO.class);
-				TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(co.getContent());
-				List<Callable<Boolean>> callableList = co.getReceivers().stream().map(clientId -> (Callable<Boolean>) () -> {
-					webSocketServer.send(clientId, webSocketFrame);
-					return true;
-				}).toList();
-				executor.invokeAll(callableList);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-				log.error("错误信息：{}", e.getMessage());
-				throw new SystemException("S_UnKnow_Error", e.getMessage());
-			}
+		try {
+			String msg = new String(message.getBody(), StandardCharsets.UTF_8);
+			PayloadCO co = JacksonUtil.toBean(msg, PayloadCO.class);
+			TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(co.getContent());
+			List<Callable<Boolean>> callableList = co.getReceivers().stream().map(clientId -> (Callable<Boolean>) () -> {
+				webSocketServer.send(clientId, webSocketFrame);
+				return true;
+			}).toList();
+			EXECUTOR.invokeAll(callableList);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			log.error("错误信息：{}", e.getMessage());
+			throw new SystemException("S_UnKnow_Error", e.getMessage());
 		}
     }
 

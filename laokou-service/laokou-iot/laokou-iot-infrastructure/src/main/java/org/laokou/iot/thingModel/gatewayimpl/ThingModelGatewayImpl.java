@@ -15,12 +15,12 @@
  *
  */
 
-package org.laokou.iot.model.gatewayimpl;
+package org.laokou.iot.thingModel.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.iot.model.convertor.ModelConvertor;
-import org.laokou.iot.model.gatewayimpl.database.ThingModelMapper;
-import org.laokou.iot.model.gatewayimpl.database.dataobject.ThingModelDO;
+import org.laokou.iot.thingModel.convertor.ModelConvertor;
+import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
+import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
 import org.laokou.iot.thingModel.gateway.ThingModelGateway;
 import org.laokou.iot.thingModel.model.ThingModelE;
 import org.springframework.stereotype.Component;

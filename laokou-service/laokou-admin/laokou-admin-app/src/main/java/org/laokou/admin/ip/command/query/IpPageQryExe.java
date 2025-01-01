@@ -23,16 +23,11 @@ import org.laokou.admin.ip.dto.IpPageQry;
 import org.laokou.admin.ip.dto.clientobject.IpCO;
 import org.laokou.admin.ip.gatewayimpl.database.IpMapper;
 import org.laokou.admin.ip.gatewayimpl.database.dataobject.IpDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询IP请求执行器.
@@ -46,16 +41,9 @@ public class IpPageQryExe {
 	private final IpMapper ipMapper;
 
 	public Result<Page<IpCO>> execute(IpPageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			Future<List<IpDO>> future1 = executor.submit(() -> ipMapper.selectPageByCondition(qry));
-			Future<Long> future2 = executor.submit(() -> ipMapper.selectCountByCondition(qry));
-			return Result
-				.ok(Page.create(future1.get(30, TimeUnit.SECONDS).stream().map(IpConvertor::toClientObject).toList(),
-						future2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_Ip_PageQueryTimeout", "IP分页查询超时");
-		}
+		List<IpDO> list = ipMapper.selectObjectPage(qry);
+		long total = ipMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(IpConvertor::toClientObject).toList(), total));
 	}
 
 }

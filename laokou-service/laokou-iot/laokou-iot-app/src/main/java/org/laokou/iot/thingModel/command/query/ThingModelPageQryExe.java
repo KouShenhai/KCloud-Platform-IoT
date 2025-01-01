@@ -18,21 +18,16 @@
 package org.laokou.iot.thingModel.command.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.iot.thingModel.dto.ThingModelPageQry;
-import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
-import org.laokou.iot.model.gatewayimpl.database.ThingModelMapper;
-import org.laokou.iot.model.gatewayimpl.database.dataobject.ThingModelDO;
-import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.thingModel.convertor.ModelConvertor;
+import org.laokou.iot.thingModel.dto.ThingModelPageQry;
+import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
+import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
+import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.model.convertor.ModelConvertor;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页物查询模型请求执行器.
@@ -46,18 +41,9 @@ public class ThingModelPageQryExe {
 	private final ThingModelMapper thingModelMapper;
 
 	public Result<Page<ThingModelCO>> execute(ThingModelPageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<ThingModelDO>> c1 = CompletableFuture
-				.supplyAsync(() -> thingModelMapper.selectObjectPage(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> thingModelMapper.selectObjectCount(qry),
-					executor);
-			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(ModelConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_ThingModel_PageQueryTimeout", "物模型分页查询超时");
-		}
+		List<ThingModelDO> list = thingModelMapper.selectObjectPage(qry);
+		long total = thingModelMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(ModelConvertor::toClientObject).toList(), total));
 	}
 
 }

@@ -21,9 +21,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.laokou.iot.communicationProtocol.gatewayimpl.database.dataobject.CommunicationProtocolDO;
 import org.springframework.stereotype.Repository;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  *
@@ -34,7 +31,5 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Mapper
 @Repository
 public interface CommunicationProtocolMapper extends CrudMapper<Long, Integer, CommunicationProtocolDO> {
-
-	List<CommunicationProtocolDO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
 
 }

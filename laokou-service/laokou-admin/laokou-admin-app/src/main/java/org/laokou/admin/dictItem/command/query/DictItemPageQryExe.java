@@ -23,16 +23,11 @@ import org.laokou.admin.dictItem.dto.DictItemPageQry;
 import org.laokou.admin.dictItem.dto.clientobject.DictItemCO;
 import org.laokou.admin.dictItem.gatewayimpl.database.DictItemMapper;
 import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询字典项请求执行器.
@@ -46,18 +41,9 @@ public class DictItemPageQryExe {
 	private final DictItemMapper dictItemMapper;
 
 	public Result<Page<DictItemCO>> execute(DictItemPageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<DictItemDO>> c1 = CompletableFuture
-				.supplyAsync(() -> dictItemMapper.selectPageByCondition(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> dictItemMapper.selectCountByCondition(qry),
-					executor);
-			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(DictItemConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_DictItem_PageQueryTimeout", "字典项分页查询超时");
-		}
+		List<DictItemDO> list = dictItemMapper.selectObjectPage(qry);
+		long total = dictItemMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(DictItemConvertor::toClientObject).toList(), total));
 	}
 
 }

@@ -18,21 +18,16 @@
 package org.laokou.generator.column.command.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.generator.column.convertor.ColumnConvertor;
 import org.laokou.generator.column.dto.ColumnPageQry;
 import org.laokou.generator.column.dto.clientobject.ColumnCO;
 import org.laokou.generator.column.gatewayimpl.database.ColumnMapper;
 import org.laokou.generator.column.gatewayimpl.database.dataobject.ColumnDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.generator.column.convertor.ColumnConvertor;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询代码生成器字段请求执行器.
@@ -46,18 +41,9 @@ public class ColumnPageQryExe {
 	private final ColumnMapper columnMapper;
 
 	public Result<Page<ColumnCO>> execute(ColumnPageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<ColumnDO>> c1 = CompletableFuture
-				.supplyAsync(() -> columnMapper.selectObjectPage(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> columnMapper.selectObjectCount(qry),
-					executor);
-			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(ColumnConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_Column_PageQueryTimeout", "代码生成器字段分页查询超时");
-		}
+		List<ColumnDO> list = columnMapper.selectObjectPage(qry);
+		long total = columnMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(ColumnConvertor::toClientObject).toList(), total));
 	}
 
 }

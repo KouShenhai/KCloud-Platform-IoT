@@ -18,13 +18,9 @@
 package org.laokou.admin.user.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * 用户数据库映射.
@@ -34,9 +30,5 @@ import java.util.List;
 @Mapper
 @Repository
 public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
-
-	List<UserDO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
-
-	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
 
 }

@@ -18,13 +18,9 @@
 package org.laokou.admin.ip.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.ip.gatewayimpl.database.dataobject.IpDO;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * IP数据库映射.
@@ -34,9 +30,5 @@ import java.util.List;
 @Mapper
 @Repository
 public interface IpMapper extends CrudMapper<Long, Integer, IpDO> {
-
-	List<IpDO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
-
-	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
 
 }

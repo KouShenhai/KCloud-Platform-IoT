@@ -18,21 +18,16 @@
 package org.laokou.generator.info.command.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.generator.info.convertor.InfoConvertor;
 import org.laokou.generator.info.dto.InfoPageQry;
 import org.laokou.generator.info.dto.clientobject.InfoCO;
 import org.laokou.generator.info.gatewayimpl.database.InfoMapper;
 import org.laokou.generator.info.gatewayimpl.database.dataobject.InfoDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.generator.info.convertor.InfoConvertor;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询代码生成器信息请求执行器.
@@ -46,18 +41,9 @@ public class InfoPageQryExe {
 	private final InfoMapper infoMapper;
 
 	public Result<Page<InfoCO>> execute(InfoPageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<InfoDO>> c1 = CompletableFuture.supplyAsync(() -> infoMapper.selectObjectPage(qry),
-					executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> infoMapper.selectObjectCount(qry),
-					executor);
-			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(InfoConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_Info_PageQueryTimeout", "代码生成器信息分页查询超时");
-		}
+		List<InfoDO> list = infoMapper.selectObjectPage(qry);
+		long total = infoMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(InfoConvertor::toClientObject).toList(), total));
 	}
 
 }

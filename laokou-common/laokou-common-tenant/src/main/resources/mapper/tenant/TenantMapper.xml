@@ -41,15 +41,15 @@
 		where id = #{id}
 	</select>
 
-  <select id="selectIdTenantCode" resultType="java.lang.Long">
+  <select id="selectIdByCode" resultType="java.lang.Long">
     <choose>
-      <when test="tenantCode == 'laokou'">
+      <when test="code == 'laokou'">
         select 0
       </when>
       <otherwise>
         select id
         from boot_sys_tenant
-        where code = #{tenantCode}
+        where code = #{code}
         and del_flag = 0
       </otherwise>
     </choose>

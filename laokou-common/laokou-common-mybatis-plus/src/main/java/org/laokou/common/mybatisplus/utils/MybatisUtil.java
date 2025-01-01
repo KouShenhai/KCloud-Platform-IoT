@@ -50,6 +50,8 @@ public class MybatisUtil {
 
 	private static final int DEFAULT_BATCH_NUM = 100000;
 
+	private static final ExecutorService EXECUTOR = ThreadUtil.newVirtualTaskExecutor();
+
 	private final SqlSessionFactory sqlSessionFactory;
 
 	public <T, M> void batch(List<T> dataList, int batchNum, int timeout, Class<M> clazz, BiConsumer<M, T> consumer) {
@@ -76,28 +78,26 @@ public class MybatisUtil {
 	 */
 	public <T, M> void batch(List<T> dataList, int batchNum, int timeout, Class<M> clazz, String ds,
 			BiConsumer<M, T> consumer) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			try {
-				// 数据分组
-				List<List<T>> partition = Lists.partition(dataList, batchNum);
-				AtomicBoolean rollback = new AtomicBoolean(false);
-				CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
-				// 虚拟线程
-				List<Callable<Boolean>> futures = partition.stream().map(item -> (Callable<Boolean>) () -> {
-					handleBatch(timeout, item, clazz, consumer, rollback, ds, cyclicBarrier);
-					return true;
-				}).toList();
-				// 执行任务
-				executor.invokeAll(futures);
-				if (rollback.get()) {
-					throw new SystemException("S_DS_TransactionRolledBack", "事务已回滚");
-				}
+		try {
+			// 数据分组
+			List<List<T>> partition = Lists.partition(dataList, batchNum);
+			AtomicBoolean rollback = new AtomicBoolean(false);
+			CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
+			// 虚拟线程
+			List<Callable<Boolean>> futures = partition.stream().map(item -> (Callable<Boolean>) () -> {
+				handleBatch(timeout, item, clazz, consumer, rollback, ds, cyclicBarrier);
+				return true;
+			}).toList();
+			// 执行任务
+			EXECUTOR.invokeAll(futures);
+			if (rollback.get()) {
+				throw new SystemException("S_DS_TransactionRolledBack", "事务已回滚");
 			}
-			catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-				log.error("错误信息：{}", e.getMessage());
-				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
-			}
+		}
+		catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			log.error("错误信息：{}", e.getMessage());
+			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 	}
 

@@ -18,14 +18,9 @@
 package org.laokou.admin.ossLog.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * OSS日志数据库映射.
@@ -35,9 +30,5 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Mapper
 @Repository
 public interface OssLogMapper extends CrudMapper<Long, Integer, OssLogDO> {
-
-	List<OssLogDO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
-
-	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
 
 }

@@ -21,9 +21,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.laokou.generator.info.gatewayimpl.database.dataobject.InfoDO;
 import org.springframework.stereotype.Repository;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  *
@@ -34,7 +31,5 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Mapper
 @Repository
 public interface InfoMapper extends CrudMapper<Long, Integer, InfoDO> {
-
-	List<InfoDO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
 
 }

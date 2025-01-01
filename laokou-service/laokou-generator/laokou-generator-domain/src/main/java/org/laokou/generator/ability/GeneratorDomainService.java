@@ -19,10 +19,12 @@ package org.laokou.generator.ability;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.laokou.common.i18n.utils.ResourceUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.generator.gateway.TableGateway;
 import org.laokou.generator.model.GeneratorA;
 import org.laokou.generator.model.TableV;
@@ -34,7 +36,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
@@ -42,9 +44,12 @@ import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class GeneratorDomainService {
+
+	private static final ExecutorService EXECUTOR = ThreadUtil.newVirtualTaskExecutor();
 
 	/**
 	 * 代码生成路径.
@@ -82,17 +87,24 @@ public class GeneratorDomainService {
 	}
 
 	private void generateCode(GeneratorA generatorA, TableV tableV, List<Template> templates) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+		try {
 			// 更新表信息
 			generatorA.updateTable(tableV);
 			// 根据模板批量生成代码
-			templates.parallelStream().map(item -> CompletableFuture.runAsync(() -> {
+			List<Callable<Boolean>> list = templates.stream().map(item -> (Callable<Boolean>) () -> {
 				String content = getContent(generatorA.toMap(), item.getTemplatePath(TEMPLATE_PATH));
 				// 写入文件
 				String directory = SOURCE_PATH + generatorA.getModuleName() + SLASH + item.getFileDirectory(generatorA);
 				File file = FileUtil.create(directory, item.getFileName(generatorA));
 				FileUtil.write(file, content.getBytes(StandardCharsets.UTF_8));
-			}, executor)).toList().forEach(CompletableFuture::join);
+				return true;
+			}).toList();
+			EXECUTOR.invokeAll(list);
+		}
+		catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			log.error("错误信息：{}", e.getMessage());
+			throw new SystemException("S_UnKnow_Error", e.getMessage());
 		}
 	}
 

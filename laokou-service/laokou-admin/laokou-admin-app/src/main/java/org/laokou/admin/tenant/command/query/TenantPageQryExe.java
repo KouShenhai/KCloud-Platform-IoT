@@ -21,18 +21,13 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.tenant.convertor.TenantConvertor;
 import org.laokou.admin.tenant.dto.TenantPageQry;
 import org.laokou.admin.tenant.dto.clientobject.TenantCO;
-import org.laokou.common.tenant.mapper.TenantMapper;
-import org.laokou.common.tenant.mapper.TenantDO;
-import org.laokou.common.core.utils.ThreadUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.tenant.mapper.TenantDO;
+import org.laokou.common.tenant.mapper.TenantMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询租户请求执行器.
@@ -46,18 +41,9 @@ public class TenantPageQryExe {
 	private final TenantMapper tenantMapper;
 
 	public Result<Page<TenantCO>> execute(TenantPageQry qry) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-			CompletableFuture<List<TenantDO>> c1 = CompletableFuture
-				.supplyAsync(() -> tenantMapper.selectPageByCondition(qry), executor);
-			CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> tenantMapper.selectCountByCondition(qry),
-					executor);
-			return Result
-				.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(TenantConvertor::toClientObject).toList(),
-						c2.get(30, TimeUnit.SECONDS)));
-		}
-		catch (Exception e) {
-			throw new SystemException("S_Tenant_PageQueryTimeout", "租户分页查询超时");
-		}
+		List<TenantDO> list = tenantMapper.selectObjectPage(qry);
+		long total = tenantMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(TenantConvertor::toClientObject).toList(), total));
 	}
 
 }
