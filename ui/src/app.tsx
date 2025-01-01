@@ -9,6 +9,8 @@ import {LogoutOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
 import {logoutV3} from "@/services/auth/auth";
 import {clearToken, getAccessToken, getExpiresTime, getRefreshToken} from "@/access";
+import React from "react";
+import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
 
 export async function getInitialState(): Promise<{
 	name: string;
@@ -20,11 +22,36 @@ export async function getInitialState(): Promise<{
 	};
 }
 
-export const layout = () => {
+export const layout: RunTimeLayoutConfig  = ({ initialState }) => {
 	return {
 		logo: '/logo.png',
 		menu: {
 			locale: false,
+			params: initialState,
+			request: async (params, defaultMenuData) => {
+				return [
+					{
+						name: '首页',
+						path: '/home',
+					},
+					{
+						name: '系统管理',
+						path: '/sys',
+						routes: [
+							{
+								name: '日志管理',
+								path: '/sys/log',
+								routes: [
+									{
+										name: '登录日志',
+										path: '/sys/log/login'
+									}
+								]
+							}
+						]
+					}
+				]
+			}
 		},
 		layout: 'mix',
 		splitMenus: false,
@@ -198,7 +225,3 @@ export const antd: (memo: { theme: { algorithm?: any }; appConfig: { message: { 
 
 	return memo;
 };
-
-export function patchClientRoutes({ routes }) {
-	console.log(routes)
-}
