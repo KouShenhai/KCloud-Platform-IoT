@@ -27,7 +27,7 @@ import org.laokou.common.core.utils.MDCUtil;
 class MDCUtilTest {
 
 	@Test
-	void testMDC(){
+	void testMDC() {
 		MDCUtil.put("111", "222");
 		Assertions.assertNotNull(MDCUtil.getTraceId());
 		Assertions.assertNotNull(MDCUtil.getSpanId());

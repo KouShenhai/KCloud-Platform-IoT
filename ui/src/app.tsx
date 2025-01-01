@@ -28,7 +28,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }) => {
 		menu: {
 			locale: false,
 			params: initialState,
-			request: async (params, defaultMenuData) => {
+			request: async () => {
 				return [
 					{
 						name: '首页',
