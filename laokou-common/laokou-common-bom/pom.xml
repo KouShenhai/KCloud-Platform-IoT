@@ -125,7 +125,7 @@
     <!--commons-lang3版本-->
     <commons-lang3.version>3.17.0</commons-lang3.version>
     <!--zstd-jni版本-->
-    <zstd-jni.version>1.5.6-8</zstd-jni.version>
+    <zstd-jni.version>1.5.6-9</zstd-jni.version>
     <!--snail-job版本-->
     <snail-job.version>1.2.0-jdk8</snail-job.version>
     <!--feign版本-->
