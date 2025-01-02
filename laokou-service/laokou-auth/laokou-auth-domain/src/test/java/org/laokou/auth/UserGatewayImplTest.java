@@ -17,6 +17,8 @@
 
 package org.laokou.auth;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.laokou.auth.gateway.UserGateway;
 import org.laokou.auth.model.UserE;
 
@@ -26,6 +28,12 @@ import org.laokou.auth.model.UserE;
  * @author laokou
  */
 class UserGatewayImplTest implements UserGateway {
+
+	@Test
+	void test() {
+		UserE user = new UserE();
+		Assertions.assertNotNull(getProfile(user, "tenantCode"));
+	}
 
 	@Override
 	public UserE getProfile(UserE user, String tenantCode) {

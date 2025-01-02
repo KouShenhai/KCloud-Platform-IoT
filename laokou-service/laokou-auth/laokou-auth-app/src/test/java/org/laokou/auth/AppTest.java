@@ -17,6 +17,8 @@
 
 package org.laokou.auth;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -29,6 +31,15 @@ class AppTest {
 
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
+	}
+
+	@Test
+	void test() {
+		Assertions.assertNotNull(testStr());
+	}
+
+	private String testStr() {
+		return "123";
 	}
 
 }

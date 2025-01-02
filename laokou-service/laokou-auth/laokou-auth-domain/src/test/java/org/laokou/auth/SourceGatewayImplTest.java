@@ -17,6 +17,8 @@
 
 package org.laokou.auth;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.laokou.auth.gateway.SourceGateway;
 
 /**
@@ -25,6 +27,11 @@ import org.laokou.auth.gateway.SourceGateway;
  * @author laokou
  */
 class SourceGatewayImplTest implements SourceGateway {
+
+	@Test
+	void test() {
+		Assertions.assertEquals("master", getPrefix("tenantCode"));
+	}
 
 	@Override
 	public String getPrefix(String tenantCode) {
