@@ -158,6 +158,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-rabbitmq</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
         <groupId>com.influxdb</groupId>
         <artifactId>influxdb-client-java</artifactId>
         <version>${influxdb-client-java.version}</version>

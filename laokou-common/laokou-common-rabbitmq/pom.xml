@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>laokou-common</artifactId>
     <groupId>org.laokou</groupId>
+    <artifactId>laokou-common</artifactId>
     <version>3.4.1</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>laokou-common-idempotent</artifactId>
+
+  <artifactId>laokou-common-rabbitmq</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-aop</artifactId>
+      <artifactId>spring-boot-starter-amqp</artifactId>
       <exclusions>
         <exclusion>
           <groupId>ch.qos.logback</groupId>
@@ -31,12 +32,11 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-redis</artifactId>
+      <artifactId>laokou-common-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <scope>provided</scope>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-log4j2</artifactId>
     </dependency>
   </dependencies>
 

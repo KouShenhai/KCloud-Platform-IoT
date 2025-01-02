@@ -335,6 +335,7 @@ services:
       - auth
       - logstash
       - gateway
+      - iot
     networks:
       - laokou_network
   gateway:
@@ -354,6 +355,8 @@ services:
       - laokou_network
     depends_on:
       - nacos
+      - kafka
+      - redis
   auth:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.4.1
     container_name: auth
@@ -374,6 +377,8 @@ services:
       - admin
       - rocketmq-namesrv
       - rocketmq-broker
+      - kafka
+      - redis
   iot:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-iot-start:3.4.1
     container_name: iot
@@ -393,6 +398,8 @@ services:
       - nacos
       - rocketmq-namesrv
       - rocketmq-broker
+      - kafka
+      - redis
   admin:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.4.1
     container_name: admin
@@ -413,6 +420,8 @@ services:
       - elasticsearch
       - rocketmq-namesrv
       - rocketmq-broker
+      - kafka
+      - redis
   logstash:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.1
     container_name: logstash
@@ -432,8 +441,6 @@ services:
       - nacos
       - elasticsearch
       - kafka
-      - rocketmq-namesrv
-      - rocketmq-broker
   job:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-snail-job:3.4.1
     container_name: job
