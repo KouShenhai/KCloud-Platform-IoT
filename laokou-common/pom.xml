@@ -75,7 +75,8 @@
     <module>laokou-common-statemachine</module>
     <module>laokou-common-ruleengine</module>
     <module>laokou-common-banner</module>
-      <module>laokou-common-influxdb</module>
+    <module>laokou-common-influxdb</module>
+    <module>laokou-common-rabbitmq</module>
   </modules>
 
 </project>
