@@ -17,6 +17,8 @@
 
 package org.laokou.auth;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.laokou.auth.gateway.TenantGateway;
 
 /**
@@ -25,6 +27,12 @@ import org.laokou.auth.gateway.TenantGateway;
  * @author laokou
  */
 class TenantGatewayImplTest implements TenantGateway {
+
+	@Test
+	void test() {
+		Long tenantId = getId("tenantCode");
+		Assertions.assertEquals(0L, tenantId);
+	}
 
 	@Override
 	public Long getId(String tenantCode) {

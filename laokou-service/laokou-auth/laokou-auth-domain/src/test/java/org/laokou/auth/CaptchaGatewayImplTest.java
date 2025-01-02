@@ -17,6 +17,8 @@
 
 package org.laokou.auth;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.laokou.auth.gateway.CaptchaGateway;
 
 /**
@@ -25,6 +27,11 @@ import org.laokou.auth.gateway.CaptchaGateway;
  * @author laokou
  */
 class CaptchaGatewayImplTest implements CaptchaGateway {
+
+	@Test
+	void test() {
+		Assertions.assertTrue(validate("key", "code"));
+	}
 
 	@Override
 	public void set(String key, String captcha) {

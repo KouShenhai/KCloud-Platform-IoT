@@ -17,6 +17,8 @@
 
 package org.laokou.auth;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.util.DigestUtils;
@@ -30,13 +32,19 @@ import java.nio.charset.StandardCharsets;
  */
 class PasswordValidatorTest implements PasswordValidator {
 
+	static String getEncodePassword(String password) {
+		return DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
+	}
+
+	@Test
+	void test() {
+		String pwd = getEncodePassword("123");
+		Assertions.assertTrue(validate("123", pwd));
+	}
+
 	@Override
 	public boolean validate(CharSequence rawPassword, String encodedPassword) {
 		return ObjectUtil.equals(getEncodePassword(rawPassword.toString()), encodedPassword);
-	}
-
-	static String getEncodePassword(String password) {
-		return DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
 	}
 
 }

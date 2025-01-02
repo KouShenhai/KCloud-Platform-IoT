@@ -17,6 +17,8 @@
 
 package org.laokou.auth;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.laokou.auth.gateway.DeptGateway;
 import org.laokou.auth.model.UserE;
 
@@ -29,6 +31,11 @@ import java.util.List;
  * @author laokou
  */
 class DeptGatewayImplTest implements DeptGateway {
+
+	@Test
+	void test() {
+		Assertions.assertNotNull(getPaths(new UserE()));
+	}
 
 	@Override
 	public List<String> getPaths(UserE user) {

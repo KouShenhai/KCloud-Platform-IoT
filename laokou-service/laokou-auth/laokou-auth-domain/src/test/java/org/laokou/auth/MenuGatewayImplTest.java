@@ -17,6 +17,7 @@
 
 package org.laokou.auth;
 
+import org.junit.jupiter.api.Test;
 import org.laokou.auth.gateway.MenuGateway;
 import org.laokou.auth.model.UserE;
 
@@ -28,6 +29,13 @@ import java.util.Set;
  * @author laokou
  */
 class MenuGatewayImplTest implements MenuGateway {
+
+	@Test
+	void test() {
+		UserE user = new UserE();
+		Set<String> permissions = getPermissions(user);
+		assert permissions.contains("sys:user:page");
+	}
 
 	@Override
 	public Set<String> getPermissions(UserE user) {

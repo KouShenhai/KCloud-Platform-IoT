@@ -17,6 +17,8 @@
 
 package org.laokou.auth;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.laokou.auth.gateway.NoticeLogGateway;
 import org.laokou.auth.model.NoticeLogE;
 
@@ -27,9 +29,16 @@ import org.laokou.auth.model.NoticeLogE;
  */
 public class NoticeLogGatewayImplTest implements NoticeLogGateway {
 
+	@Test
+	void test() {
+		NoticeLogE noticeLog = new NoticeLogE();
+		create(noticeLog);
+		Assertions.assertEquals("1", noticeLog.getUuid());
+	}
+
 	@Override
 	public void create(NoticeLogE noticeLog) {
-
+		noticeLog.setUuid("1");
 	}
 
 }

@@ -17,6 +17,8 @@
 
 package org.laokou.auth;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.laokou.auth.gateway.LoginLogGateway;
 import org.laokou.auth.model.LoginLogE;
 
@@ -27,9 +29,16 @@ import org.laokou.auth.model.LoginLogE;
  */
 class LoginLogGatewayImplTest implements LoginLogGateway {
 
+	@Test
+	void test() {
+		LoginLogE loginLogE = new LoginLogE();
+		create(loginLogE);
+		Assertions.assertEquals("127.0.0.1", loginLogE.getIp());
+	}
+
 	@Override
 	public void create(LoginLogE loginLog) {
-
+		loginLog.setIp("127.0.0.1");
 	}
 
 }
