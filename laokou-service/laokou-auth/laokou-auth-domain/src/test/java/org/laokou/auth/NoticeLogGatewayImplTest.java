@@ -27,7 +27,7 @@ import org.laokou.auth.model.NoticeLogE;
  *
  * @author laokou
  */
-public class NoticeLogGatewayImplTest implements NoticeLogGateway {
+class NoticeLogGatewayImplTest implements NoticeLogGateway {
 
 	@Test
 	void test() {

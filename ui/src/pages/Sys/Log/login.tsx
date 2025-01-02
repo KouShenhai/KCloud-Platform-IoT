@@ -45,6 +45,7 @@ export default () => {
 		loginLogParam = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
+			pageIndex: params?.pageSize * (params?.current - 1),
 			username: trim(params?.username),
 			ip: trim(params?.ip),
 			address: trim(params?.address),
