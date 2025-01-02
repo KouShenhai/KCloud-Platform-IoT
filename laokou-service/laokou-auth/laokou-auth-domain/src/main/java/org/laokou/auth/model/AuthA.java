@@ -283,9 +283,9 @@ public class AuthA extends AggregateRoot {
 			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
 					LoginStatus.OK.getCode(), EMPTY, grantType.getCode(), super.instant);
 		}
-		else if (e instanceof SystemException) {
+		else if (e instanceof SystemException ex) {
 			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
-					LoginStatus.FAIL.getCode(), e.getMsg(), grantType.getCode(), super.instant);
+					LoginStatus.FAIL.getCode(), ex.getMsg(), grantType.getCode(), super.instant);
 		}
 		return null;
 	}
