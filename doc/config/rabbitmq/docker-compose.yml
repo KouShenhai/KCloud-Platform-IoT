@@ -1,4 +1,5 @@
 services:
+  # rabbitmq-plugins enable rabbitmq_management
   rabbitmq:
     image: rabbitmq:4.0.5-management
     container_name: rabbitmq
