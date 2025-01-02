@@ -66,6 +66,9 @@ public final class IdGenerator {
 		}
 	}
 
+	private IdGenerator() {
+	}
+
 	/**
 	 * 默认雪花ID.
 	 * @return long

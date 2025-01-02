@@ -56,6 +56,9 @@ public final class JacksonUtil {
 		.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 		.registerModule(new JavaTimeModule());
 
+	private JacksonUtil() {
+	}
+
 	/**
 	 * json字符转Bean.
 	 * @param json json字符串

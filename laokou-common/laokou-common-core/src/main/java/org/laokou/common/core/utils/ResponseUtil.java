@@ -38,6 +38,9 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
  */
 public final class ResponseUtil {
 
+	private ResponseUtil() {
+	}
+
 	/**
 	 * 响应视图【状态码OK，json格式】.
 	 * @param response 响应对象

@@ -27,6 +27,9 @@ import com.google.gson.GsonBuilder;
  */
 public final class GsonUtil {
 
+	private GsonUtil() {
+	}
+
 	/**
 	 * 对象转为gson字符串.
 	 * @param obj 对象

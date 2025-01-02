@@ -26,7 +26,10 @@ import org.laokou.common.security.utils.UserDetail;
 /**
  * @author laokou
  */
-public class UserConvertor {
+public final class UserConvertor {
+
+	private UserConvertor() {
+	}
 
 	public static UserDetail to(AuthA authA) {
 		UserE userE = authA.getUser();

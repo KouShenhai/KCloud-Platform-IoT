@@ -30,6 +30,9 @@ public final class MDCUtil {
 
 	private static final String SPAN_ID = "spanId";
 
+	private MDCUtil() {
+	}
+
 	/**
 	 * 写入MDC.
 	 * @param traceId 链路ID

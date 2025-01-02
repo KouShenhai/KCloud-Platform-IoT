@@ -27,6 +27,9 @@ import static org.laokou.common.i18n.common.constant.StringConstant.ROD;
  */
 public final class UUIDGenerator {
 
+	private UUIDGenerator() {
+	}
+
 	public static String generateUUID() {
 		return UUID.randomUUID().toString().replace(ROD, EMPTY);
 	}

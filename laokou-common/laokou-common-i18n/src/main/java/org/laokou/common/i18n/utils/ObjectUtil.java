@@ -26,6 +26,9 @@ import java.util.Objects;
  */
 public final class ObjectUtil {
 
+	private ObjectUtil() {
+	}
+
 	public static boolean isNotNull(Object o) {
 		return Objects.nonNull(o);
 	}

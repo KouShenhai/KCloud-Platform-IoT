@@ -45,6 +45,9 @@ import static org.laokou.common.i18n.utils.SslUtil.sslContext;
 @Slf4j
 public final class HttpUtil {
 
+	private HttpUtil() {
+	}
+
 	/**
 	 * 表单提交.
 	 * @param url 链接

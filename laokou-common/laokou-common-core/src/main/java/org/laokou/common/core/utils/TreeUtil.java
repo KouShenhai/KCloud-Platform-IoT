@@ -35,6 +35,9 @@ import java.util.Map;
  */
 public final class TreeUtil {
 
+	private TreeUtil() {
+	}
+
 	/**
 	 * 构建树节点.
 	 * @param treeNodes 菜单列表

@@ -30,7 +30,10 @@ import static org.laokou.common.i18n.utils.StringUtil.truncate;
 /**
  * @author laokou
  */
-public class LoginLogConvertor {
+public final class LoginLogConvertor {
+
+	private LoginLogConvertor() {
+	}
 
 	public static LoginLogE toEntity(LoginLogCO co) {
 		LoginLogE loginLogE = DomainFactory.getLoginLog();

@@ -30,7 +30,10 @@ import static org.laokou.common.i18n.utils.StringUtil.truncate;
 /**
  * @author laokou
  */
-public class NoticeLogConvertor {
+public final class NoticeLogConvertor {
+
+	private NoticeLogConvertor() {
+	}
 
 	public static NoticeLogCO toClientObject(DomainEvent domainEvent, MailResult result, String uuid) {
 		NoticeLogCO noticeLogCO = new NoticeLogCO();

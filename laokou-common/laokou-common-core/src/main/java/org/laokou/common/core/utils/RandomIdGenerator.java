@@ -34,6 +34,9 @@ public final class RandomIdGenerator {
 	// 默认的随机字符串长度.
 	private static final int DEFAULT_LENGTH = 16;
 
+	private RandomIdGenerator() {
+	}
+
 	/**
 	 * 生成一个随机的字符串 ID.
 	 * @return 随机生成的字符串 ID

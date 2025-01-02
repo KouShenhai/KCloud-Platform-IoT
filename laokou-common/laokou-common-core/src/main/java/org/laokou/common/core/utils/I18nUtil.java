@@ -30,6 +30,9 @@ import static org.laokou.common.core.i18n.I18nRequestContextFilter.LANG;
  */
 public final class I18nUtil {
 
+	private I18nUtil() {
+	}
+
 	/**
 	 * 请求头数据写入本地线程.
 	 * @param request 请求对象

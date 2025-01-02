@@ -34,6 +34,9 @@ import java.util.List;
  */
 public final class PropertyUtil {
 
+	private PropertyUtil() {
+	}
+
 	/**
 	 * 绑定或创建属性.
 	 * @param bindName 配置前缀

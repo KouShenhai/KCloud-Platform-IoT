@@ -27,6 +27,9 @@ import java.util.function.Function;
  */
 public final class EnumParser {
 
+	private EnumParser() {
+	}
+
 	public static <E extends Enum<E>, O> E parse(Class<E> clazz, Function<E, O> field, O value) {
 		if (value == null) {
 			return null;

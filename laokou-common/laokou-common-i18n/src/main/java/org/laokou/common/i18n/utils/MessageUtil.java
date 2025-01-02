@@ -38,6 +38,9 @@ public final class MessageUtil {
 		RESOURCE_BUNDLE_MESSAGE_SOURCE.setBasename("classpath:i18n/message");
 	}
 
+	private MessageUtil() {
+	}
+
 	public static String getMessage(String code) {
 		return getMessage(code, null);
 	}

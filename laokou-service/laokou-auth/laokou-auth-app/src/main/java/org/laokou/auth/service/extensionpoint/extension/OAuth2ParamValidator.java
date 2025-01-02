@@ -28,7 +28,10 @@ import static org.laokou.common.i18n.utils.ParamValidator.*;
 /**
  * @author laokou
  */
-public class OAuth2ParamValidator {
+public final class OAuth2ParamValidator {
+
+	private OAuth2ParamValidator() {
+	}
 
 	public static ParamValidator.Validate validateUsername(String username) {
 		if (StringUtil.isEmpty(username)) {

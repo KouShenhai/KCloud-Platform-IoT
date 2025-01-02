@@ -30,8 +30,12 @@ class ThreadUtilTest {
 
 	@Test
 	void testShutdownThreadExecutor() {
-		ThreadUtil.shutdown(ThreadUtil.newVirtualTaskExecutor(), 1);
-		ThreadUtil.shutdown(ThreadUtil.newTtlVirtualTaskExecutor(), 1);
+		ExecutorService virtualTaskExecutor = ThreadUtil.newVirtualTaskExecutor();
+		ExecutorService ttlVirtualTaskExecutor = ThreadUtil.newTtlVirtualTaskExecutor();
+		ThreadUtil.shutdown(virtualTaskExecutor, 1);
+		ThreadUtil.shutdown(ttlVirtualTaskExecutor, 1);
+		Assertions.assertTrue(virtualTaskExecutor.isShutdown());
+		Assertions.assertTrue(ttlVirtualTaskExecutor.isShutdown());
 	}
 
 	@Test

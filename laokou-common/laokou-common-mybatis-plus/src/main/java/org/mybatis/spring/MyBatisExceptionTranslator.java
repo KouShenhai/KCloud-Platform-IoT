@@ -98,10 +98,8 @@ public class MyBatisExceptionTranslator implements PersistenceExceptionTranslato
 			// Batch exceptions come inside another PersistenceException
 			// recursion has a risk of infinite loop so better make another if
 			var msg = e.getMessage();
-			if (e.getCause() instanceof PersistenceException pe) {
-				if (msg == null) {
-					msg = pe.getMessage();
-				}
+			if (e.getCause() instanceof PersistenceException pe && msg == null) {
+				msg = pe.getMessage();
 			}
 			if (e.getCause() instanceof SQLException se) {
 				this.initExceptionTranslator();

@@ -31,6 +31,9 @@ import static org.laokou.common.i18n.common.constant.StringConstant.*;
  */
 public final class LocaleUtil {
 
+	private LocaleUtil() {
+	}
+
 	public static Locale toLocale(String language) {
 		try {
 			if (StringUtil.isEmpty(language)) {

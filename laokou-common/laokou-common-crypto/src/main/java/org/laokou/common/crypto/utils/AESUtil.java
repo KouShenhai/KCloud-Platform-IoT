@@ -66,6 +66,9 @@ public final class AESUtil {
 		}
 	}
 
+	private AESUtil() {
+	}
+
 	public static SecretKey getSecretKey() {
 		return SECRET_KEY;
 	}

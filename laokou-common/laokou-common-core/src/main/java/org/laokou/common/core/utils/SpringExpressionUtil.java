@@ -33,6 +33,9 @@ public final class SpringExpressionUtil {
 	 */
 	private static final ExpressionParser PARSER = new SpelExpressionParser();
 
+	private SpringExpressionUtil() {
+	}
+
 	/**
 	 * 解析字符串.
 	 * @param key 键

@@ -26,6 +26,9 @@ import java.nio.charset.StandardCharsets;
  */
 public final class RedisKeyUtil {
 
+	private RedisKeyUtil() {
+	}
+
 	/**
 	 * 验证码Key.
 	 * @param uuid UUID
