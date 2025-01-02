@@ -64,6 +64,9 @@ public final class RequestUtil {
 		}
 	}
 
+	private RequestUtil() {
+	}
+
 	/**
 	 * 获取UserAgentParser对象.
 	 */

@@ -20,9 +20,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.loginLog.gatewayimpl.database.LoginLogMapper">
 
-  <select id="selectObjectPage"
-          resultType="org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO">
-    SELECT id,
+  <sql id="selectColumns">
+    id,
     username,
     ip,
     address,
@@ -32,7 +31,9 @@
     error_message,
     type,
     create_time
-    from boot_sys_login_log
+  </sql>
+
+  <sql id="selectConditions">
     where del_flag = 0
     <if test="pageQuery.username != null and pageQuery.username != ''">
       and username like #{pageQuery.username}
@@ -64,44 +65,25 @@
     <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
       and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> #{pageQuery.params.endDate}
     </if>
+  </sql>
+
+  <sql id="selectObjectList">
+    SELECT <include refid="selectColumns"/>
+    from boot_sys_login_log
+    <include refid="selectConditions"/>
     order by id desc
+  </sql>
+
+  <select id="selectObjectPage"
+          resultType="org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO">
+    <include refid="selectObjectList"/>
     limit ${pageQuery.pageSize} OFFSET ${pageQuery.pageIndex}
   </select>
 
   <select id="selectObjectCount" resultType="long">
     SELECT count(1)
     from boot_sys_login_log
-    where del_flag = 0
-    <if test="pageQuery.username != null and pageQuery.username != ''">
-      and username like #{pageQuery.username}
-    </if>
-    <if test="pageQuery.ip != null and pageQuery.ip != ''">
-      and ip like #{pageQuery.ip}
-    </if>
-    <if test="pageQuery.address != null and pageQuery.address != ''">
-      and address like #{pageQuery.address}
-    </if>
-    <if test="pageQuery.browser != null and pageQuery.browser != ''">
-      and browser like #{pageQuery.browser}
-    </if>
-    <if test="pageQuery.os != null and pageQuery.os != ''">
-      and os like #{pageQuery.os}
-    </if>
-    <if test="pageQuery.errorMessage != null and pageQuery.errorMessage != ''">
-      and error_message like #{pageQuery.errorMessage}
-    </if>
-    <if test="pageQuery.type != null and pageQuery.type != ''">
-      and type = #{pageQuery.type}
-    </if>
-    <if test="pageQuery.status != null">
-      and status = #{pageQuery.status}
-    </if>
-    <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
-      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> #{pageQuery.params.startDate}
-    </if>
-    <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
-      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> #{pageQuery.params.endDate}
-    </if>
+    <include refid="selectConditions"/>
   </select>
 
   <select id="selectVersion" resultType="integer">
@@ -112,49 +94,7 @@
 
   <select id="selectObjectList" fetchSize="10000" resultSetType="FORWARD_ONLY"
           resultType="org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO">
-    SELECT
-    username,
-    ip,
-    address,
-    browser,
-    os,
-    status,
-    error_message,
-    type,
-    create_time
-    from boot_sys_login_log
-    where del_flag = 0
-    <if test="pageQuery.username != null and pageQuery.username != ''">
-      and username like #{pageQuery.username}
-    </if>
-    <if test="pageQuery.ip != null and pageQuery.ip != ''">
-      and ip like #{pageQuery.ip}
-    </if>
-    <if test="pageQuery.address != null and pageQuery.address != ''">
-      and address like #{pageQuery.address}
-    </if>
-    <if test="pageQuery.browser != null and pageQuery.browser != ''">
-      and browser like #{pageQuery.browser}
-    </if>
-    <if test="pageQuery.os != null and pageQuery.os != ''">
-      and os like #{pageQuery.os}
-    </if>
-    <if test="pageQuery.errorMessage != null and pageQuery.errorMessage != ''">
-      and error_message like #{pageQuery.errorMessage}
-    </if>
-    <if test="pageQuery.type != null and pageQuery.type != ''">
-      and type = #{pageQuery.type}
-    </if>
-    <if test="pageQuery.status != null">
-      and status = #{pageQuery.status}
-    </if>
-    <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
-      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> #{pageQuery.params.startDate}
-    </if>
-    <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
-      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> #{pageQuery.params.endDate}
-    </if>
-    order by id desc
+    <include refid="selectObjectList"/>
   </select>
 
 </mapper>

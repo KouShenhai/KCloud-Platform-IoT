@@ -90,6 +90,9 @@ public final class DateUtil {
 	 */
 	private static final DayOfWeek[] WEEK_PATTERNS = { DayOfWeek.MONDAY };
 
+	private DateUtil() {
+	}
+
 	/**
 	 * 时间格式.
 	 * @param index 索引

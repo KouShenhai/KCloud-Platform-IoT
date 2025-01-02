@@ -34,6 +34,9 @@ public final class ResourceUtil extends ResourceUtils {
 	 */
 	private static final ResourcePatternResolver RESOLVER = new PathMatchingResourcePatternResolver();
 
+	private ResourceUtil() {
+	}
+
 	/**
 	 * 根据路径获取资源.
 	 * @param location 路径

@@ -54,6 +54,9 @@ public final class RegexUtil {
 	 */
 	private static final String NUMBER_REGEX = "^[0-9]*$";
 
+	private RegexUtil() {
+	}
+
 	/**
 	 * 邮箱验证.
 	 * @param mail 邮箱

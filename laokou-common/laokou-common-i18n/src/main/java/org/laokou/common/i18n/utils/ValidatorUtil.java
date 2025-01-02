@@ -47,6 +47,9 @@ public final class ValidatorUtil {
 		VALIDATE_BUNDLE_MESSAGE_SOURCE.setBasename("classpath:i18n/validation");
 	}
 
+	private ValidatorUtil() {
+	}
+
 	public static String getMessage(String code) {
 		return getMessage(code, null);
 	}

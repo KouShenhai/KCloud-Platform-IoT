@@ -24,6 +24,9 @@ package org.laokou.common.core.utils;
  */
 public final class SystemUtil {
 
+	private SystemUtil() {
+	}
+
 	/**
 	 * 判断是否是Window系统.
 	 */

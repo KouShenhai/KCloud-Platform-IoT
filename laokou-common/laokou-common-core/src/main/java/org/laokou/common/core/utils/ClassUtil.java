@@ -25,6 +25,9 @@ import org.springframework.util.ClassUtils;
  */
 public final class ClassUtil extends ClassUtils {
 
+	private ClassUtil() {
+	}
+
 	@SneakyThrows
 	public static Class<?> parseClass(String className) {
 		return Class.forName(className);

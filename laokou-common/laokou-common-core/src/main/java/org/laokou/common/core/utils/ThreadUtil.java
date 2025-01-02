@@ -35,6 +35,9 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 @Slf4j
 public final class ThreadUtil {
 
+	private ThreadUtil() {
+	}
+
 	/**
 	 * 关闭线程池.
 	 * @param executorService 执行器.

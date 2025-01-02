@@ -37,6 +37,9 @@ public final class StringUtil {
 
 	private static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
 
+	private StringUtil() {
+	}
+
 	public static boolean isNotEmpty(String str) {
 		return hasText(str);
 	}

@@ -25,6 +25,9 @@ public final class RandomStringUtil {
 
 	private static final SecureRandom RANDOM = new SecureRandom();
 
+	private RandomStringUtil() {
+	}
+
 	public static String randomNumeric() {
 		return randomNumeric(6);
 	}

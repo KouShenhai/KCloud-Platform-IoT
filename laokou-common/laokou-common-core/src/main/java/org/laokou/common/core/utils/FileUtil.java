@@ -48,6 +48,9 @@ public final class FileUtil {
 
 	private static final String RW = "rw";
 
+	private FileUtil() {
+	}
+
 	/**
 	 * 创建目录及文件.
 	 * @param directory 目录

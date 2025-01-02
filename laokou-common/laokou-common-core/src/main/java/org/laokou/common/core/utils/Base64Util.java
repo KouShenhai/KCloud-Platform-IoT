@@ -21,6 +21,9 @@ import java.util.Base64;
 
 public final class Base64Util {
 
+	private Base64Util() {
+	}
+
 	/**
 	 * base64解密.
 	 * @param str 字符串

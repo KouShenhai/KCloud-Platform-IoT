@@ -50,6 +50,9 @@ public final class SpringContextUtil implements ApplicationContextAware, Disposa
 	@Getter
 	private volatile static ApplicationContext applicationContext = null;
 
+	private SpringContextUtil() {
+	}
+
 	/**
 	 * 获取工厂.
 	 * @return 工厂

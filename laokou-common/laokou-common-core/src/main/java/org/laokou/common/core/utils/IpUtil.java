@@ -47,6 +47,9 @@ public final class IpUtil {
 	 */
 	private static final String LOCAL_IPV6 = "0:0:0:0:0:0:0:1";
 
+	private IpUtil() {
+	}
+
 	/**
 	 * 获取IP地址.
 	 * @param request 请求对象

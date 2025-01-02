@@ -29,6 +29,9 @@ import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.VALI
  */
 public final class ParamValidator {
 
+	private ParamValidator() {
+	}
+
 	public static void validate(Validate... validates) {
 		String validateString = Stream.of(validates)
 			.filter(item -> StringUtil.isNotEmpty(item.value))

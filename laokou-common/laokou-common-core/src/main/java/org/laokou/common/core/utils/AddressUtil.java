@@ -59,6 +59,9 @@ public final class AddressUtil {
 		}
 	}
 
+	private AddressUtil() {
+	}
+
 	/**
 	 * 根据IP获取所属位置.
 	 * @param ip IP

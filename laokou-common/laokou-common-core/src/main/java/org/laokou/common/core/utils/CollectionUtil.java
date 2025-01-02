@@ -35,6 +35,9 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  */
 public final class CollectionUtil {
 
+	private CollectionUtil() {
+	}
+
 	/**
 	 * 判断集合不为空.
 	 * @param collection 集合

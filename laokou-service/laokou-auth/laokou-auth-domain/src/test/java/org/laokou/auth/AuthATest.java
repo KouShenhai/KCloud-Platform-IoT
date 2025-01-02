@@ -45,128 +45,128 @@ class AuthATest {
 
 	@BeforeEach
 	void testAuth() {
-		auth = DomainFactory.getAuth(1L, "laokou");
-		info = new InfoV("Windows", "127.0.0.1", "中国 广东 深圳", "Chrome");
-		Assertions.assertNotNull(auth);
+		this.auth = DomainFactory.getAuth(1L, "laokou");
+		this.info = new InfoV("Windows", "127.0.0.1", "中国 广东 深圳", "Chrome");
+		Assertions.assertNotNull(this.auth);
 	}
 
 	@Test
 	void testCreateUserByUsernamePassword() {
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
-		Assertions.assertNotNull(auth);
+		AuthA authA = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
+		Assertions.assertNotNull(authA);
 
 		// 创建用户【用户名密码】
-		auth.createUserByUsernamePassword();
-		Assertions.assertNotNull(auth.getUser());
-		String username = auth.getUser().getUsername();
+		authA.createUserByUsernamePassword();
+		Assertions.assertNotNull(authA.getUser());
+		String username = authA.getUser().getUsername();
 		Assertions.assertNotNull(username);
-		Assertions.assertEquals(AESUtil.decrypt(username), auth.getUsername());
+		Assertions.assertEquals(AESUtil.decrypt(username), authA.getUsername());
 	}
 
 	@Test
 	void testCreateUserByMobile() {
-		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
-		Assertions.assertNotNull(auth);
+		AuthA authA = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
+		Assertions.assertNotNull(authA);
 
 		// 创建用户【手机号】
-		auth.createUserByMobile();
-		Assertions.assertNotNull(auth.getUser());
-		String mobile = auth.getUser().getMobile();
+		authA.createUserByMobile();
+		Assertions.assertNotNull(authA.getUser());
+		String mobile = authA.getUser().getMobile();
 		Assertions.assertNotNull(mobile);
-		Assertions.assertEquals(AESUtil.decrypt(mobile), auth.getCaptcha().uuid());
+		Assertions.assertEquals(AESUtil.decrypt(mobile), authA.getCaptcha().uuid());
 	}
 
 	@Test
 	void testCreateUserByMail() {
-		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
-		Assertions.assertNotNull(auth);
+		AuthA authA = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
+		Assertions.assertNotNull(authA);
 
 		// 创建用户【邮箱】
-		auth.createUserByMail();
-		Assertions.assertNotNull(auth.getUser());
-		String mail = auth.getUser().getMail();
+		authA.createUserByMail();
+		Assertions.assertNotNull(authA.getUser());
+		String mail = authA.getUser().getMail();
 		Assertions.assertNotNull(mail);
-		Assertions.assertEquals(AESUtil.decrypt(mail), auth.getCaptcha().uuid());
+		Assertions.assertEquals(AESUtil.decrypt(mail), authA.getCaptcha().uuid());
 	}
 
 	@Test
 	void testCreateUserByAuthorizationCode() {
-		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
-		Assertions.assertNotNull(auth);
+		AuthA authA = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
+		Assertions.assertNotNull(authA);
 
 		// 创建用户【授权码】
-		auth.createUserByAuthorizationCode();
-		Assertions.assertNotNull(auth.getUser());
-		String username = auth.getUser().getUsername();
+		authA.createUserByAuthorizationCode();
+		Assertions.assertNotNull(authA.getUser());
+		String username = authA.getUser().getUsername();
 		Assertions.assertNotNull(username);
-		Assertions.assertEquals(AESUtil.decrypt(username), auth.getUsername());
+		Assertions.assertEquals(AESUtil.decrypt(username), authA.getUsername());
 	}
 
 	@Test
 	void testCreateCaptcha() {
-		Assertions.assertNotNull(auth);
+		Assertions.assertNotNull(this.auth);
 
 		CaptchaE captcha = DomainFactory.getCaptcha();
 
 		// 创建验证码
-		auth.getCaptcha(captcha);
-		auth.createCaptcha(1L);
-		Assertions.assertNotNull(auth.getCaptchaE());
-		Assertions.assertFalse(auth.getEVENTS().isEmpty());
+		this.auth.getCaptcha(captcha);
+		this.auth.createCaptcha(1L);
+		Assertions.assertNotNull(this.auth.getCaptchaE());
+		Assertions.assertFalse(this.auth.getEVENTS().isEmpty());
 
 		// 释放事件
-		auth.releaseEvents();
-		Assertions.assertTrue(auth.getEVENTS().isEmpty());
+		this.auth.releaseEvents();
+		Assertions.assertTrue(this.auth.getEVENTS().isEmpty());
 	}
 
 	@Test
 	void testCheckExtInfo() {
-		Assertions.assertNotNull(auth);
+		Assertions.assertNotNull(this.auth);
 
-		auth.getExtInfo(info);
-		Assertions.assertNotNull(auth.getInfo());
+		this.auth.getExtInfo(this.info);
+		Assertions.assertNotNull(this.auth.getInfo());
 	}
 
 	@Test
 	void testCheckTenantId() {
-		Assertions.assertNotNull(auth);
+		Assertions.assertNotNull(this.auth);
 
 		TenantGateway tenantGateway = new TenantGatewayImplTest();
 		Assertions.assertNotNull(tenantGateway);
 
-		auth.getTenantId(tenantGateway.getId("laokou"));
+		this.auth.getTenantId(tenantGateway.getId("laokou"));
 
 		// 校验租户ID
-		auth.checkTenantId();
+		this.auth.checkTenantId();
 	}
 
 	@Test
 	void testCheckCaptcha() {
-		Assertions.assertNotNull(auth);
+		Assertions.assertNotNull(this.auth);
 
 		CaptchaGateway captchaGateway = new CaptchaGatewayImplTest();
 		Assertions.assertNotNull(captchaGateway);
 
 		// 校验验证码
-		auth.checkCaptcha(captchaGateway::validate);
+		this.auth.checkCaptcha(captchaGateway::validate);
 	}
 
 	@Test
 	void testCheckSourcePrefix() {
-		Assertions.assertNotNull(auth);
+		Assertions.assertNotNull(this.auth);
 
 		SourceGateway sourceGateway = new SourceGatewayImplTest();
 		Assertions.assertNotNull(sourceGateway);
 
-		auth.getSourcePrefix(sourceGateway.getPrefix("laokou"));
+		this.auth.getSourcePrefix(sourceGateway.getPrefix("laokou"));
 
 		// 校验数据源前缀
-		auth.checkSourcePrefix();
+		this.auth.checkSourcePrefix();
 	}
 
 	@Test
 	void testCheckUsername() {
-		Assertions.assertNotNull(auth);
+		Assertions.assertNotNull(this.auth);
 
 		UserE user = DomainFactory.getUser();
 		Assertions.assertNotNull(user);
@@ -174,98 +174,98 @@ class AuthATest {
 		UserGateway userGateway = new UserGatewayImplTest();
 		Assertions.assertNotNull(userGateway);
 
-		auth.getUserInfo(userGateway.getProfile(user, "laokou"));
+		this.auth.getUserInfo(userGateway.getProfile(user, "laokou"));
 
 		// 校验用户名
-		auth.checkUsername();
+		this.auth.checkUsername();
 	}
 
 	@Test
 	void testCheckPassword() {
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
-		Assertions.assertNotNull(auth);
+		AuthA authA = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
+		Assertions.assertNotNull(authA);
 
 		PasswordValidator passwordValidator = new PasswordValidatorTest();
 		Assertions.assertNotNull(passwordValidator);
 
 		// 创建用户【用户名密码】
-		auth.createUserByUsernamePassword();
+		authA.createUserByUsernamePassword();
 
 		// 构建密码
-		auth.getUser().setPassword(PasswordValidatorTest.getEncodePassword(auth.getPassword()));
-		Assertions.assertNotNull(auth.getUser().getPassword());
+		authA.getUser().setPassword(PasswordValidatorTest.getEncodePassword(authA.getPassword()));
+		Assertions.assertNotNull(authA.getUser().getPassword());
 
 		// 校验密码
-		auth.checkPassword(passwordValidator);
+		authA.checkPassword(passwordValidator);
 	}
 
 	@Test
 	void testCheckUserStatus() {
-		Assertions.assertNotNull(auth);
+		Assertions.assertNotNull(this.auth);
 
 		// 创建用户【用户名密码】
-		auth.createUserByUsernamePassword();
-		Assertions.assertNotNull(auth.getUser());
+		this.auth.createUserByUsernamePassword();
+		Assertions.assertNotNull(this.auth.getUser());
 
 		// 校验用户状态
-		auth.checkUserStatus();
+		this.auth.checkUserStatus();
 	}
 
 	@Test
 	void testCheckMenuPermissions() {
-		Assertions.assertNotNull(auth);
+		Assertions.assertNotNull(this.auth);
 
 		MenuGateway menuGateway = new MenuGatewayImplTest();
 		Assertions.assertNotNull(menuGateway);
 
 		// 创建用户【用户名密码】
-		auth.createUserByUsernamePassword();
-		Assertions.assertNotNull(auth.getUser());
-		auth.getMenuPermissions(menuGateway.getPermissions(auth.getUser()));
+		this.auth.createUserByUsernamePassword();
+		Assertions.assertNotNull(this.auth.getUser());
+		this.auth.getMenuPermissions(menuGateway.getPermissions(this.auth.getUser()));
 
 		// 校验菜单权限集合
-		auth.checkMenuPermissions();
+		this.auth.checkMenuPermissions();
 	}
 
 	@Test
 	void testCheckDeptPaths() {
-		Assertions.assertNotNull(auth);
+		Assertions.assertNotNull(this.auth);
 
 		DeptGateway deptGateway = new DeptGatewayImplTest();
 		Assertions.assertNotNull(deptGateway);
 
 		// 创建用户【用户名密码】
-		auth.createUserByUsernamePassword();
-		Assertions.assertNotNull(auth.getUser());
-		auth.getDeptPaths(deptGateway.getPaths(auth.getUser()));
+		this.auth.createUserByUsernamePassword();
+		Assertions.assertNotNull(this.auth.getUser());
+		this.auth.getDeptPaths(deptGateway.getPaths(this.auth.getUser()));
 
 		// 校验部门路径集合
-		auth.checkDeptPaths();
+		this.auth.checkDeptPaths();
 	}
 
 	@Test
 	void testRecordLog() {
-		Assertions.assertNotNull(auth);
-		Assertions.assertNotNull(info);
+		Assertions.assertNotNull(this.auth);
+		Assertions.assertNotNull(this.info);
 
-		auth.getExtInfo(info);
-		Assertions.assertNotNull(auth.getInfo());
+		this.auth.getExtInfo(this.info);
+		Assertions.assertNotNull(this.auth.getInfo());
 
 		// 记录日志【登录成功】
-		auth.recordLog(1L, null);
-		Assertions.assertFalse(auth.getEVENTS().isEmpty());
+		this.auth.recordLog(1L, null);
+		Assertions.assertFalse(this.auth.getEVENTS().isEmpty());
 
 		// 释放事件
-		auth.releaseEvents();
-		Assertions.assertTrue(auth.getEVENTS().isEmpty());
+		this.auth.releaseEvents();
+		Assertions.assertTrue(this.auth.getEVENTS().isEmpty());
 
 		// 记录日志【登录失败】
-		auth.recordLog(1L, new SystemException(USERNAME_PASSWORD_ERROR));
-		Assertions.assertFalse(auth.getEVENTS().isEmpty());
+		this.auth.recordLog(1L, new SystemException(USERNAME_PASSWORD_ERROR));
+		Assertions.assertFalse(this.auth.getEVENTS().isEmpty());
 
 		// 释放事件
-		auth.releaseEvents();
-		Assertions.assertTrue(auth.getEVENTS().isEmpty());
+		this.auth.releaseEvents();
+		Assertions.assertTrue(this.auth.getEVENTS().isEmpty());
 	}
 
 }

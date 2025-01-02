@@ -35,6 +35,9 @@ public final class SslUtil {
 	 */
 	private static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
 
+	private SslUtil() {
+	}
+
 	/**
 	 * ssl上下文.
 	 * @return ssl上下文

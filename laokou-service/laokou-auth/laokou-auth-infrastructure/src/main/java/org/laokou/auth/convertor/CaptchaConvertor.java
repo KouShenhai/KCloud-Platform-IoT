@@ -24,7 +24,10 @@ import org.laokou.auth.model.CaptchaE;
 /**
  * @author laokou
  */
-public class CaptchaConvertor {
+public final class CaptchaConvertor {
+
+	private CaptchaConvertor() {
+	}
 
 	public static CaptchaE toEntity(CaptchaCO co) {
 		CaptchaE entity = DomainFactory.getCaptcha();

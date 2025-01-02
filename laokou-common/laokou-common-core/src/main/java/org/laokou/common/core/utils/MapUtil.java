@@ -41,6 +41,9 @@ import static org.laokou.common.i18n.common.constant.StringConstant.*;
  */
 public final class MapUtil {
 
+	private MapUtil() {
+	}
+
 	/**
 	 * 判断不为空.
 	 * @param map map对象

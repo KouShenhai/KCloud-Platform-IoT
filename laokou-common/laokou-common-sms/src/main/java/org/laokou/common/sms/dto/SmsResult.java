@@ -17,9 +17,7 @@
 
 package org.laokou.common.sms.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -27,8 +25,6 @@ import java.io.Serializable;
  * @author laokou
  */
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class SmsResult implements Serializable {
 
 	/**
@@ -39,26 +35,34 @@ public class SmsResult implements Serializable {
 	/**
 	 * 名称.
 	 */
-	private String name;
+	private final String name;
 
 	/**
 	 * 状态 0成功 1失败.
 	 */
-	private int status;
+	private final int status;
 
 	/**
 	 * 错误信息.
 	 */
-	private String errorMessage;
+	private final String errorMessage;
 
 	/**
 	 * 参数.
 	 */
-	private String param;
+	private final String param;
 
 	/**
 	 * 验证码.
 	 */
-	private String captcha;
+	private final String captcha;
+
+	public SmsResult(String name, int status, String errorMessage, String param, String captcha) {
+		this.name = name;
+		this.status = status;
+		this.errorMessage = errorMessage;
+		this.param = param;
+		this.captcha = captcha;
+	}
 
 }

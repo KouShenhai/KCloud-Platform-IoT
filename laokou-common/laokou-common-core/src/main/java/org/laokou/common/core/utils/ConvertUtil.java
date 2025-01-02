@@ -33,6 +33,9 @@ import java.util.List;
 @Slf4j
 public final class ConvertUtil extends BeanUtils {
 
+	private ConvertUtil() {
+	}
+
 	/**
 	 * 复制对象.
 	 * @param source 源对象

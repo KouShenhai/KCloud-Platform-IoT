@@ -71,6 +71,9 @@ public final class RSAUtil {
 		}
 	}
 
+	private RSAUtil() {
+	}
+
 	/**
 	 * 根据私钥解密.
 	 * @param str 字符串
