@@ -22,11 +22,6 @@ import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.laokou.admin.oss.gatewayimpl.database.dataobject.OssDO;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.i18n.dto.PageQuery;
-
 /**
  * OSS数据库映射.
  *
@@ -35,9 +30,5 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Mapper
 @Repository
 public interface OssMapper extends CrudMapper<Long, Integer, OssDO> {
-
-	List<OssDO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
-
-	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
 
 }
