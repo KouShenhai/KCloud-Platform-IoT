@@ -45,7 +45,7 @@ public class UserPageQryExe {
 	public Result<Page<UserCO>> execute(UserPageQry qry) {
 		List<UserDO> list = userMapper.selectObjectPage(qry);
 		long total = userMapper.selectObjectCount(qry);
-		return Result.ok(Page.create(list.stream().map(UserConvertor::toClientObject).toList(), total));
+		return Result.ok(Page.create(UserConvertor.toClientObjects(list), total));
 	}
 
 }

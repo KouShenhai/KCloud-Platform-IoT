@@ -92,16 +92,16 @@ public final class TreeUtil {
 	public static class TreeNode<T> extends ClientObject {
 
 		@Schema(name = "ID", description = "ID")
-		private Long id;
+		protected Long id;
 
 		@Schema(name = "名称", description = "名称")
-		private String name;
+		protected String name;
 
 		@Schema(name = "父节点ID", description = "父节点ID")
-		private Long pid;
+		protected Long pid;
 
 		@Schema(name = "子节点", description = "子节点")
-		private List<T> children = new ArrayList<>(16);
+		protected List<T> children = new ArrayList<>(16);
 
 		public TreeNode(Long id, String name, Long pid) {
 			this.id = id;

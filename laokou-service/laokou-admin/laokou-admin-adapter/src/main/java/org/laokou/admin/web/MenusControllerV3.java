@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.api.MenusServiceI;
 import org.laokou.admin.menu.dto.*;
 import org.laokou.admin.menu.dto.clientobject.MenuCO;
+import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
@@ -33,6 +34,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 import static org.laokou.common.data.cache.constant.NameConstant.MENUS;
 import static org.laokou.common.data.cache.constant.Type.DEL;
@@ -98,6 +101,13 @@ public class MenusControllerV3 {
 	@Operation(summary = "分页查询菜单列表", description = "分页查询菜单列表")
 	public Result<Page<MenuCO>> pageV3(@RequestBody MenuPageQry qry) {
 		return menusServiceI.page(qry);
+	}
+
+	@TraceLog
+	@PostMapping("tree-list")
+	@Operation(summary = "查询菜单树列表", description = "查询菜单树列表")
+	public Result<List<MenuTreeCO>> treeListV3(@RequestBody MenuTreeListQry qry) {
+		return menusServiceI.treeList(qry);
 	}
 
 	@TraceLog

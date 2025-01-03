@@ -15,21 +15,16 @@
  *
  */
 
-package org.laokou.generator.column.gatewayimpl.database;
+package org.laokou.admin.menu.dto;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.laokou.generator.column.gatewayimpl.database.dataobject.ColumnDO;
-import org.springframework.stereotype.Repository;
+import lombok.Data;
 
 /**
- *
- * 代码生成器字段数据库映射.
+ * 查询菜单命令.
  *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface ColumnMapper extends CrudMapper<Long, Integer, ColumnDO> {
+@Data
+public class MenuTreeListQry {
 
 }
