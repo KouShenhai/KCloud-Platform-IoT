@@ -25,6 +25,8 @@ import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
 
+import java.util.List;
+
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
@@ -84,6 +86,10 @@ public class UserConvertor {
 			userCO.setMobile(AESUtil.decrypt(mobile));
 		}
 		return userCO;
+	}
+
+	public static List<UserCO> toClientObjects(List<UserDO> userDOList) {
+		return userDOList.stream().map(UserConvertor::toClientObject).toList();
 	}
 
 	public static UserE toEntity(UserCO userCO, boolean isInsert) {

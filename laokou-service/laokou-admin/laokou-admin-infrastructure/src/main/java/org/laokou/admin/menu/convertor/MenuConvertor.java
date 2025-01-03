@@ -18,28 +18,71 @@
 package org.laokou.admin.menu.convertor;
 
 import org.laokou.admin.menu.dto.clientobject.MenuCO;
+import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuE;
 import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+
+import java.util.List;
 
 /**
  * 菜单转换器.
  *
  * @author laokou
  */
-public class MenuConvertor {
+public final class MenuConvertor {
+
+	private MenuConvertor() {
+	}
 
 	public static MenuDO toDataObject(MenuE menuE) {
-		MenuDO menuDO = ConvertUtil.sourceToTarget(menuE, MenuDO.class);
-		if (ObjectUtil.isNull(menuDO.getId())) {
-			menuDO.generatorId();
-		}
+		MenuDO menuDO = new MenuDO();
+		menuDO.setId(menuE.getId());
+		menuDO.setPid(menuE.getPid());
+		menuDO.setPermission(menuE.getPermission());
+		menuDO.setType(menuE.getType());
+		menuDO.setName(menuE.getName());
+		menuDO.setPath(menuE.getPath());
+		menuDO.setIcon(menuE.getIcon());
+		menuDO.setSort(menuE.getSort());
+		menuDO.setHidden(menuE.getHidden());
+		menuDO.setStatus(menuE.getStatus());
+		menuDO.setUrl(menuE.getUrl());
 		return menuDO;
 	}
 
 	public static MenuCO toClientObject(MenuDO menuDO) {
-		return ConvertUtil.sourceToTarget(menuDO, MenuCO.class);
+		MenuCO co = new MenuCO();
+		co.setId(menuDO.getId());
+		co.setPid(menuDO.getPid());
+		co.setPermission(menuDO.getPermission());
+		co.setType(menuDO.getType());
+		co.setName(menuDO.getName());
+		co.setPath(menuDO.getPath());
+		co.setIcon(menuDO.getIcon());
+		co.setSort(menuDO.getSort());
+		co.setHidden(menuDO.getHidden());
+		co.setStatus(menuDO.getStatus());
+		co.setUrl(menuDO.getUrl());
+		return co;
+	}
+
+	public static List<MenuCO> toClientObjects(List<MenuDO> list) {
+		return list.stream().map(MenuConvertor::toClientObject).toList();
+	}
+
+	public static MenuTreeCO toClientObj(MenuDO menuDO) {
+		MenuTreeCO co = new MenuTreeCO();
+		co.setId(menuDO.getId());
+		co.setPid(menuDO.getPid());
+		co.setName(menuDO.getName());
+		co.setPath(menuDO.getPath());
+		return co;
+
+	}
+
+	public static List<MenuTreeCO> toClientObjs(List<MenuDO> list) {
+		return list.stream().map(MenuConvertor::toClientObj).toList();
 	}
 
 	public static MenuE toEntity(MenuCO menuCO) {

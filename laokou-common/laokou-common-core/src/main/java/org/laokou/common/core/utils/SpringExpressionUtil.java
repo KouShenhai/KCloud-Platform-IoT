@@ -50,7 +50,6 @@ public final class SpringExpressionUtil {
 		for (int i = 0; i < parameterNames.length; i++) {
 			context.setVariable(parameterNames[i], args[i]);
 		}
-		PARSER.parseExpression(key).getValue(context, clazz);
 		return PARSER.parseExpression(key).getValue(context, clazz);
 	}
 

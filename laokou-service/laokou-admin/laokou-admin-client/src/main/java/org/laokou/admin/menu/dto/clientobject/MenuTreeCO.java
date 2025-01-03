@@ -15,21 +15,36 @@
  *
  */
 
-package org.laokou.generator.column.gatewayimpl.database;
+package org.laokou.admin.menu.dto.clientobject;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.laokou.generator.column.gatewayimpl.database.dataobject.ColumnDO;
-import org.springframework.stereotype.Repository;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.core.utils.TreeUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- *
- * 代码生成器字段数据库映射.
+ * 菜单树客户端对象.
  *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface ColumnMapper extends CrudMapper<Long, Integer, ColumnDO> {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class MenuTreeCO extends TreeUtil.TreeNode<MenuTreeCO> {
+
+	/**
+	 * 菜单路径.
+	 */
+	private String path;
+
+	/**
+	 * 孩子节点.
+	 */
+	@JsonProperty("routers")
+	private List<MenuTreeCO> children = new ArrayList<>(16);
 
 }

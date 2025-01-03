@@ -17,33 +17,38 @@
 
 package org.laokou.admin.menu.command.query;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.convertor.MenuConvertor;
-import org.laokou.admin.menu.dto.MenuPageQry;
-import org.laokou.admin.menu.dto.clientobject.MenuCO;
+import org.laokou.admin.menu.dto.MenuTreeListQry;
+import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
- * 分页查询菜单请求执行器.
+ * 查询菜单请求执行器.
  *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class MenuPageQryExe {
+public class MenuTreeListQryExe {
 
 	private final MenuMapper menuMapper;
 
-	public Result<Page<MenuCO>> execute(MenuPageQry qry) {
-		List<MenuDO> list = menuMapper.selectObjectPage(qry);
-		long total = menuMapper.selectObjectCount(qry);
-		return Result.ok(Page.create(MenuConvertor.toClientObjects(list), total));
+	public Result<List<MenuTreeCO>> execute(MenuTreeListQry qry) {
+		LambdaQueryWrapper<MenuDO> wrapper = Wrappers.lambdaQuery(MenuDO.class)
+			.select(MenuDO::getId, MenuDO::getPath, MenuDO::getPid, MenuDO::getName)
+			.orderByDesc(MenuDO::getSort);
+		List<MenuDO> list = menuMapper.selectList(wrapper);
+		MenuTreeCO co = TreeUtil.buildTreeNode(MenuConvertor.toClientObjs(list), MenuTreeCO.class);
+		return Result.ok(co.getChildren());
 	}
 
 }
