@@ -35,6 +35,4 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Repository
 public interface TemplateMapper extends CrudMapper<Long, Integer, TemplateDO> {
 
-	List<TemplateDO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
-
 }

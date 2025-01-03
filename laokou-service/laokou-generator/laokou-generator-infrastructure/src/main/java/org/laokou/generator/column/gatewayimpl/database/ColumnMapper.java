@@ -35,6 +35,4 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Repository
 public interface ColumnMapper extends CrudMapper<Long, Integer, ColumnDO> {
 
-	List<ColumnDO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
-
 }
