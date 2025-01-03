@@ -13,42 +13,42 @@
 
 ### 📣 项目介绍
 
-image::doc/image/logo/logo.png[LOGO,500,align=center]
+<div style="text-align: center"><img src="doc/image/logo/logo.png" alt="LOGO" width="500"></div>
 
 KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微服务架构的IoT云平台。基于Spring Boot 3.4.1、Spring Cloud 2024.0.0、Spring Cloud Alibaba 2023.0.3.2 最新版本开发的云服务多租户IoT平台。 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、灰度路由、服务限流、熔断降级、监控报警、多数据源、高亮搜索、分布式任务调度、分布式链路、分布式缓存、分布式事务、分布式存储、分布式锁等功能，用于快速构建IoT微服务项目。目前支持Shell、Docker、Kubernetes等多种部署方式，并且支持GraalVM和虚拟线程。实现RBAC权限、其中包含系统管理、物联管理、系统监控、数据分析等几大模块。 遵循阿里代码规范，采用RESTFul设计风格及DDD(领域驱动设计)思想，代码简洁、架构清晰，非常适合作为基础框架使用。
 
-image:https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml/badge.svg?branch=master[Maven Ci Build Stauts,link=https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml]
-image:https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/gradle.yml/badge.svg?branch=master[Gradle Ci Build Stauts,link=https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/gradle.yml]
-image:https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/node.js.yml/badge.svg?branch=master[Node.js CI Build Stauts,link=https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/node.js.yml]
-image:https://dl.circleci.com/status-badge/img/circleci/Bvmh1W3CkTV7xQCz5au73K/KgCR3Kb3gXzuxQP6YLKBUX/tree/master.svg?style=svg["CircleCI", link="https://dl.circleci.com/status-badge/redirect/circleci/Bvmh1W3CkTV7xQCz5au73K/KgCR3Kb3gXzuxQP6YLKBUX/tree/master"]
+<a href="https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml" target="_blank"><img src="https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml/badge.svg?branch=master" alt="Maven Ci Build Stauts"/></a>
+<a href="https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/gradle.yml" target="_blank"><img src="https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/gradle.yml/badge.svg?branch=master" alt="Gradle Ci Build Stauts"/></a>
+<a href="https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/node.js.yml" target="_blank"><img src="https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/node.js.yml/badge.svg?branch=master" alt="Node.js CI Build Stauts"/></a>
+<a href="https://dl.circleci.com/status-badge/redirect/circleci/Bvmh1W3CkTV7xQCz5au73K/KgCR3Kb3gXzuxQP6YLKBUX/tree/master" target="_blank"><img src="https://dl.circleci.com/status-badge/img/circleci/Bvmh1W3CkTV7xQCz5au73K/KgCR3Kb3gXzuxQP6YLKBUX/tree/master.svg?style=svg" alt="CircleCI"/></a>
 
-image:https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT.svg/?label=active+issues&show_trend=true&token=dsp_7fcdb2050e509b27f5d2ab8f5f1109bcd468[DeepSource Active Issues,link=https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT]
-image:https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT.svg/?label=resolved+issues&show_trend=true&token=dsp_7fcdb2050e509b27f5d2ab8f5f1109bcd468[DeepSource Resolved Issues,link=https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT]
-image:https://app.codacy.com/project/badge/Grade/d03c1f58dcff441690b6350d0c6980d6[Codacy,link=https://app.codacy.com/gh/KouShenhai/KCloud-Platform-IoT/dashboard]
-image:https://www.codefactor.io/repository/github/KouShenhai/KCloud-Platform-IoT/badge[CodeFactor,link=https://www.codefactor.io/repository/github/KouShenhai/KCloud-Platform-IoT]
+<a href="https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT.svg/?label=active+issues&show_trend=true&token=dsp_7fcdb2050e509b27f5d2ab8f5f1109bcd468" alt="DeepSource Active Issues"/></a>
+<a href="https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT.svg/?label=resolved+issues&show_trend=true&token=dsp_7fcdb2050e509b27f5d2ab8f5f1109bcd468" alt="DeepSource Resolved Issues"/></a>
+<a href="https://app.codacy.com/gh/KouShenhai/KCloud-Platform-IoT/dashboard" target="_blank"><img src="https://app.codacy.com/project/badge/Grade/d03c1f58dcff441690b6350d0c6980d6" alt="Codacy"/></a>
+<a href="https://www.codefactor.io/repository/github/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://www.codefactor.io/repository/github/KouShenhai/KCloud-Platform-IoT/badge" alt="CodeFactor"/></a>
 
-image:https://img.shields.io/github/stars/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub stars,link=https://github.com/KouShenhai/KCloud-Platform-IoT/stargazers]
-image:https://img.shields.io/github/forks/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub forks,link=https://github.com/KouShenhai/KCloud-Platform-IoT/forks]
-image:https://img.shields.io/github/watchers/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub watchers,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
-image:https://img.shields.io/github/last-commit/KouShenhai/KCloud-Platform-IoT[GitHub last commit,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
+<a href="https://github.com/KouShenhai/KCloud-Platform-IoT/stargazers" target="_blank"><img src="https://img.shields.io/github/stars/KouShenhai/KCloud-Platform-IoT?logo=github" alt="GitHub stars"/></a>
+<a href="https://github.com/KouShenhai/KCloud-Platform-IoT/forks" target="_blank"><img src="https://img.shields.io/github/forks/KouShenhai/KCloud-Platform-IoT?logo=github" alt="GitHub forks"/></a>
+<a href="https://github.com/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://img.shields.io/github/watchers/KouShenhai/KCloud-Platform-IoT?logo=github" alt="GitHub watchers"/></a>
+<a href="https://github.com/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://img.shields.io/github/last-commit/KouShenhai/KCloud-Platform-IoT" alt="GitHub last commit"/></a>
 
-image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/star.svg?theme=dark[Gitee star,link=https://gitee.com/laokouyun/KCloud-Platform-IoT/stargazers]
-image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark[Gitee fork,link=https://gitee.com/laokouyun/KCloud-Platform-IoT/members]
+<a href="https://gitee.com/laokouyun/KCloud-Platform-IoT/stargazers" target="_blank"><img src="https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/star.svg?theme=dark" alt="Gitee star"/></a>
+<a href="https://gitee.com/laokouyun/KCloud-Platform-IoT/members" target="_blank"><img src="https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark" alt="Gitee fork"/></a>
 
-image:https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.1&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
-image:https://img.shields.io/static/v1?label=Spring%20Boot&message=3.4.1&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
-image:https://img.shields.io/static/v1?label=Spring%20Cloud&message=2024.0.0&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
-image:https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.3.2&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
-image:https://img.shields.io/static/v1?label=OAuth%202.1&message=1.4.1&color=blue[OAuth 2.1,link=https://spring.io/projects/spring-authorization-server]
+<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.1&color=green" alt="Spring Framework"/></a>
+<a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Boot&message=3.4.1&color=green" alt="Spring Boot"/></a>
+<a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud&message=2024.0.0&color=green" alt="Spring Cloud"/></a>
+<a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.3.2&color=orange" alt="Spring Cloud Alibaba"/></a>
+<a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=OAuth%202.1&message=1.4.1&color=blue" alt="OAuth 2.1"/></a>
 
-image:https://img.shields.io/badge/GraalVM-21.0.1-blue.svg[GraalVM,link=https://www.graalvm.org/downloads]
-image:https://img.shields.io/badge/Maven-3.9.4-blue[Maven,link=https://maven.apache.org/]
+<a href="https://www.graalvm.org/downloads" target="_blank"><img src="https://img.shields.io/badge/GraalVM-21.0.1-blue.svg" alt="GraalVM"/></a>
+<a href="https://maven.apache.org/" target="_blank"><img src="https://img.shields.io/badge/Maven-3.9.4-blue" alt="Maven"/></a>
 
-image:https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT/branch/master/graph/badge.svg?token=49USEMX2MN[Codecov,https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT]
-image:https://cla-assistant.io/readme/badge/KouShenhai/KCloud-Platform-IoT[CLA assistant,link=https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT]
-image:https://tokei.rs/b1/github/KouShenhai/KCloud-Platform-IoT?category=lines[代码行数,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
-image:https://wakatime.com/badge/user/587a6632-ba42-422b-84b7-628dcb839b95/project/59654e89-b082-4cf3-8cf1-7542b343b448.svg[Wakatime, link=https://wakatime.com/projects/KCloud-Platform-IoT]
-image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源交流群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
+<a href="https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT/branch/master/graph/badge.svg?token=49USEMX2MN" alt="Codecov"/></a>
+<a href="https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://cla-assistant.io/readme/badge/KouShenhai/KCloud-Platform-IoT" alt="CLA assistant"/></a>
+<a href="https://github.com/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://tokei.rs/b1/github/KouShenhai/KCloud-Platform-IoT?category=lines" alt="代码行数"/></a>
+<a href="https://wakatime.com/projects/KCloud-Platform-IoT" target="_blank"><img src="https://wakatime.com/badge/user/587a6632-ba42-422b-84b7-628dcb839b95/project/59654e89-b082-4cf3-8cf1-7542b343b448.svg" alt="Wakatime"/></a>
+<a href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR" target="_blank"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流群"/></a>
 
 ### 😋 项目背景
 
@@ -61,27 +61,23 @@ image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源
 
 ### 🔗 在线体验
 
-[width=100%]
-|===
-|序号 |账号 |密码
+| 序号 |  账号   |    密码    |
+|:--:|:-----:|:--------:|
+| 1  | admin | admin123 |
 
-|1   |admin       |admin123
-
-|===
-
-https://www.laokou.org.cn[老寇IoT云平台在线体验（请点击我，境外服务器网络延迟请稍候）]
+[老寇IoT云平台在线体验（请点击我，境外服务器网络延迟请稍候）](https://www.laokou.org.cn)
 
 ### 🔖 在线文档
 
-https://koushenhai.github.io[老寇IoT云平台在线文档（请点击我）]
+[老寇IoT云平台在线文档（请点击我）](https://koushenhai.github.io)
 
 ### 😎 开发计划
 
-https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2[开发计划（需要登录）]
+[开发计划（需要登录）](https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2)
 
 ### 🎁 项目推荐
 
-https://github.com/KouShenhai/KCloud-Platform-Reactive-IoT[作者的另一个开源IoT项目（响应式）]
+[作者的另一个开源IoT项目（响应式）](https://github.com/KouShenhai/KCloud-Platform-Reactive-IoT)
 
 ### 💪 版本号
 
@@ -93,35 +89,32 @@ https://github.com/KouShenhai/KCloud-Platform-Reactive-IoT[作者的另一个开
 
 ### 💡 系统架构
 
-image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
+<div style="text-align: center"><img src="doc/image/老寇IoT云平台架构图.png" alt="架构图"/></div>
 
 ### ✂ 技术体系
 
 #### 🎯 Spring全家桶及核心技术版本
 
-[width=100%]
-|===
-|组件                         |版本
-
-|Spring Boot                 |3.4.1
-|Spring Cloud                |2024.0.0
-|Spring Cloud Alibaba        |2023.0.3.2
-|Spring Boot Admin           |3.4.0
-|Spring Authorization Server |1.4.1
-|Mybatis Plus                |3.5.9
-|Nacos                       |2.4.3
-|Sentinel                    |1.8.8
-|Redis                       |7.4.0
-|Elasticsearch               |8.16.0
-|RocketMQ                    |5.3.2
-|Netty                       |4.1.115.Final
-|Kafka                       |3.8.0
-|EMQX                        |5.8.1
-|TimescaleDB                 |17
-|TDengine                    |3.3.2.0
-|Liquibase                   |4.29.1
-|Snail Job                   |1.1.2
-|===
+|             组件              |      版本       |
+|:---------------------------:|:-------------:|
+|         Spring Boot         |     3.4.1     |
+|        Spring Cloud         |   2024.0.0    |
+|    Spring Cloud Alibaba     |  2023.0.3.2   |
+|      Spring Boot Admin      |     3.4.0     |
+| Spring Authorization Server |     1.4.1     |
+|        Mybatis Plus         |     3.5.9     |
+|            Nacos            |     2.4.3     |
+|          Sentinel           |     1.8.8     |
+|            Redis            |     7.4.0     |
+|        Elasticsearch        |    8.17.0     |
+|          RocketMQ           |     5.3.2     |
+|            Netty            | 4.1.115.Final |
+|            Kafka            |     3.8.0     |
+|            EMQX             |     5.8.1     |
+|         TimescaleDB         |      17       |
+|          TDengine           |    3.3.2.0    |
+|          Liquibase          |    4.29.1     |
+|          Snail Job          |     1.1.2     |
 
 #### 🍺 相关技术
 
@@ -154,8 +147,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 
 #### 🌴 项目结构
 
-[source]
-----
+```markdown
 ├── laokou-common
         └── laokou-common-xss                      --- XSS组件
         └── laokou-common-log                      --- 日志组件
@@ -204,19 +196,19 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
         └── laokou-report                          --- 报表统计模块
         └── laokou-logstash                        --- 日志收集模块
         └── laokou-generator                       --- 模板生成模块
-----
+```
 
 ### 🔒 安全报告
 
-image::https://www.murphysec.com/platform3/v31/badge/1810494453766979584.svg[https://www.murphysec.com/console/report/1717540049993383936/1810494453766979584]
+<a href="https://www.murphysec.com/console/report/1717540049993383936/1810494453766979584" target="_blank"><img src="https://www.murphysec.com/platform3/v31/badge/1810494453766979584.svg"/></a>
 
 ### 👊 性能评测
 
-link:性能测试.adoc[请点击我，查看详情]
+[请点击我，查看详情](性能测试.adoc)
 
 ### 😝 贡献者许可协议
 
-https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT[贡献者许可协议]
+[贡献者许可协议](https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT)
 
 ### 😛 用户权益（点个Star，拜托啦~🙏）
 
@@ -226,125 +218,116 @@ https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT[贡献者许可协议]
 
 ### 😻 开源协议
 
-KCloud-Platform-IoT 开源软件遵循 https://www.apache.org/licenses/LICENSE-2.0.html[Apache 2.0 协议] 请务必保留作者、Copyright信息
+KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.org/licenses/LICENSE-2.0.html) 请务必保留作者、Copyright信息
 
 ### 🐮 二次开源登记（二次开源不允许更换开源协议，否则视为侵权）
 
-[width=100%]
-|===
-|序号 |Github项目| Gitee项目
-|1   |https://github.com/xhtcode/xht-cloud-platform[xht-cloud-platform]|https://gitee.com/xhtrepo/xht-cloud-platform[xht-cloud-platform]
-|===
+| 序号 |                              Github项目                               |                              Gitee项目                               |
+|:--:|:-------------------------------------------------------------------:|:------------------------------------------------------------------:|
+| 1  | [xht-cloud-platform](https://github.com/xhtcode/xht-cloud-platform) | [xht-cloud-platform](https://gitee.com/xhtrepo/xht-cloud-platform) |
+
 
 ### 🔧 参与贡献
 
-link:CONTRIBUTING.adoc[请点击我，查看规范]
+[请点击我，查看规范](CONTRIBUTING.adoc)
 
 ### 👀 项目地址
 
-https://github.com/KouShenhai/KCloud-Platform-IoT[Github 地址]
+[Github 地址](https://github.com/KouShenhai/KCloud-Platform-IoT)
 
-https://gitee.com/laokouyun/KCloud-Platform-IoT[Gitee 地址]
+[Gitee 地址](https://gitee.com/laokouyun/KCloud-Platform-IoT)
 
 ### 🔪 技术分享
 
-image:doc/image/gzh.jpg[微信公众号,201,300]
-image:doc/image/zsxq.jpg[知识星球,201,300]
+<img src="doc/image/gzh.jpg" alt="微信公众号" width=201 height=300 />
+<img src="doc/image/zsxq.jpg" alt="知识星球" width=201 height=300 />
 
 ### 🙋 技术交流
 
-image:doc/image/wx.png[微信,250,300]
-image:doc/image/wxq.png[微信交流群,250,300]
-image:doc/image/qqq.png[QQ交流群,250,300]
+<img src="doc/image/wx.png" alt="微信" width=250 height=300 />
+<img src="doc/image/wxq.png" alt="微信交流群" width=250 height=300 />
+<img src="doc/image/qqq.png" alt="QQ交流群" width=250 height=300 />
 
 ### 💧 技术培训\广告赞助\项目合作【加微信私聊】
 
-[width=100%]
-|===
-|序号 |名称 | 金额 |备注
-|1   |技术指导【永久】 | ￥399.00      | 一对一项目指导技术指导远程指导,VIP微信交流群,全心全意为您服务
-|2   |项目指导【永久】 | ￥199.00      | 一对一项目指导远程指导,VIP微信交流群,全心全意为您服务
-|===
+| 序号 |    名称    |   金额    |                备注                 |
+|:--:|:--------:|:-------:|:---------------------------------:|
+| 1  | 技术指导【永久】 | ￥399.00 | 一对一项目指导技术指导远程指导,VIP微信交流群,全心全意为您服务 |
+| 2  | 项目指导【永久】 | ￥199.00 |   一对一项目指导远程指导,VIP微信交流群,全心全意为您服务   |
 
-[width=100%]
-|===
-|序号 |名称 | 金额 |备注
-|1   |广告赞助1【永久置顶】 | ￥199.00      | ReadMe和网站二选一【加微信私聊】
-|1   |广告赞助2【永久置顶】 | ￥299.00      | ReadMe+网站【加微信私聊】
-|===
 
-[width=100%]
-|===
-|序号 |名称| 备注
-|1 | IoT项目 | ✅
-|2 | MES项目 | ✅
-|3 | CMS项目 | ✅
-|4 | ERP项目 | ✅
-|5 | OA项目  | ✅
-|6 | 电商项目 | ✅
-|===
+| 序号 |     名称      |   金额    |         备注          |
+|:--:|:-----------:|:-------:|:-------------------:|
+| 1  | 广告赞助1【永久置顶】 | ￥199.00 | ReadMe和网站二选一【加微信私聊】 |
+| 1  | 广告赞助2【永久置顶】 | ￥299.00 |  ReadMe+网站【加微信私聊】   |
+
+
+| 序号 |  名称   | 备注 |
+|:--:|:-----:|:--:|
+| 1  | IoT项目 | ✅  |
+| 2  | MES项目 | ✅  |
+| 3  | CMS项目 | ✅  |
+| 4  | ERP项目 | ✅  |
+| 5  | OA项目  | ✅  |
+| 6  | 电商项目  | ✅  |
 
 ### 🐭 鸣谢组织
 
-https://spring.io[Spring社区]
+[Spring社区](https://spring.io)
 
-https://www.jetbrains.com/community[Jetbrains社区]
+[Jetbrains社区](https://www.jetbrains.com/community)
 
-https://github.com/alibaba[阿里巴巴社区]
+[阿里巴巴社区](https://github.com/alibaba)
 
-https://www.renren.io[人人社区]
+[人人社区](https://www.renren.io)
 
-https://www.ruoyi.vip[若依社区]
+[若依社区](https://www.ruoyi.vip)
 
-https://baomidou.com[苞米豆社区]
+[苞米豆社区](https://baomidou.com)
 
-https://gitter.im/livk-cloud/community[livk-cloud社区]
+[livk-cloud社区](https://gitter.im/livk-cloud/community)
 
-https://github.com/laokouyun[laokouyun社区]
+[laokouyun社区](https://github.com/laokouyun)
 
 非常感谢 Jetbrains 提供的开源 License
 
-image::doc/image/jb_beam.png[jb_beam,100,100,link=https://www.jetbrains.com/community/opensource/?utm_campaign=opensource&utm_content=approved&utm_medium=email&utm_source=newsletter&utm_term=jblogo#support]
+<a target="_blank" href="https://www.jetbrains.com/community/opensource/?utm_campaign=opensource&utm_content=approved&utm_medium=email&utm_source=newsletter&utm_term=jblogo#support"><img src="doc/image/jb_beam.png" alt="jb_beam" width=100 height=100 /></a>
 
 ### 🐼 鸣谢个人
 
-[width=100%]
-|===
-|序号 |头像 |名字
 
-|1   |image:https://avatars.githubusercontent.com/u/48756217?s=64&v=4[KouShenhai的头像,50,50]       |https://github.com/KouShenhai[KouShenhai]
-|2   |image:https://avatars.githubusercontent.com/u/26246537?s=64&v=4[liang99的头像,50,50]          |https://github.com/liang99[liang99]
-|3   |image:https://avatars.githubusercontent.com/u/50291874?s=64&v=4[livk-cloud的头像,50,50]       |https://github.com/livk-cloud[livk-cloud]
-|4   |image:https://avatars.githubusercontent.com/u/21030225?s=64&v=4[liukefu2050的头像,50,50]      |https://github.com/liukefu2050[liukefu2050]
-|5   |image:https://avatars.githubusercontent.com/u/127269482?s=64&v=4[HalfPomelo的头像,50,50]      |https://github.com/HalfPomelo[HalfPomelo]
-|6   |image:https://avatars.githubusercontent.com/u/69209385?s=64&v=4[lixin的头像,50,50]            |https://github.com/lixin[lixin]
-|7   |image:https://avatars.githubusercontent.com/u/2041471?s=64&v=4[simman的头像,50,50]            |https://github.com/simman[simman]
-|8   |image:https://avatars.githubusercontent.com/u/43296325?s=64&v=4[suhengli的头像,50,50]         |https://github.com/suhengli[suhengli]
-|9   |image:https://avatars.githubusercontent.com/u/89563182?s=64&v=4[gitkakafu的头像,50,50]        |https://github.com/gitkakafu[gitkakafu]
-|10  |image:https://avatars.githubusercontent.com/u/32741993?s=64&v=4[LeiZhiMin1的头像,50,50]       |https://github.com/LeiZhiMin1[LeiZhiMin1]
-|===
+| 序号 |                                                       头像                                                        |                      名字                       |
+|:--:|:---------------------------------------------------------------------------------------------------------------:|:---------------------------------------------:|
+| 1  |                   ![KouShenhai的头像](https://avatars.githubusercontent.com/u/48756217?s=64&v=4)                   |  [KouShenhai](https://github.com/KouShenhai)  |
+| 2  |   <img src="https://avatars.githubusercontent.com/u/26246537?s=64&v=4" alt="liang99的头像" width=50 height=50 />   |     [liang99](https://github.com/liang99)     |
+| 3  |                   ![livk-cloud的头像](https://avatars.githubusercontent.com/u/50291874?s=64&v=4)                   |  [livk-cloud](https://github.com/livk-cloud)  |
+| 4  |                  ![liukefu2050的头像](https://avatars.githubusercontent.com/u/21030225?s=64&v=4)                   | [liukefu2050](https://github.com/liukefu2050) |
+| 5  | <img src="https://avatars.githubusercontent.com/u/127269482?s=64&v=4" alt="HalfPomelo的头像" width=50 height=50 /> |  [HalfPomelo](https://github.com/HalfPomelo)  |
+| 6  |                     ![lixin的头像](https://avatars.githubusercontent.com/u/69209385?s=64&v=4)                      |       [lixin](https://github.com/lixin)       |
+| 7  |                     ![simman的头像](https://avatars.githubusercontent.com/u/2041471?s=64&v=4)                      |      [simman](https://github.com/simman)      |
+| 8  |                    ![suhengli的头像](https://avatars.githubusercontent.com/u/43296325?s=64&v=4)                    |    [suhengli](https://github.com/suhengli)    |
+| 9  |                   ![gitkakafu的头像](https://avatars.githubusercontent.com/u/89563182?s=64&v=4)                    |   [gitkakafu](https://github.com/gitkakafu)   |
+| 10 |                   ![LeiZhiMin1的头像](https://avatars.githubusercontent.com/u/32741993?s=64&v=4)                   |  [LeiZhiMin1](https://github.com/LeiZhiMin1)  |
 
 ### ⛳️ 赞助列表（感谢各位大佬的赞助）
 
-[width=100%]
-|===
-|时间         |网名        |赞助           |备注
-|2024/12/08  |t*          |￥199.00      |无
-|2024/12/02  |'c*         |￥399.00      |无
-|2024/11/25  |tio*        |￥520.00      |希望KCloud飞起，实现专精特新!
-|2024/08/01  |*ckai       |￥88.00       |加油~
-|2024/04/19  |*保熟       |￥188.00      |越做越好
-|2024/03/20  |A细节*      |￥66.00       |无
-|2024/03/03  |y*i        |￥58.88       |无
-|2024/01/30  |*阳        |￥10          |无
-|2023/12/22  |*民        |服务器         |无
-|2023/12/08  |*来        |￥10          |希望越来越好，一直坚持下去
-|2023/12/08  |*迪        |￥20          |越来越好，继续干下去
-|2023/10/07  |何*        |￥399         |作者说：感谢支持
-|2023/08/27  |*界        |￥10          |希望越来越好
-|2023/06/29  |顺         |￥20          |希望项目一直做下去就好
-|2023/03/27  |s*e        |￥10          |无
-|===
+|     时间     |  网名   |   赞助    |         备注         |
+|:----------:|:-----:|:-------:|:------------------:|
+| 2024/12/08 |  t*   | ￥199.00 |         无          |
+| 2024/12/02 |  'c*  | ￥399.00 |         无          |
+| 2024/11/25 | tio*  | ￥520.00 | 希望KCloud飞起，实现专精特新! |
+| 2024/08/01 | *ckai | ￥88.00  |        加油~         |
+| 2024/04/19 |  *保熟  | ￥188.00 |        越做越好        |
+| 2024/03/20 | A细节*  | ￥66.00  |         无          |
+| 2024/03/03 |  y*i  | ￥58.88  |         无          |
+| 2024/01/30 |  *阳   |   ￥10   |         无          |
+| 2023/12/22 |  *民   |   服务器   |         无          |
+| 2023/12/08 |  *来   |   ￥10   |   希望越来越好，一直坚持下去    |
+| 2023/12/08 |  *迪   |   ￥20   |     越来越好，继续干下去     |
+| 2023/10/07 |  何*   |  ￥399   |      作者说：感谢支持      |
+| 2023/08/27 |  *界   |   ￥10   |       希望越来越好       |
+| 2023/06/29 |   顺   |   ￥20   |    希望项目一直做下去就好     |
+| 2023/03/27 |  s*e  |   ￥10   |         无          |
 
 ### 🚫 免责声明
 
@@ -352,12 +335,12 @@ image::doc/image/jb_beam.png[jb_beam,100,100,link=https://www.jetbrains.com/comm
 
 ### 🐸 联系作者
 
-https://kcloud.blog.csdn.net[博客：https://kcloud.blog.csdn.net]
+[博客：https://kcloud.blog.csdn.net](https://kcloud.blog.csdn.net)
 
-https://mail.qq.com[邮箱：2413176044@qq.com]
+[邮箱：2413176044@qq.com](https://mail.qq.com)
 
-http://wpa.qq.com/msgrd?v=3&uin=2413176044&Site=gitee&Menu=yes[QQ：2413176044]
+[QQ：2413176044](http://wpa.qq.com/msgrd?v=3&uin=2413176044&Site=gitee&Menu=yes)
 
-image::https://img.shields.io/badge/Q群-465450496-blue.svg[QQ群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
+[![QQ群](https://img.shields.io/badge/Q群-465450496-blue.svg)](https://jq.qq.com/?_wv=1027&k=Ec8T76dR)
 
-image::https://starchart.cc/KouShenhai/KCloud-Platform-IoT.svg[GitHub Star 趋势]
+![GitHub Star 趋势](https://starchart.cc/KouShenhai/KCloud-Platform-IoT.svg)
