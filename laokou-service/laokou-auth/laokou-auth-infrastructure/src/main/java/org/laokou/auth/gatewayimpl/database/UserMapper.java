@@ -37,6 +37,6 @@ public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 	 * @param user 用户对象
 	 * @return 用户信息
 	 */
-	UserDO selectOneByCondition(@Param("user") UserDO user, @Param("tenantCode") String tenantCode);
+	UserDO selectObj(@Param("user") UserDO user, @Param("tenantCode") String tenantCode);
 
 }

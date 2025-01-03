@@ -36,7 +36,7 @@
             and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> ${pageQuery.params.endDate}
         </if>
 		order by id desc
-		limit ${pageQuery.pageSize} OFFSET ${pageQuery.pageIndex}
+		limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
 	</select>
 
 	<select id="selectObjectCount" resultType="long">
