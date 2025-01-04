@@ -20,7 +20,6 @@ export default [
 		name: '首页',
 		path: '/home',
 		component: './Home',
-		icon: 'home'
 	},
 	{
 		name: 'Login',
@@ -30,7 +29,6 @@ export default [
 	},
 	{
 		name: '系统管理',
-		icon: 'setting',
 		path: '/sys',
 		routes: [
 			{

@@ -5,12 +5,19 @@
 import {Dropdown, message, theme} from "antd";
 // @ts-ignore
 import {history} from 'umi';
-import {LogoutOutlined} from "@ant-design/icons";
+import {HomeOutlined, LogoutOutlined, SettingOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
 import {logoutV3} from "@/services/auth/auth";
 import {clearToken, getAccessToken, getExpiresTime, getRefreshToken} from "@/access";
 import React from "react";
 import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
+
+const getIcon = (icon: string) => {
+	switch (icon) {
+		case 'HomeOutlined': return <HomeOutlined/>
+		case 'SettingOutlined': return <SettingOutlined/>
+	}
+}
 
 export async function getInitialState(): Promise<{
 	name: string;
@@ -33,10 +40,12 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }) => {
 					{
 						name: '首页',
 						path: '/home',
+						icon: getIcon('HomeOutlined'),
 					},
 					{
 						name: '系统管理',
 						path: '/sys',
+						icon: getIcon('SettingOutlined'),
 						routes: [
 							{
 								name: '日志管理',
