@@ -25,6 +25,8 @@ import org.laokou.admin.menu.dto.MenuTreeListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.admin.menu.model.MenuStatus;
+import org.laokou.admin.menu.model.MenuType;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -44,7 +46,9 @@ public class MenuTreeListQryExe {
 
 	public Result<List<MenuTreeCO>> execute(MenuTreeListQry qry) {
 		LambdaQueryWrapper<MenuDO> wrapper = Wrappers.lambdaQuery(MenuDO.class)
-			.select(MenuDO::getId, MenuDO::getPath, MenuDO::getPid, MenuDO::getName)
+			.select(MenuDO::getId, MenuDO::getPath, MenuDO::getIcon, MenuDO::getPid, MenuDO::getName)
+			.eq(MenuDO::getStatus, MenuStatus.ENABLE.getCode())
+			.eq(MenuDO::getType, MenuType.MENU.getCode())
 			.orderByDesc(MenuDO::getSort);
 		List<MenuDO> list = menuMapper.selectList(wrapper);
 		MenuTreeCO co = TreeUtil.buildTreeNode(MenuConvertor.toClientObjs(list), MenuTreeCO.class);

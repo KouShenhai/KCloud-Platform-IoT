@@ -45,9 +45,7 @@ public final class MenuConvertor {
 		menuDO.setPath(menuE.getPath());
 		menuDO.setIcon(menuE.getIcon());
 		menuDO.setSort(menuE.getSort());
-		menuDO.setHidden(menuE.getHidden());
 		menuDO.setStatus(menuE.getStatus());
-		menuDO.setUrl(menuE.getUrl());
 		return menuDO;
 	}
 
@@ -61,9 +59,7 @@ public final class MenuConvertor {
 		co.setPath(menuDO.getPath());
 		co.setIcon(menuDO.getIcon());
 		co.setSort(menuDO.getSort());
-		co.setHidden(menuDO.getHidden());
 		co.setStatus(menuDO.getStatus());
-		co.setUrl(menuDO.getUrl());
 		return co;
 	}
 
@@ -77,6 +73,7 @@ public final class MenuConvertor {
 		co.setPid(menuDO.getPid());
 		co.setName(menuDO.getName());
 		co.setPath(menuDO.getPath());
+		co.setIcon(menuDO.getIcon());
 		return co;
 
 	}

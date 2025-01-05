@@ -1,0 +1,7 @@
+POST {{schema}}/{{host}}/v3/menus/tree-list
+Authorization: Bearer {{Authorization}}
+Content-Type: application/json
+
+{
+
+}

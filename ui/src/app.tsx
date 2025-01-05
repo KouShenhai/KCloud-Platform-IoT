@@ -11,6 +11,8 @@ import {logoutV3} from "@/services/auth/auth";
 import {clearToken, getAccessToken, getExpiresTime, getRefreshToken} from "@/access";
 import React from "react";
 import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
+import {getProfileV3} from "@/services/admin/user";
+import {treeListV3} from "@/services/admin/menu";
 
 const getIcon = (icon: string) => {
 	switch (icon) {
@@ -20,12 +22,22 @@ const getIcon = (icon: string) => {
 }
 
 export async function getInitialState(): Promise<{
-	name: string;
-	avatar?: string;
+	id: bigint;
+	tenantId: bigint;
+	username: string;
+	avatar: string;
+	permissions: string[]
+	menus: any[]
 }> {
+	const profile = await getProfileV3().catch(console.log);
+	const menu = await treeListV3({}).catch(console.log);
 	return {
-		name: 'admin',
-		avatar: '/1.jpg',
+		id: profile?.data?.id,
+		tenantId: profile?.data?.tenantId,
+		username: profile?.data?.username,
+		avatar: profile?.data?.avatar,
+		permissions: profile?.data?.permissions,
+		menus: menu?.data
 	};
 }
 
@@ -36,30 +48,17 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }) => {
 			locale: false,
 			params: initialState,
 			request: async () => {
-				return [
-					{
-						name: '首页',
-						path: '/home',
-						icon: getIcon('HomeOutlined'),
-					},
-					{
-						name: '系统管理',
-						path: '/sys',
-						icon: getIcon('SettingOutlined'),
-						routes: [
-							{
-								name: '日志管理',
-								path: '/sys/log',
-								routes: [
-									{
-										name: '登录日志',
-										path: '/sys/log/login'
-									}
-								]
-							}
-						]
-					}
-				]
+				const routers = []
+				routers.push({
+					name: '首页',
+					path: '/home',
+					icon: getIcon('HomeOutlined')
+				})
+				initialState?.menus.forEach((item: any) => {
+					item.icon = getIcon(item.icon)
+					routers.push(item)
+				})
+				return routers
 			}
 		},
 		layout: 'mix',
@@ -71,9 +70,9 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }) => {
 		fixedHeader: true,
 		siderMenuType: "sub",
 		avatarProps: {
-			src: '/1.jpg',
+			src: initialState?.avatar,
 			size: 'small',
-			title: 'admin',
+			title: initialState?.username,
 			render: (_props: any, dom: string | number | boolean | ReactElement | Iterable<ReactNode> | ReactPortal | null | undefined) => {
 				return (
 					<Dropdown
@@ -203,8 +202,9 @@ export const request: {
 			} else if (status === 200 && data.code !== 'OK') {
 				if (data.code === "Unauthorized") {
 					history.push('/login')
+				} else {
+					message.error(data.msg).then();
 				}
-				message.error(data.msg).then();
 			}
 			return response;
 		},

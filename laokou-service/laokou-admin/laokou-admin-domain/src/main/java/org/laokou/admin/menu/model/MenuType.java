@@ -15,18 +15,25 @@
  *
  */
 
-package org.laokou.admin.menu.dto;
+package org.laokou.admin.menu.model;
 
-import lombok.Data;
-
-import java.io.Serializable;
+import lombok.Getter;
 
 /**
- * 查询菜单命令.
- *
  * @author laokou
  */
-@Data
-public class MenuTreeListQry implements Serializable {
+@Getter
+public enum MenuType {
+
+	MENU(0, "菜单"), BUTTON(1, "按钮");
+
+	private final int code;
+
+	private final String desc;
+
+	MenuType(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

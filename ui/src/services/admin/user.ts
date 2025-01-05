@@ -4,7 +4,7 @@ import {request} from '@umijs/max';
 
 /** 修改用户 修改用户 PUT /v3/users */
 export async function modifyV3(body: API.UserModifyCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/users', {
+	return request<any>('/api/admin/v3/users', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ export async function modifyV3(body: API.UserModifyCmd, options?: { [key: string
 
 /** 保存用户 保存用户 POST /v3/users */
 export async function saveV3(body: API.UserSaveCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/users', {
+	return request<any>('/api/admin/v3/users', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export async function saveV3(body: API.UserSaveCmd, options?: { [key: string]: a
 
 /** 删除用户 删除用户 DELETE /v3/users */
 export async function removeV3(body: number[], options?: { [key: string]: any }) {
-	return request<any>('/v3/users', {
+	return request<any>('/api/admin/v3/users', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export async function getByIdV3(
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
-	return request<API.Result>(`/v3/users/${param0}`, {
+	return request<API.Result>(`/api/admin/v3/users/${param0}`, {
 		method: 'GET',
 		params: {...queryParams},
 		...(options || {}),
@@ -54,7 +54,7 @@ export async function getByIdV3(
 
 /** 导出用户 导出用户 POST /v3/users/export */
 export async function exportV3(body: API.UserExportCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/users/export', {
+	return request<any>('/api/admin/v3/users/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 		}
 	});
 
-	return request<any>('/v3/users/import', {
+	return request<any>('/api/admin/v3/users/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -98,7 +98,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 
 /** 分页查询用户列表 分页查询用户列表 POST /v3/users/page */
 export async function pageV3(body: API.UserPageQry, options?: { [key: string]: any }) {
-	return request<API.Result>('/v3/users/page', {
+	return request<API.Result>('/api/admin/v3/users/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ export async function pageV3(body: API.UserPageQry, options?: { [key: string]: a
 
 /** 查看个人信息 查看个人信息 GET /v3/users/profile */
 export async function getProfileV3(options?: { [key: string]: any }) {
-	return request<API.Result>('/v3/users/profile', {
+	return request<API.Result>('/api/admin/v3/users/profile', {
 		method: 'GET',
 		...(options || {}),
 	});
