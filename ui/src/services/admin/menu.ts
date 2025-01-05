@@ -107,3 +107,14 @@ export async function pageV3(body: API.MenuPageQry, options?: { [key: string]: a
 		...(options || {}),
 	});
 }
+
+export async function treeListV3(body: any,options?: { [key: string]: any }) {
+	return request<API.Result>('/api/admin/v3/menus/tree-list', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}

@@ -73,18 +73,8 @@ public class MenuCO extends ClientObject {
 	private Integer sort;
 
 	/**
-	 * 菜单隐藏 0否 1是.
-	 */
-	private Integer hidden;
-
-	/**
 	 * 菜单状态 0启用 1停用.
 	 */
 	private Integer status;
-
-	/**
-	 * 菜单链接.
-	 */
-	private String url;
 
 }

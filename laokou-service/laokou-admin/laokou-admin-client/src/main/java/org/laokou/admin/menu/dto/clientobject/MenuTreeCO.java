@@ -17,14 +17,14 @@
 
 package org.laokou.admin.menu.dto.clientobject;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.core.utils.TreeUtil;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 菜单树客户端对象.
@@ -42,9 +42,17 @@ public class MenuTreeCO extends TreeUtil.TreeNode<MenuTreeCO> {
 	private String path;
 
 	/**
-	 * 孩子节点.
+	 * 菜单图标.
 	 */
-	@JsonProperty("routers")
-	private List<MenuTreeCO> children = new ArrayList<>(16);
+	private String icon;
+
+	@JsonIgnore
+	private Map<String, Object> extValues = new HashMap<>();
+
+	@JsonIgnore
+	private Long id;
+
+	@JsonIgnore
+	private Long pid;
 
 }

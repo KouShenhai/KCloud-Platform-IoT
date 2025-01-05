@@ -20,7 +20,6 @@ package org.laokou.infrastructure.config;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
 import io.netty.util.concurrent.EventExecutorGroup;
-import lombok.RequiredArgsConstructor;
 import org.laokou.common.netty.annotation.WebSocketServer;
 import org.laokou.common.netty.config.AbstractWebSocketServerChannelInitializer;
 import org.laokou.common.netty.config.SpringWebSocketServerProperties;
@@ -31,14 +30,18 @@ import org.laokou.common.netty.config.SpringWebSocketServerProperties;
  * @author laokou
  */
 @WebSocketServer
-@RequiredArgsConstructor
 public class WebSocketServerChannelInitializer extends AbstractWebSocketServerChannelInitializer {
 
 	private final ChannelInboundHandlerAdapter webSocketServerHandler;
 
 	private final EventExecutorGroup webSocketEventExecutorGroup;
 
-	private final SpringWebSocketServerProperties springWebSocketServerProperties;
+	public WebSocketServerChannelInitializer(SpringWebSocketServerProperties springWebSocketServerProperties,
+			ChannelInboundHandlerAdapter webSocketServerHandler, EventExecutorGroup webSocketEventExecutorGroup) {
+		super(springWebSocketServerProperties);
+		this.webSocketServerHandler = webSocketServerHandler;
+		this.webSocketEventExecutorGroup = webSocketEventExecutorGroup;
+	}
 
 	@Override
 	protected void preHandler(ChannelPipeline pipeline) {
@@ -49,11 +52,6 @@ public class WebSocketServerChannelInitializer extends AbstractWebSocketServerCh
 	protected void postHandler(ChannelPipeline pipeline) {
 		// 业务处理
 		pipeline.addLast(webSocketEventExecutorGroup, webSocketServerHandler);
-	}
-
-	@Override
-	protected SpringWebSocketServerProperties getProperties() {
-		return springWebSocketServerProperties;
 	}
 
 }
