@@ -14,6 +14,61 @@
 #  * limitations under the License.
 #  */
 services:
+  loki:
+    image: grafana/loki:3.3.2
+    container_name: loki
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    user: "0"
+    ports:
+      - "3100:3100"
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./loki/config:/etc/loki/config
+      - ./loki/index:/opt/loki/index
+      - ./loki/chunks:/opt/loki/chunks
+    networks:
+      - laokou_network
+  promtail:
+    image: grafana/promtail:3.3.2
+    container_name: promtail
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    user: "0"
+    command: -config.file=/etc/promtail/config/promtail-config.yaml
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./promtail/logs:/var/logs
+      - ./promtail/config:/etc/promtail/config
+      - ./promtail/data/log:/logs
+    networks:
+      - laokou_network
+    depends_on:
+      - loki
+  # 默认账号/密码 admin/admin
+  # 新密码 laokou123
+  grafana:
+    image: grafana/grafana:11.4.0
+    container_name: grafana
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    user: "0"
+    ports:
+      - "3000:3000"
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./grafana:/var/lib/grafana
+    networks:
+      - laokou_network
   # admin/laokou123
   influxdb:
     image: influxdb:2.7.11

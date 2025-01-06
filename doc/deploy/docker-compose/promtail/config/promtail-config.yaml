@@ -1,0 +1,28 @@
+server:
+  http_listen_port: 9081
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: trace-log
+    static_configs:
+      - targets:
+          - localhost
+    pipeline_stages:
+      - match:
+          selector: '{job="trace-log"}'
+          stages:
+            - labels:
+                id:
+                serviceId:
+                traceId:
+                spanId:
+            - timestamp:
+                format: "2006/01/02 15:04:05"
+                source: instant  # 正则提取的字段
+                location: Asia/Shanghai
