@@ -2,13 +2,14 @@
 
 [source,shell]
 ----
-npm cache clean --force
-npm install
+npm install -g pnpm
+pnpm install
+pnpm add moment
 ----
 
 === 运行项目
 
 [source,shell]
 ----
-npm run dev
+pnpm dev
 ----

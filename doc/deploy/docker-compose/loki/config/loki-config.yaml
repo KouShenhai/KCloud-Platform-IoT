@@ -1,0 +1,52 @@
+auth_enabled: false
+
+server:
+  http_listen_port: 3100
+  grpc_listen_port: 3110
+  grpc_server_max_recv_msg_size: 1073741824  #grpc最大接收消息值，默认4m
+  grpc_server_max_send_msg_size: 1073741824  #grpc最大发送消息值，默认4m
+
+ingester:
+  lifecycler:
+    address: 127.0.0.1
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
+    final_sleep: 0s
+  chunk_idle_period: 5m
+  chunk_retain_period: 30s
+  max_transfer_retries: 0
+  max_chunk_age: 20m  # 一个timeseries块在内存中的最大持续时间。如果timeseries运行的时间超过此时间，则当前块将刷新到存储并创建一个新块
+
+schema_config:
+  configs:
+    - from: 2021-01-01
+      store: boltdb
+      object_store: filesystem
+      schema: v11
+      index:
+        prefix: index_
+        period: 168h
+
+storage_config:
+  boltdb:
+    directory: /opt/loki/index # 存储索引地址
+  filesystem:
+    directory: /opt/loki/chunks
+
+limits_config:
+  enforce_metric_name: false
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h
+  ingestion_rate_mb: 30  # 修改每用户摄入速率限制，即每秒样本量，默认值为4M
+  ingestion_burst_size_mb: 20  # 修改每用户摄入速率限制，即每秒样本量，默认值为6M
+
+chunk_store_config:
+  # 回看日志行的最大时间，只适用于即时日志
+  # max_look_back_period: 168h
+  max_look_back_period: 0s
+
+table_manager:
+  retention_deletes_enabled: false # 日志保留周期开关，默认为false
+  retention_period: 0s  # 日志保留周期
