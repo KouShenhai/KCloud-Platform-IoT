@@ -31,7 +31,7 @@ export default [
 	{
 		name: '系统管理',
 		path: '/sys',
-		icon: 'sys',
+		icon: 'setting',
 		routes: [
 			{
 				name: '日志管理',

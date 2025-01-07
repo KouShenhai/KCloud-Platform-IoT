@@ -17,13 +17,13 @@
 
 package org.laokou.logstash.common.support;
 
-import java.util.Map;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public interface TraceLogStorage {
 
-	CompletableFuture<Void> batchSave(Map<String, Object> map);
+	CompletableFuture<Void> batchSave(List<String> messages);
 
-	CompletableFuture<Void> save(Object obj);
+	CompletableFuture<Void> save(String obj);
 
 }
