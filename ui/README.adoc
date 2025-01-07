@@ -11,12 +11,12 @@ pnpm add moment
 
 [source,shell]
 ----
-pnpm run dev
+pnpm dev
 ----
 
 === 部署项目
 
 [source,shell]
 ----
-pnpm run build
+pnpm build
 ----

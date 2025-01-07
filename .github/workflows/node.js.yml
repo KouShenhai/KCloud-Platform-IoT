@@ -25,12 +25,12 @@ jobs:
           node-version: 18.x
           cache: 'npm'
           cache-dependency-path: "./ui/pnpm-lock.yaml"
-      - name: Clean cache pnpm
-        run: pnpm store prune
+      - name: Install pnpm
+        run: npm install -g pnpm
       - name: Install UI
-        run: pnpm install --prefix ./ui
+        run: pnpm install
       - name: Build UI
-        run: pnpm run build --prefix ./ui
+        run: pnpm build
       - name: Build the Docker image
         run: |
           # 登录阿里云镜像仓库
