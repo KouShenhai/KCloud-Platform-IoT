@@ -15,14 +15,14 @@ jobs:
     strategy:
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        node-version: [ 16.x ]
+        node-version: [ 16.x, 18.x ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18.x
           cache: 'npm'
           cache-dependency-path: "./ui/pnpm-lock.yaml"
       - name: Install pnpm
@@ -41,10 +41,10 @@ jobs:
           docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.4.1
           # 推送镜像到镜像仓库
           docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.4.1
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16.x
           cache: 'npm'
           cache-dependency-path: "./archive/package-lock.json"
       - name: Cache Clean Doc
