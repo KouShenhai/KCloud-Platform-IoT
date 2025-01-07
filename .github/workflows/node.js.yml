@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+          cache: 'npm'
           cache-dependency-path: "./ui/pnpm-lock.yaml"
       - name: Install pnpm
         run: npm install -g pnpm
