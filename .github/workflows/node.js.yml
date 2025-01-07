@@ -23,14 +23,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-          cache-dependency-path: "./ui/package-lock.json"
-      - name: Cache Clean UI
-        run: npm cache clean --force
+          cache: 'pnpm'
+          cache-dependency-path: "./ui/pnpm-lock.yaml"
+      - name: Install pnpm
+        run: npm install -g pnpm
       - name: Install UI
-        run: npm install --prefix ./ui
+        run: pnpm install --prefix ./ui
       - name: Build UI
-        run: npm run build --prefix ./ui
+        run: pnpm build --prefix ./ui
       - name: Build the Docker image
         run: |
           # 登录阿里云镜像仓库
