@@ -28,9 +28,9 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
       - name: Install UI
-        run: pnpm install --prefix ./ui
+        run: pnpm install --prefix ./ui/pnpm-lock.yaml
       - name: Build UI
-        run: pnpm build --prefix ./ui
+        run: pnpm build --prefix ./ui/pnpm-lock.yaml
       - name: Build the Docker image
         run: |
           # 登录阿里云镜像仓库
