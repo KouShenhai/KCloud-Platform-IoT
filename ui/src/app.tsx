@@ -6,7 +6,7 @@ import {Dropdown, message, theme} from "antd";
 // @ts-ignore
 import {history} from 'umi';
 import {HomeOutlined, LogoutOutlined, SettingOutlined} from "@ant-design/icons";
-import {ReactElement, ReactNode, ReactPortal} from "react";
+import {ReactElement, ReactNode, ReactPortal, useEffect} from "react";
 import {logoutV3} from "@/services/auth/auth";
 import {clearToken, getAccessToken, getExpiresTime, getRefreshToken} from "@/access";
 import React from "react";
@@ -16,9 +16,22 @@ import {treeListV3} from "@/services/admin/menu";
 
 const getIcon = (icon: string) => {
 	switch (icon) {
-		case 'HomeOutlined': return <HomeOutlined/>
 		case 'SettingOutlined': return <SettingOutlined/>
+		default: return <SettingOutlined/>
 	}
+}
+
+const getRouters = (menus: any[]) => {
+	const routers = [{
+		name: '首页',
+		path: '/home',
+		icon: <HomeOutlined/>
+	}]
+	menus.forEach((item: any) => {
+		item.icon = getIcon(item.icon)
+		routers.push(item)
+	})
+	return routers
 }
 
 export async function getInitialState(): Promise<{
@@ -27,38 +40,26 @@ export async function getInitialState(): Promise<{
 	username: string;
 	avatar: string;
 	permissions: string[]
-	menus: any[]
 }> {
 	const profile = await getProfileV3().catch(console.log);
-	const menu = await treeListV3({}).catch(console.log);
 	return {
 		id: profile?.data?.id,
 		tenantId: profile?.data?.tenantId,
 		username: profile?.data?.username,
 		avatar: profile?.data?.avatar,
 		permissions: profile?.data?.permissions,
-		menus: menu?.data
 	};
 }
 
-export const layout: RunTimeLayoutConfig  = ({ initialState }) => {
+export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 	return {
 		logo: '/logo.png',
 		menu: {
 			locale: false,
-			params: initialState,
+			params: initialState?.username,
 			request: async () => {
-				const routers = []
-				routers.push({
-					name: '首页',
-					path: '/home',
-					icon: getIcon('HomeOutlined')
-				})
-				initialState?.menus.forEach((item: any) => {
-					item.icon = getIcon(item.icon)
-					routers.push(item)
-				})
-				return routers
+				const menu = await treeListV3({}).catch(console.log);
+				return getRouters(menu?.data)
 			}
 		},
 		layout: 'mix',
@@ -134,7 +135,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }) => {
 				colorBgCollapsedButton: '#ffffff', // 展开收起按钮背景颜色
 				colorTextCollapsedButton: '#dee1f0', // 展开收起按钮字体颜色
 				colorTextCollapsedButtonHover: '#dee1f0' // 展开收起按钮 hover 时字体颜色
-			}
+			 }
 		},
 	};
 };

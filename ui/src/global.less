@@ -10,7 +10,7 @@
 		width: 1em;
 		height: 1em;
 		margin: 50px auto;
-		color: #1a88ff;
+		color: #1677ff;
 		font-size: 12px;
 		text-indent: -9999em;
 		border-radius: 50%;
@@ -107,4 +107,20 @@
 .ant-tooltip-inner {
 	background-color: #ffffff !important; /* Tooltip 背景色 */
 	color: #000000 !important;             /* Tooltip 文字颜色 */
+}
+
+.css-dev-only-do-not-override-1smb3wb {
+	&.ant-menu-light {
+		.ant-menu-submenu-selected {
+			> .ant-menu-submenu-title {
+				color: inherit !important;
+			}
+		}
+
+		> .ant-menu .ant-menu-submenu-selected {
+			> .ant-menu-submenu-title {
+				color: inherit !important;
+			}
+		}
+	}
 }

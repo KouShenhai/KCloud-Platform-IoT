@@ -4,7 +4,6 @@
 ----
 npm install -g pnpm
 pnpm install
-pnpm add moment
 ----
 
 === 运行项目
