@@ -29,8 +29,10 @@ jobs:
         run: npm install -g pnpm
       - name: Install UI
         run: pnpm install
+        working-directory: ./ui
       - name: Build UI
         run: pnpm build
+        working-directory: ./ui
       - name: Build the Docker image
         run: |
           # 登录阿里云镜像仓库
