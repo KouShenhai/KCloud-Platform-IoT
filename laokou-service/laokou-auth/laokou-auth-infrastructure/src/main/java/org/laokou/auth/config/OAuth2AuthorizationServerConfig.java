@@ -143,7 +143,7 @@ class OAuth2AuthorizationServerConfig {
 	RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate,
 			OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
 		JdbcRegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
-		propertiesMapper.asRegisteredClients().parallelStream().forEachOrdered(registeredClientRepository::save);
+		propertiesMapper.asRegisteredClients().forEach(registeredClientRepository::save);
 		return registeredClientRepository;
 	}
 
