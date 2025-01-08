@@ -34,6 +34,8 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
+	private final ExecutorService EXECUTOR = ThreadUtil.newVirtualTaskExecutor();
+
 	@Override
 	public void batchSave(List<String> messages) {
 		Map<String, Object> dataMap = messages.parallelStream()
@@ -41,12 +43,10 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 			.filter(Objects::nonNull)
 			.collect(Collectors.toMap(TraceLogIndex::getId, traceLogIndex -> traceLogIndex));
 		if (MapUtil.isNotEmpty(dataMap)) {
-			try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-				elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, executor)
-					.thenAcceptAsync(
-							res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap, executor),
-							executor);
-			}
+			elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, EXECUTOR)
+				.thenAcceptAsync(
+						res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap, EXECUTOR),
+						EXECUTOR);
 		}
 	}
 
