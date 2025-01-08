@@ -1,0 +1,21 @@
+=== 下载依赖
+
+[source,shell]
+----
+npm install -g pnpm
+pnpm install
+----
+
+=== 运行项目
+
+[source,shell]
+----
+pnpm dev
+----
+
+=== 部署项目
+
+[source,shell]
+----
+pnpm build
+----

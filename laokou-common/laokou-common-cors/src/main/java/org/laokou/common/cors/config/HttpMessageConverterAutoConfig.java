@@ -43,7 +43,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.TimeZone;
 
-import static org.laokou.common.i18n.utils.DateUtil.Constant.DEFAULT_TIMEZONE;
+import static org.laokou.common.i18n.utils.DateUtil.DEFAULT_TIMEZONE;
 
 /**
  * 消息转换器配置.
@@ -64,8 +64,8 @@ public class HttpMessageConverterAutoConfig {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		// 时区
 		TimeZone timeZone = TimeZone.getTimeZone(DEFAULT_TIMEZONE);
-		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS));
+		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
 		simpleDateFormat.setTimeZone(timeZone);
 		mapper.setDateFormat(simpleDateFormat);
 		mapper.setTimeZone(timeZone);

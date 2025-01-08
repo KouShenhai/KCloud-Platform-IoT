@@ -17,11 +17,8 @@
 
 package org.laokou.common.i18n.utils;
 
-import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
-import java.util.Collection;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,7 +30,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.PERCENT;
  *
  * @author laokou
  */
-public final class StringUtil {
+public final class StringUtil extends StringUtils {
 
 	private static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
 
@@ -42,10 +39,6 @@ public final class StringUtil {
 
 	public static boolean isNotEmpty(String str) {
 		return hasText(str);
-	}
-
-	public static String collectionToDelimitedString(Collection<?> coll, String delim) {
-		return StringUtils.collectionToDelimitedString(coll, delim);
 	}
 
 	public static boolean startWith(String str, String prefix) {
@@ -64,10 +57,6 @@ public final class StringUtil {
 			return EMPTY;
 		}
 		return str;
-	}
-
-	public static Set<String> commaDelimitedListToSet(String str) {
-		return StringUtils.commaDelimitedListToSet(str);
 	}
 
 	public static String like(String str) {
@@ -123,14 +112,6 @@ public final class StringUtil {
 			}
 		}
 		return null;
-	}
-
-	public static boolean hasText(@Nullable String str) {
-		return StringUtils.hasText(str);
-	}
-
-	public static boolean hasText(@Nullable CharSequence sequence) {
-		return StringUtils.hasText(sequence);
 	}
 
 	/**

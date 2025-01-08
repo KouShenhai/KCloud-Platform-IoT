@@ -103,7 +103,7 @@ public class LoginLogConvertor implements ExcelUtil.ExcelConvert<LoginLogDO, Log
 		loginLogExcel.setType(getTypeDesc(loginLogDO.getType()));
 		loginLogExcel.setErrorMessage(loginLogDO.getErrorMessage());
 		loginLogExcel.setCreateTime(DateUtil.format(loginLogDO.getCreateTime(), DateUtil.getDefaultZoneId(),
-				DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS));
+				DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
 		return loginLogExcel;
 	}
 
