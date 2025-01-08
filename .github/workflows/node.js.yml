@@ -29,6 +29,20 @@ jobs:
       - name: Build UI
         run: pnpm build
         working-directory: ./ui
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: 'npm'
+          cache-dependency-path: "./bigScreen/pnpm-lock.yaml"
+      - name: Install pnpm
+        run: npm install -g pnpm
+      - name: Install BigScreen
+        run: pnpm install
+        working-directory: ./bigScreen
+      - name: Build BigScreen
+        run: pnpm build
+        working-directory: ./bigScreen
       - name: Build the Docker image
         run: |
           # 登录阿里云镜像仓库
