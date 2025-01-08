@@ -32,15 +32,14 @@ class DateTest {
 	@Test
 	void test_local_date_time_yyyy_rod_mm_rod_dd_space_hh_risk_hh_risk_ss() {
 		String str = "2024-09-24 11:33:33";
-		LocalDateTime localDateTime = DateUtil.parseTime(str, DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
-		Assertions.assertEquals(str,
-				DateUtil.format(localDateTime, DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS));
+		LocalDateTime localDateTime = DateUtil.parseTime(str, DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
+		Assertions.assertEquals(str, DateUtil.format(localDateTime, DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
 	}
 
 	@Test
 	void testInstant() {
 		String str = "2024-09-24 13:59:00";
-		Instant instant = DateUtil.parsInstant(str, DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
+		Instant instant = DateUtil.parsInstant(str, DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
 		long between = DateUtil.betweenSeconds(DateUtil.nowInstant(), instant);
 		Assertions.assertTrue(between < 0);
 	}

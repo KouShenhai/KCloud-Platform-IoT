@@ -34,9 +34,9 @@ class IdGeneratorTest {
 	void testSnowflakeId() {
 		long snowflakeId = IdGenerator.defaultSnowflakeId();
 		LocalDateTime localDateTime = IdGenerator.getLocalDateTime(snowflakeId, DateUtil.getDefaultZoneId());
-		String time1 = DateUtil.format(localDateTime, DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
+		String time1 = DateUtil.format(localDateTime, DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
 		Instant instant = IdGenerator.getInstant(snowflakeId);
-		String time2 = DateUtil.format(instant, DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
+		String time2 = DateUtil.format(instant, DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
 		Assertions.assertEquals(time1, time2);
 	}
 

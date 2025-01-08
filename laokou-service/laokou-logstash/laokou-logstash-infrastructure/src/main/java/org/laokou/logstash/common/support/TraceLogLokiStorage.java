@@ -36,6 +36,7 @@ public class TraceLogLokiStorage extends AbstractTraceLogStorage {
 
 	@Data
 	static class Stream {
+
 		private String id;
 
 		private String serviceId;
@@ -51,6 +52,7 @@ public class TraceLogLokiStorage extends AbstractTraceLogStorage {
 		private String address;
 
 		private String level;
+
 	}
 
 }
