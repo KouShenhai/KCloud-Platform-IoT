@@ -41,10 +41,7 @@ public class TraceLogLokiStorage extends AbstractTraceLogStorage {
 
 	@Override
 	public void batchSave(List<String> messages) {
-		List<TraceLogIndex> list = messages.parallelStream()
-			.map(this::getTraceLogIndex)
-			.filter(Objects::nonNull)
-			.toList();
+		List<TraceLogIndex> list = messages.stream().map(this::getTraceLogIndex).filter(Objects::nonNull).toList();
 		LokiPushDTO dto = TraceLogConvertor.toDTO(list);
 		restClient.post()
 			.uri(lokiProperties.getUrl())

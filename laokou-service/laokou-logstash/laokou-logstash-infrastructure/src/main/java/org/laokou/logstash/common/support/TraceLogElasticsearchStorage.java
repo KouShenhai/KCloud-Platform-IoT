@@ -17,6 +17,7 @@
 
 package org.laokou.logstash.common.support;
 
+import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.ThreadUtil;
@@ -38,7 +39,7 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 
 	@Override
 	public void batchSave(List<String> messages) {
-		Map<String, Object> dataMap = messages.parallelStream()
+		Map<String, Object> dataMap = messages.stream()
 			.map(this::getTraceLogIndex)
 			.filter(Objects::nonNull)
 			.collect(Collectors.toMap(TraceLogIndex::getId, traceLogIndex -> traceLogIndex));
@@ -48,6 +49,11 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 						res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap, EXECUTOR),
 						EXECUTOR);
 		}
+	}
+
+	@PreDestroy
+	public void destroy() {
+		EXECUTOR.shutdown();
 	}
 
 }
