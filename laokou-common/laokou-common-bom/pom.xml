@@ -113,7 +113,7 @@
     <!--error_prone_annotations版本-->
     <error_prone_annotations.version>2.36.0</error_prone_annotations.version>
     <!--okio-jvm版本-->
-    <okio-jvm.version>3.10.1</okio-jvm.version>
+    <okio-jvm.version>3.10.2</okio-jvm.version>
     <!--checker-qual版本-->
     <checker-qual.version>3.48.4</checker-qual.version>
     <!--commons-io版本-->
