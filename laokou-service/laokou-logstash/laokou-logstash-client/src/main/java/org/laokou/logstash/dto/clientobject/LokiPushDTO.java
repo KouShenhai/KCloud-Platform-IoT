@@ -15,12 +15,51 @@
  *
  */
 
-package org.laokou.logstash.common.support;
+package org.laokou.logstash.dto.clientobject;
+
+import lombok.Data;
+import org.laokou.common.i18n.dto.ClientObject;
 
 import java.util.List;
 
-public interface TraceLogStorage {
+/**
+ * @author laokou
+ */
+@Data
+public class LokiPushDTO extends ClientObject {
 
-	void batchSave(List<String> messages);
+	private List<Stream> streams;
+
+	@Data
+	public static class Label {
+
+		private String id;
+
+		private String serviceId;
+
+		private String profile;
+
+		private String traceId;
+
+		private String spanId;
+
+		private String address;
+
+		private String level;
+
+		private String threadName;
+
+		private String packageName;
+
+	}
+
+	@Data
+	public static class Stream {
+
+		private Label stream;
+
+		private List<List<String>> values;
+
+	}
 
 }

@@ -8,21 +8,12 @@ positions:
 clients:
   - url: http://loki:3100/loki/api/v1/push
 
+# https://grafana.org.cn/docs/loki/latest/send-data/promtail/configuration/#example-push-config
 scrape_configs:
-  - job_name: trace-log
-    static_configs:
-      - targets:
-          - localhost
-    pipeline_stages:
-      - match:
-          selector: '{job="trace-log"}'
-          stages:
-            - labels:
-                id:
-                serviceId:
-                traceId:
-                spanId:
-            - timestamp:
-                format: "2006/01/02 15:04:05"
-                source: instant  # 正则提取的字段
-                location: Asia/Shanghai
+  - job_name: trace-log-push
+    loki_push_api:
+      server:
+        http_listen_port: 3500
+        grpc_listen_port: 3600
+      labels:
+        pushserver: trace-log-push

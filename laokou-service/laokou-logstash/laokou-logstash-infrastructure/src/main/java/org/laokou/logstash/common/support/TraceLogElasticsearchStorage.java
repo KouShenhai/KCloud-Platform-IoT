@@ -21,12 +21,11 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
-import org.laokou.logstash.gateway.database.dataobject.TraceLogIndex;
+import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
@@ -36,26 +35,19 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	@Override
-	public CompletableFuture<Void> batchSave(List<String> messages) {
+	public void batchSave(List<String> messages) {
 		Map<String, Object> dataMap = messages.parallelStream()
 			.map(this::getTraceLogIndex)
 			.filter(Objects::nonNull)
 			.collect(Collectors.toMap(TraceLogIndex::getId, traceLogIndex -> traceLogIndex));
 		if (MapUtil.isNotEmpty(dataMap)) {
 			try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-				return elasticsearchTemplate
-					.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, executor)
+				elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, executor)
 					.thenAcceptAsync(
 							res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap, executor),
 							executor);
 			}
 		}
-		return null;
-	}
-
-	@Override
-	public CompletableFuture<Void> save(String obj) {
-		throw new UnsupportedOperationException();
 	}
 
 }

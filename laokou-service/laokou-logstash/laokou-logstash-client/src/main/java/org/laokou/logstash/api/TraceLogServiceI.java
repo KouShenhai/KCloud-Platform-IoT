@@ -15,12 +15,15 @@
  *
  */
 
-package org.laokou.logstash.common.support;
+package org.laokou.logstash.api;
 
-import java.util.List;
+import org.laokou.logstash.dto.TraceLogSaveCmd;
 
-public interface TraceLogStorage {
+/**
+ * @author laokou
+ */
+public interface TraceLogServiceI {
 
-	void batchSave(List<String> messages);
+	void save(TraceLogSaveCmd cmd);
 
 }
