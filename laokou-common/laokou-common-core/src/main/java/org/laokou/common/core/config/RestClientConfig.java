@@ -49,7 +49,7 @@ public class RestClientConfig {
 		return RestClient.builder().requestFactory(factory).build();
 	}
 
-	@Bean(bootstrap = Bean.Bootstrap.BACKGROUND)
+	@Bean
 	public RestClient restClient() {
 		log.info("{} => Initializing Default RestClient", Thread.currentThread().getName());
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();

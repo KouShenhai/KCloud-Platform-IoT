@@ -15,39 +15,24 @@
  *
  */
 
-package org.laokou.logstash.consumer;
+package org.laokou.logstash.command;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.logstash.api.TraceLogServiceI;
+import org.laokou.logstash.ability.DomainService;
 import org.laokou.logstash.dto.TraceLogSaveCmd;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
-public class TraceLogConsumer {
+public class TraceLogSaveCmdExe {
 
-	private final TraceLogServiceI traceLogServiceI;
+	private final DomainService domainService;
 
-	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_trace_consumer_group")
-	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
-		try {
-			traceLogServiceI.save(new TraceLogSaveCmd(messages));
-		}
-		catch (Exception e) {
-			log.error("分布式链路写入失败，错误信息：{}", e.getMessage());
-		}
-		finally {
-			ack.acknowledge();
-		}
+	public void executeVoid(TraceLogSaveCmd cmd) {
+		domainService.create(cmd.getMessages());
 	}
 
 }

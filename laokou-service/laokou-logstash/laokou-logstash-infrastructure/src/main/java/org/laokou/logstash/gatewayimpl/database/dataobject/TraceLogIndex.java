@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.logstash.gateway.database.dataobject;
+package org.laokou.logstash.gatewayimpl.database.dataobject;
 
 import lombok.Data;
 import org.laokou.common.elasticsearch.annotation.Field;

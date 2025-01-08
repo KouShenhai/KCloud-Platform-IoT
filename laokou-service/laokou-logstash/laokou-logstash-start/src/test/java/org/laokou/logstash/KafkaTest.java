@@ -20,7 +20,10 @@ package org.laokou.logstash;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.kafka.template.DefaultKafkaTemplate;
+import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
@@ -37,7 +40,20 @@ class KafkaTest {
 
 	@Test
 	void kafkaSenderTest() {
-		defaultKafkaTemplate.send("laokou_trace_topic", "测试数据");
+		TraceLogIndex index = new TraceLogIndex();
+		index.setId("1");
+		index.setServiceId("laokou-logstash");
+		index.setProfile("dev");
+		index.setDateTime(DateUtil.format(DateUtil.nowInstant(), DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS));
+		index.setTraceId("1");
+		index.setSpanId("1");
+		index.setAddress("127.0.0.1");
+		index.setLevel("INFO");
+		index.setThreadName("main");
+		index.setPackageName("org.laokou.logstash");
+		index.setMessage("{\"testValue\": \"123456\"}");
+		index.setStacktrace("");
+		defaultKafkaTemplate.send("laokou_trace_topic", JacksonUtil.toJsonStr(index));
 	}
 
 }

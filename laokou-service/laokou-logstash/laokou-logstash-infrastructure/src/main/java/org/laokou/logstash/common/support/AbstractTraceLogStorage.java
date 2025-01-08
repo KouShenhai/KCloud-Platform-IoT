@@ -23,7 +23,7 @@ import org.laokou.common.i18n.common.constant.StringConstant;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.logstash.gateway.database.dataobject.TraceLogIndex;
+import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
 @Slf4j
 public abstract class AbstractTraceLogStorage implements TraceLogStorage {

@@ -15,12 +15,23 @@
  *
  */
 
-package org.laokou.logstash.common.support;
+package org.laokou.logstash.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 import java.util.List;
 
-public interface TraceLogStorage {
+/**
+ * @author laokou
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class TraceLogSaveCmd extends CommonCommand {
 
-	void batchSave(List<String> messages);
+	private List<String> messages;
 
 }

@@ -138,7 +138,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 - 高亮搜索：Elasticsearch
 - 链路跟踪：Jaeger
 - 任务调度：Snail Job
-- 日志分析：EFK
+- 日志分析：EFK & Loki
 - 缓存&分布式锁：Redis & Redisson
 - 统计报表：MongoDB
 - 对象存储：Amazon S3
