@@ -17,6 +17,8 @@
 
 package org.laokou.logstash.common.support;
 
+import lombok.Data;
+
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -30,6 +32,25 @@ public class TraceLogLokiStorage extends AbstractTraceLogStorage {
 	@Override
 	public CompletableFuture<Void> save(String obj) {
 		return null;
+	}
+
+	@Data
+	static class Stream {
+		private String id;
+
+		private String serviceId;
+
+		private String profile;
+
+		private String dateTime;
+
+		private String traceId;
+
+		private String spanId;
+
+		private String address;
+
+		private String level;
 	}
 
 }

@@ -204,8 +204,6 @@ export default () => {
 		}
 	];
 
-	// @ts-ignore
-	// @ts-ignore
 	return (
 		<ProTable<TableColumns>
 			actionRef={actionRef}

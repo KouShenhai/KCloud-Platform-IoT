@@ -159,6 +159,16 @@
     <dependencies>
       <dependency>
         <groupId>org.laokou</groupId>
+        <artifactId>laokou-logstash-client</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-logstash-domain</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-common-rabbitmq</artifactId>
         <version>${laokou.version}</version>
       </dependency>

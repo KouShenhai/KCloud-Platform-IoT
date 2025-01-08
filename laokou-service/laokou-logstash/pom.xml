@@ -15,5 +15,7 @@
     <module>laokou-logstash-app</module>
     <module>laokou-logstash-infrastructure</module>
     <module>laokou-logstash-adapter</module>
+      <module>laokou-logstash-client</module>
+    <module>laokou-logstash-domain</module>
   </modules>
 </project>

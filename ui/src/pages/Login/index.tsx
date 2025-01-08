@@ -13,20 +13,14 @@ import {
 import {LoginFormPage, ProFormCaptcha, ProFormText,} from '@ant-design/pro-components';
 import {Col, Divider, Image, message, Row, Space, Tabs} from 'antd';
 import {CSSProperties, useEffect, useRef, useState} from 'react';
-// @ts-ignore
 import {login} from '@/services/auth/auth';
-// @ts-ignore
 import {getCaptchaImageByUuidV3, sendCaptchaV3 } from '@/services/auth/captcha';
 // @ts-ignore
 import {history} from 'umi';
-// @ts-ignore
 import {getSecretInfoV3} from '@/services/auth/secret';
 import {JSEncrypt} from 'jsencrypt';
-// @ts-ignore
 import {v7 as uuidV7} from 'uuid';
-// @ts-ignore
 import {ProFormInstance} from "@ant-design/pro-form"
-// @ts-ignore
 import {clearToken, setToken} from "@/access"
 import {CaptFieldRef} from "@ant-design/pro-form/lib";
 
