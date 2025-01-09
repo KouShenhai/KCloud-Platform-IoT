@@ -62,7 +62,6 @@ public class UserConvertor {
 		userProfileCO.setId(userDetail.getId());
 		userProfileCO.setUsername(userDetail.getUsername());
 		userProfileCO.setAvatar(userDetail.getAvatar());
-		userProfileCO.setTenantId(userDetail.getTenantId());
 		userProfileCO.setPermissions(userDetail.getPermissions());
 		return userProfileCO;
 	}

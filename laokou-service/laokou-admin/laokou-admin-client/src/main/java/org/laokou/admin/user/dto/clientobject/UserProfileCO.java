@@ -43,9 +43,6 @@ public class UserProfileCO extends ClientObject {
 	@Schema(name = "头像", description = "头像")
 	private String avatar;
 
-	@Schema(name = "租户ID", description = "租户ID")
-	private Long tenantId;
-
 	@Schema(name = "菜单权限标识集合", description = "菜单权限标识集合")
 	private Set<String> permissions;
 

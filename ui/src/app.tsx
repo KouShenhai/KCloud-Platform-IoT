@@ -36,7 +36,6 @@ const getRouters = (menus: any[]) => {
 
 export async function getInitialState(): Promise<{
 	id: bigint;
-	tenantId: bigint;
 	username: string;
 	avatar: string;
 	permissions: string[]
@@ -44,7 +43,6 @@ export async function getInitialState(): Promise<{
 	const profile = await getProfileV3().catch(console.log);
 	return {
 		id: profile?.data?.id,
-		tenantId: profile?.data?.tenantId,
 		username: profile?.data?.username,
 		avatar: profile?.data?.avatar,
 		permissions: profile?.data?.permissions,
