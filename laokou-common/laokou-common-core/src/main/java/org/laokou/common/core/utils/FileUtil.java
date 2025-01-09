@@ -102,6 +102,17 @@ public final class FileUtil {
 		}
 	}
 
+	public static void chunkWrite(File file, InputStream in, long start, long end, long size) {
+		if (in instanceof FileInputStream fis) {
+			try (FileChannel inChannel = fis.getChannel()) {
+				chunkWrite(file, inChannel, start, end, size);
+			}
+			catch (IOException e) {
+				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+			}
+		}
+	}
+
 	public static void write(File file, InputStream in, long size, long chunkSize) throws IOException {
 		if (in instanceof FileInputStream fis) {
 			// 最大偏移量2G【2^31】数据
@@ -110,28 +121,12 @@ public final class FileUtil {
 			try (FileChannel inChannel = fis.getChannel();
 					ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 				List<Callable<Boolean>> futures = new ArrayList<>((int) chunkCount);
-				// position指针
-				for (long index = 0, position = 0,
-						endSize = position + chunkSize; index < chunkCount; index++, position = index * chunkSize) {
-					long finalPosition = position;
+				// start指针【position偏移量】
+				for (long index = 0, start = 0,
+						end = start + chunkSize; index < chunkCount; index++, start = index * chunkSize) {
+					long finalStart = start;
 					futures.add(() -> {
-						try (RandomAccessFile accessFile = new RandomAccessFile(file, RW);
-								FileChannel outChannel = accessFile.getChannel()) {
-							// 结束位置
-							long finalEndSize = endSize;
-							if (finalEndSize > size) {
-								finalEndSize = size;
-							}
-							outChannel.position(finalPosition);
-							// 零拷贝
-							// transferFrom 与 transferTo 区别
-							// transferTo 最多拷贝2gb，和源文件大小保持一致【发送，从当前通道读取数据并写入外部通道】
-							// transferFrom【接收，从外部通道读取数据并写入当前通道】
-							inChannel.transferTo(finalPosition, finalEndSize, outChannel);
-						}
-						catch (IOException e) {
-							throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
-						}
+						chunkWrite(file, inChannel, finalStart, end, size);
 						return true;
 					});
 				}
@@ -252,6 +247,21 @@ public final class FileUtil {
 					}
 				}
 			}
+		}
+		catch (IOException e) {
+			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+		}
+	}
+
+	private static void chunkWrite(File file, FileChannel inChannel, long start, long end, long size) {
+		try (RandomAccessFile accessFile = new RandomAccessFile(file, RW);
+				FileChannel outChannel = accessFile.getChannel()) {
+			// 零拷贝
+			// transferFrom 与 transferTo 区别
+			// transferTo 最多拷贝2gb，和源文件大小保持一致【发送，从当前通道读取数据并写入外部通道】
+			// transferFrom【接收，从外部通道读取数据并写入当前通道】
+			outChannel.position(start);
+			inChannel.transferTo(start, Math.min(end, size), outChannel);
 		}
 		catch (IOException e) {
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
