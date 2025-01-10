@@ -44,7 +44,6 @@ export function ExportAllToExcel(fileName: string, url: string, method: string, 
 			let reader = new FileReader()
 			reader.readAsText(blob)
 			reader.onload = () => {
-				// @ts-ignore
 				const link = document.createElement('a')
 				link.download = fileName
 				link.style.display = 'none'

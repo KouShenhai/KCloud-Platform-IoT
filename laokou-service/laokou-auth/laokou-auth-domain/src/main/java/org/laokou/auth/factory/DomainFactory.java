@@ -26,7 +26,9 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  * @author laokou
  */
 @Slf4j
-public class DomainFactory {
+public final class DomainFactory {
+
+	private DomainFactory() {}
 
 	/**
 	 * 邮箱.
