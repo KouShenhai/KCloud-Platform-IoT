@@ -1,7 +1,7 @@
 import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {exportV3, pageV3} from "@/services/admin/loginLog";
-import {Button} from "antd";
+import {exportV3, pageV3, getByIdV3} from "@/services/admin/noticeLog";
+import {Button, message} from "antd";
 import {ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
 import {Excel, ExportToExcel} from "@/utils/export";
@@ -15,70 +15,44 @@ export default () => {
 		1: '1'
 	};
 
-	const typeEnum = {
-		'username_password': 'username_password',
-		'mobile': 'mobile',
-		'mail': 'mail',
-		'authorization_code': 'authorization_code'
-	};
-
 	type TableColumns = {
-		id: number | undefined;
-		username: string | undefined;
-		ip: string | undefined;
-		address: string | undefined;
-		browser: string | undefined;
-		os: string | undefined;
+		id: number;
+		code: string | undefined;
+		name: string | undefined;
 		status: string | undefined;
+		param: string | undefined;
 		errorMessage: string | undefined;
-		type: string | undefined;
 		createTime: string | undefined;
 	};
 
 	const actionRef = useRef();
 
-	let loginLogList: TableColumns[]
+	let noticeLogList: TableColumns[]
 
-	let loginLogParam: any
+	let noticeLogParam: any
 
 	const getPageQuery = (params: any) => {
-		loginLogParam = {
+		noticeLogParam = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
-			username: trim(params?.username),
-			ip: trim(params?.ip),
-			address: trim(params?.address),
-			browser: trim(params?.browser),
+			code: trim(params?.code),
+			name: trim(params?.name),
 			status: params?.status,
-			os: trim(params?.os),
-			type: params?.type,
 			errorMessage: trim(params?.errorMessage),
 			params: {
 				startDate: params?.startDate,
 				endDate: params?.endDate
 			}
 		};
-		return loginLogParam;
+		return noticeLogParam;
 	}
 
 	const getStatusDesc = (status: string | undefined) => {
 		if (status === "0") {
-			return "登录成功"
+			return "成功"
 		} else {
-			return "登录失败"
-		}
-	}
-
-	const getTypeDesc = (type: string | undefined) => {
-		if (type === "username_password") {
-			return "用户名密码登录";
-		} else if (type === "mail") {
-			return "邮箱登录"
-		} else if (type === "mobile") {
-			return "手机号登录";
-		} else if (type === "authorization_code") {
-			return "授权码登录";
+			return "失败"
 		}
 	}
 
@@ -86,35 +60,33 @@ export default () => {
 		let params: Excel
 		const list: TableColumns[] = [];
 		// 格式化数据
-		loginLogList.forEach(item => {
+		noticeLogList.forEach(item => {
 			item.status = getStatusDesc(item.status)
-			item.type = getTypeDesc(item.type)
 			list.push(item)
 		})
 		params = {
 			sheetData: list,
-			sheetFilter: ["username", "ip", "address", "browser", "os", "status", "errorMessage", "type", "createTime"],
-			sheetHeader: ["用户名", "IP地址", "归属地", "浏览器", "操作系统", "登录状态", "错误信息", "登录类型", "登录时间"],
-			fileName: "登录日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
-			sheetName: "登录日志"
+			sheetFilter: ["code", "name", "status", "param", "errorMessage", "createTime"],
+			sheetHeader: ["标识", "名称", "状态", "参数", "错误信息", "创建时间"],
+			fileName: "通知日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
+			sheetName: "通知日志"
 		}
 		ExportToExcel(params)
 	}
 
 	const exportAllToExcel = async () => {
-		exportV3(loginLogParam)
+		exportV3(noticeLogParam)
 	}
 
-	const listLoginLog = async (params: any) => {
-		loginLogList = []
+	const listNoticeLog = async (params: any) => {
+		noticeLogList = []
 		return pageV3(getPageQuery(params)).then(res => {
 			res?.data?.records?.forEach((item: TableColumns) => {
 				item.status = statusEnum[item.status as '0'];
-				item.type = typeEnum[item.type as 'username_password'];
-				loginLogList.push(item);
+				noticeLogList.push(item);
 			});
 			return Promise.resolve({
-				data: loginLogList,
+				data: noticeLogList,
 				total: parseInt(res.data.total),
 				success: true,
 			});
@@ -129,36 +101,21 @@ export default () => {
 			width: 60,
 		},
 		{
-			title: '用户名',
-			dataIndex: 'username',
+			title: '标识',
+			dataIndex: 'code',
 			ellipsis: true
 		},
 		{
-			title: 'IP地址',
-			dataIndex: 'ip',
+			title: '名称',
+			dataIndex: 'name',
 			ellipsis: true
 		},
 		{
-			title: '归属地',
-			dataIndex: 'address',
-			ellipsis: true
-		},
-		{
-			title: '浏览器',
-			dataIndex: 'browser',
-			ellipsis: true
-		},
-		{
-			title: '操作系统',
-			dataIndex: 'os',
-			ellipsis: true
-		},
-		{
-			title: '登录状态',
+			title: '状态',
 			dataIndex: 'status',
 			valueEnum: {
-				0: {text: '登录成功', status: 'Success'},
-				1: {text: '登录失败', status: 'Error'},
+				0: {text: '成功', status: 'Success'},
+				1: {text: '失败', status: 'Error'},
 			},
 			ellipsis: true
 		},
@@ -168,19 +125,7 @@ export default () => {
 			ellipsis: true
 		},
 		{
-			title: '登录类型',
-			dataIndex: 'type',
-			valueEnum: {
-				username_password: {text: '用户名密码登录', status: 'Processing'},
-				mobile: {text: '手机号登录', status: 'Default'},
-				mail: {text: '邮箱登录', status: 'Success'},
-				authorization_code: {text: '授权码登录', status: 'Error'}
-			},
-			width: 160,
-			ellipsis: true
-		},
-		{
-			title: '登录日期',
+			title: '创建日期',
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
@@ -189,7 +134,7 @@ export default () => {
 			ellipsis: true
 		},
 		{
-			title: '登录日期',
+			title: '创建日期',
 			dataIndex: 'createTime',
 			valueType: 'dateRange',
 			hideInTable: true,
@@ -201,7 +146,22 @@ export default () => {
 					};
 				},
 			}
-		}
+		},
+		{
+			title: '操作',
+			valueType: 'option',
+			key: 'option',
+			render: (_, record) => [
+				<a key="getable"
+				   onClick={() => {
+					   const id = record?.id
+					   getByIdV3({id: id})
+				   }}
+				>
+					查看
+				</a>
+			],
+		},
 	];
 
 	return (
@@ -210,7 +170,7 @@ export default () => {
 			columns={columns}
 			request={(params) => {
 				// 表单搜索项会从 params 传入，传递给后端接口。
-				return listLoginLog(params)
+				return listNoticeLog(params)
 			}}
 			rowKey="id"
 			pagination={{

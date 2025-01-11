@@ -46,7 +46,7 @@ public class NoticeLogPageQryExe {
 			DynamicDataSourceContextHolder.push("domain");
 			List<NoticeLogDO> list = noticeLogMapper.selectObjectPage(qry);
 			long total = noticeLogMapper.selectObjectCount(qry);
-			return Result.ok(Page.create(list.stream().map(NoticeLogConvertor::toClientObject).toList(), total));
+			return Result.ok(Page.create(NoticeLogConvertor.toClientObjects(list), total));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

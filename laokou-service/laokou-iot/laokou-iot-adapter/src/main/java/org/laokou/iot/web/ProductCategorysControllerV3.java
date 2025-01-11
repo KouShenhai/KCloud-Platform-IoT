@@ -98,6 +98,7 @@ public class ProductCategorysControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
+	@PreAuthorize("hasAuthority('sys:product-category:detail')")
 	@Operation(summary = "查看产品类别详情", description = "查看产品类别详情")
 	public Result<ProductCategoryCO> getByIdV3(@PathVariable("id") Long id) {
 		return productCategorysServiceI.getById(new ProductCategoryGetQry(id));

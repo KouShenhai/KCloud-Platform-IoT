@@ -101,6 +101,7 @@ public class NoticeLogsControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
+	@PreAuthorize("hasAuthority('sys:notice-log:detail')")
 	@Operation(summary = "查看通知日志详情", description = "查看通知日志详情")
 	public Result<NoticeLogCO> getByIdV3(@PathVariable("id") Long id) {
 		return noticeLogsServiceI.getById(new NoticeLogGetQry(id));

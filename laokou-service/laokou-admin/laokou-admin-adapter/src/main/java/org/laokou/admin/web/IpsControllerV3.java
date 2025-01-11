@@ -97,6 +97,7 @@ public class IpsControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
+	@PreAuthorize("hasAuthority('sys:ip:detail')")
 	@Operation(summary = "查看IP详情", description = "查看IP详情")
 	public Result<IpCO> getByIdV3(@PathVariable("id") Long id) {
 		return ipsServiceI.getById(new IpGetQry(id));

@@ -103,6 +103,7 @@ public class DeptsControllerV3 {
 	@TraceLog
 	@GetMapping("{id}")
 	@DataCache(name = DEPTS, key = "#id")
+	@PreAuthorize("hasAuthority('sys:dept:detail')")
 	@Operation(summary = "查看部门详情", description = "查看部门详情")
 	public Result<DeptCO> getByIdV3(@PathVariable("id") Long id) {
 		return deptsServiceI.getById(new DeptGetQry(id));

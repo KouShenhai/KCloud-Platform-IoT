@@ -1,6 +1,8 @@
 // @ts-ignore
 /* eslint-disable */
 import {request} from '@umijs/max';
+import {ExportAllToExcel} from "@/utils/export";
+import moment from "moment";
 
 /** 修改通知日志 修改通知日志 PUT /v3/notice-logs */
 export async function modifyV3(body: API.NoticeLogModifyCmd, options?: { [key: string]: any }) {
@@ -53,15 +55,8 @@ export async function getByIdV3(
 }
 
 /** 导出通知日志 导出通知日志 POST /v3/notice-logs/export */
-export async function exportV3(body: API.NoticeLogExportCmd, options?: { [key: string]: any }) {
-	return request<any>('/api/admin/v3/notice-logs/export', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		data: body,
-		...(options || {}),
-	});
+export function exportV3(body: API.NoticeLogExportCmd, options?: { [key: string]: any }) {
+	ExportAllToExcel("通知日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/api/admin/v3/notice-logs/export', 'POST', body, options)
 }
 
 /** 导入通知日志 导入通知日志 POST /v3/notice-logs/import */

@@ -97,6 +97,7 @@ public class RolesControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
+	@PreAuthorize("hasAuthority('sys:role:detail')")
 	@Operation(summary = "查看角色详情", description = "查看角色详情")
 	public Result<RoleCO> getByIdV3(@PathVariable("id") Long id) {
 		return rolesServiceI.getById(new RoleGetQry(id));

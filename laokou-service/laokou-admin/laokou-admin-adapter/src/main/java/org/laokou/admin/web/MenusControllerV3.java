@@ -113,6 +113,7 @@ public class MenusControllerV3 {
 	@TraceLog
 	@GetMapping("{id}")
 	@DataCache(name = MENUS, key = "#id")
+	@PreAuthorize("hasAuthority('sys:menu:detail')")
 	@Operation(summary = "查看菜单详情", description = "查看菜单详情")
 	public Result<MenuCO> getByIdV3(@PathVariable("id") Long id) {
 		return menusServiceI.getById(new MenuGetQry(id));

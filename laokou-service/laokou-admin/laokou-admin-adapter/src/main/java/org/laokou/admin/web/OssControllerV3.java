@@ -97,6 +97,7 @@ public class OssControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
+	@PreAuthorize("hasAuthority('sys:oss:detail')")
 	@Operation(summary = "查看OSS详情", description = "查看OSS详情")
 	public Result<OssCO> getByIdV3(@PathVariable("id") Long id) {
 		return ossServiceI.getById(new OssGetQry(id));

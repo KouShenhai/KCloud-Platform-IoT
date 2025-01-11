@@ -20,8 +20,10 @@ import {history} from 'umi';
 import {getSecretInfoV3} from '@/services/auth/secret';
 import {JSEncrypt} from 'jsencrypt';
 import {v7 as uuidV7} from 'uuid';
+// @ts-ignore
 import {ProFormInstance} from "@ant-design/pro-form"
 import {clearToken, setToken} from "@/access"
+// @ts-ignore
 import {CaptFieldRef} from "@ant-design/pro-form/lib";
 
 type LoginType = 'usernamePassword' | 'mobile' | 'mail';
@@ -175,15 +177,13 @@ export default () => {
 				if (res.code === 'OK') {
 					// 登录成功【令牌过期前5分钟，自动刷新令牌】
 					clearToken()
-					// @ts-ignore
+					// 存储令牌
 					setToken(res.data?.access_token, res.data?.refresh_token, new Date().getTime() + res.data?.expires_in)
 					// 跳转路由
 					const urlParams = new URL(window.location.href).searchParams;
 					history.push(urlParams.get('redirect') || '/');
-					// 延迟 1 秒显示欢迎信息
-					setTimeout(() => {
-						message.success(`${timeFix()}，欢迎回来`);
-					}, 1000);
+					// 刷新页面
+					window.location.reload()
 				}
 			})
 			.catch(() => {

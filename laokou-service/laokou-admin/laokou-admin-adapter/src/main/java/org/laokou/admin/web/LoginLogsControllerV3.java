@@ -102,6 +102,7 @@ public class LoginLogsControllerV3 {
 	@TraceLog
 	@ApiSecret
 	@GetMapping("{id}")
+	@PreAuthorize("hasAuthority('sys:login-log:detail')")
 	@Operation(summary = "查看登录日志详情", description = "查看登录日志详情")
 	public Result<LoginLogCO> getByIdV3(@PathVariable("id") Long id) {
 		return loginLogsServiceI.getById(new LoginLogGetQry(id));

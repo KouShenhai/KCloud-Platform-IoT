@@ -105,12 +105,12 @@ public class LoginLogExcel extends DTO {
 	private String type;
 
 	/**
-	 * 登录日期.
+	 * 登录时间.
 	 */
 	@ColumnWidth(30)
 	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
 			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
-	@ExcelProperty(value = "登录日期", index = 8)
+	@ExcelProperty(value = "登录时间", index = 8)
 	private String createTime;
 
 }

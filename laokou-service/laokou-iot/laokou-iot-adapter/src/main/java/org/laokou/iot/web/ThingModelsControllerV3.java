@@ -98,6 +98,7 @@ public class ThingModelsControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
+	@PreAuthorize("hasAuthority('sys:thing-model:detail')")
 	@Operation(summary = "查看物模型详情", description = "查看物模型详情")
 	public Result<ThingModelCO> getByIdV3(@PathVariable("id") Long id) {
 		return thingModelsServiceI.getById(new ThingModelGetQry(id));
