@@ -60,10 +60,10 @@
       and status = #{pageQuery.status}
     </if>
     <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
-      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> #{pageQuery.params.startDate}
+      and create_time <![CDATA[ >= ]]> to_timestamp(#{pageQuery.params.startDate}, 'YYYY-MM-DD')
     </if>
     <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
-      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> #{pageQuery.params.endDate}
+      and create_time <![CDATA[ <= ]]> to_timestamp(#{pageQuery.params.endDate}, 'YYYY-MM-DD')
     </if>
   </sql>
 

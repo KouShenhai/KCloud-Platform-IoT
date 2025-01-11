@@ -7,20 +7,9 @@ import {trim} from "@/utils/format";
 import {Excel, ExportToExcel} from "@/utils/export";
 import moment from "moment";
 import {useRef} from "react";
+import {getLoginStatus, getLoginType, LOGIN_STATUS, LOGIN_TYPE} from "@/services/constant";
 
 export default () => {
-
-	const statusEnum = {
-		0: '0',
-		1: '1'
-	};
-
-	const typeEnum = {
-		'username_password': 'username_password',
-		'mobile': 'mobile',
-		'mail': 'mail',
-		'authorization_code': 'authorization_code'
-	};
 
 	type TableColumns = {
 		id: number | undefined;
@@ -62,33 +51,13 @@ export default () => {
 		return loginLogParam;
 	}
 
-	const getStatusDesc = (status: string | undefined) => {
-		if (status === "0") {
-			return "登录成功"
-		} else {
-			return "登录失败"
-		}
-	}
-
-	const getTypeDesc = (type: string | undefined) => {
-		if (type === "username_password") {
-			return "用户名密码登录";
-		} else if (type === "mail") {
-			return "邮箱登录"
-		} else if (type === "mobile") {
-			return "手机号登录";
-		} else if (type === "authorization_code") {
-			return "授权码登录";
-		}
-	}
-
 	const exportToExcel = async () => {
 		let params: Excel
 		const list: TableColumns[] = [];
 		// 格式化数据
 		loginLogList.forEach(item => {
-			item.status = getStatusDesc(item.status)
-			item.type = getTypeDesc(item.type)
+			item.status = getLoginStatus(item.status as '0').text
+			item.type = getLoginType(item.type as '0')?.text
 			list.push(item)
 		})
 		params = {
@@ -109,8 +78,8 @@ export default () => {
 		loginLogList = []
 		return pageV3(getPageQuery(params)).then(res => {
 			res?.data?.records?.forEach((item: TableColumns) => {
-				item.status = statusEnum[item.status as '0'];
-				item.type = typeEnum[item.type as 'username_password'];
+				item.status = getLoginStatus(item.status as '0').text;
+				item.type = getLoginType(item.type as '0')?.text;
 				loginLogList.push(item);
 			});
 			return Promise.resolve({
@@ -157,8 +126,8 @@ export default () => {
 			title: '登录状态',
 			dataIndex: 'status',
 			valueEnum: {
-				0: {text: '登录成功', status: 'Success'},
-				1: {text: '登录失败', status: 'Error'},
+				[LOGIN_STATUS.OK]: getLoginStatus(LOGIN_STATUS.OK),
+				[LOGIN_STATUS.FAIL]: getLoginStatus(LOGIN_STATUS.FAIL)
 			},
 			ellipsis: true
 		},
@@ -171,10 +140,10 @@ export default () => {
 			title: '登录类型',
 			dataIndex: 'type',
 			valueEnum: {
-				username_password: {text: '用户名密码登录', status: 'Processing'},
-				mobile: {text: '手机号登录', status: 'Default'},
-				mail: {text: '邮箱登录', status: 'Success'},
-				authorization_code: {text: '授权码登录', status: 'Error'}
+				[LOGIN_TYPE.AUTHORIZATION_CODE]: getLoginType(LOGIN_TYPE.AUTHORIZATION_CODE),
+				[LOGIN_TYPE.MAIL]: getLoginType(LOGIN_TYPE.MAIL),
+				[LOGIN_TYPE.MOBILE]: getLoginType(LOGIN_TYPE.MOBILE),
+				[LOGIN_TYPE.USERNAME_PASSWORD]: getLoginType(LOGIN_TYPE.USERNAME_PASSWORD)
 			},
 			width: 160,
 			ellipsis: true

@@ -26,7 +26,10 @@ import {clearToken, setToken} from "@/access"
 // @ts-ignore
 import {CaptFieldRef} from "@ant-design/pro-form/lib";
 
-type LoginType = 'usernamePassword' | 'mobile' | 'mail';
+const USERNAME_PASSWORD = {key: 'username_password', label: '用户名密码登录'};
+const MOBILE = {key: 'mobile', label: '手机号登录'};
+const MAIL = {key: 'mail', label: '邮箱登录'};
+type LoginType = 'username_password' | 'mobile' | 'mail';
 
 const iconStyles: CSSProperties = {
 	color: 'rgba(0, 0, 0, 0.2)',
@@ -37,11 +40,11 @@ const iconStyles: CSSProperties = {
 
 export default () => {
 	const items = [
-		{label: '用户名密码登录', key: 'usernamePassword'},
-		{label: '手机号登录', key: 'mobile'},
-		{label: '邮箱登录', key: 'mail'},
+		USERNAME_PASSWORD,
+		MOBILE,
+		MAIL
 	];
-	const [loginType, setLoginType] = useState<LoginType>('usernamePassword');
+	const [loginType, setLoginType] = useState<LoginType>('username_password');
 	const [captchaImage, setCaptchaImage] = useState<string>('');
 	const [uuid, setUuid] = useState<string>('');
 	const [publicKey, setPublicKey] = useState<string>('');
@@ -56,7 +59,7 @@ export default () => {
 
 	const getParams = (form: API.LoginParam) => {
 		switch (loginType) {
-			case 'usernamePassword': {
+			case USERNAME_PASSWORD.key: {
 				encrypt.setPublicKey(publicKey);
 				return {
 					uuid: uuid,
@@ -68,22 +71,22 @@ export default () => {
 						encrypt.encrypt(form.password as string),
 					),
 					tenant_code: form.tenant_code,
-					grant_type: 'username_password',
+					grant_type: USERNAME_PASSWORD.key,
 				};
 			}
-			case 'mail':
+			case MAIL.key:
 				return {
 					mail: form.mail,
 					code: form.mail_captcha,
 					tenant_code: form.tenant_code,
-					grant_type: 'mail'
+					grant_type: MAIL.key
 				};
-			case 'mobile':
+			case MOBILE.key:
 				return {
 					mobile: form.mobile,
 					code: form.mobile_captcha,
 					tenant_code: form.tenant_code,
-					grant_type: 'mobile'
+					grant_type: MOBILE.key
 				};
 		}
 	};
@@ -114,7 +117,7 @@ export default () => {
 	const sendMailCaptcha = async () => {
 		const param = {
 			tenantCode: formRef?.current?.getFieldValue("tenant_code"),
-			uuid: formRef?.current?.getFieldValue("mail")
+			uuid: formRef?.current?.getFieldValue(MAIL.key)
 		}
 		const co = { co : param }
 		sendCaptchaV3('mail', co as API.SendCaptchaCO, uuidV7()).then(res => {
@@ -127,7 +130,7 @@ export default () => {
 	const sendMobileCaptcha = async () => {
 		const param = {
 			tenantCode: formRef?.current?.getFieldValue("tenant_code"),
-			uuid: formRef?.current?.getFieldValue("mobile")
+			uuid: formRef?.current?.getFieldValue(MOBILE.key)
 		}
 		const co = { co : param }
 		sendCaptchaV3('mobile', co as API.SendCaptchaCO, uuidV7()).then(res => {
@@ -294,7 +297,7 @@ export default () => {
 					]}
 				/>
 
-				{loginType === 'usernamePassword' && (
+				{loginType === USERNAME_PASSWORD.key && (
 					<>
 						<ProFormText
 							name="username"
@@ -367,7 +370,7 @@ export default () => {
 						</Row>
 					</>
 				)}
-				{loginType === 'mobile' && (
+				{loginType === MOBILE.key && (
 					<>
 						<ProFormText
 							fieldProps={{
@@ -420,7 +423,7 @@ export default () => {
 						/>
 					</>
 				)}
-				{loginType === 'mail' && (
+				{loginType === MAIL.key && (
 					<>
 						<ProFormText
 							fieldProps={{
