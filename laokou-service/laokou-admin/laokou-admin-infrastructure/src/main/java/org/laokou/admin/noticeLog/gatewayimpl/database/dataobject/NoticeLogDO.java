@@ -27,7 +27,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("boot_notice_api_log")
+@TableName("boot_sys_notice_log")
 public class NoticeLogDO extends BaseDO {
 
 	/**

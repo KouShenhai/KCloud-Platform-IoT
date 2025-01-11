@@ -28,7 +28,8 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 @Slf4j
 public final class DomainFactory {
 
-	private DomainFactory() {}
+	private DomainFactory() {
+	}
 
 	/**
 	 * 邮箱.

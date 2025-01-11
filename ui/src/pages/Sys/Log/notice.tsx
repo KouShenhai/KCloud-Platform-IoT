@@ -1,14 +1,17 @@
-import type {ProColumns} from '@ant-design/pro-components';
+import {DrawerForm, ProColumns, ProFormText} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {exportV3, pageV3, getByIdV3} from "@/services/admin/noticeLog";
-import {Button, message} from "antd";
+import {Button} from "antd";
 import {ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
 import {Excel, ExportToExcel} from "@/utils/export";
 import moment from "moment";
-import {useRef} from "react";
+import {useRef, useState} from "react";
 
 export default () => {
+
+	const [modalVisit, setModalVisit] = useState(false);
+	const [dataSource, setDataSource] = useState({})
 
 	const statusEnum = {
 		0: '0',
@@ -125,7 +128,7 @@ export default () => {
 			ellipsis: true
 		},
 		{
-			title: '创建日期',
+			title: '创建时间',
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
@@ -134,7 +137,7 @@ export default () => {
 			ellipsis: true
 		},
 		{
-			title: '创建日期',
+			title: '创建时间',
 			dataIndex: 'createTime',
 			valueType: 'dateRange',
 			hideInTable: true,
@@ -154,8 +157,10 @@ export default () => {
 			render: (_, record) => [
 				<a key="getable"
 				   onClick={() => {
-					   const id = record?.id
-					   getByIdV3({id: id})
+					   getByIdV3({id: record?.id}).then(res => {
+						   setDataSource(res?.data)
+						   setModalVisit(true)
+					   })
 				   }}
 				>
 					查看
@@ -165,38 +170,112 @@ export default () => {
 	];
 
 	return (
-		<ProTable<TableColumns>
-			actionRef={actionRef}
-			columns={columns}
-			request={(params) => {
-				// 表单搜索项会从 params 传入，传递给后端接口。
-				return listNoticeLog(params)
-			}}
-			rowKey="id"
-			pagination={{
-				showQuickJumper: true,
-				showSizeChanger: false,
-				pageSize: 10
-			}}
-			search={{
-				layout: 'vertical',
-				defaultCollapsed: true,
-			}}
-			toolBarRender={
-				() => [
-					<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={exportToExcel}>
-						导出
-					</Button>,
-					<Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={exportAllToExcel}>
-						导出全部
-					</Button>
-				]
-			}
-			dateFormatter="string"
-			toolbar={{
-				title: '登录日志',
-				tooltip: '登录日志',
-			}}
-		/>
+		<>
+			<DrawerForm<{
+				code: string;
+				name: string;
+				status: number;
+				param: string;
+				errorMessage: string;
+				createTime: string;
+			}>
+				open={modalVisit}
+				title="查看通知日志"
+				drawerProps={{
+					destroyOnClose: true,
+					closable: true,
+					maskClosable: true
+				}}
+				initialValues={dataSource}
+				onOpenChange={setModalVisit}
+				submitter={{
+					submitButtonProps: {
+						style: {
+							display: 'none',
+						},
+					}
+				}}
+			>
+
+				<ProFormText
+					readonly={true}
+					name="code"
+					label="标识"
+					rules={[{ required: true, message: '请输入标识' }]}
+				/>
+
+				<ProFormText
+					readonly={true}
+					name="name"
+					label="名称"
+					rules={[{ required: true, message: '请输入名称' }]}
+				/>
+
+				<ProFormText
+					readonly={true}
+					name="status"
+					label="状态"
+					rules={[{ required: true, message: '请输入状态' }]}
+					convertValue={(value) => {
+						return getStatusDesc(value)
+					}}
+				/>
+
+				<ProFormText
+					readonly={true}
+					name="param"
+					label="参数"
+					rules={[{ required: true, message: '请输入参数' }]}
+				/>
+
+				<ProFormText
+					readonly={true}
+					name="errorMessage"
+					label="错误信息"
+					rules={[{ required: true, message: '请输入错误信息' }]}
+				/>
+
+				<ProFormText
+					readonly={true}
+					name="createTime"
+					label="创建时间"
+					rules={[{ required: true, message: '请输入创建时间' }]}
+				/>
+
+			</DrawerForm>
+			<ProTable<TableColumns>
+				actionRef={actionRef}
+				columns={columns}
+				request={(params) => {
+					// 表单搜索项会从 params 传入，传递给后端接口。
+					return listNoticeLog(params)
+				}}
+				rowKey="id"
+				pagination={{
+					showQuickJumper: true,
+					showSizeChanger: false,
+					pageSize: 10
+				}}
+				search={{
+					layout: 'vertical',
+					defaultCollapsed: true,
+				}}
+				toolBarRender={
+					() => [
+						<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={exportToExcel}>
+							导出
+						</Button>,
+						<Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={exportAllToExcel}>
+							导出全部
+						</Button>
+					]
+				}
+				dateFormatter="string"
+				toolbar={{
+					title: '登录日志',
+					tooltip: '登录日志',
+				}}
+			/>
+		</>
 	);
 };

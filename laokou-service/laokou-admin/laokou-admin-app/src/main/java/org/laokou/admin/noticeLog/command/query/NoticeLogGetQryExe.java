@@ -17,6 +17,7 @@
 
 package org.laokou.admin.noticeLog.command.query;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.noticeLog.convertor.NoticeLogConvertor;
 import org.laokou.admin.noticeLog.dto.NoticeLogGetQry;
@@ -37,7 +38,13 @@ public class NoticeLogGetQryExe {
 	private final NoticeLogMapper noticeLogMapper;
 
 	public Result<NoticeLogCO> execute(NoticeLogGetQry qry) {
-		return Result.ok(NoticeLogConvertor.toClientObject(noticeLogMapper.selectById(qry.getId())));
+		try {
+			DynamicDataSourceContextHolder.push("domain");
+			return Result.ok(NoticeLogConvertor.toClientObject(noticeLogMapper.selectById(qry.getId())));
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }
