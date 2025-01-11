@@ -20,7 +20,7 @@
     <!--commons-text版本-->
     <commons-text.version>1.13.0</commons-text.version>
     <!--scala-library版本-->
-    <scala-library.version>2.13.15</scala-library.version>
+    <scala-library.version>2.13.16</scala-library.version>
   </properties>
 
   <dependencies>
