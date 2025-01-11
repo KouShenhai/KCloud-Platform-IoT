@@ -103,6 +103,7 @@ public class TenantsControllerV3 {
 	@TraceLog
 	@GetMapping("{id}")
 	@DataCache(name = TENANTS, key = "#id")
+	@PreAuthorize("hasAuthority('sys:tenant:detail')")
 	@Operation(summary = "查看租户详情", description = "查看租户详情")
 	public Result<TenantCO> getByIdV3(@PathVariable("id") Long id) {
 		return tenantsServiceI.getById(new TenantGetQry(id));

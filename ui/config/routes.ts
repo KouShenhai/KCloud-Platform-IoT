@@ -41,6 +41,11 @@ export default [
 						name: '登录日志',
 						path: '/sys/log/login',
 						component: './Sys/Log/login'
+					},
+					{
+						name: '通知日志',
+						path: '/sys/log/notice',
+						component: './Sys/Log/notice'
 					}
 				]
 			}

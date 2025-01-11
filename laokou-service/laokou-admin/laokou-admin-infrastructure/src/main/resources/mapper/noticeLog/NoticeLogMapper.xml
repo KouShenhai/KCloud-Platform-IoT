@@ -20,16 +20,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.noticeLog.gatewayimpl.database.NoticeLogMapper">
 
-  <select id="selectObjectPage"
-          resultType="org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO">
-    SELECT id,
-           "code",
-           "name",
-           status,
-           error_message,
-           param,
-           create_time
-    from boot_sys_api_log
+  <sql id="selectColumns">
+    id,
+    "code",
+    "name",
+    status,
+    error_message,
+    param,
+    create_time
+  </sql>
+
+  <sql id="selectConditions">
     where del_flag = 0
     <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
       and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> #{pageQuery.params.startDate}
@@ -37,25 +38,26 @@
     <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
       and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> #{pageQuery.params.endDate}
     </if>
+  </sql>
+
+  <select id="selectObjectPage"
+          resultType="org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO">
+    SELECT <include refid="selectColumns"/>
+    from boot_sys_notice_log
+    <include refid="selectConditions"/>
     order by id desc
     limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
   </select>
 
   <select id="selectObjectCount" resultType="long">
     SELECT count(1)
-    from boot_sys_api_log
-    where del_flag = 0
-    <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
-      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> #{pageQuery.params.startDate}
-    </if>
-    <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
-      and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> #{pageQuery.params.endDate}
-    </if>
+    from boot_sys_notice_log
+    <include refid="selectConditions"/>
   </select>
 
   <select id="selectVersion" resultType="integer">
     select version
-    from boot_sys_api_log
+    from boot_sys_notice_log
     where id = #{id}
   </select>
 

@@ -97,6 +97,7 @@ public class DictsControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
+	@PreAuthorize("hasAuthority('sys:dict:detail')")
 	@Operation(summary = "查看字典详情", description = "查看字典详情")
 	public Result<DictCO> getByIdV3(@PathVariable("id") Long id) {
 		return dictsServiceI.getById(new DictGetQry(id));

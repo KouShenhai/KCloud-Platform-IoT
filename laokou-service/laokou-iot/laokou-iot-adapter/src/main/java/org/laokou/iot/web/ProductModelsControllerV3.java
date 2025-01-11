@@ -98,6 +98,7 @@ public class ProductModelsControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
+	@PreAuthorize("hasAuthority('sys:product-model:detail')")
 	@Operation(summary = "查看产品模型详情", description = "查看产品模型详情")
 	public Result<ProductModelCO> getByIdV3(@PathVariable("id") Long id) {
 		return productModelsServiceI.getById(new ProductModelGetQry(id));

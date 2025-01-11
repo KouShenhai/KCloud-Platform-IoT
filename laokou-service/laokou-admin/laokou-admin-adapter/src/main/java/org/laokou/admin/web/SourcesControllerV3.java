@@ -103,6 +103,7 @@ public class SourcesControllerV3 {
 	@TraceLog
 	@GetMapping("{id}")
 	@DataCache(name = SOURCES, key = "#id")
+	@PreAuthorize("hasAuthority('sys:source:detail')")
 	@Operation(summary = "查看数据源详情", description = "查看数据源详情")
 	public Result<SourceCO> getByIdV3(@PathVariable("id") Long id) {
 		return sourcesServiceI.getById(new SourceGetQry(id));

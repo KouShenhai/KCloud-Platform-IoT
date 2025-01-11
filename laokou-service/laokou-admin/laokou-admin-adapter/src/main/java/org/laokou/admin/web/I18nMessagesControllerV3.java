@@ -97,6 +97,7 @@ public class I18nMessagesControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
+	@PreAuthorize("hasAuthority('sys:i18n-message:detail')")
 	@Operation(summary = "查看国际化消息详情", description = "查看国际化消息详情")
 	public Result<I18nMessageCO> getByIdV3(@PathVariable("id") Long id) {
 		return i18nMessagesServiceI.getById(new I18nMessageGetQry(id));

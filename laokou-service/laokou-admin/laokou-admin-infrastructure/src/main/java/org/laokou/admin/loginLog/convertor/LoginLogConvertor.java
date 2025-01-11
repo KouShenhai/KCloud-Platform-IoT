@@ -58,6 +58,10 @@ public class LoginLogConvertor implements ExcelUtil.ExcelConvert<LoginLogDO, Log
 		return loginLogDO;
 	}
 
+	public static List<LoginLogCO> toClientObjects(List<LoginLogDO> list) {
+		return list.stream().map(LoginLogConvertor::toClientObject).toList();
+	}
+
 	public static LoginLogCO toClientObject(LoginLogDO loginLogDO) {
 		LoginLogCO loginLogCO = new LoginLogCO();
 		loginLogCO.setId(loginLogDO.getId());

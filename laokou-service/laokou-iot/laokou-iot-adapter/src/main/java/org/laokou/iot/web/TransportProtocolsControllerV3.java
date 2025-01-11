@@ -98,6 +98,7 @@ public class TransportProtocolsControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
+	@PreAuthorize("hasAuthority('sys:transport-protocol:detail')")
 	@Operation(summary = "查看传输协议详情", description = "查看传输协议详情")
 	public Result<TransportProtocolCO> getByIdV3(@PathVariable("id") Long id) {
 		return transportProtocolsServiceI.getById(new TransportProtocolGetQry(id));

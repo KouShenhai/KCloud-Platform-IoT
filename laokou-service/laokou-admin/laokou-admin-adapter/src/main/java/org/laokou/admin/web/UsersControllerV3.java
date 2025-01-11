@@ -104,6 +104,7 @@ public class UsersControllerV3 {
 	@TraceLog
 	@GetMapping("{id}")
 	@DataCache(name = USERS, key = "#id")
+	@PreAuthorize("hasAuthority('sys:user:detail')")
 	@Operation(summary = "查看用户详情", description = "查看用户详情")
 	public Result<UserCO> getByIdV3(@PathVariable("id") Long id) {
 		return usersServiceI.getById(new UserGetQry(id));

@@ -98,6 +98,7 @@ public class ClustersControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
+	@PreAuthorize("hasAuthority('sys:cluster:detail')")
 	@Operation(summary = "查看集群详情", description = "查看集群详情")
 	public Result<ClusterCO> getByIdV3(@PathVariable("id") Long id) {
 		return clustersServiceI.getById(new ClusterGetQry(id));

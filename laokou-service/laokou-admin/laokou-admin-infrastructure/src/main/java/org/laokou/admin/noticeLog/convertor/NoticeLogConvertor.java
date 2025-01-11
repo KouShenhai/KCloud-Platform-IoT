@@ -21,6 +21,8 @@ import org.laokou.admin.noticeLog.dto.clientobject.NoticeLogCO;
 import org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.admin.noticeLog.model.NoticeLogE;
 
+import java.util.List;
+
 /**
  * 通知日志转换器.
  *
@@ -42,6 +44,10 @@ public class NoticeLogConvertor {
 		noticeLogDO.setErrorMessage(noticeLogE.getErrorMessage());
 		noticeLogDO.setParam(noticeLogE.getParam());
 		return noticeLogDO;
+	}
+
+	public static List<NoticeLogCO> toClientObjects(List<NoticeLogDO> list) {
+		return list.stream().map(NoticeLogConvertor::toClientObject).toList();
 	}
 
 	public static NoticeLogCO toClientObject(NoticeLogDO noticeLogDO) {

@@ -11,7 +11,7 @@ import {
 	WechatOutlined,
 } from '@ant-design/icons';
 import {LoginFormPage, ProFormCaptcha, ProFormText,} from '@ant-design/pro-components';
-import {Col, Divider, Image, message, Row, Space, Tabs} from 'antd';
+import {Col, Divider, Image, Row, Space, Tabs} from 'antd';
 import {CSSProperties, useEffect, useRef, useState} from 'react';
 import {login} from '@/services/auth/auth';
 import {getCaptchaImageByUuidV3, sendCaptchaV3 } from '@/services/auth/captcha';
@@ -20,8 +20,10 @@ import {history} from 'umi';
 import {getSecretInfoV3} from '@/services/auth/secret';
 import {JSEncrypt} from 'jsencrypt';
 import {v7 as uuidV7} from 'uuid';
+// @ts-ignore
 import {ProFormInstance} from "@ant-design/pro-form"
 import {clearToken, setToken} from "@/access"
+// @ts-ignore
 import {CaptFieldRef} from "@ant-design/pro-form/lib";
 
 type LoginType = 'usernamePassword' | 'mobile' | 'mail';
@@ -50,21 +52,6 @@ export default () => {
 	const setFormField = (form: API.LoginParam) => {
 		formRef?.current?.setFieldsValue(form);
 	}
-
-	const timeFix = () => {
-		const time = new Date();
-		const hour = time.getHours();
-		return hour < 9
-			? '早上好'
-			: hour <= 11
-				? '上午好'
-				: hour <= 13
-					? '中午好'
-					: hour < 20
-						? '下午好'
-						: '晚上好';
-	};
-
 	const encrypt = new JSEncrypt();
 
 	const getParams = (form: API.LoginParam) => {
@@ -175,15 +162,13 @@ export default () => {
 				if (res.code === 'OK') {
 					// 登录成功【令牌过期前5分钟，自动刷新令牌】
 					clearToken()
-					// @ts-ignore
+					// 存储令牌
 					setToken(res.data?.access_token, res.data?.refresh_token, new Date().getTime() + res.data?.expires_in)
 					// 跳转路由
 					const urlParams = new URL(window.location.href).searchParams;
 					history.push(urlParams.get('redirect') || '/');
-					// 延迟 1 秒显示欢迎信息
-					setTimeout(() => {
-						message.success(`${timeFix()}，欢迎回来`);
-					}, 1000);
+					// 刷新页面
+					window.location.reload()
 				}
 			})
 			.catch(() => {

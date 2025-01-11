@@ -94,7 +94,7 @@ export default () => {
 		params = {
 			sheetData: list,
 			sheetFilter: ["username", "ip", "address", "browser", "os", "status", "errorMessage", "type", "createTime"],
-			sheetHeader: ["用户名", "IP地址", "归属地", "浏览器", "操作系统", "登录状态", "错误信息", "登录类型", "登录日期"],
+			sheetHeader: ["用户名", "IP地址", "归属地", "浏览器", "操作系统", "登录状态", "错误信息", "登录类型", "登录时间"],
 			fileName: "登录日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
 			sheetName: "登录日志"
 		}

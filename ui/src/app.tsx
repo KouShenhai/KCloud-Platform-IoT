@@ -128,7 +128,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 				colorTextMenuActive: '#ffffff', // menuItem hover 的选中字体颜色
 				colorBgMenuItemActive: 'rgba(0, 0, 0, 0.15)', // menuItem 的点击时背景颜色
 				colorBgMenuItemSelected: '#1677ff', // menuItem 的选中背景颜色
-				colorBgMenuItemHover: 'rgba(90, 75, 75, 0.03)', // menuItem 的 hover 背景颜色
+				colorBgMenuItemHover: '#1677ff', // menuItem 的 hover 背景颜色
 				colorBgMenuItemCollapsedElevated: 'transparent', // 收起 menuItem 的弹出菜单背景颜色
 				colorBgCollapsedButton: '#ffffff', // 展开收起按钮背景颜色
 				colorTextCollapsedButton: '#dee1f0', // 展开收起按钮字体颜色
