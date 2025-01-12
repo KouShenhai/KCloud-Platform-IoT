@@ -29,14 +29,12 @@ import java.util.Set;
 public class UserUtil {
 
 	public static UserDetail user() {
-		return Optional.ofNullable(getAuthentication())
-			.map(authentication -> {
-				if (authentication.getPrincipal() instanceof UserDetail userDetail) {
-					return userDetail;
-				}
-				return new UserDetail();
-			})
-			.orElse(new UserDetail());
+		return Optional.ofNullable(getAuthentication()).map(authentication -> {
+			if (authentication.getPrincipal() instanceof UserDetail userDetail) {
+				return userDetail;
+			}
+			return new UserDetail();
+		}).orElse(new UserDetail());
 	}
 
 	/**
