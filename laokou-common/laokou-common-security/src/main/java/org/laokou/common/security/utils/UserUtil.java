@@ -30,7 +30,12 @@ public class UserUtil {
 
 	public static UserDetail user() {
 		return Optional.ofNullable(getAuthentication())
-			.map(authentication -> (UserDetail) authentication.getPrincipal())
+			.map(authentication -> {
+				if (authentication.getPrincipal() instanceof UserDetail userDetail) {
+					return userDetail;
+				}
+				return new UserDetail();
+			})
 			.orElse(new UserDetail());
 	}
 
