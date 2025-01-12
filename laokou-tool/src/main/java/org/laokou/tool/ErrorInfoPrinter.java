@@ -15,38 +15,21 @@
  *
  */
 
-package org.laokou.admin.noticeLog.dto;
+package org.laokou.tool;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.StringUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * 分页查询通知日志命令.
- *
  * @author laokou
  */
-@Data
-public class NoticeLogPageQry extends PageQuery {
+@Slf4j
+final class ErrorInfoPrinter {
 
-	private String code;
-
-	private String name;
-
-	private Integer status;
-
-	private String errorMessage;
-
-	public void setCode(String code) {
-		this.code = StringUtil.like(code);
+	private ErrorInfoPrinter() {
 	}
 
-	public void setName(String name) {
-		this.name = StringUtil.like(name);
-	}
-
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = StringUtil.like(errorMessage);
+	public static void main(String[] args) {
+		log.info("Hello World!");
 	}
 
 }

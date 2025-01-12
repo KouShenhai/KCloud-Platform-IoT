@@ -36,7 +36,7 @@ import static org.laokou.common.core.utils.SystemUtil.isWindows;
  *
  * @author laokou
  */
-public class ModifyProjectBoot {
+final class ModifyProjectBoot {
 
 	private static final List<String> MODULES = List.of("laokou-cloud", "laokou-common", "laokou-service",
 			"laokou-cola", "laokou-tool", "checkstyle");
@@ -66,6 +66,9 @@ public class ModifyProjectBoot {
 	private static final String NEW_PROJECT_NAME = "New-KCloud-Platform-IoT";
 
 	private static int count = 0;
+
+	private ModifyProjectBoot() {
+	}
 
 	public static void main(String[] args) {
 

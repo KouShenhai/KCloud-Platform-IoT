@@ -67,7 +67,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 @Slf4j
 public class ExcelUtil {
 
-	private static final int DEFAULT_SIZE = 1000;
+	private static final int DEFAULT_SIZE = 10000;
 
 	public static <M, T> void doImport(String fileName, InputStream inputStream, HttpServletResponse response,
 			Class<M> clazz, BiConsumer<M, T> consumer, MybatisUtil mybatisUtil) {

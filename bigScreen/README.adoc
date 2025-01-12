@@ -1,4 +1,6 @@
-=== 下载依赖
+= IoT大屏可视化
+
+== 下载依赖
 
 [source,shell]
 ----
@@ -6,14 +8,14 @@ npm install -g pnpm
 pnpm install
 ----
 
-=== 运行项目
+== 运行项目
 
 [source,shell]
 ----
 pnpm dev
 ----
 
-=== 部署项目
+== 部署项目
 
 [source,shell]
 ----
