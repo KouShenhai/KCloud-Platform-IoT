@@ -31,6 +31,12 @@ export default () => {
 	let loginLogParam: any
 
 	const getPageQuery = (params: any) => {
+		let startTime = params?.startDate;
+		let endTime = params?.endDate;
+		if (startTime && endTime) {
+			startTime += ' 00:00:00'
+			endTime += ' 23:59:59'
+		}
 		loginLogParam = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
@@ -44,8 +50,8 @@ export default () => {
 			type: params?.type,
 			errorMessage: trim(params?.errorMessage),
 			params: {
-				startDate: params?.startDate,
-				endDate: params?.endDate
+				startTime: startTime,
+				endTime: endTime
 			}
 		};
 		return loginLogParam;
@@ -78,8 +84,8 @@ export default () => {
 		loginLogList = []
 		return pageV3(getPageQuery(params)).then(res => {
 			res?.data?.records?.forEach((item: TableColumns) => {
-				item.status = getLoginStatus(item.status as '0').text;
-				item.type = getLoginType(item.type as '0')?.text;
+				item.status = item.status as '0';
+				item.type = item.type as '0';
 				loginLogList.push(item);
 			});
 			return Promise.resolve({

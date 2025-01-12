@@ -40,23 +40,25 @@ export const LOGIN_STATUS = {
 
 export const getStatus = (code: string) => ({
 	[STATUS.OK]: {
-		ok: 'ok',
-		text: '成功'
+		code: 'ok',
+		text: '成功',
+		status: 'Success'
 	},
 	[STATUS.FAIL]: {
-		ok: 'ok',
-		text: '失败'
+		code: 'ok',
+		text: '失败',
+		status: 'Error'
 	},
 }[code]);
 
 export const getLoginStatus = (code: string) => ({
 	[LOGIN_STATUS.OK]: {
-		ok: 'ok',
+		code: '0',
 		text: '登录成功',
 		status: 'Success'
 	},
 	[LOGIN_STATUS.FAIL]: {
-		ok: 'ok',
+		code: '1',
 		text: '登录失败',
 		status: 'Error'
 	}
