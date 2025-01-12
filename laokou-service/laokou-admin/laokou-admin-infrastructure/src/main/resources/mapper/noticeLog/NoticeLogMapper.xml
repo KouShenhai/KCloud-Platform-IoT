@@ -32,20 +32,36 @@
 
   <sql id="selectConditions">
     where del_flag = 0
-    <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
-      and create_time <![CDATA[ >= ]]> to_timestamp(#{pageQuery.params.startDate}, 'YYYY-MM-DD')
+    <if test="pageQuery.errorMessage != null and pageQuery.errorMessage != ''">
+      and error_message like #{pageQuery.errorMessage}
     </if>
-    <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
-      and create_time <![CDATA[ <= ]]> to_timestamp(#{pageQuery.params.endDate}, 'YYYY-MM-DD')
+    <if test="pageQuery.name != null and pageQuery.name != ''">
+      and "name" like #{pageQuery.name}
+    </if>
+    <if test="pageQuery.code != null and pageQuery.code != ''">
+      and "code" like #{pageQuery.code}
+    </if>
+    <if test="pageQuery.status != null">
+      and status = #{pageQuery.status}
+    </if>
+    <if test="pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
+      and create_time <![CDATA[ >= ]]> to_timestamp(#{pageQuery.params.startTime}, 'YYYY-MM-DD HH24:MI:SS')
+    </if>
+    <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
+      and create_time <![CDATA[ <= ]]> to_timestamp(#{pageQuery.params.endTime}, 'YYYY-MM-DD HH24:MI:SS')
     </if>
   </sql>
 
-  <select id="selectObjectPage"
-          resultType="org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO">
+  <sql id="selectObjectList">
     SELECT <include refid="selectColumns"/>
     from boot_sys_notice_log
     <include refid="selectConditions"/>
     order by id desc
+  </sql>
+
+  <select id="selectObjectPage"
+          resultType="org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO">
+    <include refid="selectObjectList"/>
     limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
   </select>
 
@@ -59,6 +75,11 @@
     select version
     from boot_sys_notice_log
     where id = #{id}
+  </select>
+
+  <select id="selectObjectList" fetchSize="100000" resultSetType="FORWARD_ONLY"
+          resultType="org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO">
+    <include refid="selectObjectList"/>
   </select>
 
 </mapper>

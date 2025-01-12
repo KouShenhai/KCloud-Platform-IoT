@@ -29,7 +29,7 @@
     os,
     status,
     error_message,
-    type,
+    "type",
     create_time
   </sql>
 
@@ -54,7 +54,7 @@
       and error_message like #{pageQuery.errorMessage}
     </if>
     <if test="pageQuery.type != null and pageQuery.type != ''">
-      and type = #{pageQuery.type}
+      and "type" = #{pageQuery.type}
     </if>
     <if test="pageQuery.status != null">
       and status = #{pageQuery.status}
@@ -92,7 +92,7 @@
     where id = #{id}
   </select>
 
-  <select id="selectObjectList" fetchSize="10000" resultSetType="FORWARD_ONLY"
+  <select id="selectObjectList" fetchSize="100000" resultSetType="FORWARD_ONLY"
           resultType="org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO">
     <include refid="selectObjectList"/>
   </select>

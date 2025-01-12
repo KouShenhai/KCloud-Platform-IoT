@@ -20,9 +20,11 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
+import net.sf.jsqlparser.schema.Column;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.laokou.common.mybatisplus.mapper.BaseDO.DEFAULT_TENANT_ID;
@@ -54,6 +56,12 @@ public class GlobalTenantLineHandler implements TenantLineHandler {
 			return DEFAULT_TENANT_ID;
 		}
 		return tenantId;
+	}
+
+	@Override
+	public boolean ignoreInsert(List<Column> columns, String tenantIdColumn) {
+		// https://baomidou.com/plugins/tenant/#_top
+		return true;
 	}
 
 }

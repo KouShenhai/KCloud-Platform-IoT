@@ -36,6 +36,12 @@ export default () => {
 	let noticeLogParam: any
 
 	const getPageQuery = (params: any) => {
+		let startTime = params?.startDate;
+		let endTime = params?.endDate;
+		if (startTime && endTime) {
+			startTime += ' 00:00:00'
+			endTime += ' 23:59:59'
+		}
 		noticeLogParam = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
@@ -45,8 +51,8 @@ export default () => {
 			status: params?.status,
 			errorMessage: trim(params?.errorMessage),
 			params: {
-				startDate: params?.startDate,
-				endDate: params?.endDate
+				startTime: startTime,
+				endTime: endTime
 			}
 		};
 		return noticeLogParam;

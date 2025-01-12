@@ -72,10 +72,10 @@ public class DomainService {
 	public void auth(AuthA auth, InfoV info) {
 		// 获取扩展信息
 		auth.getExtInfo(info);
-		// 校验验证码
-		auth.checkCaptcha(captchaGateway::validate);
 		// 校验租户
 		checkTenant(auth);
+		// 校验验证码
+		auth.checkCaptcha(captchaGateway::validate);
 		// 获取用户信息
 		auth.getUserInfo(userGateway.getProfile(auth.getUser(), auth.getTenantCode()));
 		// 校验用户名
