@@ -7,6 +7,7 @@ import {trim} from "@/utils/format";
 import {Excel, ExportToExcel} from "@/utils/export";
 import moment from "moment";
 import {useRef, useState} from "react";
+import {getStatus, STATUS} from "@/services/constant";
 
 export default () => {
 
@@ -51,20 +52,12 @@ export default () => {
 		return noticeLogParam;
 	}
 
-	const getStatusDesc = (status: string | undefined) => {
-		if (status === "0") {
-			return "成功"
-		} else {
-			return "失败"
-		}
-	}
-
 	const exportToExcel = async () => {
 		let params: Excel
 		const list: TableColumns[] = [];
 		// 格式化数据
 		noticeLogList.forEach(item => {
-			item.status = getStatusDesc(item.status)
+			item.status = getStatus(item.status as '0')?.text
 			list.push(item)
 		})
 		params = {
@@ -117,8 +110,8 @@ export default () => {
 			title: '状态',
 			dataIndex: 'status',
 			valueEnum: {
-				0: {text: '成功', status: 'Success'},
-				1: {text: '失败', status: 'Error'},
+				[STATUS.OK]: getStatus(STATUS.OK),
+				[STATUS.FAIL]: getStatus(STATUS.FAIL)
 			},
 			ellipsis: true
 		},
@@ -196,7 +189,6 @@ export default () => {
 					}
 				}}
 			>
-
 				<ProFormText
 					readonly={true}
 					name="code"
@@ -216,8 +208,9 @@ export default () => {
 					name="status"
 					label="状态"
 					rules={[{ required: true, message: '请输入状态' }]}
+					// @ts-ignore
 					convertValue={(value) => {
-						return getStatusDesc(value)
+						return getStatus(value as '0')?.text
 					}}
 				/>
 
