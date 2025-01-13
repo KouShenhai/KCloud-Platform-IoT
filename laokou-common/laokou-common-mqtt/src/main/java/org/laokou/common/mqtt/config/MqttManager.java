@@ -18,9 +18,11 @@
 package org.laokou.common.mqtt.config;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.core.utils.ThreadUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * @author laokou
@@ -34,13 +36,15 @@ public class MqttManager {
 
 	private final MqttLoadBalancer mqttLoadBalancer;
 
+	private final ScheduledExecutorService executor = ThreadUtil.newScheduledThreadPool(32);
+
 	public MqttClient getSession(String key) {
 		return MQTT_SESSION_MAP.get(key);
 	}
 
 	public synchronized void open() {
 		for (Map.Entry<String, MqttBrokerProperties> entry : springMqttBrokerProperties.getConfigs().entrySet()) {
-			MqttClient client = new MqttClient(entry.getValue(), mqttLoadBalancer);
+			MqttClient client = new MqttClient(entry.getValue(), mqttLoadBalancer, executor);
 			MQTT_SESSION_MAP.putIfAbsent(entry.getKey(), client);
 		}
 		MQTT_SESSION_MAP.values().forEach(MqttClient::open);
