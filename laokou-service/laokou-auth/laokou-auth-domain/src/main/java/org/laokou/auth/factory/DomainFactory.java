@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,9 +27,6 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  */
 @Slf4j
 public final class DomainFactory {
-
-	private DomainFactory() {
-	}
 
 	/**
 	 * 邮箱.
@@ -80,6 +77,9 @@ public final class DomainFactory {
 	 * 租户编号.
 	 */
 	public static final String TENANT_CODE = "tenant_code";
+
+	private DomainFactory() {
+	}
 
 	public static AuthA getAuth(Long aggregateId, String tenantCode) {
 		return new AuthA(aggregateId, tenantCode);

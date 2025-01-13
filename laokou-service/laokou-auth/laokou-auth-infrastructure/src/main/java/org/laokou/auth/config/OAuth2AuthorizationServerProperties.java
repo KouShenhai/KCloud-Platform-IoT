@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,6 +46,16 @@ import java.util.Set;
 final class OAuth2AuthorizationServerProperties implements InitializingBean {
 
 	/**
+	 * Registered clients of the Authorization Server.
+	 */
+	private final Map<String, Client> client = new HashMap<>(0);
+
+	/**
+	 * Authorization Server endpoints.
+	 */
+	private final Endpoint endpoint = new Endpoint();
+
+	/**
 	 * Open or close.
 	 */
 	private boolean enabled = true;
@@ -61,16 +71,6 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 	 * multi-tenant hosting configuration.
 	 */
 	private boolean multipleIssuersAllowed = false;
-
-	/**
-	 * Registered clients of the Authorization Server.
-	 */
-	private final Map<String, Client> client = new HashMap<>(0);
-
-	/**
-	 * Authorization Server endpoints.
-	 */
-	private final Endpoint endpoint = new Endpoint();
 
 	@Override
 	public void afterPropertiesSet() {
@@ -107,6 +107,12 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 	public static class Endpoint {
 
 		/**
+		 * OpenID Connect 1.0 endpoints.
+		 */
+		@NestedConfigurationProperty
+		private final OidcEndpoint oidc = new OidcEndpoint();
+
+		/**
 		 * Authorization Server's OAuth 2.0 Authorization Endpoint.
 		 */
 		private String authorizationUri = "/oauth2/authorize";
@@ -140,12 +146,6 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 		 * Authorization Server's OAuth 2.0 Token Introspection Endpoint.
 		 */
 		private String tokenIntrospectionUri = "/oauth2/introspect";
-
-		/**
-		 * OpenID Connect 1.0 endpoints.
-		 */
-		@NestedConfigurationProperty
-		private final OidcEndpoint oidc = new OidcEndpoint();
 
 	}
 
@@ -185,6 +185,12 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 		private final Registration registration = new Registration();
 
 		/**
+		 * Token settings of the registered client.
+		 */
+		@NestedConfigurationProperty
+		private final Token token = new Token();
+
+		/**
 		 * Whether the client is required to provide a proof key challenge and verifier
 		 * when performing the Authorization Code Grant flow.
 		 */
@@ -206,12 +212,6 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 		 * {@code client_secret_jwt} authentication methods.
 		 */
 		private String tokenEndpointAuthenticationSigningAlgorithm;
-
-		/**
-		 * Token settings of the registered client.
-		 */
-		@NestedConfigurationProperty
-		private final Token token = new Token();
 
 	}
 

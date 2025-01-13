@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,6 +46,12 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 @Component
 public class CacheAop {
 
+	private static final ReentrantReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
+
+	private static final Lock READ_LOCK = READ_WRITE_LOCK.readLock();
+
+	private static final Lock WRITE_LOCK = READ_WRITE_LOCK.writeLock();
+
 	@Autowired
 	@Qualifier("redissonCacheManager")
 	private CacheManager redissonCacheManager;
@@ -53,12 +59,6 @@ public class CacheAop {
 	@Autowired
 	@Qualifier("caffeineCacheManager")
 	private CacheManager caffineCacheManager;
-
-	private static final ReentrantReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
-
-	private static final Lock READ_LOCK = READ_WRITE_LOCK.readLock();
-
-	private static final Lock WRITE_LOCK = READ_WRITE_LOCK.writeLock();
 
 	@Around("@annotation(dataCache)")
 	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) {
