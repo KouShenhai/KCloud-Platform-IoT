@@ -20,12 +20,13 @@ package org.laokou.common.mqtt.config;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.client.MqttConnectionOptions;
-import org.eclipse.paho.mqttv5.client.persist.MemoryPersistence;
+import org.eclipse.paho.mqttv5.client.persist.MqttDefaultFilePersistence;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ScheduledExecutorService;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -51,18 +52,22 @@ public class MqttClient {
 
 	private final MqttLoadBalancer mqttLoadBalancer;
 
+	private final ScheduledExecutorService executor;
+
 	private volatile org.eclipse.paho.mqttv5.client.MqttClient client;
 
-	public MqttClient(MqttBrokerProperties mqttBrokerProperties, MqttLoadBalancer mqttLoadBalancer) {
+	public MqttClient(MqttBrokerProperties mqttBrokerProperties, MqttLoadBalancer mqttLoadBalancer,
+			ScheduledExecutorService executor) {
 		this.mqttBrokerProperties = mqttBrokerProperties;
 		this.mqttLoadBalancer = mqttLoadBalancer;
+		this.executor = executor;
 	}
 
 	@SneakyThrows
 	public void open() {
 		try {
 			client = new org.eclipse.paho.mqttv5.client.MqttClient(mqttBrokerProperties.getUri(),
-					mqttBrokerProperties.getClientId(), new MemoryPersistence());
+					mqttBrokerProperties.getClientId(), new MqttDefaultFilePersistence(), executor);
 			client.setManualAcks(mqttBrokerProperties.isManualAcks());
 			client.setCallback(new MqttMessageCallback(mqttLoadBalancer, mqttBrokerProperties, client));
 			client.connect(options());

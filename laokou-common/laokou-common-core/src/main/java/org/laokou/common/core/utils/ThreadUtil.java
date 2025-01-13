@@ -24,6 +24,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -70,6 +71,10 @@ public final class ThreadUtil {
 
 	public static ExecutorService newTtlVirtualTaskExecutor() {
 		return TtlExecutors.getTtlExecutorService(newVirtualTaskExecutor());
+	}
+
+	public static ScheduledExecutorService newScheduledThreadPool(int coreSize) {
+		return Executors.newScheduledThreadPool(coreSize, VirtualThreadFactory.INSTANCE);
 	}
 
 }
