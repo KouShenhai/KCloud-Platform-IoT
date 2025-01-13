@@ -25,7 +25,10 @@ import lombok.Getter;
 @Getter
 public enum MenuType {
 
-	MENU(0, "菜单"), BUTTON(1, "按钮");
+	// @formatter:off
+	MENU(0, "菜单"),
+
+	BUTTON(1, "按钮");
 
 	private final int code;
 
@@ -35,5 +38,6 @@ public enum MenuType {
 		this.code = code;
 		this.desc = desc;
 	}
+	// @formatter:on
 
 }
