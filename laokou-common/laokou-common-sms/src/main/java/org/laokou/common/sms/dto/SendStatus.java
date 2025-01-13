@@ -22,7 +22,10 @@ import lombok.Getter;
 @Getter
 public enum SendStatus {
 
-	OK(0, "发送成功"), FAIL(1, "发送失败");
+	// @formatter:off
+	OK(0, "发送成功"),
+
+	FAIL(1, "发送失败");
 
 	private final int code;
 
@@ -32,5 +35,6 @@ public enum SendStatus {
 		this.code = code;
 		this.desc = desc;
 	}
+	// @formatter:on
 
 }

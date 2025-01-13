@@ -27,12 +27,14 @@ import org.laokou.common.i18n.utils.RedisKeyUtil;
 @Getter
 public enum SendCaptchaType {
 
+	// @formatter:off
 	SEND_MAIL_CAPTCHA("sendMailCaptcha", "发送邮箱验证码") {
 		@Override
 		public String getCaptchaCacheKey(String uuid) {
 			return RedisKeyUtil.getMailAuthCaptchaKey(uuid);
 		}
 	},
+
 	SEND_MOBILE_CAPTCHA("sendMobileCaptcha", "发送手机号验证码") {
 		@Override
 		public String getCaptchaCacheKey(String uuid) {
@@ -54,5 +56,6 @@ public enum SendCaptchaType {
 	}
 
 	public abstract String getCaptchaCacheKey(String uuid);
+	// @formatter:on
 
 }

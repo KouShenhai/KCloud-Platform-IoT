@@ -17,8 +17,14 @@
 
 package org.laokou.admin.noticeLog.command;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.noticeLog.convertor.NoticeLogConvertor;
 import org.laokou.admin.noticeLog.dto.NoticeLogExportCmd;
+import org.laokou.admin.noticeLog.dto.excel.NoticeLogExcel;
+import org.laokou.admin.noticeLog.gatewayimpl.database.NoticeLogMapper;
+import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.excel.utils.ExcelUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,8 +36,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class NoticeLogExportCmdExe {
 
+	private final NoticeLogMapper noticeLogMapper;
+
 	public void executeVoid(NoticeLogExportCmd cmd) {
 		// 校验参数
+		try {
+			DynamicDataSourceContextHolder.push("domain");
+			ExcelUtil.doExport("通知日志", ResponseUtil.getHttpServletResponse(), cmd, noticeLogMapper,
+					NoticeLogExcel.class, NoticeLogConvertor.INSTANCE);
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

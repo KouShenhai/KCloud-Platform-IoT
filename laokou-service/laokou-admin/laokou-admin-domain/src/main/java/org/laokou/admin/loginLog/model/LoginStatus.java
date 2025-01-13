@@ -15,29 +15,37 @@
  *
  */
 
-package org.laokou.common.mail.dto;
+package org.laokou.admin.loginLog.model;
 
 import lombok.Getter;
+import org.laokou.common.i18n.utils.EnumParser;
 
 /**
+ * 登录状态枚举.
+ *
  * @author laokou
  */
 @Getter
-public enum SendStatus {
+public enum LoginStatus {
 
 	// @formatter:off
-	OK(0, "发送成功"),
+	OK(0, "登录成功"),
 
-	FAIL(1, "发送失败");
+	FAIL(1, "登录失败");
 
 	private final int code;
 
 	private final String desc;
 
-	SendStatus(int code, String desc) {
+	LoginStatus(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
+
+	public static LoginStatus getByCode(int code) {
+		return EnumParser.parse(LoginStatus.class, LoginStatus::getCode, code);
+	}
+
 	// @formatter:on
 
 }

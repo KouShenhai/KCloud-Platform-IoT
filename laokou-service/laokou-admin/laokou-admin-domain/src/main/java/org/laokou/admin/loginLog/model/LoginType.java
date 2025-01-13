@@ -15,28 +15,39 @@
  *
  */
 
-package org.laokou.common.mail.dto;
+package org.laokou.admin.loginLog.model;
 
 import lombok.Getter;
+import org.laokou.common.i18n.utils.EnumParser;
 
 /**
+ * 登录类型枚举.
+ *
  * @author laokou
  */
 @Getter
-public enum SendStatus {
+public enum LoginType {
 
 	// @formatter:off
-	OK(0, "发送成功"),
+	USERNAME_PASSWORD("username_password", "用户名密码登录"),
 
-	FAIL(1, "发送失败");
+	AUTHORIZATION_CODE("authorization_code", "授权码登录"),
 
-	private final int code;
+	MOBILE("mobile", "手机号登录"),
+
+	MAIL("mail", "邮箱登录");
+
+	private final String code;
 
 	private final String desc;
 
-	SendStatus(int code, String desc) {
+	LoginType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
+	}
+
+	public static LoginType getByCode(String code) {
+		return EnumParser.parse(LoginType.class, LoginType::getCode, code);
 	}
 	// @formatter:on
 

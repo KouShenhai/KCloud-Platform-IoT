@@ -27,15 +27,10 @@ import lombok.Getter;
 @Getter
 public enum LoginStatus {
 
-	/**
-	 * 成功.
-	 */
-	OK(0, "成功"),
+	// @formatter:off
+	OK(0, "登录成功"),
 
-	/**
-	 * 失败.
-	 */
-	FAIL(1, "失败");
+	FAIL(1, "登录失败");
 
 	private final int code;
 
@@ -45,5 +40,6 @@ public enum LoginStatus {
 		this.code = code;
 		this.desc = desc;
 	}
+	// @formatter:on
 
 }

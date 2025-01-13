@@ -18,17 +18,24 @@
 package org.laokou.admin.noticeLog.convertor;
 
 import org.laokou.admin.noticeLog.dto.clientobject.NoticeLogCO;
+import org.laokou.admin.noticeLog.dto.excel.NoticeLogExcel;
 import org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.admin.noticeLog.model.NoticeLogE;
+import org.laokou.admin.noticeLog.model.Status;
+import org.laokou.common.excel.utils.ExcelUtil;
+import org.laokou.common.i18n.utils.DateUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 通知日志转换器.
  *
  * @author laokou
  */
-public class NoticeLogConvertor {
+public class NoticeLogConvertor implements ExcelUtil.ExcelConvert<NoticeLogDO, NoticeLogExcel> {
+
+	public static final NoticeLogConvertor INSTANCE = new NoticeLogConvertor();
 
 	public static NoticeLogDO toDataObject(NoticeLogE noticeLogE, boolean isInsert) {
 		NoticeLogDO noticeLogDO = new NoticeLogDO();
@@ -71,6 +78,23 @@ public class NoticeLogConvertor {
 		noticeLogE.setErrorMessage(noticeLogCO.getErrorMessage());
 		noticeLogE.setParam(noticeLogCO.getParam());
 		return noticeLogE;
+	}
+
+	@Override
+	public List<NoticeLogExcel> toExcelList(List<NoticeLogDO> list) {
+		return list.stream().map(this::toExcel).toList();
+	}
+
+	private NoticeLogExcel toExcel(NoticeLogDO noticeLogDO) {
+		NoticeLogExcel noticeLogExcel = new NoticeLogExcel();
+		noticeLogExcel.setCode(noticeLogDO.getCode());
+		noticeLogExcel.setName(noticeLogDO.getName());
+		noticeLogExcel.setStatus(Objects.requireNonNull(Status.getByCode(noticeLogDO.getStatus())).getDesc());
+		noticeLogExcel.setParam(noticeLogDO.getParam());
+		noticeLogExcel.setErrorMessage(noticeLogDO.getErrorMessage());
+		noticeLogExcel
+			.setCreateTime(DateUtil.format(noticeLogDO.getCreateTime(), DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
+		return noticeLogExcel;
 	}
 
 }
