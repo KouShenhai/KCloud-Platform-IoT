@@ -35,7 +35,7 @@
     <!--admin版本-->
     <spring-boot-admin.version>3.4.1</spring-boot-admin.version>
     <!--mybatis-plus版本 -->
-    <mybatis-plus.version>3.5.10</mybatis-plus.version>
+    <mybatis-plus.version>3.5.10.1</mybatis-plus.version>
     <!--redisson版本-->
     <redisson.version>3.43.0</redisson.version>
     <!--jsoup版本-->
