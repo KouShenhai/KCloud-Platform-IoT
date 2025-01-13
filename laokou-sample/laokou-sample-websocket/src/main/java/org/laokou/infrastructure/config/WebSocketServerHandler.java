@@ -68,8 +68,10 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 	@SneakyThrows
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 		boolean release = true;
+		// @formatter:off
 		try {
-			if (msg instanceof WebSocketFrame frame && frame instanceof TextWebSocketFrame textWebSocketFrame) {
+			if (msg instanceof WebSocketFrame frame
+				&& frame instanceof TextWebSocketFrame textWebSocketFrame) {
 				read(ctx, textWebSocketFrame);
 			}
 			else {
@@ -83,6 +85,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 				ReferenceCountUtil.release(msg);
 			}
 		}
+		// @formatter:on
 	}
 
 	@Override

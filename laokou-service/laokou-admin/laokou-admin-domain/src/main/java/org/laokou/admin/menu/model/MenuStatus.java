@@ -25,6 +25,7 @@ import lombok.Getter;
 @Getter
 public enum MenuStatus {
 
+	// @formatter:off
 	ENABLE(0, "启用"),
 
 	DISABLE(1, "禁用");
@@ -37,5 +38,6 @@ public enum MenuStatus {
 		this.code = code;
 		this.desc = desc;
 	}
+	// @formatter:on
 
 }
