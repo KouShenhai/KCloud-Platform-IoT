@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,12 +84,12 @@ import java.util.Set;
 @Data
 public class DefaultMQPushConsumer extends ClientConfig implements MQPushConsumer {
 
-	private final Logger log = LoggerFactory.getLogger(DefaultMQPushConsumer.class);
-
 	/**
 	 * Internal implementation. Most of the functions herein are delegated to it.
 	 */
 	protected final transient DefaultMQPushConsumerImpl defaultMQPushConsumerImpl;
+
+	private final Logger log = LoggerFactory.getLogger(DefaultMQPushConsumer.class);
 
 	/**
 	 * Consumers of the same role is required to have exactly same subscriptions and

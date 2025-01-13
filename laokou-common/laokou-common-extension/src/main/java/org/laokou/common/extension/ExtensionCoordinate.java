@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,14 +46,6 @@ public class ExtensionCoordinate {
 	@Getter
 	private BizScenario bizScenario;
 
-	public Class getExtensionPointClass() {
-		return extensionPointClass;
-	}
-
-	public static ExtensionCoordinate valueOf(Class<?> extPtClass, BizScenario bizScenario) {
-		return new ExtensionCoordinate(extPtClass, bizScenario);
-	}
-
 	public ExtensionCoordinate(Class<?> extPtClass, BizScenario bizScenario) {
 		this.extensionPointClass = extPtClass;
 		this.extensionPointName = extPtClass.getName();
@@ -64,6 +56,14 @@ public class ExtensionCoordinate {
 	public ExtensionCoordinate(String extensionPoint, String bizScenario) {
 		this.extensionPointName = extensionPoint;
 		this.bizScenarioUniqueIdentity = bizScenario;
+	}
+
+	public static ExtensionCoordinate valueOf(Class<?> extPtClass, BizScenario bizScenario) {
+		return new ExtensionCoordinate(extPtClass, bizScenario);
+	}
+
+	public Class getExtensionPointClass() {
+		return extensionPointClass;
 	}
 
 	@Override
