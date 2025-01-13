@@ -27,14 +27,9 @@ import lombok.Getter;
 @Getter
 public enum SuperAdmin {
 
-	/**
-	 * 否.
-	 */
+	// @formatter:off
 	NO(0, "否"),
 
-	/**
-	 * 是.
-	 */
 	YES(1, "是");
 
 	private final int code;
@@ -45,5 +40,6 @@ public enum SuperAdmin {
 		this.code = code;
 		this.desc = desc;
 	}
+	// @formatter:on
 
 }

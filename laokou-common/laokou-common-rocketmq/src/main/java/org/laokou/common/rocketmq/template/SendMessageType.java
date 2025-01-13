@@ -17,11 +17,31 @@
 
 package org.laokou.common.rocketmq.template;
 
+import lombok.Getter;
+
 /**
  * @author laokou
  */
+@Getter
 public enum SendMessageType {
 
-	ASYNC, SYNC, ONE_WAY, TRANSACTION
+	// @formatter:off
+	ASYNC("async", "异步消息"),
+
+	SYNC("SYNC", "同步消息"),
+
+	ONE_WAY("ONE_WAY", "单向消息"),
+
+	TRANSACTION("TRANSACTION", "事务消息");
+
+	private final String code;
+
+	private final String desc;
+
+	SendMessageType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+	// @formatter:on
 
 }

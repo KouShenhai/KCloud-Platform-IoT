@@ -27,14 +27,9 @@ import lombok.Getter;
 @Getter
 public enum UserStatus {
 
-	/**
-	 * 启用.
-	 */
+	// @formatter:off
 	ENABLE(0, "启用"),
 
-	/**
-	 * 禁用.
-	 */
 	DISABLE(1, "禁用");
 
 	private final int code;
@@ -45,5 +40,6 @@ public enum UserStatus {
 		this.code = code;
 		this.desc = desc;
 	}
+	// @formatter:on
 
 }

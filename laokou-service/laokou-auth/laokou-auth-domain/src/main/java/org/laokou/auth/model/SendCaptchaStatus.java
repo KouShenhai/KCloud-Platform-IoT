@@ -25,7 +25,10 @@ import lombok.Getter;
 @Getter
 public enum SendCaptchaStatus {
 
-	OK(0, "发送成功"), FAIL(1, "发送失败");
+	// @formatter:off
+	OK(0, "发送成功"),
+
+	FAIL(1, "发送失败");
 
 	private final int code;
 
@@ -35,5 +38,6 @@ public enum SendCaptchaStatus {
 		this.code = code;
 		this.desc = desc;
 	}
+	// @formatter:on
 
 }

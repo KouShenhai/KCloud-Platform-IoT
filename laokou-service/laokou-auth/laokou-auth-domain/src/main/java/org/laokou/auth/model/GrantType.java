@@ -31,9 +31,7 @@ import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
 @Getter
 public enum GrantType {
 
-	/**
-	 * 用户名密码登录.
-	 */
+	// @formatter:off
 	USERNAME_PASSWORD(DomainFactory.USERNAME_PASSWORD, "用户名密码登录") {
 		@Override
 		public void checkUsernameNotExist() {
@@ -41,9 +39,6 @@ public enum GrantType {
 		}
 	},
 
-	/**
-	 * 授权码登录.
-	 */
 	AUTHORIZATION_CODE(DomainFactory.AUTHORIZATION_CODE, "授权码登录") {
 		@Override
 		public void checkUsernameNotExist() {
@@ -51,9 +46,6 @@ public enum GrantType {
 		}
 	},
 
-	/**
-	 * 手机号登录.
-	 */
 	MOBILE(DomainFactory.MOBILE, "手机号登录") {
 		@Override
 		public void checkUsernameNotExist() {
@@ -61,9 +53,6 @@ public enum GrantType {
 		}
 	},
 
-	/**
-	 * 邮箱登录.
-	 */
 	MAIL(DomainFactory.MAIL, "邮箱登录") {
 		@Override
 		public void checkUsernameNotExist() {
@@ -81,5 +70,6 @@ public enum GrantType {
 	}
 
 	public abstract void checkUsernameNotExist();
+	// @formatter:on
 
 }
