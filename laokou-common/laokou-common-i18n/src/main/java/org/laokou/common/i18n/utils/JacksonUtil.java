@@ -17,8 +17,7 @@
 
 package org.laokou.common.i18n.utils;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -27,7 +26,9 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.SneakyThrows;
+
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
@@ -45,8 +46,6 @@ public final class JacksonUtil {
 	 * 空JSON字符串.
 	 */
 	public static final String EMPTY_JSON = "{}";
-
-	private static final JsonFactory FACTORY = new JsonFactory();
 
 	/**
 	 * 映射器配置.
@@ -69,7 +68,6 @@ public final class JacksonUtil {
 	@SneakyThrows
 	public static <T> T toBean(String json, Class<T> clazz) {
 		return MAPPER.readValue(json, javaType(clazz));
-
 	}
 
 	/**
@@ -82,7 +80,6 @@ public final class JacksonUtil {
 	@SneakyThrows
 	public static <T> T toBean(byte[] arr, Class<T> clazz) {
 		return MAPPER.readValue(arr, javaType(clazz));
-
 	}
 
 	/**
@@ -92,8 +89,7 @@ public final class JacksonUtil {
 	 * @param <T> 泛型
 	 * @return Bean
 	 */
-	@SneakyThrows
-	public static <T> T toBean(InputStream inputStream, Class<T> clazz) {
+	public static <T> T toBean(InputStream inputStream, Class<T> clazz) throws IOException {
 		return MAPPER.readValue(inputStream, javaType(clazz));
 	}
 
@@ -102,7 +98,6 @@ public final class JacksonUtil {
 	 * @param obj 对象
 	 * @return json字符串
 	 */
-	@SneakyThrows
 	public static String toJsonStr(Object obj) {
 		return toJsonStr(obj, false);
 	}
@@ -113,15 +108,19 @@ public final class JacksonUtil {
 	 * @param isFormat 是否格式化
 	 * @return json字符串
 	 */
-	@SneakyThrows
 	public static String toJsonStr(Object obj, boolean isFormat) {
-		if (obj instanceof String str) {
-			return str;
+		try {
+			if (obj instanceof String str) {
+				return str;
+			}
+			if (isFormat) {
+				return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+			}
+			return MAPPER.writeValueAsString(obj);
 		}
-		if (isFormat) {
-			return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+		catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
 		}
-		return MAPPER.writeValueAsString(obj);
 	}
 
 	/**
@@ -131,9 +130,12 @@ public final class JacksonUtil {
 	 * @param <T> 泛型
 	 * @return 对象集合
 	 */
-	@SneakyThrows
-	public static <T> List<T> toList(String json, Class<T> clazz) {
+	public static <T> List<T> toList(String json, Class<T> clazz) throws JsonProcessingException {
 		return MAPPER.readValue(json, collectionType(clazz));
+	}
+
+	public static <T> List<T> toList(File file, Class<T> clazz) throws IOException {
+		return MAPPER.readValue(file, collectionType(clazz));
 	}
 
 	/**
@@ -145,8 +147,8 @@ public final class JacksonUtil {
 	 * @param <V> 值泛型
 	 * @return map
 	 */
-	@SneakyThrows
-	public static <K, V> Map<K, V> toMap(String json, Class<K> keyClass, Class<V> valueClass) {
+	public static <K, V> Map<K, V> toMap(String json, Class<K> keyClass, Class<V> valueClass)
+			throws JsonProcessingException {
 		return MAPPER.readValue(json, mapType(keyClass, valueClass));
 	}
 
@@ -183,11 +185,6 @@ public final class JacksonUtil {
 	@SneakyThrows
 	public static JsonNode readTree(String json) {
 		return MAPPER.readTree(json);
-	}
-
-	@SneakyThrows
-	public static JsonParser createParser(String filePath) {
-		return FACTORY.createParser(new File(filePath));
 	}
 
 	/**

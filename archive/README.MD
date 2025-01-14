@@ -6,11 +6,13 @@
 
 <h2 align="left">KCloud-Platform-IoT</h2>
 
-Github 地址：[KCloud-Platform-IoT](https://github.com/KouShenhai/KCloud-Platform-IoT)  
-Gtiee 地址：[KCloud-Platform-IoT](https://gitee.com/laokouyun/KCloud-Platform-IoT)  
+Github 地址：[KCloud-Platform-IoT](https://github.com/KouShenhai/KCloud-Platform-IoT)
+Gtiee 地址：[KCloud-Platform-IoT](https://gitee.com/laokouyun/KCloud-Platform-IoT)
 
 # 启动
 ```shell
+# 注意：node版本必须为16.x
+
 # 安装
 npm install
 

@@ -14,18 +14,20 @@
 # * limitations under the License.
 # *
 # */
+
 # Compiled class file
 *.class
 
 # Log file
 *.log
 logs
-doc/db/db_data
+temp
 .idea
 *.iml
 # BlueJ files
 *.ctxt
 /**/target
+target
 *.data
 
 # Mobile Tools for Java (J2ME)
@@ -43,9 +45,3 @@ info.log.*.gz
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-
-node_modules
-.umi
-.husky
-dist
-.gradle
