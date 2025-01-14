@@ -53,7 +53,7 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 
 	@PreDestroy
 	public void destroy() {
-		EXECUTOR.shutdown();
+		ThreadUtil.shutdown(EXECUTOR, 60);
 	}
 
 }

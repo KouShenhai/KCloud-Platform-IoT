@@ -17,6 +17,7 @@
 
 package org.laokou.common.mqtt.config;
 
+import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.ThreadUtil;
 
@@ -52,6 +53,11 @@ public class MqttManager {
 
 	public synchronized void close() {
 		MQTT_SESSION_MAP.values().forEach(MqttClient::close);
+	}
+
+	@PreDestroy
+	public void shutdown() {
+		ThreadUtil.shutdown(executor, 60);
 	}
 
 }

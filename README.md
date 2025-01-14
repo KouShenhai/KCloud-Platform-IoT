@@ -59,6 +59,12 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 - 学习DDD思想并落地实践
 - 项目驱动学习任何知识
 
+### 👉 项目定位
+只适用于中大型微服务项目【业务复杂】
+
+<img src="doc/image/img_1.png" width=400 height=400 alt="COLA架构图"/>
+<img src="doc/image/img.png" width=400 height=400 alt="COLA架构图"/>
+
 ### 🔗 在线体验
 
 | 序号 |  账号   |    密码    |
