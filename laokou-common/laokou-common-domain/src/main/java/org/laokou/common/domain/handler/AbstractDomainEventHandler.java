@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.common.core.utils.MDCUtil;
-import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.JacksonUtil;
 
@@ -35,8 +34,6 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 @Slf4j
 @RequiredArgsConstructor
 public abstract class AbstractDomainEventHandler implements RocketMQListener<MessageExt> {
-
-	protected final DomainEventPublisher rocketMQDomainEventPublisher;
 
 	@Override
 	public void onMessage(MessageExt messageExt) {

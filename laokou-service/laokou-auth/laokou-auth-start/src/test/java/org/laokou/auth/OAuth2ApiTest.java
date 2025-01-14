@@ -131,7 +131,7 @@ class OAuth2ApiTest {
 	@Test
 	void testTtlMDC() {
 		MDCUtil.put("111", "222");
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+		try (ExecutorService executor = ThreadUtil.newTtlVirtualTaskExecutor()) {
 			executor.execute(() -> log.info("TraceId：{}，SpanId：{}", MDCUtil.getSpanId(), MDCUtil.getSpanId()));
 		}
 	}

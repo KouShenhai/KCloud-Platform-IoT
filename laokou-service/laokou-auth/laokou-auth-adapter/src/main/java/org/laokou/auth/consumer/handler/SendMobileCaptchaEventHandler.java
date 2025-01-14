@@ -25,7 +25,6 @@ import org.laokou.auth.convertor.NoticeLogConvertor;
 import org.laokou.auth.dto.NoticeLogSaveCmd;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
-import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.sms.service.SmsService;
@@ -51,9 +50,7 @@ public class SendMobileCaptchaEventHandler extends AbstractDomainEventHandler {
 
 	private final NoticeLogServiceI noticeLogServiceI;
 
-	public SendMobileCaptchaEventHandler(DomainEventPublisher rocketMQDomainEventPublisher, SmsService smsService,
-			NoticeLogServiceI noticeLogServiceI) {
-		super(rocketMQDomainEventPublisher);
+	public SendMobileCaptchaEventHandler(SmsService smsService, NoticeLogServiceI noticeLogServiceI) {
 		this.smsService = smsService;
 		this.noticeLogServiceI = noticeLogServiceI;
 	}

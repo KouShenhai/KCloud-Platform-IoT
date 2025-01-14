@@ -23,7 +23,6 @@ import org.laokou.auth.api.LoginLogServiceI;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.dto.LoginLogSaveCmd;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
-import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.springframework.stereotype.Component;
 
@@ -46,8 +45,7 @@ public class LoginEventHandler extends AbstractDomainEventHandler {
 
 	private final LoginLogServiceI loginLogServiceI;
 
-	public LoginEventHandler(DomainEventPublisher rocketMQDomainEventPublisher, LoginLogServiceI loginLogServiceI) {
-		super(rocketMQDomainEventPublisher);
+	public LoginEventHandler(LoginLogServiceI loginLogServiceI) {
 		this.loginLogServiceI = loginLogServiceI;
 	}
 
