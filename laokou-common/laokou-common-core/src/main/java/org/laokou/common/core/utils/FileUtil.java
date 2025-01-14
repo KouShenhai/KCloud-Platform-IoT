@@ -157,6 +157,13 @@ public final class FileUtil {
 		Files.delete(path);
 	}
 
+	public static void delete(String directory, String fileName) throws IOException {
+		Path path = Path.of(directory, fileName);
+		if (isExist(path)) {
+			delete(path);
+		}
+	}
+
 	public static boolean isExist(Path path) {
 		return Files.exists(path);
 	}
