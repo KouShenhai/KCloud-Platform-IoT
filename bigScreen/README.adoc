@@ -1,9 +1,10 @@
-= IoT大屏可视化
+= IoT可视化大屏
 
 == 下载依赖
 
 [source,shell]
 ----
+# node版本必须大于或等于18.x
 npm install -g pnpm
 pnpm install
 ----
