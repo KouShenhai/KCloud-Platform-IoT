@@ -63,7 +63,7 @@ image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源
 只适用于中大型微服务项目【业务复杂】
 
 image:doc/image/img_1.png[COLA架构图,400,400,align=center]
-image:doc/image/img.png[COLA架构图,325,325,align=center]
+image:doc/image/img.png[COLA架构图,400,400,align=center]
 
 === 🔗 在线体验
 
