@@ -7,7 +7,7 @@
 <h2 align="left">KCloud-Platform-IoT</h2>
 
 Github 地址：[KCloud-Platform-IoT](https://github.com/KouShenhai/KCloud-Platform-IoT)
-Gtiee 地址：[KCloud-Platform-IoT](https://gitee.com/laokouyun/KCloud-Platform-IoT)
+Gitee 地址：[KCloud-Platform-IoT](https://gitee.com/laokouyun/KCloud-Platform-IoT)
 
 # 启动
 ```shell
