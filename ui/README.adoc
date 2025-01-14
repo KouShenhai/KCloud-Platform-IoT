@@ -4,6 +4,7 @@
 
 [source,shell]
 ----
+# node版本必须大于或等于18.x
 npm install -g pnpm
 pnpm install
 ----
