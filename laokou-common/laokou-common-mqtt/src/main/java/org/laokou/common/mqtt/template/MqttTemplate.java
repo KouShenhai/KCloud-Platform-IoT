@@ -18,6 +18,7 @@
 package org.laokou.common.mqtt.template;
 
 import lombok.RequiredArgsConstructor;
+import org.eclipse.paho.mqttv5.common.MqttException;
 import org.laokou.common.mqtt.config.MqttManager;
 
 /**
@@ -28,7 +29,7 @@ public class MqttTemplate {
 
 	private final MqttManager mqttManager;
 
-	public void send(String key, String topic, String payload, int qos) {
+	public void send(String key, String topic, String payload, int qos) throws MqttException {
 		mqttManager.getSession(key).send(topic, payload, qos);
 	}
 

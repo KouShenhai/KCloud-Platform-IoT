@@ -1,5 +1,5 @@
 ^\Q/*\E$
-^\Q * Copyright (c) \E20\d\d\-20\d\d\Q KCloud-Platform-IoT Author or Authors. All Rights Reserved.\E$
+^\Q * Copyright (c) \E2022-2025\Q KCloud-Platform-IoT Author or Authors. All Rights Reserved.\E$
 ^\Q *\E$
 ^\Q * Licensed under the Apache License, Version 2.0 (the "License");\E$
 ^\Q * you may not use this file except in compliance with the License.\E$
