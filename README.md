@@ -108,12 +108,12 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 |    Spring Cloud Alibaba     |  2023.0.3.2   |
 |      Spring Boot Admin      |     3.4.1     |
 | Spring Authorization Server |     1.4.1     |
-|        Mybatis Plus         |     3.5.10.1     |
+|        Mybatis Plus         |   3.5.10.1    |
 |            Nacos            |     2.4.3     |
 |          Sentinel           |     1.8.8     |
 |            Redis            |     7.4.2     |
 |        Elasticsearch        |    8.17.0     |
-|          RocketMQ           |     5.3.2     |
+|          RocketMQ           |     5.3.1     |
 |            Netty            | 4.1.116.Final |
 |            Kafka            |     3.9.0     |
 |            EMQX             |     5.8.4     |
