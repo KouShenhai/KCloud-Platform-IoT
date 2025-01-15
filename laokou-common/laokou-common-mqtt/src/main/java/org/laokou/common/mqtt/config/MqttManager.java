@@ -19,7 +19,6 @@ package org.laokou.common.mqtt.config;
 
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ThreadUtil;
 
 import java.util.Map;
@@ -52,7 +51,6 @@ public class MqttManager {
 		MQTT_SESSION_MAP.values().forEach(MqttClient::open);
 	}
 
-	@SneakyThrows
 	public synchronized void close() {
 		MQTT_SESSION_MAP.values().forEach(MqttClient::close);
 	}

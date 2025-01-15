@@ -94,12 +94,17 @@ public class MqttClient {
 		}
 	}
 
-	public void close() throws MqttException {
+	public void close() {
 		if (ObjectUtil.isNotNull(client)) {
 			// 等待30秒
-			client.disconnectForcibly(30);
-			client.close();
-			log.info("关闭MQTT连接");
+			try {
+				client.disconnectForcibly(30);
+				client.close();
+				log.info("关闭MQTT连接");
+			}
+			catch (MqttException e) {
+				log.error("关闭MQTT连接失败，错误信息：{}", e.getMessage(), e);
+			}
 		}
 	}
 
