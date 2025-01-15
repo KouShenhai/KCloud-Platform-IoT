@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.client.IMqttToken;
+import org.eclipse.paho.mqttv5.client.MqttAsyncClient;
 import org.eclipse.paho.mqttv5.client.MqttCallback;
 import org.eclipse.paho.mqttv5.client.MqttDisconnectResponse;
 import org.eclipse.paho.mqttv5.common.MqttException;
@@ -38,7 +39,7 @@ public class MqttMessageCallback implements MqttCallback {
 
 	private final MqttBrokerProperties mqttBrokerProperties;
 
-	private final org.eclipse.paho.mqttv5.client.MqttClient client;
+	private final MqttAsyncClient client;
 
 	@Override
 	public void disconnected(MqttDisconnectResponse disconnectResponse) {

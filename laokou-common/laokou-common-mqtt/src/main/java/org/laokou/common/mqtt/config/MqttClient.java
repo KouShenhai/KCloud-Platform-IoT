@@ -17,10 +17,13 @@
 
 package org.laokou.common.mqtt.config;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.paho.mqttv5.client.IMqttToken;
+import org.eclipse.paho.mqttv5.client.MqttActionListener;
+import org.eclipse.paho.mqttv5.client.MqttAsyncClient;
 import org.eclipse.paho.mqttv5.client.MqttConnectionOptions;
 import org.eclipse.paho.mqttv5.client.persist.MqttDefaultFilePersistence;
+import org.eclipse.paho.mqttv5.common.MqttException;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -54,7 +57,7 @@ public class MqttClient {
 
 	private final ScheduledExecutorService executor;
 
-	private volatile org.eclipse.paho.mqttv5.client.MqttClient client;
+	private volatile MqttAsyncClient client;
 
 	public MqttClient(MqttBrokerProperties mqttBrokerProperties, MqttLoadBalancer mqttLoadBalancer,
 			ScheduledExecutorService executor) {
@@ -63,43 +66,48 @@ public class MqttClient {
 		this.executor = executor;
 	}
 
-	@SneakyThrows
 	public void open() {
 		try {
-			client = new org.eclipse.paho.mqttv5.client.MqttClient(mqttBrokerProperties.getUri(),
-					mqttBrokerProperties.getClientId(), new MqttDefaultFilePersistence(), executor);
+			client = new MqttAsyncClient(mqttBrokerProperties.getUri(), mqttBrokerProperties.getClientId(),
+					new MqttDefaultFilePersistence(), null, executor);
 			client.setManualAcks(mqttBrokerProperties.isManualAcks());
 			client.setCallback(new MqttMessageCallback(mqttLoadBalancer, mqttBrokerProperties, client));
-			client.connect(options());
+			client.connect(options(), null, new MqttActionListener() {
+				@Override
+				public void onSuccess(IMqttToken asyncActionToken) {
+					log.info("MQTT连接成功");
+				}
+
+				@Override
+				public void onFailure(IMqttToken asyncActionToken, Throwable e) {
+					log.error("MQTT连接失败，错误信息：{}", e.getMessage(), e);
+				}
+			});
 			client.subscribe(mqttBrokerProperties.getTopics().toArray(String[]::new),
 					mqttBrokerProperties.getTopics()
 						.stream()
 						.mapToInt(item -> mqttBrokerProperties.getSubscribeQos())
 						.toArray());
-			log.info("MQTT连接成功");
 		}
 		catch (Exception e) {
-			log.error("MQTT连接失败，错误信息：{}", e.getMessage());
+			log.error("MQTT连接失败，错误信息：{}", e.getMessage(), e);
 		}
 	}
 
-	@SneakyThrows
-	public void close() {
+	public void close() throws MqttException {
 		if (ObjectUtil.isNotNull(client)) {
-			// 等待10秒
-			client.disconnectForcibly(10);
+			// 等待30秒
+			client.disconnectForcibly(30);
 			client.close();
 			log.info("关闭MQTT连接");
 		}
 	}
 
-	@SneakyThrows
-	public void send(String topic, String payload, int qos) {
+	public void send(String topic, String payload, int qos) throws MqttException {
 		client.publish(topic, payload.getBytes(StandardCharsets.UTF_8), qos, false);
 	}
 
-	@SneakyThrows
-	public void send(String topic, String payload) {
+	public void send(String topic, String payload) throws MqttException {
 		send(topic, payload, mqttBrokerProperties.getSendQos());
 	}
 
