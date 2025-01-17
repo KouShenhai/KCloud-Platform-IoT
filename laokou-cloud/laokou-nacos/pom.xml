@@ -35,13 +35,13 @@
     <!--postgresql版本-->
     <postgresql.version>42.7.5</postgresql.version>
     <!--liquibase-core版本-->
-    <liquibase-core.version>4.30.0</liquibase-core.version>
+    <liquibase-core.version>4.31.0</liquibase-core.version>
     <!--protobuf-java版本-->
     <protobuf-java.version>3.25.5</protobuf-java.version>
     <!--commons-io版本-->
     <commons-io.version>2.18.0</commons-io.version>
     <!--grpc版本-->
-    <grpc.version>1.69.0</grpc.version>
+    <grpc.version>1.69.1</grpc.version>
     <!--error_prone_annotations版本-->
     <error_prone_annotations.version>2.36.0</error_prone_annotations.version>
     <!--hessian版本-->
