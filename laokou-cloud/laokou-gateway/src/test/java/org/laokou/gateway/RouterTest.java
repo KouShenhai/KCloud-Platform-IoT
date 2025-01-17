@@ -17,19 +17,48 @@
 
 package org.laokou.gateway;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import reactor.test.StepVerifier;
+import org.laokou.gateway.repository.NacosRouteDefinitionRepository;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestConstructor;
 
 /**
+ * 同步Nacos路由配置到Redis.
+ *
  * @author laokou
  */
+@Slf4j
+@SpringBootTest
+@RequiredArgsConstructor
+@AutoConfigureWebTestClient
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class RouterTest {
+
+	private final NacosRouteDefinitionRepository nacosRouteDefinitionRepository;
 
 	@Test
 	void testRouter() {
-		StepVerifier.create(Flux.zip(Mono.just("1"), Mono.just("1"))).verifyComplete();
+		// 删除路由
+		nacosRouteDefinitionRepository.removeRouters().subscribe(delFlag -> {
+			if (delFlag) {
+				log.info("删除路由成功");
+			}
+			else {
+				log.info("删除路由失败");
+			}
+		});
+		// 保存路由
+		nacosRouteDefinitionRepository.saveRouters().subscribe(saveFlag -> {
+			if (saveFlag) {
+				log.info("保存路由成功");
+			}
+			else {
+				log.info("保存路由失败");
+			}
+		});
 	}
 
 }

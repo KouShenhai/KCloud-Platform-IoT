@@ -3250,11 +3250,6 @@ spring:
       httpserver:
         # 关闭netty日志
         wiretap: false
-      router:
-        auth:
-          enabled: true
-          username: laokou
-          password: laokou123
       ip:
         white:
           enabled: false
@@ -5194,11 +5189,6 @@ spring:
       httpserver:
         # 关闭netty日志
         wiretap: false
-      router:
-        auth:
-          enabled: true
-          username: laokou
-          password: laokou123
       ip:
         white:
           enabled: false
@@ -5651,11 +5641,6 @@ spring:
       httpserver:
         # 关闭netty日志
         wiretap: false
-      router:
-        auth:
-          enabled: true
-          username: laokou
-          password: laokou123
       ip:
         white:
           enabled: false
