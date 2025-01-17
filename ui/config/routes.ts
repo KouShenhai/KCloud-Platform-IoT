@@ -50,5 +50,10 @@ export default [
 				]
 			}
 		]
+	},
+	{
+		name: '物联管理',
+		path: '/iot',
+		icon: 'robot',
 	}
 ];

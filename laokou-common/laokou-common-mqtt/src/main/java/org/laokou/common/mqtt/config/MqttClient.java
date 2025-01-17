@@ -83,11 +83,6 @@ public class MqttClient {
 					log.error("MQTT连接失败，错误信息：{}", e.getMessage(), e);
 				}
 			});
-			client.subscribe(mqttBrokerProperties.getTopics().toArray(String[]::new),
-					mqttBrokerProperties.getTopics()
-						.stream()
-						.mapToInt(item -> mqttBrokerProperties.getSubscribeQos())
-						.toArray());
 		}
 		catch (Exception e) {
 			log.error("MQTT连接失败，错误信息：{}", e.getMessage(), e);
@@ -106,6 +101,35 @@ public class MqttClient {
 				log.error("关闭MQTT连接失败，错误信息：{}", e.getMessage(), e);
 			}
 		}
+	}
+
+	public void subscribe(String[] topic, int[] qos) throws MqttException {
+		client.subscribe(topic, qos, null, new MqttActionListener() {
+
+			@Override
+			public void onSuccess(IMqttToken asyncActionToken) {
+				log.info("MQTT订阅Topic成功");
+			}
+
+			@Override
+			public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+				log.error("MQTT订阅Topic失败，错误信息：{}", exception.getMessage(), exception);
+			}
+		});
+	}
+
+	public void unsubscribe(String[] topic) throws MqttException {
+		client.unsubscribe(topic, null, new MqttActionListener() {
+			@Override
+			public void onSuccess(IMqttToken asyncActionToken) {
+				log.info("MQTT取消订阅Topic成功");
+			}
+
+			@Override
+			public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+				log.error("MQTT取消订阅Topic失败，错误信息：{}", exception.getMessage(), exception);
+			}
+		}, new MqttProperties());
 	}
 
 	public void send(String topic, String payload, int qos) throws MqttException {
