@@ -28,7 +28,7 @@ import java.io.Serializable;
 public class SmsResult implements Serializable {
 
 	/**
-	 * 编码.
+	 * 标识.
 	 */
 	private final String code = "sendMobileCaptcha";
 

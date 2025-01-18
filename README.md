@@ -35,7 +35,9 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 <a href="https://gitee.com/laokouyun/KCloud-Platform-IoT/stargazers" target="_blank"><img src="https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/star.svg?theme=dark" alt="Gitee star"/></a>
 <a href="https://gitee.com/laokouyun/KCloud-Platform-IoT/members" target="_blank"><img src="https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark" alt="Gitee fork"/></a>
 
-<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.1&color=green" alt="Spring Framework"/></a>
+<a href="https://gitcode.com/qq_39893313/KCloud-Platform-IoT" target="_blank"><img src="https://gitcode.com/qq_39893313/KCloud-Platform-IoT/star/badge.svg?theme=dark" alt="GitCode star"/></a>
+
+<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.2&color=green" alt="Spring Framework"/></a>
 <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Boot&message=3.4.1&color=green" alt="Spring Boot"/></a>
 <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud&message=2024.0.0&color=green" alt="Spring Cloud"/></a>
 <a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.3.2&color=orange" alt="Spring Cloud Alibaba"/></a>

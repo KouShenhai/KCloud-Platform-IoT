@@ -33,7 +33,7 @@ public class NoticeLogE {
 	private Long id;
 
 	/**
-	 * Api编码.
+	 * Api标识.
 	 */
 	private String code;
 

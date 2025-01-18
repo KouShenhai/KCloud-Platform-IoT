@@ -5,8 +5,8 @@
 import {Dropdown, message, theme} from "antd";
 // @ts-ignore
 import {history} from 'umi';
-import {HomeOutlined, LogoutOutlined, SettingOutlined} from "@ant-design/icons";
-import {ReactElement, ReactNode, ReactPortal, useEffect} from "react";
+import {HomeOutlined, LogoutOutlined, RobotOutlined, SettingOutlined} from "@ant-design/icons";
+import {ReactElement, ReactNode, ReactPortal} from "react";
 import {logoutV3} from "@/services/auth/auth";
 import {clearToken, getAccessToken, getExpiresTime, getRefreshToken} from "@/access";
 import React from "react";
@@ -17,6 +17,7 @@ import {treeListV3} from "@/services/admin/menu";
 const getIcon = (icon: string) => {
 	switch (icon) {
 		case 'SettingOutlined': return <SettingOutlined/>
+		case 'RobotOutlined': return <RobotOutlined/>
 		default: return <SettingOutlined/>
 	}
 }

@@ -37,7 +37,7 @@ public class Result<T> implements Serializable {
 	@Serial
 	private static final long serialVersionUID = -1286769110881865369L;
 
-	@Schema(name = "状态编码", description = "状态编码", example = "OK")
+	@Schema(name = "状态标识", description = "状态标识", example = "OK")
 	private String code;
 
 	@Schema(name = "响应描述", description = "响应描述", example = "请求成功")

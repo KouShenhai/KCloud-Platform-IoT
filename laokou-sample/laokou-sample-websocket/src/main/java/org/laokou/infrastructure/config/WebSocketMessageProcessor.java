@@ -30,7 +30,7 @@ import org.laokou.domain.model.MessageType;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAGE_TOPIC;
+import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_WS_MESSAGE_TOPIC;
 
 /**
  * @author laokou
@@ -62,7 +62,7 @@ final class WebSocketMessageProcessor {
 	}
 
 	private void publishMessage(Object payload) {
-		rocketMqTemplate.sendAsyncMessage(LAOKOU_MESSAGE_TOPIC, EMPTY, JacksonUtil.toValue(payload, PayloadCO.class),
+		rocketMqTemplate.sendAsyncMessage(LAOKOU_WS_MESSAGE_TOPIC, EMPTY, JacksonUtil.toValue(payload, PayloadCO.class),
 				"0", "0");
 	}
 

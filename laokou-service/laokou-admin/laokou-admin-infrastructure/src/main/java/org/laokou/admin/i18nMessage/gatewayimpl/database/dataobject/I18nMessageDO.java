@@ -31,7 +31,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 public class I18nMessageDO extends BaseDO {
 
 	/**
-	 * 编码.
+	 * 标识.
 	 */
 	private String code;
 

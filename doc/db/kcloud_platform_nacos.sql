@@ -2199,7 +2199,7 @@ spring:
               authorization-code-time-to-live: 1h
               access-token-time-to-live: 1h
               refresh-token-time-to-live: 6h
-              device-code-time-to-live: 1h
+              Device-code-time-to-live: 1h
             registration:
               id: 95TxSsTPFA3tF12TBSMmUVK0da
               client-id: 95TxSsTPFA3tF12TBSMmUVK0da
@@ -2378,7 +2378,7 @@ spring:
               authorization-code-time-to-live: 1h
               access-token-time-to-live: 1h
               refresh-token-time-to-live: 6h
-              device-code-time-to-live: 1h
+              Device-code-time-to-live: 1h
             registration:
               id: 95TxSsTPFA3tF12TBSMmUVK0da
               client-id: 95TxSsTPFA3tF12TBSMmUVK0da
@@ -3370,7 +3370,7 @@ spring:
               authorization-code-time-to-live: 1h
               access-token-time-to-live: 1h
               refresh-token-time-to-live: 6h
-              device-code-time-to-live: 1h
+              Device-code-time-to-live: 1h
             registration:
               id: 95TxSsTPFA3tF12TBSMmUVK0da
               client-id: 95TxSsTPFA3tF12TBSMmUVK0da
@@ -5271,6 +5271,21 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        iot:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
           url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
@@ -5382,6 +5397,21 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        iot:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
           url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
@@ -5491,6 +5521,21 @@ spring:
       strict: true
       datasource:
         master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false        
+        iot:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
           url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false

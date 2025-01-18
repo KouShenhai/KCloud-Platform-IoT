@@ -42,8 +42,7 @@ public class TransportProtocolCO extends ClientObject {
 	@Schema(name = "协议名称", description = "协议名称")
 	private String name;
 
-	@Schema(name = "协议类型 udp/tcp/websocket/mqtt_client/http/mqtt_server/coap",
-			description = "协议类型 udp/tcp/websocket/mqtt_client/http/mqtt_server/coap")
+	@Schema(name = "协议类型", description = "协议类型")
 	private String type;
 
 	@Schema(name = "主机", description = "主机")

@@ -628,7 +628,7 @@ COMMENT ON COLUMN "public"."boot_sys_i18n_message"."update_time" IS '修改时�
 COMMENT ON COLUMN "public"."boot_sys_i18n_message"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."boot_sys_i18n_message"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_sys_i18n_message"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."boot_sys_i18n_message"."code" IS '编码';
+COMMENT ON COLUMN "public"."boot_sys_i18n_message"."code" IS '标识';
 COMMENT ON COLUMN "public"."boot_sys_i18n_message"."zh_message" IS '中文';
 COMMENT ON COLUMN "public"."boot_sys_i18n_message"."en_message" IS '英文';
 COMMENT ON TABLE "public"."boot_sys_i18n_message" IS '国际化消息';
@@ -742,6 +742,12 @@ INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", 
 INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (4, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 0, 3, 'sys:login-log:page', 1, '分页查询', NULL, '', 50, 0);
 INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (5, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 0, 3, 'sys:login-log:export', 1, '导出全部', NULL, '', 40, 0);
 INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (11, 1, 1, '2025-01-11 14:10:54', '2025-01-11 14:10:57', 0, 0, 0, 3, 'sys:login-log:detail', 1, '查看', '', '', 30, 0);
+INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (13, 1, 1, '2025-01-18 09:26:17', '2025-01-18 09:26:20', 0, 0, 0, 0, NULL, 0, '物联管理', '/iot', 'RobotOutlined', 80000, 0);
+INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (14, 1, 1, '2025-01-18 09:28:42', '2025-01-18 09:28:44', 0, 0, 0, 13, NULL, 0, '设备管理', '/iot/device', NULL, 1000, 0);
+INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (15, 1, 1, '2025-01-18 09:30:03', '2025-01-18 09:30:05', 0, 0, 0, 14, NULL, 0, '设备', '/iot/device/index', NULL, 900, 0);
+INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (16, 1, 1, '2025-01-18 09:37:53', '2025-01-18 09:37:55', 0, 0, 0, 14, NULL, 0, '物模型', '/iot/device/thingModel', NULL, 400, 0);
+INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (17, 1, 1, '2025-01-18 09:38:58', '2025-01-18 09:39:00', 0, 0, 0, 14, NULL, 0, '产品', '/iot/device/product', NULL, 300, 0);
+INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (18, 1, 1, '2025-01-18 09:39:31', '2025-01-18 09:39:34', 0, 0, 0, 14, NULL, 0, '产品类别', '/iot/device/productCategory', NULL, 200, 0);
 
 -- ----------------------------
 -- Table structure for boot_sys_menu_package
@@ -1101,7 +1107,7 @@ COMMENT ON COLUMN "public"."boot_sys_tenant"."del_flag" IS '删除标识 0未删
 COMMENT ON COLUMN "public"."boot_sys_tenant"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_sys_tenant"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_sys_tenant"."name" IS '租户名称';
-COMMENT ON COLUMN "public"."boot_sys_tenant"."code" IS '租户编号';
+COMMENT ON COLUMN "public"."boot_sys_tenant"."code" IS '租户标识';
 COMMENT ON COLUMN "public"."boot_sys_tenant"."source_id" IS '数据源ID';
 COMMENT ON COLUMN "public"."boot_sys_tenant"."package_id" IS '套餐ID';
 COMMENT ON TABLE "public"."boot_sys_tenant" IS '租户';
@@ -1331,7 +1337,7 @@ CREATE TABLE "public"."oauth2_registered_client" (
 -- ----------------------------
 -- Records of oauth2_registered_client
 -- ----------------------------
-INSERT INTO "public"."oauth2_registered_client" VALUES ('95TxSsTPFA3tF12TBSMmUVK0da', '95TxSsTPFA3tF12TBSMmUVK0da', '2024-04-30 00:01:09', '{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO', NULL, 'OAuth2.1认证', 'client_secret_basic', 'refresh_token,password,client_credentials,mail,urn:ietf:params:oauth:grant-type:device_code,authorization_code,mobile,urn:ietf:params:oauth:grant-type:jwt-bearer', 'http://127.0.0.1:8001,http://127.0.0.1:8000,https://vue.laokou.org,https://laokou.org.cn', 'http://127.0.0.1:8001,http://127.0.0.1:8000,https://vue.laokou.org,https://laokou.org.cn', 'password,mail,openid,mobile', '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":true}', '{"@class":"java.util.Collections$UnmodifiableMap","settings.token.reuse-refresh-tokens":true,"settings.token.id-token-signature-algorithm":["org.springframework.security.oauth2.jose.jws.SignatureAlgorithm","RS256"],"settings.token.access-token-time-to-live":["java.time.Duration",3600.000000000],"settings.token.access-token-format":{"@class":"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat","value":"self-contained"},"settings.token.refresh-token-time-to-live":["java.time.Duration",21600.000000000],"settings.token.authorization-code-time-to-live":["java.time.Duration",3600.000000000],"settings.token.device-code-time-to-live":["java.time.Duration",3600.000000000]}');
+INSERT INTO "public"."oauth2_registered_client" VALUES ('95TxSsTPFA3tF12TBSMmUVK0da', '95TxSsTPFA3tF12TBSMmUVK0da', '2024-04-30 00:01:09', '{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO', NULL, 'OAuth2.1认证', 'client_secret_basic', 'refresh_token,password,client_credentials,mail,urn:ietf:params:oauth:grant-type:device_code,authorization_code,mobile,urn:ietf:params:oauth:grant-type:jwt-bearer', 'http://127.0.0.1:8001,http://127.0.0.1:8000,https://vue.laokou.org,https://laokou.org.cn', 'http://127.0.0.1:8001,http://127.0.0.1:8000,https://vue.laokou.org,https://laokou.org.cn', 'password,mail,openid,mobile', '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":true}', '{"@class":"java.util.Collections$UnmodifiableMap","settings.token.reuse-refresh-tokens":true,"settings.token.id-token-signature-algorithm":["org.springframework.security.oauth2.jose.jws.SignatureAlgorithm","RS256"],"settings.token.access-token-time-to-live":["java.time.Duration",3600.000000000],"settings.token.access-token-format":{"@class":"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat","value":"self-contained"},"settings.token.refresh-token-time-to-live":["java.time.Duration",21600.000000000],"settings.token.authorization-code-time-to-live":["java.time.Duration",3600.000000000],"settings.token.Device-code-time-to-live":["java.time.Duration",3600.000000000]}');
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -1646,7 +1652,7 @@ CREATE INDEX "code_tenant_id_idx" ON "public"."boot_sys_i18n_message" USING btre
   "code" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "tenant_id" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
-COMMENT ON INDEX "public"."code_tenant_id_idx" IS '编码_租户ID_唯一索引';
+COMMENT ON INDEX "public"."code_tenant_id_idx" IS '标识_租户ID_唯一索引';
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_i18n_message
