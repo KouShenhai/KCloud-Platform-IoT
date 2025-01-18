@@ -4,7 +4,7 @@ import { request } from '@umijs/max';
 
 /** 修改物模型 修改物模型 PUT /v3/thing-models */
 export async function modifyV3(body: API.ThingModelModifyCmd, options?: { [key: string]: any }) {
-  return request<any>('/v3/thing-models', {
+  return request<any>('/api/iot/v3/thing-models', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ export async function modifyV3(body: API.ThingModelModifyCmd, options?: { [key: 
 
 /** 保存物模型 保存物模型 POST /v3/thing-models */
 export async function saveV3(body: API.ThingModelSaveCmd, options?: { [key: string]: any }) {
-  return request<any>('/v3/thing-models', {
+  return request<any>('/api/iot/v3/thing-models', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export async function saveV3(body: API.ThingModelSaveCmd, options?: { [key: stri
 
 /** 删除物模型 删除物模型 DELETE /v3/thing-models */
 export async function removeV3(body: number[], options?: { [key: string]: any }) {
-  return request<any>('/v3/thing-models', {
+  return request<any>('/api/iot/v3/thing-models', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ export async function exportV3(
   body: API.ThingThingModelExportCmd,
   options?: { [key: string]: any },
 ) {
-  return request<any>('/v3/thing-models/export', {
+  return request<any>('/api/iot/v3/thing-models/export', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
     }
   });
 
-  return request<any>('/v3/thing-models/import', {
+  return request<any>('/api/iot/v3/thing-models/import', {
     method: 'POST',
     data: formData,
     requestType: 'form',
@@ -101,7 +101,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 
 /** 分页查询物模型列表 分页查询物模型列表 POST /v3/thing-models/page */
 export async function pageV3(body: API.ThingModelPageQry, options?: { [key: string]: any }) {
-  return request<API.Result>('/v3/thing-models/page', {
+  return request<API.Result>('/api/iot/v3/thing-models/page', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

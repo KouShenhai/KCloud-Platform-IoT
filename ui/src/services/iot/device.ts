@@ -4,7 +4,7 @@ import { request } from '@umijs/max';
 
 /** 修改设备 修改设备 PUT /v3/devices */
 export async function modifyV3(body: API.DeviceModifyCmd, options?: { [key: string]: any }) {
-  return request<any>('/v3/devices', {
+  return request<any>('/api/iot/v3/devices', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -16,7 +16,7 @@ export async function modifyV3(body: API.DeviceModifyCmd, options?: { [key: stri
 
 /** 保存设备 保存设备 POST /v3/devices */
 export async function saveV3(body: API.DeviceSaveCmd, options?: { [key: string]: any }) {
-  return request<any>('/v3/devices', {
+  return request<any>('/api/iot/v3/devices', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export async function saveV3(body: API.DeviceSaveCmd, options?: { [key: string]:
 
 /** 删除设备 删除设备 DELETE /v3/devices */
 export async function removeV3(body: number[], options?: { [key: string]: any }) {
-  return request<any>('/v3/devices', {
+  return request<any>('/api/iot/v3/devices', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ export async function getByIdV3(
 
 /** 导出设备 导出设备 POST /v3/devices/export */
 export async function exportV3(body: API.DeviceExportCmd, options?: { [key: string]: any }) {
-  return request<any>('/v3/devices/export', {
+  return request<any>('/api/iot/v3/devices/export', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
     }
   });
 
-  return request<any>('/v3/devices/import', {
+  return request<any>('/api/iot/v3/devices/import', {
     method: 'POST',
     data: formData,
     requestType: 'form',
@@ -98,7 +98,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 
 /** 分页查询设备列表 分页查询设备列表 POST /v3/devices/page */
 export async function pageV3(body: API.DevicePageQry, options?: { [key: string]: any }) {
-  return request<API.Result>('/v3/devices/page', {
+  return request<API.Result>('/api/iot/v3/devices/page', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 import {DrawerForm, ProColumns, ProFormText} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {exportV3, pageV3, getByIdV3} from "@/services/admin/noticeLog";
+import {exportV3, pageV3, getByIdV3} from "@/services/iot/thingModel";
 import {Button} from "antd";
 import {ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
@@ -179,7 +179,7 @@ export default () => {
 				createTime: string;
 			}>
 				open={modalVisit}
-				title="查看通知日志"
+				title="查看设备"
 				drawerProps={{
 					destroyOnClose: true,
 					closable: true,
@@ -271,8 +271,8 @@ export default () => {
 				}
 				dateFormatter="string"
 				toolbar={{
-					title: '登录日志',
-					tooltip: '登录日志',
+					title: '设备',
+					tooltip: '设备',
 				}}
 			/>
 		</>
