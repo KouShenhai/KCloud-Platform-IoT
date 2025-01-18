@@ -33,7 +33,7 @@ public class I18nMessageE {
 	private Long id;
 
 	/**
-	 * 编码.
+	 * 标识.
 	 */
 	private String code;
 

@@ -35,12 +35,12 @@ public class ThingModelPageQry extends PageQuery {
 	private String name;
 
 	/**
-	 * 模型编码.
+	 * 模型标识.
 	 */
 	private String code;
 
 	/**
-	 * 数据类型 integer string decimal boolean double.
+	 * 数据类型 integer string decimal boolean.
 	 */
 	private String dataType;
 
@@ -50,9 +50,9 @@ public class ThingModelPageQry extends PageQuery {
 	private Integer category;
 
 	/**
-	 * 读写类型 read读 write写.
+	 * 模型类型 read读 write写 report上报.
 	 */
-	private String rwType;
+	private String type;
 
 	/**
 	 * 表达式.

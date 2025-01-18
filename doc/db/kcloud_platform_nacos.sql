@@ -2199,7 +2199,7 @@ spring:
               authorization-code-time-to-live: 1h
               access-token-time-to-live: 1h
               refresh-token-time-to-live: 6h
-              device-code-time-to-live: 1h
+              Device-code-time-to-live: 1h
             registration:
               id: 95TxSsTPFA3tF12TBSMmUVK0da
               client-id: 95TxSsTPFA3tF12TBSMmUVK0da
@@ -2378,7 +2378,7 @@ spring:
               authorization-code-time-to-live: 1h
               access-token-time-to-live: 1h
               refresh-token-time-to-live: 6h
-              device-code-time-to-live: 1h
+              Device-code-time-to-live: 1h
             registration:
               id: 95TxSsTPFA3tF12TBSMmUVK0da
               client-id: 95TxSsTPFA3tF12TBSMmUVK0da
@@ -3370,7 +3370,7 @@ spring:
               authorization-code-time-to-live: 1h
               access-token-time-to-live: 1h
               refresh-token-time-to-live: 6h
-              device-code-time-to-live: 1h
+              Device-code-time-to-live: 1h
             registration:
               id: 95TxSsTPFA3tF12TBSMmUVK0da
               client-id: 95TxSsTPFA3tF12TBSMmUVK0da

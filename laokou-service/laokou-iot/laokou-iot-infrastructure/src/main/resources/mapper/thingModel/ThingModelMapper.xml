@@ -27,7 +27,7 @@
                  code,
                  data_type,
                  category,
-                 rw_type,
+                 type,
                  expression,
                  sort,
                  specs,

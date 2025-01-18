@@ -79,15 +79,15 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	/**
 	 * 用户名.
 	 */
-	public static final String USERNAME = "username";
+	private static final String USERNAME = "username";
 
 	/**
 	 * 密码.
 	 */
-	public static final String PASSWORD = "password";
+	private static final String PASSWORD = "password";
 
 	/**
-	 * 用户名密码.
+	 * 用户名密码认证【OAuth2】.
 	 */
 	private static final String USERNAME_PASSWORD = "username_password";
 

@@ -38,7 +38,7 @@ public class NoticeLogCO extends ClientObject {
 	private Long id;
 
 	/**
-	 * 编码.
+	 * 标识.
 	 */
 	private String code;
 

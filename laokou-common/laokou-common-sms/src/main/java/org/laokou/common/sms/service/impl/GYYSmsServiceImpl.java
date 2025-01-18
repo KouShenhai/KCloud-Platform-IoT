@@ -96,7 +96,7 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		JsonNode jsonNode = JacksonUtil.readTree(json);
 		int code = jsonNode.get("code").asInt();
 		if (code != SendStatus.OK.getCode()) {
-			return new SmsResult(name, SendStatus.FAIL.getCode(), jsonNode.get("msg").asText(), paramString, captcha);
+			return new SmsResult(name, SendStatus.FAIL.getCode(), json, paramString, captcha);
 		}
 		return new SmsResult(name, SendStatus.OK.getCode(), EMPTY, paramString, captcha);
 	}

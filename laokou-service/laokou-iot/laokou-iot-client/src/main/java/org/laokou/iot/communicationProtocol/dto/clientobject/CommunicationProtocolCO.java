@@ -42,7 +42,7 @@ public class CommunicationProtocolCO extends ClientObject {
 	@Schema(name = "协议名称", description = "协议名称")
 	private String name;
 
-	@Schema(name = "协议编码", description = "协议编码")
+	@Schema(name = "协议标识", description = "协议标识")
 	private String code;
 
 	@Schema(name = "排序", description = "排序")

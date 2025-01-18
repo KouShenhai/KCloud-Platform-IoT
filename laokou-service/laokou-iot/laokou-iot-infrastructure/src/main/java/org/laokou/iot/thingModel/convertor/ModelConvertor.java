@@ -41,7 +41,7 @@ public class ModelConvertor {
 		thingModelDO.setCode(thingModelE.getCode());
 		thingModelDO.setDataType(thingModelE.getDataType());
 		thingModelDO.setCategory(thingModelE.getCategory());
-		thingModelDO.setRwType(thingModelE.getRwType());
+		thingModelDO.setType(thingModelE.getType());
 		thingModelDO.setExpression(thingModelE.getExpression());
 		thingModelDO.setSort(thingModelE.getSort());
 		thingModelDO.setSpecs(thingModelE.getSpecs());
@@ -55,7 +55,7 @@ public class ModelConvertor {
 		thingModelCO.setCode(thingModelDO.getCode());
 		thingModelCO.setDataType(thingModelDO.getDataType());
 		thingModelCO.setCategory(thingModelDO.getCategory());
-		thingModelCO.setRwType(thingModelDO.getRwType());
+		thingModelCO.setType(thingModelDO.getType());
 		thingModelCO.setExpression(thingModelDO.getExpression());
 		thingModelCO.setSort(thingModelDO.getSort());
 		thingModelCO.setSpecs(thingModelDO.getSpecs());
@@ -69,7 +69,7 @@ public class ModelConvertor {
 		thingModelE.setCode(thingModelCO.getCode());
 		thingModelE.setDataType(thingModelCO.getDataType());
 		thingModelE.setCategory(thingModelCO.getCategory());
-		thingModelE.setRwType(thingModelCO.getRwType());
+		thingModelE.setType(thingModelCO.getType());
 		thingModelE.setExpression(thingModelCO.getExpression());
 		thingModelE.setSort(thingModelCO.getSort());
 		thingModelE.setSpecs(thingModelCO.getSpecs());

@@ -40,7 +40,7 @@ public class NoticeLogCO extends ClientObject {
 	private Long id;
 
 	/**
-	 * Api编码.
+	 * Api标识.
 	 */
 	private String code;
 

@@ -35,7 +35,7 @@ public class UsernamePasswordAuthParamValidator implements AuthParamValidatorExt
 	@Override
 	public void validate(AuthA auth) {
 		ParamValidator.validate(
-				// 校验租户编号
+				// 校验租户标识
 				OAuth2ParamValidator.validateTenantCode(auth.getTenantCode()),
 				// 校验UUID
 				OAuth2ParamValidator.validateUuid(auth.getCaptcha().uuid()),

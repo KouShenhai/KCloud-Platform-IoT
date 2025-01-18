@@ -38,7 +38,7 @@ public class TenantE {
 	private String name;
 
 	/**
-	 * 租户编号.
+	 * 租户标识.
 	 */
 	private String code;
 

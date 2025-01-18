@@ -39,7 +39,7 @@ public class CommunicationProtocolE {
 	private String name;
 
 	/**
-	 * 协议编码.
+	 * 协议标识.
 	 */
 	private String code;
 

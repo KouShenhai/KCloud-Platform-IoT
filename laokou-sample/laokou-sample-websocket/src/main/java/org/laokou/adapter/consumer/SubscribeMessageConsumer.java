@@ -36,8 +36,7 @@ import java.util.concurrent.ExecutorService;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
-import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAGE_CONSUMER_GROUP;
-import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAGE_TOPIC;
+import static org.laokou.infrastructure.common.constant.MqConstant.*;
 
 // @formatter:off
 /**
@@ -45,7 +44,7 @@ import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_MESSAG
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(consumerGroup = LAOKOU_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_MESSAGE_TOPIC, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
+@RocketMQMessageListener(consumerGroup = LAOKOU_WS_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_WS_MESSAGE_TOPIC, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
 public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 
 	private final Server webSocketServer;

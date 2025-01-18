@@ -22,9 +22,9 @@ package org.laokou.infrastructure.common.constant;
  */
 public final class MqConstant {
 
-	public static final String LAOKOU_MESSAGE_TOPIC = "laokou_message_topic";
+	public static final String LAOKOU_WS_MESSAGE_TOPIC = "laokou_ws_message_topic";
 
-	public static final String LAOKOU_MESSAGE_CONSUMER_GROUP = "laokou_message_consumer_group";
+	public static final String LAOKOU_WS_MESSAGE_CONSUMER_GROUP = "laokou_ws_message_consumer_group";
 
 	private MqConstant() {
 	}

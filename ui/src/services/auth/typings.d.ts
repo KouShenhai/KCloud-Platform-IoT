@@ -48,7 +48,7 @@ declare namespace API {
 
 	// @ts-ignore
     type Result = {
-		/** 状态编码 */
+		/** 状态标识 */
 		code?: string;
 		/** 响应描述 */
 		msg?: string;
