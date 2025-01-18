@@ -104,6 +104,15 @@ public class MqttClient {
 	}
 
 	public void subscribe(String[] topics, int[] qos) throws MqttException {
+		if (topics == null || qos == null) {
+			throw new IllegalArgumentException("Topics and QoS arrays cannot be null");
+		}
+		if (topics.length != qos.length) {
+			throw new IllegalArgumentException("Topics and QoS arrays must have the same length");
+		}
+		if (topics.length == 0) {
+			throw new IllegalArgumentException("Topics array cannot be empty");
+		}
 		client.subscribe(topics, qos, null, new MqttActionListener() {
 			@Override
 			public void onSuccess(IMqttToken asyncActionToken) {
@@ -119,6 +128,9 @@ public class MqttClient {
 	}
 
 	public void unsubscribe(String[] topics) throws MqttException {
+		if (topics.length == 0) {
+			throw new IllegalArgumentException("Topics array cannot be empty");
+		}
 		client.unsubscribe(topics, null, new MqttActionListener() {
 			@Override
 			public void onSuccess(IMqttToken asyncActionToken) {
