@@ -46,7 +46,6 @@ declare namespace API {
 		tenant_code?: string
 	};
 
-	// @ts-ignore
     type Result = {
 		/** 状态标识 */
 		code?: string;

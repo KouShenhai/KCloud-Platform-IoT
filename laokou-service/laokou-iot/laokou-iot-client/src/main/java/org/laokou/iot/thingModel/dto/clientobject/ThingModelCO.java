@@ -45,8 +45,7 @@ public class ThingModelCO extends ClientObject {
 	@Schema(name = "模型标识", description = "模型标识")
 	private String code;
 
-	@Schema(name = "数据类型 integer string decimal boolean",
-			description = "数据类型 integer string decimal boolean")
+	@Schema(name = "数据类型 integer string decimal boolean", description = "数据类型 integer string decimal boolean")
 	private String dataType;
 
 	@Schema(name = "模型类别 1属性 2事件", description = "模型类别 1属性 2事件")

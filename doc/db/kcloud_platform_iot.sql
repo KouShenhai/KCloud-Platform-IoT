@@ -723,7 +723,7 @@ COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."del_flag" IS '删除�
 COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."name" IS '协议名称';
-COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."type" IS '协议类型 udp/tcp/websocket/mqtt_client/http/mqtt_server/coap';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."type" IS '协议类型';
 COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."host" IS '主机';
 COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."port" IS '端口';
 COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."client_id" IS '客户端ID';

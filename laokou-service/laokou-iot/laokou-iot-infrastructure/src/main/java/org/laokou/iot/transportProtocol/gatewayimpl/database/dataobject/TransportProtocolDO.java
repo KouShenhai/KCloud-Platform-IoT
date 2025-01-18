@@ -37,7 +37,7 @@ public class TransportProtocolDO extends BaseDO {
 	private String name;
 
 	/**
-	 * 协议类型 udp/tcp/websocket/mqtt_client/http/mqtt_server/coap.
+	 * 协议类型.
 	 */
 	private String type;
 
