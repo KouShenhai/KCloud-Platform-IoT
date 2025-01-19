@@ -15,15 +15,20 @@
  *
  */
 
-package org.laokou.common.mqtt.config;
+package org.laokou.common.core.event;
 
-import org.eclipse.paho.mqttv5.common.MqttMessage;
+import org.laokou.common.core.utils.SpringContextUtil;
+import org.springframework.context.ApplicationEvent;
 
 /**
+ * 事件总线.
+ *
  * @author laokou
  */
-public interface MqttLoadBalancer {
+public class EventBus {
 
-	void messageArrived(String topic, MqttMessage message);
+	public static void publish(ApplicationEvent event) {
+		SpringContextUtil.publishEvent(event);
+	}
 
 }

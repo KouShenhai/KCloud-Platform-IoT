@@ -15,20 +15,23 @@
  *
  */
 
-package org.laokou.common.mqtt.template;
+package org.laokou.common.mqtt.config;
 
-import lombok.RequiredArgsConstructor;
-import org.eclipse.paho.mqttv5.common.MqttException;
-import org.laokou.common.mqtt.config.MqttClientManager;
+import lombok.Data;
+import org.eclipse.paho.mqttv5.common.MqttMessage;
+
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class MqttTemplate {
+@Data
+public class MqttClientMessageExt implements Serializable {
 
-	public void publish(String clientId, String topic, byte[] payload, int qos) throws MqttException {
-		MqttClientManager.get(clientId).publish(topic, payload, qos);
-	}
+	private Long productId;
+
+	private Long deviceId;
+
+	private MqttMessage mqttMessage;
 
 }

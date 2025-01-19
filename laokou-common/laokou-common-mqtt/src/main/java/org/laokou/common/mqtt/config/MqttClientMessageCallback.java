@@ -33,9 +33,9 @@ import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class MqttMessageCallback implements MqttCallback {
+public class MqttClientMessageCallback implements MqttCallback {
 
-	private final MqttLoadBalancer mqttLoadBalancer;
+	private final MqttClientLoadBalancer mqttClientLoadBalancer;
 
 	private final MqttBrokerProperties mqttBrokerProperties;
 
@@ -53,7 +53,7 @@ public class MqttMessageCallback implements MqttCallback {
 
 	@Override
 	public void messageArrived(String topic, MqttMessage message) {
-		mqttLoadBalancer.messageArrived(topic, message);
+		mqttClientLoadBalancer.messageArrived(topic, message);
 	}
 
 	@Override

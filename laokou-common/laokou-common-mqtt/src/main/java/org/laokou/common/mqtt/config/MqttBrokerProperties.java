@@ -23,17 +23,15 @@ import org.laokou.common.core.utils.IdGenerator;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-
 /**
  * @author laokou
  */
 @Data
 public class MqttBrokerProperties {
 
-	private String username = EMPTY;
+	private String username = "emqx";
 
-	private String password = EMPTY;
+	private String password = "laokou123";
 
 	private String uri = "tcp://127.0.0.1:1883";
 
@@ -41,7 +39,7 @@ public class MqttBrokerProperties {
 
 	private int subscribeQos = 0;
 
-	private int sendQos = 1;
+	private int publishQos = 1;
 
 	private boolean clearStart = false;
 

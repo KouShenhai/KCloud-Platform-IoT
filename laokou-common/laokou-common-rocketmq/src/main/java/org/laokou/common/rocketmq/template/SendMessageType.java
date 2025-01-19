@@ -28,11 +28,11 @@ public enum SendMessageType {
 	// @formatter:off
 	ASYNC("async", "异步消息"),
 
-	SYNC("SYNC", "同步消息"),
+	SYNC("sync", "同步消息"),
 
-	ONE_WAY("ONE_WAY", "单向消息"),
+	ONE_WAY("one_way", "单向消息"),
 
-	TRANSACTION("TRANSACTION", "事务消息");
+	TRANSACTION("transaction", "事务消息");
 
 	private final String code;
 

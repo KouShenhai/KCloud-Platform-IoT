@@ -15,25 +15,30 @@
  *
  */
 
-package org.laokou.common.mqtt.config;
+package org.laokou.common.mqtt.handler.event;
 
-import org.laokou.common.mqtt.template.MqttTemplate;
-import org.springframework.context.annotation.Bean;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.context.ApplicationEvent;
 
 /**
  * @author laokou
  */
-public class MqttConfig {
+@Setter
+@Getter
+public class SubscribeEvent extends ApplicationEvent {
 
-	@Bean(name = "mqttManager", initMethod = "open", destroyMethod = "close")
-	public MqttManager mqttManager(SpringMqttBrokerProperties springMqttBrokerProperties,
-			MqttLoadBalancer mqttLoadBalancer) {
-		return new MqttManager(springMqttBrokerProperties, mqttLoadBalancer);
-	}
+	private String clientId;
 
-	@Bean
-	public MqttTemplate mqttTemplate(MqttManager mqttManager) {
-		return new MqttTemplate(mqttManager);
+	private int[] subscribeQos;
+
+	private String[] topics;
+
+	public SubscribeEvent(Object source, String clientId, String[] topics, int[] subscribeQos) {
+		super(source);
+		this.clientId = clientId;
+		this.subscribeQos = subscribeQos;
+		this.topics = topics;
 	}
 
 }

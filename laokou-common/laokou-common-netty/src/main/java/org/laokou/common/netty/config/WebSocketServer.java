@@ -19,10 +19,12 @@ package org.laokou.common.netty.config;
 
 import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -74,13 +76,8 @@ public final class WebSocketServer extends AbstractServer {
 	@Override
 	public void send(String clientId, Object obj) {
 		Channel channel = WebSocketSessionManager.get(clientId);
-		if (ObjectUtil.isNotNull(channel)) {
-			if (channel.isActive() && channel.isWritable()) {
-				channel.writeAndFlush(obj);
-			}
-			else {
-				log.error("推送失败，丢弃消息：{}", ((TextWebSocketFrame) obj).text());
-			}
+		if (ObjectUtil.isNotNull(channel) && channel.isActive() && channel.isWritable()) {
+			channel.writeAndFlush(obj);
 		}
 	}
 

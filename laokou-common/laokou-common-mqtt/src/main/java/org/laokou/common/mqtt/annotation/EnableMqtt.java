@@ -17,7 +17,7 @@
 
 package org.laokou.common.mqtt.annotation;
 
-import org.laokou.common.mqtt.config.MqttConfig;
+import org.laokou.common.mqtt.config.MqttClientConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -28,7 +28,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ MqttConfig.class })
+@Import({ MqttClientConfig.class })
 public @interface EnableMqtt {
 
 }

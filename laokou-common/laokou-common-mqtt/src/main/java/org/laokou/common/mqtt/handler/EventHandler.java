@@ -15,23 +15,27 @@
  *
  */
 
-package org.laokou.common.mqtt.config;
+package org.laokou.common.mqtt.handler;
 
-import lombok.Data;
-import org.eclipse.paho.mqttv5.common.MqttMessage;
-
-import java.io.Serializable;
+import org.laokou.common.mqtt.handler.event.SubscribeEvent;
+import org.laokou.common.mqtt.handler.event.UnsubscribeEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Data
-public class MqttMessageExt implements Serializable {
+@Component
+public class EventHandler {
 
-	private String productId;
+	@EventListener
+	public void onSubscribeEvent(SubscribeEvent event) {
 
-	private String deviceId;
+	}
 
-	private MqttMessage mqttMessage;
+	@EventListener
+	public void onUnsubscribeEvent(UnsubscribeEvent event) {
+
+	}
 
 }
