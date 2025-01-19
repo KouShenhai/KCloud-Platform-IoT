@@ -15,23 +15,28 @@
  *
  */
 
-package org.laokou.common.core.event;
+package org.laokou.common.core;
 
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.core.event.EventBus;
 import org.laokou.common.core.utils.SpringContextUtil;
-import org.springframework.context.ApplicationEvent;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestConstructor;
 
 /**
- * 事件总线.
- *
  * @author laokou
  */
-public final class EventBus {
+@SpringBootTest
+@RequiredArgsConstructor
+@ContextConfiguration(classes = { SpringContextUtil.class, TestEventListener.class })
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+class EventBusTest {
 
-	private EventBus() {
-	}
-
-	public static void publish(ApplicationEvent event) {
-		SpringContextUtil.publishEvent(event);
+	@Test
+	void publish() {
+		EventBus.publish(new TestEvent(this, "123"));
 	}
 
 }

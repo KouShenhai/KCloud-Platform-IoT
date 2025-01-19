@@ -35,7 +35,7 @@ public class MqttClientManager {
 
 	private static final Map<String, MqttClient> MQTT_CLIENT_MAP = new ConcurrentHashMap<>(4096);
 
-	private final ScheduledExecutorService executor = ThreadUtil.newScheduledThreadPool(32);
+	private static final ScheduledExecutorService EXECUTOR = ThreadUtil.newScheduledThreadPool(32);
 
 	public static MqttClient get(String clientId) {
 		return MQTT_CLIENT_MAP.get(clientId);
@@ -45,8 +45,9 @@ public class MqttClientManager {
 		MQTT_CLIENT_MAP.remove(clientId);
 	}
 
-	public static void add(String clientId, MqttClient client) {
-		MQTT_CLIENT_MAP.putIfAbsent(clientId, client);
+	public static void add(String clientId, MqttBrokerProperties properties,
+			MqttClientLoadBalancer mqttClientLoadBalancer) {
+		MQTT_CLIENT_MAP.putIfAbsent(clientId, new MqttClient(properties, mqttClientLoadBalancer, EXECUTOR));
 	}
 
 	public static void open(String clientId) {
@@ -73,10 +74,19 @@ public class MqttClientManager {
 		get(clientId).publishUnsubscribeEvent(topics);
 	}
 
+	public static void publishOpenEvent(String clientId) {
+		get(clientId).publishOpenEvent(clientId);
+	}
+
+	public static void publishCloseEvent(String clientId) {
+		get(clientId).publishCloseEvent(clientId);
+	}
+
 	@PreDestroy
 	public void shutdown() {
-		ThreadUtil.shutdown(executor, 60);
+		ThreadUtil.shutdown(EXECUTOR, 60);
 		MQTT_CLIENT_MAP.values().forEach(MqttClient::close);
+		MQTT_CLIENT_MAP.clear();
 	}
 
 }
