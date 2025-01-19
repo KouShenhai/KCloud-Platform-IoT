@@ -15,23 +15,24 @@
  *
  */
 
-package org.laokou.common.core.event;
+package org.laokou.common.core;
 
-import org.laokou.common.core.utils.SpringContextUtil;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * 事件总线.
- *
  * @author laokou
  */
-public final class EventBus {
+@Getter
+@Setter
+class TestEvent extends ApplicationEvent {
 
-	private EventBus() {
-	}
+	private String name;
 
-	public static void publish(ApplicationEvent event) {
-		SpringContextUtil.publishEvent(event);
+	public TestEvent(Object source, String name) {
+		super(source);
+		this.name = name;
 	}
 
 }

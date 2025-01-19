@@ -33,9 +33,13 @@ import java.util.Objects;
  *
  * @author laokou
  */
-public class NoticeLogConvertor implements ExcelUtil.ExcelConvert<NoticeLogDO, NoticeLogExcel> {
+public final class NoticeLogConvertor implements ExcelUtil.ExcelConvert<NoticeLogDO, NoticeLogExcel> {
 
 	public static final NoticeLogConvertor INSTANCE = new NoticeLogConvertor();
+
+	private NoticeLogConvertor() {
+
+	}
 
 	public static NoticeLogDO toDataObject(NoticeLogE noticeLogE, boolean isInsert) {
 		NoticeLogDO noticeLogDO = new NoticeLogDO();

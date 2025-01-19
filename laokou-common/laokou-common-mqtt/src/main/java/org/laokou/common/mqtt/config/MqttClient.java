@@ -30,6 +30,8 @@ import org.laokou.common.core.event.EventBus;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.mqtt.handler.event.CloseEvent;
+import org.laokou.common.mqtt.handler.event.OpenEvent;
 import org.laokou.common.mqtt.handler.event.SubscribeEvent;
 import org.laokou.common.mqtt.handler.event.UnsubscribeEvent;
 
@@ -74,23 +76,25 @@ public class MqttClient {
 
 	public void open() {
 		try {
-			client = new MqttAsyncClient(mqttBrokerProperties.getUri(), mqttBrokerProperties.getClientId(),
-					new MqttDefaultFilePersistence(), null, executor);
-			client.setManualAcks(mqttBrokerProperties.isManualAcks());
-			client.setCallback(new MqttClientMessageCallback(mqttClientLoadBalancer, mqttBrokerProperties, client));
-			client.connect(options(), null, new MqttActionListener() {
-				@Override
-				public void onSuccess(IMqttToken asyncActionToken) {
-					log.info("MQTT连接成功");
-					// 发布订阅事件
-					publishSubscribeEvent(mqttBrokerProperties.getTopics(), mqttBrokerProperties.getSubscribeQos());
-				}
+			if (ObjectUtil.isNull(client)) {
+				client = new MqttAsyncClient(mqttBrokerProperties.getUri(), mqttBrokerProperties.getClientId(),
+						new MqttDefaultFilePersistence(), null, executor);
+				client.setManualAcks(mqttBrokerProperties.isManualAcks());
+				client.setCallback(new MqttClientMessageCallback(mqttClientLoadBalancer, mqttBrokerProperties, client));
+				client.connect(options(), null, new MqttActionListener() {
+					@Override
+					public void onSuccess(IMqttToken asyncActionToken) {
+						log.info("MQTT连接成功");
+						// 发布订阅事件
+						publishSubscribeEvent(mqttBrokerProperties.getTopics(), mqttBrokerProperties.getSubscribeQos());
+					}
 
-				@Override
-				public void onFailure(IMqttToken asyncActionToken, Throwable e) {
-					log.error("MQTT连接失败，错误信息：{}", e.getMessage(), e);
-				}
-			});
+					@Override
+					public void onFailure(IMqttToken asyncActionToken, Throwable e) {
+						log.error("MQTT连接失败，错误信息：{}", e.getMessage(), e);
+					}
+				});
+			}
 		}
 		catch (Exception e) {
 			log.error("MQTT连接失败，错误信息：{}", e.getMessage(), e);
@@ -123,40 +127,46 @@ public class MqttClient {
 		if (topics.length == 0) {
 			throw new IllegalArgumentException("Topics array cannot be empty");
 		}
-		client.subscribe(topics, qos, null, new MqttActionListener() {
-			@Override
-			public void onSuccess(IMqttToken asyncActionToken) {
-				log.info("MQTT订阅成功，主题: {}", String.join(",", topics));
-			}
+		if (ObjectUtil.isNotNull(client)) {
+			client.subscribe(topics, qos, null, new MqttActionListener() {
+				@Override
+				public void onSuccess(IMqttToken asyncActionToken) {
+					log.info("MQTT订阅成功，主题: {}", String.join(",", topics));
+				}
 
-			@Override
-			public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-				log.error("MQTT订阅失败，主题：{}，错误信息：{}", String.join(",", topics), exception.getMessage(), exception);
-			}
+				@Override
+				public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+					log.error("MQTT订阅失败，主题：{}，错误信息：{}", String.join(",", topics), exception.getMessage(), exception);
+				}
 
-		});
+			});
+		}
 	}
 
 	public void unsubscribe(String[] topics) throws MqttException {
 		if (topics.length == 0) {
 			throw new IllegalArgumentException("Topics array cannot be empty");
 		}
-		client.unsubscribe(topics, null, new MqttActionListener() {
-			@Override
-			public void onSuccess(IMqttToken asyncActionToken) {
-				log.info("MQTT取消订阅成功，主题：{}", String.join(",", topics));
-			}
+		if (ObjectUtil.isNotNull(client)) {
+			client.unsubscribe(topics, null, new MqttActionListener() {
+				@Override
+				public void onSuccess(IMqttToken asyncActionToken) {
+					log.info("MQTT取消订阅成功，主题：{}", String.join(",", topics));
+				}
 
-			@Override
-			public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-				log.error("MQTT取消订阅失败，主题：{}，错误信息：{}", String.join(",", topics), exception.getMessage(), exception);
-			}
+				@Override
+				public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+					log.error("MQTT取消订阅失败，主题：{}，错误信息：{}", String.join(",", topics), exception.getMessage(), exception);
+				}
 
-		}, new MqttProperties());
+			}, new MqttProperties());
+		}
 	}
 
 	public void publish(String topic, byte[] payload, int qos) throws MqttException {
-		client.publish(topic, payload, qos, false);
+		if (ObjectUtil.isNotNull(client)) {
+			client.publish(topic, payload, qos, false);
+		}
 	}
 
 	public void publish(String topic, byte[] payload) throws MqttException {
@@ -193,6 +203,14 @@ public class MqttClient {
 			EventBus
 				.publish(new UnsubscribeEvent(this, mqttBrokerProperties.getClientId(), topics.toArray(String[]::new)));
 		}
+	}
+
+	public void publishOpenEvent(String clientId) {
+		EventBus.publish(new OpenEvent(this, clientId));
+	}
+
+	public void publishCloseEvent(String clientId) {
+		EventBus.publish(new CloseEvent(this, clientId));
 	}
 
 }

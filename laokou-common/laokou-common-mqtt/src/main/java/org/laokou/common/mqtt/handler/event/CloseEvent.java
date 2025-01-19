@@ -15,23 +15,24 @@
  *
  */
 
-package org.laokou.common.core.event;
+package org.laokou.common.mqtt.handler.event;
 
-import org.laokou.common.core.utils.SpringContextUtil;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * 事件总线.
- *
  * @author laokou
  */
-public final class EventBus {
+@Getter
+@Setter
+public class CloseEvent extends ApplicationEvent {
 
-	private EventBus() {
-	}
+	private String clientId;
 
-	public static void publish(ApplicationEvent event) {
-		SpringContextUtil.publishEvent(event);
+	public CloseEvent(Object source, String clientId) {
+		super(source);
+		this.clientId = clientId;
 	}
 
 }

@@ -17,6 +17,10 @@
 
 package org.laokou.common.mqtt.handler;
 
+import org.eclipse.paho.mqttv5.common.MqttException;
+import org.laokou.common.mqtt.config.MqttClientManager;
+import org.laokou.common.mqtt.handler.event.CloseEvent;
+import org.laokou.common.mqtt.handler.event.OpenEvent;
 import org.laokou.common.mqtt.handler.event.SubscribeEvent;
 import org.laokou.common.mqtt.handler.event.UnsubscribeEvent;
 import org.springframework.context.event.EventListener;
@@ -29,13 +33,23 @@ import org.springframework.stereotype.Component;
 public class EventHandler {
 
 	@EventListener
-	public void onSubscribeEvent(SubscribeEvent event) {
-
+	public void onSubscribeEvent(SubscribeEvent event) throws MqttException {
+		MqttClientManager.subscribe(event.getClientId(), event.getTopics(), event.getSubscribeQos());
 	}
 
 	@EventListener
-	public void onUnsubscribeEvent(UnsubscribeEvent event) {
+	public void onUnsubscribeEvent(UnsubscribeEvent event) throws MqttException {
+		MqttClientManager.unsubscribe(event.getClientId(), event.getTopics());
+	}
 
+	@EventListener
+	public void onOpenEvent(OpenEvent event) {
+		MqttClientManager.open(event.getClientId());
+	}
+
+	@EventListener
+	public void onCloseEvent(CloseEvent event) {
+		MqttClientManager.close(event.getClientId());
 	}
 
 }

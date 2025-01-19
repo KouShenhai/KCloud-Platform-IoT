@@ -15,23 +15,23 @@
  *
  */
 
-package org.laokou.common.core.event;
+package org.laokou.common.core;
 
-import org.laokou.common.core.utils.SpringContextUtil;
-import org.springframework.context.ApplicationEvent;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.utils.JacksonUtil;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 
 /**
- * 事件总线.
- *
  * @author laokou
  */
-public final class EventBus {
+@Slf4j
+@Component
+class TestEventListener {
 
-	private EventBus() {
-	}
-
-	public static void publish(ApplicationEvent event) {
-		SpringContextUtil.publishEvent(event);
+	@EventListener
+	public void onEvent(TestEvent event) {
+		log.info("接收事件：{}", JacksonUtil.toJsonStr(event));
 	}
 
 }
