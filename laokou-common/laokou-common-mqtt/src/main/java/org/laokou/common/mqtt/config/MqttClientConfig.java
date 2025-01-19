@@ -17,31 +17,17 @@
 
 package org.laokou.common.mqtt.config;
 
-import lombok.Data;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-
-import java.util.Map;
+import org.laokou.common.mqtt.template.MqttTemplate;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @author laokou
  */
-@Data
-@Component
-@ConfigurationProperties(prefix = "spring.mqtt-broker")
-public class SpringMqttBrokerProperties implements InitializingBean {
+public class MqttClientConfig {
 
-	private Map<String, MqttBrokerProperties> configs = Map.of("default", new MqttBrokerProperties());
-
-	@Override
-	public void afterPropertiesSet() {
-		configs.forEach((k, v) -> {
-			if (CollectionUtil.isEmpty(v.getTopics())) {
-				throw new IllegalStateException("Topics must not be empty.");
-			}
-		});
+	@Bean
+	public MqttTemplate mqttTemplate() {
+		return new MqttTemplate();
 	}
 
 }

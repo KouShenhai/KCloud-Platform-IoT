@@ -15,24 +15,17 @@
  *
  */
 
-package org.laokou.common.i18n.annotation;
-
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-import java.lang.annotation.*;
+package org.laokou.common.mqtt.config;
 
 /**
- * Entity, Entity Object is prototype and is not thread-safe.
- *
- * @author Frank Zhang 2019-01-03 2:53 PM
+ * @author laokou
  */
-@Component
-@Inherited
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
-@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public @interface Entity {
+public interface MqttClientListener {
+
+	/**
+	 * 消息订阅.
+	 * @param messageExt 消息
+	 */
+	void onMessage(MqttClientMessageExt messageExt);
 
 }

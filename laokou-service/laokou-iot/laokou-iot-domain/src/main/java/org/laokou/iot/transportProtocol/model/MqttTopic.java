@@ -15,20 +15,22 @@
  *
  */
 
-package org.laokou.common.mqtt.template;
+package org.laokou.iot.transportProtocol.model;
 
-import lombok.RequiredArgsConstructor;
-import org.eclipse.paho.mqttv5.common.MqttException;
-import org.laokou.common.mqtt.config.MqttClientManager;
+import lombok.Getter;
 
-/**
- * @author laokou
- */
-@RequiredArgsConstructor
-public class MqttTemplate {
+@Getter
+public enum MqttTopic {
 
-	public void publish(String clientId, String topic, byte[] payload, int qos) throws MqttException {
-		MqttClientManager.get(clientId).publish(topic, payload, qos);
+	PROPERTIES_REPORT("/properties/report", "属性上报");
+
+	private final String code;
+
+	private final String desc;
+
+	MqttTopic(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }

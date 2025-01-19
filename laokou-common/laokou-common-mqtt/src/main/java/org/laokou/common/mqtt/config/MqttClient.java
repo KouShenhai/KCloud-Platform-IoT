@@ -26,9 +26,15 @@ import org.eclipse.paho.mqttv5.client.persist.MqttDefaultFilePersistence;
 import org.eclipse.paho.mqttv5.common.MqttException;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
+import org.laokou.common.core.event.EventBus;
+import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.mqtt.handler.event.SubscribeEvent;
+import org.laokou.common.mqtt.handler.event.UnsubscribeEvent;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -53,16 +59,16 @@ public class MqttClient {
 
 	private final MqttBrokerProperties mqttBrokerProperties;
 
-	private final MqttLoadBalancer mqttLoadBalancer;
+	private final MqttClientLoadBalancer mqttClientLoadBalancer;
 
 	private final ScheduledExecutorService executor;
 
 	private volatile MqttAsyncClient client;
 
-	public MqttClient(MqttBrokerProperties mqttBrokerProperties, MqttLoadBalancer mqttLoadBalancer,
+	public MqttClient(MqttBrokerProperties mqttBrokerProperties, MqttClientLoadBalancer mqttClientLoadBalancer,
 			ScheduledExecutorService executor) {
 		this.mqttBrokerProperties = mqttBrokerProperties;
-		this.mqttLoadBalancer = mqttLoadBalancer;
+		this.mqttClientLoadBalancer = mqttClientLoadBalancer;
 		this.executor = executor;
 	}
 
@@ -71,11 +77,13 @@ public class MqttClient {
 			client = new MqttAsyncClient(mqttBrokerProperties.getUri(), mqttBrokerProperties.getClientId(),
 					new MqttDefaultFilePersistence(), null, executor);
 			client.setManualAcks(mqttBrokerProperties.isManualAcks());
-			client.setCallback(new MqttMessageCallback(mqttLoadBalancer, mqttBrokerProperties, client));
+			client.setCallback(new MqttClientMessageCallback(mqttClientLoadBalancer, mqttBrokerProperties, client));
 			client.connect(options(), null, new MqttActionListener() {
 				@Override
 				public void onSuccess(IMqttToken asyncActionToken) {
 					log.info("MQTT连接成功");
+					// 发布订阅事件
+					publishSubscribeEvent(mqttBrokerProperties.getTopics(), mqttBrokerProperties.getSubscribeQos());
 				}
 
 				@Override
@@ -86,6 +94,7 @@ public class MqttClient {
 		}
 		catch (Exception e) {
 			log.error("MQTT连接失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_Mqtt_ConnectError", e.getMessage(), e);
 		}
 	}
 
@@ -95,15 +104,25 @@ public class MqttClient {
 			try {
 				client.disconnectForcibly(30);
 				client.close();
-				log.info("关闭MQTT连接");
+				log.info("关闭MQTT连接成功");
 			}
 			catch (MqttException e) {
 				log.error("关闭MQTT连接失败，错误信息：{}", e.getMessage(), e);
+				throw new SystemException("S_Mqtt_CloseError", e.getMessage(), e);
 			}
 		}
 	}
 
 	public void subscribe(String[] topics, int[] qos) throws MqttException {
+		if (topics == null || qos == null) {
+			throw new IllegalArgumentException("Topics and QoS arrays cannot be null");
+		}
+		if (topics.length != qos.length) {
+			throw new IllegalArgumentException("Topics and QoS arrays must have the same length");
+		}
+		if (topics.length == 0) {
+			throw new IllegalArgumentException("Topics array cannot be empty");
+		}
 		client.subscribe(topics, qos, null, new MqttActionListener() {
 			@Override
 			public void onSuccess(IMqttToken asyncActionToken) {
@@ -119,6 +138,9 @@ public class MqttClient {
 	}
 
 	public void unsubscribe(String[] topics) throws MqttException {
+		if (topics.length == 0) {
+			throw new IllegalArgumentException("Topics array cannot be empty");
+		}
 		client.unsubscribe(topics, null, new MqttActionListener() {
 			@Override
 			public void onSuccess(IMqttToken asyncActionToken) {
@@ -133,12 +155,12 @@ public class MqttClient {
 		}, new MqttProperties());
 	}
 
-	public void send(String topic, String payload, int qos) throws MqttException {
-		client.publish(topic, payload.getBytes(StandardCharsets.UTF_8), qos, false);
+	public void publish(String topic, byte[] payload, int qos) throws MqttException {
+		client.publish(topic, payload, qos, false);
 	}
 
-	public void send(String topic, String payload) throws MqttException {
-		send(topic, payload, mqttBrokerProperties.getSendQos());
+	public void publish(String topic, byte[] payload) throws MqttException {
+		publish(topic, payload, mqttBrokerProperties.getPublishQos());
 	}
 
 	private MqttConnectionOptions options() {
@@ -149,7 +171,7 @@ public class MqttClient {
 		options.setReceiveMaximum(mqttBrokerProperties.getReceiveMaximum());
 		options.setMaximumPacketSize(mqttBrokerProperties.getMaximumPacketSize());
 		options.setWill(WILL_TOPIC,
-				new MqttMessage(WILL_DATA, mqttBrokerProperties.getSendQos(), false, new MqttProperties()));
+				new MqttMessage(WILL_DATA, mqttBrokerProperties.getPublishQos(), false, new MqttProperties()));
 		// 超时时间
 		options.setConnectionTimeout(mqttBrokerProperties.getConnectionTimeout());
 		// 会话心跳
@@ -157,6 +179,20 @@ public class MqttClient {
 		// 开启重连
 		options.setAutomaticReconnect(mqttBrokerProperties.isAutomaticReconnect());
 		return options;
+	}
+
+	public void publishSubscribeEvent(Set<String> topics, int qos) {
+		if (CollectionUtil.isNotEmpty(topics)) {
+			EventBus.publish(new SubscribeEvent(this, mqttBrokerProperties.getClientId(), topics.toArray(String[]::new),
+					topics.stream().mapToInt(item -> qos).toArray()));
+		}
+	}
+
+	public void publishUnsubscribeEvent(Set<String> topics) {
+		if (CollectionUtil.isNotEmpty(topics)) {
+			EventBus
+				.publish(new UnsubscribeEvent(this, mqttBrokerProperties.getClientId(), topics.toArray(String[]::new)));
+		}
 	}
 
 }

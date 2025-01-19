@@ -15,17 +15,27 @@
  *
  */
 
-package org.laokou.common.mqtt.config;
+package org.laokou.common.mqtt.handler.event;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.context.ApplicationEvent;
 
 /**
  * @author laokou
  */
-public interface MqttListener {
+@Getter
+@Setter
+public class UnsubscribeEvent extends ApplicationEvent {
 
-	/**
-	 * 消息订阅.
-	 * @param messageExt 消息
-	 */
-	void onMessage(MqttMessageExt messageExt);
+	private String clientId;
+
+	private String[] topics;
+
+	public UnsubscribeEvent(Object source, String clientId, String[] topics) {
+		super(source);
+		this.clientId = clientId;
+		this.topics = topics;
+	}
 
 }

@@ -15,20 +15,15 @@
  *
  */
 
-package org.laokou.common.mqtt.template;
+package org.laokou.common.mqtt.config;
 
-import lombok.RequiredArgsConstructor;
-import org.eclipse.paho.mqttv5.common.MqttException;
-import org.laokou.common.mqtt.config.MqttClientManager;
+import org.eclipse.paho.mqttv5.common.MqttMessage;
 
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class MqttTemplate {
+public interface MqttClientLoadBalancer {
 
-	public void publish(String clientId, String topic, byte[] payload, int qos) throws MqttException {
-		MqttClientManager.get(clientId).publish(topic, payload, qos);
-	}
+	void messageArrived(String topic, MqttMessage message);
 
 }
