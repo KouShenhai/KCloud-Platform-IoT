@@ -21,13 +21,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
-import static org.laokou.auth.common.constant.Constant.TABLE_NOTICE_LOG;
+import static org.laokou.common.tenant.constant.Constant.Domain.NOTICE_LOG_TABLE;
 
 /**
  * @author laokou
  */
 @Data
-@TableName(TABLE_NOTICE_LOG)
+@TableName(NOTICE_LOG_TABLE)
 public class NoticeLogDO extends BaseDO {
 
 	private String code;

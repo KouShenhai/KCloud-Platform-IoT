@@ -30,8 +30,8 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.laokou.auth.common.constant.Constant.TABLE_MENU;
 import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.DATA_TABLE_NOT_EXIST;
+import static org.laokou.common.tenant.constant.Constant.Master.MENU_TABLE;
 
 /**
  * 菜单.
@@ -59,9 +59,9 @@ public class MenuGatewayImpl implements MenuGateway {
 			return new HashSet<>(menuMapper.selectPermissionsByUserId(user.getId()));
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 {} 不存在，错误信息：{}", TABLE_MENU, e.getMessage());
+			log.error("表 {} 不存在，错误信息：{}", MENU_TABLE, e.getMessage());
 			throw new SystemException(DATA_TABLE_NOT_EXIST,
-					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { TABLE_MENU }));
+					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { MENU_TABLE }));
 		}
 		catch (Exception e) {
 			log.error("查询菜单失败，错误信息：{}", e.getMessage());

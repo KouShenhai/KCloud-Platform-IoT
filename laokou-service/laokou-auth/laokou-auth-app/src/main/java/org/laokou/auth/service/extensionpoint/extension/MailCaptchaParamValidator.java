@@ -22,8 +22,8 @@ import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
 import org.laokou.common.i18n.utils.ParamValidator;
 import org.laokou.common.extension.Extension;
 
-import static org.laokou.auth.common.constant.MqConstant.MAIL_TAG;
 import static org.laokou.auth.dto.clientobject.CaptchaCO.USE_CASE_CAPTCHA;
+import static org.laokou.auth.model.Constant.MAIL_TAG;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**

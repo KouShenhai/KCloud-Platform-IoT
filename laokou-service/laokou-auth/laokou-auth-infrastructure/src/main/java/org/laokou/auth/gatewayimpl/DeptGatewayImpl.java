@@ -29,8 +29,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.auth.common.constant.Constant.TABLE_DEPT;
 import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.DATA_TABLE_NOT_EXIST;
+import static org.laokou.common.tenant.constant.Constant.Master.DEPT_TABLE;
 
 /**
  * 部门.
@@ -58,9 +58,9 @@ public class DeptGatewayImpl implements DeptGateway {
 			return deptMapper.selectDeptPathsByUserId(user.getId());
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 {} 不存在，错误信息：{}", TABLE_DEPT, e.getMessage());
+			log.error("表 {} 不存在，错误信息：{}", DEPT_TABLE, e.getMessage());
 			throw new SystemException(DATA_TABLE_NOT_EXIST,
-					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { TABLE_DEPT }));
+					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { DEPT_TABLE }));
 		}
 		catch (Exception e) {
 			log.error("查询部门失败，错误信息：{}", e.getMessage());

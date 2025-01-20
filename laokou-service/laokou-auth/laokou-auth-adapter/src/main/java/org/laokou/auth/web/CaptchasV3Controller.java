@@ -29,8 +29,8 @@ import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.*;
 
-import static org.laokou.auth.common.constant.MqConstant.MAIL_TAG;
-import static org.laokou.auth.common.constant.MqConstant.MOBILE_TAG;
+import static org.laokou.auth.model.Constant.MAIL_TAG;
+import static org.laokou.auth.model.Constant.MOBILE_TAG;
 import static org.laokou.common.ratelimiter.aop.Type.IP;
 
 /**

@@ -35,10 +35,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 
-import static org.laokou.auth.common.constant.MqConstant.MAIL_TAG;
-import static org.laokou.auth.common.constant.MqConstant.MOBILE_TAG;
 import static org.laokou.auth.dto.clientobject.CaptchaCO.USE_CASE_CAPTCHA;
 import static org.laokou.auth.model.AuthA.USE_CASE_AUTH;
+import static org.laokou.auth.model.Constant.MAIL_TAG;
+import static org.laokou.auth.model.Constant.MOBILE_TAG;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**

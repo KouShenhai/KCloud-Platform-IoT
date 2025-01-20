@@ -23,7 +23,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 import java.io.Serial;
 
-import static org.laokou.auth.common.constant.Constant.TABLE_LOGIN_LOG;
+import static org.laokou.common.tenant.constant.Constant.Domain.LOGIN_LOG_TABLE;
 
 /**
  * 登录日志.
@@ -31,7 +31,7 @@ import static org.laokou.auth.common.constant.Constant.TABLE_LOGIN_LOG;
  * @author laokou
  */
 @Data
-@TableName(TABLE_LOGIN_LOG)
+@TableName(LOGIN_LOG_TABLE)
 public class LoginLogDO extends BaseDO {
 
 	@Serial
