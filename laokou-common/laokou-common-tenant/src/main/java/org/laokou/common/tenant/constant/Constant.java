@@ -30,6 +30,52 @@ public final class Constant {
 
 	public static final String GENERATOR = "generator";
 
+	public static final class IoT {
+
+		private IoT() {
+		}
+
+	}
+
+	public static final class Master {
+
+		private Master() {
+		}
+
+		/**
+		 * 菜单表.
+		 */
+		public static final String MENU_TABLE = "boot_sys_menu";
+
+		/**
+		 * 用户表.
+		 */
+		public static final String USER_TABLE = "boot_sys_user";
+
+		/**
+		 * 部门表.
+		 */
+		public static final String DEPT_TABLE = "boot_sys_dept";
+
+	}
+
+	public static final class Domain {
+
+		private Domain() {
+		}
+
+		/**
+		 * 通知日志表.
+		 */
+		public static final String NOTICE_LOG_TABLE = "boot_sys_notice_log";
+
+		/**
+		 * 登录日志表.
+		 */
+		public static final String LOGIN_LOG_TABLE = "boot_sys_login_log";
+
+	}
+
 	private Constant() {
 	}
 

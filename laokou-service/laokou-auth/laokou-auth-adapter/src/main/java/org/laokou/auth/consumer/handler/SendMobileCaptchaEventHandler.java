@@ -32,9 +32,7 @@ import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.auth.common.constant.MqConstant.LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP;
-import static org.laokou.auth.common.constant.MqConstant.MOBILE_TAG;
-import static org.laokou.auth.model.Constant.LAOKOU_CAPTCHA_TOPIC;
+import static org.laokou.auth.model.Constant.*;
 
 /**
  * @author laokou

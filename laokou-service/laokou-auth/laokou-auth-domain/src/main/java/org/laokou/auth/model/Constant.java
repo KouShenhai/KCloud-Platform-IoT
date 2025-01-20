@@ -24,8 +24,18 @@ public final class Constant {
 
 	public static final String LOGIN_TAG = "loginLog";
 
+	public static final String MAIL_TAG = "mailCaptcha";
+
+	public static final String MOBILE_TAG = "mobileCaptcha";
+
 	public static final String LAOKOU_LOG_TOPIC = "laokou_log_topic";
 
 	public static final String LAOKOU_CAPTCHA_TOPIC = "laokou_captcha_topic";
+
+	public static final String LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP = "laokou_mail_captcha_consumer_group";
+
+	public static final String LAOKOU_MOBILE_CAPTCHA_CONSUMER_GROUP = "laokou_mobile_captcha_consumer_group";
+
+	public static final String LAOKOU_LOGIN_LOG_CONSUMER_GROUP = "laokou_login_log_consumer_group";
 
 }

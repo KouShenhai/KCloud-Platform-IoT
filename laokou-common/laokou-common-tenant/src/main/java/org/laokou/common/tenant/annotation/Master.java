@@ -17,11 +17,15 @@
 
 package org.laokou.common.tenant.annotation;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
+import org.laokou.common.tenant.constant.Constant;
+
 import java.lang.annotation.*;
 
 @Documented
+@DS(Constant.MASTER)
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Admin {
+public @interface Master {
 
 }
