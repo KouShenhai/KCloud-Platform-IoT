@@ -18,6 +18,7 @@
 package org.laokou.tool;
 
 import org.laokou.common.core.utils.FileUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
 import java.io.BufferedReader;
@@ -37,13 +38,29 @@ public class Test {
 				String s3 = s[3];
 				String s4 = s[4];
 				System.out.println("// " + s3);
-				System.out.println(StringUtil.convertUnder(UNDER.concat(s1)) + "");
+				System.out.println(s1.substring(0,1).toUpperCase() + s1.substring(1) + " " + getStr(s4) + " `json:\""+s1+"\"`");
 				System.out.println();
 			}
 		}
+	}
 
-
-
+	private static String getStr(String str) {
+		if (ObjectUtil.equals("varchar", str) || ObjectUtil.equals(str, "String") || ObjectUtil.equals("mediumtext", str)) {
+			return "string";
+		}
+		if (ObjectUtil.equals("datetime", str) || ObjectUtil.equals("date", str)) {
+			return "time.Time";
+		}
+		if (ObjectUtil.equals("Bigint", str)) {
+			return "int64";
+		}
+		if (ObjectUtil.equals("decimal", str)) {
+			return "float64";
+		}
+		if (ObjectUtil.equals("int", str)) {
+			return "int";
+		}
+		return "";
 	}
 
 }
