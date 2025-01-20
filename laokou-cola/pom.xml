@@ -6,16 +6,16 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-IoT</artifactId>
-    <version>3.4.1</version>
+    <version>3.4.2</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>laokou-cola</artifactId>
-  <version>3.4.1</version>
+  <version>3.4.2</version>
   <packaging>pom</packaging>
 
   <properties>
-    <version>3.4.1</version>
+    <version>3.4.2</version>
   </properties>
 
   <modules>

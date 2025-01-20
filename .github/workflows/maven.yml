@@ -43,54 +43,54 @@ jobs:
           # ========== 构建laokou-gateway ==========
           cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-cloud/laokou-gateway
           # 使用Dockerfile构建镜像
-          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.4.1
+          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.4.2
           # 推送镜像到镜像仓库
-          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.4.1
+          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.4.2
           # ========== 构建laokou-monitor ==========
           cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-cloud/laokou-monitor
           # 使用Dockerfile构建镜像
-          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.4.1
+          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.4.2
           # 推送镜像到镜像仓库
-          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.4.1
+          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.4.2
           # ========== 构建laokou-nacos ==========
           cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-cloud/laokou-nacos
           # 使用Dockerfile构建镜像
-          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-nacos:3.4.1
+          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-nacos:3.4.2
           # 推送镜像到镜像仓库
-          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-nacos:3.4.1
+          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-nacos:3.4.2
           # ========== 构建laokou-sentinel ==========
           cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-cloud/laokou-sentinel
           # 使用Dockerfile构建镜像
-          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sentinel:3.4.1
+          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sentinel:3.4.2
           # 推送镜像到镜像仓库
-          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sentinel:3.4.1
+          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sentinel:3.4.2
           # ========== 构建laokou-snail-job ==========
           cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-cloud/laokou-snail-job
           # 使用Dockerfile构建镜像
-          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-snail-job:3.4.1
+          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-snail-job:3.4.2
           # 推送镜像到镜像仓库
-          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-snail-job:3.4.1
+          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-snail-job:3.4.2
           # ========== 构建laokou-auth ==========
           cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-service/laokou-auth/laokou-auth-start
           # 使用Dockerfile构建镜像
-          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.4.1
+          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.4.2
           # 推送镜像到镜像仓库
-          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.4.1
+          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.4.2
           # ========== 构建laokou-admin ==========
           cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-service/laokou-admin/laokou-admin-start
           # 使用Dockerfile构建镜像
-          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.4.1
+          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.4.2
           # 推送镜像到镜像仓库
-          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.4.1
+          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.4.2
           # ========== 构建laokou-logstash ==========
           cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-service/laokou-logstash/laokou-logstash-start
           # 使用Dockerfile构建镜像
-          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.1
+          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.2
           # 推送镜像到镜像仓库
-          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.1
+          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.2
           # ========== 构建laokou-iot ==========
           cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-service/laokou-iot/laokou-iot-start
           # 使用Dockerfile构建镜像
-          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-iot-start:3.4.1
+          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-iot-start:3.4.2
           # 推送镜像到镜像仓库
-          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-iot-start:3.4.1
+          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-iot-start:3.4.2
