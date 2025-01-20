@@ -102,6 +102,7 @@ public final class FileUtil {
 				chunkWrite(file, inChannel, start, end, size);
 			}
 			catch (IOException e) {
+				log.error("错误信息：{}", e.getMessage());
 				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 			}
 		}
@@ -250,6 +251,7 @@ public final class FileUtil {
 			}
 		}
 		catch (IOException e) {
+			log.error("错误信息：{}", e.getMessage());
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 	}
@@ -265,6 +267,7 @@ public final class FileUtil {
 			inChannel.transferTo(start, Math.min(end, size), outChannel);
 		}
 		catch (IOException e) {
+			log.error("错误信息：{}", e.getMessage());
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 	}
