@@ -15,7 +15,7 @@
 #  */
 services:
   seata:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sample-seata-server:3.4.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sample-seata-server:3.4.2
     container_name: seata
     tty: true
     env_file:
