@@ -22,7 +22,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public final class TraceLog implements Serializable {
+final class TraceLog implements Serializable {
 
 	private String id;
 

@@ -31,8 +31,8 @@ import org.laokou.generator.model.TableV;
 import org.laokou.generator.model.Template;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -93,8 +93,8 @@ public class GeneratorDomainService {
 				String content = getContent(generatorA.toMap(), item.getTemplatePath(TEMPLATE_PATH));
 				// 写入文件
 				String directory = SOURCE_PATH + generatorA.getModuleName() + SLASH + item.getFileDirectory(generatorA);
-				File file = FileUtil.create(directory, item.getFileName(generatorA));
-				FileUtil.write(file, content.getBytes(StandardCharsets.UTF_8));
+				Path path = FileUtil.create(directory, item.getFileName(generatorA));
+				FileUtil.write(path, content.getBytes(StandardCharsets.UTF_8));
 				return true;
 			}).toList();
 			executor.invokeAll(list);

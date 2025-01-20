@@ -26,9 +26,9 @@ import org.junit.jupiter.api.Test;
 import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.i18n.utils.SslUtil;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -100,21 +100,21 @@ class CrawlerTest {
 		return element.html();
 	}
 
-	private void setImg(String directory, int index, Element element) {
+	private void setImg(String directory, int index, Element element) throws IOException {
 		Elements imgElement = element.select("img[src]");
 		int offset = 0;
 		for (Element e : imgElement) {
 			String src = e.attr("abs:src");
-			File file = FileUtil.create(getImgDirectory(directory, index), offset + ".png");
-			FileUtil.write(file, FileUtil.getBytes(src));
+			Path path = FileUtil.create(getImgDirectory(directory, index), offset + ".png");
+			FileUtil.write(path, FileUtil.getBytes(src));
 			e.attr("style", "width: 100%;");
-			e.attr("src", getImgPath(file, index));
+			e.attr("src", getImgPath(path, index));
 			offset++;
 		}
 	}
 
-	private String getImgPath(File file, int index) {
-		return index + "/" + file.getName();
+	private String getImgPath(Path path, int index) {
+		return index + "/" + path.getFileName();
 	}
 
 	private String getHeadContent() {

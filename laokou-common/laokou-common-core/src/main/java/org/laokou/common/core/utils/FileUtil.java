@@ -17,7 +17,6 @@
 
 package org.laokou.common.core.utils;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
 
@@ -51,55 +50,50 @@ public final class FileUtil {
 	private FileUtil() {
 	}
 
+	public static BufferedReader newBufferedReader(String path) throws IOException {
+		return Files.newBufferedReader(Path.of(path));
+	}
+
 	/**
 	 * 创建目录及文件.
 	 * @param directory 目录
 	 * @param fileName 文件名
 	 * @return 创建后的文件对象
 	 */
-	@SneakyThrows
-	public static File create(String directory, String fileName) {
-		File directoryFile = new File(directory);
-		if (!directoryFile.exists()) {
-			log.info("目录创建：{}", directoryFile.mkdirs());
+	public static Path create(String directory, String fileName) throws IOException {
+		Path directoryPath = Path.of(directory);
+		Path filePath = Path.of(directory, fileName);
+		if (!isExist(directoryPath)) {
+			Files.createDirectories(directoryPath);
 		}
-		File newFile = new File(directoryFile, fileName);
-		if (!newFile.exists()) {
-			log.info("文件创建：{}", newFile.createNewFile());
+		if (!isExist(filePath)) {
+			Files.createFile(filePath);
 		}
-		return newFile;
+		return filePath;
 	}
 
-	@SneakyThrows
-	public static byte[] getBytes(String url) {
+	public static byte[] getBytes(String url) throws IOException {
 		URI uri = URI.create(url);
 		URLConnection connection = uri.toURL().openConnection();
-		return connection.getInputStream().readAllBytes();
+		try (InputStream in = connection.getInputStream()) {
+			return in.readAllBytes();
+		}
 	}
 
 	public static byte[] getBytes(Path path) throws IOException {
 		return Files.readAllBytes(path);
 	}
 
-	public static String getStr(Path path) throws IOException {
-		return Files.readString(path, StandardCharsets.UTF_8);
+	public static String getStr(String path) throws IOException {
+		return getStr(Path.of(path));
 	}
 
-	@SneakyThrows
-	public static void walkFileTree(Path path, FileVisitor<? super Path> visitor) {
+	public static void walkFileTree(Path path, FileVisitor<? super Path> visitor) throws IOException {
 		Files.walkFileTree(path, visitor);
 	}
 
-	@SneakyThrows
-	public static void write(Path path, byte[] buff) {
+	public static void write(Path path, byte[] buff) throws IOException {
 		Files.write(path, buff);
-	}
-
-	@SneakyThrows
-	public static void write(File file, byte[] buff) {
-		try (FileOutputStream fos = new FileOutputStream(file)) {
-			fos.write(buff);
-		}
 	}
 
 	public static void chunkWrite(File file, InputStream in, long start, long end, long size) {
@@ -108,6 +102,7 @@ public final class FileUtil {
 				chunkWrite(file, inChannel, start, end, size);
 			}
 			catch (IOException e) {
+				log.error("错误信息：{}", e.getMessage());
 				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 			}
 		}
@@ -168,7 +163,7 @@ public final class FileUtil {
 		return Files.exists(path);
 	}
 
-	public static void delete(String directory) {
+	public static void delete(String directory) throws IOException {
 		Path path = Path.of(directory);
 		if (isExist(path)) {
 			walkFileTree(path, new SimpleFileVisitor<>() {
@@ -194,7 +189,7 @@ public final class FileUtil {
 	}
 
 	public static void zip(String sourcePath, String targetPath) throws IOException {
-		zip(sourcePath, new FileOutputStream(targetPath));
+		zip(sourcePath, Files.newOutputStream(Path.of(targetPath)));
 	}
 
 	/**
@@ -256,6 +251,7 @@ public final class FileUtil {
 			}
 		}
 		catch (IOException e) {
+			log.error("错误信息：{}", e.getMessage());
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 	}
@@ -271,8 +267,13 @@ public final class FileUtil {
 			inChannel.transferTo(start, Math.min(end, size), outChannel);
 		}
 		catch (IOException e) {
+			log.error("错误信息：{}", e.getMessage());
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
+	}
+
+	private static String getStr(Path path) throws IOException {
+		return Files.readString(path, StandardCharsets.UTF_8);
 	}
 
 }
