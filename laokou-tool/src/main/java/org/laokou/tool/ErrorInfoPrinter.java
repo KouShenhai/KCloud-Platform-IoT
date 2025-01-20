@@ -47,9 +47,9 @@ final class ErrorInfoPrinter {
 	// @formatter:off
 	public static void main(String[] args) throws IOException {
 		// 应用名称
-		String appName = "auth";
+		String appName = "generator";
 		// 服务ID
-		String serviceId = "laokou-auth";
+		String serviceId = "laokou-generator";
 		// JSON文件名称
 		String jsonName = String.format("%s.json", serviceId);
 		// 项目目录路径
@@ -61,11 +61,10 @@ final class ErrorInfoPrinter {
 		// 临时文件路径
 		String tempPath = projectPath + SLASH + "temp";
 		// 创建临时文件
-		FileUtil.create(tempPath, jsonName);
-		// 写入内容到临时文件
-		File file = new File(tempPath, jsonName);
-		FileUtil.write(file, FileUtil.getBytes(Path.of(jsonPath)));
+		Path path = FileUtil.create(tempPath, jsonName);
+		FileUtil.write(path, FileUtil.getBytes(Path.of(jsonPath)));
 		// 替换字符【从后往前】
+		File file = path.toFile();
 		FileUtil.replaceFirstFromEnd(file.getAbsolutePath(), ',', ']');
 		// 读取JSON文件
 		List<TraceLog> list = JacksonUtil.toList(file, TraceLog.class);
@@ -79,7 +78,7 @@ final class ErrorInfoPrinter {
 		// 临时文件名称
 		String tempName = "stacktrace.txt";
 		// 写入文件【堆栈信息】
-		FileUtil.write(new File(tempPath, tempName), sb.toString().getBytes(StandardCharsets.UTF_8));
+		FileUtil.write(Path.of(tempPath, tempName), sb.toString().getBytes(StandardCharsets.UTF_8));
 		// 删除临时文件
 		FileUtil.delete(tempPath, jsonName);
 	}
