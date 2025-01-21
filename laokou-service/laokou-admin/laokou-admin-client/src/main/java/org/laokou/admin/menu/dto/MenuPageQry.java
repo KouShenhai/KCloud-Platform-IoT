@@ -28,4 +28,14 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Data
 public class MenuPageQry extends PageQuery {
 
+	/**
+	 * 菜单类型 0菜单 1按钮.
+	 */
+	private Integer type;
+
+	/**
+	 * 菜单状态 0启用 1停用.
+	 */
+	private Integer status;
+
 }

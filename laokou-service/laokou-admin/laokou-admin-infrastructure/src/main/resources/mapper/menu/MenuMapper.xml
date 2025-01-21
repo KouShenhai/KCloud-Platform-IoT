@@ -20,19 +20,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.menu.gatewayimpl.database.MenuMapper">
 
+  <sql id="selectColumns">
+    id,
+    "name",
+    pid,
+    "type",
+    "path",
+    icon,
+    "sort",
+    "status",
+    create_time
+  </sql>
+
+  <sql id="selectConditions">
+    where del_flag = 0
+    <if test="pageQuery.type != null">
+      and "type" = #{pageQuery.type}
+    </if>
+    <if test="pageQuery.status != null">
+      and status = #{pageQuery.status}
+    </if>
+  </sql>
+
+  <sql id="selectObjectList">
+    SELECT <include refid="selectColumns"/>
+    from boot_sys_menu
+    <include refid="selectConditions"/>
+    order by "sort" desc
+  </sql>
+
 	<select id="selectObjectPage"
 			resultType="org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO">
-		SELECT *
-		from boot_sys_menu
-		where del_flag = 0
-		order by id desc
+    <include refid="selectObjectList"/>
 		limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
 	</select>
 
 	<select id="selectObjectCount" resultType="long">
 		SELECT count(1)
 		from boot_sys_menu
-		where del_flag = 0
+    <include refid="selectConditions"/>
 	</select>
 
 	<select id="selectVersion" resultType="integer">
@@ -40,5 +66,9 @@
 		from boot_sys_menu
 		where id = #{id}
 	</select>
+
+  <select id="selectObjectList" resultType="org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO">
+    <include refid="selectObjectList"/>
+  </select>
 
 </mapper>

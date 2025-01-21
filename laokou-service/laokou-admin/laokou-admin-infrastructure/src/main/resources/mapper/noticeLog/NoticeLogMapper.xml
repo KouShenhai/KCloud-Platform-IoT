@@ -77,7 +77,7 @@
     where id = #{id}
   </select>
 
-  <select id="selectObjectList" fetchSize="100000" resultSetType="FORWARD_ONLY"
+  <select id="selectObjectListHandler" fetchSize="100000" resultSetType="FORWARD_ONLY"
           resultType="org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO">
     <include refid="selectObjectList"/>
   </select>

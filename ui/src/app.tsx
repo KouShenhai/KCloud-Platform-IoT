@@ -57,7 +57,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 			locale: false,
 			params: initialState?.username,
 			request: async () => {
-				const menu = await treeListV3({}).catch(console.log);
+				const menu = await treeListV3({code: 0}).catch(console.log);
 				return getRouters(menu?.data)
 			}
 		},

@@ -5,7 +5,6 @@
 import * as transportProtocol from './transportProtocol';
 import * as thingModel from './thingModel';
 import * as product from './product';
-import * as productModel from './productModel';
 import * as productCategory from './productCategory';
 import * as device from './device';
 import * as communicationProtocol from './communicationProtocol';
@@ -13,7 +12,6 @@ export default {
 	transportProtocol,
 	thingModel,
 	product,
-	productModel,
 	productCategory,
 	device,
 	communicationProtocol,

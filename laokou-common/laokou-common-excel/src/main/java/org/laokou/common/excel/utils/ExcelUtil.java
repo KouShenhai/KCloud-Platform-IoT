@@ -93,7 +93,7 @@ public class ExcelUtil {
 				header(fileName, response);
 				// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
-				crudMapper.selectObjectList(pageQuery, resultContext -> {
+				crudMapper.selectObjectListHandler(pageQuery, resultContext -> {
 					list.add(resultContext.getResultObject());
 					if (list.size() % size == 0) {
 						writeSheet(list, clazz, convertor, excelWriter);

@@ -17,14 +17,10 @@
 
 package org.laokou.admin.menu.dto.clientobject;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.core.utils.TreeUtil;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 菜单树客户端对象.
@@ -45,14 +41,5 @@ public class MenuTreeCO extends TreeUtil.TreeNode<MenuTreeCO> {
 	 * 菜单图标.
 	 */
 	private String icon;
-
-	@JsonIgnore
-	private Map<String, Object> extValues = new HashMap<>();
-
-	@JsonIgnore
-	private Long id;
-
-	@JsonIgnore
-	private Long pid;
 
 }

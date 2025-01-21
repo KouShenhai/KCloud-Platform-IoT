@@ -27,8 +27,6 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import java.util.List;
 import java.util.Set;
 
-import static org.laokou.common.mybatisplus.mapper.BaseDO.DEFAULT_TENANT_ID;
-
 /**
  * @author laokou
  */
@@ -47,15 +45,8 @@ public class GlobalTenantLineHandler implements TenantLineHandler {
 
 	@Override
 	public Expression getTenantId() {
-		return new LongValue(tenantId());
-	}
-
-	private Long tenantId() {
 		Long tenantId = UserContextHolder.get().getTenantId();
-		if (ObjectUtil.isNull(tenantId)) {
-			return DEFAULT_TENANT_ID;
-		}
-		return tenantId;
+		return ObjectUtil.isNull(tenantId) ? new LongValue(0L) : new LongValue(tenantId);
 	}
 
 	@Override

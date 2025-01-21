@@ -19,14 +19,17 @@ package org.laokou.admin.menu.dto;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
  * 查询菜单命令.
  *
  * @author laokou
  */
 @Data
-public class MenuTreeListQry implements Serializable {
+public class MenuTreeListQry extends MenuPageQry {
+
+	/**
+	 * 菜单标识.
+	 */
+	private int code;
 
 }

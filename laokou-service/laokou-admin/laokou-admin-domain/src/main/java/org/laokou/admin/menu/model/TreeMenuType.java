@@ -15,29 +15,32 @@
  *
  */
 
-package org.laokou.auth;
+package org.laokou.admin.menu.model;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.laokou.auth.gateway.UserGateway;
-import org.laokou.auth.model.UserE;
+import lombok.Getter;
+import org.laokou.common.i18n.utils.EnumParser;
 
 /**
- * 用户网关测试.
- *
  * @author laokou
  */
-class UserGatewayImplTest implements UserGateway {
+@Getter
+public enum TreeMenuType {
 
-	@Test
-	void test() {
-		UserE user = new UserE();
-		Assertions.assertNotNull(getProfile(user, "tenantCode"));
+	USER(0, "用户"),
+
+	SYSTEM(1, "系统");
+
+	private final int code;
+
+	private final String desc;
+
+	TreeMenuType(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
-	@Override
-	public UserE getProfile(UserE user, String tenantCode) {
-		return user;
+	public static TreeMenuType getByCode(int code) {
+		return EnumParser.parse(TreeMenuType.class, TreeMenuType::getCode, code);
 	}
 
 }

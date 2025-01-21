@@ -92,7 +92,7 @@
     where id = #{id}
   </select>
 
-  <select id="selectObjectList" fetchSize="100000" resultSetType="FORWARD_ONLY"
+  <select id="selectObjectListHandler" fetchSize="100000" resultSetType="FORWARD_ONLY"
           resultType="org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO">
     <include refid="selectObjectList"/>
   </select>

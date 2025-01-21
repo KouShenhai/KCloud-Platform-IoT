@@ -1,11 +1,7 @@
 import {DrawerForm, ProColumns, ProFormText} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {exportV3, pageV3, getByIdV3} from "@/services/iot/thingModel";
-import {Button} from "antd";
-import {ExportOutlined} from "@ant-design/icons";
+import {pageV3, getByIdV3} from "@/services/admin/menu";
 import {trim} from "@/utils/format";
-import {Excel, ExportToExcel} from "@/utils/export";
-import moment from "moment";
 import {useRef, useState} from "react";
 import {getStatus, STATUS} from "@/services/constant";
 
@@ -46,10 +42,7 @@ export default () => {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
-			code: trim(params?.code),
 			name: trim(params?.name),
-			status: params?.status,
-			errorMessage: trim(params?.errorMessage),
 			params: {
 				startTime: startTime,
 				endTime: endTime
@@ -58,37 +51,10 @@ export default () => {
 		return param;
 	}
 
-	const exportToExcel = async () => {
-		let _param: Excel
-		const _list: TableColumns[] = [];
-		// 格式化数据
-		list.forEach(item => {
-			item.status = getStatus(item.status as '0')?.text
-			_list.push(item)
-		})
-		_param = {
-			sheetData: _list,
-			sheetFilter: ["code", "name", "status", "param", "errorMessage", "createTime"],
-			sheetHeader: ["标识", "名称", "状态", "参数", "错误信息", "创建时间"],
-			fileName: "通知日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
-			sheetName: "通知日志"
-		}
-		ExportToExcel(_param)
-	}
-
-	const exportAllToExcel = async () => {
-		exportV3(param)
-	}
-
 	const list_ = async (params: any) => {
-		list = []
 		return pageV3(getPageQuery(params)).then(res => {
-			res?.data?.records?.forEach((item: TableColumns) => {
-				item.status = statusEnum[item.status as '0'];
-				list.push(item);
-			});
 			return Promise.resolve({
-				data: list,
+				data: res.data.records,
 				total: parseInt(res.data.total),
 				success: true,
 			});
@@ -259,20 +225,10 @@ export default () => {
 					layout: 'vertical',
 					defaultCollapsed: true,
 				}}
-				toolBarRender={
-					() => [
-						<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={exportToExcel}>
-							导出
-						</Button>,
-						<Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={exportAllToExcel}>
-							导出全部
-						</Button>
-					]
-				}
 				dateFormatter="string"
 				toolbar={{
-					title: '登录日志',
-					tooltip: '登录日志',
+					title: '菜单',
+					tooltip: '菜单',
 				}}
 			/>
 		</>
