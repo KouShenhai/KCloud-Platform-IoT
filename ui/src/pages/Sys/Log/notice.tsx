@@ -4,7 +4,7 @@ import {exportV3, pageV3, getByIdV3} from "@/services/admin/noticeLog";
 import {Button} from "antd";
 import {ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
-import {Excel, ExportToExcel} from "@/utils/export";
+import {ExportToExcel} from "@/utils/export";
 import moment from "moment";
 import {useRef, useState} from "react";
 import {getStatus, STATUS} from "@/services/constant";
@@ -36,12 +36,6 @@ export default () => {
 	let param: any
 
 	const getPageQuery = (params: any) => {
-		let startTime = params?.startDate;
-		let endTime = params?.endDate;
-		if (startTime && endTime) {
-			startTime += ' 00:00:00'
-			endTime += ' 23:59:59'
-		}
 		param = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
@@ -51,29 +45,27 @@ export default () => {
 			status: params?.status,
 			errorMessage: trim(params?.errorMessage),
 			params: {
-				startTime: startTime,
-				endTime: endTime
+				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
+				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
 			}
 		};
 		return param;
 	}
 
 	const exportToExcel = async () => {
-		let _param: Excel
 		const _list: TableColumns[] = [];
 		// 格式化数据
 		list.forEach(item => {
 			item.status = getStatus(item.status as '0')?.text
 			_list.push(item)
 		})
-		_param = {
+		ExportToExcel({
 			sheetData: _list,
 			sheetFilter: ["code", "name", "status", "param", "errorMessage", "createTime"],
 			sheetHeader: ["标识", "名称", "状态", "参数", "错误信息", "创建时间"],
 			fileName: "通知日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
 			sheetName: "通知日志"
-		}
-		ExportToExcel(_param)
+		})
 	}
 
 	const exportAllToExcel = async () => {
