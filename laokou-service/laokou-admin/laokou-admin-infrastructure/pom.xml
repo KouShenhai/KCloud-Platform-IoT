@@ -124,10 +124,6 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-prometheus</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-tenant</artifactId>
-    </dependency>
   </dependencies>
 
 </project>

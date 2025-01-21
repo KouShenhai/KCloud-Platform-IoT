@@ -19,6 +19,7 @@ package org.laokou.gateway;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.gateway.repository.NacosRouteDefinitionRepository;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -43,6 +44,7 @@ class RouterTest {
 	void testRouter() {
 		// 删除路由
 		nacosRouteDefinitionRepository.removeRouters().subscribe(delFlag -> {
+			Assertions.assertNotNull(delFlag);
 			if (delFlag) {
 				log.info("删除路由成功");
 			}
@@ -52,6 +54,7 @@ class RouterTest {
 		});
 		// 保存路由
 		nacosRouteDefinitionRepository.saveRouters().subscribe(saveFlag -> {
+			Assertions.assertNotNull(saveFlag);
 			if (saveFlag) {
 				log.info("保存路由成功");
 			}
