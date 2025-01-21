@@ -17,8 +17,6 @@
 
 package org.laokou.admin.menu.command.query;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuTreeListQry;
@@ -27,6 +25,7 @@ import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuStatus;
 import org.laokou.admin.menu.model.MenuType;
+import org.laokou.admin.menu.model.TreeMenuType;
 import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
@@ -45,14 +44,26 @@ public class MenuTreeListQryExe {
 	private final MenuMapper menuMapper;
 
 	public Result<List<MenuTreeCO>> execute(MenuTreeListQry qry) {
-		LambdaQueryWrapper<MenuDO> wrapper = Wrappers.lambdaQuery(MenuDO.class)
-			.select(MenuDO::getId, MenuDO::getPath, MenuDO::getIcon, MenuDO::getPid, MenuDO::getName)
-			.eq(MenuDO::getStatus, MenuStatus.ENABLE.getCode())
-			.eq(MenuDO::getType, MenuType.MENU.getCode())
-			.orderByDesc(MenuDO::getSort);
-		List<MenuDO> list = menuMapper.selectList(wrapper);
-		MenuTreeCO co = TreeUtil.buildTreeNode(MenuConvertor.toClientObjs(list), MenuTreeCO.class);
+		MenuTreeCO co = TreeUtil.buildTreeNode(MenuConvertor.toClientObjs(getList(qry)), MenuTreeCO.class);
 		return Result.ok(co.getChildren());
+	}
+
+	private List<MenuDO> getList(MenuTreeListQry qry) {
+		switch (TreeMenuType.getByCode(qry.getCode())) {
+			case USER -> {
+				qry.setStatus(MenuStatus.ENABLE.getCode());
+				qry.setType(MenuType.MENU.getCode());
+				return menuMapper.selectObjectList(qry);
+			}
+			case SYSTEM -> {
+				return menuMapper.selectObjectList(qry);
+			}
+			case null -> {
+				qry.setStatus(MenuStatus.ENABLE.getCode());
+				qry.setType(MenuType.MENU.getCode());
+				return menuMapper.selectObjectList(qry);
+			}
+		}
 	}
 
 }

@@ -271,8 +271,8 @@ export default () => {
 				}
 				dateFormatter="string"
 				toolbar={{
-					title: '登录日志',
-					tooltip: '登录日志',
+					title: '通知日志',
+					tooltip: '通知日志',
 				}}
 			/>
 		</>

@@ -15,27 +15,32 @@
  *
  */
 
-package org.laokou.admin.menu.dto;
+package org.laokou.admin.menu.model;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
+import lombok.Getter;
+import org.laokou.common.i18n.utils.EnumParser;
 
 /**
- * 分页查询菜单命令.
- *
  * @author laokou
  */
-@Data
-public class MenuPageQry extends PageQuery {
+@Getter
+public enum TreeMenuType {
 
-	/**
-	 * 菜单类型 0菜单 1按钮.
-	 */
-	private Integer type;
+	USER(0, "用户"),
 
-	/**
-	 * 菜单状态 0启用 1停用.
-	 */
-	private Integer status;
+	SYSTEM(1, "系统");
+
+	private final int code;
+
+	private final String desc;
+
+	TreeMenuType(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+
+	public static TreeMenuType getByCode(int code) {
+		return EnumParser.parse(TreeMenuType.class, TreeMenuType::getCode, code);
+	}
 
 }

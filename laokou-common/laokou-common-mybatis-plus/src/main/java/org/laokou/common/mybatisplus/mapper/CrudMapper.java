@@ -35,10 +35,12 @@ public interface CrudMapper<ID, VERSION, DO> extends BaseMapper<DO> {
 
 	VERSION selectVersion(ID id);
 
-	void selectObjectList(@Param(PAGE_QUERY) PageQuery pageQuery, ResultHandler<DO> handler);
+	void selectObjectListHandler(@Param(PAGE_QUERY) PageQuery pageQuery, ResultHandler<DO> handler);
 
 	long selectObjectCount(@Param(PAGE_QUERY) PageQuery pageQuery);
 
-	List<DO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
+	List<DO> selectObjectPage(@Param(PAGE_QUERY) PageQuery pageQuery);
+
+	List<DO> selectObjectList(@Param(PAGE_QUERY) PageQuery pageQuery);
 
 }

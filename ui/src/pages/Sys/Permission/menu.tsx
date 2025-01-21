@@ -42,10 +42,7 @@ export default () => {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
-			code: trim(params?.code),
 			name: trim(params?.name),
-			status: params?.status,
-			errorMessage: trim(params?.errorMessage),
 			params: {
 				startTime: startTime,
 				endTime: endTime
@@ -55,14 +52,9 @@ export default () => {
 	}
 
 	const list_ = async (params: any) => {
-		list = []
 		return pageV3(getPageQuery(params)).then(res => {
-			res?.data?.records?.forEach((item: TableColumns) => {
-				item.status = statusEnum[item.status as '0'];
-				list.push(item);
-			});
 			return Promise.resolve({
-				data: list,
+				data: res.data.records,
 				total: parseInt(res.data.total),
 				success: true,
 			});
