@@ -4,7 +4,7 @@ import {exportV3, pageV3} from "@/services/admin/loginLog";
 import {Button} from "antd";
 import {ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
-import {Excel, ExportToExcel} from "@/utils/export";
+import {ExportToExcel} from "@/utils/export";
 import moment from "moment";
 import {useRef} from "react";
 import {getLoginStatus, getLoginType, LOGIN_STATUS, LOGIN_TYPE} from "@/services/constant";
@@ -31,12 +31,6 @@ export default () => {
 	let param: any
 
 	const getPageQuery = (params: any) => {
-		let startTime = params?.startDate;
-		let endTime = params?.endDate;
-		if (startTime && endTime) {
-			startTime += ' 00:00:00'
-			endTime += ' 23:59:59'
-		}
 		param = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
@@ -50,15 +44,14 @@ export default () => {
 			type: params?.type,
 			errorMessage: trim(params?.errorMessage),
 			params: {
-				startTime: startTime,
-				endTime: endTime
+				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
+				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
 			}
 		};
 		return param;
 	}
 
 	const exportToExcel = async () => {
-		let _param: Excel
 		const _list: TableColumns[] = [];
 		// 格式化数据
 		list.forEach(item => {
@@ -66,21 +59,20 @@ export default () => {
 			item.type = getLoginType(item.type as '0')?.text
 			_list.push(item)
 		})
-		_param = {
+		ExportToExcel({
 			sheetData: _list,
 			sheetFilter: ["username", "ip", "address", "browser", "os", "status", "errorMessage", "type", "createTime"],
 			sheetHeader: ["用户名", "IP地址", "归属地", "浏览器", "操作系统", "登录状态", "错误信息", "登录类型", "登录时间"],
 			fileName: "登录日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
 			sheetName: "登录日志"
-		}
-		ExportToExcel(_param)
+		})
 	}
 
 	const exportAllToExcel = async () => {
 		exportV3(param)
 	}
 
-	const list_ = async (params: any) => {
+	const _list = async (params: any) => {
 		list = []
 		return pageV3(getPageQuery(params)).then(res => {
 			res?.data?.records?.forEach((item: TableColumns) => {
@@ -185,7 +177,7 @@ export default () => {
 			columns={columns}
 			request={(params) => {
 				// 表单搜索项会从 params 传入，传递给后端接口。
-				return list_(params)
+				return _list(params)
 			}}
 			rowKey="id"
 			pagination={{
