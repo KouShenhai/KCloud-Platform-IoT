@@ -34,6 +34,17 @@ export default [
 		icon: 'setting',
 		routes: [
 			{
+				name: '权限管理',
+				path: '/sys/permission',
+				routes: [
+					{
+						name: '菜单',
+						path: '/sys/permission/menu',
+						component: './Sys/Permission/menu'
+					}
+				]
+			},
+			{
 				name: '日志管理',
 				path: '/sys/log',
 				routes: [
