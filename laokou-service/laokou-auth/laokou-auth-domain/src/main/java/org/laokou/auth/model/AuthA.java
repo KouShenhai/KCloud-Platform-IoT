@@ -211,8 +211,7 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void checkPassword(PasswordValidator passwordValidator) {
-		if (USERNAME_PASSWORD.equals(this.grantType)
-				&& !passwordValidator.validate(this.password, user.getPassword())) {
+		if (isUsePassword() && !passwordValidator.validate(this.password, user.getPassword())) {
 			throw new SystemException(USERNAME_PASSWORD_ERROR);
 		}
 	}
@@ -246,6 +245,10 @@ public class AuthA extends AggregateRoot {
 
 	private boolean isUseCaptcha() {
 		return List.of(USERNAME_PASSWORD, MOBILE, MAIL).contains(grantType);
+	}
+
+	private boolean isUsePassword() {
+		return List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE).contains(grantType);
 	}
 
 	private Set<String> getPaths(List<String> list) {

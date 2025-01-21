@@ -21,6 +21,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.utils.AddressUtil;
 
+/**
+ * @author laokou
+ */
 class AddressUtilTest {
 
 	@Test
