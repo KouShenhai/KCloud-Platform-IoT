@@ -18,7 +18,6 @@
 package org.laokou.iot.productModel.convertor;
 
 import org.laokou.iot.productModel.gatewayimpl.database.dataobject.ProductModelDO;
-import org.laokou.iot.productModel.dto.clientobject.ProductModelCO;
 import org.laokou.iot.productModel.model.ProductModelE;
 
 /**
@@ -40,20 +39,6 @@ public class ProductModelConvertor {
 		productModelDO.setProductId(productModelE.getProductId());
 		productModelDO.setModelId(productModelE.getModelId());
 		return productModelDO;
-	}
-
-	public static ProductModelCO toClientObject(ProductModelDO productModelDO) {
-		ProductModelCO productModelCO = new ProductModelCO();
-		productModelCO.setProductId(productModelDO.getProductId());
-		productModelCO.setModelId(productModelDO.getModelId());
-		return productModelCO;
-	}
-
-	public static ProductModelE toEntity(ProductModelCO productModelCO) {
-		ProductModelE productModelE = new ProductModelE();
-		productModelE.setProductId(productModelCO.getProductId());
-		productModelE.setModelId(productModelCO.getModelId());
-		return productModelE;
 	}
 
 }
