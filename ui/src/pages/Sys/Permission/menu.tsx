@@ -27,9 +27,9 @@ export default () => {
 
 	const actionRef = useRef();
 
-	let noticeLogList: TableColumns[]
+	let list: TableColumns[]
 
-	let noticeLogParam: any
+	let param: any
 
 	const getPageQuery = (params: any) => {
 		let startTime = params?.startDate;
@@ -38,7 +38,7 @@ export default () => {
 			startTime += ' 00:00:00'
 			endTime += ' 23:59:59'
 		}
-		noticeLogParam = {
+		param = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
@@ -51,18 +51,18 @@ export default () => {
 				endTime: endTime
 			}
 		};
-		return noticeLogParam;
+		return param;
 	}
 
-	const listNoticeLog = async (params: any) => {
-		noticeLogList = []
+	const list_ = async (params: any) => {
+		list = []
 		return pageV3(getPageQuery(params)).then(res => {
 			res?.data?.records?.forEach((item: TableColumns) => {
 				item.status = statusEnum[item.status as '0'];
-				noticeLogList.push(item);
+				list.push(item);
 			});
 			return Promise.resolve({
-				data: noticeLogList,
+				data: list,
 				total: parseInt(res.data.total),
 				success: true,
 			});
@@ -221,7 +221,7 @@ export default () => {
 				columns={columns}
 				request={(params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return listNoticeLog(params)
+					return list_(params)
 				}}
 				rowKey="id"
 				pagination={{

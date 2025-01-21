@@ -31,9 +31,9 @@ export default () => {
 
 	const actionRef = useRef();
 
-	let noticeLogList: TableColumns[]
+	let list: TableColumns[]
 
-	let noticeLogParam: any
+	let param: any
 
 	const getPageQuery = (params: any) => {
 		let startTime = params?.startDate;
@@ -42,7 +42,7 @@ export default () => {
 			startTime += ' 00:00:00'
 			endTime += ' 23:59:59'
 		}
-		noticeLogParam = {
+		param = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
@@ -55,40 +55,40 @@ export default () => {
 				endTime: endTime
 			}
 		};
-		return noticeLogParam;
+		return param;
 	}
 
 	const exportToExcel = async () => {
-		let params: Excel
-		const list: TableColumns[] = [];
+		let _param: Excel
+		const _list: TableColumns[] = [];
 		// 格式化数据
-		noticeLogList.forEach(item => {
+		list.forEach(item => {
 			item.status = getStatus(item.status as '0')?.text
-			list.push(item)
+			_list.push(item)
 		})
-		params = {
-			sheetData: list,
+		_param = {
+			sheetData: _list,
 			sheetFilter: ["code", "name", "status", "param", "errorMessage", "createTime"],
 			sheetHeader: ["标识", "名称", "状态", "参数", "错误信息", "创建时间"],
 			fileName: "通知日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
 			sheetName: "通知日志"
 		}
-		ExportToExcel(params)
+		ExportToExcel(_param)
 	}
 
 	const exportAllToExcel = async () => {
-		exportV3(noticeLogParam)
+		exportV3(param)
 	}
 
-	const listNoticeLog = async (params: any) => {
-		noticeLogList = []
+	const list_ = async (params: any) => {
+		list = []
 		return pageV3(getPageQuery(params)).then(res => {
 			res?.data?.records?.forEach((item: TableColumns) => {
 				item.status = statusEnum[item.status as '0'];
-				noticeLogList.push(item);
+				list.push(item);
 			});
 			return Promise.resolve({
-				data: noticeLogList,
+				data: list,
 				total: parseInt(res.data.total),
 				success: true,
 			});
@@ -247,7 +247,7 @@ export default () => {
 				columns={columns}
 				request={(params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return listNoticeLog(params)
+					return list_(params)
 				}}
 				rowKey="id"
 				pagination={{

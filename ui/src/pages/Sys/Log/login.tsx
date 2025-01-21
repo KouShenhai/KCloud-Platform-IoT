@@ -26,9 +26,9 @@ export default () => {
 
 	const actionRef = useRef();
 
-	let loginLogList: TableColumns[]
+	let list: TableColumns[]
 
-	let loginLogParam: any
+	let param: any
 
 	const getPageQuery = (params: any) => {
 		let startTime = params?.startDate;
@@ -37,7 +37,7 @@ export default () => {
 			startTime += ' 00:00:00'
 			endTime += ' 23:59:59'
 		}
-		loginLogParam = {
+		param = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
@@ -54,42 +54,42 @@ export default () => {
 				endTime: endTime
 			}
 		};
-		return loginLogParam;
+		return param;
 	}
 
 	const exportToExcel = async () => {
-		let params: Excel
-		const list: TableColumns[] = [];
+		let _param: Excel
+		const _list: TableColumns[] = [];
 		// 格式化数据
-		loginLogList.forEach(item => {
+		list.forEach(item => {
 			item.status = getLoginStatus(item.status as '0').text
 			item.type = getLoginType(item.type as '0')?.text
-			list.push(item)
+			_list.push(item)
 		})
-		params = {
-			sheetData: list,
+		_param = {
+			sheetData: _list,
 			sheetFilter: ["username", "ip", "address", "browser", "os", "status", "errorMessage", "type", "createTime"],
 			sheetHeader: ["用户名", "IP地址", "归属地", "浏览器", "操作系统", "登录状态", "错误信息", "登录类型", "登录时间"],
 			fileName: "登录日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
 			sheetName: "登录日志"
 		}
-		ExportToExcel(params)
+		ExportToExcel(_param)
 	}
 
 	const exportAllToExcel = async () => {
-		exportV3(loginLogParam)
+		exportV3(param)
 	}
 
-	const listLoginLog = async (params: any) => {
-		loginLogList = []
+	const list_ = async (params: any) => {
+		list = []
 		return pageV3(getPageQuery(params)).then(res => {
 			res?.data?.records?.forEach((item: TableColumns) => {
 				item.status = item.status as '0';
 				item.type = item.type as '0';
-				loginLogList.push(item);
+				list.push(item);
 			});
 			return Promise.resolve({
-				data: loginLogList,
+				data: list,
 				total: parseInt(res.data.total),
 				success: true,
 			});
@@ -185,7 +185,7 @@ export default () => {
 			columns={columns}
 			request={(params) => {
 				// 表单搜索项会从 params 传入，传递给后端接口。
-				return listLoginLog(params)
+				return list_(params)
 			}}
 			rowKey="id"
 			pagination={{
