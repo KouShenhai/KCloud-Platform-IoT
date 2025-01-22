@@ -20,7 +20,7 @@ package org.laokou.common.mybatisplus.config;
 import net.sf.jsqlparser.expression.Function;
 import net.sf.jsqlparser.statement.select.OrderByElement;
 import org.apache.fury.Fury;
-import org.apache.fury.ThreadLocalFury;
+import org.apache.fury.ThreadSafeFury;
 
 /**
  * @author laokou
@@ -29,7 +29,7 @@ public final class FuryFactory {
 
 	private static final FuryFactory FACTORY = new FuryFactory();
 
-	private final ThreadLocalFury FURY = Fury.builder().buildThreadLocalFury();
+	private final ThreadSafeFury FURY = Fury.builder().buildThreadSafeFury();
 
 	public FuryFactory() {
 		FURY.register(net.sf.jsqlparser.expression.Alias.class);

@@ -57,8 +57,7 @@ public class MybatisPlusAutoConfig {
 
 	static {
 		JsqlParserGlobal.setJsqlParseCache(new FurySerialCaffeineJsqlParseCache(
-				Caffeine.newBuilder().maximumSize(4096).expireAfterWrite(10, TimeUnit.MINUTES).build(),
-				ThreadUtil.newVirtualTaskExecutor(), true));
+				Caffeine.newBuilder().maximumSize(4096).expireAfterWrite(10, TimeUnit.MINUTES).build()));
 	}
 
 	@Bean
