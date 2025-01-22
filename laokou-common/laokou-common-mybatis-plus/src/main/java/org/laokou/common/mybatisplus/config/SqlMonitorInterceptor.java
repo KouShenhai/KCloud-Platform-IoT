@@ -17,19 +17,23 @@
 
 package org.laokou.common.mybatisplus.config;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.logging.jdbc.PreparedStatementLogger;
+import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.springframework.util.StopWatch;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.SPACE;
 
@@ -68,20 +72,26 @@ public class SqlMonitorInterceptor implements Interceptor {
                 && costTime >= sqlMonitor.getInterval()
                 && target instanceof StatementHandler statementHandler) {
 			// 替换空格、制表符、换页符
-			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", SPACE);
+			String sql = getSql(statementHandler).replaceAll("\\s+", SPACE);
             log.info("Consume Time：{} ms，Execute SQL：{}", costTime, sql);
-            //SqlEvent sqlEvent = new SqlEvent(SpringContextUtil.getServiceId(), sql, costTime, DateUtil.nowInstant());
         }
 		return obj;
 	}
 
-	private String getSql(Invocation invocation, StatementHandler statementHandler) throws SQLException {
-		Connection connection = (Connection) invocation.getArgs()[0];
-		PreparedStatement preparedStatement = connection.prepareStatement(statementHandler.getBoundSql().getSql());
-		statementHandler.getParameterHandler().setParameters(preparedStatement);
-		String str = preparedStatement.toString();
-		int index = str.indexOf("wrapping");
-		return str.substring(index + 9);
+	private String getSql(StatementHandler statementHandler) throws JsonProcessingException {
+		BoundSql boundSql = statementHandler.getBoundSql();
+		String sql = boundSql.getSql();
+		if (sql.indexOf("?") > 0) {
+			String parameter = JacksonUtil.toJsonStr(boundSql.getParameterObject());
+			JsonNode jsonNode = JacksonUtil.readTree(parameter);
+			String json = jsonNode.get("ew").get("paramNameValuePairs").toString();
+			Map<String, String> map = JacksonUtil.toMap(json, String.class, String.class);
+			List<String> list = map.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(Map.Entry::getValue).toList();
+			for (String str : list) {
+				sql = sql.replaceFirst("\\?", "'" + str + "'");
+			}
+		}
+		return sql;
 	}
 
 }

@@ -32,28 +32,28 @@ body:
     validations:
       required: true
   - type: input
-    id: version
+    id: jdk-version
     attributes:
       label: 当前JDK版本
       description: 遇到问题时程序所在的JDK版本
     validations:
       required: true
   - type: input
-    id: version
+    id: spring-boot-version
     attributes:
       label: 当前SpringBoot版本
       description: 遇到问题时程序所在的SpringBoot版本
     validations:
       required: true
   - type: input
-    id: version
+    id: spring-cloud-version
     attributes:
       label: 当前SpringCloud版本
       description: 遇到问题时程序所在的SpringCloud版本
     validations:
       required: true
   - type: textarea
-    id: what-happened
+    id: bug-description
     attributes:
       label: BUG描述（简洁描述）
       description: 请描述你碰到的问题
@@ -61,15 +61,15 @@ body:
     validations:
       required: true
   - type: textarea
-    id: what-happened
+    id: bug-reproduction-steps
     attributes:
-      label: BUG重现步骤（写清楚并附图）
-      description: 请详细描述BUG重现步骤
-      placeholder: "BUG重现步骤（写清楚并附图）"
+      label: BUG复现步骤（写清楚并附图）
+      description: 请详细描述BUG复现步骤
+      placeholder: "BUG复现步骤（写清楚并附图）"
     validations:
       required: true
   - type: textarea
-    id: what-happened
+    id: desired-result
     attributes:
       label: 预期效果（简洁描述）
       description: 请描述预期效果
@@ -77,7 +77,7 @@ body:
     validations:
       required: true
   - type: textarea
-    id: logs
+    id: stack-log
     attributes:
       label: 详细堆栈日志
       description: 问题出现时，程序错误堆栈日志
