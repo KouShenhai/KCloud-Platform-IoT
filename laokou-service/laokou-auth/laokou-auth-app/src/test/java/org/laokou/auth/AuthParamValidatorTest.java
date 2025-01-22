@@ -37,11 +37,7 @@ class AuthParamValidatorTest {
 	@Test
 	void testUsernamePasswordAuthParamValidator() {
 		AuthParamValidatorExtPt authParamValidator = new UsernamePasswordAuthParamValidator();
-		Assertions.assertNotNull(authParamValidator);
-
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
-		Assertions.assertNotNull(auth);
-
 		// 校验用户名密码登录
 		authParamValidator.validate(auth);
 	}
@@ -49,11 +45,7 @@ class AuthParamValidatorTest {
 	@Test
 	void testAuthorizationCodeAuthParamValidator() {
 		AuthParamValidatorExtPt authParamValidator = new AuthorizationCodeAuthParamValidator();
-		Assertions.assertNotNull(authParamValidator);
-
 		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
-		Assertions.assertNotNull(auth);
-
 		// 校验授权码登录
 		authParamValidator.validate(auth);
 	}
@@ -61,11 +53,7 @@ class AuthParamValidatorTest {
 	@Test
 	void testMailAuthParamValidator() {
 		AuthParamValidatorExtPt authParamValidator = new MailAuthParamValidator();
-		Assertions.assertNotNull(authParamValidator);
-
 		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
-		Assertions.assertNotNull(auth);
-
 		// 校验邮箱登录
 		authParamValidator.validate(auth);
 	}
@@ -73,11 +61,8 @@ class AuthParamValidatorTest {
 	@Test
 	void testMobileAuthParamValidator() {
 		AuthParamValidatorExtPt authParamValidator = new MobileAuthParamValidator();
-		Assertions.assertNotNull(authParamValidator);
-
 		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
 		Assertions.assertNotNull(auth);
-
 		// 校验手机号登录
 		authParamValidator.validate(auth);
 	}

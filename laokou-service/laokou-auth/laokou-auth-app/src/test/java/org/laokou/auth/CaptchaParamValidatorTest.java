@@ -17,7 +17,6 @@
 
 package org.laokou.auth;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.CaptchaE;
@@ -35,11 +34,7 @@ class CaptchaParamValidatorTest {
 	@Test
 	void testMailCaptchaParamValidator() {
 		CaptchaParamValidatorExtPt captchaParamValidator = new MailCaptchaParamValidator();
-		Assertions.assertNotNull(captchaParamValidator);
-
 		CaptchaE captcha = DomainFactory.getCaptcha();
-		Assertions.assertNotNull(captcha);
-
 		// 校验邮箱验证码
 		captcha.setUuid("2413176044@qq.com");
 		captcha.setTenantCode("laokou");
@@ -49,11 +44,7 @@ class CaptchaParamValidatorTest {
 	@Test
 	void testMobileCaptchaParamValidator() {
 		CaptchaParamValidatorExtPt captchaParamValidator = new MobileCaptchaParamValidator();
-		Assertions.assertNotNull(captchaParamValidator);
-
 		CaptchaE captcha = DomainFactory.getCaptcha();
-		Assertions.assertNotNull(captcha);
-
 		// 校验手机号验证码
 		captcha.setUuid("18888888888");
 		captcha.setTenantCode("laokou");

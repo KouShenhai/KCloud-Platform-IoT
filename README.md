@@ -67,6 +67,13 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 <img src="doc/image/img_1.png" width=400 height=400 alt="COLA架构图"/>
 <img src="doc/image/img.png" width=400 height=400 alt="COLA架构图"/>
 
+### 🌿 服务器配置
+
+| 环境 |             配置              |  备注   |
+|:--:|:---------------------------:|:-----:|
+| 开发 | 32G【内存】&nbsp;&nbsp;512G【磁盘】 |   无   |
+| 生产 | 16G【内存】&nbsp;&nbsp;40G【磁盘】  | 请搭建集群 |
+
 ### 🔗 在线体验
 
 | 序号 |  账号   |    密码    |
