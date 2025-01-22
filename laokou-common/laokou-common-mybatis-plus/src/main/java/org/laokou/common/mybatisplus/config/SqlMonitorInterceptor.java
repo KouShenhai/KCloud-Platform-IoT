@@ -81,7 +81,7 @@ public class SqlMonitorInterceptor implements Interceptor {
 	private String getSql(StatementHandler statementHandler) throws JsonProcessingException {
 		BoundSql boundSql = statementHandler.getBoundSql();
 		String sql = boundSql.getSql();
-		if (sql.indexOf("?") > 0) {
+		if (sql.indexOf('?') > 0) {
 			String parameter = JacksonUtil.toJsonStr(boundSql.getParameterObject());
 			JsonNode jsonNode = JacksonUtil.readTree(parameter);
 			String json = jsonNode.get("ew").get("paramNameValuePairs").toString();
