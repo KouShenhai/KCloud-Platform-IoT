@@ -19,6 +19,10 @@ package org.laokou.common.mybatisplus.config;
 
 import com.baomidou.mybatisplus.extension.parser.cache.AbstractCaffeineJsqlParseCache;
 import com.github.benmanes.caffeine.cache.Cache;
+import org.laokou.common.i18n.utils.ObjectUtil;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 /**
  * jsqlparser 缓存 fury 序列化 Caffeine 缓存实现.
@@ -29,6 +33,28 @@ public class FurySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 
 	public FurySerialCaffeineJsqlParseCache(Cache<String, byte[]> cache) {
 		super(cache);
+	}
+
+	public FurySerialCaffeineJsqlParseCache(Cache<String, byte[]> cache, Executor executor, boolean async) {
+		super(cache);
+		// 开启异步
+		super.async = async;
+		super.executor = executor;
+	}
+
+	@Override
+	protected void put(String sql, Object value) {
+		if (async) {
+			if (ObjectUtil.isNotNull(executor)) {
+				executor.execute(() -> cache.put(sql, serialize(value)));
+			}
+			else {
+				CompletableFuture.runAsync(() -> cache.put(sql, serialize(value)));
+			}
+		}
+		else {
+			cache.put(sql, serialize(value));
+		}
 	}
 
 	@Override

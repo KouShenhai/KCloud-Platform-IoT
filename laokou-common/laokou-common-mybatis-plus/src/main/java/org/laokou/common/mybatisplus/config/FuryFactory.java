@@ -29,7 +29,7 @@ public final class FuryFactory {
 
 	private static final FuryFactory FACTORY = new FuryFactory();
 
-	private final ThreadSafeFury FURY = Fury.builder().buildThreadSafeFury();
+	private final ThreadSafeFury FURY = Fury.builder().withAsyncCompilation(true).buildThreadSafeFury();
 
 	public FuryFactory() {
 		FURY.register(net.sf.jsqlparser.expression.Alias.class);

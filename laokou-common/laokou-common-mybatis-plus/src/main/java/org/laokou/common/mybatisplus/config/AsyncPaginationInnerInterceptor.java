@@ -69,7 +69,6 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.transaction.SpringManagedTransaction;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -210,7 +209,7 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 
 	@Override
 	public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds,
-			ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
+			ResultHandler resultHandler, BoundSql boundSql) {
 		IPage<?> page = ParameterUtils.findPage(parameter).orElse(null);
 		if (null == page) {
 			return;
