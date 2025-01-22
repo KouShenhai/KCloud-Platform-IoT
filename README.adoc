@@ -67,6 +67,15 @@ image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源
 image:doc/image/img_1.png[COLA架构图,400,400,align=center]
 image:doc/image/img.png[COLA架构图,400,400,align=center]
 
+=== 🌿 服务器配置
+
+[width=100%]
+|===
+|环境   |配置 						  |备注
+|开发   | 32G【内存】&nbsp;&nbsp;512G【磁盘】      |无
+|生产   | 16G【内存】&nbsp;&nbsp;40G【磁盘】       |请搭建集群
+|===
+
 === 🔗 在线体验
 
 [width=100%]

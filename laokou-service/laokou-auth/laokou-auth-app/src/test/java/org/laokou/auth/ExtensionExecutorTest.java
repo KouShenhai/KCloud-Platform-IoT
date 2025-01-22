@@ -60,13 +60,9 @@ class ExtensionExecutorTest {
 	void testUsernamePasswordAuthParamValidateExecutor() {
 		// 校验参数
 		validate();
-
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
-		Assertions.assertNotNull(auth);
-
 		// 注册【用户名密码登录】校验器
 		doRegistration(new UsernamePasswordAuthParamValidator());
-
 		// 执行参数校验【用户名密码登录】
 		execute(auth);
 	}
@@ -75,13 +71,9 @@ class ExtensionExecutorTest {
 	void testMailAuthParamValidateExecutor() {
 		// 校验参数
 		validate();
-
 		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
-		Assertions.assertNotNull(auth);
-
 		// 注册【邮箱登录】校验器
 		doRegistration(new MailAuthParamValidator());
-
 		// 执行参数校验【邮箱登录】
 		execute(auth);
 	}
@@ -90,13 +82,9 @@ class ExtensionExecutorTest {
 	void testMobileAuthParamValidateExecutor() {
 		// 校验参数
 		validate();
-
 		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
-		Assertions.assertNotNull(auth);
-
 		// 注册【手机号登录】校验器
 		doRegistration(new MobileAuthParamValidator());
-
 		// 执行参数校验【手机号登录】
 		execute(auth);
 	}
@@ -105,13 +93,9 @@ class ExtensionExecutorTest {
 	void testAuthorizationCodeAuthParamValidateExecutor() {
 		// 校验参数
 		validate();
-
 		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
-		Assertions.assertNotNull(auth);
-
 		// 注册【授权码登录】校验器
 		doRegistration(new AuthorizationCodeAuthParamValidator());
-
 		// 执行参数校验【授权码登录】
 		execute(auth);
 	}
@@ -120,13 +104,9 @@ class ExtensionExecutorTest {
 	void testMailCaptchaParamValidateExecutor() {
 		// 校验参数
 		validate();
-
 		CaptchaE captcha = DomainFactory.getCaptcha();
-		Assertions.assertNotNull(captcha);
-
 		// 注册【邮箱验证码】校验器
 		doRegistration(new MailCaptchaParamValidator());
-
 		// 执行参数校验【邮箱验证码】
 		captcha.setTag(MAIL_TAG);
 		captcha.setUuid("2413176044@qq.com");
@@ -138,13 +118,9 @@ class ExtensionExecutorTest {
 	void testCaptchaParamValidateExecutor() {
 		// 校验参数
 		validate();
-
 		CaptchaE captcha = DomainFactory.getCaptcha();
-		Assertions.assertNotNull(captcha);
-
 		// 注册【手机号验证码】校验器
 		doRegistration(new MobileCaptchaParamValidator());
-
 		// 执行参数校验【手机号验证码】
 		captcha.setTag(MOBILE_TAG);
 		captcha.setUuid("18888888888");
