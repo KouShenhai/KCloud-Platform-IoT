@@ -1,95 +1,59 @@
-import {DrawerForm, ProColumns, ProFormText} from '@ant-design/pro-components';
+import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {pageV3, getByIdV3} from "@/services/admin/menu";
+import {treeListV3} from "@/services/admin/menu";
 import {trim} from "@/utils/format";
-import {useRef, useState} from "react";
-import {getStatus, STATUS} from "@/services/constant";
+import {useRef} from "react";
+import {TableRowSelection} from "antd/es/table/interface";
 
 export default () => {
 
-	const [modalVisit, setModalVisit] = useState(false);
-	const [dataSource, setDataSource] = useState({})
-
-	const statusEnum = {
-		0: '0',
-		1: '1'
-	};
-
 	type TableColumns = {
 		id: number;
-		code: string | undefined;
-		name: string | undefined;
-		status: string | undefined;
-		param: string | undefined;
-		errorMessage: string | undefined;
 		createTime: string | undefined;
+		name: string | undefined;
 	};
 
 	const actionRef = useRef();
 
-	let list: TableColumns[]
-
 	let param: any
 
 	const getPageQuery = (params: any) => {
-		let startTime = params?.startDate;
-		let endTime = params?.endDate;
-		if (startTime && endTime) {
-			startTime += ' 00:00:00'
-			endTime += ' 23:59:59'
-		}
 		param = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
+			code: 1,
 			name: trim(params?.name),
 			params: {
-				startTime: startTime,
-				endTime: endTime
+				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
+				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
 			}
 		};
 		return param;
 	}
 
-	const list_ = async (params: any) => {
-		return pageV3(getPageQuery(params)).then(res => {
+	const _list = async (params: any) => {
+		return treeListV3(getPageQuery(params)).then(res => {
 			return Promise.resolve({
-				data: res.data.records,
-				total: parseInt(res.data.total),
+				data: res.data,
 				success: true,
 			});
 		})
 	}
 
+	const rowSelection: TableRowSelection<TableColumns> = {
+		onChange: (selectedRowKeys, selectedRows) => {
+			console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+		},
+		onSelect: (record, selected, selectedRows) => {
+			console.log(record, selected, selectedRows);
+		},
+	};
+
 	const columns: ProColumns<TableColumns>[] = [
-		{
-			title: '序号',
-			dataIndex: 'index',
-			valueType: 'indexBorder',
-			width: 60,
-		},
-		{
-			title: '标识',
-			dataIndex: 'code',
-			ellipsis: true
-		},
 		{
 			title: '名称',
 			dataIndex: 'name',
-			ellipsis: true
-		},
-		{
-			title: '状态',
-			dataIndex: 'status',
-			valueEnum: {
-				[STATUS.OK]: getStatus(STATUS.OK),
-				[STATUS.FAIL]: getStatus(STATUS.FAIL)
-			},
-			ellipsis: true
-		},
-		{
-			title: '错误信息',
-			dataIndex: 'errorMessage',
 			ellipsis: true
 		},
 		{
@@ -114,113 +78,20 @@ export default () => {
 					};
 				},
 			}
-		},
-		{
-			title: '操作',
-			valueType: 'option',
-			key: 'option',
-			render: (_, record) => [
-				<a key="getable"
-				   onClick={() => {
-					   getByIdV3({id: record?.id}).then(res => {
-						   setDataSource(res?.data)
-						   setModalVisit(true)
-					   })
-				   }}
-				>
-					查看
-				</a>
-			],
-		},
+		}
 	];
 
 	return (
 		<>
-			<DrawerForm<{
-				code: string;
-				name: string;
-				status: number;
-				param: string;
-				errorMessage: string;
-				createTime: string;
-			}>
-				open={modalVisit}
-				title="查看通知日志"
-				drawerProps={{
-					destroyOnClose: true,
-					closable: true,
-					maskClosable: true
-				}}
-				initialValues={dataSource}
-				onOpenChange={setModalVisit}
-				submitter={{
-					submitButtonProps: {
-						style: {
-							display: 'none',
-						},
-					}
-				}}
-			>
-				<ProFormText
-					readonly={true}
-					name="code"
-					label="标识"
-					rules={[{ required: true, message: '请输入标识' }]}
-				/>
-
-				<ProFormText
-					readonly={true}
-					name="name"
-					label="名称"
-					rules={[{ required: true, message: '请输入名称' }]}
-				/>
-
-				<ProFormText
-					readonly={true}
-					name="status"
-					label="状态"
-					rules={[{ required: true, message: '请输入状态' }]}
-					// @ts-ignore
-					convertValue={(value) => {
-						return getStatus(value as '0')?.text
-					}}
-				/>
-
-				<ProFormText
-					readonly={true}
-					name="param"
-					label="参数"
-					rules={[{ required: true, message: '请输入参数' }]}
-				/>
-
-				<ProFormText
-					readonly={true}
-					name="errorMessage"
-					label="错误信息"
-					rules={[{ required: true, message: '请输入错误信息' }]}
-				/>
-
-				<ProFormText
-					readonly={true}
-					name="createTime"
-					label="创建时间"
-					rules={[{ required: true, message: '请输入创建时间' }]}
-				/>
-
-			</DrawerForm>
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}
 				request={(params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return list_(params)
+					return _list(params)
 				}}
+				rowSelection={{ ...rowSelection }}
 				rowKey="id"
-				pagination={{
-					showQuickJumper: true,
-					showSizeChanger: false,
-					pageSize: 10
-				}}
 				search={{
 					layout: 'vertical',
 					defaultCollapsed: true,
