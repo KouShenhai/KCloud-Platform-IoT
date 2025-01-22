@@ -70,10 +70,15 @@ public final class MenuConvertor {
 	public static MenuTreeCO toClientObj(MenuDO menuDO) {
 		MenuTreeCO co = new MenuTreeCO();
 		co.setId(menuDO.getId());
-		co.setPid(menuDO.getPid());
 		co.setName(menuDO.getName());
+		co.setPid(menuDO.getPid());
 		co.setPath(menuDO.getPath());
 		co.setIcon(menuDO.getIcon());
+		co.setCreateTime(menuDO.getCreateTime());
+		co.setPermission(menuDO.getPermission());
+		co.setType(menuDO.getType());
+		co.setSort(menuDO.getSort());
+		co.setStatus(menuDO.getStatus());
 		return co;
 
 	}

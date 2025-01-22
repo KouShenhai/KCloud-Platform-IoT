@@ -17,23 +17,20 @@
 
 package org.laokou.common.mybatisplus.config;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.zaxxer.hikari.pool.HikariProxyPreparedStatement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.logging.jdbc.PreparedStatementLogger;
-import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
-import org.laokou.common.i18n.utils.JacksonUtil;
 import org.springframework.util.StopWatch;
 
 import java.sql.Connection;
-import java.util.List;
-import java.util.Map;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.SPACE;
 
@@ -71,35 +68,22 @@ public class SqlMonitorInterceptor implements Interceptor {
         if (sqlMonitor.isEnabled()
                 && costTime >= sqlMonitor.getInterval()
                 && target instanceof StatementHandler statementHandler) {
-			String sql = getSql(statementHandler);
+			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", SPACE);
             log.info("Consume Time：{} ms，Execute SQL：{}", costTime, sql);
         }
 		return obj;
 	}
 
-	private String getSql(StatementHandler statementHandler) throws JsonProcessingException {
-		BoundSql boundSql = statementHandler.getBoundSql();
-		// 替换空格、制表符、换页符
-		String sql = boundSql.getSql().replaceAll("\\s+", SPACE);
-		if (sql.indexOf('?') > 0) {
-			String parameter = JacksonUtil.toJsonStr(boundSql.getParameterObject());
-			JsonNode jsonNode = JacksonUtil.readTree(parameter);
-			String json = jsonNode.get("ew").get("paramNameValuePairs").toString();
-			Map<String, Object> map = JacksonUtil.toMap(json, String.class, Object.class);
-			List<Object> list = map.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(Map.Entry::getValue).toList();
-			for (Object obj : list) {
-				sql = sql.replaceFirst("\\?", getPrettyValue(obj));
+	private String getSql(Invocation invocation, StatementHandler statementHandler) throws SQLException {
+		String sql = statementHandler.getBoundSql().getSql();
+		if (invocation.getArgs()[0] instanceof Connection connection) {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			statementHandler.getParameterHandler().setParameters(preparedStatement);
+			if (preparedStatement instanceof HikariProxyPreparedStatement hikariProxyPreparedStatement) {
+				return hikariProxyPreparedStatement.toString().split("wrapping")[1].trim();
 			}
 		}
 		return sql;
-	}
-
-	private String getPrettyValue(Object obj) {
-		if (obj instanceof String str) {
-			return "'".concat(str).concat("'");
-		} else {
-			return obj.toString();
-		}
 	}
 
 }
