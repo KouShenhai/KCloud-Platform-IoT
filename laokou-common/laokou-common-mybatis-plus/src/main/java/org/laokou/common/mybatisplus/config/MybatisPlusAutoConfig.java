@@ -62,7 +62,7 @@ public class MybatisPlusAutoConfig {
 	}
 
 	@Bean
-	public ConfigurationCustomizer slowSqlConfigurationCustomizer(MybatisPlusExtProperties mybatisPlusExtProperties) {
+	public ConfigurationCustomizer configurationCustomizer(MybatisPlusExtProperties mybatisPlusExtProperties) {
 		return configuration -> {
 			// 异步查询count
 			configuration.addInterceptor(new AsyncCountInterceptor());
