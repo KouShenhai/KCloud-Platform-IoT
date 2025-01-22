@@ -71,8 +71,7 @@ public class SqlMonitorInterceptor implements Interceptor {
         if (sqlMonitor.isEnabled()
                 && costTime >= sqlMonitor.getInterval()
                 && target instanceof StatementHandler statementHandler) {
-			// 替换空格、制表符、换页符
-			String sql = getSql(statementHandler).replaceAll("\\s+", SPACE);
+			String sql = getSql(statementHandler);
             log.info("Consume Time：{} ms，Execute SQL：{}", costTime, sql);
         }
 		return obj;
@@ -80,18 +79,27 @@ public class SqlMonitorInterceptor implements Interceptor {
 
 	private String getSql(StatementHandler statementHandler) throws JsonProcessingException {
 		BoundSql boundSql = statementHandler.getBoundSql();
-		String sql = boundSql.getSql();
+		// 替换空格、制表符、换页符
+		String sql = boundSql.getSql().replaceAll("\\s+", SPACE);
 		if (sql.indexOf('?') > 0) {
 			String parameter = JacksonUtil.toJsonStr(boundSql.getParameterObject());
 			JsonNode jsonNode = JacksonUtil.readTree(parameter);
 			String json = jsonNode.get("ew").get("paramNameValuePairs").toString();
-			Map<String, String> map = JacksonUtil.toMap(json, String.class, String.class);
-			List<String> list = map.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(Map.Entry::getValue).toList();
-			for (String str : list) {
-				sql = sql.replaceFirst("\\?", "'" + str + "'");
+			Map<String, Object> map = JacksonUtil.toMap(json, String.class, Object.class);
+			List<Object> list = map.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(Map.Entry::getValue).toList();
+			for (Object obj : list) {
+				sql = sql.replaceFirst("\\?", getPrettyValue(obj));
 			}
 		}
 		return sql;
+	}
+
+	private String getPrettyValue(Object obj) {
+		if (obj instanceof String str) {
+			return "'".concat(str).concat("'");
+		} else {
+			return obj.toString();
+		}
 	}
 
 }
