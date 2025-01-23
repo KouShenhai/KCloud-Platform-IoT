@@ -1,0 +1,94 @@
+# /*
+#  * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+#  * <p>
+#  * Licensed under the Apache License, Version 2.0 (the "License");
+#  * you may not use this file except in compliance with the License.
+#  * You may obtain a copy of the License at
+#  * <p>
+#  *   http://www.apache.org/licenses/LICENSE-2.0
+#  * <p>
+#  * Unless required by applicable law or agreed to in writing, software
+#  * distributed under the License is distributed on an "AS IS" BASIS,
+#  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  * See the License for the specific language governing permissions and
+#  * limitations under the License.
+#  */
+services:
+  postgresql:
+    image: timescale/timescaledb:latest-pg17
+    container_name: postgresql
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresql17/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=laokou123
+      - TZ=Asia/Shanghai
+    networks:
+      - laokou_network
+  redis:
+    image: redis:7.4.2
+    container_name: redis
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis7/conf/redis.conf:/etc/redis/redis.conf
+      - ./redis7/data:/data
+    command: redis-server --appendonly yes --requirepass 'laokou123'
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      - laokou_network
+  rocketmq-namesrv:
+    image: apache/rocketmq:5.3.1
+    container_name: rocketmq-namesrv
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "9876:9876"
+    command: sh mqnamesrv
+    environment:
+      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
+      - TZ=Asia/Shanghai
+    networks:
+      - laokou_network
+  rocketmq-broker:
+    image: apache/rocketmq:5.3.1
+    container_name: rocketmq-broker
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "10909:10909"
+      - "10911:10911"
+      - "10912:10912"
+    # 自动创建主题
+    command: sh mqbroker -n rocketmq-namesrv:9876 -c /home/rocketmq/conf/broker.conf autoCreateTopicEnable=true
+    environment:
+      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./rocketmq5/broker/conf/broker.conf:/home/rocketmq/conf/broker.conf
+      # 挂载数据
+      - ./rocketmq5/broker/store:/home/rocketmq/store
+      # 挂载日志
+      - ./rocketmq5/broker/logs:/home/rocketmq/logs
+    networks:
+      - laokou_network
+    depends_on:
+      - rocketmq-namesrv
+networks:
+  laokou_network:
+    driver: bridge

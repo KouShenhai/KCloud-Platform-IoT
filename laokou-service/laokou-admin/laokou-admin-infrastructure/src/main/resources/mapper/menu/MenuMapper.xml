@@ -29,6 +29,7 @@
     icon,
     "sort",
     "status",
+    permission,
     create_time
   </sql>
 
@@ -39,6 +40,12 @@
     </if>
     <if test="pageQuery.status != null">
       and status = #{pageQuery.status}
+    </if>
+    <if test="pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
+      and create_time <![CDATA[ >= ]]> to_timestamp(#{pageQuery.params.startTime}, 'YYYY-MM-DD HH24:MI:SS')
+    </if>
+    <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
+      and create_time <![CDATA[ <= ]]> to_timestamp(#{pageQuery.params.endTime}, 'YYYY-MM-DD HH24:MI:SS')
     </if>
   </sql>
 
