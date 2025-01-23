@@ -19,10 +19,12 @@ package org.laokou.common.mybatisplus.config;
 
 import com.baomidou.mybatisplus.extension.parser.cache.AbstractCaffeineJsqlParseCache;
 import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
+import java.util.function.Consumer;
 
 /**
  * jsqlparser 缓存 fury 序列化 Caffeine 缓存实现.
@@ -33,6 +35,10 @@ public class FurySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 
 	public FurySerialCaffeineJsqlParseCache(Cache<String, byte[]> cache) {
 		super(cache);
+	}
+
+	public FurySerialCaffeineJsqlParseCache(Consumer<Caffeine<Object, Object>> consumer) {
+		super(consumer);
 	}
 
 	public FurySerialCaffeineJsqlParseCache(Cache<String, byte[]> cache, Executor executor, boolean async) {

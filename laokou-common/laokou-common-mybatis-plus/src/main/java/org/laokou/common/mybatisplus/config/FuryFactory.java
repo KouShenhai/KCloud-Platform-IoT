@@ -17,8 +17,6 @@
 
 package org.laokou.common.mybatisplus.config;
 
-import net.sf.jsqlparser.expression.Function;
-import net.sf.jsqlparser.statement.select.OrderByElement;
 import org.apache.fury.Fury;
 import org.apache.fury.ThreadSafeFury;
 
@@ -249,17 +247,17 @@ public final class FuryFactory {
 		FURY.register(net.sf.jsqlparser.expression.BinaryExpression.class);
 		FURY.register(net.sf.jsqlparser.expression.operators.relational.ComparisonOperator.class);
 		FURY.register(net.sf.jsqlparser.expression.operators.relational.OldOracleJoinBinaryExpression.class);
+		FURY.register(net.sf.jsqlparser.expression.Function.NullHandling.class);
 		FURY.register(net.sf.jsqlparser.statement.CreateFunctionalStatement.class);
 		FURY.register(net.sf.jsqlparser.statement.select.Select.class);
 		FURY.register(net.sf.jsqlparser.statement.select.SetOperation.class);
 		FURY.register(net.sf.jsqlparser.util.cnfexpression.MultipleExpression.class);
 		FURY.register(net.sf.jsqlparser.statement.insert.InsertModifierPriority.class);
-		FURY.register(OrderByElement.NullOrdering.class);
+		FURY.register(net.sf.jsqlparser.statement.select.OrderByElement.NullOrdering.class);
 		FURY.register(net.sf.jsqlparser.statement.select.ForMode.class);
 		FURY.register(net.sf.jsqlparser.statement.select.MySqlSqlCacheFlags.class);
 		FURY.register(net.sf.jsqlparser.statement.select.PlainSelect.BigQuerySelectQualifier.class);
 		FURY.register(net.sf.jsqlparser.statement.update.UpdateModifierPriority.class);
-		FURY.register(Function.NullHandling.class);
 	}
 
 	public static FuryFactory getFuryFactory() {
