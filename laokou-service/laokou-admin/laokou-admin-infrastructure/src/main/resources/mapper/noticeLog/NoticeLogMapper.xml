@@ -45,10 +45,10 @@
       and status = #{pageQuery.status}
     </if>
     <if test="pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
-      and create_time <![CDATA[ >= ]]> to_timestamp(#{pageQuery.params.startTime}, 'YYYY-MM-DD HH24:MI:SS')
+      and create_time <![CDATA[ >= ]]> #{pageQuery.params.startTime}
     </if>
     <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
-      and create_time <![CDATA[ <= ]]> to_timestamp(#{pageQuery.params.endTime}, 'YYYY-MM-DD HH24:MI:SS')
+      and create_time <![CDATA[ <= ]]> #{pageQuery.params.endTime}
     </if>
   </sql>
 
