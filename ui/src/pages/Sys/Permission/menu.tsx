@@ -9,8 +9,13 @@ export default () => {
 
 	type TableColumns = {
 		id: number;
-		createTime: string | undefined;
 		name: string | undefined;
+		path: string | undefined;
+		status: number | undefined;
+		type: number | undefined;
+		permission: string | undefined;
+		createTime: string | undefined;
+		sort: number | undefined;
 	};
 
 	const actionRef = useRef();
@@ -23,7 +28,8 @@ export default () => {
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
 			code: 1,
-			name: trim(params?.name),
+			type: trim(params?.type),
+			status: params?.status,
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
@@ -54,6 +60,49 @@ export default () => {
 		{
 			title: '名称',
 			dataIndex: 'name',
+			ellipsis: true,
+			hideInSearch: true,
+		},
+		{
+			title: '图标',
+			dataIndex: 'icon',
+			ellipsis: true,
+			hideInSearch: true
+		},
+		{
+			title: '路径',
+			dataIndex: 'path',
+			ellipsis: true,
+			hideInSearch: true
+		},
+		{
+			title: '权限标识',
+			dataIndex: 'permission',
+			ellipsis: true,
+			hideInSearch: true,
+		},
+		{
+			title: '类型',
+			dataIndex: 'type',
+			valueEnum: {
+				0: {text: '菜单', status: 'Processing'},
+				1: {text: '按钮', status: 'Default'},
+			},
+			ellipsis: true
+		},
+		{
+			title: '状态',
+			dataIndex: 'status',
+			valueEnum: {
+				0: {text: '启用', status: 'Success'},
+				1: {text: '禁用', status: 'Error'},
+			},
+			ellipsis: true
+		},
+		{
+			title: '排序',
+			dataIndex: 'sort',
+			hideInSearch: true,
 			ellipsis: true
 		},
 		{
