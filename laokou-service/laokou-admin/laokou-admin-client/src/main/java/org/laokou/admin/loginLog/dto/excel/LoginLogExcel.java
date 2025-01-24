@@ -17,12 +17,12 @@
 
 package org.laokou.admin.loginLog.dto.excel;
 
-import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.annotation.write.style.ColumnWidth;
-import com.alibaba.excel.annotation.write.style.ContentStyle;
-import com.alibaba.excel.enums.BooleanEnum;
-import com.alibaba.excel.enums.poi.HorizontalAlignmentEnum;
-import com.alibaba.excel.enums.poi.VerticalAlignmentEnum;
+import cn.idev.excel.annotation.ExcelProperty;
+import cn.idev.excel.annotation.write.style.ColumnWidth;
+import cn.idev.excel.annotation.write.style.ContentStyle;
+import cn.idev.excel.enums.BooleanEnum;
+import cn.idev.excel.enums.poi.HorizontalAlignmentEnum;
+import cn.idev.excel.enums.poi.VerticalAlignmentEnum;
 import lombok.Data;
 import org.laokou.common.i18n.dto.DTO;
 

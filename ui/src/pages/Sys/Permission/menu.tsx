@@ -4,6 +4,8 @@ import {treeListV3} from "@/services/admin/menu";
 import {trim} from "@/utils/format";
 import {useRef} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
+import { Button } from 'antd';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
 export default () => {
 
@@ -145,6 +147,16 @@ export default () => {
 					layout: 'vertical',
 					defaultCollapsed: true,
 				}}
+				toolBarRender={
+					() => [
+						<Button key="save" type="primary" icon={<PlusOutlined />}>
+							新增
+						</Button>,
+						<Button key="remove" type="primary" danger icon={<DeleteOutlined />}>
+							删除
+						</Button>
+					]
+				}
 				dateFormatter="string"
 				toolbar={{
 					title: '菜单',

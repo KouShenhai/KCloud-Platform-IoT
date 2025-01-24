@@ -17,18 +17,18 @@
 
 package org.laokou.common.excel.utils;
 
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.annotation.write.style.ColumnWidth;
-import com.alibaba.excel.annotation.write.style.ContentStyle;
-import com.alibaba.excel.context.AnalysisContext;
-import com.alibaba.excel.enums.BooleanEnum;
-import com.alibaba.excel.enums.poi.HorizontalAlignmentEnum;
-import com.alibaba.excel.enums.poi.VerticalAlignmentEnum;
-import com.alibaba.excel.read.listener.ReadListener;
-import com.alibaba.excel.util.ListUtils;
-import com.alibaba.excel.write.metadata.WriteSheet;
+import cn.idev.excel.FastExcel;
+import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.annotation.ExcelProperty;
+import cn.idev.excel.annotation.write.style.ColumnWidth;
+import cn.idev.excel.annotation.write.style.ContentStyle;
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.enums.BooleanEnum;
+import cn.idev.excel.enums.poi.HorizontalAlignmentEnum;
+import cn.idev.excel.enums.poi.VerticalAlignmentEnum;
+import cn.idev.excel.read.listener.ReadListener;
+import cn.idev.excel.util.ListUtils;
+import cn.idev.excel.write.metadata.WriteSheet;
 import com.google.common.collect.Lists;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
@@ -71,7 +71,7 @@ public class ExcelUtil {
 
 	public static <M, T> void doImport(String fileName, InputStream inputStream, HttpServletResponse response,
 			Class<M> clazz, BiConsumer<M, T> consumer, MybatisUtil mybatisUtil) {
-		EasyExcel.read(inputStream, new DataListener<>(clazz, consumer, response, mybatisUtil, fileName))
+		FastExcel.read(inputStream, new DataListener<>(clazz, consumer, response, mybatisUtil, fileName))
 			.sheet()
 			.doRead();
 	}
@@ -88,10 +88,10 @@ public class ExcelUtil {
 			ExcelConvert<DO, EXCEL> convertor) {
 		if (crudMapper.selectObjectCount(pageQuery) > 0) {
 			try (ServletOutputStream out = response.getOutputStream();
-					ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
+					ExcelWriter excelWriter = FastExcel.write(out, clazz).build()) {
 				// 设置请求头
 				header(fileName, response);
-				// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
+				// https://idev.cn/fastexcel/zh-CN/docs/write/write_hard
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
 				crudMapper.selectObjectListHandler(pageQuery, resultContext -> {
 					list.add(resultContext.getResultObject());
@@ -126,7 +126,7 @@ public class ExcelUtil {
 
 	private static <EXCEL, DO> void writeSheet(List<DO> list, Class<EXCEL> clazz, ExcelConvert<DO, EXCEL> convertor,
 			ExcelWriter excelWriter) {
-		WriteSheet writeSheet = EasyExcel.writerSheet().head(clazz).build();
+		WriteSheet writeSheet = FastExcel.writerSheet().head(clazz).build();
 		// 写数据
 		excelWriter.write(convertor.toExcelList(list), writeSheet);
 		list.clear();
@@ -215,12 +215,12 @@ public class ExcelUtil {
 			}
 			// 写入excel
 			try (ServletOutputStream out = response.getOutputStream();
-					ExcelWriter excelWriter = EasyExcel.write(out, Error.class).build()) {
+					ExcelWriter excelWriter = FastExcel.write(out, Error.class).build()) {
 				// 设置请求头
 				header(fileName, response);
 				if (CollectionUtil.isEmpty(ERRORS)) {
 					excelWriter.write(Collections.singletonList(new Error(EMPTY)),
-							EasyExcel.writerSheet().head(Error.class).build());
+							FastExcel.writerSheet().head(Error.class).build());
 				}
 				else {
 					List<List<String>> partition = Lists.partition(ERRORS, BATCH_COUNT);
