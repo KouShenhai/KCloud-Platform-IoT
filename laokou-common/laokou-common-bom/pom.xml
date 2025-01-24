@@ -56,8 +56,8 @@
     <rocketmq.version>5.3.1</rocketmq.version>
     <!--jakarta.servlet-api版本-->
     <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
-    <!--easyexcel版本-->
-    <easyexcel.version>4.0.3</easyexcel.version>
+    <!--fastexcel-->
+    <fastexcel.version>1.1.0</fastexcel.version>
     <!--spring-security-oauth2-authorization-server版本-->
     <spring-security-oauth2-authorization-server.version>1.4.1</spring-security-oauth2-authorization-server.version>
     <!--spring-boot-starter-oauth2版本-->
@@ -674,9 +674,9 @@
         <version>${disruptor.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.alibaba</groupId>
-        <artifactId>easyexcel-core</artifactId>
-        <version>${easyexcel.version}</version>
+        <groupId>cn.idev.excel</groupId>
+        <artifactId>fastexcel</artifactId>
+        <version>${fastexcel.version}</version>
       </dependency>
       <dependency>
         <groupId>io.swagger.core.v3</groupId>
