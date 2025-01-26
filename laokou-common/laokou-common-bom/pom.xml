@@ -47,7 +47,7 @@
     <!--guava版本-->
     <guava.version>33.4.0-jre</guava.version>
     <!--oshi版本-->
-    <oshi.version>6.6.5</oshi.version>
+    <oshi.version>6.6.6</oshi.version>
     <!--elasticsearch版本-->
     <elasticsearch.version>8.17.1</elasticsearch.version>
     <!--rocketmq-spring版本-->
