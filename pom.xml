@@ -75,7 +75,7 @@
     <!--cloud-alibaba版本-->
     <spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
     <!--springdoc-openapi版本-->
-    <springdoc-openapi.version>2.8.3</springdoc-openapi.version>
+    <springdoc-openapi.version>2.8.4</springdoc-openapi.version>
     <docker.host>tcp://127.0.0.1:2375</docker.host>
     <docker.registry>registry.cn-shenzhen.aliyuncs.com</docker.registry>
     <docker.namespace>koushenhai</docker.namespace>
