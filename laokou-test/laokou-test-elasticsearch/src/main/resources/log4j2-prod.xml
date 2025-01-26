@@ -36,14 +36,22 @@
     <property name="LOG_INTERVAL" value="1"/>
     <!-- 环境 -->
     <property name="PROFILE" value="prod"/>
+    <!--
+      %d 日期
+      %t 线程
+    -->
+    <property name="LOG_CONSOLE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:address} - ${PROFILE}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
   </Properties>
   <Appenders>
     <!-- 控制台输出 -->
     <Console name="console" target="SYSTEM_OUT">
-      <JsonLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="false" includeStacktrace="true" stacktraceAsString="true" objectMessageAsJsonObject="true">
-        <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
-        <KeyValuePair key="profile" value="${PROFILE}" />
-      </JsonLayout>
+      <!--
+            <JsonLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
+              <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
+              <KeyValuePair key="profile" value="${PROFILE}" />
+            </JsonLayout>
+      -->
+      <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
     </Console>
     <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.json"
                              filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_%d{yyyy-MM-dd}.%i.json.gz"
