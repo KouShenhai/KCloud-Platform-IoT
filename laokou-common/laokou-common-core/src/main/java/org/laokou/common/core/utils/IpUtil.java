@@ -75,7 +75,8 @@ public final class IpUtil {
 		if (conditionNull(ip)) {
 			ip = request.getRemoteAddr();
 		}
-		return LOCAL_IPV6.equals(ip) || StringUtil.isEmpty(ip) ? LOCAL_IPV4 : ip.split(COMMA)[0];
+		return LOCAL_IPV6.equals(ip) || ip.contains(LOCAL_IPV6) || StringUtil.isEmpty(ip) ? LOCAL_IPV4
+				: ip.split(COMMA)[0];
 	}
 
 	/**

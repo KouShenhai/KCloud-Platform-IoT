@@ -108,6 +108,18 @@ services:
       - laokou_network
     depends_on:
       - rocketmq-namesrv
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "9010:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer/data:/data
 networks:
   laokou_network:
     driver: bridge
