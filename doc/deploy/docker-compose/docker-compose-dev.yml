@@ -89,6 +89,25 @@ services:
       - laokou_network
     depends_on:
       - rocketmq-namesrv
+  # 账号密码 admin/admin
+  rocketmq-dashboard:
+    image: apacherocketmq/rocketmq-dashboard:1.0.0
+    container_name: rocketmq-dashboard
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "8089:8080"
+    environment:
+      - JAVA_OPTS=-Xmx256M -Xms256M -Xmn128M -Drocketmq.namesrv.addr=rocketmq-namesrv:9876
+      - TZ=Asia/Shanghai
+      # 开启登录认证
+      - ROCKETMQ_CONFIG_LOGIN_REQUIRED=true
+    networks:
+      - laokou_network
+    depends_on:
+      - rocketmq-namesrv
 networks:
   laokou_network:
     driver: bridge

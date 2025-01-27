@@ -33,7 +33,6 @@ import org.springframework.session.data.redis.RedisIndexedSessionRepository;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 import static org.laokou.common.security.config.OAuth2ResourceServerConfig.customizer;
-import static org.springframework.security.config.http.SessionCreationPolicy.IF_REQUIRED;
 
 /**
  * 资源服务器配置.
@@ -66,13 +65,13 @@ class OAuth2ResourceServerConfig {
 	) throws Exception {
 		return http
 			// 只会在需要时创建 HttpSession【默认配置】
-			.sessionManagement(config -> config
-				.sessionCreationPolicy(IF_REQUIRED)
-				.invalidSessionStrategy(sessionInvalidStrategy)
-				// 最大会话1
-				.maximumSessions(1)
-				.sessionRegistry(springSessionBackedSessionRegistry)
-				.expiredSessionStrategy(sessionExpiredStrategy))
+			//  .sessionManagement(config -> config
+			// 	.sessionCreationPolicy(IF_REQUIRED)
+			// 	.invalidSessionStrategy(sessionInvalidStrategy)
+			// 	// 最大会话1
+			// 	.maximumSessions(1)
+			// 	.sessionRegistry(springSessionBackedSessionRegistry)
+			// 	.expiredSessionStrategy(sessionExpiredStrategy))
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer
 				.httpStrictTransportSecurity(hsts -> hsts
 					.includeSubDomains(true)
