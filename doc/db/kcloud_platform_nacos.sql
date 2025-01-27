@@ -3229,7 +3229,7 @@ spring:
       httpclient:
         ssl:
           # 信任所有下游证书
-          use-insecure-trust-manager: true
+          use-insecure-trust-manager: false
         # 关闭netty日志
         wiretap: false
         pool:
@@ -5534,7 +5534,7 @@ spring:
             max-lifetime: 1800000
             maximum-pool-size: 60
             minimum-idle: 10
-            is-read-only: false        
+            is-read-only: false
         iot:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: org.postgresql.Driver
