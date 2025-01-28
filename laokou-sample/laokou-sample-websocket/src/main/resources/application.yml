@@ -4,7 +4,17 @@ jasypt:
 
 server:
   port: 9032
-
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
 spring:
   profiles:
     active: @PROFILE-ACTIVE@

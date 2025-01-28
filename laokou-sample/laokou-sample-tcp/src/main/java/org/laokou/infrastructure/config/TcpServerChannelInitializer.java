@@ -18,6 +18,7 @@
 package org.laokou.infrastructure.config;
 
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.FixedLengthFrameDecoder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.netty.annotation.TcpServer;
@@ -40,7 +41,7 @@ public class TcpServerChannelInitializer extends AbstractTcpServerChannelInitial
 	private final TcpServerHandler tcpServerHandler;
 
 	@Override
-	protected void preHandler(ChannelPipeline pipeline) {
+	protected void preHandler(SocketChannel channel, ChannelPipeline pipeline) {
 		// 定长截取
 		pipeline.addLast("fixedLengthFrameDecoder", new FixedLengthFrameDecoder(4));
 		// 解码
@@ -50,7 +51,7 @@ public class TcpServerChannelInitializer extends AbstractTcpServerChannelInitial
 	}
 
 	@Override
-	protected void postHandler(ChannelPipeline pipeline) {
+	protected void postHandler(SocketChannel channel, ChannelPipeline pipeline) {
 		pipeline.addLast("tcpServerHandler", tcpServerHandler);
 	}
 
