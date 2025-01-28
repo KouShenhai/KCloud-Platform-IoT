@@ -46,7 +46,7 @@ public class WebSocketServerChannelInitializer extends AbstractWebSocketServerCh
 
 	private final EventExecutorGroup webSocketEventExecutorGroup;
 
-	private SslContext sslContext;
+	private volatile SslContext sslContext;
 
 	public WebSocketServerChannelInitializer(SpringWebSocketServerProperties springWebSocketServerProperties,
 			ChannelInboundHandlerAdapter webSocketServerHandler, EventExecutorGroup webSocketEventExecutorGroup) {
