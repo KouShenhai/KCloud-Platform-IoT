@@ -47,7 +47,7 @@ public class WsSampleApp {
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
 				System.getProperty("server.port", "9032")));
 		new SpringApplicationBuilder(WsSampleApp.class).web(WebApplicationType.SERVLET).run(args);
-		log.info("访问地址：http://127.0.0.1:9032");
+		log.info("访问地址：https://127.0.0.1:9032");
 	}
 
 }
