@@ -19,6 +19,7 @@ package org.laokou.infrastructure.config;
 
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.util.concurrent.EventExecutorGroup;
 import org.laokou.common.netty.annotation.WebSocketServer;
 import org.laokou.common.netty.config.AbstractWebSocketServerChannelInitializer;
@@ -44,12 +45,12 @@ public class WebSocketServerChannelInitializer extends AbstractWebSocketServerCh
 	}
 
 	@Override
-	protected void preHandler(ChannelPipeline pipeline) {
+	protected void preHandler(SocketChannel channel, ChannelPipeline pipeline) {
 
 	}
 
 	@Override
-	protected void postHandler(ChannelPipeline pipeline) {
+	protected void postHandler(SocketChannel channel, ChannelPipeline pipeline) {
 		// 业务处理
 		pipeline.addLast(webSocketEventExecutorGroup, webSocketServerHandler);
 	}

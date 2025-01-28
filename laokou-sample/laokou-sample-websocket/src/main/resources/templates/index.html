@@ -6,15 +6,15 @@
 </head>
 <body>
 <label for="clientId">
-    <input id="clientId" type="text" placeholder="请输入客户端ID">
+    <input id="clientId" placeholder="请输入客户端ID" type="text">
 </label>
 <button id="btn1" onclick="connect()">连接</button>
 <br/>
 <label for="receiver">
-    <input id="receiver" type="text" placeholder="请输入用户ID">
+    <input id="receiver" placeholder="请输入用户ID" type="text">
 </label>
 <label for="content">
-    <input id="content" type="text" placeholder="请输入内容">
+    <input id="content" placeholder="请输入内容" type="text">
 </label>
 <button id="btn2" onclick="send()">发送</button>
 </body>
@@ -26,7 +26,7 @@
 
         let clientId = getClientId();
 
-        socket = new WebSocket("ws://127.0.0.1:1112/ws")
+        socket = new WebSocket("wss://127.0.0.1:1112/ws")
 
         socket.onopen = function() {
             alert("连接成功")

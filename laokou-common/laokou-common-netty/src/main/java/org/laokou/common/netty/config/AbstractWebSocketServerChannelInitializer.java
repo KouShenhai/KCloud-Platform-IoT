@@ -39,10 +39,10 @@ public abstract class AbstractWebSocketServerChannelInitializer extends Abstract
 
 	// @formatter:off
 	@Override
-	protected void initChannel(NioSocketChannel channel) {
+	protected void initChannel(NioSocketChannel channel) throws Exception {
 		ChannelPipeline pipeline = channel.pipeline();
 		// 前置处理
-		preHandler(pipeline);
+		preHandler(channel, pipeline);
 		// HTTP解码器
 		pipeline.addLast("httpServerCodec", new HttpServerCodec());
 		// 块状方式写入
@@ -56,7 +56,7 @@ public abstract class AbstractWebSocketServerChannelInitializer extends Abstract
 		// Flush合并
 		pipeline.addLast("flushConsolidationHandler", new FlushConsolidationHandler(springWebSocketServerProperties.getExplicitFlushAfterFlushes(), springWebSocketServerProperties.isConsolidateWhenNoReadInProgress()));
 		// 后置处理
-		postHandler(pipeline);
+		postHandler(channel, pipeline);
 	}
 	// @formatter:on
 

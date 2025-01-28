@@ -50,6 +50,10 @@ public final class FileUtil {
 	private FileUtil() {
 	}
 
+	public static InputStream newInputStream(String path) throws IOException {
+		return Files.newInputStream(Path.of(path));
+	}
+
 	public static BufferedReader newBufferedReader(String path) throws IOException {
 		return Files.newBufferedReader(Path.of(path));
 	}

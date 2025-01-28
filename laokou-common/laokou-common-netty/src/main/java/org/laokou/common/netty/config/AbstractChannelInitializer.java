@@ -20,14 +20,15 @@ package org.laokou.common.netty.config;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.socket.SocketChannel;
 
 /**
  * @author laokou
  */
 public abstract class AbstractChannelInitializer<C extends Channel> extends ChannelInitializer<C> {
 
-	abstract protected void preHandler(ChannelPipeline pipeline);
+	abstract protected void preHandler(SocketChannel channel, ChannelPipeline pipeline) throws Exception;
 
-	abstract protected void postHandler(ChannelPipeline pipeline);
+	abstract protected void postHandler(SocketChannel channel, ChannelPipeline pipeline) throws Exception;
 
 }

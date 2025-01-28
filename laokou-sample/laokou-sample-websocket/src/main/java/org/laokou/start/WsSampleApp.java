@@ -19,6 +19,7 @@ package org.laokou.start;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.netty.annotation.EnableWebSocketServer;
 import org.springframework.boot.WebApplicationType;
@@ -33,6 +34,7 @@ import java.net.InetAddress;
  *
  * @author laokou
  */
+@Slf4j
 @EnableTaskExecutor
 @EnableWebSocketServer
 @EnableEncryptableProperties
@@ -45,6 +47,7 @@ public class WsSampleApp {
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
 				System.getProperty("server.port", "9032")));
 		new SpringApplicationBuilder(WsSampleApp.class).web(WebApplicationType.SERVLET).run(args);
+		log.info("访问地址：http://127.0.0.1:9032");
 	}
 
 }

@@ -29,16 +29,16 @@ import java.util.concurrent.TimeUnit;
 public abstract class AbstractTcpServerChannelInitializer extends AbstractChannelInitializer<SocketChannel> {
 
 	@Override
-	protected void initChannel(SocketChannel channel) {
+	protected void initChannel(SocketChannel channel) throws Exception {
 		ChannelPipeline pipeline = channel.pipeline();
 		SpringTcpServerProperties.Config config = getConfig();
 		// 前置处理
-		preHandler(pipeline);
+		preHandler(channel, pipeline);
 		// 心跳检测
 		pipeline.addLast("idleStateHandler", new IdleStateHandler(config.getReaderIdleTime(),
 				config.getWriterIdleTime(), config.getAllIdleTime(), TimeUnit.SECONDS));
 		// 后置处理
-		postHandler(pipeline);
+		postHandler(channel, pipeline);
 	}
 
 	protected abstract SpringTcpServerProperties.Config getConfig();
