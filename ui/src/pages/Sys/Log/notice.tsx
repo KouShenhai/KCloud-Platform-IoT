@@ -52,41 +52,6 @@ export default () => {
 		return param;
 	}
 
-	const exportToExcel = async () => {
-		const _list: TableColumns[] = [];
-		// 格式化数据
-		list.forEach(item => {
-			item.status = getStatus(item.status as '0')?.text
-			_list.push(item)
-		})
-		ExportToExcel({
-			sheetData: _list,
-			sheetFilter: ["code", "name", "status", "param", "errorMessage", "createTime"],
-			sheetHeader: ["标识", "名称", "状态", "参数", "错误信息", "创建时间"],
-			fileName: "通知日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
-			sheetName: "通知日志"
-		})
-	}
-
-	const exportAllToExcel = async () => {
-		exportV3(param)
-	}
-
-	const list_ = async (params: any) => {
-		list = []
-		return pageV3(getPageQuery(params)).then(res => {
-			res?.data?.records?.forEach((item: TableColumns) => {
-				item.status = statusEnum[item.status as '0'];
-				list.push(item);
-			});
-			return Promise.resolve({
-				data: list,
-				total: parseInt(res.data.total),
-				success: true,
-			});
-		})
-	}
-
 	const columns: ProColumns<TableColumns>[] = [
 		{
 			title: '序号',
@@ -239,7 +204,18 @@ export default () => {
 				columns={columns}
 				request={(params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return list_(params)
+					list = []
+					return pageV3(getPageQuery(params)).then(res => {
+						res?.data?.records?.forEach((item: TableColumns) => {
+							item.status = statusEnum[item.status as '0'];
+							list.push(item);
+						});
+						return Promise.resolve({
+							data: list,
+							total: parseInt(res.data.total),
+							success: true,
+						});
+					})
 				}}
 				rowKey="id"
 				pagination={{
@@ -253,10 +229,26 @@ export default () => {
 				}}
 				toolBarRender={
 					() => [
-						<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={exportToExcel}>
+						<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={() => {
+							const _list: TableColumns[] = [];
+							// 格式化数据
+							list.forEach(item => {
+								item.status = getStatus(item.status as '0')?.text
+								_list.push(item)
+							})
+							ExportToExcel({
+								sheetData: _list,
+								sheetFilter: ["code", "name", "status", "param", "errorMessage", "createTime"],
+								sheetHeader: ["标识", "名称", "状态", "参数", "错误信息", "创建时间"],
+								fileName: "通知日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
+								sheetName: "通知日志"
+							})
+						}}>
 							导出
 						</Button>,
-						<Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={exportAllToExcel}>
+						<Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={() => {
+							exportV3(param)
+						}}>
 							导出全部
 						</Button>
 					]
