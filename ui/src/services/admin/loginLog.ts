@@ -56,7 +56,7 @@ export async function getByIdV3(
 
 /** 导出登录日志 导出登录日志 POST /v3/login-logs/export */
 export function exportV3(body: API.LoginLogExportCmd, options?: { [key: string]: any }) {
-	ExportAllToExcel("登录日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/api/admin/v3/login-logs/export', 'POST', body, options)
+	ExportAllToExcel("登录日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/api/admin/v3/login-logs/export', 'POST', body, options)
 }
 
 /** 导入登录日志 导入登录日志 POST /v3/login-logs/import */

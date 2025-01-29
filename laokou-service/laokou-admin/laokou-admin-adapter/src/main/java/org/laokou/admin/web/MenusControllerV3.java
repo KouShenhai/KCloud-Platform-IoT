@@ -105,6 +105,7 @@ public class MenusControllerV3 {
 
 	@TraceLog
 	@PostMapping("tree-list")
+	@PreAuthorize("hasAuthority('sys:menu:tree-list')")
 	@Operation(summary = "查询菜单树列表", description = "查询菜单树列表")
 	public Result<List<MenuTreeCO>> treeListV3(@RequestBody MenuTreeListQry qry) {
 		return menusServiceI.treeList(qry);

@@ -81,18 +81,7 @@ export default () => {
 	}
 
 	const list_ = async (params: any) => {
-		list = []
-		return pageV3(getPageQuery(params)).then(res => {
-			res?.data?.records?.forEach((item: TableColumns) => {
-				item.status = statusEnum[item.status as '0'];
-				list.push(item);
-			});
-			return Promise.resolve({
-				data: list,
-				total: parseInt(res.data.total),
-				success: true,
-			});
-		})
+
 	}
 
 	const columns: ProColumns<TableColumns>[] = [
@@ -247,7 +236,18 @@ export default () => {
 				columns={columns}
 				request={(params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return list_(params)
+					list = []
+					return pageV3(getPageQuery(params)).then(res => {
+						res?.data?.records?.forEach((item: TableColumns) => {
+							item.status = statusEnum[item.status as '0'];
+							list.push(item);
+						});
+						return Promise.resolve({
+							data: list,
+							total: parseInt(res.data.total),
+							success: true,
+						});
+					})
 				}}
 				rowKey="id"
 				pagination={{

@@ -1,10 +1,10 @@
 import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {treeListV3} from "@/services/admin/menu";
+import {treeListV3, removeV3} from "@/services/admin/menu";
 import {trim} from "@/utils/format";
 import {useRef} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
-import { Button } from 'antd';
+import {Button, message, Modal} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 
 export default () => {
@@ -24,6 +24,8 @@ export default () => {
 
 	let param: any
 
+	let ids: number[];
+
 	const getPageQuery = (params: any) => {
 		param = {
 			pageSize: params?.pageSize,
@@ -40,22 +42,13 @@ export default () => {
 		return param;
 	}
 
-	const _list = async (params: any) => {
-		return treeListV3(getPageQuery(params)).then(res => {
-			return Promise.resolve({
-				data: res.data,
-				success: true,
-			});
-		})
-	}
-
 	const rowSelection: TableRowSelection<TableColumns> = {
-		onChange: (selectedRowKeys, selectedRows) => {
-			console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-		},
-		onSelect: (record, selected, selectedRows) => {
-			console.log(record, selected, selectedRows);
-		},
+		onChange: (selectedRowKeys) => {
+			ids = []
+			selectedRowKeys.forEach(item => {
+				ids.push(item as number)
+			})
+		}
 	};
 
 	const columns: ProColumns<TableColumns>[] = [
@@ -139,7 +132,12 @@ export default () => {
 				columns={columns}
 				request={(params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return _list(params)
+					return treeListV3(getPageQuery(params)).then(res => {
+						return Promise.resolve({
+							data: res.data,
+							success: true,
+						});
+					})
 				}}
 				rowSelection={{ ...rowSelection }}
 				rowKey="id"
@@ -152,7 +150,24 @@ export default () => {
 						<Button key="save" type="primary" icon={<PlusOutlined />}>
 							新增
 						</Button>,
-						<Button key="remove" type="primary" danger icon={<DeleteOutlined />}>
+						<Button key="remove" type="primary" danger icon={<DeleteOutlined />} onClick={() => {
+							Modal.confirm({
+								title: '确认删除?',
+								content: '您确定要删除吗?',
+								okText: '确认',
+								cancelText: '取消',
+								onOk: async () => {
+									// @ts-ignore
+									removeV3(ids).then(res => {
+										if (res.code === 'OK') {
+											message.success("删除成功").then()
+											// @ts-ignore
+											actionRef?.current?.reload();
+										}
+									})
+								},
+							});
+						}}>
 							删除
 						</Button>
 					]

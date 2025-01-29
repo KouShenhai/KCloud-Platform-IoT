@@ -51,43 +51,6 @@ export default () => {
 		return param;
 	}
 
-	const exportToExcel = async () => {
-		const _list: TableColumns[] = [];
-		// 格式化数据
-		list.forEach(item => {
-			item.status = getLoginStatus(item.status as '0').text
-			item.type = getLoginType(item.type as '0')?.text
-			_list.push(item)
-		})
-		ExportToExcel({
-			sheetData: _list,
-			sheetFilter: ["username", "ip", "address", "browser", "os", "status", "errorMessage", "type", "createTime"],
-			sheetHeader: ["用户名", "IP地址", "归属地", "浏览器", "操作系统", "登录状态", "错误信息", "登录类型", "登录时间"],
-			fileName: "登录日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
-			sheetName: "登录日志"
-		})
-	}
-
-	const exportAllToExcel = async () => {
-		exportV3(param)
-	}
-
-	const _list = async (params: any) => {
-		list = []
-		return pageV3(getPageQuery(params)).then(res => {
-			res?.data?.records?.forEach((item: TableColumns) => {
-				item.status = item.status as '0';
-				item.type = item.type as '0';
-				list.push(item);
-			});
-			return Promise.resolve({
-				data: list,
-				total: parseInt(res.data.total),
-				success: true,
-			});
-		})
-	}
-
 	const columns: ProColumns<TableColumns>[] = [
 		{
 			title: '序号',
@@ -177,7 +140,19 @@ export default () => {
 			columns={columns}
 			request={(params) => {
 				// 表单搜索项会从 params 传入，传递给后端接口。
-				return _list(params)
+				list = []
+				return pageV3(getPageQuery(params)).then(res => {
+					res?.data?.records?.forEach((item: TableColumns) => {
+						item.status = item.status as '0';
+						item.type = item.type as '0';
+						list.push(item);
+					});
+					return Promise.resolve({
+						data: list,
+						total: parseInt(res.data.total),
+						success: true,
+					});
+				})
 			}}
 			rowKey="id"
 			pagination={{
@@ -191,10 +166,27 @@ export default () => {
 			}}
 			toolBarRender={
 				() => [
-					<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={exportToExcel}>
+					<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={() => {
+						const _list: TableColumns[] = [];
+						// 格式化数据
+						list.forEach(item => {
+							item.status = getLoginStatus(item.status as '0').text
+							item.type = getLoginType(item.type as '0')?.text
+							_list.push(item)
+						})
+						ExportToExcel({
+							sheetData: _list,
+							sheetFilter: ["username", "ip", "address", "browser", "os", "status", "errorMessage", "type", "createTime"],
+							sheetHeader: ["用户名", "IP地址", "归属地", "浏览器", "操作系统", "登录状态", "错误信息", "登录类型", "登录时间"],
+							fileName: "登录日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
+							sheetName: "登录日志_导出_"
+						})
+					}}>
 						导出
 					</Button>,
-					<Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={exportAllToExcel}>
+					<Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={() => {
+						exportV3(param)
+					}}>
 						导出全部
 					</Button>
 				]

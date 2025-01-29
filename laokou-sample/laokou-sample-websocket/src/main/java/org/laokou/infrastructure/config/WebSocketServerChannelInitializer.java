@@ -67,9 +67,9 @@ public class WebSocketServerChannelInitializer extends AbstractWebSocketServerCh
 	}
 
 	private SslContext getSslContext() throws Exception {
+		// @formatter:off
 		String certPrivateKeyPassword = "laokou";
-		// 生成证书 => openssl pkcs12 -in scg-keystore.p12 -clcerts -nokeys -out
-		// certificate.crt
+		// 生成证书 => openssl pkcs12 -in scg-keystore.p12 -clcerts -nokeys -out certificate.crt
 		InputStream keyCertChainIn = ResourceUtil.getResource("classpath:certificate.crt").getInputStream();
 		// 生成私钥 => openssl pkcs12 -in scg-keystore.p12 -nocerts -out private.key
 		InputStream certPrivateKeyIn = ResourceUtil.getResource("classpath:private.key").getInputStream();
@@ -77,6 +77,7 @@ public class WebSocketServerChannelInitializer extends AbstractWebSocketServerCh
 			// 忽略SSL验证
 			.trustManager(InsecureTrustManagerFactory.INSTANCE)
 			.build();
+		// @formatter:on
 	}
 
 	@Override
