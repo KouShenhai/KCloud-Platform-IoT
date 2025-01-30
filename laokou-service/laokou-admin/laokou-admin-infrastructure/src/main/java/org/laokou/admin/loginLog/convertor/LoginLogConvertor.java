@@ -23,6 +23,7 @@ import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.loginLog.model.LoginLogE;
 import org.laokou.admin.loginLog.model.LoginStatus;
 import org.laokou.admin.loginLog.model.LoginType;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.excel.utils.ExcelUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -44,7 +45,7 @@ public final class LoginLogConvertor implements ExcelUtil.ExcelConvert<LoginLogD
 	public static LoginLogDO toDataObject(LoginLogE loginLogE, boolean isInsert) {
 		LoginLogDO loginLogDO = new LoginLogDO();
 		if (isInsert) {
-			loginLogDO.generatorId();
+			loginLogDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		else {
 			loginLogDO.setId(loginLogE.getId());

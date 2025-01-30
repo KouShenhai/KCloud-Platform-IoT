@@ -3,8 +3,7 @@
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 import {Dropdown, message, theme} from "antd";
-// @ts-ignore
-import {history} from 'umi';
+import {history} from "@umijs/max";
 import {HomeOutlined, LogoutOutlined, RobotOutlined, SettingOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
 import {logoutV3} from "@/services/auth/auth";
@@ -12,7 +11,7 @@ import {clearToken, getAccessToken, getExpiresTime, getRefreshToken} from "@/acc
 import React from "react";
 import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
 import {getProfileV3} from "@/services/admin/user";
-import {treeListV3} from "@/services/admin/menu";
+import {userTreeListV3} from "@/services/admin/menu";
 
 const getIcon = (icon: string) => {
 	switch (icon) {
@@ -28,10 +27,12 @@ const getRouters = (menus: any[]) => {
 		path: '/home',
 		icon: <HomeOutlined/>
 	}]
-	menus.forEach((item: any) => {
-		item.icon = getIcon(item.icon)
-		routers.push(item)
-	})
+	if (menus.length > 0) {
+		menus.forEach((item: any) => {
+			item.icon = getIcon(item.icon)
+			routers.push(item)
+		})
+	}
 	return routers
 }
 
@@ -41,12 +42,12 @@ export async function getInitialState(): Promise<{
 	avatar: string;
 	permissions: string[]
 }> {
-	const profile = await getProfileV3().catch(console.log);
+	const result = await getProfileV3().catch(console.log);
 	return {
-		id: profile?.data?.id,
-		username: profile?.data?.username,
-		avatar: profile?.data?.avatar,
-		permissions: profile?.data?.permissions,
+		id: result?.data?.id,
+		username: result?.data?.username,
+		avatar: result?.data?.avatar,
+		permissions: result?.data?.permissions,
 	};
 }
 
@@ -57,8 +58,8 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 			locale: false,
 			params: initialState?.username,
 			request: async () => {
-				const menu = await treeListV3({code: 0}).catch(console.log);
-				return getRouters(menu?.data)
+				const result = await userTreeListV3({code: 0}).catch(console.log);
+				return getRouters(result?.data)
 			}
 		},
 		layout: 'mix',

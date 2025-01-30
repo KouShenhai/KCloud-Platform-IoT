@@ -21,6 +21,7 @@ import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
@@ -39,7 +40,7 @@ public class UserConvertor {
 	public static UserDO toDataObject(UserE userE, boolean isInsert) {
 		UserDO userDO = new UserDO();
 		if (isInsert) {
-			userDO.generatorId();
+			userDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		else {
 			userDO.setId(userE.getId());

@@ -17,11 +17,12 @@
 
 package org.laokou.admin.role.convertor;
 
-import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
+import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.model.RoleE;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
  * 角色转换器.
@@ -33,7 +34,7 @@ public class RoleConvertor {
 	public static RoleDO toDataObject(RoleE roleE) {
 		RoleDO roleDO = ConvertUtil.sourceToTarget(roleE, RoleDO.class);
 		if (ObjectUtil.isNull(roleDO.getId())) {
-			roleDO.generatorId();
+			roleDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return roleDO;
 	}

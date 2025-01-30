@@ -17,8 +17,9 @@
 
 package org.laokou.generator.template.convertor;
 
-import org.laokou.generator.template.gatewayimpl.database.dataobject.TemplateDO;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.generator.template.dto.clientobject.TemplateCO;
+import org.laokou.generator.template.gatewayimpl.database.dataobject.TemplateDO;
 import org.laokou.generator.template.model.TemplateE;
 
 /**
@@ -32,7 +33,7 @@ public class TemplateConvertor {
 	public static TemplateDO toDataObject(TemplateE templateE, boolean isInsert) {
 		TemplateDO templateDO = new TemplateDO();
 		if (isInsert) {
-			templateDO.generatorId();
+			templateDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		else {
 			templateDO.setId(templateE.getId());

@@ -33,7 +33,7 @@ public class ${className}Convertor {
 	public static ${className}DO toDataObject(${className}E ${instanceName}E, boolean isInsert) {
         ${className}DO ${instanceName}DO = new ${className}DO();
 		if (isInsert) {
-			${instanceName}DO.generatorId();
+			${instanceName}DO.setId(IdGenerator.defaultSnowflakeId());
 		} else {
             ${instanceName}DO.setId(${instanceName}E.getId());
         }

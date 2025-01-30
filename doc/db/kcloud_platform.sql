@@ -771,6 +771,7 @@ INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", 
 INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (39, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 1, NULL, 0, '集群管理', '/sys/cluster', NULL, 3000, 0);
 INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (40, 1, 1, '2025-01-21 05:19:17', '2025-01-29 11:20:15.092772', 0, 0, 0, 23, 'sys:menu:tree-list', 1, '查询树列表', '', NULL, 50, 0);
 INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (41, 1, 1, '2025-01-21 05:19:17', '2025-01-29 11:20:15.092772', 0, 0, 0, 23, 'sys:menu:remove', 1, '删除', '', NULL, 20, 0);
+INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (42, 1, 1, '2025-01-21 05:19:17', '2025-01-29 14:32:03.026995', 0, 0, 0, 23, 'sys:menu:save', 1, '新增', '', NULL, 40, 0);
 
 -- ----------------------------
 -- Table structure for boot_sys_menu_package

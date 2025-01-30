@@ -15,10 +15,11 @@ export async function modifyV3(body: API.MenuModifyCmd, options?: { [key: string
 }
 
 /** 保存菜单 保存菜单 POST /v3/menus */
-export async function saveV3(body: API.MenuSaveCmd, options?: { [key: string]: any }) {
+export async function saveV3(body: API.MenuSaveCmd, requestId: string, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/menus', {
 		method: 'POST',
 		headers: {
+			'request-id': requestId,
 			'Content-Type': 'application/json',
 		},
 		data: body,
@@ -110,6 +111,28 @@ export async function pageV3(body: API.MenuPageQry, options?: { [key: string]: a
 
 export async function treeListV3(body: any,options?: { [key: string]: any }) {
 	return request<API.Result>('/api/admin/v3/menus/tree-list', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}
+
+export async function userTreeListV3(body: any,options?: { [key: string]: any }) {
+	return request<API.Result>('/api/admin/v3/menus/user-tree-list', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}
+
+export async function dictTreeListV3(body: any,options?: { [key: string]: any }) {
+	return request<API.Result>('/api/admin/v3/menus/dict-tree-list', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

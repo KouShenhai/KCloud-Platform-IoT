@@ -17,8 +17,9 @@
 
 package org.laokou.generator.info.convertor;
 
-import org.laokou.generator.info.gatewayimpl.database.dataobject.InfoDO;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.generator.info.dto.clientobject.InfoCO;
+import org.laokou.generator.info.gatewayimpl.database.dataobject.InfoDO;
 import org.laokou.generator.info.model.InfoE;
 
 /**
@@ -32,7 +33,7 @@ public class InfoConvertor {
 	public static InfoDO toDataObject(InfoE infoE, boolean isInsert) {
 		InfoDO infoDO = new InfoDO();
 		if (isInsert) {
-			infoDO.generatorId();
+			infoDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		else {
 			infoDO.setId(infoE.getId());

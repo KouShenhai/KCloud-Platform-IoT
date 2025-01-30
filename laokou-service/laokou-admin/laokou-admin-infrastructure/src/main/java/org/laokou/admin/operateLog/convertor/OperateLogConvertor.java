@@ -17,11 +17,12 @@
 
 package org.laokou.admin.operateLog.convertor;
 
-import org.laokou.admin.operateLog.gatewayimpl.database.dataobject.OperateLogDO;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.admin.operateLog.dto.clientobject.OperateLogCO;
+import org.laokou.admin.operateLog.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.admin.operateLog.model.OperateLogE;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
  * 操作日志转换器.
@@ -33,7 +34,7 @@ public class OperateLogConvertor {
 	public static OperateLogDO toDataObject(OperateLogE operateLogE) {
 		OperateLogDO operateLogDO = ConvertUtil.sourceToTarget(operateLogE, OperateLogDO.class);
 		if (ObjectUtil.isNull(operateLogDO.getId())) {
-			operateLogDO.generatorId();
+			operateLogDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return operateLogDO;
 	}
