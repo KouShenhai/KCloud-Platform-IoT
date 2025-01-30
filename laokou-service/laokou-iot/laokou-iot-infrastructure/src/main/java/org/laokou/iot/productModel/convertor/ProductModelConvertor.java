@@ -17,6 +17,7 @@
 
 package org.laokou.iot.productModel.convertor;
 
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.iot.productModel.gatewayimpl.database.dataobject.ProductModelDO;
 import org.laokou.iot.productModel.model.ProductModelE;
 
@@ -31,7 +32,7 @@ public class ProductModelConvertor {
 	public static ProductModelDO toDataObject(ProductModelE productModelE, boolean isInsert) {
 		ProductModelDO productModelDO = new ProductModelDO();
 		if (isInsert) {
-			productModelDO.generatorId();
+			productModelDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		else {
 			productModelDO.setId(productModelE.getId());

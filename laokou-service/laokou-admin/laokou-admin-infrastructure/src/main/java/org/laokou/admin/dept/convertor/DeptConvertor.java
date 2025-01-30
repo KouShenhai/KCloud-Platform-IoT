@@ -21,6 +21,7 @@ import org.laokou.admin.dept.dto.clientobject.DeptCO;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.dept.model.DeptE;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
@@ -33,7 +34,7 @@ public class DeptConvertor {
 	public static DeptDO toDataObject(DeptE deptE) {
 		DeptDO deptDO = ConvertUtil.sourceToTarget(deptE, DeptDO.class);
 		if (ObjectUtil.isNull(deptDO.getId())) {
-			deptDO.generatorId();
+			deptDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return deptDO;
 	}

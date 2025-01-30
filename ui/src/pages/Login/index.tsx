@@ -10,21 +10,16 @@ import {
 	UserOutlined,
 	WechatOutlined,
 } from '@ant-design/icons';
-import {LoginFormPage, ProFormCaptcha, ProFormText,} from '@ant-design/pro-components';
+import {CaptFieldRef, LoginFormPage, ProFormCaptcha, ProFormInstance, ProFormText,} from '@ant-design/pro-components';
 import {Col, Divider, Image, Row, Space, Tabs} from 'antd';
 import {CSSProperties, useEffect, useRef, useState} from 'react';
 import {login} from '@/services/auth/auth';
 import {getCaptchaImageByUuidV3, sendCaptchaV3 } from '@/services/auth/captcha';
-// @ts-ignore
-import {history} from 'umi';
 import {getSecretInfoV3} from '@/services/auth/secret';
 import {JSEncrypt} from 'jsencrypt';
 import {v7 as uuidV7} from 'uuid';
-// @ts-ignore
-import {ProFormInstance} from "@ant-design/pro-form"
 import {clearToken, setToken} from "@/access"
-// @ts-ignore
-import {CaptFieldRef} from "@ant-design/pro-form/lib";
+import {history} from "@umijs/max";
 
 const USERNAME_PASSWORD = {key: 'username_password', label: '用户名密码登录'};
 const MOBILE = {key: 'mobile', label: '手机号登录'};

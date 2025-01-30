@@ -21,6 +21,7 @@ import org.laokou.admin.i18nMessage.dto.clientobject.I18nMessageCO;
 import org.laokou.admin.i18nMessage.gatewayimpl.database.dataobject.I18nMessageDO;
 import org.laokou.admin.i18nMessage.model.I18nMessageE;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
@@ -33,7 +34,7 @@ public class I18nMessageConvertor {
 	public static I18nMessageDO toDataObject(I18nMessageE i18nMessageE) {
 		I18nMessageDO i18nMessageDO = ConvertUtil.sourceToTarget(i18nMessageE, I18nMessageDO.class);
 		if (ObjectUtil.isNull(i18nMessageDO.getId())) {
-			i18nMessageDO.generatorId();
+			i18nMessageDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return i18nMessageDO;
 	}

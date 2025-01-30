@@ -17,8 +17,9 @@
 
 package org.laokou.generator.column.convertor;
 
-import org.laokou.generator.column.gatewayimpl.database.dataobject.ColumnDO;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.generator.column.dto.clientobject.ColumnCO;
+import org.laokou.generator.column.gatewayimpl.database.dataobject.ColumnDO;
 import org.laokou.generator.column.model.ColumnE;
 
 /**
@@ -32,7 +33,7 @@ public class ColumnConvertor {
 	public static ColumnDO toDataObject(ColumnE columnE, boolean isInsert) {
 		ColumnDO columnDO = new ColumnDO();
 		if (isInsert) {
-			columnDO.generatorId();
+			columnDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		else {
 			columnDO.setId(columnE.getId());

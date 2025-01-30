@@ -21,6 +21,7 @@ import org.laokou.admin.dict.dto.clientobject.DictCO;
 import org.laokou.admin.dict.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.admin.dict.model.DictE;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
@@ -33,7 +34,7 @@ public class DictConvertor {
 	public static DictDO toDataObject(DictE dictE) {
 		DictDO dictDO = ConvertUtil.sourceToTarget(dictE, DictDO.class);
 		if (ObjectUtil.isNull(dictDO.getId())) {
-			dictDO.generatorId();
+			dictDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return dictDO;
 	}

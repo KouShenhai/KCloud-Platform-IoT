@@ -22,6 +22,7 @@ import org.laokou.admin.noticeLog.dto.excel.NoticeLogExcel;
 import org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.admin.noticeLog.model.NoticeLogE;
 import org.laokou.admin.noticeLog.model.Status;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.excel.utils.ExcelUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 
@@ -44,7 +45,7 @@ public final class NoticeLogConvertor implements ExcelUtil.ExcelConvert<NoticeLo
 	public static NoticeLogDO toDataObject(NoticeLogE noticeLogE, boolean isInsert) {
 		NoticeLogDO noticeLogDO = new NoticeLogDO();
 		if (isInsert) {
-			noticeLogDO.generatorId();
+			noticeLogDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		else {
 			noticeLogDO.setId(noticeLogE.getId());

@@ -17,11 +17,12 @@
 
 package org.laokou.admin.ossLog.convertor;
 
-import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.admin.ossLog.dto.clientobject.OssLogCO;
+import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.admin.ossLog.model.OssLogE;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
  * OSS日志转换器.
@@ -33,7 +34,7 @@ public class OssLogConvertor {
 	public static OssLogDO toDataObject(OssLogE ossLogE) {
 		OssLogDO ossLogDO = ConvertUtil.sourceToTarget(ossLogE, OssLogDO.class);
 		if (ObjectUtil.isNull(ossLogDO.getId())) {
-			ossLogDO.generatorId();
+			ossLogDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return ossLogDO;
 	}

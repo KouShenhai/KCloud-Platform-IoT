@@ -40,12 +40,12 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	@Override
 	public void create(MenuE menuE) {
-		menuMapper.insert(MenuConvertor.toDataObject(menuE));
+		menuMapper.insert(MenuConvertor.toDataObject(menuE, true));
 	}
 
 	@Override
 	public void update(MenuE menuE) {
-		MenuDO menuDO = MenuConvertor.toDataObject(menuE);
+		MenuDO menuDO = MenuConvertor.toDataObject(menuE, false);
 		menuDO.setVersion(menuMapper.selectVersion(menuE.getId()));
 		menuMapper.updateById(menuDO);
 	}

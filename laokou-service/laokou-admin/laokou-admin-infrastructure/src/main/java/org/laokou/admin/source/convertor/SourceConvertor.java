@@ -17,11 +17,12 @@
 
 package org.laokou.admin.source.convertor;
 
-import org.laokou.common.tenant.mapper.SourceDO;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.admin.source.dto.clientobject.SourceCO;
 import org.laokou.admin.source.model.SourceE;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.tenant.mapper.SourceDO;
 
 /**
  * 数据源转换器.
@@ -33,7 +34,7 @@ public class SourceConvertor {
 	public static SourceDO toDataObject(SourceE sourceE) {
 		SourceDO sourceDO = ConvertUtil.sourceToTarget(sourceE, SourceDO.class);
 		if (ObjectUtil.isNull(sourceDO.getId())) {
-			sourceDO.generatorId();
+			sourceDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return sourceDO;
 	}

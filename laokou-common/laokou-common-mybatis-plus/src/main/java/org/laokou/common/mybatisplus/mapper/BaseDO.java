@@ -19,7 +19,6 @@ package org.laokou.common.mybatisplus.mapper;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-import org.laokou.common.core.utils.IdGenerator;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -120,9 +119,5 @@ public abstract class BaseDO implements Serializable {
 	 */
 	@TableField(fill = FieldFill.INSERT)
 	protected Long tenantId;
-
-	public void generatorId() {
-		this.id = IdGenerator.defaultSnowflakeId();
-	}
 
 }

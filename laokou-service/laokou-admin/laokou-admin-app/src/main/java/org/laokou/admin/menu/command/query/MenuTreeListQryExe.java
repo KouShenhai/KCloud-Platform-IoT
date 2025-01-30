@@ -30,6 +30,7 @@ import org.laokou.common.core.utils.TreeUtil;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,10 +59,13 @@ public class MenuTreeListQryExe {
 			case SYSTEM -> {
 				return menuMapper.selectObjectList(qry);
 			}
-			case null -> {
+			case DICT -> {
 				qry.setStatus(MenuStatus.ENABLE.getCode());
 				qry.setType(MenuType.MENU.getCode());
 				return menuMapper.selectObjectList(qry);
+			}
+			case null -> {
+				return new ArrayList<>(0);
 			}
 		}
 	}

@@ -127,14 +127,7 @@ export default () => {
 
 	return (
 		<>
-			<DrawerForm<{
-				code: string;
-				name: string;
-				status: number;
-				param: string;
-				errorMessage: string;
-				createTime: string;
-			}>
+			<DrawerForm<TableColumns>
 				open={modalVisit}
 				title="查看通知日志"
 				drawerProps={{

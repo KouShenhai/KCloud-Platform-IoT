@@ -21,7 +21,7 @@ import org.laokou.admin.menu.dto.clientobject.MenuCO;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuE;
-import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
 
 import java.util.List;
 
@@ -35,9 +35,14 @@ public final class MenuConvertor {
 	private MenuConvertor() {
 	}
 
-	public static MenuDO toDataObject(MenuE menuE) {
+	public static MenuDO toDataObject(MenuE menuE, boolean isInsert) {
 		MenuDO menuDO = new MenuDO();
-		menuDO.setId(menuE.getId());
+		if (isInsert) {
+			menuDO.setId(IdGenerator.defaultSnowflakeId());
+		}
+		else {
+			menuDO.setId(menuE.getId());
+		}
 		menuDO.setPid(menuE.getPid());
 		menuDO.setPermission(menuE.getPermission());
 		menuDO.setType(menuE.getType());
@@ -88,7 +93,17 @@ public final class MenuConvertor {
 	}
 
 	public static MenuE toEntity(MenuCO menuCO) {
-		return ConvertUtil.sourceToTarget(menuCO, MenuE.class);
+		MenuE menuE = new MenuE();
+		menuE.setId(menuCO.getId());
+		menuE.setPid(menuCO.getPid());
+		menuE.setPermission(menuCO.getPermission());
+		menuE.setType(menuCO.getType());
+		menuE.setName(menuCO.getName());
+		menuE.setPath(menuCO.getPath());
+		menuE.setIcon(menuCO.getIcon());
+		menuE.setSort(menuCO.getSort());
+		menuE.setStatus(menuCO.getStatus());
+		return menuE;
 	}
 
 }
