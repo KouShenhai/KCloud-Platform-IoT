@@ -15,61 +15,16 @@
  *
  */
 
-package org.laokou.admin.menu.model;
+package org.laokou.admin.menu.service.extensionpoint;
 
-import lombok.Data;
+import org.laokou.admin.menu.model.MenuE;
+import org.laokou.common.extension.ExtensionPointI;
 
 /**
- * 菜单领域对象【实体】.
- *
  * @author laokou
  */
-@Data
-public class MenuE {
+public interface MenuParamValidatorExtPt extends ExtensionPointI {
 
-	/**
-	 * ID.
-	 */
-	private Long id;
-
-	/**
-	 * 菜单父节点ID.
-	 */
-	private Long pid;
-
-	/**
-	 * 菜单权限标识.
-	 */
-	private String permission;
-
-	/**
-	 * 菜单类型 0菜单 1按钮.
-	 */
-	private Integer type;
-
-	/**
-	 * 菜单名称.
-	 */
-	private String name;
-
-	/**
-	 * 菜单路径.
-	 */
-	private String path;
-
-	/**
-	 * 菜单图标.
-	 */
-	private String icon;
-
-	/**
-	 * 菜单排序.
-	 */
-	private Integer sort;
-
-	/**
-	 * 菜单状态 0启用 1停用.
-	 */
-	private Integer status;
+	void validate(MenuE menuE);
 
 }

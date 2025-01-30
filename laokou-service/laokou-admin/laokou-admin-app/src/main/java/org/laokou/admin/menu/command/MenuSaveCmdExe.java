@@ -21,8 +21,16 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.ability.MenuDomainService;
 import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuSaveCmd;
+import org.laokou.admin.menu.model.MenuE;
+import org.laokou.admin.menu.service.extensionpoint.MenuParamValidatorExtPt;
+import org.laokou.common.extension.BizScenario;
+import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.admin.common.constant.Constant.MENU;
+import static org.laokou.admin.common.constant.Constant.SAVE;
+import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
  * 保存菜单命令执行器.
@@ -37,9 +45,14 @@ public class MenuSaveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	private final ExtensionExecutor extensionExecutor;
+
 	public void executeVoid(MenuSaveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> menuDomainService.create(MenuConvertor.toEntity(cmd.getCo())));
+		MenuE menuE = MenuConvertor.toEntity(cmd.getCo());
+		extensionExecutor.executeVoid(MenuParamValidatorExtPt.class, BizScenario.valueOf(SAVE, MENU, SCENARIO),
+				extension -> extension.validate(menuE));
+		transactionalUtil.executeInTransaction(() -> menuDomainService.create(menuE));
 	}
 
 }

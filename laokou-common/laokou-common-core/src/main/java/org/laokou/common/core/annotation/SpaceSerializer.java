@@ -15,34 +15,34 @@
  *
  */
 
-package org.laokou.common.xss.annotation;
+package org.laokou.common.core.annotation;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import org.laokou.common.core.annotation.AbstractContextualSerializer;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.xss.util.XssUtil;
+import org.laokou.common.i18n.utils.StringUtil;
 
 import java.io.IOException;
 
 /**
  * @author laokou
  */
-public class XssSerializer extends AbstractContextualSerializer {
+public class SpaceSerializer extends AbstractContextualSerializer {
 
 	@Override
 	public void serialize(String s, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
 			throws IOException {
-		jsonGenerator.writeString(XssUtil.clearSql(s));
+		String str = StringUtil.isNotEmpty(s) ? s.trim() : s;
+		jsonGenerator.writeString(str);
 	}
 
 	@Override
 	public JsonSerializer<?> createContextual(SerializerProvider serializerProvider, BeanProperty beanProperty) {
-		XssSql xssSql = beanProperty.getAnnotation(XssSql.class);
-		if (ObjectUtil.isNotNull(xssSql)) {
-			return new XssSerializer();
+		Space space = beanProperty.getAnnotation(Space.class);
+		if (ObjectUtil.isNotNull(space)) {
+			return new SpaceSerializer();
 		}
 		throw new RuntimeException();
 	}
