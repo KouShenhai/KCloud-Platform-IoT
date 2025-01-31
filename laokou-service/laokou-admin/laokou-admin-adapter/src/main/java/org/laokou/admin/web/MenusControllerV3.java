@@ -119,13 +119,6 @@ public class MenusControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("dict-tree-list")
-	@Operation(summary = "查询字典菜单树列表", description = "查询字典菜单树列表")
-	public Result<List<MenuTreeCO>> dictTreeListV3(@RequestBody MenuTreeListQry qry) {
-		return menusServiceI.treeList(qry);
-	}
-
-	@TraceLog
 	@GetMapping("{id}")
 	@DataCache(name = MENUS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:menu:detail')")

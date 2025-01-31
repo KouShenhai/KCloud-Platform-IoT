@@ -20,7 +20,6 @@ package org.laokou.admin.menu.dto.clientobject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.core.annotation.Space;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
@@ -46,7 +45,6 @@ public class MenuCO extends ClientObject {
 	/**
 	 * 菜单权限标识.
 	 */
-	@Space
 	private String permission;
 
 	/**
@@ -57,19 +55,16 @@ public class MenuCO extends ClientObject {
 	/**
 	 * 菜单名称.
 	 */
-	@Space
 	private String name;
 
 	/**
 	 * 菜单路径.
 	 */
-	@Space
 	private String path;
 
 	/**
 	 * 菜单图标.
 	 */
-	@Space
 	private String icon;
 
 	/**
@@ -81,5 +76,21 @@ public class MenuCO extends ClientObject {
 	 * 菜单状态 0启用 1停用.
 	 */
 	private Integer status;
+
+	public void setName(String name) {
+		this.name = name.trim();
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon.trim();
+	}
+
+	public void setPath(String path) {
+		this.path = path.trim();
+	}
+
+	public void setPermission(String permission) {
+		this.permission = permission.trim();
+	}
 
 }

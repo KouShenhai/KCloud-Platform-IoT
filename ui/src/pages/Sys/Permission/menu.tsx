@@ -7,8 +7,7 @@ import {
 	ProFormTreeSelect
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {treeListV3, removeV3, saveV3, dictTreeListV3} from "@/services/admin/menu";
-import {trim} from "@/utils/format";
+import {treeListV3, removeV3, saveV3} from "@/services/admin/menu";
 import {useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
@@ -45,7 +44,7 @@ export default () => {
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
 			code: 1,
-			type: trim(params?.type),
+			type: params?.type,
 			status: params?.status,
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
@@ -177,7 +176,7 @@ export default () => {
 						},
 					}}
 					request={async () => {
-						const result = await dictTreeListV3({code: 2}).catch(console.log);
+						const result = await treeListV3({code: 1, type: 0, status: 0}).catch(console.log);
 						return [{
 							id: '0',
 							name: '根目录',

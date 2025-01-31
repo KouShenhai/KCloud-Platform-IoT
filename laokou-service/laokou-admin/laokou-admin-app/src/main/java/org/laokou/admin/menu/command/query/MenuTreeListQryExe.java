@@ -59,11 +59,6 @@ public class MenuTreeListQryExe {
 			case SYSTEM -> {
 				return menuMapper.selectObjectList(qry);
 			}
-			case DICT -> {
-				qry.setStatus(MenuStatus.ENABLE.getCode());
-				qry.setType(MenuType.MENU.getCode());
-				return menuMapper.selectObjectList(qry);
-			}
 			case null -> {
 				return new ArrayList<>(0);
 			}

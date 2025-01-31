@@ -28,9 +28,7 @@ public enum TreeMenuType {
 
 	USER(0, "用户"),
 
-	SYSTEM(1, "系统"),
-
-	DICT(2, "字典");
+	SYSTEM(1, "系统");
 
 	private final int code;
 
