@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
+import org.laokou.common.i18n.utils.StringUtil;
 
 /**
  * 菜单客户端对象.
@@ -78,19 +79,19 @@ public class MenuCO extends ClientObject {
 	private Integer status;
 
 	public void setName(String name) {
-		this.name = name.trim();
+		this.name = StringUtil.trim(name);
 	}
 
 	public void setIcon(String icon) {
-		this.icon = icon.trim();
+		this.icon = StringUtil.trim(icon);
 	}
 
 	public void setPath(String path) {
-		this.path = path.trim();
+		this.path = StringUtil.trim(path);
 	}
 
 	public void setPermission(String permission) {
-		this.permission = permission.trim();
+		this.permission = StringUtil.trim(permission);
 	}
 
 }

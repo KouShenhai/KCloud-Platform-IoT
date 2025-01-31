@@ -38,15 +38,15 @@ public class NoticeLogPageQry extends PageQuery {
 	private String errorMessage;
 
 	public void setCode(String code) {
-		this.code = StringUtil.like(code.trim());
+		this.code = StringUtil.like(StringUtil.trim(code));
 	}
 
 	public void setName(String name) {
-		this.name = StringUtil.like(name.trim());
+		this.name = StringUtil.like(StringUtil.trim(name));
 	}
 
 	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = StringUtil.like(errorMessage.trim());
+		this.errorMessage = StringUtil.like(StringUtil.trim(errorMessage));
 	}
 
 }

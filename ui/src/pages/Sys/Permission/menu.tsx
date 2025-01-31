@@ -7,12 +7,13 @@ import {
 	ProFormTreeSelect
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {treeListV3, removeV3, saveV3} from "@/services/admin/menu";
-import {useRef, useState} from "react";
+import {treeListV3, removeV3, saveV3, getByIdV3, modifyV3} from "@/services/admin/menu";
+import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {v7 as uuidV7} from 'uuid';
+import {clearToken} from "@/access";
 
 export default () => {
 
@@ -27,22 +28,17 @@ export default () => {
 		sort: number | undefined;
 	};
 
+	const [readOnly, setReadOnly] = useState(false)
 	const [typeValue, setTypeValue] = useState(0);
 	const [modalVisit, setModalVisit] = useState(false);
 	const actionRef = useRef();
 	const [dataSource, setDataSource] = useState({})
-
-	let param: any
-
-	let ids: number[] = [];
-
-	let title: string = "";
+	const [ids, setIds] = useState<number[]>([])
+	const [title, setTitle] = useState("")
+	const [treeList, setTreeList] = useState<any[]>([])
 
 	const getPageQuery = (params: any) => {
-		param = {
-			pageSize: params?.pageSize,
-			pageNum: params?.current,
-			pageIndex: params?.pageSize * (params?.current - 1),
+		return {
 			code: 1,
 			type: params?.type,
 			status: params?.status,
@@ -50,25 +46,39 @@ export default () => {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
 			}
-		};
-		return param;
+		}
+	}
+
+	const getTreeList = async () => {
+		treeListV3({code: 1, type: 0, status: 0}).then(res => {
+			setTreeList([{
+				id: '0',
+				name: '根目录',
+				children: res?.data
+			}])
+		})
 	}
 
 	const rowSelection: TableRowSelection<TableColumns> = {
 		onChange: (selectedRowKeys) => {
-			ids = []
+			const ids: number[] = []
 			selectedRowKeys.forEach(item => {
 				ids.push(item as number)
 			})
+			setIds(ids)
 		}
 	};
+
+	useEffect(() => {
+		getTreeList().catch(console.log)
+	}, []);
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
 			title: '名称',
 			dataIndex: 'name',
-			ellipsis: true,
 			hideInSearch: true,
+			width: 200,
 		},
 		{
 			title: '图标',
@@ -80,13 +90,15 @@ export default () => {
 			title: '路径',
 			dataIndex: 'path',
 			ellipsis: true,
-			hideInSearch: true
+			hideInSearch: true,
+			width: 180
 		},
 		{
 			title: '权限标识',
 			dataIndex: 'permission',
 			ellipsis: true,
 			hideInSearch: true,
+			width: 150
 		},
 		{
 			title: '类型',
@@ -134,7 +146,42 @@ export default () => {
 					};
 				},
 			}
-		}
+		},
+		{
+			title: '操作',
+			valueType: 'option',
+			key: 'option',
+			render: (_, record) => [
+				<a key="get"
+				   onClick={() => {
+					   getByIdV3({id: record?.id}).then(res => {
+						   setTitle('查看菜单')
+						   setModalVisit(true)
+						   setReadOnly(true)
+						   const data = res?.data;
+						   setTypeValue(data.type)
+						   setDataSource(data)
+					   })
+				   }}
+				>
+					查看
+				</a>,
+				<a key="modify"
+				   onClick={() => {
+					   getByIdV3({id: record?.id}).then(res => {
+						   setTitle('修改菜单')
+						   setModalVisit(true)
+						   setReadOnly(false)
+						   const data = res?.data;
+						   setTypeValue(data.type)
+						   setDataSource(data)
+					   })
+				   }}
+				>
+					修改
+				</a>
+			],
+		},
 	];
 
 	return (
@@ -150,44 +197,64 @@ export default () => {
 				initialValues={dataSource}
 				onOpenChange={setModalVisit}
 				autoFocusFirstInput
-				submitTimeout={2000}
+				submitter={{
+					submitButtonProps: {
+						style: {
+							display: readOnly ? 'none' : 'inline-block',
+						},
+					}
+				}}
 				onFinish={ async (value) => {
-					saveV3({co: value}, uuidV7()).then(res => {
-						if (res.code === 'OK') {
-							message.success("新增成功").then()
-							setModalVisit(false)
-							// @ts-ignore
-							actionRef?.current?.reload();
-						}
-					})
+					if (value.id === undefined) {
+						saveV3({co: value}, uuidV7()).then(res => {
+							if (res.code === 'OK') {
+								message.success("新增成功").then()
+								setModalVisit(false)
+								// @ts-ignore
+								actionRef?.current?.reload();
+							}
+						})
+					} else {
+						modifyV3({co: value}).then(res => {
+							if (res.code === 'OK') {
+								message.success("修改成功").then()
+								setModalVisit(false)
+								// @ts-ignore
+								actionRef?.current?.reload();
+							}
+						})
+					}
 				}}>
+
+				<ProFormText
+					name="id"
+					label="ID"
+					hidden={true}
+				/>
 
 				<ProFormTreeSelect
 					name="pid"
 					label="父级"
-					debounceTime={3000}
+					readonly={readOnly}
 					allowClear={true}
 					placeholder={'请选择父级'}
 					rules={[{ required: true, message: '请选择父级' }]}
 					fieldProps={{
 						fieldNames: {
 							label: 'name',
-							value: 'id'
+							value: 'id',
+							children: 'children'
 						},
 					}}
 					request={async () => {
-						const result = await treeListV3({code: 1, type: 0, status: 0}).catch(console.log);
-						return [{
-							id: '0',
-							name: '根目录',
-							children: result?.data
-						}]
+						return treeList
 					}}
 				/>
 
 				<ProFormText
 					name="name"
 					label="名称"
+					readonly={readOnly}
 					placeholder={'请输入名称'}
 					rules={[{ required: true, message: '请输入名称' }]}
 				/>
@@ -195,12 +262,12 @@ export default () => {
 				<ProFormSelect
 					name="type"
 					label="类型"
+					readonly={readOnly}
 					placeholder={'请选择类型'}
 					rules={[{ required: true, message: '请选择类型' }]}
 					onChange={(value: number) => {
 						setTypeValue(value)
 					}}
-					initialValue={typeValue}
 					options={[
 						{value: 0, label: '菜单'},
 						{value: 1, label: '按钮'}
@@ -211,6 +278,7 @@ export default () => {
 					<ProFormText
 						name="path"
 						label="路径"
+						readonly={readOnly}
 						placeholder={'请输入路径'}
 						rules={[{ required: true, message: '请输入路径' }]}
 					/>
@@ -220,6 +288,7 @@ export default () => {
 					<ProFormText
 						name="permission"
 						label="权限标识"
+						readonly={readOnly}
 						placeholder={'请输入权限标识'}
 						rules={[{ required: true, message: '请输入权限标识' }]}
 					/>
@@ -229,6 +298,7 @@ export default () => {
 					<ProFormText
 						name="icon"
 						label="图标"
+						readonly={readOnly}
 						placeholder={'请输入图标'}
 					/>
 				)}
@@ -237,6 +307,7 @@ export default () => {
 					<ProFormSelect
 						name="status"
 						label="状态"
+						readonly={readOnly}
 						placeholder={'请选择状态'}
 						rules={[{ required: true, message: '请选择状态' }]}
 						options={[
@@ -249,6 +320,7 @@ export default () => {
 				<ProFormDigit
 					name="sort"
 					label="排序"
+					readonly={readOnly}
 					placeholder={'请输入排序'}
 					min={1}
 					max={99999}
@@ -277,10 +349,12 @@ export default () => {
 				toolBarRender={
 					() => [
 						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
-							title = '新增菜单'
-							setModalVisit(true)
+							setTitle('新增菜单')
 							setTypeValue(0)
+							setReadOnly(false)
+							setModalVisit(true)
 							setDataSource({
+								id: undefined,
 								name: '',
 								path: '',
 								permission: '',
