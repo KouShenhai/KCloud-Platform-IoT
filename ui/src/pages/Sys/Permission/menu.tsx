@@ -7,8 +7,7 @@ import {
 	ProFormTreeSelect
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {treeListV3, removeV3, saveV3, dictTreeListV3} from "@/services/admin/menu";
-import {trim} from "@/utils/format";
+import {treeListV3, removeV3, saveV3} from "@/services/admin/menu";
 import {useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
@@ -35,7 +34,7 @@ export default () => {
 
 	let param: any
 
-	let ids: number[];
+	let ids: number[] = [];
 
 	let title: string = "";
 
@@ -45,7 +44,7 @@ export default () => {
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
 			code: 1,
-			type: trim(params?.type),
+			type: params?.type,
 			status: params?.status,
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
@@ -153,9 +152,13 @@ export default () => {
 				autoFocusFirstInput
 				submitTimeout={2000}
 				onFinish={ async (value) => {
-					saveV3({co: value}, uuidV7()).then(() => {
-						message.success("新增成功").then()
-						setModalVisit(false)
+					saveV3({co: value}, uuidV7()).then(res => {
+						if (res.code === 'OK') {
+							message.success("新增成功").then()
+							setModalVisit(false)
+							// @ts-ignore
+							actionRef?.current?.reload();
+						}
 					})
 				}}>
 
@@ -173,7 +176,7 @@ export default () => {
 						},
 					}}
 					request={async () => {
-						const result = await dictTreeListV3({code: 2}).catch(console.log);
+						const result = await treeListV3({code: 1, type: 0, status: 0}).catch(console.log);
 						return [{
 							id: '0',
 							name: '根目录',
@@ -187,13 +190,6 @@ export default () => {
 					label="名称"
 					placeholder={'请输入名称'}
 					rules={[{ required: true, message: '请输入名称' }]}
-				/>
-
-				<ProFormText
-					name="path"
-					label="路径"
-					placeholder={'请输入路径'}
-					rules={[{ required: true, message: '请输入路径' }]}
 				/>
 
 				<ProFormSelect
@@ -211,6 +207,15 @@ export default () => {
 					]}
 				/>
 
+				{typeValue === 0 && (
+					<ProFormText
+						name="path"
+						label="路径"
+						placeholder={'请输入路径'}
+						rules={[{ required: true, message: '请输入路径' }]}
+					/>
+				)}
+
 				{typeValue === 1 && (
 					<ProFormText
 						name="permission"
@@ -220,22 +225,26 @@ export default () => {
 					/>
 				)}
 
-				<ProFormText
-					name="icon"
-					label="图标"
-					placeholder={'请输入图标'}
-				/>
+				{typeValue === 0 && (
+					<ProFormText
+						name="icon"
+						label="图标"
+						placeholder={'请输入图标'}
+					/>
+				)}
 
-				<ProFormSelect
-					name="status"
-					label="状态"
-					placeholder={'请选择状态'}
-					rules={[{ required: true, message: '请选择状态' }]}
-					valueEnum={{
-						0: '启用',
-						1: '禁用'
-					}}
-				/>
+				{typeValue === 0 && (
+					<ProFormSelect
+						name="status"
+						label="状态"
+						placeholder={'请选择状态'}
+						rules={[{ required: true, message: '请选择状态' }]}
+						options={[
+							{value: 0, label: '启用'},
+							{value: 1, label: '禁用'}
+						]}
+					/>
+				)}
 
 				<ProFormDigit
 					name="sort"
@@ -250,7 +259,7 @@ export default () => {
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}
-				request={(params) => {
+				request={ async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
 					return treeListV3(getPageQuery(params)).then(res => {
 						return Promise.resolve({
@@ -270,12 +279,15 @@ export default () => {
 						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
 							title = '新增菜单'
 							setModalVisit(true)
+							setTypeValue(0)
 							setDataSource({
 								name: '',
 								path: '',
 								permission: '',
 								sort: 1,
 								icon: '',
+								status: 0,
+								type: 0,
 							})
 						}}>
 							新增
@@ -287,6 +299,10 @@ export default () => {
 								okText: '确认',
 								cancelText: '取消',
 								onOk: async () => {
+									if (ids.length === 0) {
+										message.warning("请至少选择一条数据").then()
+										return;
+									}
 									// @ts-ignore
 									removeV3(ids).then(res => {
 										if (res.code === 'OK') {

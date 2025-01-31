@@ -130,14 +130,3 @@ export async function userTreeListV3(body: any,options?: { [key: string]: any })
 		...(options || {}),
 	});
 }
-
-export async function dictTreeListV3(body: any,options?: { [key: string]: any }) {
-	return request<API.Result>('/api/admin/v3/menus/dict-tree-list', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		data: body,
-		...(options || {}),
-	});
-}

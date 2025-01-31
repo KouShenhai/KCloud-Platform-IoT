@@ -195,7 +195,7 @@ export default () => {
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}
-				request={(params) => {
+				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
 					list = []
 					return pageV3(getPageQuery(params)).then(res => {

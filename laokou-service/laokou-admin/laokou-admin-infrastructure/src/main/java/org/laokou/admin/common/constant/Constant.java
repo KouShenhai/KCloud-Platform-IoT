@@ -15,61 +15,20 @@
  *
  */
 
-package org.laokou.admin.menu.model;
-
-import lombok.Data;
+package org.laokou.admin.common.constant;
 
 /**
- * 菜单领域对象【实体】.
- *
  * @author laokou
  */
-@Data
-public class MenuE {
+public final class Constant {
 
-	/**
-	 * ID.
-	 */
-	private Long id;
+	public static final String SAVE = "save";
 
-	/**
-	 * 菜单父节点ID.
-	 */
-	private Long pid;
+	public static final String MODIFY = "modify";
 
-	/**
-	 * 菜单权限标识.
-	 */
-	private String permission;
+	public static final String MENU = "menu";
 
-	/**
-	 * 菜单类型 0菜单 1按钮.
-	 */
-	private Integer type;
-
-	/**
-	 * 菜单名称.
-	 */
-	private String name;
-
-	/**
-	 * 菜单路径.
-	 */
-	private String path;
-
-	/**
-	 * 菜单图标.
-	 */
-	private String icon;
-
-	/**
-	 * 菜单排序.
-	 */
-	private Integer sort;
-
-	/**
-	 * 菜单状态 0启用 1停用.
-	 */
-	private Integer status;
+	private Constant() {
+	}
 
 }

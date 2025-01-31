@@ -77,4 +77,20 @@ public class MenuCO extends ClientObject {
 	 */
 	private Integer status;
 
+	public void setName(String name) {
+		this.name = name.trim();
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon.trim();
+	}
+
+	public void setPath(String path) {
+		this.path = path.trim();
+	}
+
+	public void setPermission(String permission) {
+		this.permission = permission.trim();
+	}
+
 }
