@@ -30,13 +30,11 @@ export default () => {
 	};
 
 	const actionRef = useRef();
-
-	let list: TableColumns[]
-
-	let param: any
+	const [list, setList] = useState<TableColumns[]>([]);
+	const [param, setParam] = useState<any>({});
 
 	const getPageQuery = (params: any) => {
-		param = {
+		const param = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
@@ -48,8 +46,9 @@ export default () => {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
 			}
-		};
-		return param;
+		}
+		setParam(param)
+		return param
 	}
 
 	const columns: ProColumns<TableColumns>[] = [
@@ -111,7 +110,7 @@ export default () => {
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				<a key="getable"
+				<a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
 						   setDataSource(res?.data)
@@ -197,12 +196,13 @@ export default () => {
 				columns={columns}
 				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					list = []
+					const list: TableColumns[] = []
 					return pageV3(getPageQuery(params)).then(res => {
 						res?.data?.records?.forEach((item: TableColumns) => {
 							item.status = statusEnum[item.status as '0'];
 							list.push(item);
 						});
+						setList(list)
 						return Promise.resolve({
 							data: list,
 							total: parseInt(res.data.total),
@@ -233,7 +233,7 @@ export default () => {
 								sheetData: _list,
 								sheetFilter: ["code", "name", "status", "param", "errorMessage", "createTime"],
 								sheetHeader: ["标识", "名称", "状态", "参数", "错误信息", "创建时间"],
-								fileName: "通知日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
+								fileName: "通知日志_导出_" + moment(new Date()).format('YYYYMMDDHHmmss'),
 								sheetName: "通知日志"
 							})
 						}}>

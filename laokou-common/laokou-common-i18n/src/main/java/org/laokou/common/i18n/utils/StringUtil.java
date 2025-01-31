@@ -66,6 +66,13 @@ public final class StringUtil extends StringUtils {
 		return str;
 	}
 
+	public static String trim(String str) {
+		if (isNotEmpty(str)) {
+			return str.trim();
+		}
+		return str;
+	}
+
 	public static boolean isEmpty(String str) {
 		return !hasText(str);
 	}
