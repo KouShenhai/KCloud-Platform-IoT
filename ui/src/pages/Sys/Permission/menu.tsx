@@ -13,7 +13,6 @@ import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {v7 as uuidV7} from 'uuid';
-import {clearToken} from "@/access";
 
 export default () => {
 
@@ -179,6 +178,25 @@ export default () => {
 				   }}
 				>
 					修改
+				</a>,
+				<a key="remove" onClick={() => {
+					Modal.confirm({
+						title: '确认删除?',
+						content: '您确定要删除吗?',
+						okText: '确认',
+						cancelText: '取消',
+						onOk: () => {
+							removeV3([record?.id]).then(res => {
+								if (res.code === 'OK') {
+									message.success("删除成功").then()
+									// @ts-ignore
+									actionRef?.current?.reload();
+								}
+							})
+						}
+					})
+				}}>
+					删除
 				</a>
 			],
 		},
