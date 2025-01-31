@@ -158,7 +158,9 @@ export default () => {
 						   setTitle('查看菜单')
 						   setModalVisit(true)
 						   setReadOnly(true)
-						   setDataSource(res.data)
+						   const data = res?.data;
+						   setTypeValue(data.type)
+						   setDataSource(data)
 					   })
 				   }}
 				>
@@ -170,7 +172,9 @@ export default () => {
 						   setTitle('修改菜单')
 						   setModalVisit(true)
 						   setReadOnly(false)
-						   setDataSource(res.data)
+						   const data = res?.data;
+						   setTypeValue(data.type)
+						   setDataSource(data)
 					   })
 				   }}
 				>
@@ -221,6 +225,12 @@ export default () => {
 						})
 					}
 				}}>
+
+				<ProFormText
+					name="id"
+					label="ID"
+					hidden={true}
+				/>
 
 				<ProFormTreeSelect
 					name="pid"
@@ -344,6 +354,7 @@ export default () => {
 							setReadOnly(false)
 							setModalVisit(true)
 							setDataSource({
+								id: undefined,
 								name: '',
 								path: '',
 								permission: '',
