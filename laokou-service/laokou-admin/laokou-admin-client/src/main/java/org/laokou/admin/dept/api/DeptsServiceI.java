@@ -19,8 +19,11 @@ package org.laokou.admin.dept.api;
 
 import org.laokou.admin.dept.dto.*;
 import org.laokou.admin.dept.dto.clientobject.DeptCO;
+import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+
+import java.util.List;
 
 /**
  * 部门接口.
@@ -64,6 +67,13 @@ public interface DeptsServiceI {
 	 * @param qry 分页查询请求
 	 */
 	Result<Page<DeptCO>> page(DeptPageQry qry);
+
+	/**
+	 * 查询部门树.
+	 * @param qry 查询请求
+	 */
+	Result<List<DeptTreeCO>> treeList(DeptTreeListQry qry);
+
 
 	/**
 	 * 查看部门.

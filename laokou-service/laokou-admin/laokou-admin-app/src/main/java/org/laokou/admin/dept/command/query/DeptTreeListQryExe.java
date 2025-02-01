@@ -15,44 +15,33 @@
  *
  */
 
-package org.laokou.admin.dept.gatewayimpl;
+package org.laokou.admin.dept.command.query;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.convertor.DeptConvertor;
-import org.laokou.admin.dept.gateway.DeptGateway;
+import org.laokou.admin.dept.dto.DeptTreeListQry;
+import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
 import org.laokou.admin.dept.gatewayimpl.database.DeptMapper;
-import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.admin.dept.model.DeptE;
+import org.laokou.common.core.utils.TreeUtil;
+import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
- * 部门网关实现.
+ * 查询部门请求执行器.
  *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class DeptGatewayImpl implements DeptGateway {
+public class DeptTreeListQryExe {
 
 	private final DeptMapper deptMapper;
 
-	@Override
-	public void create(DeptE deptE) {
-		deptMapper.insert(DeptConvertor.toDataObject(deptE, true));
-	}
-
-	@Override
-	public void update(DeptE deptE) {
-		DeptDO deptDO = DeptConvertor.toDataObject(deptE, false);
-		deptDO.setVersion(deptMapper.selectVersion(deptE.getId()));
-		deptMapper.updateById(deptDO);
-	}
-
-	@Override
-	public void delete(Long[] ids) {
-		deptMapper.deleteByIds(Arrays.asList(ids));
+	public Result<List<DeptTreeCO>> execute(DeptTreeListQry qry) {
+		DeptTreeCO co = TreeUtil.buildTreeNode(DeptConvertor.toClientObjs(deptMapper.selectObjectList(qry)), DeptTreeCO.class);
+		return Result.ok(co.getChildren());
 	}
 
 }

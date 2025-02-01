@@ -7,7 +7,7 @@ import {
 	ProFormTreeSelect
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {treeListV3, removeV3, saveV3, getByIdV3, modifyV3} from "@/services/admin/menu";
+import {treeListV3, removeV3, saveV3, getByIdV3, modifyV3} from "@/services/admin/dept";
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal, Space, Switch, Tag} from 'antd';
@@ -49,7 +49,7 @@ export default () => {
 	}
 
 	const getTreeList = async () => {
-		treeListV3({code: 1, type: 0, status: 0}).then(res => {
+		treeListV3({}).then(res => {
 			setTreeList([{
 				id: '0',
 				name: '根目录',
@@ -187,7 +187,7 @@ export default () => {
 				<a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   setTitle('查看菜单')
+						   setTitle('查看部门')
 						   setModalVisit(true)
 						   setReadOnly(true)
 						   const data = res?.data;
@@ -201,7 +201,7 @@ export default () => {
 				<a key="modify"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   setTitle('修改菜单')
+						   setTitle('修改部门')
 						   setModalVisit(true)
 						   setReadOnly(false)
 						   const data = res?.data;
@@ -401,7 +401,7 @@ export default () => {
 				toolBarRender={
 					() => [
 						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
-							setTitle('新增菜单')
+							setTitle('新增部门')
 							setTypeValue(0)
 							setReadOnly(false)
 							setModalVisit(true)
@@ -446,8 +446,8 @@ export default () => {
 				}
 				dateFormatter="string"
 				toolbar={{
-					title: '菜单',
-					tooltip: '菜单',
+					title: '部门',
+					tooltip: '部门',
 				}}
 			/>
 		</>
