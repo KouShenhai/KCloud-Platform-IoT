@@ -40,7 +40,8 @@ public class DeptTreeListQryExe {
 	private final DeptMapper deptMapper;
 
 	public Result<List<DeptTreeCO>> execute(DeptTreeListQry qry) {
-		DeptTreeCO co = TreeUtil.buildTreeNode(DeptConvertor.toClientObjs(deptMapper.selectObjectList(qry)), DeptTreeCO.class);
+		DeptTreeCO co = TreeUtil.buildTreeNode(DeptConvertor.toClientObjs(deptMapper.selectObjectList(qry)),
+				DeptTreeCO.class);
 		return Result.ok(co.getChildren());
 	}
 

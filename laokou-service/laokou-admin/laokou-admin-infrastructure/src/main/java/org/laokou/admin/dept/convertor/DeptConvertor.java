@@ -40,21 +40,21 @@ public class DeptConvertor {
 		else {
 			deptDO.setId(deptE.getId());
 		}
-  deptDO.setPid(deptE.getPid());
-  deptDO.setName(deptE.getName());
-  deptDO.setPath(deptE.getPath());
-  deptDO.setSort(deptE.getSort());
-  return deptDO;
+		deptDO.setPid(deptE.getPid());
+		deptDO.setName(deptE.getName());
+		deptDO.setPath(deptE.getPath());
+		deptDO.setSort(deptE.getSort());
+		return deptDO;
 	}
 
 	public static DeptCO toClientObject(DeptDO deptDO) {
 		DeptCO deptCO = new DeptCO();
-  deptCO.setId(deptDO.getId());
-  deptCO.setPid(deptDO.getPid());
-  deptCO.setName(deptDO.getName());
-  deptCO.setPath(deptDO.getPath());
-  deptCO.setSort(deptDO.getSort());
-  return deptCO;
+		deptCO.setId(deptDO.getId());
+		deptCO.setPid(deptDO.getPid());
+		deptCO.setName(deptDO.getName());
+		deptCO.setPath(deptDO.getPath());
+		deptCO.setSort(deptDO.getSort());
+		return deptCO;
 	}
 
 	public static List<DeptCO> toClientObjects(List<DeptDO> list) {
@@ -63,21 +63,21 @@ public class DeptConvertor {
 
 	public static DeptE toEntity(DeptCO deptCO) {
 		DeptE deptE = new DeptE();
-  deptE.setId(deptCO.getId());
-  deptE.setPid(deptCO.getPid());
-  deptE.setName(deptCO.getName());
-  deptE.setPath(deptCO.getPath());
-  deptE.setSort(deptCO.getSort());
-  return deptE;
+		deptE.setId(deptCO.getId());
+		deptE.setPid(deptCO.getPid());
+		deptE.setName(deptCO.getName());
+		deptE.setPath(deptCO.getPath());
+		deptE.setSort(deptCO.getSort());
+		return deptE;
 	}
 
 	public static DeptTreeCO toClientObj(DeptDO deptDO) {
 		DeptTreeCO co = new DeptTreeCO();
-  co.setId(deptDO.getId());
-  co.setName(deptDO.getName());
-  co.setPid(deptDO.getPid());
-  co.setPath(deptDO.getPath());
-  co.setSort(deptDO.getSort());
+		co.setId(deptDO.getId());
+		co.setName(deptDO.getName());
+		co.setPid(deptDO.getPid());
+		co.setPath(deptDO.getPath());
+		co.setSort(deptDO.getSort());
 		return co;
 
 	}

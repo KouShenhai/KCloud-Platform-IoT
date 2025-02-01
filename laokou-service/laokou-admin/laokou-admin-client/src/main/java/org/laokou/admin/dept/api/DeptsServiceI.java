@@ -74,7 +74,6 @@ public interface DeptsServiceI {
 	 */
 	Result<List<DeptTreeCO>> treeList(DeptTreeListQry qry);
 
-
 	/**
 	 * 查看部门.
 	 * @param qry 查看请求
