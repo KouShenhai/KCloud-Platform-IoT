@@ -70,7 +70,7 @@ public final class OkHttpUtil {
 	}
 
 	@PreDestroy
-	public void destroy() {
+	public static void preDestroy() {
 		CLIENT.connectionPool().evictAll();
 	}
 

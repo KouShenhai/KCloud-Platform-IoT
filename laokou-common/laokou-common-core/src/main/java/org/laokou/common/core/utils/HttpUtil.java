@@ -97,7 +97,7 @@ public final class HttpUtil {
 	}
 
 	@PreDestroy
-	public void destroy() {
+	public static void preDestroy() {
 		// 优雅停机
 		CLIENT.close(CloseMode.GRACEFUL);
 	}

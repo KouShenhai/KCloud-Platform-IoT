@@ -83,7 +83,7 @@ public class MqttClientManager {
 	}
 
 	@PreDestroy
-	public void shutdown() {
+	public static void preDestroy() {
 		ThreadUtil.shutdown(EXECUTOR, 60);
 		MQTT_CLIENT_MAP.values().forEach(MqttClient::close);
 		MQTT_CLIENT_MAP.clear();
