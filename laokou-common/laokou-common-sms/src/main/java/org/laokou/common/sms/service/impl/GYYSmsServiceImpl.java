@@ -92,7 +92,7 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		Map<String, String> params = Map.of("mobile", mobile, "param", paramValue, "smsSignId", signId, "templateId",
 			templateId);
 		String paramString = JacksonUtil.toJsonStr(Map.of("mobile", SensitiveUtil.formatMobile(mobile,3, 6), "content", TemplateUtil.getContent(TEMPLATES.get(templateId), param)));
-		String json = HttpUtil.doFormDataPost(URL, params, headers, true);
+		String json = HttpUtil.doFormDataPost(URL, params, headers);
 		JsonNode jsonNode = JacksonUtil.readTree(json);
 		int code = jsonNode.get("code").asInt();
 		if (code != SendStatus.OK.getCode()) {

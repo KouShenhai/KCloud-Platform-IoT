@@ -38,7 +38,7 @@ public class RestClientConfig {
 	public RestClient restClient() {
 		log.info("{} => Initializing Default RestClient", Thread.currentThread().getName());
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-		factory.setHttpClient(getHttpClient(true));
+		factory.setHttpClient(getHttpClient());
 		return RestClient.builder().requestFactory(factory).build();
 	}
 

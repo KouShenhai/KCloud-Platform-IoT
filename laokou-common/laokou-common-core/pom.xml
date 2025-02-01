@@ -127,6 +127,10 @@
       <artifactId>error_prone_annotations</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.freefair.okhttp-spring-boot</groupId>
+      <artifactId>okhttp4-spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
       <scope>test</scope>

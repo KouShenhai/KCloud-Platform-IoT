@@ -50,12 +50,16 @@ public final class JacksonUtil {
 	/**
 	 * 映射器配置.
 	 */
-	private static final ObjectMapper MAPPER = new ObjectMapper()
-		// 没有的属性不报错
-		.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-		.registerModule(new JavaTimeModule());
+	private static final ObjectMapper MAPPER = getMapper();
 
 	private JacksonUtil() {
+	}
+
+	private static ObjectMapper getMapper() {
+		return new ObjectMapper()
+			// 没有的属性不报错
+			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+			.registerModule(new JavaTimeModule());
 	}
 
 	/**
