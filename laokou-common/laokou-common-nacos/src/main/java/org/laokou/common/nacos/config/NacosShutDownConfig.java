@@ -35,7 +35,7 @@ public class NacosShutDownConfig {
 	private final Registration registration;
 
 	@PreDestroy
-	public void close() {
+	public void preDestroy() {
 		// 服务下线
 		log.info("开始执行服务下线");
 		serviceUtil.deregisterInstance(registration.getServiceId(), registration.getHost(), registration.getPort());
