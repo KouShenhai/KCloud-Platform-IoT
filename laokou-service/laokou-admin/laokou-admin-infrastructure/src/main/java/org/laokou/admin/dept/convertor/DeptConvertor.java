@@ -18,11 +18,12 @@
 package org.laokou.admin.dept.convertor;
 
 import org.laokou.admin.dept.dto.clientobject.DeptCO;
+import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.dept.model.DeptE;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.utils.ObjectUtil;
+
+import java.util.List;
 
 /**
  * 部门转换器.
@@ -31,20 +32,58 @@ import org.laokou.common.i18n.utils.ObjectUtil;
  */
 public class DeptConvertor {
 
-	public static DeptDO toDataObject(DeptE deptE) {
-		DeptDO deptDO = ConvertUtil.sourceToTarget(deptE, DeptDO.class);
-		if (ObjectUtil.isNull(deptDO.getId())) {
+	public static DeptDO toDataObject(DeptE deptE, boolean isInsert) {
+		DeptDO deptDO = new DeptDO();
+		if (isInsert) {
 			deptDO.setId(IdGenerator.defaultSnowflakeId());
 		}
+		else {
+			deptDO.setId(deptE.getId());
+		}
+		deptDO.setPid(deptE.getPid());
+		deptDO.setName(deptE.getName());
+		deptDO.setPath(deptE.getPath());
+		deptDO.setSort(deptE.getSort());
 		return deptDO;
 	}
 
 	public static DeptCO toClientObject(DeptDO deptDO) {
-		return ConvertUtil.sourceToTarget(deptDO, DeptCO.class);
+		DeptCO deptCO = new DeptCO();
+		deptCO.setId(deptDO.getId());
+		deptCO.setPid(deptDO.getPid());
+		deptCO.setName(deptDO.getName());
+		deptCO.setPath(deptDO.getPath());
+		deptCO.setSort(deptDO.getSort());
+		return deptCO;
+	}
+
+	public static List<DeptCO> toClientObjects(List<DeptDO> list) {
+		return list.stream().map(DeptConvertor::toClientObject).toList();
 	}
 
 	public static DeptE toEntity(DeptCO deptCO) {
-		return ConvertUtil.sourceToTarget(deptCO, DeptE.class);
+		DeptE deptE = new DeptE();
+		deptE.setId(deptCO.getId());
+		deptE.setPid(deptCO.getPid());
+		deptE.setName(deptCO.getName());
+		deptE.setPath(deptCO.getPath());
+		deptE.setSort(deptCO.getSort());
+		return deptE;
+	}
+
+	public static DeptTreeCO toClientObj(DeptDO deptDO) {
+		DeptTreeCO co = new DeptTreeCO();
+		co.setId(deptDO.getId());
+		co.setName(deptDO.getName());
+		co.setPid(deptDO.getPid());
+		co.setPath(deptDO.getPath());
+		co.setSort(deptDO.getSort());
+		return co;
+
+	}
+
+	public static List<DeptTreeCO> toClientObjs(List<DeptDO> list) {
+		return list.stream().map(DeptConvertor::toClientObj).toList();
 	}
 
 }

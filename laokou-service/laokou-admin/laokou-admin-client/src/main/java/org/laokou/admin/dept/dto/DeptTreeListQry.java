@@ -17,17 +17,9 @@
 
 package org.laokou.admin.dept.dto;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
-
 /**
- * 分页查询部门命令.
- *
  * @author laokou
  */
-@Data
-public class DeptPageQry extends PageQuery {
-
-	private String name;
+public class DeptTreeListQry extends DeptPageQry {
 
 }

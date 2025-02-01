@@ -41,6 +41,11 @@ export default [
 						name: '菜单',
 						path: '/sys/permission/menu',
 						component: './Sys/Permission/menu'
+					},
+					{
+						name: '部门',
+						path: '/sys/permission/dept',
+						component: './Sys/Permission/dept'
 					}
 				]
 			},

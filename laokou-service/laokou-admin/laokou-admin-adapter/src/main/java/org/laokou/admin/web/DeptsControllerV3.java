@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.api.DeptsServiceI;
 import org.laokou.admin.dept.dto.*;
 import org.laokou.admin.dept.dto.clientobject.DeptCO;
+import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
@@ -33,6 +34,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 import static org.laokou.common.data.cache.constant.NameConstant.DEPTS;
 import static org.laokou.common.data.cache.constant.Type.DEL;
@@ -98,6 +101,14 @@ public class DeptsControllerV3 {
 	@Operation(summary = "分页查询部门列表", description = "分页查询部门列表")
 	public Result<Page<DeptCO>> pageV3(@RequestBody DeptPageQry qry) {
 		return deptsServiceI.page(qry);
+	}
+
+	@TraceLog
+	@PostMapping("tree-list")
+	@PreAuthorize("hasAuthority('sys:dept:tree-list')")
+	@Operation(summary = "查询部门树列表", description = "查询部门树列表")
+	public Result<List<DeptTreeCO>> treeListV3(@RequestBody DeptTreeListQry qry) {
+		return deptsServiceI.treeList(qry);
 	}
 
 	@TraceLog

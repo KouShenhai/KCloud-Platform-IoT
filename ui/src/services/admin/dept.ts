@@ -4,7 +4,7 @@ import {request} from '@umijs/max';
 
 /** 修改部门 修改部门 PUT /v3/depts */
 export async function modifyV3(body: API.DeptModifyCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/depts', {
+	return request<any>('/api/admin/v3/depts', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -15,10 +15,11 @@ export async function modifyV3(body: API.DeptModifyCmd, options?: { [key: string
 }
 
 /** 保存部门 保存部门 POST /v3/depts */
-export async function saveV3(body: API.DeptSaveCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/depts', {
+export async function saveV3(body: API.DeptSaveCmd, requestId: string, options?: { [key: string]: any }) {
+	return request<any>('/api/admin/v3/depts', {
 		method: 'POST',
 		headers: {
+			'request-id': requestId,
 			'Content-Type': 'application/json',
 		},
 		data: body,
@@ -28,7 +29,7 @@ export async function saveV3(body: API.DeptSaveCmd, options?: { [key: string]: a
 
 /** 删除部门 删除部门 DELETE /v3/depts */
 export async function removeV3(body: number[], options?: { [key: string]: any }) {
-	return request<any>('/v3/depts', {
+	return request<any>('/api/admin/v3/depts', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -45,7 +46,7 @@ export async function getByIdV3(
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
-	return request<API.Result>(`/v3/depts/${param0}`, {
+	return request<API.Result>(`/api/admin/v3/depts/${param0}`, {
 		method: 'GET',
 		params: {...queryParams},
 		...(options || {}),
@@ -54,7 +55,7 @@ export async function getByIdV3(
 
 /** 导出部门 导出部门 POST /v3/depts/export */
 export async function exportV3(body: API.DeptExportCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/depts/export', {
+	return request<any>('/api/admin/v3/depts/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -88,7 +89,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 		}
 	});
 
-	return request<any>('/v3/depts/import', {
+	return request<any>('/api/admin/v3/depts/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -98,7 +99,18 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 
 /** 分页查询部门列表 分页查询部门列表 POST /v3/depts/page */
 export async function pageV3(body: API.DeptPageQry, options?: { [key: string]: any }) {
-	return request<API.Result>('/v3/depts/page', {
+	return request<API.Result>('/api/admin/v3/depts/page', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}
+
+export async function treeListV3(body: any,options?: { [key: string]: any }) {
+	return request<API.Result>('/api/admin/v3/depts/tree-list', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

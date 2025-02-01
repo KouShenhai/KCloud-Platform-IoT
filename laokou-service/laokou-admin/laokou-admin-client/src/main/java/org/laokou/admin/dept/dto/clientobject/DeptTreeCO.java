@@ -15,19 +15,33 @@
  *
  */
 
-package org.laokou.admin.dept.dto;
+package org.laokou.admin.dept.dto.clientobject;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
+import lombok.NoArgsConstructor;
+import org.laokou.common.core.utils.TreeUtil;
 
 /**
- * 分页查询部门命令.
+ * 部门树客户端对象.
  *
  * @author laokou
  */
 @Data
-public class DeptPageQry extends PageQuery {
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+public class DeptTreeCO extends TreeUtil.TreeNode<DeptTreeCO> {
 
-	private String name;
+	/**
+	 * 部门路径.
+	 */
+	private String path;
+
+	/**
+	 * 部门排序.
+	 */
+	private Integer sort;
 
 }
