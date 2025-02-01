@@ -26,10 +26,7 @@ import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.dto.clientobject.CaptchaCO;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
-import org.laokou.common.core.utils.HttpUtil;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.MDCUtil;
-import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.core.utils.*;
 import org.laokou.common.crypto.utils.RSAUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.JacksonUtil;
@@ -259,7 +256,7 @@ class OAuth2ApiTest {
 					"urn:ietf:params:oauth:grant-type:device_code");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
-			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			String json = HttpUtil.doFormDataPost(apiUrl, params, headers);
 			log.info("设备授权码认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
@@ -277,7 +274,7 @@ class OAuth2ApiTest {
 			Map<String, String> params = Map.of("grant_type", "client_credentials");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
-			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			String json = HttpUtil.doFormDataPost(apiUrl, params, headers);
 			log.info("客户端认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
@@ -295,7 +292,7 @@ class OAuth2ApiTest {
 					"authorization_code");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
-			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			String json = HttpUtil.doFormDataPost(apiUrl, params, headers);
 			log.info("授权码认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
@@ -321,7 +318,7 @@ class OAuth2ApiTest {
 			Map<String, String> headers = Map.of("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "User-Agent",
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
-			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			String json = HttpUtil.doFormDataPost(apiUrl, params, headers);
 			log.info("手机号认证，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
@@ -341,7 +338,7 @@ class OAuth2ApiTest {
 			Map<String, String> headers = Map.of("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "User-Agent",
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
-			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			String json = HttpUtil.doFormDataPost(apiUrl, params, headers);
 			log.info("邮箱认证，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
@@ -363,7 +360,7 @@ class OAuth2ApiTest {
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "trace-id",
 					String.valueOf(IdGenerator.defaultSnowflakeId()), "User-Agent",
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
-			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			String json = OkHttpUtil.doFormDataPost(apiUrl, params, headers);
 			log.info("用户名密码认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
@@ -381,7 +378,7 @@ class OAuth2ApiTest {
 			Map<String, String> params = Map.of("refresh_token", refreshToken, "grant_type", "refresh_token");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
-			String json = HttpUtil.doFormDataPost(apiUrl, params, headers, disabledSsl());
+			String json = HttpUtil.doFormDataPost(apiUrl, params, headers);
 			log.info("刷新令牌模式，返回信息；{}", json);
 			return JacksonUtil.readTree(json).get("access_token").asText();
 		}

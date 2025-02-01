@@ -60,7 +60,9 @@ public final class SslUtil {
 		HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> true);
 	}
 
-	private static class DisableValidationTrustManager implements X509TrustManager {
+	public static class DisableValidationTrustManager implements X509TrustManager {
+
+		public static final X509TrustManager INSTANCE = new DisableValidationTrustManager();
 
 		public DisableValidationTrustManager() {
 		}

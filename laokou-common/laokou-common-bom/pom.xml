@@ -158,6 +158,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>io.freefair.okhttp-spring-boot</groupId>
+        <artifactId>okhttp4-spring-boot-starter</artifactId>
+        <version>${spring-boot.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-logstash-client</artifactId>
         <version>${laokou.version}</version>
