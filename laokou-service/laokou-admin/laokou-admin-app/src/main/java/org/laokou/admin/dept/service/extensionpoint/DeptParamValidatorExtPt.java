@@ -15,40 +15,16 @@
  *
  */
 
-package org.laokou.admin.dept.dto.clientobject;
+package org.laokou.admin.dept.service.extensionpoint;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.core.utils.TreeUtil;
-
-import java.time.Instant;
+import org.laokou.admin.dept.model.DeptE;
+import org.laokou.common.extension.ExtensionPointI;
 
 /**
- * 部门树客户端对象.
- *
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class DeptTreeCO extends TreeUtil.TreeNode<DeptTreeCO> {
+public interface DeptParamValidatorExtPt extends ExtensionPointI {
 
-	/**
-	 * 部门路径.
-	 */
-	private String path;
-
-	/**
-	 * 部门排序.
-	 */
-	private Integer sort;
-
-	/**
-	 * 创建时间.
-	 */
-	private Instant createTime;
+	void validate(DeptE deptE);
 
 }

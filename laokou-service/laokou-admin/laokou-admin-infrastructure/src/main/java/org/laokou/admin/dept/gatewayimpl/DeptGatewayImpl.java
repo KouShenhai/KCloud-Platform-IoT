@@ -40,12 +40,17 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	@Override
 	public void create(DeptE deptE) {
-		deptMapper.insert(DeptConvertor.toDataObject(deptE, true));
+		checkParentPath(deptE);
+		DeptDO deptDO = DeptConvertor.toDataObject(deptE, true);
+		deptDO.setPath(deptE.getNewPath());
+		deptMapper.insert(deptDO);
 	}
 
 	@Override
 	public void update(DeptE deptE) {
+		checkParentPath(deptE);
 		DeptDO deptDO = DeptConvertor.toDataObject(deptE, false);
+		deptDO.setPath(deptE.getNewPath());
 		deptDO.setVersion(deptMapper.selectVersion(deptE.getId()));
 		deptMapper.updateById(deptDO);
 	}
@@ -53,6 +58,13 @@ public class DeptGatewayImpl implements DeptGateway {
 	@Override
 	public void delete(Long[] ids) {
 		deptMapper.deleteByIds(Arrays.asList(ids));
+	}
+
+	private void checkParentPath(DeptE deptE) {
+		// 获取父级路径
+		deptE.getParentPath(deptMapper.selectParentPathById(deptE.getPid()));
+		// 校验父级路径
+		deptE.checkParentPath();
 	}
 
 }

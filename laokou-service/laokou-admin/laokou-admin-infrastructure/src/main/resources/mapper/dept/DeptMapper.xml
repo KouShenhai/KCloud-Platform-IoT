@@ -49,6 +49,11 @@
     order by "sort" desc
   </sql>
 
+  <update id="updateChildrenPath">
+    update boot_sys_dept set "path" = regexp_replace("path", #{oldPrefix}, #{newPrefix})
+    where "path" like concat(#{path}, '%') and "path" <![CDATA[ <> ]]> #{path}
+  </update>
+
   <select id="selectObjectPage"
           resultType="org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO">
     <include refid="selectObjectList"/>
@@ -69,6 +74,10 @@
 
   <select id="selectObjectList" resultType="org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO">
     <include refid="selectObjectList"/>
+  </select>
+
+  <select id="selectParentPathById" resultType="java.lang.String">
+    select "path" from boot_sys_dept where id = #{id}
   </select>
 
 </mapper>

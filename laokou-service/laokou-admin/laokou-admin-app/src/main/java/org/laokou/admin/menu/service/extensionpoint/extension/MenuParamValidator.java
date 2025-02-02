@@ -89,6 +89,9 @@ public final class MenuParamValidator {
 		if (ObjectUtil.isNull(sort)) {
 			return invalidate("排序不能为空");
 		}
+		if (sort < 1 || sort > 99999) {
+			return invalidate("排序范围1-99999");
+		}
 		return validate();
 	}
 

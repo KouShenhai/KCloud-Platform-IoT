@@ -28,6 +28,8 @@ public final class Constant {
 
 	public static final String MENU = "menu";
 
+	public static final String DEPT = "dept";
+
 	private Constant() {
 	}
 

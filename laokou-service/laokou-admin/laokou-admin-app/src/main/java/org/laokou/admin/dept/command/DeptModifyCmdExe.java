@@ -19,10 +19,17 @@ package org.laokou.admin.dept.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.dto.DeptModifyCmd;
+import org.laokou.admin.dept.model.DeptE;
+import org.laokou.admin.dept.service.extensionpoint.DeptParamValidatorExtPt;
+import org.laokou.common.extension.BizScenario;
+import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.dept.convertor.DeptConvertor;
 import org.laokou.admin.dept.ability.DeptDomainService;
+
+import static org.laokou.admin.common.constant.Constant.*;
+import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
  * 修改部门命令执行器.
@@ -37,9 +44,14 @@ public class DeptModifyCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	private final ExtensionExecutor extensionExecutor;
+
 	public void executeVoid(DeptModifyCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> deptDomainService.update(DeptConvertor.toEntity(cmd.getCo())));
+		DeptE deptE = DeptConvertor.toEntity(cmd.getCo());
+		extensionExecutor.executeVoid(DeptParamValidatorExtPt.class, BizScenario.valueOf(MODIFY, DEPT, SCENARIO),
+				extension -> extension.validate(deptE));
+		transactionalUtil.executeInTransaction(() -> deptDomainService.update(deptE));
 	}
 
 }
