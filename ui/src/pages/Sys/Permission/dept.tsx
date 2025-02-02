@@ -2,7 +2,6 @@ import {
 	DrawerForm,
 	ProColumns,
 	ProFormDigit,
-	ProFormSelect,
 	ProFormText,
 	ProFormTreeSelect
 } from '@ant-design/pro-components';
@@ -10,25 +9,23 @@ import {ProTable} from '@ant-design/pro-components';
 import {treeListV3, removeV3, saveV3, getByIdV3, modifyV3} from "@/services/admin/dept";
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
-import {Button, message, Modal, Space, Switch, Tag} from 'antd';
+import {Button, message, Modal} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {v7 as uuidV7} from 'uuid';
+import {trim} from "@/utils/format";
 
 export default () => {
 
 	type TableColumns = {
 		id: number;
+		pid: number;
 		name: string | undefined;
 		path: string | undefined;
-		status: number | undefined;
-		type: number | undefined;
-		permission: string | undefined;
 		createTime: string | undefined;
 		sort: number | undefined;
 	};
 
 	const [readOnly, setReadOnly] = useState(false)
-	const [typeValue, setTypeValue] = useState(0);
 	const [modalVisit, setModalVisit] = useState(false);
 	const actionRef = useRef();
 	const [dataSource, setDataSource] = useState({})
@@ -38,9 +35,7 @@ export default () => {
 
 	const getPageQuery = (params: any) => {
 		return {
-			code: 1,
-			type: params?.type,
-			status: params?.status,
+			name: trim(params?.name),
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
@@ -77,84 +72,19 @@ export default () => {
 			title: '名称',
 			dataIndex: 'name',
 			hideInSearch: true,
-			width: 200,
-		},
-		{
-			title: '图标',
-			dataIndex: 'icon',
-			ellipsis: true,
-			hideInSearch: true
 		},
 		{
 			title: '路径',
 			dataIndex: 'path',
 			ellipsis: true,
 			hideInSearch: true,
-			width: 180
-		},
-		{
-			title: '权限标识',
-			dataIndex: 'permission',
-			ellipsis: true,
-			hideInSearch: true,
-			width: 150
-		},
-		{
-			title: '类型',
-			dataIndex: 'type',
-			hideInTable: true,
-			valueEnum: {
-				0: {text: '菜单', status: 'Processing'},
-				1: {text: '按钮', status: 'Default'},
-			},
-			ellipsis: true
-		},
-		{
-			disable: true,
-			title: '类型',
-			dataIndex: 'type',
-			search: false,
-			renderFormItem: (_, { defaultRender }) => {
-				return defaultRender(_);
-			},
-			render: (_, record) => (
-				<Space>
-					{record?.type === 0 && (
-						<Tag color={'rgb(51 114 253)'} key={'menu'}>
-							菜单
-						</Tag>
-					)}
-					{record?.type === 1 && (
-						<Tag color={'#fd5251'} key={'button'}>
-							按钮
-						</Tag>
-					)}
-				</Space>
-			),
-		},
-		{
-			title: '状态',
-			dataIndex: 'status',
-			hideInTable: true,
-			valueEnum: {
-				0: {text: '启用', status: 'Success'},
-				1: {text: '禁用', status: 'Error'},
-			},
-			ellipsis: true
-		},
-		{
-			title: '状态',
-			dataIndex: 'status',
-			search: false,
-			render: (_, record) => (
-				<Switch checkedChildren="启用" unCheckedChildren="禁用" disabled={true} checked={record?.status === 0} />
-			),
 		},
 		{
 			title: '排序',
 			dataIndex: 'sort',
 			hideInSearch: true,
-			ellipsis: true
+			ellipsis: true,
+			width:80,
 		},
 		{
 			title: '创建时间',
@@ -190,9 +120,7 @@ export default () => {
 						   setTitle('查看部门')
 						   setModalVisit(true)
 						   setReadOnly(true)
-						   const data = res?.data;
-						   setTypeValue(data.type)
-						   setDataSource(data)
+						   setDataSource(res?.data)
 					   })
 				   }}
 				>
@@ -204,9 +132,7 @@ export default () => {
 						   setTitle('修改部门')
 						   setModalVisit(true)
 						   setReadOnly(false)
-						   const data = res?.data;
-						   setTypeValue(data.type)
-						   setDataSource(data)
+						   setDataSource(res?.data)
 					   })
 				   }}
 				>
@@ -310,64 +236,12 @@ export default () => {
 					rules={[{ required: true, message: '请输入名称' }]}
 				/>
 
-				<ProFormSelect
-					name="type"
-					label="类型"
+				<ProFormText
+					name="path"
+					label="路径"
+					hidden={!readOnly}
 					readonly={readOnly}
-					placeholder={'请选择类型'}
-					rules={[{ required: true, message: '请选择类型' }]}
-					onChange={(value: number) => {
-						setTypeValue(value)
-					}}
-					options={[
-						{value: 0, label: '菜单'},
-						{value: 1, label: '按钮'}
-					]}
 				/>
-
-				{typeValue === 0 && (
-					<ProFormText
-						name="path"
-						label="路径"
-						readonly={readOnly}
-						placeholder={'请输入路径'}
-						rules={[{ required: true, message: '请输入路径' }]}
-					/>
-				)}
-
-				{typeValue === 1 && (
-					<ProFormText
-						name="permission"
-						label="权限标识"
-						readonly={readOnly}
-						placeholder={'请输入权限标识'}
-						rules={[{ required: true, message: '请输入权限标识' }]}
-					/>
-				)}
-
-				{typeValue === 0 && (
-					<ProFormText
-						name="icon"
-						label="图标"
-						tooltip={'只支持目录菜单显示图标'}
-						readonly={readOnly}
-						placeholder={'请输入图标'}
-					/>
-				)}
-
-				{typeValue === 0 && (
-					<ProFormSelect
-						name="status"
-						label="状态"
-						readonly={readOnly}
-						placeholder={'请选择状态'}
-						rules={[{ required: true, message: '请选择状态' }]}
-						options={[
-							{value: 0, label: '启用'},
-							{value: 1, label: '禁用'}
-						]}
-					/>
-				)}
 
 				<ProFormDigit
 					name="sort"
@@ -402,18 +276,13 @@ export default () => {
 					() => [
 						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
 							setTitle('新增部门')
-							setTypeValue(0)
 							setReadOnly(false)
 							setModalVisit(true)
 							setDataSource({
 								id: undefined,
 								name: '',
 								path: '',
-								permission: '',
 								sort: 1,
-								icon: '',
-								status: 0,
-								type: 0,
 							})
 						}}>
 							新增

@@ -18,6 +18,8 @@
 package org.laokou.admin.dept.model;
 
 import lombok.Data;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
  * 部门领域对象【实体】.
@@ -51,5 +53,32 @@ public class DeptE {
 	 * 部门排序.
 	 */
 	private Integer sort;
+
+	/**
+	 * 部门父节点路径.
+	 */
+	private String parentPath;
+
+	public void getParentPath(String parentPath) {
+		this.parentPath = parentPath;
+	}
+
+	public void checkParentPath() {
+		if (ObjectUtil.isNull(this.parentPath)) {
+			throw new SystemException("S_Dept_PathNotExist", "部门路径不存在");
+		}
+	}
+
+	public String getNewPath() {
+		return this.parentPath + "," + this.id;
+	}
+
+	public String getOldPrefix() {
+		return "^" + this.path;
+	}
+
+	public String getNewPrefix() {
+		return getNewPath();
+	}
 
 }

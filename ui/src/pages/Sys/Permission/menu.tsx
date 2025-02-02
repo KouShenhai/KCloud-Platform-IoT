@@ -18,6 +18,7 @@ export default () => {
 
 	type TableColumns = {
 		id: number;
+		pid: number;
 		name: string | undefined;
 		path: string | undefined;
 		status: number | undefined;
