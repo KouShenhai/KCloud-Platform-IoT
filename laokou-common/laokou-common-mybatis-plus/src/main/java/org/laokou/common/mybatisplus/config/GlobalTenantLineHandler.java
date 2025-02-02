@@ -23,6 +23,8 @@ import net.sf.jsqlparser.expression.LongValue;
 import net.sf.jsqlparser.schema.Column;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.mybatisplus.context.IgnoreTableContextHolder;
 
 import java.util.List;
 import java.util.Set;
@@ -40,7 +42,14 @@ public class GlobalTenantLineHandler implements TenantLineHandler {
 
 	@Override
 	public boolean ignoreTable(String tableName) {
-		return ignoreTables.contains(tableName) || ignoreTables.stream().anyMatch(tableName::contains);
+		try {
+			String name = IgnoreTableContextHolder.get();
+			return (StringUtil.isNotEmpty(name) && ObjectUtil.equals(tableName, name))
+					|| ignoreTables.contains(tableName) || ignoreTables.stream().anyMatch(tableName::contains);
+		}
+		finally {
+			IgnoreTableContextHolder.clear();
+		}
 	}
 
 	@Override

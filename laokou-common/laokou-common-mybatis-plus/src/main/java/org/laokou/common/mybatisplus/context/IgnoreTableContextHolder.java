@@ -22,12 +22,15 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 /**
  * @author laokou
  */
-public class DynamicTableSuffixContextHolder {
+public final class IgnoreTableContextHolder {
 
 	private static final ThreadLocal<String> LOCAL = new TransmittableThreadLocal<>();
 
-	public static void set(String suffix) {
-		LOCAL.set(suffix);
+	private IgnoreTableContextHolder() {
+	}
+
+	public static void set(String tableName) {
+		LOCAL.set(tableName);
 	}
 
 	public static void clear() {

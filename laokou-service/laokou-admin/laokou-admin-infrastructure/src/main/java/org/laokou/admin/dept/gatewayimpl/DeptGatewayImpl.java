@@ -23,9 +23,12 @@ import org.laokou.admin.dept.gateway.DeptGateway;
 import org.laokou.admin.dept.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.dept.model.DeptE;
+import org.laokou.common.mybatisplus.context.IgnoreTableContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+
+import static org.laokou.common.tenant.constant.Constant.Master.DEPT_TABLE;
 
 /**
  * 部门网关实现.
@@ -40,19 +43,25 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	@Override
 	public void create(DeptE deptE) {
-		checkParentPath(deptE);
 		DeptDO deptDO = DeptConvertor.toDataObject(deptE, true);
-		deptDO.setPath(deptE.getNewPath());
+		// 校验父级路径
+		checkParentPath(deptE, deptDO.getId());
+		deptDO.setPath(deptE.getParentPath());
 		deptMapper.insert(deptDO);
 	}
 
 	@Override
 	public void update(DeptE deptE) {
-		checkParentPath(deptE);
 		DeptDO deptDO = DeptConvertor.toDataObject(deptE, false);
-		deptDO.setPath(deptE.getNewPath());
+		String path = deptDO.getPath();
+		// 校验父级路径
+		checkParentPath(deptE, deptDO.getId());
+		deptDO.setPath(deptE.getParentPath());
 		deptDO.setVersion(deptMapper.selectVersion(deptE.getId()));
 		deptMapper.updateById(deptDO);
+		// 忽略部门表【上下文】
+		IgnoreTableContextHolder.set(DEPT_TABLE);
+		deptMapper.updateChildrenPath(path, deptE.getOldPrefix(), deptE.getNewPrefix());
 	}
 
 	@Override
@@ -60,11 +69,14 @@ public class DeptGatewayImpl implements DeptGateway {
 		deptMapper.deleteByIds(Arrays.asList(ids));
 	}
 
-	private void checkParentPath(DeptE deptE) {
+	/**
+	 * 校验父级路径.
+	 */
+	private void checkParentPath(DeptE deptE, Long id) {
 		// 获取父级路径
 		deptE.getParentPath(deptMapper.selectParentPathById(deptE.getPid()));
 		// 校验父级路径
-		deptE.checkParentPath();
+		deptE.checkParentPath(id);
 	}
 
 }

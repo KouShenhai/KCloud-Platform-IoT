@@ -51,7 +51,7 @@
 
   <update id="updateChildrenPath">
     update boot_sys_dept set "path" = regexp_replace("path", #{oldPrefix}, #{newPrefix})
-    where "path" like concat(#{path}, '%') and "path" <![CDATA[ <> ]]> #{path}
+    where "path" LIKE CAST(#{path} AS TEXT) || '%' and "path" <![CDATA[ <> ]]> #{path}
   </update>
 
   <select id="selectObjectPage"
@@ -77,7 +77,14 @@
   </select>
 
   <select id="selectParentPathById" resultType="java.lang.String">
-    select "path" from boot_sys_dept where id = #{id}
+    <choose>
+      <when test="id == 0">
+        select '0'
+      </when>
+      <otherwise>
+        select "path" from boot_sys_dept where id = #{id}
+      </otherwise>
+    </choose>
   </select>
 
 </mapper>

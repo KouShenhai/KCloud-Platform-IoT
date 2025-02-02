@@ -113,13 +113,18 @@ public final class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 		@Nullable
 		@Override
 		public byte[] serialize(@Nullable String value) {
-			Assert.notNull(value, "Cannot serialize null");
-			Long tenantId = TenantRedisContextHolder.get();
-			if (ObjectUtil.isNotNull(tenantId)) {
-				return super.serialize(
-						DigestUtils.md5DigestAsHex((tenantId + ":" + value).getBytes(StandardCharsets.UTF_8)));
+			try {
+				Assert.notNull(value, "Cannot serialize null");
+				Long tenantId = TenantRedisContextHolder.get();
+				if (ObjectUtil.isNotNull(tenantId)) {
+					return super.serialize(
+							DigestUtils.md5DigestAsHex((tenantId + ":" + value).getBytes(StandardCharsets.UTF_8)));
+				}
+				return super.serialize(DigestUtils.md5DigestAsHex(value.getBytes(StandardCharsets.UTF_8)));
 			}
-			return super.serialize(DigestUtils.md5DigestAsHex(value.getBytes(StandardCharsets.UTF_8)));
+			finally {
+				TenantRedisContextHolder.clear();
+			}
 		}
 
 	}
