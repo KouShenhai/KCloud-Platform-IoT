@@ -29,12 +29,15 @@ import java.util.Optional;
  *
  * @author laokou
  */
-public class UserContextHolder {
+public final class UserContextHolder {
 
 	/**
 	 * 用户上下文本地线程变量.
 	 */
 	private static final ThreadLocal<User> USER_LOCAL = new TransmittableThreadLocal<>();
+
+	private UserContextHolder() {
+	}
 
 	/**
 	 * 注销本地线程变量.

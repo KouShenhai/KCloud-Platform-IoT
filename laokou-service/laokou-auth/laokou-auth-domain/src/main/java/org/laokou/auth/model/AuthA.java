@@ -25,6 +25,7 @@ import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.common.i18n.common.constant.EventType;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.context.TenantRedisContextHolder;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.JacksonUtil;
@@ -184,6 +185,8 @@ public class AuthA extends AggregateRoot {
 		if (ObjectUtil.isNull(super.tenantId)) {
 			throw new SystemException(TENANT_NOT_EXIST);
 		}
+		// 写入租户ID到上下文
+		TenantRedisContextHolder.set(super.tenantId);
 	}
 
 	public void checkCaptcha(CaptchaValidator captchaValidator) {

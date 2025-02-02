@@ -17,10 +17,6 @@
 
 package org.laokou.common.i18n.utils;
 
-import org.springframework.util.DigestUtils;
-
-import java.nio.charset.StandardCharsets;
-
 /**
  * @author laokou
  */
@@ -34,16 +30,14 @@ public final class RedisKeyUtil {
 	 * @param uuid UUID
 	 */
 	public static String getUsernamePasswordAuthCaptchaKey(String uuid) {
-		String key = "auth:username-password:captcha:" + uuid;
-		return DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
+		return "auth:username-password:captcha:" + uuid;
 	}
 
 	/**
 	 * 布隆过滤器Key.
 	 */
 	public static String getBloomFilterKey() {
-		String key = "bloom:filter";
-		return DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
+		return "bloom:filter";
 	}
 
 	/**
@@ -51,8 +45,7 @@ public final class RedisKeyUtil {
 	 * @param mobile 手机号
 	 */
 	public static String getMobileAuthCaptchaKey(String mobile) {
-		String key = "auth:mobile:captcha:" + mobile;
-		return DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
+		return "auth:mobile:captcha:" + mobile;
 	}
 
 	/**
@@ -60,8 +53,7 @@ public final class RedisKeyUtil {
 	 * @param mail 邮箱
 	 */
 	public static String getMailAuthCaptchaKey(String mail) {
-		String key = "auth:mail:captcha:" + mail;
-		return DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
+		return "auth:mail:captcha:" + mail;
 	}
 
 	/**
@@ -69,16 +61,14 @@ public final class RedisKeyUtil {
 	 * @param token 令牌
 	 */
 	public static String getApiIdempotentKey(String token) {
-		String key = "api:idempotent:" + token;
-		return DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
+		return "api:idempotent:" + token;
 	}
 
 	/**
 	 * 动态路由Key.
 	 */
 	public static String getRouteDefinitionHashKey() {
-		String key = "route:definition";
-		return DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
+		return "route:definition";
 	}
 
 	/**
@@ -86,8 +76,7 @@ public final class RedisKeyUtil {
 	 * @param type 类型
 	 */
 	public static String getIpCacheHashKey(String type) {
-		String key = "ip:cache:" + type;
-		return DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8));
+		return "ip:cache:" + type;
 	}
 
 }
