@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  * @author laokou
  */
-public class ShutdownHolder {
+public final class ShutdownHolder {
 
 	/**
 	 * 请求计数器.
@@ -36,6 +36,9 @@ public class ShutdownHolder {
 	 * 优雅停机挡板.
 	 */
 	private static final AtomicBoolean BAFFLE = new AtomicBoolean(false);
+
+	private ShutdownHolder() {
+	}
 
 	public static void add() {
 		REQUEST_COUNTER.incrementAndGet();

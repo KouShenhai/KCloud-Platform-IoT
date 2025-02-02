@@ -57,6 +57,11 @@ public final class OkHttpUtil {
 		return EMPTY;
 	}
 
+	@PreDestroy
+	public static void preDestroy() {
+		CLIENT.connectionPool().evictAll();
+	}
+
 	private static OkHttpClient getOkHttpClient() {
 		return new OkHttpClient.Builder()
 			.sslSocketFactory(SslUtil.sslContext().getSocketFactory(), SslUtil.DisableValidationTrustManager.INSTANCE)
@@ -67,11 +72,6 @@ public final class OkHttpUtil {
 			.pingInterval(Duration.ZERO)
 			.connectionPool(new ConnectionPool(5, Duration.ofMinutes(5).toNanos(), TimeUnit.NANOSECONDS))
 			.build();
-	}
-
-	@PreDestroy
-	public static void preDestroy() {
-		CLIENT.connectionPool().evictAll();
 	}
 
 }
