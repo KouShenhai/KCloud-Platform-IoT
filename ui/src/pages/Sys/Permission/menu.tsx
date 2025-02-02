@@ -264,6 +264,7 @@ export default () => {
 								setModalVisit(false)
 								// @ts-ignore
 								actionRef?.current?.reload();
+								getTreeList().catch(console.log);
 							}
 						})
 					} else {
@@ -273,6 +274,7 @@ export default () => {
 								setModalVisit(false)
 								// @ts-ignore
 								actionRef?.current?.reload();
+								getTreeList().catch(console.log);
 							}
 						})
 					}

@@ -63,14 +63,11 @@ public class DeptE {
 		this.parentPath = parentPath;
 	}
 
-	public void checkParentPath() {
+	public void checkParentPath(Long id) {
 		if (ObjectUtil.isNull(this.parentPath)) {
 			throw new SystemException("S_Dept_PathNotExist", "部门路径不存在");
 		}
-	}
-
-	public String getNewPath() {
-		return this.parentPath + "," + this.id;
+		this.parentPath = this.parentPath + "," + id;
 	}
 
 	public String getOldPrefix() {
@@ -78,7 +75,7 @@ public class DeptE {
 	}
 
 	public String getNewPrefix() {
-		return getNewPath();
+		return this.parentPath;
 	}
 
 }
