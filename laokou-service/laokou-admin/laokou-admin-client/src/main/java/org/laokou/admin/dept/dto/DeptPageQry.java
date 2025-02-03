@@ -19,6 +19,7 @@ package org.laokou.admin.dept.dto;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.StringUtil;
 
 /**
  * 分页查询部门命令.
@@ -29,5 +30,9 @@ import org.laokou.common.i18n.dto.PageQuery;
 public class DeptPageQry extends PageQuery {
 
 	private String name;
+
+	public void setName(String name) {
+		this.name = StringUtil.like(StringUtil.trim(name));
+	}
 
 }

@@ -23,12 +23,9 @@ import org.laokou.admin.dept.gateway.DeptGateway;
 import org.laokou.admin.dept.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.dept.model.DeptE;
-import org.laokou.common.mybatisplus.context.IgnoreTableContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-
-import static org.laokou.common.tenant.constant.Constant.Master.DEPT_TABLE;
 
 /**
  * 部门网关实现.
@@ -55,12 +52,12 @@ public class DeptGatewayImpl implements DeptGateway {
 		DeptDO deptDO = DeptConvertor.toDataObject(deptE, false);
 		String path = deptDO.getPath();
 		// 校验父级路径
-		checkParentPath(deptE, deptDO.getId());
-		deptDO.setPath(deptE.getParentPath());
-		deptDO.setVersion(deptMapper.selectVersion(deptE.getId()));
+		Long id = deptDO.getId();
+		String parentPath = deptE.getParentPath();
+		checkParentPath(deptE, id);
+		deptDO.setPath(parentPath);
+		deptDO.setVersion(deptMapper.selectVersion(id));
 		deptMapper.updateById(deptDO);
-		// 忽略部门表【上下文】
-		IgnoreTableContextHolder.set(DEPT_TABLE);
 		deptMapper.updateChildrenPath(path, deptE.getOldPrefix(), deptE.getNewPrefix());
 	}
 

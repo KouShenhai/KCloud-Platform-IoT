@@ -30,6 +30,8 @@ public final class Constant {
 
 	public static final String DEPT = "dept";
 
+	public static final String ROLE = "role";
+
 	private Constant() {
 	}
 

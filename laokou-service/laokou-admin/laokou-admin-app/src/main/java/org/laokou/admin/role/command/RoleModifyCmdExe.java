@@ -21,8 +21,15 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.ability.RoleDomainService;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleModifyCmd;
+import org.laokou.admin.role.model.RoleE;
+import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
+import org.laokou.common.extension.BizScenario;
+import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.admin.common.constant.Constant.*;
+import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
  * 修改角色命令执行器.
@@ -37,9 +44,14 @@ public class RoleModifyCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	private final ExtensionExecutor extensionExecutor;
+
 	public void executeVoid(RoleModifyCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> roleDomainService.update(RoleConvertor.toEntity(cmd.getCo())));
+		RoleE roleE = RoleConvertor.toEntity(cmd.getCo());
+		extensionExecutor.executeVoid(RoleParamValidatorExtPt.class, BizScenario.valueOf(MODIFY, ROLE, SCENARIO),
+				extension -> extension.validate(roleE));
+		transactionalUtil.executeInTransaction(() -> roleDomainService.update(roleE));
 	}
 
 }

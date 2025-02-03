@@ -43,7 +43,7 @@ public class RolePageQryExe {
 	public Result<Page<RoleCO>> execute(RolePageQry qry) {
 		List<RoleDO> list = roleMapper.selectObjectPage(qry);
 		long total = roleMapper.selectObjectCount(qry);
-		return Result.ok(Page.create(list.stream().map(RoleConvertor::toClientObject).toList(), total));
+		return Result.ok(Page.create(RoleConvertor.toClientObjects(list), total));
 	}
 
 }

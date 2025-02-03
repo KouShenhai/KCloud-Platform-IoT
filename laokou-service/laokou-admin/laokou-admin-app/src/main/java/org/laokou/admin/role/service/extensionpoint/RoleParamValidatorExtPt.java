@@ -15,30 +15,16 @@
  *
  */
 
-package org.laokou.common.mybatisplus.context;
+package org.laokou.admin.role.service.extensionpoint;
 
-import com.alibaba.ttl.TransmittableThreadLocal;
+import org.laokou.admin.role.model.RoleE;
+import org.laokou.common.extension.ExtensionPointI;
 
 /**
  * @author laokou
  */
-public final class IgnoreTableContextHolder {
+public interface RoleParamValidatorExtPt extends ExtensionPointI {
 
-	private static final ThreadLocal<String> LOCAL = new TransmittableThreadLocal<>();
-
-	private IgnoreTableContextHolder() {
-	}
-
-	public static void set(String tableName) {
-		LOCAL.set(tableName);
-	}
-
-	public static void clear() {
-		LOCAL.remove();
-	}
-
-	public static String get() {
-		return LOCAL.get();
-	}
+	void validate(RoleE roleE);
 
 }

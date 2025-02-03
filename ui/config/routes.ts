@@ -46,7 +46,17 @@ export default [
 						name: '部门',
 						path: '/sys/permission/dept',
 						component: './Sys/Permission/dept'
-					}
+					},
+					{
+						name: '角色',
+						path: '/sys/permission/role',
+						component: './Sys/Permission/role'
+					},
+					{
+						name: '用户',
+						path: '/sys/permission/user',
+						component: './Sys/Permission/user'
+					},
 				]
 			},
 			{

@@ -779,6 +779,11 @@ INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", 
 INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (47, 1, 1, '2025-02-02 13:36:39.981857', '2025-02-02 13:36:39.981857', 0, 0, 0, 24, 'sys:dept:save', 1, '新增', NULL, NULL, 40, 0);
 INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (48, 1, 1, '2025-02-02 13:37:18.191332', '2025-02-02 13:37:26.503011', 0, 1, 0, 24, 'sys:dept:modify', 1, '修改', NULL, NULL, 30, 0);
 INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (49, 1, 1, '2025-02-02 13:37:56.611868', '2025-02-02 13:38:04.173925', 0, 1, 0, 24, 'sys:dept:remove', 1, '删除', NULL, NULL, 20, 0);
+INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (50, 1, 1, '2025-02-03 10:18:36.114539', '2025-02-03 10:18:36.115538', 0, 0, 0, 25, 'sys:role:page', 1, '分页查询', NULL, NULL, 50, 0);
+INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (51, 1, 1, '2025-02-03 10:19:23.231544', '2025-02-03 10:19:23.232089', 0, 0, 0, 25, 'sys:role:save', 1, '新增', NULL, NULL, 40, 0);
+INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (52, 1, 1, '2025-02-03 10:20:30.753445', '2025-02-03 10:20:30.753445', 0, 0, 0, 25, 'sys:role:modify', 1, '修改', NULL, NULL, 30, 0);
+INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (53, 1, 1, '2025-02-03 10:20:55.204108', '2025-02-03 10:20:55.204108', 0, 0, 0, 25, 'sys:role:remove', 1, '删除', NULL, NULL, 20, 0);
+INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (54, 1, 1, '2025-02-03 10:21:33.499697', '2025-02-03 10:21:33.499697', 0, 0, 0, 25, 'sys:role:detail', 1, '查看', NULL, NULL, 10, 0);
 
 -- ----------------------------
 -- Table structure for boot_sys_menu_package
@@ -979,7 +984,7 @@ COMMENT ON COLUMN "public"."boot_sys_role"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_sys_role"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_sys_role"."name" IS '角色名称';
 COMMENT ON COLUMN "public"."boot_sys_role"."sort" IS '角色排序';
-COMMENT ON COLUMN "public"."boot_sys_role"."data_scope" IS '数据范围 no无限制 custom自定义 dept_self仅本部门 dept部门及以下 self仅本人';
+COMMENT ON COLUMN "public"."boot_sys_role"."data_scope" IS '数据范围 all全部 custom自定义 dept_self仅本部门 dept部门及以下 self仅本人';
 COMMENT ON TABLE "public"."boot_sys_role" IS '角色';
 
 -- ----------------------------

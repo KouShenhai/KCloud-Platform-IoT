@@ -24,6 +24,8 @@ import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
+import java.util.List;
+
 /**
  * 角色转换器.
  *
@@ -39,8 +41,18 @@ public class RoleConvertor {
 		return roleDO;
 	}
 
+	public static List<RoleCO> toClientObjects(List<RoleDO> roleDOList) {
+		return roleDOList.stream().map(RoleConvertor::toClientObject).toList();
+	}
+
 	public static RoleCO toClientObject(RoleDO roleDO) {
-		return ConvertUtil.sourceToTarget(roleDO, RoleCO.class);
+		RoleCO roleCO = new RoleCO();
+		roleCO.setId(roleDO.getId());
+		roleCO.setName(roleDO.getName());
+		roleCO.setSort(roleDO.getSort());
+		roleCO.setDataScope(roleDO.getDataScope());
+		roleCO.setCreateTime(roleDO.getCreateTime());
+		return roleCO;
 	}
 
 	public static RoleE toEntity(RoleCO roleCO) {

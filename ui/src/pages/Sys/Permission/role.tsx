@@ -1,28 +1,28 @@
 import {
 	DrawerForm,
 	ProColumns,
-	ProFormDigit,
-	ProFormText,
-	ProFormTreeSelect
+	ProFormDigit, ProFormSelect,
+	ProFormText, ProFormTreeSelect,
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {treeListV3, removeV3, saveV3, getByIdV3, modifyV3} from "@/services/admin/dept";
+import {pageV3, removeV3, saveV3, getByIdV3, modifyV3} from "@/services/admin/role";
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {v7 as uuidV7} from 'uuid';
 import {trim} from "@/utils/format";
+import {treeListV3} from "@/services/admin/menu";
 
 export default () => {
 
 	type TableColumns = {
 		id: number;
-		pid: number;
 		name: string | undefined;
-		path: string | undefined;
 		createTime: string | undefined;
 		sort: number | undefined;
+		menuIds: string[] | undefined;
+		dataScope: string | undefined;
 	};
 
 	const [readOnly, setReadOnly] = useState(false)
@@ -36,6 +36,7 @@ export default () => {
 	const getPageQuery = (params: any) => {
 		return {
 			name: trim(params?.name),
+			dataScope: params?.dataScope,
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
@@ -44,12 +45,8 @@ export default () => {
 	}
 
 	const getTreeList = async () => {
-		treeListV3({}).then(res => {
-			setTreeList([{
-				id: '0',
-				name: '根目录',
-				children: res?.data
-			}])
+		treeListV3({code: 1, status: 0}).then(res => {
+			setTreeList(res?.data)
 		})
 	}
 
@@ -70,13 +67,18 @@ export default () => {
 	const columns: ProColumns<TableColumns>[] = [
 		{
 			title: '名称',
-			dataIndex: 'name',
+			dataIndex: 'name'
 		},
 		{
-			title: '路径',
-			dataIndex: 'path',
-			ellipsis: true,
-			hideInSearch: true,
+			title: '数据范围',
+			dataIndex: 'dataScope',
+			valueEnum: {
+				all: '全部',
+				custom: '自定义',
+				dept_self: '仅本部门',
+				dept: '部门及以下',
+				self: '仅本人',
+			},
 		},
 		{
 			title: '排序',
@@ -116,7 +118,7 @@ export default () => {
 				<a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   setTitle('查看部门')
+						   setTitle('查看角色')
 						   setModalVisit(true)
 						   setReadOnly(true)
 						   setDataSource(res?.data)
@@ -128,7 +130,7 @@ export default () => {
 				<a key="modify"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   setTitle('修改部门')
+						   setTitle('修改角色')
 						   setModalVisit(true)
 						   setReadOnly(false)
 						   setDataSource(res?.data)
@@ -181,24 +183,31 @@ export default () => {
 					}
 				}}
 				onFinish={ async (value) => {
+					// @ts-ignore
+					const menuIds = value?.menuIds.map(item => item?.value)
+					const co = {
+						name: value.name,
+						menuIds: menuIds,
+						dataScope: value.dataScope,
+						sort: value.sort,
+						id: value.id
+					}
 					if (value.id === undefined) {
-						saveV3({co: value}, uuidV7()).then(res => {
+						saveV3({co: co}, uuidV7()).then(res => {
 							if (res.code === 'OK') {
 								message.success("新增成功").then()
 								setModalVisit(false)
 								// @ts-ignore
 								actionRef?.current?.reload();
-								getTreeList().catch(console.log);
 							}
 						})
 					} else {
-						modifyV3({co: value}).then(res => {
+						modifyV3({co: co}).then(res => {
 							if (res.code === 'OK') {
 								message.success("修改成功").then()
 								setModalVisit(false)
 								// @ts-ignore
 								actionRef?.current?.reload();
-								getTreeList().catch(console.log);
 							}
 						})
 					}
@@ -210,25 +219,6 @@ export default () => {
 					hidden={true}
 				/>
 
-				<ProFormTreeSelect
-					name="pid"
-					label="父级"
-					readonly={readOnly}
-					allowClear={true}
-					placeholder={'请选择父级'}
-					rules={[{ required: true, message: '请选择父级' }]}
-					fieldProps={{
-						fieldNames: {
-							label: 'name',
-							value: 'id',
-							children: 'children'
-						},
-					}}
-					request={async () => {
-						return treeList
-					}}
-				/>
-
 				<ProFormText
 					name="name"
 					label="名称"
@@ -237,11 +227,54 @@ export default () => {
 					rules={[{ required: true, message: '请输入名称' }]}
 				/>
 
-				<ProFormText
-					name="path"
-					label="路径"
-					hidden={!readOnly}
+				<ProFormSelect
+					name="dataScope"
+					label="数据范围"
 					readonly={readOnly}
+					placeholder={'请选择数据范围'}
+					rules={[{ required: true, message: '请选择数据范围' }]}
+					options={[
+						{value: 'all', label: '全部'},
+						{value: 'custom', label: '自定义'},
+						{value: 'dept_self', label: '仅本部门'},
+						{value: 'dept', label: '部门及以下'},
+						{value: 'self', label: '仅本人'},
+					]}
+				/>
+
+				<ProFormTreeSelect
+					name="menuIds"
+					label="菜单权限"
+					readonly={readOnly}
+					allowClear={true}
+					placeholder={'请选择菜单权限'}
+					rules={[{ required: true, message: '请选择菜单权限' }]}
+					fieldProps={{
+						fieldNames: {
+							label: 'name',
+							value: 'id',
+							children: 'children'
+						},
+						// 最多显示多少个 tag，响应式模式会对性能产生损耗
+						maxTagCount: 6,
+						// 多选
+						multiple: true,
+						// 显示复选框
+						treeCheckable: true,
+						// 展示策略
+						showCheckedStrategy: 'SHOW_ALL',
+						// 取消父子节点联动
+						treeCheckStrictly: true,
+						// 默认展示所有节点
+						treeDefaultExpandAll: true,
+						// 高度
+						dropdownStyle: { maxHeight: 500 },
+						// 不显示搜索
+						showSearch: false,
+					}}
+					request={async () => {
+						return treeList
+					}}
 				/>
 
 				<ProFormDigit
@@ -260,9 +293,10 @@ export default () => {
 				columns={columns}
 				request={ async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return treeListV3(getPageQuery(params)).then(res => {
+					return pageV3(getPageQuery(params)).then(res => {
 						return Promise.resolve({
-							data: res.data,
+							data: res?.data?.records,
+							total: parseInt(res.data.total),
 							success: true,
 						});
 					})
@@ -276,13 +310,14 @@ export default () => {
 				toolBarRender={
 					() => [
 						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
-							setTitle('新增部门')
+							setTitle('新增角色')
 							setReadOnly(false)
 							setModalVisit(true)
 							setDataSource({
 								id: undefined,
 								name: '',
-								path: '',
+								dataScope: 'all',
+								menuIds: [],
 								sort: 1,
 							})
 						}}>
@@ -316,8 +351,8 @@ export default () => {
 				}
 				dateFormatter="string"
 				toolbar={{
-					title: '部门',
-					tooltip: '部门',
+					title: '角色',
+					tooltip: '角色',
 				}}
 			/>
 		</>
