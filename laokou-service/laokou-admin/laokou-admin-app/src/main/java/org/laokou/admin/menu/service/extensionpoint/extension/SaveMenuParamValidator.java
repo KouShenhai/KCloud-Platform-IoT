@@ -47,7 +47,7 @@ public class SaveMenuParamValidator implements MenuParamValidatorExtPt {
 				MenuParamValidator.validatePermission(menuE, true),
 				// 校验状态
 				MenuParamValidator.validateStatus(menuE),
-				// 排序
+				// 校验排序
 				MenuParamValidator.validateSort(menuE));
 	}
 

@@ -15,32 +15,31 @@
  *
  */
 
-package org.laokou.admin.dept.service.extensionpoint.extension;
+package org.laokou.admin.role.service.extensionpoint.extension;
 
-import org.laokou.admin.dept.model.DeptE;
-import org.laokou.admin.dept.service.extensionpoint.DeptParamValidatorExtPt;
+import org.laokou.admin.role.model.RoleE;
+import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
 import org.laokou.common.extension.Extension;
 import org.laokou.common.i18n.utils.ParamValidator;
 
-import static org.laokou.admin.common.constant.Constant.DEPT;
-import static org.laokou.admin.common.constant.Constant.SAVE;
+import static org.laokou.admin.common.constant.Constant.*;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
  * @author laokou
  */
-@Extension(bizId = SAVE, useCase = DEPT, scenario = SCENARIO)
-public class SaveDeptParamValidator implements DeptParamValidatorExtPt {
+@Extension(bizId = SAVE, useCase = ROLE, scenario = SCENARIO)
+public class SaveRoleParamValidator implements RoleParamValidatorExtPt {
 
 	@Override
-	public void validate(DeptE deptE) {
+	public void validate(RoleE roleE) {
 		ParamValidator.validate(
-				// 校验父级ID
-				DeptParamValidator.validateParentId(deptE),
 				// 校验名称
-				DeptParamValidator.validateName(deptE),
+				RoleParamValidator.validateName(roleE, true),
+				// 校验数据范围
+				RoleParamValidator.validateDataScope(roleE),
 				// 校验排序
-				DeptParamValidator.validateSort(deptE));
+				RoleParamValidator.validateSort(roleE));
 	}
 
 }

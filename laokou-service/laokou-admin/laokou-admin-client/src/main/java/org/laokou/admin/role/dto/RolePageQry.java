@@ -19,6 +19,7 @@ package org.laokou.admin.role.dto;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.StringUtil;
 
 /**
  * 分页查询角色命令.
@@ -27,5 +28,13 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 @Data
 public class RolePageQry extends PageQuery {
+
+	private String name;
+
+	private String dataScope;
+
+	public void setName(String name) {
+		this.name = StringUtil.like(StringUtil.trim(name));
+	}
 
 }

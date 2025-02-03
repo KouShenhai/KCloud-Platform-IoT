@@ -3,11 +3,10 @@ import {
 	ProColumns,
 	ProFormDigit,
 	ProFormText,
-	ProFormTreeSelect
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {treeListV3, removeV3, saveV3, getByIdV3, modifyV3} from "@/services/admin/dept";
-import {useEffect, useRef, useState} from "react";
+import {pageV3, removeV3, saveV3, getByIdV3, modifyV3} from "@/services/admin/user";
+import {useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
@@ -31,7 +30,6 @@ export default () => {
 	const [dataSource, setDataSource] = useState({})
 	const [ids, setIds] = useState<number[]>([])
 	const [title, setTitle] = useState("")
-	const [treeList, setTreeList] = useState<any[]>([])
 
 	const getPageQuery = (params: any) => {
 		return {
@@ -41,16 +39,6 @@ export default () => {
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
 			}
 		}
-	}
-
-	const getTreeList = async () => {
-		treeListV3({}).then(res => {
-			setTreeList([{
-				id: '0',
-				name: '根目录',
-				children: res?.data
-			}])
-		})
 	}
 
 	const rowSelection: TableRowSelection<TableColumns> = {
@@ -63,14 +51,11 @@ export default () => {
 		}
 	};
 
-	useEffect(() => {
-		getTreeList().catch(console.log)
-	}, []);
-
 	const columns: ProColumns<TableColumns>[] = [
 		{
 			title: '名称',
 			dataIndex: 'name',
+			hideInSearch: true,
 		},
 		{
 			title: '路径',
@@ -188,7 +173,6 @@ export default () => {
 								setModalVisit(false)
 								// @ts-ignore
 								actionRef?.current?.reload();
-								getTreeList().catch(console.log);
 							}
 						})
 					} else {
@@ -198,7 +182,6 @@ export default () => {
 								setModalVisit(false)
 								// @ts-ignore
 								actionRef?.current?.reload();
-								getTreeList().catch(console.log);
 							}
 						})
 					}
@@ -208,25 +191,6 @@ export default () => {
 					name="id"
 					label="ID"
 					hidden={true}
-				/>
-
-				<ProFormTreeSelect
-					name="pid"
-					label="父级"
-					readonly={readOnly}
-					allowClear={true}
-					placeholder={'请选择父级'}
-					rules={[{ required: true, message: '请选择父级' }]}
-					fieldProps={{
-						fieldNames: {
-							label: 'name',
-							value: 'id',
-							children: 'children'
-						},
-					}}
-					request={async () => {
-						return treeList
-					}}
 				/>
 
 				<ProFormText
@@ -260,9 +224,10 @@ export default () => {
 				columns={columns}
 				request={ async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return treeListV3(getPageQuery(params)).then(res => {
+					return pageV3(getPageQuery(params)).then(res => {
 						return Promise.resolve({
-							data: res.data,
+							data: res?.data?.records,
+							total: parseInt(res.data.total),
 							success: true,
 						});
 					})

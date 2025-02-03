@@ -41,7 +41,7 @@ public class ModifyDeptParamValidator implements DeptParamValidatorExtPt {
 				DeptParamValidator.validateParentId(deptE),
 				// 校验名称
 				DeptParamValidator.validateName(deptE),
-				// 排序
+				// 校验排序
 				DeptParamValidator.validateSort(deptE));
 	}
 

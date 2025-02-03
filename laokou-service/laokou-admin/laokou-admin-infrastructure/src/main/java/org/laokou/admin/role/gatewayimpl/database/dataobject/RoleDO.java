@@ -41,7 +41,7 @@ public class RoleDO extends BaseDO {
 	private Integer sort;
 
 	/**
-	 * 数据范围 no无限制 custom自定义 dept_self仅本部门 dept部门及以下 self仅本人.
+	 * 数据范围 all全部 custom自定义 dept_self仅本部门 dept部门及以下 self仅本人.
 	 */
 	private String dataScope;
 

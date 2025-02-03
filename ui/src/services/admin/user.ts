@@ -15,10 +15,11 @@ export async function modifyV3(body: API.UserModifyCmd, options?: { [key: string
 }
 
 /** 保存用户 保存用户 POST /v3/users */
-export async function saveV3(body: API.UserSaveCmd, options?: { [key: string]: any }) {
+export async function saveV3(body: API.UserSaveCmd, requestId: string, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/users', {
 		method: 'POST',
 		headers: {
+			'request-id': requestId,
 			'Content-Type': 'application/json',
 		},
 		data: body,
