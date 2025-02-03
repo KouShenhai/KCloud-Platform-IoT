@@ -21,10 +21,13 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.model.RoleE;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ParamValidator;
 import org.laokou.common.i18n.utils.StringUtil;
+
+import java.util.List;
 
 import static org.laokou.common.i18n.utils.ParamValidator.invalidate;
 import static org.laokou.common.i18n.utils.ParamValidator.validate;
@@ -60,6 +63,14 @@ public final class RoleParamValidator {
 		String dataScope = roleE.getDataScope();
 		if (StringUtil.isEmpty(dataScope)) {
 			return invalidate("数据范围不能为空");
+		}
+		return validate();
+	}
+
+	public static ParamValidator.Validate validateMenuIds(RoleE roleE) {
+		List<String> menuIds = roleE.getMenuIds();
+		if (CollectionUtil.isEmpty(menuIds)) {
+			return invalidate("菜单IDS不能为空");
 		}
 		return validate();
 	}

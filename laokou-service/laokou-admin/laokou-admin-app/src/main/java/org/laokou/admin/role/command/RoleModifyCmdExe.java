@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.ability.RoleDomainService;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleModifyCmd;
+import org.laokou.admin.role.gatewayimpl.database.RoleMenuMapper;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
 import org.laokou.common.extension.BizScenario;
@@ -28,7 +29,8 @@ import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.admin.common.constant.Constant.*;
+import static org.laokou.admin.common.constant.Constant.MODIFY;
+import static org.laokou.admin.common.constant.Constant.ROLE;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
@@ -39,6 +41,8 @@ import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 @Component
 @RequiredArgsConstructor
 public class RoleModifyCmdExe {
+
+	private final RoleMenuMapper roleMenuMapper;
 
 	private final RoleDomainService roleDomainService;
 
@@ -51,6 +55,7 @@ public class RoleModifyCmdExe {
 		RoleE roleE = RoleConvertor.toEntity(cmd.getCo());
 		extensionExecutor.executeVoid(RoleParamValidatorExtPt.class, BizScenario.valueOf(MODIFY, ROLE, SCENARIO),
 				extension -> extension.validate(roleE));
+		roleE.setRoleMenuIds(roleMenuMapper.selectIdsByRoleId(roleE.getId()));
 		transactionalUtil.executeInTransaction(() -> roleDomainService.update(roleE));
 	}
 

@@ -15,48 +15,29 @@
  *
  */
 
-package org.laokou.admin.role.model;
+package org.laokou.admin.role.gatewayimpl.database;
 
-import lombok.Data;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * 角色领域对象【实体】.
+ * 角色菜单数据库映射.
  *
  * @author laokou
  */
-@Data
-public class RoleE {
+@Mapper
+@Repository
+public interface RoleMenuMapper extends CrudMapper<Long, Integer, RoleMenuDO> {
 
-	/**
-	 * ID.
-	 */
-	private Long id;
+	List<Long> selectIdsByRoleId(@Param("roleId") Long roleId);
 
-	/**
-	 * 角色名称.
-	 */
-	private String name;
+	List<String> selectMenuIdsByRoleId(@Param("roleId") Long roleId);
 
-	/**
-	 * 角色排序.
-	 */
-	private Integer sort;
-
-	/**
-	 * 数据范围 all全部 custom自定义 dept_self仅本部门 dept部门及以下 self仅本人.
-	 */
-	private String dataScope;
-
-	/**
-	 * 菜单IDS.
-	 */
-	private List<String> menuIds;
-
-	/**
-	 * 角色菜单IDS.
-	 */
-	private List<Long> roleMenuIds;
+	void deleteObjById(@Param("roleMenuDO") RoleMenuDO roleMenuDO);
 
 }

@@ -259,6 +259,7 @@ public final class FuryFactory {
 		FURY.register(net.sf.jsqlparser.statement.select.PlainSelect.BigQuerySelectQualifier.class);
 		FURY.register(net.sf.jsqlparser.statement.update.UpdateModifierPriority.class);
 		FURY.register(net.sf.jsqlparser.expression.operators.relational.LikeExpression.KeyWord.class);
+		FURY.register(net.sf.jsqlparser.statement.delete.DeleteModifierPriority.class);
 	}
 
 	public static FuryFactory getFuryFactory() {
