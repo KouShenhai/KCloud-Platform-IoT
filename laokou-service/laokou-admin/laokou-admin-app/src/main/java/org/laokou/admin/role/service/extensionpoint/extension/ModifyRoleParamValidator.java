@@ -40,6 +40,8 @@ public class ModifyRoleParamValidator implements RoleParamValidatorExtPt {
 				RoleParamValidator.validateName(roleE, false),
 				// 校验数据范围
 				RoleParamValidator.validateDataScope(roleE),
+				// 校验菜单IDS
+				RoleParamValidator.validateMenuIds(roleE),
 				// 校验排序
 				RoleParamValidator.validateSort(roleE));
 	}

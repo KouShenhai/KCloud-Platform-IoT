@@ -19,10 +19,9 @@ package org.laokou.admin.role.convertor;
 
 import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
+import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.admin.role.model.RoleE;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.util.List;
 
@@ -33,12 +32,36 @@ import java.util.List;
  */
 public class RoleConvertor {
 
-	public static RoleDO toDataObject(RoleE roleE) {
-		RoleDO roleDO = ConvertUtil.sourceToTarget(roleE, RoleDO.class);
-		if (ObjectUtil.isNull(roleDO.getId())) {
+	public static RoleDO toDataObject(RoleE roleE, boolean isInsert) {
+		RoleDO roleDO = new RoleDO();
+		if (isInsert) {
 			roleDO.setId(IdGenerator.defaultSnowflakeId());
 		}
+		else {
+			roleDO.setId(roleE.getId());
+		}
+		roleDO.setName(roleE.getName());
+		roleDO.setSort(roleE.getSort());
+		roleDO.setDataScope(roleE.getDataScope());
 		return roleDO;
+	}
+
+	public static List<RoleMenuDO> toDataObject(RoleE roleE, Long roleId) {
+		return roleE.getMenuIds().stream().map(menuId -> {
+			RoleMenuDO roleMenuDO = new RoleMenuDO();
+			roleMenuDO.setId(IdGenerator.defaultSnowflakeId());
+			roleMenuDO.setRoleId(roleId);
+			roleMenuDO.setMenuId(Long.valueOf(menuId));
+			return roleMenuDO;
+		}).toList();
+	}
+
+	public static List<RoleMenuDO> toDataObject(RoleE roleE) {
+		return roleE.getRoleMenuIds().stream().map(id -> {
+			RoleMenuDO roleMenuDO = new RoleMenuDO();
+			roleMenuDO.setId(id);
+			return roleMenuDO;
+		}).toList();
 	}
 
 	public static List<RoleCO> toClientObjects(List<RoleDO> roleDOList) {
@@ -56,7 +79,13 @@ public class RoleConvertor {
 	}
 
 	public static RoleE toEntity(RoleCO roleCO) {
-		return ConvertUtil.sourceToTarget(roleCO, RoleE.class);
+		RoleE roleE = new RoleE();
+		roleE.setId(roleCO.getId());
+		roleE.setName(roleCO.getName());
+		roleE.setSort(roleCO.getSort());
+		roleE.setDataScope(roleCO.getDataScope());
+		roleE.setMenuIds(roleCO.getMenuIds());
+		return roleE;
 	}
 
 }

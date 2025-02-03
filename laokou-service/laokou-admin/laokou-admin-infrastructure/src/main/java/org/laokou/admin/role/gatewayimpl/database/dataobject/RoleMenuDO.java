@@ -15,48 +15,23 @@
  *
  */
 
-package org.laokou.admin.role.model;
+package org.laokou.admin.role.gatewayimpl.database.dataobject;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-
-import java.util.List;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 /**
- * 角色领域对象【实体】.
+ * 角色菜单数据对象.
  *
  * @author laokou
  */
 @Data
-public class RoleE {
+@TableName("boot_sys_role_menu")
+public class RoleMenuDO extends BaseDO {
 
-	/**
-	 * ID.
-	 */
-	private Long id;
+	private Long roleId;
 
-	/**
-	 * 角色名称.
-	 */
-	private String name;
-
-	/**
-	 * 角色排序.
-	 */
-	private Integer sort;
-
-	/**
-	 * 数据范围 all全部 custom自定义 dept_self仅本部门 dept部门及以下 self仅本人.
-	 */
-	private String dataScope;
-
-	/**
-	 * 菜单IDS.
-	 */
-	private List<String> menuIds;
-
-	/**
-	 * 角色菜单IDS.
-	 */
-	private List<Long> roleMenuIds;
+	private Long menuId;
 
 }

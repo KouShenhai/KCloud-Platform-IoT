@@ -22,6 +22,7 @@ import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleGetQry;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
+import org.laokou.admin.role.gatewayimpl.database.RoleMenuMapper;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -36,8 +37,12 @@ public class RoleGetQryExe {
 
 	private final RoleMapper roleMapper;
 
+	private final RoleMenuMapper roleMenuMapper;
+
 	public Result<RoleCO> execute(RoleGetQry qry) {
-		return Result.ok(RoleConvertor.toClientObject(roleMapper.selectById(qry.getId())));
+		RoleCO roleCO = RoleConvertor.toClientObject(roleMapper.selectById(qry.getId()));
+		roleCO.setMenuIds(roleMenuMapper.selectMenuIdsByRoleId(qry.getId()));
+		return Result.ok(roleCO);
 	}
 
 }

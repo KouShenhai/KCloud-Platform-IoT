@@ -1543,19 +1543,7 @@ ALTER SEQUENCE "public"."boot_sys_role_id_seq1"
 OWNED BY "public"."boot_sys_role"."id";
 SELECT setval('"public"."boot_sys_role_id_seq1"', 1, false);
 
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."boot_sys_role_menu_id_seq"
-OWNED BY "public"."boot_sys_role_menu"."id";
-SELECT setval('"public"."boot_sys_role_menu_id_seq"', 1, false);
 
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."boot_sys_role_menu_id_seq1"
-OWNED BY "public"."boot_sys_role_menu"."id";
-SELECT setval('"public"."boot_sys_role_menu_id_seq1"', 1, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -1780,19 +1768,12 @@ CREATE INDEX "boot_sys_role_dept_role_id_idx" ON "public"."boot_sys_role_dept" U
 ALTER TABLE "public"."boot_sys_role_dept" ADD CONSTRAINT "boot_sys_role_dept_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Auto increment value for boot_sys_role_menu
--- ----------------------------
-SELECT setval('"public"."boot_sys_role_menu_id_seq1"', 1, false);
-
--- ----------------------------
 -- Indexes structure for table boot_sys_role_menu
 -- ----------------------------
-CREATE INDEX "boot_sys_role_menu_menu_id_idx" ON "public"."boot_sys_role_menu" USING btree (
-  "menu_id" "pg_catalog"."int8_ops" ASC NULLS LAST
-);
-CREATE INDEX "boot_sys_role_menu_role_id_idx" ON "public"."boot_sys_role_menu" USING btree (
-  "role_id" "pg_catalog"."int8_ops" ASC NULLS LAST
-);
+CREATE UNIQUE INDEX "boot_sys_role_menu_role_menu_id_idx" ON "public"."boot_sys_role_menu" USING btree (
+																										"menu_id" "pg_catalog"."int8_ops" ASC NULLS LAST,
+																										"role_id" "pg_catalog"."int8_ops" ASC NULLS LAST
+	);
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_role_menu
