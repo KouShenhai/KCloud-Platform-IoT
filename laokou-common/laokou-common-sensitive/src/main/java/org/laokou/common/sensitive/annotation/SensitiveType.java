@@ -26,17 +26,17 @@ public enum SensitiveType {
 
 	MAIL {
 		@Override
-		public String format(String str, int start, int end) {
+		public String format(String str) {
 			return SensitiveUtil.formatMail(str);
 		}
 	},
 	MOBILE {
 		@Override
-		public String format(String str, int start, int end) {
-			return SensitiveUtil.formatMobile(str, start, end);
+		public String format(String str) {
+			return SensitiveUtil.formatMobile(str);
 		}
 	};
 
-	public abstract String format(String str, int start, int end);
+	public abstract String format(String str);
 
 }

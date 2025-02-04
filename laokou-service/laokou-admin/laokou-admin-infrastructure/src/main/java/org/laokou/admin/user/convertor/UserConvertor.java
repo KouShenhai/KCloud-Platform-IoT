@@ -25,6 +25,7 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
+import org.laokou.common.sensitive.utils.SensitiveUtil;
 
 import java.util.List;
 
@@ -35,7 +36,10 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  *
  * @author laokou
  */
-public class UserConvertor {
+public final class UserConvertor {
+
+	private UserConvertor() {
+	}
 
 	public static UserDO toDataObject(UserE userE, boolean isInsert) {
 		UserDO userDO = new UserDO();
@@ -45,16 +49,25 @@ public class UserConvertor {
 		else {
 			userDO.setId(userE.getId());
 		}
+		String username = userE.getUsername();
+		String mail = userE.getMail();
+		String mobile = userE.getMobile();
 		userDO.setPassword(userE.getPassword());
 		userDO.setSuperAdmin(userE.getSuperAdmin());
-		userDO.setMail(userE.getMail());
-		userDO.setMobile(userE.getMobile());
 		userDO.setStatus(userE.getStatus());
 		userDO.setAvatar(userE.getAvatar());
-		userDO.setUsernamePhrase(userE.getUsernamePhrase());
-		userDO.setMailPhrase(userE.getMailPhrase());
-		userDO.setMobilePhrase(userE.getMobilePhrase());
-		userDO.setUsername(userE.getUsername());
+		if (StringUtil.isNotEmpty(username)) {
+			userDO.setUsername(AESUtil.encrypt(username));
+			userDO.setUsernamePhrase(EMPTY);
+		}
+		if (StringUtil.isNotEmpty(mail)) {
+			userDO.setMail(AESUtil.encrypt(mail));
+			userDO.setMailPhrase(EMPTY);
+		}
+		if (StringUtil.isNotEmpty(mobile)) {
+			userDO.setMobile(AESUtil.encrypt(mobile));
+			userDO.setMobilePhrase(EMPTY);
+		}
 		return userDO;
 	}
 
@@ -76,6 +89,7 @@ public class UserConvertor {
 		userCO.setSuperAdmin(userDO.getSuperAdmin());
 		userCO.setStatus(userDO.getStatus());
 		userCO.setAvatar(userDO.getAvatar());
+		userCO.setCreateTime(userDO.getCreateTime());
 		if (StringUtil.isNotEmpty(username)) {
 			userCO.setUsername(AESUtil.decrypt(username));
 		}
@@ -89,32 +103,30 @@ public class UserConvertor {
 	}
 
 	public static List<UserCO> toClientObjects(List<UserDO> userDOList) {
-		return userDOList.stream().map(UserConvertor::toClientObject).toList();
+		return userDOList.stream().map(item -> {
+			UserCO userCO = toClientObject(item);
+			String mail = userCO.getMail();
+			String mobile = userCO.getMobile();
+			if (StringUtil.isNotEmpty(mail)) {
+				userCO.setMail(SensitiveUtil.formatMail(mail));
+			}
+			if (StringUtil.isNotEmpty(mobile)) {
+				userCO.setMobile(SensitiveUtil.formatMobile(mobile));
+			}
+			return userCO;
+		}).toList();
 	}
 
-	public static UserE toEntity(UserCO userCO, boolean isInsert) {
+	public static UserE toEntity(UserCO userCO) {
 		UserE userE = new UserE();
-		String username = userCO.getUsername();
-		String mail = userCO.getMail();
-		String mobile = userCO.getMobile();
 		userE.setId(userCO.getId());
-		userE.setUsername(username);
+		userE.setUsername(userCO.getUsername());
 		userE.setPassword(userCO.getPassword());
 		userE.setSuperAdmin(userCO.getSuperAdmin());
-		userE.setMail(mail);
-		userE.setMobile(mobile);
+		userE.setMail(userCO.getMail());
+		userE.setMobile(userCO.getMobile());
 		userE.setStatus(userCO.getStatus());
 		userE.setAvatar(userCO.getAvatar());
-		if (StringUtil.isNotEmpty(username) && isInsert) {
-			userE.setUsername(AESUtil.decrypt(username));
-			userE.setUsernamePhrase(EMPTY);
-		}
-		if (StringUtil.isNotEmpty(mail)) {
-			userE.setMailPhrase(EMPTY);
-		}
-		if (StringUtil.isNotEmpty(mobile)) {
-			userE.setMobilePhrase(EMPTY);
-		}
 		return userE;
 	}
 

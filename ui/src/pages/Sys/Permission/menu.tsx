@@ -332,6 +332,7 @@ export default () => {
 					<ProFormText
 						name="path"
 						label="路径"
+						tooltip={'只对菜单有效【不允许重复】'}
 						readonly={readOnly}
 						placeholder={'请输入路径'}
 						rules={[{ required: true, message: '请输入路径' }]}
@@ -342,6 +343,7 @@ export default () => {
 					<ProFormText
 						name="permission"
 						label="权限标识"
+						tooltip={'只对按钮有效【不允许重复】'}
 						readonly={readOnly}
 						placeholder={'请输入权限标识'}
 						rules={[{ required: true, message: '请输入权限标识' }]}

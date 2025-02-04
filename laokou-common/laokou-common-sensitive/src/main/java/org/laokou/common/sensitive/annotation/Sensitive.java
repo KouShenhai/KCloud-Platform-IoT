@@ -34,8 +34,4 @@ public @interface Sensitive {
 
 	SensitiveType type();
 
-	int start() default 0;
-
-	int end() default 0;
-
 }

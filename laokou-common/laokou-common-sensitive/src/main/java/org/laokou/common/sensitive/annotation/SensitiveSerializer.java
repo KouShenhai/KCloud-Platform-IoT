@@ -37,20 +37,16 @@ public class SensitiveSerializer extends AbstractContextualSerializer {
 
 	private SensitiveType sensitiveType;
 
-	private int start;
-
-	private int end;
-
 	@Override
 	public void serialize(String str, JsonGenerator generator, SerializerProvider provider) throws IOException {
-		generator.writeString(sensitiveType.format(str, start, end));
+		generator.writeString(sensitiveType.format(str));
 	}
 
 	@Override
 	public JsonSerializer<?> createContextual(SerializerProvider provider, BeanProperty beanProperty) {
 		Sensitive sensitive = beanProperty.getAnnotation(Sensitive.class);
 		if (ObjectUtil.isNotNull(sensitive)) {
-			return new SensitiveSerializer(sensitive.type(), sensitive.start(), sensitive.end());
+			return new SensitiveSerializer(sensitive.type());
 		}
 		throw new RuntimeException();
 	}

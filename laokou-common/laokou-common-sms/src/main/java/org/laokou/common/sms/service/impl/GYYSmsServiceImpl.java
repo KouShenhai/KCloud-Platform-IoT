@@ -91,7 +91,7 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		// smsSignId（短信前缀）和templateId（短信模板），可登录国阳云控制台自助申请。参考文档：http://help.guoyangyun.com/Problem/Qm.html
 		Map<String, String> params = Map.of("mobile", mobile, "param", paramValue, "smsSignId", signId, "templateId",
 			templateId);
-		String paramString = JacksonUtil.toJsonStr(Map.of("mobile", SensitiveUtil.formatMobile(mobile,3, 6), "content", TemplateUtil.getContent(TEMPLATES.get(templateId), param)));
+		String paramString = JacksonUtil.toJsonStr(Map.of("mobile", SensitiveUtil.formatMobile(mobile), "content", TemplateUtil.getContent(TEMPLATES.get(templateId), param)));
 		String json = HttpUtil.doFormDataPost(URL, params, headers);
 		JsonNode jsonNode = JacksonUtil.readTree(json);
 		int code = jsonNode.get("code").asInt();

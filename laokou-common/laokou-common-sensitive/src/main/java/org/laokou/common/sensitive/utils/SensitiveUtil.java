@@ -38,6 +38,10 @@ public class SensitiveUtil {
 		return getStar(mail.length() - str.length()).concat(str);
 	}
 
+	public static String formatMobile(String mobile) {
+		return formatMobile(mobile, 3, 6);
+	}
+
 	public static String formatMobile(String mobile, int start, int end) {
 		if (StringUtil.isEmpty(mobile)) {
 			return EMPTY;
