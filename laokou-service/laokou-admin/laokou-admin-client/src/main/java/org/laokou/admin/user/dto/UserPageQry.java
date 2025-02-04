@@ -19,6 +19,7 @@ package org.laokou.admin.user.dto;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.utils.StringUtil;
 
 /**
  * 分页查询用户命令.
@@ -27,5 +28,15 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 @Data
 public class UserPageQry extends PageQuery {
+
+	private String username;
+
+	private Integer status;
+
+	private Integer superAdmin;
+
+	public void setUsername(String username) {
+		this.username = StringUtil.like(StringUtil.trim(username));
+	}
 
 }

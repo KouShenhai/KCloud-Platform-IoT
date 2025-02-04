@@ -1,4 +1,3 @@
-// @ts-ignore
 /* eslint-disable */
 import {request} from '@umijs/max';
 import {ExportAllToExcel} from "@/utils/export";

@@ -39,8 +39,7 @@ public class UserModifyCmdExe {
 
 	public void executeVoid(UserModifyCmd cmd) {
 		// 校验参数
-		transactionalUtil
-			.executeInTransaction(() -> userDomainService.update(UserConvertor.toEntity(cmd.getCo(), false)));
+		transactionalUtil.executeInTransaction(() -> userDomainService.update(UserConvertor.toEntity(cmd.getCo())));
 	}
 
 }

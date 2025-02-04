@@ -47,7 +47,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	@Override
 	public void create(RoleE roleE) {
 		RoleDO roleDO = RoleConvertor.toDataObject(roleE, true);
-		List<RoleMenuDO> list = RoleConvertor.toDataObject(roleE, roleDO.getId());
+		List<RoleMenuDO> list = RoleConvertor.toDataObjects(roleE, roleDO.getId());
 		roleMapper.insert(roleDO);
 		// 新增角色菜单关联表
 		mybatisUtil.batch(list, RoleMenuMapper.class, RoleMenuMapper::insert);
@@ -59,9 +59,9 @@ public class RoleGatewayImpl implements RoleGateway {
 		roleDO.setVersion(roleMapper.selectVersion(roleE.getId()));
 		roleMapper.updateById(roleDO);
 		// 删除角色菜单关联表
-		mybatisUtil.batch(RoleConvertor.toDataObject(roleE), RoleMenuMapper.class, RoleMenuMapper::deleteObjById);
+		mybatisUtil.batch(RoleConvertor.toDataObjects(roleE), RoleMenuMapper.class, RoleMenuMapper::deleteObjById);
 		// 新增角色菜单关联表
-		mybatisUtil.batch(RoleConvertor.toDataObject(roleE, roleDO.getId()), RoleMenuMapper.class,
+		mybatisUtil.batch(RoleConvertor.toDataObjects(roleE, roleDO.getId()), RoleMenuMapper.class,
 				RoleMenuMapper::insert);
 	}
 

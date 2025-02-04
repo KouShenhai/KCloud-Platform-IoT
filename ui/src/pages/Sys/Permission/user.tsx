@@ -1,14 +1,13 @@
 import {
 	DrawerForm,
 	ProColumns,
-	ProFormDigit,
 	ProFormText,
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {pageV3, removeV3, saveV3, getByIdV3, modifyV3} from "@/services/admin/user";
 import {useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
-import {Button, message, Modal} from 'antd';
+import {Button, message, Modal, Space, Switch, Tag} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {v7 as uuidV7} from 'uuid';
 import {trim} from "@/utils/format";
@@ -17,11 +16,14 @@ export default () => {
 
 	type TableColumns = {
 		id: number;
-		pid: number;
-		name: string | undefined;
-		path: string | undefined;
+		username: string | undefined;
+		status: number | undefined;
+		password: string | undefined;
+		mail: string | undefined;
+		mobile: string | undefined;
 		createTime: string | undefined;
-		sort: number | undefined;
+		superAdmin: number | undefined;
+		avatar: string | undefined;
 	};
 
 	const [readOnly, setReadOnly] = useState(false)
@@ -33,7 +35,7 @@ export default () => {
 
 	const getPageQuery = (params: any) => {
 		return {
-			name: trim(params?.name),
+			username: trim(params?.username),
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
@@ -53,22 +55,67 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '名称',
-			dataIndex: 'name',
-			hideInSearch: true,
+			title: '用户名',
+			dataIndex: 'username',
 		},
 		{
-			title: '路径',
-			dataIndex: 'path',
-			ellipsis: true,
-			hideInSearch: true,
+			title: '邮箱',
+			dataIndex: 'mail',
 		},
 		{
-			title: '排序',
-			dataIndex: 'sort',
-			hideInSearch: true,
-			ellipsis: true,
-			width:80,
+			title: '手机号',
+			dataIndex: 'mobile',
+		},
+		{
+			title: '超级管理员',
+			dataIndex: 'superAdmin',
+			hideInTable: true,
+			valueEnum: {
+				0: {text: '否', status: 'Processing'},
+				1: {text: '是', status: 'Default'},
+			},
+			ellipsis: true
+		},
+		{
+			disable: true,
+			title: '超级管理员',
+			dataIndex: 'superAdmin',
+			search: false,
+			renderFormItem: (_, { defaultRender }) => {
+				return defaultRender(_);
+			},
+			render: (_, record) => (
+				<Space>
+					{record?.superAdmin === 0 && (
+						<Tag color={'rgb(51 114 253)'} key={'menu'}>
+							否
+						</Tag>
+					)}
+					{record?.superAdmin === 1 && (
+						<Tag color={'#fd5251'} key={'button'}>
+							是
+						</Tag>
+					)}
+				</Space>
+			),
+		},
+		{
+			title: '状态',
+			dataIndex: 'status',
+			hideInTable: true,
+			valueEnum: {
+				0: {text: '启用', status: 'Success'},
+				1: {text: '禁用', status: 'Error'},
+			},
+			ellipsis: true
+		},
+		{
+			title: '状态',
+			dataIndex: 'status',
+			search: false,
+			render: (_, record) => (
+				<Switch checkedChildren="启用" unCheckedChildren="禁用" disabled={true} checked={record?.status === 0} />
+			),
 		},
 		{
 			title: '创建时间',
@@ -101,7 +148,7 @@ export default () => {
 				<a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   setTitle('查看部门')
+						   setTitle('查看用户')
 						   setModalVisit(true)
 						   setReadOnly(true)
 						   setDataSource(res?.data)
@@ -113,7 +160,7 @@ export default () => {
 				<a key="modify"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   setTitle('修改部门')
+						   setTitle('修改用户')
 						   setModalVisit(true)
 						   setReadOnly(false)
 						   setDataSource(res?.data)
@@ -176,6 +223,7 @@ export default () => {
 							}
 						})
 					} else {
+						// @ts-ignore
 						modifyV3({co: value}).then(res => {
 							if (res.code === 'OK') {
 								message.success("修改成功").then()
@@ -194,28 +242,28 @@ export default () => {
 				/>
 
 				<ProFormText
-					name="name"
+					name="username"
 					label="名称"
+					tooltip={"用于用户名密码登录【不允许重复】"}
 					readonly={readOnly}
-					placeholder={'请输入名称'}
-					rules={[{ required: true, message: '请输入名称' }]}
+					placeholder={'请输入用户名'}
+					rules={[{ required: true, message: '请输入用户名' }]}
 				/>
 
 				<ProFormText
-					name="path"
-					label="路径"
-					hidden={!readOnly}
+					name="mail"
+					label="邮箱"
+					tooltip={"用于邮箱登录【不允许重复】"}
 					readonly={readOnly}
+					placeholder={'请输入邮箱'}
 				/>
 
-				<ProFormDigit
-					name="sort"
-					label="排序"
+				<ProFormText
+					name="mobile"
+					label="手机号"
+					tooltip={"用于手机号登录【不允许重复】"}
 					readonly={readOnly}
-					placeholder={'请输入排序'}
-					min={1}
-					max={99999}
-					rules={[{ required: true, message: '请输入排序' }]}
+					placeholder={'请输入手机号'}
 				/>
 
 			</DrawerForm>
@@ -241,14 +289,12 @@ export default () => {
 				toolBarRender={
 					() => [
 						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
-							setTitle('新增部门')
+							setTitle('新增用户')
 							setReadOnly(false)
 							setModalVisit(true)
 							setDataSource({
 								id: undefined,
-								name: '',
-								path: '',
-								sort: 1,
+								username: '',
 							})
 						}}>
 							新增
@@ -281,8 +327,8 @@ export default () => {
 				}
 				dateFormatter="string"
 				toolbar={{
-					title: '部门',
-					tooltip: '部门',
+					title: '用户',
+					tooltip: '用户',
 				}}
 			/>
 		</>

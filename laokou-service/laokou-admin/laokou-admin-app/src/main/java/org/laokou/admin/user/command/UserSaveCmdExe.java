@@ -39,8 +39,7 @@ public class UserSaveCmdExe {
 
 	public void executeVoid(UserSaveCmd cmd) {
 		// 校验参数
-		transactionalUtil
-			.executeInTransaction(() -> userDomainService.create(UserConvertor.toEntity(cmd.getCo(), true)));
+		transactionalUtil.executeInTransaction(() -> userDomainService.create(UserConvertor.toEntity(cmd.getCo())));
 	}
 
 }

@@ -46,7 +46,7 @@ public class RoleConvertor {
 		return roleDO;
 	}
 
-	public static List<RoleMenuDO> toDataObject(RoleE roleE, Long roleId) {
+	public static List<RoleMenuDO> toDataObjects(RoleE roleE, Long roleId) {
 		return roleE.getMenuIds().stream().map(menuId -> {
 			RoleMenuDO roleMenuDO = new RoleMenuDO();
 			roleMenuDO.setId(IdGenerator.defaultSnowflakeId());
@@ -56,7 +56,7 @@ public class RoleConvertor {
 		}).toList();
 	}
 
-	public static List<RoleMenuDO> toDataObject(RoleE roleE) {
+	public static List<RoleMenuDO> toDataObjects(RoleE roleE) {
 		return roleE.getRoleMenuIds().stream().map(id -> {
 			RoleMenuDO roleMenuDO = new RoleMenuDO();
 			roleMenuDO.setId(id);
