@@ -24,7 +24,10 @@ import static org.laokou.common.i18n.common.constant.StringConstant.*;
 /**
  * @author laokou
  */
-public class SensitiveUtil {
+public final class SensitiveUtil {
+
+	private SensitiveUtil() {
+	}
 
 	public static String formatMail(String mail) {
 		if (StringUtil.isEmpty(mail)) {
@@ -39,19 +42,18 @@ public class SensitiveUtil {
 	}
 
 	public static String formatMobile(String mobile) {
-		return formatMobile(mobile, 3, 6);
+		return formatStr(mobile, 11, 3, 6);
 	}
 
-	public static String formatMobile(String mobile, int start, int end) {
-		if (StringUtil.isEmpty(mobile)) {
+	public static String formatStr(String s, int length, int start, int end) {
+		if (StringUtil.isEmpty(s)) {
 			return EMPTY;
 		}
-		int mobileLen = 11;
-		if (mobile.length() != mobileLen) {
-			return mobile;
+		if (s.length() != length) {
+			return s;
 		}
-		String str = mobile.substring(start, end + 1);
-		return mobile.replace(str, getStar(end - start));
+		String str = s.substring(start, end + 1);
+		return s.replace(str, getStar(end - start));
 	}
 
 	private static String getStar(int len) {
