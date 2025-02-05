@@ -19,41 +19,35 @@ package org.laokou.admin.role.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.convertor.RoleConvertor;
-import org.laokou.admin.role.gateway.RoleGateway;
-import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
-import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
+import org.laokou.admin.role.gateway.RoleMenuGateway;
+import org.laokou.admin.role.gatewayimpl.database.RoleMenuMapper;
 import org.laokou.admin.role.model.RoleE;
+import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-
 /**
- * 角色网关实现.
- *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class RoleGatewayImpl implements RoleGateway {
+public class RoleMenuGatewayImpl implements RoleMenuGateway {
 
-	private final RoleMapper roleMapper;
+	private final MybatisUtil mybatisUtil;
 
 	@Override
 	public void create(RoleE roleE) {
-		RoleDO roleDO = RoleConvertor.toDataObject(roleE, true);
-		roleMapper.insert(roleDO);
+		// 新增角色菜单关联表
+		mybatisUtil.batch(RoleConvertor.toDataObjects(roleE, roleE.getId()), RoleMenuMapper.class,
+				RoleMenuMapper::insert);
 	}
 
 	@Override
 	public void update(RoleE roleE) {
-		RoleDO roleDO = RoleConvertor.toDataObject(roleE, false);
-		roleDO.setVersion(roleMapper.selectVersion(roleE.getId()));
-		roleMapper.updateById(roleDO);
-	}
-
-	@Override
-	public void delete(Long[] ids) {
-		roleMapper.deleteByIds(Arrays.asList(ids));
+		// 删除角色菜单关联表
+		mybatisUtil.batch(RoleConvertor.toDataObjects(roleE), RoleMenuMapper.class, RoleMenuMapper::deleteObjById);
+		// 新增角色菜单关联表
+		mybatisUtil.batch(RoleConvertor.toDataObjects(roleE, roleE.getId()), RoleMenuMapper.class,
+				RoleMenuMapper::insert);
 	}
 
 }

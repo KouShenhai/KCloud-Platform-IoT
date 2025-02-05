@@ -21,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserSaveCmd;
+import org.laokou.admin.user.model.UserE;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +41,9 @@ public class UserSaveCmdExe {
 
 	public void executeVoid(UserSaveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> userDomainService.create(UserConvertor.toEntity(cmd.getCo())));
+		UserE userE = UserConvertor.toEntity(cmd.getCo());
+		userE.setId(IdGenerator.defaultSnowflakeId());
+		transactionalUtil.executeInTransaction(() -> userDomainService.create(userE));
 	}
 
 }

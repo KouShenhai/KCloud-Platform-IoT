@@ -21,7 +21,6 @@ import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
@@ -47,14 +46,11 @@ public final class UserConvertor {
 	public static UserDO toDataObject(PasswordEncoder passwordEncoder, UserE userE, boolean isInsert) {
 		UserDO userDO = new UserDO();
 		if (isInsert) {
-			userDO.setId(IdGenerator.defaultSnowflakeId());
 			userDO.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
 			userDO.setUsername(AESUtil.encrypt(userE.getUsername()));
 			userDO.setUsernamePhrase(EMPTY);
 		}
-		else {
-			userDO.setId(userE.getId());
-		}
+		userDO.setId(userE.getId());
 		String mail = userE.getMail();
 		String mobile = userE.getMobile();
 		userDO.setSuperAdmin(userE.getSuperAdmin());
