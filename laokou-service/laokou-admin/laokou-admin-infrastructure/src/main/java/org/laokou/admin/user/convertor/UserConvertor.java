@@ -29,8 +29,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-
 /**
  * 用户转换器.
  *
@@ -38,7 +36,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  */
 public final class UserConvertor {
 
-	private static final String DEFAULT_PASSWORD = "123456";
+	private static final String DEFAULT_PASSWORD = "laokou123";
 
 	private UserConvertor() {
 	}
@@ -47,23 +45,17 @@ public final class UserConvertor {
 		UserDO userDO = new UserDO();
 		if (isInsert) {
 			userDO.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
-			userDO.setUsername(AESUtil.encrypt(userE.getUsername()));
-			userDO.setUsernamePhrase(EMPTY);
+			userDO.setUsername(userE.getUsername());
+			userDO.setUsernamePhrase(userE.getUsernamePhrase());
 		}
 		userDO.setId(userE.getId());
-		String mail = userE.getMail();
-		String mobile = userE.getMobile();
 		userDO.setSuperAdmin(userE.getSuperAdmin());
 		userDO.setStatus(userE.getStatus());
 		userDO.setAvatar(userE.getAvatar());
-		if (StringUtil.isNotEmpty(mail)) {
-			userDO.setMail(AESUtil.encrypt(mail));
-			userDO.setMailPhrase(EMPTY);
-		}
-		if (StringUtil.isNotEmpty(mobile)) {
-			userDO.setMobile(AESUtil.encrypt(mobile));
-			userDO.setMobilePhrase(EMPTY);
-		}
+		userDO.setMail(userE.getMail());
+		userDO.setMailPhrase(userE.getMailPhrase());
+		userDO.setMobile(userE.getMobile());
+		userDO.setMobilePhrase(userE.getMobilePhrase());
 		return userDO;
 	}
 

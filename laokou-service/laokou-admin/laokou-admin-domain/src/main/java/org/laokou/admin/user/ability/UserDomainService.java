@@ -34,10 +34,20 @@ public class UserDomainService {
 	private final UserGateway userGateway;
 
 	public void create(UserE userE) {
+		// 用户名加密
+		userE.encryptUsername();
+		// 邮箱加密
+		userE.encryptMail();
+		// 手机号加密
+		userE.encryptMobile();
 		userGateway.create(userE);
 	}
 
 	public void update(UserE userE) {
+		// 邮箱加密
+		userE.encryptMail();
+		// 手机号加密
+		userE.encryptMobile();
 		userGateway.update(userE);
 	}
 

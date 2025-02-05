@@ -57,14 +57,17 @@ export default () => {
 		{
 			title: '用户名',
 			dataIndex: 'username',
+			tooltip: "仅支持四个字符的模糊查询",
 		},
 		{
 			title: '邮箱',
 			dataIndex: 'mail',
+			tooltip: "仅支持四个字符的模糊查询",
 		},
 		{
 			title: '手机号',
 			dataIndex: 'mobile',
+			tooltip: "仅支持部分字符的模糊查询",
 		},
 		{
 			title: '超级管理员',

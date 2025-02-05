@@ -90,41 +90,34 @@ public class UserE {
 	private String username;
 
 	public void encryptUsername() {
-		this.usernamePhrase = encryptStr(username);
+		this.usernamePhrase = StringUtil.isEmpty(username) ? EMPTY : encryptStr(username);
 		this.username = AESUtil.encrypt(username);
 	}
 
 	public void encryptMail() {
-		this.mailPhrase = encryptStr(mail);
+		this.mailPhrase = StringUtil.isEmpty(mail) ? EMPTY : encryptStr(mail);
 		this.mail = AESUtil.encrypt(mail);
 	}
 
 	public void encryptMobile() {
-		this.mobilePhrase = encryptMobile(mobile);
+		this.mobilePhrase = StringUtil.isEmpty(mobile) ? EMPTY : encryptMobile(mobile);
 		this.mobile = AESUtil.encrypt(mobile);
 	}
 
 	private String encryptMobile(String str) {
-		if (StringUtil.isNotEmpty(str)) {
-			List<String> list = new ArrayList<>(150);
-			list.add(AESUtil.encrypt(str.substring(0, 3)));
-			list.add(AESUtil.encrypt(str.substring(3, 7)));
-			list.add(AESUtil.encrypt(str.substring(7)));
-			return StringUtil.collectionToDelimitedString(list, "~");
-		}
-		return EMPTY;
+		List<String> list = new ArrayList<>(3);
+		list.add(AESUtil.encrypt(str.substring(0, 3)));
+		list.add(AESUtil.encrypt(str.substring(3, 7)));
+		list.add(AESUtil.encrypt(str.substring(7)));
+		return StringUtil.collectionToDelimitedString(list, "~");
 	}
 
 	private String encryptStr(String str) {
-		int len = str.length();
-		if (StringUtil.isNotEmpty(str) && len > 4) {
-			List<String> list = new ArrayList<>(1600);
-			for (int i = 0; i <= len - 4; i++) {
-				list.add(AESUtil.encrypt(str.substring(i, i + 4)));
-			}
-			return StringUtil.collectionToDelimitedString(list, "~");
+		List<String> list = new ArrayList<>(30);
+		for (int i = 0; i <= str.length() - 4; i++) {
+			list.add(AESUtil.encrypt(str.substring(i, i + 4)));
 		}
-		return EMPTY;
+		return StringUtil.collectionToDelimitedString(list, "~");
 	}
 
 }
