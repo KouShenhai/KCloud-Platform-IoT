@@ -15,38 +15,17 @@
  *
  */
 
-package org.laokou.admin.role.ability;
+package org.laokou.admin.role.gateway;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.role.gateway.*;
 import org.laokou.admin.role.model.RoleE;
-import org.springframework.stereotype.Component;
 
 /**
- * 角色领域服务.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class RoleDomainService {
+public interface RoleMenuGateway {
 
-	private final RoleGateway roleGateway;
+	void create(RoleE roleE);
 
-	private final RoleMenuGateway roleMenuGateway;
-
-	public void create(RoleE roleE) {
-		roleGateway.create(roleE);
-		roleMenuGateway.create(roleE);
-	}
-
-	public void update(RoleE roleE) {
-		roleGateway.update(roleE);
-		roleMenuGateway.update(roleE);
-	}
-
-	public void delete(Long[] ids) {
-		roleGateway.delete(ids);
-	}
+	void update(RoleE roleE);
 
 }

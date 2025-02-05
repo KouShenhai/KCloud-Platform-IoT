@@ -23,6 +23,7 @@ import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleSaveCmd;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
@@ -52,6 +53,7 @@ public class RoleSaveCmdExe {
 		RoleE roleE = RoleConvertor.toEntity(cmd.getCo());
 		extensionExecutor.executeVoid(RoleParamValidatorExtPt.class, BizScenario.valueOf(SAVE, ROLE, SCENARIO),
 				extension -> extension.validate(roleE));
+		roleE.setId(IdGenerator.defaultSnowflakeId());
 		transactionalUtil.executeInTransaction(() -> roleDomainService.create(roleE));
 	}
 

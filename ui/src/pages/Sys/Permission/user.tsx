@@ -295,6 +295,8 @@ export default () => {
 							setDataSource({
 								id: undefined,
 								username: '',
+								superAdmin: 0,
+								status: 0,
 							})
 						}}>
 							新增

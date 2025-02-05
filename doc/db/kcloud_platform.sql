@@ -1179,14 +1179,14 @@ CACHE 1
   "tenant_id" int8 NOT NULL DEFAULT 0,
   "password" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
   "super_admin" int2 NOT NULL DEFAULT 0,
-  "mail" varchar(100) COLLATE "pg_catalog"."default",
-  "mobile" varchar(60) COLLATE "pg_catalog"."default",
+  "mail" varchar(200) COLLATE "pg_catalog"."default",
+  "mobile" varchar(11) COLLATE "pg_catalog"."default",
   "status" int2 NOT NULL DEFAULT 0,
-  "avatar" varchar(500) COLLATE "pg_catalog"."default" NOT NULL DEFAULT 'https://i.postimg.cc/FsHgVKzX/1.gif'::character varying,
-  "username_phrase" varchar(1000) COLLATE "pg_catalog"."default" NOT NULL,
-  "mail_phrase" varchar(1000) COLLATE "pg_catalog"."default",
-  "mobile_phrase" varchar(200) COLLATE "pg_catalog"."default",
-  "username" varchar(100) COLLATE "pg_catalog"."default" NOT NULL
+  "avatar" varchar(500) COLLATE "pg_catalog"."default" NOT NULL DEFAULT 'https://pic1.imgdb.cn/item/677a2d91d0e0a243d4ef1ee7.jpg'::character varying,
+  "username_phrase" varchar(1600) COLLATE "pg_catalog"."default",
+  "mail_phrase" varchar(1600) COLLATE "pg_catalog"."default",
+  "mobile_phrase" varchar(150) COLLATE "pg_catalog"."default",
+  "username" varchar(200) COLLATE "pg_catalog"."default" NOT NULL
 )
 ;
 COMMENT ON COLUMN "public"."boot_sys_user"."id" IS 'ID';

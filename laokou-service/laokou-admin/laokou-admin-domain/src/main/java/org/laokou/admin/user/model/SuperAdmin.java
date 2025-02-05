@@ -15,38 +15,31 @@
  *
  */
 
-package org.laokou.admin.role.ability;
+package org.laokou.admin.user.model;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.role.gateway.*;
-import org.laokou.admin.role.model.RoleE;
-import org.springframework.stereotype.Component;
+import lombok.Getter;
 
 /**
- * 角色领域服务.
+ * 超级管理员枚举.
  *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class RoleDomainService {
+@Getter
+public enum SuperAdmin {
 
-	private final RoleGateway roleGateway;
+	// @formatter:off
+	NO(0, "否"),
 
-	private final RoleMenuGateway roleMenuGateway;
+	YES(1, "是");
 
-	public void create(RoleE roleE) {
-		roleGateway.create(roleE);
-		roleMenuGateway.create(roleE);
+	private final int code;
+
+	private final String desc;
+
+	SuperAdmin(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
-
-	public void update(RoleE roleE) {
-		roleGateway.update(roleE);
-		roleMenuGateway.update(roleE);
-	}
-
-	public void delete(Long[] ids) {
-		roleGateway.delete(ids);
-	}
+	// @formatter:on
 
 }

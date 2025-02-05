@@ -21,11 +21,11 @@ import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -38,28 +38,24 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  */
 public final class UserConvertor {
 
+	private static final String DEFAULT_PASSWORD = "123456";
+
 	private UserConvertor() {
 	}
 
-	public static UserDO toDataObject(UserE userE, boolean isInsert) {
+	public static UserDO toDataObject(PasswordEncoder passwordEncoder, UserE userE, boolean isInsert) {
 		UserDO userDO = new UserDO();
 		if (isInsert) {
-			userDO.setId(IdGenerator.defaultSnowflakeId());
+			userDO.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
+			userDO.setUsername(AESUtil.encrypt(userE.getUsername()));
+			userDO.setUsernamePhrase(EMPTY);
 		}
-		else {
-			userDO.setId(userE.getId());
-		}
-		String username = userE.getUsername();
+		userDO.setId(userE.getId());
 		String mail = userE.getMail();
 		String mobile = userE.getMobile();
-		userDO.setPassword(userE.getPassword());
 		userDO.setSuperAdmin(userE.getSuperAdmin());
 		userDO.setStatus(userE.getStatus());
 		userDO.setAvatar(userE.getAvatar());
-		if (StringUtil.isNotEmpty(username)) {
-			userDO.setUsername(AESUtil.encrypt(username));
-			userDO.setUsernamePhrase(EMPTY);
-		}
 		if (StringUtil.isNotEmpty(mail)) {
 			userDO.setMail(AESUtil.encrypt(mail));
 			userDO.setMailPhrase(EMPTY);
@@ -81,7 +77,6 @@ public final class UserConvertor {
 	}
 
 	public static UserCO toClientObject(UserDO userDO) {
-		String username = userDO.getUsername();
 		String mail = userDO.getMail();
 		String mobile = userDO.getMobile();
 		UserCO userCO = new UserCO();
@@ -90,9 +85,7 @@ public final class UserConvertor {
 		userCO.setStatus(userDO.getStatus());
 		userCO.setAvatar(userDO.getAvatar());
 		userCO.setCreateTime(userDO.getCreateTime());
-		if (StringUtil.isNotEmpty(username)) {
-			userCO.setUsername(AESUtil.decrypt(username));
-		}
+		userCO.setUsername(AESUtil.decrypt(userDO.getUsername()));
 		if (StringUtil.isNotEmpty(mail)) {
 			userCO.setMail(AESUtil.decrypt(mail));
 		}
@@ -121,8 +114,8 @@ public final class UserConvertor {
 		UserE userE = new UserE();
 		userE.setId(userCO.getId());
 		userE.setUsername(userCO.getUsername());
-		userE.setPassword(userCO.getPassword());
 		userE.setSuperAdmin(userCO.getSuperAdmin());
+		userE.setPassword(userCO.getPassword());
 		userE.setMail(userCO.getMail());
 		userE.setMobile(userCO.getMobile());
 		userE.setStatus(userCO.getStatus());
