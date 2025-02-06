@@ -26,6 +26,8 @@ export default () => {
 		createTime: string | undefined;
 		superAdmin: number | undefined;
 		avatar: string | undefined;
+		deptIds: string[];
+		roleIds: string[];
 	};
 
 	const [readOnly, setReadOnly] = useState(false)
@@ -240,8 +242,20 @@ export default () => {
 					}
 				}}
 				onFinish={ async (value) => {
+					// @ts-ignore
+					const deptIds = value?.deptIds.map(item => item?.value)
+					const co = {
+						id: value?.id,
+						deptIds: deptIds,
+						roleIds: value?.roleIds,
+						username: value.username,
+						status: value?.status,
+						mail: value?.mail,
+						mobile: value?.mobile,
+						avatar: value?.avatar,
+					}
 					if (value.id === undefined) {
-						saveV3({co: value}, uuidV7()).then(res => {
+						saveV3({co: co}, uuidV7()).then(res => {
 							if (res.code === 'OK') {
 								message.success("新增成功").then()
 								setModalVisit(false)
@@ -251,7 +265,7 @@ export default () => {
 						})
 					} else {
 						// @ts-ignore
-						modifyV3({co: value}).then(res => {
+						modifyV3({co: co}).then(res => {
 							if (res.code === 'OK') {
 								message.success("修改成功").then()
 								setModalVisit(false)

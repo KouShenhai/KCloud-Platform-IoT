@@ -18,9 +18,11 @@
 package org.laokou.admin.user.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.gateway.UserDeptGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserDeptMapper;
 import org.laokou.admin.user.model.UserE;
+import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,16 +32,20 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserDeptGatewayImpl implements UserDeptGateway {
 
-	private final UserDeptMapper userDeptMapper;
+	private final MybatisUtil mybatisUtil;
 
 	@Override
 	public void create(UserE userE) {
-
+		// 新增用户部门关联表
+		mybatisUtil.batch(UserConvertor.toDataObjs(userE, userE.getId()), UserDeptMapper.class, UserDeptMapper::insert);
 	}
 
 	@Override
 	public void update(UserE userE) {
-
+		// 删除用户部门关联表
+		mybatisUtil.batch(UserConvertor.toDataObjs(userE), UserDeptMapper.class, UserDeptMapper::deleteObjById);
+		// 新增用户部门关联表
+		mybatisUtil.batch(UserConvertor.toDataObjs(userE, userE.getId()), UserDeptMapper.class, UserDeptMapper::insert);
 	}
 
 }

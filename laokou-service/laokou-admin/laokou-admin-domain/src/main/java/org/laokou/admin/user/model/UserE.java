@@ -99,6 +99,16 @@ public class UserE {
 	 */
 	private List<String> deptIds;
 
+	/**
+	 * 用户角色IDS.
+	 */
+	private List<Long> userRoleIds;
+
+	/**
+	 * 用户部门IDS.
+	 */
+	private List<Long> userDeptIds;
+
 	public void encryptUsername() {
 		this.usernamePhrase = StringUtil.isEmpty(username) ? EMPTY : encryptStr(username);
 		this.username = AESUtil.encrypt(username);

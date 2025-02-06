@@ -33,6 +33,10 @@ public class UserDomainService {
 
 	private final UserGateway userGateway;
 
+	private final UserRoleGateway userRoleGateway;
+
+	private final UserDeptGateway userDeptGateway;
+
 	public void create(UserE userE) {
 		// 用户名加密
 		userE.encryptUsername();
@@ -41,6 +45,8 @@ public class UserDomainService {
 		// 手机号加密
 		userE.encryptMobile();
 		userGateway.create(userE);
+		userRoleGateway.create(userE);
+		userDeptGateway.create(userE);
 	}
 
 	public void update(UserE userE) {
@@ -49,6 +55,8 @@ public class UserDomainService {
 		// 手机号加密
 		userE.encryptMobile();
 		userGateway.update(userE);
+		userRoleGateway.update(userE);
+		userDeptGateway.update(userE);
 	}
 
 	public void delete(Long[] ids) {

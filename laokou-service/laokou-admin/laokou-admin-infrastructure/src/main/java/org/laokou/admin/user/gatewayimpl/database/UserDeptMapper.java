@@ -18,9 +18,12 @@
 package org.laokou.admin.user.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -28,5 +31,11 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface UserDeptMapper extends CrudMapper<Long, Integer, UserDeptDO> {
+
+	List<Long> selectIdsByUserId(@Param("userId") Long userId);
+
+	List<String> selectDeptIdsByUserId(@Param("userId") Long userId);
+
+	void deleteObjById(@Param("userDeptDO") UserDeptDO userDeptDO);
 
 }

@@ -1238,8 +1238,7 @@ CACHE 1
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
   "user_id" int8 NOT NULL,
-  "dept_id" int8 NOT NULL,
-  "dept_path" varchar(1000) COLLATE "pg_catalog"."default" NOT NULL
+  "dept_id" int8 NOT NULL
 )
 ;
 COMMENT ON COLUMN "public"."boot_sys_user_dept"."id" IS 'ID';
@@ -1252,7 +1251,6 @@ COMMENT ON COLUMN "public"."boot_sys_user_dept"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_sys_user_dept"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_sys_user_dept"."user_id" IS '用户ID';
 COMMENT ON COLUMN "public"."boot_sys_user_dept"."dept_id" IS '部门ID';
-COMMENT ON COLUMN "public"."boot_sys_user_dept"."dept_path" IS '部门PATH';
 COMMENT ON TABLE "public"."boot_sys_user_dept" IS '用户部门';
 
 -- ----------------------------
