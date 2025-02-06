@@ -20,6 +20,7 @@ package org.laokou.admin.user.convertor;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -39,6 +40,17 @@ public final class UserConvertor {
 	private static final String DEFAULT_PASSWORD = "laokou123";
 
 	private UserConvertor() {
+	}
+
+	public static List<UserRoleDO> toDataObjects(UserE userE, Long userId) {
+		// return userE.stream().map(menuId -> {
+		// RoleMenuDO roleMenuDO = new RoleMenuDO();
+		// roleMenuDO.setId(IdGenerator.defaultSnowflakeId());
+		// roleMenuDO.setRoleId(roleId);
+		// roleMenuDO.setMenuId(Long.valueOf(menuId));
+		// return roleMenuDO;
+		// }).toList();
+		return null;
 	}
 
 	public static UserDO toDataObject(PasswordEncoder passwordEncoder, UserE userE, boolean isInsert) {
