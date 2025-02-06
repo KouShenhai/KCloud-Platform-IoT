@@ -35,6 +35,9 @@ export default () => {
 
 	const getPageQuery = (params: any) => {
 		return {
+			pageSize: params?.pageSize,
+			pageNum: params?.current,
+			pageIndex: params?.pageSize * (params?.current - 1),
 			name: trim(params?.name),
 			dataScope: params?.dataScope,
 			params: {

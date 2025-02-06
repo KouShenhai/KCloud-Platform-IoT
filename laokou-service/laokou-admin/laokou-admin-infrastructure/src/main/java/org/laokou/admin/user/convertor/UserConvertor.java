@@ -20,7 +20,10 @@ package org.laokou.admin.user.convertor;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
+import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
@@ -41,6 +44,42 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
+	public static List<UserRoleDO> toDataObjects(UserE userE, Long userId) {
+		return userE.getRoleIds().stream().map(roleId -> {
+			UserRoleDO userRoleDO = new UserRoleDO();
+			userRoleDO.setId(IdGenerator.defaultSnowflakeId());
+			userRoleDO.setRoleId(Long.valueOf(roleId));
+			userRoleDO.setUserId(userId);
+			return userRoleDO;
+		}).toList();
+	}
+
+	public static List<UserDeptDO> toDataObjs(UserE userE, Long userId) {
+		return userE.getDeptIds().stream().map(deptId -> {
+			UserDeptDO userDeptDO = new UserDeptDO();
+			userDeptDO.setId(IdGenerator.defaultSnowflakeId());
+			userDeptDO.setDeptId(Long.valueOf(deptId));
+			userDeptDO.setUserId(userId);
+			return userDeptDO;
+		}).toList();
+	}
+
+	public static List<UserRoleDO> toDataObjects(UserE userE) {
+		return userE.getUserRoleIds().stream().map(id -> {
+			UserRoleDO userRoleDO = new UserRoleDO();
+			userRoleDO.setId(id);
+			return userRoleDO;
+		}).toList();
+	}
+
+	public static List<UserDeptDO> toDataObjs(UserE userE) {
+		return userE.getUserDeptIds().stream().map(id -> {
+			UserDeptDO userDeptDO = new UserDeptDO();
+			userDeptDO.setId(id);
+			return userDeptDO;
+		}).toList();
+	}
+
 	public static UserDO toDataObject(PasswordEncoder passwordEncoder, UserE userE, boolean isInsert) {
 		UserDO userDO = new UserDO();
 		if (isInsert) {
@@ -48,13 +87,15 @@ public final class UserConvertor {
 			userDO.setUsername(userE.getUsername());
 			userDO.setUsernamePhrase(userE.getUsernamePhrase());
 		}
+		String mobile = userE.getMobile();
+		String mail = userE.getMail();
 		userDO.setId(userE.getId());
 		userDO.setSuperAdmin(userE.getSuperAdmin());
 		userDO.setStatus(userE.getStatus());
 		userDO.setAvatar(userE.getAvatar());
-		userDO.setMail(userE.getMail());
+		userDO.setMail(StringUtil.isEmpty(mail) ? null : mail);
 		userDO.setMailPhrase(userE.getMailPhrase());
-		userDO.setMobile(userE.getMobile());
+		userDO.setMobile(StringUtil.isEmpty(mobile) ? null : mobile);
 		userDO.setMobilePhrase(userE.getMobilePhrase());
 		return userDO;
 	}
@@ -112,6 +153,8 @@ public final class UserConvertor {
 		userE.setMobile(userCO.getMobile());
 		userE.setStatus(userCO.getStatus());
 		userE.setAvatar(userCO.getAvatar());
+		userE.setRoleIds(userCO.getRoleIds());
+		userE.setDeptIds(userCO.getDeptIds());
 		return userE;
 	}
 

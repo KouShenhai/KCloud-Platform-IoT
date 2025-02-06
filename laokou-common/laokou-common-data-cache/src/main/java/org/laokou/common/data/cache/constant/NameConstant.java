@@ -79,11 +79,6 @@ public final class NameConstant {
 	 */
 	public static final String USERS = "users" + DEFAULT;
 
-	/**
-	 * 树形菜单.
-	 */
-	public static final String MENU_TREE = "menu_tree" + DEFAULT;
-
 	private NameConstant() {
 	}
 

@@ -21,6 +21,9 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserModifyCmd;
+import org.laokou.admin.user.gatewayimpl.database.UserDeptMapper;
+import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
+import org.laokou.admin.user.model.UserE;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -37,9 +40,16 @@ public class UserModifyCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	private final UserRoleMapper userRoleMapper;
+
+	private final UserDeptMapper userDeptMapper;
+
 	public void executeVoid(UserModifyCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> userDomainService.update(UserConvertor.toEntity(cmd.getCo())));
+		UserE userE = UserConvertor.toEntity(cmd.getCo());
+		userE.setUserRoleIds(userRoleMapper.selectIdsByUserId(userE.getId()));
+		userE.setUserDeptIds(userDeptMapper.selectIdsByUserId(userE.getId()));
+		transactionalUtil.executeInTransaction(() -> userDomainService.update(userE));
 	}
 
 }

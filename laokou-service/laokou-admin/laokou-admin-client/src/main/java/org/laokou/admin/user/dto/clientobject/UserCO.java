@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.time.Instant;
+import java.util.List;
 
 /**
  * 用户客户端对象.
@@ -78,5 +79,15 @@ public class UserCO extends ClientObject {
 	 * 创建时间.
 	 */
 	private Instant createTime;
+
+	/**
+	 * 角色IDS.
+	 */
+	private List<String> roleIds;
+
+	/**
+	 * 部门IDS.
+	 */
+	private List<String> deptIds;
 
 }

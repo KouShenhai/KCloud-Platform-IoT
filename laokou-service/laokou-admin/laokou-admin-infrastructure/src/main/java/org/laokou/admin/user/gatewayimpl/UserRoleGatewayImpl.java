@@ -15,52 +15,39 @@
  *
  */
 
-package org.laokou.admin.user.ability;
+package org.laokou.admin.user.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.user.gateway.*;
+import org.laokou.admin.user.convertor.UserConvertor;
+import org.laokou.admin.user.gateway.UserRoleGateway;
+import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.user.model.UserE;
+import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.springframework.stereotype.Component;
 
 /**
- * 用户领域服务.
- *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class UserDomainService {
+public class UserRoleGatewayImpl implements UserRoleGateway {
 
-	private final UserGateway userGateway;
+	private final MybatisUtil mybatisUtil;
 
-	private final UserRoleGateway userRoleGateway;
-
-	private final UserDeptGateway userDeptGateway;
-
+	@Override
 	public void create(UserE userE) {
-		// 用户名加密
-		userE.encryptUsername();
-		// 邮箱加密
-		userE.encryptMail();
-		// 手机号加密
-		userE.encryptMobile();
-		userGateway.create(userE);
-		userRoleGateway.create(userE);
-		userDeptGateway.create(userE);
+		// 新增用户角色关联表
+		mybatisUtil.batch(UserConvertor.toDataObjects(userE, userE.getId()), UserRoleMapper.class,
+				UserRoleMapper::insert);
 	}
 
+	@Override
 	public void update(UserE userE) {
-		// 邮箱加密
-		userE.encryptMail();
-		// 手机号加密
-		userE.encryptMobile();
-		userGateway.update(userE);
-		userRoleGateway.update(userE);
-		userDeptGateway.update(userE);
-	}
-
-	public void delete(Long[] ids) {
-		userGateway.delete(ids);
+		// 删除用户角色关联表
+		mybatisUtil.batch(UserConvertor.toDataObjects(userE), UserRoleMapper.class, UserRoleMapper::deleteObjById);
+		// 新增用户角色关联表
+		mybatisUtil.batch(UserConvertor.toDataObjects(userE, userE.getId()), UserRoleMapper.class,
+				UserRoleMapper::insert);
 	}
 
 }

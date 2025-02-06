@@ -1,16 +1,18 @@
 import {
 	DrawerForm,
-	ProColumns,
-	ProFormText,
+	ProColumns, ProFormSelect,
+	ProFormText, ProFormTreeSelect,
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {pageV3, removeV3, saveV3, getByIdV3, modifyV3} from "@/services/admin/user";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal, Space, Switch, Tag} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {v7 as uuidV7} from 'uuid';
 import {trim} from "@/utils/format";
+import {treeListV3} from "@/services/admin/dept";
+import {pageV3 as rolePageV3} from "@/services/admin/role";
 
 export default () => {
 
@@ -24,6 +26,8 @@ export default () => {
 		createTime: string | undefined;
 		superAdmin: number | undefined;
 		avatar: string | undefined;
+		deptIds: string[];
+		roleIds: string[];
 	};
 
 	const [readOnly, setReadOnly] = useState(false)
@@ -32,15 +36,32 @@ export default () => {
 	const [dataSource, setDataSource] = useState({})
 	const [ids, setIds] = useState<number[]>([])
 	const [title, setTitle] = useState("")
+	const [deptTreeList, setDeptTreeList] = useState<any[]>([])
+	const [roleList, setRoleList] = useState<any[]>([])
 
 	const getPageQuery = (params: any) => {
 		return {
+			pageSize: params?.pageSize,
+			pageNum: params?.current,
+			pageIndex: params?.pageSize * (params?.current - 1),
 			username: trim(params?.username),
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
 			}
 		}
+	}
+
+	const getDeptTreeList = async () => {
+		treeListV3({}).then(res => {
+			setDeptTreeList(res?.data)
+		})
+	}
+
+	const getRoleList = async () => {
+		rolePageV3({pageSize: 1000, pageNum: 1, pageIndex: 0}).then(res => {
+			setRoleList(res?.data?.records)
+		})
 	}
 
 	const rowSelection: TableRowSelection<TableColumns> = {
@@ -52,6 +73,11 @@ export default () => {
 			setIds(ids)
 		}
 	};
+
+	useEffect(() => {
+		getDeptTreeList().catch(console.log)
+		getRoleList().catch(console.log)
+	}, []);
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
@@ -67,7 +93,7 @@ export default () => {
 		{
 			title: '手机号',
 			dataIndex: 'mobile',
-			tooltip: "仅支持部分字符的模糊查询",
+			tooltip: "仅支持三个或四个字符的模糊查询",
 		},
 		{
 			title: '超级管理员',
@@ -216,8 +242,20 @@ export default () => {
 					}
 				}}
 				onFinish={ async (value) => {
+					// @ts-ignore
+					const deptIds = value?.deptIds.map(item => item?.value)
+					const co = {
+						id: value?.id,
+						deptIds: deptIds,
+						roleIds: value?.roleIds,
+						username: value.username,
+						status: value?.status,
+						mail: value?.mail,
+						mobile: value?.mobile,
+						avatar: value?.avatar,
+					}
 					if (value.id === undefined) {
-						saveV3({co: value}, uuidV7()).then(res => {
+						saveV3({co: co}, uuidV7()).then(res => {
 							if (res.code === 'OK') {
 								message.success("新增成功").then()
 								setModalVisit(false)
@@ -227,7 +265,7 @@ export default () => {
 						})
 					} else {
 						// @ts-ignore
-						modifyV3({co: value}).then(res => {
+						modifyV3({co: co}).then(res => {
 							if (res.code === 'OK') {
 								message.success("修改成功").then()
 								setModalVisit(false)
@@ -267,6 +305,58 @@ export default () => {
 					tooltip={"用于手机号登录【不允许重复】"}
 					readonly={readOnly}
 					placeholder={'请输入手机号'}
+				/>
+
+				<ProFormSelect
+					name="roleIds"
+					allowClear={true}
+					label="所属角色"
+					mode={'multiple'}
+					readonly={readOnly}
+					placeholder={'请选择所属角色'}
+					rules={[{ required: true, message: '请选择所属角色' }]}
+					options={roleList}
+					fieldProps={{
+						fieldNames: {
+							label: 'name',
+							value: 'id',
+						},
+					}}
+				/>
+
+				<ProFormTreeSelect
+					name="deptIds"
+					label="所属部门"
+					readonly={readOnly}
+					allowClear={true}
+					placeholder={'请选择所属部门'}
+					rules={[{ required: true, message: '请选择所属部门' }]}
+					fieldProps={{
+						fieldNames: {
+							label: 'name',
+							value: 'id',
+							children: 'children'
+						},
+						// 最多显示多少个 tag，响应式模式会对性能产生损耗
+						maxTagCount: 6,
+						// 多选
+						multiple: true,
+						// 显示复选框
+						treeCheckable: true,
+						// 展示策略
+						showCheckedStrategy: 'SHOW_ALL',
+						// 取消父子节点联动
+						treeCheckStrictly: true,
+						// 默认展示所有节点
+						treeDefaultExpandAll: true,
+						// 高度
+						dropdownStyle: { maxHeight: 500 },
+						// 不显示搜索
+						showSearch: false,
+					}}
+					request={async () => {
+						return deptTreeList
+					}}
 				/>
 
 			</DrawerForm>
@@ -333,7 +423,7 @@ export default () => {
 				dateFormatter="string"
 				toolbar={{
 					title: '用户',
-					tooltip: '用户',
+					tooltip: '用户【默认密码：laokou123】',
 				}}
 			/>
 		</>
