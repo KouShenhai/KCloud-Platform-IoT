@@ -26,7 +26,7 @@
     <!--system-rules版本-->
     <system-rules.version>1.19.0</system-rules.version>
     <!--apollo-openapi版本-->
-    <apollo-openapi.version>2.3.0</apollo-openapi.version>
+    <apollo-openapi.version>2.4.0</apollo-openapi.version>
     <!--httpcore-nio版本-->
     <httpcore-nio.version>4.4.16</httpcore-nio.version>
     <!--fastjson版本-->
