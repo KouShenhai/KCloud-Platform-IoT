@@ -48,6 +48,10 @@
     <hessian.version>3.5.5</hessian.version>
     <!--commons-lang3版本-->
     <commons-lang3.version>3.17.0</commons-lang3.version>
+    <!-- bcprov-jdk18on版本 -->
+    <bcprov.version>1.80</bcprov.version>
+    <!-- bcpkix-jdk18on版本 -->
+    <bcpkix.version>1.80</bcpkix.version>
   </properties>
 
   <dependencies>
@@ -282,6 +286,16 @@
       <groupId>com.alipay.sofa</groupId>
       <artifactId>hessian</artifactId>
       <version>${hessian.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk18on</artifactId>
+      <version>${bcprov.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcpkix-jdk18on</artifactId>
+      <version>${bcpkix.version}</version>
     </dependency>
   </dependencies>
 

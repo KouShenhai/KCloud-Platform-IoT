@@ -152,6 +152,10 @@
     <annotations-api.version>6.0.53</annotations-api.version>
     <!--influxdb-client-java版本-->
     <influxdb-client-java.version>7.2.0</influxdb-client-java.version>
+    <!-- bcprov-jdk18on版本 -->
+    <bcprov.version>1.80</bcprov.version>
+    <!-- bcpkix-jdk18on版本 -->
+    <bcpkix.version>1.80</bcpkix.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
@@ -1054,6 +1058,16 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         <version>${spring-boot-starter-oauth2.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcprov-jdk18on</artifactId>
+        <version>${bcprov.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcpkix-jdk18on</artifactId>
+        <version>${bcpkix.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
