@@ -2,7 +2,7 @@ module laokou-sample-grpc-client-go
 
 go 1.22.7
 
-toolchain go1.23.6
+toolchain go1.24.0
 
 require (
 	golang.org/x/net v0.35.0
