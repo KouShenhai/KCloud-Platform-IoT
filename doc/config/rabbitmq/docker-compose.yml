@@ -1,7 +1,7 @@
 services:
   # rabbitmq-plugins enable rabbitmq_management
   rabbitmq:
-    image: rabbitmq:4.0.5-management
+    image: rabbitmq:4.0.6-management
     container_name: rabbitmq
     tty: true
     restart: always
