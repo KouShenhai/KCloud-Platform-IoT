@@ -15,7 +15,7 @@
 #  */
 services:
   loki:
-    image: grafana/loki:3.4.1
+    image: grafana/loki:3.4.2
     container_name: loki
     # 保持容器在没有守护程序的情况下运行
     tty: true
