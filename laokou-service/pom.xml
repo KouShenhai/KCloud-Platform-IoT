@@ -36,5 +36,6 @@
     <module>laokou-generator</module>
     <module>laokou-report</module>
     <module>laokou-iot</module>
+    <module>laokou-module</module>
   </modules>
 </project>
