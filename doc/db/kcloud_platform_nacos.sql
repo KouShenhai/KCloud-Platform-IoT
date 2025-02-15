@@ -564,10 +564,10 @@ spring:
       timeout: 60000ms #超时时长（毫秒）
       lettuce:
         pool:
-          max-active: 20 #连接池最大连接数（使用负值表示无极限）
+          max-active: -1 #连接池最大连接数（使用负值表示无极限）
           max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
-          max-idle: 10 #连接池最大空闲连接
-          min-idle: 5 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2023-01-13 12:15:59', '2023-11-06 18:02:43', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'redis公共配置', '', '', 'yaml', '', '');
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2023-01-13 12:15:59', '2023-11-06 18:02:43', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'redis公共配置', '', '', 'yaml', '', '');
 INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (2, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -600,10 +600,10 @@ spring:
       timeout: 60000ms #超时时长（毫秒）
       lettuce:
         pool:
-          max-active: 20 #连接池最大连接数（使用负值表示无极限）
+          max-active: -1 #连接池最大连接数（使用负值表示无极限）
           max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
-          max-idle: 10 #连接池最大空闲连接
-          min-idle: 5 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2024-05-25 18:12:47.33', '2024-05-25 18:13:33.296', NULL, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'redis公共配置', NULL, NULL, 'yaml', NULL, '');
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2024-05-25 18:12:47.33', '2024-05-25 18:13:33.296', NULL, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'redis公共配置', NULL, NULL, 'yaml', NULL, '');
 INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (4, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
@@ -1175,10 +1175,10 @@ spring:
       timeout: 60000ms #超时时长（毫秒）
       lettuce:
         pool:
-          max-active: 20 #连接池最大连接数（使用负值表示无极限）
+          max-active: -1 #连接池最大连接数（使用负值表示无极限）
           max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
-          max-idle: 10 #连接池最大空闲连接
-          min-idle: 5 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2024-05-25 18:13:10.544', '2024-05-25 18:13:10.544', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'redis公共配置', NULL, NULL, 'yaml', NULL, '');
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2024-05-25 18:13:10.544', '2024-05-25 18:13:10.544', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'redis公共配置', NULL, NULL, 'yaml', NULL, '');
 INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (15, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', '# jasypt
 jasypt:
   encryptor:
