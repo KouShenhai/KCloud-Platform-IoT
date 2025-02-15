@@ -63,6 +63,7 @@ public class GatewayApp {
     /// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
     /// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
     /// -Dserver.port=5555
+	/// -Djdk.internal.httpclient.disableHostnameVerification=true
     /// ```
     /// ```properties
     /// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
