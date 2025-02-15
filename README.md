@@ -37,7 +37,7 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 
 <a href="https://gitcode.com/qq_39893313/KCloud-Platform-IoT" target="_blank"><img src="https://gitcode.com/qq_39893313/KCloud-Platform-IoT/star/badge.svg?theme=dark" alt="GitCode star"/></a>
 
-<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.2&color=green" alt="Spring Framework"/></a>
+<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.3&color=green" alt="Spring Framework"/></a>
 <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Boot&message=3.4.2&color=green" alt="Spring Boot"/></a>
 <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud&message=2024.0.0&color=green" alt="Spring Cloud"/></a>
 <a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.3.2&color=orange" alt="Spring Cloud Alibaba"/></a>
@@ -323,7 +323,7 @@ KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.or
 | 8  |                    ![suhengli的头像](https://avatars.githubusercontent.com/u/43296325?s=64&v=4)                    |    [suhengli](https://github.com/suhengli)    |
 | 9  |                   ![gitkakafu的头像](https://avatars.githubusercontent.com/u/89563182?s=64&v=4)                    |   [gitkakafu](https://github.com/gitkakafu)   |
 | 10 |                   ![LeiZhiMin1的头像](https://avatars.githubusercontent.com/u/32741993?s=64&v=4)                   |  [LeiZhiMin1](https://github.com/LeiZhiMin1)  |
-
+| 11 |                   ![FlySkyBear的头像](https://avatars.githubusercontent.com/u/24284648?s=64&v=4)                   |  [FlySkyBear](https://github.com/FlySkyBear)  |
 ### ⛳️ 赞助列表（感谢各位大佬的赞助）
 
 |     时间     |  网名   |   赞助    |         备注         |

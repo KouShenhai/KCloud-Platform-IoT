@@ -37,7 +37,7 @@ image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark[
 
 image:https://gitcode.com/qq_39893313/KCloud-Platform-IoT/star/badge.svg?theme=dark[GitCode star,link=https://gitcode.com/qq_39893313/KCloud-Platform-IoT]
 
-image:https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.2&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
+image:https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.3&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
 image:https://img.shields.io/static/v1?label=Spring%20Boot&message=3.4.2&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud&message=2024.0.0&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.3.2&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
@@ -337,6 +337,7 @@ image::doc/image/jb_beam.png[jb_beam,100,100,link=https://www.jetbrains.com/comm
 |8   |image:https://avatars.githubusercontent.com/u/43296325?s=64&v=4[suhengli的头像,50,50]         |https://github.com/suhengli[suhengli]
 |9   |image:https://avatars.githubusercontent.com/u/89563182?s=64&v=4[gitkakafu的头像,50,50]        |https://github.com/gitkakafu[gitkakafu]
 |10  |image:https://avatars.githubusercontent.com/u/32741993?s=64&v=4[LeiZhiMin1的头像,50,50]       |https://github.com/LeiZhiMin1[LeiZhiMin1]
+|11  |image:https://avatars.githubusercontent.com/u/24284648?s=64&v=4[FlySkyBear的头像,50,50]      |https://github.com/FlySkyBear[FlySkyBear]
 |===
 
 === ⛳️ 赞助列表（感谢各位大佬的赞助）
