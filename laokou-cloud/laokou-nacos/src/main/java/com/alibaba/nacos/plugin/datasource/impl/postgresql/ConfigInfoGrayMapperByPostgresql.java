@@ -33,21 +33,21 @@
 
 package com.alibaba.nacos.plugin.datasource.impl.postgresql;
 
-import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.alibaba.nacos.plugin.datasource.constants.DataSourceConstant;
-import com.alibaba.nacos.plugin.datasource.mapper.ConfigInfoAggrMapper;
+import com.alibaba.nacos.plugin.datasource.mapper.ConfigInfoGrayMapper;
 import com.alibaba.nacos.plugin.datasource.model.MapperContext;
 import com.alibaba.nacos.plugin.datasource.model.MapperResult;
 
-import java.util.List;
+import java.util.Collections;
 
 /**
- * The postgresql implementation of ConfigInfoAggrMapper.
+ * The postgresql implementation of ConfigInfoMapper.
  *
  * @author hyx
  * @author laokou
  **/
-public class ConfigInfoAggrMapperByPostgresql extends AbstractMapperByPostgresql implements ConfigInfoAggrMapper {
+
+public class ConfigInfoGrayMapperByPostgresql extends AbstractMapperByPostgresql implements ConfigInfoGrayMapper {
 
 	@Override
 	public String getDataSource() {
@@ -55,16 +55,12 @@ public class ConfigInfoAggrMapperByPostgresql extends AbstractMapperByPostgresql
 	}
 
 	@Override
-	public MapperResult findConfigInfoAggrByPageFetchRows(MapperContext context) {
+	public MapperResult findAllConfigInfoGrayForDumpAllFetchRows(MapperContext context) {
 		int startRow = context.getStartRow();
 		int pageSize = context.getPageSize();
-		String dataId = (String) context.getWhereParameter("dataId");
-		String groupId = (String) context.getWhereParameter("groupId");
-		String tenantId = (String) context.getWhereParameter("tenantId");
-		String sql = "SELECT data_id,group_id,tenant_id,datum_id,app_name,content FROM config_info_aggr WHERE data_id= ? AND "
-				+ "group_id= ? AND tenant_id= ? ORDER BY datum_id LIMIT " + pageSize + " OFFSET " + startRow;
-		List<Object> paramList = CollectionUtils.list(new Object[] { dataId, groupId, tenantId });
-		return new MapperResult(sql, paramList);
+		String sql = " SELECT id,data_id,group_id,tenant_id,gray_name,gray_rule,app_name,content,md5,gmt_modified "
+				+ " FROM  config_info_gray  ORDER BY id LIMIT " + pageSize + " OFFSET " + startRow;
+		return new MapperResult(sql, Collections.emptyList());
 	}
 
 }

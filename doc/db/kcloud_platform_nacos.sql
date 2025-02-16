@@ -169,12 +169,29 @@ CACHE 1
   "src_ip" varchar(50) COLLATE "pg_catalog"."default",
   "op_type" char(10) COLLATE "pg_catalog"."default",
   "tenant_id" varchar(128) COLLATE "pg_catalog"."default" DEFAULT ''::character varying,
-  "encrypted_data_key" text COLLATE "pg_catalog"."default" NOT NULL
+  "encrypted_data_key" text COLLATE "pg_catalog"."default" NOT NULL,
+  "publish_type" varchar(50) COLLATE "pg_catalog"."default" NOT NULL default 'formal',
+	"gray_name" varchar(128) COLLATE "pg_catalog"."default",
+	"ext_info" text COLLATE "pg_catalog"."default"
 )
 ;
+COMMENT ON COLUMN "public"."his_config_info"."id" IS 'id';
+COMMENT ON COLUMN "public"."his_config_info"."nid" IS 'nid';
+COMMENT ON COLUMN "public"."his_config_info"."data_id" IS 'data_id';
+COMMENT ON COLUMN "public"."his_config_info"."group_id" IS 'group_id';
 COMMENT ON COLUMN "public"."his_config_info"."app_name" IS 'app_name';
+COMMENT ON COLUMN "public"."his_config_info"."content" IS 'content';
+COMMENT ON COLUMN "public"."his_config_info"."md5" IS 'md5';
+COMMENT ON COLUMN "public"."his_config_info"."gmt_create" IS '创建时间';
+COMMENT ON COLUMN "public"."his_config_info"."gmt_modified" IS '修改时间';
+COMMENT ON COLUMN "public"."his_config_info"."src_user" IS 'source user';
+COMMENT ON COLUMN "public"."his_config_info"."src_ip" IS 'source ip';
+COMMENT ON COLUMN "public"."his_config_info"."op_type" IS 'operation type';
 COMMENT ON COLUMN "public"."his_config_info"."tenant_id" IS '租户字段';
 COMMENT ON COLUMN "public"."his_config_info"."encrypted_data_key" IS '秘钥';
+COMMENT ON COLUMN "public"."his_config_info"."publish_type" IS 'publish type gray or formal';
+COMMENT ON COLUMN "public"."his_config_info"."gray_name" IS 'gray name';
+COMMENT ON COLUMN "public"."his_config_info"."ext_info" IS 'ext info';
 COMMENT ON TABLE "public"."his_config_info" IS '多租户改造';
 
 -- ----------------------------
@@ -455,9 +472,56 @@ COMMENT ON COLUMN "public"."config_info"."gmt_create" IS '创建时间';
 COMMENT ON COLUMN "public"."config_info"."gmt_modified" IS '修改时间';
 COMMENT ON COLUMN "public"."config_info"."src_user" IS 'source user';
 COMMENT ON COLUMN "public"."config_info"."src_ip" IS 'source ip';
+COMMENT ON COLUMN "public"."config_info"."app_name" IS 'app_name';
 COMMENT ON COLUMN "public"."config_info"."tenant_id" IS '租户字段';
+COMMENT ON COLUMN "public"."config_info"."c_desc" IS 'configuration description';
+COMMENT ON COLUMN "public"."config_info"."c_use" IS 'configuration usage';
+COMMENT ON COLUMN "public"."config_info"."effect" IS '配置生效的描述';
+COMMENT ON COLUMN "public"."config_info"."type" IS '配置的类型';
+COMMENT ON COLUMN "public"."config_info"."c_schema" IS '配置的模式';
 COMMENT ON COLUMN "public"."config_info"."encrypted_data_key" IS '秘钥';
 COMMENT ON TABLE "public"."config_info" IS 'config_info';
+
+DROP TABLE IF EXISTS "public"."config_info_gray";
+CREATE TABLE "public"."config_info_gray" (
+	"id" numeric(20,0) NOT NULL,
+	"data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+	"group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
+	"content" text COLLATE "pg_catalog"."default" NOT NULL,
+	"md5" varchar(32) COLLATE "pg_catalog"."default",
+	"src_user" text COLLATE "pg_catalog"."default",
+	"src_ip" varchar(100) COLLATE "pg_catalog"."default",
+	"gmt_create" timestamp(6) NOT NULL,
+	"gmt_modified" timestamp(6) NOT NULL,
+	"app_name" varchar(128) COLLATE "pg_catalog"."default",
+	"tenant_id" varchar(128) COLLATE "pg_catalog"."default",
+	"gray_name" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
+	"gray_rule" text COLLATE "pg_catalog"."default" NOT NULL,
+	"encrypted_data_key" varchar(256) COLLATE "pg_catalog"."default" NOT NULL,
+	CONSTRAINT "config_info_gray_pkey" PRIMARY KEY ("id")
+);
+
+CREATE INDEX "idx_dataid_gmt_modified" ON "public"."config_info_gray" USING btree ("data_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,"gmt_modified" "pg_catalog"."timestamp_ops" ASC NULLS LAST);
+
+CREATE INDEX "idx_gmt_modified" ON "public"."config_info_gray" USING btree ("gmt_modified" "pg_catalog"."timestamp_ops" ASC NULLS LAST);
+
+CREATE UNIQUE INDEX "uk_configinfogray_datagrouptenantgray" ON "public"."config_info_gray" USING btree ("data_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,"group_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,"tenant_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,"gray_name" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST);
+
+COMMENT ON COLUMN "public"."config_info_gray"."id" IS 'id';
+COMMENT ON COLUMN "public"."config_info_gray"."data_id" IS 'data_id';
+COMMENT ON COLUMN "public"."config_info_gray"."group_id" IS 'group_id';
+COMMENT ON COLUMN "public"."config_info_gray"."content" IS 'content';
+COMMENT ON COLUMN "public"."config_info_gray"."md5" IS 'md5';
+COMMENT ON COLUMN "public"."config_info_gray"."src_user" IS 'src_user';
+COMMENT ON COLUMN "public"."config_info_gray"."src_ip" IS 'src_ip';
+COMMENT ON COLUMN "public"."config_info_gray"."gmt_create" IS 'gmt_create';
+COMMENT ON COLUMN "public"."config_info_gray"."gmt_modified" IS 'gmt_modified';
+COMMENT ON COLUMN "public"."config_info_gray"."app_name" IS 'app_name';
+COMMENT ON COLUMN "public"."config_info_gray"."tenant_id" IS 'tenant_id';
+COMMENT ON COLUMN "public"."config_info_gray"."gray_name" IS 'gray_name';
+COMMENT ON COLUMN "public"."config_info_gray"."gray_rule" IS 'gray_rule';
+COMMENT ON COLUMN "public"."config_info_gray"."encrypted_data_key" IS 'encrypted_data_key';
+COMMENT ON TABLE "public"."config_info_gray" IS 'config_info_gray';
 
 -- ----------------------------
 -- Records of config_info
