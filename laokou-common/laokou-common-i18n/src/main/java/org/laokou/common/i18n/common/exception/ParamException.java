@@ -83,11 +83,6 @@ public final class ParamException extends GlobalException {
 		 */
 		public static final String MOBILE_ERROR = "P_OAuth2_MobileError";
 
-		/**
-		 * 校验失败.
-		 */
-		public static final String VALIDATE_FAILED = "P_OAuth2_ValidateFailed";
-
 	}
 
 }

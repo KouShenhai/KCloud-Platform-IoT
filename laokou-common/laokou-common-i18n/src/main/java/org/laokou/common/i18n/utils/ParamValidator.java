@@ -18,11 +18,12 @@
 package org.laokou.common.i18n.utils;
 
 import org.laokou.common.i18n.common.exception.ParamException;
+
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.*;
-import static org.laokou.common.i18n.common.exception.ParamException.OAuth2.VALIDATE_FAILED;
+import static org.laokou.common.i18n.common.constant.StringConstant.DROP;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * @author laokou
@@ -38,7 +39,7 @@ public final class ParamValidator {
 			.map(item -> item.value)
 			.collect(Collectors.joining(DROP));
 		if (StringUtil.isNotEmpty(validateString)) {
-			throw new ParamException(VALIDATE_FAILED, validateString);
+			throw new ParamException("P_System_ValidateFailed", validateString);
 		}
 	}
 
