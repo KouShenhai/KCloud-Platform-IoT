@@ -22,7 +22,6 @@ import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ParamValidator;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -75,13 +74,12 @@ public final class RoleParamValidator {
 		return validate();
 	}
 
-	public static ParamValidator.Validate validateName(RoleE roleE, boolean isSave) {
+	public static ParamValidator.Validate validateName(RoleE roleE, RoleMapper roleMapper, boolean isSave) {
 		Long id = roleE.getId();
 		String name = roleE.getName();
 		if (StringUtil.isEmpty(name)) {
 			return invalidate("名称不能为空");
 		}
-		RoleMapper roleMapper = SpringContextUtil.getBean(RoleMapper.class);
 		if (isSave && roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, name)) > 0) {
 			return invalidate("名称已存在");
 		}

@@ -23,7 +23,6 @@ import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ParamValidator;
@@ -54,7 +53,7 @@ public final class UserParamValidator {
 		return validate();
 	}
 
-	public static ParamValidator.Validate validateUserName(UserE userE, boolean isSave) {
+	public static ParamValidator.Validate validateUserName(UserE userE, UserMapper userMapper, boolean isSave) {
 		String username = userE.getUsername();
 		Long id = userE.getId();
 		String encryptUsername = AESUtil.encrypt(username);
@@ -67,7 +66,6 @@ public final class UserParamValidator {
 		if (!RegexUtil.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", username)) {
 			return invalidate("用户名只能为大小写字母或大小写字母与数字的组合");
 		}
-		UserMapper userMapper = SpringContextUtil.getBean(UserMapper.class);
 		if (isSave && userMapper
 			.selectCount(Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getUsername, encryptUsername)) > 0) {
 			return invalidate("用户名已存在");
@@ -80,7 +78,7 @@ public final class UserParamValidator {
 		return validate();
 	}
 
-	public static ParamValidator.Validate validateMail(UserE userE, boolean isSave) {
+	public static ParamValidator.Validate validateMail(UserE userE, UserMapper userMapper, boolean isSave) {
 		String mail = userE.getMail();
 		if (StringUtil.isNotEmpty(mail)) {
 			if (!RegexUtil.mailRegex(mail)) {
@@ -91,7 +89,6 @@ public final class UserParamValidator {
 			}
 			Long id = userE.getId();
 			String encryptMail = AESUtil.encrypt(mail);
-			UserMapper userMapper = SpringContextUtil.getBean(UserMapper.class);
 			if (isSave && userMapper
 				.selectCount(Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMail, encryptMail)) > 0) {
 				return invalidate("邮箱已存在");
@@ -104,7 +101,7 @@ public final class UserParamValidator {
 		return validate();
 	}
 
-	public static ParamValidator.Validate validateMobile(UserE userE, boolean isSave) {
+	public static ParamValidator.Validate validateMobile(UserE userE, UserMapper userMapper, boolean isSave) {
 		String mobile = userE.getMobile();
 		if (StringUtil.isNotEmpty(mobile)) {
 			if (!RegexUtil.mobileRegex(mobile)) {
@@ -112,7 +109,6 @@ public final class UserParamValidator {
 			}
 			Long id = userE.getId();
 			String encryptMobile = AESUtil.encrypt(mobile);
-			UserMapper userMapper = SpringContextUtil.getBean(UserMapper.class);
 			if (isSave && userMapper
 				.selectCount(Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMobile, encryptMobile)) > 0) {
 				return invalidate("手机号已存在");

@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.ability.RoleDomainService;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleSaveCmd;
+import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
 import org.laokou.common.core.utils.IdGenerator;
@@ -42,6 +43,8 @@ import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 @RequiredArgsConstructor
 public class RoleSaveCmdExe {
 
+	private final RoleMapper roleMapper;
+
 	private final RoleDomainService roleDomainService;
 
 	private final TransactionalUtil transactionalUtil;
@@ -52,7 +55,7 @@ public class RoleSaveCmdExe {
 		// 校验参数
 		RoleE roleE = RoleConvertor.toEntity(cmd.getCo());
 		extensionExecutor.executeVoid(RoleParamValidatorExtPt.class, BizScenario.valueOf(SAVE, ROLE, SCENARIO),
-				extension -> extension.validate(roleE));
+				extension -> extension.validate(roleE, roleMapper));
 		roleE.setId(IdGenerator.defaultSnowflakeId());
 		transactionalUtil.executeInTransaction(() -> roleDomainService.create(roleE));
 	}

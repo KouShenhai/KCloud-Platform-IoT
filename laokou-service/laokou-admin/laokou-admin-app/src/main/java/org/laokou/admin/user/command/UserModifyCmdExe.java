@@ -22,6 +22,7 @@ import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserModifyCmd;
 import org.laokou.admin.user.gatewayimpl.database.UserDeptMapper;
+import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
@@ -52,11 +53,13 @@ public class UserModifyCmdExe {
 
 	private final ExtensionExecutor extensionExecutor;
 
+	private final UserMapper userMapper;
+
 	public void executeVoid(UserModifyCmd cmd) {
 		// 校验参数
 		UserE userE = UserConvertor.toEntity(cmd.getCo());
 		extensionExecutor.executeVoid(UserParamValidatorExtPt.class, BizScenario.valueOf(MODIFY, USER, SCENARIO),
-				extension -> extension.validate(userE));
+				extension -> extension.validate(userE, userMapper));
 		userE.setUserRoleIds(userRoleMapper.selectIdsByUserId(userE.getId()));
 		userE.setUserDeptIds(userDeptMapper.selectIdsByUserId(userE.getId()));
 		transactionalUtil.executeInTransaction(() -> userDomainService.update(userE));

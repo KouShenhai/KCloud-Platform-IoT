@@ -22,7 +22,6 @@ import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuE;
 import org.laokou.admin.menu.model.MenuType;
-import org.laokou.common.core.utils.SpringContextUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ParamValidator;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -38,10 +37,9 @@ public final class MenuParamValidator {
 	private MenuParamValidator() {
 	}
 
-	public static ParamValidator.Validate validatePermission(MenuE menuE, boolean isSave) {
+	public static ParamValidator.Validate validatePermission(MenuE menuE, MenuMapper menuMapper, boolean isSave) {
 		Integer type = menuE.getType();
 		String permission = menuE.getPermission();
-		MenuMapper menuMapper = SpringContextUtil.getBean(MenuMapper.class);
 		if (MenuType.BUTTON.getCode() == type) {
 			if (StringUtil.isEmpty(permission)) {
 				return invalidate("权限标识不能为空");
@@ -112,13 +110,12 @@ public final class MenuParamValidator {
 		return validate();
 	}
 
-	public static ParamValidator.Validate validateName(MenuE menuE, boolean isSave) {
+	public static ParamValidator.Validate validateName(MenuE menuE, MenuMapper menuMapper, boolean isSave) {
 		String name = menuE.getName();
 		Integer type = menuE.getType();
 		if (StringUtil.isEmpty(name)) {
 			return invalidate("名称不能为空");
 		}
-		MenuMapper menuMapper = SpringContextUtil.getBean(MenuMapper.class);
 		if (MenuType.MENU.getCode() == type) {
 			if (isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, name)) > 0) {
 				return invalidate("名称已存在");

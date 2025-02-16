@@ -74,6 +74,8 @@ public class PrometheusExemplarsAutoConfiguration {
 	 */
 	static class TracingSpanContext implements SpanContext {
 
+		private volatile Span currentSpan;
+
 		@Override
 		public String getCurrentTraceId() {
 			Span currentSpan = currentSpan();
@@ -101,7 +103,10 @@ public class PrometheusExemplarsAutoConfiguration {
 
 		private Span currentSpan() {
 			try {
-				return SpringContextUtil.getBean(Tracer.class).currentSpan();
+				if (ObjectUtil.isNull(currentSpan)) {
+					currentSpan = SpringContextUtil.getBean(Tracer.class).currentSpan();
+				}
+				return currentSpan;
 			}
 			catch (Exception e) {
 				return null;

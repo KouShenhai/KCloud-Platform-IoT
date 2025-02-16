@@ -17,6 +17,7 @@
 
 package org.laokou.admin.user.service.extensionpoint;
 
+import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.extension.ExtensionPointI;
 
@@ -25,6 +26,6 @@ import org.laokou.common.extension.ExtensionPointI;
  */
 public interface UserParamValidatorExtPt extends ExtensionPointI {
 
-	void validate(UserE userE);
+	void validate(UserE userE, UserMapper userMapper);
 
 }

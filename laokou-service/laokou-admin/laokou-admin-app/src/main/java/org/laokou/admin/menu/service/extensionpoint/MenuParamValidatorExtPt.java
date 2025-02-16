@@ -17,6 +17,7 @@
 
 package org.laokou.admin.menu.service.extensionpoint;
 
+import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.model.MenuE;
 import org.laokou.common.extension.ExtensionPointI;
 
@@ -25,6 +26,6 @@ import org.laokou.common.extension.ExtensionPointI;
  */
 public interface MenuParamValidatorExtPt extends ExtensionPointI {
 
-	void validate(MenuE menuE);
+	void validate(MenuE menuE, MenuMapper menuMapper);
 
 }
