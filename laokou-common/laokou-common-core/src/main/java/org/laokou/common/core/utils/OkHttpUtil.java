@@ -70,7 +70,7 @@ public final class OkHttpUtil {
 			.readTimeout(Duration.ofSeconds(10))
 			.writeTimeout(Duration.ofSeconds(10))
 			.pingInterval(Duration.ZERO)
-			.connectionPool(new ConnectionPool(5, Duration.ofMinutes(5).toNanos(), TimeUnit.NANOSECONDS))
+			.connectionPool(new ConnectionPool(50, Duration.ofMinutes(5).toNanos(), TimeUnit.NANOSECONDS))
 			.build();
 	}
 

@@ -118,7 +118,7 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 |      Spring Boot Admin      |     3.4.1     |
 | Spring Authorization Server |     1.4.1     |
 |        Mybatis Plus         |   3.5.10.1    |
-|            Nacos            |     2.4.3     |
+|            Nacos            |     2.5.0     |
 |          Sentinel           |     1.8.8     |
 |            Redis            |     7.4.2     |
 |        Elasticsearch        |    8.17.0     |

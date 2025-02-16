@@ -1,4 +1,21 @@
 /*
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+/*
  * Copyright 1999-2022 Alibaba Group Holding Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,13 +50,7 @@ import com.alibaba.nacos.plugin.auth.constant.ActionTypes;
 import com.alibaba.nacos.plugin.auth.constant.SignType;
 import com.alibaba.nacos.plugin.auth.impl.constant.AuthConstants;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -61,11 +72,11 @@ public class NamespaceControllerV2 {
 
 	private final NamespaceOperationService namespaceOperationService;
 
-	private final NamespacePersistService namespacePersistService;
-
 	private final Pattern namespaceIdCheckPattern = Pattern.compile("^[\\w-]+");
 
 	private final Pattern namespaceNameCheckPattern = Pattern.compile("^[^@#$%^&*]+$");
+
+	private NamespacePersistService namespacePersistService;
 
 	public NamespaceControllerV2(NamespaceOperationService namespaceOperationService,
 			NamespacePersistService namespacePersistService) {

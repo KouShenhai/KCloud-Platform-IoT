@@ -33,11 +33,11 @@
 
 package com.alibaba.nacos.plugin.datasource.impl.postgresql;
 
-import com.alibaba.nacos.common.utils.StringUtils;
 import com.alibaba.nacos.plugin.datasource.constants.DataSourceConstant;
 import com.alibaba.nacos.plugin.datasource.mapper.ConfigTagsRelationMapper;
 import com.alibaba.nacos.plugin.datasource.model.MapperContext;
 import com.alibaba.nacos.plugin.datasource.model.MapperResult;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

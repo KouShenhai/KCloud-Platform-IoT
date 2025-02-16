@@ -49,7 +49,7 @@ class RouterTest {
 				log.info("删除路由成功");
 			}
 			else {
-				log.info("删除路由失败");
+				log.error("删除路由失败");
 			}
 		});
 		// 保存路由
@@ -59,7 +59,7 @@ class RouterTest {
 				log.info("保存路由成功");
 			}
 			else {
-				log.info("保存路由失败");
+				log.error("保存路由失败");
 			}
 		});
 	}
