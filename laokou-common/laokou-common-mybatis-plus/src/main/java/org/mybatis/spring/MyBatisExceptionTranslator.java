@@ -61,7 +61,7 @@ import java.util.function.Supplier;
 @NonNullApi
 public class MyBatisExceptionTranslator implements PersistenceExceptionTranslator {
 
-	private SQLExceptionTranslator exceptionTranslator;
+	private volatile SQLExceptionTranslator exceptionTranslator;
 
 	/**
 	 * Creates a new {@code PersistenceExceptionTranslator} instance with

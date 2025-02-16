@@ -17,6 +17,7 @@
 
 package org.laokou.admin.menu.service.extensionpoint.extension;
 
+import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.model.MenuE;
 import org.laokou.admin.menu.service.extensionpoint.MenuParamValidatorExtPt;
 import org.laokou.common.extension.Extension;
@@ -33,7 +34,7 @@ import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 public class ModifyMenuParamValidator implements MenuParamValidatorExtPt {
 
 	@Override
-	public void validate(MenuE menuE) {
+	public void validate(MenuE menuE, MenuMapper menuMapper) {
 		ParamValidator.validate(
 				// 校验ID
 				MenuParamValidator.validateId(menuE),
@@ -42,11 +43,11 @@ public class ModifyMenuParamValidator implements MenuParamValidatorExtPt {
 				// 校验类型
 				MenuParamValidator.validateType(menuE),
 				// 校验名称
-				MenuParamValidator.validateName(menuE, false),
+				MenuParamValidator.validateName(menuE, menuMapper, false),
 				// 校验路径
 				MenuParamValidator.validatePath(menuE),
 				// 校验权限标识
-				MenuParamValidator.validatePermission(menuE, false),
+				MenuParamValidator.validatePermission(menuE, menuMapper, false),
 				// 校验状态
 				MenuParamValidator.validateStatus(menuE),
 				// 校验排序

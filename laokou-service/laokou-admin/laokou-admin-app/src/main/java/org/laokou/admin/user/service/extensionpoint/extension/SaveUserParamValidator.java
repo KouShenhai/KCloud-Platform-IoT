@@ -17,6 +17,7 @@
 
 package org.laokou.admin.user.service.extensionpoint.extension;
 
+import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
 import org.laokou.common.extension.Extension;
@@ -32,14 +33,14 @@ import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 public class SaveUserParamValidator implements UserParamValidatorExtPt {
 
 	@Override
-	public void validate(UserE userE) {
+	public void validate(UserE userE, UserMapper userMapper) {
 		ParamValidator.validate(
 				// 校验用户名
-				UserParamValidator.validateUserName(userE, true),
+				UserParamValidator.validateUserName(userE, userMapper, true),
 				// 校验邮箱
-				UserParamValidator.validateMail(userE, true),
+				UserParamValidator.validateMail(userE, userMapper, true),
 				// 校验手机号
-				UserParamValidator.validateMobile(userE, true),
+				UserParamValidator.validateMobile(userE, userMapper, true),
 				// 校验角色IDS
 				UserParamValidator.validateRoleIds(userE),
 				// 校验部门IDS

@@ -17,6 +17,7 @@
 
 package org.laokou.admin.role.service.extensionpoint.extension;
 
+import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
 import org.laokou.common.extension.Extension;
@@ -32,12 +33,12 @@ import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 public class ModifyRoleParamValidator implements RoleParamValidatorExtPt {
 
 	@Override
-	public void validate(RoleE roleE) {
+	public void validate(RoleE roleE, RoleMapper roleMapper) {
 		ParamValidator.validate(
 				// 校验ID
 				RoleParamValidator.validateId(roleE),
 				// 校验名称
-				RoleParamValidator.validateName(roleE, false),
+				RoleParamValidator.validateName(roleE, roleMapper, false),
 				// 校验数据范围
 				RoleParamValidator.validateDataScope(roleE),
 				// 校验菜单IDS
