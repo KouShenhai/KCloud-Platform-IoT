@@ -24,8 +24,14 @@ import org.laokou.admin.user.dto.UserModifyCmd;
 import org.laokou.admin.user.gatewayimpl.database.UserDeptMapper;
 import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.user.model.UserE;
+import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
+import org.laokou.common.extension.BizScenario;
+import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.admin.common.constant.Constant.*;
+import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
  * 修改用户命令执行器.
@@ -44,9 +50,13 @@ public class UserModifyCmdExe {
 
 	private final UserDeptMapper userDeptMapper;
 
+	private final ExtensionExecutor extensionExecutor;
+
 	public void executeVoid(UserModifyCmd cmd) {
 		// 校验参数
 		UserE userE = UserConvertor.toEntity(cmd.getCo());
+		extensionExecutor.executeVoid(UserParamValidatorExtPt.class, BizScenario.valueOf(MODIFY, USER, SCENARIO),
+				extension -> extension.validate(userE));
 		userE.setUserRoleIds(userRoleMapper.selectIdsByUserId(userE.getId()));
 		userE.setUserDeptIds(userDeptMapper.selectIdsByUserId(userE.getId()));
 		transactionalUtil.executeInTransaction(() -> userDomainService.update(userE));

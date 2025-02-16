@@ -45,11 +45,6 @@ public final class RegexUtil {
 	private static final String MOBILE_REGEX = "^(1[3-9])\\d{9}$";
 
 	/**
-	 * 数据源名称正则表达式.
-	 */
-	private static final String SOURCE_REGEX = "^[a-zA-Z]+_+([0-9]+)+$";
-
-	/**
 	 * 数字正则表达式.
 	 */
 	private static final String NUMBER_REGEX = "^[0-9]*$";
@@ -85,21 +80,16 @@ public final class RegexUtil {
 	}
 
 	/**
-	 * 数据源名称验证.
-	 * @param sourceName 自由名称
-	 * @return 数据源名称匹配结果
-	 */
-	public static boolean sourceNameRegex(String sourceName) {
-		return Pattern.matches(SOURCE_REGEX, sourceName);
-	}
-
-	/**
 	 * 手机号验证.
 	 * @param mobile 手机号
 	 * @return 手机号匹配结果
 	 */
 	public static boolean mobileRegex(String mobile) {
 		return Pattern.matches(MOBILE_REGEX, mobile);
+	}
+
+	public static boolean matches(String regex, String str) {
+		return Pattern.matches(regex, str);
 	}
 
 	/**

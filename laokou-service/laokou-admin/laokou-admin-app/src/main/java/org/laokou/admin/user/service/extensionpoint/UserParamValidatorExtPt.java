@@ -15,26 +15,16 @@
  *
  */
 
-package org.laokou.admin.common.constant;
+package org.laokou.admin.user.service.extensionpoint;
+
+import org.laokou.admin.user.model.UserE;
+import org.laokou.common.extension.ExtensionPointI;
 
 /**
  * @author laokou
  */
-public final class Constant {
+public interface UserParamValidatorExtPt extends ExtensionPointI {
 
-	public static final String SAVE = "save";
-
-	public static final String MODIFY = "modify";
-
-	public static final String MENU = "menu";
-
-	public static final String DEPT = "dept";
-
-	public static final String ROLE = "role";
-
-	public static final String USER = "user";
-
-	private Constant() {
-	}
+	void validate(UserE userE);
 
 }
