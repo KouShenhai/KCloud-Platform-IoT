@@ -15,34 +15,17 @@
  *
  */
 
-package org.laokou.start;
+package org.laokou.jtt808;
 
-import org.laokou.common.core.annotation.EnableTaskExecutor;
-import org.laokou.common.netty.annotation.EnableTcpServer;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
-/**
- * 系统服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
- *
- * @author laokou
- */
-@EnableTcpServer
-@EnableTaskExecutor
-@EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
-public class TcpSampleApp {
+public class Jtt808App {
 
-	public static void main(String[] args) throws UnknownHostException {
-		// 01 01 03 05
-		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
-				System.getProperty("server.port", "9034")));
-		new SpringApplicationBuilder(TcpSampleApp.class).web(WebApplicationType.SERVLET).run(args);
+	public static void main(String[] args) {
+		new SpringApplicationBuilder(Jtt808App.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 
 }
