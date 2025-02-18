@@ -696,6 +696,7 @@ INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (10, 'applicat
   kafka:
     bootstrap-servers: kafka:9092
     consumer:
+      group-id: laokou_trace_consumer_group
       # 禁用自动提交（按周期）已消费offset
       enable-auto-commit: false
       # 单次poll()调用返回的记录数
@@ -2129,6 +2130,7 @@ INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (22, 'applicat
   kafka:
     bootstrap-servers: kafka:9092
     consumer:
+      group-id: laokou_trace_consumer_group
       # 禁用自动提交（按周期）已消费offset
       enable-auto-commit: false
       # 单次poll()调用返回的记录数
@@ -5948,6 +5950,7 @@ INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (53, 'applicat
   kafka:
     bootstrap-servers: kafka:9092
     consumer:
+      group-id: laokou_trace_consumer_group
       # 禁用自动提交（按周期）已消费offset
       enable-auto-commit: false
       # 单次poll()调用返回的记录数

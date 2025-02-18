@@ -33,7 +33,7 @@ public class TraceLogSaveCmdExe {
 	private final DomainService domainService;
 
 	public Mono<Void> executeVoid(TraceLogSaveCmd cmd) {
-		return domainService.create(cmd.getMessages());
+		return domainService.create(cmd.getMessages().collectList());
 	}
 
 }

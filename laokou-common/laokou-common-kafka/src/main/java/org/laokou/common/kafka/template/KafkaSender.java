@@ -15,30 +15,15 @@
  *
  */
 
-package org.laokou.logstash;
+package org.laokou.common.kafka.template;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import org.laokou.common.core.utils.RegexUtil;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestConstructor;
+import reactor.core.publisher.Mono;
 
 /**
  * @author laokou
  */
-@Slf4j
-@SpringBootTest
-@RequiredArgsConstructor
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-class RegexTest {
+public interface KafkaSender {
 
-	@Test
-	void numberTest() {
-		boolean b = RegexUtil.numberRegex("111111111122x");
-		boolean c = RegexUtil.numberRegex("111111111122");
-		log.info("正则表达式验证结果:{}", b);
-		log.info("正则表达式验证结果:{}", c);
-	}
+	Mono<Void> send(String topic, String payload);
 
 }

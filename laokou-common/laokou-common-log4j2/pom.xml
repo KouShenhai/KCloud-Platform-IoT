@@ -12,8 +12,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-kafka</artifactId>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka</artifactId>
     </dependency>
     <!-- log4j2的AsyncLogger时需要包含disruptor -->
     <dependency>

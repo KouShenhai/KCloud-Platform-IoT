@@ -18,15 +18,20 @@
 package org.laokou.logstash;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.logstash.consumer.TraceLogConsumer;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.util.StopWatch;
 
 import java.net.InetAddress;
@@ -35,12 +40,16 @@ import java.net.InetAddress;
  * @author laokou
  */
 @Slf4j
+@EnableAsync
 @EnableTaskExecutor
 @EnableDiscoveryClient
+@RequiredArgsConstructor
 @EnableConfigurationProperties
 @EnableEncryptableProperties
 @SpringBootApplication(scanBasePackages = "org.laokou")
-public class LogtashApp {
+public class LogtashApp implements CommandLineRunner {
+
+	private final TraceLogConsumer tracingLogConsumer;
 
 	// @formatter:off
     /// ```properties
@@ -67,6 +76,17 @@ public class LogtashApp {
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
 	}
+
+	@Async
+	@Override
+    public void run(String... args)  {
+		// 监听
+		listenMessages();
+    }
     // @formatter:on
+
+	private void listenMessages() {
+		tracingLogConsumer.consumeMessages().subscribe();
+	}
 
 }

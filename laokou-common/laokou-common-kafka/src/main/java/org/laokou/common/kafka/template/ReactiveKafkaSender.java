@@ -18,25 +18,21 @@
 package org.laokou.common.kafka.template;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.kafka.core.KafkaTemplate;
+import reactor.core.publisher.Mono;
+import reactor.kafka.sender.SenderRecord;
+import reactor.kafka.sender.internals.DefaultKafkaSender;
 
 /**
- * kafka发送消息模板.
- *
  * @author laokou
  */
 @RequiredArgsConstructor
-public class DefaultKafkaTemplate {
+public class ReactiveKafkaSender implements KafkaSender {
 
-	private final KafkaTemplate<String, String> kafkaTemplate;
+	private final DefaultKafkaSender<String, String> defaultKafkaSender;
 
-	/**
-	 * 发送消息.
-	 * @param topic 主题
-	 * @param payload 内容
-	 */
-	public void send(String topic, String payload) {
-		kafkaTemplate.send(topic, payload);
+	@Override
+	public Mono<Void> send(String topic, String payload) {
+		return defaultKafkaSender.send(Mono.just(SenderRecord.create(topic, null, null, null, payload, null))).then();
 	}
 
 }

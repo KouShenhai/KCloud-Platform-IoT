@@ -19,14 +19,13 @@ package org.laokou.logstash.consumer;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.laokou.logstash.api.TraceLogServiceI;
 import org.laokou.logstash.dto.TraceLogSaveCmd;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
+import reactor.kafka.receiver.internals.DefaultKafkaReceiver;
 
 /**
  * @author laokou
@@ -38,9 +37,15 @@ public class TraceLogConsumer {
 
 	private final TraceLogServiceI traceLogServiceI;
 
-	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_trace_consumer_group")
-	public Mono<Void> kafkaConsumer(Mono<List<String>> messages, Acknowledgment ack) {
-		return traceLogServiceI.save(new TraceLogSaveCmd(messages)).then(Mono.fromRunnable(ack::acknowledge));
+	private final DefaultKafkaReceiver<String, String> reactiveKafkaReceiver;
+
+	public Flux<Void> consumeMessages() {
+		return reactiveKafkaReceiver.receiveBatch(50)
+			.flatMap(records -> traceLogServiceI.save(new TraceLogSaveCmd(records.map(ConsumerRecord::value))))
+			.onErrorResume(e -> {
+				log.error("获取Kafka消息失败，错误信息：{}", e.getMessage(), e);
+				return Mono.empty();
+			});
 	}
 
 }
