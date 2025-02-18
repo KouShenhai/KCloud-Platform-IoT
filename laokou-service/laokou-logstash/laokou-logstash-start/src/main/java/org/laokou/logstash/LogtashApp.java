@@ -63,7 +63,7 @@ public class LogtashApp {
 		System.setProperty("management.health.sentinel.enabled", "false");
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
-		new SpringApplicationBuilder(LogtashApp.class).web(WebApplicationType.SERVLET).run(args);
+		new SpringApplicationBuilder(LogtashApp.class).web(WebApplicationType.REACTIVE).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
 	}
