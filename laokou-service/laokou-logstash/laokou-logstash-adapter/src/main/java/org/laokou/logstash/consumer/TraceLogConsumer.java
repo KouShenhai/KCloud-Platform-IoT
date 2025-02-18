@@ -27,6 +27,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.kafka.receiver.internals.DefaultKafkaReceiver;
 
+import java.time.Duration;
+
 /**
  * @author laokou
  */
@@ -41,9 +43,12 @@ public class TraceLogConsumer {
 
 	public Flux<Void> consumeMessages() {
 		return reactiveKafkaReceiver.receiveBatch(50)
-			.flatMap(records -> traceLogServiceI.save(new TraceLogSaveCmd(records.map(ConsumerRecord::value))))
+			// 控制消费速率（背压）
+			.delayElements(Duration.ofMillis(100))
+			.flatMap(records -> traceLogServiceI.save(new TraceLogSaveCmd(
+					records.doOnNext(record -> record.receiverOffset().acknowledge()).map(ConsumerRecord::value))))
 			.onErrorResume(e -> {
-				log.error("获取Kafka消息失败，错误信息：{}", e.getMessage(), e);
+				log.error("Kafka消费失败，错误信息：{}", e.getMessage(), e);
 				return Mono.empty();
 			});
 	}
