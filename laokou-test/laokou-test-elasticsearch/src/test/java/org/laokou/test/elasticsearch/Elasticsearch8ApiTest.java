@@ -74,7 +74,7 @@ class Elasticsearch8ApiTest {
 
 	@Test
 	void testAsyncCreateDocumentApi() {
-		elasticsearchTemplate.asyncCreateDocument("laokou_res_1", "444", new Resource("8888"));
+		elasticsearchTemplate.asyncCreateDocument("laokou_res_1", "444", new Resource("8888")).resultNow();
 	}
 
 	@Test

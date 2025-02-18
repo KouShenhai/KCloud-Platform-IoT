@@ -17,6 +17,8 @@
 
 package org.laokou.logstash.gateway;
 
+import reactor.core.publisher.Mono;
+
 import java.util.List;
 
 /**
@@ -24,6 +26,6 @@ import java.util.List;
  */
 public interface TraceLogGateway {
 
-	void create(List<String> messages);
+	Mono<Void> create(Mono<List<String>> messages);
 
 }

@@ -24,6 +24,7 @@ import org.laokou.logstash.dto.TraceLogSaveCmd;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -38,16 +39,8 @@ public class TraceLogConsumer {
 	private final TraceLogServiceI traceLogServiceI;
 
 	@KafkaListener(topics = "laokou_trace_topic", groupId = "laokou_trace_consumer_group")
-	public void kafkaConsumer(List<String> messages, Acknowledgment ack) {
-		try {
-			traceLogServiceI.save(new TraceLogSaveCmd(messages));
-		}
-		catch (Exception e) {
-			log.error("分布式链路写入失败，错误信息：{}", e.getMessage());
-		}
-		finally {
-			ack.acknowledge();
-		}
+	public Mono<Void> kafkaConsumer(Mono<List<String>> messages, Acknowledgment ack) {
+		return traceLogServiceI.save(new TraceLogSaveCmd(messages)).then(Mono.fromRunnable(ack::acknowledge));
 	}
 
 }

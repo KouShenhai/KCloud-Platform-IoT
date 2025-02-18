@@ -20,6 +20,7 @@ package org.laokou.logstash.ability;
 import lombok.RequiredArgsConstructor;
 import org.laokou.logstash.gateway.TraceLogGateway;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -32,8 +33,8 @@ public class DomainService {
 
 	private final TraceLogGateway traceLogGateway;
 
-	public void create(List<String> messages) {
-		traceLogGateway.create(messages);
+	public Mono<Void> create(Mono<List<String>> messages) {
+		return traceLogGateway.create(messages);
 	}
 
 }

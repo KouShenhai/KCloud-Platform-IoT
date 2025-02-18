@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.logstash.common.support.TraceLogStorage;
 import org.laokou.logstash.gateway.TraceLogGateway;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -34,8 +35,8 @@ public class TraceLogGatewayImpl implements TraceLogGateway {
 	private final TraceLogStorage traceLogStorage;
 
 	@Override
-	public void create(List<String> messages) {
-		traceLogStorage.batchSave(messages);
+	public Mono<Void> create(Mono<List<String>> messages) {
+		return traceLogStorage.batchSave(messages);
 	}
 
 }
