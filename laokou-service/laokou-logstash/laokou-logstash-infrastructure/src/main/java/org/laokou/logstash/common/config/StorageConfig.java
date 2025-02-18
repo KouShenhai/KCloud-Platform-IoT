@@ -24,7 +24,7 @@ import org.laokou.logstash.common.support.TraceLogStorage;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClient;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author laokou
@@ -40,8 +40,8 @@ public class StorageConfig {
 
 	@Bean("traceLogStorage")
 	@ConditionalOnProperty(prefix = "storage", matchIfMissing = true, name = "type", havingValue = "LOKI")
-	public TraceLogStorage traceLogLokiStorage(RestClient restClient, LokiProperties lokiProperties) {
-		return new TraceLogLokiStorage(restClient, lokiProperties);
+	public TraceLogStorage traceLogLokiStorage(WebClient webClient, LokiProperties lokiProperties) {
+		return new TraceLogLokiStorage(webClient, lokiProperties);
 	}
 
 }

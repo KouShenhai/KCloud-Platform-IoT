@@ -173,6 +173,11 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-reactor</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-logstash-domain</artifactId>
         <version>${laokou.version}</version>
       </dependency>

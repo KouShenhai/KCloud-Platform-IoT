@@ -78,7 +78,7 @@
     <module>laokou-common-influxdb</module>
     <module>laokou-common-rabbitmq</module>
     <module>laokou-common-storage</module>
-      <module>laokou-common-reactor</module>
+    <module>laokou-common-reactor</module>
   </modules>
 
 </project>

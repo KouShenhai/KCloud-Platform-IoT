@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.gateway.config;
+package org.laokou.reactor.config;
 
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
