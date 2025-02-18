@@ -17,10 +17,12 @@
 
 package org.laokou.logstash.common.support;
 
+import reactor.core.publisher.Mono;
+
 import java.util.List;
 
 public interface TraceLogStorage {
 
-	void batchSave(List<String> messages);
+	Mono<Void> batchSave(Mono<List<String>> messages);
 
 }

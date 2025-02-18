@@ -1,0 +1,8 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: laokou-jtt808
+  profiles:
+    active: @PROFILE-ACTIVE@

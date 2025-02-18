@@ -22,6 +22,7 @@ import org.laokou.logstash.api.TraceLogServiceI;
 import org.laokou.logstash.command.TraceLogSaveCmdExe;
 import org.laokou.logstash.dto.TraceLogSaveCmd;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 /**
  * @author laokou
@@ -33,8 +34,8 @@ public class TraceLogServiceImpl implements TraceLogServiceI {
 	private final TraceLogSaveCmdExe traceLogSaveCmdExe;
 
 	@Override
-	public void save(TraceLogSaveCmd cmd) {
-		traceLogSaveCmdExe.executeVoid(cmd);
+	public Mono<Void> save(TraceLogSaveCmd cmd) {
+		return traceLogSaveCmdExe.executeVoid(cmd);
 	}
 
 }

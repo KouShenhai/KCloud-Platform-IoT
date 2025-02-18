@@ -137,7 +137,7 @@ public class ElasticsearchTemplate {
 	}
 
 	@SneakyThrows
-	public void createDocument(String index, String id, Object obj) {
+	public <T> void createDocument(String index, String id, T obj) {
 		IndexResponse response = elasticsearchClient
 			.index(idx -> idx.index(index).refresh(Refresh.True).id(id).document(obj));
 		if (StringUtil.isNotEmpty(response.result().jsonValue())) {
@@ -149,21 +149,19 @@ public class ElasticsearchTemplate {
 	}
 
 	@SneakyThrows
-	public CompletableFuture<Boolean> asyncCreateDocument(String index, String id, Object obj) {
+	public <T> CompletableFuture<Void> asyncCreateDocument(String index, String id, T obj) {
 		return elasticsearchAsyncClient.index(idx -> idx.index(index).refresh(Refresh.True).id(id).document(obj))
-			.thenApplyAsync(resp -> {
+			.thenAcceptAsync(resp -> {
 				if (StringUtil.isNotEmpty(resp.result().jsonValue())) {
 					log.info("索引：{} -> 异步同步索引成功", index);
-					return Boolean.TRUE;
 				}
 				else {
 					log.info("索引：{} -> 异步同步索引失败", index);
-					return Boolean.FALSE;
 				}
 			});
 	}
 
-	public void bulkCreateDocument(String index, Map<String, Object> map) {
+	public <T> void bulkCreateDocument(String index, Map<String, T> map) {
 		try {
 			boolean errors = elasticsearchClient
 				.bulk(bulk -> bulk.index(index).refresh(Refresh.True).operations(getBulkOperations(map)))
@@ -181,18 +179,15 @@ public class ElasticsearchTemplate {
 	}
 
 	@SneakyThrows
-	public CompletableFuture<Boolean> asyncBulkCreateDocument(String index, Map<String, Object> map,
-			Executor executor) {
+	public <T> CompletableFuture<Void> asyncBulkCreateDocument(String index, Map<String, T> map, Executor executor) {
 		return elasticsearchAsyncClient
 			.bulk(bulk -> bulk.index(index).refresh(Refresh.True).operations(getBulkOperations(map)))
-			.thenApplyAsync(resp -> {
+			.thenAcceptAsync(resp -> {
 				if (resp.errors()) {
 					log.info("索引：{} -> 异步批量同步索引失败", index);
-					return Boolean.FALSE;
 				}
 				else {
 					log.info("索引：{} -> 异步批量同步索引成功", index);
-					return Boolean.TRUE;
 				}
 			}, executor);
 	}
@@ -308,7 +303,7 @@ public class ElasticsearchTemplate {
 		}));
 	}
 
-	private List<BulkOperation> getBulkOperations(Map<String, Object> map) {
+	private <T> List<BulkOperation> getBulkOperations(Map<String, T> map) {
 		return map.entrySet()
 			.stream()
 			.map(entry -> BulkOperation.of(idx -> idx.index(fn -> fn.id(entry.getKey()).document(entry.getValue()))))

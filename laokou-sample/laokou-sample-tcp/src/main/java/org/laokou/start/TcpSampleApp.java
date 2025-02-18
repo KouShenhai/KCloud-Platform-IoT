@@ -17,7 +17,6 @@
 
 package org.laokou.start;
 
-import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.netty.annotation.EnableTcpServer;
 import org.springframework.boot.WebApplicationType;
@@ -26,6 +25,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * 系统服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
@@ -38,8 +38,7 @@ import java.net.InetAddress;
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
 public class TcpSampleApp {
 
-	@SneakyThrows
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnknownHostException {
 		// 01 01 03 05
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
 				System.getProperty("server.port", "9034")));

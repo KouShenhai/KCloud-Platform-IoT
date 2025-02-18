@@ -21,11 +21,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.logstash.common.config.LokiProperties;
 import org.laokou.logstash.convertor.TraceLogConvertor;
-import org.laokou.logstash.dto.clientobject.LokiPushDTO;
-import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClient;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Objects;
@@ -35,20 +34,25 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class TraceLogLokiStorage extends AbstractTraceLogStorage {
 
-	private final RestClient restClient;
+	private final WebClient webClient;
 
 	private final LokiProperties lokiProperties;
 
 	@Override
-	public void batchSave(List<String> messages) {
-		List<TraceLogIndex> list = messages.stream().map(this::getTraceLogIndex).filter(Objects::nonNull).toList();
-		LokiPushDTO dto = TraceLogConvertor.toDTO(list);
-		restClient.post()
-			.uri(lokiProperties.getUrl())
-			.accept(MediaType.APPLICATION_JSON)
-			.body(dto)
-			.retrieve()
-			.toBodilessEntity();
+	public Mono<Void> batchSave(Mono<List<String>> messages) {
+		return messages.map(item -> item.stream().map(this::getTraceLogIndex).filter(Objects::nonNull).toList())
+			.map(TraceLogConvertor::toDTO)
+			.flatMap(item -> webClient.post()
+				.uri(lokiProperties.getUrl())
+				.accept(MediaType.APPLICATION_JSON)
+				.bodyValue(item)
+				.retrieve()
+				.toBodilessEntity()
+				.then())
+			.onErrorResume(e -> {
+				log.error("分布式链路写入失败，错误信息：{}", e.getMessage(), e);
+				return Mono.empty();
+			});
 	}
 
 }

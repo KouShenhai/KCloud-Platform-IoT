@@ -21,8 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
 
 /**
  * @author laokou
@@ -32,6 +31,6 @@ import java.util.List;
 @AllArgsConstructor
 public class TraceLogSaveCmd extends CommonCommand {
 
-	private List<String> messages;
+	private Flux<String> messages;
 
 }

@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.JacksonUtil;
-import org.laokou.common.kafka.template.DefaultKafkaTemplate;
+import org.laokou.common.kafka.template.KafkaSender;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
@@ -36,7 +36,7 @@ import org.springframework.test.context.TestConstructor;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class KafkaTest {
 
-	private final DefaultKafkaTemplate defaultKafkaTemplate;
+	private final KafkaSender reactiveKafkaSender;
 
 	@Test
 	void kafkaSenderTest() {
@@ -53,7 +53,7 @@ class KafkaTest {
 		index.setPackageName("org.laokou.logstash");
 		index.setMessage("{\"testValue\": \"123456\"}");
 		index.setStacktrace("");
-		defaultKafkaTemplate.send("laokou_trace_topic", JacksonUtil.toJsonStr(index));
+		reactiveKafkaSender.send("laokou_trace_topic", JacksonUtil.toJsonStr(index)).subscribe();
 	}
 
 }

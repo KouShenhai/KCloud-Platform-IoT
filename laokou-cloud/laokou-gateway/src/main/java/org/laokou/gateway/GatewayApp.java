@@ -18,12 +18,15 @@
 package org.laokou.gateway;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.i18n.utils.SslUtil;
 import org.laokou.common.nacos.annotation.EnableNacosShutDown;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
+import org.laokou.gateway.repository.NacosRouteDefinitionRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration;
@@ -32,6 +35,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.util.StopWatch;
 import reactor.core.publisher.Hooks;
 
@@ -43,16 +48,20 @@ import java.net.InetAddress;
  * @author laokou
  */
 @Slf4j
+@EnableAsync
 @EnableTaskExecutor
 @EnableNacosShutDown
 @EnableDiscoveryClient
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableReactiveRedisRepository
+@RequiredArgsConstructor
 @EnableAspectJAutoProxy
 @SpringBootApplication(scanBasePackages = "org.laokou",
 		exclude = { RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
-public class GatewayApp {
+public class GatewayApp implements CommandLineRunner {
+
+	private final NacosRouteDefinitionRepository nacosRouteDefinitionRepository;
 
 	// @formatter:off
     /// ```properties
@@ -86,6 +95,35 @@ public class GatewayApp {
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
 	}
+
+	@Async
+	@Override
+    public void run(String... args)  {
+		// 同步路由
+		syncRouters();
+    }
+
+	private void syncRouters() {
+		// 删除路由
+		nacosRouteDefinitionRepository.removeRouters().subscribe(delFlag -> {
+			if (delFlag) {
+				log.info("删除路由成功");
+			}
+			else {
+				log.error("删除路由失败");
+			}
+		});
+		// 保存路由
+		nacosRouteDefinitionRepository.saveRouters().subscribe(saveFlag -> {
+			if (saveFlag) {
+				log.info("保存路由成功");
+			}
+			else {
+				log.error("保存路由失败");
+			}
+		});
+	}
+
     // @formatter:on
 
 }

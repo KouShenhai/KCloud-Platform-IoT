@@ -18,11 +18,20 @@
 package org.laokou.common.core.utils;
 
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.util.ClassUtils;
+
+import java.lang.annotation.Annotation;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author laokou
  */
+@Slf4j
 public final class ClassUtil extends ClassUtils {
 
 	private ClassUtil() {
@@ -31,6 +40,21 @@ public final class ClassUtil extends ClassUtils {
 	@SneakyThrows
 	public static Class<?> parseClass(String className) {
 		return Class.forName(className);
+	}
+
+	public static Set<Class<?>> scanAnnotatedClasses(String basePackage, Class<? extends Annotation> annotationType) {
+		ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
+		scanner.addIncludeFilter(new AnnotationTypeFilter(annotationType));
+		return scanner.findCandidateComponents(basePackage).stream().map(beanDefinition -> {
+			try {
+				return Class.forName(beanDefinition.getBeanClassName());
+			}
+			catch (ClassNotFoundException e) {
+				log.error("类扫描失败，错误信息：{}", e.getMessage(), e);
+				throw new SystemException("S_UnKnow_Error", String.format("类%s扫描失败", beanDefinition.getBeanClassName()),
+						e);
+			}
+		}).collect(Collectors.toSet());
 	}
 
 }

@@ -19,17 +19,21 @@ package org.laokou.logstash.common.support;
 
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 
@@ -38,17 +42,25 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 	private final ExecutorService EXECUTOR = ThreadUtil.newVirtualTaskExecutor();
 
 	@Override
-	public void batchSave(List<String> messages) {
-		Map<String, Object> dataMap = messages.stream()
-			.map(this::getTraceLogIndex)
-			.filter(Objects::nonNull)
-			.collect(Collectors.toMap(TraceLogIndex::getId, traceLogIndex -> traceLogIndex));
-		if (MapUtil.isNotEmpty(dataMap)) {
-			elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, EXECUTOR)
-				.thenAcceptAsync(
-						res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap, EXECUTOR),
-						EXECUTOR);
-		}
+	public Mono<Void> batchSave(Mono<List<String>> messages) {
+		return messages.flatMap(item -> {
+			Map<String, TraceLogIndex> dataMap = item.stream()
+				.map(this::getTraceLogIndex)
+				.filter(Objects::nonNull)
+				.collect(Collectors.toMap(TraceLogIndex::getId, Function.identity(),
+						(existing, replacement) -> existing));
+			if (MapUtil.isEmpty(dataMap)) {
+				return Mono.empty();
+			}
+			return Mono.fromFuture(
+					elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, EXECUTOR)
+						.thenComposeAsync(
+								res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap, EXECUTOR),
+								EXECUTOR));
+		}).onErrorResume(e -> {
+			log.error("分布式链路写入失败，错误信息：{}", e.getMessage(), e);
+			return Mono.empty();
+		});
 	}
 
 	@PreDestroy

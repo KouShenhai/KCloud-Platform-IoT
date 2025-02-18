@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.gateway.config;
+package org.laokou.reactor.config;
 
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
@@ -33,7 +33,7 @@ import javax.net.ssl.SSLException;
 @Configuration
 public class WebClientConfig {
 
-	@Bean(bootstrap = Bean.Bootstrap.BACKGROUND)
+	@Bean
 	public WebClient webClient() throws SSLException {
 		log.info("{} => Initializing WebClient", Thread.currentThread().getName());
 		WebClient.Builder builder = WebClient.builder();

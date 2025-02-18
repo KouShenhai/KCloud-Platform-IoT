@@ -42,7 +42,7 @@ import static org.laokou.common.core.utils.SystemUtil.isWindows;
 final class ModifyProjectBoot {
 
 	private static final List<String> MODULES = List.of("laokou-cloud", "laokou-common", "laokou-service",
-			"laokou-cola", "laokou-tool", "checkstyle");
+			"laokou-cola", "laokou-tool", "laokou-test", "laokou-sample", "checkstyle");
 
 	private static final String MODIFY_POM_FILE_SUFFIX = "pom.xml";
 

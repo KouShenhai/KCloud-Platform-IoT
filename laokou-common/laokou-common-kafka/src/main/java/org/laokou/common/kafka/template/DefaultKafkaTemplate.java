@@ -19,14 +19,12 @@ package org.laokou.common.kafka.template;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Component;
 
 /**
  * kafka发送消息模板.
  *
  * @author laokou
  */
-@Component
 @RequiredArgsConstructor
 public class DefaultKafkaTemplate {
 
