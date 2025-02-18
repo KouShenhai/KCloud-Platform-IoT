@@ -45,7 +45,8 @@ public class TraceLogConsumer {
 		return reactiveKafkaReceiver.receiveBatch(50)
 			// 控制消费速率（背压）
 			.delayElements(Duration.ofMillis(100))
-			.flatMap(records -> traceLogServiceI.save(new TraceLogSaveCmd(records.doOnNext(record -> record.receiverOffset().acknowledge()).map(ConsumerRecord::value))))
+			.flatMap(records -> traceLogServiceI.save(new TraceLogSaveCmd(
+					records.doOnNext(record -> record.receiverOffset().acknowledge()).map(ConsumerRecord::value))))
 			.onErrorResume(e -> {
 				log.error("Kafka消费失败，错误信息：{}", e.getMessage(), e);
 				return Mono.empty();
