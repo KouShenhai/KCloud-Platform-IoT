@@ -19,9 +19,6 @@ package org.laokou.common.mybatisplus.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
-import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
-import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
-import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.parser.JsqlParserGlobal;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
@@ -29,7 +26,6 @@ import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -42,7 +38,6 @@ import org.springframework.transaction.support.TransactionOperations;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
-import java.net.InetAddress;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -104,18 +99,6 @@ public class MybatisPlusAutoConfig {
 		// 防止全表更新与删除插件
 		interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
 		return interceptor;
-	}
-
-	/**
-	 * <a href="https://baomidou.com/pages/568eb2/#spring-boot">...</a>
-	 * 生成雪花算法就是使用的这个，请查看{@link IdWorker}
-	 * 为什么要修改这个配置，集群环境可能会重复，网上的解决方案是加网卡信息（用zookeeper生成分布式ID也是可以哦，重写生成雪花算法的逻辑，mp官网支持自定义雪花算法生成）
-	 */
-	@Bean
-	@SneakyThrows
-	public IdentifierGenerator identifierGenerator() {
-		// 查看 DefaultIdentifierGenerator 可以自定义网卡信息哦，话不多说，就是怼源码
-		return new DefaultIdentifierGenerator(InetAddress.getLocalHost());
 	}
 
 	@Bean(name = "transactionTemplate")
