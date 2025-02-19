@@ -17,7 +17,7 @@
 
 package org.laokou.common.netty.config;
 
-import io.netty.channel.ChannelFuture;
+import io.netty.util.concurrent.Future;
 
 /**
  * @author laokou
@@ -29,7 +29,7 @@ public interface Server {
 	 * @param obj 对象
 	 * @param key 标识
 	 */
-	ChannelFuture send(String key, Object obj);
+	Future<Void> send(String key, Object obj);
 
 	/**
 	 * 启动.

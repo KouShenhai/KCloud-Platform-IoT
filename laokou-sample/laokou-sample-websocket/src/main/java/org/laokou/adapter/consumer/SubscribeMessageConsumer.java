@@ -17,8 +17,8 @@
 
 package org.laokou.adapter.consumer;
 
-import io.netty.channel.ChannelFuture;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.util.concurrent.Future;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -60,7 +60,7 @@ public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 			String msg = new String(message.getBody(), StandardCharsets.UTF_8);
 			PayloadCO co = JacksonUtil.toBean(msg, PayloadCO.class);
 			TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(co.getContent());
-			List<Callable<ChannelFuture>> callableList = co.getReceivers().stream().map(clientId -> (Callable<ChannelFuture>) () -> webSocketServer.send(clientId, webSocketFrame)).toList();
+			List<Callable<Future<Void>>> callableList = co.getReceivers().stream().map(clientId -> (Callable<Future<Void>>) () -> webSocketServer.send(clientId, webSocketFrame)).toList();
 			executor.invokeAll(callableList);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
