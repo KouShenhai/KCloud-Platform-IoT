@@ -17,6 +17,8 @@
 
 package org.laokou.common.netty.config;
 
+import io.netty.util.concurrent.Future;
+
 /**
  * @author laokou
  */
@@ -27,7 +29,7 @@ public interface Server {
 	 * @param obj 对象
 	 * @param key 标识
 	 */
-	void send(String key, Object obj);
+	Future<Void> send(String key, Object obj);
 
 	/**
 	 * 启动.
