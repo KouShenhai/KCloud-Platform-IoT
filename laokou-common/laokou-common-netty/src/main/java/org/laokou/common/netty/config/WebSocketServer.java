@@ -19,10 +19,7 @@ package org.laokou.common.netty.config;
 
 import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.ServerChannel;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.DefaultThreadFactory;
@@ -74,11 +71,12 @@ public final class WebSocketServer extends AbstractServer {
 	}
 
 	@Override
-	public void send(String clientId, Object obj) {
+	public ChannelFuture send(String clientId, Object obj) {
 		Channel channel = WebSocketSessionManager.get(clientId);
 		if (ObjectUtil.isNotNull(channel) && channel.isActive() && channel.isWritable()) {
-			channel.writeAndFlush(obj);
+			return channel.writeAndFlush(obj);
 		}
+		return null;
 	}
 
 }
