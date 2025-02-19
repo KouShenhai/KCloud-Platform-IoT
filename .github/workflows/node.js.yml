@@ -12,25 +12,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        node-version: [ 16.x ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18.x
           cache: 'npm'
-          cache-dependency-path: "./ui/package-lock.json"
-      - name: Cache Clean UI
-        run: npm cache clean --force
+          cache-dependency-path: "./ui/pnpm-lock.yaml"
+      - name: Install pnpm
+        run: npm install -g pnpm
       - name: Install UI
-        run: npm install --prefix ./ui
+        run: pnpm install
+        working-directory: ./ui
       - name: Build UI
-        run: npm run build --prefix ./ui
+        run: pnpm build
+        working-directory: ./ui
       - name: Build the Docker image
         run: |
           # 登录阿里云镜像仓库
