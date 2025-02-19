@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +18,9 @@
 package org.laokou.admin.loginLog.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * 登录日志数据库映射.
@@ -34,7 +30,5 @@ import java.util.List;
 @Mapper
 @Repository
 public interface LoginLogMapper extends CrudMapper<Long, Integer, LoginLogDO> {
-
-	List<LoginLogDO> selectObjectPage(@Param("pageQuery") PageQuery pageQuery);
 
 }

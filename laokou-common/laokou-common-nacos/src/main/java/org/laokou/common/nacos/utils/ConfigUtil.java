@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 package org.laokou.common.nacos.utils;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
-import com.alibaba.cloud.nacos.NacosConfigProperties;
 import com.alibaba.nacos.api.config.ConfigService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -32,10 +31,8 @@ public class ConfigUtil {
 
 	private final NacosConfigManager nacosConfigManager;
 
-	private final NacosConfigProperties nacosConfigProperties;
-
 	public String getGroup() {
-		return nacosConfigProperties.getGroup();
+		return nacosConfigManager.getNacosConfigProperties().getGroup();
 	}
 
 	public ConfigService getConfigService() {

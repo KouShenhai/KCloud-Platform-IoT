@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,18 +24,18 @@ import com.alibaba.ttl.TransmittableThreadLocal;
  */
 public class DynamicTableSuffixContextHolder {
 
-	private static final ThreadLocal<String> TABLE_SUFFIX_LOCAL = new TransmittableThreadLocal<>();
+	private static final ThreadLocal<String> LOCAL = new TransmittableThreadLocal<>();
 
 	public static void set(String suffix) {
-		TABLE_SUFFIX_LOCAL.set(suffix);
+		LOCAL.set(suffix);
 	}
 
 	public static void clear() {
-		TABLE_SUFFIX_LOCAL.remove();
+		LOCAL.remove();
 	}
 
 	public static String get() {
-		return TABLE_SUFFIX_LOCAL.get();
+		return LOCAL.get();
 	}
 
 }

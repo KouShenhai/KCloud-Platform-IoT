@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@
 
 package org.laokou.tool;
 
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.FileUtil;
+import org.springframework.util.StopWatch;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,10 +38,11 @@ import static org.laokou.common.core.utils.SystemUtil.isWindows;
  *
  * @author laokou
  */
-public class ModifyProjectBoot {
+@Slf4j
+final class ModifyProjectBoot {
 
 	private static final List<String> MODULES = List.of("laokou-cloud", "laokou-common", "laokou-service",
-			"laokou-cola", "laokou-tool", "checkstyle");
+			"laokou-cola", "laokou-tool", "laokou-test", "laokou-sample", "checkstyle");
 
 	private static final String MODIFY_POM_FILE_SUFFIX = "pom.xml";
 
@@ -67,8 +70,12 @@ public class ModifyProjectBoot {
 
 	private static int count = 0;
 
-	public static void main(String[] args) {
+	private ModifyProjectBoot() {
+	}
 
+	public static void main(String[] args) throws IOException {
+		StopWatch stopWatch = new StopWatch("一键修改项目");
+		stopWatch.start();
 		// 修改projectName、packageName、groupId、artifactId
 		String projectPath = System.getProperty("user.dir");
 		FileUtil.walkFileTree(Paths.get(projectPath), new SimpleFileVisitor<>() {
@@ -118,9 +125,11 @@ public class ModifyProjectBoot {
 			}
 
 		});
+		stopWatch.stop();
+		log.info("{}", stopWatch.prettyPrint());
 	}
 
-	private static void createDirOrFile(String path) {
+	private static void createDirOrFile(String path) throws IOException {
 		int index = path.lastIndexOf(File.separator);
 		String dir = path.substring(0, index);
 		String fileName = path.substring(index + 1);
@@ -134,12 +143,12 @@ public class ModifyProjectBoot {
 	}
 
 	private static byte[] getJavaFileAsByte(String path) throws IOException {
-		String str = FileUtil.getStr(Paths.get(path));
+		String str = FileUtil.getStr(path);
 		return str.replaceAll("org.laokou", NEW_PACKAGE_NAME).getBytes(StandardCharsets.UTF_8);
 	}
 
 	private static byte[] getPomFileAsByte(String path) throws IOException {
-		String str = FileUtil.getStr(Paths.get(path));
+		String str = FileUtil.getStr(path);
 		return str.replaceAll("org.laokou", NEW_GROUP_ID)
 			.replaceAll("laokou-", NEW_MODULE_NAME + "-")
 			.replace("KCloud-Platform-IoT", NEW_PROJECT_NAME)
@@ -147,7 +156,7 @@ public class ModifyProjectBoot {
 	}
 
 	private static byte[] getXmlFileAsByte(String path) throws IOException {
-		String str = FileUtil.getStr(Paths.get(path));
+		String str = FileUtil.getStr(path);
 		return str.replaceAll("org.laokou", NEW_PACKAGE_NAME).getBytes(StandardCharsets.UTF_8);
 	}
 

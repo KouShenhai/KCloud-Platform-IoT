@@ -16,9 +16,12 @@ declare namespace API {
 
 	type SendCaptchaParam = {
 		uuid: string;
-		tag: string;
-		tenantId: number;
+		tenantCode: string;
 	};
+
+	type SendCaptchaCO = {
+		co: SendCaptchaParam;
+	}
 
 	type OAuth2Param = {
 		username?: string;
@@ -26,7 +29,7 @@ declare namespace API {
 		uuid?: string;
 		captcha?: string;
 		grant_type?: string;
-		tenant_id?: number;
+		tenant_code?: string;
 		code?: string;
 		mail?: string;
 		mobile?: string;
@@ -40,12 +43,11 @@ declare namespace API {
 		mobile?: string;
 		mail_captcha?: string;
 		mobile_captcha?: string;
-		tenant_id?: number
+		tenant_code?: string
 	};
 
-	// @ts-ignore
     type Result = {
-		/** 状态编码 */
+		/** 状态标识 */
 		code?: string;
 		/** 响应描述 */
 		msg?: string;

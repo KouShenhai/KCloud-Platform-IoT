@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,11 +22,15 @@ import org.laokou.admin.menu.api.MenusServiceI;
 import org.laokou.admin.menu.command.*;
 import org.laokou.admin.menu.command.query.MenuGetQryExe;
 import org.laokou.admin.menu.command.query.MenuPageQryExe;
+import org.laokou.admin.menu.command.query.MenuTreeListQryExe;
 import org.laokou.admin.menu.dto.*;
 import org.laokou.admin.menu.dto.clientobject.MenuCO;
+import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 菜单接口实现类.
@@ -48,6 +52,8 @@ public class MenusServiceImpl implements MenusServiceI {
 	private final MenuExportCmdExe menuExportCmdExe;
 
 	private final MenuPageQryExe menuPageQryExe;
+
+	private final MenuTreeListQryExe menuTreeListQryExe;
 
 	private final MenuGetQryExe menuGetQryExe;
 
@@ -79,6 +85,11 @@ public class MenusServiceImpl implements MenusServiceI {
 	@Override
 	public Result<Page<MenuCO>> page(MenuPageQry qry) {
 		return menuPageQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<List<MenuTreeCO>> treeList(MenuTreeListQry qry) {
+		return menuTreeListQryExe.execute(qry);
 	}
 
 	@Override

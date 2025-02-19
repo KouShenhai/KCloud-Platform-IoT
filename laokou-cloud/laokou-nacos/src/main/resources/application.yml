@@ -1,5 +1,5 @@
 #   /*
-#    * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+#    * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
 #    *
 #    * Licensed under the Apache License, Version 2.0 (the "License");
 #    * you may not use this file except in compliance with the License.
@@ -97,9 +97,9 @@ server:
       # 设置IO线程数，来执行非阻塞任务，负责多个连接数
       io: 16
       # 工作线程数
-      worker: 256
+      worker: 512
     # 每块buffer的空间大小
-    buffer-size: 1024
+    buffer-size: 2048
     # 分配堆外内存
     direct-buffers: true
     accesslog:
@@ -119,6 +119,8 @@ server:
     enabled: @SSL-ENABLED@
   shutdown: graceful
 spring:
+  main:
+    banner-mode: console
   application:
     name: ${SERVICE_ID:laokou-nacos}
   profiles:

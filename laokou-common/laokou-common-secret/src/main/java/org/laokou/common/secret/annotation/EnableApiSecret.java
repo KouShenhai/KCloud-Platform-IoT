@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 package org.laokou.common.secret.annotation;
 
-import org.laokou.common.secret.filter.RequestFilter;
+import org.laokou.common.secret.filter.ApiSecretRequestFilter;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -25,7 +25,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ RequestFilter.class })
+@Import({ ApiSecretRequestFilter.class })
 public @interface EnableApiSecret {
 
 }

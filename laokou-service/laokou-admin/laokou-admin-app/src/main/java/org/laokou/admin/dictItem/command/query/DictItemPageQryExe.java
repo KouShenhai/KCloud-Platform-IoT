@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +18,16 @@
 package org.laokou.admin.dictItem.command.query;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.laokou.admin.dictItem.convertor.DictItemConvertor;
 import org.laokou.admin.dictItem.dto.DictItemPageQry;
 import org.laokou.admin.dictItem.dto.clientobject.DictItemCO;
 import org.laokou.admin.dictItem.gatewayimpl.database.DictItemMapper;
 import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
-import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询字典项请求执行器.
@@ -45,16 +40,10 @@ public class DictItemPageQryExe {
 
 	private final DictItemMapper dictItemMapper;
 
-	@SneakyThrows
 	public Result<Page<DictItemCO>> execute(DictItemPageQry qry) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		CompletableFuture<List<DictItemDO>> c1 = CompletableFuture
-			.supplyAsync(() -> dictItemMapper.selectPageByCondition(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> dictItemMapper.selectCountByCondition(qry),
-				executor);
-		return Result
-			.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(DictItemConvertor::toClientObject).toList(),
-					c2.get(30, TimeUnit.SECONDS)));
+		List<DictItemDO> list = dictItemMapper.selectObjectPage(qry);
+		long total = dictItemMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(DictItemConvertor::toClientObject).toList(), total));
 	}
 
 }

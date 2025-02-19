@@ -1,26 +1,15 @@
 import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {clearV3, exportV3, pageV3, removeV3} from "@/services/admin/loginLog";
-import {Button, message, Modal} from "antd";
-import {DeleteOutlined, ExportOutlined} from "@ant-design/icons";
+import {exportV3, pageV3} from "@/services/admin/loginLog";
+import {Button} from "antd";
+import {ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
-import {Excel, ExportToExcel} from "@/utils/export";
+import {ExportToExcel} from "@/utils/export";
 import moment from "moment";
 import {useRef, useState} from "react";
+import {getLoginStatus, getLoginType, LOGIN_STATUS, LOGIN_TYPE} from "@/services/constant";
 
 export default () => {
-
-	const statusEnum = {
-		0: '0',
-		1: '1'
-	};
-
-	const typeEnum = {
-		'password': 'password',
-		'mobile': 'mobile',
-		'mail': 'mail',
-		'authorization_code': 'authorization_code'
-	};
 
 	type TableColumns = {
 		id: number | undefined;
@@ -36,17 +25,14 @@ export default () => {
 	};
 
 	const actionRef = useRef();
-
-	const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
-	let loginLogList: TableColumns[]
-
-	let loginLogParam: any
+	const [list, setList] = useState<TableColumns[]>([]);
+	const [param, setParam] = useState<any>({});
 
 	const getPageQuery = (params: any) => {
-		loginLogParam = {
+		const param = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
+			pageIndex: params?.pageSize * (params?.current - 1),
 			username: trim(params?.username),
 			ip: trim(params?.ip),
 			address: trim(params?.address),
@@ -56,109 +42,12 @@ export default () => {
 			type: params?.type,
 			errorMessage: trim(params?.errorMessage),
 			params: {
-				startDate: params?.startDate,
-				endDate: params?.endDate
+				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
+				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
 			}
-		};
-		return loginLogParam;
-	}
-
-	const getStatusDesc = (status: string | undefined) => {
-		if (status === "0") {
-			return "登录成功"
-		} else {
-			return "登录失败"
 		}
-	}
-
-	const getTypeDesc = (type: string | undefined) => {
-		if (type === "password") {
-			return "用户名密码登录";
-		} else if (type === "mail") {
-			return "邮箱登录"
-		} else if (type === "mobile") {
-			return "手机号登录";
-		} else if (type === "authorization_code") {
-			return "授权码登录";
-		}
-	}
-
-	const exportToExcel = async () => {
-		let params: Excel
-		const list: TableColumns[] = [];
-		// 格式化数据
-		loginLogList.forEach(item => {
-			item.status = getStatusDesc(item.status)
-			item.type = getTypeDesc(item.type)
-			list.push(item)
-		})
-		params = {
-			sheetData: list,
-			sheetFilter: ["username", "ip", "address", "browser", "os", "status", "errorMessage", "type", "createTime"],
-			sheetHeader: ["用户名", "IP地址", "归属地", "浏览器", "操作系统", "登录状态", "错误信息", "登录类型", "登录日期"],
-			fileName: "登录日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
-			sheetName: "登录日志"
-		}
-		ExportToExcel(params)
-	}
-
-	const exportAllToExcel = async () => {
-		exportV3(loginLogParam)
-	}
-
-	const listLoginLog = async (params: any) => {
-		loginLogList = []
-		return pageV3(getPageQuery(params)).then(res => {
-			res?.data?.records?.forEach((item: TableColumns) => {
-				item.status = statusEnum[item.status as '0'];
-				item.type = typeEnum[item.type as 'password'];
-				loginLogList.push(item);
-			});
-			return Promise.resolve({
-				data: loginLogList,
-				total: parseInt(res.data.total),
-				success: true,
-			});
-		})
-	}
-
-	const rowSelection = {
-		onChange: (selectedRowKeys: any) => {
-			setSelectedRowKeys(selectedRowKeys);
-		}
-	};
-
-	const clearLoginLog = async () => {
-		Modal.confirm({
-			title: '确认清空?',
-			content: '您确定要清空数据吗?',
-			okText: '确认',
-			cancelText: '取消',
-			onOk: async () => {
-				clearV3().then(() => {
-					message.success("数据已清空").then()
-					// @ts-ignore
-					actionRef?.current?.reload();
-				})
-			},
-		});
-	}
-
-	const deleteLoginLog = async () => {
-		Modal.confirm({
-			title: '确认删除?',
-			content: '您确定要删除吗?',
-			okText: '确认',
-			cancelText: '取消',
-			onOk: async () => {
-				removeV3(selectedRowKeys).then(() => {
-					message.success("删除成功").then()
-					// @ts-ignore
-					actionRef?.current?.reload();
-				})
-				setSelectedRowKeys([])
-			},
-		});
+		setParam(param)
+		return param
 	}
 
 	const columns: ProColumns<TableColumns>[] = [
@@ -197,8 +86,8 @@ export default () => {
 			title: '登录状态',
 			dataIndex: 'status',
 			valueEnum: {
-				0: {text: '登录成功', status: 'Success'},
-				1: {text: '登录失败', status: 'Error'},
+				[LOGIN_STATUS.OK]: getLoginStatus(LOGIN_STATUS.OK),
+				[LOGIN_STATUS.FAIL]: getLoginStatus(LOGIN_STATUS.FAIL)
 			},
 			ellipsis: true
 		},
@@ -211,11 +100,12 @@ export default () => {
 			title: '登录类型',
 			dataIndex: 'type',
 			valueEnum: {
-				password: {text: '用户名密码登录', status: 'Processing'},
-				mobile: {text: '手机号登录', status: 'Default'},
-				mail: {text: '邮箱登录', status: 'Success'},
-				authorization_code: {text: '授权码登录', status: 'Error'}
+				[LOGIN_TYPE.AUTHORIZATION_CODE]: getLoginType(LOGIN_TYPE.AUTHORIZATION_CODE),
+				[LOGIN_TYPE.MAIL]: getLoginType(LOGIN_TYPE.MAIL),
+				[LOGIN_TYPE.MOBILE]: getLoginType(LOGIN_TYPE.MOBILE),
+				[LOGIN_TYPE.USERNAME_PASSWORD]: getLoginType(LOGIN_TYPE.USERNAME_PASSWORD)
 			},
+			width: 160,
 			ellipsis: true
 		},
 		{
@@ -240,45 +130,29 @@ export default () => {
 					};
 				},
 			}
-		},
-		{
-			title: '操作',
-			valueType: 'option',
-			key: 'option',
-			render: (_, record) => [
-				<a key="editable"
-					onClick={() => {
-						Modal.confirm({
-							title: '确认删除?',
-							content: '您确定要删除吗?',
-							okText: '确认',
-							cancelText: '取消',
-							onOk: async () => {
-								// @ts-ignore
-								removeV3([record.id]).then(() => {
-									message.success("删除成功").then()
-									// @ts-ignore
-									actionRef?.current?.reload();
-								})
-							},
-						});
-					}}
-				>
-					删除
-				</a>
-			],
-		},
+		}
 	];
 
-	// @ts-ignore
-	// @ts-ignore
 	return (
 		<ProTable<TableColumns>
 			actionRef={actionRef}
 			columns={columns}
-			request={(params) => {
+			request={async (params) => {
 				// 表单搜索项会从 params 传入，传递给后端接口。
-				return listLoginLog(params)
+				const list: TableColumns[] 	= []
+				return pageV3(getPageQuery(params)).then(res => {
+					res?.data?.records?.forEach((item: TableColumns) => {
+						item.status = item.status as '0';
+						item.type = item.type as '0';
+						list.push(item);
+					});
+					setList(list)
+					return Promise.resolve({
+						data: list,
+						total: parseInt(res.data.total),
+						success: true,
+					});
+				})
 			}}
 			rowKey="id"
 			pagination={{
@@ -292,23 +166,30 @@ export default () => {
 			}}
 			toolBarRender={
 				() => [
-					<Button key="delete" danger ghost icon={<DeleteOutlined/>} onClick={deleteLoginLog}>
-						删除
-					</Button>,
-					<Button key="truncate" type="primary" danger icon={<DeleteOutlined/>} onClick={clearLoginLog}>
-						清空
-					</Button>,
-					<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={exportToExcel}>
+					<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={() => {
+						const _list: TableColumns[] = [];
+						// 格式化数据
+						list.forEach(item => {
+							item.status = getLoginStatus(item.status as '0').text
+							item.type = getLoginType(item.type as '0')?.text
+							_list.push(item)
+						})
+						ExportToExcel({
+							sheetData: _list,
+							sheetFilter: ["username", "ip", "address", "browser", "os", "status", "errorMessage", "type", "createTime"],
+							sheetHeader: ["用户名", "IP地址", "归属地", "浏览器", "操作系统", "登录状态", "错误信息", "登录类型", "登录时间"],
+							fileName: "登录日志_导出_" + moment(new Date()).format('YYYYMMDDHHmmss'),
+							sheetName: "登录日志"
+						})
+					}}>
 						导出
 					</Button>,
-					<Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={exportAllToExcel}>
+					<Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={() => {
+						exportV3(param)
+					}}>
 						导出全部
 					</Button>
 				]
-			}
-			rowSelection={
-				// 自定义选择项参考: https://ant.design/components/table-cn/#components-table-demo-row-selection-custom
-				rowSelection
 			}
 			dateFormatter="string"
 			toolbar={{

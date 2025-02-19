@@ -1,6 +1,6 @@
 // @formatter:off
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@
 package ${packageName}.${instanceName}.command.query;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.common.exception.SystemException;
 import ${packageName}.${instanceName}.dto.${className}PageQry;
 import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
 import ${packageName}.${instanceName}.gatewayimpl.database.${className}Mapper;
@@ -28,7 +29,6 @@ import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 import ${packageName}.${instanceName}.convertor.${className}Convertor;
-import lombok.SneakyThrows;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -46,12 +46,14 @@ public class ${className}PageQryExe {
 
 	private final ${className}Mapper ${instanceName}Mapper;
 
-	@SneakyThrows
 	public Result<Page<${className}CO>> execute(${className}PageQry qry) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		CompletableFuture<List<${className}DO>> c1 = CompletableFuture.supplyAsync(() -> ${instanceName}Mapper.selectObjectPage(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ${instanceName}Mapper.selectObjectCount(qry), executor);
-		return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(${className}Convertor::toClientObject).toList(), c2.get(30, TimeUnit.SECONDS)));
+        try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+            CompletableFuture<List<${className}DO>> c1 = CompletableFuture.supplyAsync(() -> ${instanceName}Mapper.selectObjectPage(qry), executor);
+            CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> ${instanceName}Mapper.selectObjectCount(qry), executor);
+            return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(${className}Convertor::toClientObject).toList(), c2.get(30, TimeUnit.SECONDS)));
+        } catch (Exception e) {
+            throw new SystemException("S_${className}_PageQueryTimeout", "${comment}分页查询超时");
+        }
 	}
 
 }

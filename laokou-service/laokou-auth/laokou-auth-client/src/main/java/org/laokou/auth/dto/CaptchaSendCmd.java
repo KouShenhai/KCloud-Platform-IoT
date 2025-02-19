@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,10 @@
 
 package org.laokou.auth.dto;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.auth.dto.clientobject.CaptchaCO;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
@@ -32,29 +29,10 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@Valid
 @NoArgsConstructor
 @AllArgsConstructor
 public class CaptchaSendCmd extends CommonCommand {
 
-	/**
-	 * 验证码标签表达式.
-	 */
-	private static final String CAPTCHA_TAG = "(mail|mobile)Captcha";
-
-	/**
-	 * 业务用例.
-	 */
-	public static final String USE_CASE_CAPTCHA = "captcha";
-
-	@NotBlank(message = "UUID不能为空")
-	private String uuid;
-
-	@NotBlank(message = "标签不能为空")
-	@Pattern(regexp = CAPTCHA_TAG, message = "标签错误")
-	private String tag;
-
-	@NotNull(message = "租户ID不能为空")
-	private Long tenantId;
+	private CaptchaCO co;
 
 }

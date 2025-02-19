@@ -1,0 +1,24 @@
+= IoT可视化大屏
+
+== 下载依赖
+
+[source,shell]
+----
+# node版本必须大于或等于18.x
+npm install -g pnpm
+pnpm install
+----
+
+== 运行项目
+
+[source,shell]
+----
+pnpm dev
+----
+
+== 部署项目
+
+[source,shell]
+----
+pnpm build
+----

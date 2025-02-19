@@ -1,3 +1,9 @@
+=== 📌 作者的话
+
+即使KCloud-Platform-IoT有诸多瑕疵，也掩盖不住它的光芒。  
+
+它就像是作者的孩子一样，在作者的眼中，它就是趋于完美的存在！
+
 === 🎉 项目备注
 
 - 项目：KCloud-Platform-IoT（阻塞式）
@@ -9,9 +15,10 @@
 
 image::doc/image/logo/logo.png[LOGO,500,align=center]
 
-KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微服务架构的IoT云平台。基于Spring Boot 3.4.0、Spring Cloud 2024.0.0、Spring Cloud Alibaba 2023.0.1.2 最新版本开发的云服务多租户IoT平台。 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、灰度路由、服务限流、熔断降级、监控报警、多数据源、高亮搜索、分布式任务调度、分布式链路、分布式缓存、分布式事务、分布式存储、分布式锁等功能，用于快速构建IoT微服务项目。目前支持Shell、Docker等多种部署方式，并且支持GraalVM和虚拟线程。实现RBAC权限、其中包含系统管理、物联管理、系统监控、数据分析等几大模块。 遵循阿里代码规范，采用RESTFul设计风格及DDD(领域驱动设计)思想，代码简洁、架构清晰，非常适合作为基础框架使用。
+KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微服务架构的IoT云平台。基于Spring Boot 3.4.2、Spring Cloud 2024.0.0、Spring Cloud Alibaba 2023.0.3.2 最新版本开发的云服务多租户IoT平台。 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、灰度路由、服务限流、熔断降级、监控报警、多数据源、高亮搜索、分布式任务调度、分布式链路、分布式缓存、分布式事务、分布式存储、分布式锁等功能，用于快速构建IoT微服务项目。目前支持Shell、Docker、Kubernetes等多种部署方式，并且支持GraalVM和虚拟线程。实现RBAC权限、其中包含系统管理、物联管理、系统监控、数据分析等几大模块。 遵循阿里代码规范，采用RESTFul设计风格及DDD(领域驱动设计)思想，代码简洁、架构清晰，非常适合作为基础框架使用。
 
 image:https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml/badge.svg?branch=master[Maven Ci Build Stauts,link=https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml]
+image:https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/gradle.yml/badge.svg?branch=master[Gradle Ci Build Stauts,link=https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/gradle.yml]
 image:https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/node.js.yml/badge.svg?branch=master[Node.js CI Build Stauts,link=https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/node.js.yml]
 image:https://dl.circleci.com/status-badge/img/circleci/Bvmh1W3CkTV7xQCz5au73K/KgCR3Kb3gXzuxQP6YLKBUX/tree/master.svg?style=svg["CircleCI", link="https://dl.circleci.com/status-badge/redirect/circleci/Bvmh1W3CkTV7xQCz5au73K/KgCR3Kb3gXzuxQP6YLKBUX/tree/master"]
 
@@ -23,21 +30,24 @@ image:https://www.codefactor.io/repository/github/KouShenhai/KCloud-Platform-IoT
 image:https://img.shields.io/github/stars/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub stars,link=https://github.com/KouShenhai/KCloud-Platform-IoT/stargazers]
 image:https://img.shields.io/github/forks/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub forks,link=https://github.com/KouShenhai/KCloud-Platform-IoT/forks]
 image:https://img.shields.io/github/watchers/KouShenhai/KCloud-Platform-IoT?logo=github[GitHub watchers,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
-image:https://cla-assistant.io/readme/badge/KouShenhai/KCloud-Platform-IoT[CLA assistant,link=https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT]
 image:https://img.shields.io/github/last-commit/KouShenhai/KCloud-Platform-IoT[GitHub last commit,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
 
 image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/star.svg?theme=dark[Gitee star,link=https://gitee.com/laokouyun/KCloud-Platform-IoT/stargazers]
 image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark[Gitee fork,link=https://gitee.com/laokouyun/KCloud-Platform-IoT/members]
 
-image:https://img.shields.io/static/v1?label=Spring%20Framework&message=6.1.12&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
-image:https://img.shields.io/static/v1?label=Spring%20Boot&message=3.4.0&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
+image:https://gitcode.com/qq_39893313/KCloud-Platform-IoT/star/badge.svg?theme=dark[GitCode star,link=https://gitcode.com/qq_39893313/KCloud-Platform-IoT]
+
+image:https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.3&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
+image:https://img.shields.io/static/v1?label=Spring%20Boot&message=3.4.2&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud&message=2024.0.0&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
-image:https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.1.2&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
-image:https://img.shields.io/static/v1?label=OAuth%202.1&message=1.4.0&color=blue[OAuth 2.1,link=https://spring.io/projects/spring-authorization-server]
+image:https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.3.2&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
+image:https://img.shields.io/static/v1?label=OAuth%202.1&message=1.4.1&color=blue[OAuth 2.1,link=https://spring.io/projects/spring-authorization-server]
 
 image:https://img.shields.io/badge/GraalVM-21.0.1-blue.svg[GraalVM,link=https://www.graalvm.org/downloads]
 image:https://img.shields.io/badge/Maven-3.9.4-blue[Maven,link=https://maven.apache.org/]
 
+image:https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT/branch/master/graph/badge.svg?token=49USEMX2MN[Codecov,https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT]
+image:https://cla-assistant.io/readme/badge/KouShenhai/KCloud-Platform-IoT[CLA assistant,link=https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT]
 image:https://tokei.rs/b1/github/KouShenhai/KCloud-Platform-IoT?category=lines[代码行数,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
 image:https://wakatime.com/badge/user/587a6632-ba42-422b-84b7-628dcb839b95/project/59654e89-b082-4cf3-8cf1-7542b343b448.svg[Wakatime, link=https://wakatime.com/projects/KCloud-Platform-IoT]
 image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源交流群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
@@ -49,8 +59,30 @@ image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源
 - 持续优化代码来提高代码质量
 - 复制粘贴代码提高生产效率
 - 学习DDD思想并落地实践
+- 项目驱动学习任何知识
+
+=== 👉 项目定位
+只适用于中大型微服务项目【业务复杂】
+
+image:doc/image/img_1.png[COLA架构图,400,400,align=center]
+image:doc/image/img.png[COLA架构图,400,400,align=center]
+
+=== 🌿 服务器配置
+
+[width=100%]
+|===
+|环境   |配置 						  |备注
+|开发   | 32G【内存】&nbsp;&nbsp;512G【磁盘】      |无
+|生产   | 16G【内存】&nbsp;&nbsp;40G【磁盘】       |请搭建集群
+|===
 
 === 🔗 在线体验
+
+[width=100%]
+|===
+|序号 |账号 |密码
+|1   |admin       |admin123
+|===
 
 https://www.laokou.org.cn[老寇IoT云平台在线体验（请点击我，境外服务器网络延迟请稍候）]
 
@@ -86,23 +118,23 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 |===
 |组件                         |版本
 
-|Spring Boot                 |3.4.0
+|Spring Boot                 |3.4.2
 |Spring Cloud                |2024.0.0
-|Spring Cloud Alibaba        |2023.0.1.2
-|Spring Boot Admin           |3.3.4
-|Spring Authorization Server |1.4.0
-|Mybatis Plus                |3.5.9
-|Nacos                       |2.4.3
+|Spring Cloud Alibaba        |2023.0.3.2
+|Spring Boot Admin           |3.4.1
+|Spring Authorization Server |1.4.1
+|Mybatis Plus                |3.5.10.1
+|Nacos                       |2.5.0
 |Sentinel                    |1.8.8
-|Redis                       |7.4.0
-|Elasticsearch               |8.15.0
-|RocketMQ                    |5.3.2
-|Netty                       |4.1.113.Final
-|Kafka                       |3.8.0
-|EMQX                        |5.8.1
-|Postgresql                  |16.4
-|TDengine                    |3.3.2.0
-|Liquibase                   |4.29.1
+|Redis                       |7.4.2
+|Elasticsearch               |8.17.0
+|RocketMQ                    |5.3.1
+|Netty                       |4.1.116.Final
+|Kafka                       |3.9.0
+|EMQX                        |5.8.4
+|TimescaleDB                 |17
+|TDengine                    |3.3.5.0
+|Liquibase                   |4.30.0
 |Snail Job                   |1.1.2
 |===
 
@@ -121,17 +153,17 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 - 高亮搜索：Elasticsearch
 - 链路跟踪：Jaeger
 - 任务调度：Snail Job
-- 日志分析：EFK
+- 日志分析：EFK & Loki
 - 缓存&分布式锁：Redis & Redisson
 - 统计报表：MongoDB
 - 对象存储：Amazon S3
-- 自动化部署：Docker
+- 自动化部署：Docker & Kubernetes
 - 网络通讯：Netty
 - 持续集成&交付：Jenkins
 - 持久层框架：Mybatis Plus
 - JSON序列化：Jackson
 - 数据库：Postgresql
-- 时序数据库：TDengine
+- 时序数据库：TimescaleDB & TDengine
 - 数据库迁移：Liquibase
 - 链路&指标采集：Micrometer
 
@@ -140,6 +172,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 [source]
 ----
 ├── laokou-common
+        └── laokou-common-xss                      --- XSS组件
         └── laokou-common-log                      --- 日志组件
         └── laokou-common-core                     --- 核心组件
         └── laokou-common-cors                     --- 跨域组件
@@ -147,6 +180,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
         └── laokou-common-redis                    --- 缓存组件
         └── laokou-common-kafka                    --- 消息组件
         └── laokou-common-log4j2                   --- 日志组件
+        └── laokou-common-tenant                   --- 租户组件
         └── laokou-common-mongodb                  --- 报表组件
         └── laokou-common-rocketmq                 --- 消息组件
         └── laokou-common-algorithm                --- 算法组件
@@ -183,10 +217,8 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
         └── laokou-auth                            --- 认证授权模块
         └── laokou-admin                           --- 后台管理模块
         └── laokou-report                          --- 报表统计模块
+        └── laokou-logstash                        --- 日志收集模块
         └── laokou-generator                       --- 模板生成模块
-        └── laokou-modlule
-                └── laokou-api                     --- API模块
-                └── laokou-logstash                --- 日志收集模块
 ----
 
 === 🔒 安全报告
@@ -211,7 +243,7 @@ https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT[贡献者许可协议]
 
 KCloud-Platform-IoT 开源软件遵循 https://www.apache.org/licenses/LICENSE-2.0.html[Apache 2.0 协议] 请务必保留作者、Copyright信息
 
-=== 🐮 二次开源登记
+=== 🐮 二次开源登记（二次开源不允许更换开源协议，否则视为侵权）
 
 [width=100%]
 |===
@@ -239,6 +271,33 @@ image:doc/image/zsxq.jpg[知识星球,201,300]
 image:doc/image/wx.png[微信,250,300]
 image:doc/image/wxq.png[微信交流群,250,300]
 image:doc/image/qqq.png[QQ交流群,250,300]
+
+=== 💧 技术培训\广告赞助\项目合作【加微信私聊】
+
+[width=100%]
+|===
+|序号 |名称 | 金额 |备注
+|1   |技术指导【永久】 | ￥399.00      | 一对一项目指导技术指导远程指导,VIP微信交流群,全心全意为您服务
+|2   |项目指导【永久】 | ￥199.00      | 一对一项目指导远程指导,VIP微信交流群,全心全意为您服务
+|===
+
+[width=100%]
+|===
+|序号 |名称 | 金额 |备注
+|1   |广告赞助1【永久置顶】 | ￥199.00      | ReadMe和网站二选一【加微信私聊】
+|1   |广告赞助2【永久置顶】 | ￥299.00      | ReadMe+网站【加微信私聊】
+|===
+
+[width=100%]
+|===
+|序号 |名称| 备注
+|1 | IoT项目 | ✅
+|2 | MES项目 | ✅
+|3 | CMS项目 | ✅
+|4 | ERP项目 | ✅
+|5 | OA项目  | ✅
+|6 | 电商项目 | ✅
+|===
 
 === 🐭 鸣谢组织
 
@@ -278,6 +337,7 @@ image::doc/image/jb_beam.png[jb_beam,100,100,link=https://www.jetbrains.com/comm
 |8   |image:https://avatars.githubusercontent.com/u/43296325?s=64&v=4[suhengli的头像,50,50]         |https://github.com/suhengli[suhengli]
 |9   |image:https://avatars.githubusercontent.com/u/89563182?s=64&v=4[gitkakafu的头像,50,50]        |https://github.com/gitkakafu[gitkakafu]
 |10  |image:https://avatars.githubusercontent.com/u/32741993?s=64&v=4[LeiZhiMin1的头像,50,50]       |https://github.com/LeiZhiMin1[LeiZhiMin1]
+|11  |image:https://avatars.githubusercontent.com/u/24284648?s=64&v=4[FlySkyBear的头像,50,50]      |https://github.com/FlySkyBear[FlySkyBear]
 |===
 
 === ⛳️ 赞助列表（感谢各位大佬的赞助）
@@ -285,7 +345,10 @@ image::doc/image/jb_beam.png[jb_beam,100,100,link=https://www.jetbrains.com/comm
 [width=100%]
 |===
 |时间         |网名        |赞助           |备注
-
+| 2025/01/25 |  擎*   | ￥20.00  |        请喝咖啡        
+|2024/12/08  |t*          |￥199.00      |无
+|2024/12/02  |'c*         |￥399.00      |无
+|2024/11/25  |tio*        |￥520.00      |希望KCloud飞起，实现专精特新!
 |2024/08/01  |*ckai       |￥88.00       |加油~
 |2024/04/19  |*保熟       |￥188.00      |越做越好
 |2024/03/20  |A细节*      |￥66.00       |无
@@ -310,7 +373,7 @@ https://kcloud.blog.csdn.net[博客：https://kcloud.blog.csdn.net]
 
 https://mail.qq.com[邮箱：2413176044@qq.com]
 
-http://wpa.qq.com/msgrd?v=3&uin=2413176044&Site=gitee&Menu=yes[QQ：243176044]
+http://wpa.qq.com/msgrd?v=3&uin=2413176044&Site=gitee&Menu=yes[QQ：2413176044]
 
 image::https://img.shields.io/badge/Q群-465450496-blue.svg[QQ群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
 

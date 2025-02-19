@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,25 +18,22 @@
 package org.laokou.auth.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.auth.ability.DomainService;
+import org.laokou.auth.convertor.CaptchaConvertor;
 import org.laokou.auth.dto.CaptchaSendCmd;
-import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
-import org.laokou.auth.extensionpoint.CaptchaValidatorExtPt;
-import org.laokou.auth.gateway.SourceGateway;
-import org.laokou.auth.model.SourceV;
-import org.laokou.auth.model.UserE;
-import org.laokou.common.core.utils.SpringUtil;
+import org.laokou.auth.factory.DomainFactory;
+import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.CaptchaE;
+import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
-import org.laokou.common.i18n.common.exception.AuthException;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.rocketmq.template.SendMessageType;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.common.constant.MqConstant.LAOKOU_CAPTCHA_TOPIC;
-import static org.laokou.auth.dto.CaptchaSendCmd.USE_CASE_CAPTCHA;
+import static org.laokou.auth.dto.clientobject.CaptchaCO.USE_CASE_CAPTCHA;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
-import static org.laokou.common.i18n.common.constant.EventType.CAPTCHA;
-import static org.laokou.common.i18n.common.exception.AuthException.OAUTH2_SOURCE_NOT_EXIST;
 
 /**
  * @author laokou
@@ -49,28 +46,19 @@ public class CaptchaSendCmdExe {
 
 	private final ExtensionExecutor extensionExecutor;
 
-	private final SourceGateway sourceGateway;
-
-	private final SpringUtil springUtil;
+	private final DomainService domainService;
 
 	public void executeVoid(CaptchaSendCmd cmd) {
-		// 校验
-		extensionExecutor.executeVoid(CaptchaValidatorExtPt.class,
-				BizScenario.valueOf(cmd.getTag(), USE_CASE_CAPTCHA, SCENARIO),
-				extension -> extension.validate(cmd.getUuid()));
-		// 发布发送验证码事件
-		Long tenantId = cmd.getTenantId();
-		SendCaptchaEvent sendCaptchaEvent = new SendCaptchaEvent(cmd.getUuid(), LAOKOU_CAPTCHA_TOPIC, cmd.getTag(),
-				CAPTCHA, springUtil.getServiceId(), getSourceName(tenantId), tenantId);
-		rocketMQDomainEventPublisher.publish(sendCaptchaEvent, false);
-	}
-
-	private String getSourceName(Long tenantId) {
-		SourceV sourceV = sourceGateway.getName(new UserE(tenantId));
-		if (ObjectUtil.isNull(sourceV)) {
-			throw new AuthException(OAUTH2_SOURCE_NOT_EXIST);
-		}
-		return sourceV.name();
+		// 校验参数
+		CaptchaE entity = CaptchaConvertor.toEntity(cmd.getCo());
+		extensionExecutor.executeVoid(CaptchaParamValidatorExtPt.class,
+				BizScenario.valueOf(entity.getTag(), USE_CASE_CAPTCHA, SCENARIO),
+				extension -> extension.validate(entity));
+		AuthA auth = DomainFactory.getAuth(IdGenerator.defaultSnowflakeId(), entity.getTenantCode());
+		// 创建验证码
+		domainService.createCaptcha(IdGenerator.defaultSnowflakeId(), auth, entity);
+		// 发布事件
+		auth.releaseEvents().forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageType.ASYNC));
 	}
 
 }

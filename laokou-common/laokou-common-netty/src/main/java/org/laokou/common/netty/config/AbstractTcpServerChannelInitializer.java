@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package org.laokou.common.netty.config;
 
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
 
 import java.util.concurrent.TimeUnit;
@@ -30,20 +29,18 @@ import java.util.concurrent.TimeUnit;
 public abstract class AbstractTcpServerChannelInitializer extends AbstractChannelInitializer<SocketChannel> {
 
 	@Override
-	protected void initChannel(SocketChannel channel) {
+	protected void initChannel(SocketChannel channel) throws Exception {
 		ChannelPipeline pipeline = channel.pipeline();
+		SpringTcpServerProperties.Config config = getConfig();
 		// 前置处理
-		preHandler(pipeline);
-		// 定长截取
-		pipeline.addLast("fixedLengthFrameDecoder", new FixedLengthFrameDecoder(55));
-		// 扩展处理
-		extHandler(pipeline);
+		preHandler(channel, pipeline);
 		// 心跳检测
-		pipeline.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0, TimeUnit.SECONDS));
+		pipeline.addLast("idleStateHandler", new IdleStateHandler(config.getReaderIdleTime(),
+				config.getWriterIdleTime(), config.getAllIdleTime(), TimeUnit.SECONDS));
 		// 后置处理
-		postHandler(pipeline);
+		postHandler(channel, pipeline);
 	}
 
-	abstract protected void extHandler(ChannelPipeline pipeline);
+	protected abstract SpringTcpServerProperties.Config getConfig();
 
 }

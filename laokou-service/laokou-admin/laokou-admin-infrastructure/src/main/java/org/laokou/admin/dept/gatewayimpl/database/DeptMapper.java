@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,11 +20,8 @@ package org.laokou.admin.dept.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * 部门数据库映射.
@@ -35,8 +32,9 @@ import java.util.List;
 @Repository
 public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
 
-	List<DeptDO> selectPageByCondition(@Param("pageQuery") PageQuery pageQuery);
+	String selectParentPathById(@Param("id") Long id);
 
-	long selectCountByCondition(@Param("pageQuery") PageQuery pageQuery);
+	void updateChildrenPath(@Param("path") String path, @Param("oldPrefix") String oldPrefix,
+			@Param("newPrefix") String newPrefix);
 
 }

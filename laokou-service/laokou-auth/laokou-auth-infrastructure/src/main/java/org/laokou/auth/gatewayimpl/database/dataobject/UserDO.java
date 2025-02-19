@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,9 @@ package org.laokou.auth.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
-
 import java.io.Serial;
 
-import static org.laokou.auth.common.constant.Constant.TABLE_USER;
+import static org.laokou.common.tenant.constant.Constant.Master.USER_TABLE;
 
 /**
  * 用户.
@@ -31,7 +30,7 @@ import static org.laokou.auth.common.constant.Constant.TABLE_USER;
  * @author laokou
  */
 @Data
-@TableName(TABLE_USER)
+@TableName(USER_TABLE)
 public class UserDO extends BaseDO {
 
 	@Serial

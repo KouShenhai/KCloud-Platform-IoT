@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -381,7 +381,7 @@ public enum Template {
 		}
 	},
 
-	DO {
+	DATA_OBJECT {
 		@Override
 		public String getTemplatePath(String path) {
 			return path + "/infrastructure/do.ftl";
@@ -399,7 +399,7 @@ public enum Template {
 		}
 	},
 
-	CO {
+	CLIENT_OBJECT {
 		@Override
 		public String getTemplatePath(String path) {
 			return path + "/client/co.ftl";
@@ -466,7 +466,7 @@ public enum Template {
 
 		@Override
 		public String getFileName(GeneratorA generatorA) {
-			return generatorA.getTableV().className() + "sController" + generatorA.getVersion().toUpperCase() + ".java";
+			return generatorA.getTableV().className() + "sController" + "-" + ".java";
 		}
 	},
 

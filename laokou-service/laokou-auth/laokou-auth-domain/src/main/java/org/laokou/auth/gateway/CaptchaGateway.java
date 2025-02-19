@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,24 +26,25 @@ public interface CaptchaGateway {
 
 	/**
 	 * 写入Redis.
-	 * @param uuid UUID
+	 * @param key 标识
 	 * @param captcha 验证码
 	 */
-	void setValue(String uuid, String captcha);
+	void set(String key, String captcha);
+
+	/**
+	 * 写入Redis.
+	 * @param key 标识
+	 * @param expireTime 过期时间
+	 * @param captcha 验证码
+	 */
+	void set(String key, String captcha, long expireTime);
 
 	/**
 	 * 检查验证码.
-	 * @param uuid UUID
+	 * @param key 标识
 	 * @param code 验证码
 	 * @return 校验结果
 	 */
-	Boolean checkValue(String uuid, String code);
-
-	/**
-	 * 获取key.
-	 * @param uuid UUID
-	 * @return key
-	 */
-	String getKey(String uuid);
+	Boolean validate(String key, String code);
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,6 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQMessageConverter;
 import org.apache.rocketmq.spring.support.RocketMQUtil;
 import org.jetbrains.annotations.NotNull;
-import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,10 +62,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * rocketmq支持虚拟线程池.
@@ -198,7 +193,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 	@Bean(destroyMethod = "destroy")
 	@Conditional(ProducerOrConsumerPropertyCondition.class)
 	@ConditionalOnMissingBean(name = ROCKETMQ_TEMPLATE_DEFAULT_GLOBAL_NAME)
-	public RocketMQTemplate rocketMQTemplate(RocketMQMessageConverter rocketMQMessageConverter, SpringUtil springUtil) {
+	public RocketMQTemplate rocketMQTemplate(RocketMQMessageConverter rocketMQMessageConverter) {
 		RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
 		if (applicationContext.containsBean(PRODUCER_BEAN_NAME)) {
 			rocketMQTemplate.setProducer((DefaultMQProducer) applicationContext.getBean(PRODUCER_BEAN_NAME));
@@ -207,15 +202,8 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 			rocketMQTemplate.setConsumer((DefaultLitePullConsumer) applicationContext.getBean(CONSUMER_BEAN_NAME));
 		}
 		rocketMQTemplate.setMessageConverter(rocketMQMessageConverter.getMessageConverter());
-
-		if (springUtil.isVirtualThread()) {
-			rocketMQTemplate.setAsyncSenderExecutor(ThreadUtil.newVirtualTaskExecutor());
-		}
-		else {
-			ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(16, 32, 60, TimeUnit.SECONDS,
-					new LinkedBlockingQueue<>(256));
-			rocketMQTemplate.setAsyncSenderExecutor(threadPoolExecutor);
-		}
+		// 虚拟线程
+		rocketMQTemplate.setAsyncSenderExecutor(ThreadUtil.newVirtualTaskExecutor());
 		return rocketMQTemplate;
 	}
 

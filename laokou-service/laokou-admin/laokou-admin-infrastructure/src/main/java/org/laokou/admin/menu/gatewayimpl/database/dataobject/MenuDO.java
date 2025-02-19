@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,18 +66,8 @@ public class MenuDO extends BaseDO {
 	private Integer sort;
 
 	/**
-	 * 菜单隐藏 0否 1是.
-	 */
-	private Integer hidden;
-
-	/**
 	 * 菜单状态 0启用 1停用.
 	 */
 	private Integer status;
-
-	/**
-	 * 菜单链接.
-	 */
-	private String url;
 
 }

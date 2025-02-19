@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,16 +78,6 @@ public final class NameConstant {
 	 * 用户缓存配置.
 	 */
 	public static final String USERS = "users" + DEFAULT;
-
-	/**
-	 * 租户ID.
-	 */
-	public static final String TENANT_ID = "tenant_id" + DEFAULT;
-
-	/**
-	 * 树形菜单.
-	 */
-	public static final String MENU_TREE = "menu_tree" + DEFAULT;
 
 	private NameConstant() {
 	}

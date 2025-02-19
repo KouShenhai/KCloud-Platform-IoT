@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,6 @@ package org.laokou.common.mybatisplus.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
-import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
-import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
-import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.parser.JsqlParserGlobal;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
@@ -29,7 +26,6 @@ import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -42,8 +38,6 @@ import org.springframework.transaction.support.TransactionOperations;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
-import java.net.InetAddress;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -58,17 +52,16 @@ public class MybatisPlusAutoConfig {
 
 	static {
 		JsqlParserGlobal.setJsqlParseCache(new FurySerialCaffeineJsqlParseCache(
-				Caffeine.newBuilder().maximumSize(1024).expireAfterWrite(5, TimeUnit.SECONDS).build(),
-				ThreadUtil.newVirtualTaskExecutor(), true));
+				Caffeine.newBuilder().maximumSize(4096).expireAfterWrite(10, TimeUnit.MINUTES).build()));
 	}
 
 	@Bean
-	public ConfigurationCustomizer slowSqlConfigurationCustomizer() {
+	public ConfigurationCustomizer configurationCustomizer(MybatisPlusExtProperties mybatisPlusExtProperties) {
 		return configuration -> {
 			// 异步查询count
 			configuration.addInterceptor(new AsyncCountInterceptor());
 			// 慢SQL
-			SqlMonitorInterceptor sqlMonitorInterceptor = new SqlMonitorInterceptor();
+			SqlMonitorInterceptor sqlMonitorInterceptor = new SqlMonitorInterceptor(mybatisPlusExtProperties);
 			configuration.addInterceptor(sqlMonitorInterceptor);
 		};
 	}
@@ -108,18 +101,6 @@ public class MybatisPlusAutoConfig {
 		return interceptor;
 	}
 
-	/**
-	 * <a href="https://baomidou.com/pages/568eb2/#spring-boot">...</a>
-	 * 生成雪花算法就是使用的这个，请查看{@link IdWorker}
-	 * 为什么要修改这个配置，集群环境可能会重复，网上的解决方案是加网卡信息（用zookeeper生成分布式ID也是可以哦，重写生成雪花算法的逻辑，mp官网支持自定义雪花算法生成）
-	 */
-	@Bean
-	@SneakyThrows
-	public IdentifierGenerator identifierGenerator() {
-		// 查看 DefaultIdentifierGenerator 可以自定义网卡信息哦，话不多说，就是怼源码
-		return new DefaultIdentifierGenerator(InetAddress.getLocalHost());
-	}
-
 	@Bean(name = "transactionTemplate")
 	@ConditionalOnMissingBean(TransactionOperations.class)
 	public TransactionTemplate transactionTemplate(PlatformTransactionManager transactionManager) {
@@ -144,9 +125,8 @@ public class MybatisPlusAutoConfig {
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
 		// 使用postgresql，如果使用其他数据库，需要修改DbType
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
 		AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor = new AsyncPaginationInnerInterceptor(
-				DbType.POSTGRE_SQL, dataSource, executor);
+				DbType.POSTGRE_SQL, dataSource, ThreadUtil.newVirtualTaskExecutor());
 		// -1表示不受限制
 		asyncPaginationInnerInterceptor.setMaxLimit(-1L);
 		// 溢出总页数后是进行处理，查看源码就知道是干啥的

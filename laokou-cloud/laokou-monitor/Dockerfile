@@ -1,5 +1,5 @@
 # /**
-#  * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+#  * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
 #  * <p>
 #  * Licensed under the Apache License, Version 2.0 (the "License");
 #  * you may not use this file except in compliance with the License.
@@ -18,4 +18,4 @@ LABEL maintainer="laokou"
 LABEL description="laokou-monitor"
 COPY target/laokou-monitor.jar app.jar
 EXPOSE 5000
-CMD java $JVM_OPTS -jar app.jar >/dev/null 2>&1
+CMD java $JVM_OPTS -jar app.jar > /dev/null 2>&1

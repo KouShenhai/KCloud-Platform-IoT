@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,11 +22,11 @@ package org.laokou.infrastructure.common.constant;
  */
 public final class MqConstant {
 
+	public static final String LAOKOU_WS_MESSAGE_TOPIC = "laokou_ws_message_topic";
+
+	public static final String LAOKOU_WS_MESSAGE_CONSUMER_GROUP = "laokou_ws_message_consumer_group";
+
 	private MqConstant() {
 	}
-
-	public static final String LAOKOU_MESSAGE_TOPIC = "laokou_message_topic";
-
-	public static final String LAOKOU_MESSAGE_CONSUMER_GROUP = "laokou_message_consumer_group";
 
 }

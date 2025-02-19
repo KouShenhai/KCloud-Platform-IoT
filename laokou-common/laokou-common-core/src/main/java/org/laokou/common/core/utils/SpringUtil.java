@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,8 @@ import static org.laokou.common.core.utils.SpringContextUtil.APPLICATION_NAME;
 import static org.laokou.common.core.utils.SpringContextUtil.DEFAULT_SERVICE_ID;
 
 /**
+ * Spring工具类.
+ *
  * @author laokou
  */
 @Component
@@ -32,12 +34,11 @@ public class SpringUtil {
 
 	private final Environment environment;
 
+	/**
+	 * 获取服务ID.
+	 */
 	public String getServiceId() {
 		return environment.getProperty(APPLICATION_NAME, DEFAULT_SERVICE_ID);
-	}
-
-	public boolean isVirtualThread() {
-		return environment.getProperty("spring.threads.virtual.enabled", Boolean.class, false);
 	}
 
 }

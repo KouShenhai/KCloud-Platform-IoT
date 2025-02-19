@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,11 +31,17 @@ import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.laokou.common.core.config.CustomInstantDeserializer;
 import org.laokou.common.core.config.CustomInstantSerializer;
+import org.laokou.common.i18n.context.TenantRedisContextHolder;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.redisson.codec.JsonJacksonCodec;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
+import org.springframework.util.DigestUtils;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -46,14 +52,14 @@ import static com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping.NON_FINA
 /**
  * @author laokou
  */
-public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
+public final class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 
 	/**
 	 * 实例.
 	 */
 	public static final GlobalJsonJacksonCodec INSTANCE = new GlobalJsonJacksonCodec();
 
-	public GlobalJsonJacksonCodec() {
+	private GlobalJsonJacksonCodec() {
 		super(objectMapper());
 	}
 
@@ -64,7 +70,7 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 	 */
 	private static ObjectMapper objectMapper() {
 		ObjectMapper objectMapper = new ObjectMapper();
-		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
+		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
 		JavaTimeModule javaTimeModule = new JavaTimeModule();
 		// Long类型转String类型
 		javaTimeModule.addSerializer(Long.class, ToStringSerializer.instance);
@@ -94,8 +100,36 @@ public class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 	}
 
 	public static StringRedisSerializer getStringRedisSerializer() {
-		// String序列化配置
-		return new StringRedisSerializer(StandardCharsets.UTF_8);
+		// String序列化配置【多租户】
+		return new TenantStringRedisSerializer(StandardCharsets.UTF_8);
+	}
+
+	public static class TenantStringRedisSerializer extends StringRedisSerializer {
+
+		public TenantStringRedisSerializer(Charset charset) {
+			super(charset);
+		}
+
+		@Nullable
+		@Override
+		public byte[] serialize(@Nullable String value) {
+			try {
+				Assert.notNull(value, "Cannot serialize null");
+				Long tenantId = TenantRedisContextHolder.get();
+				if (ObjectUtil.isNotNull(tenantId)) {
+					return super.serialize(getKey(tenantId + ":", value));
+				}
+				return super.serialize(getKey("", value));
+			}
+			finally {
+				TenantRedisContextHolder.clear();
+			}
+		}
+
+		private String getKey(String prefix, String value) {
+			return DigestUtils.md5DigestAsHex(prefix.concat(value).getBytes(StandardCharsets.UTF_8));
+		}
+
 	}
 
 }

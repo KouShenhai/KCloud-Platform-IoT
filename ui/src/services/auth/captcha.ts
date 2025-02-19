@@ -1,4 +1,3 @@
-// @ts-ignore
 /* eslint-disable */
 import {request} from '@umijs/max';
 
@@ -16,13 +15,13 @@ export async function getCaptchaImageByUuidV3(
 	});
 }
 
-/** 根据UUID发送验证码 根据UUID发送验证码 POST /v3/captchas */
 export async function sendCaptchaV3(
-	body: API.SendCaptchaParam,
+	type: 'mail' | 'mobile',
+	body: API.SendCaptchaCO,
 	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/auth/v3/captchas', {
+	return request<any>(`/api/auth/v3/captchas/send/${type}`, {
 		method: 'POST',
 		headers: {
 			'request-id': requestId,

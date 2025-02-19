@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,10 +21,11 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.i18nMessage.ability.I18nMessageDomainService;
 import org.laokou.admin.i18nMessage.convertor.I18nMessageConvertor;
 import org.laokou.admin.i18nMessage.dto.I18nMessageSaveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
- * 保存国际化命令执行器.
+ * 保存国际化消息命令执行器.
  *
  * @author laokou
  */
@@ -34,9 +35,12 @@ public class I18nMessageSaveCmdExe {
 
 	private final I18nMessageDomainService i18nMessageDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(I18nMessageSaveCmd cmd) {
 		// 校验参数
-		i18nMessageDomainService.create(I18nMessageConvertor.toEntity(cmd.getCo()));
+		transactionalUtil
+			.executeInTransaction(() -> i18nMessageDomainService.create(I18nMessageConvertor.toEntity(cmd.getCo())));
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,13 @@
 
 package org.laokou.auth.gateway;
 
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.laokou.auth.model.LoginLogE;
 
 /**
  * @author laokou
  */
 public interface LoginLogGateway {
 
-	void create(DefaultDomainEvent domainEvent);
+	void create(LoginLogE loginLog);
 
 }

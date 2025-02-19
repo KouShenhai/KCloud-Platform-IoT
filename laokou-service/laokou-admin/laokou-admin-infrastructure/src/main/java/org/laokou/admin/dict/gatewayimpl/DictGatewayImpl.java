@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,11 @@
 package org.laokou.admin.dict.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.dict.convertor.DictConvertor;
 import org.laokou.admin.dict.gateway.DictGateway;
 import org.laokou.admin.dict.gatewayimpl.database.DictMapper;
 import org.laokou.admin.dict.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.admin.dict.model.DictE;
-import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -35,61 +32,27 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DictGatewayImpl implements DictGateway {
 
 	private final DictMapper dictMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
+	@Override
 	public void create(DictE dictE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				dictMapper.insert(DictConvertor.toDataObject(dictE));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		dictMapper.insert(DictConvertor.toDataObject(dictE));
 	}
 
+	@Override
 	public void update(DictE dictE) {
 		DictDO dictDO = DictConvertor.toDataObject(dictE);
 		dictDO.setVersion(dictMapper.selectVersion(dictE.getId()));
-		update(dictDO);
+		dictMapper.updateById(dictDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				dictMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
-	}
-
-	private void update(DictDO dictDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				dictMapper.updateById(dictDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		dictMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

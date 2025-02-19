@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +18,16 @@
 package org.laokou.admin.menu.command.query;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuPageQry;
 import org.laokou.admin.menu.dto.clientobject.MenuCO;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询菜单请求执行器.
@@ -45,15 +40,10 @@ public class MenuPageQryExe {
 
 	private final MenuMapper menuMapper;
 
-	@SneakyThrows
 	public Result<Page<MenuCO>> execute(MenuPageQry qry) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		CompletableFuture<List<MenuDO>> c1 = CompletableFuture
-			.supplyAsync(() -> menuMapper.selectPageByCondition(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> menuMapper.selectCountByCondition(qry),
-				executor);
-		return Result.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(MenuConvertor::toClientObject).toList(),
-				c2.get(30, TimeUnit.SECONDS)));
+		List<MenuDO> list = menuMapper.selectObjectPage(qry);
+		long total = menuMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(MenuConvertor.toClientObjects(list), total));
 	}
 
 }

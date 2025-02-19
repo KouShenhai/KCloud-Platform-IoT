@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,88 +17,102 @@
 
 package org.laokou.common.i18n.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.laokou.common.i18n.common.constant.EventType;
+import org.laokou.common.i18n.utils.DateUtil;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.Instant;
+
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * 领域事件.
  *
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public abstract class DomainEvent<ID> implements Serializable {
+@Setter
+@Getter
+public final class DomainEvent extends Identifier {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
 
 	/**
-	 * ID.
+	 * 租户ID.
 	 */
-	protected ID id;
+	private final Long tenantId;
+
+	/**
+	 * 用户ID.
+	 */
+	private final Long userId;
 
 	/**
 	 * 聚合根ID.
 	 */
-	protected ID aggregateId;
-
-	/**
-	 * 事件类型.
-	 */
-	protected EventType eventType;
+	private final Long aggregateId;
 
 	/**
 	 * MQ主题.
 	 */
-	protected String topic;
+	private final String topic;
 
 	/**
-	 * 标签.
+	 * MQ标签.
 	 */
-	protected String tag;
+	private final String tag;
 
 	/**
-	 * 数据源名称.
+	 * 时间.
 	 */
-	protected String sourceName;
+	private final Instant instant = DateUtil.nowInstant();
 
 	/**
-	 * 应用服务ID.
+	 * 版本号【乐观锁】.
 	 */
-	protected String serviceId;
+	private final int version;
 
 	/**
-	 * 创建人.
+	 * 内容.
 	 */
-	protected ID creator;
+	private final String payload;
 
 	/**
-	 * 编辑人.
+	 * 类型.
 	 */
-	protected ID editor;
+	private final String type;
 
 	/**
-	 * 租户ID.
+	 * 数据源前缀.
 	 */
-	protected ID tenantId;
+	private final String sourcePrefix;
 
-	/**
-	 * 创建时间.
-	 */
-	protected Instant createTime;
+	public DomainEvent() {
+		this.payload = EMPTY;
+		this.type = EMPTY;
+		this.sourcePrefix = EMPTY;
+		this.tenantId = 0L;
+		this.userId = 0L;
+		this.aggregateId = 0L;
+		this.topic = EMPTY;
+		this.tag = EMPTY;
+		this.version = 0;
+	}
 
-	/**
-	 * 修改时间.
-	 */
-	protected Instant updateTime;
-
-	protected abstract void generatorId();
+	public DomainEvent(Long id, Long tenantId, Long userId, Long aggregateId, String topic, String tag, int version,
+			String payload, EventType type, String sourcePrefix) {
+		super.id = id;
+		this.payload = payload;
+		this.type = type.getCode();
+		this.sourcePrefix = sourcePrefix;
+		this.tenantId = tenantId;
+		this.userId = userId;
+		this.aggregateId = aggregateId;
+		this.topic = topic;
+		this.tag = tag;
+		this.version = version;
+	}
 
 }

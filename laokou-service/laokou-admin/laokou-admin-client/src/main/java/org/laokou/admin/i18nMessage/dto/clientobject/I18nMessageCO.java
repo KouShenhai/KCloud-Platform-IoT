@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
- * 国际化客户端对象.
+ * 国际化消息客户端对象.
  *
  * @author laokou
  */
@@ -38,7 +38,7 @@ public class I18nMessageCO extends ClientObject {
 	private Long id;
 
 	/**
-	 * 编码.
+	 * 标识.
 	 */
 	private String code;
 

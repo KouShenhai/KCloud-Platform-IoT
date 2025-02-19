@@ -3,7 +3,7 @@
   <parent>
     <artifactId>laokou-iot</artifactId>
     <groupId>org.laokou</groupId>
-    <version>3.4.0</version>
+    <version>3.4.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-iot-infrastructure</artifactId>
@@ -12,10 +12,6 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-iot-domain</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-mqtt</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
@@ -47,10 +43,6 @@
           <groupId>org.laokou</groupId>
           <artifactId>laokou-common-core</artifactId>
         </exclusion>
-        <exclusion>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-redis</artifactId>
-        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -69,15 +61,28 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
       <artifactId>laokou-common-log</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-secret</artifactId>
+      <artifactId>laokou-common-nacos</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-domain</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-mqtt</artifactId>
     </dependency>
   </dependencies>
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,18 +21,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.MenuGateway;
 import org.laokou.auth.gatewayimpl.database.MenuMapper;
-import org.laokou.auth.model.MenuV;
 import org.laokou.auth.model.UserE;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.Set;
 
-import static org.laokou.auth.common.constant.Constant.TABLE_MENU;
-import static org.laokou.common.i18n.common.exception.SystemException.TABLE_NOT_EXIST;
+import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.DATA_TABLE_NOT_EXIST;
+import static org.laokou.common.tenant.constant.Constant.Master.MENU_TABLE;
 
 /**
  * 菜单.
@@ -52,17 +51,21 @@ public class MenuGatewayImpl implements MenuGateway {
 	 * @return 菜单权限标识集合
 	 */
 	@Override
-	public MenuV getPermissions(UserE user) {
+	public Set<String> getPermissions(UserE user) {
 		try {
 			if (user.isSuperAdministrator()) {
-				return new MenuV(new HashSet<>(menuMapper.selectPermissions()));
+				return new HashSet<>(menuMapper.selectPermissions());
 			}
-			return new MenuV(new HashSet<>(menuMapper.selectPermissionsByUserId(user.getId())));
+			return new HashSet<>(menuMapper.selectPermissionsByUserId(user.getId()));
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_MENU, LogUtil.record(e.getMessage()), e);
-			throw new SystemException(TABLE_NOT_EXIST,
-					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { TABLE_MENU }));
+			log.error("表 {} 不存在，错误信息：{}", MENU_TABLE, e.getMessage());
+			throw new SystemException(DATA_TABLE_NOT_EXIST,
+					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { MENU_TABLE }));
+		}
+		catch (Exception e) {
+			log.error("查询菜单失败，错误信息：{}", e.getMessage());
+			throw new SystemException(SystemException.Menu.QUERY_FAILED);
 		}
 	}
 

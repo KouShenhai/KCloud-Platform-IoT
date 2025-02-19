@@ -1,10 +1,9 @@
-// @ts-ignore
 /* eslint-disable */
 import {request} from '@umijs/max';
 
 /** 修改角色 修改角色 PUT /v3/roles */
 export async function modifyV3(body: API.RoleModifyCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/roles', {
+	return request<any>('/api/admin/v3/roles', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -15,10 +14,11 @@ export async function modifyV3(body: API.RoleModifyCmd, options?: { [key: string
 }
 
 /** 保存角色 保存角色 POST /v3/roles */
-export async function saveV3(body: API.RoleSaveCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/roles', {
+export async function saveV3(body: API.RoleSaveCmd,requestId: string, options?: { [key: string]: any }) {
+	return request<any>('/api/admin/v3/roles', {
 		method: 'POST',
 		headers: {
+			'request-id': requestId,
 			'Content-Type': 'application/json',
 		},
 		data: body,
@@ -28,7 +28,7 @@ export async function saveV3(body: API.RoleSaveCmd, options?: { [key: string]: a
 
 /** 删除角色 删除角色 DELETE /v3/roles */
 export async function removeV3(body: number[], options?: { [key: string]: any }) {
-	return request<any>('/v3/roles', {
+	return request<any>('/api/admin/v3/roles', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export async function getByIdV3(
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
-	return request<API.Result>(`/v3/roles/${param0}`, {
+	return request<API.Result>(`/api/admin/v3/roles/${param0}`, {
 		method: 'GET',
 		params: {...queryParams},
 		...(options || {}),
@@ -54,7 +54,7 @@ export async function getByIdV3(
 
 /** 导出角色 导出角色 POST /v3/roles/export */
 export async function exportV3(body: API.RoleExportCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/roles/export', {
+	return request<any>('/api/admin/v3/roles/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 		}
 	});
 
-	return request<any>('/v3/roles/import', {
+	return request<any>('/api/admin/v3/roles/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -98,7 +98,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 
 /** 分页查询角色列表 分页查询角色列表 POST /v3/roles/page */
 export async function pageV3(body: API.RolePageQry, options?: { [key: string]: any }) {
-	return request<API.Result>('/v3/roles/page', {
+	return request<API.Result>('/api/admin/v3/roles/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ package org.laokou.admin.loginLog.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.loginLog.ability.LoginLogDomainService;
 import org.laokou.admin.loginLog.dto.LoginLogRemoveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,9 +34,11 @@ public class LoginLogRemoveCmdExe {
 
 	private final LoginLogDomainService loginLogDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(LoginLogRemoveCmd cmd) {
 		// 校验参数
-		loginLogDomainService.delete(cmd.getIds());
+		transactionalUtil.executeInTransaction(() -> loginLogDomainService.delete(cmd.getIds()));
 	}
 
 }

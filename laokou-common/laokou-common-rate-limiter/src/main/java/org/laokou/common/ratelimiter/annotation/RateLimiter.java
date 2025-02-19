@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import org.laokou.common.ratelimiter.aop.Type;
 import org.redisson.api.RateType;
 
 import java.lang.annotation.*;
+
 import static org.laokou.common.ratelimiter.aop.Type.DEFAULT;
 import static org.redisson.api.RateType.OVERALL;
 
@@ -43,9 +44,14 @@ public @interface RateLimiter {
 	long rate() default 1;
 
 	/**
-	 * 过期时间,单位秒.
+	 * 过期时间，单位秒.
 	 */
 	long interval() default 1;
+
+	/**
+	 * 失效时间，单位秒.
+	 */
+	long ttl() default 3600;
 
 	/**
 	 * 类型.

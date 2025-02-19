@@ -1,0 +1,7 @@
+=== 命令
+
+[source,shell]
+----
+mvn protobuf:compile
+mvn protobuf:compile-custom
+----

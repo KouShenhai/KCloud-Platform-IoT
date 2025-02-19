@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,6 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.extension.parser.cache.AbstractCaffeineJsqlParseCache;
 import com.github.benmanes.caffeine.cache.Cache;
 
-import java.util.concurrent.Executor;
-
 /**
  * jsqlparser 缓存 fury 序列化 Caffeine 缓存实现.
  *
@@ -33,21 +31,14 @@ public class FurySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 		super(cache);
 	}
 
-	public FurySerialCaffeineJsqlParseCache(Cache<String, byte[]> cache, Executor executor, boolean async) {
-		super(cache);
-		super.executor = executor;
-		// 开启异步
-		super.async = async;
-	}
-
 	@Override
 	public byte[] serialize(Object obj) {
-		return FuryFactory.serialize(obj);
+		return FuryFactory.getFuryFactory().serialize(obj);
 	}
 
 	@Override
 	public Object deserialize(String sql, byte[] bytes) {
-		return FuryFactory.deserialize(bytes);
+		return FuryFactory.getFuryFactory().deserialize(bytes);
 	}
 
 }

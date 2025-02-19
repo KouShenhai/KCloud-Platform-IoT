@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import io.micrometer.tracing.TraceContext;
 import io.micrometer.tracing.Tracer;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.utils.MDCUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,13 +33,23 @@ public class TraceUtil {
 	private final Tracer tracer;
 
 	public String getTraceId() {
-		TraceContext context = getContext();
-		return ObjectUtil.isNull(context) ? MDCUtil.getTraceId() : context.traceId();
+		try {
+			TraceContext context = getContext();
+			return context.traceId();
+		}
+		catch (Exception e) {
+			return MDCUtil.getTraceId();
+		}
 	}
 
 	public String getSpanId() {
-		TraceContext context = getContext();
-		return ObjectUtil.isNull(context) ? MDCUtil.getSpanId() : context.spanId();
+		try {
+			TraceContext context = getContext();
+			return context.spanId();
+		}
+		catch (Exception e) {
+			return MDCUtil.getSpanId();
+		}
 	}
 
 	private TraceContext getContext() {

@@ -4,4 +4,5 @@
 - kcloud_platform_domain.sql 【领域事件】
 - kcloud_platform_iot.sql 【物联管理】
 - kcloud_platform_nacos.sql 【Nacos】
+- kcloud_platform_generator.sql 【代码生成】
 - kcloud_platform_snail_job.sql 【Snail Job】

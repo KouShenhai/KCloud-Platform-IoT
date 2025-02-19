@@ -1,16 +1,40 @@
 [
   {
-    "resource": "/v1/captchas/{uuid}",
+    "resource": "/v3/captchas/{uuid}",
     "limitApp": "default",
-    "count": 300,
+    "count": 100000,
     "grade": 1,
     "strategy": 0,
     "controlBehavior": 0
   },
   {
-    "resource": "/v1/secrets",
+    "resource": "/v3/captchas/send/mobile",
     "limitApp": "default",
-    "count": 300,
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/captchas/send/mail",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/secrets",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tokens",
+    "limitApp": "default",
+    "count": 100000,
     "grade": 1,
     "strategy": 0,
     "controlBehavior": 0

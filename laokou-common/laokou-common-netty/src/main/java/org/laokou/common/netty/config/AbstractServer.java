@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.EventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
@@ -37,9 +36,9 @@ public abstract class AbstractServer implements Server {
 
 	protected final ChannelHandler channelHandler;
 
-	protected final int bossCoreSize;
+	protected final int bossCorePoolSize;
 
-	protected final int workerCoreSize;
+	protected final int workerCorePoolSize;
 
 	/**
 	 * 完成初始化，但程序未启动完毕，其他线程结束程序，不能及时回收资源（对其他线程可见）.
@@ -56,12 +55,13 @@ public abstract class AbstractServer implements Server {
 	 */
 	private volatile boolean running;
 
-	protected AbstractServer(String ip, int port, ChannelHandler channelHandler, int bossCoreSize, int workerCoreSize) {
+	protected AbstractServer(String ip, int port, ChannelHandler channelHandler, int bossCorePoolSize,
+			int workerCorePoolSize) {
 		this.ip = ip;
 		this.port = port;
 		this.channelHandler = channelHandler;
-		this.bossCoreSize = bossCoreSize;
-		this.workerCoreSize = workerCoreSize;
+		this.bossCorePoolSize = bossCorePoolSize;
+		this.workerCorePoolSize = workerCorePoolSize;
 	}
 
 	/**
@@ -94,7 +94,7 @@ public abstract class AbstractServer implements Server {
 			});
 		}
 		catch (Exception e) {
-			log.error("启动失败，端口：{}，错误信息：{}，详情见日志", port, LogUtil.record(e.getMessage()), e);
+			log.error("启动失败，端口：{}，错误信息：{}", port, e.getMessage());
 		}
 	}
 

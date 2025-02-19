@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,26 +17,30 @@
 
 package org.laokou.auth.model;
 
-import com.blueconic.browscap.Capabilities;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
-import org.laokou.common.core.utils.*;
-import org.laokou.common.i18n.common.exception.AuthException;
+import org.laokou.auth.ability.validator.CaptchaValidator;
+import org.laokou.auth.ability.validator.PasswordValidator;
+import org.laokou.auth.dto.domainevent.LoginEvent;
+import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
+import org.laokou.common.i18n.common.constant.EventType;
+import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.context.TenantRedisContextHolder;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.laokou.common.i18n.utils.RedisKeyUtil;
+import org.springframework.util.CollectionUtils;
 
-import java.util.List;
+import java.util.*;
 
+import static org.laokou.auth.model.Constant.*;
 import static org.laokou.auth.model.GrantType.*;
-import static org.laokou.common.i18n.common.constant.Constant.FAIL;
-import static org.laokou.common.i18n.common.constant.Constant.OK;
+import static org.laokou.common.i18n.common.constant.EventType.LOGIN_EVENT;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.exception.AuthException.*;
 import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
+import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
 
 /**
  * 认证聚合.
@@ -44,7 +48,7 @@ import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
  * @author laokou
  */
 @Getter
-public class AuthA extends AggregateRoot<Long> {
+public class AuthA extends AggregateRoot {
 
 	/**
 	 * 业务用例.
@@ -54,22 +58,27 @@ public class AuthA extends AggregateRoot<Long> {
 	/**
 	 * 用户名.
 	 */
-	private String username;
+	private final String username;
 
 	/**
 	 * 密码.
 	 */
-	private String password;
+	private final String password;
 
 	/**
-	 * 认证类型 mail邮箱 mobile手机号 password密码 authorization_code授权码.
+	 * 租户标识.
 	 */
-	private GrantType grantType;
+	private final String tenantCode;
+
+	/**
+	 * 认证类型 mail邮箱 mobile手机号 username_password用户名密码 authorization_code授权码.
+	 */
+	private final GrantType grantType;
 
 	/**
 	 * 验证码值对象.
 	 */
-	private CaptchaV captcha;
+	private final CaptchaV captcha;
 
 	/**
 	 * 用户实体.
@@ -77,149 +86,223 @@ public class AuthA extends AggregateRoot<Long> {
 	private UserE user;
 
 	/**
-	 * 菜单值对象.
+	 * 数据源前缀.
 	 */
-	private MenuV menu;
+	private String sourcePrefix;
 
 	/**
-	 * 部门值对象.
+	 * 菜单权限标识.
 	 */
-	private DeptV dept;
+	private Set<String> permissions;
 
 	/**
-	 * 日志值对象.
+	 * 部门路径.
 	 */
-	private LogV log;
+	private Set<String> deptPaths;
 
 	/**
-	 * 请求对象.
+	 * 扩展信息.
 	 */
-	private HttpServletRequest request;
+	private InfoV info;
 
 	/**
-	 * 当前用户.
+	 * 验证码实体.
 	 */
-	private String currentUser;
+	private CaptchaE captchaE;
 
-	public AuthA() {
-		super(IdGenerator.defaultSnowflakeId());
+	public AuthA(Long id, String tenantCode) {
+		super.id = id;
+		this.username = EMPTY;
+		this.password = EMPTY;
+		this.tenantCode = tenantCode;
+		this.grantType = USERNAME_PASSWORD;
+		this.captcha = new CaptchaV(EMPTY, EMPTY);
 	}
 
-	public AuthA(String username, String password, String tenantId, GrantType grantType, String uuid, String captcha,
-			HttpServletRequest request) {
-		super(IdGenerator.defaultSnowflakeId());
+	public AuthA(Long id, String username, String password, String tenantCode, GrantType grantType, String uuid,
+			String captcha) {
+		super.id = id;
 		this.username = username;
 		this.password = password;
+		this.tenantCode = tenantCode;
 		this.grantType = grantType;
-		// 用于tenantId判空
-		this.tenantId = StringUtil.isNotEmpty(tenantId) ? Long.parseLong(tenantId) : null;
 		this.captcha = new CaptchaV(uuid, captcha);
-		this.request = request;
 	}
 
-	public void updateServiceId(String serviceId) {
-		this.serviceId = serviceId;
-	}
-
-	public void createUserByPassword() {
-		currentUser = this.username;
-		this.user = new UserE(currentUser, EMPTY, EMPTY, this.tenantId);
+	public void createUserByUsernamePassword() {
+		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 
 	public void createUserByMobile() {
-		currentUser = this.captcha.uuid();
-		this.user = new UserE(EMPTY, EMPTY, currentUser, this.tenantId);
+		this.user = new UserE(EMPTY, EMPTY, this.captcha.uuid());
 	}
 
 	public void createUserByMail() {
-		currentUser = this.captcha.uuid();
-		this.user = new UserE(EMPTY, currentUser, EMPTY, this.tenantId);
+		this.user = new UserE(EMPTY, this.captcha.uuid(), EMPTY);
 	}
 
 	public void createUserByAuthorizationCode() {
-		currentUser = this.username;
-		this.user = new UserE(currentUser, EMPTY, EMPTY, 0L);
+		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 
-	public void updateUser(UserE user) {
-		if (ObjectUtil.isNotNull(user)) {
-			this.user = user;
-			this.creator = user.getId();
-			this.editor = user.getId();
+	public void createCaptcha(Long eventId) {
+		addEvent(new DomainEvent(eventId, tenantId, null, super.id, LAOKOU_CAPTCHA_TOPIC, captchaE.getTag(),
+				super.version, JacksonUtil.toJsonStr(new SendCaptchaEvent(captchaE.getUuid())),
+				EventType.SEND_CAPTCHA_EVENT, sourcePrefix));
+		super.version++;
+	}
+
+	public void getExtInfo(InfoV info) {
+		this.info = info;
+	}
+
+	public void getTenantId(Long tenantId) {
+		super.tenantId = tenantId;
+	}
+
+	public void getSourcePrefix(String sourcePrefix) {
+		this.sourcePrefix = sourcePrefix;
+	}
+
+	public void getUserInfo(UserE user) {
+		this.user = user;
+		super.userId = ObjectUtil.isNotNull(this.user) ? this.user.getId() : null;
+	}
+
+	public void getMenuPermissions(Set<String> permissions) {
+		this.permissions = permissions;
+	}
+
+	public void getDeptPaths(List<String> deptPaths) {
+		this.deptPaths = getPaths(deptPaths);
+	}
+
+	public void getCaptcha(CaptchaE captcha) {
+		this.captchaE = captcha;
+	}
+
+	public void checkTenantId() {
+		if (ObjectUtil.isNull(super.tenantId)) {
+			throw new SystemException(TENANT_NOT_EXIST);
 		}
-		else {
-			fail(grantType.getErrorCode());
+		// 写入租户ID到上下文
+		TenantRedisContextHolder.set(super.tenantId);
+	}
+
+	public void checkCaptcha(CaptchaValidator captchaValidator) {
+		if (isUseCaptcha()) {
+			Boolean validate = captchaValidator.validate(getCaptchaCacheKey(), captcha.captcha());
+			if (ObjectUtil.isNull(validate)) {
+				throw new SystemException(CAPTCHA_EXPIRED);
+			}
+			if (!validate) {
+				throw new SystemException(CAPTCHA_ERROR);
+			}
 		}
 	}
 
-	public boolean checkNotEmptyLog() {
-		return ObjectUtil.isNotNull(this.log);
-	}
-
-	public void updateSource(SourceV source) {
-		if (ObjectUtil.isNull(source)) {
-			fail(OAUTH2_SOURCE_NOT_EXIST);
-		}
-		this.sourceName = source.name();
-	}
-
-	public void updateMenu(MenuV menu) {
-		this.menu = menu;
-	}
-
-	public void updateDept(DeptV dept) {
-		this.dept = dept;
-	}
-
-	public boolean isUseCaptcha() {
-		return List.of(PASSWORD, MOBILE, MAIL).contains(grantType);
-	}
-
-	public void checkCaptcha(Boolean result) {
-		if (ObjectUtil.isNull(result)) {
-			fail(OAUTH2_CAPTCHA_EXPIRED);
-		}
-		if (!result) {
-			fail(OAUTH2_CAPTCHA_ERROR);
+	public void checkSourcePrefix() {
+		if (ObjectUtil.isNull(sourcePrefix)) {
+			throw new SystemException(DATA_SOURCE_NOT_EXIST);
 		}
 	}
 
-	public void checkUserPassword(PasswordEncoder passwordEncoder) {
-		if (PASSWORD.equals(this.grantType) && !passwordEncoder.matches(this.password, user.getPassword())) {
-			fail(OAUTH2_USERNAME_PASSWORD_ERROR);
+	public void checkUsername() {
+		if (ObjectUtil.isNull(this.user)) {
+			this.grantType.checkUsernameNotExist();
+		}
+	}
+
+	public void checkPassword(PasswordValidator passwordValidator) {
+		if (isUsePassword() && !passwordValidator.validate(this.password, user.getPassword())) {
+			throw new SystemException(USERNAME_PASSWORD_ERROR);
 		}
 	}
 
 	public void checkUserStatus() {
-		if (ObjectUtil.equals(UserStatus.DISABLE.ordinal(), this.user.getStatus())) {
-			fail(OAUTH2_USER_DISABLED);
+		if (ObjectUtil.equals(UserStatus.DISABLE.getCode(), this.user.getStatus())) {
+			throw new SystemException(USER_DISABLED);
 		}
 	}
 
 	public void checkMenuPermissions() {
-		if (CollectionUtil.isEmpty(this.menu.permissions())) {
-			fail(FORBIDDEN);
+		if (CollectionUtils.isEmpty(this.permissions)) {
+			throw new SystemException(FORBIDDEN);
 		}
 	}
 
-	public void ok() {
-		createLog(OK, EMPTY);
+	public void checkDeptPaths() {
+		if (CollectionUtils.isEmpty(this.deptPaths)) {
+			throw new SystemException(FORBIDDEN);
+		}
 	}
 
-	private void fail(String code) {
-		String errorMessage = MessageUtil.getMessage(code);
-		createLog(FAIL, errorMessage);
-		throw new AuthException(code, errorMessage);
+	public void recordLog(Long eventId, GlobalException e) {
+		LoginEvent event = getEvent(e);
+		if (ObjectUtil.isNotNull(event)) {
+			addEvent(new DomainEvent(eventId, super.tenantId, super.userId, super.id, LAOKOU_LOG_TOPIC, LOGIN_TAG,
+					super.version, JacksonUtil.toJsonStr(event), LOGIN_EVENT, sourcePrefix));
+			super.version++;
+		}
 	}
 
-	private void createLog(Integer status, String errorMessage) {
-		String ip = IpUtil.getIpAddr(request);
-		String address = AddressUtil.getRealAddress(ip);
-		Capabilities capabilities = RequestUtil.getCapabilities(request);
-		String os = capabilities.getPlatform();
-		String browser = capabilities.getBrowser();
-		this.log = new LogV(currentUser, os, ip, address, browser, status, errorMessage, grantType.getCode(),
-				DateUtil.nowInstant());
+	private boolean isUseCaptcha() {
+		return List.of(USERNAME_PASSWORD, MOBILE, MAIL).contains(grantType);
+	}
+
+	private boolean isUsePassword() {
+		return List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE).contains(grantType);
+	}
+
+	private Set<String> getPaths(List<String> list) {
+		if (CollectionUtils.isEmpty(list)) {
+			return Collections.emptySet();
+		}
+		// 字符串长度排序
+		list.sort(Comparator.comparingInt(String::length));
+		Set<String> paths = new HashSet<>(list.size());
+		paths.add(list.getFirst());
+		for (String path : list.subList(1, list.size())) {
+			int find = paths.size();
+			for (String p : paths) {
+				if (path.contains(p)) {
+					break;
+				}
+				find--;
+			}
+			if (find == 0) {
+				paths.add(path);
+			}
+		}
+		return paths;
+	}
+
+	private String getLoginName() {
+		if (List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE).contains(grantType)) {
+			return this.username;
+		}
+		return this.captcha.uuid();
+	}
+
+	private LoginEvent getEvent(GlobalException e) {
+		if (ObjectUtil.isNull(e)) {
+			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
+					LoginStatus.OK.getCode(), EMPTY, grantType.getCode(), super.instant);
+		}
+		else if (e instanceof SystemException ex) {
+			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
+					LoginStatus.FAIL.getCode(), ex.getMsg(), grantType.getCode(), super.instant);
+		}
+		return null;
+	}
+
+	private String getCaptchaCacheKey() {
+		return switch (grantType) {
+			case MOBILE -> RedisKeyUtil.getMobileAuthCaptchaKey(captcha.uuid());
+			case MAIL -> RedisKeyUtil.getMailAuthCaptchaKey(captcha.uuid());
+			case USERNAME_PASSWORD, AUTHORIZATION_CODE ->
+				RedisKeyUtil.getUsernamePasswordAuthCaptchaKey(captcha.uuid());
+		};
 	}
 
 }

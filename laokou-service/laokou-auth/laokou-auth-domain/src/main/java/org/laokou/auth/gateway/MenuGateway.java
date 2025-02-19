@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,9 @@
 
 package org.laokou.auth.gateway;
 
-import org.laokou.auth.model.MenuV;
 import org.laokou.auth.model.UserE;
+
+import java.util.Set;
 
 /**
  * 菜单.
@@ -32,6 +33,6 @@ public interface MenuGateway {
 	 * @param user 用户对象
 	 * @return 菜单权限标识集合
 	 */
-	MenuV getPermissions(UserE user);
+	Set<String> getPermissions(UserE user);
 
 }

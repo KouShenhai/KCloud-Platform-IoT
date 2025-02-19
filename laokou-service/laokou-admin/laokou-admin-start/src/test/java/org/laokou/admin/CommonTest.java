@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.security.Principal;
 
+import static org.laokou.common.security.config.GlobalOpaqueTokenIntrospector.FULL;
+
 /**
  * @author laokou
  */
@@ -40,7 +42,7 @@ import java.security.Principal;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class CommonTest {
 
-	private static final String TOKEN = "eyJraWQiOiI5MDVkOGQyNi00MTAyLTRlM2UtODhmMy1hN2UwNjU5YmExYmIiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJLQnNubVNnNlMxTDFRNDNwREZmSUwvbnA5QzNCeWp2YStPcERnbnlHcGlRPSIsImF1ZCI6Ijk1VHhTc1RQRkEzdEYxMlRCU01tVVZLMGRhIiwibmJmIjoxNzE4Mjg0NTk4LCJzY29wZSI6WyJwYXNzd29yZCIsIm1haWwiLCJvcGVuaWQiLCJtb2JpbGUiXSwiaXNzIjoiaHR0cHM6Ly8xMjcuMC4wLjE6MTExMSIsImV4cCI6MTcxODI4ODE5OCwiaWF0IjoxNzE4Mjg0NTk4LCJqdGkiOiI3OGY3YjZiYy03NTYwLTQ0NDQtOWZiMi1jMGQ1M2Y3ZDQ5YTQifQ.sJRRdXuhdCUm92G2eBdTehCdtPnrhO2vFzOM0go0XRzspNmvOzMcN6DAl-wPy1-IcxksCckDOmwbcOmERs7xBl01hK3DkJdwc-GtejPPMZT8BDcOgL_5w-AHcV1uTr0bm1T8Tl4J9YaXwsYOKUgHdE4qRj_rchDkG1D4hnJrIYLsOeqFKOkRS7_FQuJIrG7HwXWcAV6jTYGQ8Zz9TIm1SimVv_zScnZqhkmA2VkhUBG2JVuJpHqi3brPTOADBdzpeBIL4RujYigEPo4zRUHBO-qyje3Moa3c17vnR3Dnen401PlAmt_w63PpWERh_jiQNdYdhi_pVN51JMOJcon26g";
+	private static final String TOKEN = "eyJraWQiOiI5ZmJhYjBhMi00ODEzLTRkMDUtYmY4OS05MzQzZTVmZDdlNzgiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJZbGg0UVRGMFltZEVXV0pSaW1GTVBHYUptbGR5dVdJYjlCTm1VTjFVTE1JNyIsImF1ZCI6Ijk1VHhTc1RQRkEzdEYxMlRCU01tVVZLMGRhIiwibmJmIjoxNzMyMDIwNzUwLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiaXNzIjoiaHR0cHM6Ly9nYXRld2F5OjU1NTUvYXV0aCIsImV4cCI6MTczMjAyNDM1MCwiaWF0IjoxNzMyMDIwNzUwLCJqdGkiOiJjNWZmMTc0Ny0wMWJmLTQ2ZDYtOGI4Zi02MDBhNDE2ZmZmMWQifQ.jcfqP27WgVzo4M2ryZ5G1QOSWFYmWFaJntHulgMLowUUXMIiODicUMd5mrB7GjBKV_hYiVyz2Ls15Q_6--IQhlG9g96a9lw6ZsvSIpb4wr7zSodtwYjny_03BAjm_1GwngfKHZTfGR2VoAGjaWdNKWiRTyKWAmzcUPp7G4oovYQ5pYf-xHyVXaI2Wnd-GihpOQooIbFvlqZMAMIVT1yfv496UYpMUJnQnhAZaGaqocImjzclfCW5X69agnncH4tjacR4k-IOz3swTasAU53F0D-eaJC8ynOmnq-OcQi21sWyPP09Ju1n-_KzJMt94pT8iNun1GxZFmKuxBnBpCdPDQ";
 
 	private final WebApplicationContext webApplicationContext;
 
@@ -51,7 +53,7 @@ class CommonTest {
 	@BeforeEach
 	public void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-		OAuth2Authorization authorization = oAuth2AuthorizationService.findById(TOKEN);
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(TOKEN, FULL);
 		Assertions.assertNotNull(authorization);
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = authorization
 			.getAttribute(Principal.class.getName());

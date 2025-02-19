@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,6 +103,7 @@ public class TenantsControllerV3 {
 	@TraceLog
 	@GetMapping("{id}")
 	@DataCache(name = TENANTS, key = "#id")
+	@PreAuthorize("hasAuthority('sys:tenant:detail')")
 	@Operation(summary = "查看租户详情", description = "查看租户详情")
 	public Result<TenantCO> getByIdV3(@PathVariable("id") Long id) {
 		return tenantsServiceI.getById(new TenantGetQry(id));

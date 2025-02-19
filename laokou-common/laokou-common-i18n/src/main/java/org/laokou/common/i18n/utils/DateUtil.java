@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
  */
 
 package org.laokou.common.i18n.utils;
-
-import org.laokou.common.i18n.common.exception.SystemException;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -36,110 +34,84 @@ public final class DateUtil {
 	/**
 	 * yyyy-MM-dd HH:mm:ss.
 	 */
-	public static final int YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS = 0;
+	public static final String YYYY_B_MM_B_DD_HH_R_MM_R_SS = "yyyy-MM-dd HH:mm:ss";
 
 	/**
 	 * yyyyMMddHHmmss.
 	 */
-	public static final int YYYYMMDDHHMMSS = 1;
+	public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
 	/**
 	 * yyyyMM.
 	 */
-	public static final int YYYYMM = 2;
+	public static final String YYYYMM = "yyyyMM";
 
 	/**
 	 * yyyy-MM-dd.
 	 */
-	public static final int YYYY_ROD_MM_ROD_DD = 3;
+	public static final String YYYY_B_MM_B_DD = "yyyy-MM-dd";
 
 	/**
 	 * yyyy年MM月dd日.
 	 */
-	public static final int YYYY_TEXT_MM_TEXT_DD_TEXT = 4;
+	public static final String YYYY_T_MM_T_DD_T = "yyyy年MM月dd日";
 
 	/**
 	 * yyyy.MM.dd.
 	 */
-	public static final int YYYY_DOT_MM_DOT_DD = 5;
+	public static final String YYYY_D_MM_D_DD = "yyyy.MM.dd";
 
 	/**
-	 * yyyymmdd.
+	 * yyyyMMdd.
 	 */
-	public static final int YYYYMMDD = 6;
+	public static final String YYYYMMDD = "yyyyMMdd";
+
+	/**
+	 * GMT+8.
+	 */
+	public static final String DEFAULT_TIMEZONE = "GMT+8";
 
 	/**
 	 * yyyy-MM-dd HH:mm:ss.SSS.
 	 */
-	public static final int YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS_SSS = 7;
+	public static final String YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
 
-	/**
-	 * 星期一.
-	 */
-	public static final int MONDAY = 0;
-
-	/**
-	 * 时间格式.
-	 */
-	private static final String[] TIME_PATTERNS = { Constant.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS,
-			Constant.YYYYMMDDHHMMSS, Constant.YYYYMM, Constant.YYYY_ROD_MM_ROD_DD, Constant.YYYY_TEXT_MM_TEXT_DD_TEXT,
-			Constant.YYYY_DOT_MM_DOT_DD, Constant.YYYYMMDD, Constant.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS_SSS };
-
-	/**
-	 * 星期数组.
-	 */
-	private static final DayOfWeek[] WEEK_PATTERNS = { DayOfWeek.MONDAY };
-
-	/**
-	 * 时间格式.
-	 * @param index 索引
-	 * @return 时间格式
-	 */
-	public static String getTimePattern(int index) {
-		if (index >= TIME_PATTERNS.length || index < 0) {
-			throw new SystemException("时间格式不存在");
-		}
-		return TIME_PATTERNS[index];
-	}
-
-	/**
-	 * 星期格式.
-	 * @param index 索引
-	 * @return 星球格式
-	 */
-	public static DayOfWeek getWeekPattern(int index) {
-		if (index >= WEEK_PATTERNS.length || index < 0) {
-			throw new SystemException("星期格式不存在");
-		}
-		return WEEK_PATTERNS[index];
+	private DateUtil() {
 	}
 
 	/**
 	 * 时间格式化.
 	 * @param localDateTime 时间
-	 * @param index 索引
+	 * @param pattern 格式
 	 * @return 字符串
 	 */
-	public static String format(LocalDateTime localDateTime, int index) {
-		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter(index);
+	public static String format(LocalDateTime localDateTime, String pattern) {
+		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter(pattern);
 		return localDateTime.format(dateTimeFormatter);
 	}
 
 	/**
 	 * 日期格式化.
 	 * @param localDate 日期
-	 * @param index 索引
+	 * @param pattern 格式
 	 * @return 字符串
 	 */
-	public static String format(LocalDate localDate, int index) {
-		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter(index);
+	public static String format(LocalDate localDate, String pattern) {
+		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter(pattern);
 		return localDate.format(dateTimeFormatter);
 	}
 
-	public static String format(Instant instant, ZoneId zoneId, int index) {
+	public static String format(Instant instant, ZoneId zoneId, String pattern) {
 		// 指定时区
 		ZonedDateTime zonedDateTime = instant.atZone(zoneId);
-		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter(index);
+		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter(pattern);
+		return zonedDateTime.format(dateTimeFormatter);
+	}
+
+	public static String format(Instant instant, String pattern) {
+		// 指定时区
+		ZonedDateTime zonedDateTime = instant.atZone(getDefaultZoneId());
+		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter(pattern);
 		return zonedDateTime.format(dateTimeFormatter);
 	}
 
@@ -149,23 +121,21 @@ public final class DateUtil {
 
 	/**
 	 * 格式化配置.
-	 * @param index 索引
+	 * @param pattern 格式
 	 * @return 格式化配置
 	 */
-	public static DateTimeFormatter getDateTimeFormatter(int index) {
-		String timePattern = getTimePattern(index);
-		return DateTimeFormatter.ofPattern(timePattern).withZone(getDefaultZoneId());
+	public static DateTimeFormatter getDateTimeFormatter(String pattern) {
+		return DateTimeFormatter.ofPattern(pattern).withZone(getDefaultZoneId());
 	}
 
 	/**
 	 * 格式化配置.
-	 * @param index 索引
+	 * @param pattern 格式
 	 * @param zoneId 时区
 	 * @return 格式化配置
 	 */
-	public static DateTimeFormatter getDateTimeFormatter(int index, ZoneId zoneId) {
-		String timePattern = getTimePattern(index);
-		return DateTimeFormatter.ofPattern(timePattern).withZone(zoneId);
+	public static DateTimeFormatter getDateTimeFormatter(String pattern, ZoneId zoneId) {
+		return DateTimeFormatter.ofPattern(pattern).withZone(zoneId);
 	}
 
 	/**
@@ -209,21 +179,21 @@ public final class DateUtil {
 	/**
 	 * 字符串转换时间.
 	 * @param dateTime 时间
-	 * @param index 索引
+	 * @param pattern 格式
 	 * @return 时间
 	 */
-	public static LocalDateTime parseTime(String dateTime, int index) {
-		return LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(getTimePattern(index)));
+	public static LocalDateTime parseTime(String dateTime, String pattern) {
+		return LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(pattern));
 	}
 
 	/**
 	 * 字符串转换日期.
 	 * @param date 日期
-	 * @param index 索引
+	 * @param pattern 格式
 	 * @return 日期
 	 */
-	public static LocalDate parseDate(String date, int index) {
-		return LocalDate.parse(date, DateTimeFormatter.ofPattern(getTimePattern(index)));
+	public static LocalDate parseDate(String date, String pattern) {
+		return LocalDate.parse(date, DateTimeFormatter.ofPattern(pattern));
 	}
 
 	public static ZoneOffset getDefaultZoneOffset() {
@@ -234,14 +204,14 @@ public final class DateUtil {
 		return OffsetDateTime.now(zoneId).getOffset();
 	}
 
-	public static Instant parsInstant(String instant, ZoneId zoneId, int index) {
-		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(getTimePattern(index));
+	public static Instant parsInstant(String instant, ZoneId zoneId, String pattern) {
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
 		LocalDateTime localDateTime = LocalDateTime.parse(instant, dateTimeFormatter);
 		return localDateTime.toInstant(getZoneOffset(zoneId));
 	}
 
-	public static Instant parsInstant(String instant, int index) {
-		return parsInstant(instant, getDefaultZoneId(), index);
+	public static Instant parsInstant(String instant, String pattern) {
+		return parsInstant(instant, getDefaultZoneId(), pattern);
 	}
 
 	/**
@@ -326,8 +296,11 @@ public final class DateUtil {
 	 * @return 时间
 	 */
 	public static LocalDateTime getLocalDateTimeOfTimestamp(long timestamp, ZoneId zoneId) {
-		Instant instant = Instant.ofEpochMilli(timestamp);
-		return LocalDateTime.ofInstant(instant, zoneId);
+		return LocalDateTime.ofInstant(getInstantOfTimestamp(timestamp), zoneId);
+	}
+
+	public static Instant getInstantOfTimestamp(long timestamp) {
+		return Instant.ofEpochMilli(timestamp);
 	}
 
 	/**
@@ -390,8 +363,8 @@ public final class DateUtil {
 		return Period.between(start, end).getYears();
 	}
 
-	public static LocalDate getDayOfWeek(LocalDate localDate, int index) {
-		return localDate.with(TemporalAdjusters.nextOrSame(getWeekPattern(index)));
+	public static LocalDate getDayOfWeek(LocalDate localDate, int dayOfWeek) {
+		return localDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.of(dayOfWeek)));
 	}
 
 	/**
@@ -449,59 +422,6 @@ public final class DateUtil {
 	 */
 	public static String getDayOfWeekText(LocalDate localDate) {
 		return localDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
-	}
-
-	public static final class Constant {
-
-		/**
-		 * yyyy-MM-dd HH:mm:ss.
-		 */
-		public static final String YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS = "yyyy-MM-dd HH:mm:ss";
-
-		/**
-		 * yyyy-MM-dd HH:mm:ss.SSS.
-		 */
-		public static final String YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
-
-		/**
-		 * yyyyMMddHHmmss.
-		 */
-		public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
-
-		/**
-		 * yyyyMM.
-		 */
-		public static final String YYYYMM = "yyyyMM";
-
-		/**
-		 * yyyy-MM-dd.
-		 */
-		public static final String YYYY_ROD_MM_ROD_DD = "yyyy-MM-dd";
-
-		/**
-		 * yyyy年MM月dd日.
-		 */
-		public static final String YYYY_TEXT_MM_TEXT_DD_TEXT = "yyyy年MM月dd日";
-
-		/**
-		 * yyyy.MM.dd.
-		 */
-		public static final String YYYY_DOT_MM_DOT_DD = "yyyy.MM.dd";
-
-		/**
-		 * yyyyMMdd.
-		 */
-		public static final String YYYYMMDD = "yyyyMMdd";
-
-		/**
-		 * GMT+8.
-		 */
-		public static final String DEFAULT_TIMEZONE = "GMT+8";
-
-		private Constant() {
-
-		}
-
 	}
 
 }

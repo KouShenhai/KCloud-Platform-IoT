@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ import org.springframework.security.web.session.SessionInformationExpiredEvent;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.SESSION_EXPIRED;
+
 /**
  * @author laokou
  */
@@ -31,7 +33,7 @@ public class SessionExpiredStrategy implements SessionInformationExpiredStrategy
 
 	@Override
 	public void onExpiredSessionDetected(SessionInformationExpiredEvent event) {
-		ResponseUtil.responseOk(event.getResponse(), Result.fail("A_OAuth2_SessionExpired", "会话过期"));
+		ResponseUtil.responseOk(event.getResponse(), Result.fail(SESSION_EXPIRED));
 	}
 
 }

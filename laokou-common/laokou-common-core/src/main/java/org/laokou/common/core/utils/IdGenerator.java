@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 package org.laokou.common.core.utils;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -27,6 +28,7 @@ import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.concurrent.Executors;
@@ -34,7 +36,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
-
 import static org.laokou.common.i18n.common.constant.StringConstant.AT;
 
 /**
@@ -65,6 +66,9 @@ public final class IdGenerator {
 		}
 	}
 
+	private IdGenerator() {
+	}
+
 	/**
 	 * 默认雪花ID.
 	 * @return long
@@ -78,10 +82,22 @@ public final class IdGenerator {
 	 * @param snowflakeId 雪花ID
 	 * @return 时间
 	 */
+	public static Instant getInstant(long snowflakeId) {
+		return DateUtil.getInstantOfTimestamp(getTimestamp(snowflakeId));
+	}
+
+	/**
+	 * 雪花ID生成时间.
+	 * @param snowflakeId 雪花ID
+	 * @return 时间
+	 */
 	public static LocalDateTime getLocalDateTime(long snowflakeId, ZoneId zoneId) {
+		return DateUtil.getLocalDateTimeOfTimestamp(getTimestamp(snowflakeId), zoneId);
+	}
+
+	private static long getTimestamp(long snowflakeId) {
 		// 第一段 时间戳部分 (反推 -> 右移left + start)
-		long timestamp = (snowflakeId >> Snowflake.TIMESTAMP_LEFT) + Snowflake.START_TIMESTAMP;
-		return DateUtil.getLocalDateTimeOfTimestamp(timestamp, zoneId);
+		return (snowflakeId >> Snowflake.TIMESTAMP_LEFT) + Snowflake.START_TIMESTAMP;
 	}
 
 	static class Snowflake {
@@ -166,7 +182,7 @@ public final class IdGenerator {
 		 * @param dataCenterId 数据中心ID
 		 * @param machineId 机器标志ID
 		 */
-		Snowflake(final long dataCenterId, final long machineId) {
+		private Snowflake(final long dataCenterId, final long machineId) {
 			Assert.isTrue(machineId <= MAX_MACHINE && machineId >= 0,
 					String.format("MachineId can't be greater than %s or less than 0", MAX_MACHINE));
 			Assert.isTrue(dataCenterId <= MAX_DATACENTER && dataCenterId >= 0,
@@ -175,7 +191,7 @@ public final class IdGenerator {
 			this.DATACENTER_ID = dataCenterId;
 		}
 
-		Snowflake(InetAddress inetAddress) {
+		private Snowflake(InetAddress inetAddress) {
 			this.inetAddress = inetAddress;
 			DATACENTER_ID = getDatacenterId();
 			MACHINE_ID = getMaxMachineId(DATACENTER_ID);
@@ -216,7 +232,7 @@ public final class IdGenerator {
 				}
 			}
 			catch (Exception e) {
-				log.error("Error message：{}", e.getMessage(), e);
+				throw new RuntimeException(e);
 			}
 			return id;
 		}
@@ -246,10 +262,10 @@ public final class IdGenerator {
 		 * 生产雪花ID.
 		 * @return 雪花ID
 		 */
+		@SneakyThrows
 		public synchronized long nextId() {
 			long currTimeStamp = getNewTimeStamp();
 			int maxOffset = 5;
-			// 闰秒
 			if (currTimeStamp < lastTimeStamp) {
 				long offset = lastTimeStamp - currTimeStamp;
 				if (offset <= maxOffset) {
@@ -325,11 +341,14 @@ public final class IdGenerator {
 	 */
 	public final static class SystemClock {
 
+		private final long initialDelay;
+
 		private final long period;
 
 		private final AtomicLong now;
 
-		private SystemClock(long period) {
+		private SystemClock(long initialDelay, long period) {
+			this.initialDelay = initialDelay;
 			this.period = period;
 			this.now = new AtomicLong(System.currentTimeMillis());
 			scheduleClockUpdating();
@@ -350,7 +369,7 @@ public final class IdGenerator {
 				thread.setDaemon(false);
 				return thread;
 			});
-			scheduler.scheduleAtFixedRate(() -> now.set(System.currentTimeMillis()), period, period,
+			scheduler.scheduleAtFixedRate(() -> now.set(System.currentTimeMillis()), initialDelay, period,
 					TimeUnit.MILLISECONDS);
 		}
 
@@ -360,7 +379,7 @@ public final class IdGenerator {
 
 		private static class InstanceHolder {
 
-			public static final SystemClock INSTANCE = new SystemClock(1);
+			public static final SystemClock INSTANCE = new SystemClock(1, 1);
 
 		}
 

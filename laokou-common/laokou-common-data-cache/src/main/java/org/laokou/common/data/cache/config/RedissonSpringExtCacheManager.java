@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,7 +63,7 @@ import java.util.concurrent.ConcurrentMap;
 import static org.laokou.common.i18n.common.constant.StringConstant.WELL_NO;
 
 /**
- * 数据缓存扩展管理类. A {@link org.springframework.cache.CacheManager} implementation backed by
+ * 数据缓存扩展管理类. {@link org.springframework.cache.CacheManager}. implementation backed by
  * Redisson instance.
  *
  * @author Nikita Koksharov

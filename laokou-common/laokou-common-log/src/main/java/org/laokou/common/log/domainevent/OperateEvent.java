@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,66 +18,64 @@
 package org.laokou.common.log.domainevent;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import lombok.Getter;
 
 import java.io.Serial;
 
 /**
+ * 操作事件.
+ *
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@Schema(name = "OperateEvent", description = "操作事件")
-public class OperateEvent extends DefaultDomainEvent {
+@Getter
+public final class OperateEvent {
 
 	@Serial
 	private static final long serialVersionUID = -6523521638764501311L;
 
 	@Schema(name = "name", description = "操作名称")
-	protected String name;
+	private String name;
 
 	@Schema(name = "moduleName", description = "操作的模块名称")
-	protected String moduleName;
+	private String moduleName;
 
 	@Schema(name = "uri", description = "操作的URI")
-	protected String uri;
+	private String uri;
 
 	@Schema(name = "methodName", description = "操作的方法名")
-	protected String methodName;
+	private String methodName;
 
 	@Schema(name = "requestType", description = "操作的请求类型")
-	protected String requestType;
+	private String requestType;
 
 	@Schema(name = "requestParams", description = "操作的请求参数")
-	protected String requestParams;
+	private String requestParams;
 
 	@Schema(name = "userAgent", description = "操作的浏览器")
-	protected String userAgent;
+	private String userAgent;
 
 	@Schema(name = "ip", description = "操作的IP地址")
-	protected String ip;
+	private String ip;
 
 	@Schema(name = "address", description = "操作的归属地")
-	protected String address;
+	private String address;
 
 	@Schema(name = "status", description = "操作状态 0成功 1失败")
-	protected Integer status;
+	private Integer status;
 
 	@Schema(name = "operator", description = "操作人")
-	protected String operator;
+	private String operator;
 
 	@Schema(name = "errorMessage", description = "错误信息")
-	protected String errorMessage;
+	private String errorMessage;
 
-	@Schema(name = "takeTime", description = "操作的消耗时间(毫秒)")
-	protected Long takeTime;
+	@Schema(name = "costTime", description = "操作的消耗时间(毫秒)")
+	private Long costTime;
 
-	@Override
-	protected void generatorId() {
-		super.id = IdGenerator.defaultSnowflakeId();
-	}
+	// protected OperateEvent(String serviceId, Long tenantId, Long userId, Long
+	// aggregateId, String sourcePrefix,
+	// String topic, String tag) {
+	// super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
+	// }
 
 }

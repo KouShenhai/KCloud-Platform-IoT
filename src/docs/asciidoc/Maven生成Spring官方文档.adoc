@@ -1,5 +1,13 @@
-:toc:
+[[maven-spring-asciidoctor-backends]]
 = Maven生成Spring官方文档
+:revdate: {docdate}
+:toc: left
+:Author: laokou
+:doctype: document
+:toclevels: 4
+:tabsize: 4
+
+:numbered:
 
 == 介绍
 

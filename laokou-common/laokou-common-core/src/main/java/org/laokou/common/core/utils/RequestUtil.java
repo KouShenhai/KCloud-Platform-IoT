@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,9 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerExecutionChain;
+import org.springframework.web.servlet.HandlerMapping;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -36,9 +39,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-import static org.laokou.common.core.utils.IpUtil.LOCAL_IPV4;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.constant.TraceConstant.DOMAIN_NAME;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 /**
@@ -63,13 +64,18 @@ public final class RequestUtil {
 		}
 	}
 
+	private RequestUtil() {
+	}
+
+	/**
+	 * 获取UserAgentParser对象.
+	 */
 	public static UserAgentParser getUserAgentParser() {
 		return PARSER;
 	}
 
 	/**
 	 * 获取请求对象.
-	 * @return 请求对象
 	 */
 	public static HttpServletRequest getHttpServletRequest() {
 		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
@@ -78,13 +84,17 @@ public final class RequestUtil {
 	}
 
 	/**
-	 * 根据请求获取域名.
+	 * 获取方法处理器.
 	 * @param request 请求对象
-	 * @return 域名
+	 * @param handlerMapping 映射处理器
 	 */
-	public static String getDomainName(HttpServletRequest request) {
-		String domainName = request.getHeader(DOMAIN_NAME);
-		return StringUtil.isEmpty(domainName) ? LOCAL_IPV4 : domainName;
+	@SneakyThrows
+	public static HandlerMethod getHandlerMethod(HttpServletRequest request, HandlerMapping handlerMapping) {
+		HandlerExecutionChain chain = handlerMapping.getHandler(request);
+		if (chain != null && chain.getHandler() instanceof HandlerMethod handlerMethod) {
+			return handlerMethod;
+		}
+		return null;
 	}
 
 	/**
@@ -96,6 +106,11 @@ public final class RequestUtil {
 		return PARSER.parse(request.getHeader(USER_AGENT));
 	}
 
+	/**
+	 * 获取参数值.
+	 * @param request 请求对象
+	 * @param paramName 参数名称
+	 */
 	public static String getParamValue(HttpServletRequest request, String paramName) {
 		String paramValue = request.getHeader(paramName);
 		// 从参数中获取
@@ -105,12 +120,46 @@ public final class RequestUtil {
 		return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
 	}
 
+	/**
+	 * 获取请求体.
+	 * @param request 请求对象
+	 */
 	@SneakyThrows
 	public static byte[] getRequestBody(HttpServletRequest request) {
 		return StreamUtils.copyToByteArray(request.getInputStream());
 	}
 
-	public static class RequestWrapper extends HttpServletRequestWrapper {
+	/**
+	 * 获取流.
+	 * @param requestBody 请求体
+	 */
+	public static ServletInputStream getInputStream(byte[] requestBody) {
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(requestBody);
+		return new ServletInputStream() {
+
+			@Override
+			public int read() {
+				return inputStream.read();
+			}
+
+			@Override
+			public boolean isFinished() {
+				return false;
+			}
+
+			@Override
+			public boolean isReady() {
+				return false;
+			}
+
+			@Override
+			public void setReadListener(ReadListener readListener) {
+				throw new UnsupportedOperationException();
+			}
+		};
+	}
+
+	public final static class RequestWrapper extends HttpServletRequestWrapper {
 
 		private final byte[] REQUEST_BODY;
 
@@ -131,29 +180,7 @@ public final class RequestUtil {
 
 		@Override
 		public ServletInputStream getInputStream() {
-			ByteArrayInputStream inputStream = new ByteArrayInputStream(REQUEST_BODY);
-			return new ServletInputStream() {
-
-				@Override
-				public int read() {
-					return inputStream.read();
-				}
-
-				@Override
-				public boolean isFinished() {
-					return false;
-				}
-
-				@Override
-				public boolean isReady() {
-					return false;
-				}
-
-				@Override
-				public void setReadListener(ReadListener readListener) {
-					throw new UnsupportedOperationException();
-				}
-			};
+			return RequestUtil.getInputStream(REQUEST_BODY);
 		}
 
 		private static class ByteArrayInputStreamReader extends InputStreamReader {

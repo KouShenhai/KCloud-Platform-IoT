@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,18 @@
 package org.laokou.common.core.utils;
 
 /**
+ * 系统工具类.
+ *
  * @author laokou
  */
 public final class SystemUtil {
 
+	private SystemUtil() {
+	}
+
+	/**
+	 * 判断是否是Window系统.
+	 */
 	public static boolean isWindows() {
 		return System.getProperty("os.name").toLowerCase().contains("windows");
 	}

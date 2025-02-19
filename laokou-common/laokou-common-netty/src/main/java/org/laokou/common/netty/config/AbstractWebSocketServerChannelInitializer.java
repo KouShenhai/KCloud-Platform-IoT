@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,38 +25,39 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.flush.FlushConsolidationHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
+import lombok.RequiredArgsConstructor;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * @author laokou
  */
+@RequiredArgsConstructor
 public abstract class AbstractWebSocketServerChannelInitializer extends AbstractChannelInitializer<NioSocketChannel> {
+
+	protected final SpringWebSocketServerProperties springWebSocketServerProperties;
 
 	// @formatter:off
 	@Override
-	protected void initChannel(NioSocketChannel channel) {
+	protected void initChannel(NioSocketChannel channel) throws Exception {
 		ChannelPipeline pipeline = channel.pipeline();
-		SpringWebSocketServerProperties properties = getProperties();
 		// 前置处理
-		preHandler(pipeline);
+		preHandler(channel, pipeline);
 		// HTTP解码器
 		pipeline.addLast("httpServerCodec", new HttpServerCodec());
 		// 块状方式写入
 		pipeline.addLast("chunkedWriteHandler", new ChunkedWriteHandler());
 		// 最大内容长度
-		pipeline.addLast("httpObjectAggregator", new HttpObjectAggregator(properties.getMaxContentLength()));
+		pipeline.addLast("httpObjectAggregator", new HttpObjectAggregator(springWebSocketServerProperties.getMaxContentLength()));
 		// WebSocket协议
-		pipeline.addLast("webSocketServerProtocolHandler", new WebSocketServerProtocolHandler(properties.getWebsocketPath()));
+		pipeline.addLast("webSocketServerProtocolHandler", new WebSocketServerProtocolHandler(springWebSocketServerProperties.getWebsocketPath()));
 		// 心跳检测
-		pipeline.addLast("idleStateHandler", new IdleStateHandler(properties.getReaderIdleTime(), properties.getWriterIdleTime(), properties.getAllIdleTime(), SECONDS));
+		pipeline.addLast("idleStateHandler", new IdleStateHandler(springWebSocketServerProperties.getReaderIdleTime(), springWebSocketServerProperties.getWriterIdleTime(), springWebSocketServerProperties.getAllIdleTime(), SECONDS));
 		// Flush合并
-		pipeline.addLast("flushConsolidationHandler", new FlushConsolidationHandler(properties.getExplicitFlushAfterFlushes(), properties.isConsolidateWhenNoReadInProgress()));
+		pipeline.addLast("flushConsolidationHandler", new FlushConsolidationHandler(springWebSocketServerProperties.getExplicitFlushAfterFlushes(), springWebSocketServerProperties.isConsolidateWhenNoReadInProgress()));
 		// 后置处理
-		postHandler(pipeline);
+		postHandler(channel, pipeline);
 	}
 	// @formatter:on
-
-	protected abstract SpringWebSocketServerProperties getProperties();
 
 }

@@ -1,8 +1,696 @@
 [
   {
-    "resource": "/sys/user/api/userInfo",
+    "resource": "/v3/users",
     "limitApp": "default",
-    "count": 300,
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/profile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/all",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/{id}",
+    "limitApp": "default",
+    "count": 100000,
     "grade": 1,
     "strategy": 0,
     "controlBehavior": 0

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 package org.laokou.common.core.config;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.i18n.I18nRequestContextFilter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -30,14 +31,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * @author laokou
  */
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class WebMvcConfig implements WebMvcConfigurer {
 
-	@Bean
+	@Bean(bootstrap = Bean.Bootstrap.BACKGROUND)
 	@ConditionalOnMissingBean(name = "requestContextFilter")
 	public static RequestContextFilter requestContextFilter() {
+		log.info("{} => Initializing RequestContextFilter", Thread.currentThread().getName());
 		return new I18nRequestContextFilter();
 	}
 

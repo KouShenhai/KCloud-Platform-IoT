@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-auth</artifactId>
-    <version>3.4.0</version>
+    <version>3.4.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-auth-infrastructure</artifactId>
@@ -54,10 +54,6 @@
       <artifactId>laokou-common-sensitive</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-auth-client</artifactId>
-    </dependency>
-    <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>
@@ -73,10 +69,6 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-trace</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-tenant</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
@@ -99,6 +91,10 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-prometheus</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-extension</artifactId>
     </dependency>
   </dependencies>
 

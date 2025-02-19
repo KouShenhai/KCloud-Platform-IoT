@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ package org.laokou.common.core.utils;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import jakarta.servlet.http.HttpServletRequest;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.LinkedMultiValueMap;
@@ -40,8 +41,11 @@ import static org.laokou.common.i18n.common.constant.StringConstant.*;
  */
 public final class MapUtil {
 
+	private MapUtil() {
+	}
+
 	/**
-	 * 判端不为空.
+	 * 判断不为空.
 	 * @param map map对象
 	 * @return 判断结果
 	 */
@@ -116,9 +120,9 @@ public final class MapUtil {
 	}
 
 	/**
-	 * 字符串转为param map.
+	 * 字符串参数转为map参数.
 	 * @param params 参数
-	 * @return paramMap对象
+	 * @return map参数对象
 	 */
 	public static Map<String, String> parseParamMap(String params) {
 		String[] strings = params.split(AND);
@@ -185,6 +189,11 @@ public final class MapUtil {
 		return parameters;
 	}
 
+	/**
+	 * 获取请求参数.
+	 * @param request 请求对象
+	 * @return 请求参数Map对象
+	 */
 	public static Map<String, String> getParameters(HttpServletRequest request) {
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		if (MapUtil.isNotEmpty(parameterMap)) {

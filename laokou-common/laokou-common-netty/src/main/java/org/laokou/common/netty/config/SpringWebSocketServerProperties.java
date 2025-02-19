@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,26 +30,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "spring.websocket-server")
 public class SpringWebSocketServerProperties {
-
-	/**
-	 * 开关，默认不开启.
-	 */
-	private boolean enabled = false;
-
-	/**
-	 * 监听核心线程数.
-	 */
-	private Integer bossCoreSize = 1;
-
-	/**
-	 * 读写核心线程数.
-	 */
-	private Integer workerCoreSize = 8;
-
-	/**
-	 * 线程池数.
-	 */
-	private Integer corePoolSize = 8;
 
 	/**
 	 * IP.
@@ -100,5 +80,40 @@ public class SpringWebSocketServerProperties {
 	 * 全部时间.
 	 */
 	private long allIdleTime = 0;
+
+	/**
+	 * 监听核心线程数.
+	 */
+	private Integer bossCorePoolSize = 1;
+
+	/**
+	 * 读写核心线程数.
+	 */
+	private Integer workerCorePoolSize = 8;
+
+	/**
+	 * 组核心线程数.
+	 */
+	private Integer groupCorePoolSize = 16;
+
+	/**
+	 * 延迟发送 => true实时，false延迟.
+	 */
+	private boolean tcpNodelay = false;
+
+	/**
+	 * 请求队列最大长度.
+	 */
+	private int backlogLength = 1024;
+
+	/**
+	 * 开启心跳包活机制.
+	 */
+	private boolean keepAlive = true;
+
+	/**
+	 * 最大心跳次数.
+	 */
+	private int maxHeartBeatCount = 5;
 
 }

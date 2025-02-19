@@ -55,7 +55,7 @@ public abstract class AbstractRuleEntity<T extends AbstractRule> implements Rule
 		return app;
 	}
 
-	public AbstractRuleEntity<T> setApp(String app) {
+	protected AbstractRuleEntity<T> setApp(String app) {
 		this.app = app;
 		return this;
 	}
@@ -65,7 +65,7 @@ public abstract class AbstractRuleEntity<T extends AbstractRule> implements Rule
 		return ip;
 	}
 
-	public AbstractRuleEntity<T> setIp(String ip) {
+	protected AbstractRuleEntity<T> setIp(String ip) {
 		this.ip = ip;
 		return this;
 	}
@@ -75,7 +75,7 @@ public abstract class AbstractRuleEntity<T extends AbstractRule> implements Rule
 		return port;
 	}
 
-	public AbstractRuleEntity<T> setPort(Integer port) {
+	protected AbstractRuleEntity<T> setPort(Integer port) {
 		this.port = port;
 		return this;
 	}
@@ -84,7 +84,7 @@ public abstract class AbstractRuleEntity<T extends AbstractRule> implements Rule
 		return rule;
 	}
 
-	public AbstractRuleEntity<T> setRule(T rule) {
+	protected AbstractRuleEntity<T> setRule(T rule) {
 		this.rule = rule;
 		return this;
 	}

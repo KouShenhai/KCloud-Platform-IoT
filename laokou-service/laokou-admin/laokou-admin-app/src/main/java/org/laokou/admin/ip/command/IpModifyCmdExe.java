@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.ip.ability.IpDomainService;
 import org.laokou.admin.ip.convertor.IpConvertor;
 import org.laokou.admin.ip.dto.IpModifyCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,9 +35,11 @@ public class IpModifyCmdExe {
 
 	private final IpDomainService ipDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(IpModifyCmd cmd) {
 		// 校验参数
-		ipDomainService.update(IpConvertor.toEntity(cmd.getCo()));
+		transactionalUtil.executeInTransaction(() -> ipDomainService.update(IpConvertor.toEntity(cmd.getCo())));
 	}
 
 }

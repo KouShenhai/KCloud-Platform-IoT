@@ -3,28 +3,64 @@
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 import {Dropdown, message, theme} from "antd";
-// @ts-ignore
-import {history} from 'umi';
-import {LogoutOutlined} from "@ant-design/icons";
+import {history} from "@umijs/max";
+import {HomeOutlined, LogoutOutlined, RobotOutlined, SettingOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
 import {logoutV3} from "@/services/auth/auth";
 import {clearToken, getAccessToken, getExpiresTime, getRefreshToken} from "@/access";
+import React from "react";
+import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
+import {getProfileV3} from "@/services/admin/user";
+import {userTreeListV3} from "@/services/admin/menu";
+
+const getIcon = (icon: string) => {
+	switch (icon) {
+		case 'SettingOutlined': return <SettingOutlined/>
+		case 'RobotOutlined': return <RobotOutlined/>
+		default: return <SettingOutlined/>
+	}
+}
+
+const getRouters = (menus: any[]) => {
+	const routers = [{
+		name: '首页',
+		path: '/home',
+		icon: <HomeOutlined/>
+	}]
+	if (menus.length > 0) {
+		menus.forEach((item: any) => {
+			item.icon = getIcon(item.icon)
+			routers.push(item)
+		})
+	}
+	return routers
+}
 
 export async function getInitialState(): Promise<{
-	name: string;
-	avatar?: string;
+	id: bigint;
+	username: string;
+	avatar: string;
+	permissions: string[]
 }> {
+	const result = await getProfileV3().catch(console.log);
 	return {
-		name: 'admin',
-		avatar: '/1.jpg',
+		id: result?.data?.id,
+		username: result?.data?.username,
+		avatar: result?.data?.avatar,
+		permissions: result?.data?.permissions,
 	};
 }
 
-export const layout = () => {
+export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 	return {
 		logo: '/logo.png',
 		menu: {
 			locale: false,
+			params: initialState?.username,
+			request: async () => {
+				const result = await userTreeListV3({code: 0}).catch(console.log);
+				return getRouters(result?.data)
+			}
 		},
 		layout: 'mix',
 		splitMenus: false,
@@ -35,9 +71,9 @@ export const layout = () => {
 		fixedHeader: true,
 		siderMenuType: "sub",
 		avatarProps: {
-			src: '/1.jpg',
+			src: initialState?.avatar,
 			size: 'small',
-			title: 'admin',
+			title: initialState?.username,
 			render: (_props: any, dom: string | number | boolean | ReactElement | Iterable<ReactNode> | ReactPortal | null | undefined) => {
 				return (
 					<Dropdown
@@ -94,12 +130,12 @@ export const layout = () => {
 				colorTextMenuActive: '#ffffff', // menuItem hover 的选中字体颜色
 				colorBgMenuItemActive: 'rgba(0, 0, 0, 0.15)', // menuItem 的点击时背景颜色
 				colorBgMenuItemSelected: '#1677ff', // menuItem 的选中背景颜色
-				colorBgMenuItemHover: 'rgba(90, 75, 75, 0.03)', // menuItem 的 hover 背景颜色
+				colorBgMenuItemHover: '#1677ff', // menuItem 的 hover 背景颜色
 				colorBgMenuItemCollapsedElevated: 'transparent', // 收起 menuItem 的弹出菜单背景颜色
 				colorBgCollapsedButton: '#ffffff', // 展开收起按钮背景颜色
 				colorTextCollapsedButton: '#dee1f0', // 展开收起按钮字体颜色
 				colorTextCollapsedButtonHover: '#dee1f0' // 展开收起按钮 hover 时字体颜色
-			}
+			 }
 		},
 	};
 };
@@ -132,7 +168,7 @@ export const request: {
 	},
 	// 请求拦截
 	requestInterceptors: [
-		(config: any) => {
+		async (config: any) => {
 			const headers = config.headers ? config.headers : [];
 			// 令牌过期前5分钟刷新
 			const time = 5 * 60 * 1000;
@@ -154,15 +190,22 @@ export const request: {
 	],
 	// 响应拦截
 	responseInterceptors: [
-		(response: any) => {
+		async (response: any) => {
 			const {status, data} = response;
+			if (response.request?.responseType === 'blob' || response.request?.responseType === 'arraybuffer') {
+				if(response.data.type === 'application/json') {
+					const res = await new Response(response.data).json()
+					message.error(res.msg).then();
+				}
+			}
 			if (status === 200 && data.code === undefined) {
 				response.data = {code: 'OK', msg: '请求成功', data: data};
 			} else if (status === 200 && data.code !== 'OK') {
 				if (data.code === "Unauthorized") {
 					history.push('/login')
+				} else {
+					message.error(data.msg).then();
 				}
-				message.error(data.msg).then();
 			}
 			return response;
 		},

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,8 @@
 package org.laokou.common.mqtt.template;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.mqtt.config.MqttManager;
+import org.eclipse.paho.mqttv5.common.MqttException;
+import org.laokou.common.mqtt.config.MqttClientManager;
 
 /**
  * @author laokou
@@ -26,10 +27,8 @@ import org.laokou.common.mqtt.config.MqttManager;
 @RequiredArgsConstructor
 public class MqttTemplate {
 
-	private final MqttManager mqttManager;
-
-	public void send(String key, String topic, String payload, int qos) {
-		mqttManager.getSession(key).send(topic, payload, qos);
+	public void publish(String clientId, String topic, byte[] payload, int qos) throws MqttException {
+		MqttClientManager.get(clientId).publish(topic, payload, qos);
 	}
 
 }

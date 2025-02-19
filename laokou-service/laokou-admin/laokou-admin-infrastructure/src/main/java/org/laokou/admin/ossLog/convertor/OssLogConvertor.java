@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,12 @@
 
 package org.laokou.admin.ossLog.convertor;
 
-import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.admin.ossLog.dto.clientobject.OssLogCO;
+import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.admin.ossLog.model.OssLogE;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
  * OSS日志转换器.
@@ -33,7 +34,7 @@ public class OssLogConvertor {
 	public static OssLogDO toDataObject(OssLogE ossLogE) {
 		OssLogDO ossLogDO = ConvertUtil.sourceToTarget(ossLogE, OssLogDO.class);
 		if (ObjectUtil.isNull(ossLogDO.getId())) {
-			ossLogDO.generatorId();
+			ossLogDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return ossLogDO;
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,12 @@
 
 package org.laokou.admin.source.convertor;
 
-import org.laokou.admin.source.gatewayimpl.database.dataobject.SourceDO;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.admin.source.dto.clientobject.SourceCO;
 import org.laokou.admin.source.model.SourceE;
+import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.tenant.mapper.SourceDO;
 
 /**
  * 数据源转换器.
@@ -33,7 +34,7 @@ public class SourceConvertor {
 	public static SourceDO toDataObject(SourceE sourceE) {
 		SourceDO sourceDO = ConvertUtil.sourceToTarget(sourceE, SourceDO.class);
 		if (ObjectUtil.isNull(sourceDO.getId())) {
-			sourceDO.generatorId();
+			sourceDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return sourceDO;
 	}

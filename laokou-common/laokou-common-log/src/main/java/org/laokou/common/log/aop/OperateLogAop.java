@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,16 +19,17 @@ package org.laokou.common.log.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.log.annotation.OperateLog;
-import org.laokou.common.log.model.LogA;
+import org.laokou.common.log.model.LogE;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
 /**
  * 操作日志切面.
@@ -43,13 +44,15 @@ public class OperateLogAop {
 
 	private final SpringUtil springUtil;
 
+	@SneakyThrows
 	@Around("@annotation(operateLog)")
 	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) {
-		long startTime = IdGenerator.SystemClock.now();
+		StopWatch stopWatch = new StopWatch("操作日志");
+		stopWatch.start();
 		// 服务ID
 		String serviceId = springUtil.getServiceId();
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
-		LogA operate = new LogA(operateLog.module(), operateLog.operation(), request, serviceId);
+		LogE operate = new LogE(operateLog.module(), operateLog.operation(), request, serviceId);
 		String className = point.getTarget().getClass().getName();
 		String methodName = point.getSignature().getName();
 		Object[] args = point.getArgs();
@@ -57,18 +60,17 @@ public class OperateLogAop {
 		operate.decorateMethodName(className, methodName);
 		// 组装请求参数
 		operate.decorateRequestParams(args);
-		Object proceed = null;
+		Object proceed;
 		Throwable throwable = null;
 		try {
 			proceed = point.proceed();
 		}
 		catch (Throwable e) {
-			log.error("错误信息：{}", e.getMessage(), e);
-			throwable = e;
+			throw throwable = e;
 		}
 		finally {
 			// 计算消耗时间
-			operate.calculateTaskTime(startTime);
+			operate.calculateTaskTime(stopWatch);
 			// 修改错误
 			operate.updateThrowable(throwable);
 		}

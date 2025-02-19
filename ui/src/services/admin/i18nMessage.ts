@@ -1,8 +1,7 @@
-// @ts-ignore
 /* eslint-disable */
 import {request} from '@umijs/max';
 
-/** 修改国际化 修改国际化 PUT /v3/i18n-messages */
+/** 修改国际化消息 修改国际化消息 PUT /v3/i18n-messages */
 export async function modifyV3(body: API.I18nMessageModifyCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/i18n-messages', {
 		method: 'PUT',
@@ -14,7 +13,7 @@ export async function modifyV3(body: API.I18nMessageModifyCmd, options?: { [key:
 	});
 }
 
-/** 保存国际化 保存国际化 POST /v3/i18n-messages */
+/** 保存国际化消息 保存国际化消息 POST /v3/i18n-messages */
 export async function saveV3(body: API.I18nMessageSaveCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/i18n-messages', {
 		method: 'POST',
@@ -26,7 +25,7 @@ export async function saveV3(body: API.I18nMessageSaveCmd, options?: { [key: str
 	});
 }
 
-/** 删除国际化 删除国际化 DELETE /v3/i18n-messages */
+/** 删除国际化消息 删除国际化消息 DELETE /v3/i18n-messages */
 export async function removeV3(body: number[], options?: { [key: string]: any }) {
 	return request<any>('/v3/i18n-messages', {
 		method: 'DELETE',
@@ -38,7 +37,7 @@ export async function removeV3(body: number[], options?: { [key: string]: any })
 	});
 }
 
-/** 查看国际化详情 查看国际化详情 GET /v3/i18n-messages/${param0} */
+/** 查看国际化消息详情 查看国际化消息详情 GET /v3/i18n-messages/${param0} */
 export async function getByIdV3(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
 	params: API.getByIdV3Params,
@@ -52,7 +51,7 @@ export async function getByIdV3(
 	});
 }
 
-/** 导出国际化 导出国际化 POST /v3/i18n-messages/export */
+/** 导出国际化消息 导出国际化消息 POST /v3/i18n-messages/export */
 export async function exportV3(body: API.I18nMessageExportCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/i18n-messages/export', {
 		method: 'POST',
@@ -64,7 +63,7 @@ export async function exportV3(body: API.I18nMessageExportCmd, options?: { [key:
 	});
 }
 
-/** 导入国际化 导入国际化 POST /v3/i18n-messages/import */
+/** 导入国际化消息 导入国际化消息 POST /v3/i18n-messages/import */
 export async function importV3(body: {}, file?: File[], options?: { [key: string]: any }) {
 	const formData = new FormData();
 
@@ -96,7 +95,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 	});
 }
 
-/** 分页查询国际化列表 分页查询国际化列表 POST /v3/i18n-messages/page */
+/** 分页查询国际化消息列表 分页查询国际化消息列表 POST /v3/i18n-messages/page */
 export async function pageV3(body: API.I18nMessagePageQry, options?: { [key: string]: any }) {
 	return request<API.Result>('/v3/i18n-messages/page', {
 		method: 'POST',

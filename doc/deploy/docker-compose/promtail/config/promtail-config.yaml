@@ -1,0 +1,19 @@
+server:
+  http_listen_port: 9081
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+# https://grafana.org.cn/docs/loki/latest/send-data/promtail/configuration/#example-push-config
+scrape_configs:
+  - job_name: trace-log-push
+    loki_push_api:
+      server:
+        http_listen_port: 3500
+        grpc_listen_port: 3600
+      labels:
+        pushserver: trace-log-push

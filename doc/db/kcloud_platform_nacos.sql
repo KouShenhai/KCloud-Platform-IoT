@@ -3,816 +3,41 @@
 
  Source Server         : 127.0.0.1
  Source Server Type    : PostgreSQL
- Source Server Version : 160002 (160002)
+ Source Server Version : 160003 (160003)
  Source Host           : 127.0.0.1:5432
  Source Catalog        : kcloud_platform_nacos
  Source Schema         : public
 
  Target Server Type    : PostgreSQL
- Target Server Version : 160002 (160002)
+ Target Server Version : 160003 (160003)
  File Encoding         : 65001
 
- Date: 18/10/2024 19:19:16
+ Date: 30/12/2024 23:27:10
 */
 
 
 -- ----------------------------
--- Sequence structure for config_info_aggr_id_seq
+-- Table structure for users
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
+DROP TABLE IF EXISTS "public"."users";
+CREATE TABLE "public"."users" (
+  "username" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
+  "password" varchar(500) COLLATE "pg_catalog"."default" NOT NULL,
+  "enabled" bool NOT NULL DEFAULT true
+)
+;
 
 -- ----------------------------
--- Sequence structure for config_info_aggr_id_seq1
+-- Records of users
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq1";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
+INSERT INTO "public"."users" VALUES ('laokou', '$2a$10$75WIn2J5FoX9F5wEBdFsL.0cKdv5h8QqBMKMWBABhWAxKB4TO8WZq', 'f');
+INSERT INTO "public"."users" VALUES ('nacos', '$2a$10$oVX1zRtaql9Jbsyzaaovx.TU2M6Bw0ZpCbPYWOIED58d1ougzaFRm', 'f');
 
 -- ----------------------------
--- Sequence structure for config_info_aggr_id_seq2
+-- Table structure for tenant_info
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq2";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq3";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq4";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq5";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq6";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_aggr_id_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_aggr_id_seq7";
-CREATE SEQUENCE "public"."config_info_aggr_id_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq";
-CREATE SEQUENCE "public"."config_info_beta_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq1";
-CREATE SEQUENCE "public"."config_info_beta_id_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq2";
-CREATE SEQUENCE "public"."config_info_beta_id_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq3";
-CREATE SEQUENCE "public"."config_info_beta_id_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq4";
-CREATE SEQUENCE "public"."config_info_beta_id_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq5";
-CREATE SEQUENCE "public"."config_info_beta_id_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq6";
-CREATE SEQUENCE "public"."config_info_beta_id_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_beta_id_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_beta_id_seq7";
-CREATE SEQUENCE "public"."config_info_beta_id_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq";
-CREATE SEQUENCE "public"."config_info_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq1";
-CREATE SEQUENCE "public"."config_info_id_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq2";
-CREATE SEQUENCE "public"."config_info_id_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq3";
-CREATE SEQUENCE "public"."config_info_id_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq4";
-CREATE SEQUENCE "public"."config_info_id_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq5";
-CREATE SEQUENCE "public"."config_info_id_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq6";
-CREATE SEQUENCE "public"."config_info_id_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_id_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_id_seq7";
-CREATE SEQUENCE "public"."config_info_id_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq";
-CREATE SEQUENCE "public"."config_info_tag_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq1";
-CREATE SEQUENCE "public"."config_info_tag_id_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq2";
-CREATE SEQUENCE "public"."config_info_tag_id_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq3";
-CREATE SEQUENCE "public"."config_info_tag_id_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq4";
-CREATE SEQUENCE "public"."config_info_tag_id_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq5";
-CREATE SEQUENCE "public"."config_info_tag_id_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq6";
-CREATE SEQUENCE "public"."config_info_tag_id_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_info_tag_id_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_info_tag_id_seq7";
-CREATE SEQUENCE "public"."config_info_tag_id_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq1";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq2";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq3";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq4";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq5";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq6";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for config_tags_relation_nid_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."config_tags_relation_nid_seq7";
-CREATE SEQUENCE "public"."config_tags_relation_nid_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq";
-CREATE SEQUENCE "public"."group_capacity_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq1";
-CREATE SEQUENCE "public"."group_capacity_id_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq2";
-CREATE SEQUENCE "public"."group_capacity_id_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq3";
-CREATE SEQUENCE "public"."group_capacity_id_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq4";
-CREATE SEQUENCE "public"."group_capacity_id_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq5";
-CREATE SEQUENCE "public"."group_capacity_id_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq6";
-CREATE SEQUENCE "public"."group_capacity_id_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for group_capacity_id_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."group_capacity_id_seq7";
-CREATE SEQUENCE "public"."group_capacity_id_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq";
-CREATE SEQUENCE "public"."his_config_info_nid_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq1";
-CREATE SEQUENCE "public"."his_config_info_nid_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq2";
-CREATE SEQUENCE "public"."his_config_info_nid_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq3";
-CREATE SEQUENCE "public"."his_config_info_nid_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq4";
-CREATE SEQUENCE "public"."his_config_info_nid_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq5";
-CREATE SEQUENCE "public"."his_config_info_nid_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq6";
-CREATE SEQUENCE "public"."his_config_info_nid_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for his_config_info_nid_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."his_config_info_nid_seq7";
-CREATE SEQUENCE "public"."his_config_info_nid_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq1";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq2";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq3";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq4";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq5";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq6";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_capacity_id_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_capacity_id_seq7";
-CREATE SEQUENCE "public"."tenant_capacity_id_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq";
-CREATE SEQUENCE "public"."tenant_info_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq1
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq1";
-CREATE SEQUENCE "public"."tenant_info_id_seq1" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq2
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq2";
-CREATE SEQUENCE "public"."tenant_info_id_seq2" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq3
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq3";
-CREATE SEQUENCE "public"."tenant_info_id_seq3" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq4
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq4";
-CREATE SEQUENCE "public"."tenant_info_id_seq4" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq5
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq5";
-CREATE SEQUENCE "public"."tenant_info_id_seq5" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq6
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq6";
-CREATE SEQUENCE "public"."tenant_info_id_seq6" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tenant_info_id_seq7
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tenant_info_id_seq7";
-CREATE SEQUENCE "public"."tenant_info_id_seq7" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Table structure for config_info
--- ----------------------------
-DROP TABLE IF EXISTS "public"."config_info";
-CREATE TABLE "public"."config_info" (
+DROP TABLE IF EXISTS "public"."tenant_info";
+CREATE TABLE "public"."tenant_info" (
   "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
 INCREMENT 1
 MINVALUE  1
@@ -820,2824 +45,278 @@ MAXVALUE 9223372036854775807
 START 1
 CACHE 1
 ),
+  "kp" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
+  "tenant_id" varchar(128) COLLATE "pg_catalog"."default" DEFAULT ''::character varying,
+  "tenant_name" varchar(128) COLLATE "pg_catalog"."default" DEFAULT ''::character varying,
+  "tenant_desc" varchar(256) COLLATE "pg_catalog"."default",
+  "create_source" varchar(32) COLLATE "pg_catalog"."default",
+  "gmt_create" int8 NOT NULL,
+  "gmt_modified" int8 NOT NULL
+)
+;
+COMMENT ON COLUMN "public"."tenant_info"."id" IS 'id';
+COMMENT ON COLUMN "public"."tenant_info"."kp" IS 'kp';
+COMMENT ON COLUMN "public"."tenant_info"."tenant_id" IS 'tenant_id';
+COMMENT ON COLUMN "public"."tenant_info"."tenant_name" IS 'tenant_name';
+COMMENT ON COLUMN "public"."tenant_info"."tenant_desc" IS 'tenant_desc';
+COMMENT ON COLUMN "public"."tenant_info"."create_source" IS 'create_source';
+COMMENT ON COLUMN "public"."tenant_info"."gmt_create" IS '创建时间';
+COMMENT ON COLUMN "public"."tenant_info"."gmt_modified" IS '修改时间';
+COMMENT ON TABLE "public"."tenant_info" IS 'tenant_info';
+
+-- ----------------------------
+-- Records of tenant_info
+-- ----------------------------
+INSERT INTO "public"."tenant_info" VALUES (2, '1', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'test', 'test', 'nacos', 1673556960289, 1716628319164);
+INSERT INTO "public"."tenant_info" VALUES (1, '1', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'dev', 'dev', 'nacos', 1716631648356, 1716631648356);
+INSERT INTO "public"."tenant_info" VALUES (3, '1', '8140e92b-fb43-48f5-b63b-7506185206a5', 'prod', 'prod', 'nacos', 1716631657328, 1716631657328);
+
+-- ----------------------------
+-- Table structure for tenant_capacity
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."tenant_capacity";
+CREATE TABLE "public"."tenant_capacity" (
+  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1
+),
+  "tenant_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL DEFAULT ''::character varying,
+  "quota" int8 NOT NULL DEFAULT 0,
+  "usage" int8 NOT NULL DEFAULT 0,
+  "max_size" int8 NOT NULL DEFAULT 0,
+  "max_aggr_count" int8 NOT NULL DEFAULT 0,
+  "max_aggr_size" int8 NOT NULL DEFAULT 0,
+  "max_history_count" int8 NOT NULL DEFAULT 0,
+  "gmt_create" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "gmt_modified" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+)
+;
+COMMENT ON COLUMN "public"."tenant_capacity"."id" IS '主键ID';
+COMMENT ON COLUMN "public"."tenant_capacity"."tenant_id" IS 'Tenant ID';
+COMMENT ON COLUMN "public"."tenant_capacity"."quota" IS '配额，0表示使用默认值';
+COMMENT ON COLUMN "public"."tenant_capacity"."usage" IS '使用量';
+COMMENT ON COLUMN "public"."tenant_capacity"."max_size" IS '单个配置大小上限，单位为字节，0表示使用默认值';
+COMMENT ON COLUMN "public"."tenant_capacity"."max_aggr_count" IS '聚合子配置最大个数';
+COMMENT ON COLUMN "public"."tenant_capacity"."max_aggr_size" IS '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值';
+COMMENT ON COLUMN "public"."tenant_capacity"."max_history_count" IS '最大变更历史数量';
+COMMENT ON COLUMN "public"."tenant_capacity"."gmt_create" IS '创建时间';
+COMMENT ON COLUMN "public"."tenant_capacity"."gmt_modified" IS '修改时间';
+COMMENT ON TABLE "public"."tenant_capacity" IS '租户容量信息表';
+
+-- ----------------------------
+-- Records of tenant_capacity
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for roles
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."roles";
+CREATE TABLE "public"."roles" (
+  "username" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
+  "role" varchar(50) COLLATE "pg_catalog"."default" NOT NULL
+)
+;
+
+-- ----------------------------
+-- Records of roles
+-- ----------------------------
+INSERT INTO "public"."roles" VALUES ('laokou', 'ADMIN');
+INSERT INTO "public"."roles" VALUES ('nacos', 'ROLE_ADMIN');
+
+-- ----------------------------
+-- Table structure for permissions
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."permissions";
+CREATE TABLE "public"."permissions" (
+  "role" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
+  "resource" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+  "action" varchar(8) COLLATE "pg_catalog"."default" NOT NULL
+)
+;
+
+-- ----------------------------
+-- Records of permissions
+-- ----------------------------
+INSERT INTO "public"."permissions" VALUES ('ADMIN', ':*:*', 'rw');
+INSERT INTO "public"."permissions" VALUES ('ADMIN', 'a61abd4c-ef96-42a5-99a1-616adee531f3:*:*', 'rw');
+INSERT INTO "public"."permissions" VALUES ('ROLE_ADMIN', ':*:*', 'rw');
+INSERT INTO "public"."permissions" VALUES ('ROLE_ADMIN', 'a61abd4c-ef96-42a5-99a1-616adee531f3:*:*', 'rw');
+
+-- ----------------------------
+-- Table structure for his_config_info
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."his_config_info";
+CREATE TABLE "public"."his_config_info" (
+  "id" int8 NOT NULL,
+  "nid" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1
+),
   "data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "group_id" varchar(128) COLLATE "pg_catalog"."default",
+  "group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
+  "app_name" varchar(128) COLLATE "pg_catalog"."default",
   "content" text COLLATE "pg_catalog"."default" NOT NULL,
   "md5" varchar(32) COLLATE "pg_catalog"."default",
   "gmt_create" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "gmt_modified" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "src_user" text COLLATE "pg_catalog"."default",
   "src_ip" varchar(50) COLLATE "pg_catalog"."default",
-  "app_name" varchar(128) COLLATE "pg_catalog"."default",
+  "op_type" char(10) COLLATE "pg_catalog"."default",
   "tenant_id" varchar(128) COLLATE "pg_catalog"."default" DEFAULT ''::character varying,
-  "c_desc" varchar(256) COLLATE "pg_catalog"."default",
-  "c_use" varchar(64) COLLATE "pg_catalog"."default",
-  "effect" varchar(64) COLLATE "pg_catalog"."default",
-  "type" varchar(64) COLLATE "pg_catalog"."default",
-  "c_schema" text COLLATE "pg_catalog"."default",
-  "encrypted_data_key" text COLLATE "pg_catalog"."default" NOT NULL
+  "encrypted_data_key" text COLLATE "pg_catalog"."default" NOT NULL,
+  "publish_type" varchar(50) COLLATE "pg_catalog"."default" NOT NULL default 'formal',
+	"gray_name" varchar(128) COLLATE "pg_catalog"."default",
+	"ext_info" text COLLATE "pg_catalog"."default"
 )
 ;
-COMMENT ON COLUMN "public"."config_info"."id" IS 'id';
-COMMENT ON COLUMN "public"."config_info"."data_id" IS 'data_id';
-COMMENT ON COLUMN "public"."config_info"."content" IS 'content';
-COMMENT ON COLUMN "public"."config_info"."md5" IS 'md5';
-COMMENT ON COLUMN "public"."config_info"."gmt_create" IS '创建时间';
-COMMENT ON COLUMN "public"."config_info"."gmt_modified" IS '修改时间';
-COMMENT ON COLUMN "public"."config_info"."src_user" IS 'source user';
-COMMENT ON COLUMN "public"."config_info"."src_ip" IS 'source ip';
-COMMENT ON COLUMN "public"."config_info"."tenant_id" IS '租户字段';
-COMMENT ON COLUMN "public"."config_info"."encrypted_data_key" IS '秘钥';
-COMMENT ON TABLE "public"."config_info" IS 'config_info';
+COMMENT ON COLUMN "public"."his_config_info"."id" IS 'id';
+COMMENT ON COLUMN "public"."his_config_info"."nid" IS 'nid';
+COMMENT ON COLUMN "public"."his_config_info"."data_id" IS 'data_id';
+COMMENT ON COLUMN "public"."his_config_info"."group_id" IS 'group_id';
+COMMENT ON COLUMN "public"."his_config_info"."app_name" IS 'app_name';
+COMMENT ON COLUMN "public"."his_config_info"."content" IS 'content';
+COMMENT ON COLUMN "public"."his_config_info"."md5" IS 'md5';
+COMMENT ON COLUMN "public"."his_config_info"."gmt_create" IS '创建时间';
+COMMENT ON COLUMN "public"."his_config_info"."gmt_modified" IS '修改时间';
+COMMENT ON COLUMN "public"."his_config_info"."src_user" IS 'source user';
+COMMENT ON COLUMN "public"."his_config_info"."src_ip" IS 'source ip';
+COMMENT ON COLUMN "public"."his_config_info"."op_type" IS 'operation type';
+COMMENT ON COLUMN "public"."his_config_info"."tenant_id" IS '租户字段';
+COMMENT ON COLUMN "public"."his_config_info"."encrypted_data_key" IS '秘钥';
+COMMENT ON COLUMN "public"."his_config_info"."publish_type" IS 'publish type gray or formal';
+COMMENT ON COLUMN "public"."his_config_info"."gray_name" IS 'gray name';
+COMMENT ON COLUMN "public"."his_config_info"."ext_info" IS 'ext info';
+COMMENT ON TABLE "public"."his_config_info" IS '多租户改造';
 
 -- ----------------------------
--- Records of config_info
+-- Records of his_config_info
 -- ----------------------------
-INSERT INTO "public"."config_info" VALUES (16, 'application-common-redis.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  data:
-    # redis
-    redis:
-      client-type: lettuce
-      host: redis
-      port: 6379
-      password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-      connect-timeout: 60000ms #连接超时时长（毫秒）
-      timeout: 60000ms #超时时长（毫秒）
-      lettuce:
-        pool:
-          max-active: 20 #连接池最大连接数（使用负值表示无极限）
-          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
-          max-idle: 10 #连接池最大空闲连接
-          min-idle: 5 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2023-01-13 12:15:59', '2023-11-06 18:02:43', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'redis公共配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (103, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-spring:
-  # elasticsearch
-  elasticsearch:
-    uris:
-     - https://elasticsearch:9200
-    username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
-    password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-    connection-timeout: 30s
-    socket-timeout: 30s', '54cf98fa1e36856f525336acf7a5d20d', '2023-01-17 10:22:15', '2024-04-07 20:52:38', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'elasticsearch公共配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (1270, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'rocketmq:
-  producer:
-    group: laokou_producer_group
-  name-server: rocketmq-namesrv:9876
-  consumer:
-    pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2023-01-21 10:43:04', '2023-11-06 18:10:30', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'rocketmq公共配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (1567, 'gateway-flow.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "laokou-auth",
-    "grade": 1,
-    "count": 300,
-    "intervalSec": 1,
-    "burst": 1000,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "laokou-admin",
-    "grade": 1,
-    "count": 300,
-    "intervalSec": 1,
-    "burst": 1000,
-    "controlBehavior": 0
-  }
-]', 'c5fbcf8031ce039bb97bd44cbfbca16b', '2023-02-26 14:59:20', '2023-04-01 14:42:04', 'nacos', '127.0.0.1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (1568, 'auth-flow.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "/v3/captchas/{uuid}",
-    "limitApp": "default",
-    "count": 300,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/secrets",
-    "limitApp": "default",
-    "count": 300,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  }
-]', '6ae7639ff49789dd99787e908efa836d', '2023-02-26 15:01:51', '2024-05-25 18:20:09.951', 'nacos', '127.0.0.1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'auth sentinel  flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (1569, 'admin-flow.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "/v3/users/profile",
-    "limitApp": "default",
-    "count": 300,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  }
-]', '31d82f93a5909b2529f159848116e162', '2023-02-26 15:03:07', '2024-05-25 18:19:15.142', 'nacos', '127.0.0.1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (2118, 'application-report.yaml', 'LAOKOU_GROUP', 'server:
-  port: 8088', '89f7b26715cf760d099a258200381fe0', '2023-10-01 04:56:06', '2024-05-01 00:45:57', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-report', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (1477, 'application-mail.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-spring:
-  # mail
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8', '3e16e7d481fcc41559736dc5f7258251', '2023-02-13 20:00:32', '2024-07-16 21:52:10.149', 'nacos', '127.0.0.1', 'laokou-mail', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'mail配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (2159, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
-  kafka:
-    bootstrap-servers: kafka:9092
-    consumer:
-      # 禁用自动提交（按周期）已消费offset
-      enable-auto-commit: false
-      # 单次poll()调用返回的记录数
-      max-poll-records: 50
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    producer:
-      # 发生错误后，消息重发的次数。
-      retries: 5
-      #当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
-      batch-size: 16384
-      # 设置生产者内存缓冲区的大小。
-      buffer-memory: 33554432
-      # 键的序列化方式
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      # 值的序列化方式
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
-      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
-      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
-      acks: 0
-    listener:
-      # 在侦听器容器中运行的线程数。
-      concurrency: 5
-      # listner负责ack，每调用一次，就立即commit
-      ack-mode: manual
-      # 批量batch类型
-      type: batch
-      # topic不存在报错
-      missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2023-10-26 08:54:23', '2023-11-06 18:14:00', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'kafka公共配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (70, 'application-gateway.yaml', 'LAOKOU_GROUP', 'server:
-  # 开启请求压缩
-  compression:
-    enabled: true
-  ssl:
-    # 开启证书
-    enabled: false
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-    # 证书密码
-    key-password: laokou
-  http2:
-    enabled: false
-  forward-headers-strategy: native
-  # 优雅停机
-  shutdown: graceful
-  netty:
-    # 请求的最大初始行长度
-    max-initial-line-length: 4096
-# spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  webflux:
-    multipart:
-      max-parts: -1
-      max-disk-usage-per-part: -1
-      max-in-memory-size: 4096
-  cloud:
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # key可以自定义
-        db0:
-          nacos:
-            server-addr: http://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            data-id: gateway-flow.json
-            rule-type: gw_flow # 网关规则
-            group-id: LAOKOU_GROUP
-            data-type: json
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      cache:
-        caffeine:
-          # 初始容量 => 30
-          # 最大容量 => 4096
-          # 淘汰规则 => 最后一次写操作后经过30s过期
-          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
-        # 开启缓存
-        enabled: true
-      nacos:
-        # 开启Nacos路由负载均衡
-        enabled: true
-    # network
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-    # gateway
-    gateway:
-      discovery:
-        locator:
-          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
-          # 查看DiscoveryLocatorProperties
-          enabled: false
-          # 开启服务ID强制小写
-          lower-case-service-id: true
-      httpclient:
-        ssl:
-          # 信任所有下游证书
-          use-insecure-trust-manager: true
-        # 关闭netty日志
-        wiretap: false
-        pool:
-          # 连接池中连接的最大空闲时间
-          max-idle-time: 10m
-          # 最大连接数
-          max-connections: 10000
-          # 连接池中连接的最大存活时间
-          max-life-time: 5m
-          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
-          # fixed     固定数量线程池
-          # disabled  不使用线程池（只有一个线程）
-          type: fixed
-          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
-          acquire-timeout: 60000
-        # 连接超时时间（毫秒），默认30s
-        connect-timeout: 60000
-      httpserver:
-        # 关闭netty日志
-        wiretap: false
-      router:
-        auth:
-          enabled: true
-          username: laokou
-          password: laokou123
-      ip:
-        white:
-          enabled: false
-        black:
-          enabled: false
-logging:
-  config: classpath:log4j2-dev.xml
-
-knife4j:
-  gateway:
-    enabled: true
-    tags-sorter: order
-    operations-sorter: order
-    # 手动
-    strategy: manual
-    routes:
-      - name: 认证服务
-        url: /auth/v3/api-docs?group=default
-        service-name: laokou-auth
-        context-path: /auth
-        order: 1
-      - name: 管理服务
-        url: /admin/v3/api-docs?group=default
-        service-name: laokou-admin
-        context-path: /admin
-        order: 2', '53536b4ca08a0955243898587905b8e8', '2024-05-25 18:13:33.458', '2024-09-07 16:38:51.447', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (48, 'application-gateway.yaml', 'LAOKOU_GROUP', 'server:
-  # 开启请求压缩
-  compression:
-    enabled: true
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-    # 证书密码
-    key-password: laokou
-  http2:
-    enabled: true
-  forward-headers-strategy: native
-  # 优雅停机
-  shutdown: graceful
-  netty:
-    # 请求的最大初始行长度
-    max-initial-line-length: 4096
-# spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  webflux:
-    multipart:
-      max-parts: -1
-      max-disk-usage-per-part: -1
-      max-in-memory-size: 4096
-  cloud:
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # key可以自定义
-        db0:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            data-id: gateway-flow.json
-            rule-type: gw_flow # 网关规则
-            group-id: LAOKOU_GROUP
-            data-type: json
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      cache:
-        caffeine:
-          # 初始容量 => 30
-          # 最大容量 => 4096
-          # 淘汰规则 => 最后一次写操作后经过30s过期
-          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
-        # 开启缓存
-        enabled: true
-      nacos:
-        # 开启Nacos路由负载均衡
-        enabled: true
-    # network
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-    # gateway
-    gateway:
-      discovery:
-        locator:
-          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
-          # 查看DiscoveryLocatorProperties
-          enabled: false
-          # 开启服务ID强制小写
-          lower-case-service-id: true
-      httpclient:
-        ssl:
-          # 信任所有下游证书
-          use-insecure-trust-manager: true
-        # 关闭netty日志
-        wiretap: false
-        pool:
-          # 连接池中连接的最大空闲时间
-          max-idle-time: 10m
-          # 最大连接数
-          max-connections: 10000
-          # 连接池中连接的最大存活时间
-          max-life-time: 5m
-          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
-          # fixed     固定数量线程池
-          # disabled  不使用线程池（只有一个线程）
-          type: fixed
-          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
-          acquire-timeout: 60000
-        # 连接超时时间（毫秒），默认30s
-        connect-timeout: 60000
-      httpserver:
-        # 关闭netty日志
-        wiretap: false
-      router:
-        auth:
-          enabled: true
-          username: laokou
-          password: laokou123
-      ip:
-        white:
-          enabled: false
-        black:
-          enabled: false
-logging:
-  config: classpath:log4j2-prod.xml
-
-knife4j:
-  gateway:
-    enabled: false
-    tags-sorter: order
-    operations-sorter: order
-    # 手动
-    strategy: manual
-    routes:
-      - name: 认证服务
-        url: /auth/v3/api-docs?group=default
-        service-name: laokou-auth
-        context-path: /auth
-        order: 1
-      - name: 管理服务
-        url: /admin/v3/api-docs?group=default
-        service-name: laokou-admin
-        context-path: /admin
-        order: 2', '4e9b78290343eb4d89e9fd86d9c6774f', '2024-05-25 18:13:10.704', '2024-09-07 16:39:05.047', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (1570, 'admin-degrade.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "POST:https://laokou-flowable/work/task/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  },
-  {
-    "resource": "POST:https://laokou-flowable/work/definition/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  }
-]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2023-02-26 15:55:49', '2024-05-03 09:24:56.976', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel degrade rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (59, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
-spring:
-  # security
-  security:
-    oauth2:
-      client:
-        registration:
-          default:
-            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-            client-name: OAuth2.1认证
-            client-secret: FpHwIfw4wY92dO
-            client-authentication-method: client_secret_basic
-            authorization-grant-type: client_credentials
-            scope:
-              - read
-              - write
-        provider:
-          default:
-            token-uri: https://gateway:5555/auth/oauth2/token
-            authorization-uri: https://gateway:5555/auth/oauth2/token
-      resource-server:
-        enabled: true
-        authorization-url: http://auth:1111/oauth2/authorize
-        token-url: http://gateway:5555/auth/oauth2/token
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /**/v3/api-docs/**=laokou-gateway
-              - /v3/api-docs/**=laokou-auth,laokou-admin
-              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
-              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
-              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
-              - /error=laokou-admin,laokou-auth
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
-              - /favicon.ico=laokou-gateway
-              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
-              - /v3/secrets=laokou-gateway,laokou-auth
-              - /graceful-shutdown=laokou-auth
-              - /doc.html=laokou-gateway,laokou-auth,laokou-admin
-              - /webjars/**=laokou-auth,laokou-admin,laokou-gateway
-              - /v3/tokens=laokou-auth,laokou-gateway
-            POST:
-              - /v3/captchas=laokou-auth,laokou-gateway
-            DELETE:
-              - /v3/tokens=laokou-auth,laokou-gateway
-  # task
-  task-execution:
-    enabled: true
-    pool:
-      core-size: 33
-      keep-alive: 180s
-    fork-join-pool:
-      core-size: 33
-  cloud:
-    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
-    openfeign:
-      compression:
-        response:
-          enabled: true
-        request:
-          enabled: true
-      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
-      okhttp:
-        enabled: true
-      circuitbreaker:
-        enabled: true
-      httpclient:
-        enabled: false
-        hc5:
-          enabled: false
-        disable-ssl-validation: true
-      client:
-        config:
-          default:
-            connectTimeout: 120000 #连接超时
-            readTimeout: 120000 #读取超时
-            logger-level: none
-      lazy-attributes-resolution: true
-    # sentinel
-    sentinel:
-      web-context-unify: false
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        dashboard: sentinel:8972
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    gateway:
-      enabled: true
-    health:
-      show-details: always
-  tracing:
-    enabled: true
-    propagation:
-      type: w3c
-    # 采样率 => 100%
-    sampling:
-      probability: 1
-  otlp:
-    tracing:
-      endpoint: http://otel-collector:4318/v1/traces
-      compression: gzip
-      timeout: 10s
-    metrics:
-      export:
-        enabled: false
-  metrics:
-    tags:
-      application: ${spring.application.name}
-
-# server
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
-    threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 256
-    # 每块buffer的空间大小
-    buffer-size: 1024
-    # 分配堆外内存
-    direct-buffers: true
-
-# feign
-feign:
-  sentinel:
-    enabled: true
-    default-rule: default
-    rules:
-      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
-      default:
-        - grade: 2 # 异常数策略
-          count: 1 # 异常数模式下为对应的阈值
-          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
-          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
-          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
-
-# knife4j的增强配置，不需要增强可以不配
-knife4j:
-  enable: true
-  setting:
-    language: zh_cn', 'fff8ea24d07c20ee79049d314f78da0b', '2024-05-25 18:13:33.393', '2024-10-18 19:18:19.875', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (18, 'application-common-redis.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  data:
-    # redis
-    redis:
-      client-type: lettuce
-      host: redis
-      port: 6379
-      password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-      connect-timeout: 60000ms #连接超时时长（毫秒）
-      timeout: 60000ms #超时时长（毫秒）
-      lettuce:
-        pool:
-          max-active: 20 #连接池最大连接数（使用负值表示无极限）
-          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
-          max-idle: 10 #连接池最大空闲连接
-          min-idle: 5 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2024-05-25 18:12:47.33', '2024-05-25 18:13:33.296', NULL, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'redis公共配置', NULL, NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info" VALUES (20, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-spring:
-  # elasticsearch
-  elasticsearch:
-    uris:
-     - https://elasticsearch:9200
-    username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
-    password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-    connection-timeout: 30s
-    socket-timeout: 30s', '54cf98fa1e36856f525336acf7a5d20d', '2024-05-25 18:12:47.339', '2024-05-25 18:13:33.322', NULL, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'elasticsearch公共配置', NULL, NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info" VALUES (21, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'rocketmq:
-  producer:
-    group: laokou_producer_group
-  name-server: rocketmq-namesrv:9876
-  consumer:
-    pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2024-05-25 18:12:47.344', '2024-05-25 18:13:33.332', NULL, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'rocketmq公共配置', NULL, NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info" VALUES (24, 'gateway-flow.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "laokou-auth",
-    "grade": 1,
-    "count": 300,
-    "intervalSec": 1,
-    "burst": 1000,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "laokou-admin",
-    "grade": 1,
-    "count": 300,
-    "intervalSec": 1,
-    "burst": 1000,
-    "controlBehavior": 0
-  }
-]', 'c5fbcf8031ce039bb97bd44cbfbca16b', '2024-05-25 18:12:47.358', '2024-05-25 18:13:33.364', NULL, '127.0.0.1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway sentinel flow rule', NULL, NULL, 'json', NULL, '');
-INSERT INTO "public"."config_info" VALUES (25, 'auth-flow.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "/v3/captchas/{uuid}",
-    "limitApp": "default",
-    "count": 300,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/secrets",
-    "limitApp": "default",
-    "count": 300,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  }
-]', '6ae7639ff49789dd99787e908efa836d', '2024-05-25 18:12:47.362', '2024-05-25 18:20:22.239', 'nacos', '127.0.0.1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'auth sentinel  flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (23, 'application-mail.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-spring:
-  # mail
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8', '3e16e7d481fcc41559736dc5f7258251', '2024-05-25 18:12:47.354', '2024-07-16 21:51:27.174', 'nacos', '127.0.0.1', 'laokou-mail', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'mail配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (33, 'gateway-flow.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "laokou-auth",
-    "grade": 1,
-    "count": 300,
-    "intervalSec": 1,
-    "burst": 1000,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "laokou-admin",
-    "grade": 1,
-    "count": 300,
-    "intervalSec": 1,
-    "burst": 1000,
-    "controlBehavior": 0
-  }
-]', 'c5fbcf8031ce039bb97bd44cbfbca16b', '2024-05-25 18:13:10.6', '2024-05-25 18:13:10.6', NULL, '127.0.0.1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway sentinel flow rule', NULL, NULL, 'json', NULL, '');
-INSERT INTO "public"."config_info" VALUES (39, 'application-report.yaml', 'LAOKOU_GROUP', 'server:
-  port: 8088', '89f7b26715cf760d099a258200381fe0', '2024-05-25 18:13:10.644', '2024-05-25 18:13:10.644', NULL, '127.0.0.1', 'laokou-report', '8140e92b-fb43-48f5-b63b-7506185206a5', '', NULL, NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info" VALUES (40, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
-  kafka:
-    bootstrap-servers: kafka:9092
-    consumer:
-      # 禁用自动提交（按周期）已消费offset
-      enable-auto-commit: false
-      # 单次poll()调用返回的记录数
-      max-poll-records: 50
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    producer:
-      # 发生错误后，消息重发的次数。
-      retries: 5
-      #当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
-      batch-size: 16384
-      # 设置生产者内存缓冲区的大小。
-      buffer-memory: 33554432
-      # 键的序列化方式
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      # 值的序列化方式
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
-      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
-      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
-      acks: 0
-    listener:
-      # 在侦听器容器中运行的线程数。
-      concurrency: 5
-      # listner负责ack，每调用一次，就立即commit
-      ack-mode: manual
-      # 批量batch类型
-      type: batch
-      # topic不存在报错
-      missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2024-05-25 18:13:10.65', '2024-05-25 18:13:10.65', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'kafka公共配置', NULL, NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info" VALUES (44, 'admin-degrade.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "POST:https://laokou-flowable/work/task/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  },
-  {
-    "resource": "POST:https://laokou-flowable/work/definition/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  }
-]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2024-05-25 18:13:10.676', '2024-05-25 18:13:10.676', NULL, '127.0.0.1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel degrade rule', NULL, NULL, 'json', NULL, '');
-INSERT INTO "public"."config_info" VALUES (35, 'admin-flow.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "/v3/users/profile",
-    "limitApp": "default",
-    "count": 300,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  }
-]', '31d82f93a5909b2529f159848116e162', '2024-05-25 18:13:10.61', '2024-05-25 18:19:37.997', 'nacos', '127.0.0.1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (34, 'auth-flow.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "/v3/captchas/{uuid}",
-    "limitApp": "default",
-    "count": 300,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/secrets",
-    "limitApp": "default",
-    "count": 300,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  }
-]', '6ae7639ff49789dd99787e908efa836d', '2024-05-25 18:13:10.604', '2024-05-25 18:19:55.655', 'nacos', '127.0.0.1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', 'auth sentinel  flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (27, 'application-common-redis.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-# spring
-spring:
-  data:
-    # redis
-    redis:
-      client-type: lettuce
-      host: redis
-      port: 6379
-      password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-      connect-timeout: 60000ms #连接超时时长（毫秒）
-      timeout: 60000ms #超时时长（毫秒）
-      lettuce:
-        pool:
-          max-active: 20 #连接池最大连接数（使用负值表示无极限）
-          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
-          max-idle: 10 #连接池最大空闲连接
-          min-idle: 5 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2024-05-25 18:13:10.544', '2024-05-25 18:13:10.544', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'redis公共配置', NULL, NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info" VALUES (29, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-spring:
-  # elasticsearch
-  elasticsearch:
-    uris:
-     - https://elasticsearch:9200
-    username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
-    password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-    connection-timeout: 30s
-    socket-timeout: 30s', '54cf98fa1e36856f525336acf7a5d20d', '2024-05-25 18:13:10.576', '2024-05-25 18:13:10.576', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'elasticsearch公共配置', NULL, NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info" VALUES (30, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'rocketmq:
-  producer:
-    group: laokou_producer_group
-  name-server: rocketmq-namesrv:9876
-  consumer:
-    pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2024-05-25 18:13:10.582', '2024-05-25 18:13:10.582', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'rocketmq公共配置', NULL, NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info" VALUES (31, 'application-sms.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-sms:
-  gyy:
-    enabled: true
-    template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
-    sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
-    appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)', '3adcbf9b68966d16ac2136f236f2f919', '2024-05-25 18:13:10.588', '2024-07-16 21:50:44.322', 'nacos', '127.0.0.1', 'laokou-sms', '8140e92b-fb43-48f5-b63b-7506185206a5', 'sms配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (32, 'application-mail.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-spring:
-  # mail
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8', '3e16e7d481fcc41559736dc5f7258251', '2024-05-25 18:13:10.594', '2024-07-16 21:52:24.67', 'nacos', '127.0.0.1', 'laokou-mail', '8140e92b-fb43-48f5-b63b-7506185206a5', 'mail配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (61, 'application-report.yaml', 'LAOKOU_GROUP', 'server:
-  port: 8088', '89f7b26715cf760d099a258200381fe0', '2024-05-25 18:13:33.406', '2024-05-25 18:13:33.406', NULL, '127.0.0.1', 'laokou-report', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', NULL, NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info" VALUES (57, 'admin-flow.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "/v3/users/profile",
-    "limitApp": "default",
-    "count": 300,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  }
-]', '31d82f93a5909b2529f159848116e162', '2024-05-25 18:13:33.382', '2024-05-25 18:19:26.212', 'nacos', '127.0.0.1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (62, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
-  kafka:
-    bootstrap-servers: kafka:9092
-    consumer:
-      # 禁用自动提交（按周期）已消费offset
-      enable-auto-commit: false
-      # 单次poll()调用返回的记录数
-      max-poll-records: 50
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    producer:
-      # 发生错误后，消息重发的次数。
-      retries: 5
-      #当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
-      batch-size: 16384
-      # 设置生产者内存缓冲区的大小。
-      buffer-memory: 33554432
-      # 键的序列化方式
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      # 值的序列化方式
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
-      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
-      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
-      acks: 0
-    listener:
-      # 在侦听器容器中运行的线程数。
-      concurrency: 5
-      # listner负责ack，每调用一次，就立即commit
-      ack-mode: manual
-      # 批量batch类型
-      type: batch
-      # topic不存在报错
-      missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2024-05-25 18:13:33.413', '2024-05-25 18:13:33.413', NULL, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'kafka公共配置', NULL, NULL, 'yaml', NULL, '');
-INSERT INTO "public"."config_info" VALUES (66, 'admin-degrade.json', 'LAOKOU_GROUP', '[
-  {
-    "resource": "POST:https://laokou-flowable/work/task/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  },
-  {
-    "resource": "POST:https://laokou-flowable/work/definition/api/query",
-    "count": 200,
-    "grade": 0,
-    "slowRatioThreshold": 0.1,
-    "minRequestAmount": 5,
-    "timeWindow": 30
-  }
-]', '2c0d4de0716f94bd6878b0a68d3faa0f', '2024-05-25 18:13:33.436', '2024-05-25 18:13:33.436', NULL, '127.0.0.1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel degrade rule', NULL, NULL, 'json', NULL, '');
-INSERT INTO "public"."config_info" VALUES (1273, 'application-gateway.yaml', 'LAOKOU_GROUP', 'server:
-  # 开启请求压缩
-  compression:
-    enabled: true
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-    # 证书密码
-    key-password: laokou
-  http2:
-    enabled: true
-  forward-headers-strategy: native
-  # 优雅停机
-  shutdown: graceful
-  netty:
-    # 请求的最大初始行长度
-    max-initial-line-length: 4096
-# spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  webflux:
-    multipart:
-      max-parts: -1
-      max-disk-usage-per-part: -1
-      max-in-memory-size: 4096
-  cloud:
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # key可以自定义
-        db0:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            data-id: gateway-flow.json
-            rule-type: gw_flow # 网关规则
-            group-id: LAOKOU_GROUP
-            data-type: json
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      cache:
-        caffeine:
-          # 初始容量 => 30
-          # 最大容量 => 4096
-          # 淘汰规则 => 最后一次写操作后经过30s过期
-          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
-        # 开启缓存
-        enabled: true
-      nacos:
-        # 开启Nacos路由负载均衡
-        enabled: true
-    # network
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-    # gateway
-    gateway:
-      discovery:
-        locator:
-          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
-          # 查看DiscoveryLocatorProperties
-          enabled: false
-          # 开启服务ID强制小写
-          lower-case-service-id: true
-      httpclient:
-        ssl:
-          # 信任所有下游证书
-          use-insecure-trust-manager: true
-        # 关闭netty日志
-        wiretap: false
-        pool:
-          # 连接池中连接的最大空闲时间
-          max-idle-time: 10m
-          # 最大连接数
-          max-connections: 10000
-          # 连接池中连接的最大存活时间
-          max-life-time: 5m
-          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
-          # fixed     固定数量线程池
-          # disabled  不使用线程池（只有一个线程）
-          type: fixed
-          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
-          acquire-timeout: 60000
-        # 连接超时时间（毫秒），默认30s
-        connect-timeout: 60000
-      httpserver:
-        # 关闭netty日志
-        wiretap: false
-      router:
-        auth:
-          enabled: true
-          username: laokou
-          password: laokou123
-      ip:
-        white:
-          enabled: false
-        black:
-          enabled: false
-logging:
-  config: classpath:log4j2-test.xml
-
-knife4j:
-  gateway:
-    enabled: true
-    tags-sorter: order
-    operations-sorter: order
-    # 手动
-    strategy: manual
-    routes:
-      - name: 认证服务
-        url: /auth/v3/api-docs?group=default
-        service-name: laokou-auth
-        context-path: /auth
-        order: 1
-      - name: 管理服务
-        url: /admin/v3/api-docs?group=default
-        service-name: laokou-admin
-        context-path: /admin
-        order: 2', '83a42fbb3c7e33650b926996566b5857', '2023-01-22 13:16:13', '2024-09-07 16:38:31.713', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (68, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: false
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: false
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
-spring:
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: -1
-      max-request-size: -1
-  cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: http://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            group-id: LAOKOU_GROUP
-            data-id: admin-flow.json
-            data-type: json
-            rule-type: flow
-            username: nacos
-            password: nacos
-        db1:
-          nacos:
-            server-addr: http://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            group-id: LAOKOU_GROUP
-            data-id: admin-degrade.json
-            data-type: json
-            rule-type: degrade
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # 不开启虚拟线程
-  threads:
-    virtual:
-      enabled: true
-  liquibase:
-    enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.xml
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-
-logging:
-  config: classpath:log4j2-dev.xml
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    enabled: true
-    path: /v3/api-docs
-  group-configs:
-    - group: ''default''
-      paths-to-match: ''/**''
-      packages-to-scan: org.laokou.admin.web
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '2cbd6a7b166616f09c980b06bece7fa9', '2024-05-25 18:13:33.447', '2024-10-16 23:14:12.189', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (1475, 'application-sms.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-sms:
-  gyy:
-    enabled: true
-    template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
-    sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
-    appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)', '3adcbf9b68966d16ac2136f236f2f919', '2023-02-13 19:59:35', '2024-07-16 21:50:25.922', 'nacos', '127.0.0.1', 'laokou-sms', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'sms配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (22, 'application-sms.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-sms:
-  gyy:
-    enabled: true
-    template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
-    sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
-    appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)', '3adcbf9b68966d16ac2136f236f2f919', '2024-05-25 18:12:47.349', '2024-07-16 21:51:04.709', 'nacos', '127.0.0.1', 'laokou-sms', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'sms配置', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (19, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: false
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: false
-  shutdown: graceful
-# spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  cloud:
-    config:
-      initialize-on-context-refresh: true
-  boot:
-    # admin
-    admin:
-      notify:
-        mail:
-          from: 2413176044@qq.com
-          to: 2413176044@qq.com
-          template: META-INF/spring-boot-admin-server/mail/status-changed.html
-  # security
-  security:
-    user:
-      # root
-      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
-      # laokou123
-      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
-  # mail
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8
-
-logging:
-  config: classpath:log4j2-dev.xml
-
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always', 'bb561a1b2a08e2bbe282c4b3d39396bc', '2024-05-25 18:12:47.335', '2024-10-12 00:14:58.804', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'spring boot admin monitor', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (28, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  shutdown: graceful
-# spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  cloud:
-    config:
-      initialize-on-context-refresh: true
-  boot:
-    # admin
-    admin:
-      notify:
-        mail:
-          from: 2413176044@qq.com
-          to: 2413176044@qq.com
-          template: META-INF/spring-boot-admin-server/mail/status-changed.html
-  # security
-  security:
-    user:
-      # root
-      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
-      # laokou123
-      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
-  # mail
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8
-
-logging:
-  config: classpath:log4j2-prod.xml
-
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always', '90a67f1cbc3594606d9df4d2a5c8067c', '2024-05-25 18:13:10.57', '2024-10-12 00:15:13.245', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', '8140e92b-fb43-48f5-b63b-7506185206a5', 'spring boot admin monitor', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (46, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
-spring:
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: -1
-      max-request-size: -1
-  cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            group-id: LAOKOU_GROUP
-            data-id: admin-flow.json
-            data-type: json
-            rule-type: flow
-            username: nacos
-            password: nacos
-        db1:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            group-id: LAOKOU_GROUP
-            data-id: admin-degrade.json
-            data-type: json
-            rule-type: degrade
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # 不开启虚拟线程
-  threads:
-    virtual:
-      enabled: true
-  liquibase:
-    enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.xml
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-
-logging:
-  config: classpath:log4j2-prod.xml
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    enabled: false
-    path: /v3/api-docs
-  group-configs:
-    - group: ''default''
-      paths-to-match: ''/**''
-      packages-to-scan: org.laokou.admin.web
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '70f8d84be27922eb1d5100b448c86cb8', '2024-05-25 18:13:10.69', '2024-10-16 23:14:58.464', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (47, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
-spring:
-  session:
-    redis:
-      repository-type: indexed
-      namespace: spring:session:auth
-    timeout: 3600
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-  cloud:
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            data-id: auth-flow.json
-            data-type: json
-            group-id: LAOKOU_GROUP
-            rule-type: flow
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    # network
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # OAuth2
-  security:
-    oauth2:
-      authorization-server:
-        enabled: true
-        # 多租户
-        multiple-issuers-allowed: false
-        client:
-          default:
-            token:
-              authorization-code-time-to-live: 1h
-              access-token-time-to-live: 1h
-              refresh-token-time-to-live: 6h
-              device-code-time-to-live: 1h
-            registration:
-              id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-name: OAuth2.1认证
-              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
-              client-authentication-methods:
-                - client_secret_basic
-              authorization-grant-types:
-                - password
-                - mail
-                - mobile
-                - client_credentials
-                - refresh_token
-                - authorization_code
-                - urn:ietf:params:oauth:grant-type:device_code
-                - urn:ietf:params:oauth:grant-type:jwt-bearer
-                - urn:ietf:params:oauth:grant-type:token-exchange
-              scopes:
-                - read
-                - write
-              redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://vue.laokou.org
-                - https://laokou.org.cn
-                - https://laokou.org.cn/api/webjars/oauth/oauth2.html
-                - http://laokou.org.cn/api/webjars/oauth/oauth2.html
-                - https://ui/api/webjars/oauth/oauth2.html
-                - http://ui/api/webjars/oauth/oauth2.html
-                - https://gateway:5555/webjars/oauth/oauth2.html
-                - http://gateway:5555/webjars/oauth/oauth2.html
-                - https://auth:1111/webjars/oauth/oauth2.html
-                - http://auth:1111/webjars/oauth/oauth2.html
-                - https://admin:9990/webjars/oauth/oauth2.html
-                - http://admin:9990/webjars/oauth/oauth2.html
-              post-logout-redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://vue.laokou.org
-                - https://laokou.org.cn
-                - https://ui
-                - http://ui
-            # 客户端请求访问时需要授权同意
-            require-authorization-consent: true
-            # PKCE
-            require-proof-key: false
-  threads:
-    virtual:
-      enabled: true
-
-logging:
-  config: classpath:log4j2-prod.xml
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    enabled: false
-    path: /v3/api-docs
-  group-configs:
-    - group: ''default''
-      paths-to-match: ''/**''
-      packages-to-scan: org.laokou.auth.web
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-      - boot_sys_user
-      - boot_sys_menu
-      - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '8b9b54cd3fbdd29f301918eeebd89565', '2024-05-25 18:13:10.697', '2024-10-16 23:15:17.672', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (2022, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
-spring:
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: -1
-      max-request-size: -1
-  cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            group-id: LAOKOU_GROUP
-            data-id: admin-flow.json
-            data-type: json
-            rule-type: flow
-            username: nacos
-            password: nacos
-        db1:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            group-id: LAOKOU_GROUP
-            data-id: admin-degrade.json
-            data-type: json
-            rule-type: degrade
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # 不开启虚拟线程
-  threads:
-    virtual:
-      enabled: true
-  liquibase:
-    enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.xml
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-
-logging:
-  config: classpath:log4j2-test.xml
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    enabled: true
-    path: /v3/api-docs
-  group-configs:
-    - group: ''default''
-      paths-to-match: ''/**''
-      packages-to-scan: org.laokou.admin.web
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
-    enabled: true
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '3f5ab00737ec66449e0ad8eacb6c3fdf', '2023-09-28 11:37:33', '2024-10-16 23:13:12.149', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (2025, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
-spring:
-  session:
-    redis:
-      repository-type: indexed
-      namespace: spring:session:auth
-    timeout: 3600
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-  cloud:
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: https://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            data-id: auth-flow.json
-            data-type: json
-            group-id: LAOKOU_GROUP
-            rule-type: flow
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    # network
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # OAuth2
-  security:
-    oauth2:
-      authorization-server:
-        enabled: true
-        # 多租户
-        multiple-issuers-allowed: false
-        client:
-          default:
-            token:
-              authorization-code-time-to-live: 1h
-              access-token-time-to-live: 1h
-              refresh-token-time-to-live: 6h
-              device-code-time-to-live: 1h
-            registration:
-              id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-name: OAuth2.1认证
-              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
-              client-authentication-methods:
-                - client_secret_basic
-              authorization-grant-types:
-                - password
-                - mail
-                - mobile
-                - client_credentials
-                - refresh_token
-                - authorization_code
-                - urn:ietf:params:oauth:grant-type:device_code
-                - urn:ietf:params:oauth:grant-type:jwt-bearer
-                - urn:ietf:params:oauth:grant-type:token-exchange
-              scopes:
-                - read
-                - write
-              redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://vue.laokou.org
-                - https://laokou.org.cn
-                - https://laokou.org.cn/api/webjars/oauth/oauth2.html
-                - http://laokou.org.cn/api/webjars/oauth/oauth2.html
-                - https://ui/api/webjars/oauth/oauth2.html
-                - http://ui/api/webjars/oauth/oauth2.html
-                - https://gateway:5555/webjars/oauth/oauth2.html
-                - http://gateway:5555/webjars/oauth/oauth2.html
-                - https://auth:1111/webjars/oauth/oauth2.html
-                - http://auth:1111/webjars/oauth/oauth2.html
-                - https://admin:9990/webjars/oauth/oauth2.html
-                - http://admin:9990/webjars/oauth/oauth2.html
-              post-logout-redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://vue.laokou.org
-                - https://laokou.org.cn
-                - https://ui
-                - http://ui
-            # 客户端请求访问时需要授权同意
-            require-authorization-consent: true
-            # PKCE
-            require-proof-key: false
-  threads:
-    virtual:
-      enabled: true
-
-logging:
-  config: classpath:log4j2-test.xml
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    enabled: true
-    path: /v3/api-docs
-  group-configs:
-    - group: ''default''
-      paths-to-match: ''/**''
-      packages-to-scan: org.laokou.auth.web
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-      - boot_sys_user
-      - boot_sys_menu
-      - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '5ee8dcd2ab0294561055ad74408b9cba', '2023-09-28 11:51:44', '2024-10-16 23:13:31.927', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (69, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: false
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: false
-  forward-headers-strategy: framework
-  shutdown: graceful
-# spring
-spring:
-  session:
-    redis:
-      repository-type: indexed
-      namespace: spring:session:auth
-    timeout: 3600
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 60000
-            validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-nacos&useSSL=false&reWriteBatchedInserts=true&stringtype=unspecified
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-  cloud:
-    # sentinel
-    sentinel:
-      filter:
-        enabled: true
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: http://nacos:8848
-            namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-            data-id: auth-flow.json
-            data-type: json
-            group-id: LAOKOU_GROUP
-            rule-type: flow
-            username: nacos
-            password: nacos
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
-    # network
-    inetutils:
-      ignored-interfaces:
-        - docker0
-        - veth.*
-  # OAuth2
-  security:
-    oauth2:
-      authorization-server:
-        enabled: true
-        # 多租户
-        multiple-issuers-allowed: false
-        client:
-          default:
-            token:
-              authorization-code-time-to-live: 1h
-              access-token-time-to-live: 1h
-              refresh-token-time-to-live: 6h
-              device-code-time-to-live: 1h
-            registration:
-              id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-name: OAuth2.1认证
-              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
-              client-authentication-methods:
-                - client_secret_basic
-              authorization-grant-types:
-                - password
-                - mail
-                - mobile
-                - client_credentials
-                - refresh_token
-                - authorization_code
-                - urn:ietf:params:oauth:grant-type:device_code
-                - urn:ietf:params:oauth:grant-type:jwt-bearer
-                - urn:ietf:params:oauth:grant-type:token-exchange
-              scopes:
-                - read
-                - write
-              redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://vue.laokou.org
-                - https://laokou.org.cn
-                - https://laokou.org.cn/api/webjars/oauth/oauth2.html
-                - http://laokou.org.cn/api/webjars/oauth/oauth2.html
-                - https://ui/api/webjars/oauth/oauth2.html
-                - http://ui/api/webjars/oauth/oauth2.html
-                - https://gateway:5555/webjars/oauth/oauth2.html
-                - http://gateway:5555/webjars/oauth/oauth2.html
-                - https://auth:1111/webjars/oauth/oauth2.html
-                - http://auth:1111/webjars/oauth/oauth2.html
-                - https://admin:9990/webjars/oauth/oauth2.html
-                - http://admin:9990/webjars/oauth/oauth2.html
-              post-logout-redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://vue.laokou.org
-                - https://laokou.org.cn
-                - https://ui
-                - http://ui
-            # 客户端请求访问时需要授权同意
-            require-authorization-consent: true
-            # PKCE
-            require-proof-key: false
-  threads:
-    virtual:
-      enabled: true
-
-logging:
-  config: classpath:log4j2-dev.xml
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    enabled: true
-    path: /v3/api-docs
-  group-configs:
-    - group: ''default''
-      paths-to-match: ''/**''
-      packages-to-scan: org.laokou.auth.web
-
-# mybatis-plus
-mybatis-plus:
-  # 全局处理
-  global-config:
-    db-config:
-      column-format: "\"%s\""
-  tenant:
-    enabled: true
-    ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
-      - boot_domain_event
-      - boot_sys_user
-      - boot_sys_menu
-      - boot_sys_dept
-  mapper-locations: classpath*:/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'e337bc2cd1b34ad7fed6aeb632808e16', '2024-05-25 18:13:33.452', '2024-10-16 23:14:38.115', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (26, 'router.json', 'LAOKOU_GROUP', '[
-  {
-    "id": "laokou-auth",
-    "uri": "lb://laokou-auth",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/auth/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "auth",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/auth/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  },
-  {
-    "id": "laokou-admin",
-    "uri": "lb://laokou-admin",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/admin/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "admin",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/admin/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  }
-]', 'ed49c55c612fb22e4c6ea7a78e258d0c', '2023-01-13 15:44:25', '2024-10-12 00:09:25.877', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'text', '', '');
-INSERT INTO "public"."config_info" VALUES (58, 'router.json', 'LAOKOU_GROUP', '[
-  {
-    "id": "laokou-auth",
-    "uri": "lb://laokou-auth",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/auth/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "auth",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/auth/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  },
-  {
-    "id": "laokou-admin",
-    "uri": "lb://laokou-admin",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/admin/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "admin",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/admin/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  }
-]', 'ed49c55c612fb22e4c6ea7a78e258d0c', '2024-05-25 18:13:33.387', '2024-10-12 00:09:50.962', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '动态路由配置', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (37, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
-spring:
-  # security
-  security:
-    oauth2:
-      client:
-        registration:
-          default:
-            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-            client-name: OAuth2.1认证
-            client-secret: FpHwIfw4wY92dO
-            client-authentication-method: client_secret_basic
-            authorization-grant-type: client_credentials
-            scope:
-              - read
-              - write
-        provider:
-          default:
-            token-uri: https://gateway:5555/auth/oauth2/token
-            authorization-uri: https://gateway:5555/auth/oauth2/token
-      resource-server:
-        enabled: true
-        authorization-url: https://auth:1111/oauth2/authorize
-        token-url: https://gateway:5555/auth/oauth2/token
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /**/v3/api-docs/**=laokou-gateway
-              - /v3/api-docs/**=laokou-auth,laokou-admin
-              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
-              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
-              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
-              - /error=laokou-admin,laokou-auth
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
-              - /favicon.ico=laokou-gateway
-              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
-              - /v3/secrets=laokou-gateway,laokou-auth
-              - /graceful-shutdown=laokou-auth
-              - /doc.html=laokou-gateway,laokou-auth,laokou-admin
-              - /webjars/**=laokou-auth,laokou-admin,laokou-gateway
-              - /v3/tokens=laokou-auth,laokou-gateway
-            POST:
-              - /v3/captchas=laokou-auth,laokou-gateway
-            DELETE:
-              - /v3/tokens=laokou-auth,laokou-gateway
-  # task
-  task-execution:
-    enabled: true
-    pool:
-      core-size: 33
-      keep-alive: 180s
-    fork-join-pool:
-      core-size: 33
-  cloud:
-    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
-    openfeign:
-      compression:
-        response:
-          enabled: true
-        request:
-          enabled: true
-      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
-      okhttp:
-        enabled: true
-      circuitbreaker:
-        enabled: true
-      httpclient:
-        enabled: false
-        hc5:
-          enabled: false
-        disable-ssl-validation: true
-      client:
-        config:
-          default:
-            connectTimeout: 120000 #连接超时
-            readTimeout: 120000 #读取超时
-            logger-level: none
-      lazy-attributes-resolution: true
-    # sentinel
-    sentinel:
-      web-context-unify: false
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        dashboard: sentinel:8972
-
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    gateway:
-      enabled: true
-    health:
-      show-details: always
-  tracing:
-    enabled: true
-    propagation:
-      type: w3c
-    # 采样率 => 100%
-    sampling:
-      probability: 1
-  otlp:
-    tracing:
-      endpoint: http://otel-collector:4318/v1/traces
-      compression: gzip
-      timeout: 10s
-    metrics:
-      export:
-        enabled: false
-  metrics:
-    tags:
-      application: ${spring.application.name}
-
-# server
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
-    threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 256
-    # 每块buffer的空间大小
-    buffer-size: 1024
-    # 分配堆外内存
-    direct-buffers: true
-
-# feign
-feign:
-  sentinel:
-    enabled: true
-    default-rule: default
-    rules:
-      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
-      default:
-        - grade: 2 # 异常数策略
-          count: 1 # 异常数模式下为对应的阈值
-          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
-          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
-          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
-
-# knife4j的增强配置，不需要增强可以不配
-knife4j:
-  enable: false
-  setting:
-    language: zh_cn', 'c66db97b9a5aa815bebd2afa9f09b7f8', '2024-05-25 18:13:10.622', '2024-10-18 19:18:39.146', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (36, 'router.json', 'LAOKOU_GROUP', '[
-  {
-    "id": "laokou-auth",
-    "uri": "lb://laokou-auth",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/auth/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "auth",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/auth/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  },
-  {
-    "id": "laokou-admin",
-    "uri": "lb://laokou-admin",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/admin/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "admin",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "1"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/admin/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v3"
-    },
-    "order": 1
-  }
-]', 'ed49c55c612fb22e4c6ea7a78e258d0c', '2024-05-25 18:13:10.616', '2024-10-12 00:10:19.043', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', '动态路由配置', '', '', 'json', '', '');
-INSERT INTO "public"."config_info" VALUES (82, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
-jasypt:
-  encryptor:
-    password: 5201314wumeihua
-
-server:
-  ssl:
-    # 开启证书
-    enabled: true
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
-  http2:
-    enabled: true
-  shutdown: graceful
-# spring
-spring:
-  threads:
-    virtual:
-      enabled: true
-  cloud:
-    config:
-      initialize-on-context-refresh: true
-  boot:
-    # admin
-    admin:
-      notify:
-        mail:
-          from: 2413176044@qq.com
-          to: 2413176044@qq.com
-          template: META-INF/spring-boot-admin-server/mail/status-changed.html
-  # security
-  security:
-    user:
-      # root
-      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
-      # laokou123
-      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
-  # mail
-  mail:
-    host: smtp.qq.com
-    username: 2413176044@qq.com
-    password: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
-    default-encoding: UTF-8
-
-logging:
-  config: classpath:log4j2-test.xml
-
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always', '797a4e0f738fd13b22da52906dd9e80b', '2023-01-16 12:01:23', '2024-10-12 00:14:44.667', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'spring boot admin monitor', '', '', 'yaml', '', '');
-INSERT INTO "public"."config_info" VALUES (17, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
-spring:
-  # security
-  security:
-    oauth2:
-      client:
-        registration:
-          default:
-            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-            client-name: OAuth2.1认证
-            client-secret: FpHwIfw4wY92dO
-            client-authentication-method: client_secret_basic
-            authorization-grant-type: client_credentials
-            scope:
-              - read
-              - write
-        provider:
-          default:
-            token-uri: https://gateway:5555/auth/oauth2/token
-            authorization-uri: https://gateway:5555/auth/oauth2/token
-      resource-server:
-        enabled: true
-        authorization-url: https://auth:1111/oauth2/authorize
-        token-url: https://gateway:5555/auth/oauth2/token
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /**/v3/api-docs/**=laokou-gateway
-              - /v3/api-docs/**=laokou-auth,laokou-admin
-              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth
-              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth
-              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth
-              - /error=laokou-admin,laokou-auth
-              - /v3/tenants/options=laokou-auth,laokou-gateway
-              - /v3/tenants/id=laokou-auth,laokou-gateway
-              - /favicon.ico=laokou-gateway
-              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
-              - /v3/secrets=laokou-gateway,laokou-auth
-              - /graceful-shutdown=laokou-auth
-              - /doc.html=laokou-gateway,laokou-auth,laokou-admin
-              - /webjars/**=laokou-auth,laokou-admin,laokou-gateway
-              - /v3/tokens=laokou-auth,laokou-gateway
-            POST:
-              - /v3/captchas=laokou-auth,laokou-gateway
-            DELETE:
-              - /v3/tokens=laokou-auth,laokou-gateway
-  # task
-  task-execution:
-    enabled: true
-    pool:
-      core-size: 33
-      keep-alive: 180s
-    fork-join-pool:
-      core-size: 33
-  cloud:
-    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
-    openfeign:
-      compression:
-        response:
-          enabled: true
-        request:
-          enabled: true
-      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
-      okhttp:
-        enabled: true
-      circuitbreaker:
-        enabled: true
-      httpclient:
-        enabled: false
-        hc5:
-          enabled: false
-        disable-ssl-validation: true
-      client:
-        config:
-          default:
-            connectTimeout: 120000 #连接超时
-            readTimeout: 120000 #读取超时
-            logger-level: none
-      lazy-attributes-resolution: true
-    # sentinel
-    sentinel:
-      web-context-unify: false
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        dashboard: sentinel:8972
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    gateway:
-      enabled: true
-    health:
-      show-details: always
-  tracing:
-    enabled: true
-    propagation:
-      type: w3c
-    # 采样率 => 100%
-    sampling:
-      probability: 1
-  otlp:
-    tracing:
-      endpoint: http://otel-collector:4318/v1/traces
-      compression: gzip
-      timeout: 10s
-    metrics:
-      export:
-        enabled: false
-  metrics:
-    tags:
-      application: ${spring.application.name}
-
-# server
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
-    threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 256
-    # 每块buffer的空间大小
-    buffer-size: 1024
-    # 分配堆外内存
-    direct-buffers: true
-
-# feign
-feign:
-  sentinel:
-    enabled: true
-    default-rule: default
-    rules:
-      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
-      default:
-        - grade: 2 # 异常数策略
-          count: 1 # 异常数模式下为对应的阈值
-          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
-          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
-          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-tenant:
-  domain-names:
-    - laokou.org
-    - laokouyun.org
-    - laokou.org.cn
-
-# knife4j的增强配置，不需要增强可以不配
-knife4j:
-  enable: true
-  setting:
-    language: zh_cn', '6cd127e0de4ed6b9333d6087cdd03987', '2023-01-13 12:16:46', '2024-10-18 19:16:55.238', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
 
 -- ----------------------------
--- Table structure for config_info_aggr
+-- Table structure for group_capacity
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."config_info_aggr";
-CREATE TABLE "public"."config_info_aggr" (
+DROP TABLE IF EXISTS "public"."group_capacity";
+CREATE TABLE "public"."group_capacity" (
+  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1
+),
+  "group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL DEFAULT ''::character varying,
+  "quota" int8 NOT NULL DEFAULT 0,
+  "usage" int8 NOT NULL DEFAULT 0,
+  "max_size" int8 NOT NULL DEFAULT 0,
+  "max_aggr_count" int8 NOT NULL DEFAULT 0,
+  "max_aggr_size" int8 NOT NULL DEFAULT 0,
+  "max_history_count" int8 NOT NULL DEFAULT 0,
+  "gmt_create" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "gmt_modified" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+)
+;
+COMMENT ON COLUMN "public"."group_capacity"."id" IS '主键ID';
+COMMENT ON COLUMN "public"."group_capacity"."group_id" IS 'Group ID，空字符表示整个集群';
+COMMENT ON COLUMN "public"."group_capacity"."quota" IS '配额，0表示使用默认值';
+COMMENT ON COLUMN "public"."group_capacity"."usage" IS '使用量';
+COMMENT ON COLUMN "public"."group_capacity"."max_size" IS '单个配置大小上限，单位为字节，0表示使用默认值';
+COMMENT ON COLUMN "public"."group_capacity"."max_aggr_count" IS '聚合子配置最大个数，，0表示使用默认值';
+COMMENT ON COLUMN "public"."group_capacity"."max_aggr_size" IS '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值';
+COMMENT ON COLUMN "public"."group_capacity"."max_history_count" IS '最大变更历史数量';
+COMMENT ON COLUMN "public"."group_capacity"."gmt_create" IS '创建时间';
+COMMENT ON COLUMN "public"."group_capacity"."gmt_modified" IS '修改时间';
+COMMENT ON TABLE "public"."group_capacity" IS '集群、各Group容量信息表';
+
+-- ----------------------------
+-- Records of group_capacity
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for databasechangeloglock
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."databasechangeloglock";
+CREATE TABLE "public"."databasechangeloglock" (
+  "id" int4 NOT NULL,
+  "locked" bool NOT NULL,
+  "lockgranted" timestamp(6),
+  "lockedby" varchar(255) COLLATE "pg_catalog"."default"
+)
+;
+
+-- ----------------------------
+-- Records of databasechangeloglock
+-- ----------------------------
+INSERT INTO "public"."databasechangeloglock" VALUES (1, 'f', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for databasechangelog
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."databasechangelog";
+CREATE TABLE "public"."databasechangelog" (
+  "id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+  "author" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+  "filename" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+  "dateexecuted" timestamp(6) NOT NULL,
+  "orderexecuted" int4 NOT NULL,
+  "exectype" varchar(10) COLLATE "pg_catalog"."default" NOT NULL,
+  "md5sum" varchar(35) COLLATE "pg_catalog"."default",
+  "description" varchar(255) COLLATE "pg_catalog"."default",
+  "comments" varchar(255) COLLATE "pg_catalog"."default",
+  "tag" varchar(255) COLLATE "pg_catalog"."default",
+  "liquibase" varchar(20) COLLATE "pg_catalog"."default",
+  "contexts" varchar(255) COLLATE "pg_catalog"."default",
+  "labels" varchar(255) COLLATE "pg_catalog"."default",
+  "deployment_id" varchar(10) COLLATE "pg_catalog"."default"
+)
+;
+
+-- ----------------------------
+-- Records of databasechangelog
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for config_tags_relation
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."config_tags_relation";
+CREATE TABLE "public"."config_tags_relation" (
+  "id" int8 NOT NULL,
+  "tag_name" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
+  "tag_type" varchar(64) COLLATE "pg_catalog"."default",
+  "data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+  "group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
+  "tenant_id" varchar(128) COLLATE "pg_catalog"."default" DEFAULT ''::character varying,
+  "nid" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1
+)
+)
+;
+COMMENT ON COLUMN "public"."config_tags_relation"."id" IS 'id';
+COMMENT ON COLUMN "public"."config_tags_relation"."tag_name" IS 'tag_name';
+COMMENT ON COLUMN "public"."config_tags_relation"."tag_type" IS 'tag_type';
+COMMENT ON COLUMN "public"."config_tags_relation"."data_id" IS 'data_id';
+COMMENT ON COLUMN "public"."config_tags_relation"."group_id" IS 'group_id';
+COMMENT ON COLUMN "public"."config_tags_relation"."tenant_id" IS 'tenant_id';
+COMMENT ON TABLE "public"."config_tags_relation" IS 'config_tag_relation';
+
+-- ----------------------------
+-- Records of config_tags_relation
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for config_info_tag
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."config_info_tag";
+CREATE TABLE "public"."config_info_tag" (
   "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
 INCREMENT 1
 MINVALUE  1
@@ -3647,24 +326,33 @@ CACHE 1
 ),
   "data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
-  "datum_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "content" text COLLATE "pg_catalog"."default" NOT NULL,
-  "gmt_modified" timestamp(6) NOT NULL,
+  "tenant_id" varchar(128) COLLATE "pg_catalog"."default" DEFAULT ''::character varying,
+  "tag_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
   "app_name" varchar(128) COLLATE "pg_catalog"."default",
-  "tenant_id" varchar(128) COLLATE "pg_catalog"."default" DEFAULT ''::character varying
+  "content" text COLLATE "pg_catalog"."default" NOT NULL,
+  "md5" varchar(32) COLLATE "pg_catalog"."default",
+  "gmt_create" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "gmt_modified" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "src_user" text COLLATE "pg_catalog"."default",
+  "src_ip" varchar(50) COLLATE "pg_catalog"."default"
 )
 ;
-COMMENT ON COLUMN "public"."config_info_aggr"."id" IS 'id';
-COMMENT ON COLUMN "public"."config_info_aggr"."data_id" IS 'data_id';
-COMMENT ON COLUMN "public"."config_info_aggr"."group_id" IS 'group_id';
-COMMENT ON COLUMN "public"."config_info_aggr"."datum_id" IS 'datum_id';
-COMMENT ON COLUMN "public"."config_info_aggr"."content" IS '内容';
-COMMENT ON COLUMN "public"."config_info_aggr"."gmt_modified" IS '修改时间';
-COMMENT ON COLUMN "public"."config_info_aggr"."tenant_id" IS '租户字段';
-COMMENT ON TABLE "public"."config_info_aggr" IS '增加租户字段';
+COMMENT ON COLUMN "public"."config_info_tag"."id" IS 'id';
+COMMENT ON COLUMN "public"."config_info_tag"."data_id" IS 'data_id';
+COMMENT ON COLUMN "public"."config_info_tag"."group_id" IS 'group_id';
+COMMENT ON COLUMN "public"."config_info_tag"."tenant_id" IS 'tenant_id';
+COMMENT ON COLUMN "public"."config_info_tag"."tag_id" IS 'tag_id';
+COMMENT ON COLUMN "public"."config_info_tag"."app_name" IS 'app_name';
+COMMENT ON COLUMN "public"."config_info_tag"."content" IS 'content';
+COMMENT ON COLUMN "public"."config_info_tag"."md5" IS 'md5';
+COMMENT ON COLUMN "public"."config_info_tag"."gmt_create" IS '创建时间';
+COMMENT ON COLUMN "public"."config_info_tag"."gmt_modified" IS '修改时间';
+COMMENT ON COLUMN "public"."config_info_tag"."src_user" IS 'source user';
+COMMENT ON COLUMN "public"."config_info_tag"."src_ip" IS 'source ip';
+COMMENT ON TABLE "public"."config_info_tag" IS 'config_info_tag';
 
 -- ----------------------------
--- Records of config_info_aggr
+-- Records of config_info_tag
 -- ----------------------------
 
 -- ----------------------------
@@ -3713,10 +401,10 @@ COMMENT ON TABLE "public"."config_info_beta" IS 'config_info_beta';
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for config_info_tag
+-- Table structure for config_info_aggr
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."config_info_tag";
-CREATE TABLE "public"."config_info_tag" (
+DROP TABLE IF EXISTS "public"."config_info_aggr";
+CREATE TABLE "public"."config_info_aggr" (
   "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
 INCREMENT 1
 MINVALUE  1
@@ -3726,959 +414,5638 @@ CACHE 1
 ),
   "data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
-  "tenant_id" varchar(128) COLLATE "pg_catalog"."default" DEFAULT ''::character varying,
-  "tag_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
-  "app_name" varchar(128) COLLATE "pg_catalog"."default",
+  "datum_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "content" text COLLATE "pg_catalog"."default" NOT NULL,
-  "md5" varchar(32) COLLATE "pg_catalog"."default",
-  "gmt_create" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "gmt_modified" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "src_user" text COLLATE "pg_catalog"."default",
-  "src_ip" varchar(50) COLLATE "pg_catalog"."default"
-)
-;
-COMMENT ON COLUMN "public"."config_info_tag"."id" IS 'id';
-COMMENT ON COLUMN "public"."config_info_tag"."data_id" IS 'data_id';
-COMMENT ON COLUMN "public"."config_info_tag"."group_id" IS 'group_id';
-COMMENT ON COLUMN "public"."config_info_tag"."tenant_id" IS 'tenant_id';
-COMMENT ON COLUMN "public"."config_info_tag"."tag_id" IS 'tag_id';
-COMMENT ON COLUMN "public"."config_info_tag"."app_name" IS 'app_name';
-COMMENT ON COLUMN "public"."config_info_tag"."content" IS 'content';
-COMMENT ON COLUMN "public"."config_info_tag"."md5" IS 'md5';
-COMMENT ON COLUMN "public"."config_info_tag"."gmt_create" IS '创建时间';
-COMMENT ON COLUMN "public"."config_info_tag"."gmt_modified" IS '修改时间';
-COMMENT ON COLUMN "public"."config_info_tag"."src_user" IS 'source user';
-COMMENT ON COLUMN "public"."config_info_tag"."src_ip" IS 'source ip';
-COMMENT ON TABLE "public"."config_info_tag" IS 'config_info_tag';
-
--- ----------------------------
--- Records of config_info_tag
--- ----------------------------
-
--- ----------------------------
--- Table structure for config_tags_relation
--- ----------------------------
-DROP TABLE IF EXISTS "public"."config_tags_relation";
-CREATE TABLE "public"."config_tags_relation" (
-  "id" int8 NOT NULL,
-  "tag_name" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
-  "tag_type" varchar(64) COLLATE "pg_catalog"."default",
-  "data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
-  "tenant_id" varchar(128) COLLATE "pg_catalog"."default" DEFAULT ''::character varying,
-  "nid" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1
-)
-)
-;
-COMMENT ON COLUMN "public"."config_tags_relation"."id" IS 'id';
-COMMENT ON COLUMN "public"."config_tags_relation"."tag_name" IS 'tag_name';
-COMMENT ON COLUMN "public"."config_tags_relation"."tag_type" IS 'tag_type';
-COMMENT ON COLUMN "public"."config_tags_relation"."data_id" IS 'data_id';
-COMMENT ON COLUMN "public"."config_tags_relation"."group_id" IS 'group_id';
-COMMENT ON COLUMN "public"."config_tags_relation"."tenant_id" IS 'tenant_id';
-COMMENT ON TABLE "public"."config_tags_relation" IS 'config_tag_relation';
-
--- ----------------------------
--- Records of config_tags_relation
--- ----------------------------
-INSERT INTO "public"."config_tags_relation" VALUES (1567, 'gateway', '', 'gateway-flow.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 358);
-INSERT INTO "public"."config_tags_relation" VALUES (16, 'redis', '', 'application-common-redis.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 672);
-INSERT INTO "public"."config_tags_relation" VALUES (1270, 'rocketmq', '', 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 678);
-INSERT INTO "public"."config_tags_relation" VALUES (2159, 'kafka', '', 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 684);
-INSERT INTO "public"."config_tags_relation" VALUES (103, 'elasticsearch', '', 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 689);
-INSERT INTO "public"."config_tags_relation" VALUES (2118, 'report', '', 'application-report.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 720);
-INSERT INTO "public"."config_tags_relation" VALUES (1570, 'admin', '', 'admin-degrade.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 4);
-INSERT INTO "public"."config_tags_relation" VALUES (1475, 'sms', '', 'application-sms.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 5);
-INSERT INTO "public"."config_tags_relation" VALUES (1477, 'mail', '', 'application-mail.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 6);
-INSERT INTO "public"."config_tags_relation" VALUES (1273, 'gateway', '', 'application-gateway.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 11);
-INSERT INTO "public"."config_tags_relation" VALUES (26, 'gateway', '', 'router.json', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 10);
-INSERT INTO "public"."config_tags_relation" VALUES (82, 'monitor', '', 'application-monitor.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 12);
-INSERT INTO "public"."config_tags_relation" VALUES (2022, 'admin', '', 'application-admin.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 19);
-INSERT INTO "public"."config_tags_relation" VALUES (2025, 'auth', '', 'application-auth.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 20);
-INSERT INTO "public"."config_tags_relation" VALUES (17, 'common', '', 'application-common.yaml', 'LAOKOU_GROUP', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 1);
-
--- ----------------------------
--- Table structure for databasechangelog
--- ----------------------------
-DROP TABLE IF EXISTS "public"."databasechangelog";
-CREATE TABLE "public"."databasechangelog" (
-  "id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "author" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "filename" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "dateexecuted" timestamp(6) NOT NULL,
-  "orderexecuted" int4 NOT NULL,
-  "exectype" varchar(10) COLLATE "pg_catalog"."default" NOT NULL,
-  "md5sum" varchar(35) COLLATE "pg_catalog"."default",
-  "description" varchar(255) COLLATE "pg_catalog"."default",
-  "comments" varchar(255) COLLATE "pg_catalog"."default",
-  "tag" varchar(255) COLLATE "pg_catalog"."default",
-  "liquibase" varchar(20) COLLATE "pg_catalog"."default",
-  "contexts" varchar(255) COLLATE "pg_catalog"."default",
-  "labels" varchar(255) COLLATE "pg_catalog"."default",
-  "deployment_id" varchar(10) COLLATE "pg_catalog"."default"
-)
-;
-
--- ----------------------------
--- Records of databasechangelog
--- ----------------------------
-
--- ----------------------------
--- Table structure for databasechangeloglock
--- ----------------------------
-DROP TABLE IF EXISTS "public"."databasechangeloglock";
-CREATE TABLE "public"."databasechangeloglock" (
-  "id" int4 NOT NULL,
-  "locked" bool NOT NULL,
-  "lockgranted" timestamp(6),
-  "lockedby" varchar(255) COLLATE "pg_catalog"."default"
-)
-;
-
--- ----------------------------
--- Records of databasechangeloglock
--- ----------------------------
-INSERT INTO "public"."databasechangeloglock" VALUES (1, 'f', NULL, NULL);
-
--- ----------------------------
--- Table structure for group_capacity
--- ----------------------------
-DROP TABLE IF EXISTS "public"."group_capacity";
-CREATE TABLE "public"."group_capacity" (
-  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1
-),
-  "group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL DEFAULT ''::character varying,
-  "quota" int8 NOT NULL DEFAULT 0,
-  "usage" int8 NOT NULL DEFAULT 0,
-  "max_size" int8 NOT NULL DEFAULT 0,
-  "max_aggr_count" int8 NOT NULL DEFAULT 0,
-  "max_aggr_size" int8 NOT NULL DEFAULT 0,
-  "max_history_count" int8 NOT NULL DEFAULT 0,
-  "gmt_create" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "gmt_modified" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
-)
-;
-COMMENT ON COLUMN "public"."group_capacity"."id" IS '主键ID';
-COMMENT ON COLUMN "public"."group_capacity"."group_id" IS 'Group ID，空字符表示整个集群';
-COMMENT ON COLUMN "public"."group_capacity"."quota" IS '配额，0表示使用默认值';
-COMMENT ON COLUMN "public"."group_capacity"."usage" IS '使用量';
-COMMENT ON COLUMN "public"."group_capacity"."max_size" IS '单个配置大小上限，单位为字节，0表示使用默认值';
-COMMENT ON COLUMN "public"."group_capacity"."max_aggr_count" IS '聚合子配置最大个数，，0表示使用默认值';
-COMMENT ON COLUMN "public"."group_capacity"."max_aggr_size" IS '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值';
-COMMENT ON COLUMN "public"."group_capacity"."max_history_count" IS '最大变更历史数量';
-COMMENT ON COLUMN "public"."group_capacity"."gmt_create" IS '创建时间';
-COMMENT ON COLUMN "public"."group_capacity"."gmt_modified" IS '修改时间';
-COMMENT ON TABLE "public"."group_capacity" IS '集群、各Group容量信息表';
-
--- ----------------------------
--- Records of group_capacity
--- ----------------------------
-
--- ----------------------------
--- Table structure for his_config_info
--- ----------------------------
-DROP TABLE IF EXISTS "public"."his_config_info";
-CREATE TABLE "public"."his_config_info" (
-  "id" int8 NOT NULL,
-  "nid" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1
-),
-  "data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
+  "gmt_modified" timestamp(6) NOT NULL,
   "app_name" varchar(128) COLLATE "pg_catalog"."default",
+  "tenant_id" varchar(128) COLLATE "pg_catalog"."default" DEFAULT ''::character varying
+)
+;
+COMMENT ON COLUMN "public"."config_info_aggr"."id" IS 'id';
+COMMENT ON COLUMN "public"."config_info_aggr"."data_id" IS 'data_id';
+COMMENT ON COLUMN "public"."config_info_aggr"."group_id" IS 'group_id';
+COMMENT ON COLUMN "public"."config_info_aggr"."datum_id" IS 'datum_id';
+COMMENT ON COLUMN "public"."config_info_aggr"."content" IS '内容';
+COMMENT ON COLUMN "public"."config_info_aggr"."gmt_modified" IS '修改时间';
+COMMENT ON COLUMN "public"."config_info_aggr"."tenant_id" IS '租户字段';
+COMMENT ON TABLE "public"."config_info_aggr" IS '增加租户字段';
+
+-- ----------------------------
+-- Records of config_info_aggr
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for config_info
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."config_info";
+CREATE TABLE "public"."config_info" (
+  "id" int8 NOT NULL GENERATED ALWAYS AS IDENTITY (
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1
+),
+  "data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+  "group_id" varchar(128) COLLATE "pg_catalog"."default",
   "content" text COLLATE "pg_catalog"."default" NOT NULL,
   "md5" varchar(32) COLLATE "pg_catalog"."default",
   "gmt_create" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "gmt_modified" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   "src_user" text COLLATE "pg_catalog"."default",
   "src_ip" varchar(50) COLLATE "pg_catalog"."default",
-  "op_type" char(10) COLLATE "pg_catalog"."default",
+  "app_name" varchar(128) COLLATE "pg_catalog"."default",
   "tenant_id" varchar(128) COLLATE "pg_catalog"."default" DEFAULT ''::character varying,
+  "c_desc" varchar(256) COLLATE "pg_catalog"."default",
+  "c_use" varchar(64) COLLATE "pg_catalog"."default",
+  "effect" varchar(64) COLLATE "pg_catalog"."default",
+  "type" varchar(64) COLLATE "pg_catalog"."default",
+  "c_schema" text COLLATE "pg_catalog"."default",
   "encrypted_data_key" text COLLATE "pg_catalog"."default" NOT NULL
 )
 ;
-COMMENT ON COLUMN "public"."his_config_info"."app_name" IS 'app_name';
-COMMENT ON COLUMN "public"."his_config_info"."tenant_id" IS '租户字段';
-COMMENT ON COLUMN "public"."his_config_info"."encrypted_data_key" IS '秘钥';
-COMMENT ON TABLE "public"."his_config_info" IS '多租户改造';
-
--- ----------------------------
--- Records of his_config_info
--- ----------------------------
-
--- ----------------------------
--- Table structure for permissions
--- ----------------------------
-DROP TABLE IF EXISTS "public"."permissions";
-CREATE TABLE "public"."permissions" (
-  "role" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
-  "resource" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
-  "action" varchar(8) COLLATE "pg_catalog"."default" NOT NULL
-)
-;
-
--- ----------------------------
--- Records of permissions
--- ----------------------------
-INSERT INTO "public"."permissions" VALUES ('ADMIN', ':*:*', 'rw');
-INSERT INTO "public"."permissions" VALUES ('ADMIN', 'a61abd4c-ef96-42a5-99a1-616adee531f3:*:*', 'rw');
-INSERT INTO "public"."permissions" VALUES ('ROLE_ADMIN', ':*:*', 'rw');
-INSERT INTO "public"."permissions" VALUES ('ROLE_ADMIN', 'a61abd4c-ef96-42a5-99a1-616adee531f3:*:*', 'rw');
-
--- ----------------------------
--- Table structure for roles
--- ----------------------------
-DROP TABLE IF EXISTS "public"."roles";
-CREATE TABLE "public"."roles" (
-  "username" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
-  "role" varchar(50) COLLATE "pg_catalog"."default" NOT NULL
-)
-;
-
--- ----------------------------
--- Records of roles
--- ----------------------------
-INSERT INTO "public"."roles" VALUES ('laokou', 'ADMIN');
-INSERT INTO "public"."roles" VALUES ('nacos', 'ROLE_ADMIN');
-
--- ----------------------------
--- Table structure for tenant_capacity
--- ----------------------------
-DROP TABLE IF EXISTS "public"."tenant_capacity";
-CREATE TABLE "public"."tenant_capacity" (
-  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1
-),
-  "tenant_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL DEFAULT ''::character varying,
-  "quota" int8 NOT NULL DEFAULT 0,
-  "usage" int8 NOT NULL DEFAULT 0,
-  "max_size" int8 NOT NULL DEFAULT 0,
-  "max_aggr_count" int8 NOT NULL DEFAULT 0,
-  "max_aggr_size" int8 NOT NULL DEFAULT 0,
-  "max_history_count" int8 NOT NULL DEFAULT 0,
-  "gmt_create" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "gmt_modified" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
-)
-;
-COMMENT ON COLUMN "public"."tenant_capacity"."id" IS '主键ID';
-COMMENT ON COLUMN "public"."tenant_capacity"."tenant_id" IS 'Tenant ID';
-COMMENT ON COLUMN "public"."tenant_capacity"."quota" IS '配额，0表示使用默认值';
-COMMENT ON COLUMN "public"."tenant_capacity"."usage" IS '使用量';
-COMMENT ON COLUMN "public"."tenant_capacity"."max_size" IS '单个配置大小上限，单位为字节，0表示使用默认值';
-COMMENT ON COLUMN "public"."tenant_capacity"."max_aggr_count" IS '聚合子配置最大个数';
-COMMENT ON COLUMN "public"."tenant_capacity"."max_aggr_size" IS '单个聚合数据的子配置大小上限，单位为字节，0表示使用默认值';
-COMMENT ON COLUMN "public"."tenant_capacity"."max_history_count" IS '最大变更历史数量';
-COMMENT ON COLUMN "public"."tenant_capacity"."gmt_create" IS '创建时间';
-COMMENT ON COLUMN "public"."tenant_capacity"."gmt_modified" IS '修改时间';
-COMMENT ON TABLE "public"."tenant_capacity" IS '租户容量信息表';
-
--- ----------------------------
--- Records of tenant_capacity
--- ----------------------------
-
--- ----------------------------
--- Table structure for tenant_info
--- ----------------------------
-DROP TABLE IF EXISTS "public"."tenant_info";
-CREATE TABLE "public"."tenant_info" (
-  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY (
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1
-),
-  "kp" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
-  "tenant_id" varchar(128) COLLATE "pg_catalog"."default" DEFAULT ''::character varying,
-  "tenant_name" varchar(128) COLLATE "pg_catalog"."default" DEFAULT ''::character varying,
-  "tenant_desc" varchar(256) COLLATE "pg_catalog"."default",
-  "create_source" varchar(32) COLLATE "pg_catalog"."default",
-  "gmt_create" int8 NOT NULL,
-  "gmt_modified" int8 NOT NULL
-)
-;
-COMMENT ON COLUMN "public"."tenant_info"."id" IS 'id';
-COMMENT ON COLUMN "public"."tenant_info"."kp" IS 'kp';
-COMMENT ON COLUMN "public"."tenant_info"."tenant_id" IS 'tenant_id';
-COMMENT ON COLUMN "public"."tenant_info"."tenant_name" IS 'tenant_name';
-COMMENT ON COLUMN "public"."tenant_info"."tenant_desc" IS 'tenant_desc';
-COMMENT ON COLUMN "public"."tenant_info"."create_source" IS 'create_source';
-COMMENT ON COLUMN "public"."tenant_info"."gmt_create" IS '创建时间';
-COMMENT ON COLUMN "public"."tenant_info"."gmt_modified" IS '修改时间';
-COMMENT ON TABLE "public"."tenant_info" IS 'tenant_info';
-
--- ----------------------------
--- Records of tenant_info
--- ----------------------------
-INSERT INTO "public"."tenant_info" VALUES (2, '1', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'test', 'test', 'nacos', 1673556960289, 1716628319164);
-INSERT INTO "public"."tenant_info" VALUES (1, '1', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'dev', 'dev', 'nacos', 1716631648356, 1716631648356);
-INSERT INTO "public"."tenant_info" VALUES (3, '1', '8140e92b-fb43-48f5-b63b-7506185206a5', 'prod', 'prod', 'nacos', 1716631657328, 1716631657328);
-
--- ----------------------------
--- Table structure for users
--- ----------------------------
-DROP TABLE IF EXISTS "public"."users";
-CREATE TABLE "public"."users" (
-  "username" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
-  "password" varchar(500) COLLATE "pg_catalog"."default" NOT NULL,
-  "enabled" bool NOT NULL DEFAULT true
-)
-;
-
--- ----------------------------
--- Records of users
--- ----------------------------
-INSERT INTO "public"."users" VALUES ('laokou', '$2a$10$75WIn2J5FoX9F5wEBdFsL.0cKdv5h8QqBMKMWBABhWAxKB4TO8WZq', 'f');
-INSERT INTO "public"."users" VALUES ('nacos', '$2a$10$oVX1zRtaql9Jbsyzaaovx.TU2M6Bw0ZpCbPYWOIED58d1ougzaFRm', 'f');
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq1"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq1"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq2"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq2"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq3"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq3"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq4"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq4"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq5"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq5"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq6"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq6"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_aggr_id_seq7"
-OWNED BY "public"."config_info_aggr"."id";
-SELECT setval('"public"."config_info_aggr_id_seq7"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq1"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq1"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq2"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq2"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq3"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq3"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq4"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq4"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq5"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq5"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq6"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq6"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_beta_id_seq7"
-OWNED BY "public"."config_info_beta"."id";
-SELECT setval('"public"."config_info_beta_id_seq7"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq"', 6, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq1"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq1"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq2"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq2"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq3"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq3"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq4"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq4"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq5"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq5"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq6"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq6"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_id_seq7"
-OWNED BY "public"."config_info"."id";
-SELECT setval('"public"."config_info_id_seq7"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq1"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq1"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq2"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq2"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq3"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq3"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq4"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq4"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq5"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq5"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq6"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq6"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_info_tag_id_seq7"
-OWNED BY "public"."config_info_tag"."id";
-SELECT setval('"public"."config_info_tag_id_seq7"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq"', 59, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq1"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq1"', 23, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq2"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq2"', 3, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq3"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq3"', 1, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq4"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq4"', 24, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq5"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq5"', 35, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq6"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq6"', 20, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."config_tags_relation_nid_seq7"
-OWNED BY "public"."config_tags_relation"."nid";
-SELECT setval('"public"."config_tags_relation_nid_seq7"', 1, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq1"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq1"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq2"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq2"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq3"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq3"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq4"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq4"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq5"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq5"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq6"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq6"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."group_capacity_id_seq7"
-OWNED BY "public"."group_capacity"."id";
-SELECT setval('"public"."group_capacity_id_seq7"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq"', 171, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq1"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq1"', 50, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq2"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq2"', 7, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq3"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq3"', 3, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq4"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq4"', 48, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq5"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq5"', 54, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq6"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq6"', 39, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."his_config_info_nid_seq7"
-OWNED BY "public"."his_config_info"."nid";
-SELECT setval('"public"."his_config_info_nid_seq7"', 3, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq1"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq1"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq2"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq2"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq3"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq3"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq4"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq4"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq5"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq5"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq6"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq6"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_capacity_id_seq7"
-OWNED BY "public"."tenant_capacity"."id";
-SELECT setval('"public"."tenant_capacity_id_seq7"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
+COMMENT ON COLUMN "public"."config_info"."id" IS 'id';
+COMMENT ON COLUMN "public"."config_info"."data_id" IS 'data_id';
+COMMENT ON COLUMN "public"."config_info"."content" IS 'content';
+COMMENT ON COLUMN "public"."config_info"."md5" IS 'md5';
+COMMENT ON COLUMN "public"."config_info"."gmt_create" IS '创建时间';
+COMMENT ON COLUMN "public"."config_info"."gmt_modified" IS '修改时间';
+COMMENT ON COLUMN "public"."config_info"."src_user" IS 'source user';
+COMMENT ON COLUMN "public"."config_info"."src_ip" IS 'source ip';
+COMMENT ON COLUMN "public"."config_info"."app_name" IS 'app_name';
+COMMENT ON COLUMN "public"."config_info"."tenant_id" IS '租户字段';
+COMMENT ON COLUMN "public"."config_info"."c_desc" IS 'configuration description';
+COMMENT ON COLUMN "public"."config_info"."c_use" IS 'configuration usage';
+COMMENT ON COLUMN "public"."config_info"."effect" IS '配置生效的描述';
+COMMENT ON COLUMN "public"."config_info"."type" IS '配置的类型';
+COMMENT ON COLUMN "public"."config_info"."c_schema" IS '配置的模式';
+COMMENT ON COLUMN "public"."config_info"."encrypted_data_key" IS '秘钥';
+COMMENT ON TABLE "public"."config_info" IS 'config_info';
+
+DROP TABLE IF EXISTS "public"."config_info_gray";
+CREATE TABLE "public"."config_info_gray" (
+	"id" numeric(20,0) NOT NULL,
+	"data_id" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
+	"group_id" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
+	"content" text COLLATE "pg_catalog"."default" NOT NULL,
+	"md5" varchar(32) COLLATE "pg_catalog"."default",
+	"src_user" text COLLATE "pg_catalog"."default",
+	"src_ip" varchar(100) COLLATE "pg_catalog"."default",
+	"gmt_create" timestamp(6) NOT NULL,
+	"gmt_modified" timestamp(6) NOT NULL,
+	"app_name" varchar(128) COLLATE "pg_catalog"."default",
+	"tenant_id" varchar(128) COLLATE "pg_catalog"."default",
+	"gray_name" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
+	"gray_rule" text COLLATE "pg_catalog"."default" NOT NULL,
+	"encrypted_data_key" varchar(256) COLLATE "pg_catalog"."default" NOT NULL,
+	CONSTRAINT "config_info_gray_pkey" PRIMARY KEY ("id")
+);
+
+CREATE INDEX "idx_dataid_gmt_modified" ON "public"."config_info_gray" USING btree ("data_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,"gmt_modified" "pg_catalog"."timestamp_ops" ASC NULLS LAST);
+
+CREATE INDEX "idx_gmt_modified" ON "public"."config_info_gray" USING btree ("gmt_modified" "pg_catalog"."timestamp_ops" ASC NULLS LAST);
+
+CREATE UNIQUE INDEX "uk_configinfogray_datagrouptenantgray" ON "public"."config_info_gray" USING btree ("data_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,"group_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,"tenant_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,"gray_name" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST);
+
+COMMENT ON COLUMN "public"."config_info_gray"."id" IS 'id';
+COMMENT ON COLUMN "public"."config_info_gray"."data_id" IS 'data_id';
+COMMENT ON COLUMN "public"."config_info_gray"."group_id" IS 'group_id';
+COMMENT ON COLUMN "public"."config_info_gray"."content" IS 'content';
+COMMENT ON COLUMN "public"."config_info_gray"."md5" IS 'md5';
+COMMENT ON COLUMN "public"."config_info_gray"."src_user" IS 'src_user';
+COMMENT ON COLUMN "public"."config_info_gray"."src_ip" IS 'src_ip';
+COMMENT ON COLUMN "public"."config_info_gray"."gmt_create" IS 'gmt_create';
+COMMENT ON COLUMN "public"."config_info_gray"."gmt_modified" IS 'gmt_modified';
+COMMENT ON COLUMN "public"."config_info_gray"."app_name" IS 'app_name';
+COMMENT ON COLUMN "public"."config_info_gray"."tenant_id" IS 'tenant_id';
+COMMENT ON COLUMN "public"."config_info_gray"."gray_name" IS 'gray_name';
+COMMENT ON COLUMN "public"."config_info_gray"."gray_rule" IS 'gray_rule';
+COMMENT ON COLUMN "public"."config_info_gray"."encrypted_data_key" IS 'encrypted_data_key';
+COMMENT ON TABLE "public"."config_info_gray" IS 'config_info_gray';
+
+-- ----------------------------
+-- Records of config_info
+-- ----------------------------
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (8, 'application-mail.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+spring:
+  # mail
+  mail:
+    host: smtp.163.com
+    username: koushenhai@163.com
+    password: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
+    default-encoding: UTF-8', '362c78bb6bf5dab1f309feca3de8fdb6', '2023-02-13 20:00:32', '2024-12-30 23:22:24.925', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-mail', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'mail配置', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (18, 'application-mail.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+spring:
+  # mail
+  mail:
+    host: smtp.163.com
+    username: koushenhai@163.com
+    password: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
+    default-encoding: UTF-8', '362c78bb6bf5dab1f309feca3de8fdb6', '2024-05-25 18:13:10.594', '2024-12-30 23:23:09.846', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-mail', '8140e92b-fb43-48f5-b63b-7506185206a5', 'mail配置', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (28, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  shutdown: graceful
+# spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  cloud:
+    config:
+      initialize-on-context-refresh: true
+  boot:
+    # admin
+    admin:
+      notify:
+        mail:
+          from: koushenhai@163.com
+          to: 2413176044@qq.com
+          template: META-INF/spring-boot-admin-server/mail/status-changed.html
+  # security
+  security:
+    user:
+      # root
+      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
+      # laokou123
+      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
+  # mail
+  mail:
+    host: smtp.163.com
+    username: koushenhai@163.com
+    password: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
+    default-encoding: UTF-8
+
+logging:
+  config: classpath:log4j2-test.xml
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always', 'cb34fe9f4f34be92ad78647f1977adf7', '2023-01-16 12:01:23', '2024-12-30 23:23:25.974', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'spring boot admin monitor', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (1, 'application-common-redis.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  data:
+    # redis
+    redis:
+      client-type: lettuce
+      host: redis
+      port: 6379
+      password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+      connect-timeout: 60000ms #连接超时时长（毫秒）
+      timeout: 60000ms #超时时长（毫秒）
+      lettuce:
+        pool:
+          max-active: -1 #连接池最大连接数（使用负值表示无极限）
+          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2023-01-13 12:15:59', '2023-11-06 18:02:43', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'redis公共配置', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (2, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+spring:
+  # elasticsearch
+  elasticsearch:
+    uris:
+     - https://elasticsearch:9200
+    username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
+    password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+    connection-timeout: 30s
+    socket-timeout: 30s', '54cf98fa1e36856f525336acf7a5d20d', '2023-01-17 10:22:15', '2024-04-07 20:52:38', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'elasticsearch公共配置', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (3, 'application-common-redis.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  data:
+    # redis
+    redis:
+      client-type: lettuce
+      host: redis
+      port: 6379
+      password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+      connect-timeout: 60000ms #连接超时时长（毫秒）
+      timeout: 60000ms #超时时长（毫秒）
+      lettuce:
+        pool:
+          max-active: -1 #连接池最大连接数（使用负值表示无极限）
+          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2024-05-25 18:12:47.33', '2024-05-25 18:13:33.296', NULL, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'redis公共配置', NULL, NULL, 'yaml', NULL, '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (4, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+spring:
+  # elasticsearch
+  elasticsearch:
+    uris:
+     - https://elasticsearch:9200
+    username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
+    password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+    connection-timeout: 30s
+    socket-timeout: 30s', '54cf98fa1e36856f525336acf7a5d20d', '2024-05-25 18:12:47.339', '2024-05-25 18:13:33.322', NULL, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'elasticsearch公共配置', NULL, NULL, 'yaml', NULL, '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (5, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'rocketmq:
+  producer:
+    group: laokou_producer_group
+  name-server: rocketmq-namesrv:9876
+  consumer:
+    pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2024-05-25 18:12:47.344', '2024-05-25 18:13:33.332', NULL, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'rocketmq公共配置', NULL, NULL, 'yaml', NULL, '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (7, 'application-report.yaml', 'LAOKOU_GROUP', 'server:
+  port: 8088', '89f7b26715cf760d099a258200381fe0', '2024-05-25 18:13:10.644', '2024-05-25 18:13:10.644', NULL, '127.0.0.1', 'laokou-report', '8140e92b-fb43-48f5-b63b-7506185206a5', '', NULL, NULL, 'yaml', NULL, '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (9, 'application-report.yaml', 'LAOKOU_GROUP', 'server:
+  port: 8088', '89f7b26715cf760d099a258200381fe0', '2023-10-01 04:56:06', '2024-05-01 00:45:57', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-report', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (10, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: laokou_trace_consumer_group
+      # 禁用自动提交（按周期）已消费offset
+      enable-auto-commit: false
+      # 单次poll()调用返回的记录数
+      max-poll-records: 50
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      # 发生错误后，消息重发的次数。
+      retries: 5
+      #当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
+      batch-size: 16384
+      # 设置生产者内存缓冲区的大小。
+      buffer-memory: 33554432
+      # 键的序列化方式
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 值的序列化方式
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      acks: 0
+    listener:
+      # 在侦听器容器中运行的线程数。
+      concurrency: 5
+      # listner负责ack，每调用一次，就立即commit
+      ack-mode: manual
+      # 批量batch类型
+      type: batch
+      # topic不存在报错
+      missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2024-05-25 18:13:10.65', '2024-05-25 18:13:10.65', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'kafka公共配置', NULL, NULL, 'yaml', NULL, '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (11, 'gateway-flow.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "laokou-auth",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-admin",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-iot",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-generator",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  }
+]', '5e013d830e3af21e5e321c0f4910fda0', '2024-05-25 18:12:47.358', '2024-11-11 20:51:44.543', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (12, 'seataServer.properties', 'SEATA_GROUP', '#For details about configuration items, see https://seata.io/zh-cn/docs/user/configurations.html
+#Transport configuration, for client and server
+transport.type=TCP
+transport.server=NIO
+transport.heartbeat=true
+transport.enableTmClientBatchSendRequest=false
+transport.enableRmClientBatchSendRequest=true
+transport.enableTcServerBatchSendResponse=false
+transport.rpcRmRequestTimeout=30000
+transport.rpcTmRequestTimeout=30000
+transport.rpcTcRequestTimeout=30000
+transport.threadFactory.bossThreadPrefix=NettyBoss
+transport.threadFactory.workerThreadPrefix=NettyServerNIOWorker
+transport.threadFactory.serverExecutorThreadPrefix=NettyServerBizHandler
+transport.threadFactory.shareBossWorker=false
+transport.threadFactory.clientSelectorThreadPrefix=NettyClientSelector
+transport.threadFactory.clientSelectorThreadSize=1
+transport.threadFactory.clientWorkerThreadPrefix=NettyClientWorkerThread
+transport.threadFactory.bossThreadSize=1
+transport.threadFactory.workerThreadSize=default
+transport.shutdown.wait=3
+transport.serialization=seata
+transport.compressor=none
+
+#Transaction routing rules configuration, only for the client
+service.vgroupMapping.default_tx_group=default
+#If you use a registry, you can ignore it
+service.default.grouplist=seata:8091
+service.enableDegrade=false
+service.disableGlobalTransaction=false
+
+client.metadataMaxAgeMs=30000
+#Transaction rule configuration, only for the client
+client.rm.asyncCommitBufferLimit=10000
+client.rm.lock.retryInterval=10
+client.rm.lock.retryTimes=30
+client.rm.lock.retryPolicyBranchRollbackOnConflict=true
+client.rm.reportRetryCount=5
+client.rm.tableMetaCheckEnable=true
+client.rm.tableMetaCheckerInterval=60000
+client.rm.sqlParserType=hikari
+client.rm.reportSuccessEnable=false
+client.rm.sagaBranchRegisterEnable=false
+client.rm.sagaJsonParser=jackson
+client.rm.tccActionInterceptorOrder=-2147482648
+client.tm.commitRetryCount=5
+client.tm.rollbackRetryCount=5
+client.tm.defaultGlobalTransactionTimeout=60000
+client.tm.degradeCheck=false
+client.tm.degradeCheckAllowTimes=10
+client.tm.degradeCheckPeriod=2000
+client.tm.interceptorOrder=-2147482648
+client.undo.dataValidation=true
+client.undo.logSerialization=jackson
+client.undo.onlyCareUpdateColumns=true
+server.undo.logSaveDays=7
+server.undo.logDeletePeriod=86400000
+client.undo.logTable=undo_log
+client.undo.compress.enable=true
+client.undo.compress.type=zip
+client.undo.compress.threshold=64k
+#For TCC transaction mode
+tcc.fence.logTableName=tcc_fence_log
+tcc.fence.cleanPeriod=1h
+# You can choose from the following options: fastjson, jackson, gson
+tcc.contextJsonParserType=fastjson
+
+#Log rule configuration, for client and server
+log.exceptionRate=100
+
+#Transaction storage configuration, only for the server. The file, db, and redis configuration values are optional.
+store.mode=redis
+store.lock.mode=redis
+store.session.mode=redis
+#Used for password encryption
+store.publicKey=
+
+#If `store.mode,store.lock.mode,store.session.mode` are not equal to `file`, you can remove the configuration block.
+store.file.dir=file_store/data
+store.file.maxBranchSessionSize=16384
+store.file.maxGlobalSessionSize=512
+store.file.fileWriteBufferCacheSize=16384
+store.file.flushDiskMode=async
+store.file.sessionReloadReadSize=100
+
+#These configurations are required if the `store mode` is `db`. If `store.mode,store.lock.mode,store.session.mode` are not equal to `db`, you can remove the configuration block.
+store.db.datasource=hikari
+store.db.dbType=mysql
+store.db.driverClassName=com.mysql.cj.jdbc.Driver
+store.db.url=jdbc:mysql://mysql:3306/kcloud_platform_alibaba_seata?useUnicode=true&rewriteBatchedStatements=true
+store.db.user=root
+store.db.password=laokou123
+store.db.minConn=5
+store.db.maxConn=30
+store.db.globalTable=global_table
+store.db.branchTable=branch_table
+store.db.distributedLockTable=distributed_lock
+store.db.queryLimit=100
+store.db.lockTable=lock_table
+store.db.maxWait=5000
+
+#These configurations are required if the `store mode` is `redis`. If `store.mode,store.lock.mode,store.session.mode` are not equal to `redis`, you can remove the configuration block.
+store.redis.mode=single
+store.redis.type=pipeline
+store.redis.single.host=redis
+store.redis.single.port=6379
+store.redis.sentinel.masterName=
+store.redis.sentinel.sentinelHosts=
+store.redis.sentinel.sentinelPassword=
+store.redis.maxConn=10
+store.redis.minConn=1
+store.redis.maxTotal=100
+store.redis.database=0
+store.redis.password=laokou123
+store.redis.queryLimit=100
+
+#Transaction rule configuration, only for the server
+server.recovery.committingRetryPeriod=1000
+server.recovery.asynCommittingRetryPeriod=1000
+server.recovery.rollbackingRetryPeriod=1000
+server.recovery.timeoutRetryPeriod=1000
+server.maxCommitRetryTimeout=-1
+server.maxRollbackRetryTimeout=-1
+server.rollbackRetryTimeoutUnlockEnable=false
+server.distributedLockExpireTime=10000
+server.session.branchAsyncQueueSize=5000
+server.session.enableBranchAsyncRemove=false
+server.enableParallelRequestHandle=true
+server.enableParallelHandleBranch=false
+
+server.raft.cluster=seata:7091,seata:7092,seata:7093
+server.raft.snapshotInterval=600
+server.raft.applyBatch=32
+server.raft.maxAppendBufferSize=262144
+server.raft.maxReplicatorInflightMsgs=256
+server.raft.disruptorBufferSize=16384
+server.raft.electionTimeoutMs=2000
+server.raft.reporterEnabled=false
+server.raft.reporterInitialDelay=60
+server.raft.serialization=jackson
+server.raft.compressor=none
+server.raft.sync=true
+
+#Metrics configuration, only for the server
+metrics.enabled=false
+metrics.registryType=compact
+metrics.exporterList=prometheus
+metrics.exporterPrometheusPort=9898', 'a7c7188f1828b0521c7ce82a105bc070', '2024-12-15 20:30:03.552', '2024-12-15 20:30:03.552', 'nacos', '127.0.0.1', 'laokou-sample-seata-server', '', 'seata server配置', NULL, NULL, 'properties', NULL, '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (13, 'gateway-flow.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "laokou-auth",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-admin",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-iot",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-generator",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  }
+]', '5e013d830e3af21e5e321c0f4910fda0', '2024-05-25 18:13:10.6', '2024-11-11 20:52:03.56', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (31, 'router.json', 'LAOKOU_GROUP', '[
+  {
+    "id": "laokou-auth",
+    "uri": "lb://laokou-auth",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/auth/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "auth",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/auth/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  },
+  {
+    "id": "laokou-admin",
+    "uri": "lb://laokou-admin",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/admin/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "admin",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/admin/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  },
+  {
+    "id": "laokou-iot",
+    "uri": "lb://laokou-iot",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/iot/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "iot",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/iot/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  }
+]
+', '0e03959c7b36b5d0c13fc33b2463e0d3', '2024-05-25 18:13:10.616', '2024-11-06 22:47:22.13', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', '动态路由配置', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (32, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
+spring:
+  # security
+  security:
+    oauth2:
+      client:
+        registration:
+          default:
+            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+            client-name: OAuth2.1认证
+            client-secret: FpHwIfw4wY92dO
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: client_credentials
+            scope:
+              - read
+              - write
+        provider:
+          default:
+            token-uri: https://gateway:5555/auth/oauth2/token
+            authorization-uri: https://gateway:5555/auth/oauth2/token
+      resource-server:
+        enabled: true
+        authorization-url: https://auth:1111/oauth2/authorize
+        token-url: https://gateway:5555/auth/oauth2/token
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /**/v3/api-docs/**=laokou-gateway
+              - /v3/api-docs/**=laokou-auth,laokou-admin,laokou-iot
+              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
+              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
+              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
+              - /error=laokou-admin,laokou-auth,laokou-iot
+              - /favicon.ico=laokou-gateway
+              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
+              - /v3/secrets=laokou-gateway,laokou-auth
+              - /graceful-shutdown=laokou-auth
+              - /doc.html=laokou-gateway,laokou-auth,laokou-admin,laokou-iot
+              - /webjars/**=laokou-auth,laokou-admin,laokou-gateway,laokou-iot
+            POST:
+              - /v3/captchas/send/mail=laokou-auth,laokou-gateway
+              - /v3/captchas/send/mobile=laokou-auth,laokou-gateway
+            DELETE:
+              - /v3/tokens=laokou-auth,laokou-gateway
+  # task
+  task-execution:
+    pool:
+      core-pool-size: 32
+      max-pool-size: 64
+      keep-alive: 60s
+      thread-priority: 10
+      allow-core-thread-timeout: false
+      queue-capacity: 500
+  cloud:
+    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
+    openfeign:
+      compression:
+        response:
+          enabled: true
+        request:
+          enabled: true
+      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
+      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
+      okhttp:
+        enabled: true
+      circuitbreaker:
+        enabled: true
+      httpclient:
+        enabled: false
+        hc5:
+          enabled: false
+        disable-ssl-validation: true
+      client:
+        config:
+          default:
+            connectTimeout: 120000 #连接超时
+            readTimeout: 120000 #读取超时
+            logger-level: none
+      lazy-attributes-resolution: true
+    # sentinel
+    sentinel:
+      web-context-unify: false
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        dashboard: sentinel:8972
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+    # 采样率 => 100%
+    sampling:
+      probability: 1
+  otlp:
+    tracing:
+      endpoint: http://otel-collector:4317/v1/traces
+      compression: gzip
+      timeout: 10s
+      transport: grpc
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# server
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 512
+    # 每块buffer的空间大小
+    buffer-size: 2048
+    # 分配堆外内存
+    direct-buffers: true
+
+# feign
+feign:
+  sentinel:
+    enabled: true
+    default-rule: default
+    rules:
+      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
+      default:
+        - grade: 2 # 异常数策略
+          count: 1 # 异常数模式下为对应的阈值
+          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
+          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
+          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn', '8289454abc0542a483dff016a14bb33f', '2023-01-13 12:16:46', '2024-11-29 00:07:44.842', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (6, 'application-mail.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+spring:
+  # mail
+  mail:
+    host: smtp.163.com
+    username: koushenhai@163.com
+    password: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
+    default-encoding: UTF-8', '362c78bb6bf5dab1f309feca3de8fdb6', '2024-05-25 18:12:47.354', '2024-12-30 23:22:57.814', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-mail', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'mail配置', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (14, 'application-common-redis.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  data:
+    # redis
+    redis:
+      client-type: lettuce
+      host: redis
+      port: 6379
+      password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+      connect-timeout: 60000ms #连接超时时长（毫秒）
+      timeout: 60000ms #超时时长（毫秒）
+      lettuce:
+        pool:
+          max-active: -1 #连接池最大连接数（使用负值表示无极限）
+          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接', 'c8c0e7fbaa49086163b00c1c8e1fa454', '2024-05-25 18:13:10.544', '2024-05-25 18:13:10.544', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'redis公共配置', NULL, NULL, 'yaml', NULL, '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (15, 'application-common-elasticsearch.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+spring:
+  # elasticsearch
+  elasticsearch:
+    uris:
+     - https://elasticsearch:9200
+    username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
+    password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+    connection-timeout: 30s
+    socket-timeout: 30s', '54cf98fa1e36856f525336acf7a5d20d', '2024-05-25 18:13:10.576', '2024-05-25 18:13:10.576', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'elasticsearch公共配置', NULL, NULL, 'yaml', NULL, '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (16, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'rocketmq:
+  producer:
+    group: laokou_producer_group
+  name-server: rocketmq-namesrv:9876
+  consumer:
+    pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2024-05-25 18:13:10.582', '2024-05-25 18:13:10.582', NULL, '127.0.0.1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', 'rocketmq公共配置', NULL, NULL, 'yaml', NULL, '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (17, 'application-sms.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+sms:
+  type: gyy
+  gyy:
+    template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
+    sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
+    appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)', '3adcbf9b68966d16ac2136f236f2f919', '2024-05-25 18:13:10.588', '2024-07-16 21:50:44.322', 'nacos', '127.0.0.1', 'laokou-sms', '8140e92b-fb43-48f5-b63b-7506185206a5', 'sms配置', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (19, 'application-report.yaml', 'LAOKOU_GROUP', 'server:
+  port: 8088', '89f7b26715cf760d099a258200381fe0', '2024-05-25 18:13:33.406', '2024-05-25 18:13:33.406', NULL, '127.0.0.1', 'laokou-report', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', NULL, NULL, 'yaml', NULL, '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (20, 'admin-flow.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "/v3/users",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/profile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/all",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
+', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-12 11:21:13.251', '2024-11-12 11:22:10.475', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (21, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
+spring:
+  # security
+  security:
+    oauth2:
+      client:
+        registration:
+          default:
+            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+            client-name: OAuth2.1认证
+            client-secret: FpHwIfw4wY92dO
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: client_credentials
+            scope:
+              - read
+              - write
+        provider:
+          default:
+            token-uri: https://gateway:5555/auth/oauth2/token
+            authorization-uri: https://gateway:5555/auth/oauth2/token
+      resource-server:
+        enabled: true
+        authorization-url: http://auth:1111/oauth2/authorize
+        token-url: http://gateway:5555/auth/oauth2/token
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /**/v3/api-docs/**=laokou-gateway
+              - /v3/api-docs/**=laokou-auth,laokou-admin,laokou-iot
+              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
+              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
+              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
+              - /error=laokou-admin,laokou-auth,laokou-iot
+              - /favicon.ico=laokou-gateway
+              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
+              - /v3/secrets=laokou-gateway,laokou-auth
+              - /graceful-shutdown=laokou-auth
+              - /doc.html=laokou-gateway,laokou-auth,laokou-admin,laokou-iot
+              - /webjars/**=laokou-auth,laokou-admin,laokou-gateway,laokou-iot
+            POST:
+              - /v3/captchas/send/mail=laokou-auth,laokou-gateway
+              - /v3/captchas/send/mobile=laokou-auth,laokou-gateway
+            DELETE:
+              - /v3/tokens=laokou-auth,laokou-gateway
+  # task
+  task-execution:
+    pool:
+      core-pool-size: 32
+      max-pool-size: 64
+      keep-alive: 60s
+      thread-priority: 10
+      allow-core-thread-timeout: false
+      queue-capacity: 500
+  cloud:
+    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
+    openfeign:
+      compression:
+        response:
+          enabled: true
+        request:
+          enabled: true
+      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
+      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
+      okhttp:
+        enabled: true
+      circuitbreaker:
+        enabled: true
+      httpclient:
+        enabled: false
+        hc5:
+          enabled: false
+        disable-ssl-validation: true
+      client:
+        config:
+          default:
+            connectTimeout: 120000 #连接超时
+            readTimeout: 120000 #读取超时
+            logger-level: none
+      lazy-attributes-resolution: true
+    # sentinel
+    sentinel:
+      web-context-unify: false
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        dashboard: sentinel:8972
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+    # 采样率 => 100%
+    sampling:
+      probability: 1
+  otlp:
+    tracing:
+      endpoint: http://otel-collector:4317/v1/traces
+      compression: gzip
+      timeout: 10s
+      transport: grpc
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# server
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 512
+    # 每块buffer的空间大小
+    buffer-size: 2048
+    # 分配堆外内存
+    direct-buffers: true
+
+# feign
+feign:
+  sentinel:
+    enabled: true
+    default-rule: default
+    rules:
+      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
+      default:
+        - grade: 2 # 异常数策略
+          count: 1 # 异常数模式下为对应的阈值
+          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
+          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
+          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn', '81c1e533aa1e03626028f5166cb2aa90', '2024-05-25 18:13:33.393', '2024-11-29 00:08:01.835', 'nacos', '0:0:0:0:0:0:0:1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (22, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: laokou_trace_consumer_group
+      # 禁用自动提交（按周期）已消费offset
+      enable-auto-commit: false
+      # 单次poll()调用返回的记录数
+      max-poll-records: 50
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      # 发生错误后，消息重发的次数。
+      retries: 5
+      #当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
+      batch-size: 16384
+      # 设置生产者内存缓冲区的大小。
+      buffer-memory: 33554432
+      # 键的序列化方式
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 值的序列化方式
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      acks: 0
+    listener:
+      # 在侦听器容器中运行的线程数。
+      concurrency: 5
+      # listner负责ack，每调用一次，就立即commit
+      ack-mode: manual
+      # 批量batch类型
+      type: batch
+      # topic不存在报错
+      missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2024-05-25 18:13:33.413', '2024-05-25 18:13:33.413', NULL, '127.0.0.1', '', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'kafka公共配置', NULL, NULL, 'yaml', NULL, '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (23, 'application-sms.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+sms:
+  type: gyy
+  gyy:
+    template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
+    sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
+    appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)', '3adcbf9b68966d16ac2136f236f2f919', '2024-05-25 18:12:47.349', '2024-07-16 21:51:04.709', 'nacos', '127.0.0.1', 'laokou-sms', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'sms配置', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (33, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: false
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: false
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  session:
+    redis:
+      repository-type: indexed
+      namespace: spring:session:auth
+    timeout: 3600
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 60000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # OAuth2
+  security:
+    oauth2:
+      authorization-server:
+        enabled: true
+        # 多租户
+        multiple-issuers-allowed: false
+        client:
+          default:
+            token:
+              authorization-code-time-to-live: 1h
+              access-token-time-to-live: 1h
+              refresh-token-time-to-live: 6h
+              Device-code-time-to-live: 1h
+            registration:
+              id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-name: OAuth2.1认证
+              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
+              client-authentication-methods:
+                - client_secret_basic
+              authorization-grant-types:
+                - password
+                - mail
+                - mobile
+                - client_credentials
+                - refresh_token
+                - authorization_code
+                - urn:ietf:params:oauth:grant-type:device_code
+                - urn:ietf:params:oauth:grant-type:jwt-bearer
+                - urn:ietf:params:oauth:grant-type:token-exchange
+              scopes:
+                - read
+                - write
+              redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+                - https://laokou.org.cn/api/webjars/oauth/oauth2.html
+                - http://laokou.org.cn/api/webjars/oauth/oauth2.html
+                - https://ui/api/webjars/oauth/oauth2.html
+                - http://ui/api/webjars/oauth/oauth2.html
+                - https://gateway:5555/webjars/oauth/oauth2.html
+                - http://gateway:5555/webjars/oauth/oauth2.html
+                - https://auth:1111/webjars/oauth/oauth2.html
+                - http://auth:1111/webjars/oauth/oauth2.html
+                - https://admin:9990/webjars/oauth/oauth2.html
+                - http://admin:9990/webjars/oauth/oauth2.html
+              post-logout-redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+                - https://ui
+                - http://ui
+            # 客户端请求访问时需要授权同意
+            require-authorization-consent: true
+            # PKCE
+            require-proof-key: false
+  threads:
+    virtual:
+      enabled: true
+
+logging:
+  config: classpath:log4j2-dev.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.auth.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: true
+    ignore-tables:
+      - boot_sys_source
+      - boot_sys_tenant
+      - boot_domain_event
+      - boot_sys_user
+      - boot_sys_menu
+      - boot_sys_dept
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '6f43e3a1956b1811cd468ba49d1c7926', '2024-05-25 18:13:33.452', '2024-12-02 13:06:14.788', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (34, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  session:
+    redis:
+      repository-type: indexed
+      namespace: spring:session:auth
+    timeout: 3600
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 60000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # OAuth2
+  security:
+    oauth2:
+      authorization-server:
+        enabled: true
+        # 多租户
+        multiple-issuers-allowed: false
+        client:
+          default:
+            token:
+              authorization-code-time-to-live: 1h
+              access-token-time-to-live: 1h
+              refresh-token-time-to-live: 6h
+              Device-code-time-to-live: 1h
+            registration:
+              id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-name: OAuth2.1认证
+              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
+              client-authentication-methods:
+                - client_secret_basic
+              authorization-grant-types:
+                - password
+                - mail
+                - mobile
+                - client_credentials
+                - refresh_token
+                - authorization_code
+                - urn:ietf:params:oauth:grant-type:device_code
+                - urn:ietf:params:oauth:grant-type:jwt-bearer
+                - urn:ietf:params:oauth:grant-type:token-exchange
+              scopes:
+                - read
+                - write
+              redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+                - https://laokou.org.cn/api/webjars/oauth/oauth2.html
+                - http://laokou.org.cn/api/webjars/oauth/oauth2.html
+                - https://ui/api/webjars/oauth/oauth2.html
+                - http://ui/api/webjars/oauth/oauth2.html
+                - https://gateway:5555/webjars/oauth/oauth2.html
+                - http://gateway:5555/webjars/oauth/oauth2.html
+                - https://auth:1111/webjars/oauth/oauth2.html
+                - http://auth:1111/webjars/oauth/oauth2.html
+                - https://admin:9990/webjars/oauth/oauth2.html
+                - http://admin:9990/webjars/oauth/oauth2.html
+              post-logout-redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+                - https://ui
+                - http://ui
+            # 客户端请求访问时需要授权同意
+            require-authorization-consent: true
+            # PKCE
+            require-proof-key: false
+  threads:
+    virtual:
+      enabled: true
+
+logging:
+  config: classpath:log4j2-prod.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: false
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.auth.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: true
+    ignore-tables:
+      - boot_sys_source
+      - boot_sys_tenant
+      - boot_domain_event
+      - boot_sys_user
+      - boot_sys_menu
+      - boot_sys_dept
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '1c5f41f783339c04acca49767ee77ef0', '2024-05-25 18:13:10.697', '2024-12-02 13:06:31.995', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (35, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: "default"
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # 不开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+
+logging:
+  config: classpath:log4j2-prod.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: false
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.admin.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '423e21263632ed25138cc1b1e0e2e110', '2024-05-25 18:13:10.69', '2024-12-02 13:06:47.536', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (26, 'router.json', 'LAOKOU_GROUP', '[
+  {
+    "id": "laokou-auth",
+    "uri": "lb://laokou-auth",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/auth/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "auth",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/auth/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  },
+  {
+    "id": "laokou-admin",
+    "uri": "lb://laokou-admin",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/admin/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "admin",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/admin/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  },
+  {
+    "id": "laokou-iot",
+    "uri": "lb://laokou-iot",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/iot/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "iot",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/iot/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  }
+]
+', '0e03959c7b36b5d0c13fc33b2463e0d3', '2024-05-25 18:13:33.387', '2024-11-06 22:46:53.026', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '动态路由配置', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (27, 'application-common.yaml', 'LAOKOU_GROUP', '# spring
+spring:
+  # security
+  security:
+    oauth2:
+      client:
+        registration:
+          default:
+            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+            client-name: OAuth2.1认证
+            client-secret: FpHwIfw4wY92dO
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: client_credentials
+            scope:
+              - read
+              - write
+        provider:
+          default:
+            token-uri: https://gateway:5555/auth/oauth2/token
+            authorization-uri: https://gateway:5555/auth/oauth2/token
+      resource-server:
+        enabled: true
+        authorization-url: https://auth:1111/oauth2/authorize
+        token-url: https://gateway:5555/auth/oauth2/token
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /**/v3/api-docs/**=laokou-gateway
+              - /v3/api-docs/**=laokou-auth,laokou-admin,laokou-iot
+              - /swagger-ui.html=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
+              - /swagger-ui/**=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
+              - /actuator/**=laokou-admin,laokou-gateway,laokou-auth,laokou-iot
+              - /error=laokou-admin,laokou-auth,laokou-iot
+              - /favicon.ico=laokou-gateway
+              - /v3/captchas/{uuid}=laokou-gateway,laokou-auth
+              - /v3/secrets=laokou-gateway,laokou-auth
+              - /graceful-shutdown=laokou-auth
+              - /doc.html=laokou-gateway,laokou-auth,laokou-admin,laokou-iot
+              - /webjars/**=laokou-auth,laokou-admin,laokou-gateway,laokou-iot
+            POST:
+              - /v3/captchas/send/mail=laokou-auth,laokou-gateway
+              - /v3/captchas/send/mobile=laokou-auth,laokou-gateway
+            DELETE:
+              - /v3/tokens=laokou-auth,laokou-gateway
+  # task
+  task-execution:
+    pool:
+      core-pool-size: 32
+      max-pool-size: 64
+      keep-alive: 60s
+      thread-priority: 10
+      allow-core-thread-timeout: false
+      queue-capacity: 500
+  cloud:
+    # 解决集成sentinel，openfeign启动报错，官方下个版本修复
+    openfeign:
+      compression:
+        response:
+          enabled: true
+        request:
+          enabled: true
+      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
+      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
+      okhttp:
+        enabled: true
+      circuitbreaker:
+        enabled: true
+      httpclient:
+        enabled: false
+        hc5:
+          enabled: false
+        disable-ssl-validation: true
+      client:
+        config:
+          default:
+            connectTimeout: 120000 #连接超时
+            readTimeout: 120000 #读取超时
+            logger-level: none
+      lazy-attributes-resolution: true
+    # sentinel
+    sentinel:
+      web-context-unify: false
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        dashboard: sentinel:8972
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+    # 采样率 => 100%
+    sampling:
+      probability: 1
+  otlp:
+    tracing:
+      endpoint: http://otel-collector:4317/v1/traces
+      compression: gzip
+      timeout: 10s
+      transport: grpc
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# server
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 512
+    # 每块buffer的空间大小
+    buffer-size: 2048
+    # 分配堆外内存
+    direct-buffers: true
+
+# feign
+feign:
+  sentinel:
+    enabled: true
+    default-rule: default
+    rules:
+      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
+      default:
+        - grade: 2 # 异常数策略
+          count: 1 # 异常数模式下为对应的阈值
+          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
+          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
+          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: false
+  setting:
+    language: zh_cn', 'd4cf3cf2ea03b00fde99bb360d3103d2', '2024-05-25 18:13:10.622', '2024-11-29 00:08:21.07', 'nacos', '0:0:0:0:0:0:0:1', '', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (29, 'application-shardingsphere.yaml', 'DEFAULT_GROUP', 'public-key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ4o6sn4WoPmbs7DR9mGQzuuUQM9erQTVPpwxIzB0ETYkyKffO097qXVRLA6KPmaV+/siWewR7vpfYYjWajw5KkCAwEAAQ==
+dataSources:
+  master:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: org.postgresql.Driver
+    jdbcUrl: jdbc:postgresql://postgresql:5432/kcloud_platform_test?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-sample-shardingsphere&useSSL=false
+    username: ENC(VZamSTMi224AH6RUtJGXNldiDp/XEL2ozRhBUu/o9ChodT4JEb9kE/j0EFhXKbjsfvLVacUW0AUzetA6OrNJug==)
+    password: ENC(laIHkPM/z03tYjA95hES4+BhyjyhvrPjJynrC65oDyXnUTP0Tge1UxwERWFBbHoOOQZ2GzzUrRhEYJ3jFb89eQ==)
+  slave:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: org.postgresql.Driver
+    jdbcUrl: jdbc:postgresql://postgresql:5432/kcloud_platform_test?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-sample-shardingsphere&useSSL=false
+    username: ENC(VZamSTMi224AH6RUtJGXNldiDp/XEL2ozRhBUu/o9ChodT4JEb9kE/j0EFhXKbjsfvLVacUW0AUzetA6OrNJug==)
+    password: ENC(laIHkPM/z03tYjA95hES4+BhyjyhvrPjJynrC65oDyXnUTP0Tge1UxwERWFBbHoOOQZ2GzzUrRhEYJ3jFb89eQ==)
+rules:
+- !SHARDING
+  tables:
+    boot_sys_user:
+      actualDataNodes: master.boot_sys_user_20240$->{1..9},master.boot_sys_user_2024$->{10..12}
+      tableStrategy:
+        standard:
+          shardingColumn: create_date
+          shardingAlgorithmName: laokou_table_inline
+      keyGenerateStrategy:
+        column: id
+        keyGeneratorName: snowflake
+  shardingAlgorithms:
+    laokou_table_inline:
+      # 时间范围分片算法
+      type: INTERVAL
+      props:
+          # 分片键的时间戳格式
+        datetime-pattern: "yyyy-MM-dd HH:mm:ss"
+        # 真实表的后缀格式
+        sharding-suffix-pattern: "yyyyMM"
+        # 时间分片下界值
+        datetime-lower: "2024-01-01 00:00:00"
+        # 时间分片上界值
+        datetime-upper: "2024-12-31 23:59:59"
+        # 分片间隔
+        datetime-interval-amount: 1
+        # 按月分表
+        datetime-interval-unit: "months"
+  keyGenerators:
+    snowflake:
+      type: SNOWFLAKE
+      props:
+        work-id: 123
+- !READWRITE_SPLITTING
+  dataSourceGroups:
+    laokou_readwrite_data_sources:
+      writeDataSourceName: master
+      readDataSourceNames:
+        - slave
+      loadBalancerName: laokou_load_balance_algorithm
+  loadBalancers:
+    laokou_load_balance_algorithm:
+      type: ROUND_ROBIN
+props:
+  sql-show: true', '71f24dc33bc0a8cb31b1172c53cc4760', '2024-10-26 19:01:28.101', '2024-10-26 20:10:28.884', 'nacos', '0:0:0:0:0:0:0:1', '', '', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (30, 'router.json', 'LAOKOU_GROUP', '[
+  {
+    "id": "laokou-auth",
+    "uri": "lb://laokou-auth",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/auth/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "auth",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/auth/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  },
+  {
+    "id": "laokou-admin",
+    "uri": "lb://laokou-admin",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/admin/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "admin",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/admin/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  },
+  {
+    "id": "laokou-iot",
+    "uri": "lb://laokou-iot",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/iot/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "iot",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/iot/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  }
+]
+', '0e03959c7b36b5d0c13fc33b2463e0d3', '2023-01-13 15:44:25', '2024-11-06 22:47:10.779', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'text', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (24, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: false
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: false
+  shutdown: graceful
+# spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  cloud:
+    config:
+      initialize-on-context-refresh: true
+  boot:
+    # admin
+    admin:
+      notify:
+        mail:
+          from: koushenhai@163.com
+          to: 2413176044@qq.com
+          template: META-INF/spring-boot-admin-server/mail/status-changed.html
+  # security
+  security:
+    user:
+      # root
+      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
+      # laokou123
+      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
+  # mail
+  mail:
+    host: smtp.163.com
+    username: koushenhai@163.com
+    password: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
+    default-encoding: UTF-8
+
+logging:
+  config: classpath:log4j2-dev.xml
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always', '964b939da2b2453894e2433994f00828', '2024-05-25 18:12:47.335', '2024-12-30 23:23:41.782', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'spring boot admin monitor', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (25, 'application-monitor.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  shutdown: graceful
+# spring
+spring:
+  threads:
+    virtual:
+      enabled: true
+  cloud:
+    config:
+      initialize-on-context-refresh: true
+  boot:
+    # admin
+    admin:
+      notify:
+        mail:
+          from: koushenhai@163.com
+          to: 2413176044@qq.com
+          template: META-INF/spring-boot-admin-server/mail/status-changed.html
+  # security
+  security:
+    user:
+      # root
+      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
+      # laokou123
+      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
+  # mail
+  mail:
+    host: smtp.163.com
+    username: koushenhai@163.com
+    password: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
+    default-encoding: UTF-8
+
+logging:
+  config: classpath:log4j2-prod.xml
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always', '1313d401b65083400d90d273226ed232', '2024-05-25 18:13:10.57', '2024-12-30 23:23:56.385', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-monitor', '8140e92b-fb43-48f5-b63b-7506185206a5', 'spring boot admin monitor', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (36, 'application-gateway.yaml', 'LAOKOU_GROUP', 'server:
+  # 开启请求压缩
+  compression:
+    enabled: true
+  ssl:
+    # 开启证书
+    enabled: false
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+    # 证书密码
+    key-password: laokou
+  http2:
+    enabled: false
+  forward-headers-strategy: native
+  # 优雅停机
+  shutdown: graceful
+  netty:
+    # 请求的最大初始行长度
+    max-initial-line-length: 4096
+# spring
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  threads:
+    virtual:
+      enabled: true
+  webflux:
+    multipart:
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-in-memory-size: 4096
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+    # loadbalancer
+    loadbalancer:
+      cache:
+        caffeine:
+          # 初始容量 => 30
+          # 最大容量 => 4096
+          # 淘汰规则 => 最后一次写操作后经过30s过期
+          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
+        # 开启缓存
+        enabled: true
+      nacos:
+        # 开启Nacos路由负载均衡
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+    # gateway
+    gateway:
+      discovery:
+        locator:
+          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
+          # 查看DiscoveryLocatorProperties
+          enabled: false
+          # 开启服务ID强制小写
+          lower-case-service-id: true
+      httpclient:
+        ssl:
+          # 信任所有下游证书
+          use-insecure-trust-manager: false
+        # 关闭netty日志
+        wiretap: false
+        pool:
+          # 连接池中连接的最大空闲时间
+          max-idle-time: 10m
+          # 最大连接数
+          max-connections: 10000
+          # 连接池中连接的最大存活时间
+          max-life-time: 5m
+          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
+          # fixed     固定数量线程池
+          # disabled  不使用线程池（只有一个线程）
+          type: fixed
+          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
+          acquire-timeout: 60000
+        # 连接超时时间（毫秒），默认30s
+        connect-timeout: 60000
+      httpserver:
+        # 关闭netty日志
+        wiretap: false
+      ip:
+        white:
+          enabled: false
+        black:
+          enabled: false
+logging:
+  config: classpath:log4j2-dev.xml
+
+knife4j:
+  gateway:
+    enabled: true
+    tags-sorter: order
+    operations-sorter: order
+    # 手动
+    strategy: manual
+    routes:
+      - name: 认证服务
+        url: /auth/v3/api-docs?group=default
+        service-name: laokou-auth
+        context-path: /auth
+        order: 1
+      - name: 管理服务
+        url: /admin/v3/api-docs?group=default
+        service-name: laokou-admin
+        context-path: /admin
+        order: 2', '742c1977d606dd90963114917d3f1f8f', '2024-05-25 18:13:33.458', '2024-11-17 21:10:15.174', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway配置', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (37, 'application-auth.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  session:
+    redis:
+      repository-type: indexed
+      namespace: spring:session:auth
+    timeout: 3600
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 60000
+            validation-timeout: 3000
+            idle-timeout: 60000
+            max-lifetime: 60000
+            maximum-pool-size: 30
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # OAuth2
+  security:
+    oauth2:
+      authorization-server:
+        enabled: true
+        # 多租户
+        multiple-issuers-allowed: false
+        client:
+          default:
+            token:
+              authorization-code-time-to-live: 1h
+              access-token-time-to-live: 1h
+              refresh-token-time-to-live: 6h
+              Device-code-time-to-live: 1h
+            registration:
+              id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+              client-name: OAuth2.1认证
+              client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
+              client-authentication-methods:
+                - client_secret_basic
+              authorization-grant-types:
+                - password
+                - mail
+                - mobile
+                - client_credentials
+                - refresh_token
+                - authorization_code
+                - urn:ietf:params:oauth:grant-type:device_code
+                - urn:ietf:params:oauth:grant-type:jwt-bearer
+                - urn:ietf:params:oauth:grant-type:token-exchange
+              scopes:
+                - read
+                - write
+              redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+                - https://laokou.org.cn/api/webjars/oauth/oauth2.html
+                - http://laokou.org.cn/api/webjars/oauth/oauth2.html
+                - https://ui/api/webjars/oauth/oauth2.html
+                - http://ui/api/webjars/oauth/oauth2.html
+                - https://gateway:5555/webjars/oauth/oauth2.html
+                - http://gateway:5555/webjars/oauth/oauth2.html
+                - https://auth:1111/webjars/oauth/oauth2.html
+                - http://auth:1111/webjars/oauth/oauth2.html
+                - https://admin:9990/webjars/oauth/oauth2.html
+                - http://admin:9990/webjars/oauth/oauth2.html
+              post-logout-redirect-uris:
+                - http://127.0.0.1:8000
+                - http://127.0.0.1:8001
+                - https://vue.laokou.org
+                - https://laokou.org.cn
+                - https://ui
+                - http://ui
+            # 客户端请求访问时需要授权同意
+            require-authorization-consent: true
+            # PKCE
+            require-proof-key: false
+  threads:
+    virtual:
+      enabled: true
+
+logging:
+  config: classpath:log4j2-test.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.auth.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: true
+    ignore-tables:
+      - boot_sys_source
+      - boot_sys_tenant
+      - boot_domain_event
+      - boot_sys_user
+      - boot_sys_menu
+      - boot_sys_dept
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '2fa6e751e519d16cb3bbad6df8730aa3', '2023-09-28 11:51:44', '2024-12-02 13:05:12.573', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (38, 'auth-flow.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "/v3/captchas/{uuid}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/captchas/send/mobile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+    {
+    "resource": "/v3/captchas/send/mail",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/secrets",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tokens",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
+', '2bb6ed92c98b4a1693426dadf1c96a30', '2024-11-11 21:17:37.578', '2024-11-11 21:18:17.553', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', 'auth sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (39, 'auth-flow.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "/v3/captchas/{uuid}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/captchas/send/mobile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+    {
+    "resource": "/v3/captchas/send/mail",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/secrets",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tokens",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
+', '2bb6ed92c98b4a1693426dadf1c96a30', '2024-11-11 21:16:13.23', '2024-11-11 21:17:25.382', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'auth sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (40, 'admin-flow.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "/v3/users",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/profile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/all",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
+', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-11 21:19:54.557', '2024-11-12 11:13:47.766', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (41, 'admin-flow.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "/v3/users",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/profile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/all",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/ips/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
+', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-11 21:20:18.495', '2024-11-12 11:14:01.899', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (42, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: false
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: false
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: "default"
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # 不开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+
+logging:
+  config: classpath:log4j2-dev.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.admin.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '6ce8a33e0483d263c4c187f1d48f4090', '2024-05-25 18:13:33.447', '2024-12-02 13:05:58.382', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (43, 'auth-flow.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "/v3/captchas/{uuid}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/captchas/send/mobile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+    {
+    "resource": "/v3/captchas/send/mail",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/secrets",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tokens",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
+', '2bb6ed92c98b4a1693426dadf1c96a30', '2024-11-11 21:17:33.583', '2024-11-11 21:18:04.394', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'auth sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (48, 'application-common-rocketmq.yaml', 'LAOKOU_GROUP', 'rocketmq:
+  producer:
+    group: laokou_producer_group
+  name-server: rocketmq-namesrv:9876
+  consumer:
+    pull-batch-size: 16', '540e67a6edad605be9959a9652d383e2', '2023-01-21 10:43:04', '2023-11-06 18:10:30', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'rocketmq公共配置', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (44, 'application-gateway.yaml', 'LAOKOU_GROUP', 'server:
+  # 开启请求压缩
+  compression:
+    enabled: true
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+    # 证书密码
+    key-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: native
+  # 优雅停机
+  shutdown: graceful
+  netty:
+    # 请求的最大初始行长度
+    max-initial-line-length: 4096
+# spring
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  threads:
+    virtual:
+      enabled: true
+  webflux:
+    multipart:
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-in-memory-size: 4096
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+    # loadbalancer
+    loadbalancer:
+      cache:
+        caffeine:
+          # 初始容量 => 30
+          # 最大容量 => 4096
+          # 淘汰规则 => 最后一次写操作后经过30s过期
+          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
+        # 开启缓存
+        enabled: true
+      nacos:
+        # 开启Nacos路由负载均衡
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+    # gateway
+    gateway:
+      discovery:
+        locator:
+          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
+          # 查看DiscoveryLocatorProperties
+          enabled: false
+          # 开启服务ID强制小写
+          lower-case-service-id: true
+      httpclient:
+        ssl:
+          # 信任所有下游证书
+          use-insecure-trust-manager: true
+        # 关闭netty日志
+        wiretap: false
+        pool:
+          # 连接池中连接的最大空闲时间
+          max-idle-time: 10m
+          # 最大连接数
+          max-connections: 10000
+          # 连接池中连接的最大存活时间
+          max-life-time: 5m
+          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
+          # fixed     固定数量线程池
+          # disabled  不使用线程池（只有一个线程）
+          type: fixed
+          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
+          acquire-timeout: 60000
+        # 连接超时时间（毫秒），默认30s
+        connect-timeout: 60000
+      httpserver:
+        # 关闭netty日志
+        wiretap: false
+      ip:
+        white:
+          enabled: false
+        black:
+          enabled: false
+logging:
+  config: classpath:log4j2-prod.xml
+
+knife4j:
+  gateway:
+    enabled: false
+    tags-sorter: order
+    operations-sorter: order
+    # 手动
+    strategy: manual
+    routes:
+      - name: 认证服务
+        url: /auth/v3/api-docs?group=default
+        service-name: laokou-auth
+        context-path: /auth
+        order: 1
+      - name: 管理服务
+        url: /admin/v3/api-docs?group=default
+        service-name: laokou-admin
+        context-path: /admin
+        order: 2', '1aa56899a633f3843d3b5adffe2d03e1', '2024-05-25 18:13:10.704', '2024-11-17 21:11:40.537', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway配置', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (45, 'application-iot.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: "default"
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # 不开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        iot:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+
+logging:
+  config: classpath:log4j2-prod.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.iot.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'd3e6742866a686695b33fe7cad1be416', '2024-11-06 22:52:26.903', '2024-12-02 13:08:07.645', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-iot', '8140e92b-fb43-48f5-b63b-7506185206a5', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (46, 'application-iot.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: "default"
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # 不开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        iot:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+
+logging:
+  config: classpath:log4j2-test.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.iot.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '0b1fe50e52ccc896190ee63fa5c49e35', '2024-11-06 22:51:23.767', '2024-12-02 13:07:37.463', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-iot', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (47, 'application-iot.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: false
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: false
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: "default"
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # 不开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        iot:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+
+logging:
+  config: classpath:log4j2-dev.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.iot.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', 'c066d096cdc06f9035bad4dd5c38477f', '2024-11-06 22:52:13.959', '2024-12-02 13:07:53.776', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-iot', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (49, 'application-gateway.yaml', 'LAOKOU_GROUP', 'server:
+  # 开启请求压缩
+  compression:
+    enabled: true
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+    # 证书密码
+    key-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: native
+  # 优雅停机
+  shutdown: graceful
+  netty:
+    # 请求的最大初始行长度
+    max-initial-line-length: 4096
+# spring
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  threads:
+    virtual:
+      enabled: true
+  webflux:
+    multipart:
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-in-memory-size: 4096
+  cloud:
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+    # loadbalancer
+    loadbalancer:
+      cache:
+        caffeine:
+          # 初始容量 => 30
+          # 最大容量 => 4096
+          # 淘汰规则 => 最后一次写操作后经过30s过期
+          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
+        # 开启缓存
+        enabled: true
+      nacos:
+        # 开启Nacos路由负载均衡
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+    # gateway
+    gateway:
+      discovery:
+        locator:
+          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
+          # 查看DiscoveryLocatorProperties
+          enabled: false
+          # 开启服务ID强制小写
+          lower-case-service-id: true
+      httpclient:
+        ssl:
+          # 信任所有下游证书
+          use-insecure-trust-manager: true
+        # 关闭netty日志
+        wiretap: false
+        pool:
+          # 连接池中连接的最大空闲时间
+          max-idle-time: 10m
+          # 最大连接数
+          max-connections: 10000
+          # 连接池中连接的最大存活时间
+          max-life-time: 5m
+          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
+          # fixed     固定数量线程池
+          # disabled  不使用线程池（只有一个线程）
+          type: fixed
+          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
+          acquire-timeout: 60000
+        # 连接超时时间（毫秒），默认30s
+        connect-timeout: 60000
+      httpserver:
+        # 关闭netty日志
+        wiretap: false
+      ip:
+        white:
+          enabled: false
+        black:
+          enabled: false
+logging:
+  config: classpath:log4j2-test.xml
+
+knife4j:
+  gateway:
+    enabled: true
+    tags-sorter: order
+    operations-sorter: order
+    # 手动
+    strategy: manual
+    routes:
+      - name: 认证服务
+        url: /auth/v3/api-docs?group=default
+        service-name: laokou-auth
+        context-path: /auth
+        order: 1
+      - name: 管理服务
+        url: /admin/v3/api-docs?group=default
+        service-name: laokou-admin
+        context-path: /admin
+        order: 2', '0aae19e61b8420c9e9231d97735d30a0', '2023-01-22 13:16:13', '2024-11-17 21:08:48.387', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway配置', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (50, 'application-sms.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+sms:
+  type: gyy
+  gyy:
+    template-id: ENC(YpExkbRJjCJUNB9QWmqzSmJl9XJ2BMnw2KmxxQ5JPXbhB66Z9ARRPJ3o4cuZNcxDgaLsLB0Qnplvvagdn0XJN7iZOPSL7P8pg3iFIoS8RKE=)
+    sign-id: ENC(anORfPoXwjam7f2azlNZAJbPfgmYUd6p8OVOyyNnTNgHNZPesJhYXE9mvqvpgHFSit3aNeIyBuJS6j1PSsFs6m0aJdL0NjvKNwPd2aGTLog=)
+    appcode: ENC(Mlk2DvR7RwOjEj0EajZ+9cjHqHK9Qzkmti7U1r8/iVDj2bFOwoO1ZdwbaYon/1QivDL1hu4vvxFVNv56mVdqCQiPQrhPW3oIJRDd9sQBfWA=)', '3adcbf9b68966d16ac2136f236f2f919', '2023-02-13 19:59:35', '2024-07-16 21:50:25.922', 'nacos', '127.0.0.1', 'laokou-sms', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'sms配置', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (51, 'gateway-flow.json', 'LAOKOU_GROUP', '[
+  {
+    "resource": "laokou-auth",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-admin",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-iot",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-generator",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  }
+]', '5e013d830e3af21e5e321c0f4910fda0', '2023-02-26 14:59:20', '2024-11-11 20:51:31.708', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (52, 'application-admin.yaml', 'LAOKOU_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+server:
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  forward-headers-strategy: framework
+  shutdown: graceful
+# spring
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: "default"
+    # sentinel
+    sentinel:
+      filter:
+        enabled: true
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  # 不开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+
+logging:
+  config: classpath:log4j2-test.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  group-configs:
+    - group: ''default''
+      paths-to-match: ''/**''
+      packages-to-scan: org.laokou.admin.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl', '6ed8f8a8db0d41bcb198545aa6f6d920', '2023-09-28 11:37:33', '2024-12-02 13:05:34.14', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'yaml', '', '');
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (53, 'application-common-kafka.yaml', 'LAOKOU_GROUP', 'spring:
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: laokou_trace_consumer_group
+      # 禁用自动提交（按周期）已消费offset
+      enable-auto-commit: false
+      # 单次poll()调用返回的记录数
+      max-poll-records: 50
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      # 发生错误后，消息重发的次数。
+      retries: 5
+      #当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
+      batch-size: 16384
+      # 设置生产者内存缓冲区的大小。
+      buffer-memory: 33554432
+      # 键的序列化方式
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 值的序列化方式
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      acks: 0
+    listener:
+      # 在侦听器容器中运行的线程数。
+      concurrency: 5
+      # listner负责ack，每调用一次，就立即commit
+      ack-mode: manual
+      # 批量batch类型
+      type: batch
+      # topic不存在报错
+      missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2023-10-26 08:54:23', '2023-11-06 18:14:00', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'kafka公共配置', '', '', 'yaml', '', '');
+
+-- ----------------------------
+-- Primary Key structure for table users
+-- ----------------------------
+ALTER TABLE "public"."users" ADD CONSTRAINT "users_pkey" PRIMARY KEY ("username");
+
+-- ----------------------------
+-- Auto increment value for tenant_info
 -- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq"
-OWNED BY "public"."tenant_info"."id";
 SELECT setval('"public"."tenant_info_id_seq"', 1, false);
 
 -- ----------------------------
--- Alter sequences owned by
+-- Indexes structure for table tenant_info
 -- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq1"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq1"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq2"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq2"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq3"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq3"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq4"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq4"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq5"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq5"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq6"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq6"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tenant_info_id_seq7"
-OWNED BY "public"."tenant_info"."id";
-SELECT setval('"public"."tenant_info_id_seq7"', 1, false);
-
--- ----------------------------
--- Auto increment value for config_info
--- ----------------------------
-SELECT setval('"public"."config_info_id_seq7"', 1, false);
-
--- ----------------------------
--- Indexes structure for table config_info
--- ----------------------------
-CREATE UNIQUE INDEX "config_info_data_id_group_id_tenant_id_idx" ON "public"."config_info" USING btree (
-  "data_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "group_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+CREATE UNIQUE INDEX "tenant_info_kp_tenant_id_idx" ON "public"."tenant_info" USING btree (
+  "kp" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "tenant_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
+);
+CREATE INDEX "tenant_info_tenant_id_idx" ON "public"."tenant_info" USING btree (
   "tenant_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 
 -- ----------------------------
--- Primary Key structure for table config_info
+-- Primary Key structure for table tenant_info
 -- ----------------------------
-ALTER TABLE "public"."config_info" ADD CONSTRAINT "config_info_pkey" PRIMARY KEY ("id");
+ALTER TABLE "public"."tenant_info" ADD CONSTRAINT "tenant_info_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Auto increment value for config_info_aggr
+-- Auto increment value for tenant_capacity
 -- ----------------------------
-SELECT setval('"public"."config_info_aggr_id_seq7"', 1, false);
+SELECT setval('"public"."tenant_capacity_id_seq"', 1, false);
 
 -- ----------------------------
--- Indexes structure for table config_info_aggr
+-- Indexes structure for table tenant_capacity
 -- ----------------------------
-CREATE UNIQUE INDEX "config_info_aggr_data_id_group_id_tenant_id_datum_id_idx" ON "public"."config_info_aggr" USING btree (
-  "data_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "group_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "tenant_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "datum_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
-);
-
--- ----------------------------
--- Primary Key structure for table config_info_aggr
--- ----------------------------
-ALTER TABLE "public"."config_info_aggr" ADD CONSTRAINT "config_info_aggr_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
--- Auto increment value for config_info_beta
--- ----------------------------
-SELECT setval('"public"."config_info_beta_id_seq7"', 1, false);
-
--- ----------------------------
--- Indexes structure for table config_info_beta
--- ----------------------------
-CREATE UNIQUE INDEX "config_info_beta_data_id_group_id_tenant_id_idx" ON "public"."config_info_beta" USING btree (
-  "data_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "group_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+CREATE UNIQUE INDEX "tenant_capacity_tenant_id_idx" ON "public"."tenant_capacity" USING btree (
   "tenant_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 
 -- ----------------------------
--- Primary Key structure for table config_info_beta
+-- Primary Key structure for table tenant_capacity
 -- ----------------------------
-ALTER TABLE "public"."config_info_beta" ADD CONSTRAINT "config_info_beta_pkey" PRIMARY KEY ("id");
+ALTER TABLE "public"."tenant_capacity" ADD CONSTRAINT "tenant_capacity_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Auto increment value for config_info_tag
+-- Indexes structure for table roles
 -- ----------------------------
-SELECT setval('"public"."config_info_tag_id_seq7"', 1, false);
-
--- ----------------------------
--- Indexes structure for table config_info_tag
--- ----------------------------
-CREATE UNIQUE INDEX "config_info_tag_data_id_group_id_tenant_id_tag_id_idx" ON "public"."config_info_tag" USING btree (
-  "data_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "group_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "tenant_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "tag_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
+CREATE UNIQUE INDEX "roles_username_role_idx" ON "public"."roles" USING btree (
+  "username" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "role" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 
 -- ----------------------------
--- Primary Key structure for table config_info_tag
+-- Indexes structure for table permissions
 -- ----------------------------
-ALTER TABLE "public"."config_info_tag" ADD CONSTRAINT "config_info_tag_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
--- Auto increment value for config_tags_relation
--- ----------------------------
-SELECT setval('"public"."config_tags_relation_nid_seq7"', 1, true);
-
--- ----------------------------
--- Indexes structure for table config_tags_relation
--- ----------------------------
-CREATE UNIQUE INDEX "config_tags_relation_id_tag_name_tag_type_idx" ON "public"."config_tags_relation" USING btree (
-  "id" "pg_catalog"."int8_ops" ASC NULLS LAST,
-  "tag_name" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "tag_type" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
+CREATE UNIQUE INDEX "permissions_role_resource_action_idx" ON "public"."permissions" USING btree (
+  "role" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "resource" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "action" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
-CREATE INDEX "config_tags_relation_tenant_id_idx" ON "public"."config_tags_relation" USING btree (
-  "tenant_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
-);
-
--- ----------------------------
--- Primary Key structure for table config_tags_relation
--- ----------------------------
-ALTER TABLE "public"."config_tags_relation" ADD CONSTRAINT "config_tags_relation_pkey" PRIMARY KEY ("nid");
-
--- ----------------------------
--- Primary Key structure for table databasechangeloglock
--- ----------------------------
-ALTER TABLE "public"."databasechangeloglock" ADD CONSTRAINT "databasechangeloglock_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
--- Auto increment value for group_capacity
--- ----------------------------
-SELECT setval('"public"."group_capacity_id_seq7"', 1, false);
-
--- ----------------------------
--- Indexes structure for table group_capacity
--- ----------------------------
-CREATE UNIQUE INDEX "group_capacity_group_id_idx" ON "public"."group_capacity" USING btree (
-  "group_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
-);
-
--- ----------------------------
--- Primary Key structure for table group_capacity
--- ----------------------------
-ALTER TABLE "public"."group_capacity" ADD CONSTRAINT "group_capacity_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
 -- Auto increment value for his_config_info
 -- ----------------------------
-SELECT setval('"public"."his_config_info_nid_seq7"', 3, true);
+SELECT setval('"public"."his_config_info_nid_seq"', 47, true);
 
 -- ----------------------------
 -- Indexes structure for table his_config_info
@@ -4699,61 +6066,111 @@ CREATE INDEX "his_config_info_gmt_modified_idx" ON "public"."his_config_info" US
 ALTER TABLE "public"."his_config_info" ADD CONSTRAINT "his_config_info_pkey" PRIMARY KEY ("nid");
 
 -- ----------------------------
--- Indexes structure for table permissions
+-- Auto increment value for group_capacity
 -- ----------------------------
-CREATE UNIQUE INDEX "permissions_role_resource_action_idx" ON "public"."permissions" USING btree (
-  "role" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "resource" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "action" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
+SELECT setval('"public"."group_capacity_id_seq"', 1, false);
+
+-- ----------------------------
+-- Indexes structure for table group_capacity
+-- ----------------------------
+CREATE UNIQUE INDEX "group_capacity_group_id_idx" ON "public"."group_capacity" USING btree (
+  "group_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 
 -- ----------------------------
--- Indexes structure for table roles
+-- Primary Key structure for table group_capacity
 -- ----------------------------
-CREATE UNIQUE INDEX "roles_username_role_idx" ON "public"."roles" USING btree (
-  "username" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
-  "role" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
+ALTER TABLE "public"."group_capacity" ADD CONSTRAINT "group_capacity_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
+-- Primary Key structure for table databasechangeloglock
+-- ----------------------------
+ALTER TABLE "public"."databasechangeloglock" ADD CONSTRAINT "databasechangeloglock_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
+-- Auto increment value for config_tags_relation
+-- ----------------------------
+SELECT setval('"public"."config_tags_relation_nid_seq"', 63, true);
+
+-- ----------------------------
+-- Primary Key structure for table config_tags_relation
+-- ----------------------------
+ALTER TABLE "public"."config_tags_relation" ADD CONSTRAINT "config_tags_relation_pkey" PRIMARY KEY ("nid");
+
+-- ----------------------------
+-- Auto increment value for config_info_tag
+-- ----------------------------
+SELECT setval('"public"."config_info_tag_id_seq"', 1, false);
+
+-- ----------------------------
+-- Indexes structure for table config_info_tag
+-- ----------------------------
+CREATE UNIQUE INDEX "config_info_tag_data_id_group_id_tenant_id_tag_id_idx" ON "public"."config_info_tag" USING btree (
+  "data_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "group_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "tenant_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "tag_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 
 -- ----------------------------
--- Auto increment value for tenant_capacity
+-- Primary Key structure for table config_info_tag
 -- ----------------------------
-SELECT setval('"public"."tenant_capacity_id_seq7"', 1, false);
+ALTER TABLE "public"."config_info_tag" ADD CONSTRAINT "config_info_tag_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Indexes structure for table tenant_capacity
+-- Auto increment value for config_info_beta
 -- ----------------------------
-CREATE UNIQUE INDEX "tenant_capacity_tenant_id_idx" ON "public"."tenant_capacity" USING btree (
+SELECT setval('"public"."config_info_beta_id_seq"', 1, false);
+
+-- ----------------------------
+-- Indexes structure for table config_info_beta
+-- ----------------------------
+CREATE UNIQUE INDEX "config_info_beta_data_id_group_id_tenant_id_idx" ON "public"."config_info_beta" USING btree (
+  "data_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "group_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "tenant_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 
 -- ----------------------------
--- Primary Key structure for table tenant_capacity
+-- Primary Key structure for table config_info_beta
 -- ----------------------------
-ALTER TABLE "public"."tenant_capacity" ADD CONSTRAINT "tenant_capacity_pkey" PRIMARY KEY ("id");
+ALTER TABLE "public"."config_info_beta" ADD CONSTRAINT "config_info_beta_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Auto increment value for tenant_info
+-- Auto increment value for config_info_aggr
 -- ----------------------------
-SELECT setval('"public"."tenant_info_id_seq7"', 1, false);
+SELECT setval('"public"."config_info_aggr_id_seq"', 1, false);
 
 -- ----------------------------
--- Indexes structure for table tenant_info
+-- Indexes structure for table config_info_aggr
 -- ----------------------------
-CREATE UNIQUE INDEX "tenant_info_kp_tenant_id_idx" ON "public"."tenant_info" USING btree (
-  "kp" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+CREATE UNIQUE INDEX "config_info_aggr_data_id_group_id_tenant_id_datum_id_idx" ON "public"."config_info_aggr" USING btree (
+  "data_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "group_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "tenant_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "datum_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
+);
+
+-- ----------------------------
+-- Primary Key structure for table config_info_aggr
+-- ----------------------------
+ALTER TABLE "public"."config_info_aggr" ADD CONSTRAINT "config_info_aggr_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
+-- Auto increment value for config_info
+-- ----------------------------
+SELECT setval('"public"."config_info_id_seq"', 213, true);
+
+-- ----------------------------
+-- Indexes structure for table config_info
+-- ----------------------------
+CREATE UNIQUE INDEX "config_info_data_id_group_id_tenant_id_idx" ON "public"."config_info" USING btree (
+  "data_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
+  "group_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "tenant_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
-CREATE INDEX "tenant_info_tenant_id_idx" ON "public"."tenant_info" USING btree (
-  "tenant_id" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
-);
 
 -- ----------------------------
--- Primary Key structure for table tenant_info
+-- Primary Key structure for table config_info
 -- ----------------------------
-ALTER TABLE "public"."tenant_info" ADD CONSTRAINT "tenant_info_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
--- Primary Key structure for table users
--- ----------------------------
-ALTER TABLE "public"."users" ADD CONSTRAINT "users_pkey" PRIMARY KEY ("username");
+ALTER TABLE "public"."config_info" ADD CONSTRAINT "config_info_pkey" PRIMARY KEY ("id");

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.laokou</groupId>
   <artifactId>KCloud-Platform-IoT</artifactId>
-  <version>3.4.0</version>
+  <version>3.4.2</version>
   <packaging>pom</packaging>
   <modules>
     <module>laokou-common</module>
@@ -31,6 +31,7 @@
     <module>laokou-tool</module>
     <module>laokou-cola</module>
     <module>laokou-sample</module>
+    <module>laokou-test</module>
   </modules>
   <name>KCloud-Platform-IoT</name>
   <description>一个企业级微服务架构的云服务多租户IoT平台</description>
@@ -43,7 +44,7 @@
     </developer>
   </developers>
   <scm>
-    <tag>kcloud-platform-iot-3.4.0.RELEASE</tag>
+    <tag>kcloud-platform-iot-3.4.2.RELEASE</tag>
     <url>https://github.com/KouShenhai/KCloud-Platform-IoT</url>
     <connection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IoT.git</connection>
     <developerConnection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IoT.git</developerConnection>
@@ -57,24 +58,24 @@
     </license>
   </licenses>
   <properties>
-    <laokou.version>3.4.0</laokou.version>
+    <laokou.version>3.4.2</laokou.version>
     <java.version>21</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-    <spring-boot-maven-plugin.version>3.3.5</spring-boot-maven-plugin.version>
-    <maven-surefire-plugin.version>3.5.1</maven-surefire-plugin.version>
+    <spring-boot-maven-plugin.version>3.4.2</spring-boot-maven-plugin.version>
+    <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
     <!--spring-boot版本-->
-    <spring-boot.version>3.3.5</spring-boot.version>
+    <spring-boot.version>3.4.2</spring-boot.version>
     <!--spring-cloud版本-->
-    <spring-cloud.version>2023.0.3</spring-cloud.version>
+    <spring-cloud.version>2024.0.0</spring-cloud.version>
     <!--spring-framework版本-->
-    <spring-framework.version>6.1.14</spring-framework.version>
+    <spring-framework.version>6.2.3</spring-framework.version>
     <!--cloud-alibaba版本-->
-    <spring-cloud-alibaba.version>2023.0.1.2</spring-cloud-alibaba.version>
+    <spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
     <!--springdoc-openapi版本-->
-    <springdoc-openapi.version>2.6.0</springdoc-openapi.version>
+    <springdoc-openapi.version>2.8.5</springdoc-openapi.version>
     <docker.host>tcp://127.0.0.1:2375</docker.host>
     <docker.registry>registry.cn-shenzhen.aliyuncs.com</docker.registry>
     <docker.namespace>koushenhai</docker.namespace>
@@ -82,12 +83,12 @@
     <docker.password>password</docker.password>
     <docker-maven-plugin.version>0.45.1</docker-maven-plugin.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
-    <native-maven-plugin.version>0.10.3</native-maven-plugin.version>
-    <versions-maven-plugin.version>2.17.1</versions-maven-plugin.version>
+    <native-maven-plugin.version>0.10.4</native-maven-plugin.version>
+    <versions-maven-plugin.version>2.18.0</versions-maven-plugin.version>
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
-    <asciidoctor-maven-plugin.version>3.0.0</asciidoctor-maven-plugin.version>
+    <asciidoctor-maven-plugin.version>3.1.1</asciidoctor-maven-plugin.version>
     <spring-javaformat-maven-plugin.version>0.0.43</spring-javaformat-maven-plugin.version>
-    <maven-archetype-plugin.version>3.3.0</maven-archetype-plugin.version>
+    <maven-archetype-plugin.version>3.3.1</maven-archetype-plugin.version>
     <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
   </properties>
   <dependencyManagement>
@@ -143,6 +144,28 @@
     </dependencies>
   </dependencyManagement>
   <repositories>
+    <repository>
+      <id>tencent-cloud-mirror</id>
+      <name>TenantCloud Maven Central</name>
+      <url>https://mirrors.cloud.tencent.com/nexus/repository/maven-public</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
+    <repository>
+      <id>tencent-mirror</id>
+      <name>Tenant Maven Central</name>
+      <url>https://mirrors.tencent.com/nexus/repository/maven-public</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
     <repository>
       <id>maven-central</id>
       <name>Maven Central</name>
@@ -212,12 +235,16 @@
         <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-        <NACOS-CLUSTER-NAME>laokou-nacos-cluster</NACOS-CLUSTER-NAME>
+        <NACOS-CLUSTER-NAME>laokou-cluster</NACOS-CLUSTER-NAME>
         <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
         <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
         <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
         <SSL-ENABLED>false</SSL-ENABLED>
         <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
+        <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
+        <SEATA-USERNAME>seata</SEATA-USERNAME>
+        <SEATA-PASSWORD>seata</SEATA-PASSWORD>
+        <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
       </properties>
       <activation>
         <activeByDefault>false</activeByDefault>
@@ -249,12 +276,16 @@
         <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-        <NACOS-CLUSTER-NAME>laokou-nacos-cluster</NACOS-CLUSTER-NAME>
+        <NACOS-CLUSTER-NAME>laokou-cluster</NACOS-CLUSTER-NAME>
         <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
         <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
         <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
         <SSL-ENABLED>true</SSL-ENABLED>
         <JASYPT-ENCRYPTOR-PASSWORD>5201314wumeihua</JASYPT-ENCRYPTOR-PASSWORD>
+        <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
+        <SEATA-USERNAME>seata</SEATA-USERNAME>
+        <SEATA-PASSWORD>seata</SEATA-PASSWORD>
+        <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
       </properties>
       <activation>
         <activeByDefault>true</activeByDefault>
@@ -315,7 +346,7 @@
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-PASSWORD>${NACOS_PASSWORD:nacos}</NACOS-PASSWORD>
         <!--suppress UnresolvedMavenProperty -->
-        <NACOS-CLUSTER-NAME>${NACOS_CLUSTER_NAME:laokou-nacos-cluster}</NACOS-CLUSTER-NAME>
+        <NACOS-CLUSTER-NAME>${NACOS_CLUSTER_NAME:laokou-cluster}</NACOS-CLUSTER-NAME>
         <!--suppress UnresolvedMavenProperty -->
         <SENTINEL-USERNAME>${SENTINEL_USERNAME:sentinel}</SENTINEL-USERNAME>
         <!--suppress UnresolvedMavenProperty -->
@@ -324,6 +355,14 @@
         <SSL-ENABLED>true</SSL-ENABLED>
         <!--suppress UnresolvedMavenProperty -->
         <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:5201314wumeihua}</JASYPT-ENCRYPTOR-PASSWORD>
+        <!--suppress UnresolvedMavenProperty -->
+        <SEATA-GROUP>${SEATA_GROUP:SEATA_GROUP}</SEATA-GROUP>
+        <!--suppress UnresolvedMavenProperty -->
+        <SEATA-USERNAME>${SEATA_USERNAME:seata}</SEATA-USERNAME>
+        <!--suppress UnresolvedMavenProperty -->
+        <SEATA-PASSWORD>${SEATA_PASSWORD:seata}</SEATA-PASSWORD>
+        <!--suppress UnresolvedMavenProperty -->
+        <SEATA-LOG-PATH>${SEATA_LOG_PATH:/opt}</SEATA-LOG-PATH>
       </properties>
       <activation>
         <activeByDefault>false</activeByDefault>
@@ -341,8 +380,8 @@
         <configuration>
           <!--备份版本-->
           <generateBackupPoms>true</generateBackupPoms>
-          <newVersion>3.4.1</newVersion>
-          <oldVersion>3.4.0</oldVersion>
+          <newVersion>3.5.0</newVersion>
+          <oldVersion>3.4.2</oldVersion>
         </configuration>
       </plugin>
       <plugin>

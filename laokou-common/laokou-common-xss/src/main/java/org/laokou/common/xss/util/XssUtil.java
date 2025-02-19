@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,14 @@
 
 package org.laokou.common.xss.util;
 
+import net.sf.jsqlparser.JSQLParserException;
+import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
+import org.laokou.common.i18n.common.exception.ParamException;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.springframework.web.util.HtmlUtils;
+
 import java.util.regex.Pattern;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
@@ -27,7 +32,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 /**
  * @author laokou
  */
-public class XssUtil {
+public class XssUtil extends HtmlUtils {
 
 	private static final Pattern[] SCRIPT_PATTERNS = {
 			Pattern.compile("<script(.*?)></script>", Pattern.CASE_INSENSITIVE),
@@ -40,18 +45,25 @@ public class XssUtil {
 			Pattern.compile("vbscript:", Pattern.CASE_INSENSITIVE),
 			Pattern.compile("onload(.*?)=", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL) };
 
-	public static String clear(String str) {
+	public static String clearHtml(String str) {
 		if (StringUtil.isNotEmpty(str)) {
 			for (Pattern pattern : SCRIPT_PATTERNS) {
 				str = pattern.matcher(str).replaceAll(EMPTY);
 			}
-			str = clear(str, getSafelist());
+			str = clearHtml(str, getSafelist());
 		}
 		return str;
 	}
 
-	private static String clear(String str, Safelist safelist) {
-		return Jsoup.clean(str, safelist);
+	public static String clearSql(String str) {
+		if (checkSql(str)) {
+			throw new ParamException("P_Request_SqlInjection", "参数异常，存在SQL注入风险");
+		}
+		return str;
+	}
+
+	private static String clearHtml(String str, Safelist safelist) {
+		return Pattern.compile("\\n").matcher(Jsoup.clean(str, safelist)).replaceAll(EMPTY);
 	}
 
 	private static Safelist getSafelist() {
@@ -67,8 +79,17 @@ public class XssUtil {
 			.addTags("b", "em", "i", "strong", "u")
 			.addTags("img")
 			.addTags("a", "b", "blockquote", "br", "cite", "code", "dd", "dl", "dt", "em", "i", "li", "ol", "p", "pre",
-					"q", "small", "span", "strike", "strong", "sub", "sup", "u", "ul")
-			.addEnforcedAttribute("a", "rel", "nofollow");
+					"q", "small", "span", "strike", "strong", "sub", "sup", "u", "ul");
+	}
+
+	private static boolean checkSql(String str) {
+		try {
+			CCJSqlParserUtil.parse(str);
+			return true;
+		}
+		catch (JSQLParserException e) {
+			return false;
+		}
 	}
 
 }

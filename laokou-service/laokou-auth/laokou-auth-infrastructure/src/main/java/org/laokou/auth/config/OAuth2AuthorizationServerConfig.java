@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.laokou.auth.ability.validator.PasswordValidator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -78,50 +79,58 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.security.oauth2.authorization-server", name = "enabled")
 class OAuth2AuthorizationServerConfig {
 
+	private static void applyDefaultSecurity(HttpSecurity http) throws Exception {
+		// @formatter:off
+        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = OAuth2AuthorizationServerConfigurer.authorizationServer();
+        http.securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
+                .with(authorizationServerConfigurer, Customizer.withDefaults())
+                .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated());
+        // @formatter:on
+	}
+	// @formatter:on
+
 	/**
 	 * OAuth2AuthorizationServer核心配置.
 	 * @param http http配置
-	 * @param passwordAuthenticationProvider 密码认证Provider
+	 * @param usernamePasswordAuthenticationProvider 用户名密码认证Provider
 	 * @param mailAuthenticationProvider 邮箱认证Provider
 	 * @param mobileAuthenticationProvider 手机号认证Provider
 	 * @param authorizationServerSettings OAuth2配置
 	 * @param authorizationService 认证配置
 	 * @param mailAuthenticationConverter 邮箱认证Converter
 	 * @param mobileAuthenticationConverter 手机号认证Converter
-	 * @param passwordAuthenticationConverter 密码认证Converter
+	 * @param usernamePasswordAuthenticationConverter 用户名密码认证Converter
 	 * @return 认证过滤器
 	 * @throws Exception 异常
 	 */
 	@Bean
 	@Order(HIGHEST_PRECEDENCE)
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
-			AuthenticationProvider passwordAuthenticationProvider,
-			AuthenticationProvider mailAuthenticationProvider,
-			AuthenticationProvider mobileAuthenticationProvider,
-			AuthenticationConverter passwordAuthenticationConverter,
-			AuthenticationConverter mailAuthenticationConverter,
-			AuthenticationConverter mobileAuthenticationConverter,
-			AuthorizationServerSettings authorizationServerSettings,
-			OAuth2AuthorizationService authorizationService) throws Exception {
+			AuthenticationProvider usernamePasswordAuthenticationProvider,
+			AuthenticationProvider mailAuthenticationProvider, AuthenticationProvider mobileAuthenticationProvider,
+			AuthenticationConverter usernamePasswordAuthenticationConverter,
+			AuthenticationConverter mailAuthenticationConverter, AuthenticationConverter mobileAuthenticationConverter,
+			AuthorizationServerSettings authorizationServerSettings, OAuth2AuthorizationService authorizationService)
+			throws Exception {
 		// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/configuration-model.html
-		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-        http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+		OAuth2AuthorizationServerConfig.applyDefaultSecurity(http);
+		http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
 			// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
-			.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(new DelegatingAuthenticationConverter(List.of(
-						passwordAuthenticationConverter,
-						mobileAuthenticationConverter,
-						mailAuthenticationConverter)))
-				.authenticationProvider(passwordAuthenticationProvider)
+			.tokenEndpoint((tokenEndpoint) -> tokenEndpoint
+				.accessTokenRequestConverter(
+						new DelegatingAuthenticationConverter(List.of(usernamePasswordAuthenticationConverter,
+								mobileAuthenticationConverter, mailAuthenticationConverter)))
+				.authenticationProvider(usernamePasswordAuthenticationProvider)
 				.authenticationProvider(mobileAuthenticationProvider)
 				.authenticationProvider(mailAuthenticationProvider))
 			.oidc(Customizer.withDefaults())
 			.authorizationService(authorizationService)
 			.authorizationServerSettings(authorizationServerSettings);
 		return http.addFilterBefore(UsernamePasswordFilter.INSTANCE, UsernamePasswordAuthenticationFilter.class)
-			.exceptionHandling(configurer -> configurer
-				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))).build();
+			.exceptionHandling(
+					configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")))
+			.build();
 	}
-	// @formatter:on
 
 	/**
 	 * 构造注册信息.
@@ -134,7 +143,7 @@ class OAuth2AuthorizationServerConfig {
 	RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate,
 			OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
 		JdbcRegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
-		propertiesMapper.asRegisteredClients().parallelStream().forEachOrdered(registeredClientRepository::save);
+		propertiesMapper.asRegisteredClients().forEach(registeredClientRepository::save);
 		return registeredClientRepository;
 	}
 
@@ -219,6 +228,11 @@ class OAuth2AuthorizationServerConfig {
 	OAuth2AuthorizationConsentService authorizationConsentService(JdbcTemplate jdbcTemplate,
 			RegisteredClientRepository registeredClientRepository) {
 		return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
+	}
+
+	@Bean
+	PasswordValidator passwordValidator(PasswordEncoder passwordEncoder) {
+		return passwordEncoder::matches;
 	}
 
 	/**

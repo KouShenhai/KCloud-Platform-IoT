@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +34,9 @@ import java.util.Map;
  * @author laokou
  */
 public final class TreeUtil {
+
+	private TreeUtil() {
+	}
 
 	/**
 	 * 构建树节点.
@@ -89,16 +92,16 @@ public final class TreeUtil {
 	public static class TreeNode<T> extends ClientObject {
 
 		@Schema(name = "ID", description = "ID")
-		private Long id;
+		protected Long id;
 
 		@Schema(name = "名称", description = "名称")
-		private String name;
+		protected String name;
 
 		@Schema(name = "父节点ID", description = "父节点ID")
-		private Long pid;
+		protected Long pid;
 
 		@Schema(name = "子节点", description = "子节点")
-		private List<T> children = new ArrayList<>(8);
+		protected List<T> children = new ArrayList<>(16);
 
 		public TreeNode(Long id, String name, Long pid) {
 			this.id = id;

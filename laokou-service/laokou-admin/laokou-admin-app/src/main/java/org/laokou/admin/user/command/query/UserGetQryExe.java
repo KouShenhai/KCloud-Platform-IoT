@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,9 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserGetQry;
 import org.laokou.admin.user.dto.clientobject.UserCO;
+import org.laokou.admin.user.gatewayimpl.database.UserDeptMapper;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
+import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -36,8 +38,15 @@ public class UserGetQryExe {
 
 	private final UserMapper userMapper;
 
+	private final UserRoleMapper userRoleMapper;
+
+	private final UserDeptMapper userDeptMapper;
+
 	public Result<UserCO> execute(UserGetQry qry) {
-		return Result.ok(UserConvertor.toClientObject(userMapper.selectById(qry.getId())));
+		UserCO userCO = UserConvertor.toClientObject(userMapper.selectById(qry.getId()));
+		userCO.setRoleIds(userRoleMapper.selectRoleIdsByUserId(qry.getId()));
+		userCO.setDeptIds(userDeptMapper.selectDeptIdsByUserId(qry.getId()));
+		return Result.ok(userCO);
 	}
 
 }

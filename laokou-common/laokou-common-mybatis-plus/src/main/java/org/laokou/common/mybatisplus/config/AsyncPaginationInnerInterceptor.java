@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,7 +69,6 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.transaction.SpringManagedTransaction;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -100,14 +99,6 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 
 	private static final ThreadLocal<CompletableFuture<Void>> COUNT_LOCAL = new TransmittableThreadLocal<>();
 
-	public static CompletableFuture<Void> get() {
-		return COUNT_LOCAL.get();
-	}
-
-	public static void remove() {
-		COUNT_LOCAL.remove();
-	}
-
 	/**
 	 * 溢出总页数后是否进行处理.
 	 */
@@ -117,6 +108,13 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 	 * 单页分页条数限制.
 	 */
 	protected Long maxLimit;
+
+	/**
+	 * 生成 countSql 优化掉 join 现在只支持 left join.
+	 *
+	 * @since 3.4.2
+	 */
+	protected boolean optimizeJoin = true;
 
 	/**
 	 * 数据库类型.
@@ -131,13 +129,6 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 	 * 查看 {@link #findIDialect(Executor)} 逻辑.
 	 */
 	private IDialect dialect;
-
-	/**
-	 * 生成 countSql 优化掉 join 现在只支持 left join.
-	 *
-	 * @since 3.4.2
-	 */
-	protected boolean optimizeJoin = true;
 
 	private DataSource dataSource;
 
@@ -155,6 +146,14 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 		this.dialect = dialect;
 		this.dataSource = dataSource;
 		this.executor = executor;
+	}
+
+	public static CompletableFuture<Void> get() {
+		return COUNT_LOCAL.get();
+	}
+
+	public static void remove() {
+		COUNT_LOCAL.remove();
 	}
 
 	/**
@@ -201,7 +200,7 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 				page.setTotal(total);
 			}
 			catch (Exception e) {
-				log.error("查询失败，错误信息：{}", e.getMessage(), e);
+				log.error("查询失败，错误信息：{}", e.getMessage());
 			}
 		}, this.executor);
 		COUNT_LOCAL.set(future);
@@ -210,7 +209,7 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 
 	@Override
 	public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds,
-			ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
+			ResultHandler resultHandler, BoundSql boundSql) {
 		IPage<?> page = ParameterUtils.findPage(parameter).orElse(null);
 		if (null == page) {
 			return;

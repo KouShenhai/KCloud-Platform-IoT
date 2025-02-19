@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,19 +20,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.menu.gatewayimpl.database.MenuMapper">
 
-	<select id="selectPageByCondition"
+  <sql id="selectColumns">
+    id,
+    "name",
+    pid,
+    "type",
+    "path",
+    icon,
+    "sort",
+    "status",
+    permission,
+    create_time
+  </sql>
+
+  <sql id="selectConditions">
+    where del_flag = 0
+    <if test="pageQuery.type != null">
+      and "type" = #{pageQuery.type}
+    </if>
+    <if test="pageQuery.status != null">
+      and status = #{pageQuery.status}
+    </if>
+    <if test="pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
+      and create_time <![CDATA[ >= ]]> #{pageQuery.params.startTime}
+    </if>
+    <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
+      and create_time <![CDATA[ <= ]]> #{pageQuery.params.endTime}
+    </if>
+  </sql>
+
+  <sql id="selectObjectList">
+    SELECT <include refid="selectColumns"/>
+    from boot_sys_menu
+    <include refid="selectConditions"/>
+    order by "sort" desc
+  </sql>
+
+	<select id="selectObjectPage"
 			resultType="org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO">
-		SELECT *
-		from boot_sys_menu
-		where del_flag = 0
-		order by id desc
-		limit ${pageQuery.pageSize} OFFSET ${pageQuery.pageIndex}
+    <include refid="selectObjectList"/>
+		limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
 	</select>
 
-	<select id="selectCountByCondition" resultType="long">
+	<select id="selectObjectCount" resultType="long">
 		SELECT count(1)
 		from boot_sys_menu
-		where del_flag = 0
+    <include refid="selectConditions"/>
 	</select>
 
 	<select id="selectVersion" resultType="integer">
@@ -40,5 +73,9 @@
 		from boot_sys_menu
 		where id = #{id}
 	</select>
+
+  <select id="selectObjectList" resultType="org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO">
+    <include refid="selectObjectList"/>
+  </select>
 
 </mapper>

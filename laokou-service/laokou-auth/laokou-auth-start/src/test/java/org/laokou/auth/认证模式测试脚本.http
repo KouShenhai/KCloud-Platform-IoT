@@ -1,5 +1,5 @@
 #/**
-# * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+# * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
 # * <p>
 # * Licensed under the Apache License, Version 2.0 (the "License");
 # * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 --WebAppBoundary
 Content-Disposition: form-data; name="grant_type"
 
-password
+username_password
 --WebAppBoundary
 Content-Disposition: form-data; name="username"
 
@@ -40,11 +40,11 @@ Content-Disposition: form-data; name="uuid"
 --WebAppBoundary
 Content-Disposition: form-data; name="captcha"
 
-{{captcha}}
---WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
 
-{{tenant_id}}
+--WebAppBoundary
+Content-Disposition: form-data; name="tenant_code"
+
+{{tenant_code}}
 --WebAppBoundary
 
 ###
@@ -68,9 +68,9 @@ Content-Disposition: form-data; name="code"
 
 {{mobile_code}}
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
-{{tenant_id}}
+{{tenant_code}}
 --WebAppBoundary
 
 
@@ -95,9 +95,9 @@ Content-Disposition: form-data; name="code"
 
 {{mail_code}}
 --WebAppBoundary
-Content-Disposition: form-data; name="tenant_id"
+Content-Disposition: form-data; name="tenant_code"
 
-{{tenant_id}}
+{{tenant_code}}
 --WebAppBoundary
 
 ###

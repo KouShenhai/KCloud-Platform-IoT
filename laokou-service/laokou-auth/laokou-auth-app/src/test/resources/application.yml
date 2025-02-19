@@ -1,0 +1,8 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: laokou-auth-app
+  profiles:
+    active: test

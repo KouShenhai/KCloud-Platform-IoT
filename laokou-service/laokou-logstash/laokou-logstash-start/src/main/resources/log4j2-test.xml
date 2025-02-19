@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /*
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+-->
+<!--
+    OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL
+    monitorInterval: 间隔秒数，自动检测配置文件的变更和重新配置本身
+ -->
+<Configuration status="INFO" monitorInterval="5">
+  <!-- 变量配置 -->
+  <Properties>
+    <!-- 存放目录 -->
+    <property name="LOG_PATH" value="./logs/logstash"/>
+    <!-- 日志文件大小 -->
+    <property name="LOG_ROLL_SIZE" value="100 M"/>
+    <!-- 服务名称 -->
+    <property name="SERVICE_ID" value="laokou-logstash"/>
+    <!-- 日志保留30天 -->
+    <property name="LOG_DAYS" value="30"/>
+    <!-- 1天滚动一次 -->
+    <property name="LOG_INTERVAL" value="1"/>
+    <!-- 环境 -->
+    <property name="PROFILE" value="test"/>
+    <!--
+      %d 日期
+      %t 线程
+    -->
+    <property name="LOG_CONSOLE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:address} - ${PROFILE}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
+  </Properties>
+  <Appenders>
+    <!-- 控制台输出 -->
+    <Console name="console" target="SYSTEM_OUT">
+      <!--
+            <JsonLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
+              <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
+              <KeyValuePair key="profile" value="${PROFILE}" />
+            </JsonLayout>
+      -->
+      <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
+    </Console>
+    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.json"
+                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_%d{yyyy-MM-dd}.%i.json.gz"
+                             immediateFlush="false">
+      <Filters>
+        <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+      </Filters>
+      <JsonLayout complete="true" compact="false" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
+        <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
+        <KeyValuePair key="profile" value="${PROFILE}" />
+      </JsonLayout>
+      <Policies>
+        <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
+        <SizeBasedTriggeringPolicy size="${LOG_ROLL_SIZE}"/>
+      </Policies>
+      <DefaultRolloverStrategy max="${LOG_DAYS}"/>
+    </RollingRandomAccessFile>
+    <Async name="async_file" bufferSize="2000" blocking="false">
+      <AppenderRef ref="file"/>
+    </Async>
+  </Appenders>
+  <!--
+   additivity      => 需不需要打印此logger继承的父logger，false只打印当前logger，true继续打印上一层logger，直至root
+   includeLocation => 显示文件行数，方法名等信息，true显示，false不显示，可以减少日志输出的体积，加快日志写入速度
+ -->
+  <Loggers>
+    <AsyncLogger name="org.laokou" additivity="FALSE" includeLocation="FALSE" level="INFO">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="async_file"/>
+    </AsyncLogger>
+    <AsyncRoot level="INFO" additivity="FALSE" includeLocation="FALSE">
+      <AppenderRef ref="console"/>
+      <AppenderRef ref="async_file"/>
+    </AsyncRoot>
+  </Loggers>
+</Configuration>

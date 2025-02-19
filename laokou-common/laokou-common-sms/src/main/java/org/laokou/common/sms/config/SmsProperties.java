@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 package org.laokou.common.sms.config;
 
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -29,12 +30,28 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "sms")
 public class SmsProperties {
 
-	private final GYY gyy = new GYY();
+	private GYY gyy = new GYY();
+
+	private Type type = Type.GYY;
+
+	@Getter
+	public enum Type {
+
+		GYY("gyy", "国阳云");
+
+		private final String code;
+
+		private final String desc;
+
+		Type(String code, String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
+
+	}
 
 	@Data
 	public static class GYY {
-
-		private boolean enabled = true;
 
 		private String templateId;
 

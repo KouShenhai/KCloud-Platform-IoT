@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,6 @@ public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 	 * @param user 用户对象
 	 * @return 用户信息
 	 */
-	UserDO selectOneByCondition(@Param("user") UserDO user);
+	UserDO selectObj(@Param("user") UserDO user, @Param("tenantCode") String tenantCode);
 
 }

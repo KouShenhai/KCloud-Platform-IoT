@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,11 @@
 package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
+import org.laokou.common.i18n.utils.DateUtil;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 聚合根.
@@ -27,45 +30,42 @@ import java.time.Instant;
  * @author laokou
  */
 @Getter
-public abstract class AggregateRoot<ID> extends Identifier<ID> {
+public abstract class AggregateRoot extends Identifier {
 
 	/**
-	 * 创建人.
+	 * 操作时间.
 	 */
-	protected ID creator;
+	protected final Instant instant = DateUtil.nowInstant();
 
 	/**
-	 * 编辑人.
+	 * 事件集合.
 	 */
-	protected ID editor;
+	private final List<DomainEvent> EVENTS = new ArrayList<>(16);
 
 	/**
 	 * 租户ID.
 	 */
-	protected ID tenantId;
+	protected Long tenantId;
 
 	/**
-	 * 创建时间.
+	 * 用户ID.
 	 */
-	protected Instant createTime;
+	protected Long userId;
 
 	/**
-	 * 修改时间.
+	 * 版本号.
 	 */
-	protected Instant updateTime;
+	protected int version = 0;
 
-	/**
-	 * 数据源名称.
-	 */
-	protected String sourceName;
+	protected void addEvent(DomainEvent event) {
+		EVENTS.add(event);
+	}
 
-	/**
-	 * 服务ID.
-	 */
-	protected String serviceId;
-
-	protected AggregateRoot(ID id) {
-		super(id);
+	public List<DomainEvent> releaseEvents() {
+		List<DomainEvent> events = new ArrayList<>(EVENTS.size());
+		events.addAll(EVENTS);
+		EVENTS.clear();
+		return events;
 	}
 
 }

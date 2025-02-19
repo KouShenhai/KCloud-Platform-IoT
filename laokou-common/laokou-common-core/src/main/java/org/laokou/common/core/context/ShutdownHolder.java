@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  * @author laokou
  */
-public class ShutdownHolder {
+public final class ShutdownHolder {
 
 	/**
 	 * 请求计数器.
@@ -36,6 +36,9 @@ public class ShutdownHolder {
 	 * 优雅停机挡板.
 	 */
 	private static final AtomicBoolean BAFFLE = new AtomicBoolean(false);
+
+	private ShutdownHolder() {
+	}
 
 	public static void add() {
 		REQUEST_COUNTER.incrementAndGet();

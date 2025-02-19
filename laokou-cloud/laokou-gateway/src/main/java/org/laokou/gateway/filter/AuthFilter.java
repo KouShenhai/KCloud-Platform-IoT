@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.crypto.utils.RSAUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
@@ -80,12 +79,17 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	/**
 	 * 用户名.
 	 */
-	public static final String USERNAME = "username";
+	private static final String USERNAME = "username";
 
 	/**
 	 * 密码.
 	 */
-	public static final String PASSWORD = "password";
+	private static final String PASSWORD = "password";
+
+	/**
+	 * 用户名密码认证【OAuth2】.
+	 */
+	private static final String USERNAME_PASSWORD = "username_password";
 
 	/**
 	 * 令牌URL.
@@ -180,7 +184,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 		return s -> {
 			// 获取请求密码并解密
 			Map<String, String> paramMap = MapUtil.parseParamMap(s);
-			if (ObjectUtil.equals(PASSWORD, paramMap.getOrDefault(GRANT_TYPE, EMPTY)) && paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
+			if (ObjectUtil.equals(USERNAME_PASSWORD, paramMap.getOrDefault(GRANT_TYPE, EMPTY)) && paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
 				try {
 					String password = paramMap.get(PASSWORD);
 					String username = paramMap.get(USERNAME);
@@ -193,7 +197,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 					}
 				}
 				catch (Exception e) {
-					log.error("用户名密码认证模式，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+					log.error("用户名密码认证模式，错误信息：{}", e.getMessage());
 				}
 			}
 			return Mono.just(MapUtil.parseParams(paramMap));

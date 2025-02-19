@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,12 +29,15 @@ import java.util.Optional;
  *
  * @author laokou
  */
-public class UserContextHolder {
+public final class UserContextHolder {
 
 	/**
 	 * 用户上下文本地线程变量.
 	 */
 	private static final ThreadLocal<User> USER_LOCAL = new TransmittableThreadLocal<>();
+
+	private UserContextHolder() {
+	}
 
 	/**
 	 * 注销本地线程变量.
@@ -83,9 +86,9 @@ public class UserContextHolder {
 		private Long tenantId;
 
 		/**
-		 * 数据源名称.
+		 * 数据源前缀.
 		 */
-		private String sourceName;
+		private String sourcePrefix;
 
 	}
 

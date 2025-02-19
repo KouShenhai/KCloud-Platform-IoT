@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,29 +31,20 @@ import java.time.Duration;
 @ConfigurationProperties(prefix = "spring.task-execution")
 public class SpringTaskExecutionProperties {
 
-	private boolean enabled = false;
-
 	private Pool pool = new Pool();
-
-	private ForkJoinPool forkJoinPool = new ForkJoinPool();
-
-	@Data
-	public static class ForkJoinPool {
-
-		private int coreSize = 17;
-
-	}
 
 	@Data
 	public static class Pool {
 
-		private int queueCapacity = Integer.MAX_VALUE;
+		private int queueCapacity = 500;
 
-		private int coreSize = 17;
+		private int corePoolSize = 32;
 
-		private int maxSize = Integer.MAX_VALUE;
+		private int maxPoolSize = 64;
 
-		private boolean allowCoreThreadTimeout = true;
+		private boolean allowCoreThreadTimeout = false;
+
+		private int threadPriority = 5;
 
 		private Duration keepAlive = Duration.ofSeconds(60L);
 

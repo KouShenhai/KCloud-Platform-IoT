@@ -1,6 +1,6 @@
 // @formatter:off
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import ${packageName}.${instanceName}.dto.${className}RemoveCmd;
 import org.springframework.stereotype.Component;
 import ${packageName}.${instanceName}.ability.${className}DomainService;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 
 /**
  *
@@ -35,9 +36,11 @@ public class ${className}RemoveCmdExe {
 
 	private final ${className}DomainService ${instanceName}DomainService;
 
+    private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(${className}RemoveCmd cmd) {
 		// 校验参数
-		${instanceName}DomainService.delete(cmd.getIds());
+        transactionalUtil.executeInTransaction(() -> ${instanceName}DomainService.delete(cmd.getIds()));
 	}
 
 }

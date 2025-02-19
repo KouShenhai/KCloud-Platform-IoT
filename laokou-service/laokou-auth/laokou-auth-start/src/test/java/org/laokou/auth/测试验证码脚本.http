@@ -1,0 +1,8 @@
+POST {{schema}}{{host}}/v3/captchas/send/mail
+Content-Type: application/json
+
+{
+    "uuid": {{mail}},
+    "tenantCode": {{tenant_code}}
+}
+

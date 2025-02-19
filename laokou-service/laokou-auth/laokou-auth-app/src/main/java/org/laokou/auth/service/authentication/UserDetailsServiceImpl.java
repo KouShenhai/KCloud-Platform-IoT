@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,21 @@
 
 package org.laokou.auth.service.authentication;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.factory.AuthFactory;
+import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.i18n.common.exception.AuthException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.auth.factory.DomainFactory.PASSWORD;
+import static org.laokou.auth.factory.DomainFactory.TENANT_CODE;
 
 /**
  * 用户认证.
@@ -38,7 +43,7 @@ import org.springframework.stereotype.Component;
 @Component("userDetailsServiceImpl")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	private final OAuth2AuthenticationProvider authProvider;
+	private final OAuth2AuthenticationProcessor authProcessor;
 
 	/**
 	 * 获取用户信息.
@@ -49,11 +54,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
-			AuthA auth = AuthFactory.authorizationCode(RequestUtil.getHttpServletRequest());
+			HttpServletRequest request = RequestUtil.getHttpServletRequest();
+			String password = request.getParameter(PASSWORD);
+			String tenantCode = request.getParameter(TENANT_CODE);
+			AuthA auth = DomainFactory.getAuthorizationCodeAuth(IdGenerator.defaultSnowflakeId(), username, password,
+					tenantCode);
 			auth.createUserByAuthorizationCode();
-			return (UserDetails) authProvider.authentication(auth).getPrincipal();
+			return (UserDetails) authProcessor.authenticationToken(auth, request).getPrincipal();
 		}
-		catch (AuthException e) {
+		catch (SystemException e) {
 			throw new UsernameNotFoundException(e.getMsg(), e);
 		}
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,15 @@
 package org.laokou.gateway;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.common.nacos.annotation.EnableNacosShutDown;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
-import org.laokou.gateway.annotation.EnableAuth;
+import org.laokou.gateway.repository.NacosRouteDefinitionRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration;
@@ -30,6 +35,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.util.StopWatch;
 import reactor.core.publisher.Hooks;
 
 import java.net.InetAddress;
@@ -39,15 +47,21 @@ import java.net.InetAddress;
  *
  * @author laokou
  */
-@EnableAuth
+@Slf4j
+@EnableAsync
+@EnableTaskExecutor
+@EnableNacosShutDown
 @EnableDiscoveryClient
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableReactiveRedisRepository
-@EnableAspectJAutoProxy(exposeProxy = true)
+@RequiredArgsConstructor
+@EnableAspectJAutoProxy
 @SpringBootApplication(scanBasePackages = "org.laokou",
 		exclude = { RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
-public class GatewayApp {
+public class GatewayApp implements CommandLineRunner {
+
+	private final NacosRouteDefinitionRepository nacosRouteDefinitionRepository;
 
 	// @formatter:off
     /// ```properties
@@ -58,6 +72,7 @@ public class GatewayApp {
     /// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
     /// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
     /// -Dserver.port=5555
+	/// -Djdk.internal.httpclient.disableHostnameVerification=true
     /// ```
     /// ```properties
     /// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
@@ -65,15 +80,50 @@ public class GatewayApp {
     /// ```
 	@SneakyThrows
 	public static void main(String[] args) {
-		System.setProperty("ip", InetAddress.getLocalHost().getHostAddress());
+		StopWatch stopWatch = new StopWatch("Gateway应用程序");
+		stopWatch.start();
+		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "5555")));
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
+		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494
+		System.setProperty("management.health.sentinel.enabled", "false");
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
 		// 开启reactor的上下文传递
 		Hooks.enableAutomaticContextPropagation();
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
+		stopWatch.stop();
+		log.info("{}", stopWatch.prettyPrint());
 	}
+
+	@Async
+	@Override
+    public void run(String... args)  {
+		// 同步路由
+		syncRouters();
+    }
+
+	private void syncRouters() {
+		// 删除路由
+		nacosRouteDefinitionRepository.removeRouters().subscribe(delFlag -> {
+			if (delFlag) {
+				log.info("删除路由成功");
+			}
+			else {
+				log.error("删除路由失败");
+			}
+		});
+		// 保存路由
+		nacosRouteDefinitionRepository.saveRouters().subscribe(saveFlag -> {
+			if (saveFlag) {
+				log.info("保存路由成功");
+			}
+			else {
+				log.error("保存路由失败");
+			}
+		});
+	}
+
     // @formatter:on
 
 }

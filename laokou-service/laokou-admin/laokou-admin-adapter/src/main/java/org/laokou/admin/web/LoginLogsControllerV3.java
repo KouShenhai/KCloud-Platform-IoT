@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,17 +102,10 @@ public class LoginLogsControllerV3 {
 	@TraceLog
 	@ApiSecret
 	@GetMapping("{id}")
+	@PreAuthorize("hasAuthority('sys:login-log:detail')")
 	@Operation(summary = "查看登录日志详情", description = "查看登录日志详情")
 	public Result<LoginLogCO> getByIdV3(@PathVariable("id") Long id) {
 		return loginLogsServiceI.getById(new LoginLogGetQry(id));
-	}
-
-	@DeleteMapping("all")
-	@PreAuthorize("hasAuthority('sys:login-log:clear')")
-	@OperateLog(module = "登录日志管理", operation = "清空登录日志")
-	@Operation(summary = "清空登录日志", description = "清空登录日志")
-	public void clearV3() {
-		loginLogsServiceI.clear();
 	}
 
 }

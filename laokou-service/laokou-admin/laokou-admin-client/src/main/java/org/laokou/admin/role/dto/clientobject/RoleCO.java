@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
+import org.laokou.common.i18n.utils.StringUtil;
+
+import java.time.Instant;
+import java.util.List;
 
 /**
  * 角色客户端对象.
@@ -48,8 +52,22 @@ public class RoleCO extends ClientObject {
 	private Integer sort;
 
 	/**
-	 * 数据范围 no无限制 custom自定义 dept_self仅本部门 dept部门及以下 self仅本人.
+	 * 数据范围 all全部 custom自定义 dept_self仅本部门 dept部门及以下 self仅本人.
 	 */
 	private String dataScope;
+
+	/**
+	 * 创建时间.
+	 */
+	private Instant createTime;
+
+	/**
+	 * 菜单IDS.
+	 */
+	private List<String> menuIds;
+
+	public void setName(String name) {
+		this.name = StringUtil.trim(name);
+	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,17 +23,15 @@ import org.laokou.common.core.utils.IdGenerator;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-
 /**
  * @author laokou
  */
 @Data
 public class MqttBrokerProperties {
 
-	private String username = EMPTY;
+	private String username = "emqx";
 
-	private String password = EMPTY;
+	private String password = "laokou123";
 
 	private String uri = "tcp://127.0.0.1:1883";
 
@@ -41,7 +39,7 @@ public class MqttBrokerProperties {
 
 	private int subscribeQos = 0;
 
-	private int sendQos = 1;
+	private int publishQos = 1;
 
 	private boolean clearStart = false;
 

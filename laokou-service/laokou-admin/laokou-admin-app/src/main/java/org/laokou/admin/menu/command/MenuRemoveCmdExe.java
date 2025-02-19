@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ package org.laokou.admin.menu.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.ability.MenuDomainService;
 import org.laokou.admin.menu.dto.MenuRemoveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,9 +34,11 @@ public class MenuRemoveCmdExe {
 
 	private final MenuDomainService menuDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(MenuRemoveCmd cmd) {
 		// 校验参数
-		menuDomainService.delete(cmd.getIds());
+		transactionalUtil.executeInTransaction(() -> menuDomainService.delete(cmd.getIds()));
 	}
 
 }

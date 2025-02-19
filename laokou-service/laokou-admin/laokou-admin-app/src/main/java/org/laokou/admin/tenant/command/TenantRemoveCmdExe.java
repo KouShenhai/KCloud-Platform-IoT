@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ package org.laokou.admin.tenant.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.tenant.ability.TenantDomainService;
 import org.laokou.admin.tenant.dto.TenantRemoveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,9 +34,11 @@ public class TenantRemoveCmdExe {
 
 	private final TenantDomainService tenantDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(TenantRemoveCmd cmd) {
 		// 校验参数
-		tenantDomainService.delete(cmd.getIds());
+		transactionalUtil.executeInTransaction(() -> tenantDomainService.delete(cmd.getIds()));
 	}
 
 }

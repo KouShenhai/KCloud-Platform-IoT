@@ -6,32 +6,25 @@ import {
 	MobileOutlined,
 	QqOutlined,
 	SafetyCertificateOutlined,
+	TeamOutlined,
 	UserOutlined,
 	WechatOutlined,
 } from '@ant-design/icons';
-import {LoginFormPage, ProFormCaptcha, ProFormText,} from '@ant-design/pro-components';
-import {Col, Divider, Image, message, Row, Space, Tabs} from 'antd';
+import {CaptFieldRef, LoginFormPage, ProFormCaptcha, ProFormInstance, ProFormText,} from '@ant-design/pro-components';
+import {Col, Divider, Image, Row, Space, Tabs} from 'antd';
 import {CSSProperties, useEffect, useRef, useState} from 'react';
-// @ts-ignore
 import {login} from '@/services/auth/auth';
-// @ts-ignore
-import {getCaptchaImageByUuidV3, sendCaptchaV3} from '@/services/auth/captcha';
-// @ts-ignore
-import {history} from 'umi';
-// @ts-ignore
+import {getCaptchaImageByUuidV3, sendCaptchaV3 } from '@/services/auth/captcha';
 import {getSecretInfoV3} from '@/services/auth/secret';
 import {JSEncrypt} from 'jsencrypt';
-// @ts-ignore
 import {v7 as uuidV7} from 'uuid';
-// @ts-ignore
-import {getTenantIdByDomainNameV3, listTenantOptionV3} from "@/services/auth/tenant"
-import {ProFormInstance, ProFormSelect} from "@ant-design/pro-form"
-// @ts-ignore
 import {clearToken, setToken} from "@/access"
-// @ts-ignore
-import {getTokenV3} from "@/services/auth/tokens"
+import {history} from "@umijs/max";
 
-type LoginType = 'usernamePassword' | 'mobile' | 'mail';
+const USERNAME_PASSWORD = {key: 'username_password', label: '用户名密码登录'};
+const MOBILE = {key: 'mobile', label: '手机号登录'};
+const MAIL = {key: 'mail', label: '邮箱登录'};
+type LoginType = 'username_password' | 'mobile' | 'mail';
 
 const iconStyles: CSSProperties = {
 	color: 'rgba(0, 0, 0, 0.2)',
@@ -42,41 +35,26 @@ const iconStyles: CSSProperties = {
 
 export default () => {
 	const items = [
-		{label: '用户名密码登录', key: 'usernamePassword'},
-		{label: '手机号登录', key: 'mobile'},
-		{label: '邮箱登录', key: 'mail'},
+		USERNAME_PASSWORD,
+		MOBILE,
+		MAIL
 	];
-	const [loginType, setLoginType] = useState<LoginType>('usernamePassword');
+	const [loginType, setLoginType] = useState<LoginType>('username_password');
 	const [captchaImage, setCaptchaImage] = useState<string>('');
 	const [uuid, setUuid] = useState<string>('');
 	const [publicKey, setPublicKey] = useState<string>('');
-	const [tenantOptions, setTenantOptions] = useState<API.TenantOptionParam[]>([])
 	const formRef = useRef<ProFormInstance>();
-	const [requestToken, setRequestToken] = useState<string>('')
+	const mailCaptchaRef = useRef<CaptFieldRef | null | undefined>();
+	const mobileCaptchaRef = useRef<CaptFieldRef | null | undefined>();
 
 	const setFormField = (form: API.LoginParam) => {
 		formRef?.current?.setFieldsValue(form);
 	}
-
-	const timeFix = () => {
-		const time = new Date();
-		const hour = time.getHours();
-		return hour < 9
-			? '早上好'
-			: hour <= 11
-				? '上午好'
-				: hour <= 13
-					? '中午好'
-					: hour < 20
-						? '下午好'
-						: '晚上好';
-	};
-
 	const encrypt = new JSEncrypt();
 
 	const getParams = (form: API.LoginParam) => {
 		switch (loginType) {
-			case 'usernamePassword': {
+			case USERNAME_PASSWORD.key: {
 				encrypt.setPublicKey(publicKey);
 				return {
 					uuid: uuid,
@@ -87,23 +65,23 @@ export default () => {
 					password: encodeURIComponent(
 						encrypt.encrypt(form.password as string),
 					),
-					tenant_id: form.tenant_id,
-					grant_type: 'password',
+					tenant_code: form.tenant_code,
+					grant_type: USERNAME_PASSWORD.key,
 				};
 			}
-			case 'mail':
+			case MAIL.key:
 				return {
 					mail: form.mail,
 					code: form.mail_captcha,
-					tenant_id: form.tenant_id,
-					grant_type: 'mail'
+					tenant_code: form.tenant_code,
+					grant_type: MAIL.key
 				};
-			case 'mobile':
+			case MOBILE.key:
 				return {
 					mobile: form.mobile,
 					code: form.mobile_captcha,
-					tenant_id: form.tenant_id,
-					grant_type: 'mobile'
+					tenant_code: form.tenant_code,
+					grant_type: MOBILE.key
 				};
 		}
 	};
@@ -114,7 +92,7 @@ export default () => {
 		// 调用验证码API
 		const uuid = uuidV7();
 		// @ts-ignore
-        getCaptchaImageByUuidV3({uuid: uuid}).then((res: { code: string; data: React.SetStateAction<string>; }) => {
+		getCaptchaImageByUuidV3({uuid: uuid}).then((res: { code: string; data: React.SetStateAction<string>; }) => {
 			if (res.code === 'OK') {
 				setCaptchaImage(res.data);
 			}
@@ -124,58 +102,37 @@ export default () => {
 
 	const getPublicKey = async () => {
 		// @ts-ignore
-        getSecretInfoV3().then((res: { code: string; data: { publicKey: React.SetStateAction<string>; }; }) => {
+		getSecretInfoV3().then((res: { code: string; data: { publicKey: React.SetStateAction<string>; }; }) => {
 			if (res.code === 'OK') {
 				setPublicKey(res.data.publicKey);
 			}
 		});
 	};
 
-	const getToken = async () => {
-		// @ts-ignore
-        getTokenV3().then((res: { data: React.SetStateAction<string>; }) => {
-			setRequestToken(res.data)
-		})
-	}
-
-	const listTenantOption = async () => {
-		// @ts-ignore
-        listTenantOptionV3().then((res: { code: string; data: API.TenantOptionParam[]; }) => {
-			if (res.code === 'OK') {
-				const options = []
-				const defaultOption = {label: '老寇云集团', value: '0'}
-				options.push(defaultOption)
-				res.data?.forEach((item: API.TenantOptionParam) => options.push(item))
-				setTenantOptions(options)
-			}
-		})
-	}
-
 	const sendMailCaptcha = async () => {
 		const param = {
-			tenantId: formRef?.current?.getFieldValue("tenant_id"),
-			tag: 'mailCaptcha',
-			uuid: formRef?.current?.getFieldValue("mail")
+			tenantCode: formRef?.current?.getFieldValue("tenant_code"),
+			uuid: formRef?.current?.getFieldValue(MAIL.key)
 		}
-		sendCaptchaV3(param as API.SendCaptchaParam, requestToken).catch(console.log)
+		const co = { co : param }
+		sendCaptchaV3('mail', co as API.SendCaptchaCO, uuidV7()).then(res => {
+			if (res.code !== "OK") {
+				mailCaptchaRef.current?.endTiming()
+			}
+		}).catch(console.log)
 	}
 
 	const sendMobileCaptcha = async () => {
 		const param = {
-			tenantId: formRef?.current?.getFieldValue("tenant_id"),
-			tag: 'mobileCaptcha',
-			uuid: formRef?.current?.getFieldValue("mobile")
+			tenantCode: formRef?.current?.getFieldValue("tenant_code"),
+			uuid: formRef?.current?.getFieldValue(MOBILE.key)
 		}
-		sendCaptchaV3(param as API.SendCaptchaParam, requestToken).catch(console.log)
-	}
-
-	const getTenantIdByDomain = async () => {
-		// @ts-ignore
-        getTenantIdByDomainNameV3().then((res: { code: string; data: any; }) => {
-			if (res.code === 'OK') {
-				setFormField({tenant_id: res.data})
+		const co = { co : param }
+		sendCaptchaV3('mobile', co as API.SendCaptchaCO, uuidV7()).then(res => {
+			if (res.code !== "OK") {
+				mobileCaptchaRef.current?.endTiming()
 			}
-		})
+		}).catch(console.log)
 	}
 
 	const clearMailCaptcha = () => {
@@ -188,30 +145,28 @@ export default () => {
 
 	useEffect(() => {
 		clearToken()
-		listTenantOption().catch(console.log)
 		getPublicKey().catch(console.log)
 		getCaptchaImage().catch(console.log)
-		getTenantIdByDomain().catch(console.log)
-		getToken().catch(console.log)
 	}, []);
 
 	const onSubmit = async (form: API.LoginParam) => {
 		const params = getParams(form);
-        login({...params})
-            // @ts-ignore
-            .then((res: { code: string; data: { access_token: string; refresh_token: string; expires_in: number; }; }) => {
+		login({...params})
+			// @ts-ignore
+			.then((res: {
+				code: string;
+				data: { access_token: string; refresh_token: string; expires_in: number; };
+			}) => {
 				if (res.code === 'OK') {
 					// 登录成功【令牌过期前5分钟，自动刷新令牌】
 					clearToken()
-					// @ts-ignore
+					// 存储令牌
 					setToken(res.data?.access_token, res.data?.refresh_token, new Date().getTime() + res.data?.expires_in)
 					// 跳转路由
 					const urlParams = new URL(window.location.href).searchParams;
 					history.push(urlParams.get('redirect') || '/');
-					// 延迟 1 秒显示欢迎信息
-					setTimeout(() => {
-						message.success(`${timeFix()}，欢迎回来`);
-					}, 1000);
+					// 刷新页面
+					window.location.reload()
 				}
 			})
 			.catch(() => {
@@ -321,24 +276,23 @@ export default () => {
 					onChange={(activeKey) => setLoginType(activeKey as LoginType)}
 				></Tabs>
 
-				<ProFormSelect
-					name="tenant_id"
-					showSearch
+				<ProFormText
+					name="tenant_code"
 					fieldProps={{
-						size: 'large'
+						size: 'large',
+						prefix: <TeamOutlined className={'prefixIcon'}/>,
+						autoComplete: 'new-password',
 					}}
-					options={tenantOptions}
-					debounceTime={300}
-					placeholder="请选择租户"
+					placeholder={'请输入租户标识'}
 					rules={[
 						{
 							required: true,
-							message: '请选择租户',
+							message: '请输入租户标识',
 						},
 					]}
 				/>
 
-				{loginType === 'usernamePassword' && (
+				{loginType === USERNAME_PASSWORD.key && (
 					<>
 						<ProFormText
 							name="username"
@@ -411,7 +365,7 @@ export default () => {
 						</Row>
 					</>
 				)}
-				{loginType === 'mobile' && (
+				{loginType === MOBILE.key && (
 					<>
 						<ProFormText
 							fieldProps={{
@@ -438,6 +392,7 @@ export default () => {
 								prefix: <SafetyCertificateOutlined className={'prefixIcon'}/>,
 								autoComplete: 'new-password',
 							}}
+							fieldRef={mobileCaptchaRef}
 							captchaProps={{
 								size: 'large',
 							}}
@@ -463,7 +418,7 @@ export default () => {
 						/>
 					</>
 				)}
-				{loginType === 'mail' && (
+				{loginType === MAIL.key && (
 					<>
 						<ProFormText
 							fieldProps={{
@@ -490,6 +445,7 @@ export default () => {
 								prefix: <SafetyCertificateOutlined className={'prefixIcon'}/>,
 								autoComplete: 'new-password',
 							}}
+							fieldRef={mailCaptchaRef}
 							captchaProps={{
 								size: 'large',
 							}}

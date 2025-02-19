@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.api.DeptsServiceI;
 import org.laokou.admin.dept.dto.*;
 import org.laokou.admin.dept.dto.clientobject.DeptCO;
+import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
@@ -33,6 +34,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 import static org.laokou.common.data.cache.constant.NameConstant.DEPTS;
 import static org.laokou.common.data.cache.constant.Type.DEL;
@@ -101,8 +104,17 @@ public class DeptsControllerV3 {
 	}
 
 	@TraceLog
+	@PostMapping("tree-list")
+	@PreAuthorize("hasAuthority('sys:dept:tree-list')")
+	@Operation(summary = "查询部门树列表", description = "查询部门树列表")
+	public Result<List<DeptTreeCO>> treeListV3(@RequestBody DeptTreeListQry qry) {
+		return deptsServiceI.treeList(qry);
+	}
+
+	@TraceLog
 	@GetMapping("{id}")
 	@DataCache(name = DEPTS, key = "#id")
+	@PreAuthorize("hasAuthority('sys:dept:detail')")
 	@Operation(summary = "查看部门详情", description = "查看部门详情")
 	public Result<DeptCO> getByIdV3(@PathVariable("id") Long id) {
 		return deptsServiceI.getById(new DeptGetQry(id));

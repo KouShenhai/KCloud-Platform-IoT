@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,24 +20,24 @@ package org.laokou.admin.i18nMessage.gateway;
 import org.laokou.admin.i18nMessage.model.I18nMessageE;
 
 /**
- * 国际化网关【防腐】.
+ * 国际化消息网关【防腐】.
  *
  * @author laokou
  */
 public interface I18nMessageGateway {
 
 	/**
-	 * 新增国际化.
+	 * 新增国际化消息.
 	 */
 	void create(I18nMessageE i18nMessageE);
 
 	/**
-	 * 修改国际化.
+	 * 修改国际化消息.
 	 */
 	void update(I18nMessageE i18nMessageE);
 
 	/**
-	 * 删除国际化.
+	 * 删除国际化消息.
 	 */
 	void delete(Long[] ids);
 

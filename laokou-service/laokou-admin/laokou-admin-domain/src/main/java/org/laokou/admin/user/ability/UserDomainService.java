@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,12 +33,30 @@ public class UserDomainService {
 
 	private final UserGateway userGateway;
 
+	private final UserRoleGateway userRoleGateway;
+
+	private final UserDeptGateway userDeptGateway;
+
 	public void create(UserE userE) {
+		// 用户名加密
+		userE.encryptUsername();
+		// 邮箱加密
+		userE.encryptMail();
+		// 手机号加密
+		userE.encryptMobile();
 		userGateway.create(userE);
+		userRoleGateway.create(userE);
+		userDeptGateway.create(userE);
 	}
 
 	public void update(UserE userE) {
+		// 邮箱加密
+		userE.encryptMail();
+		// 手机号加密
+		userE.encryptMobile();
 		userGateway.update(userE);
+		userRoleGateway.update(userE);
+		userDeptGateway.update(userE);
 	}
 
 	public void delete(Long[] ids) {

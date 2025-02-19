@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.i18n.common.exception.AuthException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
@@ -32,9 +32,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.exception.AuthException.OAUTH2_INVALID_SCOPE;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
+import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.INVALID_SCOPE;
+import static org.laokou.common.security.handler.OAuth2ExceptionHandler.*;
 
 /**
  * 抽象认证转换器.
@@ -70,7 +69,7 @@ public abstract class AbstractOAuth2AuthenticationConverter implements Authentic
 			List<String> scopes = parameters.get(OAuth2ParameterNames.SCOPE);
 			// 判断scopes
 			if (CollectionUtil.isNotEmpty(scopes) && scopes.size() != 1) {
-				throw new AuthException(OAUTH2_INVALID_SCOPE);
+				throw new SystemException(INVALID_SCOPE);
 			}
 			// 获取上下文认证信息
 			Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();
@@ -82,8 +81,8 @@ public abstract class AbstractOAuth2AuthenticationConverter implements Authentic
 			});
 			return convert(clientPrincipal, additionalParameters);
 		}
-		catch (AuthException e) {
-			throw getException(e.getCode(), e.getMsg(), ERROR_URL);
+		catch (SystemException e) {
+			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 	}
 

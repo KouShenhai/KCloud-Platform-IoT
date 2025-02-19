@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,7 @@ import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.nio.charset.StandardCharsets;
+import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * 只针对 spring-boot 3.x.x.
@@ -31,6 +30,7 @@ import java.nio.charset.StandardCharsets;
  * @author laokou
  */
 @Slf4j
+@SpringBootTest
 class Jasypt3Test {
 
 	@Test
@@ -39,10 +39,9 @@ class Jasypt3Test {
 		String plainText = "laokou";
 		String encryptWithMD5ANDAES256Str = encryptWithHMACSHA512ANDAES256(plainText, factor);
 		String decryptWithMD5ANDAES256Str = decryptWithHMACSHA512ANDAES256(encryptWithMD5ANDAES256Str, factor);
-		log.info("采用PBEWITHHMACSHA512ANDAES_256加密前原文密文：{}", encryptWithMD5ANDAES256Str);
-		log.info("采用PBEWITHHMACSHA512ANDAES_256解密后密文原文：{}", decryptWithMD5ANDAES256Str);
-		Assertions.assertArrayEquals(decryptWithMD5ANDAES256Str.getBytes(StandardCharsets.UTF_8),
-				plainText.getBytes(StandardCharsets.UTF_8));
+		log.info("采用PBEWITHHMACSHA512ANDAES_256加密后：{}", encryptWithMD5ANDAES256Str);
+		log.info("采用PBEWITHHMACSHA512ANDAES_256解密后：{}", decryptWithMD5ANDAES256Str);
+		Assertions.assertEquals(plainText, decryptWithMD5ANDAES256Str);
 	}
 
 	/**
@@ -51,7 +50,7 @@ class Jasypt3Test {
 	 * @param factor 加密秘钥
 	 * @return java.lang.String
 	 */
-	public String encryptWithHMACSHA512ANDAES256(String plainText, String factor) {
+	private String encryptWithHMACSHA512ANDAES256(String plainText, String factor) {
 		return pooledPBEStringEncryptor(factor).encrypt(plainText);
 	}
 
@@ -61,11 +60,11 @@ class Jasypt3Test {
 	 * @param factor 解密秘钥
 	 * @return java.lang.String
 	 */
-	public String decryptWithHMACSHA512ANDAES256(String encryptedText, String factor) {
+	private String decryptWithHMACSHA512ANDAES256(String encryptedText, String factor) {
 		return pooledPBEStringEncryptor(factor).decrypt(encryptedText);
 	}
 
-	public PooledPBEStringEncryptor pooledPBEStringEncryptor(String factor) {
+	private PooledPBEStringEncryptor pooledPBEStringEncryptor(String factor) {
 		PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
 		SimpleStringPBEConfig config = new SimpleStringPBEConfig();
 		config.setPassword(factor);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 package org.laokou.admin.loginLog.command;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.loginLog.convertor.LoginLogConvertor;
 import org.laokou.admin.loginLog.dto.LoginLogExportCmd;
@@ -38,9 +39,14 @@ public class LoginLogExportCmdExe {
 	private final LoginLogMapper loginLogMapper;
 
 	public void executeVoid(LoginLogExportCmd cmd) {
-		// 校验参数
-		ExcelUtil.doExport("登录日志", ResponseUtil.getHttpServletResponse(), cmd, loginLogMapper, LoginLogExcel.class,
-				LoginLogConvertor.INSTANCE);
+		try {
+			DynamicDataSourceContextHolder.push("domain");
+			ExcelUtil.doExport("登录日志", ResponseUtil.getHttpServletResponse(), cmd, loginLogMapper, LoginLogExcel.class,
+					LoginLogConvertor.INSTANCE);
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

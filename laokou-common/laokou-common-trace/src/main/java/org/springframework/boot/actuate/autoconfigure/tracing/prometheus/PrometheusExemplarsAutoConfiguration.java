@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,6 +74,8 @@ public class PrometheusExemplarsAutoConfiguration {
 	 */
 	static class TracingSpanContext implements SpanContext {
 
+		private volatile Span currentSpan;
+
 		@Override
 		public String getCurrentTraceId() {
 			Span currentSpan = currentSpan();
@@ -92,7 +94,7 @@ public class PrometheusExemplarsAutoConfiguration {
 			if (ObjectUtil.isNull(currentSpan)) {
 				return false;
 			}
-			return currentSpan.context().sampled();
+			return Boolean.TRUE.equals(currentSpan.context().sampled());
 		}
 
 		@Override
@@ -101,7 +103,10 @@ public class PrometheusExemplarsAutoConfiguration {
 
 		private Span currentSpan() {
 			try {
-				return SpringContextUtil.getBean(Tracer.class).currentSpan();
+				if (ObjectUtil.isNull(currentSpan)) {
+					currentSpan = SpringContextUtil.getBean(Tracer.class).currentSpan();
+				}
+				return currentSpan;
 			}
 			catch (Exception e) {
 				return null;

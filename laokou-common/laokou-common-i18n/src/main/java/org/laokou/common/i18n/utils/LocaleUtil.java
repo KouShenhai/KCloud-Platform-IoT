@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,9 @@ import static org.laokou.common.i18n.common.constant.StringConstant.*;
  * @author laokou
  */
 public final class LocaleUtil {
+
+	private LocaleUtil() {
+	}
 
 	public static Locale toLocale(String language) {
 		try {

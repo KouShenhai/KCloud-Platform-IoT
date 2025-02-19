@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.laokou.common.core.annotation.AbstractContextualSerializer;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 import java.io.IOException;
@@ -33,24 +33,20 @@ import java.io.IOException;
  */
 @NoArgsConstructor
 @AllArgsConstructor
-public class SensitiveSerializer extends JsonSerializer<String> implements ContextualSerializer {
+public class SensitiveSerializer extends AbstractContextualSerializer {
 
 	private SensitiveType sensitiveType;
 
-	private int start;
-
-	private int end;
-
 	@Override
 	public void serialize(String str, JsonGenerator generator, SerializerProvider provider) throws IOException {
-		generator.writeString(sensitiveType.format(str, start, end));
+		generator.writeString(sensitiveType.format(str));
 	}
 
 	@Override
 	public JsonSerializer<?> createContextual(SerializerProvider provider, BeanProperty beanProperty) {
 		Sensitive sensitive = beanProperty.getAnnotation(Sensitive.class);
 		if (ObjectUtil.isNotNull(sensitive)) {
-			return new SensitiveSerializer(sensitive.type(), sensitive.start(), sensitive.end());
+			return new SensitiveSerializer(sensitive.type());
 		}
 		throw new RuntimeException();
 	}

@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-generator</artifactId>
-    <version>3.4.0</version>
+    <version>3.4.2</version>
   </parent>
 
   <artifactId>laokou-generator-infrastructure</artifactId>
@@ -17,7 +17,31 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-mybatis-plus</artifactId>
+      <artifactId>laokou-common-domain</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-idempotent</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-log</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-trace</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-generator-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-nacos</artifactId>
     </dependency>
   </dependencies>
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,11 @@ package org.laokou.admin.menu.api;
 
 import org.laokou.admin.menu.dto.*;
 import org.laokou.admin.menu.dto.clientobject.MenuCO;
+import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+
+import java.util.List;
 
 /**
  * 菜单接口.
@@ -64,6 +67,12 @@ public interface MenusServiceI {
 	 * @param qry 分页查询请求
 	 */
 	Result<Page<MenuCO>> page(MenuPageQry qry);
+
+	/**
+	 * 查询菜单树.
+	 * @param qry 查询请求
+	 */
+	Result<List<MenuTreeCO>> treeList(MenuTreeListQry qry);
 
 	/**
 	 * 查看菜单.

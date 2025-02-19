@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package org.laokou.common.core.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RequestUtil;
-import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Bean;
 
 /**
  * 预热.
@@ -27,16 +27,25 @@ import org.springframework.beans.factory.InitializingBean;
  * @author laokou
  */
 @Slf4j
-public class WarmUpConfig implements InitializingBean {
+public class WarmUpConfig {
 
-	private static final String DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3";
+	@Bean(initMethod = "init", bootstrap = Bean.Bootstrap.BACKGROUND)
+	public WarmUp warmUp() {
+		log.info("{} => Initializing WarmUpConfig", Thread.currentThread().getName());
+		return new WarmUp();
+	}
 
-	@Override
-	public void afterPropertiesSet() {
-		log.info("加载Browscap预热...");
-		// 预热
-		RequestUtil.getUserAgentParser().parse(DEFAULT_USER_AGENT);
-		log.info("完成Browscap预热...");
+	public static class WarmUp {
+
+		private static final String DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3";
+
+		public void init() {
+			log.info("加载Browscap预热...");
+			// 预热
+			RequestUtil.getUserAgentParser().parse(DEFAULT_USER_AGENT);
+			log.info("完成Browscap预热...");
+		}
+
 	}
 
 }

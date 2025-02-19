@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,14 +20,15 @@ package org.laokou.common.netty.config;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.socket.SocketChannel;
 
 /**
  * @author laokou
  */
 public abstract class AbstractChannelInitializer<C extends Channel> extends ChannelInitializer<C> {
 
-	abstract protected void preHandler(ChannelPipeline pipeline);
+	abstract protected void preHandler(SocketChannel channel, ChannelPipeline pipeline) throws Exception;
 
-	abstract protected void postHandler(ChannelPipeline pipeline);
+	abstract protected void postHandler(SocketChannel channel, ChannelPipeline pipeline) throws Exception;
 
 }

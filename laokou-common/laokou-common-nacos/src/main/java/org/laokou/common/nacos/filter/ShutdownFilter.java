@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +95,7 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 				NEWED_SCHEDULED_THREAD_POOL.scheduleWithFixedDelay(() -> {
 					// 一分钟内没完成 或 计数器为0 -> 结束
 					if (IdGenerator.SystemClock.now() - start >= second || ShutdownHolder.get() == 0) {
-						ThreadUtil.shutdown(NEWED_SCHEDULED_THREAD_POOL, 10);
+						ThreadUtil.shutdown(NEWED_SCHEDULED_THREAD_POOL, 30);
 						log.info("关闭应用");
 						int exitCode = SpringApplication.exit(SpringContextUtil.getApplicationContext(),
 								new ExitCodeGeneratorImpl());

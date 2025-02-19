@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,18 +17,19 @@
 
 package org.laokou.common.mybatisplus.config;
 
-import net.sf.jsqlparser.statement.select.OrderByElement;
 import org.apache.fury.Fury;
-import org.apache.fury.ThreadLocalFury;
+import org.apache.fury.ThreadSafeFury;
 
 /**
  * @author laokou
  */
 public final class FuryFactory {
 
-	private static final ThreadLocalFury FURY = Fury.builder().buildThreadLocalFury();
+	private static final FuryFactory FACTORY = new FuryFactory();
 
-	static {
+	private final ThreadSafeFury FURY = Fury.builder().withAsyncCompilation(true).buildThreadSafeFury();
+
+	public FuryFactory() {
 		FURY.register(net.sf.jsqlparser.expression.Alias.class);
 		FURY.register(net.sf.jsqlparser.expression.Alias.AliasColumn.class);
 		FURY.register(net.sf.jsqlparser.expression.AllValue.class);
@@ -246,26 +247,33 @@ public final class FuryFactory {
 		FURY.register(net.sf.jsqlparser.expression.BinaryExpression.class);
 		FURY.register(net.sf.jsqlparser.expression.operators.relational.ComparisonOperator.class);
 		FURY.register(net.sf.jsqlparser.expression.operators.relational.OldOracleJoinBinaryExpression.class);
+		FURY.register(net.sf.jsqlparser.expression.Function.NullHandling.class);
 		FURY.register(net.sf.jsqlparser.statement.CreateFunctionalStatement.class);
 		FURY.register(net.sf.jsqlparser.statement.select.Select.class);
 		FURY.register(net.sf.jsqlparser.statement.select.SetOperation.class);
 		FURY.register(net.sf.jsqlparser.util.cnfexpression.MultipleExpression.class);
 		FURY.register(net.sf.jsqlparser.statement.insert.InsertModifierPriority.class);
-		FURY.register(OrderByElement.NullOrdering.class);
+		FURY.register(net.sf.jsqlparser.statement.select.OrderByElement.NullOrdering.class);
 		FURY.register(net.sf.jsqlparser.statement.select.ForMode.class);
 		FURY.register(net.sf.jsqlparser.statement.select.MySqlSqlCacheFlags.class);
 		FURY.register(net.sf.jsqlparser.statement.select.PlainSelect.BigQuerySelectQualifier.class);
 		FURY.register(net.sf.jsqlparser.statement.update.UpdateModifierPriority.class);
+		FURY.register(net.sf.jsqlparser.expression.operators.relational.LikeExpression.KeyWord.class);
+		FURY.register(net.sf.jsqlparser.statement.delete.DeleteModifierPriority.class);
 	}
 
-	public static byte[] serialize(Object object) {
+	public static FuryFactory getFuryFactory() {
+		return FACTORY;
+	}
+
+	public byte[] serialize(Object object) {
 		if (object == null) {
 			return new byte[0];
 		}
 		return FURY.serialize(object);
 	}
 
-	public static Object deserialize(byte[] bytes) {
+	public Object deserialize(byte[] bytes) {
 		if (bytes == null) {
 			return null;
 		}

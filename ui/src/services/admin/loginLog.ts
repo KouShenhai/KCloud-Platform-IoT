@@ -1,4 +1,3 @@
-// @ts-ignore
 /* eslint-disable */
 import {request} from '@umijs/max';
 import {ExportAllToExcel} from "@/utils/export";
@@ -56,7 +55,7 @@ export async function getByIdV3(
 
 /** 导出登录日志 导出登录日志 POST /v3/login-logs/export */
 export function exportV3(body: API.LoginLogExportCmd, options?: { [key: string]: any }) {
-	ExportAllToExcel("登录日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/api/admin/v3/login-logs/export', 'POST', body, options)
+	ExportAllToExcel("登录日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/api/admin/v3/login-logs/export', 'POST', body, options)
 }
 
 /** 导入登录日志 导入登录日志 POST /v3/login-logs/import */
@@ -99,16 +98,6 @@ export async function pageV3(body: API.LoginLogPageQry, options?: { [key: string
 			'Content-Type': 'application/json',
 		},
 		data: body,
-		...(options || {}),
-	});
-}
-
-export async function clearV3(options?: { [key: string]: any }) {
-	return request<API.Result>('/api/admin/v3/login-logs/all', {
-		method: 'DELETE',
-		headers: {
-			'Content-Type': 'application/json',
-		},
 		...(options || {}),
 	});
 }

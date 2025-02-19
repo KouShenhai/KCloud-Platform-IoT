@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,32 +18,92 @@
 package org.laokou.admin.menu.convertor;
 
 import org.laokou.admin.menu.dto.clientobject.MenuCO;
+import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuE;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.core.utils.IdGenerator;
+
+import java.util.List;
 
 /**
  * 菜单转换器.
  *
  * @author laokou
  */
-public class MenuConvertor {
+public final class MenuConvertor {
 
-	public static MenuDO toDataObject(MenuE menuE) {
-		MenuDO menuDO = ConvertUtil.sourceToTarget(menuE, MenuDO.class);
-		if (ObjectUtil.isNull(menuDO.getId())) {
-			menuDO.generatorId();
+	private MenuConvertor() {
+	}
+
+	public static MenuDO toDataObject(MenuE menuE, boolean isInsert) {
+		MenuDO menuDO = new MenuDO();
+		if (isInsert) {
+			menuDO.setId(IdGenerator.defaultSnowflakeId());
 		}
+		else {
+			menuDO.setId(menuE.getId());
+		}
+		menuDO.setPid(menuE.getPid());
+		menuDO.setPermission(menuE.getPermission());
+		menuDO.setType(menuE.getType());
+		menuDO.setName(menuE.getName());
+		menuDO.setPath(menuE.getPath());
+		menuDO.setIcon(menuE.getIcon());
+		menuDO.setSort(menuE.getSort());
+		menuDO.setStatus(menuE.getStatus());
 		return menuDO;
 	}
 
 	public static MenuCO toClientObject(MenuDO menuDO) {
-		return ConvertUtil.sourceToTarget(menuDO, MenuCO.class);
+		MenuCO co = new MenuCO();
+		co.setId(menuDO.getId());
+		co.setPid(menuDO.getPid());
+		co.setPermission(menuDO.getPermission());
+		co.setType(menuDO.getType());
+		co.setName(menuDO.getName());
+		co.setPath(menuDO.getPath());
+		co.setIcon(menuDO.getIcon());
+		co.setSort(menuDO.getSort());
+		co.setStatus(menuDO.getStatus());
+		return co;
+	}
+
+	public static List<MenuCO> toClientObjects(List<MenuDO> list) {
+		return list.stream().map(MenuConvertor::toClientObject).toList();
+	}
+
+	public static MenuTreeCO toClientObj(MenuDO menuDO) {
+		MenuTreeCO co = new MenuTreeCO();
+		co.setId(menuDO.getId());
+		co.setName(menuDO.getName());
+		co.setPid(menuDO.getPid());
+		co.setPath(menuDO.getPath());
+		co.setIcon(menuDO.getIcon());
+		co.setCreateTime(menuDO.getCreateTime());
+		co.setPermission(menuDO.getPermission());
+		co.setType(menuDO.getType());
+		co.setSort(menuDO.getSort());
+		co.setStatus(menuDO.getStatus());
+		return co;
+
+	}
+
+	public static List<MenuTreeCO> toClientObjs(List<MenuDO> list) {
+		return list.stream().map(MenuConvertor::toClientObj).toList();
 	}
 
 	public static MenuE toEntity(MenuCO menuCO) {
-		return ConvertUtil.sourceToTarget(menuCO, MenuE.class);
+		MenuE menuE = new MenuE();
+		menuE.setId(menuCO.getId());
+		menuE.setPid(menuCO.getPid());
+		menuE.setPermission(menuCO.getPermission());
+		menuE.setType(menuCO.getType());
+		menuE.setName(menuCO.getName());
+		menuE.setPath(menuCO.getPath());
+		menuE.setIcon(menuCO.getIcon());
+		menuE.setSort(menuCO.getSort());
+		menuE.setStatus(menuCO.getStatus());
+		return menuE;
 	}
 
 }

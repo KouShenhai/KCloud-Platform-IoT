@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,33 +22,44 @@
   <parent>
     <artifactId>laokou-cloud</artifactId>
     <groupId>org.laokou</groupId>
-    <version>3.4.0</version>
+    <version>3.4.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-nacos</artifactId>
 
   <properties>
     <!--nacos版本-->
-    <nacos.version>2.4.3</nacos.version>
+    <nacos.version>2.5.0</nacos.version>
     <!--spring-boot版本-->
     <spring-boot.version>2.7.18</spring-boot.version>
     <!--postgresql版本-->
-    <postgresql.version>42.7.4</postgresql.version>
+    <postgresql.version>42.7.5</postgresql.version>
     <!--liquibase-core版本-->
-    <liquibase-core.version>4.29.2</liquibase-core.version>
+    <liquibase-core.version>4.31.1</liquibase-core.version>
     <!--protobuf-java版本-->
     <protobuf-java.version>3.25.5</protobuf-java.version>
     <!--commons-io版本-->
-    <commons-io.version>2.17.0</commons-io.version>
+    <commons-io.version>2.18.0</commons-io.version>
     <!--grpc版本-->
-    <grpc.version>1.68.0</grpc.version>
+    <grpc.version>1.70.0</grpc.version>
     <!--error_prone_annotations版本-->
-    <error_prone_annotations.version>2.35.1</error_prone_annotations.version>
+    <error_prone_annotations.version>2.36.0</error_prone_annotations.version>
     <!--hessian版本-->
     <hessian.version>3.5.5</hessian.version>
+    <!--commons-lang3版本-->
+    <commons-lang3.version>3.17.0</commons-lang3.version>
+    <!--bcprov-jdk18on版本-->
+    <bcprov.version>1.80</bcprov.version>
+    <!--bcpkix-jdk18on版本-->
+    <bcpkix.version>1.80</bcpkix.version>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
+    </dependency>
     <dependency>
       <groupId>io.xuxiaowei.nacos</groupId>
       <artifactId>nacos-config</artifactId>
@@ -239,6 +250,10 @@
           <groupId>org.apache.commons</groupId>
           <artifactId>commons-text</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -271,6 +286,16 @@
       <groupId>com.alipay.sofa</groupId>
       <artifactId>hessian</artifactId>
       <version>${hessian.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk18on</artifactId>
+      <version>${bcprov.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcpkix-jdk18on</artifactId>
+      <version>${bcpkix.version}</version>
     </dependency>
   </dependencies>
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,79 +18,42 @@
 package org.laokou.admin.role.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.role.model.RoleE;
-import org.springframework.stereotype.Component;
+import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.gateway.RoleGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
+import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
+import org.laokou.admin.role.model.RoleE;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.admin.role.convertor.RoleConvertor;
-import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 
 /**
  * 角色网关实现.
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class RoleGatewayImpl implements RoleGateway {
 
 	private final RoleMapper roleMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
+	@Override
 	public void create(RoleE roleE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				roleMapper.insert(RoleConvertor.toDataObject(roleE));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		RoleDO roleDO = RoleConvertor.toDataObject(roleE, true);
+		roleMapper.insert(roleDO);
 	}
 
+	@Override
 	public void update(RoleE roleE) {
-		RoleDO roleDO = RoleConvertor.toDataObject(roleE);
+		RoleDO roleDO = RoleConvertor.toDataObject(roleE, false);
 		roleDO.setVersion(roleMapper.selectVersion(roleE.getId()));
-		update(roleDO);
+		roleMapper.updateById(roleDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				roleMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
-	}
-
-	private void update(RoleDO roleDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				roleMapper.updateById(roleDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		roleMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

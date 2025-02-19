@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ import co.elastic.clients.transport.endpoints.BooleanResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.annotation.*;
 import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.i18n.dto.Page;
@@ -71,7 +71,7 @@ public class ElasticsearchTemplate {
 	private final ElasticsearchAsyncClient elasticsearchAsyncClient;
 
 	@SneakyThrows
-	public <TDocument> CompletableFuture<Boolean> asyncCreateIndex(String name, String alias, Class<TDocument> clazz,
+	public <TDocument> CompletableFuture<Void> asyncCreateIndex(String name, String alias, Class<TDocument> clazz,
 			Executor executor) {
 		return asyncExist(List.of(name), executor).thenApplyAsync(resp -> {
 			if (resp) {
@@ -79,21 +79,19 @@ public class ElasticsearchTemplate {
 				return Boolean.FALSE;
 			}
 			return Boolean.TRUE;
-		}, executor).thenApplyAsync(resp -> {
-			if (resp) {
-				Document document = convert(name, alias, clazz);
-				elasticsearchAsyncClient.indices().create(getCreateIndexRequest(document)).thenApplyAsync(response -> {
-					if (response.acknowledged()) {
-						log.info("索引：{} -> 创建索引成功", name);
-						return Boolean.TRUE;
-					}
-					else {
-						log.info("索引：{} -> 创建索引失败", name);
-						return Boolean.FALSE;
-					}
-				});
+		}, executor).thenAcceptAsync(result -> {
+			if (result) {
+				elasticsearchAsyncClient.indices()
+					.create(getCreateIndexRequest(convert(name, alias, clazz)))
+					.thenAcceptAsync(response -> {
+						if (response.acknowledged()) {
+							log.info("索引：{} -> 创建索引成功", name);
+						}
+						else {
+							log.info("索引：{} -> 创建索引失败", name);
+						}
+					});
 			}
-			return Boolean.FALSE;
 		}, executor);
 	}
 
@@ -137,7 +135,7 @@ public class ElasticsearchTemplate {
 	}
 
 	@SneakyThrows
-	public void createDocument(String index, String id, Object obj) {
+	public <T> void createDocument(String index, String id, T obj) {
 		IndexResponse response = elasticsearchClient
 			.index(idx -> idx.index(index).refresh(Refresh.True).id(id).document(obj));
 		if (StringUtil.isNotEmpty(response.result().jsonValue())) {
@@ -149,21 +147,19 @@ public class ElasticsearchTemplate {
 	}
 
 	@SneakyThrows
-	public CompletableFuture<Boolean> asyncCreateDocument(String index, String id, Object obj) {
+	public <T> CompletableFuture<Void> asyncCreateDocument(String index, String id, T obj) {
 		return elasticsearchAsyncClient.index(idx -> idx.index(index).refresh(Refresh.True).id(id).document(obj))
-			.thenApplyAsync(resp -> {
+			.thenAcceptAsync(resp -> {
 				if (StringUtil.isNotEmpty(resp.result().jsonValue())) {
 					log.info("索引：{} -> 异步同步索引成功", index);
-					return Boolean.TRUE;
 				}
 				else {
 					log.info("索引：{} -> 异步同步索引失败", index);
-					return Boolean.FALSE;
 				}
 			});
 	}
 
-	public void bulkCreateDocument(String index, Map<String, Object> map) {
+	public <T> void bulkCreateDocument(String index, Map<String, T> map) {
 		try {
 			boolean errors = elasticsearchClient
 				.bulk(bulk -> bulk.index(index).refresh(Refresh.True).operations(getBulkOperations(map)))
@@ -176,23 +172,20 @@ public class ElasticsearchTemplate {
 			}
 		}
 		catch (Throwable e) {
-			log.error("批量同步索引失败，错误信息：{}", e.getMessage(), e);
+			log.error("批量同步索引失败，错误信息：{}", e.getMessage());
 		}
 	}
 
 	@SneakyThrows
-	public CompletableFuture<Boolean> asyncBulkCreateDocument(String index, Map<String, Object> map,
-			Executor executor) {
+	public <T> CompletableFuture<Void> asyncBulkCreateDocument(String index, Map<String, T> map, Executor executor) {
 		return elasticsearchAsyncClient
 			.bulk(bulk -> bulk.index(index).refresh(Refresh.True).operations(getBulkOperations(map)))
-			.thenApplyAsync(resp -> {
+			.thenAcceptAsync(resp -> {
 				if (resp.errors()) {
 					log.info("索引：{} -> 异步批量同步索引失败", index);
-					return Boolean.FALSE;
 				}
 				else {
 					log.info("索引：{} -> 异步批量同步索引成功", index);
-					return Boolean.TRUE;
 				}
 			}, executor);
 	}
@@ -241,7 +234,7 @@ public class ElasticsearchTemplate {
 			ReflectionUtils.setField(field, source, id);
 		}
 		catch (Exception e) {
-			log.error("ID赋值失败，错误信息：{}", e.getMessage(), e);
+			log.error("ID赋值失败，错误信息：{}", e.getMessage());
 		}
 	}
 
@@ -308,7 +301,7 @@ public class ElasticsearchTemplate {
 		}));
 	}
 
-	private List<BulkOperation> getBulkOperations(Map<String, Object> map) {
+	private <T> List<BulkOperation> getBulkOperations(Map<String, T> map) {
 		return map.entrySet()
 			.stream()
 			.map(entry -> BulkOperation.of(idx -> idx.index(fn -> fn.id(entry.getKey()).document(entry.getValue()))))

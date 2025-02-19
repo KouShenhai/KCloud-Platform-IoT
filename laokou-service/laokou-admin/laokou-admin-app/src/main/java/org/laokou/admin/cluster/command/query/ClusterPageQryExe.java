@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,21 +18,16 @@
 package org.laokou.admin.cluster.command.query;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.laokou.admin.cluster.convertor.ClusterConvertor;
 import org.laokou.admin.cluster.dto.ClusterPageQry;
 import org.laokou.admin.cluster.dto.clientobject.ClusterCO;
 import org.laokou.admin.cluster.gatewayimpl.database.ClusterMapper;
 import org.laokou.admin.cluster.gatewayimpl.database.dataobject.ClusterDO;
-import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询集群请求执行器.
@@ -45,16 +40,10 @@ public class ClusterPageQryExe {
 
 	private final ClusterMapper clusterMapper;
 
-	@SneakyThrows
 	public Result<Page<ClusterCO>> execute(ClusterPageQry qry) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		CompletableFuture<List<ClusterDO>> c1 = CompletableFuture
-			.supplyAsync(() -> clusterMapper.selectObjectPage(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> clusterMapper.selectObjectCount(qry),
-				executor);
-		return Result
-			.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(ClusterConvertor::toClientObject).toList(),
-					c2.get(30, TimeUnit.SECONDS)));
+		List<ClusterDO> list = clusterMapper.selectObjectPage(qry);
+		long total = clusterMapper.selectObjectCount(qry);
+		return Result.ok(Page.create(list.stream().map(ClusterConvertor::toClientObject).toList(), total));
 	}
 
 }

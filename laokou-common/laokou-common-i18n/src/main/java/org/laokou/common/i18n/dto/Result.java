@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ public class Result<T> implements Serializable {
 	@Serial
 	private static final long serialVersionUID = -1286769110881865369L;
 
-	@Schema(name = "状态编码", description = "状态编码", example = "OK")
+	@Schema(name = "状态标识", description = "状态标识", example = "OK")
 	private String code;
 
 	@Schema(name = "响应描述", description = "响应描述", example = "请求成功")

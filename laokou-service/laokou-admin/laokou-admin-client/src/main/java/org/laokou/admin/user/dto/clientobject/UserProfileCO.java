@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,9 +42,6 @@ public class UserProfileCO extends ClientObject {
 
 	@Schema(name = "头像", description = "头像")
 	private String avatar;
-
-	@Schema(name = "租户ID", description = "租户ID")
-	private Long tenantId;
 
 	@Schema(name = "菜单权限标识集合", description = "菜单权限标识集合")
 	private Set<String> permissions;

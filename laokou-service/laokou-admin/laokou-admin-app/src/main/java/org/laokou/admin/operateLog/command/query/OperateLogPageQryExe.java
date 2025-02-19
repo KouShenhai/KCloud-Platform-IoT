@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,22 +17,18 @@
 
 package org.laokou.admin.operateLog.command.query;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.laokou.admin.operateLog.convertor.OperateLogConvertor;
 import org.laokou.admin.operateLog.dto.OperateLogPageQry;
 import org.laokou.admin.operateLog.dto.clientobject.OperateLogCO;
 import org.laokou.admin.operateLog.gatewayimpl.database.OperateLogMapper;
 import org.laokou.admin.operateLog.gatewayimpl.database.dataobject.OperateLogDO;
-import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 分页查询操作日志请求执行器.
@@ -45,16 +41,16 @@ public class OperateLogPageQryExe {
 
 	private final OperateLogMapper operateLogMapper;
 
-	@SneakyThrows
 	public Result<Page<OperateLogCO>> execute(OperateLogPageQry qry) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		CompletableFuture<List<OperateLogDO>> c1 = CompletableFuture
-			.supplyAsync(() -> operateLogMapper.selectPageByCondition(qry.index()), executor);
-		CompletableFuture<Long> c2 = CompletableFuture.supplyAsync(() -> operateLogMapper.selectCountByCondition(qry),
-				executor);
-		return Result
-			.ok(Page.create(c1.get(30, TimeUnit.SECONDS).stream().map(OperateLogConvertor::toClientObject).toList(),
-					c2.get(30, TimeUnit.SECONDS)));
+		try {
+			DynamicDataSourceContextHolder.push("domain");
+			List<OperateLogDO> list = operateLogMapper.selectObjectPage(qry);
+			long total = operateLogMapper.selectObjectCount(qry);
+			return Result.ok(Page.create(list.stream().map(OperateLogConvertor::toClientObject).toList(), total));
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

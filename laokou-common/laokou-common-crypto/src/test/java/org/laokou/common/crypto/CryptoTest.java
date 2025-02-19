@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.crypto.utils.RSAUtil;
 
-import java.nio.charset.StandardCharsets;
-
 /**
  * @author laokou
  */
@@ -39,18 +37,15 @@ class CryptoTest {
 		String encryptPassword = RSAUtil.encryptByPublicKey(PASSWORD);
 		String decryptUsername = RSAUtil.decryptByPrivateKey(encryptUsername);
 		String decryptPassword = RSAUtil.decryptByPrivateKey(encryptPassword);
-		Assertions.assertArrayEquals(decryptUsername.getBytes(StandardCharsets.UTF_8),
-				USERNAME.getBytes(StandardCharsets.UTF_8));
-		Assertions.assertArrayEquals(decryptPassword.getBytes(StandardCharsets.UTF_8),
-				PASSWORD.getBytes(StandardCharsets.UTF_8));
+		Assertions.assertEquals(USERNAME, decryptUsername);
+		Assertions.assertEquals(PASSWORD, decryptPassword);
 	}
 
 	@Test
 	void testAES() {
 		String encryptUsername = AESUtil.encrypt(USERNAME);
 		String decryptUsername = AESUtil.decrypt(encryptUsername);
-		Assertions.assertArrayEquals(decryptUsername.getBytes(StandardCharsets.UTF_8),
-				USERNAME.getBytes(StandardCharsets.UTF_8));
+		Assertions.assertEquals(USERNAME, decryptUsername);
 	}
 
 }

@@ -1,18 +1,29 @@
+jasypt:
+  encryptor:
+    password: @JASYPT-ENCRYPTOR-PASSWORD@
+
 server:
   port: 9032
-
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
 spring:
   profiles:
     active: @PROFILE-ACTIVE@
   application:
     name: laokou-sample-websocket
-  tcp-server:
-    enabled: false
   websocket-server:
-    enabled: true
-    boss-core-size: 2
-    core-pool-size: 16
-    worker-core-size: 16
+    boss-core-pool-size: 2
+    group-core-pool-size: 32
+    worker-core-pool-size: 32
     ip: 0.0.0.0
     port: 1112
     service-id: ${spring.application.name}-server
@@ -23,12 +34,19 @@ spring:
     consolidate-when-no-read-in-progress: true
     explicit-flush-after-flushes: 10
     websocket-path: "/ws"
+    backlog-length: 4096
+    tcp-nodelay: true
+    keep-alive: true
+    max-heart-beat-count: 5
   thymeleaf:
     servlet:
       content-type: text/html
     cache: false
     suffix: .html
     prefix: classpath:/templates/
+  threads:
+    virtual:
+      enabled: true
 
 rocketmq:
   producer:
@@ -38,4 +56,4 @@ rocketmq:
     pull-batch-size: 16
 
 logging:
-  config: classpath:log4j2.xml
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml

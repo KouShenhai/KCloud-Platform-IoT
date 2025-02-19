@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 import java.util.Map;
 
-import static org.laokou.auth.factory.AuthFactory.MAIL;
+import static org.laokou.auth.factory.DomainFactory.MAIL;
 
 /**
  * 邮箱令牌.
@@ -32,7 +32,7 @@ import static org.laokou.auth.factory.AuthFactory.MAIL;
 public class OAuth2MailAuthenticationToken extends AbstractOAuth2AuthenticationToken {
 
 	/**
-	 * Sub-class constructor.
+	 * Subclass constructor.
 	 * @param clientPrincipal the authenticated client principal
 	 * @param additionalParameters the additional parameters
 	 */

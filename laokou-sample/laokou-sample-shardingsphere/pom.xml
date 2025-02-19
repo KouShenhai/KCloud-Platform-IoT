@@ -6,11 +6,11 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-sample</artifactId>
-    <version>3.4.0</version>
+    <version>3.4.2</version>
   </parent>
 
   <artifactId>laokou-sample-shardingsphere</artifactId>
-  <version>3.4.0</version>
+  <version>3.4.2</version>
 
   <dependencies>
     <dependency>
@@ -31,22 +31,26 @@
       <artifactId>laokou-common-log4j2</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-mybatis-plus</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-nacos</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-cors</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-classic</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.logging.log4j</groupId>
-          <artifactId>log4j-to-slf4j</artifactId>
-        </exclusion>
-      </exclusions>
+      <artifactId>spring-boot-starter-undertow</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

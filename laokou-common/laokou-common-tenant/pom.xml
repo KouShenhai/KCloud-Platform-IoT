@@ -4,14 +4,14 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common</artifactId>
-    <version>3.4.0</version>
+    <version>3.4.2</version>
   </parent>
   <artifactId>laokou-common-tenant</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-core</artifactId>
+      <artifactId>laokou-common-mybatis-plus</artifactId>
     </dependency>
   </dependencies>
 

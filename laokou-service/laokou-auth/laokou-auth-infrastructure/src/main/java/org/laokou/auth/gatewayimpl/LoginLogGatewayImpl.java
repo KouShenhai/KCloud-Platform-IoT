@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,11 +19,9 @@ package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.convertor.LoginLogConvertor;
-import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.gateway.LoginLogGateway;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
-import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.common.i18n.dto.DefaultDomainEvent;
+import org.laokou.auth.model.LoginLogE;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,9 +34,8 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 	private final LoginLogMapper loginLogMapper;
 
 	@Override
-	public void create(DefaultDomainEvent domainEvent) {
-		LoginLogDO loginLogDO = LoginLogConvertor.toDataObject((LoginEvent) domainEvent);
-		loginLogMapper.insert(loginLogDO);
+	public void create(LoginLogE loginLog) {
+		loginLogMapper.insert(LoginLogConvertor.toDataObject(loginLog));
 	}
 
 }

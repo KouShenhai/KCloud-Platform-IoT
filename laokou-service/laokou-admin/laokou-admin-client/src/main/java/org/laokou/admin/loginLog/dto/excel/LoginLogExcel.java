@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,12 @@
 
 package org.laokou.admin.loginLog.dto.excel;
 
-import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.annotation.write.style.ColumnWidth;
-import com.alibaba.excel.annotation.write.style.ContentStyle;
-import com.alibaba.excel.enums.BooleanEnum;
-import com.alibaba.excel.enums.poi.HorizontalAlignmentEnum;
-import com.alibaba.excel.enums.poi.VerticalAlignmentEnum;
+import cn.idev.excel.annotation.ExcelProperty;
+import cn.idev.excel.annotation.write.style.ColumnWidth;
+import cn.idev.excel.annotation.write.style.ContentStyle;
+import cn.idev.excel.enums.BooleanEnum;
+import cn.idev.excel.enums.poi.HorizontalAlignmentEnum;
+import cn.idev.excel.enums.poi.VerticalAlignmentEnum;
 import lombok.Data;
 import org.laokou.common.i18n.dto.DTO;
 
@@ -105,12 +105,12 @@ public class LoginLogExcel extends DTO {
 	private String type;
 
 	/**
-	 * 登录日期.
+	 * 登录时间.
 	 */
 	@ColumnWidth(30)
 	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
 			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
-	@ExcelProperty(value = "登录日期", index = 8)
+	@ExcelProperty(value = "登录时间", index = 8)
 	private String createTime;
 
 }

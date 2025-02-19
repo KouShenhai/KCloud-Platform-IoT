@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,12 +22,12 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-IoT</artifactId>
-    <version>3.4.0</version>
+    <version>3.4.2</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-common</artifactId>
-  <version>3.4.0</version>
+  <version>3.4.2</version>
   <packaging>pom</packaging>
 
   <modules>
@@ -71,6 +71,14 @@
     <module>laokou-common-snail-job</module>
     <module>laokou-common-prometheus</module>
     <module>laokou-common-xss</module>
+    <module>laokou-common-grpc</module>
+    <module>laokou-common-statemachine</module>
+    <module>laokou-common-ruleengine</module>
+    <module>laokou-common-banner</module>
+    <module>laokou-common-influxdb</module>
+    <module>laokou-common-rabbitmq</module>
+    <module>laokou-common-storage</module>
+    <module>laokou-common-reactor</module>
   </modules>
 
 </project>

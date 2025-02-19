@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,29 +17,29 @@
 
 package org.laokou.auth.convertor;
 
+import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.DeptV;
-import org.laokou.auth.model.MenuV;
 import org.laokou.auth.model.UserE;
 import org.laokou.common.security.utils.UserDetail;
 
 /**
  * @author laokou
  */
-public class UserConvertor {
+public final class UserConvertor {
+
+	private UserConvertor() {
+	}
 
 	public static UserDetail to(AuthA authA) {
 		UserE userE = authA.getUser();
-		MenuV menuV = authA.getMenu();
-		DeptV deptV = authA.getDept();
 		return new UserDetail(userE.getId(), userE.getUsername(), userE.getPassword(), userE.getAvatar(),
-				userE.getSuperAdmin(), userE.getStatus(), userE.getMail(), userE.getMobile(), deptV.deptPaths(),
-				menuV.permissions(), userE.getTenantId(), authA.getSourceName());
+				userE.isSuperAdministrator(), userE.getStatus(), userE.getMail(), userE.getMobile(),
+				authA.getDeptPaths(), authA.getPermissions(), userE.getTenantId(), authA.getSourcePrefix());
 	}
 
 	public static UserE toEntity(UserDO userDO) {
-		UserE userE = new UserE();
+		UserE userE = DomainFactory.getUser();
 		userE.setId(userDO.getId());
 		userE.setUsername(userDO.getUsername());
 		userE.setPassword(userDO.getPassword());

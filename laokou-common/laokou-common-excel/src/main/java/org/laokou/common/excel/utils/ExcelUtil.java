@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,18 +17,18 @@
 
 package org.laokou.common.excel.utils;
 
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.annotation.write.style.ColumnWidth;
-import com.alibaba.excel.annotation.write.style.ContentStyle;
-import com.alibaba.excel.context.AnalysisContext;
-import com.alibaba.excel.enums.BooleanEnum;
-import com.alibaba.excel.enums.poi.HorizontalAlignmentEnum;
-import com.alibaba.excel.enums.poi.VerticalAlignmentEnum;
-import com.alibaba.excel.read.listener.ReadListener;
-import com.alibaba.excel.util.ListUtils;
-import com.alibaba.excel.write.metadata.WriteSheet;
+import cn.idev.excel.FastExcel;
+import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.annotation.ExcelProperty;
+import cn.idev.excel.annotation.write.style.ColumnWidth;
+import cn.idev.excel.annotation.write.style.ContentStyle;
+import cn.idev.excel.context.AnalysisContext;
+import cn.idev.excel.enums.BooleanEnum;
+import cn.idev.excel.enums.poi.HorizontalAlignmentEnum;
+import cn.idev.excel.enums.poi.VerticalAlignmentEnum;
+import cn.idev.excel.read.listener.ReadListener;
+import cn.idev.excel.util.ListUtils;
+import cn.idev.excel.write.metadata.WriteSheet;
 import com.google.common.collect.Lists;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,9 +38,9 @@ import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
@@ -67,11 +67,11 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 @Slf4j
 public class ExcelUtil {
 
-	private static final int DEFAULT_SIZE = 1000;
+	private static final int DEFAULT_SIZE = 10000;
 
 	public static <M, T> void doImport(String fileName, InputStream inputStream, HttpServletResponse response,
 			Class<M> clazz, BiConsumer<M, T> consumer, MybatisUtil mybatisUtil) {
-		EasyExcel.read(inputStream, new DataListener<>(clazz, consumer, response, mybatisUtil, fileName))
+		FastExcel.read(inputStream, new DataListener<>(clazz, consumer, response, mybatisUtil, fileName))
 			.sheet()
 			.doRead();
 	}
@@ -86,14 +86,14 @@ public class ExcelUtil {
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, int size, HttpServletResponse response,
 			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
 			ExcelConvert<DO, EXCEL> convertor) {
-		try (ServletOutputStream out = response.getOutputStream();
-				ExcelWriter excelWriter = EasyExcel.write(out, clazz).build()) {
-			// 设置请求头
-			header(fileName, response);
-			if (crudMapper.selectObjectCount(pageQuery) > 0) {
-				// https://easyexcel.opensource.alibaba.com/docs/current/quickstart/write#%E4%BB%A3%E7%A0%81
+		if (crudMapper.selectObjectCount(pageQuery) > 0) {
+			try (ServletOutputStream out = response.getOutputStream();
+					ExcelWriter excelWriter = FastExcel.write(out, clazz).build()) {
+				// 设置请求头
+				header(fileName, response);
+				// https://idev.cn/fastexcel/zh-CN/docs/write/write_hard
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
-				crudMapper.selectObjectList(pageQuery, resultContext -> {
+				crudMapper.selectObjectListHandler(pageQuery, resultContext -> {
 					list.add(resultContext.getResultObject());
 					if (list.size() % size == 0) {
 						writeSheet(list, clazz, convertor, excelWriter);
@@ -102,16 +102,16 @@ public class ExcelUtil {
 				if (list.size() % size != 0) {
 					writeSheet(list, clazz, convertor, excelWriter);
 				}
+				// 刷新数据
+				excelWriter.finish();
 			}
-			else {
-				excelWriter.write(Collections.singletonList(new Error("数据为空，导出失败")),
-						EasyExcel.writerSheet().head(Error.class).build());
+			catch (Exception e) {
+				log.error("Excel导出失败，错误信息：{}", e.getMessage());
+				throw new SystemException("S_Excel_UnKnowError", "Excel导出失败，系统繁忙", e);
 			}
-			// 刷新数据
-			excelWriter.finish();
 		}
-		catch (Exception e) {
-			log.error("Excel导出失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+		else {
+			throw new SystemException("S_Excel_DataIsEmpty", "Excel导出失败，数据不能为空");
 		}
 	}
 
@@ -126,7 +126,7 @@ public class ExcelUtil {
 
 	private static <EXCEL, DO> void writeSheet(List<DO> list, Class<EXCEL> clazz, ExcelConvert<DO, EXCEL> convertor,
 			ExcelWriter excelWriter) {
-		WriteSheet writeSheet = EasyExcel.writerSheet().head(clazz).build();
+		WriteSheet writeSheet = FastExcel.writerSheet().head(clazz).build();
 		// 写数据
 		excelWriter.write(convertor.toExcelList(list), writeSheet);
 		list.clear();
@@ -202,8 +202,8 @@ public class ExcelUtil {
 		}
 
 		@Override
-		public void onException(Exception exception, AnalysisContext context) {
-			log.error("Excel导入异常，错误信息：{}，详情见日志", LogUtil.record(exception.getMessage()));
+		public void onException(Exception e, AnalysisContext context) {
+			log.error("Excel导入异常，错误信息：{}", e.getMessage());
 		}
 
 		@SneakyThrows
@@ -215,12 +215,12 @@ public class ExcelUtil {
 			}
 			// 写入excel
 			try (ServletOutputStream out = response.getOutputStream();
-					ExcelWriter excelWriter = EasyExcel.write(out, Error.class).build()) {
+					ExcelWriter excelWriter = FastExcel.write(out, Error.class).build()) {
 				// 设置请求头
 				header(fileName, response);
 				if (CollectionUtil.isEmpty(ERRORS)) {
 					excelWriter.write(Collections.singletonList(new Error(EMPTY)),
-							EasyExcel.writerSheet().head(Error.class).build());
+							FastExcel.writerSheet().head(Error.class).build());
 				}
 				else {
 					List<List<String>> partition = Lists.partition(ERRORS, BATCH_COUNT);

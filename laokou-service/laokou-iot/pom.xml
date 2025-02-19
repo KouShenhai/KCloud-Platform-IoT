@@ -5,11 +5,11 @@
   <parent>
     <artifactId>laokou-service</artifactId>
     <groupId>org.laokou</groupId>
-    <version>3.4.0</version>
+    <version>3.4.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-iot</artifactId>
-  <version>3.4.0</version>
+  <version>3.4.2</version>
   <packaging>pom</packaging>
   <modules>
     <module>laokou-iot-start</module>

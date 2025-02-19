@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.oss.ability.OssDomainService;
 import org.laokou.admin.oss.convertor.OssConvertor;
 import org.laokou.admin.oss.dto.OssSaveCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,9 +35,11 @@ public class OssSaveCmdExe {
 
 	private final OssDomainService ossDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(OssSaveCmd cmd) {
 		// 校验参数
-		ossDomainService.create(OssConvertor.toEntity(cmd.getCo()));
+		transactionalUtil.executeInTransaction(() -> ossDomainService.create(OssConvertor.toEntity(cmd.getCo())));
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,13 @@
 
 package org.laokou.admin.role.convertor;
 
-import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
+import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
+import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.admin.role.model.RoleE;
+import org.laokou.common.core.utils.IdGenerator;
+
+import java.util.List;
 
 /**
  * 角色转换器.
@@ -30,20 +32,60 @@ import org.laokou.admin.role.model.RoleE;
  */
 public class RoleConvertor {
 
-	public static RoleDO toDataObject(RoleE roleE) {
-		RoleDO roleDO = ConvertUtil.sourceToTarget(roleE, RoleDO.class);
-		if (ObjectUtil.isNull(roleDO.getId())) {
-			roleDO.generatorId();
+	public static RoleDO toDataObject(RoleE roleE, boolean isInsert) {
+		RoleDO roleDO = new RoleDO();
+		if (isInsert) {
+			roleDO.setId(IdGenerator.defaultSnowflakeId());
 		}
+		else {
+			roleDO.setId(roleE.getId());
+		}
+		roleDO.setName(roleE.getName());
+		roleDO.setSort(roleE.getSort());
+		roleDO.setDataScope(roleE.getDataScope());
 		return roleDO;
 	}
 
+	public static List<RoleMenuDO> toDataObjects(RoleE roleE, Long roleId) {
+		return roleE.getMenuIds().stream().map(menuId -> {
+			RoleMenuDO roleMenuDO = new RoleMenuDO();
+			roleMenuDO.setId(IdGenerator.defaultSnowflakeId());
+			roleMenuDO.setRoleId(roleId);
+			roleMenuDO.setMenuId(Long.valueOf(menuId));
+			return roleMenuDO;
+		}).toList();
+	}
+
+	public static List<RoleMenuDO> toDataObjects(RoleE roleE) {
+		return roleE.getRoleMenuIds().stream().map(id -> {
+			RoleMenuDO roleMenuDO = new RoleMenuDO();
+			roleMenuDO.setId(id);
+			return roleMenuDO;
+		}).toList();
+	}
+
+	public static List<RoleCO> toClientObjects(List<RoleDO> roleDOList) {
+		return roleDOList.stream().map(RoleConvertor::toClientObject).toList();
+	}
+
 	public static RoleCO toClientObject(RoleDO roleDO) {
-		return ConvertUtil.sourceToTarget(roleDO, RoleCO.class);
+		RoleCO roleCO = new RoleCO();
+		roleCO.setId(roleDO.getId());
+		roleCO.setName(roleDO.getName());
+		roleCO.setSort(roleDO.getSort());
+		roleCO.setDataScope(roleDO.getDataScope());
+		roleCO.setCreateTime(roleDO.getCreateTime());
+		return roleCO;
 	}
 
 	public static RoleE toEntity(RoleCO roleCO) {
-		return ConvertUtil.sourceToTarget(roleCO, RoleE.class);
+		RoleE roleE = new RoleE();
+		roleE.setId(roleCO.getId());
+		roleE.setName(roleCO.getName());
+		roleE.setSort(roleCO.getSort());
+		roleE.setDataScope(roleCO.getDataScope());
+		roleE.setMenuIds(roleCO.getMenuIds());
+		return roleE;
 	}
 
 }

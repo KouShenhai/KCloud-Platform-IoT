@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,11 @@
 package org.laokou.admin.menu.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.gateway.MenuGateway;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuE;
-import org.laokou.common.i18n.utils.LogUtil;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -35,61 +32,27 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class MenuGatewayImpl implements MenuGateway {
 
 	private final MenuMapper menuMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
+	@Override
 	public void create(MenuE menuE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				menuMapper.insert(MenuConvertor.toDataObject(menuE));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		menuMapper.insert(MenuConvertor.toDataObject(menuE, true));
 	}
 
+	@Override
 	public void update(MenuE menuE) {
-		MenuDO menuDO = MenuConvertor.toDataObject(menuE);
+		MenuDO menuDO = MenuConvertor.toDataObject(menuE, false);
 		menuDO.setVersion(menuMapper.selectVersion(menuE.getId()));
-		update(menuDO);
+		menuMapper.updateById(menuDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				menuMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
-	}
-
-	private void update(MenuDO menuDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				menuMapper.updateById(menuDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		menuMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,10 +70,5 @@ public interface LoginLogsServiceI {
 	 * @param qry 查看请求
 	 */
 	Result<LoginLogCO> getById(LoginLogGetQry qry);
-
-	/**
-	 * 清空登录日志.
-	 */
-	void clear();
 
 }

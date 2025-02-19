@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,16 +20,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.i18nMessage.gatewayimpl.database.I18nMessageMapper">
 
-	<select id="selectPageByCondition"
+	<select id="selectObjectPage"
 			resultType="org.laokou.admin.i18nMessage.gatewayimpl.database.dataobject.I18nMessageDO">
 		SELECT *
 		from boot_sys_i18n_message
 		where del_flag = 0
 		order by id desc
-		limit ${pageQuery.pageSize} OFFSET ${pageQuery.pageIndex}
+		limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
 	</select>
 
-	<select id="selectCountByCondition" resultType="long">
+	<select id="selectObjectCount" resultType="long">
 		SELECT count(1)
 		from boot_sys_i18n_message
 		where del_flag = 0

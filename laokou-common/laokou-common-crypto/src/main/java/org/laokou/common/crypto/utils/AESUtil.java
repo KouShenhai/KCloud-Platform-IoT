@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
@@ -53,17 +52,21 @@ public final class AESUtil {
 	private final static byte[] SECRET_IV;
 
 	static {
-		try (InputStream inputStream1 = ResourceUtil.getResource("conf/secretKey.b256").getInputStream();
-				InputStream inputStream2 = ResourceUtil.getResource("conf/secretIV.b12").getInputStream()) {
-			String key = new String(inputStream1.readAllBytes(), StandardCharsets.UTF_8).trim();
+		try {
+			String key = ResourceUtil.getResource("conf/secretKey.b256")
+				.getContentAsString(StandardCharsets.UTF_8)
+				.trim();
 			Assert.isTrue(key.length() == 32, "密钥长度必须32位");
-			String iv = new String(inputStream2.readAllBytes(), StandardCharsets.UTF_8).trim();
+			String iv = ResourceUtil.getResource("conf/secretIV.b12").getContentAsString(StandardCharsets.UTF_8).trim();
 			SECRET_KEY = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), AES);
 			SECRET_IV = iv.getBytes(StandardCharsets.UTF_8);
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private AESUtil() {
 	}
 
 	public static SecretKey getSecretKey() {

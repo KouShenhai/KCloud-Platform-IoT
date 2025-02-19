@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
-import org.laokou.common.redis.utils.RedisKeyUtil;
+import org.laokou.common.i18n.utils.RedisKeyUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolver;
@@ -35,7 +35,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.InetSocketAddress;
 
-import static org.laokou.common.i18n.common.exception.SystemException.IP_BLACKED;
+import static org.laokou.common.i18n.common.exception.SystemException.Gateway.IP_BLACKED;
 
 /**
  * 黑名单IP.

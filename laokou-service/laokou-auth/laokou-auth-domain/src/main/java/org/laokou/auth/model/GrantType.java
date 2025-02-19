@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,62 +18,58 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
-import org.laokou.auth.factory.AuthFactory;
+import org.laokou.auth.factory.DomainFactory;
+import org.laokou.common.i18n.common.exception.SystemException;
 
-import static org.laokou.common.i18n.common.exception.AuthException.*;
+import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
 
 /**
+ * 登录类型枚举.
+ *
  * @author laokou
  */
 @Getter
 public enum GrantType {
 
-	/**
-	 * 用户名密码.
-	 */
-	PASSWORD(AuthFactory.PASSWORD) {
+	// @formatter:off
+	USERNAME_PASSWORD(DomainFactory.USERNAME_PASSWORD, "用户名密码登录") {
 		@Override
-		public String getErrorCode() {
-			return OAUTH2_USERNAME_PASSWORD_ERROR;
+		public void checkUsernameNotExist() {
+			throw new SystemException(USERNAME_PASSWORD_ERROR);
 		}
 	},
 
-	/**
-	 * 授权码.
-	 */
-	AUTHORIZATION_CODE(AuthFactory.AUTHORIZATION_CODE) {
+	AUTHORIZATION_CODE(DomainFactory.AUTHORIZATION_CODE, "授权码登录") {
 		@Override
-		public String getErrorCode() {
-			return OAUTH2_USERNAME_PASSWORD_ERROR;
+		public void checkUsernameNotExist() {
+			throw new SystemException(USERNAME_PASSWORD_ERROR);
 		}
 	},
 
-	/**
-	 * 手机号.
-	 */
-	MOBILE(AuthFactory.MOBILE) {
+	MOBILE(DomainFactory.MOBILE, "手机号登录") {
 		@Override
-		public String getErrorCode() {
-			return OAUTH2_MOBILE_NOT_REGISTERED;
+		public void checkUsernameNotExist() {
+			throw new SystemException(MOBILE_NOT_REGISTERED);
 		}
 	},
 
-	/**
-	 * 邮箱.
-	 */
-	MAIL(AuthFactory.MAIL) {
+	MAIL(DomainFactory.MAIL, "邮箱登录") {
 		@Override
-		public String getErrorCode() {
-			return OAUTH2_MAIL_NOT_REGISTERED;
+		public void checkUsernameNotExist() {
+			throw new SystemException(MAIL_NOT_REGISTERED);
 		}
 	};
 
 	private final String code;
 
-	GrantType(String code) {
+	private final String desc;
+
+	GrantType(String code, String desc) {
 		this.code = code;
+		this.desc = desc;
 	}
 
-	public abstract String getErrorCode();
+	public abstract void checkUsernameNotExist();
+	// @formatter:on
 
 }

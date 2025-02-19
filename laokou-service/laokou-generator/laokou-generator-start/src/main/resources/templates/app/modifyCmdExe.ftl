@@ -1,6 +1,6 @@
 // @formatter:off
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import ${packageName}.${instanceName}.dto.${className}ModifyCmd;
 import org.springframework.stereotype.Component;
 import ${packageName}.${instanceName}.convertor.${className}Convertor;
 import ${packageName}.${instanceName}.ability.${className}DomainService;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 
 /**
  *
@@ -36,9 +37,11 @@ public class ${className}ModifyCmdExe {
 
 	private final ${className}DomainService ${instanceName}DomainService;
 
+    private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(${className}ModifyCmd cmd) {
 		// 校验参数
-		${instanceName}DomainService.update(${className}Convertor.toEntity(cmd.getCo()));
+        transactionalUtil.executeInTransaction(() -> ${instanceName}DomainService.update(${className}Convertor.toEntity(cmd.getCo())));
 	}
 
 }

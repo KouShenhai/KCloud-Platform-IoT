@@ -1,5 +1,5 @@
 #   /*
-#    * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+#    * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
 #    *
 #    * Licensed under the Apache License, Version 2.0 (the "License");
 #    * you may not use this file except in compliance with the License.
@@ -22,3 +22,18 @@ spring:
     name: ${SERVICE_ID:laokou-gateway}
   profiles:
     active: @PROFILE-ACTIVE@
+  cloud:
+    # sentinel
+    sentinel:
+      datasource:
+        # key可以自定义
+        db0:
+          nacos:
+            server-addr: @NACOS-DISCOVERY-ADDRESS@
+            namespace: @NACOS-NAMESPACE@
+            data-id: gateway-flow.json
+            rule-type: gw_flow # 网关规则
+            group-id: @NACOS-GROUP@
+            username: @NACOS-USERNAME@
+            password: @NACOS-PASSWORD@
+            data-type: json

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,43 +17,72 @@
 
 package org.laokou.auth.convertor;
 
+import org.laokou.auth.dto.clientobject.LoginLogCO;
 import org.laokou.auth.dto.domainevent.LoginEvent;
+import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
-import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.LogV;
+import org.laokou.auth.model.LoginLogE;
+import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.i18n.utils.JacksonUtil;
 
-import static org.laokou.auth.common.constant.MqConstant.LAOKOU_LOG_TOPIC;
-import static org.laokou.auth.common.constant.MqConstant.LOGIN_TAG;
-import static org.laokou.common.i18n.common.constant.EventType.LOGIN;
+import static org.laokou.common.i18n.utils.StringUtil.truncate;
 
 /**
  * @author laokou
  */
-public class LoginLogConvertor {
+public final class LoginLogConvertor {
 
-	public static LoginEvent toEvent(AuthA authA) {
-		LogV logV = authA.getLog();
-		return new LoginEvent(logV.type(), logV.errorMessage(), logV.status(), logV.browser(), logV.os(), logV.ip(),
-				logV.address(), logV.username(), authA, LAOKOU_LOG_TOPIC, LOGIN_TAG, LOGIN, logV.instant());
+	private LoginLogConvertor() {
 	}
 
-	public static LoginLogDO toDataObject(LoginEvent loginEvent) {
+	public static LoginLogE toEntity(LoginLogCO co) {
+		LoginLogE loginLogE = DomainFactory.getLoginLog();
+		loginLogE.setId(co.getId());
+		loginLogE.setUsername(co.getUsername());
+		loginLogE.setIp(co.getIp());
+		loginLogE.setAddress(co.getAddress());
+		loginLogE.setBrowser(co.getBrowser());
+		loginLogE.setOs(co.getOs());
+		loginLogE.setStatus(co.getStatus());
+		loginLogE.setErrorMessage(co.getErrorMessage());
+		loginLogE.setType(co.getType());
+		loginLogE.setInstant(co.getInstant());
+		loginLogE.setTenantId(co.getTenantId());
+		return loginLogE;
+	}
+
+	public static LoginLogDO toDataObject(LoginLogE loginLogE) {
 		LoginLogDO loginLogDO = new LoginLogDO();
-		loginLogDO.setId(loginEvent.getId());
-		loginLogDO.setCreator(loginEvent.getCreator());
-		loginLogDO.setEditor(loginEvent.getEditor());
-		loginLogDO.setCreateTime(loginEvent.getCreateTime());
-		loginLogDO.setUpdateTime(loginEvent.getUpdateTime());
-		loginLogDO.setTenantId(loginEvent.getTenantId());
-		loginLogDO.setUsername(loginEvent.getUsername());
-		loginLogDO.setIp(loginEvent.getIp());
-		loginLogDO.setAddress(loginEvent.getAddress());
-		loginLogDO.setBrowser(loginEvent.getBrowser());
-		loginLogDO.setOs(loginEvent.getOs());
-		loginLogDO.setStatus(loginEvent.getStatus());
-		loginLogDO.setErrorMessage(loginEvent.getErrorMessage());
-		loginLogDO.setType(loginEvent.getType());
+		loginLogDO.setId(loginLogE.getId());
+		loginLogDO.setUsername(loginLogE.getUsername());
+		loginLogDO.setIp(loginLogE.getIp());
+		loginLogDO.setAddress(loginLogE.getAddress());
+		loginLogDO.setBrowser(loginLogE.getBrowser());
+		loginLogDO.setOs(loginLogE.getOs());
+		loginLogDO.setStatus(loginLogE.getStatus());
+		loginLogDO.setErrorMessage(loginLogE.getErrorMessage());
+		loginLogDO.setType(loginLogE.getType());
+		loginLogDO.setCreateTime(loginLogE.getInstant());
+		loginLogDO.setUpdateTime(loginLogE.getInstant());
+		loginLogDO.setTenantId(loginLogE.getTenantId());
 		return loginLogDO;
+	}
+
+	public static LoginLogCO toClientObject(DomainEvent domainEvent) {
+		LoginEvent loginEvent = JacksonUtil.toBean(domainEvent.getPayload(), LoginEvent.class);
+		LoginLogCO loginLogCO = new LoginLogCO();
+		loginLogCO.setId(domainEvent.getAggregateId());
+		loginLogCO.setUsername(loginEvent.username());
+		loginLogCO.setIp(loginEvent.ip());
+		loginLogCO.setAddress(loginEvent.address());
+		loginLogCO.setBrowser(loginEvent.browser());
+		loginLogCO.setOs(loginEvent.os());
+		loginLogCO.setStatus(loginEvent.status());
+		loginLogCO.setErrorMessage(truncate(loginEvent.errorMessage(), 2000));
+		loginLogCO.setType(loginEvent.type());
+		loginLogCO.setInstant(loginEvent.instant());
+		loginLogCO.setTenantId(domainEvent.getTenantId());
+		return loginLogCO;
 	}
 
 }

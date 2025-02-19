@@ -20,7 +20,7 @@ export default [
 		name: '首页',
 		path: '/home',
 		component: './Home',
-		icon: 'HomeOutlined'
+		icon: 'home'
 	},
 	{
 		name: 'Login',
@@ -30,9 +30,35 @@ export default [
 	},
 	{
 		name: '系统管理',
-		icon: 'setting',
 		path: '/sys',
+		icon: 'setting',
 		routes: [
+			{
+				name: '权限管理',
+				path: '/sys/permission',
+				routes: [
+					{
+						name: '菜单',
+						path: '/sys/permission/menu',
+						component: './Sys/Permission/menu'
+					},
+					{
+						name: '部门',
+						path: '/sys/permission/dept',
+						component: './Sys/Permission/dept'
+					},
+					{
+						name: '角色',
+						path: '/sys/permission/role',
+						component: './Sys/Permission/role'
+					},
+					{
+						name: '用户',
+						path: '/sys/permission/user',
+						component: './Sys/Permission/user'
+					},
+				]
+			},
 			{
 				name: '日志管理',
 				path: '/sys/log',
@@ -43,21 +69,43 @@ export default [
 						component: './Sys/Log/login'
 					},
 					{
-						name: 'Api日志',
-						path: '/sys/log/api',
-						component: './Sys/Log/api'
+						name: '通知日志',
+						path: '/sys/log/notice',
+						component: './Sys/Log/notice'
 					}
 				]
-			},
+			}
+		]
+	},
+	{
+		name: '物联管理',
+		path: '/iot',
+		icon: 'robot',
+		routes: [
 			{
-				name: '事件管理',
-				path: '/sys/event',
+				name: '设备管理',
+				path: '/iot/device',
 				routes: [
 					{
-						name: '领域事件',
-						path: '/sys/event/domain',
-						component: './Sys/Event/domain'
-					}
+						name: '设备',
+						path: '/iot/device/index',
+						component: './IoT/Device/index'
+					},
+					{
+						name: '物模型',
+						path: '/iot/device/thingModel',
+						component: './IoT/Device/thingModel'
+					},
+					{
+						name: '产品',
+						path: '/iot/device/product',
+						component: './IoT/Device/product'
+					},
+					{
+						name: '产品类别',
+						path: '/iot/device/productCategory',
+						component: './IoT/Device/productCategory'
+					},
 				]
 			}
 		]

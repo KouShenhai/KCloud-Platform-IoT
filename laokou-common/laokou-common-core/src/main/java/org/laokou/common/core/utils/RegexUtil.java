@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,14 +30,9 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 public final class RegexUtil {
 
 	/**
-	 * URL版本正则表达式.
-	 */
-	public static final String URL_VERSION_REGEX = "/(v\\d+)/";
-
-	/**
 	 * IPV4正则表达式.
 	 */
-	public static final String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
+	private static final String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
 
 	/**
 	 * 邮箱正则表达式.
@@ -47,17 +42,15 @@ public final class RegexUtil {
 	/**
 	 * 手机号正则表达式.
 	 */
-	private static final String MOBILE_REGEX = "^((13[0-9])|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[0-9])|(18[0-9])|(19[1,8,9]))\\d{8}$";
-
-	/**
-	 * 数据源名称正则表达式.
-	 */
-	private static final String SOURCE_REGEX = "^[a-zA-Z]+_+([0-9]+)+$";
+	private static final String MOBILE_REGEX = "^(1[3-9])\\d{9}$";
 
 	/**
 	 * 数字正则表达式.
 	 */
 	private static final String NUMBER_REGEX = "^[0-9]*$";
+
+	private RegexUtil() {
+	}
 
 	/**
 	 * 邮箱验证.
@@ -87,21 +80,16 @@ public final class RegexUtil {
 	}
 
 	/**
-	 * 数据源名称验证.
-	 * @param sourceName 自由名称
-	 * @return 数据源名称匹配结果
-	 */
-	public static boolean sourceRegex(String sourceName) {
-		return Pattern.matches(SOURCE_REGEX, sourceName);
-	}
-
-	/**
 	 * 手机号验证.
 	 * @param mobile 手机号
 	 * @return 手机号匹配结果
 	 */
 	public static boolean mobileRegex(String mobile) {
 		return Pattern.matches(MOBILE_REGEX, mobile);
+	}
+
+	public static boolean matches(String regex, String str) {
+		return Pattern.matches(regex, str);
 	}
 
 	/**

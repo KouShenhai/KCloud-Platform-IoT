@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,6 @@ import org.springframework.stereotype.Component;
 import org.laokou.admin.cluster.gateway.ClusterGateway;
 import org.laokou.admin.cluster.gatewayimpl.database.ClusterMapper;
 import java.util.Arrays;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.admin.cluster.convertor.ClusterConvertor;
 import org.laokou.admin.cluster.gatewayimpl.database.dataobject.ClusterDO;
 
@@ -35,61 +32,27 @@ import org.laokou.admin.cluster.gatewayimpl.database.dataobject.ClusterDO;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ClusterGatewayImpl implements ClusterGateway {
 
 	private final ClusterMapper clusterMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
+	@Override
 	public void create(ClusterE clusterE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				clusterMapper.insert(ClusterConvertor.toDataObject(clusterE, true));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		clusterMapper.insert(ClusterConvertor.toDataObject(clusterE, true));
 	}
 
+	@Override
 	public void update(ClusterE clusterE) {
 		ClusterDO clusterDO = ClusterConvertor.toDataObject(clusterE, false);
 		clusterDO.setVersion(clusterMapper.selectVersion(clusterE.getId()));
-		update(clusterDO);
+		clusterMapper.updateById(clusterDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				clusterMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
-	}
-
-	private void update(ClusterDO clusterDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				clusterMapper.updateById(clusterDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		clusterMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

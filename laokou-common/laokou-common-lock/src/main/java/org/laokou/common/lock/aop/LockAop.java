@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.SpringExpressionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.lock.Lock;
 import org.laokou.common.lock.RedissonLock;
@@ -82,7 +81,7 @@ public class LockAop {
 			return joinPoint.proceed();
 		}
 		catch (Throwable throwable) {
-			log.error("错误信息：{}，详情见日志", LogUtil.record(throwable.getMessage()), throwable);
+			log.error("错误信息：{}", throwable.getMessage());
 			throw throwable;
 		}
 		finally {

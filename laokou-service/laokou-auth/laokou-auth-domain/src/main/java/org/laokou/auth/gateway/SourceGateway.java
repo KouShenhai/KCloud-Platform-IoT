@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,6 @@
 
 package org.laokou.auth.gateway;
 
-import org.laokou.auth.model.SourceV;
-import org.laokou.auth.model.UserE;
-
 /**
  * 数据源.
  *
@@ -29,9 +26,9 @@ public interface SourceGateway {
 
 	/**
 	 * 查看数据源名称.
-	 * @param user 用户信息
+	 * @param tenantCode 租户标识
 	 * @return 数据源名称
 	 */
-	SourceV getName(UserE user);
+	String getPrefix(String tenantCode);
 
 }

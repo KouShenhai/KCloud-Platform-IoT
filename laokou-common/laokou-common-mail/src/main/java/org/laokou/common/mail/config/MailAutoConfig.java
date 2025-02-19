@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,8 @@
 package org.laokou.common.mail.config;
 
 import org.laokou.common.mail.service.MailService;
-import org.laokou.common.mail.service.impl.QQMailServiceImpl;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.laokou.common.mail.service.impl.MailServiceImpl;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -27,13 +27,13 @@ import org.springframework.context.annotation.Bean;
 /**
  * @author laokou
  */
-@AutoConfigureAfter
+@AutoConfiguration
 @EnableConfigurationProperties(MailProperties.class)
 public class MailAutoConfig {
 
 	@Bean
 	public MailService mailService(MailProperties mailProperties) {
-		return new QQMailServiceImpl(mailProperties);
+		return new MailServiceImpl(mailProperties);
 	}
 
 }

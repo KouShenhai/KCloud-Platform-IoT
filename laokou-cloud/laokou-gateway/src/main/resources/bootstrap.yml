@@ -1,5 +1,5 @@
 #   /*
-#    * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+#    * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
 #    *
 #    * Licensed under the Apache License, Version 2.0 (the "License");
 #    * you may not use this file except in compliance with the License.
@@ -16,6 +16,11 @@
 #    */
 # spring
 spring:
+  config:
+    import:
+      - optional:nacos:application-common-redis.yaml?refreshEnabled=true&group=${NACOS-GROUP}
+      - optional:nacos:application-gateway.yaml?refreshEnabled=true&group=${NACOS-GROUP}
+      - optional:nacos:application-common.yaml?refreshEnabled=true&group=${NACOS-GROUP}
   cloud:
     # nacos
     nacos:
@@ -29,23 +34,13 @@ spring:
         secure: @SSL-ENABLED@
         # true 临时 false 持久
         ephemeral: true
-        cluster-name: ${NACOS-CLUSTER-NAME}-gateway
+        cluster-name: ${NACOS-CLUSTER-NAME}
       config:
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
         username: ${NACOS-USERNAME}
         password: ${NACOS-PASSWORD}
         group: ${NACOS-GROUP}
-        cluster-name: ${NACOS-CLUSTER-NAME}-gateway
+        cluster-name: ${NACOS-CLUSTER-NAME}
         refresh-enabled: true
         file-extension: yaml
-        extension-configs:
-          - data-id: application-common-redis.yaml
-            group: ${NACOS-GROUP}
-            refresh: true
-          - data-id: application-common.yaml
-            group: ${NACOS-GROUP}
-            refresh: true
-          - data-id: application-gateway.yaml
-            group: ${NACOS-GROUP}
-            refresh: true

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ package org.laokou.generator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.utils.JacksonUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.generator.ability.GeneratorDomainService;
 import org.laokou.generator.gatewayimpl.database.TableColumnMapper;
@@ -133,21 +133,47 @@ class TableTest {
 		// 应用
 		App app = App.IOT;
 		// 表名
-		Set<String> tableNames = Set.of("boot_iot_device");
+		Set<String> tableNames = Set.of("boot_iot_device", "boot_iot_thing_model", "boot_iot_network",
+				"boot_iot_product", "boot_iot_product_type", "boot_iot_protocol");
+		generateCode(sourceName, version, author, tablePrefix, moduleName, packageName, tableNames, app);
+	}
+
+	@Test
+	void testGeneratorGenerateCode() {
+		// 已注释代码生成【跑CI已注释】
+		// 已注释代码生成【跑CI已注释】
+		// 已注释代码生成【跑CI已注释】
+		// 数据源
+		String sourceName = "generator";
+		// 版本号
+		String version = "v3";
+		// 作者
+		String author = "laokou";
+		// 表前缀
+		String tablePrefix = "boot_generator_";
+		// 模块名
+		String moduleName = "laokou-generator";
+		// 包名
+		String packageName = "org.laokou.generator";
+		// 应用
+		App app = App.GENERATOR;
+		// 表名
+		Set<String> tableNames = Set.of("boot_generator_template", "boot_generator_info");
 		generateCode(sourceName, version, author, tablePrefix, moduleName, packageName, tableNames, app);
 	}
 
 	private void generateCode(String sourceName, String version, String author, String tablePrefix, String moduleName,
 			String packageName, Set<String> tableNames, App app) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		tableNames.stream().map(item -> CompletableFuture.runAsync(() -> {
-			TableE tableE = new TableE(item, tablePrefix, sourceName);
-			GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE, app);
-			// 已注释代码生成【跑CI已注释】
-			// 已注释代码生成【跑CI已注释】
-			// 已注释代码生成【跑CI已注释】
-			// generatorDomainService.generateCode(generatorA);
-		}, executor)).forEach(CompletableFuture::join);
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			tableNames.stream().map(item -> CompletableFuture.runAsync(() -> {
+				TableE tableE = new TableE(item, tablePrefix, sourceName);
+				GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE, app);
+				// 已注释代码生成【跑CI已注释】
+				// 已注释代码生成【跑CI已注释】
+				// 已注释代码生成【跑CI已注释】
+				// generatorDomainService.generateCode(generatorA);
+			}, executor)).forEach(CompletableFuture::join);
+		}
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,13 @@
 
 package org.laokou.common.mail.service;
 
-import org.laokou.common.i18n.dto.ApiLog;
-import org.laokou.common.i18n.dto.Cache;
+import org.laokou.common.mail.dto.MailResult;
 
 /**
  * @author laokou
  */
 public interface MailService {
 
-	ApiLog send(String mail, int minute, Cache cache);
+	MailResult send(String mail);
 
 }

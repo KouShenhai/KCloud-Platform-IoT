@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,9 +29,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.LogUtil;
 
-import static org.laokou.common.i18n.common.exception.SystemException.*;
+import static org.laokou.common.i18n.common.exception.SystemException.Sentinel.*;
 
 /**
  * @author laokou
@@ -44,35 +43,31 @@ public class SentinelExceptionHandler implements BlockExceptionHandler {
 			BlockException e) {
 		// 限流
 		if (e instanceof FlowException flowException) {
-			log.error("FlowException -> 已限流，错误信息：{}，详情见日志", LogUtil.record(flowException.getMessage()), flowException);
+			log.error("FlowException -> 已限流，错误信息：{}", flowException.getMessage());
 			ResponseUtil.responseOk(response, Result.fail(FLOWED));
 			return;
 		}
 		// 降级
 		if (e instanceof DegradeException degradeException) {
-			log.error("DegradeException -> 已降级，错误信息：{}，详情见日志", LogUtil.record(degradeException.getMessage()),
-					degradeException);
+			log.error("DegradeException -> 已降级，错误信息：{}", degradeException.getMessage());
 			ResponseUtil.responseOk(response, Result.fail(DEGRADED));
 			return;
 		}
 		// 热点参数限流
 		if (e instanceof ParamFlowException paramFlowException) {
-			log.error("ParamFlowException -> 热点参数已限流，错误信息：{}，详情见日志", LogUtil.record(paramFlowException.getMessage()),
-					paramFlowException);
+			log.error("ParamFlowException -> 热点参数已限流，错误信息：{}", paramFlowException.getMessage());
 			ResponseUtil.responseOk(response, Result.fail(PARAM_FLOWED));
 			return;
 		}
 		// 系统规则
 		if (e instanceof SystemBlockException systemBlockException) {
-			log.error("SystemBlockException -> 系统规则错误，错误信息：{}，详情见日志", LogUtil.record(systemBlockException.getMessage()),
-					systemBlockException);
+			log.error("SystemBlockException -> 系统规则错误，错误信息：{}", systemBlockException.getMessage());
 			ResponseUtil.responseOk(response, Result.fail(SYSTEM_BLOCKED));
 			return;
 		}
 		// 授权规则
 		if (e instanceof AuthorityException authorityException) {
-			log.error("AuthorityException -> 授权规则错误，错误信息：{}，详情见日志", LogUtil.record(authorityException.getMessage()),
-					authorityException);
+			log.error("AuthorityException -> 授权规则错误，错误信息：{}", authorityException.getMessage());
 			ResponseUtil.responseOk(response, Result.fail(AUTHORITY));
 		}
 	}

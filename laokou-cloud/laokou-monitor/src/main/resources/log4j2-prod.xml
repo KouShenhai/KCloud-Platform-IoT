@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,40 +27,42 @@
     <!-- 存放目录 -->
     <property name="LOG_PATH" value="/opt/monitor"/>
     <!-- 日志文件大小 -->
-    <property name="LOG_ROLL_SIZE" value="1 GB"/>
+    <property name="LOG_ROLL_SIZE" value="500 M"/>
     <!-- 服务名称 -->
     <property name="SERVICE_ID" value="laokou-monitor"/>
-    <!-- -Dlog4j.skipJansi=false -->
-    <!-- 日志格式 -->
-    <!--
-			%d 日期
-			%t 线程
-
-			对于系统参数，使用${sys:xxx}即可，例如读取-Dserver.port=1111，即${sys:server.port}
-			spanId  => %X{spanId}
-			traceId => %X{traceId}
-    -->
-    <property name="LOG_CONSOLE_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ip}:${sys:server.port}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
-    <property name="LOG_FILE_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ip}:${sys:server.port}] - [%X{traceId}] - [%X{spanId}] - [ %-5level] - [%t] - %logger : %msg%n"/>
     <!-- 日志保留30天 -->
     <property name="LOG_DAYS" value="30"/>
     <!-- 1天滚动一次 -->
     <property name="LOG_INTERVAL" value="1"/>
+    <!-- 环境 -->
+    <property name="PROFILE" value="prod"/>
+    <!--
+      %d 日期
+      %t 线程
+    -->
+    <property name="LOG_CONSOLE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:address} - ${PROFILE}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
   </Properties>
   <Appenders>
     <!-- 控制台输出 -->
     <Console name="console" target="SYSTEM_OUT">
+      <!--
+            <JsonLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
+              <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
+              <KeyValuePair key="profile" value="${PROFILE}" />
+            </JsonLayout>
+      -->
       <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
     </Console>
-    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.log"
-                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_%d{yyyy-MM-dd}.%i.log.gz"
+    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.json"
+                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_%d{yyyy-MM-dd}.%i.json.gz"
                              immediateFlush="false">
       <Filters>
         <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
       </Filters>
-      <PatternLayout pattern="${LOG_FILE_PATTERN}"/>
+      <JsonLayout complete="true" compact="false" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
+        <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
+        <KeyValuePair key="profile" value="${PROFILE}" />
+      </JsonLayout>
       <Policies>
         <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
         <SizeBasedTriggeringPolicy size="${LOG_ROLL_SIZE}"/>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package org.laokou.common.mybatisplus.mapper;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-import org.laokou.common.core.utils.IdGenerator;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -67,11 +66,6 @@ public abstract class BaseDO implements Serializable {
 	 * 租户ID.
 	 */
 	public static final String TENANT_ID = "tenantId";
-
-	/**
-	 * 默认租户ID.
-	 */
-	public static final long DEFAULT_TENANT_ID = 0;
 
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;
@@ -125,9 +119,5 @@ public abstract class BaseDO implements Serializable {
 	 */
 	@TableField(fill = FieldFill.INSERT)
 	protected Long tenantId;
-
-	public void generatorId() {
-		this.id = IdGenerator.defaultSnowflakeId();
-	}
 
 }

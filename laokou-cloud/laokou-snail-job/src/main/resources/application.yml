@@ -11,9 +11,9 @@ server:
       # 设置IO线程数，来执行非阻塞任务，负责多个连接数
       io: 16
       # 工作线程数
-      worker: 256
+      worker: 512
     # 每块buffer的空间大小
-    buffer-size: 1024
+    buffer-size: 2048
     # 分配堆外内存
     direct-buffers: true
 
@@ -21,7 +21,7 @@ spring:
   application:
     name: ${SERVICE_ID:laokou-snail-job}
   main:
-    banner-mode: off
+    banner-mode: console
   profiles:
     active: @PROFILE-ACTIVE@
   datasource:
@@ -65,14 +65,14 @@ snail-job:
     auth: true
     connectionTimeout: 0
     enabled: true
-    from: 2413176044@qq.com
-    host: smtp.qq.com
-    pass: ENC(A7pfP5nvz3Mmc/6Nc3ewvkcNv7AQyZz8qWri7Kn8GqW4vwPFmZt+Vaq0gjS8SS1767v2h0exWJbJpA2zsTtmVA==)
+    from: koushenhai@163.com
+    host: smtp.163.com
+    pass: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
     port: 465
     sslEnable: false
     starttlsEnable: false
     timeout: 0
-    user: 2413176044@qq.com
+    user: koushenhai@163.com
   retry-pull-page-size: 1000 # 拉取重试数据的每批次的大小
   job-pull-page-size: 1000 # 拉取重试数据的每批次的大小
   netty-port: 1788  # 服务端netty端口

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,6 +102,7 @@ public class OssLogsControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
+	@PreAuthorize("hasAuthority('sys:oss-log:detail')")
 	@Operation(summary = "查看OSS日志详情", description = "查看OSS日志详情")
 	public Result<OssLogCO> getByIdV3(@PathVariable("id") Long id) {
 		return ossLogsServiceI.getById(new OssLogGetQry(id));

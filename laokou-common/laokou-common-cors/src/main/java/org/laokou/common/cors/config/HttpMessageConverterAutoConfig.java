@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.TimeZone;
 
-import static org.laokou.common.i18n.utils.DateUtil.Constant.DEFAULT_TIMEZONE;
+import static org.laokou.common.i18n.utils.DateUtil.DEFAULT_TIMEZONE;
 
 /**
  * 消息转换器配置.
@@ -64,8 +64,8 @@ public class HttpMessageConverterAutoConfig {
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		// 时区
 		TimeZone timeZone = TimeZone.getTimeZone(DEFAULT_TIMEZONE);
-		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS);
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.getTimePattern(DateUtil.YYYY_ROD_MM_ROD_DD_SPACE_HH_RISK_HH_RISK_SS));
+		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
 		simpleDateFormat.setTimeZone(timeZone);
 		mapper.setDateFormat(simpleDateFormat);
 		mapper.setTimeZone(timeZone);
@@ -82,7 +82,7 @@ public class HttpMessageConverterAutoConfig {
 		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
 		mapper.registerModule(javaTimeModule);
 		converter.setObjectMapper(mapper);
-		log.info("jackson配置加载完毕");
+		log.info("{} => jackson配置加载完毕", Thread.currentThread().getName());
 		return converter;
 	}
 	// @formatter:on

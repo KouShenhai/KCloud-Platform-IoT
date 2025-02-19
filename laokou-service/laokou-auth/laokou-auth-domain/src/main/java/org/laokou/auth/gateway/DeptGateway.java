@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,9 @@
 
 package org.laokou.auth.gateway;
 
-import org.laokou.auth.model.DeptV;
 import org.laokou.auth.model.UserE;
+
+import java.util.List;
 
 /**
  * 部门.
@@ -28,10 +29,10 @@ import org.laokou.auth.model.UserE;
 public interface DeptGateway {
 
 	/**
-	 * 查询部门PATHS列表.
+	 * 查询部门路径集合.
 	 * @param user 用户对象
-	 * @return 部门PATHS列表
+	 * @return 部门路径集合
 	 */
-	DeptV getPaths(UserE user);
+	List<String> getPaths(UserE user);
 
 }

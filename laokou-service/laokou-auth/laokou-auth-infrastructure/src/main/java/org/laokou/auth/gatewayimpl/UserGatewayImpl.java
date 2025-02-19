@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,14 +25,13 @@ import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.UserE;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.common.constant.Constant.TABLE_USER;
-import static org.laokou.common.i18n.common.exception.SystemException.TABLE_NOT_EXIST;
+import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.DATA_TABLE_NOT_EXIST;
+import static org.laokou.common.tenant.constant.Constant.Master.USER_TABLE;
 
 /**
  * 用户.
@@ -52,15 +51,19 @@ public class UserGatewayImpl implements UserGateway {
 	 * @return 用户信息
 	 */
 	@Override
-	public UserE getProfile(UserE user) {
+	public UserE getProfile(UserE user, String tenantCode) {
 		try {
-			UserDO userDO = userMapper.selectOneByCondition(UserConvertor.toDataObject(user));
+			UserDO userDO = userMapper.selectObj(UserConvertor.toDataObject(user), tenantCode);
 			return ObjectUtil.isNotNull(userDO) ? UserConvertor.toEntity(userDO) : null;
 		}
 		catch (BadSqlGrammarException e) {
-			log.error("表 {} 不存在，错误信息：{}，详情见日志", TABLE_USER, LogUtil.record(e.getMessage()), e);
-			throw new SystemException(TABLE_NOT_EXIST,
-					MessageUtil.getMessage(TABLE_NOT_EXIST, new String[] { TABLE_USER }));
+			log.error("表 {} 不存在，错误信息：{}", USER_TABLE, e.getMessage());
+			throw new SystemException(DATA_TABLE_NOT_EXIST,
+					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { USER_TABLE }));
+		}
+		catch (Exception e) {
+			log.error("查询用户失败，错误信息：{}", e.getMessage());
+			throw new SystemException(SystemException.User.QUERY_FAILED);
 		}
 	}
 

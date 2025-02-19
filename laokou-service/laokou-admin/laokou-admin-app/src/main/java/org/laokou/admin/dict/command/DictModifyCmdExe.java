@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package org.laokou.admin.dict.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dict.dto.DictModifyCmd;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.dict.convertor.DictConvertor;
 import org.laokou.admin.dict.ability.DictDomainService;
@@ -34,9 +35,11 @@ public class DictModifyCmdExe {
 
 	private final DictDomainService dictDomainService;
 
+	private final TransactionalUtil transactionalUtil;
+
 	public void executeVoid(DictModifyCmd cmd) {
 		// 校验参数
-		dictDomainService.update(DictConvertor.toEntity(cmd.getCo()));
+		transactionalUtil.executeInTransaction(() -> dictDomainService.update(DictConvertor.toEntity(cmd.getCo())));
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ public class SecretsV3Controller {
 	@TraceLog
 	@GetMapping
 	@Operation(summary = "获取密钥", description = "获取密钥")
-	@RateLimiter(key = "AUTH_SECRET", type = IP, interval = 1800, rate = 100)
+	@RateLimiter(key = "AUTH_SECRET", type = IP)
 	public Result<SecretCO> getInfoV3() {
 		return secretsServiceI.getInfo();
 	}

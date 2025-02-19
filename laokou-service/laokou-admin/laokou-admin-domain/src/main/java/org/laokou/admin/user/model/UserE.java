@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,13 @@
 package org.laokou.admin.user.model;
 
 import lombok.Data;
+import org.laokou.common.crypto.utils.AESUtil;
+import org.laokou.common.i18n.utils.StringUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * 用户领域对象【实体】.
@@ -81,5 +88,56 @@ public class UserE {
 	 * 用户名.
 	 */
 	private String username;
+
+	/**
+	 * 角色IDS.
+	 */
+	private List<String> roleIds;
+
+	/**
+	 * 部门IDS.
+	 */
+	private List<String> deptIds;
+
+	/**
+	 * 用户角色IDS.
+	 */
+	private List<Long> userRoleIds;
+
+	/**
+	 * 用户部门IDS.
+	 */
+	private List<Long> userDeptIds;
+
+	public void encryptUsername() {
+		this.usernamePhrase = StringUtil.isEmpty(username) ? EMPTY : encryptStr(username);
+		this.username = AESUtil.encrypt(username);
+	}
+
+	public void encryptMail() {
+		this.mailPhrase = StringUtil.isEmpty(mail) ? EMPTY : encryptStr(mail);
+		this.mail = AESUtil.encrypt(mail);
+	}
+
+	public void encryptMobile() {
+		this.mobilePhrase = StringUtil.isEmpty(mobile) ? EMPTY : encryptMobile(mobile);
+		this.mobile = AESUtil.encrypt(mobile);
+	}
+
+	private String encryptMobile(String str) {
+		List<String> list = new ArrayList<>(3);
+		list.add(AESUtil.encrypt(str.substring(0, 3)));
+		list.add(AESUtil.encrypt(str.substring(3, 7)));
+		list.add(AESUtil.encrypt(str.substring(7)));
+		return StringUtil.collectionToDelimitedString(list, "~");
+	}
+
+	private String encryptStr(String str) {
+		List<String> list = new ArrayList<>(30);
+		for (int i = 0; i <= str.length() - 4; i++) {
+			list.add(AESUtil.encrypt(str.substring(i, i + 4)));
+		}
+		return StringUtil.collectionToDelimitedString(list, "~");
+	}
 
 }

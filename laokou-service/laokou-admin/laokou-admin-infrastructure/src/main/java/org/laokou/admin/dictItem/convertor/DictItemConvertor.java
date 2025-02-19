@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import org.laokou.admin.dictItem.dto.clientobject.DictItemCO;
 import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
 import org.laokou.admin.dictItem.model.DictItemE;
 import org.laokou.common.core.utils.ConvertUtil;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
@@ -33,7 +34,7 @@ public class DictItemConvertor {
 	public static DictItemDO toDataObject(DictItemE dictItemE) {
 		DictItemDO dictItemDO = ConvertUtil.sourceToTarget(dictItemE, DictItemDO.class);
 		if (ObjectUtil.isNull(dictItemDO.getId())) {
-			dictItemDO.generatorId();
+			dictItemDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return dictItemDO;
 	}

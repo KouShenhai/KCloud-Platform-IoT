@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 
 /**
@@ -34,7 +33,10 @@ public final class SslUtil {
 	/**
 	 * TLS协议版本.
 	 */
-	public static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
+	private static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
+
+	private SslUtil() {
+	}
 
 	/**
 	 * ssl上下文.
@@ -49,7 +51,7 @@ public final class SslUtil {
 		// 怎么选择加密协议，请看 ProtocolVersion
 		// 为什么能找到对应的加密协议 请查看 SSLContextSpi
 		SSLContext sslContext = SSLContext.getInstance(TLS_PROTOCOL_VERSION);
-		sslContext.init(null, trustManagers, new SecureRandom());
+		sslContext.init(null, trustManagers, null);
 		return sslContext;
 	}
 
@@ -58,7 +60,9 @@ public final class SslUtil {
 		HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> true);
 	}
 
-	private static class DisableValidationTrustManager implements X509TrustManager {
+	public static class DisableValidationTrustManager implements X509TrustManager {
+
+		public static final X509TrustManager INSTANCE = new DisableValidationTrustManager();
 
 		public DisableValidationTrustManager() {
 		}

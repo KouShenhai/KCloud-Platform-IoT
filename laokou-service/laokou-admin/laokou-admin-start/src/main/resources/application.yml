@@ -1,5 +1,5 @@
 #   /*
-#    * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+#    * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
 #    *
 #    * Licensed under the Apache License, Version 2.0 (the "License");
 #    * you may not use this file except in compliance with the License.
@@ -21,3 +21,17 @@ spring:
     name: ${SERVICE_ID:laokou-admin}
   profiles:
     active: @PROFILE-ACTIVE@
+  cloud:
+    # sentinel
+    sentinel:
+      datasource:
+        db0:
+          nacos:
+            server-addr: @NACOS-CONFIG-ADDRESS@
+            namespace: @NACOS-NAMESPACE@
+            group-id: @NACOS-GROUP@
+            data-id: admin-flow.json
+            data-type: json
+            username: @NACOS-USERNAME@
+            password: @NACOS-PASSWORD@
+            rule-type: flow

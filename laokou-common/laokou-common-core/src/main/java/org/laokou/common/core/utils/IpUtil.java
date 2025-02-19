@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package org.laokou.common.core.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
@@ -48,8 +47,11 @@ public final class IpUtil {
 	 */
 	private static final String LOCAL_IPV6 = "0:0:0:0:0:0:0:1";
 
+	private IpUtil() {
+	}
+
 	/**
-	 * 解析IP地址.
+	 * 获取IP地址.
 	 * @param request 请求对象
 	 * @return IP地址
 	 */
@@ -73,11 +75,12 @@ public final class IpUtil {
 		if (conditionNull(ip)) {
 			ip = request.getRemoteAddr();
 		}
-		return LOCAL_IPV6.equals(ip) ? LOCAL_IPV4 : ip.split(COMMA)[0];
+		return LOCAL_IPV6.equals(ip) || ip.contains(LOCAL_IPV6) || StringUtil.isEmpty(ip) ? LOCAL_IPV4
+				: ip.split(COMMA)[0];
 	}
 
 	/**
-	 * 判断内部IP.
+	 * 判断是否内部IP.
 	 * @param ip IP地址
 	 * @return 判断结果
 	 */
@@ -90,49 +93,14 @@ public final class IpUtil {
 	}
 
 	/**
-	 * 判断IP不存在或未知.
-	 * @param ip IP地址
-	 * @return 判断结果
-	 */
-	private static boolean conditionNull(String ip) {
-		return StringUtil.isEmpty(ip) || UNKNOWN_IP.equalsIgnoreCase(ip);
-	}
-
-	/**
-	 * 判断内部IP.
-	 * @param addr 字节数组
-	 * @return 判断结果
-	 */
-	private static boolean internalIp(byte[] addr) {
-		final byte b0 = addr[0];
-		final byte b1 = addr[1];
-		// 10.x.x.x/8
-		final byte section1 = 0x0A;
-		// 172.16.x.x/12
-		final byte section2 = (byte) 0xAC;
-		final byte section3 = (byte) 0x10;
-		final byte section4 = (byte) 0x1F;
-		// 192.168.x.x/16
-		final byte section5 = (byte) 0xC0;
-		final byte section6 = (byte) 0xA8;
-		return switch (b0) {
-			case section1 -> true;
-			case section2 -> b1 >= section3 && b1 <= section4;
-			case section5 -> b1 == section6;
-			default -> false;
-		};
-	}
-
-	/**
 	 * 将IPv4地址转换成字节.
 	 * @param text IPv4地址
 	 * @return 字节
 	 */
-	public static byte[] textToNumericFormatV4(String text) {
+	private static byte[] textToNumericFormatV4(String text) {
 		if (text.isEmpty()) {
 			return new byte[0];
 		}
-
 		byte[] bytes = new byte[4];
 		String[] elements = text.split("\\.", -1);
 		try {
@@ -198,10 +166,44 @@ public final class IpUtil {
 			}
 		}
 		catch (NumberFormatException e) {
-			log.error("格式化失败，错误信息：{}，详情见日志", LogUtil.record(e.getMessage()), e);
+			log.error("格式化失败，错误信息：{}", e.getMessage());
 			return new byte[0];
 		}
 		return bytes;
+	}
+
+	/**
+	 * 判断IP不存在或未知.
+	 * @param ip IP地址
+	 * @return 判断结果
+	 */
+	private static boolean conditionNull(String ip) {
+		return StringUtil.isEmpty(ip) || UNKNOWN_IP.equalsIgnoreCase(ip);
+	}
+
+	/**
+	 * 判断内部IP.
+	 * @param addr 字节数组
+	 * @return 判断结果
+	 */
+	private static boolean internalIp(byte[] addr) {
+		final byte b0 = addr[0];
+		final byte b1 = addr[1];
+		// 10.x.x.x/8
+		final byte section1 = 0x0A;
+		// 172.16.x.x/12
+		final byte section2 = (byte) 0xAC;
+		final byte section3 = (byte) 0x10;
+		final byte section4 = (byte) 0x1F;
+		// 192.168.x.x/16
+		final byte section5 = (byte) 0xC0;
+		final byte section6 = (byte) 0xA8;
+		return switch (b0) {
+			case section1 -> true;
+			case section2 -> b1 >= section3 && b1 <= section4;
+			case section5 -> b1 == section6;
+			default -> false;
+		};
 	}
 
 }

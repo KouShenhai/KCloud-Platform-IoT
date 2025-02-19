@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,12 +22,7 @@ import org.laokou.admin.oss.model.OssE;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.oss.gateway.OssGateway;
 import org.laokou.admin.oss.gatewayimpl.database.OssMapper;
-
 import java.util.Arrays;
-
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.LogUtil;
 import org.laokou.admin.oss.convertor.OssConvertor;
 import org.laokou.admin.oss.gatewayimpl.database.dataobject.OssDO;
 
@@ -36,61 +31,27 @@ import org.laokou.admin.oss.gatewayimpl.database.dataobject.OssDO;
  *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OssGatewayImpl implements OssGateway {
 
 	private final OssMapper ossMapper;
 
-	private final TransactionalUtil transactionalUtil;
-
+	@Override
 	public void create(OssE ossE) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				ossMapper.insert(OssConvertor.toDataObject(ossE));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("新增失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		ossMapper.insert(OssConvertor.toDataObject(ossE));
 	}
 
+	@Override
 	public void update(OssE ossE) {
 		OssDO ossDO = OssConvertor.toDataObject(ossE);
 		ossDO.setVersion(ossMapper.selectVersion(ossE.getId()));
-		update(ossDO);
+		ossMapper.updateById(ossDO);
 	}
 
+	@Override
 	public void delete(Long[] ids) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				ossMapper.deleteByIds(Arrays.asList(ids));
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("删除失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
-	}
-
-	private void update(OssDO ossDO) {
-		transactionalUtil.defaultExecuteWithoutResult(r -> {
-			try {
-				ossMapper.updateById(ossDO);
-			}
-			catch (Exception e) {
-				String msg = LogUtil.record(e.getMessage());
-				log.error("修改失败，错误信息：{}，详情见日志", msg, e);
-				r.setRollbackOnly();
-				throw new RuntimeException(msg);
-			}
-		});
+		ossMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

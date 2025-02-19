@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package org.laokou.common.core.utils;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestAttributes;
@@ -37,8 +38,11 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
  */
 public final class ResponseUtil {
 
+	private ResponseUtil() {
+	}
+
 	/**
-	 * 响应给视图解析.
+	 * 响应视图【状态码OK，json格式】.
 	 * @param response 响应对象
 	 * @param obj 对象
 	 */
@@ -48,7 +52,7 @@ public final class ResponseUtil {
 	}
 
 	/**
-	 * 响应给视图解析.
+	 * 响应视图【状态码OK，自定义响应类型】.
 	 * @param response 响应对象
 	 * @param str 对象
 	 */
@@ -70,7 +74,7 @@ public final class ResponseUtil {
 	}
 
 	/**
-	 * 获取请求对象.
+	 * 获取响应对象.
 	 * @return 请求对象
 	 */
 	public static HttpServletResponse getHttpServletResponse() {

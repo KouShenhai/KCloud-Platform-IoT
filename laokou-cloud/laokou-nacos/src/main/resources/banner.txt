@@ -1,0 +1,59 @@
+/*
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+${AnsiColor.BRIGHT_RED}
+ __  ___   ______  __        ______    __    __   _______        .______    __          ___   .___________. _______   ______   .______      .___  ___.         __    ______   .___________.
+|  |/  /  /      ||  |      /  __  \  |  |  |  | |       \       |   _  \  |  |        /   \  |           ||   ____| /  __  \  |   _  \     |   \/   |        |  |  /  __  \  |           |
+|  '  /  |  ,----'|  |     |  |  |  | |  |  |  | |  .--.  |______|  |_)  | |  |       /  ^  \ `---|  |----`|  |__   |  |  |  | |  |_)  |    |  \  /  |  ______|  | |  |  |  | `---|  |----`
+|    <   |  |     |  |     |  |  |  | |  |  |  | |  |  |  |______|   ___/  |  |      /  /_\  \    |  |     |   __|  |  |  |  | |      /     |  |\/|  | |______|  | |  |  |  |     |  |
+|  .  \  |  `----.|  `----.|  `--'  | |  `--'  | |  '--'  |      |  |      |  `----./  _____  \   |  |     |  |     |  `--'  | |  |\  \----.|  |  |  |        |  | |  `--'  |     |  |
+|__|\__\  \______||_______| \______/   \______/  |_______/       | _|      |_______/__/     \__\  |__|     |__|      \______/  | _| `._____||__|  |__|        |__|  \______/      |__|
+${AnsiColor.DEFAULT}
+作者：老寇
+GitHub：https://github.com/KouShenhai
+Gitee：https://gitee.com/laokouyun
+CSDN：https://kcloud.blog.csdn.net
+Juejin：https://juejin.cn/user/160945808873534
+Website：https://laokou.org.cn
+
+版本：${laokou-version}
+
+${AnsiColor.CYAN}端口：${server.port}，PID：${PID}，启动环境：${spring.profiles.active}
+
+${AnsiColor.BRIGHT_RED}操作系统：${os.name}-${os.version}-${os.arch}
+
+${AnsiColor.BRIGHT_YELLOW}Java 版本信息：${java.version} ${java.version.date}
+${java.runtime.name} ${java.vendor.version:} (build ${java.vm.version})
+${java.vm.name} ${java.vendor.version:} (build ${java.runtime.version}，${java.vm.info})
+${AnsiColor.BRIGHT_YELLOW}Java 类版本号：${java.class.version}
+
+${AnsiColor.GREEN}Spring Boot版本：${spring-boot.version}
+${AnsiColor.BRIGHT_GREEN}Spring Cloud版本：${spring-cloud-version}
+${AnsiColor.YELLOW}Spring Cloud Alibaba版本：${spring-cloud-alibaba-version}
+
+${AnsiColor.BRIGHT_MAGENTA}时区：${user.timezone}，语言：${user.language}，国家：${user.country}，文件编码：${file.encoding}
+${AnsiColor.BLUE}JDK所在目录：${java.home}
+${AnsiColor.BRIGHT_CYAN}项目所在目录：${user.dir}
+${AnsiColor.DEFAULT}
+应用名称：${spring.application.name}
+
+老寇IoT云平台正在启动中......
+
+相遇便是缘分，感谢各位盆友
+
+Nacos访问地址【https】：https://127.0.0.1:${server.port}/nacos
+
+Nacos访问地址【http】：http://127.0.0.1:${server.port}/nacos

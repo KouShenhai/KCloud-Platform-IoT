@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,9 +27,10 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import static org.laokou.auth.model.Constant.MAIL_TAG;
+import static org.laokou.auth.model.Constant.MOBILE_TAG;
 import static org.laokou.common.ratelimiter.aop.Type.IP;
 
 /**
@@ -45,17 +46,27 @@ public class CaptchasV3Controller {
 
 	@TraceLog
 	@GetMapping("{uuid}")
-	@RateLimiter(key = "GET_CAPTCHA", type = IP, interval = 300, rate = 100)
+	@RateLimiter(key = "GET_CAPTCHA", type = IP)
 	@Operation(summary = "根据UUID获取验证码", description = "根据UUID获取验证码")
 	public Result<String> getByUuidV3(@PathVariable("uuid") String uuid) {
 		return captchasServiceI.getByUuid(new CaptchaGetQry(uuid));
 	}
 
 	@Idempotent
-	@PostMapping
-	@RateLimiter(key = "SEND_CAPTCHA", type = IP, interval = 60)
-	@Operation(summary = "根据UUID发送验证码", description = "根据UUID发送验证码")
-	public void sendByUuidV3(@Validated @RequestBody CaptchaSendCmd cmd) {
+	@PostMapping("send/mobile")
+	@RateLimiter(key = "SEND_MOBILE_CAPTCHA", type = IP)
+	@Operation(summary = "根据UUID发送手机验证码", description = "根据UUID发送手机验证码")
+	public void sendMobileByUuidV3(@RequestBody CaptchaSendCmd cmd) {
+		cmd.getCo().setTag(MOBILE_TAG);
+		captchasServiceI.sendByUuid(cmd);
+	}
+
+	@Idempotent
+	@PostMapping("send/mail")
+	@RateLimiter(key = "SEND_MAIL_CAPTCHA", type = IP)
+	@Operation(summary = "根据UUID发送邮箱验证码", description = "根据UUID发送邮箱验证码")
+	public void sendMailByUuidV3(@RequestBody CaptchaSendCmd cmd) {
+		cmd.getCo().setTag(MAIL_TAG);
 		captchasServiceI.sendByUuid(cmd);
 	}
 

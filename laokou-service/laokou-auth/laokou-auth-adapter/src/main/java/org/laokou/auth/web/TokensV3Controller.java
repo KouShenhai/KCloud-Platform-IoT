@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.TokensServiceI;
 import org.laokou.auth.dto.TokenRemoveCmd;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -35,12 +34,6 @@ import org.springframework.web.bind.annotation.*;
 public class TokensV3Controller {
 
 	private final TokensServiceI tokensServiceI;
-
-	@GetMapping
-	@Operation(summary = "查看令牌", description = "查看令牌")
-	public Result<String> getTokenV3() {
-		return tokensServiceI.getTokenV3();
-	}
 
 	@DeleteMapping
 	@Operation(summary = "删除令牌", description = "删除令牌")

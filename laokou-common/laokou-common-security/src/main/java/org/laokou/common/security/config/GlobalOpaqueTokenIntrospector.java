@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 
 package org.laokou.common.security.config;
 
-import com.baomidou.dynamic.datasource.annotation.Master;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +25,7 @@ import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.laokou.common.security.utils.UserDetail;
+import org.laokou.common.tenant.annotation.Master;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
@@ -39,6 +39,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.security.Principal;
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
+import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getOAuth2AuthenticationException;
 
 /**
  * @author laokou
@@ -85,11 +86,10 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 	private UserDetail decryptInfo(UserDetail userDetail) {
 		try {
 			// 解密
-			userDetail.decrypt();
-			return userDetail;
+			return userDetail.getDecryptInfo();
 		}
 		catch (GlobalException e) {
-			throw OAuth2ExceptionHandler.getException(e.getCode(), e.getMsg(), ERROR_URL);
+			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 	}
 

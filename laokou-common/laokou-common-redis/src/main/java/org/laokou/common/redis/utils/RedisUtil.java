@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,17 +51,17 @@ public class RedisUtil {
 	/**
 	 * 1小时过期，单位：秒.
 	 */
-	public final static long HOUR_ONE_EXPIRE = 60 * 60;
+	public final static long ONE_HOUR_EXPIRE = 60 * 60;
 
 	/**
 	 * 6小时过期，单位：秒.
 	 */
-	public final static long HOUR_SIX_EXPIRE = 60 * 60 * 6;
+	public final static long SIX_HOUR_EXPIRE = 60 * 60 * 6;
 
 	/**
 	 * 5分钟过期，单位：秒.
 	 */
-	public final static long MINUTE_FIVE_EXPIRE = 5 * 60;
+	public final static long FIVE_MINUTE_EXPIRE = 5 * 60;
 
 	/**
 	 * 永不过期.
@@ -96,14 +96,11 @@ public class RedisUtil {
 		return lock.tryLock(timeout, TimeUnit.MILLISECONDS);
 	}
 
-	public boolean rateLimiter(String key, RateType mode, long replenishRate, Duration rateInterval) {
+	public boolean rateLimiter(String key, RateType mode, long replenishRate, Duration rateInterval,
+			Duration ttlInterval) {
 		RRateLimiter rateLimiter = redissonClient.getRateLimiter(key);
-		rateLimiter.trySetRate(mode, replenishRate, rateInterval);
+		rateLimiter.trySetRate(mode, replenishRate, rateInterval, ttlInterval);
 		return rateLimiter.tryAcquire();
-	}
-
-	public boolean tryLock(String key, long timeout) throws InterruptedException {
-		return tryLock(getLock(key), timeout);
 	}
 
 	public void unlock(String key) {
@@ -221,19 +218,19 @@ public class RedisUtil {
 
 	public long incrementAndGet(String key) {
 		RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
-		atomicLong.expireIfNotSet(Duration.ofSeconds(HOUR_ONE_EXPIRE));
+		atomicLong.expireIfNotSet(Duration.ofSeconds(ONE_HOUR_EXPIRE));
 		return atomicLong.incrementAndGet();
 	}
 
 	public long decrementAndGet(String key) {
 		RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
-		atomicLong.expireIfNotSet(Duration.ofSeconds(HOUR_ONE_EXPIRE));
+		atomicLong.expireIfNotSet(Duration.ofSeconds(ONE_HOUR_EXPIRE));
 		return atomicLong.decrementAndGet();
 	}
 
 	public long addAndGet(String key, long value) {
 		RAtomicLong atomicLong = redissonClient.getAtomicLong(key);
-		atomicLong.expireIfNotSet(Duration.ofSeconds(HOUR_ONE_EXPIRE));
+		atomicLong.expireIfNotSet(Duration.ofSeconds(ONE_HOUR_EXPIRE));
 		return atomicLong.addAndGet(value);
 	}
 

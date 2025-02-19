@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-IoT</artifactId>
-    <version>3.4.0</version>
+    <version>3.4.2</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>laokou-sample</artifactId>
-  <version>3.4.0</version>
+  <version>3.4.2</version>
   <packaging>pom</packaging>
   <modules>
       <module>laokou-sample-websocket</module>
       <module>laokou-sample-shardingsphere</module>
+      <module>laokou-sample-tcp</module>
+      <module>laokou-sample-rpc</module>
+      <module>laokou-sample-crawler</module>
+      <module>laokou-sample-grpc</module>
+      <module>laokou-sample-seata</module>
+      <module>laokou-sample-rabbitmq</module>
   </modules>
 
 </project>

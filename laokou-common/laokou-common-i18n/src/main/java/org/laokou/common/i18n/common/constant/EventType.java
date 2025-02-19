@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,33 @@
 
 package org.laokou.common.i18n.common.constant;
 
+import lombok.Getter;
+
 /**
  * 事件类型枚举.
  *
  * @author laokou
  */
+@Getter
 public enum EventType {
 
-	LOGIN, CAPTCHA, API
+	/**
+	 * 发送验证码事件.
+	 */
+	SEND_CAPTCHA_EVENT("sendCaptchaEvent", "发送验证码事件"),
+
+	/**
+	 * 登录事件.
+	 */
+	LOGIN_EVENT("loginEvent", "登录事件");
+
+	private final String code;
+
+	private final String desc;
+
+	EventType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

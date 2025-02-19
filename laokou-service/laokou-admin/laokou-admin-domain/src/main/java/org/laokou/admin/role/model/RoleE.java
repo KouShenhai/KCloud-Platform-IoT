@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@
 package org.laokou.admin.role.model;
 
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * 角色领域对象【实体】.
@@ -43,8 +45,18 @@ public class RoleE {
 	private Integer sort;
 
 	/**
-	 * 数据范围 no无限制 custom自定义 dept_self仅本部门 dept部门及以下 self仅本人.
+	 * 数据范围 all全部 custom自定义 dept_self仅本部门 dept部门及以下 self仅本人.
 	 */
 	private String dataScope;
+
+	/**
+	 * 菜单IDS.
+	 */
+	private List<String> menuIds;
+
+	/**
+	 * 角色菜单IDS.
+	 */
+	private List<Long> roleMenuIds;
 
 }

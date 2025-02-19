@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,12 +34,23 @@ public class MybatisPlusExtProperties {
 
 	private Tenant tenant = new Tenant();
 
+	private SqlMonitor sqlMonitor = new SqlMonitor();
+
 	@Data
 	public static class Tenant {
 
 		private boolean enabled = false;
 
 		private Set<String> ignoreTables = new HashSet<>(0);
+
+	}
+
+	@Data
+	public static class SqlMonitor {
+
+		private boolean enabled = true;
+
+		private long interval = 0;
 
 	}
 

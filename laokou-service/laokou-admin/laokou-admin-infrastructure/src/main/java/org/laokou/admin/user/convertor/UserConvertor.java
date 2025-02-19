@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,38 +20,83 @@ package org.laokou.admin.user.convertor;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
+import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
+import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
+import org.laokou.common.sensitive.utils.SensitiveUtil;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import java.util.List;
 
 /**
  * 用户转换器.
  *
  * @author laokou
  */
-public class UserConvertor {
+public final class UserConvertor {
 
-	public static UserDO toDataObject(UserE userE, boolean isInsert) {
+	private static final String DEFAULT_PASSWORD = "laokou123";
+
+	private UserConvertor() {
+	}
+
+	public static List<UserRoleDO> toDataObjects(UserE userE, Long userId) {
+		return userE.getRoleIds().stream().map(roleId -> {
+			UserRoleDO userRoleDO = new UserRoleDO();
+			userRoleDO.setId(IdGenerator.defaultSnowflakeId());
+			userRoleDO.setRoleId(Long.valueOf(roleId));
+			userRoleDO.setUserId(userId);
+			return userRoleDO;
+		}).toList();
+	}
+
+	public static List<UserDeptDO> toDataObjs(UserE userE, Long userId) {
+		return userE.getDeptIds().stream().map(deptId -> {
+			UserDeptDO userDeptDO = new UserDeptDO();
+			userDeptDO.setId(IdGenerator.defaultSnowflakeId());
+			userDeptDO.setDeptId(Long.valueOf(deptId));
+			userDeptDO.setUserId(userId);
+			return userDeptDO;
+		}).toList();
+	}
+
+	public static List<UserRoleDO> toDataObjects(UserE userE) {
+		return userE.getUserRoleIds().stream().map(id -> {
+			UserRoleDO userRoleDO = new UserRoleDO();
+			userRoleDO.setId(id);
+			return userRoleDO;
+		}).toList();
+	}
+
+	public static List<UserDeptDO> toDataObjs(UserE userE) {
+		return userE.getUserDeptIds().stream().map(id -> {
+			UserDeptDO userDeptDO = new UserDeptDO();
+			userDeptDO.setId(id);
+			return userDeptDO;
+		}).toList();
+	}
+
+	public static UserDO toDataObject(PasswordEncoder passwordEncoder, UserE userE, boolean isInsert) {
 		UserDO userDO = new UserDO();
 		if (isInsert) {
-			userDO.generatorId();
+			userDO.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
+			userDO.setUsername(userE.getUsername());
+			userDO.setUsernamePhrase(userE.getUsernamePhrase());
 		}
-		else {
-			userDO.setId(userE.getId());
-		}
-		userDO.setPassword(userE.getPassword());
+		String mobile = userE.getMobile();
+		String mail = userE.getMail();
+		userDO.setId(userE.getId());
 		userDO.setSuperAdmin(userE.getSuperAdmin());
-		userDO.setMail(userE.getMail());
-		userDO.setMobile(userE.getMobile());
 		userDO.setStatus(userE.getStatus());
 		userDO.setAvatar(userE.getAvatar());
-		userDO.setUsernamePhrase(userE.getUsernamePhrase());
+		userDO.setMail(StringUtil.isEmpty(mail) ? null : mail);
 		userDO.setMailPhrase(userE.getMailPhrase());
+		userDO.setMobile(StringUtil.isEmpty(mobile) ? null : mobile);
 		userDO.setMobilePhrase(userE.getMobilePhrase());
-		userDO.setUsername(userE.getUsername());
 		return userDO;
 	}
 
@@ -60,13 +105,11 @@ public class UserConvertor {
 		userProfileCO.setId(userDetail.getId());
 		userProfileCO.setUsername(userDetail.getUsername());
 		userProfileCO.setAvatar(userDetail.getAvatar());
-		userProfileCO.setTenantId(userDetail.getTenantId());
 		userProfileCO.setPermissions(userDetail.getPermissions());
 		return userProfileCO;
 	}
 
 	public static UserCO toClientObject(UserDO userDO) {
-		String username = userDO.getUsername();
 		String mail = userDO.getMail();
 		String mobile = userDO.getMobile();
 		UserCO userCO = new UserCO();
@@ -74,9 +117,8 @@ public class UserConvertor {
 		userCO.setSuperAdmin(userDO.getSuperAdmin());
 		userCO.setStatus(userDO.getStatus());
 		userCO.setAvatar(userDO.getAvatar());
-		if (StringUtil.isNotEmpty(username)) {
-			userCO.setUsername(AESUtil.decrypt(username));
-		}
+		userCO.setCreateTime(userDO.getCreateTime());
+		userCO.setUsername(AESUtil.decrypt(userDO.getUsername()));
 		if (StringUtil.isNotEmpty(mail)) {
 			userCO.setMail(AESUtil.decrypt(mail));
 		}
@@ -86,29 +128,33 @@ public class UserConvertor {
 		return userCO;
 	}
 
-	public static UserE toEntity(UserCO userCO, boolean isInsert) {
+	public static List<UserCO> toClientObjects(List<UserDO> userDOList) {
+		return userDOList.stream().map(item -> {
+			UserCO userCO = toClientObject(item);
+			String mail = userCO.getMail();
+			String mobile = userCO.getMobile();
+			if (StringUtil.isNotEmpty(mail)) {
+				userCO.setMail(SensitiveUtil.formatMail(mail));
+			}
+			if (StringUtil.isNotEmpty(mobile)) {
+				userCO.setMobile(SensitiveUtil.formatMobile(mobile));
+			}
+			return userCO;
+		}).toList();
+	}
+
+	public static UserE toEntity(UserCO userCO) {
 		UserE userE = new UserE();
-		String username = userCO.getUsername();
-		String mail = userCO.getMail();
-		String mobile = userCO.getMobile();
 		userE.setId(userCO.getId());
-		userE.setUsername(username);
-		userE.setPassword(userCO.getPassword());
+		userE.setUsername(userCO.getUsername());
 		userE.setSuperAdmin(userCO.getSuperAdmin());
-		userE.setMail(mail);
-		userE.setMobile(mobile);
+		userE.setPassword(userCO.getPassword());
+		userE.setMail(userCO.getMail());
+		userE.setMobile(userCO.getMobile());
 		userE.setStatus(userCO.getStatus());
 		userE.setAvatar(userCO.getAvatar());
-		if (StringUtil.isNotEmpty(username) && isInsert) {
-			userE.setUsername(AESUtil.decrypt(username));
-			userE.setUsernamePhrase(EMPTY);
-		}
-		if (StringUtil.isNotEmpty(mail)) {
-			userE.setMailPhrase(EMPTY);
-		}
-		if (StringUtil.isNotEmpty(mobile)) {
-			userE.setMobilePhrase(EMPTY);
-		}
+		userE.setRoleIds(userCO.getRoleIds());
+		userE.setDeptIds(userCO.getDeptIds());
 		return userE;
 	}
 

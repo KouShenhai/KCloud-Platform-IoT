@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,11 @@ package org.laokou.generator.ability;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.generator.gateway.TableGateway;
 import org.laokou.generator.model.GeneratorA;
@@ -29,13 +31,12 @@ import org.laokou.generator.model.TableV;
 import org.laokou.generator.model.Template;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
@@ -43,6 +44,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class GeneratorDomainService {
@@ -83,25 +85,31 @@ public class GeneratorDomainService {
 	}
 
 	private void generateCode(GeneratorA generatorA, TableV tableV, List<Template> templates) {
-		ExecutorService executor = ThreadUtil.newVirtualTaskExecutor();
-		// 更新表信息
-		generatorA.updateTable(tableV);
-		// 根据模板批量生成代码
-		templates.parallelStream().map(item -> CompletableFuture.runAsync(() -> {
-			String content = getContent(generatorA.toMap(), item.getTemplatePath(TEMPLATE_PATH));
-			// 写入文件
-			String directory = SOURCE_PATH + generatorA.getModuleName() + SLASH + item.getFileDirectory(generatorA);
-			File file = FileUtil.create(directory, item.getFileName(generatorA));
-			FileUtil.write(file, content.getBytes(StandardCharsets.UTF_8));
-		}, executor)).toList().forEach(CompletableFuture::join);
+		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			// 更新表信息
+			generatorA.updateTable(tableV);
+			// 根据模板批量生成代码
+			List<Callable<Boolean>> list = templates.stream().map(item -> (Callable<Boolean>) () -> {
+				String content = getContent(generatorA.toMap(), item.getTemplatePath(TEMPLATE_PATH));
+				// 写入文件
+				String directory = SOURCE_PATH + generatorA.getModuleName() + SLASH + item.getFileDirectory(generatorA);
+				Path path = FileUtil.create(directory, item.getFileName(generatorA));
+				FileUtil.write(path, content.getBytes(StandardCharsets.UTF_8));
+				return true;
+			}).toList();
+			executor.invokeAll(list);
+		}
+		catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			log.error("错误信息：{}", e.getMessage());
+			throw new SystemException("S_UnKnow_Error", e.getMessage());
+		}
 	}
 
 	@SneakyThrows
 	private String getContent(Map<String, Object> map, String templatePath) {
-		try (InputStream inputStream = ResourceUtil.getResource(templatePath).getInputStream()) {
-			String template = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-			return TemplateUtil.getContent(template, map);
-		}
+		String template = ResourceUtil.getResource(templatePath).getContentAsString(StandardCharsets.UTF_8).trim();
+		return TemplateUtil.getContent(template, map);
 	}
 
 	private List<Template> getTemplates() {
@@ -125,8 +133,8 @@ public class GeneratorDomainService {
 		templates.add(Template.SERVICE_I);
 		templates.add(Template.SERVICE_IMPL);
 		templates.add(Template.DOMAIN_SERVICE);
-		templates.add(Template.DO);
-		templates.add(Template.CO);
+		templates.add(Template.DATA_OBJECT);
+		templates.add(Template.CLIENT_OBJECT);
 		templates.add(Template.GATEWAY);
 		templates.add(Template.GATEWAY_IMPL);
 		templates.add(Template.CONTROLLER);

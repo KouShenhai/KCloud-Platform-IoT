@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import static org.laokou.common.i18n.common.constant.TraceConstant.*;
-import static org.laokou.common.nacos.utils.ReactiveRequestUtil.getHost;
 
 /**
  * 分布式请求链路过滤器.
@@ -50,7 +49,6 @@ public class TraceFilter implements GlobalFilter, Ordered {
 				.header(SERVICE_HOST, serviceHost)
 				.header(SERVICE_PORT, servicePort)
 				.header(SERVICE_GRAY, serviceGray)
-				.header(DOMAIN_NAME, getHost(request))
 				.build())
 			.build());
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,8 @@
 
 package org.laokou.common.i18n.utils;
 
-import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
-import java.util.Collection;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,16 +30,19 @@ import static org.laokou.common.i18n.common.constant.StringConstant.PERCENT;
  *
  * @author laokou
  */
-public final class StringUtil {
+public final class StringUtil extends StringUtils {
 
 	private static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
+
+	private StringUtil() {
+	}
 
 	public static boolean isNotEmpty(String str) {
 		return hasText(str);
 	}
 
-	public static String collectionToDelimitedString(Collection<?> coll, String delim) {
-		return StringUtils.collectionToDelimitedString(coll, delim);
+	public static boolean startWith(String str, String prefix) {
+		return str.startsWith(prefix);
 	}
 
 	public static Long parseLong(String str) {
@@ -59,13 +59,16 @@ public final class StringUtil {
 		return str;
 	}
 
-	public static Set<String> commaDelimitedListToSet(String str) {
-		return StringUtils.commaDelimitedListToSet(str);
-	}
-
 	public static String like(String str) {
 		if (isNotEmpty(str)) {
 			return PERCENT.concat(str.concat(PERCENT));
+		}
+		return str;
+	}
+
+	public static String trim(String str) {
+		if (isNotEmpty(str)) {
+			return str.trim();
 		}
 		return str;
 	}
@@ -118,14 +121,6 @@ public final class StringUtil {
 		return null;
 	}
 
-	public static boolean hasText(@Nullable String str) {
-		return StringUtils.hasText(str);
-	}
-
-	public static boolean hasText(@Nullable CharSequence sequence) {
-		return StringUtils.hasText(sequence);
-	}
-
 	/**
 	 * 转换为驼峰json字符串.
 	 * @param str 字符串
@@ -139,6 +134,13 @@ public final class StringUtil {
 		}
 		matcher.appendTail(sb);
 		return sb.toString();
+	}
+
+	public static String truncate(String str, int maxLength) {
+		if (!StringUtil.isNotEmpty(str)) {
+			return null;
+		}
+		return str.length() > maxLength ? str.substring(0, maxLength) : str;
 	}
 
 }

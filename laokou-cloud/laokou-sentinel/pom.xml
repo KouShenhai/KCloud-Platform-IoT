@@ -4,7 +4,7 @@
   <parent>
     <artifactId>laokou-cloud</artifactId>
     <groupId>org.laokou</groupId>
-    <version>3.4.0</version>
+    <version>3.4.2</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-sentinel</artifactId>
@@ -18,7 +18,7 @@
     <!--curator版本-->
     <curator.version>5.7.1</curator.version>
     <!--log4j版本-->
-    <log4j.version>2.24.1</log4j.version>
+    <log4j.version>2.24.3</log4j.version>
     <!--commons-lang版本-->
     <commons-lang.version>2.6</commons-lang.version>
     <!--httpasyncclient版本-->
@@ -26,11 +26,11 @@
     <!--system-rules版本-->
     <system-rules.version>1.19.0</system-rules.version>
     <!--apollo-openapi版本-->
-    <apollo-openapi.version>2.3.0</apollo-openapi.version>
+    <apollo-openapi.version>2.4.0</apollo-openapi.version>
     <!--httpcore-nio版本-->
     <httpcore-nio.version>4.4.16</httpcore-nio.version>
     <!--fastjson版本-->
-    <fastjson.version>2.0.53</fastjson.version>
+    <fastjson.version>2.0.55</fastjson.version>
   </properties>
 
   <dependencies>
@@ -137,6 +137,10 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-undertow</artifactId>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-banner</artifactId>
     </dependency>
   </dependencies>
 
