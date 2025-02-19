@@ -71,7 +71,7 @@ public class ElasticsearchTemplate {
 	private final ElasticsearchAsyncClient elasticsearchAsyncClient;
 
 	@SneakyThrows
-	public <TDocument> CompletableFuture<Boolean> asyncCreateIndex(String name, String alias, Class<TDocument> clazz,
+	public <TDocument> CompletableFuture<Void> asyncCreateIndex(String name, String alias, Class<TDocument> clazz,
 			Executor executor) {
 		return asyncExist(List.of(name), executor).thenApplyAsync(resp -> {
 			if (resp) {
@@ -79,21 +79,19 @@ public class ElasticsearchTemplate {
 				return Boolean.FALSE;
 			}
 			return Boolean.TRUE;
-		}, executor).thenApplyAsync(resp -> {
-			if (resp) {
-				Document document = convert(name, alias, clazz);
-				elasticsearchAsyncClient.indices().create(getCreateIndexRequest(document)).thenApplyAsync(response -> {
-					if (response.acknowledged()) {
-						log.info("索引：{} -> 创建索引成功", name);
-						return Boolean.TRUE;
-					}
-					else {
-						log.info("索引：{} -> 创建索引失败", name);
-						return Boolean.FALSE;
-					}
-				});
+		}, executor).thenAcceptAsync(result -> {
+			if (result) {
+				elasticsearchAsyncClient.indices()
+					.create(getCreateIndexRequest(convert(name, alias, clazz)))
+					.thenAcceptAsync(response -> {
+						if (response.acknowledged()) {
+							log.info("索引：{} -> 创建索引成功", name);
+						}
+						else {
+							log.info("索引：{} -> 创建索引失败", name);
+						}
+					});
 			}
-			return Boolean.FALSE;
 		}, executor);
 	}
 

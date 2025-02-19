@@ -39,6 +39,14 @@ public final class TcpServerManager {
 	private final List<ChannelHandler> channelHandlers;
 
 	public synchronized void start() {
+		SERVER_MAP.values().forEach(Server::start);
+	}
+
+	public synchronized void stop() {
+		SERVER_MAP.values().forEach(Server::stop);
+	}
+
+	public synchronized void initialize() {
 		List<ChannelHandler> tcpServerList = channelHandlers.stream()
 			.filter(item -> item.getClass().isAnnotationPresent(org.laokou.common.netty.annotation.TcpServer.class))
 			.toList();
@@ -57,11 +65,6 @@ public final class TcpServerManager {
 					channelHandler, config);
 			SERVER_MAP.putIfAbsent(key, server);
 		}
-		SERVER_MAP.values().forEach(Server::start);
-	}
-
-	public synchronized void stop() {
-		SERVER_MAP.values().forEach(Server::stop);
 	}
 
 }

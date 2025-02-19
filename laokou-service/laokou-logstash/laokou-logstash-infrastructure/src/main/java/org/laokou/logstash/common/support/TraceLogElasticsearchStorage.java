@@ -52,11 +52,11 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 			if (MapUtil.isEmpty(dataMap)) {
 				return Mono.empty();
 			}
-			return Mono.fromFuture(
-					elasticsearchTemplate.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, EXECUTOR)
-						.thenComposeAsync(
-								res -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap, EXECUTOR),
-								EXECUTOR));
+			return Mono.fromFuture(elasticsearchTemplate
+				.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, EXECUTOR)
+				.thenComposeAsync(
+						result -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap, EXECUTOR),
+						EXECUTOR));
 		}).onErrorResume(e -> {
 			log.error("分布式链路写入失败，错误信息：{}", e.getMessage(), e);
 			return Mono.empty();

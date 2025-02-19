@@ -33,7 +33,10 @@ public class TcpServerConfig {
 
     @Bean(name = "tcpServerManager", initMethod = "start", destroyMethod = "stop")
 	public TcpServerManager tcpServerManager(SpringTcpServerProperties springTcpServerProperties, List<ChannelHandler> channelHandlers) {
-        return new TcpServerManager(springTcpServerProperties, channelHandlers);
+		TcpServerManager tcpServerManager = new TcpServerManager(springTcpServerProperties, channelHandlers);
+		// 初始化
+		tcpServerManager.initialize();
+		return tcpServerManager;
     }
 
     @Bean
