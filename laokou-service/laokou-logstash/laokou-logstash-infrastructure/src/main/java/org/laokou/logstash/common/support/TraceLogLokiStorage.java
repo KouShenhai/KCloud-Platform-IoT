@@ -24,9 +24,9 @@ import org.laokou.logstash.convertor.TraceLogConvertor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -39,8 +39,9 @@ public class TraceLogLokiStorage extends AbstractTraceLogStorage {
 	private final LokiProperties lokiProperties;
 
 	@Override
-	public Mono<Void> batchSave(Mono<List<String>> messages) {
-		return messages.map(item -> item.stream().map(this::getTraceLogIndex).filter(Objects::nonNull).toList())
+	public Mono<Void> batchSave(Flux<String> messages) {
+		return messages.collectList()
+			.map(item -> item.stream().map(this::getTraceLogIndex).filter(Objects::nonNull).toList())
 			.map(TraceLogConvertor::toDTO)
 			.flatMap(item -> webClient.post()
 				.uri(lokiProperties.getUrl())

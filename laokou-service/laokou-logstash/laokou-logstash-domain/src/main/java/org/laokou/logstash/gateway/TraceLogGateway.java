@@ -17,15 +17,14 @@
 
 package org.laokou.logstash.gateway;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
 
 /**
  * @author laokou
  */
 public interface TraceLogGateway {
 
-	Mono<Void> create(Mono<List<String>> messages);
+	Mono<Void> create(Flux<String> messages);
 
 }
