@@ -54,7 +54,7 @@ services:
   # 默认账号/密码 admin/admin
   # 新密码 laokou123
   grafana:
-    image: grafana/grafana:11.5.1
+    image: grafana/grafana:11.5.2
     container_name: grafana
     # 保持容器在没有守护程序的情况下运行
     tty: true
