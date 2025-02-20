@@ -31,9 +31,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.laokou.common.core.config.CustomInstantDeserializer;
 import org.laokou.common.core.config.CustomInstantSerializer;
-import org.laokou.common.i18n.context.TenantRedisContextHolder;
 import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.redisson.codec.JsonJacksonCodec;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -100,34 +98,20 @@ public final class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 	}
 
 	public static StringRedisSerializer getStringRedisSerializer() {
-		// String序列化配置【多租户】
-		return new TenantStringRedisSerializer(StandardCharsets.UTF_8);
+		return new Md5DigestStringRedisSerializer(StandardCharsets.UTF_8);
 	}
 
-	public static class TenantStringRedisSerializer extends StringRedisSerializer {
+	public static class Md5DigestStringRedisSerializer extends StringRedisSerializer {
 
-		public TenantStringRedisSerializer(Charset charset) {
+		public Md5DigestStringRedisSerializer(Charset charset) {
 			super(charset);
 		}
 
 		@Nullable
 		@Override
 		public byte[] serialize(@Nullable String value) {
-			try {
-				Assert.notNull(value, "Cannot serialize null");
-				Long tenantId = TenantRedisContextHolder.get();
-				if (ObjectUtil.isNotNull(tenantId)) {
-					return super.serialize(getKey(tenantId + ":", value));
-				}
-				return super.serialize(getKey("", value));
-			}
-			finally {
-				TenantRedisContextHolder.clear();
-			}
-		}
-
-		private String getKey(String prefix, String value) {
-			return DigestUtils.md5DigestAsHex(prefix.concat(value).getBytes(StandardCharsets.UTF_8));
+			Assert.notNull(value, "Cannot serialize null");
+			return super.serialize(DigestUtils.md5DigestAsHex(value.getBytes(StandardCharsets.UTF_8)));
 		}
 
 	}

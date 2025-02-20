@@ -30,6 +30,7 @@ import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -91,7 +92,7 @@ public class I18nMessagesControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:i18n-message:page')")
 	@Operation(summary = "分页查询国际化消息列表", description = "分页查询国际化消息列表")
-	public Result<Page<I18nMessageCO>> pageV3(@RequestBody I18nMessagePageQry qry) {
+	public Result<Page<I18nMessageCO>> pageV3(@Validated @RequestBody I18nMessagePageQry qry) {
 		return i18nMessagesServiceI.page(qry);
 	}
 

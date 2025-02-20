@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.http.MediaType;
 import org.laokou.admin.cluster.dto.clientobject.ClusterCO;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.laokou.admin.cluster.api.ClustersServiceI;
 import org.laokou.admin.cluster.dto.*;
@@ -92,7 +93,7 @@ public class ClustersControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:cluster:page')")
 	@Operation(summary = "分页查询集群列表", description = "分页查询集群列表")
-	public Result<Page<ClusterCO>> pageV3(@RequestBody ClusterPageQry qry) {
+	public Result<Page<ClusterCO>> pageV3(@Validated @RequestBody ClusterPageQry qry) {
 		return clustersServiceI.page(qry);
 	}
 

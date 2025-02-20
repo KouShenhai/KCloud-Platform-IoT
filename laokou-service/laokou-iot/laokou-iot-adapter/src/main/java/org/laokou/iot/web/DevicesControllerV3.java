@@ -30,6 +30,7 @@ import org.laokou.iot.device.dto.*;
 import org.laokou.iot.device.dto.clientobject.DeviceCO;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -92,7 +93,7 @@ public class DevicesControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('iot:device:page')")
 	@Operation(summary = "分页查询设备列表", description = "分页查询设备列表")
-	public Result<Page<DeviceCO>> pageV3(@RequestBody DevicePageQry qry) {
+	public Result<Page<DeviceCO>> pageV3(@Validated @RequestBody DevicePageQry qry) {
 		return devicesServiceI.page(qry);
 	}
 

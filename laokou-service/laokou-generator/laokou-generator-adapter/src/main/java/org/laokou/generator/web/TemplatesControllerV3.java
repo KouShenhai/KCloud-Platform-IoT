@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.http.MediaType;
 import org.laokou.generator.template.dto.clientobject.TemplateCO;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.laokou.generator.template.api.TemplatesServiceI;
 import org.laokou.generator.template.dto.*;
@@ -92,7 +93,7 @@ public class TemplatesControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('generator:template:page')")
 	@Operation(summary = "分页查询代码生成器模板列表", description = "分页查询代码生成器模板列表")
-	public Result<Page<TemplateCO>> pageV3(@RequestBody TemplatePageQry qry) {
+	public Result<Page<TemplateCO>> pageV3(@Validated @RequestBody TemplatePageQry qry) {
 		return templatesServiceI.page(qry);
 	}
 

@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(SystemException.class)
 	public Result<?> handle(SystemException ex) {
-		log.error("系统异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
+		// log.error("系统异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg(), ex);
 		return Result.fail(ex.getCode(), ex.getMsg());
 	}
 
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(BizException.class)
 	public Result<?> handle(BizException ex) {
-		log.error("业务异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
+		// log.error("业务异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg(), ex);
 		return Result.fail(ex.getCode(), ex.getMsg());
 	}
 
@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(ParamException.class)
 	public Result<?> handle(ParamException ex) {
-		log.error("参数异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg());
+		// log.error("参数异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg(), ex);
 		return Result.fail(ex.getCode(), ex.getMsg());
 	}
 
@@ -80,13 +80,14 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler({ MethodArgumentNotValidException.class, ValidationException.class })
 	public Result<?> handle(Exception ex) {
+		// log.error("参数校验失败，错误信息：{}", ex.getMsg(), ex);
 		if (ex instanceof MethodArgumentNotValidException mane) {
 			FieldError fieldError = mane.getFieldError();
 			if (ObjectUtil.isNotNull(fieldError)) {
 				return Result.fail(fieldError.getCode(), fieldError.getDefaultMessage());
 			}
 		}
-		throw new RuntimeException();
+		return Result.fail("S_UnKnow_Error", ex.getMessage());
 	}
 
 }

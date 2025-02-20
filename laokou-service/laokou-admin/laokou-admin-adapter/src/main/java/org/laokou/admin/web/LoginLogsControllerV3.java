@@ -31,6 +31,7 @@ import org.laokou.common.secret.annotation.ApiSecret;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -95,7 +96,7 @@ public class LoginLogsControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:login-log:page')")
 	@Operation(summary = "分页查询登录日志列表", description = "分页查询登录日志列表")
-	public Result<Page<LoginLogCO>> pageV3(@RequestBody LoginLogPageQry qry) {
+	public Result<Page<LoginLogCO>> pageV3(@Validated @RequestBody LoginLogPageQry qry) {
 		return loginLogsServiceI.page(qry);
 	}
 

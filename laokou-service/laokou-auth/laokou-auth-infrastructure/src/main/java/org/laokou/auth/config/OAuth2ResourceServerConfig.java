@@ -64,7 +64,7 @@ class OAuth2ResourceServerConfig {
 		SessionRegistry springSessionBackedSessionRegistry
 	) throws Exception {
 		return http
-			// 只会在需要时创建 HttpSession【默认配置】
+			//   // 只会在需要时创建 HttpSession【默认配置】
 			//  .sessionManagement(config -> config
 			// 	.sessionCreationPolicy(IF_REQUIRED)
 			// 	.invalidSessionStrategy(sessionInvalidStrategy)

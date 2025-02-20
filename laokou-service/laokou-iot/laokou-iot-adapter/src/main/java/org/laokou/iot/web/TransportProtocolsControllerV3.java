@@ -24,6 +24,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.transportProtocol.dto.*;
 import org.springframework.http.MediaType;
 import org.laokou.iot.transportProtocol.dto.clientobject.TransportProtocolCO;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.laokou.iot.transportProtocol.api.TransportProtocolsServiceI;
 import org.laokou.common.i18n.dto.Page;
@@ -92,7 +93,7 @@ public class TransportProtocolsControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('iot:transport-protocol:page')")
 	@Operation(summary = "分页查询传输协议列表", description = "分页查询传输协议列表")
-	public Result<Page<TransportProtocolCO>> pageV3(@RequestBody TransportProtocolPageQry qry) {
+	public Result<Page<TransportProtocolCO>> pageV3(@Validated @RequestBody TransportProtocolPageQry qry) {
 		return transportProtocolsServiceI.page(qry);
 	}
 

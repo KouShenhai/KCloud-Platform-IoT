@@ -41,7 +41,7 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Boot&message=3.4.2&color=green" alt="Spring Boot"/></a>
 <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud&message=2024.0.0&color=green" alt="Spring Cloud"/></a>
 <a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.3.2&color=orange" alt="Spring Cloud Alibaba"/></a>
-<a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=OAuth%202.1&message=1.4.1&color=blue" alt="OAuth 2.1"/></a>
+<a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=OAuth%202.1&message=1.4.2&color=blue" alt="OAuth 2.1"/></a>
 
 <a href="https://www.graalvm.org/downloads" target="_blank"><img src="https://img.shields.io/badge/GraalVM-21.0.1-blue.svg" alt="GraalVM"/></a>
 <a href="https://maven.apache.org/" target="_blank"><img src="https://img.shields.io/badge/Maven-3.9.4-blue" alt="Maven"/></a>
@@ -76,9 +76,9 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 
 ### 🔗 在线体验
 
-| 序号 |  账号   |    密码    |
-|:--:|:-----:|:--------:|
-| 1  | admin | admin123 |
+| 序号 |   租户   |  账号   |    密码    |
+|:--:|:------:|:-----:|:--------:|
+| 1  | laokou | admin | admin123 |
 
 [老寇IoT云平台在线体验（请点击我，境外服务器网络延迟请稍候）](https://www.laokou.org.cn)
 
@@ -115,8 +115,8 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 |         Spring Boot         |     3.4.2     |
 |        Spring Cloud         |   2024.0.0    |
 |    Spring Cloud Alibaba     |  2023.0.3.2   |
-|      Spring Boot Admin      |     3.4.1     |
-| Spring Authorization Server |     1.4.1     |
+|      Spring Boot Admin      |     3.4.2     |
+| Spring Authorization Server |     1.4.2     |
 |        Mybatis Plus         |   3.5.10.1    |
 |            Nacos            |     2.5.0     |
 |          Sentinel           |     1.8.8     |

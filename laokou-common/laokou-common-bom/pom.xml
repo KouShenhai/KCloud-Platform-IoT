@@ -25,6 +25,7 @@
   <version>3.4.2</version>
   <packaging>pom</packaging>
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <laokou.version>3.4.2</laokou.version>
     <!--spring-boot版本-->
     <spring-boot.version>3.4.2</spring-boot.version>

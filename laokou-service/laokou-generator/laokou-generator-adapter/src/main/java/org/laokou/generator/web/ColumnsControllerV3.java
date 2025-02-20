@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.http.MediaType;
 import org.laokou.generator.column.dto.clientobject.ColumnCO;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.laokou.generator.column.api.ColumnsServiceI;
 import org.laokou.generator.column.dto.*;
@@ -92,7 +93,7 @@ public class ColumnsControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('generator:column:page')")
 	@Operation(summary = "分页查询代码生成器字段列表", description = "分页查询代码生成器字段列表")
-	public Result<Page<ColumnCO>> pageV3(@RequestBody ColumnPageQry qry) {
+	public Result<Page<ColumnCO>> pageV3(@Validated @RequestBody ColumnPageQry qry) {
 		return columnsServiceI.page(qry);
 	}
 
