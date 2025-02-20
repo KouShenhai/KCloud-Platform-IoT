@@ -128,7 +128,7 @@ public final class ExcelUtil {
 		response.addHeader("Access-Control-Expose-Headers", "Content-disposition");
 	}
 
-	private static <EXCEL, DO> void writeSheet(List<DO> list, Class<EXCEL> clazz, ExcelConvert<DO, EXCEL> convertor,
+	private static <EXCEL, DO> void writeSheet(List<DO> list, Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor,
 			ExcelWriter excelWriter) {
 		WriteSheet writeSheet = FastExcel.writerSheet().head(clazz).build();
 		// 写数据
@@ -136,7 +136,7 @@ public final class ExcelUtil {
 		list.clear();
 	}
 
-	public interface ExcelConvert<DO, EXCEL> {
+	public interface ExcelConvertor<DO, EXCEL> {
 
 		List<EXCEL> toExcels(List<DO> list);
 

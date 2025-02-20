@@ -34,7 +34,7 @@ import java.util.List;
  *
  * @author laokou
  */
-public final class LoginLogConvertor implements ExcelUtil.ExcelConvert<LoginLogDO, LoginLogExcel> {
+public final class LoginLogConvertor implements ExcelUtil.ExcelConvertor<LoginLogDO, LoginLogExcel> {
 
 	public static final LoginLogConvertor INSTANCE = new LoginLogConvertor();
 

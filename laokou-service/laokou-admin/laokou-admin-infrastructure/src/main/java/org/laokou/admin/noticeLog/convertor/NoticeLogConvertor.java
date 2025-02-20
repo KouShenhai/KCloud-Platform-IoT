@@ -33,7 +33,7 @@ import java.util.Objects;
  *
  * @author laokou
  */
-public final class NoticeLogConvertor implements ExcelUtil.ExcelConvert<NoticeLogDO, NoticeLogExcel> {
+public final class NoticeLogConvertor implements ExcelUtil.ExcelConvertor<NoticeLogDO, NoticeLogExcel> {
 
 	public static final NoticeLogConvertor INSTANCE = new NoticeLogConvertor();
 
