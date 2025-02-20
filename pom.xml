@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.laokou</groupId>
   <artifactId>KCloud-Platform-IoT</artifactId>
-  <version>3.4.2</version>
+  <version>3.4.3</version>
   <packaging>pom</packaging>
   <modules>
     <module>laokou-common</module>
@@ -44,7 +44,7 @@
     </developer>
   </developers>
   <scm>
-    <tag>kcloud-platform-iot-3.4.2.RELEASE</tag>
+    <tag>kcloud-platform-iot-3.4.3.RELEASE</tag>
     <url>https://github.com/KouShenhai/KCloud-Platform-IoT</url>
     <connection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IoT.git</connection>
     <developerConnection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IoT.git</developerConnection>
@@ -58,16 +58,16 @@
     </license>
   </licenses>
   <properties>
-    <laokou.version>3.4.2</laokou.version>
+    <laokou.version>3.4.3</laokou.version>
     <java.version>21</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-    <spring-boot-maven-plugin.version>3.4.2</spring-boot-maven-plugin.version>
+    <spring-boot-maven-plugin.version>3.4.3</spring-boot-maven-plugin.version>
     <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
     <!--spring-boot版本-->
-    <spring-boot.version>3.4.2</spring-boot.version>
+    <spring-boot.version>3.4.3</spring-boot.version>
     <!--spring-cloud版本-->
     <spring-cloud.version>2024.0.0</spring-cloud.version>
     <!--spring-framework版本-->
@@ -380,8 +380,8 @@
         <configuration>
           <!--备份版本-->
           <generateBackupPoms>true</generateBackupPoms>
-          <newVersion>3.5.0</newVersion>
-          <oldVersion>3.4.2</oldVersion>
+          <newVersion>3.4.4</newVersion>
+          <oldVersion>3.4.3</oldVersion>
         </configuration>
       </plugin>
       <plugin>
