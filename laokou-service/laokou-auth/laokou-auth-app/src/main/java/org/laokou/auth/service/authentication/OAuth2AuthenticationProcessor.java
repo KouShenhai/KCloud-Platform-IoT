@@ -80,8 +80,9 @@ public class OAuth2AuthenticationProcessor {
 			auth.recordLog(eventId, e);
 			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
 			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
-		}
-		finally {
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();
 			// 发布事件
@@ -89,7 +90,7 @@ public class OAuth2AuthenticationProcessor {
 		}
 	}
 
-	private InfoV getInfo(HttpServletRequest request) {
+	private InfoV getInfo(HttpServletRequest request) throws Exception {
 		Capabilities capabilities = RequestUtil.getCapabilities(request);
 		String ip = IpUtil.getIpAddr(request);
 		String address = AddressUtil.getRealAddress(ip);

@@ -109,7 +109,7 @@ public final class UserConvertor {
 		return userProfileCO;
 	}
 
-	public static UserCO toClientObject(UserDO userDO) {
+	public static UserCO toClientObject(UserDO userDO) throws Exception {
 		String mail = userDO.getMail();
 		String mobile = userDO.getMobile();
 		UserCO userCO = new UserCO();
@@ -130,16 +130,20 @@ public final class UserConvertor {
 
 	public static List<UserCO> toClientObjects(List<UserDO> userDOList) {
 		return userDOList.stream().map(item -> {
-			UserCO userCO = toClientObject(item);
-			String mail = userCO.getMail();
-			String mobile = userCO.getMobile();
-			if (StringUtil.isNotEmpty(mail)) {
-				userCO.setMail(SensitiveUtil.formatMail(mail));
+			try {
+				UserCO userCO = toClientObject(item);
+				String mail = userCO.getMail();
+				String mobile = userCO.getMobile();
+				if (StringUtil.isNotEmpty(mail)) {
+					userCO.setMail(SensitiveUtil.formatMail(mail));
+				}
+				if (StringUtil.isNotEmpty(mobile)) {
+					userCO.setMobile(SensitiveUtil.formatMobile(mobile));
+				}
+				return userCO;
+			} catch (Exception e) {
+				throw new RuntimeException(e);
 			}
-			if (StringUtil.isNotEmpty(mobile)) {
-				userCO.setMobile(SensitiveUtil.formatMobile(mobile));
-			}
-			return userCO;
 		}).toList();
 	}
 

@@ -59,10 +59,22 @@ public class UserModifyCmdExe {
 		// 校验参数
 		UserE userE = UserConvertor.toEntity(cmd.getCo());
 		extensionExecutor.executeVoid(UserParamValidatorExtPt.class, BizScenario.valueOf(MODIFY, USER, SCENARIO),
-				extension -> extension.validate(userE, userMapper));
+				extension -> {
+					try {
+						extension.validate(userE, userMapper);
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+				});
 		userE.setUserRoleIds(userRoleMapper.selectIdsByUserId(userE.getId()));
 		userE.setUserDeptIds(userDeptMapper.selectIdsByUserId(userE.getId()));
-		transactionalUtil.executeInTransaction(() -> userDomainService.update(userE));
+		transactionalUtil.executeInTransaction(() -> {
+			try {
+				userDomainService.update(userE);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		});
 	}
 
 }

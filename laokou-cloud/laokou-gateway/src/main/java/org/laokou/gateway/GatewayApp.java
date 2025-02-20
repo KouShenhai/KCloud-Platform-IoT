@@ -41,6 +41,8 @@ import reactor.core.publisher.Hooks;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * 网关服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
@@ -78,7 +80,7 @@ public class GatewayApp implements CommandLineRunner {
     /// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
     /// client_secret => FpHwIfw4wY92dO
     /// ```
-	public static void main(String[] args) throws UnknownHostException {
+	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("Gateway应用程序");
 		stopWatch.start();
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "5555")));

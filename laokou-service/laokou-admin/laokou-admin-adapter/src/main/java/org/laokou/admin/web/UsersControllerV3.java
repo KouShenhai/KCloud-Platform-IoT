@@ -107,7 +107,7 @@ public class UsersControllerV3 {
 	@DataCache(name = USERS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:user:detail')")
 	@Operation(summary = "查看用户详情", description = "查看用户详情")
-	public Result<UserCO> getByIdV3(@PathVariable("id") Long id) {
+	public Result<UserCO> getByIdV3(@PathVariable("id") Long id) throws Exception {
 		return usersServiceI.getById(new UserGetQry(id));
 	}
 

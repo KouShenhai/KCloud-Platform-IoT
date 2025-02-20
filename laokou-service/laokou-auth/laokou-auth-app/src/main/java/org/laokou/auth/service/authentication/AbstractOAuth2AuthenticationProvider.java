@@ -17,6 +17,7 @@
 
 package org.laokou.auth.service.authentication;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,8 +42,6 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
-
-import java.io.IOException;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.Optional;
@@ -79,7 +78,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 		try {
 			return authentication(authentication, getPrincipal(request));
 		}
-		catch (IOException e) {
+		catch (Exception e) {
 			log.error("认证授权失败，错误信息：{}", e.getMessage());
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
@@ -98,7 +97,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 	 * 认证.
 	 * @param request 请求对象
 	 */
-	abstract Authentication getPrincipal(HttpServletRequest request) throws IOException;
+	abstract Authentication getPrincipal(HttpServletRequest request) throws Exception;
 
 	/**
 	 * 获取认证类型.
@@ -112,7 +111,7 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 	 * @param principal 认证对象
 	 * @return 令牌
 	 */
-	protected Authentication authentication(Authentication authentication, Authentication principal) {
+	protected Authentication authentication(Authentication authentication, Authentication principal) throws JsonProcessingException {
 		// 仿照授权码模式
 		// 生成token（access_token + refresh_token）
 		AbstractOAuth2AuthenticationToken auth2BaseAuthenticationToken = (AbstractOAuth2AuthenticationToken) authentication;

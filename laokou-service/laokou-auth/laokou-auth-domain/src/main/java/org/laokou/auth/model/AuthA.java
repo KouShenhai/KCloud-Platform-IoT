@@ -128,19 +128,19 @@ public class AuthA extends AggregateRoot {
 		this.captcha = new CaptchaV(uuid, captcha);
 	}
 
-	public void createUserByUsernamePassword() {
+	public void createUserByUsernamePassword() throws Exception {
 		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 
-	public void createUserByMobile() {
+	public void createUserByMobile() throws Exception {
 		this.user = new UserE(EMPTY, EMPTY, this.captcha.uuid());
 	}
 
-	public void createUserByMail() {
+	public void createUserByMail() throws Exception {
 		this.user = new UserE(EMPTY, this.captcha.uuid(), EMPTY);
 	}
 
-	public void createUserByAuthorizationCode() {
+	public void createUserByAuthorizationCode() throws Exception {
 		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 

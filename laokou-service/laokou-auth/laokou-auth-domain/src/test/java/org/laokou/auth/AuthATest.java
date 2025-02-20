@@ -45,7 +45,7 @@ import static org.mockito.Mockito.*;
 class AuthATest {
 
 	@Test
-	void testCreateUserByUsernamePassword() {
+	void testCreateUserByUsernamePassword() throws Exception {
 		AuthA authA = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		// 创建用户【用户名密码】
 		authA.createUserByUsernamePassword();
@@ -53,7 +53,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCreateUserByMobile() {
+	void testCreateUserByMobile() throws Exception {
 		AuthA authA = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
 		// 创建用户【手机号】
 		authA.createUserByMobile();
@@ -61,7 +61,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCreateUserByMail() {
+	void testCreateUserByMail() throws Exception {
 		AuthA authA = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
 		// 创建用户【邮箱】
 		authA.createUserByMail();
@@ -69,7 +69,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCreateUserByAuthorizationCode() {
+	void testCreateUserByAuthorizationCode() throws Exception {
 		AuthA authA = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
 		// 创建用户【授权码】
 		authA.createUserByAuthorizationCode();
@@ -149,7 +149,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckPassword() {
+	void testCheckPassword() throws Exception {
 		// 构造密码校验
 		PasswordValidator passwordValidator = mock(PasswordValidator.class);
 		doReturn(true).when(passwordValidator).validate("123", "202cb962ac59075b964b07152d234b70");
@@ -165,7 +165,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckUserStatus() {
+	void testCheckUserStatus() throws Exception {
 		// 创建用户【用户名密码】
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		auth.createUserByUsernamePassword();
@@ -175,7 +175,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckMenuPermissions() {
+	void testCheckMenuPermissions() throws Exception {
 		MenuGateway menuGateway = mock(MenuGateway.class);
 		// 创建用户【用户名密码】
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
@@ -190,7 +190,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckDeptPaths() {
+	void testCheckDeptPaths() throws Exception {
 		DeptGateway deptGateway = mock(DeptGateway.class);
 		// 创建用户【用户名密码】
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");

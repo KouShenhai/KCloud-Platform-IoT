@@ -27,6 +27,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * 监控启动类.
@@ -49,7 +51,7 @@ public class MonitorApp {
     /// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
     /// -Dserver.port=5000
     /// ```
-	public static void main(String[] args) throws UnknownHostException {
+	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "5000")));
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");

@@ -94,7 +94,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testUsernamePasswordAuth() {
+	void testUsernamePasswordAuth() throws Exception {
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		// 创建用户【用户名密码】
 		auth.createUserByUsernamePassword();
@@ -127,7 +127,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testMailAuth() {
+	void testMailAuth() throws Exception {
 		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
 		// 创建用户【邮箱】
 		auth.createUserByMail();
@@ -156,7 +156,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testMobileAuth() {
+	void testMobileAuth() throws Exception {
 		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
 		// 创建用户【手机号】
 		auth.createUserByMobile();
@@ -185,7 +185,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testAuthorizationCodeAuth() {
+	void testAuthorizationCodeAuth() throws Exception {
 		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
 		// 创建用户【授权码】
 		auth.createUserByAuthorizationCode();

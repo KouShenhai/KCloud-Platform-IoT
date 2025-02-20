@@ -35,6 +35,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author laokou
@@ -67,7 +69,7 @@ public class GeneratorApp {
 	/// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
 	/// client_secret => FpHwIfw4wY92dO
 	/// ```
-	public static void main(String[] args) throws UnknownHostException {
+	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "8086")));
 		// SpringSecurity 子线程读取父线程的上下文
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.TTL_MODE_INHERITABLETHREADLOCAL);

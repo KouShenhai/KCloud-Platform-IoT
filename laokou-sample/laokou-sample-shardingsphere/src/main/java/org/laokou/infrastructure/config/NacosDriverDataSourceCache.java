@@ -34,6 +34,7 @@
 
 package org.laokou.infrastructure.config;
 
+import com.alibaba.nacos.api.exception.NacosException;
 import lombok.Getter;
 import org.apache.shardingsphere.driver.api.yaml.YamlShardingSphereDataSourceFactory;
 import org.apache.shardingsphere.infra.url.core.ShardingSphereURL;
@@ -79,6 +80,8 @@ public final class NacosDriverDataSourceCache {
 		}
 		catch (final SQLException ex) {
 			throw (T) ex;
+		} catch (NacosException e) {
+			throw new RuntimeException(e);
 		}
 	}
 

@@ -64,6 +64,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		catch (SystemException e) {
 			throw new UsernameNotFoundException(e.getMsg(), e);
+		} catch (Exception e) {
+			log.error("用户认证失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_OAuth2_UserAuthFail","用户认证失败", e);
 		}
 	}
 

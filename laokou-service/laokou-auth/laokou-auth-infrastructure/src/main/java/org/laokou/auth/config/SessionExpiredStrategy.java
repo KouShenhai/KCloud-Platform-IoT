@@ -23,6 +23,8 @@ import org.springframework.security.web.session.SessionInformationExpiredEvent;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+
 import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.SESSION_EXPIRED;
 
 /**
@@ -32,7 +34,7 @@ import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.SES
 public class SessionExpiredStrategy implements SessionInformationExpiredStrategy {
 
 	@Override
-	public void onExpiredSessionDetected(SessionInformationExpiredEvent event) {
+	public void onExpiredSessionDetected(SessionInformationExpiredEvent event) throws IOException {
 		ResponseUtil.responseOk(event.getResponse(), Result.fail(SESSION_EXPIRED));
 	}
 

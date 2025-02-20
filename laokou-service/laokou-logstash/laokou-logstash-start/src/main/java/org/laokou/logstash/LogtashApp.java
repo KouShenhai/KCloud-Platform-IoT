@@ -35,6 +35,8 @@ import org.springframework.util.StopWatch;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author laokou
@@ -61,7 +63,7 @@ public class LogtashApp implements CommandLineRunner {
     /// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
     /// -Dserver.port=10003
     /// ```
-	public static void main(String[] args) throws UnknownHostException {
+	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("Logstash应用程序");
 		stopWatch.start();
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "10003")));
@@ -79,7 +81,7 @@ public class LogtashApp implements CommandLineRunner {
 	@Async
 	@Override
     public void run(String... args)  {
-		// 监听
+		// 监听消息
 		listenMessages();
     }
     // @formatter:on

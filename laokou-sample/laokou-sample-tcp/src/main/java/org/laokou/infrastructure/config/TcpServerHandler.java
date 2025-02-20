@@ -42,7 +42,7 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 	 * @param msg 消息
 	 */
 	@Override
-	public void channelRead(ChannelHandlerContext ctx, Object msg) throws InterruptedException {
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		boolean release = true;
 		try {
 			if (msg instanceof SensorCO co) {
@@ -73,7 +73,7 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	@Override
-	public void handlerRemoved(ChannelHandlerContext ctx) {
+	public void handlerRemoved(ChannelHandlerContext ctx) throws InterruptedException {
 		String channelId = ctx.channel().id().asLongText();
 		log.info("断开连接：{}", channelId);
 		SessionManager.remove(channelId);

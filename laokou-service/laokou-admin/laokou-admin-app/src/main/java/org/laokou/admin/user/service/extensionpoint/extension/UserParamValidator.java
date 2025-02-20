@@ -53,7 +53,7 @@ public final class UserParamValidator {
 		return validate();
 	}
 
-	public static ParamValidator.Validate validateUserName(UserE userE, UserMapper userMapper, boolean isSave) {
+	public static ParamValidator.Validate validateUserName(UserE userE, UserMapper userMapper, boolean isSave) throws Exception {
 		String username = userE.getUsername();
 		Long id = userE.getId();
 		String encryptUsername = AESUtil.encrypt(username);
@@ -78,7 +78,7 @@ public final class UserParamValidator {
 		return validate();
 	}
 
-	public static ParamValidator.Validate validateMail(UserE userE, UserMapper userMapper, boolean isSave) {
+	public static ParamValidator.Validate validateMail(UserE userE, UserMapper userMapper, boolean isSave) throws Exception {
 		String mail = userE.getMail();
 		if (StringUtil.isNotEmpty(mail)) {
 			if (!RegexUtil.mailRegex(mail)) {
@@ -101,7 +101,7 @@ public final class UserParamValidator {
 		return validate();
 	}
 
-	public static ParamValidator.Validate validateMobile(UserE userE, UserMapper userMapper, boolean isSave) {
+	public static ParamValidator.Validate validateMobile(UserE userE, UserMapper userMapper, boolean isSave) throws Exception {
 		String mobile = userE.getMobile();
 		if (StringUtil.isNotEmpty(mobile)) {
 			if (!RegexUtil.mobileRegex(mobile)) {

@@ -17,6 +17,7 @@
 
 package org.laokou.common.domain.handler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
@@ -51,7 +52,7 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 		}
 	}
 
-	protected abstract void handleDomainEvent(DomainEvent domainEvent);
+	protected abstract void handleDomainEvent(DomainEvent domainEvent) throws JsonProcessingException;
 
 	private void putTrace(MessageExt messageExt) {
 		String traceId = messageExt.getProperty(TRACE_ID);
