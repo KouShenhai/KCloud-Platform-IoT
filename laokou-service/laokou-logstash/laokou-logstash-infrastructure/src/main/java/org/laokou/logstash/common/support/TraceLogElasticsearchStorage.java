@@ -24,9 +24,9 @@ import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
@@ -42,8 +42,8 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 	private final ExecutorService EXECUTOR = ThreadUtil.newVirtualTaskExecutor();
 
 	@Override
-	public Mono<Void> batchSave(Mono<List<String>> messages) {
-		return messages.flatMap(item -> {
+	public Mono<Void> batchSave(Flux<String> messages) {
+		return messages.collectList().flatMap(item -> {
 			Map<String, TraceLogIndex> dataMap = item.stream()
 				.map(this::getTraceLogIndex)
 				.filter(Objects::nonNull)
