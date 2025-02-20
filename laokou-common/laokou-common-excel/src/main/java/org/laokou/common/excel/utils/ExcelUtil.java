@@ -139,8 +139,6 @@ public class ExcelUtil {
 
 	private static class DataListener<M, T> implements ReadListener<T> {
 
-		public static final int BATCH_COUNT = 1000;
-
 		/**
 		 * Temporary storage of data.
 		 */
@@ -168,7 +166,7 @@ public class ExcelUtil {
 
 		DataListener(Class<M> clazz, BiConsumer<M, T> consumer, HttpServletResponse response, MybatisUtil mybatisUtil,
 				String fileName) {
-			this(clazz, consumer, BATCH_COUNT, fileName, response, mybatisUtil);
+			this(clazz, consumer, DEFAULT_SIZE, fileName, response, mybatisUtil);
 		}
 
 		DataListener(Class<M> clazz, BiConsumer<M, T> consumer, int batchCount, String fileName,
@@ -178,7 +176,7 @@ public class ExcelUtil {
 			this.fileName = fileName;
 			this.response = response;
 			this.ERRORS = new ArrayList<>();
-			this.CACHED_DATA_LIST = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+			this.CACHED_DATA_LIST = ListUtils.newArrayListWithExpectedSize(DEFAULT_SIZE);
 			this.mybatisUtil = mybatisUtil;
 			this.consumer = consumer;
 		}
@@ -221,7 +219,7 @@ public class ExcelUtil {
 							FastExcel.writerSheet().head(Error.class).build());
 				}
 				else {
-					List<List<String>> partition = Lists.partition(ERRORS, BATCH_COUNT);
+					List<List<String>> partition = Lists.partition(ERRORS, DEFAULT_SIZE);
 					partition
 						.forEach(item -> writeSheet(item, Error.class, ImportExcelConvertor.INSTANCE, excelWriter));
 				}
