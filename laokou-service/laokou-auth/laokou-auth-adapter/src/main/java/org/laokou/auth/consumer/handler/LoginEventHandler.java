@@ -17,6 +17,7 @@
 
 package org.laokou.auth.consumer.handler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.micrometer.common.lang.NonNullApi;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.api.LoginLogServiceI;
@@ -50,7 +51,7 @@ public class LoginEventHandler extends AbstractDomainEventHandler {
 	}
 
 	@Override
-	protected void handleDomainEvent(DomainEvent domainEvent) {
+	protected void handleDomainEvent(DomainEvent domainEvent) throws JsonProcessingException {
 		loginLogServiceI.save(new LoginLogSaveCmd(LoginLogConvertor.toClientObject(domainEvent)));
 	}
 

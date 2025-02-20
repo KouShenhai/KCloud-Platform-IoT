@@ -54,9 +54,23 @@ public class UserSaveCmdExe {
 		// 校验参数
 		UserE userE = UserConvertor.toEntity(cmd.getCo());
 		extensionExecutor.executeVoid(UserParamValidatorExtPt.class, BizScenario.valueOf(SAVE, USER, SCENARIO),
-				extension -> extension.validate(userE, userMapper));
+				extension -> {
+					try {
+						extension.validate(userE, userMapper);
+					}
+					catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+				});
 		userE.setId(IdGenerator.defaultSnowflakeId());
-		transactionalUtil.executeInTransaction(() -> userDomainService.create(userE));
+		transactionalUtil.executeInTransaction(() -> {
+			try {
+				userDomainService.create(userE);
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		});
 	}
 
 }

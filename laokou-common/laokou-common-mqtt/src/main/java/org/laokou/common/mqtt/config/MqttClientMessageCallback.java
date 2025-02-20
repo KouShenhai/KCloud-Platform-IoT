@@ -18,7 +18,6 @@
 package org.laokou.common.mqtt.config;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.client.IMqttToken;
 import org.eclipse.paho.mqttv5.client.MqttAsyncClient;
@@ -62,7 +61,6 @@ public class MqttClientMessageCallback implements MqttCallback {
 	}
 
 	@Override
-	@SneakyThrows
 	public void connectComplete(boolean reconnect, String uri) {
 		if (reconnect) {
 			log.info("MQTT重连成功，URI：{}", uri);

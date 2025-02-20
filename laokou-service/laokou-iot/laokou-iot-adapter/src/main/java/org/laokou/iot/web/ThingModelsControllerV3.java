@@ -24,6 +24,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.thingModel.dto.*;
 import org.springframework.http.MediaType;
 import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.laokou.iot.thingModel.api.ThingModelsServiceI;
 import org.laokou.common.i18n.dto.Page;
@@ -92,7 +93,7 @@ public class ThingModelsControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('iot:thing-model:page')")
 	@Operation(summary = "分页查询物模型列表", description = "分页查询物模型列表")
-	public Result<Page<ThingModelCO>> pageV3(@RequestBody ThingModelPageQry qry) {
+	public Result<Page<ThingModelCO>> pageV3(@Validated @RequestBody ThingModelPageQry qry) {
 		return thingModelsServiceI.page(qry);
 	}
 

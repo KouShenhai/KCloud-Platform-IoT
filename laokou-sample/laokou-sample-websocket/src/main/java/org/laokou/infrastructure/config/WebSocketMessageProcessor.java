@@ -42,7 +42,7 @@ final class WebSocketMessageProcessor {
 
 	private final RocketMqTemplate rocketMqTemplate;
 
-	public void processMessage(MessageCO message, Channel channel) {
+	public void processMessage(MessageCO message, Channel channel) throws InterruptedException {
 		String clientId = channel.id().asLongText();
 		switch (MessageType.valueOf(message.getType().toUpperCase())) {
 			case PONG -> {

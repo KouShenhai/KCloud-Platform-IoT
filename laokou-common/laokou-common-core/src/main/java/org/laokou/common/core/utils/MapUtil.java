@@ -27,6 +27,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.yaml.snakeyaml.util.UriEncoder;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -194,7 +195,7 @@ public final class MapUtil {
 	 * @param request 请求对象
 	 * @return 请求参数Map对象
 	 */
-	public static Map<String, String> getParameters(HttpServletRequest request) {
+	public static Map<String, String> getParameters(HttpServletRequest request) throws IOException {
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		if (MapUtil.isNotEmpty(parameterMap)) {
 			return getParameters(parameterMap).toSingleValueMap();

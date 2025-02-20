@@ -26,6 +26,6 @@ import org.laokou.common.extension.ExtensionPointI;
  */
 public interface UserParamValidatorExtPt extends ExtensionPointI {
 
-	void validate(UserE userE, UserMapper userMapper);
+	void validate(UserE userE, UserMapper userMapper) throws Exception;
 
 }

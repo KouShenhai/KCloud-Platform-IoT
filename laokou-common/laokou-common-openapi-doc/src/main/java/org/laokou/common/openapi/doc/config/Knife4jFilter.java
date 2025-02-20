@@ -18,9 +18,9 @@
 package org.laokou.common.openapi.doc.config;
 
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.laokou.common.core.utils.ResponseUtil;
@@ -54,9 +54,8 @@ public class Knife4jFilter extends OncePerRequestFilter {
 	}
 
 	@Override
-	@SneakyThrows
 	protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response,
-			@NotNull FilterChain chain) {
+			@NotNull FilterChain chain) throws IOException, ServletException {
 		if (isOAuth2UrlRequest(request)) {
 			ResponseUtil.responseOk(response, HTML_CONTENT, MimeTypeUtils.TEXT_HTML_VALUE);
 		}

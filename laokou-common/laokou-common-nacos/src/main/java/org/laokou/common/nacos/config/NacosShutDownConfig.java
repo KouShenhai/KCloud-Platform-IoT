@@ -17,6 +17,7 @@
 
 package org.laokou.common.nacos.config;
 
+import com.alibaba.nacos.api.exception.NacosException;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +36,7 @@ public class NacosShutDownConfig {
 	private final Registration registration;
 
 	@PreDestroy
-	public void preDestroy() {
+	public void preDestroy() throws NacosException {
 		// 服务下线
 		log.info("开始执行服务下线");
 		serviceUtil.deregisterInstance(registration.getServiceId(), registration.getHost(), registration.getPort());

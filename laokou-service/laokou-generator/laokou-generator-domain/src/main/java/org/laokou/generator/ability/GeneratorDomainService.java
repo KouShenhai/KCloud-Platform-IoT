@@ -18,7 +18,6 @@
 package org.laokou.generator.ability;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.core.utils.TemplateUtil;
@@ -31,6 +30,7 @@ import org.laokou.generator.model.TableV;
 import org.laokou.generator.model.Template;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -106,8 +106,7 @@ public class GeneratorDomainService {
 		}
 	}
 
-	@SneakyThrows
-	private String getContent(Map<String, Object> map, String templatePath) {
+	private String getContent(Map<String, Object> map, String templatePath) throws IOException {
 		String template = ResourceUtil.getResource(templatePath).getContentAsString(StandardCharsets.UTF_8).trim();
 		return TemplateUtil.getContent(template, map);
 	}

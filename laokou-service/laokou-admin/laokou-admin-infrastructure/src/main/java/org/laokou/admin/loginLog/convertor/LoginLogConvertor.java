@@ -27,7 +27,6 @@ import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.excel.utils.ExcelUtil;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
-
 import java.util.List;
 
 /**
@@ -35,7 +34,7 @@ import java.util.List;
  *
  * @author laokou
  */
-public final class LoginLogConvertor implements ExcelUtil.ExcelConvert<LoginLogDO, LoginLogExcel> {
+public final class LoginLogConvertor implements ExcelUtil.ExcelConvertor<LoginLogDO, LoginLogExcel> {
 
 	public static final LoginLogConvertor INSTANCE = new LoginLogConvertor();
 
@@ -95,8 +94,13 @@ public final class LoginLogConvertor implements ExcelUtil.ExcelConvert<LoginLogD
 	}
 
 	@Override
-	public List<LoginLogExcel> toExcelList(List<LoginLogDO> list) {
+	public List<LoginLogExcel> toExcels(List<LoginLogDO> list) {
 		return list.stream().map(this::toExcel).toList();
+	}
+
+	@Override
+	public LoginLogDO toDataObject(LoginLogExcel excel) {
+		return null;
 	}
 
 	private LoginLogExcel toExcel(LoginLogDO loginLogDO) {

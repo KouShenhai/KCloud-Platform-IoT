@@ -20,10 +20,13 @@ package org.laokou.common.core.utils;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.SslUtil;
 
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -36,7 +39,17 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 @Slf4j
 public final class OkHttpUtil {
 
-	private static final OkHttpClient CLIENT = getOkHttpClient();
+	private static final OkHttpClient CLIENT;
+
+	static {
+		try {
+			CLIENT = getOkHttpClient();
+		}
+		catch (NoSuchAlgorithmException | KeyManagementException e) {
+			log.error("SSL初始化失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_OkHttp_SslInitFail", "SSL初始化失败", e);
+		}
+	}
 
 	private OkHttpUtil() {
 	}
@@ -62,7 +75,7 @@ public final class OkHttpUtil {
 		CLIENT.connectionPool().evictAll();
 	}
 
-	private static OkHttpClient getOkHttpClient() {
+	private static OkHttpClient getOkHttpClient() throws NoSuchAlgorithmException, KeyManagementException {
 		return new OkHttpClient.Builder()
 			.sslSocketFactory(SslUtil.sslContext().getSocketFactory(), SslUtil.DisableValidationTrustManager.INSTANCE)
 			.hostnameVerifier((hostname, session) -> true)

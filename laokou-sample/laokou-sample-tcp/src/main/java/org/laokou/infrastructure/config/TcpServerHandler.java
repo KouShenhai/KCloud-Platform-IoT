@@ -21,7 +21,6 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.client.dto.clientobject.SensorCO;
 import org.laokou.common.i18n.utils.JacksonUtil;
@@ -43,8 +42,7 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 	 * @param msg 消息
 	 */
 	@Override
-	@SneakyThrows
-	public void channelRead(ChannelHandlerContext ctx, Object msg) {
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		boolean release = true;
 		try {
 			if (msg instanceof SensorCO co) {
@@ -75,7 +73,7 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	@Override
-	public void handlerRemoved(ChannelHandlerContext ctx) {
+	public void handlerRemoved(ChannelHandlerContext ctx) throws InterruptedException {
 		String channelId = ctx.channel().id().asLongText();
 		log.info("断开连接：{}", channelId);
 		SessionManager.remove(channelId);

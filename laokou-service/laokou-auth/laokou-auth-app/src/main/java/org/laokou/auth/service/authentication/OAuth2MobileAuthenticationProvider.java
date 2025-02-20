@@ -51,7 +51,7 @@ public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authentica
 	}
 
 	@Override
-	Authentication getPrincipal(HttpServletRequest request) {
+	Authentication getPrincipal(HttpServletRequest request) throws Exception {
 		String code = request.getParameter(CODE);
 		String mobile = request.getParameter(MOBILE);
 		String tenantCode = request.getParameter(TENANT_CODE);

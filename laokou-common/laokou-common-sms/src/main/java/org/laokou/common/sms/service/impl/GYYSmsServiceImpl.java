@@ -17,6 +17,7 @@
 
 package org.laokou.common.sms.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.HttpUtil;
@@ -70,7 +71,7 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 
 	// @formatter:off
 	@Override
-	public SmsResult send(String mobile) {
+	public SmsResult send(String mobile) throws JsonProcessingException {
 		String name = "手机号验证码【国阳云】";
 		String captcha = RandomStringUtil.randomNumeric();
 		String templateId = smsProperties.getGyy().getTemplateId();

@@ -17,6 +17,7 @@
 
 package org.laokou.auth.convertor;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.laokou.auth.dto.clientobject.LoginLogCO;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.factory.DomainFactory;
@@ -68,7 +69,7 @@ public final class LoginLogConvertor {
 		return loginLogDO;
 	}
 
-	public static LoginLogCO toClientObject(DomainEvent domainEvent) {
+	public static LoginLogCO toClientObject(DomainEvent domainEvent) throws JsonProcessingException {
 		LoginEvent loginEvent = JacksonUtil.toBean(domainEvent.getPayload(), LoginEvent.class);
 		LoginLogCO loginLogCO = new LoginLogCO();
 		loginLogCO.setId(domainEvent.getAggregateId());

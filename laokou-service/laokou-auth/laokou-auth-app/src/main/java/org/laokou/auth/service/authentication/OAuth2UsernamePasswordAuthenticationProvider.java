@@ -51,7 +51,7 @@ public class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2
 	}
 
 	@Override
-	Authentication getPrincipal(HttpServletRequest request) {
+	Authentication getPrincipal(HttpServletRequest request) throws Exception {
 		String uuid = request.getParameter(UUID);
 		String captcha = request.getParameter(CAPTCHA);
 		String username = request.getParameter(USERNAME);

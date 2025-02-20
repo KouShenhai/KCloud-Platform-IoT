@@ -24,6 +24,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+
 import static org.laokou.common.core.utils.HttpUtil.getHttpClient;
 
 /**
@@ -35,7 +38,7 @@ import static org.laokou.common.core.utils.HttpUtil.getHttpClient;
 public class RestClientConfig {
 
 	@Bean
-	public RestClient restClient() {
+	public RestClient restClient() throws NoSuchAlgorithmException, KeyManagementException {
 		log.info("{} => Initializing Default RestClient", Thread.currentThread().getName());
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
 		factory.setHttpClient(getHttpClient());

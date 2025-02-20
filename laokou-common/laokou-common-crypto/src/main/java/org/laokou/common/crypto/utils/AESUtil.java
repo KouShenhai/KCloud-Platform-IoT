@@ -17,7 +17,6 @@
 
 package org.laokou.common.crypto.utils;
 
-import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.Assert;
@@ -77,8 +76,7 @@ public final class AESUtil {
 		return new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), AES);
 	}
 
-	@SneakyThrows
-	public static String encrypt(String plainText) {
+	public static String encrypt(String plainText) throws Exception {
 		return encrypt(plainText, SECRET_KEY, SECRET_IV);
 	}
 
@@ -96,8 +94,7 @@ public final class AESUtil {
 		return Base64.getEncoder().encodeToString(encryptedIVAndText);
 	}
 
-	@SneakyThrows
-	public static String decrypt(String encryptedText) {
+	public static String decrypt(String encryptedText) throws Exception {
 		return decrypt(encryptedText, SECRET_KEY, SECRET_IV);
 	}
 

@@ -109,22 +109,22 @@ public class UserE {
 	 */
 	private List<Long> userDeptIds;
 
-	public void encryptUsername() {
+	public void encryptUsername() throws Exception {
 		this.usernamePhrase = StringUtil.isEmpty(username) ? EMPTY : encryptStr(username);
 		this.username = AESUtil.encrypt(username);
 	}
 
-	public void encryptMail() {
+	public void encryptMail() throws Exception {
 		this.mailPhrase = StringUtil.isEmpty(mail) ? EMPTY : encryptStr(mail);
 		this.mail = AESUtil.encrypt(mail);
 	}
 
-	public void encryptMobile() {
+	public void encryptMobile() throws Exception {
 		this.mobilePhrase = StringUtil.isEmpty(mobile) ? EMPTY : encryptMobile(mobile);
 		this.mobile = AESUtil.encrypt(mobile);
 	}
 
-	private String encryptMobile(String str) {
+	private String encryptMobile(String str) throws Exception {
 		List<String> list = new ArrayList<>(3);
 		list.add(AESUtil.encrypt(str.substring(0, 3)));
 		list.add(AESUtil.encrypt(str.substring(3, 7)));
@@ -132,7 +132,7 @@ public class UserE {
 		return StringUtil.collectionToDelimitedString(list, "~");
 	}
 
-	private String encryptStr(String str) {
+	private String encryptStr(String str) throws Exception {
 		List<String> list = new ArrayList<>(30);
 		for (int i = 0; i <= str.length() - 4; i++) {
 			list.add(AESUtil.encrypt(str.substring(i, i + 4)));

@@ -18,7 +18,6 @@
 package org.laokou.common.core.utils;
 
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.JacksonUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
@@ -26,6 +25,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
@@ -46,8 +46,7 @@ public final class ResponseUtil {
 	 * @param response 响应对象
 	 * @param obj 对象
 	 */
-	@SneakyThrows
-	public static void responseOk(HttpServletResponse response, Object obj) {
+	public static void responseOk(HttpServletResponse response, Object obj) throws IOException {
 		responseOk(response, JacksonUtil.toJsonStr(obj), APPLICATION_JSON_VALUE);
 	}
 
@@ -56,14 +55,12 @@ public final class ResponseUtil {
 	 * @param response 响应对象
 	 * @param str 对象
 	 */
-	@SneakyThrows
-	public static void responseOk(HttpServletResponse response, String str, String contentType) {
+	public static void responseOk(HttpServletResponse response, String str, String contentType) throws IOException {
 		response.setStatus(HttpStatus.OK.value());
 		response(response, str, contentType);
 	}
 
-	@SneakyThrows
-	private static void response(HttpServletResponse response, String str, String contentType) {
+	private static void response(HttpServletResponse response, String str, String contentType) throws IOException {
 		response.setContentType(contentType);
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentLength(str.getBytes(StandardCharsets.UTF_8).length);

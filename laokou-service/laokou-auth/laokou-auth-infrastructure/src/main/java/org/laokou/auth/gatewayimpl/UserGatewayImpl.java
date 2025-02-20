@@ -24,13 +24,13 @@ import org.laokou.auth.gateway.UserGateway;
 import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.UserE;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.utils.MessageUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.DATA_TABLE_NOT_EXIST;
+import static org.laokou.common.i18n.common.exception.BizException.OAuth2.DATA_TABLE_NOT_EXIST;
 import static org.laokou.common.tenant.constant.Constant.Master.USER_TABLE;
 
 /**
@@ -58,12 +58,12 @@ public class UserGatewayImpl implements UserGateway {
 		}
 		catch (BadSqlGrammarException e) {
 			log.error("表 {} 不存在，错误信息：{}", USER_TABLE, e.getMessage());
-			throw new SystemException(DATA_TABLE_NOT_EXIST,
+			throw new BizException(DATA_TABLE_NOT_EXIST,
 					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { USER_TABLE }));
 		}
 		catch (Exception e) {
 			log.error("查询用户失败，错误信息：{}", e.getMessage());
-			throw new SystemException(SystemException.User.QUERY_FAILED);
+			throw new BizException(BizException.User.QUERY_FAILED);
 		}
 	}
 

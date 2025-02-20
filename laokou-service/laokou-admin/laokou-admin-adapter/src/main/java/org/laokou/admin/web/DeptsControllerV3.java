@@ -32,6 +32,7 @@ import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -99,7 +100,7 @@ public class DeptsControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:dept:page')")
 	@Operation(summary = "分页查询部门列表", description = "分页查询部门列表")
-	public Result<Page<DeptCO>> pageV3(@RequestBody DeptPageQry qry) {
+	public Result<Page<DeptCO>> pageV3(@Validated @RequestBody DeptPageQry qry) {
 		return deptsServiceI.page(qry);
 	}
 

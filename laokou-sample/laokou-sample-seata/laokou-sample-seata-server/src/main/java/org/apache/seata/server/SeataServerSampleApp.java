@@ -22,6 +22,9 @@ import org.laokou.common.i18n.utils.SslUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * @author spilledyear@outlook.com
  */
@@ -37,7 +40,7 @@ public class SeataServerSampleApp {
 	/// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
 	/// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
 	/// ```
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NoSuchAlgorithmException, KeyManagementException {
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题

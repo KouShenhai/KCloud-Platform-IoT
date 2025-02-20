@@ -18,7 +18,6 @@
 package org.laokou.common.netty.config;
 
 import io.netty.channel.Channel;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.StringUtil;
 
@@ -44,8 +43,7 @@ public class SessionManager {
 
 	private static final Lock READ_LOCK = READ_WRITE_LOCK.readLock();
 
-	@SneakyThrows
-	public static void add(String clientId, Channel channel) {
+	public static void add(String clientId, Channel channel) throws InterruptedException {
 		boolean isLocked = false;
 		int retry = 3;
 		try {
@@ -66,8 +64,7 @@ public class SessionManager {
 		}
 	}
 
-	@SneakyThrows
-	public static Channel get(String clientId) {
+	public static Channel get(String clientId) throws InterruptedException {
 		boolean isLocked = false;
 		int retry = 3;
 		try {
@@ -88,8 +85,7 @@ public class SessionManager {
 		}
 	}
 
-	@SneakyThrows
-	public static void remove(String channelId) {
+	public static void remove(String channelId) throws InterruptedException {
 		boolean isLocked = false;
 		int retry = 3;
 		try {

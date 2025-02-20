@@ -18,7 +18,6 @@
 package org.laokou.auth;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -159,7 +158,7 @@ class OAuth2ApiTest {
 	@Test
 	void testUsernamePasswordAuthApi() {
 		log.info("---------- 用户名密码认证模式开始 ----------");
-		String captcha = getCaptcha(UUID, RedisKeyUtil.getUsernamePasswordAuthCaptchaKey(UUID));
+		String captcha = getCaptcha(RedisKeyUtil.getUsernamePasswordAuthCaptchaKey(UUID));
 		String encryptUsername = RSAUtil.encryptByPublicKey(USERNAME);
 		String encryptPassword = RSAUtil.encryptByPublicKey(PASSWORD);
 		String decryptUsername = RSAUtil.decryptByPrivateKey(encryptUsername);
@@ -350,7 +349,6 @@ class OAuth2ApiTest {
 		}
 	}
 
-	@SneakyThrows
 	private Map<String, String> usernamePasswordAuth(String captcha, String username, String password) {
 		try {
 			String apiUrl = getOAuthApiUrl();
@@ -387,9 +385,8 @@ class OAuth2ApiTest {
 		}
 	}
 
-	@SneakyThrows
-	private String getCaptcha(String uuid, String key) {
-		restClient.get().uri(URI.create(getCaptchaApiUrlV3(uuid))).retrieve().toBodilessEntity();
+	private String getCaptcha(String key) {
+		restClient.get().uri(URI.create(getCaptchaApiUrlV3(OAuth2ApiTest.UUID))).retrieve().toBodilessEntity();
 		String captcha = redisUtil.get(key).toString();
 		Assert.isTrue(StringUtil.isNotEmpty(captcha), "captcha is empty");
 		return captcha;

@@ -17,6 +17,7 @@
 
 package org.laokou.auth.consumer.handler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
@@ -54,7 +55,7 @@ public class SendMobileCaptchaEventHandler extends AbstractDomainEventHandler {
 	}
 
 	@Override
-	protected void handleDomainEvent(DomainEvent domainEvent) {
+	protected void handleDomainEvent(DomainEvent domainEvent) throws JsonProcessingException {
 		SendCaptchaEvent evt = JacksonUtil.toBean(domainEvent.getPayload(), SendCaptchaEvent.class);
 		noticeLogServiceI.save(new NoticeLogSaveCmd(
 				NoticeLogConvertor.toClientObject(domainEvent, smsService.send(evt.uuid()), evt.uuid())));

@@ -17,12 +17,12 @@
 
 package org.laokou.common.mybatisplus.utils;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
+import org.laokou.common.i18n.common.exception.SystemException;
 
 /**
  * @author laokou
@@ -30,14 +30,13 @@ import net.sf.jsqlparser.statement.select.Select;
 @Slf4j
 public class SqlUtil {
 
-	@SneakyThrows
 	public static Statement parseSql(String sql) {
 		try {
 			return CCJSqlParserUtil.parse(sql);
 		}
 		catch (Exception e) {
-			log.error("SQL解析失败");
-			throw new RuntimeException("SQL解析失败");
+			log.error("SQL解析失败", e);
+			throw new SystemException("S_DS_SqlParseFail", "SQL解析失败", e);
 		}
 	}
 

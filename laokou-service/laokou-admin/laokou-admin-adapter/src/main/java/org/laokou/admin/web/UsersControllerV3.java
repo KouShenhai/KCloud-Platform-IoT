@@ -32,6 +32,7 @@ import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -97,7 +98,7 @@ public class UsersControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:user:page')")
 	@Operation(summary = "分页查询用户列表", description = "分页查询用户列表")
-	public Result<Page<UserCO>> pageV3(@RequestBody UserPageQry qry) {
+	public Result<Page<UserCO>> pageV3(@Validated @RequestBody UserPageQry qry) {
 		return usersServiceI.page(qry);
 	}
 
@@ -106,7 +107,7 @@ public class UsersControllerV3 {
 	@DataCache(name = USERS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:user:detail')")
 	@Operation(summary = "查看用户详情", description = "查看用户详情")
-	public Result<UserCO> getByIdV3(@PathVariable("id") Long id) {
+	public Result<UserCO> getByIdV3(@PathVariable("id") Long id) throws Exception {
 		return usersServiceI.getById(new UserGetQry(id));
 	}
 

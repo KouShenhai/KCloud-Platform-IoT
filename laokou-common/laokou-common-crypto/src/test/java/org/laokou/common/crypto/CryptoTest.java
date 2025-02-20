@@ -42,7 +42,7 @@ class CryptoTest {
 	}
 
 	@Test
-	void testAES() {
+	void testAES() throws Exception {
 		String encryptUsername = AESUtil.encrypt(USERNAME);
 		String decryptUsername = AESUtil.decrypt(encryptUsername);
 		Assertions.assertEquals(USERNAME, decryptUsername);

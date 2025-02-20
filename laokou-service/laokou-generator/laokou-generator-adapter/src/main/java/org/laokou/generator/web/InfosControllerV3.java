@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.http.MediaType;
 import org.laokou.generator.info.dto.clientobject.InfoCO;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.laokou.generator.info.api.InfosServiceI;
 import org.laokou.generator.info.dto.*;
@@ -92,7 +93,7 @@ public class InfosControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('generator:info:page')")
 	@Operation(summary = "分页查询代码生成器信息列表", description = "分页查询代码生成器信息列表")
-	public Result<Page<InfoCO>> pageV3(@RequestBody InfoPageQry qry) {
+	public Result<Page<InfoCO>> pageV3(@Validated @RequestBody InfoPageQry qry) {
 		return infosServiceI.page(qry);
 	}
 

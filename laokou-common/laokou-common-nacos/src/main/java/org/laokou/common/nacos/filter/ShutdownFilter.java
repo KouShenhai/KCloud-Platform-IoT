@@ -22,7 +22,6 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.context.ShutdownHolder;
 import org.laokou.common.core.utils.IdGenerator;
@@ -36,6 +35,7 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
+import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -61,8 +61,7 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 	}
 
 	@Override
-	@SneakyThrows
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException {
 		if (open()) {
 			ResponseUtil.responseOk((HttpServletResponse) response, Result.ok(EMPTY));
 			return;

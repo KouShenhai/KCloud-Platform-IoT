@@ -22,8 +22,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.secret.annotation.ApiSecret;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,6 +35,7 @@ import org.springframework.web.servlet.HandlerMapping;
 /**
  * @author laokou
  */
+@Slf4j
 @NonNullApi
 public class ApiSecretRequestFilter extends OncePerRequestFilter {
 
@@ -42,15 +44,20 @@ public class ApiSecretRequestFilter extends OncePerRequestFilter {
 	private HandlerMapping handlerMapping;
 
 	@Override
-	@SneakyThrows
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
-		HandlerMethod handlerMethod = RequestUtil.getHandlerMethod(request, handlerMapping);
-		if (handlerMethod != null && handlerMethod.getMethod().isAnnotationPresent(ApiSecret.class)) {
-			ServletRequest requestWrapper = new RequestUtil.RequestWrapper(request);
-			chain.doFilter(requestWrapper, response);
+		try {
+			HandlerMethod handlerMethod = RequestUtil.getHandlerMethod(request, handlerMapping);
+			if (handlerMethod != null && handlerMethod.getMethod().isAnnotationPresent(ApiSecret.class)) {
+				ServletRequest requestWrapper = new RequestUtil.RequestWrapper(request);
+				chain.doFilter(requestWrapper, response);
+			}
+			else {
+				chain.doFilter(request, response);
+			}
 		}
-		else {
-			chain.doFilter(request, response);
+		catch (Exception e) {
+			log.error("ApiSecretRequestFilter error", e);
+			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 	}
 

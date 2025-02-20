@@ -37,9 +37,9 @@ package org.laokou.infrastructure.config;
 import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.cloud.nacos.NacosConfigProperties;
 import com.alibaba.nacos.api.config.ConfigService;
+import com.alibaba.nacos.api.exception.NacosException;
 import com.baomidou.dynamic.datasource.toolkit.CryptoUtils;
 import com.google.common.base.Preconditions;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.infra.url.core.ShardingSphereURL;
 import org.laokou.common.core.utils.CollectionUtil;
@@ -93,8 +93,7 @@ public final class NacosShardingSphereURLLoadEngine {
 	 * Load configuration content.
 	 * @return loaded content
 	 */
-	@SneakyThrows
-	public byte[] loadContent() {
+	public byte[] loadContent() throws IOException, NacosException {
 		NacosConfigProperties properties = PropertyUtil.bindOrCreate(NACOS_CONFIG_PREFIX, NacosConfigProperties.class,
 				BIND_YAML_NAME, YAML_FORMAT_NAME);
 		String group = properties.getGroup();

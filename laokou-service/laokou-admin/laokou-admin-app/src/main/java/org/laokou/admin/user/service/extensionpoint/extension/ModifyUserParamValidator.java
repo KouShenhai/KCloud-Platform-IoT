@@ -33,7 +33,7 @@ import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 public class ModifyUserParamValidator implements UserParamValidatorExtPt {
 
 	@Override
-	public void validate(UserE userE, UserMapper userMapper) {
+	public void validate(UserE userE, UserMapper userMapper) throws Exception {
 		ParamValidator.validate(
 				// 校验ID
 				UserParamValidator.validateId(userE),

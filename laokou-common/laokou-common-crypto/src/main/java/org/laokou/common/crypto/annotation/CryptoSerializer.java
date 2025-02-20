@@ -24,13 +24,13 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ObjectUtil;
-
-import java.io.IOException;
 
 /**
  * @author laokou
  */
+@Slf4j
 @NoArgsConstructor
 @AllArgsConstructor
 public class CryptoSerializer extends JsonSerializer<String> implements ContextualSerializer {
@@ -40,12 +40,17 @@ public class CryptoSerializer extends JsonSerializer<String> implements Contextu
 	private boolean isEncrypt;
 
 	@Override
-	public void serialize(String str, JsonGenerator generator, SerializerProvider provider) throws IOException {
-		if (isEncrypt) {
-			generator.writeString(cipherType.encrypt(str));
+	public void serialize(String str, JsonGenerator generator, SerializerProvider provider) {
+		try {
+			if (isEncrypt) {
+				generator.writeString(cipherType.encrypt(str));
+			}
+			else {
+				generator.writeString(cipherType.decrypt(str));
+			}
 		}
-		else {
-			generator.writeString(cipherType.decrypt(str));
+		catch (Exception e) {
+			log.error("加密/解密失败，错误信息：{}", e.getMessage(), e);
 		}
 	}
 

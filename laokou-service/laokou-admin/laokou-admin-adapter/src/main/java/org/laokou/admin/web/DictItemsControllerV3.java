@@ -30,6 +30,7 @@ import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -91,7 +92,7 @@ public class DictItemsControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:dict-item:page')")
 	@Operation(summary = "分页查询字典项列表", description = "分页查询字典项列表")
-	public Result<Page<DictItemCO>> pageV3(@RequestBody DictItemPageQry qry) {
+	public Result<Page<DictItemCO>> pageV3(@Validated @RequestBody DictItemPageQry qry) {
 		return dictItemsServiceI.page(qry);
 	}
 

@@ -29,6 +29,8 @@ import org.laokou.common.i18n.utils.SslUtil;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -52,13 +54,14 @@ class CrawlerTest {
 			try {
 				crawl(url, name);
 			}
-			catch (IOException | InterruptedException e) {
+			catch (IOException | InterruptedException | NoSuchAlgorithmException | KeyManagementException e) {
 				throw new RuntimeException(e);
 			}
 		});
 	}
 
-	private void crawl(String url, String name) throws IOException, InterruptedException {
+	private void crawl(String url, String name)
+			throws IOException, InterruptedException, NoSuchAlgorithmException, KeyManagementException {
 		String directory = DIRECTORY + name;
 		Document document = Jsoup.connect(url).get();
 		Elements links = document.select("a[href]");

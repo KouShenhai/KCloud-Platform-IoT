@@ -32,6 +32,7 @@ import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -99,7 +100,7 @@ public class MenusControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:menu:page')")
 	@Operation(summary = "分页查询菜单列表", description = "分页查询菜单列表")
-	public Result<Page<MenuCO>> pageV3(@RequestBody MenuPageQry qry) {
+	public Result<Page<MenuCO>> pageV3(@Validated @RequestBody MenuPageQry qry) {
 		return menusServiceI.page(qry);
 	}
 

@@ -51,7 +51,7 @@ public class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticati
 	}
 
 	@Override
-	Authentication getPrincipal(HttpServletRequest request) {
+	Authentication getPrincipal(HttpServletRequest request) throws Exception {
 		String code = request.getParameter(CODE);
 		String mail = request.getParameter(MAIL);
 		String tenantCode = request.getParameter(TENANT_CODE);

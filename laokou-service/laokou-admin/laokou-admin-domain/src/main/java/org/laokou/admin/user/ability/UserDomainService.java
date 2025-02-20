@@ -37,7 +37,7 @@ public class UserDomainService {
 
 	private final UserDeptGateway userDeptGateway;
 
-	public void create(UserE userE) {
+	public void create(UserE userE) throws Exception {
 		// 用户名加密
 		userE.encryptUsername();
 		// 邮箱加密
@@ -49,7 +49,7 @@ public class UserDomainService {
 		userDeptGateway.create(userE);
 	}
 
-	public void update(UserE userE) {
+	public void update(UserE userE) throws Exception {
 		// 邮箱加密
 		userE.encryptMail();
 		// 手机号加密

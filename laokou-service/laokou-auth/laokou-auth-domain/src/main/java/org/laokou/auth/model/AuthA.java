@@ -24,8 +24,7 @@ import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.common.i18n.common.constant.EventType;
 import org.laokou.common.i18n.common.exception.GlobalException;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.context.TenantRedisContextHolder;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.utils.JacksonUtil;
@@ -40,7 +39,7 @@ import static org.laokou.auth.model.GrantType.*;
 import static org.laokou.common.i18n.common.constant.EventType.LOGIN_EVENT;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
-import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
+import static org.laokou.common.i18n.common.exception.BizException.OAuth2.*;
 
 /**
  * 认证聚合.
@@ -129,19 +128,19 @@ public class AuthA extends AggregateRoot {
 		this.captcha = new CaptchaV(uuid, captcha);
 	}
 
-	public void createUserByUsernamePassword() {
+	public void createUserByUsernamePassword() throws Exception {
 		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 
-	public void createUserByMobile() {
+	public void createUserByMobile() throws Exception {
 		this.user = new UserE(EMPTY, EMPTY, this.captcha.uuid());
 	}
 
-	public void createUserByMail() {
+	public void createUserByMail() throws Exception {
 		this.user = new UserE(EMPTY, this.captcha.uuid(), EMPTY);
 	}
 
-	public void createUserByAuthorizationCode() {
+	public void createUserByAuthorizationCode() throws Exception {
 		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 
@@ -183,27 +182,25 @@ public class AuthA extends AggregateRoot {
 
 	public void checkTenantId() {
 		if (ObjectUtil.isNull(super.tenantId)) {
-			throw new SystemException(TENANT_NOT_EXIST);
+			throw new BizException(TENANT_NOT_EXIST);
 		}
-		// 写入租户ID到上下文
-		TenantRedisContextHolder.set(super.tenantId);
 	}
 
 	public void checkCaptcha(CaptchaValidator captchaValidator) {
 		if (isUseCaptcha()) {
 			Boolean validate = captchaValidator.validate(getCaptchaCacheKey(), captcha.captcha());
 			if (ObjectUtil.isNull(validate)) {
-				throw new SystemException(CAPTCHA_EXPIRED);
+				throw new BizException(CAPTCHA_EXPIRED);
 			}
 			if (!validate) {
-				throw new SystemException(CAPTCHA_ERROR);
+				throw new BizException(CAPTCHA_ERROR);
 			}
 		}
 	}
 
 	public void checkSourcePrefix() {
 		if (ObjectUtil.isNull(sourcePrefix)) {
-			throw new SystemException(DATA_SOURCE_NOT_EXIST);
+			throw new BizException(DATA_SOURCE_NOT_EXIST);
 		}
 	}
 
@@ -215,25 +212,25 @@ public class AuthA extends AggregateRoot {
 
 	public void checkPassword(PasswordValidator passwordValidator) {
 		if (isUsePassword() && !passwordValidator.validate(this.password, user.getPassword())) {
-			throw new SystemException(USERNAME_PASSWORD_ERROR);
+			throw new BizException(USERNAME_PASSWORD_ERROR);
 		}
 	}
 
 	public void checkUserStatus() {
 		if (ObjectUtil.equals(UserStatus.DISABLE.getCode(), this.user.getStatus())) {
-			throw new SystemException(USER_DISABLED);
+			throw new BizException(USER_DISABLED);
 		}
 	}
 
 	public void checkMenuPermissions() {
 		if (CollectionUtils.isEmpty(this.permissions)) {
-			throw new SystemException(FORBIDDEN);
+			throw new BizException(FORBIDDEN);
 		}
 	}
 
 	public void checkDeptPaths() {
 		if (CollectionUtils.isEmpty(this.deptPaths)) {
-			throw new SystemException(FORBIDDEN);
+			throw new BizException(FORBIDDEN);
 		}
 	}
 
@@ -289,7 +286,7 @@ public class AuthA extends AggregateRoot {
 			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
 					LoginStatus.OK.getCode(), EMPTY, grantType.getCode(), super.instant);
 		}
-		else if (e instanceof SystemException ex) {
+		else if (e instanceof BizException ex) {
 			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
 					LoginStatus.FAIL.getCode(), ex.getMsg(), grantType.getCode(), super.instant);
 		}

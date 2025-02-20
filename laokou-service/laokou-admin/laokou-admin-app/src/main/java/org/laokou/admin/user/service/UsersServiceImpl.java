@@ -86,7 +86,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public Result<UserCO> getById(UserGetQry qry) {
+	public Result<UserCO> getById(UserGetQry qry) throws Exception {
 		return userGetQryExe.execute(qry);
 	}
 

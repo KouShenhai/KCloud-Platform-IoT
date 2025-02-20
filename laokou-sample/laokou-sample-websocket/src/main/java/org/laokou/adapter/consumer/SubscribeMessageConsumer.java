@@ -17,6 +17,7 @@
 
 package org.laokou.adapter.consumer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.Future;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +63,7 @@ public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 			TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(co.getContent());
 			List<Callable<Future<Void>>> callableList = co.getReceivers().stream().map(clientId -> (Callable<Future<Void>>) () -> webSocketServer.send(clientId, webSocketFrame)).toList();
 			executor.invokeAll(callableList);
-		} catch (InterruptedException e) {
+		} catch (InterruptedException | JsonProcessingException e) {
 			Thread.currentThread().interrupt();
 			log.error("错误信息：{}", e.getMessage());
 			throw new SystemException("S_UnKnow_Error", e.getMessage());

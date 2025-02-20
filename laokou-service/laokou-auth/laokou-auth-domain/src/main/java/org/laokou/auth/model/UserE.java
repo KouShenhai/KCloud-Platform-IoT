@@ -77,7 +77,7 @@ public class UserE extends Identifier {
 	public UserE() {
 	}
 
-	public UserE(String username, String mail, String mobile) {
+	public UserE(String username, String mail, String mobile) throws Exception {
 		this.username = AESUtil.encrypt(username);
 		this.mail = AESUtil.encrypt(mail);
 		this.mobile = AESUtil.encrypt(mobile);

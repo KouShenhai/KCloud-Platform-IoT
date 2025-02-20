@@ -30,6 +30,7 @@ import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -91,7 +92,7 @@ public class OssControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:oss:page')")
 	@Operation(summary = "分页查询OSS列表", description = "分页查询OSS列表")
-	public Result<Page<OssCO>> pageV3(@RequestBody OssPageQry qry) {
+	public Result<Page<OssCO>> pageV3(@Validated @RequestBody OssPageQry qry) {
 		return ossServiceI.page(qry);
 	}
 

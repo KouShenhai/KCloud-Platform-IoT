@@ -25,8 +25,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import lombok.SneakyThrows;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -69,8 +67,7 @@ public final class JacksonUtil {
 	 * @param <T> 类型
 	 * @return Bean
 	 */
-	@SneakyThrows
-	public static <T> T toBean(String json, Class<T> clazz) {
+	public static <T> T toBean(String json, Class<T> clazz) throws JsonProcessingException {
 		return MAPPER.readValue(json, javaType(clazz));
 	}
 
@@ -81,8 +78,7 @@ public final class JacksonUtil {
 	 * @param <T> 类型
 	 * @return Bean
 	 */
-	@SneakyThrows
-	public static <T> T toBean(byte[] arr, Class<T> clazz) {
+	public static <T> T toBean(byte[] arr, Class<T> clazz) throws IOException {
 		return MAPPER.readValue(arr, javaType(clazz));
 	}
 
@@ -186,8 +182,7 @@ public final class JacksonUtil {
 	 * @param json json字符串
 	 * @return 树节点
 	 */
-	@SneakyThrows
-	public static JsonNode readTree(String json) {
+	public static JsonNode readTree(String json) throws JsonProcessingException {
 		return MAPPER.readTree(json);
 	}
 

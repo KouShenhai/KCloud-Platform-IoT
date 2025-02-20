@@ -21,7 +21,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.MapType;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
@@ -73,7 +72,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 	// @formatter:on
 
 	@Override
-	public void save(@NonNull OAuth2Authorization authorization) {
+	public void save(@NonNull OAuth2Authorization authorization) throws JsonProcessingException {
 		RedisOAuth2Authorization redisOAuth2Authorization = convert(authorization);
 		List<Instant> expireAtList = Stream.of(redisOAuth2Authorization.getAuthorizationCodeExpiresAt(),
 				redisOAuth2Authorization.getAccessTokenExpiresAt(), redisOAuth2Authorization.getOidcIdTokenExpiresAt(),
@@ -133,7 +132,6 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		};
 	}
 
-	@SneakyThrows
 	private OAuth2Authorization parse(RedisOAuth2Authorization redisOAuth2Authorization) {
 		RegisteredClient registeredClient = registeredClientRepository
 			.findByClientId(redisOAuth2Authorization.getRegisteredClientId());
@@ -247,8 +245,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 	}
 
 	// @formatter:off
-	@SneakyThrows
-	private RedisOAuth2Authorization convert(OAuth2Authorization authorization) {
+	private RedisOAuth2Authorization convert(OAuth2Authorization authorization) throws JsonProcessingException {
 		RedisOAuth2Authorization redisOAuth2Authorization = new RedisOAuth2Authorization();
 		redisOAuth2Authorization.setId(authorization.getId());
 		redisOAuth2Authorization.setRegisteredClientId(authorization.getRegisteredClientId());
@@ -274,8 +271,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 	// @formatter:on
 
 	// @formatter:off
-	@SneakyThrows
-	private void setAccessToken(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization) {
+	private void setAccessToken(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization) throws JsonProcessingException {
 		OAuth2Authorization.Token<OAuth2AccessToken> token = authorization.getAccessToken();
 		if (ObjectUtil.isNotNull(token)) {
 			OAuth2AccessToken accessToken = token.getToken();
@@ -289,8 +285,8 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 	}
 	// @formatter:on
 
-	@SneakyThrows
-	private void setRefreshToken(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization) {
+	private void setRefreshToken(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization)
+			throws JsonProcessingException {
 		OAuth2Authorization.Token<OAuth2RefreshToken> token = authorization.getRefreshToken();
 		if (ObjectUtil.isNotNull(token)) {
 			OAuth2RefreshToken refreshToken = token.getToken();
@@ -301,9 +297,8 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		}
 	}
 
-	@SneakyThrows
 	private void setAuthorizationCode(OAuth2Authorization authorization,
-			RedisOAuth2Authorization redisOAuth2Authorization) {
+			RedisOAuth2Authorization redisOAuth2Authorization) throws JsonProcessingException {
 		OAuth2Authorization.Token<OAuth2AuthorizationCode> token = authorization
 			.getToken(OAuth2AuthorizationCode.class);
 		if (ObjectUtil.isNotNull(token)) {
@@ -315,8 +310,8 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		}
 	}
 
-	@SneakyThrows
-	private void setOidcIdToken(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization) {
+	private void setOidcIdToken(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization)
+			throws JsonProcessingException {
 		OAuth2Authorization.Token<OidcIdToken> token = authorization.getToken(OidcIdToken.class);
 		if (ObjectUtil.isNotNull(token)) {
 			OidcIdToken oidcIdToken = token.getToken();
@@ -328,8 +323,8 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		}
 	}
 
-	@SneakyThrows
-	private void setUserCode(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization) {
+	private void setUserCode(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization)
+			throws JsonProcessingException {
 		OAuth2Authorization.Token<OAuth2UserCode> token = authorization.getToken(OAuth2UserCode.class);
 		if (ObjectUtil.isNotNull(token)) {
 			OAuth2UserCode userCode = token.getToken();
@@ -340,8 +335,8 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		}
 	}
 
-	@SneakyThrows
-	private void setDeviceCode(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization) {
+	private void setDeviceCode(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization)
+			throws JsonProcessingException {
 		OAuth2Authorization.Token<OAuth2DeviceCode> token = authorization.getToken(OAuth2DeviceCode.class);
 		if (ObjectUtil.isNotNull(token)) {
 			OAuth2DeviceCode deviceCode = token.getToken();

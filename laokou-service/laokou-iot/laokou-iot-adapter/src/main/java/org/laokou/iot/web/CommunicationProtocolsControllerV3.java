@@ -24,6 +24,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.communicationProtocol.dto.*;
 import org.springframework.http.MediaType;
 import org.laokou.iot.communicationProtocol.dto.clientobject.CommunicationProtocolCO;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.laokou.iot.communicationProtocol.api.CommunicationProtocolsServiceI;
 import org.laokou.common.i18n.dto.Page;
@@ -92,7 +93,7 @@ public class CommunicationProtocolsControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('iot:communication-protocol:page')")
 	@Operation(summary = "分页查询通讯协议列表", description = "分页查询通讯协议列表")
-	public Result<Page<CommunicationProtocolCO>> pageV3(@RequestBody CommunicationProtocolPageQry qry) {
+	public Result<Page<CommunicationProtocolCO>> pageV3(@Validated @RequestBody CommunicationProtocolPageQry qry) {
 		return communicationProtocolsServiceI.page(qry);
 	}
 

@@ -31,6 +31,7 @@ import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -96,7 +97,7 @@ public class SourcesControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:source:page')")
 	@Operation(summary = "分页查询数据源列表", description = "分页查询数据源列表")
-	public Result<Page<SourceCO>> pageV3(@RequestBody SourcePageQry qry) {
+	public Result<Page<SourceCO>> pageV3(@Validated @RequestBody SourcePageQry qry) {
 		return sourcesServiceI.page(qry);
 	}
 

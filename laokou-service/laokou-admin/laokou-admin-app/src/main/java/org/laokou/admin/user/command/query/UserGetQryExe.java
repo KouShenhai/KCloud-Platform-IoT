@@ -42,7 +42,7 @@ public class UserGetQryExe {
 
 	private final UserDeptMapper userDeptMapper;
 
-	public Result<UserCO> execute(UserGetQry qry) {
+	public Result<UserCO> execute(UserGetQry qry) throws Exception {
 		UserCO userCO = UserConvertor.toClientObject(userMapper.selectById(qry.getId()));
 		userCO.setRoleIds(userRoleMapper.selectRoleIdsByUserId(qry.getId()));
 		userCO.setDeptIds(userDeptMapper.selectDeptIdsByUserId(qry.getId()));

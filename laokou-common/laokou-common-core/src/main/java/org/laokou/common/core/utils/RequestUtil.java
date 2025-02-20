@@ -22,7 +22,6 @@ import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
-import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.Assert;
 import org.springframework.util.StreamUtils;
@@ -88,8 +87,8 @@ public final class RequestUtil {
 	 * @param request 请求对象
 	 * @param handlerMapping 映射处理器
 	 */
-	@SneakyThrows
-	public static HandlerMethod getHandlerMethod(HttpServletRequest request, HandlerMapping handlerMapping) {
+	public static HandlerMethod getHandlerMethod(HttpServletRequest request, HandlerMapping handlerMapping)
+			throws Exception {
 		HandlerExecutionChain chain = handlerMapping.getHandler(request);
 		if (chain != null && chain.getHandler() instanceof HandlerMethod handlerMethod) {
 			return handlerMethod;
@@ -124,8 +123,7 @@ public final class RequestUtil {
 	 * 获取请求体.
 	 * @param request 请求对象
 	 */
-	@SneakyThrows
-	public static byte[] getRequestBody(HttpServletRequest request) {
+	public static byte[] getRequestBody(HttpServletRequest request) throws IOException {
 		return StreamUtils.copyToByteArray(request.getInputStream());
 	}
 
@@ -168,7 +166,7 @@ public final class RequestUtil {
 		 * @param request the {@link HttpServletRequest} to be wrapped.
 		 * @throws IllegalArgumentException if the request is null
 		 */
-		public RequestWrapper(HttpServletRequest request) {
+		public RequestWrapper(HttpServletRequest request) throws IOException {
 			super(request);
 			REQUEST_BODY = getRequestBody(request);
 		}

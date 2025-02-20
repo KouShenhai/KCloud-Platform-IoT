@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.http.MediaType;
 import org.laokou.iot.product.dto.clientobject.ProductCO;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.laokou.iot.product.api.ProductsServiceI;
 import org.laokou.iot.product.dto.*;
@@ -92,7 +93,7 @@ public class ProductsControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('iot:product:page')")
 	@Operation(summary = "分页查询产品列表", description = "分页查询产品列表")
-	public Result<Page<ProductCO>> pageV3(@RequestBody ProductPageQry qry) {
+	public Result<Page<ProductCO>> pageV3(@Validated @RequestBody ProductPageQry qry) {
 		return productsServiceI.page(qry);
 	}
 

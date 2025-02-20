@@ -18,7 +18,6 @@
 package org.laokou.common.security.handler;
 
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.Result;
@@ -27,6 +26,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
+
+import java.io.IOException;
 
 /**
  * @author laokou
@@ -48,15 +49,13 @@ public class OAuth2ExceptionHandler {
 		return getOAuth2AuthenticationException(code, MessageUtil.getMessage(code), ERROR_URL);
 	}
 
-	@SneakyThrows
-	public static void handleAccessDenied(HttpServletResponse response, Throwable ex) {
+	public static void handleAccessDenied(HttpServletResponse response, Throwable ex) throws IOException {
 		if (ex instanceof AccessDeniedException) {
 			ResponseUtil.responseOk(response, Result.fail(StatusCode.FORBIDDEN));
 		}
 	}
 
-	@SneakyThrows
-	public static void handleAuthentication(HttpServletResponse response, Throwable ex) {
+	public static void handleAuthentication(HttpServletResponse response, Throwable ex) throws IOException {
 		if (ex instanceof OAuth2AuthenticationException authenticationException) {
 			String msg = authenticationException.getError().getDescription();
 			String code = authenticationException.getError().getErrorCode();

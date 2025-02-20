@@ -39,6 +39,8 @@ import org.springframework.util.StopWatch;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * 认证服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
@@ -75,7 +77,7 @@ public class AuthApp {
     /// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
     /// client_secret => FpHwIfw4wY92dO
     /// ```
-	public static void main(String[] args)throws UnknownHostException {
+	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("Auth应用程序");
 		stopWatch.start();
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题

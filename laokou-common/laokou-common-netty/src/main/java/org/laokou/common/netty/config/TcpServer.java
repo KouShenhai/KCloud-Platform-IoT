@@ -66,7 +66,7 @@ public final class TcpServer extends AbstractServer {
 	}
 
 	@Override
-	public Future<Void> send(String clientId, Object obj) {
+	public Future<Void> send(String clientId, Object obj) throws InterruptedException {
 		Channel channel = SessionManager.get(clientId);
 		if (ObjectUtil.isNotNull(channel) && channel.isActive() && channel.isWritable()) {
 			return channel.writeAndFlush(obj);

@@ -17,12 +17,12 @@
 
 package org.laokou.common.i18n.utils;
 
-import lombok.SneakyThrows;
-
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 
 /**
@@ -42,8 +42,7 @@ public final class SslUtil {
 	 * ssl上下文.
 	 * @return ssl上下文
 	 */
-	@SneakyThrows
-	public static SSLContext sslContext() {
+	public static SSLContext sslContext() throws NoSuchAlgorithmException, KeyManagementException {
 		// X.509是密码学里公钥证书的格式标准，作为证书标准
 		X509TrustManager disabledTrustManager = new DisableValidationTrustManager();
 		// 信任库
@@ -55,7 +54,7 @@ public final class SslUtil {
 		return sslContext;
 	}
 
-	public static void ignoreSSLTrust() {
+	public static void ignoreSSLTrust() throws NoSuchAlgorithmException, KeyManagementException {
 		HttpsURLConnection.setDefaultSSLSocketFactory(sslContext().getSocketFactory());
 		HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> true);
 	}
