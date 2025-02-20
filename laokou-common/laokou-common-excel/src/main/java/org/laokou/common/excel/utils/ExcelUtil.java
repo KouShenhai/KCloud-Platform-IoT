@@ -69,9 +69,9 @@ public class ExcelUtil {
 
 	private static final int DEFAULT_SIZE = 10000;
 
-	public static <M, T> void doImport(String fileName, InputStream inputStream, HttpServletResponse response,
-			Class<M> clazz, BiConsumer<M, T> consumer, MybatisUtil mybatisUtil) {
-		FastExcel.read(inputStream, new DataListener<>(clazz, consumer, response, mybatisUtil, fileName))
+	public static <MAPPER, EXCEL, DO> void doImport(String fileName, EXCEL excel, InputStream inputStream, HttpServletResponse response,
+			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil) {
+		FastExcel.read(inputStream, excel.getClass(), new DataListener<>(clazz, consumer, response, mybatisUtil, fileName))
 			.sheet()
 			.doRead();
 	}
@@ -137,12 +137,12 @@ public class ExcelUtil {
 
 	}
 
-	private static class DataListener<M, T> implements ReadListener<T> {
+	private static class DataListener<MAPPER, DO> implements ReadListener<DO> {
 
 		/**
 		 * Temporary storage of data.
 		 */
-		private final List<T> CACHED_DATA_LIST;
+		private final List<DO> CACHED_DATA_LIST;
 
 		/**
 		 * 错误信息.
@@ -160,16 +160,16 @@ public class ExcelUtil {
 
 		private final MybatisUtil mybatisUtil;
 
-		private final Class<M> clazz;
+		private final Class<MAPPER> clazz;
 
-		private final BiConsumer<M, T> consumer;
+		private final BiConsumer<MAPPER, DO> consumer;
 
-		DataListener(Class<M> clazz, BiConsumer<M, T> consumer, HttpServletResponse response, MybatisUtil mybatisUtil,
+		DataListener(Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, HttpServletResponse response, MybatisUtil mybatisUtil,
 				String fileName) {
 			this(clazz, consumer, DEFAULT_SIZE, fileName, response, mybatisUtil);
 		}
 
-		DataListener(Class<M> clazz, BiConsumer<M, T> consumer, int batchCount, String fileName,
+		DataListener(Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, int batchCount, String fileName,
 				HttpServletResponse response, MybatisUtil mybatisUtil) {
 			this.batchCount = batchCount;
 			this.clazz = clazz;
@@ -182,7 +182,7 @@ public class ExcelUtil {
 		}
 
 		@Override
-		public void invoke(T data, AnalysisContext context) {
+		public void invoke(DO data, AnalysisContext context) {
 			int currentRowNum = context.readRowHolder().getRowIndex() + 1;
 			// 校验数据
 			Set<String> validates = ValidatorUtil.validateEntity(data);

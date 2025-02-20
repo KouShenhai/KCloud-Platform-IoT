@@ -52,15 +52,15 @@ public class MybatisUtil {
 
 	private final SqlSessionFactory sqlSessionFactory;
 
-	public <T, M> void batch(List<T> dataList, int batchNum, int timeout, Class<M> clazz, BiConsumer<M, T> consumer) {
+	public <DO, MAPPER> void batch(List<DO> dataList, int batchNum, int timeout, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer) {
 		batch(dataList, batchNum, timeout, clazz, MASTER, consumer);
 	}
 
-	public <T, M> void batch(List<T> dataList, Class<M> clazz, BiConsumer<M, T> consumer) {
+	public <DO, MAPPER> void batch(List<DO> dataList, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer) {
 		batch(dataList, DEFAULT_BATCH_NUM, 180, clazz, MASTER, consumer);
 	}
 
-	public <T, M> void batch(List<T> dataList, Class<M> clazz, String ds, BiConsumer<M, T> consumer) {
+	public <DO, MAPPER> void batch(List<DO> dataList, Class<MAPPER> clazz, String ds, BiConsumer<MAPPER, DO> consumer) {
 		batch(dataList, DEFAULT_BATCH_NUM, 180, clazz, ds, consumer);
 	}
 
@@ -69,16 +69,16 @@ public class MybatisUtil {
 	 * @param dataList 集合
 	 * @param batchNum 每组多少条数据
 	 * @param clazz 类型
-	 * @param <T> 泛型
-	 * @param <M> mapper泛型
+	 * @param <DO> 泛型
+	 * @param <MAPPER> mapper泛型
 	 * @param consumer 函数
 	 * @param ds 数据源名称
 	 */
-	public <T, M> void batch(List<T> dataList, int batchNum, int timeout, Class<M> clazz, String ds,
-			BiConsumer<M, T> consumer) {
+	public <DO, MAPPER> void batch(List<DO> dataList, int batchNum, int timeout, Class<MAPPER> clazz, String ds,
+			BiConsumer<MAPPER, DO> consumer) {
 		if (CollectionUtil.isNotEmpty(dataList)) {
 			// 数据分组
-			List<List<T>> partition = Lists.partition(dataList, batchNum);
+			List<List<DO>> partition = Lists.partition(dataList, batchNum);
 			AtomicBoolean rollback = new AtomicBoolean(false);
 			CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
 			try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
@@ -103,12 +103,12 @@ public class MybatisUtil {
 		}
 	}
 
-	private <T, M> void handleBatch(int timeout, List<T> item, Class<M> clazz, BiConsumer<M, T> consumer,
+	private <DO, MAPPER> void handleBatch(int timeout, List<DO> item, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer,
 			AtomicBoolean rollback, String ds, CyclicBarrier cyclicBarrier) {
 		try {
 			DynamicDataSourceContextHolder.push(ds);
 			SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false);
-			M mapper = sqlSession.getMapper(clazz);
+			MAPPER mapper = sqlSession.getMapper(clazz);
 			// commit 执行 flushStatements()
 			// rollback 执行 flushStatements(true);
 			try {
