@@ -69,9 +69,9 @@ public class ExcelUtil {
 
 	private static final int DEFAULT_SIZE = 10000;
 
-	public static <MAPPER, EXCEL, DO> void doImport(String fileName, EXCEL excel, InputStream inputStream, HttpServletResponse response,
+	public static <MAPPER, EXCEL, DO> void doImport(String fileName, Class<EXCEL> excel, InputStream inputStream, HttpServletResponse response,
 			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil) {
-		FastExcel.read(inputStream, excel.getClass(), new DataListener<>(clazz, consumer, response, mybatisUtil, fileName))
+		FastExcel.read(inputStream, excel, new DataListener<>(clazz, consumer, response, mybatisUtil, fileName))
 			.sheet()
 			.doRead();
 	}
