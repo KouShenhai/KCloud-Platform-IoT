@@ -101,7 +101,7 @@
     <!--fury-core版本-->
     <fury-core.version>0.10.0</fury-core.version>
     <!--browscap-java版本-->
-    <browscap-java.version>1.4.4</browscap-java.version>
+    <browscap-java.version>1.4.5</browscap-java.version>
     <!--liquibase-core版本-->
     <liquibase-core.version>4.31.1</liquibase-core.version>
     <!--protobuf-java版本-->
