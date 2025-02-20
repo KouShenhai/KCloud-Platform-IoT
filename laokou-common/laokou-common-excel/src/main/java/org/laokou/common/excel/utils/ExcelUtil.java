@@ -231,7 +231,7 @@ public final class ExcelUtil {
 				else {
 					List<List<String>> partition = Lists.partition(ERRORS, DEFAULT_SIZE);
 					partition.forEach(
-							item -> writeSheet(item, Error.class, ImportErrorExcelConvertor.INSTANCE, excelWriter));
+							item -> writeSheet(item, Error.class, ImportExcelErrorConvertor.INSTANCE, excelWriter));
 				}
 				// 刷新数据
 				excelWriter.finish();
@@ -248,9 +248,9 @@ public final class ExcelUtil {
 
 	}
 
-	private static class ImportErrorExcelConvertor implements ExcelConvert<String, Error> {
+	private static class ImportExcelErrorConvertor implements ExcelConvert<String, Error> {
 
-		public static final ImportErrorExcelConvertor INSTANCE = new ImportErrorExcelConvertor();
+		public static final ImportExcelErrorConvertor INSTANCE = new ImportExcelErrorConvertor();
 
 		@Override
 		public List<Error> toExcels(List<String> list) {
