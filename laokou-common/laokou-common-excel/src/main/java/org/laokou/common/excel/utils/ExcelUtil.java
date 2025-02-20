@@ -73,8 +73,8 @@ public final class ExcelUtil {
 	private static final int DEFAULT_SIZE = 10000;
 
 	public static <MAPPER, EXCEL, DO> void doImport(String fileName, Class<EXCEL> excel,
-			ExcelConvert<DO, EXCEL> convert, InputStream inputStream, HttpServletResponse response, Class<MAPPER> clazz,
-			BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil) {
+			ExcelConvertor<DO, EXCEL> convert, InputStream inputStream, HttpServletResponse response,
+			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil) {
 		FastExcel
 			.read(inputStream, excel, new DataListener<>(clazz, consumer, response, mybatisUtil, fileName, convert))
 			.sheet()
@@ -83,13 +83,13 @@ public final class ExcelUtil {
 
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, HttpServletResponse response,
 			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
-			ExcelConvert<DO, EXCEL> convertor) {
+			ExcelConvertor<DO, EXCEL> convertor) {
 		doExport(fileName, DEFAULT_SIZE, response, pageQuery, crudMapper, clazz, convertor);
 	}
 
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, int size, HttpServletResponse response,
 			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
-			ExcelConvert<DO, EXCEL> convertor) {
+			ExcelConvertor<DO, EXCEL> convertor) {
 		if (crudMapper.selectObjectCount(pageQuery) > 0) {
 			try (ServletOutputStream out = response.getOutputStream();
 					ExcelWriter excelWriter = FastExcel.write(out, clazz).build()) {
@@ -171,15 +171,15 @@ public final class ExcelUtil {
 
 		private final BiConsumer<MAPPER, DO> consumer;
 
-		private final ExcelConvert<DO, EXCEL> convertor;
+		private final ExcelConvertor<DO, EXCEL> convertor;
 
 		DataListener(Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, HttpServletResponse response,
-				MybatisUtil mybatisUtil, String fileName, ExcelConvert<DO, EXCEL> convertor) {
+				MybatisUtil mybatisUtil, String fileName, ExcelConvertor<DO, EXCEL> convertor) {
 			this(clazz, consumer, DEFAULT_SIZE, fileName, response, mybatisUtil, convertor);
 		}
 
 		DataListener(Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, int batchCount, String fileName,
-				HttpServletResponse response, MybatisUtil mybatisUtil, ExcelConvert<DO, EXCEL> convertor) {
+				HttpServletResponse response, MybatisUtil mybatisUtil, ExcelConvertor<DO, EXCEL> convertor) {
 			this.batchCount = batchCount;
 			this.clazz = clazz;
 			this.fileName = fileName;
@@ -248,7 +248,7 @@ public final class ExcelUtil {
 
 	}
 
-	private static class ImportExcelErrorConvertor implements ExcelConvert<String, Error> {
+	private static class ImportExcelErrorConvertor implements ExcelConvertor<String, Error> {
 
 		public static final ImportExcelErrorConvertor INSTANCE = new ImportExcelErrorConvertor();
 
