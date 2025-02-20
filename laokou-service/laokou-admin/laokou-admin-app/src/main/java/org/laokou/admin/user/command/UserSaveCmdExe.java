@@ -57,7 +57,8 @@ public class UserSaveCmdExe {
 				extension -> {
 					try {
 						extension.validate(userE, userMapper);
-					} catch (Exception e) {
+					}
+					catch (Exception e) {
 						throw new RuntimeException(e);
 					}
 				});
@@ -65,7 +66,8 @@ public class UserSaveCmdExe {
 		transactionalUtil.executeInTransaction(() -> {
 			try {
 				userDomainService.create(userE);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 		});

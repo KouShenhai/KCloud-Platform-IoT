@@ -123,7 +123,8 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		}
 	}
 
-	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame) throws JsonProcessingException, InterruptedException {
+	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame)
+			throws JsonProcessingException, InterruptedException {
 		Channel channel = ctx.channel();
 		String str = frame.text();
 		if (StringUtil.isEmpty(str)) {

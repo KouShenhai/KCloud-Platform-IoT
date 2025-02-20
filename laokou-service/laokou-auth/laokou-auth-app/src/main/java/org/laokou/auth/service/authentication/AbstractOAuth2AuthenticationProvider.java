@@ -47,7 +47,7 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
+import static org.laokou.common.i18n.common.exception.BizException.OAuth2.*;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
@@ -111,7 +111,8 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 	 * @param principal 认证对象
 	 * @return 令牌
 	 */
-	protected Authentication authentication(Authentication authentication, Authentication principal) throws JsonProcessingException {
+	protected Authentication authentication(Authentication authentication, Authentication principal)
+			throws JsonProcessingException {
 		// 仿照授权码模式
 		// 生成token（access_token + refresh_token）
 		AbstractOAuth2AuthenticationToken auth2BaseAuthenticationToken = (AbstractOAuth2AuthenticationToken) authentication;

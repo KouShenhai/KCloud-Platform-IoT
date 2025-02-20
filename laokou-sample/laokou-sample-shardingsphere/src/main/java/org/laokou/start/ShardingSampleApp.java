@@ -49,7 +49,8 @@ public class ShardingSampleApp {
 	/// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
 	/// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
 	/// ```
-	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
+	public static void main(String[] args)
+			throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题

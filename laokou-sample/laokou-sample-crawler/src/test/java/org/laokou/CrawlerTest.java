@@ -60,7 +60,8 @@ class CrawlerTest {
 		});
 	}
 
-	private void crawl(String url, String name) throws IOException, InterruptedException, NoSuchAlgorithmException, KeyManagementException {
+	private void crawl(String url, String name)
+			throws IOException, InterruptedException, NoSuchAlgorithmException, KeyManagementException {
 		String directory = DIRECTORY + name;
 		Document document = Jsoup.connect(url).get();
 		Elements links = document.select("a[href]");

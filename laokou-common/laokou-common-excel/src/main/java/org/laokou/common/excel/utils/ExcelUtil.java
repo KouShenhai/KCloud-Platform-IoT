@@ -227,7 +227,8 @@ public class ExcelUtil {
 				}
 				// 刷新数据
 				excelWriter.finish();
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				log.error("Excel导入异常，错误信息：{}", e.getMessage(), e);
 				throw new SystemException("S_Excel_ImportError", "Excel导入异常，系统繁忙", e);
 			}

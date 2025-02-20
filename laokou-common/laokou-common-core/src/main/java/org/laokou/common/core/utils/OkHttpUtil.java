@@ -44,7 +44,8 @@ public final class OkHttpUtil {
 	static {
 		try {
 			CLIENT = getOkHttpClient();
-		} catch (NoSuchAlgorithmException | KeyManagementException e) {
+		}
+		catch (NoSuchAlgorithmException | KeyManagementException e) {
 			log.error("SSL初始化失败，错误信息：{}", e.getMessage(), e);
 			throw new SystemException("S_OkHttp_SslInitFail", "SSL初始化失败", e);
 		}

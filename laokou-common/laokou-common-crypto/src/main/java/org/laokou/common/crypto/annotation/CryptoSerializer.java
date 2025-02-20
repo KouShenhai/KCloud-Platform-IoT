@@ -44,10 +44,12 @@ public class CryptoSerializer extends JsonSerializer<String> implements Contextu
 		try {
 			if (isEncrypt) {
 				generator.writeString(cipherType.encrypt(str));
-			} else {
+			}
+			else {
 				generator.writeString(cipherType.decrypt(str));
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("加密/解密失败，错误信息：{}", e.getMessage(), e);
 		}
 	}

@@ -25,7 +25,7 @@ import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.InfoV;
 import org.laokou.auth.model.UserE;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.mockito.Mockito;
 import org.springframework.util.DigestUtils;
 
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.USERNAME_PASSWORD_ERROR;
+import static org.laokou.common.i18n.common.exception.BizException.OAuth2.USERNAME_PASSWORD_ERROR;
 import static org.mockito.Mockito.*;
 
 /**
@@ -216,7 +216,7 @@ class AuthATest {
 		auth.releaseEvents();
 		Assertions.assertTrue(auth.getEVENTS().isEmpty());
 		// 记录日志【登录失败】
-		auth.recordLog(1L, new SystemException(USERNAME_PASSWORD_ERROR));
+		auth.recordLog(1L, new BizException(USERNAME_PASSWORD_ERROR));
 		Assertions.assertFalse(auth.getEVENTS().isEmpty());
 		// 释放事件
 		auth.releaseEvents();

@@ -19,9 +19,9 @@ package org.laokou.auth.model;
 
 import lombok.Getter;
 import org.laokou.auth.factory.DomainFactory;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.common.exception.BizException;
 
-import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.*;
+import static org.laokou.common.i18n.common.exception.BizException.OAuth2.*;
 
 /**
  * 登录类型枚举.
@@ -35,28 +35,28 @@ public enum GrantType {
 	USERNAME_PASSWORD(DomainFactory.USERNAME_PASSWORD, "用户名密码登录") {
 		@Override
 		public void checkUsernameNotExist() {
-			throw new SystemException(USERNAME_PASSWORD_ERROR);
+			throw new BizException(USERNAME_PASSWORD_ERROR);
 		}
 	},
 
 	AUTHORIZATION_CODE(DomainFactory.AUTHORIZATION_CODE, "授权码登录") {
 		@Override
 		public void checkUsernameNotExist() {
-			throw new SystemException(USERNAME_PASSWORD_ERROR);
+			throw new BizException(USERNAME_PASSWORD_ERROR);
 		}
 	},
 
 	MOBILE(DomainFactory.MOBILE, "手机号登录") {
 		@Override
 		public void checkUsernameNotExist() {
-			throw new SystemException(MOBILE_NOT_REGISTERED);
+			throw new BizException(MOBILE_NOT_REGISTERED);
 		}
 	},
 
 	MAIL(DomainFactory.MAIL, "邮箱登录") {
 		@Override
 		public void checkUsernameNotExist() {
-			throw new SystemException(MAIL_NOT_REGISTERED);
+			throw new BizException(MAIL_NOT_REGISTERED);
 		}
 	};
 

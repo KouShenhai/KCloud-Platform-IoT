@@ -24,7 +24,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -62,11 +62,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			auth.createUserByAuthorizationCode();
 			return (UserDetails) authProcessor.authenticationToken(auth, request).getPrincipal();
 		}
-		catch (SystemException e) {
+		catch (BizException e) {
 			throw new UsernameNotFoundException(e.getMsg(), e);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("用户认证失败，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_OAuth2_UserAuthFail","用户认证失败", e);
+			throw new BizException("B_OAuth2_UserAuthFail", "用户认证失败", e);
 		}
 	}
 

@@ -16,6 +16,7 @@
  */
 
 package org.laokou.common.mybatisplus.utils;
+
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
@@ -35,7 +36,7 @@ public class SqlUtil {
 		}
 		catch (Exception e) {
 			log.error("SQL解析失败", e);
-			throw new SystemException("S_DS_SqlParseFail","SQL解析失败", e);
+			throw new SystemException("S_DS_SqlParseFail", "SQL解析失败", e);
 		}
 	}
 

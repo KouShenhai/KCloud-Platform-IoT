@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.MessageUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.INVALID_SCOPE;
+import static org.laokou.common.i18n.common.exception.BizException.OAuth2.INVALID_SCOPE;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.*;
 
 /**
@@ -58,32 +58,27 @@ public abstract class AbstractOAuth2AuthenticationConverter implements Authentic
 
 	@Override
 	public Authentication convert(HttpServletRequest request) {
-		try {
-			// 请求链 FilterOrderRegistration
-			String grantType = request.getParameter(OAuth2ParameterNames.GRANT_TYPE);
-			if (!getGrantType().equals(grantType)) {
-				return null;
-			}
-			// 构建请求参数集合
-			MultiValueMap<String, String> parameters = MapUtil.getParameters(request.getParameterMap());
-			List<String> scopes = parameters.get(OAuth2ParameterNames.SCOPE);
-			// 判断scopes
-			if (CollectionUtil.isNotEmpty(scopes) && scopes.size() != 1) {
-				throw new SystemException(INVALID_SCOPE);
-			}
-			// 获取上下文认证信息
-			Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();
-			Map<String, Object> additionalParameters = new HashMap<>(parameters.size());
-			parameters.forEach((key, value) -> {
-				if (!key.equals(OAuth2ParameterNames.GRANT_TYPE) && !key.equals(OAuth2ParameterNames.CLIENT_ID)) {
-					additionalParameters.put(key, value.getFirst());
-				}
-			});
-			return convert(clientPrincipal, additionalParameters);
+		// 请求链 FilterOrderRegistration
+		String grantType = request.getParameter(OAuth2ParameterNames.GRANT_TYPE);
+		if (!getGrantType().equals(grantType)) {
+			return null;
 		}
-		catch (SystemException e) {
-			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
+		// 构建请求参数集合
+		MultiValueMap<String, String> parameters = MapUtil.getParameters(request.getParameterMap());
+		List<String> scopes = parameters.get(OAuth2ParameterNames.SCOPE);
+		// 判断scopes
+		if (CollectionUtil.isNotEmpty(scopes) && scopes.size() != 1) {
+			throw getOAuth2AuthenticationException(INVALID_SCOPE, MessageUtil.getMessage(INVALID_SCOPE), ERROR_URL);
 		}
+		// 获取上下文认证信息
+		Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();
+		Map<String, Object> additionalParameters = new HashMap<>(parameters.size());
+		parameters.forEach((key, value) -> {
+			if (!key.equals(OAuth2ParameterNames.GRANT_TYPE) && !key.equals(OAuth2ParameterNames.CLIENT_ID)) {
+				additionalParameters.put(key, value.getFirst());
+			}
+		});
+		return convert(clientPrincipal, additionalParameters);
 	}
 
 }

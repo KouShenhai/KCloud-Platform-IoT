@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static org.laokou.common.i18n.common.exception.SystemException.OAuth2.SESSION_INVALID;
+import static org.laokou.common.i18n.common.exception.BizException.OAuth2.SESSION_INVALID;
 
 /**
  * @author laokou

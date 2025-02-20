@@ -33,8 +33,8 @@ import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.ParamException;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.rocketmq.template.SendMessageType;
 import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -75,14 +75,16 @@ public class OAuth2AuthenticationProcessor {
 			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
 					userDetail.getAuthorities());
 		}
-		catch (ParamException | SystemException e) {
+		catch (ParamException | BizException e) {
 			// 记录日志
 			auth.recordLog(eventId, e);
 			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
 			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new RuntimeException(e);
-		} finally {
+		}
+		finally {
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();
 			// 发布事件

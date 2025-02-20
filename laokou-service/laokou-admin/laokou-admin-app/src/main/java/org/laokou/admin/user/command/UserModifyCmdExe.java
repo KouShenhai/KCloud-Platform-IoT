@@ -62,7 +62,8 @@ public class UserModifyCmdExe {
 				extension -> {
 					try {
 						extension.validate(userE, userMapper);
-					} catch (Exception e) {
+					}
+					catch (Exception e) {
 						throw new RuntimeException(e);
 					}
 				});
@@ -71,7 +72,8 @@ public class UserModifyCmdExe {
 		transactionalUtil.executeInTransaction(() -> {
 			try {
 				userDomainService.update(userE);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 		});

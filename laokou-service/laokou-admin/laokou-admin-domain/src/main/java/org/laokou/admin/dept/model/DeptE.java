@@ -18,7 +18,7 @@
 package org.laokou.admin.dept.model;
 
 import lombok.Data;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 
 /**
@@ -65,7 +65,7 @@ public class DeptE {
 
 	public void checkParentPath(Long id) {
 		if (ObjectUtil.isNull(this.parentPath)) {
-			throw new SystemException("S_Dept_PathNotExist", "部门路径不存在");
+			throw new BizException("B_Dept_PathNotExist", "部门路径不存在");
 		}
 		this.parentPath = this.parentPath + "," + id;
 	}

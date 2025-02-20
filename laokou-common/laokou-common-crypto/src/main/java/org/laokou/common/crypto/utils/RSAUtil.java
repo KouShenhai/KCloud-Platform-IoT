@@ -159,7 +159,9 @@ public final class RSAUtil {
 	 * @param keyBytes 公钥
 	 * @return 加密后的字符串
 	 */
-	private static byte[] encryptByPublicKey(byte[] strBytes, byte[] keyBytes) throws InvalidKeySpecException, NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+	private static byte[] encryptByPublicKey(byte[] strBytes, byte[] keyBytes)
+			throws InvalidKeySpecException, NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException,
+			InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 		X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
 		KeyFactory keyFactory = KeyFactory.getInstance(RSA, SUN_RSA_SIGN_PROVIDER);
 		PublicKey publicKey = keyFactory.generatePublic(x509KeySpec);
@@ -174,7 +176,9 @@ public final class RSAUtil {
 	 * @param keyBytes 私钥
 	 * @return 解密后的字符串
 	 */
-	private static byte[] decryptByPrivateKey(byte[] strBytes, byte[] keyBytes) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+	private static byte[] decryptByPrivateKey(byte[] strBytes, byte[] keyBytes)
+			throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException, NoSuchPaddingException,
+			IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
 		PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
 		KeyFactory keyFactory = KeyFactory.getInstance(RSA, SUN_RSA_SIGN_PROVIDER);
 		Key privateKey = keyFactory.generatePrivate(pkcs8KeySpec);

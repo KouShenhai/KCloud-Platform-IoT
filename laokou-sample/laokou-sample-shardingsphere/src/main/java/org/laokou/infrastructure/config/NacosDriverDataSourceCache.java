@@ -80,7 +80,8 @@ public final class NacosDriverDataSourceCache {
 		}
 		catch (final SQLException ex) {
 			throw (T) ex;
-		} catch (NacosException e) {
+		}
+		catch (NacosException e) {
 			throw new RuntimeException(e);
 		}
 	}

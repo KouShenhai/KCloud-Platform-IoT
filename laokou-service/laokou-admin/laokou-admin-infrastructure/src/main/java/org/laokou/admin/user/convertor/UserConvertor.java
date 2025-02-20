@@ -141,7 +141,8 @@ public final class UserConvertor {
 					userCO.setMobile(SensitiveUtil.formatMobile(mobile));
 				}
 				return userCO;
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 		}).toList();

@@ -285,7 +285,8 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 	}
 	// @formatter:on
 
-	private void setRefreshToken(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization) throws JsonProcessingException {
+	private void setRefreshToken(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization)
+			throws JsonProcessingException {
 		OAuth2Authorization.Token<OAuth2RefreshToken> token = authorization.getRefreshToken();
 		if (ObjectUtil.isNotNull(token)) {
 			OAuth2RefreshToken refreshToken = token.getToken();
@@ -309,7 +310,8 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		}
 	}
 
-	private void setOidcIdToken(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization) throws JsonProcessingException {
+	private void setOidcIdToken(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization)
+			throws JsonProcessingException {
 		OAuth2Authorization.Token<OidcIdToken> token = authorization.getToken(OidcIdToken.class);
 		if (ObjectUtil.isNotNull(token)) {
 			OidcIdToken oidcIdToken = token.getToken();
@@ -321,7 +323,8 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		}
 	}
 
-	private void setUserCode(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization) throws JsonProcessingException {
+	private void setUserCode(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization)
+			throws JsonProcessingException {
 		OAuth2Authorization.Token<OAuth2UserCode> token = authorization.getToken(OAuth2UserCode.class);
 		if (ObjectUtil.isNotNull(token)) {
 			OAuth2UserCode userCode = token.getToken();
@@ -332,7 +335,8 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		}
 	}
 
-	private void setDeviceCode(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization) throws JsonProcessingException {
+	private void setDeviceCode(OAuth2Authorization authorization, RedisOAuth2Authorization redisOAuth2Authorization)
+			throws JsonProcessingException {
 		OAuth2Authorization.Token<OAuth2DeviceCode> token = authorization.getToken(OAuth2DeviceCode.class);
 		if (ObjectUtil.isNotNull(token)) {
 			OAuth2DeviceCode deviceCode = token.getToken();

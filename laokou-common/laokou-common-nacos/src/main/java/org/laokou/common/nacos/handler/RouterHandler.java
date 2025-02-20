@@ -56,8 +56,9 @@ public class RouterHandler implements ApplicationListener<ApplicationReadyEvent>
 			map.put("abbr", abbr);
 			String router = getRouter(map);
 			log.info("\n----------Nacos路由配置开始(请复制到router.json)----------" + "{}"
-				+ "----------Nacos路由配置结束(请复制到router.json)----------", router);
-		} catch (IOException e) {
+					+ "----------Nacos路由配置结束(请复制到router.json)----------", router);
+		}
+		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}

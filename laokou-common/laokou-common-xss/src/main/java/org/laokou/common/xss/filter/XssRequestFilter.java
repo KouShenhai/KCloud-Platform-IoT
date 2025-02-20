@@ -53,7 +53,8 @@ public final class XssRequestFilter extends OncePerRequestFilter {
 			else {
 				chain.doFilter(request, response);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("XssRequestFilter -> 过滤器异常：{}", e.getMessage(), e);
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}

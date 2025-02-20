@@ -100,10 +100,12 @@ public class CacheAop {
 				return value;
 			}
 			return point.proceed();
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			log.error("获取缓存失败", e);
 			throw new SystemException("S_Cache_GetError", "获取缓存失败", e);
-		} finally {
+		}
+		finally {
 			if (isLocked) {
 				READ_LOCK.unlock();
 			}
@@ -125,10 +127,12 @@ public class CacheAop {
 				caffineCache.evictIfPresent(key);
 			}
 			return point.proceed();
-		} catch (Throwable e) {
+		}
+		catch (Throwable e) {
 			log.error("获取缓存失败", e);
 			throw new SystemException("S_Cache_GetError", "获取缓存失败", e);
-		} finally {
+		}
+		finally {
 			if (isLocked) {
 				WRITE_LOCK.unlock();
 			}

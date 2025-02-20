@@ -87,7 +87,8 @@ public final class RequestUtil {
 	 * @param request 请求对象
 	 * @param handlerMapping 映射处理器
 	 */
-	public static HandlerMethod getHandlerMethod(HttpServletRequest request, HandlerMapping handlerMapping) throws Exception {
+	public static HandlerMethod getHandlerMethod(HttpServletRequest request, HandlerMapping handlerMapping)
+			throws Exception {
 		HandlerExecutionChain chain = handlerMapping.getHandler(request);
 		if (chain != null && chain.getHandler() instanceof HandlerMethod handlerMethod) {
 			return handlerMethod;

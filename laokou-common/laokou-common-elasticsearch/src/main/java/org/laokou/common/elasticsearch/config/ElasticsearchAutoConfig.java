@@ -114,7 +114,8 @@ class ElasticsearchAutoConfig {
 			else {
 				try {
 					ignoreConfigureSsl(httpClientBuilder);
-				} catch (NoSuchAlgorithmException | KeyManagementException e) {
+				}
+				catch (NoSuchAlgorithmException | KeyManagementException e) {
 					log.error("ignoreConfigureSsl error", e);
 					throw new SystemException("S_Elasticsearch_IgnoreSslFail", "忽略SSL验证失败", e);
 				}
@@ -158,7 +159,8 @@ class ElasticsearchAutoConfig {
 				sslOptions.getCiphers(), (HostnameVerifier) null));
 	}
 
-	private void ignoreConfigureSsl(HttpAsyncClientBuilder httpClientBuilder) throws NoSuchAlgorithmException, KeyManagementException {
+	private void ignoreConfigureSsl(HttpAsyncClientBuilder httpClientBuilder)
+			throws NoSuchAlgorithmException, KeyManagementException {
 		httpClientBuilder.setSSLContext(sslContext()).setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE);
 	}
 

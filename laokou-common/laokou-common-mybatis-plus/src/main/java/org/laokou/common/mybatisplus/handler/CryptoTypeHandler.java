@@ -39,13 +39,15 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 public class CryptoTypeHandler implements TypeHandler<String> {
 
 	@Override
-	public void setParameter(PreparedStatement preparedStatement, int parameterIndex, String content, JdbcType jdbcType) {
+	public void setParameter(PreparedStatement preparedStatement, int parameterIndex, String content,
+			JdbcType jdbcType) {
 		try {
 			if (StringUtil.isNotEmpty(content)) {
 				content = AESUtil.encrypt(content);
 			}
 			preparedStatement.setString(parameterIndex, content);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("加密失败，错误信息：{}", e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
@@ -59,7 +61,8 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 				return EMPTY;
 			}
 			return AESUtil.decrypt(data.trim());
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("解密失败，错误信息：{}", e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
@@ -73,7 +76,8 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 				return EMPTY;
 			}
 			return AESUtil.decrypt(data.trim());
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("解密失败，错误信息：{}", e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
@@ -87,7 +91,8 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 				return EMPTY;
 			}
 			return AESUtil.decrypt(data.trim());
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			log.error("解密失败，错误信息：{}", e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
