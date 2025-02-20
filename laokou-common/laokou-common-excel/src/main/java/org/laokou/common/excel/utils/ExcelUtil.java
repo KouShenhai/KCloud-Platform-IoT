@@ -37,8 +37,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
@@ -57,6 +59,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.DROP;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * Excel工具类.
@@ -234,6 +237,12 @@ public final class ExcelUtil {
 				catch (IOException e) {
 					log.error("Excel导入异常，错误信息：{}", e.getMessage(), e);
 					throw new SystemException("S_Excel_ImportError", "Excel导入异常，系统繁忙", e);
+				}
+			} else {
+				try {
+					ResponseUtil.responseOk(response, Result.ok(EMPTY));
+				} catch (IOException e) {
+					throw new RuntimeException(e);
 				}
 			}
 		}
