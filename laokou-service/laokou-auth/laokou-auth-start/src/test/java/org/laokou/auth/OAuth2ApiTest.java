@@ -133,14 +133,6 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void testSetInstantObj() {
-		String key = "test:instant:obj";
-		redisUtil.set(key, new InstantTest(DateUtil.nowInstant()));
-		log.info("获取Instant obj值：{}", redisUtil.get(key));
-		redisUtil.del(key);
-	}
-
-	@Test
 	void testSetInstant() {
 		String key = "test:instant";
 		redisUtil.set(key, DateUtil.nowInstant());
