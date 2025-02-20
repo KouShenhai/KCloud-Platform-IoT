@@ -25,7 +25,6 @@ import org.laokou.admin.noticeLog.model.Status;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.excel.utils.ExcelUtil;
 import org.laokou.common.i18n.utils.DateUtil;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -86,8 +85,13 @@ public final class NoticeLogConvertor implements ExcelUtil.ExcelConvert<NoticeLo
 	}
 
 	@Override
-	public List<NoticeLogExcel> toExcelList(List<NoticeLogDO> list) {
+	public List<NoticeLogExcel> toExcels(List<NoticeLogDO> list) {
 		return list.stream().map(this::toExcel).toList();
+	}
+
+	@Override
+	public NoticeLogDO toDataObject(NoticeLogExcel excel) {
+		return null;
 	}
 
 	private NoticeLogExcel toExcel(NoticeLogDO noticeLogDO) {

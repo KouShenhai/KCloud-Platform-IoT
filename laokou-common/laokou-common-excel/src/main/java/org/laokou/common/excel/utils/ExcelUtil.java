@@ -65,13 +65,18 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
  * @author laokou
  */
 @Slf4j
-public class ExcelUtil {
+public final class ExcelUtil {
+
+	private ExcelUtil() {
+	}
 
 	private static final int DEFAULT_SIZE = 10000;
 
-	public static <MAPPER, EXCEL, DO> void doImport(String fileName, Class<EXCEL> excel, InputStream inputStream, HttpServletResponse response,
-			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil) {
-		FastExcel.read(inputStream, excel, new DataListener<>(clazz, consumer, response, mybatisUtil, fileName))
+	public static <MAPPER, EXCEL, DO> void doImport(String fileName, Class<EXCEL> excel,
+			ExcelConvert<DO, EXCEL> convert, InputStream inputStream, HttpServletResponse response, Class<MAPPER> clazz,
+			BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil) {
+		FastExcel
+			.read(inputStream, excel, new DataListener<>(clazz, consumer, response, mybatisUtil, fileName, convert))
 			.sheet()
 			.doRead();
 	}
@@ -127,17 +132,19 @@ public class ExcelUtil {
 			ExcelWriter excelWriter) {
 		WriteSheet writeSheet = FastExcel.writerSheet().head(clazz).build();
 		// 写数据
-		excelWriter.write(convertor.toExcelList(list), writeSheet);
+		excelWriter.write(convertor.toExcels(list), writeSheet);
 		list.clear();
 	}
 
 	public interface ExcelConvert<DO, EXCEL> {
 
-		List<EXCEL> toExcelList(List<DO> list);
+		List<EXCEL> toExcels(List<DO> list);
+
+		DO toDataObject(EXCEL excel);
 
 	}
 
-	private static class DataListener<MAPPER, DO> implements ReadListener<DO> {
+	private static class DataListener<MAPPER, DO, EXCEL> implements ReadListener<EXCEL> {
 
 		/**
 		 * Temporary storage of data.
@@ -164,13 +171,15 @@ public class ExcelUtil {
 
 		private final BiConsumer<MAPPER, DO> consumer;
 
-		DataListener(Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, HttpServletResponse response, MybatisUtil mybatisUtil,
-				String fileName) {
-			this(clazz, consumer, DEFAULT_SIZE, fileName, response, mybatisUtil);
+		private final ExcelConvert<DO, EXCEL> convertor;
+
+		DataListener(Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, HttpServletResponse response,
+				MybatisUtil mybatisUtil, String fileName, ExcelConvert<DO, EXCEL> convertor) {
+			this(clazz, consumer, DEFAULT_SIZE, fileName, response, mybatisUtil, convertor);
 		}
 
 		DataListener(Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, int batchCount, String fileName,
-				HttpServletResponse response, MybatisUtil mybatisUtil) {
+				HttpServletResponse response, MybatisUtil mybatisUtil, ExcelConvert<DO, EXCEL> convertor) {
 			this.batchCount = batchCount;
 			this.clazz = clazz;
 			this.fileName = fileName;
@@ -179,18 +188,19 @@ public class ExcelUtil {
 			this.CACHED_DATA_LIST = ListUtils.newArrayListWithExpectedSize(DEFAULT_SIZE);
 			this.mybatisUtil = mybatisUtil;
 			this.consumer = consumer;
+			this.convertor = convertor;
 		}
 
 		@Override
-		public void invoke(DO data, AnalysisContext context) {
+		public void invoke(EXCEL excel, AnalysisContext context) {
 			int currentRowNum = context.readRowHolder().getRowIndex() + 1;
 			// 校验数据
-			Set<String> validates = ValidatorUtil.validateEntity(data);
+			Set<String> validates = ValidatorUtil.validateEntity(excel);
 			if (CollectionUtil.isNotEmpty(validates)) {
 				ERRORS.add(template(currentRowNum, StringUtil.collectionToDelimitedString(validates, DROP)));
 			}
 			else {
-				CACHED_DATA_LIST.add(data);
+				CACHED_DATA_LIST.add(convertor.toDataObject(excel));
 				if (CACHED_DATA_LIST.size() % batchCount == 0) {
 					mybatisUtil.batch(CACHED_DATA_LIST, clazz, consumer);
 					CACHED_DATA_LIST.clear();
@@ -220,8 +230,8 @@ public class ExcelUtil {
 				}
 				else {
 					List<List<String>> partition = Lists.partition(ERRORS, DEFAULT_SIZE);
-					partition
-						.forEach(item -> writeSheet(item, Error.class, ImportExcelConvertor.INSTANCE, excelWriter));
+					partition.forEach(
+							item -> writeSheet(item, Error.class, ImportErrorExcelConvertor.INSTANCE, excelWriter));
 				}
 				// 刷新数据
 				excelWriter.finish();
@@ -238,13 +248,18 @@ public class ExcelUtil {
 
 	}
 
-	private static class ImportExcelConvertor implements ExcelConvert<String, Error> {
+	private static class ImportErrorExcelConvertor implements ExcelConvert<String, Error> {
 
-		public static final ImportExcelConvertor INSTANCE = new ImportExcelConvertor();
+		public static final ImportErrorExcelConvertor INSTANCE = new ImportErrorExcelConvertor();
 
 		@Override
-		public List<Error> toExcelList(List<String> list) {
+		public List<Error> toExcels(List<String> list) {
 			return list.stream().map(Error::new).toList();
+		}
+
+		@Override
+		public String toDataObject(Error error) {
+			return null;
 		}
 
 	}

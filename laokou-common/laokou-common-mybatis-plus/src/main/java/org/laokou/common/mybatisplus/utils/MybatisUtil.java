@@ -52,7 +52,8 @@ public class MybatisUtil {
 
 	private final SqlSessionFactory sqlSessionFactory;
 
-	public <DO, MAPPER> void batch(List<DO> dataList, int batchNum, int timeout, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer) {
+	public <DO, MAPPER> void batch(List<DO> dataList, int batchNum, int timeout, Class<MAPPER> clazz,
+			BiConsumer<MAPPER, DO> consumer) {
 		batch(dataList, batchNum, timeout, clazz, MASTER, consumer);
 	}
 
@@ -103,8 +104,8 @@ public class MybatisUtil {
 		}
 	}
 
-	private <DO, MAPPER> void handleBatch(int timeout, List<DO> item, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer,
-			AtomicBoolean rollback, String ds, CyclicBarrier cyclicBarrier) {
+	private <DO, MAPPER> void handleBatch(int timeout, List<DO> item, Class<MAPPER> clazz,
+			BiConsumer<MAPPER, DO> consumer, AtomicBoolean rollback, String ds, CyclicBarrier cyclicBarrier) {
 		try {
 			DynamicDataSourceContextHolder.push(ds);
 			SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false);
