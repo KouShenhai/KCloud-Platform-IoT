@@ -33,7 +33,6 @@ import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
 import co.elastic.clients.elasticsearch.indices.*;
 import co.elastic.clients.transport.endpoints.BooleanResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.elasticsearch.annotation.*;
@@ -45,6 +44,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -70,7 +70,6 @@ public class ElasticsearchTemplate {
 
 	private final ElasticsearchAsyncClient elasticsearchAsyncClient;
 
-	@SneakyThrows
 	public <TDocument> CompletableFuture<Void> asyncCreateIndex(String name, String alias, Class<TDocument> clazz,
 			Executor executor) {
 		return asyncExist(List.of(name), executor).thenApplyAsync(resp -> {
@@ -95,8 +94,7 @@ public class ElasticsearchTemplate {
 		}, executor);
 	}
 
-	@SneakyThrows
-	public <TDocument> void createIndex(String name, String alias, Class<TDocument> clazz) {
+	public <TDocument> void createIndex(String name, String alias, Class<TDocument> clazz) throws IOException {
 		// 判断索引是否存在
 		if (exist(List.of(name))) {
 			log.info("索引：{} -> 创建索引失败，索引已存在", name);
@@ -113,8 +111,7 @@ public class ElasticsearchTemplate {
 		}
 	}
 
-	@SneakyThrows
-	public void deleteIndex(List<String> names) {
+	public void deleteIndex(List<String> names) throws IOException {
 		if (!exist(names)) {
 			log.info("索引：{} -> 删除索引失败，索引不存在", StringUtil.collectionToDelimitedString(names, COMMA));
 			return;
@@ -129,13 +126,11 @@ public class ElasticsearchTemplate {
 		}
 	}
 
-	@SneakyThrows
-	public Map<String, IndexState> getIndex(List<String> names) {
+	public Map<String, IndexState> getIndex(List<String> names) throws IOException {
 		return elasticsearchClient.indices().get(getIndexRequest(names)).result();
 	}
 
-	@SneakyThrows
-	public <T> void createDocument(String index, String id, T obj) {
+	public <T> void createDocument(String index, String id, T obj) throws IOException {
 		IndexResponse response = elasticsearchClient
 			.index(idx -> idx.index(index).refresh(Refresh.True).id(id).document(obj));
 		if (StringUtil.isNotEmpty(response.result().jsonValue())) {
@@ -146,7 +141,6 @@ public class ElasticsearchTemplate {
 		}
 	}
 
-	@SneakyThrows
 	public <T> CompletableFuture<Void> asyncCreateDocument(String index, String id, T obj) {
 		return elasticsearchAsyncClient.index(idx -> idx.index(index).refresh(Refresh.True).id(id).document(obj))
 			.thenAcceptAsync(resp -> {
@@ -176,7 +170,6 @@ public class ElasticsearchTemplate {
 		}
 	}
 
-	@SneakyThrows
 	public <T> CompletableFuture<Void> asyncBulkCreateDocument(String index, Map<String, T> map, Executor executor) {
 		return elasticsearchAsyncClient
 			.bulk(bulk -> bulk.index(index).refresh(Refresh.True).operations(getBulkOperations(map)))
@@ -190,13 +183,11 @@ public class ElasticsearchTemplate {
 			}, executor);
 	}
 
-	@SneakyThrows
-	public boolean exist(List<String> names) {
+	public boolean exist(List<String> names) throws IOException {
 		return elasticsearchClient.indices().exists(getExists(names)).value();
 	}
 
-	@SneakyThrows
-	public <R> Page<R> search(List<String> names, Search search, Class<R> clazz) {
+	public <R> Page<R> search(List<String> names, Search search, Class<R> clazz) throws IOException {
 		SearchRequest searchRequest = getSearchRequest(names, search);
 		SearchResponse<R> response = elasticsearchClient.search(searchRequest, clazz);
 		HitsMetadata<R> hits = response.hits();

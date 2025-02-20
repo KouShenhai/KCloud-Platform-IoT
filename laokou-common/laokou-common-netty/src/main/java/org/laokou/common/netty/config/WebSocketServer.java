@@ -72,7 +72,7 @@ public final class WebSocketServer extends AbstractServer {
 	}
 
 	@Override
-	public Future<Void> send(String clientId, Object obj) {
+	public Future<Void> send(String clientId, Object obj) throws InterruptedException {
 		Channel channel = WebSocketSessionManager.get(clientId);
 		if (ObjectUtil.isNotNull(channel) && channel.isActive() && channel.isWritable()) {
 			return channel.writeAndFlush(obj);

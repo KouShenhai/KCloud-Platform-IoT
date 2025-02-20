@@ -17,6 +17,7 @@
 
 package org.laokou.common.mybatisplus.handler;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 import org.laokou.common.crypto.utils.AESUtil;
@@ -33,43 +34,63 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 public class CryptoTypeHandler implements TypeHandler<String> {
 
 	@Override
-	public void setParameter(PreparedStatement preparedStatement, int parameterIndex, String content, JdbcType jdbcType)
-			throws SQLException {
-		if (StringUtil.isNotEmpty(content)) {
-			content = AESUtil.encrypt(content);
+	public void setParameter(PreparedStatement preparedStatement, int parameterIndex, String content, JdbcType jdbcType) {
+		try {
+			if (StringUtil.isNotEmpty(content)) {
+				content = AESUtil.encrypt(content);
+			}
+			preparedStatement.setString(parameterIndex, content);
+		} catch (Exception e) {
+			log.error("加密失败，错误信息：{}", e.getMessage(), e);
+			throw new RuntimeException(e);
 		}
-		preparedStatement.setString(parameterIndex, content);
 	}
 
 	@Override
 	public String getResult(ResultSet resultSet, String columnName) throws SQLException {
-		String data = resultSet.getString(columnName);
-		if (StringUtil.isEmpty(data)) {
-			return EMPTY;
+		try {
+			String data = resultSet.getString(columnName);
+			if (StringUtil.isEmpty(data)) {
+				return EMPTY;
+			}
+			return AESUtil.decrypt(data.trim());
+		} catch (Exception e) {
+			log.error("解密失败，错误信息：{}", e.getMessage(), e);
+			throw new RuntimeException(e);
 		}
-		return AESUtil.decrypt(data.trim());
 	}
 
 	@Override
 	public String getResult(ResultSet resultSet, int columnIndex) throws SQLException {
-		String data = resultSet.getString(columnIndex);
-		if (StringUtil.isEmpty(data)) {
-			return EMPTY;
+		try {
+			String data = resultSet.getString(columnIndex);
+			if (StringUtil.isEmpty(data)) {
+				return EMPTY;
+			}
+			return AESUtil.decrypt(data.trim());
+		} catch (Exception e) {
+			log.error("解密失败，错误信息：{}", e.getMessage(), e);
+			throw new RuntimeException(e);
 		}
-		return AESUtil.decrypt(data.trim());
 	}
 
 	@Override
 	public String getResult(CallableStatement callableStatement, int columnIndex) throws SQLException {
-		String data = callableStatement.getString(columnIndex);
-		if (StringUtil.isEmpty(data)) {
-			return EMPTY;
+		try {
+			String data = callableStatement.getString(columnIndex);
+			if (StringUtil.isEmpty(data)) {
+				return EMPTY;
+			}
+			return AESUtil.decrypt(data.trim());
+		} catch (Exception e) {
+			log.error("解密失败，错误信息：{}", e.getMessage(), e);
+			throw new RuntimeException(e);
 		}
-		return AESUtil.decrypt(data.trim());
 	}
 
 }

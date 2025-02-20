@@ -17,7 +17,6 @@
 
 package org.laokou.common.core.utils;
 
-import lombok.SneakyThrows;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.lionsoul.ip2region.xdb.Searcher;
@@ -67,8 +66,7 @@ public final class AddressUtil {
 	 * @param ip IP
 	 * @return 所属位置
 	 */
-	@SneakyThrows
-	public static String getRealAddress(String ip) {
+	public static String getRealAddress(String ip) throws Exception {
 		return IpUtil.internalIp(ip) ? LOCAL_ADDR : addressFormat(SEARCHER.search(ip));
 	}
 

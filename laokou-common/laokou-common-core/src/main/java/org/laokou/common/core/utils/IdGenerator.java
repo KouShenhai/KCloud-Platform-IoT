@@ -17,7 +17,6 @@
 
 package org.laokou.common.core.utils;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -262,7 +261,6 @@ public final class IdGenerator {
 		 * 生产雪花ID.
 		 * @return 雪花ID
 		 */
-		@SneakyThrows
 		public synchronized long nextId() {
 			long currTimeStamp = getNewTimeStamp();
 			int maxOffset = 5;

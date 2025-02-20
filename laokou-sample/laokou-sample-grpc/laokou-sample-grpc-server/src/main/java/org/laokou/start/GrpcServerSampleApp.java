@@ -17,12 +17,12 @@
 
 package org.laokou.start;
 
-import lombok.SneakyThrows;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * @author laokou
@@ -30,8 +30,7 @@ import java.net.InetAddress;
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
 public class GrpcServerSampleApp {
 
-	@SneakyThrows
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnknownHostException {
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
 				System.getProperty("server.port", "9035")));
 		new SpringApplicationBuilder(GrpcServerSampleApp.class).web(WebApplicationType.SERVLET).run(args);

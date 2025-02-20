@@ -18,9 +18,9 @@
 package org.laokou.common.nacos.utils;
 
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
+import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.client.naming.NacosNamingService;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.cloud.client.ServiceInstance;
@@ -86,8 +86,7 @@ public class ServiceUtil {
 	 * 查看命名服务.
 	 * @return 命令服务
 	 */
-	@SneakyThrows
-	private NacosNamingService getNacosNamingService() {
+	private NacosNamingService getNacosNamingService() throws NacosException {
 		if (ObjectUtil.isNull(nacosNamingService)) {
 			synchronized (NacosNamingService.class) {
 				if (ObjectUtil.isNull(nacosNamingService)) {
@@ -109,8 +108,7 @@ public class ServiceUtil {
 	 * @param ip 服务IP
 	 * @param port 服务端口
 	 */
-	@SneakyThrows
-	public void registerInstance(String serviceId, String ip, int port) {
+	public void registerInstance(String serviceId, String ip, int port) throws NacosException {
 		getNacosNamingService().registerInstance(serviceId, ip, port);
 	}
 
@@ -121,8 +119,7 @@ public class ServiceUtil {
 	 * @param ip 服务IP
 	 * @param port 服务端口
 	 */
-	@SneakyThrows
-	public void registerInstance(String serviceId, String group, String ip, int port) {
+	public void registerInstance(String serviceId, String group, String ip, int port) throws NacosException {
 		getNacosNamingService().registerInstance(serviceId, group, ip, port);
 	}
 
@@ -132,8 +129,7 @@ public class ServiceUtil {
 	 * @param ip 服务IP
 	 * @param port 服务端口
 	 */
-	@SneakyThrows
-	public void deregisterInstance(String serviceId, String ip, int port) {
+	public void deregisterInstance(String serviceId, String ip, int port) throws NacosException {
 		getNacosNamingService().deregisterInstance(serviceId, ip, port);
 	}
 
@@ -144,8 +140,7 @@ public class ServiceUtil {
 	 * @param ip 服务IP
 	 * @param port 服务端口
 	 */
-	@SneakyThrows
-	public void deregisterInstance(String serviceId, String group, String ip, int port) {
+	public void deregisterInstance(String serviceId, String group, String ip, int port) throws NacosException {
 		getNacosNamingService().deregisterInstance(serviceId, group, ip, port);
 	}
 

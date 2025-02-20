@@ -29,7 +29,7 @@ public interface Server {
 	 * @param obj 对象
 	 * @param key 标识
 	 */
-	Future<Void> send(String key, Object obj);
+	Future<Void> send(String key, Object obj) throws InterruptedException;
 
 	/**
 	 * 启动.

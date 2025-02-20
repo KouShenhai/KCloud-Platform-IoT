@@ -19,7 +19,6 @@ package org.laokou.common.log.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -44,9 +43,8 @@ public class OperateLogAop {
 
 	private final SpringUtil springUtil;
 
-	@SneakyThrows
 	@Around("@annotation(operateLog)")
-	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) {
+	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) throws Throwable {
 		StopWatch stopWatch = new StopWatch("操作日志");
 		stopWatch.start();
 		// 服务ID

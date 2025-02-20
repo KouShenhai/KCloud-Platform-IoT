@@ -30,6 +30,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.i18n.dto.Result;
 
+import java.io.IOException;
+
 import static org.laokou.common.i18n.common.exception.SystemException.Sentinel.*;
 
 /**
@@ -40,7 +42,7 @@ public class SentinelExceptionHandler implements BlockExceptionHandler {
 
 	@Override
 	public void handle(HttpServletRequest httpServletRequest, HttpServletResponse response, String s,
-			BlockException e) {
+			BlockException e) throws IOException {
 		// 限流
 		if (e instanceof FlowException flowException) {
 			log.error("FlowException -> 已限流，错误信息：{}", flowException.getMessage());

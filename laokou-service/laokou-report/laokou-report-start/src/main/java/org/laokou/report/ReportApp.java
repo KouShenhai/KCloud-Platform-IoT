@@ -17,13 +17,13 @@
 
 package org.laokou.report;
 
-import lombok.SneakyThrows;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * @author laokou
@@ -42,8 +42,7 @@ public class ReportApp {
     /// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
     /// -Dserver.port=10002
     /// ```
-	@SneakyThrows
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnknownHostException {
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "10002")));
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
 		// 配置关闭nacos日志

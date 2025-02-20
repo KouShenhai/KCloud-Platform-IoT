@@ -17,19 +17,20 @@
 
 package org.laokou.common.crypto.utils;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.security.KeyFactory;
-import java.security.PublicKey;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
@@ -158,8 +159,7 @@ public final class RSAUtil {
 	 * @param keyBytes 公钥
 	 * @return 加密后的字符串
 	 */
-	@SneakyThrows
-	private static byte[] encryptByPublicKey(byte[] strBytes, byte[] keyBytes) {
+	private static byte[] encryptByPublicKey(byte[] strBytes, byte[] keyBytes) throws InvalidKeySpecException, NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 		X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
 		KeyFactory keyFactory = KeyFactory.getInstance(RSA, SUN_RSA_SIGN_PROVIDER);
 		PublicKey publicKey = keyFactory.generatePublic(x509KeySpec);
@@ -174,8 +174,7 @@ public final class RSAUtil {
 	 * @param keyBytes 私钥
 	 * @return 解密后的字符串
 	 */
-	@SneakyThrows
-	private static byte[] decryptByPrivateKey(byte[] strBytes, byte[] keyBytes) {
+	private static byte[] decryptByPrivateKey(byte[] strBytes, byte[] keyBytes) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
 		PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
 		KeyFactory keyFactory = KeyFactory.getInstance(RSA, SUN_RSA_SIGN_PROVIDER);
 		Key privateKey = keyFactory.generatePrivate(pkcs8KeySpec);

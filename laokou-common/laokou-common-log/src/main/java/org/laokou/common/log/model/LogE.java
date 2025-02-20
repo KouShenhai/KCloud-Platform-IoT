@@ -134,7 +134,7 @@ public class LogE {
 	 */
 	private Long costTime;
 
-	public LogE(String moduleName, String name, HttpServletRequest request, String serviceId) {
+	public LogE(String moduleName, String name, HttpServletRequest request, String serviceId) throws Exception {
 		UserContextHolder.User user = UserContextHolder.get();
 		this.moduleName = moduleName;
 		this.name = name;

@@ -18,7 +18,6 @@
 package org.laokou.common.core.utils;
 
 import jakarta.annotation.PreDestroy;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
@@ -31,9 +30,12 @@ import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.io.CloseMode;
+import org.laokou.common.i18n.common.exception.SystemException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
@@ -47,7 +49,16 @@ import static org.laokou.common.i18n.utils.SslUtil.sslContext;
 @Slf4j
 public final class HttpUtil {
 
-	private static final CloseableHttpClient CLIENT = getHttpClient();
+	private static final CloseableHttpClient CLIENT;
+
+	static {
+		try {
+			CLIENT = getHttpClient();
+		} catch (NoSuchAlgorithmException | KeyManagementException e) {
+			log.error("SSL初始化失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_Http_SslInitFail", "SSL初始化失败", e);
+		}
+	}
 
 	private HttpUtil() {
 	}
@@ -59,7 +70,6 @@ public final class HttpUtil {
 	 * @param headers 请求头
 	 * @return 响应结果
 	 */
-	@SneakyThrows
 	public static String doFormDataPost(String url, Map<String, String> params, Map<String, String> headers) {
 		HttpPost httpPost = new HttpPost(url);
 		if (MapUtil.isNotEmpty(headers)) {
@@ -83,7 +93,7 @@ public final class HttpUtil {
 		return resultString;
 	}
 
-	public static CloseableHttpClient getHttpClient() {
+	public static CloseableHttpClient getHttpClient() throws NoSuchAlgorithmException, KeyManagementException {
 		// 创建HttpClient对象
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 		DefaultClientTlsStrategy tlsStrategy = new DefaultClientTlsStrategy(sslContext(),

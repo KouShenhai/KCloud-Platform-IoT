@@ -5,7 +5,6 @@ import com.aizuda.snailjob.common.core.util.SnailJobVersion;
 import com.aizuda.snailjob.common.log.SnailJobLog;
 import com.aizuda.snailjob.server.common.Lifecycle;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.helpers.MessageFormatter;
@@ -30,7 +29,6 @@ public class StartListener implements ApplicationListener<ContextRefreshedEvent>
 	private volatile boolean isStarted = false;
 
 	@Override
-	@SneakyThrows
 	public void onApplicationEvent(@NotNull ContextRefreshedEvent event) {
 		if (isStarted) {
 			SnailJobLog.LOCAL.info("snail-job server already started v{}", SnailJobVersion.getVersion());

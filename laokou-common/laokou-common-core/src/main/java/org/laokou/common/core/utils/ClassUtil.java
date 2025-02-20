@@ -17,7 +17,6 @@
 
 package org.laokou.common.core.utils;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
@@ -37,8 +36,7 @@ public final class ClassUtil extends ClassUtils {
 	private ClassUtil() {
 	}
 
-	@SneakyThrows
-	public static Class<?> parseClass(String className) {
+	public static Class<?> parseClass(String className) throws ClassNotFoundException {
 		return Class.forName(className);
 	}
 

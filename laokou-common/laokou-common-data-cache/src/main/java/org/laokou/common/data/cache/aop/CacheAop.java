@@ -17,7 +17,7 @@
 
 package org.laokou.common.data.cache.aop;
 
-import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -42,6 +42,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  *
  * @author laokou
  */
+@Slf4j
 @Aspect
 @Component
 public class CacheAop {
@@ -61,7 +62,7 @@ public class CacheAop {
 	private CacheManager caffineCacheManager;
 
 	@Around("@annotation(dataCache)")
-	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) {
+	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) throws InterruptedException {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		String[] parameterNames = signature.getParameterNames();
 		Type type = dataCache.type();
@@ -73,8 +74,7 @@ public class CacheAop {
 		};
 	}
 
-	@SneakyThrows
-	private Object get(String name, String key, ProceedingJoinPoint point) {
+	private Object get(String name, String key, ProceedingJoinPoint point) throws InterruptedException {
 		boolean isLocked = false;
 		int retry = 3;
 		try {
@@ -100,16 +100,17 @@ public class CacheAop {
 				return value;
 			}
 			return point.proceed();
-		}
-		finally {
+		} catch (Throwable e) {
+			log.error("获取缓存失败", e);
+			throw new SystemException("S_Cache_GetError", "获取缓存失败", e);
+		} finally {
 			if (isLocked) {
 				READ_LOCK.unlock();
 			}
 		}
 	}
 
-	@SneakyThrows
-	private Object del(String name, String key, ProceedingJoinPoint point) {
+	private Object del(String name, String key, ProceedingJoinPoint point) throws InterruptedException {
 		boolean isLocked = false;
 		int retry = 3;
 		try {
@@ -124,8 +125,10 @@ public class CacheAop {
 				caffineCache.evictIfPresent(key);
 			}
 			return point.proceed();
-		}
-		finally {
+		} catch (Throwable e) {
+			log.error("获取缓存失败", e);
+			throw new SystemException("S_Cache_GetError", "获取缓存失败", e);
+		} finally {
 			if (isLocked) {
 				WRITE_LOCK.unlock();
 			}

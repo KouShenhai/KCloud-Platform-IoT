@@ -17,6 +17,7 @@
 
 package org.laokou.infrastructure.config;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -26,7 +27,6 @@ import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.client.dto.clientobject.MessageCO;
 import org.laokou.common.i18n.utils.JacksonUtil;
@@ -65,8 +65,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 	 * @param msg 消息
 	 */
 	@Override
-	@SneakyThrows
-	public void channelRead(ChannelHandlerContext ctx, Object msg) {
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		boolean release = true;
 		// @formatter:off
 		try {
@@ -94,7 +93,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	@Override
-	public void handlerRemoved(ChannelHandlerContext ctx) {
+	public void handlerRemoved(ChannelHandlerContext ctx) throws InterruptedException {
 		String channelId = ctx.channel().id().asLongText();
 		log.info("断开连接：{}", channelId);
 		WebSocketSessionManager.remove(channelId);
@@ -124,7 +123,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		}
 	}
 
-	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
+	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame) throws JsonProcessingException {
 		Channel channel = ctx.channel();
 		String str = frame.text();
 		if (StringUtil.isEmpty(str)) {

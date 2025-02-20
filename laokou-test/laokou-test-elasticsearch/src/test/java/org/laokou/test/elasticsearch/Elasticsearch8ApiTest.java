@@ -37,6 +37,7 @@ import org.laokou.test.elasticsearch.entity.Result;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -65,7 +66,7 @@ class Elasticsearch8ApiTest {
 	}
 
 	@Test
-	void testCreateIndexApi() {
+	void testCreateIndexApi() throws IOException {
 		elasticsearchTemplate.createIndex("laokou_res_1", "laokou_res", Resource.class);
 		elasticsearchTemplate.createIndex("laokou_pro_1", "laokou_pro", Project.class);
 		elasticsearchTemplate.asyncCreateIndex("laokou_resp_1", "laokou_resp", Resp.class,
@@ -84,7 +85,7 @@ class Elasticsearch8ApiTest {
 	}
 
 	@Test
-	void testCreateDocumentApi() {
+	void testCreateDocumentApi() throws IOException {
 		elasticsearchTemplate.createDocument("laokou_res_1", "222", new Resource("3333"));
 	}
 
@@ -120,7 +121,7 @@ class Elasticsearch8ApiTest {
 	}
 
 	@Test
-	void testDeleteIndexApi() {
+	void testDeleteIndexApi() throws IOException {
 		elasticsearchTemplate.deleteIndex(List.of("laokou_res_1", "laokou_pro_1", "laokou_resp_1"));
 	}
 

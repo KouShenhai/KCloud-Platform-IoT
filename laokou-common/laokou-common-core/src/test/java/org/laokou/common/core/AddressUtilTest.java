@@ -27,7 +27,7 @@ import org.laokou.common.core.utils.AddressUtil;
 class AddressUtilTest {
 
 	@Test
-	void testAddress() {
+	void testAddress() throws Exception {
 		String address = "127.0.0.1";
 		Assertions.assertEquals("内网IP", AddressUtil.getRealAddress(address));
 	}

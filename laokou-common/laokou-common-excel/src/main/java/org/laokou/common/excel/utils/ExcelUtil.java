@@ -35,7 +35,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -47,6 +46,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -82,7 +82,6 @@ public class ExcelUtil {
 		doExport(fileName, DEFAULT_SIZE, response, pageQuery, crudMapper, clazz, convertor);
 	}
 
-	@SneakyThrows
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, int size, HttpServletResponse response,
 			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
 			ExcelConvert<DO, EXCEL> convertor) {
@@ -206,10 +205,9 @@ public class ExcelUtil {
 			log.error("Excel导入异常，错误信息：{}", e.getMessage());
 		}
 
-		@SneakyThrows
 		@Override
 		public void doAfterAllAnalysed(AnalysisContext context) {
-			log.info("完成数据解析");
+			// log.info("完成数据解析");
 			if (CollectionUtil.isNotEmpty(CACHED_DATA_LIST)) {
 				mybatisUtil.batch(CACHED_DATA_LIST, clazz, consumer);
 			}
@@ -229,6 +227,9 @@ public class ExcelUtil {
 				}
 				// 刷新数据
 				excelWriter.finish();
+			} catch (IOException e) {
+				log.error("Excel导入异常，错误信息：{}", e.getMessage(), e);
+				throw new SystemException("S_Excel_ImportError", "Excel导入异常，系统繁忙", e);
 			}
 		}
 

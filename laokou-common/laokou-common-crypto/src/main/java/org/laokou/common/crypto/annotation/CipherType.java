@@ -24,12 +24,12 @@ public enum CipherType {
 
 	AES {
 		@Override
-		public String decrypt(String str) {
+		public String decrypt(String str) throws Exception {
 			return AESUtil.decrypt(str);
 		}
 
 		@Override
-		public String encrypt(String str) {
+		public String encrypt(String str) throws Exception {
 			return AESUtil.encrypt(str);
 		}
 	},
@@ -45,8 +45,8 @@ public enum CipherType {
 		}
 	};
 
-	public abstract String decrypt(String str);
+	public abstract String decrypt(String str) throws Exception;
 
-	public abstract String encrypt(String str);
+	public abstract String encrypt(String str) throws Exception;
 
 }

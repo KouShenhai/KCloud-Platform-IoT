@@ -20,7 +20,6 @@ package org.laokou.common.mybatisplus.utils;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
@@ -104,7 +103,6 @@ public class MybatisUtil {
 		}
 	}
 
-	@SneakyThrows
 	private <T, M> void handleBatch(int timeout, List<T> item, Class<M> clazz, BiConsumer<M, T> consumer,
 			AtomicBoolean rollback, String ds, CyclicBarrier cyclicBarrier) {
 		try {

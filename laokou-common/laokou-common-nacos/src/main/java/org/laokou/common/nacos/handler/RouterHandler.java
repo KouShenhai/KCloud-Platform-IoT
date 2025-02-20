@@ -19,7 +19,6 @@ package org.laokou.common.nacos.handler;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.core.utils.SpringUtil;
@@ -29,6 +28,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.util.Assert;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,15 +47,19 @@ public class RouterHandler implements ApplicationListener<ApplicationReadyEvent>
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
-		String serviceId = springUtil.getServiceId();
-		Assert.isTrue(StringUtil.isNotEmpty(serviceId), "ServiceID is empty");
-		Map<String, Object> map = new HashMap<>(2);
-		String abbr = serviceId.substring(7);
-		map.put("serviceId", serviceId);
-		map.put("abbr", abbr);
-		String router = getRouter(map);
-		log.info("\n----------Nacos路由配置开始(请复制到router.json)----------" + "{}"
+		try {
+			String serviceId = springUtil.getServiceId();
+			Assert.isTrue(StringUtil.isNotEmpty(serviceId), "ServiceID is empty");
+			Map<String, Object> map = new HashMap<>(2);
+			String abbr = serviceId.substring(7);
+			map.put("serviceId", serviceId);
+			map.put("abbr", abbr);
+			String router = getRouter(map);
+			log.info("\n----------Nacos路由配置开始(请复制到router.json)----------" + "{}"
 				+ "----------Nacos路由配置结束(请复制到router.json)----------", router);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**
@@ -63,8 +67,7 @@ public class RouterHandler implements ApplicationListener<ApplicationReadyEvent>
 	 * @param dataMap map对象
 	 * @return 路由配置
 	 */
-	@SneakyThrows
-	private String getRouter(Map<String, Object> dataMap) {
+	private String getRouter(Map<String, Object> dataMap) throws IOException {
 		String template = ResourceUtil.getResource("templates/router_template.json")
 			.getContentAsString(StandardCharsets.UTF_8)
 			.trim();

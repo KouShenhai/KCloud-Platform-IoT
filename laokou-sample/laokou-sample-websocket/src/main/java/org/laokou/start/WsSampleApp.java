@@ -18,7 +18,6 @@
 package org.laokou.start;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.netty.annotation.EnableWebSocketServer;
@@ -28,6 +27,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * 系统服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
@@ -42,8 +42,7 @@ import java.net.InetAddress;
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
 public class WsSampleApp {
 
-	@SneakyThrows
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnknownHostException {
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
 				System.getProperty("server.port", "9032")));
 		new SpringApplicationBuilder(WsSampleApp.class).web(WebApplicationType.SERVLET).run(args);

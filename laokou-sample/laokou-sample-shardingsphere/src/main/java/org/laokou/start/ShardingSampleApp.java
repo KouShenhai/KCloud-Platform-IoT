@@ -17,7 +17,6 @@
 
 package org.laokou.start;
 
-import lombok.SneakyThrows;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.i18n.utils.SslUtil;
 import org.mybatis.spring.annotation.MapperScan;
@@ -28,6 +27,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * @author laokou
@@ -47,8 +47,7 @@ public class ShardingSampleApp {
 	/// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
 	/// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
 	/// ```
-	@SneakyThrows
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnknownHostException {
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题

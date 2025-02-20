@@ -55,7 +55,6 @@ public final class DsUtil {
 	// * 验证码数据源.
 	// * @param properties 数据源属性配置
 	// */
-	// @SneakyThrows
 	// private void checkConnect(DataSourceProperty properties) {
 	// Connection connection = null;
 	// try {

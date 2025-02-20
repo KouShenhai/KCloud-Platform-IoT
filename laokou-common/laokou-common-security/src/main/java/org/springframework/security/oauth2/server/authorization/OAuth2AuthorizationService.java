@@ -32,6 +32,7 @@
  */
 package org.springframework.security.oauth2.server.authorization;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -51,7 +52,7 @@ public interface OAuth2AuthorizationService {
 	 * Saves the {@link OAuth2Authorization}.
 	 * @param authorization the {@link OAuth2Authorization}
 	 */
-	void save(OAuth2Authorization authorization);
+	void save(OAuth2Authorization authorization) throws JsonProcessingException;
 
 	/**
 	 * Removes the {@link OAuth2Authorization}.

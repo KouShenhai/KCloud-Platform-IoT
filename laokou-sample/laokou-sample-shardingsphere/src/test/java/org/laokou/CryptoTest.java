@@ -18,7 +18,6 @@
 package org.laokou;
 
 import com.baomidou.dynamic.datasource.toolkit.CryptoUtils;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,8 +29,7 @@ import org.junit.jupiter.api.Test;
 class CryptoTest {
 
 	@Test
-	@SneakyThrows
-	void testRSA() {
+	void testRSA() throws Exception {
 		String username = "root";
 		String password = "laokou123";
 		String encryptUsername = CryptoUtils.encrypt(username);

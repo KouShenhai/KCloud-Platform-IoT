@@ -20,13 +20,13 @@ package org.laokou.common.xss.filter;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
-import lombok.SneakyThrows;
 import org.laokou.common.core.utils.ArrayUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.xss.util.XssUtil;
 import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -51,8 +51,7 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 	}
 
 	@Override
-	@SneakyThrows
-	public ServletInputStream getInputStream() {
+	public ServletInputStream getInputStream() throws IOException {
 		if (!checkJson()) {
 			return super.getInputStream();
 		}

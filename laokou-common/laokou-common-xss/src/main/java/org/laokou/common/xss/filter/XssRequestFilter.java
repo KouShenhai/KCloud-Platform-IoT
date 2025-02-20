@@ -21,8 +21,9 @@ import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.xss.annotation.Xss;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,6 +34,7 @@ import org.springframework.web.servlet.HandlerMapping;
 /**
  * @author laokou
  */
+@Slf4j
 @NonNullApi
 public final class XssRequestFilter extends OncePerRequestFilter {
 
@@ -41,15 +43,19 @@ public final class XssRequestFilter extends OncePerRequestFilter {
 	private HandlerMapping handlerMapping;
 
 	@Override
-	@SneakyThrows
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
-		HandlerMethod handlerMethod = RequestUtil.getHandlerMethod(request, handlerMapping);
-		if (handlerMethod != null && handlerMethod.getMethod().isAnnotationPresent(Xss.class)) {
-			ServletRequest requestWrapper = new XssRequestWrapper(request);
-			chain.doFilter(requestWrapper, response);
-		}
-		else {
-			chain.doFilter(request, response);
+		try {
+			HandlerMethod handlerMethod = RequestUtil.getHandlerMethod(request, handlerMapping);
+			if (handlerMethod != null && handlerMethod.getMethod().isAnnotationPresent(Xss.class)) {
+				ServletRequest requestWrapper = new XssRequestWrapper(request);
+				chain.doFilter(requestWrapper, response);
+			}
+			else {
+				chain.doFilter(request, response);
+			}
+		} catch (Exception e) {
+			log.error("XssRequestFilter -> 过滤器异常：{}", e.getMessage(), e);
+			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 	}
 

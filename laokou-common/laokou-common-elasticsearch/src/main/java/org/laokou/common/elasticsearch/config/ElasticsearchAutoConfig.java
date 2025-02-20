@@ -23,6 +23,7 @@ import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
@@ -35,6 +36,7 @@ import org.apache.http.impl.nio.reactor.IOReactorConfig;
 import org.apache.http.nio.conn.ssl.SSLIOSessionStrategy;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -54,6 +56,8 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.util.List;
 import java.util.stream.Stream;
@@ -65,6 +69,7 @@ import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
 /**
  * @author laokou
  */
+@Slf4j
 @AutoConfiguration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(ElasticsearchProperties.class)
@@ -107,7 +112,12 @@ class ElasticsearchAutoConfig {
 				configureSsl(httpClientBuilder, sslBundles.getObject().getBundle(sslBundleName));
 			}
 			else {
-				ignoreConfigureSsl(httpClientBuilder);
+				try {
+					ignoreConfigureSsl(httpClientBuilder);
+				} catch (NoSuchAlgorithmException | KeyManagementException e) {
+					log.error("ignoreConfigureSsl error", e);
+					throw new SystemException("S_Elasticsearch_IgnoreSslFail", "忽略SSL验证失败", e);
+				}
 			}
 			return httpClientBuilder;
 		});
@@ -148,7 +158,7 @@ class ElasticsearchAutoConfig {
 				sslOptions.getCiphers(), (HostnameVerifier) null));
 	}
 
-	private void ignoreConfigureSsl(HttpAsyncClientBuilder httpClientBuilder) {
+	private void ignoreConfigureSsl(HttpAsyncClientBuilder httpClientBuilder) throws NoSuchAlgorithmException, KeyManagementException {
 		httpClientBuilder.setSSLContext(sslContext()).setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE);
 	}
 
