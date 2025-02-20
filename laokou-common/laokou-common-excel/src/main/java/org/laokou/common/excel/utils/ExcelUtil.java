@@ -57,7 +57,6 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.DROP;
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * Excel工具类.
@@ -211,6 +210,7 @@ public final class ExcelUtil {
 		@Override
 		public void onException(Exception e, AnalysisContext context) {
 			log.error("Excel导入异常，错误信息：{}", e.getMessage());
+			throw new SystemException("S_Excel_ImportError", "Excel导入异常，系统繁忙", e);
 		}
 
 		@Override
@@ -219,26 +219,22 @@ public final class ExcelUtil {
 			if (CollectionUtil.isNotEmpty(CACHED_DATA_LIST)) {
 				mybatisUtil.batch(CACHED_DATA_LIST, clazz, consumer);
 			}
-			// 写入excel
-			try (ServletOutputStream out = response.getOutputStream();
-					ExcelWriter excelWriter = FastExcel.write(out, Error.class).build()) {
-				// 设置请求头
-				header(fileName, response);
-				if (CollectionUtil.isEmpty(ERRORS)) {
-					excelWriter.write(Collections.singletonList(new Error(EMPTY)),
-							FastExcel.writerSheet().head(Error.class).build());
-				}
-				else {
+			if (CollectionUtil.isNotEmpty(ERRORS)) {
+				try (ServletOutputStream out = response.getOutputStream();
+						ExcelWriter excelWriter = FastExcel.write(out, Error.class).build()) {
+					// 设置请求头
+					header(fileName, response);
 					List<List<String>> partition = Lists.partition(ERRORS, DEFAULT_SIZE);
+					// 写入excel
 					partition.forEach(
 							item -> writeSheet(item, Error.class, ImportExcelErrorConvertor.INSTANCE, excelWriter));
+					// 刷新数据
+					excelWriter.finish();
 				}
-				// 刷新数据
-				excelWriter.finish();
-			}
-			catch (IOException e) {
-				log.error("Excel导入异常，错误信息：{}", e.getMessage(), e);
-				throw new SystemException("S_Excel_ImportError", "Excel导入异常，系统繁忙", e);
+				catch (IOException e) {
+					log.error("Excel导入异常，错误信息：{}", e.getMessage(), e);
+					throw new SystemException("S_Excel_ImportError", "Excel导入异常，系统繁忙", e);
+				}
 			}
 		}
 
