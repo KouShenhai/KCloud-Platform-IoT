@@ -6,11 +6,11 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-IoT</artifactId>
-    <version>3.4.2</version>
+    <version>3.4.3</version>
   </parent>
 
   <artifactId>laokou-test</artifactId>
-  <version>3.4.2</version>
+  <version>3.4.3</version>
   <packaging>pom</packaging>
 
   <modules>

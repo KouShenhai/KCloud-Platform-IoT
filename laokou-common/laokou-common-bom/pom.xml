@@ -22,13 +22,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.laokou</groupId>
   <artifactId>laokou-common-bom</artifactId>
-  <version>3.4.2</version>
+  <version>3.4.3</version>
   <packaging>pom</packaging>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <laokou.version>3.4.2</laokou.version>
+    <laokou.version>3.4.3</laokou.version>
     <!--spring-boot版本-->
-    <spring-boot.version>3.4.2</spring-boot.version>
+    <spring-boot.version>3.4.3</spring-boot.version>
     <!--lombok版本-->
     <lombok.version>1.18.36</lombok.version>
     <!--postgresql版本-->
@@ -62,7 +62,7 @@
     <!--spring-security-oauth2-authorization-server版本-->
     <spring-security-oauth2-authorization-server.version>1.4.2</spring-security-oauth2-authorization-server.version>
     <!--spring-boot-starter-oauth2版本-->
-    <spring-boot-starter-oauth2.version>3.4.2</spring-boot-starter-oauth2.version>
+    <spring-boot-starter-oauth2.version>3.4.3</spring-boot-starter-oauth2.version>
     <!--aws-java-sdk-s3版本-->
     <aws-java-sdk-s3.version>1.12.782</aws-java-sdk-s3.version>
     <!--dynamic-datasource版本-->
@@ -159,6 +159,8 @@
     <bcpkix.version>1.80</bcpkix.version>
     <!--reactor-kafka版本-->
     <reactor-kafka.version>1.3.23</reactor-kafka.version>
+    <!--okhttp4-spring-boot-starter版本-->
+    <okhttp4-spring-boot-starter.version>3.4.2</okhttp4-spring-boot-starter.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
@@ -167,7 +169,7 @@
       <dependency>
         <groupId>io.freefair.okhttp-spring-boot</groupId>
         <artifactId>okhttp4-spring-boot-starter</artifactId>
-        <version>${spring-boot.version}</version>
+        <version>${okhttp4-spring-boot-starter.version}</version>
       </dependency>
       <dependency>
         <groupId>io.projectreactor.kafka</groupId>
