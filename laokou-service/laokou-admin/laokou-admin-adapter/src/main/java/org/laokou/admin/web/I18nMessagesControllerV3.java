@@ -76,7 +76,7 @@ public class I18nMessagesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:i18n-message:import')")
 	@OperateLog(module = "国际化消息管理", operation = "导入国际化消息")
 	@Operation(summary = "导入国际化消息", description = "导入国际化消息")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		i18nMessagesServiceI.importI(new I18nMessageImportCmd(files));
 	}
 

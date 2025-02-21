@@ -24,7 +24,6 @@ import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.write.metadata.WriteSheet;
 import com.google.common.collect.Lists;
-import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
@@ -89,16 +88,15 @@ public final class ExcelUtil {
 			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
 			ExcelConvertor<DO, EXCEL> convertor) {
 		if (crudMapper.selectObjectCount(pageQuery) > 0) {
-			try (ServletOutputStream out = response.getOutputStream();
-					ExcelWriter excelWriter = FastExcel.write(out, clazz).build();
+			String newFileName = fileName + "_" + DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + ".xlsx";
+			try (ExcelWriter excelWriter = FastExcel.write(response.getOutputStream(), clazz).build();
 					ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 				// 设置请求头
-				String[] values = getValues(fileName);
-				setHeader(values, response);
+				setHeader(newFileName, response);
 				// https://idev.cn/fastexcel/zh-CN/docs/write/write_hard
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
 				// 设置sheet页
-				WriteSheet writeSheet = FastExcel.writerSheet(values[0]).head(clazz).build();
+				WriteSheet writeSheet = FastExcel.writerSheet(fileName).head(clazz).build();
 				crudMapper.selectObjectListHandler(pageQuery, resultContext -> {
 					list.add(resultContext.getResultObject());
 					if (list.size() % size == 0) {
@@ -140,23 +138,12 @@ public final class ExcelUtil {
 		}
 	}
 
-	private static void setHeader(String[] values, HttpServletResponse response) {
-		String fileName = values[0] + "_" + DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + values[1];
+	private static void setHeader(String fileName, HttpServletResponse response) {
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType("application/vnd.ms-excel;charset=UTF-8");
 		response.setHeader("Content-disposition",
 				"attachment;filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8));
 		response.addHeader("Access-Control-Expose-Headers", "Content-disposition");
-	}
-
-	private static String[] getValues(String fileName) {
-		if (fileName.contains(DOT)) {
-			String[] arr = new String[2];
-			arr[0] = fileName.substring(0, fileName.lastIndexOf(DOT));
-			arr[1] = fileName.substring(fileName.lastIndexOf(DOT));
-			return arr;
-		}
-		return new String[0];
 	}
 
 	public interface ExcelConvertor<DO, EXCEL> {
@@ -222,28 +209,30 @@ public final class ExcelUtil {
 		@Override
 		public void doAfterAllAnalysed(AnalysisContext context) {
 			// log.info("完成数据解析");
-			if (CollectionUtil.isNotEmpty(CACHED_DATA_LIST)) {
-				mybatisUtil.batch(CACHED_DATA_LIST, clazz, consumer);
-				CACHED_DATA_LIST.clear();
-			}
 			if (CollectionUtil.isNotEmpty(ERRORS)) {
 				try {
 					ResponseUtil.responseOk(response, Result.fail("S_Excel_ImportError", "Excel导入失败【仅显示前100条】",
-							ERRORS.subList(0, Math.min(ERRORS.size(), 100))));
+						ERRORS.subList(0, Math.min(ERRORS.size(), 100))));
+					// 清除数据
+					CACHED_DATA_LIST.clear();
+					return;
 				}
 				catch (IOException e) {
 					log.error("未知错误，错误信息：{}", e.getMessage(), e);
 					throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 				}
 			}
-			else {
-				try {
-					ResponseUtil.responseOk(response, Result.ok(EMPTY));
-				}
-				catch (IOException e) {
-					log.error("未知错误，错误信息：{}", e.getMessage(), e);
-					throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
-				}
+			if (CollectionUtil.isNotEmpty(CACHED_DATA_LIST)) {
+				mybatisUtil.batch(CACHED_DATA_LIST, clazz, consumer);
+				// 清除数据
+				CACHED_DATA_LIST.clear();
+			}
+			try {
+				ResponseUtil.responseOk(response, Result.ok(EMPTY));
+			}
+			catch (IOException e) {
+				log.error("未知错误，错误信息：{}", e.getMessage(), e);
+				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 			}
 		}
 

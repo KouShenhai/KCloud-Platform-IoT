@@ -84,7 +84,7 @@ public class DeptsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dept:import')")
 	@OperateLog(module = "部门管理", operation = "导入部门")
 	@Operation(summary = "导入部门", description = "导入部门")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		deptsServiceI.importI(new DeptImportCmd(files));
 	}
 

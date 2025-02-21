@@ -82,7 +82,7 @@ public class ${className}sController${(version)?upper_case} {
 	@PreAuthorize("hasAuthority('${app?lower_case}:${instanceName}:import')")
 	@OperateLog(module = "${comment}管理", operation = "导入${comment}")
 	@Operation(summary = "导入${comment}", description = "导入${comment}")
-	public void import${(version)?upper_case}(@RequestPart("file") MultipartFile[] files) {
+	public void import${(version)?upper_case}(@RequestPart("files") MultipartFile[] files) {
 		${instanceName}sServiceI.importI(new ${className}ImportCmd(files));
 	}
 

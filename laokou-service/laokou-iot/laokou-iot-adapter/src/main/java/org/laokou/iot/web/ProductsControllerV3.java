@@ -77,7 +77,7 @@ public class ProductsControllerV3 {
 	@PreAuthorize("hasAuthority('iot:product:import')")
 	@OperateLog(module = "产品管理", operation = "导入产品")
 	@Operation(summary = "导入产品", description = "导入产品")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		productsServiceI.importI(new ProductImportCmd(files));
 	}
 

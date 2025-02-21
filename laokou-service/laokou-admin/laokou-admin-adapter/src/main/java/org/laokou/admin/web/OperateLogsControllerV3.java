@@ -81,7 +81,7 @@ public class OperateLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:operate-log:import')")
 	@OperateLog(module = "操作日志管理", operation = "导入操作日志")
 	@Operation(summary = "导入操作日志", description = "导入操作日志")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		operateLogsServiceI.importI(new OperateLogImportCmd(files));
 	}
 

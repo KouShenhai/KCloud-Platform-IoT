@@ -76,7 +76,7 @@ public class RolesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:role:import')")
 	@OperateLog(module = "角色管理", operation = "导入角色")
 	@Operation(summary = "导入角色", description = "导入角色")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		rolesServiceI.importI(new RoleImportCmd(files));
 	}
 

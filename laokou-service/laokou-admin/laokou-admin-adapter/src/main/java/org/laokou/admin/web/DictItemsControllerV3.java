@@ -76,7 +76,7 @@ public class DictItemsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dict-item:import')")
 	@OperateLog(module = "字典项管理", operation = "导入字典项")
 	@Operation(summary = "导入字典项", description = "导入字典项")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		dictItemsServiceI.importI(new DictItemImportCmd(files));
 	}
 

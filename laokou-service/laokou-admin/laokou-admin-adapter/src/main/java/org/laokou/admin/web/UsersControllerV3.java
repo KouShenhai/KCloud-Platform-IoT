@@ -82,7 +82,7 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:import')")
 	@OperateLog(module = "用户管理", operation = "导入用户")
 	@Operation(summary = "导入用户", description = "导入用户")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		usersServiceI.importI(new UserImportCmd(files));
 	}
 

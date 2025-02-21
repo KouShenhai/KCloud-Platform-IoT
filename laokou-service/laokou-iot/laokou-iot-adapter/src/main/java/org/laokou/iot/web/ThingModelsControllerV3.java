@@ -77,7 +77,7 @@ public class ThingModelsControllerV3 {
 	@PreAuthorize("hasAuthority('iot:thing-model:import')")
 	@OperateLog(module = "物模型管理", operation = "导入物模型")
 	@Operation(summary = "导入物模型", description = "导入物模型")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		thingModelsServiceI.importI(new ThingModelImportCmd(files));
 	}
 

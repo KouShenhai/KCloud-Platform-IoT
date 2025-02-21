@@ -77,7 +77,7 @@ public class DevicesControllerV3 {
 	@PreAuthorize("hasAuthority('iot:device:import')")
 	@OperateLog(module = "设备管理", operation = "导入设备")
 	@Operation(summary = "导入设备", description = "导入设备")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		devicesServiceI.importI(new DeviceImportCmd(files));
 	}
 

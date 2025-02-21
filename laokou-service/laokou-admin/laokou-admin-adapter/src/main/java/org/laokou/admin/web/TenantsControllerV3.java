@@ -81,7 +81,7 @@ public class TenantsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:tenant:import')")
 	@OperateLog(module = "租户管理", operation = "导入租户")
 	@Operation(summary = "导入租户", description = "导入租户")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		tenantsServiceI.importI(new TenantImportCmd(files));
 	}
 

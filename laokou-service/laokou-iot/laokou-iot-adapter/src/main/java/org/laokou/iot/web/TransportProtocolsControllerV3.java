@@ -77,7 +77,7 @@ public class TransportProtocolsControllerV3 {
 	@PreAuthorize("hasAuthority('iot:transport-protocol:import')")
 	@OperateLog(module = "传输协议管理", operation = "导入传输协议")
 	@Operation(summary = "导入传输协议", description = "导入传输协议")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		transportProtocolsServiceI.importI(new TransportProtocolImportCmd(files));
 	}
 
