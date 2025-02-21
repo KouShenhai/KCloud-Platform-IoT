@@ -78,6 +78,7 @@ public class AuthApp {
     /// client_secret => FpHwIfw4wY92dO
     /// ```
 	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
+		// undertow虚拟线程 => EmbeddedWebServerFactoryCustomizerAutoConfiguration#virtualThreadsUndertowDeploymentInfoCustomizer
 		StopWatch stopWatch = new StopWatch("Auth应用程序");
 		stopWatch.start();
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题

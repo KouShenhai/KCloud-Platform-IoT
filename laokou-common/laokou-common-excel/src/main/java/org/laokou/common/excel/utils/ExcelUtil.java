@@ -17,13 +17,14 @@
 
 package org.laokou.common.excel.utils;
 
-import cn.idev.excel.FastExcel;
 import cn.idev.excel.ExcelWriter;
+import cn.idev.excel.FastExcel;
 import cn.idev.excel.context.AnalysisContext;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.write.metadata.WriteSheet;
 import com.google.common.collect.Lists;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
@@ -51,7 +52,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.function.BiConsumer;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.*;
+import static org.laokou.common.i18n.common.constant.StringConstant.DROP;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 
 /**
  * Excel工具类.
@@ -61,14 +63,12 @@ import static org.laokou.common.i18n.common.constant.StringConstant.*;
 @Slf4j
 public final class ExcelUtil {
 
+	private static final int BATCH_SIZE = 100000;
+	private static final int PARTITION_SIZE = 10000;
+	private static final int DEFAULT_SIZE = 1000000;
+
 	private ExcelUtil() {
 	}
-
-	private static final int BATCH_SIZE = 100000;
-
-	private static final int PARTITION_SIZE = 10000;
-
-	private static final int DEFAULT_SIZE = 1000000;
 
 	public static <MAPPER, EXCEL, DO> void doImport(Class<EXCEL> excel, ExcelConvertor<DO, EXCEL> convert,
 			InputStream inputStream, HttpServletResponse response, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer,
@@ -88,9 +88,10 @@ public final class ExcelUtil {
 			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
 			ExcelConvertor<DO, EXCEL> convertor) {
 		if (crudMapper.selectObjectCount(pageQuery) > 0) {
-			String newFileName = fileName + "_" + DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + ".xlsx";
-			try (ExcelWriter excelWriter = FastExcel.write(response.getOutputStream(), clazz).build();
-					ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			try (ServletOutputStream out = response.getOutputStream();
+				 ExcelWriter excelWriter = FastExcel.write(out, clazz).build();
+				 ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+				String newFileName = fileName + "_" + DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + ".xlsx";
 				// 设置请求头
 				setHeader(newFileName, response);
 				// https://idev.cn/fastexcel/zh-CN/docs/write/write_hard
