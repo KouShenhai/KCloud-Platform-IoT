@@ -77,7 +77,7 @@ public class ColumnsControllerV3 {
 	@PreAuthorize("hasAuthority('generator:column:import')")
 	@OperateLog(module = "代码生成器字段管理", operation = "导入代码生成器字段")
 	@Operation(summary = "导入代码生成器字段", description = "导入代码生成器字段")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		columnsServiceI.importI(new ColumnImportCmd(files));
 	}
 

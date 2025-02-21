@@ -77,7 +77,7 @@ public class CommunicationProtocolsControllerV3 {
 	@PreAuthorize("hasAuthority('iot:communication-protocol:import')")
 	@OperateLog(module = "通讯协议管理", operation = "导入通讯协议")
 	@Operation(summary = "导入通讯协议", description = "导入通讯协议")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		communicationProtocolsServiceI.importI(new CommunicationProtocolImportCmd(files));
 	}
 

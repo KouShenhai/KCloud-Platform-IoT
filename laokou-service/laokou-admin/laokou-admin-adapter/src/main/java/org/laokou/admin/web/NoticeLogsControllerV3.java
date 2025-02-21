@@ -80,7 +80,7 @@ public class NoticeLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:notice-log:import')")
 	@OperateLog(module = "通知日志管理", operation = "导入通知日志")
 	@Operation(summary = "导入通知日志", description = "导入通知日志")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		noticeLogsServiceI.importI(new NoticeLogImportCmd(files));
 	}
 

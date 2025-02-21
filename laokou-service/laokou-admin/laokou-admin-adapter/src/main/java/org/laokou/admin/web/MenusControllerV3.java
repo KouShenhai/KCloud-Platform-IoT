@@ -84,7 +84,7 @@ public class MenusControllerV3 {
 	@PreAuthorize("hasAuthority('sys:menu:import')")
 	@OperateLog(module = "菜单管理", operation = "导入菜单")
 	@Operation(summary = "导入菜单", description = "导入菜单")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		menusServiceI.importI(new MenuImportCmd(files));
 	}
 

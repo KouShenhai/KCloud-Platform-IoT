@@ -76,7 +76,7 @@ public class IpsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:ip:import')")
 	@OperateLog(module = "IP管理", operation = "导入IP")
 	@Operation(summary = "导入IP", description = "导入IP")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		ipsServiceI.importI(new IpImportCmd(files));
 	}
 

@@ -76,7 +76,7 @@ public class DictsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dict:import')")
 	@OperateLog(module = "字典管理", operation = "导入字典")
 	@Operation(summary = "导入字典", description = "导入字典")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		dictsServiceI.importI(new DictImportCmd(files));
 	}
 

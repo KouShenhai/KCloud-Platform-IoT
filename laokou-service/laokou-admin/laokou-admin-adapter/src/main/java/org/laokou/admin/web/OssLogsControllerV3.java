@@ -81,7 +81,7 @@ public class OssLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:oss-log:import')")
 	@OperateLog(module = "OSS日志管理", operation = "导入OSS日志")
 	@Operation(summary = "导入OSS日志", description = "导入OSS日志")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		ossLogsServiceI.importI(new OssLogImportCmd(files));
 	}
 

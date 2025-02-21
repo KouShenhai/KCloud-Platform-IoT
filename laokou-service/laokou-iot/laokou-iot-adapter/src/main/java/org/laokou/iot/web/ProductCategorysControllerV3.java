@@ -77,7 +77,7 @@ public class ProductCategorysControllerV3 {
 	@PreAuthorize("hasAuthority('iot:product-category:import')")
 	@OperateLog(module = "产品类别管理", operation = "导入产品类别")
 	@Operation(summary = "导入产品类别", description = "导入产品类别")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		productCategorysServiceI.importI(new ProductCategoryImportCmd(files));
 	}
 

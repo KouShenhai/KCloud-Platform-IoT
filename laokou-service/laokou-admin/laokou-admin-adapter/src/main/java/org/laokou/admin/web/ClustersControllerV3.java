@@ -77,7 +77,7 @@ public class ClustersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:cluster:import')")
 	@OperateLog(module = "集群管理", operation = "导入集群")
 	@Operation(summary = "导入集群", description = "导入集群")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		clustersServiceI.importI(new ClusterImportCmd(files));
 	}
 

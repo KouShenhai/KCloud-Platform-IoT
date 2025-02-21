@@ -76,7 +76,7 @@ public class OssControllerV3 {
 	@PreAuthorize("hasAuthority('sys:oss:import')")
 	@OperateLog(module = "OSS管理", operation = "导入OSS")
 	@Operation(summary = "导入OSS", description = "导入OSS")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		ossServiceI.importI(new OssImportCmd(files));
 	}
 

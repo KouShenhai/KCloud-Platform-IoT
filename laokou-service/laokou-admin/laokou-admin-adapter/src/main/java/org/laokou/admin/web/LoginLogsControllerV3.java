@@ -80,7 +80,7 @@ public class LoginLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:login-log:import')")
 	@OperateLog(module = "登录日志管理", operation = "导入登录日志")
 	@Operation(summary = "导入登录日志", description = "导入登录日志")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		loginLogsServiceI.importI(new LoginLogImportCmd(files));
 	}
 

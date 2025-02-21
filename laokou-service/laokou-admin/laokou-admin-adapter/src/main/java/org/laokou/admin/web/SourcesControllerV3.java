@@ -81,7 +81,7 @@ public class SourcesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:source:import')")
 	@OperateLog(module = "数据源管理", operation = "导入数据源")
 	@Operation(summary = "导入数据源", description = "导入数据源")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		sourcesServiceI.importI(new SourceImportCmd(files));
 	}
 

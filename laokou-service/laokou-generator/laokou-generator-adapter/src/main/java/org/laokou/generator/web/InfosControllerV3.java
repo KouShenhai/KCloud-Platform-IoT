@@ -77,7 +77,7 @@ public class InfosControllerV3 {
 	@PreAuthorize("hasAuthority('generator:info:import')")
 	@OperateLog(module = "代码生成器信息管理", operation = "导入代码生成器信息")
 	@Operation(summary = "导入代码生成器信息", description = "导入代码生成器信息")
-	public void importV3(@RequestPart("file") MultipartFile[] files) {
+	public void importV3(@RequestPart("files") MultipartFile[] files) {
 		infosServiceI.importI(new InfoImportCmd(files));
 	}
 
