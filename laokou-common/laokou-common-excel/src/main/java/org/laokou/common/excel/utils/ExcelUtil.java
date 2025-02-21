@@ -19,25 +19,17 @@ package org.laokou.common.excel.utils;
 
 import cn.idev.excel.FastExcel;
 import cn.idev.excel.ExcelWriter;
-import cn.idev.excel.annotation.ExcelProperty;
-import cn.idev.excel.annotation.write.style.ColumnWidth;
-import cn.idev.excel.annotation.write.style.ContentStyle;
 import cn.idev.excel.context.AnalysisContext;
-import cn.idev.excel.enums.BooleanEnum;
-import cn.idev.excel.enums.poi.HorizontalAlignmentEnum;
-import cn.idev.excel.enums.poi.VerticalAlignmentEnum;
 import cn.idev.excel.read.listener.ReadListener;
 import cn.idev.excel.util.ListUtils;
 import cn.idev.excel.write.metadata.WriteSheet;
 import com.google.common.collect.Lists;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
@@ -56,10 +48,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.function.BiConsumer;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.DROP;
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstant.*;
 
 /**
  * Excel工具类.
@@ -72,13 +65,16 @@ public final class ExcelUtil {
 	private ExcelUtil() {
 	}
 
-	private static final int DEFAULT_SIZE = 10000;
+	private static final int BATCH_SIZE = 100000;
 
-	public static <MAPPER, EXCEL, DO> void doImport(String fileName, Class<EXCEL> excel,
-			ExcelConvertor<DO, EXCEL> convert, InputStream inputStream, HttpServletResponse response,
-			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil) {
-		FastExcel
-			.read(inputStream, excel, new DataListener<>(clazz, consumer, response, mybatisUtil, fileName, convert))
+	private static final int PARTITION_SIZE = 10000;
+
+	private static final int DEFAULT_SIZE = 1000000;
+
+	public static <MAPPER, EXCEL, DO> void doImport(Class<EXCEL> excel, ExcelConvertor<DO, EXCEL> convert,
+			InputStream inputStream, HttpServletResponse response, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer,
+			MybatisUtil mybatisUtil) {
+		FastExcel.read(inputStream, excel, new DataListener<>(clazz, consumer, response, mybatisUtil, convert))
 			.sheet()
 			.doRead();
 	}
@@ -86,7 +82,7 @@ public final class ExcelUtil {
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, HttpServletResponse response,
 			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
 			ExcelConvertor<DO, EXCEL> convertor) {
-		doExport(fileName, DEFAULT_SIZE, response, pageQuery, crudMapper, clazz, convertor);
+		doExport(fileName, BATCH_SIZE, response, pageQuery, crudMapper, clazz, convertor);
 	}
 
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, int size, HttpServletResponse response,
@@ -94,19 +90,42 @@ public final class ExcelUtil {
 			ExcelConvertor<DO, EXCEL> convertor) {
 		if (crudMapper.selectObjectCount(pageQuery) > 0) {
 			try (ServletOutputStream out = response.getOutputStream();
-					ExcelWriter excelWriter = FastExcel.write(out, clazz).build()) {
+					ExcelWriter excelWriter = FastExcel.write(out, clazz).build();
+					ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
 				// 设置请求头
-				header(fileName, response);
+				String[] values = getValues(fileName);
+				setHeader(values, response);
 				// https://idev.cn/fastexcel/zh-CN/docs/write/write_hard
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
+				// 设置sheet页
+				WriteSheet writeSheet = FastExcel.writerSheet(values[0]).head(clazz).build();
 				crudMapper.selectObjectListHandler(pageQuery, resultContext -> {
 					list.add(resultContext.getResultObject());
 					if (list.size() % size == 0) {
-						writeSheet(list, clazz, convertor, excelWriter);
+						try {
+							// 分组
+							List<List<DO>> partition = Lists.partition(list, PARTITION_SIZE);
+							List<Callable<Boolean>> futures = partition.stream().map(item -> (Callable<Boolean>) () -> {
+								// 写数据
+								excelWriter.write(convertor.toExcels(list), writeSheet);
+								return true;
+							}).toList();
+							executor.invokeAll(futures);
+						}
+						catch (InterruptedException e) {
+							Thread.currentThread().interrupt();
+							log.error("未知错误，错误信息：{}", e.getMessage(), e);
+							throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+						}
+						finally {
+							list.clear();
+						}
 					}
 				});
 				if (list.size() % size != 0) {
-					writeSheet(list, clazz, convertor, excelWriter);
+					// 写数据
+					excelWriter.write(convertor.toExcels(list), writeSheet);
+					list.clear();
 				}
 				// 刷新数据
 				excelWriter.finish();
@@ -121,8 +140,8 @@ public final class ExcelUtil {
 		}
 	}
 
-	private static void header(String fileName, HttpServletResponse response) {
-		fileName = fileName + "_" + DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + ".xlsx";
+	private static void setHeader(String[] values, HttpServletResponse response) {
+		String fileName = values[0] + "_" + DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + values[1];
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType("application/vnd.ms-excel;charset=UTF-8");
 		response.setHeader("Content-disposition",
@@ -130,12 +149,14 @@ public final class ExcelUtil {
 		response.addHeader("Access-Control-Expose-Headers", "Content-disposition");
 	}
 
-	private static <EXCEL, DO> void writeSheet(List<DO> list, Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor,
-			ExcelWriter excelWriter) {
-		WriteSheet writeSheet = FastExcel.writerSheet().head(clazz).build();
-		// 写数据
-		excelWriter.write(convertor.toExcels(list), writeSheet);
-		list.clear();
+	private static String[] getValues(String fileName) {
+		if (fileName.contains(DOT)) {
+			String[] arr = new String[2];
+			arr[0] = fileName.substring(0, fileName.lastIndexOf(DOT));
+			arr[1] = fileName.substring(fileName.lastIndexOf(DOT));
+			return arr;
+		}
+		return new String[0];
 	}
 
 	public interface ExcelConvertor<DO, EXCEL> {
@@ -158,13 +179,6 @@ public final class ExcelUtil {
 		 */
 		private final List<String> ERRORS;
 
-		/**
-		 * Single handle the amount of data.
-		 */
-		private final int batchCount;
-
-		private final String fileName;
-
 		private final HttpServletResponse response;
 
 		private final MybatisUtil mybatisUtil;
@@ -176,15 +190,8 @@ public final class ExcelUtil {
 		private final ExcelConvertor<DO, EXCEL> convertor;
 
 		DataListener(Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, HttpServletResponse response,
-				MybatisUtil mybatisUtil, String fileName, ExcelConvertor<DO, EXCEL> convertor) {
-			this(clazz, consumer, DEFAULT_SIZE, fileName, response, mybatisUtil, convertor);
-		}
-
-		DataListener(Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, int batchCount, String fileName,
-				HttpServletResponse response, MybatisUtil mybatisUtil, ExcelConvertor<DO, EXCEL> convertor) {
-			this.batchCount = batchCount;
+				MybatisUtil mybatisUtil, ExcelConvertor<DO, EXCEL> convertor) {
 			this.clazz = clazz;
-			this.fileName = fileName;
 			this.response = response;
 			this.ERRORS = new ArrayList<>();
 			this.CACHED_DATA_LIST = ListUtils.newArrayListWithExpectedSize(DEFAULT_SIZE);
@@ -203,10 +210,6 @@ public final class ExcelUtil {
 			}
 			else {
 				CACHED_DATA_LIST.add(convertor.toDataObject(excel));
-				if (CACHED_DATA_LIST.size() % batchCount == 0) {
-					mybatisUtil.batch(CACHED_DATA_LIST, clazz, consumer);
-					CACHED_DATA_LIST.clear();
-				}
 			}
 		}
 
@@ -221,28 +224,25 @@ public final class ExcelUtil {
 			// log.info("完成数据解析");
 			if (CollectionUtil.isNotEmpty(CACHED_DATA_LIST)) {
 				mybatisUtil.batch(CACHED_DATA_LIST, clazz, consumer);
+				CACHED_DATA_LIST.clear();
 			}
 			if (CollectionUtil.isNotEmpty(ERRORS)) {
-				try (ServletOutputStream out = response.getOutputStream();
-						ExcelWriter excelWriter = FastExcel.write(out, Error.class).build()) {
-					// 设置请求头
-					header(fileName, response);
-					List<List<String>> partition = Lists.partition(ERRORS, DEFAULT_SIZE);
-					// 写入excel
-					partition.forEach(
-							item -> writeSheet(item, Error.class, ImportExcelErrorConvertor.INSTANCE, excelWriter));
-					// 刷新数据
-					excelWriter.finish();
+				try {
+					ResponseUtil.responseOk(response, Result.fail("S_Excel_ImportError", "Excel导入失败【仅显示前100条】",
+							ERRORS.subList(0, Math.min(ERRORS.size(), 100))));
 				}
 				catch (IOException e) {
-					log.error("Excel导入异常，错误信息：{}", e.getMessage(), e);
-					throw new SystemException("S_Excel_ImportError", "Excel导入异常，系统繁忙", e);
+					log.error("未知错误，错误信息：{}", e.getMessage(), e);
+					throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 				}
-			} else {
+			}
+			else {
 				try {
 					ResponseUtil.responseOk(response, Result.ok(EMPTY));
-				} catch (IOException e) {
-					throw new RuntimeException(e);
+				}
+				catch (IOException e) {
+					log.error("未知错误，错误信息：{}", e.getMessage(), e);
+					throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 				}
 			}
 		}
@@ -250,35 +250,6 @@ public final class ExcelUtil {
 		private String template(int num, String msg) {
 			return String.format("第%s行，%s", num, msg);
 		}
-
-	}
-
-	private static class ImportExcelErrorConvertor implements ExcelConvertor<String, Error> {
-
-		public static final ImportExcelErrorConvertor INSTANCE = new ImportExcelErrorConvertor();
-
-		@Override
-		public List<Error> toExcels(List<String> list) {
-			return list.stream().map(Error::new).toList();
-		}
-
-		@Override
-		public String toDataObject(Error error) {
-			return null;
-		}
-
-	}
-
-	@Data
-	@AllArgsConstructor
-	@NoArgsConstructor
-	private static class Error {
-
-		@ColumnWidth(30)
-		@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
-				verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
-		@ExcelProperty(value = "错误信息", index = 0)
-		private String msg;
 
 	}
 

@@ -101,8 +101,8 @@ public class GeneratorDomainService {
 		}
 		catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
-			log.error("错误信息：{}", e.getMessage());
-			throw new SystemException("S_UnKnow_Error", e.getMessage());
+			log.error("未知错误，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 	}
 

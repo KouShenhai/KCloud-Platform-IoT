@@ -74,6 +74,14 @@ public class Result<T> implements Serializable {
 		return result;
 	}
 
+	public static <T> Result<T> fail(String code, String msg, T data) {
+		Result<T> result = new Result<>();
+		result.setCode(code);
+		result.setMsg(msg);
+		result.setData(data);
+		return result;
+	}
+
 	public boolean success() {
 		return ObjectUtil.equals(this.code, OK);
 	}
