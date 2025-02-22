@@ -135,7 +135,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 				colorBgCollapsedButton: '#ffffff', // 展开收起按钮背景颜色
 				colorTextCollapsedButton: '#dee1f0', // 展开收起按钮字体颜色
 				colorTextCollapsedButtonHover: '#dee1f0' // 展开收起按钮 hover 时字体颜色
-			 }
+			}
 		},
 	};
 };
