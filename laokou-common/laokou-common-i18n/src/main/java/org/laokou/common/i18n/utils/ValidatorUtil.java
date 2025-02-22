@@ -62,7 +62,7 @@ public final class ValidatorUtil {
 	 * 校验对象.
 	 * @param obj 待校验对象
 	 */
-	public static Set<String> validateEntity(Object obj, Class<?>... groups) {
+	public static Set<String> validate(Object obj, Class<?>... groups) {
 		try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = validatorFactory.getValidator();
 			Set<ConstraintViolation<Object>> violationSet = validator.validate(obj, groups);

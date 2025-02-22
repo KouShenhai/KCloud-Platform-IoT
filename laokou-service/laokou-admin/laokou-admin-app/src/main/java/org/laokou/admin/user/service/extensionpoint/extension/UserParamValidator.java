@@ -53,7 +53,7 @@ public final class UserParamValidator {
 		return validate();
 	}
 
-	public static ParamValidator.Validate validateUserName(UserE userE, UserMapper userMapper, boolean isSave)
+	public static ParamValidator.Validate validateUsername(UserE userE, UserMapper userMapper, boolean isSave)
 			throws Exception {
 		String username = userE.getUsername();
 		Long id = userE.getId();

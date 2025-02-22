@@ -36,7 +36,7 @@ public class SaveUserParamValidator implements UserParamValidatorExtPt {
 	public void validate(UserE userE, UserMapper userMapper) throws Exception {
 		ParamValidator.validate(
 				// 校验用户名
-				UserParamValidator.validateUserName(userE, userMapper, true),
+				UserParamValidator.validateUsername(userE, userMapper, true),
 				// 校验邮箱
 				UserParamValidator.validateMail(userE, userMapper, true),
 				// 校验手机号
