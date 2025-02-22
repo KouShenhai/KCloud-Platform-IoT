@@ -30,10 +30,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ResponseUtil;
 import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.excel.validator.ExcelValidator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
@@ -64,7 +66,9 @@ import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 public final class ExcelUtil {
 
 	private static final int BATCH_SIZE = 100000;
+
 	private static final int PARTITION_SIZE = 10000;
+
 	private static final int DEFAULT_SIZE = 1000000;
 
 	private ExcelUtil() {
@@ -73,7 +77,16 @@ public final class ExcelUtil {
 	public static <MAPPER, EXCEL, DO> void doImport(Class<EXCEL> excel, ExcelConvertor<DO, EXCEL> convert,
 			InputStream inputStream, HttpServletResponse response, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer,
 			MybatisUtil mybatisUtil) {
-		FastExcel.read(inputStream, excel, new DataListener<>(clazz, consumer, response, mybatisUtil, convert))
+		FastExcel.read(inputStream, excel, new DataListener<>(clazz, consumer, response, mybatisUtil, convert, null))
+			.sheet()
+			.doRead();
+	}
+
+	public static <MAPPER, EXCEL, DO> void doImport(Class<EXCEL> excel, ExcelConvertor<DO, EXCEL> convert,
+			InputStream inputStream, HttpServletResponse response, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer,
+			MybatisUtil mybatisUtil, ExcelValidator<EXCEL> validator) {
+		FastExcel
+			.read(inputStream, excel, new DataListener<>(clazz, consumer, response, mybatisUtil, convert, validator))
 			.sheet()
 			.doRead();
 	}
@@ -89,9 +102,10 @@ public final class ExcelUtil {
 			ExcelConvertor<DO, EXCEL> convertor) {
 		if (crudMapper.selectObjectCount(pageQuery) > 0) {
 			try (ServletOutputStream out = response.getOutputStream();
-				 ExcelWriter excelWriter = FastExcel.write(out, clazz).build();
-				 ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-				String newFileName = fileName + "_" + DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + ".xlsx";
+					ExcelWriter excelWriter = FastExcel.write(out, clazz).build();
+					ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+				String newFileName = fileName + "_" + DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS)
+						+ ".xlsx";
 				// 设置请求头
 				setHeader(newFileName, response);
 				// https://idev.cn/fastexcel/zh-CN/docs/write/write_hard
@@ -177,10 +191,13 @@ public final class ExcelUtil {
 
 		private final ExcelConvertor<DO, EXCEL> convertor;
 
+		private final ExcelValidator<EXCEL> validator;
+
 		DataListener(Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, HttpServletResponse response,
-				MybatisUtil mybatisUtil, ExcelConvertor<DO, EXCEL> convertor) {
+				MybatisUtil mybatisUtil, ExcelConvertor<DO, EXCEL> convertor, ExcelValidator<EXCEL> validator) {
 			this.clazz = clazz;
 			this.response = response;
+			this.validator = validator;
 			this.ERRORS = new ArrayList<>();
 			this.CACHED_DATA_LIST = ListUtils.newArrayListWithExpectedSize(DEFAULT_SIZE);
 			this.mybatisUtil = mybatisUtil;
@@ -192,7 +209,13 @@ public final class ExcelUtil {
 		public void invoke(EXCEL excel, AnalysisContext context) {
 			int currentRowNum = context.readRowHolder().getRowIndex() + 1;
 			// 校验数据
-			Set<String> validates = ValidatorUtil.validateEntity(excel);
+			Set<String> validates;
+			if (ObjectUtil.isNotNull(validator)) {
+				validates = validator.validate(excel);
+			}
+			else {
+				validates = ValidatorUtil.validate(excel);
+			}
 			if (CollectionUtil.isNotEmpty(validates)) {
 				ERRORS.add(template(currentRowNum, StringUtil.collectionToDelimitedString(validates, DROP)));
 			}
@@ -213,7 +236,7 @@ public final class ExcelUtil {
 			if (CollectionUtil.isNotEmpty(ERRORS)) {
 				try {
 					ResponseUtil.responseOk(response, Result.fail("S_Excel_ImportError", "Excel导入失败【仅显示前100条】",
-						ERRORS.subList(0, Math.min(ERRORS.size(), 100))));
+							ERRORS.subList(0, Math.min(ERRORS.size(), 100))));
 					// 清除数据
 					CACHED_DATA_LIST.clear();
 					return;

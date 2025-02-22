@@ -19,6 +19,7 @@ package org.laokou.common.i18n.utils;
 
 import org.laokou.common.i18n.common.exception.ParamException;
 
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,13 +35,17 @@ public final class ParamValidator {
 	}
 
 	public static void validate(Validate... validates) {
-		String validateString = Stream.of(validates)
-			.filter(item -> StringUtil.isNotEmpty(item.value))
-			.map(item -> item.value)
-			.collect(Collectors.joining(DROP));
+		String validateString = StringUtil.collectionToDelimitedString(validates(validates), DROP);
 		if (StringUtil.isNotEmpty(validateString)) {
 			throw new ParamException("P_System_ValidateFailed", validateString);
 		}
+	}
+
+	public static Set<String> validates(Validate... validates) {
+		return Stream.of(validates)
+			.filter(item -> StringUtil.isNotEmpty(item.value))
+			.map(item -> item.value)
+			.collect(Collectors.toSet());
 	}
 
 	public static Validate validate() {
