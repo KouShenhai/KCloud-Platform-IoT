@@ -17,15 +17,15 @@
 
 package org.laokou.common.mqtt.config;
 
+import org.eclipse.paho.mqttv5.common.MqttMessage;
+
 /**
  * @author laokou
  */
-public interface MqttClientListener {
+public interface MessageHandler {
 
-	/**
-	 * 消息订阅.
-	 * @param messageExt 消息
-	 */
-	void onMessage(MqttClientMessageExt messageExt);
+	boolean isSubscribe(String topic);
+
+	void handle(String topic, MqttMessage message);
 
 }
