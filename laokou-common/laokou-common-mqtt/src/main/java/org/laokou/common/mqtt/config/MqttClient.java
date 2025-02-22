@@ -36,6 +36,7 @@ import org.laokou.common.mqtt.handler.event.SubscribeEvent;
 import org.laokou.common.mqtt.handler.event.UnsubscribeEvent;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -61,16 +62,16 @@ public class MqttClient {
 
 	private final MqttBrokerProperties mqttBrokerProperties;
 
-	private final MqttClientLoadBalancer mqttClientLoadBalancer;
+	private final List<MessageHandler> messageHandlers;
 
 	private final ScheduledExecutorService executor;
 
 	private volatile MqttAsyncClient client;
 
-	public MqttClient(MqttBrokerProperties mqttBrokerProperties, MqttClientLoadBalancer mqttClientLoadBalancer,
+	public MqttClient(MqttBrokerProperties mqttBrokerProperties, List<MessageHandler> messageHandlers,
 			ScheduledExecutorService executor) {
 		this.mqttBrokerProperties = mqttBrokerProperties;
-		this.mqttClientLoadBalancer = mqttClientLoadBalancer;
+		this.messageHandlers = messageHandlers;
 		this.executor = executor;
 	}
 
@@ -80,7 +81,7 @@ public class MqttClient {
 				client = new MqttAsyncClient(mqttBrokerProperties.getUri(), mqttBrokerProperties.getClientId(),
 						new MqttDefaultFilePersistence(), null, executor);
 				client.setManualAcks(mqttBrokerProperties.isManualAcks());
-				client.setCallback(new MqttClientMessageCallback(mqttClientLoadBalancer, mqttBrokerProperties, client));
+				client.setCallback(new MqttClientMessageCallback(messageHandlers, mqttBrokerProperties, client));
 				client.connect(options(), null, new MqttActionListener() {
 					@Override
 					public void onSuccess(IMqttToken asyncActionToken) {

@@ -27,6 +27,8 @@ import org.eclipse.paho.mqttv5.common.MqttException;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 
+import java.util.List;
+
 /**
  * @author laokou
  */
@@ -34,7 +36,7 @@ import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 @RequiredArgsConstructor
 public class MqttClientMessageCallback implements MqttCallback {
 
-	private final MqttClientLoadBalancer mqttClientLoadBalancer;
+	private final List<MessageHandler> messageHandlers;
 
 	private final MqttBrokerProperties mqttBrokerProperties;
 
@@ -52,7 +54,11 @@ public class MqttClientMessageCallback implements MqttCallback {
 
 	@Override
 	public void messageArrived(String topic, MqttMessage message) {
-		mqttClientLoadBalancer.messageArrived(topic, message);
+		for (MessageHandler messageHandler : messageHandlers) {
+			if (messageHandler.isSubscribe(topic)) {
+				messageHandler.handle(topic, message);
+			}
+		}
 	}
 
 	@Override

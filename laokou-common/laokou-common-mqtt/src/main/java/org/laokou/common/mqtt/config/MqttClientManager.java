@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.eclipse.paho.mqttv5.common.MqttException;
 import org.laokou.common.core.utils.ThreadUtil;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,9 +46,8 @@ public class MqttClientManager {
 		MQTT_CLIENT_MAP.remove(clientId);
 	}
 
-	public static void add(String clientId, MqttBrokerProperties properties,
-			MqttClientLoadBalancer mqttClientLoadBalancer) {
-		MQTT_CLIENT_MAP.putIfAbsent(clientId, new MqttClient(properties, mqttClientLoadBalancer, EXECUTOR));
+	public static void add(String clientId, MqttBrokerProperties properties, List<MessageHandler> messageHandlers) {
+		MQTT_CLIENT_MAP.putIfAbsent(clientId, new MqttClient(properties, messageHandlers, EXECUTOR));
 	}
 
 	public static void open(String clientId) {
@@ -84,9 +84,9 @@ public class MqttClientManager {
 
 	@PreDestroy
 	public static void preDestroy() {
-		ThreadUtil.shutdown(EXECUTOR, 60);
 		MQTT_CLIENT_MAP.values().forEach(MqttClient::close);
 		MQTT_CLIENT_MAP.clear();
+		ThreadUtil.shutdown(EXECUTOR, 60);
 	}
 
 }
