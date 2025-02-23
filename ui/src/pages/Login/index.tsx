@@ -19,6 +19,7 @@ import {getSecretInfoV3} from '@/services/auth/secret';
 import {JSEncrypt} from 'jsencrypt';
 import {v7 as uuidV7} from 'uuid';
 import {clearToken, setToken} from "@/access"
+// @ts-ignore
 import {history} from "@umijs/max";
 
 const USERNAME_PASSWORD = {key: 'username_password', label: '用户名密码登录'};
