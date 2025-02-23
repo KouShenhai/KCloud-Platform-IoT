@@ -33,7 +33,13 @@
   <sql id="selectConditions">
     where del_flag = 0
     <if test="pageQuery.username != null and pageQuery.username != ''">
-      and "username" like #{pageQuery.username}
+      and ("username" like #{pageQuery.username} or username_phrase like #{pageQuery.username})
+    </if>
+    <if test="pageQuery.mail != null and pageQuery.mail != ''">
+      and (mail like #{pageQuery.mail} or mail_phrase like #{pageQuery.mail})
+    </if>
+    <if test="pageQuery.mobile != null and pageQuery.mobile != ''">
+      and (mobile like #{pageQuery.mobile} or mobile_phrase like #{pageQuery.mobile})
     </if>
     <if test="pageQuery.superAdmin != null">
       and super_admin = #{pageQuery.superAdmin}

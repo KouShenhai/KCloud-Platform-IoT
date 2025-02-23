@@ -67,6 +67,14 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 <img src="doc/image/img_1.png" width=400 height=400 alt="COLA架构图"/>
 <img src="doc/image/img.png" width=400 height=400 alt="COLA架构图"/>
 
+### 📙 项目截图
+|                                    |                                    |
+|:----------------------------------:|:----------------------------------:|
+|  ![登录页面](doc/image/project/1.png)  |  ![菜单页面](doc/image/project/2.png)  |
+|  ![部门页面](doc/image/project/3.png)  |  ![角色页面](doc/image/project/4.png)  |
+|  ![用户页面](doc/image/project/5.png)  | ![登录日志页面](doc/image/project/6.png) |
+| ![通知日志页面](doc/image/project/7.png) |                                    |
+
 ### 🌿 服务器配置
 
 | 环境 |             配置              |  备注   |
@@ -311,19 +319,19 @@ KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.or
 ### 🐼 鸣谢个人
 
 
-| 序号 |                                                       头像                                                        |                      名字                       |
-|:--:|:---------------------------------------------------------------------------------------------------------------:|:---------------------------------------------:|
-| 1  |                   ![KouShenhai的头像](https://avatars.githubusercontent.com/u/48756217?s=64&v=4)                   |  [KouShenhai](https://github.com/KouShenhai)  |
-| 2  |   <img src="https://avatars.githubusercontent.com/u/26246537?s=64&v=4" alt="liang99的头像" width=50 height=50 />   |     [liang99](https://github.com/liang99)     |
-| 3  |                   ![livk-cloud的头像](https://avatars.githubusercontent.com/u/50291874?s=64&v=4)                   |  [livk-cloud](https://github.com/livk-cloud)  |
-| 4  |                  ![liukefu2050的头像](https://avatars.githubusercontent.com/u/21030225?s=64&v=4)                   | [liukefu2050](https://github.com/liukefu2050) |
-| 5  | <img src="https://avatars.githubusercontent.com/u/127269482?s=64&v=4" alt="HalfPomelo的头像" width=50 height=50 /> |  [HalfPomelo](https://github.com/HalfPomelo)  |
-| 6  |                     ![lixin的头像](https://avatars.githubusercontent.com/u/69209385?s=64&v=4)                      |       [lixin](https://github.com/lixin)       |
-| 7  |                     ![simman的头像](https://avatars.githubusercontent.com/u/2041471?s=64&v=4)                      |      [simman](https://github.com/simman)      |
-| 8  |                    ![suhengli的头像](https://avatars.githubusercontent.com/u/43296325?s=64&v=4)                    |    [suhengli](https://github.com/suhengli)    |
-| 9  |                   ![gitkakafu的头像](https://avatars.githubusercontent.com/u/89563182?s=64&v=4)                    |   [gitkakafu](https://github.com/gitkakafu)   |
-| 10 |                   ![LeiZhiMin1的头像](https://avatars.githubusercontent.com/u/32741993?s=64&v=4)                   |  [LeiZhiMin1](https://github.com/LeiZhiMin1)  |
-| 11 |                   ![FlySkyBear的头像](https://avatars.githubusercontent.com/u/24284648?s=64&v=4)                   |  [FlySkyBear](https://github.com/FlySkyBear)  |
+| 序号 |                                      头像                                      |                      名字                       |
+|:--:|:----------------------------------------------------------------------------:|:---------------------------------------------:|
+| 1  | ![KouShenhai的头像](https://avatars.githubusercontent.com/u/48756217?s=64&v=4)  |  [KouShenhai](https://github.com/KouShenhai)  |
+| 2  |   ![liang99的头像](https://avatars.githubusercontent.com/u/26246537?s=64&v=4)   |     [liang99](https://github.com/liang99)     |
+| 3  | ![livk-cloud的头像](https://avatars.githubusercontent.com/u/50291874?s=64&v=4)  |  [livk-cloud](https://github.com/livk-cloud)  |
+| 4  | ![liukefu2050的头像](https://avatars.githubusercontent.com/u/21030225?s=64&v=4) | [liukefu2050](https://github.com/liukefu2050) |
+| 5  | ![HalfPomelo的头像](https://avatars.githubusercontent.com/u/127269482?s=64&v=4) |  [HalfPomelo](https://github.com/HalfPomelo)  |
+| 6  |    ![lixin的头像](https://avatars.githubusercontent.com/u/69209385?s=64&v=4)    |       [lixin](https://github.com/lixin)       |
+| 7  |    ![simman的头像](https://avatars.githubusercontent.com/u/2041471?s=64&v=4)    |      [simman](https://github.com/simman)      |
+| 8  |  ![suhengli的头像](https://avatars.githubusercontent.com/u/43296325?s=64&v=4)   |    [suhengli](https://github.com/suhengli)    |
+| 9  |  ![gitkakafu的头像](https://avatars.githubusercontent.com/u/89563182?s=64&v=4)  |   [gitkakafu](https://github.com/gitkakafu)   |
+| 10 | ![LeiZhiMin1的头像](https://avatars.githubusercontent.com/u/32741993?s=64&v=4)  |  [LeiZhiMin1](https://github.com/LeiZhiMin1)  |
+| 11 | ![FlySkyBear的头像](https://avatars.githubusercontent.com/u/24284648?s=64&v=4)  |  [FlySkyBear](https://github.com/FlySkyBear)  |
 ### ⛳️ 赞助列表（感谢各位大佬的赞助）
 
 |     时间     |  网名   |   赞助    |         备注         |

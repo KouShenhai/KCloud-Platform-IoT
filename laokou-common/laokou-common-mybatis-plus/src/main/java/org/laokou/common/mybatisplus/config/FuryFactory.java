@@ -29,7 +29,7 @@ public final class FuryFactory {
 
 	private final ThreadSafeFury FURY = Fury.builder().withAsyncCompilation(true).buildThreadSafeFury();
 
-	public FuryFactory() {
+	private FuryFactory() {
 		FURY.register(net.sf.jsqlparser.expression.Alias.class);
 		FURY.register(net.sf.jsqlparser.expression.Alias.AliasColumn.class);
 		FURY.register(net.sf.jsqlparser.expression.AllValue.class);
@@ -226,6 +226,7 @@ public final class FuryFactory {
 		FURY.register(net.sf.jsqlparser.statement.select.PlainSelect.class);
 		FURY.register(net.sf.jsqlparser.statement.select.SelectItem.class);
 		FURY.register(net.sf.jsqlparser.statement.select.SetOperationList.class);
+		FURY.register(net.sf.jsqlparser.statement.select.SetOperationList.SetOperationType.class);
 		FURY.register(net.sf.jsqlparser.statement.select.Skip.class);
 		FURY.register(net.sf.jsqlparser.statement.select.TableFunction.class);
 		FURY.register(net.sf.jsqlparser.statement.select.TableStatement.class);
