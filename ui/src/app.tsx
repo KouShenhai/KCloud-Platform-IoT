@@ -3,6 +3,7 @@
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 import {Dropdown, message, theme} from "antd";
+// @ts-ignore
 import {history} from "@umijs/max";
 import {HomeOutlined, LogoutOutlined, RobotOutlined, SettingOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
@@ -67,7 +68,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 		fixSiderbar: true,
 		navTheme: "light",
 		contentWidth: "Fluid",
-		colorPrimary: "#1677FF",
+		colorPrimary: "#1677ff",
 		fixedHeader: true,
 		siderMenuType: "sub",
 		avatarProps: {
@@ -105,37 +106,37 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 			// colorTextAppListIconHover: 'rgba(0, 0, 0, 0.65)', // 跨站点应用的图标 hover 颜色
 			// colorBgAppListIconHover: 'rgba(0, 0, 0, 0.04)', // 跨站点应用的图标 hover 背景颜色
 			// 头部菜单的配置 ，这里具体看文档 https://procomponents.ant.design/components/layout
-			header: {
-				colorBgHeader: 'rgb(16 18 26)', // header 的背景颜色
-				colorHeaderTitle: '#ffffff', // header 的标题字体颜色
-				colorTextMenu: '#dee1f0', // menuItem 的字体颜色
-				colorTextMenuSecondary: '#dee1f0', // menu 的二级字体颜色，比如 footer 和 action 的 icon
-				colorTextMenuSelected: '#ffffff', // menuItem 的选中字体颜色
-				colorTextMenuActive: '#ffffff', // menuItem hover 的选中字体颜色
-				colorBgMenuItemHover: 'rgba(90, 75, 75, 0.03)', // menuItem 的 hover 背景颜色
-				colorBgMenuItemSelected: 'rgba(0, 0, 0, 0.04)', // menuItem 的选中背景颜色
-				colorTextRightActionsItem: '#dee1f0', // 右上角字体颜色
-				colorBgRightActionsItemHover: 'rgba(0, 0, 0, 0.03)', // 右上角选中的 hover 颜色
-				heightLayoutHeader: 60 // header 高度
-			},
+			// header: {
+			// 	colorBgHeader: 'rgb(16 18 26)', // header 的背景颜色
+			// 	colorHeaderTitle: '#ffffff', // header 的标题字体颜色
+			// 	colorTextMenu: '#dee1f0', // menuItem 的字体颜色
+			// 	colorTextMenuSecondary: '#dee1f0', // menu 的二级字体颜色，比如 footer 和 action 的 icon
+			// 	colorTextMenuSelected: '#ffffff', // menuItem 的选中字体颜色
+			// 	colorTextMenuActive: '#ffffff', // menuItem hover 的选中字体颜色
+			// 	colorBgMenuItemHover: 'rgba(90, 75, 75, 0.03)', // menuItem 的 hover 背景颜色
+			// 	colorBgMenuItemSelected: 'rgba(0, 0, 0, 0.04)', // menuItem 的选中背景颜色
+			// 	colorTextRightActionsItem: '#dee1f0', // 右上角字体颜色
+			// 	colorBgRightActionsItemHover: 'rgba(0, 0, 0, 0.03)', // 右上角选中的 hover 颜色
+			// 	heightLayoutHeader: 60 // header 高度
+			// },
 			// 侧边菜单的配置 ，这里具体看文档 https://procomponents.ant.design/components/layout
-			sider: {
-				colorMenuBackground: 'rgb(16 18 26)', // menu 的背景颜色
-				colorTextMenuTitle: '#ffffff', // sider 的标题字体颜色
-				colorMenuItemDivider: 'transparent', // 	menuItem 分割线的颜色
-				colorTextMenu: '#dee1f0', // 	menuItem 的字体颜色
-				colorTextMenuSecondary: '#dee1f0', // menu 的二级字体颜色，比如 footer 和 action 的 icon
-				colorTextMenuSelected: '#ffffff', // menuItem 的选中字体颜色
-				colorTextMenuItemHover: '#ffffff', // menuItem 的 hover 字体颜色
-				colorTextMenuActive: '#ffffff', // menuItem hover 的选中字体颜色
-				colorBgMenuItemActive: 'rgba(0, 0, 0, 0.15)', // menuItem 的点击时背景颜色
-				colorBgMenuItemSelected: '#1677ff', // menuItem 的选中背景颜色
-				colorBgMenuItemHover: '#1677ff', // menuItem 的 hover 背景颜色
-				colorBgMenuItemCollapsedElevated: 'transparent', // 收起 menuItem 的弹出菜单背景颜色
-				colorBgCollapsedButton: '#ffffff', // 展开收起按钮背景颜色
-				colorTextCollapsedButton: '#dee1f0', // 展开收起按钮字体颜色
-				colorTextCollapsedButtonHover: '#dee1f0' // 展开收起按钮 hover 时字体颜色
-			}
+			// sider: {
+			// 	colorMenuBackground: 'rgb(16 18 26)', // menu 的背景颜色
+			// 	colorTextMenuTitle: '#ffffff', // sider 的标题字体颜色
+			// 	colorMenuItemDivider: 'transparent', // 	menuItem 分割线的颜色
+			// 	colorTextMenu: '#dee1f0', // 	menuItem 的字体颜色
+			// 	colorTextMenuSecondary: '#dee1f0', // menu 的二级字体颜色，比如 footer 和 action 的 icon
+			// 	colorTextMenuSelected: '#ffffff', // menuItem 的选中字体颜色
+			// 	colorTextMenuItemHover: '#ffffff', // menuItem 的 hover 字体颜色
+			// 	colorTextMenuActive: '#ffffff', // menuItem hover 的选中字体颜色
+			// 	colorBgMenuItemActive: 'rgba(0, 0, 0, 0.15)', // menuItem 的点击时背景颜色
+			// 	colorBgMenuItemSelected: '#1677ff', // menuItem 的选中背景颜色
+			// 	colorBgMenuItemHover: '#1677ff', // menuItem 的 hover 背景颜色
+			// 	colorBgMenuItemCollapsedElevated: 'transparent', // 收起 menuItem 的弹出菜单背景颜色
+			// 	colorBgCollapsedButton: '#ffffff', // 展开收起按钮背景颜色
+			// 	colorTextCollapsedButton: '#dee1f0', // 展开收起按钮字体颜色
+			// 	colorTextCollapsedButtonHover: '#dee1f0' // 展开收起按钮 hover 时字体颜色
+			// }
 		},
 	};
 };
