@@ -18,6 +18,7 @@
 package org.laokou.admin.user.dto;
 
 import lombok.Data;
+import org.laokou.common.crypto.utils.AESUtil;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.utils.StringUtil;
 
@@ -31,12 +32,24 @@ public class UserPageQry extends PageQuery {
 
 	private String username;
 
+	private String mobile;
+
+	private String mail;
+
 	private Integer status;
 
 	private Integer superAdmin;
 
-	public void setUsername(String username) {
-		this.username = StringUtil.like(StringUtil.trim(username));
+	public void setUsername(String username) throws Exception {
+		this.username = StringUtil.like(StringUtil.trim(AESUtil.encrypt(username)));
+	}
+
+	public void setMobile(String mobile) throws Exception {
+		this.mobile = StringUtil.like(StringUtil.trim(AESUtil.encrypt(mobile)));
+	}
+
+	public void setMail(String mail) throws Exception {
+		this.mail = StringUtil.like(StringUtil.trim(AESUtil.encrypt(mail)));
 	}
 
 }

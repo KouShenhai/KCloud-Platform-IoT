@@ -45,6 +45,10 @@ export default () => {
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
 			username: trim(params?.username),
+			mail: trim(params?.mail),
+			mobile: trim(params?.mobile),
+			superAdmin: params?.superAdmin,
+			status: params?.status,
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
