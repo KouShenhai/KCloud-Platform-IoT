@@ -12,6 +12,7 @@ import React from "react";
 import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
 import {getProfileV3} from "@/services/admin/user";
 import {userTreeListV3} from "@/services/admin/menu";
+import {ProBreadcrumb} from "@ant-design/pro-layout";
 
 const getIcon = (icon: string) => {
 	switch (icon) {
@@ -53,6 +54,8 @@ export async function getInitialState(): Promise<{
 
 export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 	return {
+		// 面包屑配置
+		headerContentRender: () => <ProBreadcrumb />,
 		logo: '/logo.png',
 		menu: {
 			locale: false,
