@@ -61,7 +61,7 @@ public final class ParamValidator {
 		private final String value;
 
 		public Validate() {
-			value = EMPTY;
+			this(EMPTY);
 		}
 
 		public Validate(String value) {

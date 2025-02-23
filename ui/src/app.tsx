@@ -3,7 +3,6 @@
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 import {Dropdown, message, theme} from "antd";
-// @ts-ignore
 import {history} from "@umijs/max";
 import {HomeOutlined, LogoutOutlined, RobotOutlined, SettingOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
@@ -13,6 +12,7 @@ import React from "react";
 import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
 import {getProfileV3} from "@/services/admin/user";
 import {userTreeListV3} from "@/services/admin/menu";
+import {ProBreadcrumb} from "@ant-design/pro-layout";
 
 const getIcon = (icon: string) => {
 	switch (icon) {
@@ -54,6 +54,8 @@ export async function getInitialState(): Promise<{
 
 export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 	return {
+		// 面包屑配置
+		headerContentRender: () => <ProBreadcrumb />,
 		logo: '/logo.png',
 		menu: {
 			locale: false,
