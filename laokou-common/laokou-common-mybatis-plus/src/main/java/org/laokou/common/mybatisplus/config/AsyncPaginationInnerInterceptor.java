@@ -70,8 +70,9 @@ import org.mybatis.spring.transaction.SpringManagedTransaction;
 
 import javax.sql.DataSource;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 /**
@@ -97,7 +98,7 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 
 	protected static final Map<String, MappedStatement> countMsCache = new ConcurrentHashMap<>();
 
-	private static final ThreadLocal<CompletableFuture<Void>> COUNT_LOCAL = new TransmittableThreadLocal<>();
+	private static final ThreadLocal<Future<?>> COUNT_LOCAL = new TransmittableThreadLocal<>();
 
 	/**
 	 * 溢出总页数后是否进行处理.
@@ -132,23 +133,26 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 
 	private DataSource dataSource;
 
-	private java.util.concurrent.Executor executor;
+	private ExecutorService executorService;
 
-	public AsyncPaginationInnerInterceptor(DbType dbType, DataSource dataSource,
-			java.util.concurrent.Executor executor) {
+	public AsyncPaginationInnerInterceptor(DbType dbType, DataSource dataSource, ExecutorService executorService) {
 		this.dbType = dbType;
 		this.dataSource = dataSource;
-		this.executor = executor;
+		this.executorService = executorService;
 	}
 
-	public AsyncPaginationInnerInterceptor(IDialect dialect, DataSource dataSource,
-			java.util.concurrent.Executor executor) {
+	public AsyncPaginationInnerInterceptor(IDialect dialect, DataSource dataSource, ExecutorService executorService) {
 		this.dialect = dialect;
 		this.dataSource = dataSource;
-		this.executor = executor;
+		this.executorService = executorService;
 	}
 
-	public static CompletableFuture<Void> get() {
+	public AsyncPaginationInnerInterceptor(DataSource dataSource, ExecutorService executorService) {
+		this.dataSource = dataSource;
+		this.executorService = executorService;
+	}
+
+	public static Future<?> get() {
 		return COUNT_LOCAL.get();
 	}
 
@@ -185,7 +189,8 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 		CacheKey cacheKey = simpleExecutor.createCacheKey(countMs, parameter, rowBounds, countSql);
 
 		final MappedStatement mappedStatement = countMs;
-		CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+
+		Future<?> future = executorService.submit(() -> {
 			try {
 				List<Object> result = executor.query(mappedStatement, parameter, rowBounds, resultHandler, cacheKey,
 						countSql);
@@ -202,7 +207,7 @@ public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 			catch (Exception e) {
 				log.error("查询失败，错误信息：{}", e.getMessage());
 			}
-		}, this.executor);
+		});
 		COUNT_LOCAL.set(future);
 		return true;
 	}
