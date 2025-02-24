@@ -57,7 +57,7 @@ public final class HttpUtil {
 		}
 		catch (NoSuchAlgorithmException | KeyManagementException e) {
 			log.error("SSL初始化失败，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_Http_SslInitFail", "SSL初始化失败", e);
+			throw new SystemException("S_Http_SslInitFailed", "SSL初始化失败", e);
 		}
 	}
 

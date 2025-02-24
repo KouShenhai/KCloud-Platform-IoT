@@ -29,11 +29,6 @@ public final class Constant {
 	 */
 	public static final String SCENARIO = "iot";
 
-	/**
-	 * 认证标识.
-	 */
-	public static final String AUTHORIZATION = "Authorization";
-
 	private Constant() {
 	}
 

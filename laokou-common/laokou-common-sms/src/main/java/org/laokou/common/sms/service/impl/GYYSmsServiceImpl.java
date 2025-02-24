@@ -32,8 +32,8 @@ import org.laokou.common.sms.dto.SmsResult;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 /**
  * @author laokou

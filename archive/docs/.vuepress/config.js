@@ -106,7 +106,12 @@ module.exports = {
                         text: '道法', link: '/pages/e03540/', items: [
                             {text: '道法摘抄（一）', link: '/pages/e03540/'}
                         ]
-                    }
+                    },
+					{
+						text: '养生', link: '/pages/e03541/', items: [
+							{text: '养生摘抄（一）', link: '/pages/e03541/'}
+						]
+					}
 				]
 			},
 			{

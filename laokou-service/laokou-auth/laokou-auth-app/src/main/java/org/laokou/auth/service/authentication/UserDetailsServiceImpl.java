@@ -67,7 +67,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}
 		catch (Exception e) {
 			log.error("用户认证失败，错误信息：{}", e.getMessage(), e);
-			throw new BizException("B_OAuth2_UserAuthFail", "用户认证失败", e);
+			throw new BizException("B_OAuth2_UserAuthFailed", "用户认证失败", e);
 		}
 	}
 

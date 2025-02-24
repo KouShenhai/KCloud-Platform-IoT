@@ -36,7 +36,7 @@ public class SqlUtil {
 		}
 		catch (Exception e) {
 			log.error("SQL解析失败", e);
-			throw new SystemException("S_DS_SqlParseFail", "SQL解析失败", e);
+			throw new SystemException("S_DS_SqlParseFailed", "SQL解析失败", e);
 		}
 	}
 

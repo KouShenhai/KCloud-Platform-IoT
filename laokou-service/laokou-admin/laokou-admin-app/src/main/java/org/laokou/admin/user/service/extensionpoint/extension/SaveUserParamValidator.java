@@ -22,6 +22,7 @@ import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
 import org.laokou.common.extension.Extension;
 import org.laokou.common.i18n.utils.ParamValidator;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.laokou.admin.common.constant.Constant.*;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
@@ -33,7 +34,7 @@ import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 public class SaveUserParamValidator implements UserParamValidatorExtPt {
 
 	@Override
-	public void validate(UserE userE, UserMapper userMapper) throws Exception {
+	public void validate(UserE userE, PasswordEncoder passwordEncoder, UserMapper userMapper) throws Exception {
 		ParamValidator.validate(
 				// 校验用户名
 				UserParamValidator.validateUsername(userE, userMapper, true),

@@ -49,6 +49,8 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	private final UserExportCmdExe userExportCmdExe;
 
+	private final UserResetPwdCmdExe userResetPwdCmdExe;
+
 	private final UserPageQryExe userPageQryExe;
 
 	private final UserGetQryExe userGetQryExe;
@@ -78,6 +80,11 @@ public class UsersServiceImpl implements UsersServiceI {
 	@Override
 	public void export(UserExportCmd cmd) {
 		userExportCmdExe.executeVoid(cmd);
+	}
+
+	@Override
+	public void resetPwd(UserResetPwdCmd cmd) {
+		userResetPwdCmdExe.executeVoid(cmd);
 	}
 
 	@Override

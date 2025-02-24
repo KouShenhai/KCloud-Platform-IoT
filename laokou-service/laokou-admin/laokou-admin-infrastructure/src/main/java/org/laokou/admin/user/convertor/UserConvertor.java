@@ -87,6 +87,12 @@ public final class UserConvertor {
 			userDO.setUsername(userE.getUsername());
 			userDO.setUsernamePhrase(userE.getUsernamePhrase());
 		}
+		else {
+			String password = userE.getPassword();
+			if (StringUtil.isNotEmpty(password)) {
+				userDO.setPassword(passwordEncoder.encode(password));
+			}
+		}
 		String mobile = userE.getMobile();
 		String mail = userE.getMail();
 		userDO.setId(userE.getId());
@@ -160,6 +166,13 @@ public final class UserConvertor {
 		userE.setAvatar(userCO.getAvatar());
 		userE.setRoleIds(userCO.getRoleIds());
 		userE.setDeptIds(userCO.getDeptIds());
+		return userE;
+	}
+
+	public static UserE toEntity(Long id, String password) {
+		UserE userE = new UserE();
+		userE.setId(id);
+		userE.setPassword(password);
 		return userE;
 	}
 

@@ -51,9 +51,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
 import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
 import static org.laokou.common.i18n.common.constant.TraceConstant.REQUEST_ID;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpMethod.POST;
 
 /**
@@ -378,7 +378,7 @@ class OAuth2ApiTest {
 	}
 
 	private String getCaptcha(String key) {
-		restClient.get().uri(URI.create(getCaptchaApiUrlV3(OAuth2ApiTest.UUID))).retrieve().toBodilessEntity();
+		restClient.get().uri(URI.create(getCaptchaApiUrlV3())).retrieve().toBodilessEntity();
 		String captcha = redisUtil.get(key).toString();
 		Assert.isTrue(StringUtil.isNotEmpty(captcha), "captcha is empty");
 		return captcha;
@@ -411,8 +411,9 @@ class OAuth2ApiTest {
 		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/oauth2/device_authorization";
 	}
 
-	private String getCaptchaApiUrlV3(String uuid) {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/captchas/" + uuid;
+	private String getCaptchaApiUrlV3() {
+		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/captchas/"
+				+ OAuth2ApiTest.UUID;
 	}
 
 	private String getTokenUrlV3() {

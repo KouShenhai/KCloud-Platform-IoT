@@ -1092,7 +1092,7 @@ CACHE 1
   "driver_class_name" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
   "url" varchar(500) COLLATE "pg_catalog"."default" NOT NULL,
   "username" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
-  "password" varchar(200) COLLATE "pg_catalog"."default" NOT NULL
+  "password" varchar(100) COLLATE "pg_catalog"."default" NOT NULL
 )
 ;
 COMMENT ON COLUMN "public"."boot_sys_source"."id" IS 'ID';
