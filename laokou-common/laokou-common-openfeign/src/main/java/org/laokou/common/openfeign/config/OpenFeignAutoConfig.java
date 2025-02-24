@@ -33,9 +33,9 @@ import org.springframework.context.annotation.Import;
 
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
 import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
 import static org.laokou.common.i18n.common.constant.TraceConstant.*;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 // @formatter:off
 /**

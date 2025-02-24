@@ -24,30 +24,23 @@ import org.laokou.common.extension.Extension;
 import org.laokou.common.i18n.utils.ParamValidator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.laokou.admin.common.constant.Constant.*;
+import static org.laokou.admin.common.constant.Constant.MODIFY;
+import static org.laokou.admin.common.constant.Constant.REST_PWD;
 import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
  * @author laokou
  */
-@Extension(bizId = MODIFY, useCase = USER, scenario = SCENARIO)
-public class ModifyUserParamValidator implements UserParamValidatorExtPt {
+@Extension(bizId = MODIFY, useCase = REST_PWD, scenario = SCENARIO)
+public class ResetPwdParamValidator implements UserParamValidatorExtPt {
 
 	@Override
 	public void validate(UserE userE, PasswordEncoder passwordEncoder, UserMapper userMapper) throws Exception {
 		ParamValidator.validate(
 				// 校验ID
 				UserParamValidator.validateId(userE),
-				// 校验用户名
-				UserParamValidator.validateUsername(userE, userMapper, false),
-				// 校验邮箱
-				UserParamValidator.validateMail(userE, userMapper, false),
-				// 校验手机号
-				UserParamValidator.validateMobile(userE, userMapper, false),
-				// 校验角色IDS
-				UserParamValidator.validateRoleIds(userE),
-				// 校验部门IDS
-				UserParamValidator.validateDeptIds(userE));
+				// 校验密码
+				UserParamValidator.validatePassword(userE, passwordEncoder, userMapper));
 	}
 
 }

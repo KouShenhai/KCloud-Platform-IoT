@@ -79,7 +79,7 @@ public class SecretUtil {
 		String params = MapUtil.parseParams(map, false);
 		String newSing = sign(appKey, appSecret, nonce, ts, params);
 		if (!sign.equals(newSing)) {
-			throw new SystemException("S_Api_CheckSignFail", "Api验签失败");
+			throw new SystemException("S_Api_CheckSignFailed", "Api验签失败");
 		}
 	}
 

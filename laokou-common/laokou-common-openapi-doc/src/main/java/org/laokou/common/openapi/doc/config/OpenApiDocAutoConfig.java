@@ -30,7 +30,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 
-import static org.laokou.common.i18n.common.constant.Constant.AUTHORIZATION;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 /**
  * @author laokou

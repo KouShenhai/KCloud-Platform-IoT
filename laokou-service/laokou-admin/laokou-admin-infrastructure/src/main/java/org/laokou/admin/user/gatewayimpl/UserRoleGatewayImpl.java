@@ -22,6 +22,7 @@ import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.gateway.UserRoleGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.user.model.UserE;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.springframework.stereotype.Component;
 
@@ -43,11 +44,13 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 
 	@Override
 	public void update(UserE userE) {
-		// 删除用户角色关联表
-		mybatisUtil.batch(UserConvertor.toDataObjects(userE), UserRoleMapper.class, UserRoleMapper::deleteObjById);
-		// 新增用户角色关联表
-		mybatisUtil.batch(UserConvertor.toDataObjects(userE, userE.getId()), UserRoleMapper.class,
-				UserRoleMapper::insert);
+		if (CollectionUtil.isNotEmpty(userE.getRoleIds())) {
+			// 删除用户角色关联表
+			mybatisUtil.batch(UserConvertor.toDataObjects(userE), UserRoleMapper.class, UserRoleMapper::deleteObjById);
+			// 新增用户角色关联表
+			mybatisUtil.batch(UserConvertor.toDataObjects(userE, userE.getId()), UserRoleMapper.class,
+					UserRoleMapper::insert);
+		}
 	}
 
 }

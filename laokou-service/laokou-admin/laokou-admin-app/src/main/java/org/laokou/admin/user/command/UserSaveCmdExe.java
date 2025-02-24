@@ -18,6 +18,7 @@
 package org.laokou.admin.user.command;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserSaveCmd;
@@ -27,6 +28,8 @@ import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
+import org.laokou.common.i18n.common.exception.ParamException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +41,7 @@ import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class UserSaveCmdExe {
@@ -56,10 +60,14 @@ public class UserSaveCmdExe {
 		extensionExecutor.executeVoid(UserParamValidatorExtPt.class, BizScenario.valueOf(SAVE, USER, SCENARIO),
 				extension -> {
 					try {
-						extension.validate(userE, userMapper);
+						extension.validate(userE, null, userMapper);
+					}
+					catch (ParamException e) {
+						throw e;
 					}
 					catch (Exception e) {
-						throw new RuntimeException(e);
+						log.error("未知错误，错误信息：{}", e.getMessage(), e);
+						throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 					}
 				});
 		userE.setId(IdGenerator.defaultSnowflakeId());
@@ -68,7 +76,8 @@ public class UserSaveCmdExe {
 				userDomainService.create(userE);
 			}
 			catch (Exception e) {
-				throw new RuntimeException(e);
+				log.error("未知错误，错误信息：{}", e.getMessage(), e);
+				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 			}
 		});
 	}

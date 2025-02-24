@@ -61,6 +61,12 @@ public interface UsersServiceI {
 	void export(UserExportCmd cmd);
 
 	/**
+	 * 重置密码.
+	 * @param cmd 重置密码命令
+	 */
+	void resetPwd(UserResetPwdCmd cmd);
+
+	/**
 	 * 分页查询用户.
 	 * @param qry 分页查询请求
 	 */

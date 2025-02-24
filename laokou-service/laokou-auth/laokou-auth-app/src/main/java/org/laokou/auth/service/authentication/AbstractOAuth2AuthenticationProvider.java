@@ -42,6 +42,7 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
+
 import java.security.Principal;
 import java.util.Collections;
 import java.util.Optional;
@@ -78,8 +79,11 @@ public abstract class AbstractOAuth2AuthenticationProvider implements Authentica
 		try {
 			return authentication(authentication, getPrincipal(request));
 		}
+		catch (OAuth2AuthenticationException e) {
+			throw e;
+		}
 		catch (Exception e) {
-			log.error("认证授权失败，错误信息：{}", e.getMessage());
+			log.error("未知错误，错误信息：{}", e.getMessage(), e);
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 	}

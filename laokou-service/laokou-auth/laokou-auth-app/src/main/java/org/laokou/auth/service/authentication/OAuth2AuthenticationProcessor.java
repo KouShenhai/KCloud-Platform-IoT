@@ -21,6 +21,7 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.blueconic.browscap.Capabilities;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.model.AuthA;
@@ -35,6 +36,7 @@ import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.ParamException;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.rocketmq.template.SendMessageType;
 import org.laokou.common.security.utils.UserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,6 +50,7 @@ import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getOAuth
 /**
  * @author laokou
  */
+@Slf4j
 @RequiredArgsConstructor
 @Component("authProcessor")
 public class OAuth2AuthenticationProcessor {
@@ -82,7 +85,8 @@ public class OAuth2AuthenticationProcessor {
 			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 		catch (Exception e) {
-			throw new RuntimeException(e);
+			log.error("未知错误，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 		finally {
 			// 清除数据源上下文

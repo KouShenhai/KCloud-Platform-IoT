@@ -28,6 +28,7 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ParamValidator;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.i18n.utils.ValidatorUtil;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -49,6 +50,25 @@ public final class UserParamValidator {
 		Long id = userE.getId();
 		if (ObjectUtil.isNull(id)) {
 			return invalidate("ID不能为空");
+		}
+		return validate();
+	}
+
+	public static ParamValidator.Validate validatePassword(UserE userE, PasswordEncoder passwordEncoder,
+			UserMapper userMapper) {
+		String password = userE.getPassword();
+		if (StringUtil.isEmpty(password)) {
+			return invalidate("密码不能为空");
+		}
+		if (password.length() < 6 || password.length() > 30) {
+			return invalidate("密码长度为6-30个字符");
+		}
+		UserDO userDO = userMapper.selectById(userE.getId());
+		if (ObjectUtil.isNull(userDO)) {
+			return invalidate("用户不存在");
+		}
+		if (passwordEncoder.matches(password, userDO.getPassword())) {
+			return invalidate("新密码不能与旧密码相同");
 		}
 		return validate();
 	}

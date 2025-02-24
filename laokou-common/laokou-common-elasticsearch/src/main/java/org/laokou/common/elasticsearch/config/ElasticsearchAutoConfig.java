@@ -117,7 +117,7 @@ class ElasticsearchAutoConfig {
 				}
 				catch (NoSuchAlgorithmException | KeyManagementException e) {
 					log.error("ignoreConfigureSsl error", e);
-					throw new SystemException("S_Elasticsearch_IgnoreSslFail", "忽略SSL验证失败", e);
+					throw new SystemException("S_Elasticsearch_IgnoreSslFailed", "忽略SSL验证失败", e);
 				}
 			}
 			return httpClientBuilder;

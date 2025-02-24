@@ -15,28 +15,19 @@
  *
  */
 
-package org.laokou.admin.common.constant;
+package org.laokou.admin.user.dto;
+
+import lombok.Data;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-public final class Constant {
+@Data
+public class UserResetPwdCmd extends CommonCommand {
 
-	public static final String SAVE = "save";
+	private Long id;
 
-	public static final String MODIFY = "modify";
-
-	public static final String MENU = "menu";
-
-	public static final String DEPT = "dept";
-
-	public static final String ROLE = "role";
-
-	public static final String USER = "user";
-
-	public static final String REST_PWD = "reset-pwd";
-
-	private Constant() {
-	}
+	private String password;
 
 }
