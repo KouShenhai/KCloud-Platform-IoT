@@ -41,15 +41,15 @@ public class UserPageQry extends PageQuery {
 	private Integer superAdmin;
 
 	public void setUsername(String username) throws Exception {
-		this.username = StringUtil.like(StringUtil.trim(AESUtil.encrypt(username)));
+		this.username = StringUtil.like(AESUtil.encrypt(StringUtil.trim(username)));
 	}
 
 	public void setMobile(String mobile) throws Exception {
-		this.mobile = StringUtil.like(StringUtil.trim(AESUtil.encrypt(mobile)));
+		this.mobile = StringUtil.like(AESUtil.encrypt(StringUtil.trim(mobile)));
 	}
 
 	public void setMail(String mail) throws Exception {
-		this.mail = StringUtil.like(StringUtil.trim(AESUtil.encrypt(mail)));
+		this.mail = StringUtil.like(AESUtil.encrypt(StringUtil.trim(mail)));
 	}
 
 }
