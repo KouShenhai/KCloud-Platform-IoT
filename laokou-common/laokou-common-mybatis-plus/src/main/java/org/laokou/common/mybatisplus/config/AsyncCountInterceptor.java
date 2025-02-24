@@ -28,8 +28,8 @@ import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.laokou.common.i18n.utils.ObjectUtil;
-
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author gitkakafu
@@ -47,9 +47,9 @@ public class AsyncCountInterceptor implements Interceptor {
 	public Object intercept(Invocation invocation) throws Throwable {
 		Object obj = invocation.proceed();
 		try {
-			CompletableFuture<Void> future = AsyncPaginationInnerInterceptor.get();
+			Future<?> future = AsyncPaginationInnerInterceptor.get();
 			if (ObjectUtil.isNotNull(future)) {
-				future.join();
+				future.get(60, TimeUnit.SECONDS);
 			}
 		}
 		finally {

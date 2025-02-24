@@ -17,7 +17,6 @@
 
 package org.laokou.common.mybatisplus.config;
 
-import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.extension.parser.JsqlParserGlobal;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
@@ -36,7 +35,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.TransactionOperations;
 import org.springframework.transaction.support.TransactionTemplate;
-
 import javax.sql.DataSource;
 import java.util.concurrent.TimeUnit;
 
@@ -122,11 +120,8 @@ public class MybatisPlusAutoConfig {
 	 * 异步分页. 解除每页500条限制.
 	 */
 	private AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor(DataSource dataSource) {
-		// 使用postgresql，如果使用其他数据库，需要修改DbType
-		// 使用postgresql，如果使用其他数据库，需要修改DbType
-		// 使用postgresql，如果使用其他数据库，需要修改DbType
 		AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor = new AsyncPaginationInnerInterceptor(
-				DbType.POSTGRE_SQL, dataSource, ThreadUtil.newVirtualTaskExecutor());
+				dataSource, ThreadUtil.newVirtualTaskExecutor());
 		// -1表示不受限制
 		asyncPaginationInnerInterceptor.setMaxLimit(-1L);
 		// 溢出总页数后是进行处理，查看源码就知道是干啥的
