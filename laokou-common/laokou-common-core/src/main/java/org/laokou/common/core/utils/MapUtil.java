@@ -19,21 +19,32 @@ package org.laokou.common.core.utils;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.MultiValueMapAdapter;
+import org.springframework.util.ObjectUtils;
 import org.yaml.snakeyaml.util.UriEncoder;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.*;
+import static org.laokou.common.i18n.common.constant.StringConstant.AND;
+import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstant.EQUAL;
 
 /**
  * map工具类.
@@ -112,6 +123,7 @@ public final class MapUtil {
 	 * @param on 分隔符
 	 * @param separator 分隔符
 	 * @return Map对象
+	 * @deprecated 出现a=1&a=2的情况无法处理,与{@link #parseParamMap(String)}情况类似
 	 */
 	public static Map<String, String> toMap(String str, String on, String separator) {
 		if (StringUtil.isEmpty(str)) {
@@ -124,7 +136,10 @@ public final class MapUtil {
 	 * 字符串参数转为map参数.
 	 * @param params 参数
 	 * @return map参数对象
+	 * @see org.laokou.common.core.utils.MapUtil#parseParams(String)
+	 * @deprecated 出现a=1&a=2的情况无法处理
 	 */
+	@Deprecated
 	public static Map<String, String> parseParamMap(String params) {
 		String[] strings = params.split(AND);
 		int length = strings.length;
@@ -139,6 +154,26 @@ public final class MapUtil {
 				if (!paramMap.containsKey(key)) {
 					String value = UriEncoder.decode(string.substring(index + 1));
 					paramMap.put(key, value);
+				}
+			}
+		}
+		return paramMap;
+	}
+
+	/**
+	 * <a href=
+	 * "https://github.com/livk-cloud/spring-boot-extension/blob/main/spring-extension-commons/src/main/java/com/livk/commons/util/MultiValueMapSplitter.java">MultiValueMapSplitter</a>.
+	 */
+	public static MultiValueMap<String, String> parseParams(String params) {
+		MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
+		String[] strings = params.split(AND);
+		if (!ObjectUtils.isEmpty(strings)) {
+			for (String string : strings) {
+				int index = string.indexOf(EQUAL);
+				if (index > -1) {
+					String key = string.substring(0, index);
+					String value = UriEncoder.decode(string.substring(index + 1));
+					paramMap.add(key, value);
 				}
 			}
 		}
@@ -185,15 +220,15 @@ public final class MapUtil {
 	 * @return MultiValueMap
 	 */
 	public static MultiValueMap<String, String> getParameters(Map<String, String[]> parameterMap) {
-		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>(parameterMap.size());
-		parameterMap.forEach((k, v) -> parameters.addAll(k, Arrays.asList(v)));
-		return parameters;
+		Map<String, List<String>> transformValues = Maps.transformValues(parameterMap, Lists::newArrayList);
+		return new MultiValueMapAdapter<>(transformValues);
 	}
 
 	/**
 	 * 获取请求参数.
 	 * @param request 请求对象
 	 * @return 请求参数Map对象
+	 * @deprecated 这个方法不推荐使用, 命名不清楚或者不够直观(方法有业务冗余，通用性差)
 	 */
 	public static Map<String, String> getParameters(HttpServletRequest request) throws IOException {
 		Map<String, String[]> parameterMap = request.getParameterMap();
