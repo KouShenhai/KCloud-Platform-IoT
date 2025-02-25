@@ -115,3 +115,15 @@ export async function getProfileV3(options?: { [key: string]: any }) {
 		...(options || {}),
 	});
 }
+
+/** 重置密码 重置密码 PUT /v3/users/reset-pwd */
+export async function resetPwdV3(body: API.ResetPwdCmd, options?: { [key: string]: any }) {
+	return request<any>('/api/admin/v3/users/reset-pwd', {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}

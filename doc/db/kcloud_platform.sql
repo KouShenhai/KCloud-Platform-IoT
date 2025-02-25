@@ -474,7 +474,7 @@ CACHE 1
   "tenant_id" int8 NOT NULL DEFAULT 0,
   "pid" int8 NOT NULL,
   "name" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
-  "path" varchar(1000) COLLATE "pg_catalog"."default" NOT NULL DEFAULT '0'::character varying,
+  "path" text COLLATE "pg_catalog"."default" NOT NULL DEFAULT '0'::character varying,
   "sort" int4 NOT NULL DEFAULT 1
 )
 ;

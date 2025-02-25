@@ -74,44 +74,41 @@ public final class ExcelUtil {
 	private ExcelUtil() {
 	}
 
-	public static <MAPPER, EXCEL, DO> void doImport(Class<EXCEL> excel, ExcelConvertor<DO, EXCEL> convert,
-			InputStream inputStream, HttpServletResponse response, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer,
-			MybatisUtil mybatisUtil) {
-		FastExcel.read(inputStream, excel, new DataListener<>(clazz, consumer, response, mybatisUtil, convert, null))
-			.sheet()
-			.doRead();
+	public static <MAPPER, EXCEL, DO> void doImport(String sheetName, Class<EXCEL> excel,
+			ExcelConvertor<DO, EXCEL> convert, InputStream inputStream, HttpServletResponse response,
+			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil) {
+		doImport(sheetName, excel, convert, inputStream, response, clazz, consumer, mybatisUtil, null);
 	}
 
-	public static <MAPPER, EXCEL, DO> void doImport(Class<EXCEL> excel, ExcelConvertor<DO, EXCEL> convert,
-			InputStream inputStream, HttpServletResponse response, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer,
-			MybatisUtil mybatisUtil, ExcelValidator<EXCEL> validator) {
+	public static <MAPPER, EXCEL, DO> void doImport(String sheetName, Class<EXCEL> excel,
+			ExcelConvertor<DO, EXCEL> convert, InputStream inputStream, HttpServletResponse response,
+			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil,
+			ExcelValidator<EXCEL> validator) {
 		FastExcel
 			.read(inputStream, excel, new DataListener<>(clazz, consumer, response, mybatisUtil, convert, validator))
-			.sheet()
+			.sheet(sheetName)
 			.doRead();
 	}
 
-	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, HttpServletResponse response,
-			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
-			ExcelConvertor<DO, EXCEL> convertor) {
-		doExport(fileName, BATCH_SIZE, response, pageQuery, crudMapper, clazz, convertor);
+	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, String sheetName,
+			HttpServletResponse response, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper,
+			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor) {
+		doExport(fileName, sheetName, BATCH_SIZE, response, pageQuery, crudMapper, clazz, convertor);
 	}
 
-	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, int size, HttpServletResponse response,
-			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
-			ExcelConvertor<DO, EXCEL> convertor) {
+	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, String sheetName, int size,
+			HttpServletResponse response, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper,
+			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor) {
 		if (crudMapper.selectObjectCount(pageQuery) > 0) {
 			try (ServletOutputStream out = response.getOutputStream();
 					ExcelWriter excelWriter = FastExcel.write(out, clazz).build();
 					ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
-				String newFileName = fileName + "_" + DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS)
-						+ ".xlsx";
 				// 设置请求头
-				setHeader(newFileName, response);
+				setHeader(fileName, response);
 				// https://idev.cn/fastexcel/zh-CN/docs/write/write_hard
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
 				// 设置sheet页
-				WriteSheet writeSheet = FastExcel.writerSheet(fileName).head(clazz).build();
+				WriteSheet writeSheet = FastExcel.writerSheet(sheetName).head(clazz).build();
 				crudMapper.selectObjectListHandler(pageQuery, resultContext -> {
 					list.add(resultContext.getResultObject());
 					if (list.size() % size == 0) {
@@ -154,6 +151,7 @@ public final class ExcelUtil {
 	}
 
 	private static void setHeader(String fileName, HttpServletResponse response) {
+		fileName = fileName + "_导出全部_" + DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + ".xlsx";
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType("application/vnd.ms-excel;charset=UTF-8");
 		response.setHeader("Content-disposition",

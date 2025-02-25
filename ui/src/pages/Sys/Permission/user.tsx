@@ -4,11 +4,11 @@ import {
 	ProFormText, ProFormTreeSelect,
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {pageV3, removeV3, saveV3, getByIdV3, modifyV3} from "@/services/admin/user";
+import { pageV3, removeV3, saveV3, getByIdV3, modifyV3, resetPwdV3 } from '@/services/admin/user';
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal, Space, Switch, Tag} from 'antd';
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusOutlined, UserOutlined } from '@ant-design/icons';
 import {v7 as uuidV7} from 'uuid';
 import {trim} from "@/utils/format";
 import {treeListV3} from "@/services/admin/dept";
@@ -30,10 +30,18 @@ export default () => {
 		roleIds: string[];
 	};
 
+	type TableRestPwdColumns = {
+		id: number;
+		password: string | undefined;
+		confirmPassword: string | undefined;
+	}
+
 	const [readOnly, setReadOnly] = useState(false)
 	const [modalVisit, setModalVisit] = useState(false);
+	const [modalRestPwdVisit, setModalRestPwdVisit] = useState(false);
 	const actionRef = useRef();
 	const [dataSource, setDataSource] = useState({})
+	const [primaryKey, setPrimaryKey] = useState<number>()
 	const [ids, setIds] = useState<number[]>([])
 	const [title, setTitle] = useState("")
 	const [deptTreeList, setDeptTreeList] = useState<any[]>([])
@@ -202,6 +210,12 @@ export default () => {
 				>
 					修改
 				</a>,
+				<a key={'resetPwd'} onClick={() => {
+					setPrimaryKey(record?.id)
+					setModalRestPwdVisit(true)
+				}}>
+					重置密码
+				</a>,
 				<a key="remove" onClick={() => {
 					Modal.confirm({
 						title: '确认删除?',
@@ -227,6 +241,66 @@ export default () => {
 
 	return (
 		<>
+			<DrawerForm<TableRestPwdColumns>
+				open={modalRestPwdVisit}
+				title={'重置密码'}
+				drawerProps={{
+					destroyOnClose: true,
+					closable: true,
+					maskClosable: true
+				}}
+				onOpenChange={setModalRestPwdVisit}
+				submitter={{
+					submitButtonProps: {
+						style: {
+							display: readOnly ? 'none' : 'inline-block',
+						},
+					}
+				}}
+				onFinish={ async (value) => {
+					const password = value?.password
+					const confirmPassword = value?.confirmPassword
+					if (password !== confirmPassword) {
+						message.error("两次密码不一致").then()
+						return
+					}
+					resetPwdV3({id: primaryKey, password: password}).then(res => {
+						if (res.code === 'OK') {
+							message.success("重置成功").then()
+							setModalRestPwdVisit(false)
+						}
+					})
+				}}>
+
+				<ProFormText
+					name="id"
+					label="ID"
+					hidden={true}
+				/>
+
+				<ProFormText.Password
+					name="password"
+					label="密码"
+					tooltip={"默认密码：laokou123"}
+					placeholder={'请输入密码'}
+					fieldProps={{
+						autoComplete: 'new-password',
+					}}
+					rules={[{ required: true, message: '请输入密码' }]}
+				/>
+
+				<ProFormText.Password
+					name="confirmPassword"
+					label="确认密码"
+					tooltip={"默认密码：laokou123"}
+					placeholder={'请输入确认密码'}
+					fieldProps={{
+						autoComplete: 'new-password',
+					}}
+					rules={[{ required: true, message: '请输入确认密码' }]}
+				/>
+			</DrawerForm>
+
 			<DrawerForm<TableColumns>
 				open={modalVisit}
 				title={title}

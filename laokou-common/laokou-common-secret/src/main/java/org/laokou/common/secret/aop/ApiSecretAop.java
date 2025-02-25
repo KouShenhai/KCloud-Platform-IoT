@@ -66,7 +66,7 @@ public class ApiSecretAop {
 	 */
 	public static final String APP_SECRET = "app-secret";
 
-	private static Map<String, String> getParameters(HttpServletRequest request) throws IOException {
+	private static Map<String, String> getParameterMap(HttpServletRequest request) throws IOException {
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		if (MapUtil.isNotEmpty(parameterMap)) {
 			return MapUtil.getParameterMap(parameterMap).toSingleValueMap();
@@ -84,7 +84,7 @@ public class ApiSecretAop {
 		String sign = request.getHeader(SIGN);
 		String appKey = request.getHeader(APP_KEY);
 		String appSecret = request.getHeader(APP_SECRET);
-		Map<String, String> parameterMap = getParameters(request);
+		Map<String, String> parameterMap = getParameterMap(request);
 		SecretUtil.verification(appKey, appSecret, sign, nonce, timestamp, parameterMap);
 		return point.proceed();
 	}

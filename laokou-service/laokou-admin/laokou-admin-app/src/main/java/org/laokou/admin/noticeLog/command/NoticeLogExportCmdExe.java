@@ -42,7 +42,7 @@ public class NoticeLogExportCmdExe {
 		// 校验参数
 		try {
 			DynamicDataSourceContextHolder.push("domain");
-			ExcelUtil.doExport("通知日志", ResponseUtil.getHttpServletResponse(), cmd, noticeLogMapper,
+			ExcelUtil.doExport("通知日志", "通知日志", ResponseUtil.getHttpServletResponse(), cmd, noticeLogMapper,
 					NoticeLogExcel.class, NoticeLogConvertor.INSTANCE);
 		}
 		finally {
