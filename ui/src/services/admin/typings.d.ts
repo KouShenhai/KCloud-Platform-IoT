@@ -467,6 +467,11 @@ declare namespace API {
 		co?: UserCO;
 	};
 
+	type ResetPwdCmd = {
+		id?: number;
+		password?: string;
+	};
+
 	type UserPageQry = {
 		pageNum?: number;
 		pageSize?: number;
