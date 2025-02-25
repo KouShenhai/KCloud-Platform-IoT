@@ -64,7 +64,7 @@ public abstract class AbstractOAuth2AuthenticationConverter implements Authentic
 			return null;
 		}
 		// 构建请求参数集合
-		MultiValueMap<String, String> parameters = MapUtil.getParameters(request.getParameterMap());
+		MultiValueMap<String, String> parameters = MapUtil.getParameterMap(request.getParameterMap());
 		List<String> scopes = parameters.get(OAuth2ParameterNames.SCOPE);
 		// 判断scopes
 		if (CollectionUtil.isNotEmpty(scopes) && scopes.size() != 1) {

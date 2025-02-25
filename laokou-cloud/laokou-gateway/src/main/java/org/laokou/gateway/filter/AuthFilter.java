@@ -56,6 +56,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
+import static org.laokou.common.i18n.common.constant.StringConstant.AND;
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.getContentType;
@@ -187,7 +188,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	private Function<String, Mono<String>> decrypt() {
 		return s -> {
 			// 获取请求密码并解密
-			Map<String, String> paramMap = MapUtil.parseParams(s).asSingleValueMap();
+			Map<String, String> paramMap = MapUtil.getParameterMap(s, AND).asSingleValueMap();
 			if (ObjectUtil.equals(USERNAME_PASSWORD, paramMap.getOrDefault(GRANT_TYPE, EMPTY)) && paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
 				try {
 					String password = paramMap.get(PASSWORD);
@@ -204,7 +205,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 					log.error("用户名密码认证模式，错误信息：{}", e.getMessage());
 				}
 			}
-			return Mono.just(MapUtil.parseParams(paramMap));
+			return Mono.just(MapUtil.parseParamterString(paramMap));
 		};
 	}
 

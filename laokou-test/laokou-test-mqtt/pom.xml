@@ -7,13 +7,13 @@
     <artifactId>laokou-test</artifactId>
     <version>3.4.3</version>
   </parent>
-  <artifactId>laokou-test-elasticsearch</artifactId>
+  <artifactId>laokou-test-mqtt</artifactId>
   <version>3.4.3</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-elasticsearch</artifactId>
+      <artifactId>laokou-common-mqtt</artifactId>
     </dependency>
     <dependency>
       <groupId>com.github.ulisesbocchio</groupId>
