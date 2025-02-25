@@ -134,7 +134,7 @@
     <!--archunit-junit5版本-->
     <archunit-junit5.version>1.4.0</archunit-junit5.version>
     <!--nimbus-jose-jwt版本-->
-    <nimbus-jose-jwt.version>10.0.1</nimbus-jose-jwt.version>
+    <nimbus-jose-jwt.version>10.0.2</nimbus-jose-jwt.version>
     <!--opentelemetry-api-incubator版本-->
     <opentelemetry-api-incubator.version>1.47.0-alpha</opentelemetry-api-incubator.version>
     <!--opentelemetry-exporter-jaeger版本-->
