@@ -17,7 +17,6 @@
 
 package org.laokou.common.mqtt.config;
 
-import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.paho.mqttv5.common.MqttException;
 import org.laokou.common.core.utils.ThreadUtil;
@@ -82,7 +81,6 @@ public class MqttClientManager {
 		get(clientId).publishCloseEvent(clientId);
 	}
 
-	@PreDestroy
 	public static void preDestroy() {
 		MQTT_CLIENT_MAP.values().forEach(MqttClient::close);
 		MQTT_CLIENT_MAP.clear();

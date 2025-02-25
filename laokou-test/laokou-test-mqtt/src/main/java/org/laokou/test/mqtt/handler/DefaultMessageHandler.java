@@ -15,19 +15,28 @@
  *
  */
 
-package org.laokou.common.mqtt.config;
+package org.laokou.test.mqtt.handler;
 
-import org.laokou.common.mqtt.template.MqttTemplate;
-import org.springframework.context.annotation.Bean;
+import lombok.extern.slf4j.Slf4j;
+import org.eclipse.paho.mqttv5.common.MqttMessage;
+import org.laokou.common.mqtt.config.MessageHandler;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public class MqttClientConfig {
+@Slf4j
+@Component
+public class DefaultMessageHandler implements MessageHandler {
 
-	@Bean
-	public MqttTemplate mqttTemplate() {
-		return new MqttTemplate();
+	@Override
+	public boolean isSubscribe(String topic) {
+		return true;
+	}
+
+	@Override
+	public void handle(String topic, MqttMessage message) {
+		log.info("接收到MQTT消息 => topic: {}, message: {}", topic, new String(message.getPayload()));
 	}
 
 }

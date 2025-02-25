@@ -22,11 +22,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.laokou.common.core.utils.ArrayUtil;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.secret.utils.SecretUtil;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -62,6 +66,16 @@ public class ApiSecretAop {
 	 */
 	public static final String APP_SECRET = "app-secret";
 
+	private static Map<String, String> getParameters(HttpServletRequest request) throws IOException {
+		Map<String, String[]> parameterMap = request.getParameterMap();
+		if (MapUtil.isNotEmpty(parameterMap)) {
+			return MapUtil.getParameterMap(parameterMap).toSingleValueMap();
+		}
+		byte[] requestBody = RequestUtil.getRequestBody(request);
+		return ArrayUtil.isEmpty(requestBody) ? Collections.emptyMap()
+				: JacksonUtil.toMap(requestBody, String.class, String.class);
+	}
+
 	@Around("@annotation(org.laokou.common.secret.annotation.ApiSecret)")
 	public Object doAround(ProceedingJoinPoint point) throws Throwable {
 		HttpServletRequest request = RequestUtil.getHttpServletRequest();
@@ -70,7 +84,7 @@ public class ApiSecretAop {
 		String sign = request.getHeader(SIGN);
 		String appKey = request.getHeader(APP_KEY);
 		String appSecret = request.getHeader(APP_SECRET);
-		Map<String, String> parameterMap = MapUtil.getParameters(request);
+		Map<String, String> parameterMap = getParameters(request);
 		SecretUtil.verification(appKey, appSecret, sign, nonce, timestamp, parameterMap);
 		return point.proceed();
 	}

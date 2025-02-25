@@ -15,20 +15,21 @@
  *
  */
 
-package org.laokou.common.mqtt.template;
+package org.laokou.test.mqtt;
 
-import lombok.RequiredArgsConstructor;
-import org.eclipse.paho.mqttv5.common.MqttException;
-import org.laokou.common.mqtt.config.MqttClientManager;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * @author laokou
- */
-@RequiredArgsConstructor
-public class MqttTemplate {
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-	public void publish(String clientId, String topic, byte[] payload, int qos) throws MqttException {
-		MqttClientManager.get(clientId).publish(topic, payload, qos);
+@SpringBootApplication(scanBasePackages = { "org.laokou" })
+public class MqttTestApp {
+
+	public static void main(String[] args) throws UnknownHostException {
+		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
+				System.getProperty("server.port", "8090")));
+		SpringApplication.run(MqttTestApp.class, args);
 	}
 
 }

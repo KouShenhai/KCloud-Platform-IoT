@@ -17,34 +17,24 @@
 
 package org.laokou.common.core.utils;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import jakarta.servlet.http.HttpServletRequest;
-import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.MultiValueMapAdapter;
-import org.springframework.util.ObjectUtils;
 import org.yaml.snakeyaml.util.UriEncoder;
 
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.AND;
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.constant.StringConstant.EQUAL;
+import static org.laokou.common.i18n.common.constant.StringConstant.*;
 
 /**
  * map工具类.
@@ -72,20 +62,6 @@ public final class MapUtil {
 	 */
 	public static boolean isEmpty(Map<?, ?> map) {
 		return ObjectUtil.isNull(map) || map.isEmpty();
-	}
-
-	/**
-	 * map转字符串.
-	 * @param map map对象
-	 * @param on 分隔符
-	 * @param separator 分隔符
-	 * @return 字符串
-	 */
-	public static String toStr(Map<String, String> map, String on, String separator) {
-		if (map.isEmpty()) {
-			return EMPTY;
-		}
-		return Joiner.on(on).withKeyValueSeparator(separator).join(map);
 	}
 
 	/**
@@ -117,68 +93,31 @@ public final class MapUtil {
 		return toUriMap(uriMap, serviceId, EQUAL);
 	}
 
-	/**
-	 * 字符串转为Map.
-	 * @param str 字符串
-	 * @param on 分隔符
-	 * @param separator 分隔符
-	 * @return Map对象
-	 * @deprecated 出现a=1&a=2的情况无法处理,与{@link #parseParamMap(String)}情况类似
-	 */
-	public static Map<String, String> toMap(String str, String on, String separator) {
-		if (StringUtil.isEmpty(str)) {
-			return Collections.emptyMap();
-		}
-		return Splitter.on(on).trimResults().withKeyValueSeparator(separator).split(str);
-	}
-
+	// @formatter:off
 	/**
 	 * 字符串参数转为map参数.
+	 * @see <a href="https://github.com/livk-cloud/spring-boot-extension/blob/main/spring-extension-commons/src/main/java/com/livk/commons/util/MultiValueMapSplitter.java">MultiValueMapSplitter</a>.
 	 * @param params 参数
 	 * @return map参数对象
-	 * @see org.laokou.common.core.utils.MapUtil#parseParams(String)
-	 * @deprecated 出现a=1&a=2的情况无法处理
 	 */
-	@Deprecated
-	public static Map<String, String> parseParamMap(String params) {
-		String[] strings = params.split(AND);
-		int length = strings.length;
-		if (length == 0) {
-			return Collections.emptyMap();
-		}
-		Map<String, String> paramMap = new HashMap<>(strings.length);
-		for (String string : strings) {
-			int index = string.indexOf(EQUAL);
-			if (index > -1) {
-				String key = string.substring(0, index);
-				if (!paramMap.containsKey(key)) {
-					String value = UriEncoder.decode(string.substring(index + 1));
-					paramMap.put(key, value);
-				}
-			}
-		}
-		return paramMap;
-	}
-
-	/**
-	 * <a href=
-	 * "https://github.com/livk-cloud/spring-boot-extension/blob/main/spring-extension-commons/src/main/java/com/livk/commons/util/MultiValueMapSplitter.java">MultiValueMapSplitter</a>.
-	 */
-	public static MultiValueMap<String, String> parseParams(String params) {
-		MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
-		String[] strings = params.split(AND);
-		if (!ObjectUtils.isEmpty(strings)) {
+	public static MultiValueMap<String, String> getParameterMap(String params, String separator) {
+		if (StringUtil.isNotEmpty(params)) {
+			String[] strings = params.split(separator);
+			MultiValueMap<String, String> parameterMap = new LinkedMultiValueMap<>(strings.length * 2);
 			for (String string : strings) {
 				int index = string.indexOf(EQUAL);
 				if (index > -1) {
 					String key = string.substring(0, index);
 					String value = UriEncoder.decode(string.substring(index + 1));
-					paramMap.add(key, value);
+					parameterMap.add(key, value);
 				}
 			}
-		}
-		return paramMap;
+			return parameterMap;
+		} else {
+		return new LinkedMultiValueMap<>(0);
 	}
+	}
+	// @formatter:on
 
 	/**
 	 * map转字符串.
@@ -186,7 +125,7 @@ public final class MapUtil {
 	 * @param isEncode 是否编码
 	 * @return 字符串
 	 */
-	public static String parseParams(Map<String, String> paramMap, boolean isEncode) {
+	public static String parseParamterString(Map<String, String> paramMap, boolean isEncode) {
 		if (paramMap.isEmpty()) {
 			return EMPTY;
 		}
@@ -210,8 +149,8 @@ public final class MapUtil {
 	 * @param paramMap 参数
 	 * @return 字符串
 	 */
-	public static String parseParams(Map<String, String> paramMap) {
-		return parseParams(paramMap, true);
+	public static String parseParamterString(Map<String, String> paramMap) {
+		return parseParamterString(paramMap, true);
 	}
 
 	/**
@@ -219,25 +158,9 @@ public final class MapUtil {
 	 * @param parameterMap 请求参数Map
 	 * @return MultiValueMap
 	 */
-	public static MultiValueMap<String, String> getParameters(Map<String, String[]> parameterMap) {
+	public static MultiValueMap<String, String> getParameterMap(Map<String, String[]> parameterMap) {
 		Map<String, List<String>> transformValues = Maps.transformValues(parameterMap, Lists::newArrayList);
 		return new MultiValueMapAdapter<>(transformValues);
-	}
-
-	/**
-	 * 获取请求参数.
-	 * @param request 请求对象
-	 * @return 请求参数Map对象
-	 * @deprecated 这个方法不推荐使用, 命名不清楚或者不够直观(方法有业务冗余，通用性差)
-	 */
-	public static Map<String, String> getParameters(HttpServletRequest request) throws IOException {
-		Map<String, String[]> parameterMap = request.getParameterMap();
-		if (MapUtil.isNotEmpty(parameterMap)) {
-			return getParameters(parameterMap).toSingleValueMap();
-		}
-		byte[] requestBody = RequestUtil.getRequestBody(request);
-		return ArrayUtil.isEmpty(requestBody) ? Collections.emptyMap()
-				: JacksonUtil.toMap(requestBody, String.class, String.class);
 	}
 
 }

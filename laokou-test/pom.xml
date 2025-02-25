@@ -15,6 +15,7 @@
 
   <modules>
     <module>laokou-test-elasticsearch</module>
+    <module>laokou-test-mqtt</module>
   </modules>
 
 </project>
