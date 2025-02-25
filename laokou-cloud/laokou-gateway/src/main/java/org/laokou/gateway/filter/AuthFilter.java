@@ -58,8 +58,14 @@ import java.util.function.Function;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
-import static org.laokou.common.nacos.utils.ReactiveRequestUtil.*;
-import static org.springframework.http.HttpHeaders.*;
+import static org.laokou.common.nacos.utils.ReactiveRequestUtil.getContentType;
+import static org.laokou.common.nacos.utils.ReactiveRequestUtil.getMethodName;
+import static org.laokou.common.nacos.utils.ReactiveRequestUtil.getParamValue;
+import static org.laokou.common.nacos.utils.ReactiveRequestUtil.getRequestURL;
+import static org.laokou.common.nacos.utils.ReactiveRequestUtil.pathMatcher;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpHeaders.CONTENT_LENGTH;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
@@ -181,7 +187,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	private Function<String, Mono<String>> decrypt() {
 		return s -> {
 			// 获取请求密码并解密
-			Map<String, String> paramMap = MapUtil.parseParamMap(s);
+			Map<String, String> paramMap = MapUtil.parseParams(s).asSingleValueMap();
 			if (ObjectUtil.equals(USERNAME_PASSWORD, paramMap.getOrDefault(GRANT_TYPE, EMPTY)) && paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
 				try {
 					String password = paramMap.get(PASSWORD);
