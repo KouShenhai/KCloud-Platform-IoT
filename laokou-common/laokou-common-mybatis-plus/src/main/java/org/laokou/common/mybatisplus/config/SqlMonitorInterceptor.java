@@ -58,7 +58,7 @@ public class SqlMonitorInterceptor implements Interceptor {
 
     @Override
 	public Object intercept(Invocation invocation) throws Throwable {
-		StopWatch stopWatch = new StopWatch("SQL查询");
+		StopWatch stopWatch = new StopWatch("SQL执行");
 		stopWatch.start();
 		Object obj = invocation.proceed();
 		stopWatch.stop();
