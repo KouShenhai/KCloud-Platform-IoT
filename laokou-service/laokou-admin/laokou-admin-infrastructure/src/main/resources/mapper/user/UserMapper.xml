@@ -59,7 +59,7 @@
     SELECT <include refid="selectColumns"/>
     from boot_sys_user
     <include refid="selectConditions"/>
-    order by create_time desc
+    order by id desc
   </sql>
 
 	<select id="selectObjectPage"
