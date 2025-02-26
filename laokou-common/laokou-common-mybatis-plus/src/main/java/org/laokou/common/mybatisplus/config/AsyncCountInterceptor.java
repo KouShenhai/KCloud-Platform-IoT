@@ -32,6 +32,10 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 没有上过生产，请谨慎使用.
+ * 没有上过生产，请谨慎使用.
+ * 没有上过生产，请谨慎使用.
+ *
  * @author gitkakafu
  * @author laokou
  */

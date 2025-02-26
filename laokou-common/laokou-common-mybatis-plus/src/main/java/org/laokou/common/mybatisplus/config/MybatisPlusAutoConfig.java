@@ -20,12 +20,8 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.extension.parser.JsqlParserGlobal;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.*;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import org.laokou.common.core.utils.ThreadUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -56,9 +52,7 @@ public class MybatisPlusAutoConfig {
 	@Bean
 	public ConfigurationCustomizer configurationCustomizer(MybatisPlusExtProperties mybatisPlusExtProperties) {
 		return configuration -> {
-			// 异步查询count
-			configuration.addInterceptor(new AsyncCountInterceptor());
-			// 慢SQL
+			// SQL监控
 			SqlMonitorInterceptor sqlMonitorInterceptor = new SqlMonitorInterceptor(mybatisPlusExtProperties);
 			configuration.addInterceptor(sqlMonitorInterceptor);
 		};
@@ -91,7 +85,7 @@ public class MybatisPlusAutoConfig {
 		dynamicTableNameInnerInterceptor.setTableNameHandler(new DynamicTableNameHandler());
 		interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
 		// 分页插件
-		interceptor.addInnerInterceptor(asyncPaginationInnerInterceptor(dataSource));
+		interceptor.addInnerInterceptor(paginationInnerInterceptor());
 		// 乐观锁插件
 		interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
 		// 防止全表更新与删除插件
@@ -117,16 +111,15 @@ public class MybatisPlusAutoConfig {
 	}
 
 	/**
-	 * 异步分页. 解除每页500条限制.
+	 * 分页. 解除每页500条限制.
 	 */
-	private AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor(DataSource dataSource) {
-		AsyncPaginationInnerInterceptor asyncPaginationInnerInterceptor = new AsyncPaginationInnerInterceptor(
-				dataSource, ThreadUtil.newVirtualTaskExecutor());
+	private PaginationInnerInterceptor paginationInnerInterceptor() {
+		PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();
 		// -1表示不受限制
-		asyncPaginationInnerInterceptor.setMaxLimit(-1L);
+		paginationInnerInterceptor.setMaxLimit(-1L);
 		// 溢出总页数后是进行处理，查看源码就知道是干啥的
-		asyncPaginationInnerInterceptor.setOverflow(true);
-		return asyncPaginationInnerInterceptor;
+		paginationInnerInterceptor.setOverflow(true);
+		return paginationInnerInterceptor;
 	}
 
 }

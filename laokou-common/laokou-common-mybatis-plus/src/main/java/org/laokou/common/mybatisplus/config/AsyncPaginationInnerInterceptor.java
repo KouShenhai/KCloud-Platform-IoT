@@ -76,6 +76,10 @@ import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 /**
+ * 没有上过生产，请谨慎使用.
+ * 没有上过生产，请谨慎使用.
+ * 没有上过生产，请谨慎使用.
+ *
  * @author hubin
  * @author gitkakafu
  * @author laokou
