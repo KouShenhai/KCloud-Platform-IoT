@@ -2560,10 +2560,6 @@ spring:
       max-file-size: -1
       max-request-size: -1
   cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
     # sentinel
     sentinel:
       filter:
@@ -5020,10 +5016,6 @@ spring:
       max-file-size: -1
       max-request-size: -1
   cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
     # sentinel
     sentinel:
       filter:
@@ -5307,10 +5299,6 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: "2m"
   cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
     # sentinel
     sentinel:
       filter:
@@ -5433,10 +5421,6 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: "2m"
   cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
     # sentinel
     sentinel:
       filter:
@@ -5559,10 +5543,6 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: "2m"
   cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
     # sentinel
     sentinel:
       filter:
@@ -5853,10 +5833,6 @@ spring:
       max-file-size: -1
       max-request-size: -1
   cloud:
-    openfeign:
-      oauth2:
-        enabled: true
-        clientRegistrationId: "default"
     # sentinel
     sentinel:
       filter:
