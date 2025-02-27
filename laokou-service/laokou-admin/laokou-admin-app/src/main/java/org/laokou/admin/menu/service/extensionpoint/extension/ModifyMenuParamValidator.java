@@ -45,7 +45,7 @@ public class ModifyMenuParamValidator implements MenuParamValidatorExtPt {
 				// 校验名称
 				MenuParamValidator.validateName(menuE, menuMapper, false),
 				// 校验路径
-				MenuParamValidator.validatePath(menuE),
+				MenuParamValidator.validatePath(menuE, menuMapper, false),
 				// 校验权限标识
 				MenuParamValidator.validatePermission(menuE, menuMapper, false),
 				// 校验状态
