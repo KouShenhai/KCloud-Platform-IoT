@@ -73,11 +73,21 @@ public final class MenuParamValidator {
 		return validate();
 	}
 
-	public static ParamValidator.Validate validatePath(MenuE menuE) {
+	public static ParamValidator.Validate validatePath(MenuE menuE, MenuMapper menuMapper, boolean isSave) {
 		Integer type = menuE.getType();
 		String path = menuE.getPath();
-		if (MenuType.MENU.getCode() == type && StringUtil.isEmpty(path)) {
-			return invalidate("路径不能为空");
+		if (MenuType.MENU.getCode() == type) {
+			if (StringUtil.isEmpty(path)) {
+				return invalidate("路径不能为空");
+			}
+			if (isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getPath, path)) > 0) {
+				return invalidate("路径已存在");
+			}
+			if (!isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class)
+				.eq(MenuDO::getPath, path)
+				.ne(MenuDO::getId, menuE.getId())) > 0) {
+				return invalidate("路径已存在");
+			}
 		}
 		return validate();
 	}

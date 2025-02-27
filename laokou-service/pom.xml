@@ -37,5 +37,6 @@
     <module>laokou-report</module>
     <module>laokou-iot</module>
     <module>laokou-module</module>
+    <module>laokou-oss</module>
   </modules>
 </project>
