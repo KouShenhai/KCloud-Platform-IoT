@@ -21,7 +21,6 @@ import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.common.MqttException;
-import org.jetbrains.annotations.NotNull;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mqtt.config.MessageHandler;
 import org.laokou.common.mqtt.config.MqttBrokerProperties;
@@ -43,7 +42,7 @@ public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 	private final List<MessageHandler> messageHandlers;
 
 	@Override
-	public void onApplicationEvent(@NotNull ApplicationReadyEvent event) {
+	public void onApplicationEvent(ApplicationReadyEvent event) {
 		MqttBrokerProperties properties = new MqttBrokerProperties();
 		properties.setPublishQos(2);
 		properties.setSubscribeQos(2);

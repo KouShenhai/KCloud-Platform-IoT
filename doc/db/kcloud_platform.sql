@@ -1374,11 +1374,6 @@ CREATE TABLE "public"."oauth2_registered_client" (
 ;
 
 -- ----------------------------
--- Records of oauth2_registered_client
--- ----------------------------
-INSERT INTO "public"."oauth2_registered_client" VALUES ('95TxSsTPFA3tF12TBSMmUVK0da', '95TxSsTPFA3tF12TBSMmUVK0da', '2024-04-30 00:01:09', '{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO', NULL, 'OAuth2.1认证', 'client_secret_basic', 'refresh_token,password,client_credentials,mail,urn:ietf:params:oauth:grant-type:device_code,authorization_code,mobile,urn:ietf:params:oauth:grant-type:jwt-bearer', 'http://127.0.0.1:8001,http://127.0.0.1:8000,https://vue.laokou.org,https://laokou.org.cn', 'http://127.0.0.1:8001,http://127.0.0.1:8000,https://vue.laokou.org,https://laokou.org.cn', 'password,mail,openid,mobile', '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":false,"settings.client.require-authorization-consent":true}', '{"@class":"java.util.Collections$UnmodifiableMap","settings.token.reuse-refresh-tokens":true,"settings.token.id-token-signature-algorithm":["org.springframework.security.oauth2.jose.jws.SignatureAlgorithm","RS256"],"settings.token.access-token-time-to-live":["java.time.Duration",3600.000000000],"settings.token.access-token-format":{"@class":"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat","value":"self-contained"},"settings.token.refresh-token-time-to-live":["java.time.Duration",21600.000000000],"settings.token.authorization-code-time-to-live":["java.time.Duration",3600.000000000],"settings.token.Device-code-time-to-live":["java.time.Duration",3600.000000000]}');
-
--- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."boot_sys_cluster_id_seq"

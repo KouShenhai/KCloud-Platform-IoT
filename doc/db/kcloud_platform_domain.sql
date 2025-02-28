@@ -77,7 +77,7 @@ CACHE 1
   "url" varchar(200) COLLATE "pg_catalog"."default" NOT NULL,
   "size" int8 NOT NULL,
   "status" int2 NOT NULL DEFAULT 0,
-  "error_message" varchar(500) COLLATE "pg_catalog"."default"
+  "error_message" varchar(2000) COLLATE "pg_catalog"."default"
 )
 ;
 COMMENT ON COLUMN "public"."boot_sys_oss_log"."id" IS 'ID';
@@ -123,10 +123,14 @@ CACHE 1
   "request_params" text COLLATE "pg_catalog"."default",
   "user_agent" varchar(500) COLLATE "pg_catalog"."default" NOT NULL,
   "ip" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
+  "service_address" varchar(100) COLLATE "pg_catalog"."default" NOT NULL,
+  "service_id" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
   "address" varchar(200) COLLATE "pg_catalog"."default" NOT NULL,
   "status" int2 NOT NULL DEFAULT 0,
   "operator" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
-  "error_message" varchar(500) COLLATE "pg_catalog"."default",
+  "error_message" varchar(2000) COLLATE "pg_catalog"."default",
+  "profile" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
+  "stack_trace" text COLLATE "pg_catalog"."default",
   "cost_time" int8 NOT NULL
 )
 ;
@@ -148,6 +152,10 @@ COMMENT ON COLUMN "public"."boot_sys_operate_log"."user_agent" IS '操作的浏�
 COMMENT ON COLUMN "public"."boot_sys_operate_log"."ip" IS '操作的IP地址';
 COMMENT ON COLUMN "public"."boot_sys_operate_log"."address" IS '操作的归属地';
 COMMENT ON COLUMN "public"."boot_sys_operate_log"."status" IS '操作状态 0成功 1失败';
+COMMENT ON COLUMN "public"."boot_sys_operate_log"."profile" IS '操作的服务环境';
+COMMENT ON COLUMN "public"."boot_sys_operate_log"."stack_trace" IS '操作的堆栈信息';
+COMMENT ON COLUMN "public"."boot_sys_operate_log"."service_id" IS '操作的服务ID';
+COMMENT ON COLUMN "public"."boot_sys_operate_log"."service_address" IS '操作的服务地址';
 COMMENT ON COLUMN "public"."boot_sys_operate_log"."operator" IS '操作人';
 COMMENT ON COLUMN "public"."boot_sys_operate_log"."error_message" IS '错误信息';
 COMMENT ON COLUMN "public"."boot_sys_operate_log"."cost_time" IS '操作的消耗时间(毫秒)';

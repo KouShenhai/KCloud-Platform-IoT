@@ -6,8 +6,8 @@ import {Dropdown, message, theme} from "antd";
 import {history} from "@umijs/max";
 import {HomeOutlined, LogoutOutlined, RobotOutlined, SettingOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
-import {logoutV3} from "@/services/auth/auth";
-import {clearToken, getAccessToken, getExpiresTime, getRefreshToken} from "@/access";
+import { logoutV3, refresh } from '@/services/auth/auth';
+import { clearToken, getAccessToken, getExpiresTime, getRefreshToken, setToken } from '@/access';
 import React from "react";
 import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
 import {getProfileV3} from "@/services/admin/user";
@@ -173,13 +173,21 @@ export const request: {
 	requestInterceptors: [
 		async (config: any) => {
 			const headers = config.headers ? config.headers : [];
-			// 令牌过期前5分钟刷新
-			const time = 5 * 60 * 1000;
+			// 令牌过期前1分钟刷新
+			const time = 60 * 1000;
 			const expiresTime = getExpiresTime();
 			const diffTime = expiresTime - new Date().getTime()
 			const refreshToken = getRefreshToken();
-			if (expiresTime && refreshToken && diffTime >= 0 && diffTime <= time) {
+			if (expiresTime && refreshToken && diffTime <= time) {
 				// 刷新令牌
+				refresh({refresh_token: refreshToken, grant_type: 'refresh_token'}).then((res) => {
+					if (res.code === 'OK') {
+						// 登录成功【令牌过期前1分钟，自动刷新令牌】
+						clearToken()
+						// 存储令牌
+						setToken(res.data?.access_token, res.data?.refresh_token, new Date().getTime() + res.data?.expires_in)
+					}
+				});
 			}
 			const accessToken = getAccessToken()
 			if (accessToken) {

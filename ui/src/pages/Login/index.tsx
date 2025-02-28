@@ -158,7 +158,7 @@ export default () => {
 				data: { access_token: string; refresh_token: string; expires_in: number; };
 			}) => {
 				if (res.code === 'OK') {
-					// 登录成功【令牌过期前5分钟，自动刷新令牌】
+					// 登录成功【令牌过期前1分钟，自动刷新令牌】
 					clearToken()
 					// 存储令牌
 					setToken(res.data?.access_token, res.data?.refresh_token, new Date().getTime() + res.data?.expires_in)
