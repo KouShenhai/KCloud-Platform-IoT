@@ -7,12 +7,13 @@ import {history} from "@umijs/max";
 import {HomeOutlined, LogoutOutlined, RobotOutlined, SettingOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
 import { logoutV3, refresh } from '@/services/auth/auth';
-import { clearToken, getAccessToken, getExpiresTime, getRefreshToken, setToken } from '@/access';
+import { clearToken, getAccessToken, getRefreshToken, setToken } from '@/access';
 import React from "react";
 import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
 import {getProfileV3} from "@/services/admin/user";
 import {userTreeListV3} from "@/services/admin/menu";
 import {ProBreadcrumb} from "@ant-design/pro-layout";
+import axios from 'axios';
 
 const getIcon = (icon: string) => {
 	switch (icon) {
@@ -173,22 +174,6 @@ export const request: {
 	requestInterceptors: [
 		async (config: any) => {
 			const headers = config.headers ? config.headers : [];
-			// 令牌过期前1分钟刷新
-			const time = 60 * 1000;
-			const expiresTime = getExpiresTime();
-			const diffTime = expiresTime - new Date().getTime()
-			const refreshToken = getRefreshToken();
-			if (expiresTime && refreshToken && diffTime <= time) {
-				// 刷新令牌
-				refresh({refresh_token: refreshToken, grant_type: 'refresh_token'}).then((res) => {
-					if (res.code === 'OK') {
-						// 登录成功【令牌过期前1分钟，自动刷新令牌】
-						clearToken()
-						// 存储令牌
-						setToken(res.data?.access_token, res.data?.refresh_token, new Date().getTime() + res.data?.expires_in)
-					}
-				});
-			}
 			const accessToken = getAccessToken()
 			if (accessToken) {
 				headers['Authorization'] = `Bearer ${accessToken}`
@@ -213,7 +198,24 @@ export const request: {
 				response.data = {code: 'OK', msg: '请求成功', data: data};
 			} else if (status === 200 && data.code !== 'OK') {
 				if (data.code === "Unauthorized") {
-					history.push('/login')
+					const refreshToken = getRefreshToken();
+					if (refreshToken) {
+						// 清空令牌
+						clearToken()
+						// 刷新令牌
+						refresh({refresh_token: refreshToken, grant_type: 'refresh_token'}).then((res) => {
+							if (res.code === 'OK') {
+								// 存储令牌
+								setToken(res.data?.access_token, res.data?.refresh_token)
+								// 重新发起请求
+								return axios.request(response.config);
+							}
+						}).catch(() => {
+							history.push('/login')
+						});
+					} else {
+						history.push('/login')
+					}
 				} else {
 					message.error(data.msg).then();
 				}

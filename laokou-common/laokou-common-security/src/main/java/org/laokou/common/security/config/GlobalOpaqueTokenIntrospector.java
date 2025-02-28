@@ -72,8 +72,6 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
                 return decryptInfo(userDetail);
             }
 		}
-		// 移除
-		oAuth2AuthorizationService.remove(authorization);
 		throw OAuth2ExceptionHandler.getException(UNAUTHORIZED);
 	}
 	// @formatter:on

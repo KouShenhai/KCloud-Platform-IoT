@@ -17,7 +17,6 @@
 
 package org.laokou.common.log.aop;
 
-import freemarker.core.Environment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -43,8 +42,6 @@ import org.springframework.util.StopWatch;
 public class OperateLogAop {
 
 	private final SpringUtil springUtil;
-
-	private final Environment environment;
 
 	@Around("@annotation(operateLog)")
 	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) throws Throwable {

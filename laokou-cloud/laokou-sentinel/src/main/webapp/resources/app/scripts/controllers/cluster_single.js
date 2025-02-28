@@ -174,7 +174,7 @@ app.controller('SentinelClusterSingleController', ['$scope', '$stateParams', 'ng
             request.transportConfig = stateVO.server.transport;
             request.namespaceSet = convertStrToNamespaceSet(stateVO.server.namespaceSetStr);
             ClusterStateService.modifyClusterConfig(request).success(function (data) {
-                if (data.code == 0 && data.data) {
+                if (data.code === 0 && data.data) {
                     alert('修改集群限流服务端配置成功');
                     window.location.reload();
                 } else {
