@@ -215,7 +215,7 @@ public final class ExcelUtil {
 				validates = ValidatorUtil.validate(excel);
 			}
 			if (CollectionUtil.isNotEmpty(validates)) {
-				ERRORS.add(template(currentRowNum, StringUtil.collectionToDelimitedString(validates, DROP)));
+				ERRORS.add(getTemplate(currentRowNum, StringUtil.collectionToDelimitedString(validates, DROP)));
 			}
 			else {
 				CACHED_DATA_LIST.add(convertor.toDataObject(excel));
@@ -258,7 +258,7 @@ public final class ExcelUtil {
 			}
 		}
 
-		private String template(int num, String msg) {
+		private String getTemplate(int num, String msg) {
 			return String.format("第%s行，%s", num, msg);
 		}
 

@@ -15,18 +15,23 @@
  *
  */
 
-package org.laokou;
+package org.laokou.common.log.event.handler;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.domain.handler.AbstractDomainEventHandler;
+import org.laokou.common.i18n.dto.DomainEvent;
+import org.springframework.stereotype.Component;
 
-@EnableScheduling
-@SpringBootApplication
-public class RabbitmqClientSampleApp {
+/**
+ * @author laokou
+ */
+@Component
+@RequiredArgsConstructor
+public class OperateEventHandler extends AbstractDomainEventHandler {
 
-	public static void main(String[] args) {
-		SpringApplication.run(RabbitmqClientSampleApp.class, args);
+	@Override
+	protected void handleDomainEvent(DomainEvent domainEvent) {
+
 	}
 
 }

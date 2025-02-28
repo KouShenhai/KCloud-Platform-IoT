@@ -17,7 +17,6 @@
 
 package org.laokou.common.log.aop;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,7 +25,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.SpringUtil;
 import org.laokou.common.log.annotation.OperateLog;
-import org.laokou.common.log.model.LogE;
+import org.laokou.common.log.factory.DomainFactory;
+import org.laokou.common.log.model.OperateLogE;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
@@ -47,17 +47,17 @@ public class OperateLogAop {
 	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) throws Throwable {
 		StopWatch stopWatch = new StopWatch("操作日志");
 		stopWatch.start();
-		// 服务ID
-		String serviceId = springUtil.getServiceId();
-		HttpServletRequest request = RequestUtil.getHttpServletRequest();
-		LogE operate = new LogE(operateLog.module(), operateLog.operation(), request, serviceId);
+		OperateLogE operateLogE = DomainFactory.getOperateLog();
+		operateLogE.getModuleName(operateLog.module());
+		operateLogE.getName(operateLog.operation());
+		operateLogE.getServiceId(springUtil.getServiceId());
+		operateLogE.getRequest(RequestUtil.getHttpServletRequest());
 		String className = point.getTarget().getClass().getName();
 		String methodName = point.getSignature().getName();
-		Object[] args = point.getArgs();
 		// 组装类名
-		operate.decorateMethodName(className, methodName);
+		operateLogE.decorateMethodName(className, methodName);
 		// 组装请求参数
-		operate.decorateRequestParams(args);
+		operateLogE.decorateRequestParams(point.getArgs());
 		Object proceed;
 		Throwable throwable = null;
 		try {
@@ -68,9 +68,9 @@ public class OperateLogAop {
 		}
 		finally {
 			// 计算消耗时间
-			operate.calculateTaskTime(stopWatch);
-			// 修改错误
-			operate.updateThrowable(throwable);
+			operateLogE.calculateTaskTime(stopWatch);
+			// 获取错误
+			operateLogE.getThrowable(throwable);
 		}
 		return proceed;
 	}

@@ -15,22 +15,17 @@
  *
  */
 
-package org.laokou.scheduler;
+package org.laokou.common.log.factory;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import org.laokou.common.log.model.OperateLogE;
 
-@Component
-@RequiredArgsConstructor
-public class AlarmScheduler {
+public final class DomainFactory {
 
-	private final RabbitTemplate rabbitTemplate;
+	private DomainFactory() {
+	}
 
-	@Scheduled(cron = "0/10 * * * * *")
-	public void alarm() {
-		rabbitTemplate.convertAndSend("laokou-queue", "alarm");
+	public static OperateLogE getOperateLog() {
+		return new OperateLogE();
 	}
 
 }
