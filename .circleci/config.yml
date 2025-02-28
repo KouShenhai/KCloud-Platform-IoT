@@ -12,11 +12,6 @@ jobs:
     steps:
       - checkout
       - run: mvn clean install -P prod -DskipTests -B
-      - checkout
-      - run: |
-          cd laokou-gradle
-          chmod +x gradlew
-          ./gradlew build
 workflows:
   maven-build:
     jobs:

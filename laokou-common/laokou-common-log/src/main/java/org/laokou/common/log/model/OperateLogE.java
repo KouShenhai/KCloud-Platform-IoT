@@ -25,9 +25,12 @@ import org.laokou.common.core.utils.*;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.Instant;
 import java.util.*;
 
@@ -41,48 +44,39 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
  * @author laokou
  */
 @Getter
-public class LogE {
+public class OperateLogE {
 
 	private static final Set<String> REMOVE_PARAMS = Set.of("username", "password", "mail", "mobile");
-
-	private static final int OK = 0;
-
-	private static final int FAIL = 1;
 
 	/**
 	 * 操作名称.
 	 */
-	private final String name;
+	private String name;
 
 	/**
 	 * 操作的模块名称.
 	 */
-	private final String moduleName;
+	private String moduleName;
 
 	/**
 	 * 操作的URI.
 	 */
-	private final String uri;
+	private String uri;
 
 	/**
 	 * 操作的请求类型.
 	 */
-	private final String requestType;
+	private String requestType;
 
 	/**
 	 * 操作的浏览器.
 	 */
-	private final String userAgent;
-
-	/**
-	 * 操作的IP地址.
-	 */
-	private final String ip;
+	private String userAgent;
 
 	/**
 	 * 操作的归属地.
 	 */
-	private final String address;
+	private String address;
 
 	/**
 	 * 操作人.
@@ -92,22 +86,12 @@ public class LogE {
 	/**
 	 * 服务ID.
 	 */
-	private final String serviceId;
-
-	/**
-	 * 创建人.
-	 */
-	private final Long creator;
+	private String serviceId;
 
 	/**
 	 * 创建时间.
 	 */
 	private final Instant createTime;
-
-	/**
-	 * 租户ID.
-	 */
-	private final Long tenantId;
 
 	/**
 	 * 操作的方法名.
@@ -134,29 +118,55 @@ public class LogE {
 	 */
 	private Long costTime;
 
-	public LogE(String moduleName, String name, HttpServletRequest request, String serviceId) throws Exception {
-		UserContextHolder.User user = UserContextHolder.get();
+	/**
+	 * 操作的IP地址.
+	 */
+	private String ip;
+
+	private String profile;
+
+	private String serviceAddress;
+
+	private String stackTrace;
+
+	public OperateLogE() {
+		this.createTime = DateUtil.nowInstant();
+		this.operator = UserContextHolder.get().getUsername();
+	}
+
+	public void getProfile(String profile) {
+		this.profile = profile;
+	}
+
+	public void getModuleName(String moduleName) {
 		this.moduleName = moduleName;
+	}
+
+	public void getName(String name) {
 		this.name = name;
+	}
+
+	public void getServiceId(String serviceId) {
+		this.serviceId = serviceId;
+	}
+
+	public void getRequest(HttpServletRequest request) throws Exception {
 		this.uri = request.getRequestURI();
 		this.requestType = request.getMethod();
 		this.userAgent = request.getHeader(USER_AGENT);
 		this.ip = IpUtil.getIpAddr(request);
-		this.address = AddressUtil.getRealAddress(ip);
-		this.tenantId = user.getTenantId();
-		this.createTime = DateUtil.nowInstant();
-		this.creator = user.getId();
-		this.serviceId = serviceId;
-		this.operator = user.getUsername();
+		this.address = AddressUtil.getRealAddress(this.ip);
+		this.serviceAddress = System.getProperty("address");
 	}
 
-	public void updateThrowable(Throwable throwable) {
+	public void getThrowable(Throwable throwable) {
 		if (ObjectUtil.isNotNull(throwable)) {
+			this.stackTrace = getStackTraceAsString(throwable);
 			this.errorMessage = throwable.getMessage();
-			this.status = FAIL;
+			this.status = Status.FAIL.getCode();
 		}
 		else {
-			this.status = OK;
+			this.status = Status.OK.getCode();
 		}
 	}
 
@@ -196,6 +206,17 @@ public class LogE {
 	private boolean filterArgs(Object arg) {
 		return !(arg instanceof HttpServletRequest) && !(arg instanceof MultipartFile)
 				&& !(arg instanceof HttpServletResponse);
+	}
+
+	private String getStackTraceAsString(Throwable throwable) {
+		if (ObjectUtils.isEmpty(throwable)) {
+			return EMPTY;
+		}
+		StringWriter stringWriter = new StringWriter();
+		try (PrintWriter printWriter = new PrintWriter(stringWriter)) {
+			throwable.printStackTrace(printWriter);
+		}
+		return stringWriter.toString();
 	}
 
 }

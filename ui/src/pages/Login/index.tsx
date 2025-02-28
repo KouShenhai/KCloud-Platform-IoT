@@ -158,15 +158,15 @@ export default () => {
 				data: { access_token: string; refresh_token: string; expires_in: number; };
 			}) => {
 				if (res.code === 'OK') {
-					// 登录成功【令牌过期前5分钟，自动刷新令牌】
+					// 清空令牌
 					clearToken()
-					// 存储令牌
-					setToken(res.data?.access_token, res.data?.refresh_token, new Date().getTime() + res.data?.expires_in)
+					// 登录成功，存储令牌
+					setToken(res.data?.access_token, res.data?.refresh_token)
 					// 跳转路由
 					const urlParams = new URL(window.location.href).searchParams;
 					history.push(urlParams.get('redirect') || '/');
 					// 刷新页面
-					window.location.reload()
+					window.location.reload();
 				}
 			})
 			.catch(() => {
