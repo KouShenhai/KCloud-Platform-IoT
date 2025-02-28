@@ -1,7 +1,7 @@
 import {request} from '@umijs/max';
 
-async function token(
-	params: API.OAuth2Param,
+async function getToken(
+	params: any,
 	options?: { [key: string]: any },
 ) {
 	return request<API.Result>(`/api/auth/oauth2/token`, {
@@ -27,7 +27,15 @@ export async function login(
 	params: API.OAuth2Param,
 	options?: { [key: string]: any },
 ) {
-	return token(params, options)
+	return getToken(params, options)
+}
+
+/** OAuth2 认证授权 POST /oauth2/token */
+export async function refresh(
+	params: API.RefreshTokenParam,
+	options?: { [key: string]: any }
+) {
+	return getToken(params, options)
 }
 
 /** 清除令牌 清除令牌 DELETE /v3/logouts */
