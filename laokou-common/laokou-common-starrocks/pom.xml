@@ -5,11 +5,21 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.laokou</groupId>
-    <artifactId>laokou-sample</artifactId>
+    <artifactId>laokou-common</artifactId>
     <version>3.4.3</version>
   </parent>
 
-  <artifactId>laokou-sample-rabbitmq</artifactId>
-  <packaging>pom</packaging>
+  <artifactId>laokou-common-starrocks</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>

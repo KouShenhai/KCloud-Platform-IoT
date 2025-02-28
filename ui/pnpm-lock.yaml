@@ -26,6 +26,9 @@ dependencies:
   antd:
     specifier: ^5.4.4
     version: 5.24.2(moment@2.30.1)(react-dom@18.3.1)(react@18.3.1)
+  axios:
+    specifier: ^1.8.1
+    version: 1.8.1
   js-export-excel:
     specifier: ^1.1.4
     version: 1.1.4
@@ -2823,7 +2826,7 @@ packages:
     dependencies:
       '@types/history': 5.0.0
       '@types/react': 18.3.18
-      '@types/react-router': 5.1.12
+      '@types/react-router': 5.1.20
     dev: false
 
   /@types/react-router-redux@5.0.27:
@@ -2832,7 +2835,7 @@ packages:
       '@types/history': 4.7.11
       '@types/react': 18.3.18
       '@types/react-router': 5.1.20
-      redux: 3.7.2
+      redux: 4.2.1
     dev: false
 
   /@types/react-router@5.1.12:
@@ -4675,6 +4678,16 @@ packages:
     dependencies:
       follow-redirects: 1.15.9
       form-data: 4.0.2
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /axios@1.8.1:
+    resolution: {integrity: sha512-NN+fvwH/kV01dYUQ3PTOZns4LWtWhOFCAhQ/pHb88WQ1hNe5V/dvFwc4VJcDL11LT9xSX0QtsR8sWUuyOuOq7g==}
+    dependencies:
+      follow-redirects: 1.15.9
+      form-data: 4.0.2
+      proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
     dev: false
@@ -10438,6 +10451,10 @@ packages:
 
   /proxy-compare@2.5.1:
     resolution: {integrity: sha512-oyfc0Tx87Cpwva5ZXezSp5V9vht1c7dZBhvuV/y3ctkgMVUmiAGDVeeB0dKhGSyT0v1ZTEQYpe/RXlBVBNuCLA==}
+    dev: false
+
+  /proxy-from-env@1.1.0:
+    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
     dev: false
 
   /prr@1.0.1:

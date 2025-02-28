@@ -2262,10 +2262,10 @@ spring:
         client:
           default:
             token:
-              authorization-code-time-to-live: 1h
-              access-token-time-to-live: 1h
+              authorization-code-time-to-live: 5m
+              access-token-time-to-live: 5m
               refresh-token-time-to-live: 6h
-              Device-code-time-to-live: 1h
+              device-code-time-to-live: 5m
             registration:
               id: 95TxSsTPFA3tF12TBSMmUVK0da
               client-id: 95TxSsTPFA3tF12TBSMmUVK0da
@@ -2441,10 +2441,10 @@ spring:
         client:
           default:
             token:
-              authorization-code-time-to-live: 1h
-              access-token-time-to-live: 1h
+              authorization-code-time-to-live: 5m
+              access-token-time-to-live: 5m
               refresh-token-time-to-live: 6h
-              Device-code-time-to-live: 1h
+              device-code-time-to-live: 5m
             registration:
               id: 95TxSsTPFA3tF12TBSMmUVK0da
               client-id: 95TxSsTPFA3tF12TBSMmUVK0da
@@ -3429,10 +3429,10 @@ spring:
         client:
           default:
             token:
-              authorization-code-time-to-live: 1h
-              access-token-time-to-live: 1h
+              authorization-code-time-to-live: 5m
+              access-token-time-to-live: 5m
               refresh-token-time-to-live: 6h
-              Device-code-time-to-live: 1h
+              device-code-time-to-live: 5m
             registration:
               id: 95TxSsTPFA3tF12TBSMmUVK0da
               client-id: 95TxSsTPFA3tF12TBSMmUVK0da

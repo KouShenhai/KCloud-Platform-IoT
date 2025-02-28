@@ -79,6 +79,12 @@
     <module>laokou-common-rabbitmq</module>
     <module>laokou-common-storage</module>
     <module>laokou-common-reactor</module>
+    <module>laokou-common-ai</module>
+    <module>laokou-common-flink</module>
+    <module>laokou-common-spark</module>
+    <module>laokou-common-dubbo</module>
+    <module>laokou-common-starrocks</module>
+    <module>laokou-common-clickhouse</module>
   </modules>
 
 </project>

@@ -35,6 +35,11 @@ declare namespace API {
 		mobile?: string;
 	};
 
+	type RefreshTokenParam = {
+		refresh_token?: string;
+		grant_type?: string;
+	};
+
 	type LoginParam = {
 		username?: string;
 		password?: string;
