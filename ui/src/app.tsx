@@ -144,6 +144,8 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 	};
 };
 
+let isRefreshToken = false;
+
 export const request: {
 	responseInterceptors: ((response: any) => any)[];
 	requestInterceptors: (((config: any) => any) | ((error: any) => any))[];
@@ -164,6 +166,9 @@ export const request: {
 			}
 			if (code === 'ERR_BAD_RESPONSE') {
 				errorMessage = '网络请求错误，请稍后再试'
+			}
+			if (response && response.status === 400 && response.data.error === "invalid_grant") {
+				errorMessage = "令牌续签失败，请重新登录"
 			}
 			message.error(errorMessage).then();
 		},
@@ -199,7 +204,8 @@ export const request: {
 			} else if (status === 200 && data.code !== 'OK') {
 				if (data.code === "Unauthorized") {
 					const refreshToken = getRefreshToken();
-					if (refreshToken) {
+					if (refreshToken && !isRefreshToken) {
+						isRefreshToken = true;
 						// 清空令牌
 						clearToken()
 						// 刷新令牌
@@ -207,12 +213,12 @@ export const request: {
 							if (res.code === 'OK') {
 								// 存储令牌
 								setToken(res.data?.access_token, res.data?.refresh_token)
-								// 重新发起请求
-								return axios.request(response.config);
+								// 续签提醒
+								message.warning("令牌续签成功，请刷新页面");
 							}
 						}).catch(() => {
 							history.push('/login')
-						});
+						}).finally(() => isRefreshToken = false);
 					} else {
 						history.push('/login')
 					}

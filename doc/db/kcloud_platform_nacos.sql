@@ -2264,7 +2264,7 @@ spring:
             token:
               authorization-code-time-to-live: 5m
               access-token-time-to-live: 5m
-              refresh-token-time-to-live: 6h
+              refresh-token-time-to-live: 1h
               device-code-time-to-live: 5m
             registration:
               id: 95TxSsTPFA3tF12TBSMmUVK0da
@@ -2443,7 +2443,7 @@ spring:
             token:
               authorization-code-time-to-live: 5m
               access-token-time-to-live: 5m
-              refresh-token-time-to-live: 6h
+              refresh-token-time-to-live: 1h
               device-code-time-to-live: 5m
             registration:
               id: 95TxSsTPFA3tF12TBSMmUVK0da
@@ -3431,7 +3431,7 @@ spring:
             token:
               authorization-code-time-to-live: 5m
               access-token-time-to-live: 5m
-              refresh-token-time-to-live: 6h
+              refresh-token-time-to-live: 1h
               device-code-time-to-live: 5m
             registration:
               id: 95TxSsTPFA3tF12TBSMmUVK0da

@@ -21,7 +21,6 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.GlobalException;
-import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.laokou.common.security.utils.UserDetail;
@@ -29,10 +28,12 @@ import org.laokou.common.tenant.annotation.Master;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
+import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
+import org.springframework.util.Assert;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -62,15 +63,20 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 		if (ObjectUtil.isNull(authorization)) {
 			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED);
 		}
+		OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken = authorization.getRefreshToken();
 		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
-		long expireTime = DateUtil.betweenSeconds(DateUtil.nowInstant(), accessToken.getToken().getExpiresAt());
-		if (expireTime > 0) {
+		Assert.notNull(accessToken, "accessToken is null");
+		Assert.notNull(refreshToken, "refreshToken is null");
+		if (accessToken.isActive()) {
             Object obj = authorization.getAttribute(Principal.class.getName());
             if (ObjectUtil.isNotNull(obj)) {
                 UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) obj).getPrincipal();
                 // 解密
                 return decryptInfo(userDetail);
             }
+		}
+		if (!refreshToken.isActive()) {
+			oAuth2AuthorizationService.remove(authorization);
 		}
 		throw OAuth2ExceptionHandler.getException(UNAUTHORIZED);
 	}
