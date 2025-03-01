@@ -17,24 +17,24 @@
 
 package org.laokou.admin.menu.service.extensionpoint.extension;
 
+import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.model.MenuE;
 import org.laokou.admin.menu.service.extensionpoint.MenuParamValidatorExtPt;
-import org.laokou.common.extension.Extension;
 import org.laokou.common.i18n.utils.ParamValidator;
-
-import static org.laokou.admin.common.constant.Constant.MENU;
-import static org.laokou.admin.common.constant.Constant.MODIFY;
-import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Extension(bizId = MODIFY, useCase = MENU, scenario = SCENARIO)
+@Component("modifyMenuParamValidator")
+@RequiredArgsConstructor
 public class ModifyMenuParamValidator implements MenuParamValidatorExtPt {
 
+	private final MenuMapper menuMapper;
+
 	@Override
-	public void validate(MenuE menuE, MenuMapper menuMapper) {
+	public void validate(MenuE menuE) {
 		ParamValidator.validate(
 				// 校验ID
 				MenuParamValidator.validateId(menuE),

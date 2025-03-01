@@ -18,12 +18,11 @@
 package org.laokou.admin.dept.service.extensionpoint;
 
 import org.laokou.admin.dept.model.DeptE;
-import org.laokou.common.extension.ExtensionPointI;
 
 /**
  * @author laokou
  */
-public interface DeptParamValidatorExtPt extends ExtensionPointI {
+public interface DeptParamValidatorExtPt {
 
 	void validate(DeptE deptE);
 

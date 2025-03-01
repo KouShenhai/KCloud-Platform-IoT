@@ -17,25 +17,19 @@
 
 package org.laokou.admin.user.command;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserModifyCmd;
 import org.laokou.admin.user.gatewayimpl.database.UserDeptMapper;
-import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
-import org.laokou.common.extension.BizScenario;
-import org.laokou.common.extension.ExtensionExecutor;
-import org.laokou.common.i18n.common.exception.ParamException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.admin.common.constant.Constant.*;
-import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
  * 修改用户命令执行器.
@@ -44,8 +38,11 @@ import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class UserModifyCmdExe {
+
+	@Autowired
+	@Qualifier("modifyUserParamValidator")
+	private UserParamValidatorExtPt modifyUserParamValidator;
 
 	private final UserDomainService userDomainService;
 
@@ -55,26 +52,18 @@ public class UserModifyCmdExe {
 
 	private final UserDeptMapper userDeptMapper;
 
-	private final ExtensionExecutor extensionExecutor;
+	public UserModifyCmdExe(UserDomainService userDomainService, TransactionalUtil transactionalUtil,
+			UserRoleMapper userRoleMapper, UserDeptMapper userDeptMapper) {
+		this.userDomainService = userDomainService;
+		this.transactionalUtil = transactionalUtil;
+		this.userRoleMapper = userRoleMapper;
+		this.userDeptMapper = userDeptMapper;
+	}
 
-	private final UserMapper userMapper;
-
-	public void executeVoid(UserModifyCmd cmd) {
+	public void executeVoid(UserModifyCmd cmd) throws Exception {
 		// 校验参数
 		UserE userE = UserConvertor.toEntity(cmd.getCo());
-		extensionExecutor.executeVoid(UserParamValidatorExtPt.class, BizScenario.valueOf(MODIFY, USER, SCENARIO),
-				extension -> {
-					try {
-						extension.validate(userE, null, userMapper);
-					}
-					catch (ParamException e) {
-						throw e;
-					}
-					catch (Exception e) {
-						log.error("未知错误，错误信息：{}", e.getMessage(), e);
-						throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
-					}
-				});
+		modifyUserParamValidator.validate(userE);
 		userE.setUserRoleIds(userRoleMapper.selectIdsByUserId(userE.getId()));
 		userE.setUserDeptIds(userDeptMapper.selectIdsByUserId(userE.getId()));
 		transactionalUtil.executeInTransaction(() -> {

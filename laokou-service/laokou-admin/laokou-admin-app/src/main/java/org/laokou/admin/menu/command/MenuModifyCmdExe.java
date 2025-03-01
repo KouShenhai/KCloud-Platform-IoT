@@ -17,43 +17,43 @@
 
 package org.laokou.admin.menu.command;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.menu.ability.MenuDomainService;
 import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuModifyCmd;
-import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.model.MenuE;
 import org.laokou.admin.menu.service.extensionpoint.MenuParamValidatorExtPt;
-import org.laokou.common.extension.BizScenario;
-import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.admin.common.constant.Constant.*;
-import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
  * 修改菜单命令执行器.
  *
  * @author laokou
  */
+@Slf4j
 @Component
-@RequiredArgsConstructor
 public class MenuModifyCmdExe {
 
 	private final MenuDomainService menuDomainService;
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final ExtensionExecutor extensionExecutor;
+	@Autowired
+	@Qualifier("modifyMenuParamValidator")
+	private MenuParamValidatorExtPt modifyMenuParamValidator;
 
-	private final MenuMapper menuMapper;
+	public MenuModifyCmdExe(MenuDomainService menuDomainService, TransactionalUtil transactionalUtil) {
+		this.menuDomainService = menuDomainService;
+		this.transactionalUtil = transactionalUtil;
+	}
 
 	public void executeVoid(MenuModifyCmd cmd) {
 		// 校验参数
 		MenuE menuE = MenuConvertor.toEntity(cmd.getCo());
-		extensionExecutor.executeVoid(MenuParamValidatorExtPt.class, BizScenario.valueOf(MODIFY, MENU, SCENARIO),
-				extension -> extension.validate(menuE, menuMapper));
+		modifyMenuParamValidator.validate(menuE);
 		transactionalUtil.executeInTransaction(() -> menuDomainService.update(menuE));
 	}
 

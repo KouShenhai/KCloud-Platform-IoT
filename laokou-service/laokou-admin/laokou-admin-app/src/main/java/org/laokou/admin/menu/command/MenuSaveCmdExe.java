@@ -17,44 +17,42 @@
 
 package org.laokou.admin.menu.command;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.menu.ability.MenuDomainService;
 import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuSaveCmd;
-import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.model.MenuE;
 import org.laokou.admin.menu.service.extensionpoint.MenuParamValidatorExtPt;
-import org.laokou.common.extension.BizScenario;
-import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.admin.common.constant.Constant.MENU;
-import static org.laokou.admin.common.constant.Constant.SAVE;
-import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
  * 保存菜单命令执行器.
  *
  * @author laokou
  */
+@Slf4j
 @Component
-@RequiredArgsConstructor
 public class MenuSaveCmdExe {
+
+	@Autowired
+	@Qualifier("saveMenuParamValidator")
+	private MenuParamValidatorExtPt saveMenuParamValidator;
 
 	private final MenuDomainService menuDomainService;
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final ExtensionExecutor extensionExecutor;
-
-	private final MenuMapper menuMapper;
+	public MenuSaveCmdExe(MenuDomainService menuDomainService, TransactionalUtil transactionalUtil) {
+		this.menuDomainService = menuDomainService;
+		this.transactionalUtil = transactionalUtil;
+	}
 
 	public void executeVoid(MenuSaveCmd cmd) {
-		// 校验参数
 		MenuE menuE = MenuConvertor.toEntity(cmd.getCo());
-		extensionExecutor.executeVoid(MenuParamValidatorExtPt.class, BizScenario.valueOf(SAVE, MENU, SCENARIO),
-				extension -> extension.validate(menuE, menuMapper));
+		saveMenuParamValidator.validate(menuE);
 		transactionalUtil.executeInTransaction(() -> menuDomainService.create(menuE));
 	}
 

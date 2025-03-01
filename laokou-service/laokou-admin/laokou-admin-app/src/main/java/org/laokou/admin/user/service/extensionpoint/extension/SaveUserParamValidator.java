@@ -17,24 +17,24 @@
 
 package org.laokou.admin.user.service.extensionpoint.extension;
 
+import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
-import org.laokou.common.extension.Extension;
 import org.laokou.common.i18n.utils.ParamValidator;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import static org.laokou.admin.common.constant.Constant.*;
-import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Extension(bizId = SAVE, useCase = USER, scenario = SCENARIO)
+@Component("saveUserParamValidator")
+@RequiredArgsConstructor
 public class SaveUserParamValidator implements UserParamValidatorExtPt {
 
+	private final UserMapper userMapper;
+
 	@Override
-	public void validate(UserE userE, PasswordEncoder passwordEncoder, UserMapper userMapper) throws Exception {
+	public void validate(UserE userE) throws Exception {
 		ParamValidator.validate(
 				// 校验用户名
 				UserParamValidator.validateUsername(userE, userMapper, true),

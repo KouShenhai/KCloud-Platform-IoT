@@ -17,15 +17,13 @@
 
 package org.laokou.admin.role.service.extensionpoint;
 
-import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.model.RoleE;
-import org.laokou.common.extension.ExtensionPointI;
 
 /**
  * @author laokou
  */
-public interface RoleParamValidatorExtPt extends ExtensionPointI {
+public interface RoleParamValidatorExtPt {
 
-	void validate(RoleE roleE, RoleMapper roleMapper);
+	void validate(RoleE roleE);
 
 }

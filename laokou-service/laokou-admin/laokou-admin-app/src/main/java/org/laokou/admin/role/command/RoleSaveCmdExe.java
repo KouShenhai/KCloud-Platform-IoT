@@ -17,22 +17,16 @@
 
 package org.laokou.admin.role.command;
 
-import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.ability.RoleDomainService;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleSaveCmd;
-import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.extension.BizScenario;
-import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.admin.common.constant.Constant.ROLE;
-import static org.laokou.admin.common.constant.Constant.SAVE;
-import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
  * 保存角色命令执行器.
@@ -40,22 +34,25 @@ import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
  * @author laokou
  */
 @Component
-@RequiredArgsConstructor
 public class RoleSaveCmdExe {
 
-	private final RoleMapper roleMapper;
+	@Autowired
+	@Qualifier("saveRoleParamValidator")
+	private RoleParamValidatorExtPt saveRoleParamValidator;
 
 	private final RoleDomainService roleDomainService;
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final ExtensionExecutor extensionExecutor;
+	public RoleSaveCmdExe(RoleDomainService roleDomainService, TransactionalUtil transactionalUtil) {
+		this.roleDomainService = roleDomainService;
+		this.transactionalUtil = transactionalUtil;
+	}
 
 	public void executeVoid(RoleSaveCmd cmd) {
 		// 校验参数
 		RoleE roleE = RoleConvertor.toEntity(cmd.getCo());
-		extensionExecutor.executeVoid(RoleParamValidatorExtPt.class, BizScenario.valueOf(SAVE, ROLE, SCENARIO),
-				extension -> extension.validate(roleE, roleMapper));
+		saveRoleParamValidator.validate(roleE);
 		roleE.setId(IdGenerator.defaultSnowflakeId());
 		transactionalUtil.executeInTransaction(() -> roleDomainService.create(roleE));
 	}

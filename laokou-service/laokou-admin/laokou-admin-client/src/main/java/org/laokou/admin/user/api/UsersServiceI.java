@@ -34,13 +34,13 @@ public interface UsersServiceI {
 	 * 保存用户.
 	 * @param cmd 保存命令
 	 */
-	void save(UserSaveCmd cmd);
+	void save(UserSaveCmd cmd) throws Exception;
 
 	/**
 	 * 修改用户.
 	 * @param cmd 修改命令
 	 */
-	void modify(UserModifyCmd cmd);
+	void modify(UserModifyCmd cmd) throws Exception;
 
 	/**
 	 * 删除用户.
@@ -64,7 +64,7 @@ public interface UsersServiceI {
 	 * 重置密码.
 	 * @param cmd 重置密码命令
 	 */
-	void resetPwd(UserResetPwdCmd cmd);
+	void resetPwd(UserResetPwdCmd cmd) throws Exception;
 
 	/**
 	 * 分页查询用户.

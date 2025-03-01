@@ -57,7 +57,7 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:save')")
 	@OperateLog(module = "用户管理", operation = "保存用户")
 	@Operation(summary = "保存用户", description = "保存用户")
-	public void saveV3(@RequestBody UserSaveCmd cmd) {
+	public void saveV3(@RequestBody UserSaveCmd cmd) throws Exception {
 		usersServiceI.save(cmd);
 	}
 
@@ -66,7 +66,7 @@ public class UsersControllerV3 {
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@Operation(summary = "修改用户", description = "修改用户")
 	@DataCache(name = USERS, key = "#cmd.co.id", type = DEL)
-	public void modifyV3(@RequestBody UserModifyCmd cmd) {
+	public void modifyV3(@RequestBody UserModifyCmd cmd) throws Exception {
 		usersServiceI.modify(cmd);
 	}
 
@@ -98,7 +98,7 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:modify')")
 	@OperateLog(module = "用户管理", operation = "重置密码")
 	@Operation(summary = "重置密码", description = "重置密码")
-	public void resetPwdV3(@RequestBody UserResetPwdCmd cmd) {
+	public void resetPwdV3(@RequestBody UserResetPwdCmd cmd) throws Exception {
 		usersServiceI.resetPwd(cmd);
 	}
 

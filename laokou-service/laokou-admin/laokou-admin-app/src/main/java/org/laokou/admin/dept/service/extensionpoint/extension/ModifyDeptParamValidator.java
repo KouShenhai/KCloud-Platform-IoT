@@ -17,19 +17,17 @@
 
 package org.laokou.admin.dept.service.extensionpoint.extension;
 
+import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.model.DeptE;
 import org.laokou.admin.dept.service.extensionpoint.DeptParamValidatorExtPt;
-import org.laokou.common.extension.Extension;
 import org.laokou.common.i18n.utils.ParamValidator;
-
-import static org.laokou.admin.common.constant.Constant.DEPT;
-import static org.laokou.admin.common.constant.Constant.MODIFY;
-import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Extension(bizId = MODIFY, useCase = DEPT, scenario = SCENARIO)
+@Component("modifyDeptParamValidator")
+@RequiredArgsConstructor
 public class ModifyDeptParamValidator implements DeptParamValidatorExtPt {
 
 	@Override

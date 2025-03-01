@@ -17,23 +17,24 @@
 
 package org.laokou.admin.role.service.extensionpoint.extension;
 
+import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
-import org.laokou.common.extension.Extension;
 import org.laokou.common.i18n.utils.ParamValidator;
-
-import static org.laokou.admin.common.constant.Constant.*;
-import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Extension(bizId = MODIFY, useCase = ROLE, scenario = SCENARIO)
+@Component("modifyRoleParamValidator")
+@RequiredArgsConstructor
 public class ModifyRoleParamValidator implements RoleParamValidatorExtPt {
 
+	private final RoleMapper roleMapper;
+
 	@Override
-	public void validate(RoleE roleE, RoleMapper roleMapper) {
+	public void validate(RoleE roleE) {
 		ParamValidator.validate(
 				// 校验ID
 				RoleParamValidator.validateId(roleE),
