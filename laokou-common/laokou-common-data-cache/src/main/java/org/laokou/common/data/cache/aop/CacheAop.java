@@ -25,6 +25,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.utils.SpringExpressionUtil;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.constant.Type;
+import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.common.exception.ParamException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,8 +130,12 @@ public class CacheAop {
 			}
 			return point.proceed();
 		}
+		catch (SystemException | BizException | ParamException e) {
+			// 系统异常/业务异常/参数异常直接捕获并抛出
+			throw e;
+		}
 		catch (Throwable e) {
-			log.error("获取缓存失败", e);
+			log.error("获取缓存失败，错误信息：{}", e.getMessage(), e);
 			throw new SystemException("S_Cache_GetError", "获取缓存失败", e);
 		}
 		finally {

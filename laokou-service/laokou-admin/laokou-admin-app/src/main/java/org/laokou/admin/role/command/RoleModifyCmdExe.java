@@ -17,22 +17,16 @@
 
 package org.laokou.admin.role.command;
 
-import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.ability.RoleDomainService;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleModifyCmd;
-import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.gatewayimpl.database.RoleMenuMapper;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
-import org.laokou.common.extension.BizScenario;
-import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.admin.common.constant.Constant.MODIFY;
-import static org.laokou.admin.common.constant.Constant.ROLE;
-import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
  * 修改角色命令执行器.
@@ -40,10 +34,11 @@ import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
  * @author laokou
  */
 @Component
-@RequiredArgsConstructor
 public class RoleModifyCmdExe {
 
-	private final RoleMapper roleMapper;
+	@Autowired
+	@Qualifier("modifyRoleParamValidator")
+	private RoleParamValidatorExtPt modifyRoleParamValidator;
 
 	private final RoleMenuMapper roleMenuMapper;
 
@@ -51,13 +46,17 @@ public class RoleModifyCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final ExtensionExecutor extensionExecutor;
+	public RoleModifyCmdExe(RoleMenuMapper roleMenuMapper, RoleDomainService roleDomainService,
+			TransactionalUtil transactionalUtil) {
+		this.roleMenuMapper = roleMenuMapper;
+		this.roleDomainService = roleDomainService;
+		this.transactionalUtil = transactionalUtil;
+	}
 
 	public void executeVoid(RoleModifyCmd cmd) {
 		// 校验参数
 		RoleE roleE = RoleConvertor.toEntity(cmd.getCo());
-		extensionExecutor.executeVoid(RoleParamValidatorExtPt.class, BizScenario.valueOf(MODIFY, ROLE, SCENARIO),
-				extension -> extension.validate(roleE, roleMapper));
+		modifyRoleParamValidator.validate(roleE);
 		roleE.setRoleMenuIds(roleMenuMapper.selectIdsByRoleId(roleE.getId()));
 		transactionalUtil.executeInTransaction(() -> roleDomainService.update(roleE));
 	}

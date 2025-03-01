@@ -58,12 +58,12 @@ public class UsersServiceImpl implements UsersServiceI {
 	private final UserProfileGetQryExe userProfileGetQryExe;
 
 	@Override
-	public void save(UserSaveCmd cmd) {
+	public void save(UserSaveCmd cmd) throws Exception {
 		userSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(UserModifyCmd cmd) {
+	public void modify(UserModifyCmd cmd) throws Exception {
 		userModifyCmdExe.executeVoid(cmd);
 	}
 
@@ -83,7 +83,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public void resetPwd(UserResetPwdCmd cmd) {
+	public void resetPwd(UserResetPwdCmd cmd) throws Exception {
 		userResetPwdCmdExe.executeVoid(cmd);
 	}
 

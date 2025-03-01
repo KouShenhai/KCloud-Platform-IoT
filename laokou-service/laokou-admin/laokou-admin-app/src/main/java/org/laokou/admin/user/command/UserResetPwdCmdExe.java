@@ -17,59 +17,41 @@
 
 package org.laokou.admin.user.command;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserResetPwdCmd;
-import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
-import org.laokou.common.extension.BizScenario;
-import org.laokou.common.extension.ExtensionExecutor;
-import org.laokou.common.i18n.common.exception.ParamException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.admin.common.constant.Constant.MODIFY;
-import static org.laokou.admin.common.constant.Constant.REST_PWD;
-import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
  * @author laokou
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class UserResetPwdCmdExe {
+
+	@Autowired
+	@Qualifier("resetPwdParamValidator")
+	private UserParamValidatorExtPt resetPwdParamValidator;
 
 	private final UserDomainService userDomainService;
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final ExtensionExecutor extensionExecutor;
+	public UserResetPwdCmdExe(UserDomainService userDomainService, TransactionalUtil transactionalUtil) {
+		this.userDomainService = userDomainService;
+		this.transactionalUtil = transactionalUtil;
+	}
 
-	private final UserMapper userMapper;
-
-	private final PasswordEncoder passwordEncoder;
-
-	public void executeVoid(UserResetPwdCmd cmd) {
+	public void executeVoid(UserResetPwdCmd cmd) throws Exception {
 		UserE userE = UserConvertor.toEntity(cmd.getId(), cmd.getPassword());
-		extensionExecutor.executeVoid(UserParamValidatorExtPt.class, BizScenario.valueOf(MODIFY, REST_PWD, SCENARIO),
-				extension -> {
-					try {
-						extension.validate(userE, passwordEncoder, userMapper);
-					}
-					catch (ParamException e) {
-						throw e;
-					}
-					catch (Exception e) {
-						log.error("未知错误，错误信息：{}", e.getMessage(), e);
-						throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
-					}
-				});
+		resetPwdParamValidator.validate(userE);
 		transactionalUtil.executeInTransaction(() -> {
 			try {
 				userDomainService.update(userE);

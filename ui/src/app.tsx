@@ -168,7 +168,7 @@ export const request: {
 				errorMessage = '网络请求错误，请稍后再试'
 			}
 			if (response && response.status === 400 && response.data.error === "invalid_grant") {
-				errorMessage = "令牌续签失败，请重新登录"
+				errorMessage = "令牌续期失败，请重新登录"
 			}
 			message.error(errorMessage).then();
 		},
@@ -214,12 +214,14 @@ export const request: {
 								// 存储令牌
 								setToken(res.data?.access_token, res.data?.refresh_token)
 								// 续签提醒
-								message.warning("令牌续签成功，请刷新页面");
+								message.warning("令牌续期成功，请刷新页面或重新请求");
+								// 重新请求
+								return axios.request(response.config)
 							}
 						}).catch(() => {
 							history.push('/login')
 						}).finally(() => isRefreshToken = false);
-					} else {
+					} else if (!refreshToken && !isRefreshToken) {
 						history.push('/login')
 					}
 				} else {
