@@ -15,20 +15,20 @@
  *
  */
 
-package org.laokou.admin.operateLog.gatewayimpl.database;
-
-import org.apache.ibatis.annotations.Mapper;
-import org.laokou.admin.operateLog.gatewayimpl.database.dataobject.OperateLogDO;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.springframework.stereotype.Repository;
+package org.laokou.common.log.constant;
 
 /**
- * 操作日志数据库映射.
- *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface OperateLogMapper extends CrudMapper<Long, Integer, OperateLogDO> {
+public final class Constant {
+
+	private Constant() {
+	}
+
+	public static final String OPERATE_TAG = "operateLog";
+
+	public static final String LAOKOU_LOG_TOPIC = "laokou_log_topic";
+
+	public static final String LAOKOU_OPERATE_LOG_CONSUMER_GROUP = "laokou_operate_log_consumer_group";
 
 }

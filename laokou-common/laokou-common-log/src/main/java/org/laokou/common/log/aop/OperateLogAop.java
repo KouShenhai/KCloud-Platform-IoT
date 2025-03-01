@@ -24,9 +24,14 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.core.utils.SpringUtil;
+import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.log.annotation.OperateLog;
+import org.laokou.common.log.convertor.OperateLogConvertor;
 import org.laokou.common.log.factory.DomainFactory;
 import org.laokou.common.log.model.OperateLogE;
+import org.laokou.common.rocketmq.template.SendMessageType;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
@@ -38,10 +43,15 @@ import org.springframework.util.StopWatch;
 @Slf4j
 @Aspect
 @Component
+@MapperScan(basePackages = "org.laokou.common.log.database")
 @RequiredArgsConstructor
 public class OperateLogAop {
 
 	private final SpringUtil springUtil;
+
+	private final Environment environment;
+
+	private final DomainEventPublisher rocketMQDomainEventPublisher;
 
 	@Around("@annotation(operateLog)")
 	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) throws Throwable {
@@ -52,6 +62,7 @@ public class OperateLogAop {
 		operateLogE.getName(operateLog.operation());
 		operateLogE.getServiceId(springUtil.getServiceId());
 		operateLogE.getRequest(RequestUtil.getHttpServletRequest());
+		operateLogE.getProfile(environment.getActiveProfiles()[0]);
 		String className = point.getTarget().getClass().getName();
 		String methodName = point.getSignature().getName();
 		// 组装类名
@@ -71,6 +82,8 @@ public class OperateLogAop {
 			operateLogE.calculateTaskTime(stopWatch);
 			// 获取错误
 			operateLogE.getThrowable(throwable);
+			// 发布事件
+			rocketMQDomainEventPublisher.publish(OperateLogConvertor.toDomainEvent(operateLogE), SendMessageType.ASYNC);
 		}
 		return proceed;
 	}

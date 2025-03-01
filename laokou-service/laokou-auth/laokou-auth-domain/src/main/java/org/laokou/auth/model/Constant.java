@@ -22,6 +22,9 @@ package org.laokou.auth.model;
  */
 public final class Constant {
 
+	private Constant() {
+	}
+
 	public static final String LOGIN_TAG = "loginLog";
 
 	public static final String MAIL_TAG = "mailCaptcha";

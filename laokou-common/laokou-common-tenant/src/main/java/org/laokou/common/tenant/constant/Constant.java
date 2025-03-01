@@ -57,6 +57,26 @@ public final class Constant {
 		 */
 		public static final String DEPT_TABLE = "boot_sys_dept";
 
+		/**
+		 * 角色表.
+		 */
+		public static final String ROLE_TABLE = "boot_sys_role";
+
+		/**
+		 * 用户角色表.
+		 */
+		public static final String USER_ROLE_TABLE = "boot_sys_user_role";
+
+		/**
+		 * 用户部门表.
+		 */
+		public static final String USER_DEPT_TABLE = "boot_sys_user_dept";
+
+		/**
+		 * 角色菜单表.
+		 */
+		public static final String ROLE_MENU_TABLE = "boot_sys_role_menu";
+
 	}
 
 	public static final class Domain {
@@ -73,6 +93,11 @@ public final class Constant {
 		 * 登录日志表.
 		 */
 		public static final String LOGIN_LOG_TABLE = "boot_sys_login_log";
+
+		/**
+		 * 操作日志表.
+		 */
+		public static final String OPERATE_LOG_TABLE = "boot_sys_operate_log";
 
 	}
 

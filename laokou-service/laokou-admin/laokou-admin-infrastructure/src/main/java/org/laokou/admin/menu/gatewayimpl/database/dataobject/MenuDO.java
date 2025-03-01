@@ -21,13 +21,15 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
+import static org.laokou.common.tenant.constant.Constant.Master.MENU_TABLE;
+
 /**
  * 菜单数据对象.
  *
  * @author laokou
  */
 @Data
-@TableName("boot_sys_menu")
+@TableName(MENU_TABLE)
 public class MenuDO extends BaseDO {
 
 	/**

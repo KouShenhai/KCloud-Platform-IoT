@@ -21,13 +21,15 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
+import static org.laokou.common.tenant.constant.Constant.Master.USER_TABLE;
+
 /**
  * 用户数据对象.
  *
  * @author laokou
  */
 @Data
-@TableName("boot_sys_user")
+@TableName(USER_TABLE)
 public class UserDO extends BaseDO {
 
 	/**

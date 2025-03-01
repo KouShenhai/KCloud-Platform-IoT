@@ -15,23 +15,18 @@
  *
  */
 
-package org.laokou.admin.user.gatewayimpl.database.dataobject;
+package org.laokou.common.log.database;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
-
-import static org.laokou.common.tenant.constant.Constant.Master.USER_DEPT_TABLE;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.log.database.dataobject.OperateLogDO;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author laokou
  */
-@Data
-@TableName(USER_DEPT_TABLE)
-public class UserDeptDO extends BaseDO {
-
-	private Long userId;
-
-	private Long deptId;
+@Mapper
+@Repository
+public interface OperateLogMapper extends CrudMapper<Long, Integer, OperateLogDO> {
 
 }

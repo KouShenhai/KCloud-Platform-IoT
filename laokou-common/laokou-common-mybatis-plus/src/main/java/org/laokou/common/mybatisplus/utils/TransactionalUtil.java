@@ -17,6 +17,7 @@
 
 package org.laokou.common.mybatisplus.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -107,7 +108,7 @@ public class TransactionalUtil {
 	@FunctionalInterface
 	public interface DatabaseOperation {
 
-		void execute();
+		void execute()throws JsonProcessingException;
 
 	}
     // @formatter:on
