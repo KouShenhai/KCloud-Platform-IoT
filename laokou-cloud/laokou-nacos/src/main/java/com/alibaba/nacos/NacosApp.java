@@ -40,6 +40,8 @@ public class NacosApp {
 		// @formatter:off
 		// -Dnacos.home => Nacos的根目录
 		// Nacos控制台 => 【http/https】://【ip:8848】/nacos
+		// -Dnacos.standalone=true
+		// -Dnacos.home=./logs/nacos
 		// -Dnacos.remote.server.rpc.tls.enableTls=true
 		// -Dnacos.remote.server.rpc.tls.mutualAuthEnable=true
 		// -Dnacos.remote.server.rpc.tls.compatibility=false
