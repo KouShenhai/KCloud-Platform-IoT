@@ -27,6 +27,7 @@ import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.secret.annotation.EnableApiSecret;
 import org.laokou.common.security.annotation.EnableSecurity;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
@@ -63,6 +64,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
+@MapperScan(basePackages = "org.laokou.admin.**.gatewayimpl.database")
 @SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
 public class AdminApp {
 

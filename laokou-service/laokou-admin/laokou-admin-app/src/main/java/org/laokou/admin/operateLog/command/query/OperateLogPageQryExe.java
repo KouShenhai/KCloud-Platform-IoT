@@ -22,10 +22,10 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.operateLog.convertor.OperateLogConvertor;
 import org.laokou.admin.operateLog.dto.OperateLogPageQry;
 import org.laokou.admin.operateLog.dto.clientobject.OperateLogCO;
-import org.laokou.admin.operateLog.gatewayimpl.database.OperateLogMapper;
-import org.laokou.admin.operateLog.gatewayimpl.database.dataobject.OperateLogDO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.log.database.OperateLogMapper;
+import org.laokou.common.log.database.dataobject.OperateLogDO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

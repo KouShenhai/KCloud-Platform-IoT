@@ -15,19 +15,21 @@
  *
  */
 
-package org.laokou.admin.operateLog.gatewayimpl.database.dataobject;
+package org.laokou.common.log.database.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
+import java.time.Instant;
+
+import static org.laokou.common.tenant.constant.Constant.Domain.OPERATE_LOG_TABLE;
+
 /**
- * 操作日志数据对象.
- *
  * @author laokou
  */
 @Data
-@TableName("boot_sys_operate_log")
+@TableName(OPERATE_LOG_TABLE)
 public class OperateLogDO extends BaseDO {
 
 	/**
@@ -46,19 +48,9 @@ public class OperateLogDO extends BaseDO {
 	private String uri;
 
 	/**
-	 * 操作的方法名.
-	 */
-	private String methodName;
-
-	/**
 	 * 操作的请求类型.
 	 */
 	private String requestType;
-
-	/**
-	 * 操作的请求参数.
-	 */
-	private String requestParams;
 
 	/**
 	 * 操作的浏览器.
@@ -66,19 +58,9 @@ public class OperateLogDO extends BaseDO {
 	private String userAgent;
 
 	/**
-	 * 操作的IP地址.
-	 */
-	private String ip;
-
-	/**
 	 * 操作的归属地.
 	 */
 	private String address;
-
-	/**
-	 * 操作状态 0成功 1失败.
-	 */
-	private Integer status;
 
 	/**
 	 * 操作人.
@@ -86,13 +68,58 @@ public class OperateLogDO extends BaseDO {
 	private String operator;
 
 	/**
+	 * 服务ID.
+	 */
+	private String serviceId;
+
+	/**
+	 * 创建时间.
+	 */
+	private Instant createTime;
+
+	/**
+	 * 操作的方法名.
+	 */
+	private String methodName;
+
+	/**
+	 * 操作的请求参数.
+	 */
+	private String requestParams;
+
+	/**
 	 * 错误信息.
 	 */
 	private String errorMessage;
 
 	/**
+	 * 操作状态 0成功 1失败.
+	 */
+	private Integer status;
+
+	/**
 	 * 操作的消耗时间(毫秒).
 	 */
 	private Long costTime;
+
+	/**
+	 * 操作的IP地址.
+	 */
+	private String ip;
+
+	/**
+	 * 操作的服务环境.
+	 */
+	private String profile;
+
+	/**
+	 * 操作的服务地址.
+	 */
+	private String serviceAddress;
+
+	/**
+	 * 操作的堆栈信息.
+	 */
+	private String stackTrace;
 
 }

@@ -21,13 +21,15 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
+import static org.laokou.common.tenant.constant.Constant.Master.ROLE_TABLE;
+
 /**
  * 角色数据对象.
  *
  * @author laokou
  */
 @Data
-@TableName("boot_sys_role")
+@TableName(ROLE_TABLE)
 public class RoleDO extends BaseDO {
 
 	/**

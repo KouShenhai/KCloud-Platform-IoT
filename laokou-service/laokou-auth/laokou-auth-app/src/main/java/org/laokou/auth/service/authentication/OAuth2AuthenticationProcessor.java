@@ -92,7 +92,7 @@ public class OAuth2AuthenticationProcessor {
 			// 清除数据源上下文
 			DynamicDataSourceContextHolder.clear();
 			// 发布事件
-			auth.releaseEvents().forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageType.ONE_WAY));
+			auth.releaseEvents().forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageType.ASYNC));
 		}
 	}
 

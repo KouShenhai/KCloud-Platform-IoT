@@ -19,13 +19,13 @@ package org.laokou.admin.operateLog.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.operateLog.model.OperateLogE;
+import org.laokou.common.log.database.OperateLogMapper;
+import org.laokou.common.log.database.dataobject.OperateLogDO;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.operateLog.gateway.OperateLogGateway;
-import org.laokou.admin.operateLog.gatewayimpl.database.OperateLogMapper;
 
 import java.util.Arrays;
 import org.laokou.admin.operateLog.convertor.OperateLogConvertor;
-import org.laokou.admin.operateLog.gatewayimpl.database.dataobject.OperateLogDO;
 
 /**
  * 操作日志网关实现.

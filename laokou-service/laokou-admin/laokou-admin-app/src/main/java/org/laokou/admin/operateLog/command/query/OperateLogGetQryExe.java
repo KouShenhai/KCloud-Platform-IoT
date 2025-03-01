@@ -21,8 +21,8 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.operateLog.convertor.OperateLogConvertor;
 import org.laokou.admin.operateLog.dto.OperateLogGetQry;
 import org.laokou.admin.operateLog.dto.clientobject.OperateLogCO;
-import org.laokou.admin.operateLog.gatewayimpl.database.OperateLogMapper;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.log.database.OperateLogMapper;
 import org.springframework.stereotype.Component;
 
 /**

@@ -17,21 +17,44 @@
 
 package org.laokou.common.log.event.handler;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.log.convertor.OperateLogConvertor;
+import org.laokou.common.log.database.OperateLogMapper;
+import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
+
+import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
+import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
+import static org.laokou.common.log.constant.Constant.*;
 
 /**
  * @author laokou
  */
+
 @Component
 @RequiredArgsConstructor
+@RocketMQMessageListener(consumerGroup = LAOKOU_OPERATE_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
+		selectorExpression = OPERATE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
 public class OperateEventHandler extends AbstractDomainEventHandler {
+
+	private final OperateLogMapper operateLogMapper;
+
+	private final TransactionalUtil transactionalUtil;
 
 	@Override
 	protected void handleDomainEvent(DomainEvent domainEvent) {
-
+		try {
+			DynamicDataSourceContextHolder.push("domain");
+			transactionalUtil
+				.executeInTransaction(() -> operateLogMapper.insert(OperateLogConvertor.toDataObject(domainEvent)));
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

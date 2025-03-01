@@ -21,11 +21,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
+import static org.laokou.common.tenant.constant.Constant.Master.USER_ROLE_TABLE;
+
 /**
  * @author laokou
  */
 @Data
-@TableName("boot_sys_user_role")
+@TableName(USER_ROLE_TABLE)
 public class UserRoleDO extends BaseDO {
 
 	private Long userId;
