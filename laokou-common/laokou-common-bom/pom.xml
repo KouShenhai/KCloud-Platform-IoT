@@ -170,7 +170,7 @@
     <!--mysql-connector-j版本-->
     <mysql-connector-j.version>9.2.0</mysql-connector-j.version>
     <!--clickhouse-jdbc版本-->
-    <clickhouse-jdbc.version>0.8.1</clickhouse-jdbc.version>
+    <clickhouse-jdbc.version>0.8.2</clickhouse-jdbc.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
