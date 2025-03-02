@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.HttpUtil;
+import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.RandomStringUtil;
 import org.laokou.common.core.utils.TemplateUtil;
 import org.laokou.common.i18n.utils.JacksonUtil;
@@ -41,7 +42,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @Slf4j
 public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 
-	private static final Map<String, String> TEMPLATES = new HashMap<>(15);
+	private static final Map<String, String> TEMPLATES = new HashMap<>(MapUtil.initialCapacity(15));
 
 	private static final String PARAMS_TEMPLATE = "**code**:${captcha},**minute**:${minute}";
 

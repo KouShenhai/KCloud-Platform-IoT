@@ -72,6 +72,11 @@ export default [
 						name: '通知日志',
 						path: '/sys/log/notice',
 						component: './Sys/Log/notice'
+					},
+					{
+						name: '操作日志',
+						path: '/sys/log/operate',
+						component: './Sys/Log/operate'
 					}
 				]
 			}

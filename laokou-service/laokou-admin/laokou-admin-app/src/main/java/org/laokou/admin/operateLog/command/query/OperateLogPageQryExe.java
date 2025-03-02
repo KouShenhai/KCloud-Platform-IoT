@@ -46,7 +46,7 @@ public class OperateLogPageQryExe {
 			DynamicDataSourceContextHolder.push("domain");
 			List<OperateLogDO> list = operateLogMapper.selectObjectPage(qry);
 			long total = operateLogMapper.selectObjectCount(qry);
-			return Result.ok(Page.create(list.stream().map(OperateLogConvertor::toClientObject).toList(), total));
+			return Result.ok(Page.create(OperateLogConvertor.toClientObjects(list), total));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

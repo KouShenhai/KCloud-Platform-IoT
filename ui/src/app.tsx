@@ -156,7 +156,7 @@ export const request: {
 	// other axios options you want
 	errorConfig: {
 		errorHandler(error: any) {
-			const {response, code} = error;
+			const {request, response, code} = error;
 			let errorMessage;
 			if (response && response.data && response.data.error_description !== undefined) {
 				errorMessage = response.data.error_description
@@ -169,6 +169,9 @@ export const request: {
 			}
 			if (response && response.status === 400 && response.data.error === "invalid_grant") {
 				errorMessage = "令牌续期失败，请重新登录"
+			}
+			if (response && response.status === 404) {
+				errorMessage = "无法找到 " + request.responseURL + " 请求的资源"
 			}
 			message.error(errorMessage).then();
 		},

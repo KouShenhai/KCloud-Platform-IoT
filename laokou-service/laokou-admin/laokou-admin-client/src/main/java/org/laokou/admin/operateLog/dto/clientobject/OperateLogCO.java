@@ -22,6 +22,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
+import java.time.Instant;
+
 /**
  * 操作日志客户端对象.
  *
@@ -101,5 +103,25 @@ public class OperateLogCO extends ClientObject {
 	 * 操作的消耗时间(毫秒).
 	 */
 	private Long costTime;
+
+	/**
+	 * 操作的服务环境.
+	 */
+	private String profile;
+
+	/**
+	 * 操作的服务地址.
+	 */
+	private String serviceAddress;
+
+	/**
+	 * 操作的堆栈信息.
+	 */
+	private String stackTrace;
+
+	/**
+	 * 创建时间.
+	 */
+	private Instant createTime;
 
 }

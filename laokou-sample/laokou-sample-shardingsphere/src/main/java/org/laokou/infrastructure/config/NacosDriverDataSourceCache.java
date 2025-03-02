@@ -38,6 +38,7 @@ import com.alibaba.nacos.api.exception.NacosException;
 import lombok.Getter;
 import org.apache.shardingsphere.driver.api.yaml.YamlShardingSphereDataSourceFactory;
 import org.apache.shardingsphere.infra.url.core.ShardingSphereURL;
+import org.laokou.common.core.utils.MapUtil;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -53,7 +54,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Getter
 public final class NacosDriverDataSourceCache {
 
-	private final Map<String, DataSource> dataSourceMap = new ConcurrentHashMap<>();
+	private final Map<String, DataSource> DATASOURCE_MAP = new ConcurrentHashMap<>(MapUtil.initialCapacity(16));
 
 	/**
 	 * Get data source.
@@ -62,10 +63,10 @@ public final class NacosDriverDataSourceCache {
 	 * @return got data source
 	 */
 	public DataSource get(final String url, final String urlPrefix) {
-		if (dataSourceMap.containsKey(url)) {
-			return dataSourceMap.get(url);
+		if (DATASOURCE_MAP.containsKey(url)) {
+			return DATASOURCE_MAP.get(url);
 		}
-		return dataSourceMap.computeIfAbsent(url,
+		return DATASOURCE_MAP.computeIfAbsent(url,
 				driverUrl -> createDataSource(ShardingSphereURL.parse(driverUrl.substring(urlPrefix.length()))));
 	}
 

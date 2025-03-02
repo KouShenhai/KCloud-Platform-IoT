@@ -47,6 +47,14 @@ public final class MapUtil {
 	}
 
 	/**
+	 * 根据负载因子【0.75】计算初始化容量.
+	 * @param size 容量
+	 */
+	public static int initialCapacity(int size) {
+		return Math.ceilDiv(size * 100, 75);
+	}
+
+	/**
 	 * 判断不为空.
 	 * @param map map对象
 	 * @return 判断结果

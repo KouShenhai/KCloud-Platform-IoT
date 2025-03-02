@@ -78,13 +78,8 @@ export default () => {
 			title: '名称',
 			dataIndex: 'name',
 			hideInSearch: true,
-			width: 200,
-		},
-		{
-			title: '图标',
-			dataIndex: 'icon',
 			ellipsis: true,
-			hideInSearch: true
+			width: 200,
 		},
 		{
 			title: '路径',
@@ -98,7 +93,7 @@ export default () => {
 			dataIndex: 'permission',
 			ellipsis: true,
 			hideInSearch: true,
-			width: 150
+			width: 180
 		},
 		{
 			title: '类型',
@@ -199,6 +194,25 @@ export default () => {
 				>
 					查看
 				</a>,
+				<a key="save" onClick={() => {
+					setTitle('新增菜单')
+					setTypeValue(0)
+					setReadOnly(false)
+					setModalVisit(true)
+					setDataSource({
+						id: undefined,
+						name: '',
+						path: '',
+						permission: '',
+						sort: 1,
+						icon: '',
+						status: 0,
+						type: 0,
+						pid: record?.id
+					})
+				}}>
+					新增
+				</a>,
 				<a key="modify"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
@@ -233,6 +247,7 @@ export default () => {
 					删除
 				</a>
 			],
+			width: 200
 		},
 	];
 
