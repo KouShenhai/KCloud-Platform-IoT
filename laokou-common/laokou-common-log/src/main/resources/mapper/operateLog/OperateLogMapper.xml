@@ -20,25 +20,90 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.common.log.database.OperateLogMapper">
 
-	<select id="selectObjectPage"
-			resultType="org.laokou.common.log.database.dataobject.OperateLogDO">
-		SELECT *
-		from boot_sys_operate_log
-		where del_flag = 0
-		order by id desc
-		limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
-	</select>
+  <sql id="selectColumns">
+    id,
+    create_time,
+    "name",
+    module_name,
+    uri,
+    method_name,
+    request_type,
+    request_params,
+    user_agent,
+    ip,
+    service_address,
+    service_id,
+    address,
+    status,
+    "operator",
+    error_message,
+    profile,
+    stack_trace,
+    cost_time
+  </sql>
 
-	<select id="selectObjectCount" resultType="long">
-		SELECT count(1)
-		from boot_sys_operate_log
-		where del_flag = 0
-	</select>
+  <sql id="selectConditions">
+    where del_flag = 0
+    <if test="pageQuery.errorMessage != null and pageQuery.errorMessage != ''">
+      and error_message like #{pageQuery.errorMessage}
+    </if>
+    <if test="pageQuery.name != null and pageQuery.name != ''">
+      and "name" like #{pageQuery.name}
+    </if>
+    <if test="pageQuery.moduleName != null and pageQuery.moduleName != ''">
+      and module_name like #{pageQuery.moduleName}
+    </if>
+    <if test="pageQuery.ip != null and pageQuery.ip != ''">
+      and ip like #{pageQuery.ip}
+    </if>
+    <if test="pageQuery.requestType != null and pageQuery.requestType != ''">
+      and request_type like #{pageQuery.requestType}
+    </if>
+    <if test="pageQuery.profile != null and pageQuery.profile != ''">
+      and profile like #{pageQuery.profile}
+    </if>
+    <if test="pageQuery.operator != null and pageQuery.operator != ''">
+      and "operator" like #{pageQuery.operator}
+    </if>
+    <if test="pageQuery.status != null">
+      and status = #{pageQuery.status}
+    </if>
+    <if test="pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
+      and create_time <![CDATA[ >= ]]> #{pageQuery.params.startTime}
+    </if>
+    <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
+      and create_time <![CDATA[ <= ]]> #{pageQuery.params.endTime}
+    </if>
+  </sql>
 
-	<select id="selectVersion" resultType="integer">
-		select version
-		from boot_sys_operate_log
-		where id = #{id}
-	</select>
+  <sql id="selectObjectList">
+    SELECT <include refid="selectColumns"/>
+    from boot_sys_operate_log
+    <include refid="selectConditions"/>
+    order by id desc
+  </sql>
+
+  <select id="selectObjectPage"
+          resultType="org.laokou.common.log.database.dataobject.OperateLogDO">
+    <include refid="selectObjectList"/>
+    limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
+  </select>
+
+  <select id="selectObjectCount" resultType="long">
+    SELECT count(1)
+    from boot_sys_operate_log
+    <include refid="selectConditions"/>
+  </select>
+
+  <select id="selectVersion" resultType="integer">
+    select version
+    from boot_sys_operate_log
+    where id = #{id}
+  </select>
+
+  <select id="selectObjectListHandler" fetchSize="100000" resultSetType="FORWARD_ONLY"
+          resultType="org.laokou.common.log.database.dataobject.OperateLogDO">
+    <include refid="selectObjectList"/>
+  </select>
 
 </mapper>

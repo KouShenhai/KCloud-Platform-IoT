@@ -19,10 +19,10 @@ package org.laokou.admin.operateLog.convertor;
 
 import org.laokou.admin.operateLog.dto.clientobject.OperateLogCO;
 import org.laokou.admin.operateLog.model.OperateLogE;
-import org.laokou.common.core.utils.ConvertUtil;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.log.database.dataobject.OperateLogDO;
+
+import java.util.List;
 
 /**
  * 操作日志转换器.
@@ -31,20 +31,80 @@ import org.laokou.common.log.database.dataobject.OperateLogDO;
  */
 public class OperateLogConvertor {
 
-	public static OperateLogDO toDataObject(OperateLogE operateLogE) {
-		OperateLogDO operateLogDO = ConvertUtil.sourceToTarget(operateLogE, OperateLogDO.class);
-		if (ObjectUtil.isNull(operateLogDO.getId())) {
+	public static OperateLogDO toDataObject(OperateLogE operateLogE, boolean isInsert) {
+		OperateLogDO operateLogDO = new OperateLogDO();
+		if (isInsert) {
 			operateLogDO.setId(IdGenerator.defaultSnowflakeId());
 		}
+		else {
+			operateLogDO.setId(operateLogE.getId());
+		}
+		operateLogDO.setName(operateLogE.getName());
+		operateLogDO.setModuleName(operateLogE.getModuleName());
+		operateLogDO.setUri(operateLogE.getUri());
+		operateLogDO.setRequestType(operateLogE.getRequestType());
+		operateLogDO.setUserAgent(operateLogE.getUserAgent());
+		operateLogDO.setAddress(operateLogE.getAddress());
+		operateLogDO.setOperator(operateLogE.getOperator());
+		operateLogDO.setMethodName(operateLogE.getMethodName());
+		operateLogDO.setRequestParams(operateLogE.getRequestParams());
+		operateLogDO.setErrorMessage(operateLogE.getErrorMessage());
+		operateLogDO.setStatus(operateLogE.getStatus());
+		operateLogDO.setCostTime(operateLogE.getCostTime());
+		operateLogDO.setIp(operateLogE.getIp());
+		operateLogDO.setProfile(operateLogE.getProfile());
+		operateLogDO.setServiceAddress(operateLogE.getServiceAddress());
+		operateLogDO.setStackTrace(operateLogE.getStackTrace());
 		return operateLogDO;
 	}
 
 	public static OperateLogCO toClientObject(OperateLogDO operateLogDO) {
-		return ConvertUtil.sourceToTarget(operateLogDO, OperateLogCO.class);
+		OperateLogCO operateLogCO = new OperateLogCO();
+		operateLogCO.setId(operateLogDO.getId());
+		operateLogCO.setName(operateLogDO.getName());
+		operateLogCO.setModuleName(operateLogDO.getModuleName());
+		operateLogCO.setUri(operateLogDO.getUri());
+		operateLogCO.setMethodName(operateLogDO.getMethodName());
+		operateLogCO.setRequestType(operateLogDO.getRequestType());
+		operateLogCO.setRequestParams(operateLogDO.getRequestParams());
+		operateLogCO.setUserAgent(operateLogDO.getUserAgent());
+		operateLogCO.setIp(operateLogDO.getIp());
+		operateLogCO.setAddress(operateLogDO.getAddress());
+		operateLogCO.setStatus(operateLogDO.getStatus());
+		operateLogCO.setOperator(operateLogDO.getOperator());
+		operateLogCO.setErrorMessage(operateLogDO.getErrorMessage());
+		operateLogCO.setCostTime(operateLogDO.getCostTime());
+		operateLogCO.setProfile(operateLogDO.getProfile());
+		operateLogCO.setServiceAddress(operateLogDO.getServiceAddress());
+		operateLogCO.setStackTrace(operateLogDO.getStackTrace());
+		operateLogCO.setCreateTime(operateLogDO.getCreateTime());
+		return operateLogCO;
+	}
+
+	public static List<OperateLogCO> toClientObjects(List<OperateLogDO> list) {
+		return list.stream().map(OperateLogConvertor::toClientObject).toList();
 	}
 
 	public static OperateLogE toEntity(OperateLogCO operateLogCO) {
-		return ConvertUtil.sourceToTarget(operateLogCO, OperateLogE.class);
+		OperateLogE operateLogE = new OperateLogE();
+		operateLogE.setId(operateLogCO.getId());
+		operateLogE.setName(operateLogCO.getName());
+		operateLogE.setModuleName(operateLogCO.getModuleName());
+		operateLogE.setUri(operateLogCO.getUri());
+		operateLogE.setMethodName(operateLogCO.getMethodName());
+		operateLogE.setRequestType(operateLogCO.getRequestType());
+		operateLogE.setRequestParams(operateLogCO.getRequestParams());
+		operateLogE.setUserAgent(operateLogCO.getUserAgent());
+		operateLogE.setIp(operateLogCO.getIp());
+		operateLogE.setAddress(operateLogCO.getAddress());
+		operateLogE.setStatus(operateLogCO.getStatus());
+		operateLogE.setOperator(operateLogCO.getOperator());
+		operateLogE.setErrorMessage(operateLogCO.getErrorMessage());
+		operateLogE.setCostTime(operateLogCO.getCostTime());
+		operateLogE.setProfile(operateLogCO.getProfile());
+		operateLogE.setServiceAddress(operateLogCO.getServiceAddress());
+		operateLogE.setStackTrace(operateLogCO.getStackTrace());
+		return operateLogE;
 	}
 
 }

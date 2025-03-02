@@ -97,4 +97,19 @@ public class OperateLogE {
 	 */
 	private Long costTime;
 
+	/**
+	 * 操作的服务环境.
+	 */
+	private String profile;
+
+	/**
+	 * 操作的服务地址.
+	 */
+	private String serviceAddress;
+
+	/**
+	 * 操作的堆栈信息.
+	 */
+	private String stackTrace;
+
 }
