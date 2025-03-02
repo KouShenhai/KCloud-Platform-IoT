@@ -56,6 +56,8 @@ public class ServiceUtil {
 
 	private volatile NacosNamingService nacosNamingService;
 
+	private static final Object LOCK = new Object();
+
 	/**
 	 * 查询服务列表.
 	 * @return 服务列表
@@ -88,7 +90,7 @@ public class ServiceUtil {
 	 */
 	private NacosNamingService getNacosNamingService() throws NacosException {
 		if (ObjectUtil.isNull(nacosNamingService)) {
-			synchronized (NacosNamingService.class) {
+			synchronized (LOCK) {
 				if (ObjectUtil.isNull(nacosNamingService)) {
 					Properties properties = new Properties();
 					properties.put(NAMESPACE, nacosDiscoveryProperties.getNamespace());

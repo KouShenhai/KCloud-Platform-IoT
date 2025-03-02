@@ -48,7 +48,7 @@ public final class SpringContextUtil implements ApplicationContextAware, Disposa
 	public static final String DEFAULT_SERVICE_ID = "application";
 
 	@Getter
-	private volatile static ApplicationContext applicationContext = null;
+	private static volatile ApplicationContext applicationContext = null;
 
 	private SpringContextUtil() {
 	}

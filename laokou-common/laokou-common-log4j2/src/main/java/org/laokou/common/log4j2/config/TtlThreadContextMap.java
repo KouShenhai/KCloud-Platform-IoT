@@ -54,7 +54,7 @@ public class TtlThreadContextMap implements ThreadContextMap {
 	public void remove(final String key) {
 		final Map<String, String> map = LOCAL_MAP.get();
 		if (map != null) {
-			final Map<String, String> copy = new HashMap<String, String>(map);
+			final Map<String, String> copy = new HashMap<>(map);
 			copy.remove(key);
 			LOCAL_MAP.set(Collections.unmodifiableMap(copy));
 		}
