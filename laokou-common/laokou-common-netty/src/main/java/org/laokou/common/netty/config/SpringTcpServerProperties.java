@@ -39,7 +39,10 @@ public class SpringTcpServerProperties {
 	 */
 	private Integer groupCorePoolSize = 16;
 
-	private Map<String, Config> configs = new HashMap<>();
+	/**
+	 * 配置项.
+	 */
+	private Map<String, Config> configs = new HashMap<>(0);
 
 	@Data
 	public static class Config {

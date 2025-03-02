@@ -72,7 +72,7 @@ public abstract class AbstractOAuth2AuthenticationConverter implements Authentic
 		}
 		// 获取上下文认证信息
 		Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();
-		Map<String, Object> additionalParameters = new HashMap<>(parameters.size());
+		Map<String, Object> additionalParameters = new HashMap<>(MapUtil.initialCapacity(parameters.size()));
 		parameters.forEach((key, value) -> {
 			if (!key.equals(OAuth2ParameterNames.GRANT_TYPE) && !key.equals(OAuth2ParameterNames.CLIENT_ID)) {
 				additionalParameters.put(key, value.getFirst());

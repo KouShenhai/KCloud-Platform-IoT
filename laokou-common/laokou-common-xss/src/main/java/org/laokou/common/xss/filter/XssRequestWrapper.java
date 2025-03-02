@@ -21,6 +21,7 @@ import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import org.laokou.common.core.utils.ArrayUtil;
+import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.xss.util.XssUtil;
@@ -93,8 +94,8 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 	 */
 	@Override
 	public Map<String, String[]> getParameterMap() {
-		Map<String, String[]> newParameterMap = new LinkedHashMap<>();
 		Map<String, String[]> parameterMap = super.getParameterMap();
+		Map<String, String[]> newParameterMap = new LinkedHashMap<>(MapUtil.initialCapacity(parameterMap.size()));
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String key = entry.getKey();
 			String[] values = entry.getValue();

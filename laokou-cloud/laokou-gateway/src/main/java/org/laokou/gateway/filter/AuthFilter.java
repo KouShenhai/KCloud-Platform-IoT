@@ -111,7 +111,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 */
 	private static final String GRANT_TYPE = "grant_type";
 
-	private final Map<String, Set<String>> URI_MAP = new HashMap<>();
+	private final Map<String, Set<String>> URI_MAP = new HashMap<>(MapUtil.initialCapacity(128));
 
 	private final OAuth2ResourceServerProperties oAuth2ResourceServerProperties;
 
