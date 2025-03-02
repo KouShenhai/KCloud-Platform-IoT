@@ -76,6 +76,8 @@ public class PrometheusExemplarsAutoConfiguration {
 
 		private volatile Span currentSpan;
 
+		private static final Object LOCK = new Object();
+
 		@Override
 		public String getCurrentTraceId() {
 			Span currentSpan = currentSpan();
@@ -103,8 +105,13 @@ public class PrometheusExemplarsAutoConfiguration {
 
 		private Span currentSpan() {
 			try {
+				// 双检锁
 				if (ObjectUtil.isNull(currentSpan)) {
-					currentSpan = SpringContextUtil.getBean(Tracer.class).currentSpan();
+					synchronized (LOCK) {
+						if (ObjectUtil.isNull(currentSpan)) {
+							currentSpan = SpringContextUtil.getBean(Tracer.class).currentSpan();
+						}
+					}
 				}
 				return currentSpan;
 			}

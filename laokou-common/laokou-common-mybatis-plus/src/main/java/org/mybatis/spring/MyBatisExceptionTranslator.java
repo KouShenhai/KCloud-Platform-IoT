@@ -63,6 +63,8 @@ public class MyBatisExceptionTranslator implements PersistenceExceptionTranslato
 
 	private volatile SQLExceptionTranslator exceptionTranslator;
 
+	private static final Object LOCK = new Object();
+
 	/**
 	 * Creates a new {@code PersistenceExceptionTranslator} instance with
 	 * {@code SQLErrorCodeSQLExceptionTranslator}.
@@ -119,10 +121,15 @@ public class MyBatisExceptionTranslator implements PersistenceExceptionTranslato
 	 * Initializes the internal translator reference.
 	 */
 	private void initExceptionTranslator() {
+		// 双检锁
 		if (this.exceptionTranslator == null) {
-			SqlSessionFactory sessionFactory = SpringContextUtil.getBean(SqlSessionFactory.class);
-			this.exceptionTranslator = new SQLErrorCodeSQLExceptionTranslator(
-					sessionFactory.getConfiguration().getEnvironment().getDataSource());
+			synchronized (LOCK) {
+				if (this.exceptionTranslator == null) {
+					SqlSessionFactory sessionFactory = SpringContextUtil.getBean(SqlSessionFactory.class);
+					this.exceptionTranslator = new SQLErrorCodeSQLExceptionTranslator(
+							sessionFactory.getConfiguration().getEnvironment().getDataSource());
+				}
+			}
 		}
 	}
 
