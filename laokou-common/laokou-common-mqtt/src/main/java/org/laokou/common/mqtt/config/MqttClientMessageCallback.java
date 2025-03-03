@@ -57,6 +57,7 @@ public class MqttClientMessageCallback implements MqttCallback {
 		for (MessageHandler messageHandler : messageHandlers) {
 			if (messageHandler.isSubscribe(topic)) {
 				messageHandler.handle(topic, message);
+				break;
 			}
 		}
 	}
