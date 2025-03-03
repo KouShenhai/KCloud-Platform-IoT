@@ -166,7 +166,7 @@
     <!--flink-connector-kafka版本-->
     <flink-connector-kafka.version>3.4.0-1.20</flink-connector-kafka.version>
     <!--spark版本-->
-    <spark.version>3.5.5</spark.version>
+    <spark.version>4.0.0-preview2</spark.version>
     <!--mysql-connector-j版本-->
     <mysql-connector-j.version>9.2.0</mysql-connector-j.version>
     <!--clickhouse-jdbc版本-->
