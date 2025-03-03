@@ -27,6 +27,19 @@ export default () => {
 		param: string | undefined;
 		errorMessage: string | undefined;
 		createTime: string | undefined;
+		moduleName: string | undefined;
+		uri: string | undefined;
+		methodName: string | undefined;
+		requestType: string | undefined;
+		requestParams: string | undefined;
+		userAgent: string | undefined;
+		ip: string | undefined;
+		address: string | undefined;
+		operator: string | undefined;
+		costTime: number | string;
+		profile: string | undefined;
+		serviceAddress: string | undefined;
+		stackTrace: string | undefined;
 	};
 
 	const actionRef = useRef();
@@ -38,9 +51,13 @@ export default () => {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
-			code: trim(params?.code),
 			name: trim(params?.name),
 			status: params?.status,
+			moduleName: trim(params?.moduleName),
+			ip: trim(params?.ip),
+			requestType: trim(params?.requestType),
+			operator: trim(params?.operator),
+			profile: trim(params?.profile),
 			errorMessage: trim(params?.errorMessage),
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,

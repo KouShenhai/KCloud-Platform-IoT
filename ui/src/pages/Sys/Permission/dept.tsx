@@ -125,6 +125,20 @@ export default () => {
 				>
 					查看
 				</a>,
+				<a key="save" onClick={() => {
+					setTitle('新增部门')
+					setReadOnly(false)
+					setModalVisit(true)
+					setDataSource({
+						id: undefined,
+						name: '',
+						path: '',
+						pid: record?.id,
+						sort: 1,
+					})
+				}}>
+					新增
+				</a>,
 				<a key="modify"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
