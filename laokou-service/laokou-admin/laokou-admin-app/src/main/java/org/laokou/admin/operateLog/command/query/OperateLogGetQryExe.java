@@ -17,6 +17,7 @@
 
 package org.laokou.admin.operateLog.command.query;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.operateLog.convertor.OperateLogConvertor;
 import org.laokou.admin.operateLog.dto.OperateLogGetQry;
@@ -37,7 +38,12 @@ public class OperateLogGetQryExe {
 	private final OperateLogMapper operateLogMapper;
 
 	public Result<OperateLogCO> execute(OperateLogGetQry qry) {
-		return Result.ok(OperateLogConvertor.toClientObject(operateLogMapper.selectById(qry.getId())));
+		try {
+			DynamicDataSourceContextHolder.push("domain");
+			return Result.ok(OperateLogConvertor.toClientObject(operateLogMapper.selectById(qry.getId())));
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

@@ -103,7 +103,8 @@ export default () => {
 		{
 			title: 'IP归属地',
 			dataIndex: 'address',
-			ellipsis: true
+			ellipsis: true,
+			hideInSearch: true
 		},
 		{
 			title: '状态',
