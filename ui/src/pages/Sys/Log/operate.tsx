@@ -76,13 +76,33 @@ export default () => {
 			width: 60,
 		},
 		{
-			title: '标识',
-			dataIndex: 'code',
+			title: '模块名称',
+			dataIndex: 'moduleName',
 			ellipsis: true
 		},
 		{
-			title: '名称',
+			title: '操作名称',
 			dataIndex: 'name',
+			ellipsis: true
+		},
+		{
+			title: '请求类型',
+			dataIndex: 'requestType',
+			ellipsis: true
+		},
+		{
+			title: '操作人员',
+			dataIndex: 'operator',
+			ellipsis: true
+		},
+		{
+			title: 'IP地址',
+			dataIndex: 'ip',
+			ellipsis: true
+		},
+		{
+			title: 'IP归属地',
+			dataIndex: 'address',
 			ellipsis: true
 		},
 		{
@@ -145,7 +165,7 @@ export default () => {
 		<>
 			<DrawerForm<TableColumns>
 				open={modalVisit}
-				title="查看通知日志"
+				title="查看操作日志"
 				drawerProps={{
 					destroyOnClose: true,
 					closable: true,
@@ -250,8 +270,8 @@ export default () => {
 								sheetData: _list,
 								sheetFilter: ["code", "name", "status", "param", "errorMessage", "createTime"],
 								sheetHeader: ["标识", "名称", "状态", "参数", "错误信息", "创建时间"],
-								fileName: "通知日志_导出_" + moment(new Date()).format('YYYYMMDDHHmmss'),
-								sheetName: "通知日志"
+								fileName: "操作日志_导出_" + moment(new Date()).format('YYYYMMDDHHmmss'),
+								sheetName: "操作日志"
 							})
 						}}>
 							导出
@@ -265,8 +285,8 @@ export default () => {
 				}
 				dateFormatter="string"
 				toolbar={{
-					title: '通知日志',
-					tooltip: '通知日志',
+					title: '操作日志',
+					tooltip: '操作日志',
 				}}
 			/>
 		</>
