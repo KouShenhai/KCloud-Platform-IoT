@@ -40,7 +40,7 @@
     <!--redisson版本-->
     <redisson.version>3.45.0</redisson.version>
     <!--jsoup版本-->
-    <jsoup.version>1.18.3</jsoup.version>
+    <jsoup.version>1.19.1</jsoup.version>
     <!--jasypt版本-->
     <jasypt.version>3.0.5</jasypt.version>
     <!--captcha版本-->
@@ -50,7 +50,7 @@
     <!--oshi版本-->
     <oshi.version>6.7.0</oshi.version>
     <!--elasticsearch版本-->
-    <elasticsearch.version>8.17.2</elasticsearch.version>
+    <elasticsearch.version>8.17.3</elasticsearch.version>
     <!--rocketmq-spring版本-->
     <rocketmq-spring.version>2.3.2</rocketmq-spring.version>
     <!--rocketmq版本-->
@@ -108,7 +108,7 @@
     <!--protobuf-java版本-->
     <protobuf-java.version>3.25.5</protobuf-java.version>
     <!--grpc版本-->
-    <grpc.version>1.70.0</grpc.version>
+    <grpc.version>1.71.0</grpc.version>
     <!--proto-google-common-protos版本-->
     <proto-google-common-protos.version>2.53.0</proto-google-common-protos.version>
     <!--error_prone_annotations版本-->
