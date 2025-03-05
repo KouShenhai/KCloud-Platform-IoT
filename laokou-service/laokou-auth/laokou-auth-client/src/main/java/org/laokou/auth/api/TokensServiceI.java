@@ -18,6 +18,7 @@
 package org.laokou.auth.api;
 
 import org.laokou.auth.dto.TokenRemoveCmd;
+import reactor.core.publisher.Mono;
 
 /**
  * 令牌管理.
@@ -30,6 +31,6 @@ public interface TokensServiceI {
 	 * 移除Token.
 	 * @param cmd 退出登录参数
 	 */
-	void removeToken(TokenRemoveCmd cmd);
+	Mono<Void> removeToken(TokenRemoveCmd cmd);
 
 }

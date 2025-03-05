@@ -171,11 +171,18 @@
     <mysql-connector-j.version>9.2.0</mysql-connector-j.version>
     <!--clickhouse-jdbc版本-->
     <clickhouse-jdbc.version>0.8.2</clickhouse-jdbc.version>
+    <!--reactor-core版本-->
+    <reactor-core.version>3.7.3</reactor-core.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>io.projectreactor</groupId>
+        <artifactId>reactor-core</artifactId>
+        <version>${reactor-core.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.clickhouse</groupId>
         <artifactId>clickhouse-jdbc</artifactId>

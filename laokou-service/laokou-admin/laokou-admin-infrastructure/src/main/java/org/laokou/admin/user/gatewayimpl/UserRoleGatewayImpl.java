@@ -25,6 +25,7 @@ import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 /**
  * @author laokou
@@ -36,21 +37,29 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 	private final MybatisUtil mybatisUtil;
 
 	@Override
-	public void create(UserE userE) {
-		// 新增用户角色关联表
-		mybatisUtil.batch(UserConvertor.toDataObjects(userE, userE.getId()), UserRoleMapper.class,
-				UserRoleMapper::insert);
+	public Mono<Void> create(UserE userE) {
+		return insertUserRole(userE);
 	}
 
 	@Override
-	public void update(UserE userE) {
+	public Mono<Void> update(UserE userE) {
 		if (CollectionUtil.isNotEmpty(userE.getRoleIds())) {
-			// 删除用户角色关联表
-			mybatisUtil.batch(UserConvertor.toDataObjects(userE), UserRoleMapper.class, UserRoleMapper::deleteObjById);
-			// 新增用户角色关联表
-			mybatisUtil.batch(UserConvertor.toDataObjects(userE, userE.getId()), UserRoleMapper.class,
-					UserRoleMapper::insert);
+			return deleteUserRole(userE).then(Mono.defer(() -> insertUserRole(userE)));
 		}
+		return Mono.empty();
+	}
+
+	private Mono<Void> insertUserRole(UserE userE) {
+		// 新增用户角色关联表
+		mybatisUtil.batch(UserConvertor.toDataObjects(userE, userE.getId()), UserRoleMapper.class,
+				UserRoleMapper::insert);
+		return Mono.empty();
+	}
+
+	private Mono<Void> deleteUserRole(UserE userE) {
+		// 删除用户角色关联表
+		mybatisUtil.batch(UserConvertor.toDataObjects(userE), UserRoleMapper.class, UserRoleMapper::deleteObjById);
+		return Mono.empty();
 	}
 
 }

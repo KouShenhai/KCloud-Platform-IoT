@@ -54,6 +54,19 @@ public class TransactionalUtil {
 		});
 	}
 
+	public <T> T executeResultInTransaction(DatabaseExecutor<T> operation) {
+		return defaultExecute(r -> {
+			try {
+				return operation.execute();
+			}
+			catch (Exception e) {
+				r.setRollbackOnly();
+				log.error("操作失败，错误信息：{}", e.getMessage());
+				throw new SystemException("S_DS_OperationError", e.getMessage(), e);
+			}
+		});
+	}
+
 	// @formatter:off
 	private <T> T execute(TransactionCallback<T> action, int propagationBehavior, int isolationLevel, boolean readOnly) {
         return convert(propagationBehavior, isolationLevel, readOnly).execute(action);
@@ -63,7 +76,7 @@ public class TransactionalUtil {
 		return execute(action, TransactionDefinition.PROPAGATION_REQUIRED, isolationLevel, readOnly);
 	}
 
-	private <T> T defaultExecute(TransactionCallback<T> action) {
+	private  <T> T defaultExecute(TransactionCallback<T> action) {
 		return execute(action, TransactionDefinition.PROPAGATION_REQUIRED, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 	}
 
@@ -109,6 +122,13 @@ public class TransactionalUtil {
 	public interface DatabaseOperation {
 
 		void execute()throws JsonProcessingException;
+
+	}
+
+	@FunctionalInterface
+	public interface DatabaseExecutor<T> {
+
+		T execute()throws JsonProcessingException;
 
 	}
     // @formatter:on

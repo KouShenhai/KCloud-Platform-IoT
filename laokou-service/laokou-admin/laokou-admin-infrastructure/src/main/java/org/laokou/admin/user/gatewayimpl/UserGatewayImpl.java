@@ -25,6 +25,7 @@ import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
 
@@ -42,15 +43,17 @@ public class UserGatewayImpl implements UserGateway {
 	private final UserMapper userMapper;
 
 	@Override
-	public void create(UserE userE) {
+	public Mono<Void> create(UserE userE) {
 		userMapper.insert(UserConvertor.toDataObject(passwordEncoder, userE, true));
+		return Mono.empty();
 	}
 
 	@Override
-	public void update(UserE userE) {
+	public Mono<Void> update(UserE userE) {
 		UserDO userDO = UserConvertor.toDataObject(passwordEncoder, userE, false);
 		userDO.setVersion(userMapper.selectVersion(userE.getId()));
 		userMapper.updateById(userDO);
+		return Mono.empty();
 	}
 
 	@Override

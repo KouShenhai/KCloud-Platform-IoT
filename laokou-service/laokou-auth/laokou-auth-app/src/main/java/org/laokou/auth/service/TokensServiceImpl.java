@@ -22,6 +22,7 @@ import org.laokou.auth.api.TokensServiceI;
 import org.laokou.auth.command.TokenRemoveCmdExe;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 /**
  * 退出登录.
@@ -39,8 +40,8 @@ public class TokensServiceImpl implements TokensServiceI {
 	 * @param cmd 退出登录参数
 	 */
 	@Override
-	public void removeToken(TokenRemoveCmd cmd) {
-		tokenRemoveCmdExe.executeVoid(cmd);
+	public Mono<Void> removeToken(TokenRemoveCmd cmd) {
+		return tokenRemoveCmdExe.executeVoid(cmd);
 	}
 
 }

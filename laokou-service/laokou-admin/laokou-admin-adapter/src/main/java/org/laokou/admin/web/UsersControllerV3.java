@@ -35,6 +35,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import static org.laokou.common.data.cache.constant.NameConstant.USERS;
 import static org.laokou.common.data.cache.constant.Type.DEL;
@@ -57,8 +59,8 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:save')")
 	@OperateLog(module = "用户管理", operation = "保存用户")
 	@Operation(summary = "保存用户", description = "保存用户")
-	public void saveV3(@RequestBody UserSaveCmd cmd) throws Exception {
-		usersServiceI.save(cmd);
+	public Mono<Void> saveV3(@RequestBody UserSaveCmd cmd) throws Exception {
+		return usersServiceI.save(cmd);
 	}
 
 	@PutMapping
@@ -66,8 +68,8 @@ public class UsersControllerV3 {
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@Operation(summary = "修改用户", description = "修改用户")
 	@DataCache(name = USERS, key = "#cmd.co.id", type = DEL)
-	public void modifyV3(@RequestBody UserModifyCmd cmd) throws Exception {
-		usersServiceI.modify(cmd);
+	public Flux<Void> modifyV3(@RequestBody UserModifyCmd cmd) throws Exception {
+		return usersServiceI.modify(cmd);
 	}
 
 	@DeleteMapping

@@ -25,6 +25,7 @@ import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 /**
  * @author laokou
@@ -36,20 +37,28 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 	private final MybatisUtil mybatisUtil;
 
 	@Override
-	public void create(UserE userE) {
-		// 新增用户部门关联表
-		mybatisUtil.batch(UserConvertor.toDataObjs(userE, userE.getId()), UserDeptMapper.class, UserDeptMapper::insert);
+	public Mono<Void> create(UserE userE) {
+		return insertUserDept(userE);
 	}
 
 	@Override
-	public void update(UserE userE) {
+	public Mono<Void> update(UserE userE) {
 		if (CollectionUtil.isNotEmpty(userE.getDeptIds())) {
-			// 删除用户部门关联表
-			mybatisUtil.batch(UserConvertor.toDataObjs(userE), UserDeptMapper.class, UserDeptMapper::deleteObjById);
-			// 新增用户部门关联表
-			mybatisUtil.batch(UserConvertor.toDataObjs(userE, userE.getId()), UserDeptMapper.class,
-					UserDeptMapper::insert);
+			return removeUserDept(userE).then(Mono.defer(() -> insertUserDept(userE)));
 		}
+		return Mono.empty();
+	}
+
+	private Mono<Void> insertUserDept(UserE userE) {
+		// 新增用户部门关联表
+		mybatisUtil.batch(UserConvertor.toDataObjs(userE, userE.getId()), UserDeptMapper.class, UserDeptMapper::insert);
+		return Mono.empty();
+	}
+
+	private Mono<Void> removeUserDept(UserE userE) {
+		// 删除用户部门关联表
+		mybatisUtil.batch(UserConvertor.toDataObjs(userE), UserDeptMapper.class, UserDeptMapper::deleteObjById);
+		return Mono.empty();
 	}
 
 }

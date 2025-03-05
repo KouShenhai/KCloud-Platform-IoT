@@ -29,6 +29,8 @@ import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * 用户接口实现类.
@@ -58,13 +60,13 @@ public class UsersServiceImpl implements UsersServiceI {
 	private final UserProfileGetQryExe userProfileGetQryExe;
 
 	@Override
-	public void save(UserSaveCmd cmd) throws Exception {
-		userSaveCmdExe.executeVoid(cmd);
+	public Mono<Void> save(UserSaveCmd cmd) throws Exception {
+		return userSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(UserModifyCmd cmd) throws Exception {
-		userModifyCmdExe.executeVoid(cmd);
+	public Flux<Void> modify(UserModifyCmd cmd) throws Exception {
+		return userModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override

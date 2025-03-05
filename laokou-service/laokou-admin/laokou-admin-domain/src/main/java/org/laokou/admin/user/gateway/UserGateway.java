@@ -18,6 +18,7 @@
 package org.laokou.admin.user.gateway;
 
 import org.laokou.admin.user.model.UserE;
+import reactor.core.publisher.Mono;
 
 /**
  * 用户网关【防腐】.
@@ -29,12 +30,12 @@ public interface UserGateway {
 	/**
 	 * 新增用户.
 	 */
-	void create(UserE userE);
+	Mono<Void> create(UserE userE);
 
 	/**
 	 * 修改用户.
 	 */
-	void update(UserE userE);
+	Mono<Void> update(UserE userE);
 
 	/**
 	 * 删除用户.
