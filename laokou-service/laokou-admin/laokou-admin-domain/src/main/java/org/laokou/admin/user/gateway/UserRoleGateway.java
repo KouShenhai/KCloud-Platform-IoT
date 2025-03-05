@@ -29,4 +29,6 @@ public interface UserRoleGateway {
 
 	Mono<Void> update(UserE userE);
 
+	Mono<Void> delete(UserE userE);
+
 }

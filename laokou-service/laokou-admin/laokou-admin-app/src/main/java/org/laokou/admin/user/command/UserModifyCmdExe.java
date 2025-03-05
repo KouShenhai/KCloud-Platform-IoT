@@ -33,8 +33,6 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 /**
  * 修改用户命令执行器.
  *
@@ -68,27 +66,23 @@ public class UserModifyCmdExe {
 		// 校验参数
 		UserE userE = UserConvertor.toEntity(cmd.getCo());
 		modifyUserParamValidator.validate(userE);
-		return Flux.zip(getUserRoleIds(userE), getUserDeptIds(userE)).map(tuple -> {
-			userE.setUserRoleIds(tuple.getT1());
-			userE.setUserDeptIds(tuple.getT2());
-			return userE;
-		}).flatMap(user -> transactionalUtil.executeResultInTransaction(() -> {
-			try {
-				return userDomainService.update(user);
-			}
-			catch (Exception e) {
-				log.error("未知错误，错误信息：{}", e.getMessage(), e);
-				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
-			}
-		}));
-	}
-
-	private Mono<List<Long>> getUserRoleIds(UserE userE) {
-		return Mono.just(userRoleMapper.selectIdsByUserId(userE.getId()));
-	}
-
-	private Mono<List<Long>> getUserDeptIds(UserE userE) {
-		return Mono.just(userDeptMapper.selectIdsByUserId(userE.getId()));
+		return Flux
+			.zip(Mono.just(userRoleMapper.selectIdsByUserId(userE.getId())),
+					Mono.just(userDeptMapper.selectIdsByUserId(userE.getId())))
+			.map(tuple -> {
+				userE.setUserRoleIds(tuple.getT1());
+				userE.setUserDeptIds(tuple.getT2());
+				return userE;
+			})
+			.flatMap(user -> transactionalUtil.executeResultInTransaction(() -> {
+				try {
+					return userDomainService.update(user);
+				}
+				catch (Exception e) {
+					log.error("未知错误，错误信息：{}", e.getMessage(), e);
+					throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+				}
+			}));
 	}
 
 }

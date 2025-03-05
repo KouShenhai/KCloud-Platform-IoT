@@ -21,7 +21,7 @@ export default () => {
 		name: string | undefined;
 		createTime: string | undefined;
 		sort: number | undefined;
-		menuIds: string[] | undefined;
+		menuIds: string[];
 		dataScope: string | undefined;
 	};
 
@@ -186,8 +186,7 @@ export default () => {
 					}
 				}}
 				onFinish={ async (value) => {
-					// @ts-ignore
-					const menuIds = value?.menuIds.map(item => item?.value)
+					const menuIds = value?.menuIds.map((item: any) => item?.value ? item?.value : item)
 					const co = {
 						name: value.name,
 						menuIds: menuIds,

@@ -261,8 +261,7 @@ export default () => {
 					}
 				}}
 				onFinish={ async (value) => {
-					// @ts-ignore
-					const deptIds = value?.deptIds.map(item => item?.value)
+					const deptIds = value?.deptIds.map((item: any) => item?.value ? item.value : item)
 					const co = {
 						id: value?.id,
 						deptIds: deptIds,
@@ -283,7 +282,6 @@ export default () => {
 							}
 						})
 					} else {
-						// @ts-ignore
 						modifyV3({co: co}).then(res => {
 							if (res.code === 'OK') {
 								message.success("修改成功").then()

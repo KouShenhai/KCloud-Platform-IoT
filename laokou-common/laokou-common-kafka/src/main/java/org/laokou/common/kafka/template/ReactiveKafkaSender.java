@@ -32,7 +32,8 @@ public class ReactiveKafkaSender implements KafkaSender {
 
 	@Override
 	public Mono<Void> send(String topic, String payload) {
-		return defaultKafkaSender.send(Mono.just(SenderRecord.create(topic, null, null, null, payload, null))).then(Mono.empty());
+		return defaultKafkaSender.send(Mono.just(SenderRecord.create(topic, null, null, null, payload, null)))
+			.then(Mono.empty());
 	}
 
 }
