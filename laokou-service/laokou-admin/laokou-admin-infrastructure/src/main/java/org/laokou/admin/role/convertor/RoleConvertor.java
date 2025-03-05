@@ -35,7 +35,9 @@ public class RoleConvertor {
 	public static RoleDO toDataObject(RoleE roleE, boolean isInsert) {
 		RoleDO roleDO = new RoleDO();
 		if (isInsert) {
-			roleDO.setId(IdGenerator.defaultSnowflakeId());
+			long id = IdGenerator.defaultSnowflakeId();
+			roleDO.setId(id);
+			roleE.setId(id);
 		}
 		else {
 			roleDO.setId(roleE.getId());

@@ -136,7 +136,7 @@ public class CacheAop {
 		}
 		catch (Throwable e) {
 			log.error("获取缓存失败，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_Cache_GetError", "获取缓存失败", e);
+			throw new SystemException("S_Cache_GetError", String.format("获取缓存失败，%s", e.getMessage()), e);
 		}
 		finally {
 			if (isLocked) {

@@ -22,7 +22,6 @@ import org.laokou.admin.user.gateway.*;
 import org.laokou.admin.user.model.UserE;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 /**
  * 用户领域服务.
@@ -39,24 +38,22 @@ public class UserDomainService {
 
 	private final UserDeptGateway userDeptGateway;
 
-	public Mono<Void> create(UserE userE) throws Exception {
+	public Flux<Void> create(UserE userE) throws Exception {
 		// 用户名加密
 		userE.encryptUsername();
 		// 邮箱加密
 		userE.encryptMail();
 		// 手机号加密
 		userE.encryptMobile();
-		return Flux.merge(userGateway.create(userE), userRoleGateway.create(userE), userDeptGateway.create(userE))
-			.then(Mono.empty());
+		return Flux.merge(userGateway.create(userE), userRoleGateway.create(userE), userDeptGateway.create(userE));
 	}
 
-	public Mono<Void> update(UserE userE) throws Exception {
+	public Flux<Void> update(UserE userE) throws Exception {
 		// 邮箱加密
 		userE.encryptMail();
 		// 手机号加密
 		userE.encryptMobile();
-		return Flux.merge(userGateway.update(userE), userRoleGateway.update(userE), userDeptGateway.update(userE))
-			.then(Mono.empty());
+		return Flux.merge(userGateway.update(userE), userRoleGateway.update(userE), userDeptGateway.update(userE));
 	}
 
 	public void delete(Long[] ids) {

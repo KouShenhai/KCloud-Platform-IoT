@@ -29,7 +29,7 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
 /**
  * 保存用户命令执行器.
@@ -53,7 +53,7 @@ public class UserSaveCmdExe {
 		this.transactionalUtil = transactionalUtil;
 	}
 
-	public Mono<Void> executeVoid(UserSaveCmd cmd) throws Exception {
+	public Flux<Void> executeVoid(UserSaveCmd cmd) throws Exception {
 		// 校验参数
 		UserE userE = UserConvertor.toEntity(cmd.getCo());
 		saveUserParamValidator.validate(userE);

@@ -41,7 +41,8 @@ public class OperateLogGetQryExe {
 		try {
 			DynamicDataSourceContextHolder.push("domain");
 			return Result.ok(OperateLogConvertor.toClientObject(operateLogMapper.selectById(qry.getId())));
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

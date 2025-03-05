@@ -38,25 +38,22 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 
 	@Override
 	public Mono<Void> create(UserE userE) {
-		return insertUserRole(userE);
-	}
-
-	@Override
-	public Mono<Void> update(UserE userE) {
-		if (CollectionUtil.isNotEmpty(userE.getRoleIds())) {
-			return deleteUserRole(userE).then(Mono.defer(() -> insertUserRole(userE)));
-		}
-		return Mono.empty();
-	}
-
-	private Mono<Void> insertUserRole(UserE userE) {
 		// 新增用户角色关联表
 		mybatisUtil.batch(UserConvertor.toDataObjects(userE, userE.getId()), UserRoleMapper.class,
 				UserRoleMapper::insert);
 		return Mono.empty();
 	}
 
-	private Mono<Void> deleteUserRole(UserE userE) {
+	@Override
+	public Mono<Void> update(UserE userE) {
+		if (CollectionUtil.isNotEmpty(userE.getRoleIds())) {
+			return delete(userE).then(Mono.defer(() -> create(userE)));
+		}
+		return Mono.empty();
+	}
+
+	@Override
+	public Mono<Void> delete(UserE userE) {
 		// 删除用户角色关联表
 		mybatisUtil.batch(UserConvertor.toDataObjects(userE), UserRoleMapper.class, UserRoleMapper::deleteObjById);
 		return Mono.empty();
