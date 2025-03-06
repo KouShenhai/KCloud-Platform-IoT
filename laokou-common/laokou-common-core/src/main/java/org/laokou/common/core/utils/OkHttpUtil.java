@@ -17,7 +17,6 @@
 
 package org.laokou.common.core.utils;
 
-import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -70,8 +69,7 @@ public final class OkHttpUtil {
 		return EMPTY;
 	}
 
-	@PreDestroy
-	public static void preDestroy() {
+	public static void destroy() {
 		CLIENT.connectionPool().evictAll();
 	}
 

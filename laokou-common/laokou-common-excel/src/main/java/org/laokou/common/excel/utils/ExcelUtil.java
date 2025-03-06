@@ -29,7 +29,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.ResponseUtil;
-import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.excel.validator.ExcelValidator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -92,17 +91,17 @@ public final class ExcelUtil {
 
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, String sheetName,
 			HttpServletResponse response, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper,
-			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor) {
-		doExport(fileName, sheetName, BATCH_SIZE, response, pageQuery, crudMapper, clazz, convertor);
+			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor, ExecutorService virtualThreadExecutor) {
+		doExport(fileName, sheetName, BATCH_SIZE, response, pageQuery, crudMapper, clazz, convertor,
+				virtualThreadExecutor);
 	}
 
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, String sheetName, int size,
 			HttpServletResponse response, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper,
-			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor) {
+			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor, ExecutorService virtualThreadExecutor) {
 		if (crudMapper.selectObjectCount(pageQuery) > 0) {
 			try (ServletOutputStream out = response.getOutputStream();
-					ExcelWriter excelWriter = FastExcel.write(out, clazz).build();
-					ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+					ExcelWriter excelWriter = FastExcel.write(out, clazz).build()) {
 				// 设置请求头
 				setHeader(fileName, response);
 				// https://idev.cn/fastexcel/zh-CN/docs/write/write_hard
@@ -120,7 +119,7 @@ public final class ExcelUtil {
 								excelWriter.write(convertor.toExcels(list), writeSheet);
 								return true;
 							}).toList();
-							executor.invokeAll(futures);
+							virtualThreadExecutor.invokeAll(futures);
 						}
 						catch (InterruptedException e) {
 							Thread.currentThread().interrupt();

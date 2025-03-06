@@ -26,6 +26,7 @@ import org.laokou.common.kafka.template.KafkaSender;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
+import reactor.core.scheduler.Schedulers;
 
 /**
  * @author laokou
@@ -53,7 +54,9 @@ class KafkaTest {
 		index.setPackageName("org.laokou.logstash");
 		index.setMessage("{\"testValue\": \"123456\"}");
 		index.setStacktrace("");
-		reactiveKafkaSender.send("laokou_trace_topic", JacksonUtil.toJsonStr(index)).subscribe();
+		reactiveKafkaSender.send("laokou_trace_topic", JacksonUtil.toJsonStr(index))
+			.subscribeOn(Schedulers.boundedElastic())
+			.subscribe();
 	}
 
 }

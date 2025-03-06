@@ -45,7 +45,6 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQMessageConverter;
 import org.apache.rocketmq.spring.support.RocketMQUtil;
 import org.jetbrains.annotations.NotNull;
-import org.laokou.common.core.utils.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -62,6 +61,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+
+import java.util.concurrent.ExecutorService;
 
 /**
  * rocketmq支持虚拟线程池.
@@ -193,7 +194,8 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 	@Bean(destroyMethod = "destroy")
 	@Conditional(ProducerOrConsumerPropertyCondition.class)
 	@ConditionalOnMissingBean(name = ROCKETMQ_TEMPLATE_DEFAULT_GLOBAL_NAME)
-	public RocketMQTemplate rocketMQTemplate(RocketMQMessageConverter rocketMQMessageConverter) {
+	public RocketMQTemplate rocketMQTemplate(RocketMQMessageConverter rocketMQMessageConverter,
+			ExecutorService virtualThreadExecutor) {
 		RocketMQTemplate rocketMQTemplate = new RocketMQTemplate();
 		if (applicationContext.containsBean(PRODUCER_BEAN_NAME)) {
 			rocketMQTemplate.setProducer((DefaultMQProducer) applicationContext.getBean(PRODUCER_BEAN_NAME));
@@ -203,7 +205,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 		}
 		rocketMQTemplate.setMessageConverter(rocketMQMessageConverter.getMessageConverter());
 		// 虚拟线程
-		rocketMQTemplate.setAsyncSenderExecutor(ThreadUtil.newVirtualTaskExecutor());
+		rocketMQTemplate.setAsyncSenderExecutor(virtualThreadExecutor);
 		return rocketMQTemplate;
 	}
 

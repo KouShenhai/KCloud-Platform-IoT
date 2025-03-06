@@ -25,13 +25,17 @@ import org.laokou.admin.user.gatewayimpl.database.UserDeptMapper;
 import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
+
+import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 /**
  * 修改用户命令执行器.
@@ -54,35 +58,42 @@ public class UserModifyCmdExe {
 
 	private final UserDeptMapper userDeptMapper;
 
+	private final ExecutorService virtualThreadExecutor;
+
 	public UserModifyCmdExe(UserDomainService userDomainService, TransactionalUtil transactionalUtil,
-			UserRoleMapper userRoleMapper, UserDeptMapper userDeptMapper) {
+			UserRoleMapper userRoleMapper, UserDeptMapper userDeptMapper, ExecutorService virtualThreadExecutor) {
 		this.userDomainService = userDomainService;
 		this.transactionalUtil = transactionalUtil;
 		this.userRoleMapper = userRoleMapper;
 		this.userDeptMapper = userDeptMapper;
+		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
 
 	public Flux<Void> executeVoid(UserModifyCmd cmd) throws Exception {
 		// 校验参数
 		UserE userE = UserConvertor.toEntity(cmd.getCo());
 		modifyUserParamValidator.validate(userE);
-		return Flux
-			.zip(Mono.just(userRoleMapper.selectIdsByUserId(userE.getId())),
-					Mono.just(userDeptMapper.selectIdsByUserId(userE.getId())))
-			.map(tuple -> {
-				userE.setUserRoleIds(tuple.getT1());
-				userE.setUserDeptIds(tuple.getT2());
-				return userE;
-			})
-			.flatMap(user -> transactionalUtil.executeResultInTransaction(() -> {
-				try {
-					return userDomainService.update(user);
-				}
-				catch (Exception e) {
-					log.error("未知错误，错误信息：{}", e.getMessage(), e);
-					throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
-				}
-			}));
+		return Flux.zip(getUserRoleIds(userE), getUserDeptIds(userE)).map(tuple -> {
+			userE.setUserRoleIds(tuple.getT1());
+			userE.setUserDeptIds(tuple.getT2());
+			return userE;
+		})
+			.flatMap(user -> transactionalUtil.executeResultInTransaction(() -> userDomainService.update(user)
+				.onErrorResume(e -> {
+					log.error("更新用户信息失败，错误信息：{}", e.getMessage(), e);
+					return Mono.error(new BizException("B_User_UpdateError", e.getMessage(), e));
+				})))
+			.onErrorResume(Mono::error);
+	}
+
+	private Mono<List<Long>> getUserRoleIds(UserE userE) {
+		return Mono.fromCallable(() -> userRoleMapper.selectIdsByUserId(userE.getId()))
+			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
+	}
+
+	private Mono<List<Long>> getUserDeptIds(UserE userE) {
+		return Mono.fromCallable(() -> userDeptMapper.selectIdsByUserId(userE.getId()))
+			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
 	}
 
 }

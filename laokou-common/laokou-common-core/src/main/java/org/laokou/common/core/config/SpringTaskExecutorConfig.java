@@ -18,8 +18,10 @@
 package org.laokou.common.core.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.utils.ThreadUtil;
 import org.springframework.context.annotation.Bean;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 
 /**
  * 异步配置.
@@ -29,18 +31,9 @@ import java.util.concurrent.Executor;
 @Slf4j
 public class SpringTaskExecutorConfig {
 
-	/**
-	 * 线程池名称.
-	 */
-	public static final String THREAD_POOL_TASK_EXECUTOR_NAME = "ttl-task-executor";
-
-	@Bean(value = THREAD_POOL_TASK_EXECUTOR_NAME, bootstrap = Bean.Bootstrap.BACKGROUND)
-	public Executor executor(SpringTaskExecutionProperties properties) {
-		log.info("{} => Initializing Executor", Thread.currentThread().getName());
-		return new SpringTaskExecutorBuilder().withPool(properties.getPool())
-			.disableDaemon()
-			.withPrefix("ttl-task-")
-			.build(true);
+	@Bean(name = "virtualThreadExecutor", destroyMethod = "close")
+	public ExecutorService virtualThreadExecutor() {
+		return ThreadUtil.newVirtualTaskExecutor();
 	}
 
 	@Bean

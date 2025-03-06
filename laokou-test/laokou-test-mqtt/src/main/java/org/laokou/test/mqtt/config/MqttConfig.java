@@ -17,6 +17,7 @@
 
 package org.laokou.test.mqtt.config;
 
+import io.micrometer.common.lang.NonNullApi;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,7 @@ import java.util.List;
  */
 @Slf4j
 @Component
+@NonNullApi
 @RequiredArgsConstructor
 public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 

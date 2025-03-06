@@ -25,7 +25,6 @@ import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.client.dto.clientobject.PayloadCO;
-import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.netty.config.Server;
@@ -51,18 +50,21 @@ public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 
 	private final Server webSocketServer;
 
-	public SubscribeMessageConsumer(Server webSocketServer) {
+	private final ExecutorService virtualThreadExecutor;
+
+	public SubscribeMessageConsumer(Server webSocketServer, ExecutorService virtualThreadExecutor) {
 		this.webSocketServer = webSocketServer;
+		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
 
 	@Override
 	public void onMessage(MessageExt message) {
-		try (ExecutorService executor =  ThreadUtil.newVirtualTaskExecutor()) {
+		try {
 			String msg = new String(message.getBody(), StandardCharsets.UTF_8);
 			PayloadCO co = JacksonUtil.toBean(msg, PayloadCO.class);
 			TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(co.getContent());
 			List<Callable<Future<Void>>> callableList = co.getReceivers().stream().map(clientId -> (Callable<Future<Void>>) () -> webSocketServer.send(clientId, webSocketFrame)).toList();
-			executor.invokeAll(callableList);
+			virtualThreadExecutor.invokeAll(callableList);
 		} catch (InterruptedException | JsonProcessingException e) {
 			Thread.currentThread().interrupt();
 			log.error("错误信息：{}", e.getMessage());

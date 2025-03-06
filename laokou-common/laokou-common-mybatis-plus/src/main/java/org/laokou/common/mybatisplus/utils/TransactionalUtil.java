@@ -128,7 +128,7 @@ public class TransactionalUtil {
 	@FunctionalInterface
 	public interface DatabaseExecutor<T> {
 
-		T execute()throws JsonProcessingException;
+		T execute() throws Exception;
 
 	}
     // @formatter:on

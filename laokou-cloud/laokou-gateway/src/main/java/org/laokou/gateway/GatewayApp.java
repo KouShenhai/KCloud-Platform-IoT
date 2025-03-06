@@ -35,7 +35,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.util.StopWatch;
 import reactor.core.publisher.Hooks;
 
@@ -50,7 +49,6 @@ import java.security.NoSuchAlgorithmException;
  * @author laokou
  */
 @Slf4j
-@EnableAsync
 @EnableTaskExecutor
 @EnableNacosShutDown
 @EnableDiscoveryClient

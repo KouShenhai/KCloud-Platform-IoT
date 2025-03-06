@@ -17,21 +17,25 @@
 
 package org.laokou.common.core.config;
 
-import org.laokou.common.core.utils.ThreadUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.lang.Nullable;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
  */
+@RequiredArgsConstructor
 public class AsyncConfig implements AsyncConfigurer {
+
+	private final ExecutorService virtualThreadExecutor;
 
 	@Nullable
 	@Override
 	public Executor getAsyncExecutor() {
-		return ThreadUtil.newVirtualTaskExecutor();
+		return virtualThreadExecutor;
 	}
 
 }

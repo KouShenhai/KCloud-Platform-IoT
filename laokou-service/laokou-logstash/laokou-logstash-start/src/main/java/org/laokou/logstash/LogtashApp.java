@@ -30,19 +30,19 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.util.StopWatch;
+import reactor.core.scheduler.Schedulers;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
  */
 @Slf4j
-@EnableAsync
 @EnableTaskExecutor
 @EnableDiscoveryClient
 @RequiredArgsConstructor
@@ -52,6 +52,8 @@ import java.security.NoSuchAlgorithmException;
 public class LogtashApp implements CommandLineRunner {
 
 	private final TraceLogConsumer tracingLogConsumer;
+
+	private final ExecutorService virtualThreadExecutor;
 
 	// @formatter:off
     /// ```properties
@@ -87,7 +89,9 @@ public class LogtashApp implements CommandLineRunner {
     // @formatter:on
 
 	private void listenMessages() {
-		tracingLogConsumer.consumeMessages().subscribe();
+		tracingLogConsumer.consumeMessages()
+			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.subscribe();
 	}
 
 }

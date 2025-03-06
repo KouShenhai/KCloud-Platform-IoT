@@ -24,12 +24,16 @@ import org.laokou.admin.user.dto.UserSaveCmd;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
 import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
+
+import java.util.concurrent.ExecutorService;
 
 /**
  * 保存用户命令执行器.
@@ -48,9 +52,13 @@ public class UserSaveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
-	public UserSaveCmdExe(UserDomainService userDomainService, TransactionalUtil transactionalUtil) {
+	private final ExecutorService virtualThreadExecutor;
+
+	public UserSaveCmdExe(UserDomainService userDomainService, TransactionalUtil transactionalUtil,
+			ExecutorService virtualThreadExecutor) {
 		this.userDomainService = userDomainService;
 		this.transactionalUtil = transactionalUtil;
+		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
 
 	public Flux<Void> executeVoid(UserSaveCmd cmd) throws Exception {
@@ -58,15 +66,12 @@ public class UserSaveCmdExe {
 		UserE userE = UserConvertor.toEntity(cmd.getCo());
 		saveUserParamValidator.validate(userE);
 		userE.setId(IdGenerator.defaultSnowflakeId());
-		return transactionalUtil.executeResultInTransaction(() -> {
-			try {
-				return userDomainService.create(userE);
-			}
-			catch (Exception e) {
-				log.error("未知错误，错误信息：{}", e.getMessage(), e);
-				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
-			}
-		});
+		return transactionalUtil.executeResultInTransaction(() -> userDomainService.create(userE)
+			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.onErrorResume(e -> {
+				log.error("新增用户信息失败，错误信息：{}", e.getMessage(), e);
+				return Mono.error(new BizException("B_User_CreateError", e.getMessage(), e));
+			})).onErrorResume(Mono::error).subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
 	}
 
 }

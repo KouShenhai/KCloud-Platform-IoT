@@ -40,7 +40,6 @@ import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQUtil;
 import org.jetbrains.annotations.NotNull;
-import org.laokou.common.core.utils.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -53,6 +52,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
 @Configuration
@@ -62,9 +62,12 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
 
 	private ConfigurableApplicationContext applicationContext;
 
+	private volatile ExecutorService virtualThreadExecutor;
+
 	@Override
 	public void setApplicationContext(@NotNull ApplicationContext applicationContext) throws BeansException {
 		this.applicationContext = (ConfigurableApplicationContext) applicationContext;
+		virtualThreadExecutor = this.applicationContext.getBean(ExecutorService.class);
 	}
 
 	@Override
@@ -93,8 +96,7 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
 					annotation.rocketMQTemplateBeanName() + " already exists RocketMQLocalTransactionListener");
 		}
 		// 虚拟线程
-		((TransactionMQProducer) rocketMQTemplate.getProducer())
-			.setExecutorService(ThreadUtil.newVirtualTaskExecutor());
+		((TransactionMQProducer) rocketMQTemplate.getProducer()).setExecutorService(virtualThreadExecutor);
 		((TransactionMQProducer) rocketMQTemplate.getProducer())
 			.setTransactionListener(RocketMQUtil.convert((RocketMQLocalTransactionListener) bean));
 		log.debug("RocketMQLocalTransactionListener {} register to {} success", clazz.getName(),

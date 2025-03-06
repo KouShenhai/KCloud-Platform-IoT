@@ -17,7 +17,6 @@
 
 package org.laokou.common.core.utils;
 
-import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
@@ -107,8 +106,7 @@ public final class HttpUtil {
 		return httpClientBuilder.build();
 	}
 
-	@PreDestroy
-	public static void preDestroy() {
+	public static void destroy() {
 		// 优雅停机
 		CLIENT.close(CloseMode.GRACEFUL);
 	}

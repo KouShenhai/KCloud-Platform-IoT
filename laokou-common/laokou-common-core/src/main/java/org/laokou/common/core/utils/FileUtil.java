@@ -112,13 +112,13 @@ public final class FileUtil {
 		}
 	}
 
-	public static void write(File file, InputStream in, long size, long chunkSize) throws IOException {
+	public static void write(File file, InputStream in, long size, long chunkSize,
+			ExecutorService virtualThreadExecutor) throws IOException {
 		if (in instanceof FileInputStream fis) {
 			// 最大偏移量2G【2^31】数据
 			chunkSize = Math.min(chunkSize, 2L * 1024 * 1024 * 1024);
 			long chunkCount = (size / chunkSize) + (size % chunkSize == 0 ? 0 : 1);
-			try (FileChannel inChannel = fis.getChannel();
-					ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+			try (FileChannel inChannel = fis.getChannel()) {
 				List<Callable<Boolean>> futures = new ArrayList<>((int) chunkCount);
 				// start指针【position偏移量】
 				for (long index = 0, start = 0,
@@ -129,7 +129,7 @@ public final class FileUtil {
 						return true;
 					});
 				}
-				executor.invokeAll(futures);
+				virtualThreadExecutor.invokeAll(futures);
 			}
 			catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
