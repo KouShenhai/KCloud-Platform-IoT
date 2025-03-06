@@ -49,7 +49,7 @@ public class TraceLogConsumer {
 					records.doOnNext(record -> record.receiverOffset().acknowledge()).map(ConsumerRecord::value))))
 			.onErrorResume(e -> {
 				log.error("Kafka消费失败，错误信息：{}", e.getMessage(), e);
-				return Mono.empty();
+				return Mono.error(e);
 			});
 	}
 

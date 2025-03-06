@@ -52,7 +52,7 @@ public class TokenRemoveCmdExe {
 	public Mono<Void> executeVoid(TokenRemoveCmd cmd) {
 		String token = cmd.getToken();
 		if (StringUtil.isNotEmpty(token)) {
-			return Flux.merge(removeKey(token), removeAuthorization(token)).then(Mono.empty());
+			return Flux.merge(removeKey(token), removeAuthorization(token)).then();
 		}
 		return Mono.empty();
 	}

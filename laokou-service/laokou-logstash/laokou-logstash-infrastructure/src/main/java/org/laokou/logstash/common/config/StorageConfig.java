@@ -23,19 +23,22 @@ import org.laokou.logstash.common.support.TraceLogLokiStorage;
 import org.laokou.logstash.common.support.TraceLogStorage;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
  */
-@Component
+@Configuration
 public class StorageConfig {
 
 	@Bean("traceLogStorage")
 	@ConditionalOnProperty(prefix = "storage", matchIfMissing = true, name = "type", havingValue = "ELASTICSEARCH")
-	public TraceLogStorage traceLogElasticsearchStorage(ElasticsearchTemplate elasticsearchTemplate) {
-		return new TraceLogElasticsearchStorage(elasticsearchTemplate);
+	public TraceLogStorage traceLogElasticsearchStorage(ElasticsearchTemplate elasticsearchTemplate,
+			ExecutorService virtualThreadExecutor) {
+		return new TraceLogElasticsearchStorage(virtualThreadExecutor, elasticsearchTemplate);
 	}
 
 	@Bean("traceLogStorage")

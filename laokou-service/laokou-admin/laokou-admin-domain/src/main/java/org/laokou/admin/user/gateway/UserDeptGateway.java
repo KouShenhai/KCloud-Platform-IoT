@@ -29,4 +29,6 @@ public interface UserDeptGateway {
 
 	Mono<Void> update(UserE userE);
 
+	Mono<Void> delete(UserE userE);
+
 }

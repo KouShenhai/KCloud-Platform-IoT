@@ -52,7 +52,7 @@ public class TraceLogLokiStorage extends AbstractTraceLogStorage {
 				.then())
 			.onErrorResume(e -> {
 				log.error("分布式链路写入失败，错误信息：{}", e.getMessage(), e);
-				return Mono.empty();
+				return Mono.error(e);
 			});
 	}
 

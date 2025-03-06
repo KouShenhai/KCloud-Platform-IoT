@@ -78,8 +78,8 @@ public class UserModifyCmdExe {
 			userE.setUserDeptIds(tuple.getT2());
 			return userE;
 		})
-			.flatMap(user -> transactionalUtil.executeResultInTransaction(() -> userDomainService.update(user)
-				.onErrorResume(e -> {
+			.flatMap(user -> transactionalUtil
+				.executeResultInTransaction(() -> userDomainService.update(user).onErrorResume(e -> {
 					log.error("更新用户信息失败，错误信息：{}", e.getMessage(), e);
 					return Mono.error(new BizException("B_User_UpdateError", e.getMessage(), e));
 				})))

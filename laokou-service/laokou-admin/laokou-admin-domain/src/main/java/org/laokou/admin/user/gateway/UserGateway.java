@@ -40,6 +40,6 @@ public interface UserGateway {
 	/**
 	 * 删除用户.
 	 */
-	void delete(Long[] ids);
+	Mono<Void> delete(Long[] ids);
 
 }

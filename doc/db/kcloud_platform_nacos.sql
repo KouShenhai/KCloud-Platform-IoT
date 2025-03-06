@@ -2572,7 +2572,7 @@ spring:
       ignored-interfaces:
         - docker0
         - veth.*
-  # 不开启虚拟线程
+  # 开启虚拟线程
   threads:
     virtual:
       enabled: true
@@ -5028,7 +5028,7 @@ spring:
       ignored-interfaces:
         - docker0
         - veth.*
-  # 不开启虚拟线程
+  # 开启虚拟线程
   threads:
     virtual:
       enabled: true
@@ -5311,7 +5311,7 @@ spring:
       ignored-interfaces:
         - docker0
         - veth.*
-  # 不开启虚拟线程
+  # 开启虚拟线程
   threads:
     virtual:
       enabled: true
@@ -5433,7 +5433,7 @@ spring:
       ignored-interfaces:
         - docker0
         - veth.*
-  # 不开启虚拟线程
+  # 开启虚拟线程
   threads:
     virtual:
       enabled: true
@@ -5555,7 +5555,7 @@ spring:
       ignored-interfaces:
         - docker0
         - veth.*
-  # 不开启虚拟线程
+  # 开启虚拟线程
   threads:
     virtual:
       enabled: true
@@ -5845,7 +5845,7 @@ spring:
       ignored-interfaces:
         - docker0
         - veth.*
-  # 不开启虚拟线程
+  # 开启虚拟线程
   threads:
     virtual:
       enabled: true
