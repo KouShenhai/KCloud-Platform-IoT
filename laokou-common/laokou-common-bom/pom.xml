@@ -34,7 +34,7 @@
     <!--postgresql版本-->
     <postgresql.version>42.7.5</postgresql.version>
     <!--admin版本-->
-    <spring-boot-admin.version>3.4.4</spring-boot-admin.version>
+    <spring-boot-admin.version>3.4.5</spring-boot-admin.version>
     <!--mybatis-plus版本 -->
     <mybatis-plus.version>3.5.10.1</mybatis-plus.version>
     <!--redisson版本-->
