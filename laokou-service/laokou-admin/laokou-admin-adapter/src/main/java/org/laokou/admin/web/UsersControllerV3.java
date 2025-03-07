@@ -58,7 +58,7 @@ public class UsersControllerV3 {
 	@OperateLog(module = "用户管理", operation = "保存用户")
 	@Operation(summary = "保存用户", description = "保存用户")
 	public void saveV3(@RequestBody UserSaveCmd cmd) throws Exception {
-		usersServiceI.save(cmd).subscribe();
+		usersServiceI.save(cmd);
 	}
 
 	@PutMapping
@@ -67,7 +67,7 @@ public class UsersControllerV3 {
 	@Operation(summary = "修改用户", description = "修改用户")
 	@DataCache(name = USERS, key = "#cmd.co.id", type = DEL)
 	public void modifyV3(@RequestBody UserModifyCmd cmd) throws Exception {
-		usersServiceI.modify(cmd).subscribe();
+		usersServiceI.modify(cmd);
 	}
 
 	@DeleteMapping

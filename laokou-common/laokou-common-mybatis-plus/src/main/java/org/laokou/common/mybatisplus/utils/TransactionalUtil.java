@@ -17,7 +17,6 @@
 
 package org.laokou.common.mybatisplus.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -49,7 +48,7 @@ public class TransactionalUtil {
 			catch (Exception e) {
 				r.setRollbackOnly();
 				log.error("操作失败，错误信息：{}", e.getMessage());
-				throw new SystemException("S_DS_OperationError", e.getMessage(), e);
+				throw new SystemException("S_DS_OperateError", e.getMessage(), e);
 			}
 		});
 	}
@@ -62,7 +61,7 @@ public class TransactionalUtil {
 			catch (Exception e) {
 				r.setRollbackOnly();
 				log.error("操作失败，错误信息：{}", e.getMessage());
-				throw new SystemException("S_DS_OperationError", e.getMessage(), e);
+				throw new SystemException("S_DS_OperateError", e.getMessage(), e);
 			}
 		});
 	}
@@ -121,7 +120,7 @@ public class TransactionalUtil {
 	@FunctionalInterface
 	public interface DatabaseOperation {
 
-		void execute()throws JsonProcessingException;
+		void execute() throws Exception;
 
 	}
 

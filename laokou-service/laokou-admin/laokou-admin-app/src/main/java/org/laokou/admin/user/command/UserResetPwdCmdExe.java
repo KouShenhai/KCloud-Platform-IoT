@@ -23,7 +23,7 @@ import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserResetPwdCmd;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -57,8 +57,8 @@ public class UserResetPwdCmdExe {
 				userDomainService.update(userE);
 			}
 			catch (Exception e) {
-				log.error("未知错误，错误信息：{}", e.getMessage(), e);
-				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+				log.error("重置用户密码失败，错误信息：{}", e.getMessage(), e);
+				throw new BizException("B_User_RestPwdError", e.getMessage(), e);
 			}
 		});
 	}

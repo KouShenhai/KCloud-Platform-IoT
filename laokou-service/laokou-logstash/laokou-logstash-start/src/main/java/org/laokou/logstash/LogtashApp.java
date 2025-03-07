@@ -91,7 +91,7 @@ public class LogtashApp implements CommandLineRunner {
 	private void listenMessages() {
 		tracingLogConsumer.consumeMessages()
 			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
-			.subscribe();
+			.blockLast();
 	}
 
 }

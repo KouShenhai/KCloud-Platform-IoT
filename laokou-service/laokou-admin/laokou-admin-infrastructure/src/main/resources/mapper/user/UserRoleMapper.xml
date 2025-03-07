@@ -24,10 +24,13 @@
     delete from boot_sys_user_role where id = #{userRoleDO.id}
   </delete>
 
-  <select id="selectIdsByUserId" resultType="java.lang.Long">
+  <select id="selectIdsByUserIds" resultType="java.lang.Long">
     select id
     from boot_sys_user_role
-    where user_id = #{userId}
+    where user_id in
+    <foreach collection="userIds" item="item" open="(" close=")">
+      #{item}
+    </foreach>
   </select>
 
   <select id="selectRoleIdsByUserId" resultType="java.lang.String">

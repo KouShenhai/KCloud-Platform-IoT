@@ -32,7 +32,7 @@ import java.util.List;
 @Repository
 public interface UserDeptMapper extends CrudMapper<Long, Integer, UserDeptDO> {
 
-	List<Long> selectIdsByUserId(@Param("userId") Long userId);
+	List<Long> selectIdsByUserIds(@Param("userIds") List<Long> userIds);
 
 	List<String> selectDeptIdsByUserId(@Param("userId") Long userId);
 

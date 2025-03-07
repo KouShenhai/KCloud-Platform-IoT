@@ -29,11 +29,6 @@ import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
-
-import java.util.concurrent.ExecutorService;
 
 /**
  * 保存用户命令执行器.
@@ -52,26 +47,25 @@ public class UserSaveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
-	private final ExecutorService virtualThreadExecutor;
-
-	public UserSaveCmdExe(UserDomainService userDomainService, TransactionalUtil transactionalUtil,
-			ExecutorService virtualThreadExecutor) {
+	public UserSaveCmdExe(UserDomainService userDomainService, TransactionalUtil transactionalUtil) {
 		this.userDomainService = userDomainService;
 		this.transactionalUtil = transactionalUtil;
-		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
 
-	public Flux<Void> executeVoid(UserSaveCmd cmd) throws Exception {
+	public void executeVoid(UserSaveCmd cmd) throws Exception {
 		// 校验参数
 		UserE userE = UserConvertor.toEntity(cmd.getCo());
 		saveUserParamValidator.validate(userE);
 		userE.setId(IdGenerator.defaultSnowflakeId());
-		return transactionalUtil.executeResultInTransaction(() -> userDomainService.create(userE)
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
-			.onErrorResume(e -> {
+		transactionalUtil.executeInTransaction(() -> {
+			try {
+				userDomainService.create(userE);
+			}
+			catch (Exception e) {
 				log.error("新增用户信息失败，错误信息：{}", e.getMessage(), e);
-				return Mono.error(new BizException("B_User_CreateError", e.getMessage(), e));
-			})).onErrorResume(Mono::error).subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
+				throw new BizException("B_User_CreateError", e.getMessage(), e);
+			}
+		});
 	}
 
 }

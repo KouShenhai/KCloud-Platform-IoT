@@ -25,10 +25,8 @@ import reactor.core.publisher.Mono;
  */
 public interface UserDeptGateway {
 
-	Mono<Void> create(UserE userE);
-
 	Mono<Void> update(UserE userE);
 
-	Mono<Void> delete(UserE userE);
+	Mono<Void> delete(Long[] userIds);
 
 }

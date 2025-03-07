@@ -109,6 +109,11 @@ public class UserE {
 	 */
 	private List<Long> userDeptIds;
 
+	/**
+	 * 用户IDS.
+	 */
+	private List<Long> userIds;
+
 	public void encryptUsername() throws Exception {
 		this.usernamePhrase = StringUtil.isEmpty(username) ? EMPTY : encryptStr(username);
 		this.username = AESUtil.encrypt(username);

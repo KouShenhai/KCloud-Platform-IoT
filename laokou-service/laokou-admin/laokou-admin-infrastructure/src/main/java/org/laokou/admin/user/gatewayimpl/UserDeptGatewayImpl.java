@@ -21,13 +21,15 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.gateway.UserDeptGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserDeptMapper;
+import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
-
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -41,39 +43,44 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 
 	private final ExecutorService virtualThreadExecutor;
 
-	@Override
-	public Mono<Void> create(UserE userE) {
-		return insertUserDept(userE).then();
-	}
+	private final UserDeptMapper userDeptMapper;
 
 	@Override
 	public Mono<Void> update(UserE userE) {
-		if (CollectionUtil.isNotEmpty(userE.getDeptIds())) {
-			return deleteUserDept(userE).then(Mono.defer(() -> create(userE)));
-		}
-		return Mono.empty();
+		return getUserDeptIds(userE.getUserIds()).map(ids -> {
+			userE.setUserDeptIds(ids);
+			return userE;
+		}).doOnNext(this::deleteUserDept).doOnNext(this::insertUserDept).then();
 	}
 
 	@Override
-	public Mono<Void> delete(UserE userE) {
-		return deleteUserDept(userE).then();
+	public Mono<Void> delete(Long[] userIds) {
+		return getUserDeptIds(Arrays.asList(userIds)).map(ids -> {
+			UserE userE = new UserE();
+			userE.setUserDeptIds(ids);
+			return userE;
+		}).doOnNext(this::deleteUserDept).then();
 	}
 
-	private Mono<Object> insertUserDept(UserE userE) {
+	private void insertUserDept(UserE userE) {
 		// 新增用户部门关联表
-		return Mono.fromCallable(() -> {
-			mybatisUtil.batch(UserConvertor.toDataObjs(userE, userE.getId()), UserDeptMapper.class,
-					UserDeptMapper::insert);
-			return null;
-		}).subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
+		List<UserDeptDO> list = UserConvertor.toDataObjs(userE, userE.getId());
+		if (CollectionUtil.isEmpty(list)) {
+			mybatisUtil.batch(list, UserDeptMapper.class, UserDeptMapper::insert);
+		}
 	}
 
-	private Mono<Object> deleteUserDept(UserE userE) {
+	private void deleteUserDept(UserE userE) {
 		// 删除用户部门关联表
-		return Mono.fromCallable(() -> {
-			mybatisUtil.batch(UserConvertor.toDataObjs(userE), UserDeptMapper.class, UserDeptMapper::deleteObjById);
-			return null;
-		}).subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
+		List<UserDeptDO> list = UserConvertor.toDataObjs(userE);
+		if (CollectionUtil.isEmpty(list)) {
+			mybatisUtil.batch(list, UserDeptMapper.class, UserDeptMapper::deleteObjById);
+		}
+	}
+
+	private Mono<List<Long>> getUserDeptIds(List<Long> userIds) {
+		return Mono.fromCallable(() -> userDeptMapper.selectIdsByUserIds(userIds))
+			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
 	}
 
 }

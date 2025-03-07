@@ -21,13 +21,9 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-
 import static org.laokou.common.security.config.GlobalOpaqueTokenIntrospector.FULL;
 
 /**
@@ -39,46 +35,22 @@ import static org.laokou.common.security.config.GlobalOpaqueTokenIntrospector.FU
 @RequiredArgsConstructor
 public class TokenRemoveCmdExe {
 
-	private static final String MENU_TREE = "menu_tree";
-
-	private final RedisUtil redisUtil;
-
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 
 	/**
 	 * 执行退出登录.
 	 * @param cmd 退出登录参数
 	 */
-	public Mono<Void> executeVoid(TokenRemoveCmd cmd) {
+	public void executeVoid(TokenRemoveCmd cmd) {
 		String token = cmd.getToken();
-		if (StringUtil.isNotEmpty(token)) {
-			return Flux.merge(removeKey(token), removeAuthorization(token)).then();
+		if (StringUtil.isEmpty(token)) {
+			return;
 		}
-		return Mono.empty();
-	}
-
-	private Mono<Void> removeKey(String token) {
-		// 删除树形菜单key
-		redisUtil.hDel(MENU_TREE, token);
-		return Mono.empty();
-	}
-
-	private Mono<Void> removeAuthorization(String token) {
-		return getAuthorization(token).flatMap(authorization -> {
-			if (ObjectUtil.isNotNull(authorization)) {
-				// 删除token
-				oAuth2AuthorizationService.remove(authorization);
-			}
-			return Mono.empty();
-		});
-	}
-
-	private Mono<OAuth2Authorization> getAuthorization(String token) {
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, FULL);
 		if (ObjectUtil.isNotNull(authorization)) {
-			return Mono.just(authorization);
+			// 删除token
+			oAuth2AuthorizationService.remove(authorization);
 		}
-		return Mono.empty();
 	}
 
 }

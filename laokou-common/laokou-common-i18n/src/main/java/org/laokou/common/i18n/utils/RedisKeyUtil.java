@@ -33,6 +33,10 @@ public final class RedisKeyUtil {
 		return "auth:username-password:captcha:" + uuid;
 	}
 
+	public static String getMenuKey(String token) {
+		return "menu:user:" + token;
+	}
+
 	/**
 	 * 布隆过滤器Key.
 	 */

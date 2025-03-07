@@ -42,7 +42,7 @@ public class TraceLogConsumer {
 	private final DefaultKafkaReceiver<String, String> reactiveKafkaReceiver;
 
 	public Flux<Void> consumeMessages() {
-		return reactiveKafkaReceiver.receiveBatch(50)
+		return reactiveKafkaReceiver.receiveBatch(100)
 			// 控制消费速率（背压）
 			.delayElements(Duration.ofMillis(100))
 			.flatMap(records -> traceLogServiceI.save(new TraceLogSaveCmd(

@@ -23,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.TokensServiceI;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
 
 /**
  * @author laokou
@@ -38,8 +37,8 @@ public class TokensV3Controller {
 
 	@DeleteMapping
 	@Operation(summary = "删除令牌", description = "删除令牌")
-	public Mono<Void> removeTokenV3(@RequestBody TokenRemoveCmd cmd) {
-		return tokensServiceI.removeToken(cmd);
+	public void removeV3(@RequestBody TokenRemoveCmd cmd) {
+		tokensServiceI.remove(cmd);
 	}
 
 }

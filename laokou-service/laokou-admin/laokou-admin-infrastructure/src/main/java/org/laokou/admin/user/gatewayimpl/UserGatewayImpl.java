@@ -47,17 +47,15 @@ public class UserGatewayImpl implements UserGateway {
 	private final ExecutorService virtualThreadExecutor;
 
 	@Override
-	public Mono<Void> create(UserE userE) {
-		return insert(UserConvertor.toDataObject(passwordEncoder, userE, true)).then();
+	public void create(UserE userE) {
+		UserDO userDO = UserConvertor.toDataObject(passwordEncoder, userE, true);
+		userMapper.insert(userDO);
 	}
 
 	@Override
-	public Mono<Void> update(UserE userE) {
-		return getVersion(userE.getId()).map(version -> {
-			UserDO userDO = UserConvertor.toDataObject(passwordEncoder, userE, false);
-			userDO.setVersion(version);
-			return userDO;
-		}).flatMap(this::update).then();
+	public void update(UserE userE) {
+		UserDO userDO = UserConvertor.toDataObject(passwordEncoder, userE, false);
+		userDO.setVersion(userMapper.selectVersion(userE.getId()));
 	}
 
 	@Override
@@ -65,21 +63,6 @@ public class UserGatewayImpl implements UserGateway {
 		return Mono.fromCallable(() -> userMapper.deleteByIds(Arrays.asList(ids)))
 			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
 			.then();
-	}
-
-	private Mono<Integer> insert(UserDO userDO) {
-		return Mono.fromCallable(() -> userMapper.insert(userDO))
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
-	}
-
-	private Mono<Integer> update(UserDO userDO) {
-		return Mono.fromCallable(() -> userMapper.updateById(userDO))
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
-	}
-
-	private Mono<Integer> getVersion(Long id) {
-		return Mono.fromCallable(() -> userMapper.selectVersion(id))
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
 	}
 
 }

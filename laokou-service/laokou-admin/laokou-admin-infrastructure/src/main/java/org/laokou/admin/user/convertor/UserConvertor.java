@@ -29,7 +29,7 @@ import org.laokou.common.i18n.utils.StringUtil;
 import org.laokou.common.security.utils.UserDetail;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -164,6 +164,13 @@ public final class UserConvertor {
 		userE.setMobile(userCO.getMobile());
 		userE.setStatus(userCO.getStatus());
 		userE.setAvatar(userCO.getAvatar());
+		return userE;
+	}
+
+	public static UserE toEntity(UserCO userCO, Long id) {
+		UserE userE = new UserE();
+		userE.setId(id);
+		userE.setUserIds(Collections.singletonList(id));
 		userE.setRoleIds(userCO.getRoleIds());
 		userE.setDeptIds(userCO.getDeptIds());
 		return userE;

@@ -22,7 +22,6 @@ import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
-import reactor.core.publisher.Flux;
 
 /**
  * 用户接口.
@@ -35,13 +34,13 @@ public interface UsersServiceI {
 	 * 保存用户.
 	 * @param cmd 保存命令
 	 */
-	Flux<Void> save(UserSaveCmd cmd) throws Exception;
+	void save(UserSaveCmd cmd) throws Exception;
 
 	/**
 	 * 修改用户.
 	 * @param cmd 修改命令
 	 */
-	Flux<Void> modify(UserModifyCmd cmd) throws Exception;
+	void modify(UserModifyCmd cmd) throws Exception;
 
 	/**
 	 * 删除用户.

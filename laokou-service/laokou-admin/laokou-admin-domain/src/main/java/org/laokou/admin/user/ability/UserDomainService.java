@@ -38,26 +38,30 @@ public class UserDomainService {
 
 	private final UserDeptGateway userDeptGateway;
 
-	public Flux<Void> create(UserE userE) throws Exception {
+	public void create(UserE userE) throws Exception {
 		// 用户名加密
 		userE.encryptUsername();
 		// 邮箱加密
 		userE.encryptMail();
 		// 手机号加密
 		userE.encryptMobile();
-		return Flux.merge(userGateway.create(userE), userRoleGateway.create(userE), userDeptGateway.create(userE));
+		userGateway.create(userE);
 	}
 
-	public Flux<Void> update(UserE userE) throws Exception {
+	public void update(UserE userE) throws Exception {
 		// 邮箱加密
 		userE.encryptMail();
 		// 手机号加密
 		userE.encryptMobile();
-		return Flux.merge(userGateway.update(userE), userRoleGateway.update(userE), userDeptGateway.update(userE));
+		userGateway.update(userE);
 	}
 
-	public void delete(Long[] ids) {
-		userGateway.delete(ids);
+	public Flux<Void> updateAuthority(UserE userE) {
+		return Flux.merge(userRoleGateway.update(userE), userDeptGateway.update(userE));
+	}
+
+	public Flux<Void> delete(Long[] ids) {
+		return Flux.merge(userGateway.delete(ids), userRoleGateway.delete(ids), userDeptGateway.delete(ids));
 	}
 
 }

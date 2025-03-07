@@ -30,12 +30,12 @@ public interface UserGateway {
 	/**
 	 * 新增用户.
 	 */
-	Mono<Void> create(UserE userE);
+	void create(UserE userE);
 
 	/**
 	 * 修改用户.
 	 */
-	Mono<Void> update(UserE userE);
+	void update(UserE userE);
 
 	/**
 	 * 删除用户.

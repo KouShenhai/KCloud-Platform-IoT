@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.gateway.UserRoleGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
+import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
@@ -28,6 +29,8 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -41,39 +44,44 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 
 	private final ExecutorService virtualThreadExecutor;
 
-	@Override
-	public Mono<Void> create(UserE userE) {
-		return insertUserRole(userE).then();
-	}
+	private final UserRoleMapper userRoleMapper;
 
 	@Override
 	public Mono<Void> update(UserE userE) {
-		if (CollectionUtil.isNotEmpty(userE.getRoleIds())) {
-			return deleteUserRole(userE).then(Mono.defer(() -> create(userE)));
-		}
-		return Mono.empty();
+		return getUserRoleIds(userE.getUserIds()).map(ids -> {
+			userE.setUserRoleIds(ids);
+			return userE;
+		}).doOnNext(this::deleteUserRole).doOnNext(this::insertUserRole).then();
 	}
 
 	@Override
-	public Mono<Void> delete(UserE userE) {
-		return deleteUserRole(userE).then();
+	public Mono<Void> delete(Long[] userIds) {
+		return getUserRoleIds(Arrays.asList(userIds)).map(ids -> {
+			UserE userE = new UserE();
+			userE.setUserRoleIds(ids);
+			return userE;
+		}).doOnNext(this::deleteUserRole).then();
 	}
 
-	private Mono<Object> insertUserRole(UserE userE) {
+	private void insertUserRole(UserE userE) {
 		// 新增用户角色关联表
-		return Mono.fromCallable(() -> {
-			mybatisUtil.batch(UserConvertor.toDataObjects(userE, userE.getId()), UserRoleMapper.class,
-					UserRoleMapper::insert);
-			return null;
-		}).subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
+		List<UserRoleDO> list = UserConvertor.toDataObjects(userE, userE.getId());
+		if (CollectionUtil.isNotEmpty(list)) {
+			mybatisUtil.batch(list, UserRoleMapper.class, UserRoleMapper::insert);
+		}
 	}
 
-	private Mono<Object> deleteUserRole(UserE userE) {
+	private void deleteUserRole(UserE userE) {
 		// 删除用户角色关联表
-		return Mono.fromCallable(() -> {
-			mybatisUtil.batch(UserConvertor.toDataObjects(userE), UserRoleMapper.class, UserRoleMapper::deleteObjById);
-			return null;
-		}).subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
+		List<UserRoleDO> list = UserConvertor.toDataObjects(userE);
+		if (CollectionUtil.isNotEmpty(list)) {
+			mybatisUtil.batch(list, UserRoleMapper.class, UserRoleMapper::deleteObjById);
+		}
+	}
+
+	private Mono<List<Long>> getUserRoleIds(List<Long> userIds) {
+		return Mono.fromCallable(() -> userRoleMapper.selectIdsByUserIds(userIds))
+			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
 	}
 
 }
