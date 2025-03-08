@@ -72,7 +72,7 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 |  ![登录页面](doc/image/project/1.png)  |  ![菜单页面](doc/image/project/2.png)  |
 |  ![部门页面](doc/image/project/3.png)  |  ![角色页面](doc/image/project/4.png)  |
 |  ![用户页面](doc/image/project/5.png)  | ![登录日志页面](doc/image/project/6.png) |
-| ![通知日志页面](doc/image/project/7.png) |                                    |
+| ![通知日志页面](doc/image/project/7.png) | ![操作日志页面](doc/image/project/8.png) |                                  |
 
 ### 🌿 服务器配置
 
