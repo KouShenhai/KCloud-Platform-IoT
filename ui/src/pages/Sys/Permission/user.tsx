@@ -9,7 +9,7 @@ import {Button, message, Modal, Space, Switch, Tag} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {trim} from "@/utils/format";
 import { ResetPwdDrawer } from '@/pages/Sys/Permission/ResetPwdDrawer';
-import {UserCreateOrModifyDrawer} from "@/pages/Sys/Permission/UserCreateOrModifyDrawer";
+import {UserDrawer} from "@/pages/Sys/Permission/UserDrawer";
 import {treeListV3} from "@/services/admin/dept";
 import {pageV3 as rolePageV3} from "@/services/admin/role";
 import {UserModifyAuthorityDrawer} from "@/pages/Sys/Permission/UserModifyAuthorityDrawer";
@@ -250,7 +250,7 @@ export default () => {
 				primaryKey={primaryKey}
 			/>
 
-			<UserCreateOrModifyDrawer
+			<UserDrawer
 				onComponent={() => {
 					// @ts-ignore
 					actionRef?.current?.reload();

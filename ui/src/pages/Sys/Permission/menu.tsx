@@ -1,18 +1,13 @@
 import {
-	DrawerForm,
-	ProColumns,
-	ProFormDigit,
-	ProFormSelect,
-	ProFormText,
-	ProFormTreeSelect
+	ProColumns
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {treeListV3, removeV3, saveV3, getByIdV3, modifyV3} from "@/services/admin/menu";
+import {treeListV3, removeV3, getByIdV3} from "@/services/admin/menu";
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal, Space, Switch, Tag} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import {v7 as uuidV7} from 'uuid';
+import {MenuDrawer} from "@/pages/Sys/Permission/MenuDrawer";
 
 export default () => {
 
@@ -29,12 +24,12 @@ export default () => {
 	};
 
 	const [readOnly, setReadOnly] = useState(false)
-	const [typeValue, setTypeValue] = useState(0);
 	const [modalVisit, setModalVisit] = useState(false);
 	const actionRef = useRef();
-	const [dataSource, setDataSource] = useState({})
+	const [dataSource, setDataSource] = useState<any>({})
 	const [ids, setIds] = useState<number[]>([])
 	const [title, setTitle] = useState("")
+	const [typeValue, setTypeValue] = useState(0);
 	const [treeList, setTreeList] = useState<any[]>([])
 
 	const getPageQuery = (params: any) => {
@@ -253,153 +248,23 @@ export default () => {
 
 	return (
 		<>
-			<DrawerForm<TableColumns>
-				open={modalVisit}
+
+			<MenuDrawer
+				modalVisit={modalVisit}
+				setModalVisit={setModalVisit}
 				title={title}
-				drawerProps={{
-					destroyOnClose: true,
-					closable: true,
-					maskClosable: true
+				readOnly={readOnly}
+				dataSource={dataSource}
+				treeList={treeList}
+				typeValue={typeValue}
+				setTypeValue={setTypeValue}
+				onComponent={() => {
+					// @ts-ignore
+					actionRef?.current?.reload();
+					getTreeList().catch(console.log);
 				}}
-				initialValues={dataSource}
-				onOpenChange={setModalVisit}
-				autoFocusFirstInput
-				submitter={{
-					submitButtonProps: {
-						style: {
-							display: readOnly ? 'none' : 'inline-block',
-						},
-					}
-				}}
-				onFinish={ async (value) => {
-					if (value.id === undefined) {
-						saveV3({co: value}, uuidV7()).then(res => {
-							if (res.code === 'OK') {
-								message.success("新增成功").then()
-								setModalVisit(false)
-								// @ts-ignore
-								actionRef?.current?.reload();
-								getTreeList().catch(console.log);
-							}
-						})
-					} else {
-						modifyV3({co: value}).then(res => {
-							if (res.code === 'OK') {
-								message.success("修改成功").then()
-								setModalVisit(false)
-								// @ts-ignore
-								actionRef?.current?.reload();
-								getTreeList().catch(console.log);
-							}
-						})
-					}
-				}}>
+			/>
 
-				<ProFormText
-					name="id"
-					label="ID"
-					hidden={true}
-				/>
-
-				<ProFormTreeSelect
-					name="pid"
-					label="父级"
-					readonly={readOnly}
-					allowClear={true}
-					placeholder={'请选择父级'}
-					rules={[{ required: true, message: '请选择父级' }]}
-					fieldProps={{
-						fieldNames: {
-							label: 'name',
-							value: 'id',
-							children: 'children'
-						},
-					}}
-					request={async () => {
-						return treeList
-					}}
-				/>
-
-				<ProFormText
-					name="name"
-					label="名称"
-					readonly={readOnly}
-					placeholder={'请输入名称'}
-					rules={[{ required: true, message: '请输入名称' }]}
-				/>
-
-				<ProFormSelect
-					name="type"
-					label="类型"
-					readonly={readOnly}
-					placeholder={'请选择类型'}
-					rules={[{ required: true, message: '请选择类型' }]}
-					onChange={(value: number) => {
-						setTypeValue(value)
-					}}
-					options={[
-						{value: 0, label: '菜单'},
-						{value: 1, label: '按钮'}
-					]}
-				/>
-
-				{typeValue === 0 && (
-					<ProFormText
-						name="path"
-						label="路径"
-						tooltip={'只对菜单有效【不允许重复】'}
-						readonly={readOnly}
-						placeholder={'请输入路径'}
-						rules={[{ required: true, message: '请输入路径' }]}
-					/>
-				)}
-
-				{typeValue === 1 && (
-					<ProFormText
-						name="permission"
-						label="权限标识"
-						tooltip={'只对按钮有效【不允许重复】'}
-						readonly={readOnly}
-						placeholder={'请输入权限标识'}
-						rules={[{ required: true, message: '请输入权限标识' }]}
-					/>
-				)}
-
-				{typeValue === 0 && (
-					<ProFormText
-						name="icon"
-						label="图标"
-						tooltip={'只支持目录菜单显示图标'}
-						readonly={readOnly}
-						placeholder={'请输入图标'}
-					/>
-				)}
-
-				{typeValue === 0 && (
-					<ProFormSelect
-						name="status"
-						label="状态"
-						readonly={readOnly}
-						placeholder={'请选择状态'}
-						rules={[{ required: true, message: '请选择状态' }]}
-						options={[
-							{value: 0, label: '启用'},
-							{value: 1, label: '禁用'}
-						]}
-					/>
-				)}
-
-				<ProFormDigit
-					name="sort"
-					label="排序"
-					readonly={readOnly}
-					placeholder={'请输入排序'}
-					min={1}
-					max={99999}
-					rules={[{ required: true, message: '请输入排序' }]}
-				/>
-
-			</DrawerForm>
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}

@@ -3,7 +3,7 @@ import { message } from 'antd';
 import {modifyV3, saveV3} from '@/services/admin/user';
 import {v7 as uuidV7} from "uuid";
 
-interface UserCreateOrModifyProps {
+interface UserDrawerProps {
 	modalVisit: boolean;
 	edit: boolean;
 	setModalVisit: (visible: boolean) => void;
@@ -19,7 +19,6 @@ type TableColumns = {
 	id: number;
 	username: string | undefined;
 	status: number | undefined;
-	password: string | undefined;
 	mail: string | undefined;
 	mobile: string | undefined;
 	avatar: string | undefined;
@@ -29,7 +28,7 @@ type TableColumns = {
 
 
 
-export const UserCreateOrModifyDrawer: React.FC<UserCreateOrModifyProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, edit, roleList, deptTreeList }) => {
+export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, edit, roleList, deptTreeList }) => {
 
 	return (
 		<DrawerForm<TableColumns>
