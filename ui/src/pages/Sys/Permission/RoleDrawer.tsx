@@ -126,23 +126,7 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 						label: 'name',
 						value: 'id',
 						children: 'children'
-					},
-					// 最多显示多少个 tag，响应式模式会对性能产生损耗
-					maxTagCount: 6,
-					// 多选
-					multiple: true,
-					// 显示复选框
-					treeCheckable: true,
-					// 展示策略
-					showCheckedStrategy: 'SHOW_ALL',
-					// 取消父子节点联动
-					treeCheckStrictly: true,
-					// 默认展示所有节点
-					treeDefaultExpandAll: true,
-					// 高度
-					dropdownStyle: { maxHeight: 500 },
-					// 不显示搜索
-					showSearch: false,
+					}
 				}}
 				request={async () => {
 					return menuTreeList

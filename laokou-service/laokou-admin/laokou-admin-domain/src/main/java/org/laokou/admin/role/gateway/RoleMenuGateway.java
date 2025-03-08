@@ -27,4 +27,6 @@ public interface RoleMenuGateway {
 
 	Mono<Void> update(RoleE roleE);
 
+	Mono<Void> delete(Long[] roleIds);
+
 }

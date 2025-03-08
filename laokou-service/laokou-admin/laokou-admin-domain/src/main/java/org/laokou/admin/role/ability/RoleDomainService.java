@@ -49,8 +49,8 @@ public class RoleDomainService {
 		return Flux.merge(roleGateway.update(roleE), roleMenuGateway.update(roleE));
 	}
 
-	public void delete(Long[] ids) {
-		roleGateway.delete(ids);
+	public Flux<Void> delete(Long[] ids) {
+		return Flux.merge(roleGateway.delete(ids), roleMenuGateway.delete(ids));
 	}
 
 }

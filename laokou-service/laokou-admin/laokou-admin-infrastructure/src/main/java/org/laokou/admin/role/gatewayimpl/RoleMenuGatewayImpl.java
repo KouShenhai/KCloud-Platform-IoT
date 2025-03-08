@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
@@ -51,6 +52,15 @@ public class RoleMenuGatewayImpl implements RoleMenuGateway {
 			roleE.setRoleMenuIds(ids);
 			return roleE;
 		}).doOnNext(this::deleteRoleMenu).doOnNext(this::insertRoleMenu).then();
+	}
+
+	@Override
+	public Mono<Void> delete(Long[] roleIds) {
+		return getRoleMenuIds(Arrays.asList(roleIds)).map(ids -> {
+			RoleE roleE = new RoleE();
+			roleE.setRoleMenuIds(ids);
+			return roleE;
+		}).doOnNext(this::deleteRoleMenu).then();
 	}
 
 	private void insertRoleMenu(RoleE roleE) {
