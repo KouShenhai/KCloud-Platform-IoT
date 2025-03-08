@@ -74,7 +74,7 @@ public class DeptE {
 
 	public void checkParentPath(Long id) {
 		if (ObjectUtil.isNull(this.parentPath)) {
-			throw new BizException("B_Dept_ParentPathNotExist", "上级部门路径不存在");
+			throw new BizException("B_Dept_ParentPathNotExist", "父级部门路径不存在");
 		}
 		this.path = this.parentPath + "," + id;
 	}
