@@ -114,9 +114,11 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 					// 默认展示所有节点
 					treeDefaultExpandAll: true,
 					// 高度
-					dropdownStyle: { maxHeight: 500 },
+					dropdownStyle: { maxHeight: 600 },
 					// 不显示搜索
 					showSearch: false,
+					// 高度
+					listHeight: 550
 				}}
 				request={async () => {
 					return deptTreeList

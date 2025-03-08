@@ -40,6 +40,6 @@ public interface RoleGateway {
 	/**
 	 * 删除角色.
 	 */
-	void delete(Long[] ids);
+	Mono<Void> delete(Long[] ids);
 
 }

@@ -47,7 +47,7 @@ public interface RolesServiceI {
 	 * 删除角色.
 	 * @param cmd 删除命令
 	 */
-	void remove(RoleRemoveCmd cmd);
+	Flux<Void> remove(RoleRemoveCmd cmd);
 
 	/**
 	 * 导入角色.

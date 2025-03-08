@@ -66,8 +66,8 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	@Override
-	public void remove(RoleRemoveCmd cmd) {
-		roleRemoveCmdExe.executeVoid(cmd);
+	public Flux<Void> remove(RoleRemoveCmd cmd) {
+		return roleRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override

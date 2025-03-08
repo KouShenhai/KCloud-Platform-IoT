@@ -1015,7 +1015,8 @@ CREATE TABLE "public"."boot_sys_role_dept" (
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
-  "role_id" int8 NOT NULL
+  "role_id" int8 NOT NULL,
+  "dept_id" int8 NOT NULL
 )
 ;
 COMMENT ON COLUMN "public"."boot_sys_role_dept"."id" IS 'ID';
@@ -1027,6 +1028,7 @@ COMMENT ON COLUMN "public"."boot_sys_role_dept"."del_flag" IS '删除标识 0未
 COMMENT ON COLUMN "public"."boot_sys_role_dept"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_sys_role_dept"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_sys_role_dept"."role_id" IS '角色ID';
+COMMENT ON COLUMN "public"."boot_sys_role_dept"."dept_id" IS '部门ID';
 COMMENT ON TABLE "public"."boot_sys_role_dept" IS '角色部门';
 
 -- ----------------------------

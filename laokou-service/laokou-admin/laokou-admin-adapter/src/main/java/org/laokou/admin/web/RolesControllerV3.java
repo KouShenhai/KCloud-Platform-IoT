@@ -67,7 +67,10 @@ public class RolesControllerV3 {
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@Operation(summary = "修改角色", description = "修改角色")
 	public void modifyV3(@RequestBody RoleModifyCmd cmd) {
-		rolesServiceI.modify(cmd).subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor)).block();
+		// 阻塞5秒
+		rolesServiceI.modify(cmd)
+			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.block(Duration.ofSeconds(5));
 	}
 
 	@DeleteMapping
@@ -75,7 +78,10 @@ public class RolesControllerV3 {
 	@OperateLog(module = "角色管理", operation = "删除角色")
 	@Operation(summary = "删除角色", description = "删除角色")
 	public void removeV3(@RequestBody Long[] ids) {
-		rolesServiceI.remove(new RoleRemoveCmd(ids));
+		// 阻塞5秒
+		rolesServiceI.remove(new RoleRemoveCmd(ids))
+			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.blockLast(Duration.ofSeconds(5));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

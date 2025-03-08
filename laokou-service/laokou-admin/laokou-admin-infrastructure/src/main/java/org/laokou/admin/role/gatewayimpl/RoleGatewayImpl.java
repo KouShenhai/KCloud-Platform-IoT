@@ -58,8 +58,10 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	@Override
-	public void delete(Long[] ids) {
-		roleMapper.deleteByIds(Arrays.asList(ids));
+	public Mono<Void> delete(Long[] ids) {
+		return Mono.fromCallable(() -> roleMapper.deleteByIds(Arrays.asList(ids)))
+			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.then();
 	}
 
 	private Mono<Integer> getVersion(RoleE roleE) {

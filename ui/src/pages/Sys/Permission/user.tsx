@@ -45,7 +45,7 @@ export default () => {
 	}
 
 	const getRoleList = async () => {
-		rolePageV3({pageSize: 1000, pageNum: 1, pageIndex: 0}).then(res => {
+		rolePageV3({pageSize: 10000, pageNum: 1, pageIndex: 0}).then(res => {
 			setRoleList(res?.data?.records)
 		})
 	}

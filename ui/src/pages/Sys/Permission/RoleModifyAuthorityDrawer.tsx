@@ -71,20 +71,6 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 				rules={[{ required: true, message: '请输入名称' }]}
 			/>
 
-			<ProFormSelect
-				name="dataScope"
-				label="数据范围"
-				placeholder={'请选择数据范围'}
-				rules={[{ required: true, message: '请选择数据范围' }]}
-				options={[
-					{value: 'all', label: '全部'},
-					{value: 'custom', label: '自定义'},
-					{value: 'dept_self', label: '仅本部门'},
-					{value: 'dept', label: '部门及以下'},
-					{value: 'self', label: '仅本人'},
-				]}
-			/>
-
 			<ProFormTreeSelect
 				name="menuIds"
 				label="菜单权限"
@@ -110,13 +96,29 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 					// 默认展示所有节点
 					treeDefaultExpandAll: true,
 					// 高度
-					dropdownStyle: { maxHeight: 500 },
+					dropdownStyle: { maxHeight: 660 },
 					// 不显示搜索
 					showSearch: false,
+					// 高度
+					listHeight: 640
 				}}
 				request={async () => {
 					return menuTreeList
 				}}
+			/>
+
+			<ProFormSelect
+				name="dataScope"
+				label="数据范围"
+				placeholder={'请选择数据范围'}
+				rules={[{ required: true, message: '请选择数据范围' }]}
+				options={[
+					{value: 'all', label: '全部'},
+					{value: 'custom', label: '自定义'},
+					{value: 'dept_self', label: '仅本部门'},
+					{value: 'dept', label: '部门及以下'},
+					{value: 'self', label: '仅本人'},
+				]}
 			/>
 
 		</DrawerForm>
