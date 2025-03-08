@@ -1,19 +1,15 @@
 import {
-	DrawerForm,
-	ProColumns, ProFormSelect,
-	ProFormText, ProFormTreeSelect,
+	ProColumns
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import { pageV3, removeV3, saveV3, getByIdV3, modifyV3 } from '@/services/admin/user';
-import {useEffect, useRef, useState} from "react";
+import { pageV3, removeV3, getByIdV3 } from '@/services/admin/user';
+import {useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal, Space, Switch, Tag} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import {v7 as uuidV7} from 'uuid';
 import {trim} from "@/utils/format";
-import {treeListV3} from "@/services/admin/dept";
-import {pageV3 as rolePageV3} from "@/services/admin/role";
 import { ResetPwdDrawer } from '@/pages/Sys/Permission/ResetPwdDrawer';
+import {UserCreateOrModifyDrawer} from "@/pages/Sys/Permission/UserCreateOrModifyDrawer";
 
 export default () => {
 
@@ -21,26 +17,21 @@ export default () => {
 		id: number;
 		username: string | undefined;
 		status: number | undefined;
-		password: string | undefined;
 		mail: string | undefined;
 		mobile: string | undefined;
 		createTime: string | undefined;
 		superAdmin: number | undefined;
-		avatar: string | undefined;
-		deptIds: string[];
-		roleIds: string[];
 	};
 
 	const [readOnly, setReadOnly] = useState(false)
 	const [modalVisit, setModalVisit] = useState(false);
 	const [modalRestPwdVisit, setModalRestPwdVisit] = useState(false);
 	const actionRef = useRef();
-	const [dataSource, setDataSource] = useState({})
+	const [dataSource, setDataSource] = useState<any>({})
 	const [primaryKey, setPrimaryKey] = useState<number>()
 	const [ids, setIds] = useState<number[]>([])
 	const [title, setTitle] = useState("")
-	const [deptTreeList, setDeptTreeList] = useState<any[]>([])
-	const [roleList, setRoleList] = useState<any[]>([])
+	const [edit, setEdit] = useState(false)
 
 	const getPageQuery = (params: any) => {
 		return {
@@ -59,18 +50,6 @@ export default () => {
 		}
 	}
 
-	const getDeptTreeList = async () => {
-		treeListV3({}).then(res => {
-			setDeptTreeList(res?.data)
-		})
-	}
-
-	const getRoleList = async () => {
-		rolePageV3({pageSize: 1000, pageNum: 1, pageIndex: 0}).then(res => {
-			setRoleList(res?.data?.records)
-		})
-	}
-
 	const rowSelection: TableRowSelection<TableColumns> = {
 		onChange: (selectedRowKeys) => {
 			const ids: number[] = []
@@ -80,11 +59,6 @@ export default () => {
 			setIds(ids)
 		}
 	};
-
-	useEffect(() => {
-		getDeptTreeList().catch(console.log)
-		getRoleList().catch(console.log)
-	}, []);
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
@@ -199,6 +173,7 @@ export default () => {
 						   setTitle('修改用户')
 						   setModalVisit(true)
 						   setReadOnly(false)
+						   setEdit(true)
 						   setDataSource(res?.data)
 					   })
 				   }}
@@ -242,141 +217,18 @@ export default () => {
 				primaryKey={primaryKey}
 			/>
 
-			<DrawerForm<TableColumns>
-				open={modalVisit}
+			<UserCreateOrModifyDrawer
+				onComponent={() => {
+					// @ts-ignore
+					actionRef?.current?.reload();
+				}}
+				edit={edit}
+				modalVisit={modalVisit}
+				setModalVisit={setModalVisit}
 				title={title}
-				drawerProps={{
-					destroyOnClose: true,
-					closable: true,
-					maskClosable: true
-				}}
-				initialValues={dataSource}
-				onOpenChange={setModalVisit}
-				autoFocusFirstInput
-				submitter={{
-					submitButtonProps: {
-						style: {
-							display: readOnly ? 'none' : 'inline-block',
-						},
-					}
-				}}
-				onFinish={ async (value) => {
-					const deptIds = value?.deptIds.map((item: any) => item?.value ? item.value : item)
-					const co = {
-						id: value?.id,
-						deptIds: deptIds,
-						roleIds: value?.roleIds,
-						username: value.username,
-						status: value?.status,
-						mail: value?.mail,
-						mobile: value?.mobile,
-						avatar: value?.avatar,
-					}
-					if (value.id === undefined) {
-						saveV3({co: co}, uuidV7()).then(res => {
-							if (res.code === 'OK') {
-								message.success("新增成功").then()
-								setModalVisit(false)
-								// @ts-ignore
-								actionRef?.current?.reload();
-							}
-						})
-					} else {
-						modifyV3({co: co}).then(res => {
-							if (res.code === 'OK') {
-								message.success("修改成功").then()
-								setModalVisit(false)
-								// @ts-ignore
-								actionRef?.current?.reload();
-							}
-						})
-					}
-				}}>
-
-				<ProFormText
-					name="id"
-					label="ID"
-					hidden={true}
-				/>
-
-				<ProFormText
-					name="username"
-					label="名称"
-					tooltip={"用于用户名密码登录【不允许重复】"}
-					readonly={readOnly}
-					placeholder={'请输入用户名'}
-					rules={[{ required: true, message: '请输入用户名' }]}
-				/>
-
-				<ProFormText
-					name="mail"
-					label="邮箱"
-					tooltip={"用于邮箱登录【不允许重复】"}
-					readonly={readOnly}
-					placeholder={'请输入邮箱'}
-				/>
-
-				<ProFormText
-					name="mobile"
-					label="手机号"
-					tooltip={"用于手机号登录【不允许重复】"}
-					readonly={readOnly}
-					placeholder={'请输入手机号'}
-				/>
-
-				<ProFormSelect
-					name="roleIds"
-					allowClear={true}
-					label="所属角色"
-					mode={'multiple'}
-					readonly={readOnly}
-					placeholder={'请选择所属角色'}
-					rules={[{ required: true, message: '请选择所属角色' }]}
-					options={roleList}
-					fieldProps={{
-						fieldNames: {
-							label: 'name',
-							value: 'id',
-						},
-					}}
-				/>
-
-				<ProFormTreeSelect
-					name="deptIds"
-					label="所属部门"
-					readonly={readOnly}
-					allowClear={true}
-					placeholder={'请选择所属部门'}
-					rules={[{ required: true, message: '请选择所属部门' }]}
-					fieldProps={{
-						fieldNames: {
-							label: 'name',
-							value: 'id',
-							children: 'children'
-						},
-						// 最多显示多少个 tag，响应式模式会对性能产生损耗
-						maxTagCount: 6,
-						// 多选
-						multiple: true,
-						// 显示复选框
-						treeCheckable: true,
-						// 展示策略
-						showCheckedStrategy: 'SHOW_ALL',
-						// 取消父子节点联动
-						treeCheckStrictly: true,
-						// 默认展示所有节点
-						treeDefaultExpandAll: true,
-						// 高度
-						dropdownStyle: { maxHeight: 500 },
-						// 不显示搜索
-						showSearch: false,
-					}}
-					request={async () => {
-						return deptTreeList
-					}}
-				/>
-
-			</DrawerForm>
+				readOnly={readOnly}
+				dataSource={dataSource}
+			/>
 
 			<ProTable<TableColumns>
 				actionRef={actionRef}
@@ -403,6 +255,7 @@ export default () => {
 							setTitle('新增用户')
 							setReadOnly(false)
 							setModalVisit(true)
+							setEdit(false)
 							setDataSource({
 								id: undefined,
 								username: '',

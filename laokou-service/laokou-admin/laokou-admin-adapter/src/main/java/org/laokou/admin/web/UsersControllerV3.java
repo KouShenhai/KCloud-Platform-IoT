@@ -35,7 +35,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import reactor.core.scheduler.Schedulers;
+import java.time.Duration;
+import java.util.concurrent.ExecutorService;
 import static org.laokou.common.data.cache.constant.NameConstant.USERS;
 import static org.laokou.common.data.cache.constant.Type.DEL;
 
@@ -51,6 +53,8 @@ import static org.laokou.common.data.cache.constant.Type.DEL;
 public class UsersControllerV3 {
 
 	private final UsersServiceI usersServiceI;
+
+	private final ExecutorService virtualThreadExecutor;
 
 	@Idempotent
 	@PostMapping
@@ -75,7 +79,10 @@ public class UsersControllerV3 {
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@Operation(summary = "删除用户", description = "删除用户")
 	public void removeV3(@RequestBody Long[] ids) {
-		usersServiceI.remove(new UserRemoveCmd(ids));
+		// 阻塞5秒
+		usersServiceI.remove(new UserRemoveCmd(ids))
+			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.blockLast(Duration.ofSeconds(5));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -100,6 +107,17 @@ public class UsersControllerV3 {
 	@Operation(summary = "重置密码", description = "重置密码")
 	public void resetPwdV3(@RequestBody UserResetPwdCmd cmd) throws Exception {
 		usersServiceI.resetPwd(cmd);
+	}
+
+	@PutMapping("authority")
+	@PreAuthorize("hasAuthority('sys:user:modify')")
+	@OperateLog(module = "用户管理", operation = "修改用户权限")
+	@Operation(summary = "修改用户权限", description = "修改用户权限")
+	public void modifyAuthorityV3(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {
+		// 阻塞5秒
+		usersServiceI.modifyAuthority(cmd)
+			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.blockLast(Duration.ofSeconds(5));
 	}
 
 	@TraceLog

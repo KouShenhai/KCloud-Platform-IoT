@@ -18,7 +18,6 @@
 package org.laokou.admin.user.service.extensionpoint.extension;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
 import org.laokou.common.i18n.utils.ParamValidator;
@@ -27,23 +26,19 @@ import org.springframework.stereotype.Component;
 /**
  * @author laokou
  */
-@Component("modifyUserParamValidator")
+@Component("modifyAuthorityParamValidator")
 @RequiredArgsConstructor
-public class ModifyUserParamValidator implements UserParamValidatorExtPt {
-
-	private final UserMapper userMapper;
+public class ModifyAuthorityParamValidator implements UserParamValidatorExtPt {
 
 	@Override
 	public void validate(UserE userE) throws Exception {
 		ParamValidator.validate(
 				// 校验ID
 				UserParamValidator.validateId(userE),
-				// 校验用户名
-				UserParamValidator.validateUsername(userE, userMapper, false),
-				// 校验邮箱
-				UserParamValidator.validateMail(userE, userMapper, false),
-				// 校验手机号
-				UserParamValidator.validateMobile(userE, userMapper, false));
+				// 校验角色IDS
+				UserParamValidator.validateRoleIds(userE),
+				// 校验部门IDS
+				UserParamValidator.validateDeptIds(userE));
 	}
 
 }

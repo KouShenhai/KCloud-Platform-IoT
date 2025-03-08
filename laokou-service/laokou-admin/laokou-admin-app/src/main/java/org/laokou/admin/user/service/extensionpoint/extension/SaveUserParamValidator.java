@@ -41,11 +41,7 @@ public class SaveUserParamValidator implements UserParamValidatorExtPt {
 				// 校验邮箱
 				UserParamValidator.validateMail(userE, userMapper, true),
 				// 校验手机号
-				UserParamValidator.validateMobile(userE, userMapper, true),
-				// 校验角色IDS
-				UserParamValidator.validateRoleIds(userE),
-				// 校验部门IDS
-				UserParamValidator.validateDeptIds(userE));
+				UserParamValidator.validateMobile(userE, userMapper, true));
 	}
 
 }

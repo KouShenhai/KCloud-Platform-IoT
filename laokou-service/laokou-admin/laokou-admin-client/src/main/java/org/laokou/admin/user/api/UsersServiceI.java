@@ -22,6 +22,7 @@ import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import reactor.core.publisher.Flux;
 
 /**
  * 用户接口.
@@ -46,7 +47,7 @@ public interface UsersServiceI {
 	 * 删除用户.
 	 * @param cmd 删除命令
 	 */
-	void remove(UserRemoveCmd cmd);
+	Flux<Void> remove(UserRemoveCmd cmd);
 
 	/**
 	 * 导入用户.
@@ -65,6 +66,12 @@ public interface UsersServiceI {
 	 * @param cmd 重置密码命令
 	 */
 	void resetPwd(UserResetPwdCmd cmd) throws Exception;
+
+	/**
+	 * 修改权限.
+	 * @param cmd 修改权限命令
+	 */
+	Flux<Void> modifyAuthority(UserModifyAuthorityCmd cmd) throws Exception;
 
 	/**
 	 * 分页查询用户.
