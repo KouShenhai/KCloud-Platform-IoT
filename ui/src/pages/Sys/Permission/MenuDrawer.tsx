@@ -1,4 +1,11 @@
-import {DrawerForm, ProFormDigit, ProFormSelect, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
+import {
+	DrawerForm,
+	ProFormDigit,
+	ProFormRadio,
+	ProFormSelect,
+	ProFormText,
+	ProFormTreeSelect
+} from '@ant-design/pro-components';
 import { message } from 'antd';
 import {modifyV3, saveV3} from "@/services/admin/menu";
 import {v7 as uuidV7} from "uuid";
@@ -149,15 +156,14 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 			)}
 
 			{typeValue === 0 && (
-				<ProFormSelect
+				<ProFormRadio.Group
 					name="status"
 					label="状态"
 					readonly={readOnly}
-					placeholder={'请选择状态'}
-					rules={[{ required: true, message: '请选择状态' }]}
+					rules={[{required: true, message: '请选择状态',}]}
 					options={[
-						{value: 0, label: '启用'},
-						{value: 1, label: '禁用'}
+						{label:"启用",value: 0 },
+						{label:"禁用",value: 1 }
 					]}
 				/>
 			)}

@@ -34,7 +34,7 @@ import java.util.List;
 @Repository
 public interface RoleMenuMapper extends CrudMapper<Long, Integer, RoleMenuDO> {
 
-	List<Long> selectIdsByRoleId(@Param("roleId") Long roleId);
+	List<Long> selectIdsByRoleIds(@Param("roleIds") List<Long> roleIds);
 
 	List<String> selectMenuIdsByRoleId(@Param("roleId") Long roleId);
 

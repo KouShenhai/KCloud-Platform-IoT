@@ -32,7 +32,6 @@ export default () => {
 	const [modalRestPwdVisit, setModalRestPwdVisit] = useState(false);
 	const actionRef = useRef();
 	const [dataSource, setDataSource] = useState<any>({})
-	const [primaryKey, setPrimaryKey] = useState<number>()
 	const [ids, setIds] = useState<number[]>([])
 	const [title, setTitle] = useState("")
 	const [edit, setEdit] = useState(false)
@@ -214,8 +213,10 @@ export default () => {
 					分配权限
 				</a>,
 				<a key={'resetPwd'} onClick={() => {
-					setPrimaryKey(record?.id)
-					setModalRestPwdVisit(true)
+					getByIdV3({id: record?.id}).then(res => {
+						setModalRestPwdVisit(true)
+						setDataSource(res?.data)
+					})
 				}}>
 					重置密码
 				</a>,
@@ -247,11 +248,11 @@ export default () => {
 
 			<ResetPwdDrawer visible={modalRestPwdVisit}
 				setVisible={setModalRestPwdVisit}
-				primaryKey={primaryKey}
+				dataSource={dataSource}
 			/>
 
 			<UserDrawer
-				onComponent={() => {
+				onComponent={async () => {
 					// @ts-ignore
 					actionRef?.current?.reload();
 				}}

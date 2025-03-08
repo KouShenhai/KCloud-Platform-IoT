@@ -1,4 +1,3 @@
-// @formatter:off
 /*
  * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
@@ -16,31 +15,30 @@
  *
  */
 
-package ${packageName}.${instanceName}.command;
+package org.laokou.admin.user.service.extensionpoint.extension;
 
 import lombok.RequiredArgsConstructor;
-import ${packageName}.${instanceName}.dto.${className}RemoveCmd;
+import org.laokou.admin.user.model.UserE;
+import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
+import org.laokou.common.i18n.utils.ParamValidator;
 import org.springframework.stereotype.Component;
-import ${packageName}.${instanceName}.ability.${className}DomainService;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 
 /**
- *
- * 删除${comment}命令执行器.
- *
- * @author ${author}
+ * @author laokou
  */
-@Component
+@Component("modifyAuthorityUserParamValidator")
 @RequiredArgsConstructor
-public class ${className}RemoveCmdExe {
+public class ModifyAuthorityUserParamValidator implements UserParamValidatorExtPt {
 
-	private final ${className}DomainService ${instanceName}DomainService;
-
-    private final TransactionalUtil transactionalUtil;
-
-	public void executeVoid(${className}RemoveCmd cmd) {
-        transactionalUtil.executeInTransaction(() -> ${instanceName}DomainService.delete(cmd.getIds()));
+	@Override
+	public void validate(UserE userE) throws Exception {
+		ParamValidator.validate(
+				// 校验ID
+				UserParamValidator.validateId(userE),
+				// 校验角色IDS
+				UserParamValidator.validateRoleIds(userE),
+				// 校验部门IDS
+				UserParamValidator.validateDeptIds(userE));
 	}
 
 }
-// @formatter:on

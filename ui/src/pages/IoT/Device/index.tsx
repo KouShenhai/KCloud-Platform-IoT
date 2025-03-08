@@ -80,10 +80,6 @@ export default () => {
 		exportV3(param)
 	}
 
-	const list_ = async (params: any) => {
-
-	}
-
 	const columns: ProColumns<TableColumns>[] = [
 		{
 			title: '序号',
@@ -227,7 +223,6 @@ export default () => {
 					readonly={true}
 					name="createTime"
 					label="创建时间"
-					rules={[{ required: true, message: '请输入创建时间' }]}
 				/>
 
 			</DrawerForm>

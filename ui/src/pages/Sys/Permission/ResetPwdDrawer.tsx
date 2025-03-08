@@ -5,25 +5,10 @@ import { resetPwdV3 } from '@/services/admin/user';
 interface ResetPwdDrawerProps {
 	visible: boolean;
 	setVisible: (visible: boolean) => void;
-	primaryKey: number | undefined;
+	dataSource: any;
 }
 
-export const ResetPwdDrawer: React.FC<ResetPwdDrawerProps> = ({ visible, setVisible, primaryKey }) => {
-	const handleFinish = async (values: any) => {
-		const { password, confirmPassword } = values;
-		if (password !== confirmPassword) {
-			message.error("两次密码不一致");
-			return false;
-		}
-		resetPwdV3({ id: primaryKey, password }).then(res => {
-			if (res.code === 'OK') {
-				message.success("密码重置成功");
-				setVisible(false);
-				return true;
-			}
-		});
-		return false;
-	};
+export const ResetPwdDrawer: React.FC<ResetPwdDrawerProps> = ({ visible, setVisible, dataSource}) => {
 
 	return (
 		<DrawerForm
@@ -34,10 +19,38 @@ export const ResetPwdDrawer: React.FC<ResetPwdDrawerProps> = ({ visible, setVisi
 				closable: true,
 				maskClosable: true,
 			}}
+			initialValues={dataSource}
 			onOpenChange={setVisible}
-			onFinish={handleFinish}
+			onFinish={async (value: any) => {
+				const { password, confirmPassword } = value;
+				if (password !== confirmPassword) {
+					message.error("两次密码不一致");
+					return;
+				}
+				resetPwdV3({ id: value?.id, password }).then(res => {
+					if (res.code === 'OK') {
+						message.success("密码重置成功");
+						setVisible(false);
+						return true;
+					}
+				});
+			}}
 		>
-			<ProFormText name="id" label="ID" hidden />
+			<ProFormText
+				name="id"
+				label="ID"
+				hidden
+			/>
+
+			<ProFormText
+				name="username"
+				label="名称"
+				tooltip={"密码登录【不允许重复，不允许修改】"}
+				disabled={true}
+				placeholder={'请输入用户名'}
+				rules={[{ required: true, message: '请输入用户名' }]}
+			/>
+
 			<ProFormText.Password
 				name="password"
 				label="密码"

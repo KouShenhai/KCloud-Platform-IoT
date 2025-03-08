@@ -24,8 +24,10 @@ import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.model.RoleE;
 import org.springframework.stereotype.Component;
-
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 import java.util.Arrays;
+import java.util.concurrent.ExecutorService;
 
 /**
  * 角色网关实现.
@@ -38,6 +40,8 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	private final RoleMapper roleMapper;
 
+	private final ExecutorService virtualThreadExecutor;
+
 	@Override
 	public void create(RoleE roleE) {
 		RoleDO roleDO = RoleConvertor.toDataObject(roleE, true);
@@ -45,15 +49,22 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	@Override
-	public void update(RoleE roleE) {
-		RoleDO roleDO = RoleConvertor.toDataObject(roleE, false);
-		roleDO.setVersion(roleMapper.selectVersion(roleE.getId()));
-		roleMapper.updateById(roleDO);
+	public Mono<Void> update(RoleE roleE) {
+		return getVersion(roleE).map(version -> {
+			RoleDO roleDO = RoleConvertor.toDataObject(roleE, false);
+			roleDO.setVersion(version);
+			return roleDO;
+		}).doOnNext(roleMapper::updateById).then();
 	}
 
 	@Override
 	public void delete(Long[] ids) {
 		roleMapper.deleteByIds(Arrays.asList(ids));
+	}
+
+	private Mono<Integer> getVersion(RoleE roleE) {
+		return Mono.fromCallable(() -> roleMapper.selectVersion(roleE.getId()))
+			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
 	}
 
 }

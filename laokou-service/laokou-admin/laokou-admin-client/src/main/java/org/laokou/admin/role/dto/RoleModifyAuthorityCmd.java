@@ -15,31 +15,18 @@
  *
  */
 
-package org.laokou.admin.role.gateway;
+package org.laokou.admin.role.dto;
 
-import org.laokou.admin.role.model.RoleE;
-import reactor.core.publisher.Mono;
+import lombok.Data;
+import org.laokou.admin.role.dto.clientobject.RoleCO;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
- * 角色网关【防腐】.
- *
  * @author laokou
  */
-public interface RoleGateway {
+@Data
+public class RoleModifyAuthorityCmd extends CommonCommand {
 
-	/**
-	 * 新增角色.
-	 */
-	void create(RoleE roleE);
-
-	/**
-	 * 修改角色.
-	 */
-	Mono<Void> update(RoleE roleE);
-
-	/**
-	 * 删除角色.
-	 */
-	void delete(Long[] ids);
+	private RoleCO co;
 
 }

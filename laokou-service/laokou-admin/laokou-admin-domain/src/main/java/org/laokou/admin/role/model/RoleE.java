@@ -69,4 +69,9 @@ public class RoleE {
 	 */
 	private List<Long> roleDeptIds;
 
+	/**
+	 * 角色IDS.
+	 */
+	private List<Long> roleIds;
+
 }

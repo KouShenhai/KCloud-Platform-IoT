@@ -23,6 +23,7 @@ import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.core.utils.IdGenerator;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,16 +36,13 @@ public class RoleConvertor {
 	public static RoleDO toDataObject(RoleE roleE, boolean isInsert) {
 		RoleDO roleDO = new RoleDO();
 		if (isInsert) {
-			long id = IdGenerator.defaultSnowflakeId();
-			roleDO.setId(id);
-			roleE.setId(id);
+			roleDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		else {
 			roleDO.setId(roleE.getId());
 		}
 		roleDO.setName(roleE.getName());
 		roleDO.setSort(roleE.getSort());
-		roleDO.setDataScope(roleE.getDataScope());
 		return roleDO;
 	}
 
@@ -85,8 +83,15 @@ public class RoleConvertor {
 		roleE.setId(roleCO.getId());
 		roleE.setName(roleCO.getName());
 		roleE.setSort(roleCO.getSort());
-		roleE.setDataScope(roleCO.getDataScope());
+		return roleE;
+	}
+
+	public static RoleE toEntity(RoleCO roleCO, Long id) {
+		RoleE roleE = new RoleE();
+		roleE.setId(id);
 		roleE.setMenuIds(roleCO.getMenuIds());
+		roleE.setDataScope(roleCO.getDataScope());
+		roleE.setRoleIds(Collections.singletonList(id));
 		return roleE;
 	}
 

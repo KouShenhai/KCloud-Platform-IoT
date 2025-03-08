@@ -178,7 +178,7 @@ export default () => {
 				title={title}
 				readOnly={readOnly}
 				dataSource={dataSource}
-				onComponent={() => {
+				onComponent={async () => {
 					// @ts-ignore
 					actionRef?.current?.reload();
 					getTreeList().catch(console.log);

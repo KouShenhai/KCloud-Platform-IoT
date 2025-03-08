@@ -1,18 +1,16 @@
 import {
-	DrawerForm,
-	ProColumns,
-	ProFormDigit, ProFormSelect,
-	ProFormText, ProFormTreeSelect,
+	ProColumns
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {pageV3, removeV3, saveV3, getByIdV3, modifyV3} from "@/services/admin/role";
+import {pageV3, removeV3, getByIdV3} from "@/services/admin/role";
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import {v7 as uuidV7} from 'uuid';
 import {trim} from "@/utils/format";
 import {treeListV3} from "@/services/admin/menu";
+import {RoleDrawer} from "@/pages/Sys/Permission/RoleDrawer";
+import {RoleModifyAuthorityDrawer} from "@/pages/Sys/Permission/RoleModifyAuthorityDrawer";
 
 export default () => {
 
@@ -21,17 +19,17 @@ export default () => {
 		name: string | undefined;
 		createTime: string | undefined;
 		sort: number | undefined;
-		menuIds: string[];
 		dataScope: string | undefined;
 	};
 
 	const [readOnly, setReadOnly] = useState(false)
 	const [modalVisit, setModalVisit] = useState(false);
 	const actionRef = useRef();
-	const [dataSource, setDataSource] = useState({})
+	const [dataSource, setDataSource] = useState<any>({})
 	const [ids, setIds] = useState<number[]>([])
 	const [title, setTitle] = useState("")
-	const [treeList, setTreeList] = useState<any[]>([])
+	const [menuTreeList, setMenuTreeList] = useState<any[]>([])
+	const [modalModifyAuthorityVisit, setModalModifyAuthorityVisit] = useState(false);
 
 	const getPageQuery = (params: any) => {
 		return {
@@ -47,9 +45,9 @@ export default () => {
 		}
 	}
 
-	const getTreeList = async () => {
+	const getMenuTreeList = async () => {
 		treeListV3({code: 1, status: 0}).then(res => {
-			setTreeList(res?.data)
+			setMenuTreeList(res?.data)
 		})
 	}
 
@@ -64,7 +62,7 @@ export default () => {
 	};
 
 	useEffect(() => {
-		getTreeList().catch(console.log)
+		getMenuTreeList().catch(console.log)
 	}, []);
 
 	const columns: ProColumns<TableColumns>[] = [
@@ -142,6 +140,15 @@ export default () => {
 				>
 					修改
 				</a>,
+				<a key={'modifyAuthority'} onClick={() => {
+					getByIdV3({id: record?.id}).then(res => {
+						setTitle('分配权限')
+						setModalModifyAuthorityVisit(true)
+						setDataSource(res?.data)
+					})
+				}}>
+					分配权限
+				</a>,
 				<a key="remove" onClick={() => {
 					Modal.confirm({
 						title: '确认删除?',
@@ -167,129 +174,32 @@ export default () => {
 
 	return (
 		<>
-			<DrawerForm<TableColumns>
-				open={modalVisit}
+
+			<RoleDrawer
+				modalVisit={modalVisit}
+				setModalVisit={setModalVisit}
 				title={title}
-				drawerProps={{
-					destroyOnClose: true,
-					closable: true,
-					maskClosable: true
+				readOnly={readOnly}
+				dataSource={dataSource}
+				onComponent={async () => {
+					// @ts-ignore
+					actionRef?.current?.reload();
 				}}
-				initialValues={dataSource}
-				onOpenChange={setModalVisit}
-				autoFocusFirstInput
-				submitter={{
-					submitButtonProps: {
-						style: {
-							display: readOnly ? 'none' : 'inline-block',
-						},
-					}
+				menuTreeList={menuTreeList}
+			/>
+
+			<RoleModifyAuthorityDrawer
+				modalModifyAuthorityVisit={modalModifyAuthorityVisit}
+				setModalModifyAuthorityVisit={setModalModifyAuthorityVisit}
+				title={title}
+				dataSource={dataSource}
+				onComponent={() => {
+					// @ts-ignore
+					actionRef?.current?.reload();
 				}}
-				onFinish={ async (value) => {
-					const menuIds = value?.menuIds.map((item: any) => item?.value ? item?.value : item)
-					const co = {
-						name: value.name,
-						menuIds: menuIds,
-						dataScope: value.dataScope,
-						sort: value.sort,
-						id: value.id
-					}
-					if (value.id === undefined) {
-						saveV3({co: co}, uuidV7()).then(res => {
-							if (res.code === 'OK') {
-								message.success("新增成功").then()
-								setModalVisit(false)
-								// @ts-ignore
-								actionRef?.current?.reload();
-							}
-						})
-					} else {
-						modifyV3({co: co}).then(res => {
-							if (res.code === 'OK') {
-								message.success("修改成功").then()
-								setModalVisit(false)
-								// @ts-ignore
-								actionRef?.current?.reload();
-							}
-						})
-					}
-				}}>
+				menuTreeList={menuTreeList}
+			/>
 
-				<ProFormText
-					name="id"
-					label="ID"
-					hidden={true}
-				/>
-
-				<ProFormText
-					name="name"
-					label="名称"
-					readonly={readOnly}
-					placeholder={'请输入名称'}
-					rules={[{ required: true, message: '请输入名称' }]}
-				/>
-
-				<ProFormSelect
-					name="dataScope"
-					label="数据范围"
-					readonly={readOnly}
-					placeholder={'请选择数据范围'}
-					rules={[{ required: true, message: '请选择数据范围' }]}
-					options={[
-						{value: 'all', label: '全部'},
-						{value: 'custom', label: '自定义'},
-						{value: 'dept_self', label: '仅本部门'},
-						{value: 'dept', label: '部门及以下'},
-						{value: 'self', label: '仅本人'},
-					]}
-				/>
-
-				<ProFormTreeSelect
-					name="menuIds"
-					label="菜单权限"
-					readonly={readOnly}
-					allowClear={true}
-					placeholder={'请选择菜单权限'}
-					rules={[{ required: true, message: '请选择菜单权限' }]}
-					fieldProps={{
-						fieldNames: {
-							label: 'name',
-							value: 'id',
-							children: 'children'
-						},
-						// 最多显示多少个 tag，响应式模式会对性能产生损耗
-						maxTagCount: 6,
-						// 多选
-						multiple: true,
-						// 显示复选框
-						treeCheckable: true,
-						// 展示策略
-						showCheckedStrategy: 'SHOW_ALL',
-						// 取消父子节点联动
-						treeCheckStrictly: true,
-						// 默认展示所有节点
-						treeDefaultExpandAll: true,
-						// 高度
-						dropdownStyle: { maxHeight: 500 },
-						// 不显示搜索
-						showSearch: false,
-					}}
-					request={async () => {
-						return treeList
-					}}
-				/>
-
-				<ProFormDigit
-					name="sort"
-					label="排序"
-					readonly={readOnly}
-					placeholder={'请输入排序'}
-					min={1}
-					max={99999}
-					rules={[{ required: true, message: '请输入排序' }]}
-				/>
-
-			</DrawerForm>
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}

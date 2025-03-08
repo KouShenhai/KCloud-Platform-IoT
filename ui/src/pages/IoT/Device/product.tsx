@@ -238,7 +238,6 @@ export default () => {
 					readonly={true}
 					name="createTime"
 					label="创建时间"
-					rules={[{ required: true, message: '请输入创建时间' }]}
 				/>
 
 			</DrawerForm>

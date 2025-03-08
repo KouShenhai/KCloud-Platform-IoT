@@ -21,9 +21,16 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.gateway.RoleMenuGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleMenuMapper;
+import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.admin.role.model.RoleE;
+import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.mybatisplus.utils.MybatisUtil;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
+
+import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -34,20 +41,37 @@ public class RoleMenuGatewayImpl implements RoleMenuGateway {
 
 	private final MybatisUtil mybatisUtil;
 
-	@Override
-	public void create(RoleE roleE) {
-		// 新增角色菜单关联表
-		mybatisUtil.batch(RoleConvertor.toDataObjects(roleE, roleE.getId()), RoleMenuMapper.class,
-				RoleMenuMapper::insert);
-	}
+	private final RoleMenuMapper roleMenuMapper;
+
+	private final ExecutorService virtualThreadExecutor;
 
 	@Override
-	public void update(RoleE roleE) {
-		// 删除角色菜单关联表
-		mybatisUtil.batch(RoleConvertor.toDataObjects(roleE), RoleMenuMapper.class, RoleMenuMapper::deleteObjById);
+	public Mono<Void> update(RoleE roleE) {
+		return getRoleMenuIds(roleE.getRoleIds()).map(ids -> {
+			roleE.setRoleMenuIds(ids);
+			return roleE;
+		}).doOnNext(this::deleteRoleMenu).doOnNext(this::insertRoleMenu).then();
+	}
+
+	private void insertRoleMenu(RoleE roleE) {
 		// 新增角色菜单关联表
-		mybatisUtil.batch(RoleConvertor.toDataObjects(roleE, roleE.getId()), RoleMenuMapper.class,
-				RoleMenuMapper::insert);
+		List<RoleMenuDO> list = RoleConvertor.toDataObjects(roleE, roleE.getId());
+		if (CollectionUtil.isNotEmpty(list)) {
+			mybatisUtil.batch(list, RoleMenuMapper.class, RoleMenuMapper::insert);
+		}
+	}
+
+	private void deleteRoleMenu(RoleE roleE) {
+		// 删除角色菜单关联表
+		List<RoleMenuDO> list = RoleConvertor.toDataObjects(roleE);
+		if (CollectionUtil.isNotEmpty(list)) {
+			mybatisUtil.batch(list, RoleMenuMapper.class, RoleMenuMapper::deleteObjById);
+		}
+	}
+
+	private Mono<List<Long>> getRoleMenuIds(List<Long> roleIds) {
+		return Mono.fromCallable(() -> roleMenuMapper.selectIdsByRoleIds(roleIds))
+			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
 	}
 
 }

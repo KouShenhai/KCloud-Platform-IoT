@@ -24,10 +24,13 @@
     delete from boot_sys_role_menu where id = #{roleMenuDO.id}
   </delete>
 
-  <select id="selectIdsByRoleId" resultType="java.lang.Long">
+  <select id="selectIdsByRoleIds" resultType="java.lang.Long">
     select id
     from boot_sys_role_menu
-    where role_id = #{roleId}
+    where role_id in
+    <foreach collection="roleIds" item="item" open="(" close=")">
+      #{item}
+    </foreach>
   </select>
 
   <select id="selectMenuIdsByRoleId" resultType="java.lang.String">

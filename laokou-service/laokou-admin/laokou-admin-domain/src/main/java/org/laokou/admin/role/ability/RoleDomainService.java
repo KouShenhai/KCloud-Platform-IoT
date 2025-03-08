@@ -22,6 +22,7 @@ import org.laokou.admin.role.gateway.*;
 import org.laokou.admin.role.model.RoleE;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * 角色领域服务.
@@ -38,16 +39,14 @@ public class RoleDomainService {
 
 	public void create(RoleE roleE) {
 		roleGateway.create(roleE);
-		roleMenuGateway.create(roleE);
 	}
 
-	public void update(RoleE roleE) {
-		roleGateway.update(roleE);
-		roleMenuGateway.update(roleE);
+	public Mono<Void> update(RoleE roleE) {
+		return roleGateway.update(roleE);
 	}
 
 	public Flux<Void> updateAuthority(RoleE roleE) {
-		return Flux.empty();
+		return Flux.merge(roleGateway.update(roleE), roleMenuGateway.update(roleE));
 	}
 
 	public void delete(Long[] ids) {

@@ -1,27 +1,26 @@
 import {DrawerForm, ProFormSelect, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
 import { message } from 'antd';
-import {modifyAuthorityV3} from '@/services/admin/user';
+import {modifyAuthorityV3} from '@/services/admin/role';
 
-interface UserAuthorityProps {
+interface RoleAuthorityProps {
 	modalModifyAuthorityVisit: boolean;
 	setModalModifyAuthorityVisit: (visible: boolean) => void;
 	title: string;
 	dataSource: TableColumns;
 	onComponent: () => void;
-	deptTreeList: any[]
-	roleList: any[]
+	menuTreeList: any[]
 }
 
 type TableColumns = {
 	id: number;
-	username: string | undefined;
+	dataScope: string | undefined;
+	menuIds: string[];
 	deptIds: string[];
-	roleIds: string[];
 };
 
 
 
-export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalModifyAuthorityVisit, setModalModifyAuthorityVisit, title, dataSource, onComponent, roleList, deptTreeList }) => {
+export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalModifyAuthorityVisit, setModalModifyAuthorityVisit, title, dataSource, onComponent, menuTreeList }) => {
 
 	return (
 		<DrawerForm<TableColumns>
@@ -43,11 +42,11 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 				}
 			}}
 			onFinish={ async (value) => {
-				const deptIds = value?.deptIds.map((item: any) => item?.value ? item?.value : item)
+				const menuIds = value?.menuIds.map((item: any) => item?.value ? item?.value : item)
 				const co = {
 					id: value?.id,
-					deptIds: deptIds,
-					roleIds: value?.roleIds,
+					dataScope: value?.dataScope,
+					menuIds: menuIds,
 				}
 				modifyAuthorityV3({co: co}).then(res => {
 					if (res.code === 'OK') {
@@ -65,36 +64,33 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 			/>
 
 			<ProFormText
-				name="username"
+				name="name"
 				label="名称"
-				tooltip={"密码登录【不允许重复，不允许修改】"}
 				disabled={true}
-				placeholder={'请输入用户名'}
-				rules={[{ required: true, message: '请输入用户名' }]}
+				placeholder={'请输入名称'}
+				rules={[{ required: true, message: '请输入名称' }]}
 			/>
 
 			<ProFormSelect
-				name="roleIds"
-				allowClear={true}
-				label="所属角色"
-				mode={'multiple'}
-				placeholder={'请选择所属角色'}
-				rules={[{ required: true, message: '请选择所属角色' }]}
-				options={roleList}
-				fieldProps={{
-					fieldNames: {
-						label: 'name',
-						value: 'id',
-					},
-				}}
+				name="dataScope"
+				label="数据范围"
+				placeholder={'请选择数据范围'}
+				rules={[{ required: true, message: '请选择数据范围' }]}
+				options={[
+					{value: 'all', label: '全部'},
+					{value: 'custom', label: '自定义'},
+					{value: 'dept_self', label: '仅本部门'},
+					{value: 'dept', label: '部门及以下'},
+					{value: 'self', label: '仅本人'},
+				]}
 			/>
 
 			<ProFormTreeSelect
-				name="deptIds"
-				label="所属部门"
+				name="menuIds"
+				label="菜单权限"
 				allowClear={true}
-				placeholder={'请选择所属部门'}
-				rules={[{ required: true, message: '请选择所属部门' }]}
+				placeholder={'请选择菜单权限'}
+				rules={[{ required: true, message: '请选择菜单权限' }]}
 				fieldProps={{
 					fieldNames: {
 						label: 'name',
@@ -119,7 +115,7 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 					showSearch: false,
 				}}
 				request={async () => {
-					return deptTreeList
+					return menuTreeList
 				}}
 			/>
 

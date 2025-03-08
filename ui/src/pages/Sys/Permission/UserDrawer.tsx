@@ -87,7 +87,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 			<ProFormText
 				name="username"
 				label="名称"
-				tooltip={"用于用户名密码登录【不允许重复，不允许修改用户名】"}
+				tooltip={"密码登录【不允许重复，不允许修改】"}
 				disabled={edit}
 				readonly={readOnly}
 				placeholder={'请输入用户名'}
@@ -97,7 +97,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 			<ProFormText
 				name="mail"
 				label="邮箱"
-				tooltip={"用于邮箱登录【不允许重复】"}
+				tooltip={"邮箱登录【不允许重复】"}
 				readonly={readOnly}
 				placeholder={'请输入邮箱'}
 			/>
@@ -105,7 +105,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 			<ProFormText
 				name="mobile"
 				label="手机号"
-				tooltip={"用于手机号登录【不允许重复】"}
+				tooltip={"手机号登录【不允许重复】"}
 				readonly={readOnly}
 				placeholder={'请输入手机号'}
 			/>
@@ -117,7 +117,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 				rules={[{required: true, message: '请选择状态',}]}
 				options={[
 					{label:"启用",value: 0 },
-					{label:"禁用",value: 1}
+					{label:"禁用",value: 1 }
 				]}
 			/>
 
@@ -128,7 +128,6 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 				mode={'multiple'}
 				hidden={!readOnly}
 				readonly={readOnly}
-				placeholder={'请选择所属角色'}
 				options={roleList}
 				fieldProps={{
 					fieldNames: {
@@ -144,7 +143,6 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 				hidden={!readOnly}
 				readonly={readOnly}
 				allowClear={true}
-				placeholder={'请选择所属部门'}
 				fieldProps={{
 					fieldNames: {
 						label: 'name',

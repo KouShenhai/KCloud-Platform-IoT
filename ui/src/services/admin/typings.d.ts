@@ -382,6 +382,10 @@ declare namespace API {
 		co?: RoleCO;
 	};
 
+	type RoleModifyAuthorityCmd = {
+		co?: RoleCO;
+	};
+
 	type RolePageQry = {
 		pageNum?: number;
 		pageSize?: number;

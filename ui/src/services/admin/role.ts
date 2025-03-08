@@ -107,3 +107,15 @@ export async function pageV3(body: API.RolePageQry, options?: { [key: string]: a
 		...(options || {}),
 	});
 }
+
+/** 修改角色权限 修改角色权限 PUT /v3/roles/authority */
+export async function modifyAuthorityV3(body: API.RoleModifyAuthorityCmd, options?: { [key: string]: any }) {
+	return request<any>('/api/admin/v3/roles/authority', {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}

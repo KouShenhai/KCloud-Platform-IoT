@@ -257,7 +257,7 @@ export default () => {
 				treeList={treeList}
 				typeValue={typeValue}
 				setTypeValue={setTypeValue}
-				onComponent={() => {
+				onComponent={async () => {
 					// @ts-ignore
 					actionRef?.current?.reload();
 					getTreeList().catch(console.log);

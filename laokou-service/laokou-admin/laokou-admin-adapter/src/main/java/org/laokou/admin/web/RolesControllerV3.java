@@ -33,6 +33,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import reactor.core.scheduler.Schedulers;
+
+import java.time.Duration;
+import java.util.concurrent.ExecutorService;
 
 /**
  * 角色管理控制器.
@@ -46,6 +50,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class RolesControllerV3 {
 
 	private final RolesServiceI rolesServiceI;
+
+	private final ExecutorService virtualThreadExecutor;
 
 	@Idempotent
 	@PostMapping
@@ -61,7 +67,7 @@ public class RolesControllerV3 {
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@Operation(summary = "修改角色", description = "修改角色")
 	public void modifyV3(@RequestBody RoleModifyCmd cmd) {
-		rolesServiceI.modify(cmd);
+		rolesServiceI.modify(cmd).subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor)).block();
 	}
 
 	@DeleteMapping
@@ -86,6 +92,17 @@ public class RolesControllerV3 {
 	@Operation(summary = "导出角色", description = "导出角色")
 	public void exportV3(@RequestBody RoleExportCmd cmd) {
 		rolesServiceI.export(cmd);
+	}
+
+	@PutMapping("authority")
+	@PreAuthorize("hasAuthority('sys:role:modify')")
+	@OperateLog(module = "用户管理", operation = "修改角色权限")
+	@Operation(summary = "修改角色权限", description = "修改角色权限")
+	public void modifyAuthorityV3(@RequestBody RoleModifyAuthorityCmd cmd) throws Exception {
+		// 阻塞5秒
+		rolesServiceI.modifyAuthority(cmd)
+			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.blockLast(Duration.ofSeconds(5));
 	}
 
 	@TraceLog

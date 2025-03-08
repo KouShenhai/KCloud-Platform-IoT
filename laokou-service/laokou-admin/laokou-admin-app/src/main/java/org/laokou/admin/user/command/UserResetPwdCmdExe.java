@@ -37,8 +37,8 @@ import org.springframework.stereotype.Component;
 public class UserResetPwdCmdExe {
 
 	@Autowired
-	@Qualifier("resetPwdParamValidator")
-	private UserParamValidatorExtPt resetPwdParamValidator;
+	@Qualifier("resetPwdUserParamValidator")
+	private UserParamValidatorExtPt resetPwdUserParamValidator;
 
 	private final UserDomainService userDomainService;
 
@@ -51,7 +51,7 @@ public class UserResetPwdCmdExe {
 
 	public void executeVoid(UserResetPwdCmd cmd) throws Exception {
 		UserE userE = UserConvertor.toEntity(cmd.getId(), cmd.getPassword());
-		resetPwdParamValidator.validate(userE);
+		resetPwdUserParamValidator.validate(userE);
 		transactionalUtil.executeInTransaction(() -> {
 			try {
 				userDomainService.update(userE);

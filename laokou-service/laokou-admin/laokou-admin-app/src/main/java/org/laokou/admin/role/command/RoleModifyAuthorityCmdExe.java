@@ -19,41 +19,36 @@ package org.laokou.admin.role.command;
 
 import org.laokou.admin.role.ability.RoleDomainService;
 import org.laokou.admin.role.convertor.RoleConvertor;
-import org.laokou.admin.role.dto.RoleModifyCmd;
+import org.laokou.admin.role.dto.RoleModifyAuthorityCmd;
+import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
 /**
- * 修改角色命令执行器.
- *
  * @author laokou
  */
 @Component
-public class RoleModifyCmdExe {
+public class RoleModifyAuthorityCmdExe {
 
 	@Autowired
-	@Qualifier("modifyRoleParamValidator")
-	private RoleParamValidatorExtPt modifyRoleParamValidator;
+	@Qualifier("modifyAuthorityRoleParamValidator")
+	private RoleParamValidatorExtPt modifyAuthorityRoleParamValidator;
 
 	private final RoleDomainService roleDomainService;
 
-	private final TransactionalUtil transactionalUtil;
-
-	public RoleModifyCmdExe(RoleDomainService roleDomainService, TransactionalUtil transactionalUtil) {
+	public RoleModifyAuthorityCmdExe(RoleDomainService roleDomainService) {
 		this.roleDomainService = roleDomainService;
-		this.transactionalUtil = transactionalUtil;
 	}
 
-	public Mono<Void> executeVoid(RoleModifyCmd cmd) {
-		// 校验参数
-		RoleE roleE = RoleConvertor.toEntity(cmd.getCo());
-		modifyRoleParamValidator.validate(roleE);
-		return transactionalUtil.executeResultInTransaction(() -> roleDomainService.update(roleE));
+	public Flux<Void> executeVoid(RoleModifyAuthorityCmd cmd) throws Exception {
+		RoleCO co = cmd.getCo();
+		RoleE roleE = RoleConvertor.toEntity(co, co.getId());
+		modifyAuthorityRoleParamValidator.validate(roleE);
+		return roleDomainService.updateAuthority(roleE);
 	}
 
 }

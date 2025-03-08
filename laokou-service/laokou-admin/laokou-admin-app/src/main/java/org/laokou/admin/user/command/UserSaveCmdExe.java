@@ -23,7 +23,6 @@ import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserSaveCmd;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +55,6 @@ public class UserSaveCmdExe {
 		// 校验参数
 		UserE userE = UserConvertor.toEntity(cmd.getCo());
 		saveUserParamValidator.validate(userE);
-		userE.setId(IdGenerator.defaultSnowflakeId());
 		transactionalUtil.executeInTransaction(() -> {
 			try {
 				userDomainService.create(userE);
