@@ -59,23 +59,38 @@ public class DeptE {
 	 */
 	private String parentPath;
 
+	/**
+	 * 旧路径.
+	 */
+	private String oldPath;
+
+	public void getOldPath(String oldPath) {
+		this.oldPath = oldPath;
+	}
+
 	public void getParentPath(String parentPath) {
 		this.parentPath = parentPath;
 	}
 
 	public void checkParentPath(Long id) {
 		if (ObjectUtil.isNull(this.parentPath)) {
-			throw new BizException("B_Dept_PathNotExist", "部门路径不存在");
+			throw new BizException("B_Dept_ParentPathNotExist", "上级部门路径不存在");
 		}
-		this.parentPath = this.parentPath + "," + id;
+		this.path = this.parentPath + "," + id;
+	}
+
+	public void checkOldPath() {
+		if (ObjectUtil.isNull(this.oldPath)) {
+			throw new BizException("B_Dept_OldPathNotExist", "旧部门路径不存在");
+		}
 	}
 
 	public String getOldPrefix() {
-		return "^" + this.path;
+		return "^" + this.oldPath;
 	}
 
 	public String getNewPrefix() {
-		return this.parentPath;
+		return this.path;
 	}
 
 }

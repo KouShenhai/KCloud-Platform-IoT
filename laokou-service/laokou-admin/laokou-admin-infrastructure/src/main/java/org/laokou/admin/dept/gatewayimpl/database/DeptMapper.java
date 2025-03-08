@@ -34,7 +34,7 @@ public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
 
 	String selectParentPathById(@Param("id") Long id);
 
-	void updateChildrenPath(@Param("path") String path, @Param("oldPrefix") String oldPrefix,
+	void updateChildrenPath(@Param("oldPath") String oldPath, @Param("oldPrefix") String oldPrefix,
 			@Param("newPrefix") String newPrefix);
 
 }

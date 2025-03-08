@@ -51,7 +51,7 @@
 
   <update id="updateChildrenPath">
     update boot_sys_dept set "path" = regexp_replace("path", #{oldPrefix}, #{newPrefix})
-    where "path" LIKE CAST(#{path} AS TEXT) || '%' and "path" <![CDATA[ <> ]]> #{path}
+    where "path" LIKE CAST(#{oldPath} AS TEXT) || '%'
   </update>
 
   <select id="selectObjectPage"

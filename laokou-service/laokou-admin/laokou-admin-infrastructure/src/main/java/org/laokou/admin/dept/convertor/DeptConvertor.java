@@ -32,14 +32,9 @@ import java.util.List;
  */
 public class DeptConvertor {
 
-	public static DeptDO toDataObject(DeptE deptE, boolean isInsert) {
+	public static DeptDO toDataObject(DeptE deptE) {
 		DeptDO deptDO = new DeptDO();
-		if (isInsert) {
-			deptDO.setId(IdGenerator.defaultSnowflakeId());
-		}
-		else {
-			deptDO.setId(deptE.getId());
-		}
+		deptDO.setId(IdGenerator.defaultSnowflakeId());
 		deptDO.setPid(deptE.getPid());
 		deptDO.setName(deptE.getName());
 		deptDO.setPath(deptE.getPath());

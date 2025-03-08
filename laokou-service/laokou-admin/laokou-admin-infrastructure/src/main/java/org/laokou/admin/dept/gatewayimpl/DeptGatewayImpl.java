@@ -40,30 +40,40 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	@Override
 	public void create(DeptE deptE) {
-		DeptDO deptDO = DeptConvertor.toDataObject(deptE, true);
+		DeptDO deptDO = DeptConvertor.toDataObject(deptE);
 		// 校验父级路径
 		checkParentPath(deptE, deptDO.getId());
-		deptDO.setPath(deptE.getParentPath());
+		deptDO.setPath(deptE.getPath());
 		deptMapper.insert(deptDO);
 	}
 
 	@Override
 	public void update(DeptE deptE) {
-		DeptDO deptDO = DeptConvertor.toDataObject(deptE, false);
-		String path = deptDO.getPath();
+		Long id = deptE.getId();
+		DeptDO deptDO = getDeptDO(deptE, id);
+		// 获取旧路径
+		deptE.getOldPath(deptDO.getPath());
+		// 校验旧路径
+		deptE.checkOldPath();
 		// 校验父级路径
-		Long id = deptDO.getId();
-		String parentPath = deptE.getParentPath();
 		checkParentPath(deptE, id);
-		deptDO.setPath(parentPath);
+		deptDO.setPath(deptE.getPath());
 		deptDO.setVersion(deptMapper.selectVersion(id));
 		deptMapper.updateById(deptDO);
-		deptMapper.updateChildrenPath(path, deptE.getOldPrefix(), deptE.getNewPrefix());
+		deptMapper.updateChildrenPath(deptE.getOldPath(), deptE.getOldPrefix(), deptE.getNewPrefix());
 	}
 
 	@Override
 	public void delete(Long[] ids) {
 		deptMapper.deleteByIds(Arrays.asList(ids));
+	}
+
+	private DeptDO getDeptDO(DeptE deptE, Long id) {
+		DeptDO deptDO = deptMapper.selectById(id);
+		deptDO.setPid(deptE.getPid());
+		deptDO.setName(deptE.getName());
+		deptDO.setSort(deptE.getSort());
+		return deptDO;
 	}
 
 	/**
