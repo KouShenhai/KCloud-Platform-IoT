@@ -3,13 +3,16 @@ import {
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import { pageV3, removeV3, getByIdV3 } from '@/services/admin/user';
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal, Space, Switch, Tag} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {trim} from "@/utils/format";
 import { ResetPwdDrawer } from '@/pages/Sys/Permission/ResetPwdDrawer';
 import {UserCreateOrModifyDrawer} from "@/pages/Sys/Permission/UserCreateOrModifyDrawer";
+import {treeListV3} from "@/services/admin/dept";
+import {pageV3 as rolePageV3} from "@/services/admin/role";
+import {UserModifyAuthorityDrawer} from "@/pages/Sys/Permission/UserModifyAuthorityDrawer";
 
 export default () => {
 
@@ -25,6 +28,7 @@ export default () => {
 
 	const [readOnly, setReadOnly] = useState(false)
 	const [modalVisit, setModalVisit] = useState(false);
+	const [modalModifyAuthorityVisit, setModalModifyAuthorityVisit] = useState(false);
 	const [modalRestPwdVisit, setModalRestPwdVisit] = useState(false);
 	const actionRef = useRef();
 	const [dataSource, setDataSource] = useState<any>({})
@@ -32,6 +36,20 @@ export default () => {
 	const [ids, setIds] = useState<number[]>([])
 	const [title, setTitle] = useState("")
 	const [edit, setEdit] = useState(false)
+	const [deptTreeList, setDeptTreeList] = useState<any[]>([])
+	const [roleList, setRoleList] = useState<any[]>([])
+
+	const getDeptTreeList = async () => {
+		treeListV3({}).then(res => {
+			setDeptTreeList(res?.data)
+		})
+	}
+
+	const getRoleList = async () => {
+		rolePageV3({pageSize: 1000, pageNum: 1, pageIndex: 0}).then(res => {
+			setRoleList(res?.data?.records)
+		})
+	}
 
 	const getPageQuery = (params: any) => {
 		return {
@@ -59,6 +77,11 @@ export default () => {
 			setIds(ids)
 		}
 	};
+
+	useEffect(() => {
+		getDeptTreeList().catch(console.log)
+		getRoleList().catch(console.log)
+	}, []);
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
@@ -154,6 +177,7 @@ export default () => {
 			title: '操作',
 			valueType: 'option',
 			key: 'option',
+			width: 250,
 			render: (_, record) => [
 				<a key="get"
 				   onClick={() => {
@@ -179,6 +203,15 @@ export default () => {
 				   }}
 				>
 					修改
+				</a>,
+				<a key={'modifyAuthority'} onClick={() => {
+					getByIdV3({id: record?.id}).then(res => {
+						setTitle('分配权限')
+						setModalModifyAuthorityVisit(true)
+						setDataSource(res?.data)
+					})
+				}}>
+					分配权限
 				</a>,
 				<a key={'resetPwd'} onClick={() => {
 					setPrimaryKey(record?.id)
@@ -222,12 +255,27 @@ export default () => {
 					// @ts-ignore
 					actionRef?.current?.reload();
 				}}
+				deptTreeList={deptTreeList}
+				roleList={roleList}
 				edit={edit}
 				modalVisit={modalVisit}
 				setModalVisit={setModalVisit}
 				title={title}
 				readOnly={readOnly}
 				dataSource={dataSource}
+			/>
+
+			<UserModifyAuthorityDrawer
+				modalModifyAuthorityVisit={modalModifyAuthorityVisit}
+				setModalModifyAuthorityVisit={setModalModifyAuthorityVisit}
+				title={title}
+				dataSource={dataSource}
+				onComponent={() => {
+					// @ts-ignore
+					actionRef?.current?.reload();
+				}}
+				deptTreeList={deptTreeList}
+				roleList={roleList}
 			/>
 
 			<ProTable<TableColumns>

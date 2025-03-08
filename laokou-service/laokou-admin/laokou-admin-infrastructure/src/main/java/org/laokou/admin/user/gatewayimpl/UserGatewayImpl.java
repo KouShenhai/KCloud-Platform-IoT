@@ -56,6 +56,7 @@ public class UserGatewayImpl implements UserGateway {
 	public void update(UserE userE) {
 		UserDO userDO = UserConvertor.toDataObject(passwordEncoder, userE, false);
 		userDO.setVersion(userMapper.selectVersion(userE.getId()));
+		userMapper.updateById(userDO);
 	}
 
 	@Override

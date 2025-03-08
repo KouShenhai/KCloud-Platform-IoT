@@ -1,10 +1,7 @@
-import {DrawerForm, ProFormSelect, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
+import {DrawerForm, ProFormRadio, ProFormSelect, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
 import { message } from 'antd';
 import {modifyV3, saveV3} from '@/services/admin/user';
 import {v7 as uuidV7} from "uuid";
-import {treeListV3} from "@/services/admin/dept";
-import {pageV3 as rolePageV3} from "@/services/admin/role";
-import {useEffect, useState} from "react";
 
 interface UserCreateOrModifyProps {
 	modalVisit: boolean;
@@ -14,6 +11,8 @@ interface UserCreateOrModifyProps {
 	readOnly: boolean;
 	dataSource: TableColumns;
 	onComponent: () => void;
+	deptTreeList: any[]
+	roleList: any[]
 }
 
 type TableColumns = {
@@ -23,8 +22,6 @@ type TableColumns = {
 	password: string | undefined;
 	mail: string | undefined;
 	mobile: string | undefined;
-	createTime: string | undefined;
-	superAdmin: number | undefined;
 	avatar: string | undefined;
 	deptIds: string[];
 	roleIds: string[];
@@ -32,27 +29,7 @@ type TableColumns = {
 
 
 
-export const UserCreateOrModifyDrawer: React.FC<UserCreateOrModifyProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, edit }) => {
-
-	const [deptTreeList, setDeptTreeList] = useState<any[]>([])
-	const [roleList, setRoleList] = useState<any[]>([])
-
-	const getDeptTreeList = async () => {
-		treeListV3({}).then(res => {
-			setDeptTreeList(res?.data)
-		})
-	}
-
-	const getRoleList = async () => {
-		rolePageV3({pageSize: 1000, pageNum: 1, pageIndex: 0}).then(res => {
-			setRoleList(res?.data?.records)
-		})
-	}
-
-	useEffect(() => {
-		getDeptTreeList().catch(console.log)
-		getRoleList().catch(console.log)
-	}, []);
+export const UserCreateOrModifyDrawer: React.FC<UserCreateOrModifyProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, edit, roleList, deptTreeList }) => {
 
 	return (
 		<DrawerForm<TableColumns>
@@ -133,6 +110,17 @@ export const UserCreateOrModifyDrawer: React.FC<UserCreateOrModifyProps> = ({ mo
 				placeholder={'请输入手机号'}
 			/>
 
+			<ProFormRadio.Group
+				name="status"
+				label="状态"
+				readonly={readOnly}
+				rules={[{required: true, message: '请选择状态',}]}
+				options={[
+					{label:"启用",value: 0 },
+					{label:"禁用",value: 1}
+				]}
+			/>
+
 			<ProFormSelect
 				name="roleIds"
 				allowClear={true}
@@ -146,7 +134,7 @@ export const UserCreateOrModifyDrawer: React.FC<UserCreateOrModifyProps> = ({ mo
 					fieldNames: {
 						label: 'name',
 						value: 'id',
-					},
+					}
 				}}
 			/>
 
@@ -162,23 +150,7 @@ export const UserCreateOrModifyDrawer: React.FC<UserCreateOrModifyProps> = ({ mo
 						label: 'name',
 						value: 'id',
 						children: 'children'
-					},
-					// 最多显示多少个 tag，响应式模式会对性能产生损耗
-					maxTagCount: 6,
-					// 多选
-					multiple: true,
-					// 显示复选框
-					treeCheckable: true,
-					// 展示策略
-					showCheckedStrategy: 'SHOW_ALL',
-					// 取消父子节点联动
-					treeCheckStrictly: true,
-					// 默认展示所有节点
-					treeDefaultExpandAll: true,
-					// 高度
-					dropdownStyle: { maxHeight: 500 },
-					// 不显示搜索
-					showSearch: false,
+					}
 				}}
 				request={async () => {
 					return deptTreeList

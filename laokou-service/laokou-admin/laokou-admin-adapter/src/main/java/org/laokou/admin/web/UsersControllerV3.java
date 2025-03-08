@@ -111,6 +111,7 @@ public class UsersControllerV3 {
 
 	@PutMapping("authority")
 	@PreAuthorize("hasAuthority('sys:user:modify')")
+	@DataCache(name = USERS, key = "#cmd.co.id", type = DEL)
 	@OperateLog(module = "用户管理", operation = "修改用户权限")
 	@Operation(summary = "修改用户权限", description = "修改用户权限")
 	public void modifyAuthorityV3(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {

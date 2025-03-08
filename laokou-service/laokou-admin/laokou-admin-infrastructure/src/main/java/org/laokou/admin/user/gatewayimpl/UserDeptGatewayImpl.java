@@ -65,7 +65,7 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 	private void insertUserDept(UserE userE) {
 		// 新增用户部门关联表
 		List<UserDeptDO> list = UserConvertor.toDataObjs(userE, userE.getId());
-		if (CollectionUtil.isEmpty(list)) {
+		if (CollectionUtil.isNotEmpty(list)) {
 			mybatisUtil.batch(list, UserDeptMapper.class, UserDeptMapper::insert);
 		}
 	}
@@ -73,7 +73,7 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 	private void deleteUserDept(UserE userE) {
 		// 删除用户部门关联表
 		List<UserDeptDO> list = UserConvertor.toDataObjs(userE);
-		if (CollectionUtil.isEmpty(list)) {
+		if (CollectionUtil.isNotEmpty(list)) {
 			mybatisUtil.batch(list, UserDeptMapper.class, UserDeptMapper::deleteObjById);
 		}
 	}

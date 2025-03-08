@@ -467,6 +467,10 @@ declare namespace API {
 		co?: UserCO;
 	};
 
+	type UserModifyAuthorityCmd = {
+		co?: UserCO;
+	};
+
 	type ResetPwdCmd = {
 		id?: number;
 		password?: string;

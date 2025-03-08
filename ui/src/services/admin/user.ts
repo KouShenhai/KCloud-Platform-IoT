@@ -127,3 +127,15 @@ export async function resetPwdV3(body: API.ResetPwdCmd, options?: { [key: string
 		...(options || {}),
 	});
 }
+
+/** 修改用户权限 修改用户权限 PUT /v3/users/authority */
+export async function modifyAuthorityV3(body: API.UserModifyAuthorityCmd, options?: { [key: string]: any }) {
+	return request<any>('/api/admin/v3/users/authority', {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}
