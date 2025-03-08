@@ -23,7 +23,6 @@ type TableColumns = {
 	status: number | undefined;
 	type: number | undefined;
 	permission: string | undefined;
-	createTime: string | undefined;
 	sort: number | undefined;
 };
 

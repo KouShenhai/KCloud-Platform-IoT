@@ -1,24 +1,19 @@
 import {
-	DrawerForm,
 	ProColumns,
-	ProFormDigit,
-	ProFormText,
-	ProFormTreeSelect
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {treeListV3, removeV3, saveV3, getByIdV3, modifyV3} from "@/services/admin/dept";
+import {treeListV3, removeV3, getByIdV3} from "@/services/admin/dept";
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import {v7 as uuidV7} from 'uuid';
 import {trim} from "@/utils/format";
+import {DeptDrawer} from "@/pages/Sys/Permission/DeptDrawer";
 
 export default () => {
 
 	type TableColumns = {
 		id: number;
-		pid: number;
 		name: string | undefined;
 		path: string | undefined;
 		createTime: string | undefined;
@@ -28,7 +23,7 @@ export default () => {
 	const [readOnly, setReadOnly] = useState(false)
 	const [modalVisit, setModalVisit] = useState(false);
 	const actionRef = useRef();
-	const [dataSource, setDataSource] = useState({})
+	const [dataSource, setDataSource] = useState<any>({})
 	const [ids, setIds] = useState<number[]>([])
 	const [title, setTitle] = useState("")
 	const [treeList, setTreeList] = useState<any[]>([])
@@ -176,99 +171,21 @@ export default () => {
 
 	return (
 		<>
-			<DrawerForm<TableColumns>
-				open={modalVisit}
+
+			<DeptDrawer
+				modalVisit={modalVisit}
+				setModalVisit={setModalVisit}
 				title={title}
-				drawerProps={{
-					destroyOnClose: true,
-					closable: true,
-					maskClosable: true
+				readOnly={readOnly}
+				dataSource={dataSource}
+				onComponent={() => {
+					// @ts-ignore
+					actionRef?.current?.reload();
+					getTreeList().catch(console.log);
 				}}
-				initialValues={dataSource}
-				onOpenChange={setModalVisit}
-				autoFocusFirstInput
-				submitter={{
-					submitButtonProps: {
-						style: {
-							display: readOnly ? 'none' : 'inline-block',
-						},
-					}
-				}}
-				onFinish={ async (value) => {
-					if (value.id === undefined) {
-						saveV3({co: value}, uuidV7()).then(res => {
-							if (res.code === 'OK') {
-								message.success("新增成功").then()
-								setModalVisit(false)
-								// @ts-ignore
-								actionRef?.current?.reload();
-								getTreeList().catch(console.log);
-							}
-						})
-					} else {
-						modifyV3({co: value}).then(res => {
-							if (res.code === 'OK') {
-								message.success("修改成功").then()
-								setModalVisit(false)
-								// @ts-ignore
-								actionRef?.current?.reload();
-								getTreeList().catch(console.log);
-							}
-						})
-					}
-				}}>
+				treeList={treeList}
+			/>
 
-				<ProFormText
-					name="id"
-					label="ID"
-					hidden={true}
-				/>
-
-				<ProFormTreeSelect
-					name="pid"
-					label="父级"
-					readonly={readOnly}
-					allowClear={true}
-					placeholder={'请选择父级'}
-					rules={[{ required: true, message: '请选择父级' }]}
-					fieldProps={{
-						fieldNames: {
-							label: 'name',
-							value: 'id',
-							children: 'children'
-						},
-					}}
-					request={async () => {
-						return treeList
-					}}
-				/>
-
-				<ProFormText
-					name="name"
-					label="名称"
-					readonly={readOnly}
-					placeholder={'请输入名称'}
-					rules={[{ required: true, message: '请输入名称' }]}
-				/>
-
-				<ProFormText
-					name="path"
-					label="路径"
-					hidden={!readOnly}
-					readonly={readOnly}
-				/>
-
-				<ProFormDigit
-					name="sort"
-					label="排序"
-					readonly={readOnly}
-					placeholder={'请输入排序'}
-					min={1}
-					max={99999}
-					rules={[{ required: true, message: '请输入排序' }]}
-				/>
-
-			</DrawerForm>
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}
