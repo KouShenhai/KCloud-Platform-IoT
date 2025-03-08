@@ -1,4 +1,4 @@
-import {DrawerForm, ProColumns, ProFormText} from '@ant-design/pro-components';
+import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {exportV3, pageV3, getByIdV3} from "@/services/admin/noticeLog";
 import {Button} from "antd";
@@ -8,11 +8,12 @@ import {ExportToExcel} from "@/utils/export";
 import moment from "moment";
 import {useRef, useState} from "react";
 import {getStatus, STATUS} from "@/services/constant";
+import {NoticeLogDrawer} from "@/pages/Sys/Log/NoticeDrawer";
 
 export default () => {
 
 	const [modalVisit, setModalVisit] = useState(false);
-	const [dataSource, setDataSource] = useState({})
+	const [dataSource, setDataSource] = useState<any>({})
 
 	const statusEnum = {
 		0: '0',
@@ -126,71 +127,13 @@ export default () => {
 
 	return (
 		<>
-			<DrawerForm<TableColumns>
-				open={modalVisit}
-				title="查看通知日志"
-				drawerProps={{
-					destroyOnClose: true,
-					closable: true,
-					maskClosable: true
-				}}
-				initialValues={dataSource}
-				onOpenChange={setModalVisit}
-				submitter={{
-					submitButtonProps: {
-						style: {
-							display: 'none',
-						},
-					}
-				}}
-			>
-				<ProFormText
-					readonly={true}
-					name="code"
-					label="标识"
-					rules={[{ required: true, message: '请输入标识' }]}
-				/>
 
-				<ProFormText
-					readonly={true}
-					name="name"
-					label="名称"
-					rules={[{ required: true, message: '请输入名称' }]}
-				/>
+			<NoticeLogDrawer
+				modalVisit={modalVisit}
+				setModalVisit={setModalVisit}
+				dataSource={dataSource}
+			/>
 
-				<ProFormText
-					readonly={true}
-					name="status"
-					label="状态"
-					rules={[{ required: true, message: '请输入状态' }]}
-					// @ts-ignore
-					convertValue={(value) => {
-						return getStatus(value as '0')?.text
-					}}
-				/>
-
-				<ProFormText
-					readonly={true}
-					name="param"
-					label="参数"
-					rules={[{ required: true, message: '请输入参数' }]}
-				/>
-
-				<ProFormText
-					readonly={true}
-					name="errorMessage"
-					label="错误信息"
-					rules={[{ required: true, message: '请输入错误信息' }]}
-				/>
-
-				<ProFormText
-					readonly={true}
-					name="createTime"
-					label="创建时间"
-					rules={[{ required: true, message: '请输入创建时间' }]}
-				/>
-
-			</DrawerForm>
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}

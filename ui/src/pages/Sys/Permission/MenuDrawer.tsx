@@ -24,6 +24,7 @@ type TableColumns = {
 	type: number | undefined;
 	permission: string | undefined;
 	sort: number | undefined;
+	createTime: string | undefined;
 };
 
 export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, typeValue, setTypeValue, treeList }) => {
@@ -169,6 +170,13 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 				min={1}
 				max={99999}
 				rules={[{ required: true, message: '请输入排序' }]}
+			/>
+
+			<ProFormText
+				readonly={true}
+				hidden={!readOnly}
+				name="createTime"
+				label="创建时间"
 			/>
 
 		</DrawerForm>

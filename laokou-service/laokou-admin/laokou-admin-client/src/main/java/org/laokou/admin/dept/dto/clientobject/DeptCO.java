@@ -22,6 +22,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
+import java.time.Instant;
+
 /**
  * 部门客户端对象.
  *
@@ -56,5 +58,10 @@ public class DeptCO extends ClientObject {
 	 * 部门排序.
 	 */
 	private Integer sort;
+
+	/**
+	 * 创建时间.
+	 */
+	private Instant createTime;
 
 }

@@ -19,6 +19,7 @@ type TableColumns = {
 	name: string | undefined;
 	path: string | undefined;
 	sort: number | undefined;
+	createTime: string | undefined;
 };
 
 export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, treeList }) => {
@@ -110,6 +111,13 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 				min={1}
 				max={99999}
 				rules={[{ required: true, message: '请输入排序' }]}
+			/>
+
+			<ProFormText
+				readonly={true}
+				hidden={!readOnly}
+				name="createTime"
+				label="创建时间"
 			/>
 
 		</DrawerForm>

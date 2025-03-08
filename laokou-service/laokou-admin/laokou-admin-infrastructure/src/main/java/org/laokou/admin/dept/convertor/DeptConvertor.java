@@ -54,6 +54,7 @@ public class DeptConvertor {
 		deptCO.setName(deptDO.getName());
 		deptCO.setPath(deptDO.getPath());
 		deptCO.setSort(deptDO.getSort());
+		deptCO.setCreateTime(deptDO.getCreateTime());
 		return deptCO;
 	}
 

@@ -23,6 +23,8 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 import org.laokou.common.i18n.utils.StringUtil;
 
+import java.time.Instant;
+
 /**
  * 菜单客户端对象.
  *
@@ -77,6 +79,11 @@ public class MenuCO extends ClientObject {
 	 * 菜单状态 0启用 1停用.
 	 */
 	private Integer status;
+
+	/**
+	 * 创建时间.
+	 */
+	private Instant createTime;
 
 	public void setName(String name) {
 		this.name = StringUtil.trim(name);

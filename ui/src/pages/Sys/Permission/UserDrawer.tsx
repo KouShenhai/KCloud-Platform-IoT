@@ -24,6 +24,7 @@ type TableColumns = {
 	avatar: string | undefined;
 	deptIds: string[];
 	roleIds: string[];
+	createTime: string | undefined;
 };
 
 
@@ -154,6 +155,13 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 				request={async () => {
 					return deptTreeList
 				}}
+			/>
+
+			<ProFormText
+				readonly={true}
+				hidden={!readOnly}
+				name="createTime"
+				label="创建时间"
 			/>
 
 		</DrawerForm>
