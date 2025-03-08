@@ -25,8 +25,9 @@ import org.laokou.admin.noticeLog.model.Status;
 import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.excel.utils.ExcelUtil;
 import org.laokou.common.i18n.utils.DateUtil;
+import org.springframework.util.Assert;
+
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 通知日志转换器.
@@ -95,10 +96,12 @@ public final class NoticeLogConvertor implements ExcelUtil.ExcelConvertor<Notice
 	}
 
 	private NoticeLogExcel toExcel(NoticeLogDO noticeLogDO) {
+		Status status = Status.getByCode(noticeLogDO.getStatus());
+		Assert.notNull(status, "通知状态不存在");
 		NoticeLogExcel noticeLogExcel = new NoticeLogExcel();
 		noticeLogExcel.setCode(noticeLogDO.getCode());
 		noticeLogExcel.setName(noticeLogDO.getName());
-		noticeLogExcel.setStatus(Objects.requireNonNull(Status.getByCode(noticeLogDO.getStatus())).getDesc());
+		noticeLogExcel.setStatus(status.getDesc());
 		noticeLogExcel.setParam(noticeLogDO.getParam());
 		noticeLogExcel.setErrorMessage(noticeLogDO.getErrorMessage());
 		noticeLogExcel

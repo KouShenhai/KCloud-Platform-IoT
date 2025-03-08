@@ -40,17 +40,13 @@ public interface Condition {
 	// 谓词and逻辑，参考Predicate
 	default Condition and(Condition other) {
 		Objects.requireNonNull(other);
-		return (facts) -> {
-			return this.evaluate(facts) && other.evaluate(facts);
-		};
+		return (facts) -> this.evaluate(facts) && other.evaluate(facts);
 	}
 
 	// 谓词or逻辑，参考Predicate
 	default Condition or(Condition other) {
 		Objects.requireNonNull(other);
-		return (facts) -> {
-			return this.evaluate(facts) || other.evaluate(facts);
-		};
+		return (facts) -> this.evaluate(facts) || other.evaluate(facts);
 	}
 
 }

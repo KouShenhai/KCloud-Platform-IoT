@@ -1,5 +1,7 @@
 /* eslint-disable */
 import {request} from '@umijs/max';
+import {ExportAllToExcel} from "@/utils/export";
+import moment from "moment";
 
 /** 修改操作日志 修改操作日志 PUT /v3/operate-logs */
 export async function modifyV3(body: API.OperateLogModifyCmd, options?: { [key: string]: any }) {
@@ -53,14 +55,7 @@ export async function getByIdV3(
 
 /** 导出操作日志 导出操作日志 POST /v3/operate-logs/export */
 export async function exportV3(body: API.OperateLogExportCmd, options?: { [key: string]: any }) {
-	return request<any>('/api/admin/v3/operate-logs/export', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		data: body,
-		...(options || {}),
-	});
+	ExportAllToExcel("操作日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/api/admin/v3/operate-logs/export', 'POST', body, options)
 }
 
 /** 导入操作日志 导入操作日志 POST /v3/operate-logs/import */

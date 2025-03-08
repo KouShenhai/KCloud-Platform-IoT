@@ -208,8 +208,8 @@ export default () => {
 							})
 							ExportToExcel({
 								sheetData: _list,
-								sheetFilter: ["code", "name", "status", "param", "errorMessage", "createTime"],
-								sheetHeader: ["标识", "名称", "状态", "参数", "错误信息", "创建时间"],
+								sheetFilter: ["moduleName", "name", "requestType", "operator", "ip", "address", "status", "errorMessage", "costTime", "createTime"],
+								sheetHeader: ["模块名称", "操作名称", "请求类型", "操作人员", "IP地址", "IP归属地", "状态", "错误信息", "消耗时间(毫秒)", "创建时间"],
 								fileName: "操作日志_导出_" + moment(new Date()).format('YYYYMMDDHHmmss'),
 								sheetName: "操作日志"
 							})

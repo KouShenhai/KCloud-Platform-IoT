@@ -19,9 +19,9 @@ package org.laokou.common.crypto.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ResourceUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.springframework.util.Assert;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -85,7 +85,8 @@ public final class RSAUtil {
 		try {
 			byte[] privateKey = StringUtil.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PRIVATE_KEY);
 			byte[] bytes = decryptByPrivateKey(decryptBase64(str), privateKey);
-			return new String(ObjectUtil.requireNotNull(bytes), StandardCharsets.UTF_8);
+			Assert.notNull(bytes, "bytes is null");
+			return new String(bytes, StandardCharsets.UTF_8);
 		}
 		catch (Exception e) {
 			return str;

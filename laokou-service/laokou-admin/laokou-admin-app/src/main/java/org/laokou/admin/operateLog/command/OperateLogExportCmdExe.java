@@ -17,9 +17,17 @@
 
 package org.laokou.admin.operateLog.command;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.operateLog.convertor.OperateLogConvertor;
 import org.laokou.admin.operateLog.dto.OperateLogExportCmd;
+import org.laokou.admin.operateLog.dto.excel.OperateLogExcel;
+import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.excel.utils.ExcelUtil;
+import org.laokou.common.log.database.OperateLogMapper;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.ExecutorService;
 
 /**
  * 导出操作日志命令执行器.
@@ -30,8 +38,19 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OperateLogExportCmdExe {
 
+	private final ExecutorService virtualThreadExecutor;
+
+	private final OperateLogMapper operateLogMapper;
+
 	public void executeVoid(OperateLogExportCmd cmd) {
-		// 校验参数
+		try {
+			DynamicDataSourceContextHolder.push("domain");
+			ExcelUtil.doExport("操作日志", "操作日志", ResponseUtil.getHttpServletResponse(), cmd, operateLogMapper,
+					OperateLogExcel.class, OperateLogConvertor.INSTANCE, virtualThreadExecutor);
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

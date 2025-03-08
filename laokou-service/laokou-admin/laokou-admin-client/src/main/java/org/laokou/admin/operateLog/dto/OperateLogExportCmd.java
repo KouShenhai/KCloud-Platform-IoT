@@ -19,7 +19,6 @@ package org.laokou.admin.operateLog.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
  * 导出操作日志命令.
@@ -28,6 +27,6 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 @Data
 @NoArgsConstructor
-public class OperateLogExportCmd extends PageQuery {
+public class OperateLogExportCmd extends OperateLogPageQry {
 
 }

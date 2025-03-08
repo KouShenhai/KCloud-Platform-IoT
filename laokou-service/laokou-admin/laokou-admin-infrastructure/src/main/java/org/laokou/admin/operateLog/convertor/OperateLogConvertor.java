@@ -17,10 +17,15 @@
 
 package org.laokou.admin.operateLog.convertor;
 
+import org.laokou.admin.noticeLog.model.Status;
 import org.laokou.admin.operateLog.dto.clientobject.OperateLogCO;
+import org.laokou.admin.operateLog.dto.excel.OperateLogExcel;
 import org.laokou.admin.operateLog.model.OperateLogE;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.excel.utils.ExcelUtil;
+import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.log.database.dataobject.OperateLogDO;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -29,7 +34,12 @@ import java.util.List;
  *
  * @author laokou
  */
-public class OperateLogConvertor {
+public final class OperateLogConvertor implements ExcelUtil.ExcelConvertor<OperateLogDO, OperateLogExcel> {
+
+	public static final OperateLogConvertor INSTANCE = new OperateLogConvertor();
+
+	private OperateLogConvertor() {
+	}
 
 	public static OperateLogDO toDataObject(OperateLogE operateLogE, boolean isInsert) {
 		OperateLogDO operateLogDO = new OperateLogDO();
@@ -106,6 +116,34 @@ public class OperateLogConvertor {
 		operateLogE.setServiceAddress(operateLogCO.getServiceAddress());
 		operateLogE.setStackTrace(operateLogCO.getStackTrace());
 		return operateLogE;
+	}
+
+	@Override
+	public List<OperateLogExcel> toExcels(List<OperateLogDO> list) {
+		return list.stream().map(this::toExcel).toList();
+	}
+
+	@Override
+	public OperateLogDO toDataObject(OperateLogExcel operateLogExcel) {
+		return null;
+	}
+
+	private OperateLogExcel toExcel(OperateLogDO operateLogDO) {
+		Status status = Status.getByCode(operateLogDO.getStatus());
+		Assert.notNull(status, "操作状态不存在");
+		OperateLogExcel operateLogExcel = new OperateLogExcel();
+		operateLogExcel.setName(operateLogDO.getName());
+		operateLogExcel.setModuleName(operateLogDO.getModuleName());
+		operateLogExcel.setRequestType(operateLogDO.getRequestType());
+		operateLogExcel.setOperator(operateLogDO.getOperator());
+		operateLogExcel.setIp(operateLogDO.getIp());
+		operateLogExcel.setAddress(operateLogDO.getAddress());
+		operateLogExcel.setStatus(status.getDesc());
+		operateLogExcel.setErrorMessage(operateLogDO.getErrorMessage());
+		operateLogExcel.setCostTime(operateLogDO.getCostTime());
+		operateLogExcel
+			.setCreateTime(DateUtil.format(operateLogDO.getCreateTime(), DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
+		return operateLogExcel;
 	}
 
 }

@@ -19,7 +19,6 @@ package org.laokou.common.core.utils;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.Getter;
-import org.laokou.common.i18n.utils.ObjectUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -30,6 +29,7 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.util.Map;
 
@@ -115,7 +115,9 @@ public final class SpringContextUtil implements ApplicationContextAware, Disposa
 	 * @return 类
 	 */
 	public static Class<?> getType(String name) {
-		return ObjectUtil.requireNotNull(applicationContext.getType(name));
+		Class<?> clazz = applicationContext.getType(name);
+		Assert.notNull(clazz, "Bean is null");
+		return clazz;
 	}
 
 	/**
