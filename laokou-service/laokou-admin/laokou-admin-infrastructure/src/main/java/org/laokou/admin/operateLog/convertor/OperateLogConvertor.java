@@ -78,6 +78,7 @@ public class OperateLogConvertor {
 		operateLogCO.setServiceAddress(operateLogDO.getServiceAddress());
 		operateLogCO.setStackTrace(operateLogDO.getStackTrace());
 		operateLogCO.setCreateTime(operateLogDO.getCreateTime());
+		operateLogCO.setServiceId(operateLogDO.getServiceId());
 		return operateLogCO;
 	}
 

@@ -50,7 +50,7 @@ public class OperateLogCO extends ClientObject {
 	private String moduleName;
 
 	/**
-	 * 操作的URI.
+	 * 操作的请求路径.
 	 */
 	private String uri;
 
@@ -108,6 +108,11 @@ public class OperateLogCO extends ClientObject {
 	 * 操作的服务环境.
 	 */
 	private String profile;
+
+	/**
+	 * 操作的服务ID.
+	 */
+	private String serviceId;
 
 	/**
 	 * 操作的服务地址.

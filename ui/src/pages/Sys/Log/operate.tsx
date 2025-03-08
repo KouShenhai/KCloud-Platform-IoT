@@ -1,4 +1,4 @@
-import {DrawerForm, ProColumns, ProFormText} from '@ant-design/pro-components';
+import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {exportV3, pageV3, getByIdV3} from "@/services/admin/operateLog";
 import {Button} from "antd";
@@ -8,11 +8,12 @@ import {ExportToExcel} from "@/utils/export";
 import moment from "moment";
 import {useRef, useState} from "react";
 import {getStatus, STATUS} from "@/services/constant";
+import {OperateLogDrawer} from "@/pages/Sys/Log/OperateDrawer";
 
 export default () => {
 
 	const [modalVisit, setModalVisit] = useState(false);
-	const [dataSource, setDataSource] = useState({})
+	const [dataSource, setDataSource] = useState<any>({})
 
 	const statusEnum = {
 		0: '0',
@@ -21,25 +22,16 @@ export default () => {
 
 	type TableColumns = {
 		id: number;
-		code: string | undefined;
 		name: string | undefined;
 		status: string | undefined;
-		param: string | undefined;
 		errorMessage: string | undefined;
 		createTime: string | undefined;
 		moduleName: string | undefined;
-		uri: string | undefined;
-		methodName: string | undefined;
 		requestType: string | undefined;
-		requestParams: string | undefined;
-		userAgent: string | undefined;
 		ip: string | undefined;
 		address: string | undefined;
 		operator: string | undefined;
 		costTime: number | string;
-		profile: string | undefined;
-		serviceAddress: string | undefined;
-		stackTrace: string | undefined;
 	};
 
 	const actionRef = useRef();
@@ -121,6 +113,12 @@ export default () => {
 			ellipsis: true
 		},
 		{
+			title: '消耗时间(毫秒)',
+			dataIndex: 'costTime',
+			hideInSearch: true,
+			ellipsis: true
+		},
+		{
 			title: '创建时间',
 			key: 'createTime',
 			dataIndex: 'createTime',
@@ -164,6 +162,12 @@ export default () => {
 
 	return (
 		<>
+			<OperateLogDrawer
+				modalVisit={modalVisit}
+				setModalVisit={setModalVisit}
+				dataSource={dataSource}
+			/>
+
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}

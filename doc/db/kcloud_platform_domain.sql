@@ -144,7 +144,7 @@ COMMENT ON COLUMN "public"."boot_sys_operate_log"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_sys_operate_log"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_sys_operate_log"."name" IS '操作名称';
 COMMENT ON COLUMN "public"."boot_sys_operate_log"."module_name" IS '操作的模块名称';
-COMMENT ON COLUMN "public"."boot_sys_operate_log"."uri" IS '操作的URI';
+COMMENT ON COLUMN "public"."boot_sys_operate_log"."uri" IS '操作的请求路径';
 COMMENT ON COLUMN "public"."boot_sys_operate_log"."method_name" IS '操作的方法名';
 COMMENT ON COLUMN "public"."boot_sys_operate_log"."request_type" IS '操作的请求类型';
 COMMENT ON COLUMN "public"."boot_sys_operate_log"."request_params" IS '操作的请求参数';

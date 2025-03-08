@@ -43,7 +43,7 @@ public class OperateLogE {
 	private String moduleName;
 
 	/**
-	 * 操作的URI.
+	 * 操作的请求路径.
 	 */
 	private String uri;
 

@@ -1,19 +1,15 @@
 import {DrawerForm, ProFormText} from '@ant-design/pro-components';
 import {getStatus} from "@/services/constant";
+import {ProFormTextArea} from "@ant-design/pro-form";
 
-interface DeptDrawerProps {
+interface OperateLogDrawerProps {
 	modalVisit: boolean;
 	setModalVisit: (visible: boolean) => void;
-	title: string;
-	readOnly: boolean;
 	dataSource: TableColumns;
-	onComponent: () => void;
-	treeList: any[]
 }
 
 type TableColumns = {
 	id: number;
-	code: string | undefined;
 	name: string | undefined;
 	status: string | undefined;
 	param: string | undefined;
@@ -29,11 +25,13 @@ type TableColumns = {
 	operator: string | undefined;
 	costTime: number | string;
 	profile: string | undefined;
+	serviceId: string | undefined;
 	serviceAddress: string | undefined;
 	stackTrace: string | undefined;
+	createTime: string | undefined;
 };
 
-export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisit, dataSource }) => {
+export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({ modalVisit, setModalVisit, dataSource }) => {
 
 	return (
 		<DrawerForm<TableColumns>
@@ -44,6 +42,7 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 				closable: true,
 				maskClosable: true
 			}}
+			width={1200}
 			initialValues={dataSource}
 			onOpenChange={setModalVisit}
 			submitter={{
@@ -56,16 +55,72 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 
 			<ProFormText
 				readonly={true}
-				name="code"
-				label="标识"
-				rules={[{ required: true, message: '请输入标识' }]}
+				name="name"
+				label="操作名称"
+				rules={[{ required: true, message: '请输入操作名称' }]}
 			/>
 
 			<ProFormText
 				readonly={true}
-				name="name"
-				label="名称"
-				rules={[{ required: true, message: '请输入名称' }]}
+				name="moduleName"
+				label="模块名称"
+				rules={[{ required: true, message: '请输入模块名称' }]}
+			/>
+
+			<ProFormText
+				readonly={true}
+				name="operator"
+				label="操作人"
+				rules={[{ required: true, message: '请输入操作人' }]}
+			/>
+
+			<ProFormText
+				readonly={true}
+				name="uri"
+				label="请求路径"
+				rules={[{ required: true, message: '请输入URI' }]}
+			/>
+
+			<ProFormText
+				readonly={true}
+				name="requestType"
+				label="请求类型"
+				rules={[{ required: true, message: '请输入请求类型' }]}
+			/>
+
+			<ProFormText
+				readonly={true}
+				name="requestParams"
+				label="请求参数"
+				rules={[{ required: true, message: '请输入请求参数' }]}
+			/>
+
+			<ProFormText
+				readonly={true}
+				name="methodName"
+				label="方法名"
+				rules={[{ required: true, message: '请输入方法名' }]}
+			/>
+
+			<ProFormText
+				readonly={true}
+				name="userAgent"
+				label="浏览器"
+				rules={[{ required: true, message: '请输入浏览器' }]}
+			/>
+
+			<ProFormText
+				readonly={true}
+				name="ip"
+				label="IP地址"
+				rules={[{ required: true, message: '请输入IP地址' }]}
+			/>
+
+			<ProFormText
+				readonly={true}
+				name="address"
+				label="IP地址"
+				rules={[{ required: true, message: '请输入IP地址' }]}
 			/>
 
 			<ProFormText
@@ -81,9 +136,23 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 
 			<ProFormText
 				readonly={true}
-				name="param"
-				label="参数"
-				rules={[{ required: true, message: '请输入参数' }]}
+				name="profile"
+				label="服务环境"
+				rules={[{ required: true, message: '请输入服务环境' }]}
+			/>
+
+			<ProFormText
+				readonly={true}
+				name="serviceId"
+				label="服务ID"
+				rules={[{ required: true, message: '请输入服务ID' }]}
+			/>
+
+			<ProFormText
+				readonly={true}
+				name="serviceAddress"
+				label="服务地址"
+				rules={[{ required: true, message: '请输入服务地址' }]}
 			/>
 
 			<ProFormText
@@ -91,6 +160,13 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 				name="errorMessage"
 				label="错误信息"
 				rules={[{ required: true, message: '请输入错误信息' }]}
+			/>
+
+			<ProFormTextArea
+				readonly={true}
+				name="stackTrace"
+				label="堆栈信息"
+				rules={[{ required: true, message: '请输入堆栈信息' }]}
 			/>
 
 			<ProFormText
