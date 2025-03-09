@@ -74,6 +74,14 @@ public final class RoleParamValidator {
 		return validate();
 	}
 
+	public static ParamValidator.Validate validateDeptIds(RoleE roleE) {
+		List<String> deptIds = roleE.getDeptIds();
+		if (CollectionUtil.isEmpty(deptIds)) {
+			return invalidate("部门IDS不能为空");
+		}
+		return validate();
+	}
+
 	public static ParamValidator.Validate validateName(RoleE roleE, RoleMapper roleMapper, boolean isSave) {
 		Long id = roleE.getId();
 		String name = roleE.getName();

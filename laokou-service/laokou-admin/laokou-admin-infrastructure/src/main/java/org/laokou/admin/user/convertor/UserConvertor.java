@@ -83,7 +83,8 @@ public final class UserConvertor {
 	public static UserDO toDataObject(PasswordEncoder passwordEncoder, UserE userE, boolean isInsert) {
 		UserDO userDO = new UserDO();
 		if (isInsert) {
-			userDO.setId(IdGenerator.defaultSnowflakeId());
+			long id = IdGenerator.defaultSnowflakeId();
+			userDO.setId(id);
 			userDO.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
 			userDO.setUsername(userE.getUsername());
 			userDO.setUsernamePhrase(userE.getUsernamePhrase());
@@ -96,7 +97,6 @@ public final class UserConvertor {
 		}
 		String mobile = userE.getMobile();
 		String mail = userE.getMail();
-		userDO.setId(userE.getId());
 		userDO.setSuperAdmin(userE.getSuperAdmin());
 		userDO.setStatus(userE.getStatus());
 		userDO.setAvatar(userE.getAvatar());

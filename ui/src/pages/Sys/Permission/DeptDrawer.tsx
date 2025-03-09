@@ -36,6 +36,7 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 			initialValues={dataSource}
 			onOpenChange={setModalVisit}
 			autoFocusFirstInput
+			width={1200}
 			submitter={{
 				submitButtonProps: {
 					style: {
@@ -96,12 +97,13 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 				rules={[{ required: true, message: '请输入名称' }]}
 			/>
 
+			{ readOnly && (
 			<ProFormText
 				name="path"
 				label="路径"
-				hidden={!readOnly}
 				readonly={readOnly}
 			/>
+			)}
 
 			<ProFormDigit
 				name="sort"
@@ -113,12 +115,14 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 				rules={[{ required: true, message: '请输入排序' }]}
 			/>
 
-			<ProFormText
-				readonly={true}
-				hidden={!readOnly}
-				name="createTime"
-				label="创建时间"
-			/>
+			{ readOnly && (
+				<ProFormText
+					readonly={true}
+					name="createTime"
+					rules={[{ required: true, message: '请输入创建时间' }]}
+					label="创建时间"
+				/>
+			)}
 
 		</DrawerForm>
 	);

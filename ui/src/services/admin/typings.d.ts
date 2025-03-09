@@ -374,6 +374,8 @@ declare namespace API {
 		name?: string;
 		sort?: number;
 		dataScope?: string;
+		deptIds: string[];
+		menuIds: string[];
 	};
 
 	type RoleExportCmd = true;

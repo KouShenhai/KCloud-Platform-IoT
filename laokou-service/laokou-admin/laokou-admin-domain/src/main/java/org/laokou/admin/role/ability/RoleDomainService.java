@@ -37,6 +37,8 @@ public class RoleDomainService {
 
 	private final RoleMenuGateway roleMenuGateway;
 
+	private final RoleDeptGateway roleDeptGateway;
+
 	public void create(RoleE roleE) {
 		roleGateway.create(roleE);
 	}
@@ -46,11 +48,11 @@ public class RoleDomainService {
 	}
 
 	public Flux<Void> updateAuthority(RoleE roleE) {
-		return Flux.merge(roleGateway.update(roleE), roleMenuGateway.update(roleE));
+		return Flux.merge(roleGateway.update(roleE), roleMenuGateway.update(roleE), roleDeptGateway.update(roleE));
 	}
 
 	public Flux<Void> delete(Long[] ids) {
-		return Flux.merge(roleGateway.delete(ids), roleMenuGateway.delete(ids));
+		return Flux.merge(roleGateway.delete(ids), roleMenuGateway.delete(ids), roleDeptGateway.delete(ids));
 	}
 
 }

@@ -8,7 +8,8 @@ import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {trim} from "@/utils/format";
-import {treeListV3} from "@/services/admin/menu";
+import {treeListV3 as menuTreeListV3} from "@/services/admin/menu";
+import {treeListV3 as deptTreeListV3} from "@/services/admin/dept";
 import {RoleDrawer} from "@/pages/Sys/Permission/RoleDrawer";
 import {RoleModifyAuthorityDrawer} from "@/pages/Sys/Permission/RoleModifyAuthorityDrawer";
 
@@ -30,6 +31,8 @@ export default () => {
 	const [title, setTitle] = useState("")
 	const [menuTreeList, setMenuTreeList] = useState<any[]>([])
 	const [modalModifyAuthorityVisit, setModalModifyAuthorityVisit] = useState(false);
+	const [deptTreeList, setDeptTreeList] = useState<any[]>([])
+	const [typeValue, setTypeValue] = useState('all');
 
 	const getPageQuery = (params: any) => {
 		return {
@@ -46,8 +49,14 @@ export default () => {
 	}
 
 	const getMenuTreeList = async () => {
-		treeListV3({code: 1, status: 0}).then(res => {
+		menuTreeListV3({code: 1, status: 0}).then(res => {
 			setMenuTreeList(res?.data)
+		})
+	}
+
+	const getDeptTreeList = async () => {
+		deptTreeListV3({}).then(res => {
+			setDeptTreeList(res?.data)
 		})
 	}
 
@@ -63,6 +72,7 @@ export default () => {
 
 	useEffect(() => {
 		getMenuTreeList().catch(console.log)
+		getDeptTreeList().catch(console.log)
 	}, []);
 
 	const columns: ProColumns<TableColumns>[] = [
@@ -145,6 +155,7 @@ export default () => {
 						setTitle('分配权限')
 						setModalModifyAuthorityVisit(true)
 						setDataSource(res?.data)
+						setTypeValue(res?.data?.dataScope)
 					})
 				}}>
 					分配权限
@@ -198,6 +209,9 @@ export default () => {
 					actionRef?.current?.reload();
 				}}
 				menuTreeList={menuTreeList}
+				deptTreeList={deptTreeList}
+				typeValue={typeValue}
+				setTypeValue={setTypeValue}
 			/>
 
 			<ProTable<TableColumns>

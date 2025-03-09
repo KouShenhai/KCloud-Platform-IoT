@@ -38,7 +38,9 @@ public class ModifyAuthorityRoleParamValidator implements RoleParamValidatorExtP
 				// 校验数据范围
 				RoleParamValidator.validateDataScope(roleE),
 				// 校验菜单IDS
-				RoleParamValidator.validateMenuIds(roleE));
+				RoleParamValidator.validateMenuIds(roleE),
+				// 校验部门IDS
+				RoleParamValidator.validateDeptIds(roleE));
 	}
 
 }

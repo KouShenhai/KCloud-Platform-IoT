@@ -178,12 +178,14 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 				rules={[{ required: true, message: '请输入排序' }]}
 			/>
 
-			<ProFormText
-				readonly={true}
-				hidden={!readOnly}
-				name="createTime"
-				label="创建时间"
-			/>
+			{ readOnly && (
+				<ProFormText
+					readonly={true}
+					name="createTime"
+					rules={[{ required: true, message: '请输入创建时间' }]}
+					label="创建时间"
+				/>
+			)}
 
 		</DrawerForm>
 	);

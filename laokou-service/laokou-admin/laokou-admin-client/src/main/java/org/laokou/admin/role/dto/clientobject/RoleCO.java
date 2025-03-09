@@ -66,6 +66,11 @@ public class RoleCO extends ClientObject {
 	 */
 	private List<String> menuIds;
 
+	/**
+	 * 部门IDS.
+	 */
+	private List<String> deptIds;
+
 	public void setName(String name) {
 		this.name = StringUtil.trim(name);
 	}
