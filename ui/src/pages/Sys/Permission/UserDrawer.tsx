@@ -121,14 +121,16 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 				]}
 			/>
 
+			{ readOnly && (
 			<ProFormSelect
 				name="roleIds"
 				allowClear={true}
 				label="所属角色"
 				mode={'multiple'}
-				hidden={!readOnly}
 				readonly={readOnly}
 				options={roleList}
+				placeholder={'请选择所属角色'}
+				rules={[{required: true, message: '请选择所属角色',}]}
 				fieldProps={{
 					fieldNames: {
 						label: 'name',
@@ -136,13 +138,16 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 					}
 				}}
 			/>
+			)}
 
+			{ readOnly && (
 			<ProFormTreeSelect
 				name="deptIds"
 				label="所属部门"
-				hidden={!readOnly}
 				readonly={readOnly}
 				allowClear={true}
+				placeholder={'请选择所属部门'}
+				rules={[{ required: true, message: '请选择所属部门' }]}
 				fieldProps={{
 					fieldNames: {
 						label: 'name',
@@ -154,13 +159,16 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 					return deptTreeList
 				}}
 			/>
+			)}
 
-			<ProFormText
-				readonly={true}
-				hidden={!readOnly}
-				name="createTime"
-				label="创建时间"
-			/>
+			{ readOnly && (
+				<ProFormText
+					readonly={true}
+					name="createTime"
+					rules={[{ required: true, message: '请输入创建时间' }]}
+					label="创建时间"
+				/>
+			)}
 
 		</DrawerForm>
 	);

@@ -19,6 +19,7 @@ package org.laokou.admin.role.convertor;
 
 import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
+import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.core.utils.IdGenerator;
@@ -43,6 +44,7 @@ public class RoleConvertor {
 		}
 		roleDO.setName(roleE.getName());
 		roleDO.setSort(roleE.getSort());
+		roleDO.setDataScope(roleE.getDataScope());
 		return roleDO;
 	}
 
@@ -61,6 +63,24 @@ public class RoleConvertor {
 			RoleMenuDO roleMenuDO = new RoleMenuDO();
 			roleMenuDO.setId(id);
 			return roleMenuDO;
+		}).toList();
+	}
+
+	public static List<RoleDeptDO> toDataObjs(RoleE roleE, Long roleId) {
+		return roleE.getDeptIds().stream().map(deptId -> {
+			RoleDeptDO roleDeptDO = new RoleDeptDO();
+			roleDeptDO.setId(IdGenerator.defaultSnowflakeId());
+			roleDeptDO.setRoleId(roleId);
+			roleDeptDO.setDeptId(Long.valueOf(deptId));
+			return roleDeptDO;
+		}).toList();
+	}
+
+	public static List<RoleDeptDO> toDataObjs(RoleE roleE) {
+		return roleE.getRoleDeptIds().stream().map(id -> {
+			RoleDeptDO roleDeptDO = new RoleDeptDO();
+			roleDeptDO.setId(id);
+			return roleDeptDO;
 		}).toList();
 	}
 
@@ -91,6 +111,7 @@ public class RoleConvertor {
 		roleE.setId(id);
 		roleE.setMenuIds(roleCO.getMenuIds());
 		roleE.setDataScope(roleCO.getDataScope());
+		roleE.setDeptIds(roleCO.getDeptIds());
 		roleE.setRoleIds(Collections.singletonList(id));
 		return roleE;
 	}

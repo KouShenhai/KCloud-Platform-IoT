@@ -77,6 +77,11 @@ public final class Constant {
 		 */
 		public static final String ROLE_MENU_TABLE = "boot_sys_role_menu";
 
+		/**
+		 * 角色部门表.
+		 */
+		public static final String ROLE_DEPT_TABLE = "boot_sys_role_dept";
+
 	}
 
 	public static final class Domain {

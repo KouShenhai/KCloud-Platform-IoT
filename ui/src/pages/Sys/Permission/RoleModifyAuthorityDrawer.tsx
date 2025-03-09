@@ -8,7 +8,10 @@ interface RoleAuthorityProps {
 	title: string;
 	dataSource: TableColumns;
 	onComponent: () => void;
-	menuTreeList: any[]
+	menuTreeList: any[];
+	deptTreeList: any[];
+	typeValue: string;
+	setTypeValue: (value: string) => void;
 }
 
 type TableColumns = {
@@ -20,7 +23,7 @@ type TableColumns = {
 
 
 
-export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalModifyAuthorityVisit, setModalModifyAuthorityVisit, title, dataSource, onComponent, menuTreeList }) => {
+export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalModifyAuthorityVisit, setModalModifyAuthorityVisit, title, dataSource, onComponent, menuTreeList, deptTreeList, typeValue, setTypeValue }) => {
 
 	return (
 		<DrawerForm<TableColumns>
@@ -42,11 +45,19 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 				}
 			}}
 			onFinish={ async (value) => {
-				const menuIds = value?.menuIds.map((item: any) => item?.value ? item?.value : item)
+				let menuIds: any[] = []
+				let deptIds: any[] = []
+				if (value?.menuIds) {
+					menuIds = value?.menuIds.map((item: any) => item?.value ? item?.value : item)
+				}
+				if (value?.deptIds) {
+					deptIds = value?.deptIds.map((item: any) => item?.value ? item?.value : item)
+				}
 				const co = {
 					id: value?.id,
 					dataScope: value?.dataScope,
-					menuIds: menuIds,
+					deptIds: deptIds,
+					menuIds: menuIds
 				}
 				modifyAuthorityV3({co: co}).then(res => {
 					if (res.code === 'OK') {
@@ -112,6 +123,9 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 				label="数据范围"
 				placeholder={'请选择数据范围'}
 				rules={[{ required: true, message: '请选择数据范围' }]}
+				onChange={(value: string) => {
+					setTypeValue(value)
+				}}
 				options={[
 					{value: 'all', label: '全部'},
 					{value: 'custom', label: '自定义'},
@@ -120,6 +134,44 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 					{value: 'self', label: '仅本人'},
 				]}
 			/>
+
+			{typeValue === 'custom' && (
+				<ProFormTreeSelect
+					name="deptIds"
+					label="部门权限"
+					allowClear={true}
+					placeholder={'请选择部门权限'}
+					rules={[{ required: true, message: '请选择部门权限' }]}
+					fieldProps={{
+						fieldNames: {
+							label: 'name',
+							value: 'id',
+							children: 'children'
+						},
+						// 最多显示多少个 tag，响应式模式会对性能产生损耗
+						maxTagCount: 6,
+						// 多选
+						multiple: true,
+						// 显示复选框
+						treeCheckable: true,
+						// 展示策略
+						showCheckedStrategy: 'SHOW_ALL',
+						// 取消父子节点联动
+						treeCheckStrictly: true,
+						// 默认展示所有节点
+						treeDefaultExpandAll: true,
+						// 高度
+						dropdownStyle: { maxHeight: 460 },
+						// 不显示搜索
+						showSearch: false,
+						// 高度
+						listHeight: 450
+					}}
+					request={async () => {
+						return deptTreeList
+					}}
+				/>
+			)}
 
 		</DrawerForm>
 	);

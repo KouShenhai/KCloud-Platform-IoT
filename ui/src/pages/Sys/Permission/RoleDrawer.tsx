@@ -56,7 +56,9 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 				const co = {
 					id: value.id,
 					sort: value.sort,
-					name: value.name
+					name: value.name,
+					menuIds: [],
+					deptIds: []
 				}
 				if (value.id === undefined) {
 					saveV3({co: co}, uuidV7()).then(res => {
@@ -101,11 +103,13 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 				rules={[{ required: true, message: '请输入排序' }]}
 			/>
 
+			{ readOnly && (
 			<ProFormSelect
 				name="dataScope"
 				label="数据范围"
 				readonly={readOnly}
-				hidden={!readOnly}
+				placeholder={'请选择数据范围'}
+				rules={[{ required: true, message: '请选择数据范围' }]}
 				options={[
 					{value: 'all', label: '全部'},
 					{value: 'custom', label: '自定义'},
@@ -114,13 +118,16 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 					{value: 'self', label: '仅本人'},
 				]}
 			/>
+			)}
 
+			{ readOnly && (
 			<ProFormTreeSelect
 				name="menuIds"
 				label="菜单权限"
 				readonly={readOnly}
-				hidden={!readOnly}
 				allowClear={true}
+				placeholder={'请选择菜单权限'}
+				rules={[{ required: true, message: '请选择菜单权限' }]}
 				fieldProps={{
 					fieldNames: {
 						label: 'name',
@@ -132,13 +139,16 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 					return menuTreeList
 				}}
 			/>
+			)}
 
-			<ProFormText
-				readonly={true}
-				hidden={!readOnly}
-				name="createTime"
-				label="创建时间"
-			/>
+			{ readOnly && (
+				<ProFormText
+					readonly={true}
+					name="createTime"
+					rules={[{ required: true, message: '请输入创建时间' }]}
+					label="创建时间"
+				/>
+			)}
 
 		</DrawerForm>
 	);

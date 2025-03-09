@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleGetQry;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
+import org.laokou.admin.role.gatewayimpl.database.RoleDeptMapper;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.gatewayimpl.database.RoleMenuMapper;
 import org.laokou.common.i18n.dto.Result;
@@ -39,9 +40,12 @@ public class RoleGetQryExe {
 
 	private final RoleMenuMapper roleMenuMapper;
 
+	private final RoleDeptMapper roleDeptMapper;
+
 	public Result<RoleCO> execute(RoleGetQry qry) {
 		RoleCO roleCO = RoleConvertor.toClientObject(roleMapper.selectById(qry.getId()));
 		roleCO.setMenuIds(roleMenuMapper.selectMenuIdsByRoleId(qry.getId()));
+		roleCO.setDeptIds(roleDeptMapper.selectDeptIdsByRoleId(qry.getId()));
 		return Result.ok(roleCO);
 	}
 
