@@ -54,6 +54,4 @@ ${AnsiColor.DEFAULT}
 
 相遇便是缘分，感谢各位盆友
 
-Nacos访问地址【https】：https://127.0.0.1:${server.port}/nacos
-
 Nacos访问地址【http】：http://127.0.0.1:${server.port}/nacos

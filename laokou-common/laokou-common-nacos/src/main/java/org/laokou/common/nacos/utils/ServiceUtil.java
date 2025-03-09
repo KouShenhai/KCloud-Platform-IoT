@@ -19,6 +19,7 @@ package org.laokou.common.nacos.utils;
 
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.nacos.api.exception.NacosException;
+import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.alibaba.nacos.client.naming.NacosNamingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,6 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 
 import java.util.List;
-import java.util.Properties;
 
 /**
  * Nacos服务工具类.
@@ -39,14 +39,6 @@ import java.util.Properties;
 @Slf4j
 @RequiredArgsConstructor
 public class ServiceUtil {
-
-	private static final String NAMESPACE = "namespace";
-
-	private static final String SERVER_ADDR = "serverAddr";
-
-	private static final String USERNAME = "username";
-
-	private static final String PASSWORD = "password";
 
 	private final LoadBalancerClient loadBalancerClient;
 
@@ -84,6 +76,10 @@ public class ServiceUtil {
 		return loadBalancerClient.choose(serviceId);
 	}
 
+	public List<Instance> getAllInstances(String serviceId) throws NacosException {
+		return getNacosNamingService().getAllInstances(serviceId);
+	}
+
 	/**
 	 * 查看命名服务.
 	 * @return 命令服务
@@ -92,12 +88,7 @@ public class ServiceUtil {
 		if (ObjectUtil.isNull(nacosNamingService)) {
 			synchronized (LOCK) {
 				if (ObjectUtil.isNull(nacosNamingService)) {
-					Properties properties = new Properties();
-					properties.put(NAMESPACE, nacosDiscoveryProperties.getNamespace());
-					properties.put(SERVER_ADDR, nacosDiscoveryProperties.getServerAddr());
-					properties.put(USERNAME, nacosDiscoveryProperties.getUsername());
-					properties.put(PASSWORD, nacosDiscoveryProperties.getPassword());
-					nacosNamingService = new NacosNamingService(properties);
+					nacosNamingService = new NacosNamingService(nacosDiscoveryProperties.getNacosProperties());
 				}
 			}
 		}
