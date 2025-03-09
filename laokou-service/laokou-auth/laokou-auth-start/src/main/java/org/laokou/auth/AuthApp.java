@@ -64,12 +64,6 @@ public class AuthApp {
 
 	// @formatter:off
     /// ```properties
-	/// -Dnacos.remote.client.rpc.tls.enable=true
-    /// -Dnacos.remote.client.rpc.tls.mutualAuth=true
-    /// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
-    /// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
-    /// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
-    /// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
     /// -Dcsp.sentinel.api.port=8722
     /// -Dserver.port=1111
     /// ```

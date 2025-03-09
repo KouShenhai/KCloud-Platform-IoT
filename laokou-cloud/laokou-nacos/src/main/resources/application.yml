@@ -105,18 +105,10 @@ server:
     accesslog:
       enabled: true
   ssl:
-    # 开启证书
-    enabled: @SSL-ENABLED@
-    # 证书位置
-    key-store: classpath:scg-keystore.p12
-    # 证书别名
-    key-alias: ${spring.application.name}
-    # 秘钥类型
-    key-store-type: PKCS12
-    # 证书密码
-    key-store-password: laokou
+    # 关闭证书
+    enabled: false
   http2:
-    enabled: @SSL-ENABLED@
+    enabled: false
   shutdown: graceful
 spring:
   main:

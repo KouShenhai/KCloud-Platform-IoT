@@ -32,14 +32,6 @@ import java.security.NoSuchAlgorithmException;
 @SpringBootApplication(scanBasePackages = { "org.apache.seata" })
 public class SeataServerSampleApp {
 
-	/// ```properties
-	/// -Dnacos.remote.client.rpc.tls.enable=true
-	/// -Dnacos.remote.client.rpc.tls.mutualAuth=true
-	/// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
-	/// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
-	/// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
-	/// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
-	/// ```
 	public static void main(String[] args) throws NoSuchAlgorithmException, KeyManagementException {
 		// 忽略SSL认证
 		SslUtil.ignoreSSLTrust();

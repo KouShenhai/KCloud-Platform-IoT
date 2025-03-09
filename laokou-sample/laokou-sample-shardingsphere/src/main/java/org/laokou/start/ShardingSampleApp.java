@@ -36,19 +36,11 @@ import java.security.NoSuchAlgorithmException;
  */
 @EnableTaskExecutor
 @EnableConfigurationProperties
-@EnableDiscoveryClient(autoRegister = false)
+@EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
 @MapperScan(basePackages = "org.laokou.infrastructure.gatewayimpl.database")
 public class ShardingSampleApp {
 
-	/// ```properties
-	/// -Dnacos.remote.client.rpc.tls.enable=true
-	/// -Dnacos.remote.client.rpc.tls.mutualAuth=true
-	/// -Dnacos.remote.client.rpc.tls.certChainFile=nacos-client-cert.pem
-	/// -Dnacos.remote.client.rpc.tls.certPrivateKey=nacos-client-key.pem
-	/// -Dnacos.remote.client.rpc.tls.trustCollectionChainPath=nacos-ca-cert.pem
-	/// -Dnacos.remote.client.rpc.tls.certPrivateKeyPassword=laokou123
-	/// ```
 	public static void main(String[] args)
 			throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		// 忽略SSL认证

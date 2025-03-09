@@ -1128,7 +1128,6 @@ spring:
       circuitbreaker:
         enabled: true
       httpclient:
-        enabled: false
         hc5:
           enabled: false
         disable-ssl-validation: true
@@ -2043,7 +2042,6 @@ spring:
       circuitbreaker:
         enabled: true
       httpclient:
-        enabled: false
         hc5:
           enabled: false
         disable-ssl-validation: true
@@ -2834,7 +2832,6 @@ spring:
       circuitbreaker:
         enabled: true
       httpclient:
-        enabled: false
         hc5:
           enabled: false
         disable-ssl-validation: true
@@ -5957,6 +5954,29 @@ INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (53, 'applicat
       type: batch
       # topic不存在报错
       missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2023-10-26 08:54:23', '2023-11-06 18:14:00', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'kafka公共配置', '', '', 'yaml', '', '');
+
+INSERT INTO "public"."config_info" ("id", "data_id", "group_id", "content", "md5", "gmt_create", "gmt_modified", "src_user", "src_ip", "app_name", "tenant_id", "c_desc", "c_use", "effect", "type", "c_schema", "encrypted_data_key") VALUES (214, 'application-common-redis.yaml', 'DEFAULT_GROUP', '# jasypt
+jasypt:
+  encryptor:
+    password: 5201314wumeihua
+
+# spring
+spring:
+  data:
+    # redis
+    redis:
+      client-type: lettuce
+      host: redis
+      port: 6379
+      password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+      connect-timeout: 60000ms #连接超时时长（毫秒）
+      timeout: 60000ms #超时时长（毫秒）
+      lettuce:
+        pool:
+          max-active: -1 #连接池最大连接数（使用负值表示无极限）
+          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接', '271221c36024d359f47832c004d714cb', '2025-03-09 11:21:13.558', '2025-03-09 11:21:13.558', 'nacos', '127.0.0.1', '', '', 'redis公共配置', NULL, NULL, 'yaml', NULL, '');
 
 -- ----------------------------
 -- Primary Key structure for table users
