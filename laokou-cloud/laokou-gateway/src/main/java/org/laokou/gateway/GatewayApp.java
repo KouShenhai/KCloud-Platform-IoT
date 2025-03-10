@@ -37,11 +37,14 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.util.StopWatch;
 import reactor.core.publisher.Hooks;
+import reactor.core.scheduler.Schedulers;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
+import java.util.concurrent.ExecutorService;
 
 /**
  * 网关服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
@@ -62,6 +65,8 @@ import java.security.NoSuchAlgorithmException;
 public class GatewayApp implements CommandLineRunner {
 
 	private final NacosRouteDefinitionRepository nacosRouteDefinitionRepository;
+
+	private final ExecutorService virtualThreadExecutor;
 
 	// @formatter:off
     /// ```properties
@@ -97,23 +102,25 @@ public class GatewayApp implements CommandLineRunner {
 
 	private void syncRouters() {
 		// 删除路由
-		nacosRouteDefinitionRepository.removeRouters().subscribe(delFlag -> {
+		nacosRouteDefinitionRepository.removeRouters().map(delFlag -> {
 			if (delFlag) {
 				log.info("删除路由成功");
 			}
 			else {
 				log.error("删除路由失败");
 			}
-		});
-		// 保存路由
-		nacosRouteDefinitionRepository.saveRouters().subscribe(saveFlag -> {
-			if (saveFlag) {
-				log.info("保存路由成功");
-			}
-			else {
-				log.error("保存路由失败");
-			}
-		});
+			// 保存路由
+			return nacosRouteDefinitionRepository.saveRouters().doOnNext(saveFlag -> {
+				if (saveFlag) {
+					log.info("保存路由成功");
+				}
+				else {
+					log.error("保存路由失败");
+				}
+			}).subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
+		}).subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			// 阻塞60s
+			.block(Duration.ofSeconds(60));
 	}
 
     // @formatter:on
