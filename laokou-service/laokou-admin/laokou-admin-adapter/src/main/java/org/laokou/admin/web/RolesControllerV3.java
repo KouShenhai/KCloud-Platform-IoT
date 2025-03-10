@@ -34,8 +34,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.scheduler.Schedulers;
-
-import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -67,9 +65,7 @@ public class RolesControllerV3 {
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@Operation(summary = "修改角色", description = "修改角色")
 	public void modifyV3(@RequestBody RoleModifyCmd cmd) {
-		rolesServiceI.modify(cmd)
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
-			.subscribe();
+		rolesServiceI.modify(cmd).subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor)).subscribe();
 	}
 
 	@DeleteMapping

@@ -1,0 +1,21 @@
+server:
+  port: 8014
+
+spring:
+  application:
+    name: laokou-test-dubbo
+
+dubbo:
+  registry:
+    address: nacos://nacos:8848?username=nacos&password=nacos
+    register-mode: instance
+    parameters:
+      register-consumer-url: true
+      namespace: public
+    group: DEFAULT_GROUP
+  protocol:
+    name: dubbo
+    port: -1
+  application:
+    name: laokou-test-dubbo
+    logger: slf4j
