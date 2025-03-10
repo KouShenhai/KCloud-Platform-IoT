@@ -54,7 +54,7 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 	}
 
 	@Override
-	public String getResult(ResultSet resultSet, String columnName) throws SQLException {
+	public String getResult(ResultSet resultSet, String columnName) {
 		try {
 			String data = resultSet.getString(columnName);
 			if (StringUtil.isEmpty(data)) {
@@ -69,7 +69,7 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 	}
 
 	@Override
-	public String getResult(ResultSet resultSet, int columnIndex) throws SQLException {
+	public String getResult(ResultSet resultSet, int columnIndex) {
 		try {
 			String data = resultSet.getString(columnIndex);
 			if (StringUtil.isEmpty(data)) {

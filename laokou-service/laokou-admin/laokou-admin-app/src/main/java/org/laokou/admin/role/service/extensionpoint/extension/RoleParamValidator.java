@@ -25,6 +25,7 @@ import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.ParamValidator;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.mybatisplus.annotation.DataScope;
 
 import java.util.List;
 
@@ -76,7 +77,7 @@ public final class RoleParamValidator {
 
 	public static ParamValidator.Validate validateDeptIds(RoleE roleE) {
 		List<String> deptIds = roleE.getDeptIds();
-		if (CollectionUtil.isEmpty(deptIds)) {
+		if (ObjectUtil.equals(roleE.getDataScope(), DataScope.CUSTOM.getCode()) && CollectionUtil.isEmpty(deptIds)) {
 			return invalidate("部门IDS不能为空");
 		}
 		return validate();
