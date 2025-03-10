@@ -45,7 +45,13 @@ class CrawlerTest {
 	private static final String DIRECTORY = "D:/crawl/data/";
 
 	static {
-		MAP.put("xxx", "xxx");
+		try {
+			MAP.put("xxx", "xxx");
+			SslUtil.ignoreSSLTrust();
+		}
+		catch (NoSuchAlgorithmException | KeyManagementException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Test
@@ -71,7 +77,6 @@ class CrawlerTest {
 			String linkText = link.text();
 			String linkHref = link.attr("abs:href");
 			if (linkHref.startsWith("https://xxx/%")) {
-				SslUtil.ignoreSSLTrust();
 				try {
 					FileUtil.write(FileUtil.create(directory, linkText.replace(".md", ".html")),
 							getContent(directory, index, linkHref).getBytes(StandardCharsets.UTF_8));

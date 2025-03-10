@@ -67,10 +67,9 @@ public class RolesControllerV3 {
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@Operation(summary = "修改角色", description = "修改角色")
 	public void modifyV3(@RequestBody RoleModifyCmd cmd) {
-		// 阻塞5秒
 		rolesServiceI.modify(cmd)
 			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
-			.block(Duration.ofSeconds(5));
+			.subscribe();
 	}
 
 	@DeleteMapping
@@ -78,10 +77,9 @@ public class RolesControllerV3 {
 	@OperateLog(module = "角色管理", operation = "删除角色")
 	@Operation(summary = "删除角色", description = "删除角色")
 	public void removeV3(@RequestBody Long[] ids) {
-		// 阻塞5秒
 		rolesServiceI.remove(new RoleRemoveCmd(ids))
 			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
-			.blockLast(Duration.ofSeconds(5));
+			.subscribe();
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -105,10 +103,9 @@ public class RolesControllerV3 {
 	@OperateLog(module = "用户管理", operation = "修改角色权限")
 	@Operation(summary = "修改角色权限", description = "修改角色权限")
 	public void modifyAuthorityV3(@RequestBody RoleModifyAuthorityCmd cmd) throws Exception {
-		// 阻塞5秒
 		rolesServiceI.modifyAuthority(cmd)
 			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
-			.blockLast(Duration.ofSeconds(5));
+			.subscribe();
 	}
 
 	@TraceLog
