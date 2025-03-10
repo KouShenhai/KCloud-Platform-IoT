@@ -20,6 +20,18 @@
       <groupId>org.apache.dubbo</groupId>
       <artifactId>dubbo-nacos-spring-boot-starter</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.alibaba.csp</groupId>
+      <artifactId>sentinel-apache-dubbo3-adapter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba.csp</groupId>
+      <artifactId>sentinel-transport-simple-http</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

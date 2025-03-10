@@ -43,7 +43,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -102,25 +101,23 @@ public class GatewayApp implements CommandLineRunner {
 
 	private void syncRouters() {
 		// 删除路由
-		nacosRouteDefinitionRepository.removeRouters().map(delFlag -> {
+		nacosRouteDefinitionRepository.removeRouters().subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor)).subscribe(delFlag -> {
 			if (delFlag) {
 				log.info("删除路由成功");
 			}
 			else {
 				log.error("删除路由失败");
 			}
-			// 保存路由
-			return nacosRouteDefinitionRepository.saveRouters().doOnNext(saveFlag -> {
-				if (saveFlag) {
-					log.info("保存路由成功");
-				}
-				else {
-					log.error("保存路由失败");
-				}
-			}).subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
-		}).subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
-			// 阻塞60s
-			.block(Duration.ofSeconds(60));
+		});
+		// 保存路由
+		nacosRouteDefinitionRepository.saveRouters().subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor)).subscribe(saveFlag -> {
+			if (saveFlag) {
+				log.info("保存路由成功");
+			}
+			else {
+				log.error("保存路由失败");
+			}
+		});
 	}
 
     // @formatter:on
