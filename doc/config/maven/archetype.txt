@@ -15,7 +15,7 @@
  *
  */
 
-mvn clean archetype:create-from-project
+mvn clean archetype:create-from-project -e
 
 cd target/generated-sources/archetype/
 mvn clean install
