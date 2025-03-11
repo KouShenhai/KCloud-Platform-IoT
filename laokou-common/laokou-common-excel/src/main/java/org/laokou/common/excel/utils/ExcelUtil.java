@@ -123,8 +123,8 @@ public final class ExcelUtil {
 						}
 						catch (InterruptedException e) {
 							Thread.currentThread().interrupt();
-							log.error("未知错误，错误信息：{}", e.getMessage(), e);
-							throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+							log.error("Excel导出失败，错误信息：{}", e.getMessage(), e);
+							throw new SystemException("S_Excel_ExportFailed", e.getMessage(), e);
 						}
 						finally {
 							list.clear();
@@ -141,7 +141,7 @@ public final class ExcelUtil {
 			}
 			catch (Exception e) {
 				log.error("Excel导出失败，错误信息：{}", e.getMessage());
-				throw new SystemException("S_Excel_UnKnowError", "Excel导出失败，系统繁忙", e);
+				throw new SystemException("S_Excel_ExportFailed", "Excel导出失败，系统繁忙", e);
 			}
 		}
 		else {
@@ -223,8 +223,8 @@ public final class ExcelUtil {
 
 		@Override
 		public void onException(Exception e, AnalysisContext context) {
-			log.error("Excel导入异常，错误信息：{}", e.getMessage());
-			throw new SystemException("S_Excel_ImportError", "Excel导入异常，系统繁忙", e);
+			log.error("Excel导入失败，错误信息：{}", e.getMessage());
+			throw new SystemException("S_Excel_ImportFailed", "Excel导入失败，系统繁忙", e);
 		}
 
 		@Override
