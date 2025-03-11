@@ -73,13 +73,13 @@ public final class ExcelUtil {
 	private ExcelUtil() {
 	}
 
-	public static <MAPPER, EXCEL, DO> void doImport(String sheetName, Class<EXCEL> excel,
+	public static <MAPPER extends CrudMapper<?, ?, DO>, EXCEL, DO> void doImport(String sheetName, Class<EXCEL> excel,
 			ExcelConvertor<DO, EXCEL> convert, InputStream inputStream, HttpServletResponse response,
 			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil) {
 		doImport(sheetName, excel, convert, inputStream, response, clazz, consumer, mybatisUtil, null);
 	}
 
-	public static <MAPPER, EXCEL, DO> void doImport(String sheetName, Class<EXCEL> excel,
+	public static <MAPPER extends CrudMapper<?, ?, DO>, EXCEL, DO> void doImport(String sheetName, Class<EXCEL> excel,
 			ExcelConvertor<DO, EXCEL> convert, InputStream inputStream, HttpServletResponse response,
 			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil,
 			ExcelValidator<EXCEL> validator) {
@@ -166,7 +166,7 @@ public final class ExcelUtil {
 
 	}
 
-	private static class DataListener<MAPPER, DO, EXCEL> implements ReadListener<EXCEL> {
+	private static class DataListener<MAPPER extends CrudMapper<?, ?, DO>, DO, EXCEL> implements ReadListener<EXCEL> {
 
 		/**
 		 * Temporary storage of data.

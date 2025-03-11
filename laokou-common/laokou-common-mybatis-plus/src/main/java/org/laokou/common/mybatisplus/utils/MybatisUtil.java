@@ -26,6 +26,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -47,46 +48,52 @@ import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 @Component
 public class MybatisUtil {
 
-	private static final int DEFAULT_BATCH_NUM = 100000;
+	private static final int DEFAULT_PARTITION_SIZE = 100000;
+
+	private static final int DEFAULT_BATCH_SIZE = 1000;
 
 	private final SqlSessionFactory sqlSessionFactory;
 
 	private final ExecutorService virtualThreadExecutor;
 
-	public <DO, MAPPER> void batch(List<DO> dataList, int batchNum, int timeout, Class<MAPPER> clazz,
+	public <DO, MAPPER extends CrudMapper<?, ?, DO>> void batch(List<DO> dataList, int partitionSize, int batchSize,
+			int timeout, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer) {
+		batch(dataList, partitionSize, batchSize, timeout, clazz, MASTER, consumer);
+	}
+
+	public <DO, MAPPER extends CrudMapper<?, ?, DO>> void batch(List<DO> dataList, Class<MAPPER> clazz,
 			BiConsumer<MAPPER, DO> consumer) {
-		batch(dataList, batchNum, timeout, clazz, MASTER, consumer);
+		batch(dataList, DEFAULT_PARTITION_SIZE, DEFAULT_BATCH_SIZE, 180, clazz, MASTER, consumer);
 	}
 
-	public <DO, MAPPER> void batch(List<DO> dataList, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer) {
-		batch(dataList, DEFAULT_BATCH_NUM, 180, clazz, MASTER, consumer);
-	}
-
-	public <DO, MAPPER> void batch(List<DO> dataList, Class<MAPPER> clazz, String ds, BiConsumer<MAPPER, DO> consumer) {
-		batch(dataList, DEFAULT_BATCH_NUM, 180, clazz, ds, consumer);
+	public <DO, MAPPER extends CrudMapper<?, ?, DO>> void batch(List<DO> dataList, Class<MAPPER> clazz, String ds,
+			BiConsumer<MAPPER, DO> consumer) {
+		batch(dataList, DEFAULT_PARTITION_SIZE, DEFAULT_BATCH_SIZE, 180, clazz, ds, consumer);
 	}
 
 	/**
 	 * 批量新增.
 	 * @param dataList 集合
-	 * @param batchNum 每组多少条数据
+	 * @param partitionSize 分组大小
 	 * @param clazz 类型
 	 * @param <DO> 泛型
 	 * @param <MAPPER> mapper泛型
 	 * @param consumer 函数
 	 * @param ds 数据源名称
+	 * @param timeout 超时时间
+	 * @param batchSize 批次大小
 	 */
-	public <DO, MAPPER> void batch(List<DO> dataList, int batchNum, int timeout, Class<MAPPER> clazz, String ds,
-			BiConsumer<MAPPER, DO> consumer) {
+	public <DO, MAPPER extends CrudMapper<?, ?, DO>> void batch(List<DO> dataList, int partitionSize, int batchSize,
+			int timeout, Class<MAPPER> clazz, String ds, BiConsumer<MAPPER, DO> consumer) {
 		if (CollectionUtil.isNotEmpty(dataList)) {
 			// 数据分组
-			List<List<DO>> partition = Lists.partition(dataList, batchNum);
+			List<List<DO>> partition = Lists.partition(dataList, partitionSize);
 			AtomicBoolean rollback = new AtomicBoolean(false);
 			CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
 			try {
 				// 虚拟线程
 				List<Callable<Boolean>> futures = partition.stream().map(item -> (Callable<Boolean>) () -> {
-					handleBatch(timeout, item, clazz, consumer, rollback, ds, cyclicBarrier);
+					handleBatch(timeout, batchSize, item, clazz, consumer, rollback, ds, cyclicBarrier);
 					return true;
 				}).toList();
 				// 执行任务
@@ -97,25 +104,33 @@ public class MybatisUtil {
 			}
 			catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
-				log.error("未知错误，错误信息：{}", e.getMessage(), e);
-				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+				log.error("SQL执行失败，错误信息：{}", e.getMessage(), e);
+				throw new SystemException("S_DS_UnKnowError", e.getMessage(), e);
 			}
 		}
 	}
 
-	private <DO, MAPPER> void handleBatch(int timeout, List<DO> item, Class<MAPPER> clazz,
-			BiConsumer<MAPPER, DO> consumer, AtomicBoolean rollback, String ds, CyclicBarrier cyclicBarrier) {
+	private <DO, MAPPER extends CrudMapper<?, ?, DO>> void handleBatch(int timeout, int batchSize, List<DO> item,
+			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, AtomicBoolean rollback, String ds,
+			CyclicBarrier cyclicBarrier) {
 		try {
 			DynamicDataSourceContextHolder.push(ds);
 			SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH, false);
 			MAPPER mapper = sqlSession.getMapper(clazz);
-			// commit 执行 flushStatements()
-			// rollback 执行 flushStatements(true);
 			try {
-				item.forEach(i -> consumer.accept(mapper, i));
+				int size = item.size();
+				for (int i = 0; i < size; i++) {
+					consumer.accept(mapper, item.get(i));
+					if (i % batchSize == 0 || i == size - 1) {
+						// 刷入批处理
+						sqlSession.flushStatements();
+						// 清理缓存防止 OOM
+						sqlSession.clearCache();
+					}
+				}
 				// 阻塞线程【默认180秒】
 				cyclicBarrier.await(timeout, TimeUnit.SECONDS);
-				// 默认SQL执行没有问题
+				// 提交事务
 				sqlSession.commit();
 			}
 			catch (Exception e) {
@@ -125,7 +140,6 @@ public class MybatisUtil {
 				if (rollback.get()) {
 					sqlSession.rollback();
 				}
-				sqlSession.clearCache();
 				sqlSession.close();
 			}
 		}
