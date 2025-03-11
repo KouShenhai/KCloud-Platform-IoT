@@ -50,7 +50,7 @@ public class MybatisUtil {
 
 	private static final int DEFAULT_PARTITION_SIZE = 100000;
 
-	private static final int DEFAULT_BATCH_SIZE = 1000;
+	private static final int DEFAULT_BATCH_SIZE = 10000;
 
 	private final SqlSessionFactory sqlSessionFactory;
 
