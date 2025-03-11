@@ -15,21 +15,20 @@
  *
  */
 
-package org.laokou.common.dubbo.config;
+package org.laokou.common.algorithm;
 
-import com.alibaba.csp.sentinel.slots.block.flow.FlowRule;
-import com.alibaba.csp.sentinel.slots.block.flow.FlowRuleManager;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import java.util.List;
+import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 /**
  * @author laokou
  */
-@AutoConfiguration
-public class DubboAutoConfig {
+@SpringBootApplication
+class AppTest {
 
-	public DubboAutoConfig(List<FlowRule> flowRules) {
-		FlowRuleManager.loadRules(flowRules);
+	public static void main(String[] args) {
+		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }

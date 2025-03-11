@@ -567,6 +567,68 @@ services:
      - ./portainer/data:/data
    networks:
      - laokou_network
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.12
+    container_name: clickhouse
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "8123:8123"
+      - "9020:9000"
+    environment:
+      # 设置用户名
+      - CLICKHOUSE_USER=root
+      # 设置密码
+      - CLICKHOUSE_PASSWORD=laokou123
+    volumes:
+      - ./clickhouse/data:/var/lib/clickhouse
+      - ./clickhouse/log/:/var/log/clickhouse-server/
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    networks:
+      - laokou_network
+  # rabbitmq-plugins enable rabbitmq_management
+  rabbitmq:
+    image: rabbitmq:4.0.7-management
+    container_name: rabbitmq
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    # 节点名 rabbit@rabbitserver，不然会去容器ID
+    hostname: rabbitmq
+    environment:
+      # 默认虚拟机名
+      RABBITMQ_DEFAULT_VHOST: /
+      # 用户名
+      RABBITMQ_DEFAULT_USER: root
+      # 密码
+      RABBITMQ_DEFAULT_PASS: laokou123
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./rabbitmq/data:/var/lib/rabbitmq
+      - ./rabbitmq/plugins:/plugins
+    networks:
+      - laokou_network
+  nexus:
+    image: sonatype/nexus3
+    container_name: nexus
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "8001:8081"
+    volumes:
+      - ./nexus/data:/nexus-data
+    networks:
+      - laokou_network
 networks:
   laokou_network:
     driver: bridge
