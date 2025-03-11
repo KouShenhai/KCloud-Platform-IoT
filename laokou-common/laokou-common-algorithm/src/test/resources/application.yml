@@ -1,0 +1,8 @@
+server:
+  port: 8093
+
+spring:
+  application:
+    name: laokou-common-algorithm
+  profiles:
+    active: test

@@ -17,23 +17,37 @@
 
 package org.laokou.common.algorithm;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.algorithm.template.Algorithm;
+import org.laokou.common.algorithm.template.select.HashSelectAlgorithm;
+import org.laokou.common.algorithm.template.select.PollSelectAlgorithm;
+import org.laokou.common.algorithm.template.select.RandomSelectAlgorithm;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestConstructor;
 
 import java.util.List;
+import java.util.Random;
 
 @Slf4j
+@SpringBootTest
+@RequiredArgsConstructor
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class AlgorithmTest {
 
 	@Test
 	void testApi() {
-		List<OssApi> ossApis = List.of(new TencentcloudOssApi(), new TencentcloudOssApi());
-		// 负载均衡【】
-	}
-
-	@Test
-	void testServiceInstance() {
-
+		List<OssApi> ossApis = List.of(new TencentcloudOssApi(), new AliyunOssApi());
+		// 负载均衡【哈希算法】
+		Algorithm algorithm = new HashSelectAlgorithm();
+		algorithm.select(ossApis, new Random().nextInt(10)).upload();
+		// 负载均衡【轮询算法】
+		algorithm = new PollSelectAlgorithm();
+		algorithm.select(ossApis, "").upload();
+		// 负载均衡【随机算法】
+		algorithm = new RandomSelectAlgorithm();
+		algorithm.select(ossApis, "").upload();
 	}
 
 	interface OssApi {
