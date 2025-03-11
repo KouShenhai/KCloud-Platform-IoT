@@ -232,15 +232,15 @@ public final class ExcelUtil {
 			// log.info("完成数据解析");
 			if (CollectionUtil.isNotEmpty(ERRORS)) {
 				try {
-					ResponseUtil.responseOk(response, Result.fail("S_Excel_ImportError", "Excel导入失败【仅显示前100条】",
+					ResponseUtil.responseOk(response, Result.fail("S_Excel_ImportFailed", "Excel导入失败【仅显示前100条】",
 							ERRORS.subList(0, Math.min(ERRORS.size(), 100))));
 					// 清除数据
 					CACHED_DATA_LIST.clear();
 					return;
 				}
 				catch (IOException e) {
-					log.error("未知错误，错误信息：{}", e.getMessage(), e);
-					throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+					log.error("Excel导入失败，错误信息：{}", e.getMessage(), e);
+					throw new SystemException("S_Excel_ImportFailed", e.getMessage(), e);
 				}
 			}
 			if (CollectionUtil.isNotEmpty(CACHED_DATA_LIST)) {
@@ -252,8 +252,8 @@ public final class ExcelUtil {
 				ResponseUtil.responseOk(response, Result.ok(EMPTY));
 			}
 			catch (IOException e) {
-				log.error("未知错误，错误信息：{}", e.getMessage(), e);
-				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+				log.error("Excel导入失败，错误信息：{}", e.getMessage(), e);
+				throw new SystemException("S_Excel_ImportFailed", e.getMessage(), e);
 			}
 		}
 
