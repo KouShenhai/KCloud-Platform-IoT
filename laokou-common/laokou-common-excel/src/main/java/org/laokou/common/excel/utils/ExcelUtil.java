@@ -73,13 +73,13 @@ public final class ExcelUtil {
 	private ExcelUtil() {
 	}
 
-	public static <MAPPER, EXCEL, DO> void doImport(String sheetName, Class<EXCEL> excel,
+	public static <MAPPER extends CrudMapper<?, ?, DO>, EXCEL, DO> void doImport(String sheetName, Class<EXCEL> excel,
 			ExcelConvertor<DO, EXCEL> convert, InputStream inputStream, HttpServletResponse response,
 			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil) {
 		doImport(sheetName, excel, convert, inputStream, response, clazz, consumer, mybatisUtil, null);
 	}
 
-	public static <MAPPER, EXCEL, DO> void doImport(String sheetName, Class<EXCEL> excel,
+	public static <MAPPER extends CrudMapper<?, ?, DO>, EXCEL, DO> void doImport(String sheetName, Class<EXCEL> excel,
 			ExcelConvertor<DO, EXCEL> convert, InputStream inputStream, HttpServletResponse response,
 			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil,
 			ExcelValidator<EXCEL> validator) {
@@ -123,8 +123,8 @@ public final class ExcelUtil {
 						}
 						catch (InterruptedException e) {
 							Thread.currentThread().interrupt();
-							log.error("未知错误，错误信息：{}", e.getMessage(), e);
-							throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+							log.error("Excel导出失败，错误信息：{}", e.getMessage(), e);
+							throw new SystemException("S_Excel_ExportFailed", e.getMessage(), e);
 						}
 						finally {
 							list.clear();
@@ -141,7 +141,7 @@ public final class ExcelUtil {
 			}
 			catch (Exception e) {
 				log.error("Excel导出失败，错误信息：{}", e.getMessage());
-				throw new SystemException("S_Excel_UnKnowError", "Excel导出失败，系统繁忙", e);
+				throw new SystemException("S_Excel_ExportFailed", "Excel导出失败，系统繁忙", e);
 			}
 		}
 		else {
@@ -166,7 +166,7 @@ public final class ExcelUtil {
 
 	}
 
-	private static class DataListener<MAPPER, DO, EXCEL> implements ReadListener<EXCEL> {
+	private static class DataListener<MAPPER extends CrudMapper<?, ?, DO>, DO, EXCEL> implements ReadListener<EXCEL> {
 
 		/**
 		 * Temporary storage of data.
@@ -223,8 +223,8 @@ public final class ExcelUtil {
 
 		@Override
 		public void onException(Exception e, AnalysisContext context) {
-			log.error("Excel导入异常，错误信息：{}", e.getMessage());
-			throw new SystemException("S_Excel_ImportError", "Excel导入异常，系统繁忙", e);
+			log.error("Excel导入失败，错误信息：{}", e.getMessage());
+			throw new SystemException("S_Excel_ImportFailed", "Excel导入失败，系统繁忙", e);
 		}
 
 		@Override
@@ -232,15 +232,15 @@ public final class ExcelUtil {
 			// log.info("完成数据解析");
 			if (CollectionUtil.isNotEmpty(ERRORS)) {
 				try {
-					ResponseUtil.responseOk(response, Result.fail("S_Excel_ImportError", "Excel导入失败【仅显示前100条】",
+					ResponseUtil.responseOk(response, Result.fail("S_Excel_ImportFailed", "Excel导入失败【仅显示前100条】",
 							ERRORS.subList(0, Math.min(ERRORS.size(), 100))));
 					// 清除数据
 					CACHED_DATA_LIST.clear();
 					return;
 				}
 				catch (IOException e) {
-					log.error("未知错误，错误信息：{}", e.getMessage(), e);
-					throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+					log.error("Excel导入失败，错误信息：{}", e.getMessage(), e);
+					throw new SystemException("S_Excel_ImportFailed", e.getMessage(), e);
 				}
 			}
 			if (CollectionUtil.isNotEmpty(CACHED_DATA_LIST)) {
@@ -252,8 +252,8 @@ public final class ExcelUtil {
 				ResponseUtil.responseOk(response, Result.ok(EMPTY));
 			}
 			catch (IOException e) {
-				log.error("未知错误，错误信息：{}", e.getMessage(), e);
-				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+				log.error("Excel导入失败，错误信息：{}", e.getMessage(), e);
+				throw new SystemException("S_Excel_ImportFailed", e.getMessage(), e);
 			}
 		}
 
