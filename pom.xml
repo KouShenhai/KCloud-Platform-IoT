@@ -246,6 +246,9 @@
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
         <NACOS-CLUSTER-NAME>laokou-cluster</NACOS-CLUSTER-NAME>
+        <DUBBO-ADDRESS>nacos://nacos:8848?username=nacos&amp;password=nacos</DUBBO-ADDRESS>
+        <DUBBO-GROUP>LAOKOU_GROUP</DUBBO-GROUP>
+        <DUBBO-NAMESPACE>0dac1a68-2f01-40df-bd26-bf0cb199057a</DUBBO-NAMESPACE>
         <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
         <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
         <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
@@ -287,6 +290,9 @@
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
         <NACOS-CLUSTER-NAME>laokou-cluster</NACOS-CLUSTER-NAME>
+        <DUBBO-ADDRESS>nacos://nacos:8848?username=nacos&amp;password=nacos</DUBBO-ADDRESS>
+        <DUBBO-GROUP>LAOKOU_GROUP</DUBBO-GROUP>
+        <DUBBO-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</DUBBO-NAMESPACE>
         <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
         <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
         <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
@@ -357,6 +363,12 @@
         <NACOS-PASSWORD>${NACOS_PASSWORD:nacos}</NACOS-PASSWORD>
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-CLUSTER-NAME>${NACOS_CLUSTER_NAME:laokou-cluster}</NACOS-CLUSTER-NAME>
+        <!--suppress UnresolvedMavenProperty -->
+        <DUBBO-ADDRESS>${DUBBO_ADDRESS:nacos://nacos:8848?username=nacos&amp;password=nacos}</DUBBO-ADDRESS>
+        <!--suppress UnresolvedMavenProperty -->
+        <DUBBO-GROUP>${DUBBO_GROUP:LAOKOU_GROUP}</DUBBO-GROUP>
+        <!--suppress UnresolvedMavenProperty -->
+        <DUBBO-NAMESPACE>${DUBBO_NAMESPACE:8140e92b-fb43-48f5-b63b-7506185206a5}</DUBBO-NAMESPACE>
         <!--suppress UnresolvedMavenProperty -->
         <SENTINEL-USERNAME>${SENTINEL_USERNAME:sentinel}</SENTINEL-USERNAME>
         <!--suppress UnresolvedMavenProperty -->

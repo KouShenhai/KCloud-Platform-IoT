@@ -13,4 +13,13 @@
   <packaging>pom</packaging>
   <version>3.4.3</version>
 
+  <modules>
+    <module>laokou-oss-start</module>
+    <module>laokou-oss-infrastructure</module>
+    <module>laokou-oss-adapter</module>
+    <module>laokou-oss-app</module>
+    <module>laokou-oss-client</module>
+    <module>laokou-oss-domain</module>
+  </modules>
+
 </project>

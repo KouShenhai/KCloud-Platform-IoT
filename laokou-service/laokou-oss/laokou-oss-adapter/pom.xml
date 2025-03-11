@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.laokou</groupId>
+    <artifactId>laokou-oss</artifactId>
+    <version>3.4.3</version>
+  </parent>
+
+  <artifactId>laokou-oss-adapter</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-oss-app</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-openapi-doc</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.laokou</groupId>
+          <artifactId>laokou-common-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-cors</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-idempotent</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.laokou</groupId>
+          <artifactId>laokou-common-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.laokou</groupId>
+          <artifactId>laokou-common-redis</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-trace</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+</project>
