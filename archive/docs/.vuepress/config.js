@@ -85,20 +85,20 @@ module.exports = {
 					},
 					{
 						text: '环境搭建', items: [
-							{text: 'Centos7安装Mysql 8.0.33（傻瓜式安装）', link: '/pages/a2f161/'},
-							{text: 'Centos7安装Redis 7.0.11（傻瓜式安装）', link: '/pages/90401a/'},
-							{text: 'Centos7安装RocketMQ 5.1.1（傻瓜式安装）', link: '/pages/0fb88c/'},
-							{text: 'Centos7安装Jdk 17.0.7（傻瓜式安装）', link: '/pages/65acfd/'},
-							{text: 'Centos7安装Docker 23.0.6（傻瓜式安装）', link: '/pages/65acff/'},
-							{text: 'Centos7安装Elasticsearch 8.6.2（傻瓜式安装）', link: '/pages/d715cf/'},
-							{text: 'Docker安装RabbitMQ 3.12.2（傻瓜式安装）', link: '/pages/552b64/'},
-							{text: 'Docker安装Postgresql 16.1（傻瓜式安装）', link: '/pages/d715cb/'}
+							{text: 'Centos7安装Mysql 8.0.33', link: '/pages/a2f161/'},
+							{text: 'Centos7安装Redis 7.0.11', link: '/pages/90401a/'},
+							{text: 'Centos7安装RocketMQ 5.1.1', link: '/pages/0fb88c/'},
+							{text: 'Centos7安装Jdk 17.0.7', link: '/pages/65acfd/'},
+							{text: 'Centos7安装Docker 23.0.6', link: '/pages/65acff/'},
+							{text: 'Centos7安装Elasticsearch 8.6.2', link: '/pages/d715cf/'},
+							{text: 'Docker安装RabbitMQ 3.12.2', link: '/pages/552b64/'},
+							{text: 'Docker安装Postgresql 16.1', link: '/pages/d715cb/'}
 						]
 					},
 					{
 						text: '常用命令', items: [
-							{text: 'Centos7常用命令（傻瓜式笔记）', link: '/pages/76bfa2/'},
-							{text: 'Centos7常用命令（傻瓜式笔记）', link: '/pages/2f475f/'}
+							{text: 'Centos7常用命令', link: '/pages/76bfa2/'},
+							{text: 'Centos7常用命令', link: '/pages/2f475f/'}
 						]
 					},
 					{
