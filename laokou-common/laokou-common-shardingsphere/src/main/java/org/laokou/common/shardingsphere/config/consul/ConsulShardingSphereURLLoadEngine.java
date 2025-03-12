@@ -52,7 +52,7 @@ public final class ConsulShardingSphereURLLoadEngine extends AbstractShardingSph
 
 	@Override
 	protected String getContent() {
-		// 请填写拉取配置的值
+		// 补充拉取配置的代码
 		return null;
 	}
 
