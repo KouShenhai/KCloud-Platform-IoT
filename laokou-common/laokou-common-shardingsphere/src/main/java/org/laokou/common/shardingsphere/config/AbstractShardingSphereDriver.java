@@ -34,7 +34,6 @@
 
 package org.laokou.common.shardingsphere.config;
 
-import org.apache.shardingsphere.driver.exception.DriverRegisterException;
 import org.apache.shardingsphere.infra.annotation.HighFrequencyInvocation;
 
 import java.sql.*;
@@ -42,39 +41,26 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 /**
- * Nacos ShardingSphere driver.
+ * Abstract ShardingSphere driver.
  *
  * @author laokou
  */
-@SuppressWarnings("UseNacosOfJDBCDriverClass")
-public final class NacosShardingSphereDriver implements Driver {
-
-	private static final String DRIVER_URL_PREFIX = "jdbc:shardingsphere:nacos:";
+@SuppressWarnings("UseAbstractOfJDBCDriverClass")
+public abstract class AbstractShardingSphereDriver implements Driver {
 
 	private static final int MAJOR_DRIVER_VERSION = 5;
 
 	private static final int MINOR_DRIVER_VERSION = 5;
 
-	static {
-		try {
-			DriverManager.registerDriver(new NacosShardingSphereDriver());
-		}
-		catch (final SQLException ex) {
-			throw new DriverRegisterException(ex);
-		}
-	}
-
-	private final NacosDriverDataSourceCache dataSourceCache = new NacosDriverDataSourceCache();
-
 	@HighFrequencyInvocation(canBeCached = true)
 	@Override
 	public Connection connect(final String url, final Properties info) throws SQLException {
-		return acceptsURL(url) ? dataSourceCache.get(url, DRIVER_URL_PREFIX).getConnection() : null;
+		return acceptsURL(url) ? getDriverDataSourceCache().get(url, getDriverUrlPrefix()).getConnection() : null;
 	}
 
 	@Override
 	public boolean acceptsURL(final String url) {
-		return null != url && url.startsWith(DRIVER_URL_PREFIX);
+		return null != url && url.startsWith(getDriverUrlPrefix());
 	}
 
 	@Override
@@ -101,5 +87,9 @@ public final class NacosShardingSphereDriver implements Driver {
 	public Logger getParentLogger() {
 		return Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	}
+
+	abstract protected AbstractDriverDataSourceCache getDriverDataSourceCache();
+
+	abstract protected String getDriverUrlPrefix();
 
 }

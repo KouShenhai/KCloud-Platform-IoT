@@ -34,22 +34,15 @@
 
 package org.laokou.common.shardingsphere.config;
 
-import com.alibaba.cloud.nacos.NacosConfigManager;
-import com.alibaba.cloud.nacos.NacosConfigProperties;
-import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.baomidou.dynamic.datasource.toolkit.CryptoUtils;
-import com.google.common.base.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.infra.url.core.ShardingSphereURL;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.PropertyUtil;
 import org.laokou.common.i18n.common.constant.StringConstant;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.StringUtils;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -63,18 +56,14 @@ import java.util.regex.Pattern;
 import static org.laokou.common.i18n.common.constant.StringConstant.WELL_NO;
 
 /**
- * Nacos ShardingSphere URL load engine.
+ * Abstract ShardingSphere URL load engine.
  *
  * @author laokou
  */
 @Slf4j
-public final class NacosShardingSphereURLLoadEngine {
+public abstract class AbstractShardingSphereURLLoadEngine {
 
 	private static final Pattern ENC_PATTERN = Pattern.compile("^ENC\\((.*)\\)$");
-
-	private static final String BIND_YAML_NAME = "bootstrap.yml";
-
-	private static final String YAML_FORMAT = "yaml";
 
 	private static final String PUBLIC_KEY = "public-key";
 
@@ -82,11 +71,9 @@ public final class NacosShardingSphereURLLoadEngine {
 
 	private static final String CRYPTO_SUFFIX = ")";
 
-	private static final String NACOS_CONFIG_PREFIX = "spring.cloud.nacos.config";
+	protected final ShardingSphereURL url;
 
-	private final ShardingSphereURL url;
-
-	public NacosShardingSphereURLLoadEngine(final ShardingSphereURL url) {
+	public AbstractShardingSphereURLLoadEngine(final ShardingSphereURL url) {
 		this.url = url;
 	}
 
@@ -94,23 +81,16 @@ public final class NacosShardingSphereURLLoadEngine {
 	 * Load configuration content.
 	 * @return loaded content
 	 */
-	public byte[] loadContent() throws IOException, NacosException {
-		NacosConfigProperties properties = PropertyUtil.bindOrCreate(NACOS_CONFIG_PREFIX, NacosConfigProperties.class,
-				BIND_YAML_NAME, YAML_FORMAT);
-		String group = properties.getGroup();
-		NacosConfigManager nacosConfigManager = new NacosConfigManager(properties);
-		ConfigService configService = nacosConfigManager.getConfigService();
-		String dataId = url.getConfigurationSubject();
-		Preconditions.checkArgument(StringUtil.isNotEmpty(dataId),
-				"Nacos dataId is required in ShardingSphere driver URL.");
-		String configInfo = configService.getConfig(dataId, group, 5000);
-		return resolvePropertyValue(configInfo).getBytes(StandardCharsets.UTF_8);
+	public byte[] loadContent() throws Exception {
+		return resolvePropertyValue(getContent()).getBytes(StandardCharsets.UTF_8);
 	}
+
+	abstract protected String getContent() throws IOException, NacosException;
 
 	private String resolvePropertyValue(String value) {
 		List<String> list = getList(value);
 		if (list.isEmpty()) {
-			throw new SystemException("S_ShardingSphere_NacosConfigError", "Nacos配置ShardingSphere不正确");
+			throw new SystemException("S_ShardingSphere_PullConfigError", "无法拉取ShardingSphere配置");
 		}
 		List<String> strList = list.stream().filter(i -> i.startsWith(PUBLIC_KEY)).toList();
 		String publicKey = StringConstant.EMPTY;
@@ -141,7 +121,7 @@ public final class NacosShardingSphereURLLoadEngine {
 				new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8))) {
 			String str;
 			while (ObjectUtil.isNotNull((str = reader.readLine()))) {
-				// #开头直接去掉
+				// #开头直接丢弃
 				if (!str.trim().startsWith(WELL_NO)) {
 					list.add(str);
 				}
@@ -166,7 +146,7 @@ public final class NacosShardingSphereURLLoadEngine {
 					return CryptoUtils.decrypt(publicKey, matcher.group(1));
 				}
 				catch (Exception e) {
-					log.error("Nacos ShardingSphere decrypt error", e);
+					log.error("ShardingSphere decrypt error", e);
 				}
 			}
 		}

@@ -14,7 +14,7 @@ spring:
       datasource:
         master:
           url: jdbc:shardingsphere:nacos:application-shardingsphere.yaml
-          driver-class-name: org.laokou.common.shardingsphere.config.NacosShardingSphereDriver
+          driver-class-name: org.laokou.common.shardingsphere.config.nacos.NacosShardingSphereDriver
 # mybatis-plus
 mybatis-plus:
   # 全局处理

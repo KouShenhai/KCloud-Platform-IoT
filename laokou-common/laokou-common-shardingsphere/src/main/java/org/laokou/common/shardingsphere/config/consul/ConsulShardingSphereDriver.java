@@ -32,59 +32,43 @@
  * limitations under the License.
  */
 
-package org.laokou.common.shardingsphere.config;
+package org.laokou.common.shardingsphere.config.consul;
 
-import com.alibaba.nacos.api.exception.NacosException;
-import lombok.Getter;
-import org.apache.shardingsphere.driver.api.yaml.YamlShardingSphereDataSourceFactory;
-import org.apache.shardingsphere.infra.url.core.ShardingSphereURL;
-import org.laokou.common.core.utils.MapUtil;
-
-import javax.sql.DataSource;
-import java.io.IOException;
+import org.apache.shardingsphere.driver.exception.DriverRegisterException;
+import org.laokou.common.shardingsphere.config.AbstractDriverDataSourceCache;
+import org.laokou.common.shardingsphere.config.AbstractShardingSphereDriver;
+import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Nacos Driver data source cache.
+ * Consul ShardingSphere driver.
  *
  * @author laokou
  */
-@Getter
-public final class NacosDriverDataSourceCache {
+@SuppressWarnings("UseConsulOfJDBCDriverClass")
+public final class ConsulShardingSphereDriver extends AbstractShardingSphereDriver {
 
-	private final Map<String, DataSource> DATASOURCE_MAP = new ConcurrentHashMap<>(MapUtil.initialCapacity(16));
+	private static final String DRIVER_URL_PREFIX = "jdbc:shardingsphere:consul:";
 
-	/**
-	 * Get data source.
-	 * @param url URL
-	 * @param urlPrefix URL prefix
-	 * @return got data source
-	 */
-	public DataSource get(final String url, final String urlPrefix) {
-		if (DATASOURCE_MAP.containsKey(url)) {
-			return DATASOURCE_MAP.get(url);
-		}
-		return DATASOURCE_MAP.computeIfAbsent(url,
-				driverUrl -> createDataSource(ShardingSphereURL.parse(driverUrl.substring(urlPrefix.length()))));
-	}
-
-	@SuppressWarnings("unchecked")
-	private <T extends Throwable> DataSource createDataSource(final ShardingSphereURL url) throws T {
+	static {
 		try {
-			NacosShardingSphereURLLoadEngine urlLoadEngine = new NacosShardingSphereURLLoadEngine(url);
-			return YamlShardingSphereDataSourceFactory.createDataSource(urlLoadEngine.loadContent());
-		}
-		catch (final IOException ex) {
-			throw (T) new SQLException(ex);
+			DriverManager.registerDriver(new ConsulShardingSphereDriver());
 		}
 		catch (final SQLException ex) {
-			throw (T) ex;
+			throw new DriverRegisterException(ex);
 		}
-		catch (NacosException e) {
-			throw new RuntimeException(e);
-		}
+	}
+
+	private final CosulDriverDataSourceCache dataSourceCache = new CosulDriverDataSourceCache();
+
+	@Override
+	protected AbstractDriverDataSourceCache getDriverDataSourceCache() {
+		return dataSourceCache;
+	}
+
+	@Override
+	protected String getDriverUrlPrefix() {
+		return DRIVER_URL_PREFIX;
 	}
 
 }
