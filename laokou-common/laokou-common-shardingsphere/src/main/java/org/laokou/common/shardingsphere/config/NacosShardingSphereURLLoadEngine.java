@@ -32,7 +32,7 @@
  * limitations under the License.
  */
 
-package org.laokou.infrastructure.config;
+package org.laokou.common.shardingsphere.config;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.cloud.nacos.NacosConfigProperties;
@@ -44,6 +44,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.infra.url.core.ShardingSphereURL;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.core.utils.PropertyUtil;
+import org.laokou.common.i18n.common.constant.StringConstant;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.util.StringUtils;
@@ -58,8 +60,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
+import static org.laokou.common.i18n.common.constant.StringConstant.WELL_NO;
 
 /**
  * Nacos ShardingSphere URL load engine.
@@ -73,13 +74,13 @@ public final class NacosShardingSphereURLLoadEngine {
 
 	private static final String BIND_YAML_NAME = "bootstrap.yml";
 
-	private static final String YAML_FORMAT_NAME = "yaml";
+	private static final String YAML_FORMAT = "yaml";
 
-	private static final String PUBLIC_KEY_NAME = "public-key";
+	private static final String PUBLIC_KEY = "public-key";
 
-	private static final String CRYPTO_PREFIX_NAME = "ENC(";
+	private static final String CRYPTO_PREFIX = "ENC(";
 
-	private static final String CRYPTO_SUFFIX_NAME = ")";
+	private static final String CRYPTO_SUFFIX = ")";
 
 	private static final String NACOS_CONFIG_PREFIX = "spring.cloud.nacos.config";
 
@@ -95,7 +96,7 @@ public final class NacosShardingSphereURLLoadEngine {
 	 */
 	public byte[] loadContent() throws IOException, NacosException {
 		NacosConfigProperties properties = PropertyUtil.bindOrCreate(NACOS_CONFIG_PREFIX, NacosConfigProperties.class,
-				BIND_YAML_NAME, YAML_FORMAT_NAME);
+				BIND_YAML_NAME, YAML_FORMAT);
 		String group = properties.getGroup();
 		NacosConfigManager nacosConfigManager = new NacosConfigManager(properties);
 		ConfigService configService = nacosConfigManager.getConfigService();
@@ -109,19 +110,19 @@ public final class NacosShardingSphereURLLoadEngine {
 	private String resolvePropertyValue(String value) {
 		List<String> list = getList(value);
 		if (list.isEmpty()) {
-			throw new RuntimeException("Nacos配置ShardingSphere不正确");
+			throw new SystemException("S_ShardingSphere_NacosConfigError", "Nacos配置ShardingSphere不正确");
 		}
-		List<String> strList = list.stream().filter(i -> i.startsWith(PUBLIC_KEY_NAME)).toList();
-		String publicKey = EMPTY;
+		List<String> strList = list.stream().filter(i -> i.startsWith(PUBLIC_KEY)).toList();
+		String publicKey = StringConstant.EMPTY;
 		if (CollectionUtil.isNotEmpty(strList)) {
 			publicKey = strList.getFirst().substring(11).trim();
 		}
 		StringBuilder stringBuilder = new StringBuilder();
 		String finalPublicKey = publicKey;
 		list.forEach(item -> {
-			if (!item.startsWith(PUBLIC_KEY_NAME)) {
-				if (item.contains(CRYPTO_PREFIX_NAME) && item.contains(CRYPTO_SUFFIX_NAME)) {
-					int index = item.indexOf(RISK);
+			if (!item.startsWith(PUBLIC_KEY)) {
+				if (item.contains(CRYPTO_PREFIX) && item.contains(CRYPTO_SUFFIX)) {
+					int index = item.indexOf(StringConstant.RISK);
 					String key = item.substring(0, index + 2);
 					String val = item.substring(index + 2).trim();
 					stringBuilder.append(key).append(decrypt(finalPublicKey, val)).append("\n");
@@ -140,7 +141,10 @@ public final class NacosShardingSphereURLLoadEngine {
 				new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8))) {
 			String str;
 			while (ObjectUtil.isNotNull((str = reader.readLine()))) {
-				list.add(str);
+				// #开头直接去掉
+				if (!str.trim().startsWith(WELL_NO)) {
+					list.add(str);
+				}
 			}
 		}
 		catch (IOException e) {

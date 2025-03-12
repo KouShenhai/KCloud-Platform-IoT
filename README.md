@@ -143,19 +143,20 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
 - 认证授权：Spring Security OAuth2 Authorization Server
-- 远程调用：Spring Cloud OpenFeign & OkHttp & HttpClient & WebClient & RestClient
+- 远程调用：Spring Cloud OpenFeign & Apache Dubbo
+- 客户端请求：OkHttp & HttpClient & WebClient & RestClient
 - 负载均衡：Spring Cloud Loadbalancer
 - 服务熔断&降级&限流：Sentinel
-- 分库分表：Mybatis Plus
-- 分布式事务：RocketMQ
-- 消息队列：RocketMQ & Kafka & MQTT
+- 分库分表：Mybatis Plus & ShardingSphere
+- 分布式事务：RocketMQ & Seata
+- 消息队列：RocketMQ & Kafka & MQTT & RabbitMQ
 - 服务监控：Spring Boot Admin & Prometheus
 - 高亮搜索：Elasticsearch
 - 链路跟踪：Jaeger
 - 任务调度：Snail Job
 - 日志分析：EFK
 - 缓存&分布式锁：Redis & Redisson
-- 统计报表：MongoDB
+- 统计报表：MongoDB & StarRocks
 - 对象存储：Amazon S3
 - 自动化部署：Docker & Kubernetes
 - 网络通讯：Netty
@@ -163,8 +164,11 @@ KCloud-Platform-IoT（阻塞式）（老寇IoT云平台）是一个企业级微�
 - 持久层框架：Mybatis Plus
 - JSON序列化：Jackson
 - 数据库：Postgresql
-- 时序数据库：TimescaleDB & TDengine
+- 时序数据库：TimescaleDB & TDengine & InfluxDB
 - 数据库迁移：Liquibase
+- 实时流批处理：Flink
+- 离线批处理：Spark
+- 列式数据库：ClickHouse
 - 链路&指标采集：Micrometer
 
 #### 🌴 项目结构

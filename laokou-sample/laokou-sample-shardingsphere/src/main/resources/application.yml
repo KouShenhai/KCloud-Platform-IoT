@@ -1,6 +1,6 @@
 server:
   port: 9033
-
+  shutdown: graceful
 spring:
   threads:
     virtual:
@@ -14,7 +14,7 @@ spring:
       datasource:
         master:
           url: jdbc:shardingsphere:nacos:application-shardingsphere.yaml
-          driver-class-name: org.laokou.infrastructure.config.NacosShardingSphereDriver
+          driver-class-name: org.laokou.common.shardingsphere.config.NacosShardingSphereDriver
 # mybatis-plus
 mybatis-plus:
   # 全局处理

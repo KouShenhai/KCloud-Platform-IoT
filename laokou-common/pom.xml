@@ -85,6 +85,7 @@
     <module>laokou-common-dubbo</module>
     <module>laokou-common-starrocks</module>
     <module>laokou-common-clickhouse</module>
+    <module>laokou-common-shardingsphere</module>
   </modules>
 
 </project>

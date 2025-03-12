@@ -32,7 +32,7 @@
  * limitations under the License.
  */
 
-package org.laokou.infrastructure.config;
+package org.laokou.common.shardingsphere.config;
 
 import org.apache.shardingsphere.driver.exception.DriverRegisterException;
 import org.apache.shardingsphere.infra.annotation.HighFrequencyInvocation;

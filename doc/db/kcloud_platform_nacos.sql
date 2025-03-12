@@ -5955,7 +5955,7 @@ INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (53, 'applicat
       # topic不存在报错
       missing-topics-fatal: false', '157c7aaa53329ababa1aab96b9878fad', '2023-10-26 08:54:23', '2023-11-06 18:14:00', 'nacos', '0:0:0:0:0:0:0:1', '', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'kafka公共配置', '', '', 'yaml', '', '');
 
-INSERT INTO "public"."config_info" ("id", "data_id", "group_id", "content", "md5", "gmt_create", "gmt_modified", "src_user", "src_ip", "app_name", "tenant_id", "c_desc", "c_use", "effect", "type", "c_schema", "encrypted_data_key") VALUES (214, 'application-common-redis.yaml', 'DEFAULT_GROUP', '# jasypt
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES  (214, 'application-common-redis.yaml', 'DEFAULT_GROUP', '# jasypt
 jasypt:
   encryptor:
     password: 5201314wumeihua
@@ -5977,6 +5977,96 @@ spring:
           max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
           max-idle: 500 #连接池最大空闲连接
           min-idle: 200 #连接池最小空间连接', '271221c36024d359f47832c004d714cb', '2025-03-09 11:21:13.558', '2025-03-09 11:21:13.558', 'nacos', '127.0.0.1', '', '', 'redis公共配置', NULL, NULL, 'yaml', NULL, '');
+
+UPDATE "public"."config_info" SET "data_id" = 'application-shardingsphere.yaml', "group_id" = 'DEFAULT_GROUP', "content" = '# 加密公钥
+public-key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ4o6sn4WoPmbs7DR9mGQzuuUQM9erQTVPpwxIzB0ETYkyKffO097qXVRLA6KPmaV+/siWewR7vpfYYjWajw5KkCAwEAAQ==
+dataSources:
+  # 主表【数据库配置，请按照作者来，请不要瞎几把改！！！】
+  master:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: org.postgresql.Driver
+    jdbcUrl: jdbc:postgresql://postgresql:5432/kcloud_platform_test?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-sample-shardingsphere&useSSL=false
+    username: ENC(VZamSTMi224AH6RUtJGXNldiDp/XEL2ozRhBUu/o9ChodT4JEb9kE/j0EFhXKbjsfvLVacUW0AUzetA6OrNJug==)
+    password: ENC(laIHkPM/z03tYjA95hES4+BhyjyhvrPjJynrC65oDyXnUTP0Tge1UxwERWFBbHoOOQZ2GzzUrRhEYJ3jFb89eQ==)
+  # 从表【数据库配置，请按照作者来，请不要瞎几把改！！！】
+  slave:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: org.postgresql.Driver
+    jdbcUrl: jdbc:postgresql://postgresql:5432/kcloud_platform_test?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-sample-shardingsphere&useSSL=false
+    username: ENC(VZamSTMi224AH6RUtJGXNldiDp/XEL2ozRhBUu/o9ChodT4JEb9kE/j0EFhXKbjsfvLVacUW0AUzetA6OrNJug==)
+    password: ENC(laIHkPM/z03tYjA95hES4+BhyjyhvrPjJynrC65oDyXnUTP0Tge1UxwERWFBbHoOOQZ2GzzUrRhEYJ3jFb89eQ==)
+rules:
+- !SHARDING
+  tables:
+    # 分表的表名
+    boot_sys_user:
+      # 分表规则，按月份分表
+      actualDataNodes: master.boot_sys_user_20240$->{1..9},master.boot_sys_user_2024$->{10..12}
+      # 分表策略
+      tableStrategy:
+        # 规格
+        standard:
+          # 按创建时间字段分表
+          shardingColumn: create_date
+          # 自定义分表算法名称
+          shardingAlgorithmName: laokou_table_inline
+      # 主键生成策略
+      keyGenerateStrategy:
+        # 主键字段名称
+        column: id
+        # 主键生成采用的算法名称
+        keyGeneratorName: snowflake
+  # 自定义分表算法
+  shardingAlgorithms:
+    # 自定义分表算法名称
+    laokou_table_inline:
+      # 时间范围分片算法
+      type: INTERVAL
+      props:
+        # 分片键的时间戳格式
+        datetime-pattern: "yyyy-MM-dd HH:mm:ss"
+        # 真实表的后缀格式
+        sharding-suffix-pattern: "yyyyMM"
+        # 时间分片下界值
+        datetime-lower: "2024-01-01 00:00:00"
+        # 时间分片上界值
+        datetime-upper: "2024-12-31 23:59:59"
+        # 分片间隔
+        datetime-interval-amount: 1
+        # 按月分表
+        datetime-interval-unit: "months"
+  # 主键生成器
+  keyGenerators:
+    # 雪花算法配置
+    snowflake:
+      # 雪花算法
+      type: SNOWFLAKE
+      # 属性
+      props:
+        # 机器工作ID
+        work-id: 123
+- !READWRITE_SPLITTING
+  # 数据源分组
+  dataSourceGroups:
+    # 读写分离配置
+    laokou_readwrite_data_sources:
+      # 主节点写入
+      writeDataSourceName: master
+      # 从节点读取
+      readDataSourceNames:
+        - slave
+      # 自定义负载均衡算法名称
+      loadBalancerName: laokou_load_balance_algorithm
+  # 自定义负载均衡算法
+  loadBalancers:
+    # 自定义负载均衡算法名称
+    laokou_load_balance_algorithm:
+      # 轮询调度算法
+      type: ROUND_ROBIN
+# 属性配置
+props:
+  # 显示SQL语句
+  sql-show: true', "md5" = 'b9fc8e8c42efd77d4029eaa4f9794bae', "gmt_create" = '2024-10-26 19:01:28.101', "gmt_modified" = '2025-03-12 11:53:33.869', "src_user" = 'nacos', "src_ip" = '0:0:0:0:0:0:0:1', "app_name" = '', "tenant_id" = '', "c_desc" = '', "c_use" = '', "effect" = '', "type" = 'yaml', "c_schema" = '', "encrypted_data_key" = '' WHERE "id" = 29;
 
 -- ----------------------------
 -- Primary Key structure for table users

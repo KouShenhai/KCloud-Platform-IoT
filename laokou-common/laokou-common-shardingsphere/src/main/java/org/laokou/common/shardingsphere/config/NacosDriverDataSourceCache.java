@@ -32,7 +32,7 @@
  * limitations under the License.
  */
 
-package org.laokou.infrastructure.config;
+package org.laokou.common.shardingsphere.config;
 
 import com.alibaba.nacos.api.exception.NacosException;
 import lombok.Getter;

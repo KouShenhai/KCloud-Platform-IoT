@@ -14,10 +14,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.shardingsphere</groupId>
-      <artifactId>shardingsphere-jdbc</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
     </dependency>
@@ -32,14 +28,6 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-mybatis-plus</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-nacos</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
       <scope>test</scope>
     </dependency>
@@ -51,6 +39,10 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-undertow</artifactId>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-shardingsphere</artifactId>
     </dependency>
   </dependencies>
 

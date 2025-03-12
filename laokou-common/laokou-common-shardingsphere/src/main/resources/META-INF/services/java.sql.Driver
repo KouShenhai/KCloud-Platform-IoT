@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-org.laokou.infrastructure.config.NacosShardingSphereDriver
+org.laokou.common.shardingsphere.config.NacosShardingSphereDriver

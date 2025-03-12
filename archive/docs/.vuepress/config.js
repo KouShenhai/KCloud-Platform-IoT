@@ -80,6 +80,7 @@ module.exports = {
 							{ text: '组件【test】', link: '/pages/zj51/'},
 							{ text: '组件【trace】', link: '/pages/zj52/'},
 							{ text: '组件【xss】', link: '/pages/zj53/'},
+							{ text: '组件【shardingsphere】', link: '/pages/zj54/'},
 						]
 					},
 					{
