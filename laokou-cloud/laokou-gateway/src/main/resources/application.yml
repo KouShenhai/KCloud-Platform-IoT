@@ -15,25 +15,36 @@
 #    *
 #    */
 server:
+  # 端口
   port: ${SERVER_PORT:5555}
 
 spring:
   application:
+    # 应用名称
     name: ${SERVICE_ID:laokou-gateway}
   profiles:
+    # 环境
     active: @PROFILE-ACTIVE@
   cloud:
-    # sentinel
+    # sentinel配置
     sentinel:
       datasource:
         # key可以自定义
         db0:
           nacos:
+            # 服务注册&发现-地址
             server-addr: @NACOS-DISCOVERY-ADDRESS@
+            # 服务注册&发现-命名空间
             namespace: @NACOS-NAMESPACE@
+            # 服务注册&发现-数据标识
             data-id: gateway-flow.json
-            rule-type: gw_flow # 网关规则
+            # 服务注册&发现-规则类型【网关规则】
+            rule-type: gw_flow
+            # 服务注册&发现-分组标识
             group-id: @NACOS-GROUP@
+            # 服务注册&发现-用户名
             username: @NACOS-USERNAME@
+            # 服务注册&发现-密码
             password: @NACOS-PASSWORD@
+            # 服务注册&发现-数据类型
             data-type: json

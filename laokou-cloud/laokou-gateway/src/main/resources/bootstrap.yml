@@ -18,29 +18,46 @@
 spring:
   config:
     import:
+      # Redis公共配置
       - optional:nacos:application-common-redis.yaml?refreshEnabled=true&group=${NACOS-GROUP}
+      # 网关公共配置
       - optional:nacos:application-gateway.yaml?refreshEnabled=true&group=${NACOS-GROUP}
+      # 公共配置
       - optional:nacos:application-common.yaml?refreshEnabled=true&group=${NACOS-GROUP}
   cloud:
     # nacos
     nacos:
       discovery:
+        # 服务注册&发现-地址
         server-addr: ${NACOS-DISCOVERY-ADDRESS}
+        # 服务注册&发现-命名空间
         namespace: ${NACOS-NAMESPACE}
+        # 服务注册&发现-用户名
         username: ${NACOS-USERNAME}
+        # 服务注册&发现-密码
         password: ${NACOS-PASSWORD}
+        # 服务注册&发现-分组
         group: ${NACOS-GROUP}
-        # https
+        # true支持https，false不支持https
         secure: @SSL-ENABLED@
         # true 临时 false 持久
         ephemeral: true
+        # # 服务注册&发现-集群名称
         cluster-name: ${NACOS-CLUSTER-NAME}
       config:
+        # 配置中心-地址
         server-addr: ${NACOS-CONFIG-ADDRESS}
+        # 配置中心-命名空间
         namespace: ${NACOS-NAMESPACE}
+        # 配置中心-用户名
         username: ${NACOS-USERNAME}
+        # 配置中心-密码
         password: ${NACOS-PASSWORD}
+        # 配置中心-分组
         group: ${NACOS-GROUP}
+        # 配置中心-集群名称
         cluster-name: ${NACOS-CLUSTER-NAME}
+        # 配置中心-开启自动刷新
         refresh-enabled: true
+        # 配置中心-配置文件格式
         file-extension: yaml

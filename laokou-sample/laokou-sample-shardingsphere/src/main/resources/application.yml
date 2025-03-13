@@ -1,9 +1,11 @@
 server:
   port: 9033
+  # 优雅停机
   shutdown: graceful
 spring:
   threads:
     virtual:
+      # 开启虚拟线程
       enabled: true
   profiles:
     active: @PROFILE-ACTIVE@

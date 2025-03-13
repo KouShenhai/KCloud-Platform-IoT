@@ -28,7 +28,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -131,11 +130,11 @@ public final class JacksonUtil {
 	 * @return 对象集合
 	 */
 	public static <T> List<T> toList(String json, Class<T> clazz) throws JsonProcessingException {
-		return MAPPER.readValue(json, collectionType(clazz));
+		return MAPPER.readValue(json, listType(clazz));
 	}
 
 	public static <T> List<T> toList(File file, Class<T> clazz) throws IOException {
-		return MAPPER.readValue(file, collectionType(clazz));
+		return MAPPER.readValue(file, listType(clazz));
 	}
 
 	/**
@@ -202,8 +201,8 @@ public final class JacksonUtil {
 	 * @param <T> 泛型
 	 * @return 集合类型
 	 */
-	private static <T> CollectionType collectionType(Class<T> clazz) {
-		return MAPPER.getTypeFactory().constructCollectionType(Collection.class, clazz);
+	private static <T> CollectionType listType(Class<T> clazz) {
+		return MAPPER.getTypeFactory().constructCollectionType(List.class, clazz);
 	}
 
 	/**

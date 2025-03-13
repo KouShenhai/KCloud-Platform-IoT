@@ -73,7 +73,7 @@ public abstract class AbstractShardingSphereURLLoadEngine {
 
 	protected final ShardingSphereURL url;
 
-	public AbstractShardingSphereURLLoadEngine(final ShardingSphereURL url) {
+	protected AbstractShardingSphereURLLoadEngine(final ShardingSphereURL url) {
 		this.url = url;
 	}
 

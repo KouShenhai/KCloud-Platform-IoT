@@ -14,46 +14,63 @@
 #    * limitations under the License.
 #    *
 #    */
+# 加密配置
 jasypt:
   encryptor:
+    # 加密算法
+    # springboot2加密密钥 => 使用MD5AndDES
     algorithm: PBEWithMD5AndDES
+    # IV生成类
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    # 密钥
     password: @JASYPT-ENCRYPTOR-PASSWORD@
 
 db:
+  # 数据库数量，请按照作者的来，请不要瞎几把改
+  # 数据库数量，请按照作者的来，请不要瞎几把改
+  # 数据库数量，请按照作者的来，请不要瞎几把改
   num: 1
+  # 数据库连接地址
   url.'0': jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/@DATASOURCE-DB-NACOS@?@DATASOURCE-PARAM-NACOS@
+  # 数据库用户名
   user.'0': @DATASOURCE-USERNAME-NACOS@
+  # 数据库密码
   password.'0': @DATASOURCE-PASSWORD-NACOS@
   # see DataSourcePoolProperties 与 ExternalDataSourceProperties
   pool:
     config:
       # see DataSourcePoolProperties
       # see HikariConfig
-      minimum-idle: 2
-      idle-timeout: 10000
+      # 最小空闲连接数
+      minimum-idle: 200
+      # 空闲连接的最大存活时间
+      idle-timeout: 60000
       # 连接时间
-      connection-timeout: 30000
+      connection-timeout: 60000
       # 超时时间
-      validation-timeout: 10000
-      # 最优最大连接数
-      maximum-pool-size: 20
+      validation-timeout: 60000
+      # 最大连接数
+      maximum-pool-size: 500
       # 数据库驱动
       driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
 management:
   metrics:
     export:
+      # 不暴露指标到Elastic
       elastic:
         enabled: false
+      # 不暴露指标到Influx
       influx:
         enabled: false
 nacos:
   config:
     push:
+      # 配置推送失败时的最大重试次数
       maxRetryTime: 50
   core:
     auth:
       caching:
+        # 启用认证信息的缓存，减少重复认证的开销
         enabled: true
       enable:
         userAgentAuthWhite: false
@@ -89,8 +106,10 @@ nacos:
 server:
   error:
     include-message: always
+  # 端口
   port: ${SERVER_PORT:8848}
   servlet:
+    # 请求上下文路径
     contextPath: /nacos
   undertow:
     threads:
@@ -109,20 +128,31 @@ server:
     enabled: false
   http2:
     enabled: false
+  # 优雅停机
   shutdown: graceful
 spring:
   main:
+    # banner模式
     banner-mode: console
   application:
+    # 应用名称
     name: ${SERVICE_ID:laokou-nacos}
   profiles:
+    # 环境
     active: @PROFILE-ACTIVE@
   sql:
     init:
+      # 指定数据库类型
       platform: @DATASOURCE-PLATFORM@
+  # 数据库版本管理工具
   liquibase:
+    # 开启
     enabled: true
+    # 数据库版本变更配置
     change-log: classpath:/db/changelog/db.changelog-master.xml
+    # 数据库用户名
     user: @DATASOURCE-USERNAME-NACOS@
+    # 数据库密码
     password: @DATASOURCE-PASSWORD-NACOS@
+    # 数据库连接地址
     url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/@DATASOURCE-DB-NACOS@?@DATASOURCE-PARAM-NACOS@
