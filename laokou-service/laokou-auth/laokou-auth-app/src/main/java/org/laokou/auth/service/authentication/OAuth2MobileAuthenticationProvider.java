@@ -38,7 +38,7 @@ import static org.laokou.auth.factory.DomainFactory.*;
  */
 @Slf4j
 @Component("mobileAuthenticationProvider")
-public class OAuth2MobileAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
+final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2MobileAuthenticationProvider(OAuth2AuthorizationService authorizationService,
 			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor) {

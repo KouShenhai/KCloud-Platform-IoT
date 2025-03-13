@@ -53,7 +53,7 @@ import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getOAuth
 @Slf4j
 @RequiredArgsConstructor
 @Component("authProcessor")
-public class OAuth2AuthenticationProcessor {
+final class OAuth2AuthenticationProcessor {
 
 	private final DomainService domainService;
 

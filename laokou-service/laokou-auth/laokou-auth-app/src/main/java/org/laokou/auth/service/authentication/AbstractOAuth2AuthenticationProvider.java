@@ -60,7 +60,7 @@ import static org.springframework.security.oauth2.server.authorization.OAuth2Tok
  */
 @Slf4j
 @RequiredArgsConstructor
-public abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationProvider {
+abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationProvider {
 
 	private static final OAuth2TokenType ID_TOKEN_TOKEN_TYPE = new OAuth2TokenType(ID_TOKEN);
 

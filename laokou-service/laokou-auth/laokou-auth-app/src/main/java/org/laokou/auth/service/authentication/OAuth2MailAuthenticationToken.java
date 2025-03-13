@@ -29,14 +29,14 @@ import static org.laokou.auth.factory.DomainFactory.MAIL;
  *
  * @author laokou
  */
-public class OAuth2MailAuthenticationToken extends AbstractOAuth2AuthenticationToken {
+final class OAuth2MailAuthenticationToken extends AbstractOAuth2AuthenticationToken {
 
 	/**
 	 * Subclass constructor.
 	 * @param clientPrincipal the authenticated client principal
 	 * @param additionalParameters the additional parameters
 	 */
-	protected OAuth2MailAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
+	OAuth2MailAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
 		super(new AuthorizationGrantType(MAIL), clientPrincipal, additionalParameters);
 	}
 

@@ -29,14 +29,14 @@ import static org.laokou.auth.factory.DomainFactory.USERNAME_PASSWORD;
  *
  * @author laokou
  */
-public class OAuth2UsernamePasswordAuthenticationToken extends AbstractOAuth2AuthenticationToken {
+final class OAuth2UsernamePasswordAuthenticationToken extends AbstractOAuth2AuthenticationToken {
 
 	/**
 	 * Subclass constructor.
 	 * @param clientPrincipal the authenticated client principal
 	 * @param additionalParameters the additional parameters
 	 */
-	protected OAuth2UsernamePasswordAuthenticationToken(Authentication clientPrincipal,
+	OAuth2UsernamePasswordAuthenticationToken(Authentication clientPrincipal,
 			Map<String, Object> additionalParameters) {
 		super(new AuthorizationGrantType(USERNAME_PASSWORD), clientPrincipal, additionalParameters);
 	}

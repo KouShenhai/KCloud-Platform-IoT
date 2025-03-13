@@ -29,15 +29,14 @@ import static org.laokou.auth.factory.DomainFactory.MOBILE;
  *
  * @author laokou
  */
-public class OAuth2MobileAuthenticationToken extends AbstractOAuth2AuthenticationToken {
+final class OAuth2MobileAuthenticationToken extends AbstractOAuth2AuthenticationToken {
 
 	/**
 	 * Sub-class constructor.
 	 * @param clientPrincipal the authenticated client principal
 	 * @param additionalParameters the additional parameters
 	 */
-	protected OAuth2MobileAuthenticationToken(Authentication clientPrincipal,
-			Map<String, Object> additionalParameters) {
+	OAuth2MobileAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
 		super(new AuthorizationGrantType(MOBILE), clientPrincipal, additionalParameters);
 	}
 

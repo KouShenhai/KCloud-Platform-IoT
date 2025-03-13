@@ -38,9 +38,9 @@ import static org.laokou.auth.factory.DomainFactory.*;
  */
 @Slf4j
 @Component("usernamePasswordAuthenticationProvider")
-public class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
+final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
-	public OAuth2UsernamePasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
+	OAuth2UsernamePasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
 			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor) {
 		super(authorizationService, tokenGenerator, authProcessor);
 	}

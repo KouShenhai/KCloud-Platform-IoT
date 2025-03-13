@@ -38,7 +38,7 @@ import static org.laokou.auth.factory.DomainFactory.*;
  */
 @Slf4j
 @Component("mailAuthenticationProvider")
-public class OAuth2MailAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
+final class OAuth2MailAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2MailAuthenticationProvider(OAuth2AuthorizationService authorizationService,
 			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor) {

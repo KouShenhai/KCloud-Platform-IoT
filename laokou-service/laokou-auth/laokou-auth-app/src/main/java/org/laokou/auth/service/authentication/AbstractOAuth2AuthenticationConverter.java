@@ -41,7 +41,7 @@ import static org.laokou.common.security.handler.OAuth2ExceptionHandler.*;
  * @author laokou
  */
 @Slf4j
-public abstract class AbstractOAuth2AuthenticationConverter implements AuthenticationConverter {
+abstract class AbstractOAuth2AuthenticationConverter implements AuthenticationConverter {
 
 	/**
 	 * 获取认证类型.

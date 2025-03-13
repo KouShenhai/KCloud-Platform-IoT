@@ -121,9 +121,8 @@ public final class MapUtil {
 				}
 			}
 			return parameterMap;
-		} else {
+		}
 		return new LinkedMultiValueMap<>(0);
-	}
 	}
 	// @formatter:on
 

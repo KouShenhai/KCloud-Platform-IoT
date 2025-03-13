@@ -28,7 +28,7 @@ import java.util.Map;
  *
  * @author laokou
  */
-public abstract class AbstractOAuth2AuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
+abstract class AbstractOAuth2AuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
 
 	/**
 	 * Subclass constructor.

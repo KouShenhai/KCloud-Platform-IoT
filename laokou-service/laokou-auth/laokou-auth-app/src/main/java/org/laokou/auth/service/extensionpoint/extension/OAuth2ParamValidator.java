@@ -28,7 +28,7 @@ import static org.laokou.common.i18n.utils.ParamValidator.*;
 /**
  * @author laokou
  */
-public final class OAuth2ParamValidator {
+final class OAuth2ParamValidator {
 
 	private OAuth2ParamValidator() {
 	}

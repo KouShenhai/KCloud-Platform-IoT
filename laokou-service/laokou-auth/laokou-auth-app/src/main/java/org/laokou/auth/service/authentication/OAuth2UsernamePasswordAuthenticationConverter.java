@@ -30,7 +30,7 @@ import static org.laokou.auth.factory.DomainFactory.USERNAME_PASSWORD;
  * @author laokou
  */
 @Component("usernamePasswordAuthenticationConverter")
-public class OAuth2UsernamePasswordAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
+final class OAuth2UsernamePasswordAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
 
 	@Override
 	String getGrantType() {

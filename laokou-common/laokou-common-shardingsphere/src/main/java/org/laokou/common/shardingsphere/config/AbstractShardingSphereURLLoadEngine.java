@@ -39,7 +39,6 @@ import com.baomidou.dynamic.datasource.toolkit.CryptoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.infra.url.core.ShardingSphereURL;
 import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.i18n.common.constant.StringConstant;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
@@ -117,7 +116,7 @@ public abstract class AbstractShardingSphereURLLoadEngine {
 	}
 
 	private List<String> getList(String value) {
-		List<String> list = new ArrayList<>(MapUtil.initialCapacity(256));
+		List<String> list = new ArrayList<>(256);
 		try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(
 				new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8))) {
 			String str;

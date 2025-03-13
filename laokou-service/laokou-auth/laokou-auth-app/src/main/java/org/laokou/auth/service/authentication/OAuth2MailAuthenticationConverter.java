@@ -30,7 +30,7 @@ import static org.laokou.auth.factory.DomainFactory.MAIL;
  * @author laokou
  */
 @Component("mailAuthenticationConverter")
-public class OAuth2MailAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
+final class OAuth2MailAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
 
 	@Override
 	String getGrantType() {

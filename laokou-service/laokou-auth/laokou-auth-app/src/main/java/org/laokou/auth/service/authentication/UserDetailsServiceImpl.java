@@ -41,7 +41,7 @@ import static org.laokou.auth.factory.DomainFactory.TENANT_CODE;
 @Slf4j
 @RequiredArgsConstructor
 @Component("userDetailsServiceImpl")
-public class UserDetailsServiceImpl implements UserDetailsService {
+final class UserDetailsServiceImpl implements UserDetailsService {
 
 	private final OAuth2AuthenticationProcessor authProcessor;
 

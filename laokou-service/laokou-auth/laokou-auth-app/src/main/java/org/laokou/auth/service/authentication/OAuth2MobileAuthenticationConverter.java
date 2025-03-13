@@ -30,7 +30,7 @@ import static org.laokou.auth.factory.DomainFactory.MOBILE;
  * @author laokou
  */
 @Component("mobileAuthenticationConverter")
-public class OAuth2MobileAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
+final class OAuth2MobileAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
 
 	@Override
 	String getGrantType() {
