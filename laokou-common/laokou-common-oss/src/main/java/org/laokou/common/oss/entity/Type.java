@@ -15,14 +15,29 @@
  *
  */
 
-package org.laokou.common.oss.template;
-import java.io.IOException;
+package org.laokou.common.oss.entity;
 
-/**
- * @author laokou
- */
-public interface Storage {
+import lombok.Getter;
+import org.laokou.common.i18n.utils.EnumParser;
 
-	String upload() throws IOException;
+@Getter
+public enum Type {
+
+	LOCAL("local", "本地"),
+
+	CLOUD("cloud", "云端");
+
+	private final String code;
+
+	private final String desc;
+
+	Type(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+
+	public static Type getByCode(String code) {
+		return EnumParser.parse(Type.class, Type::getCode, code);
+	}
 
 }

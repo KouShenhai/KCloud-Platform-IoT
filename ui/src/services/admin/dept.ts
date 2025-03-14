@@ -108,8 +108,8 @@ export async function pageV3(body: API.DeptPageQry, options?: { [key: string]: a
 	});
 }
 
-export async function treeListV3(body: any,options?: { [key: string]: any }) {
-	return request<API.Result>('/api/admin/v3/depts/tree-list', {
+export async function listTreeV3(body: any,options?: { [key: string]: any }) {
+	return request<API.Result>('/api/admin/v3/depts/list-tree', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

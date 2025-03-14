@@ -105,11 +105,11 @@ public class DeptsControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("tree-list")
-	@PreAuthorize("hasAuthority('sys:dept:tree-list')")
+	@PostMapping("list-tree")
+	@PreAuthorize("hasAuthority('sys:dept:list-tree')")
 	@Operation(summary = "查询部门树列表", description = "查询部门树列表")
-	public Result<List<DeptTreeCO>> treeListV3(@RequestBody DeptTreeListQry qry) {
-		return deptsServiceI.treeList(qry);
+	public Result<List<DeptTreeCO>> listTreeV3(@RequestBody DeptTreeListQry qry) {
+		return deptsServiceI.listTree(qry);
 	}
 
 	@TraceLog

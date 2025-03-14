@@ -17,16 +17,41 @@
 
 package org.laokou.common.oss.template;
 
+import org.laokou.common.core.utils.FileUtil;
 import org.laokou.common.oss.entity.FileInfo;
+import org.laokou.common.oss.entity.OssInfo;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
  */
-public class LocalStorage extends AbstractStorage {
+public class LocalStorage extends AbstractStorage<Path> {
+
+	public LocalStorage(FileInfo fileInfo, OssInfo ossInfo, ExecutorService virtualThreadExecutor) {
+		super(fileInfo, ossInfo, virtualThreadExecutor);
+	}
 
 	@Override
-	public String getUrl(FileInfo fileInfo) {
-		return "";
+	protected Path getObj() throws IOException {
+		return FileUtil.create(ossInfo.getDirectory(), fileInfo.getName());
+	}
+
+	@Override
+	protected void createBucket(Path obj) {
+	}
+
+	@Override
+	protected void upload(Path obj) throws IOException {
+		FileUtil.write(obj.toFile(), fileInfo.getInputStream(), fileInfo.getSize(), fileInfo.getChunkSize(),
+				virtualThreadExecutor);
+	}
+
+	@Override
+	protected String getUrl(Path obj) {
+		return ossInfo.getDomain() + obj.toString();
 	}
 
 }

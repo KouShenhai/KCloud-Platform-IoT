@@ -8,8 +8,8 @@ import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {trim} from "@/utils/format";
-import {treeListV3 as menuTreeListV3} from "@/services/admin/menu";
-import {treeListV3 as deptTreeListV3} from "@/services/admin/dept";
+import {listTreeV3 as listMenuTreeV3} from "@/services/admin/menu";
+import {listTreeV3 as listDeptTreeV3} from "@/services/admin/dept";
 import {RoleDrawer} from "@/pages/Sys/Permission/RoleDrawer";
 import {RoleModifyAuthorityDrawer} from "@/pages/Sys/Permission/RoleModifyAuthorityDrawer";
 
@@ -49,13 +49,13 @@ export default () => {
 	}
 
 	const getMenuTreeList = async () => {
-		menuTreeListV3({code: 1, status: 0}).then(res => {
+		listMenuTreeV3({code: 1, status: 0}).then(res => {
 			setMenuTreeList(res?.data)
 		})
 	}
 
 	const getDeptTreeList = async () => {
-		deptTreeListV3({}).then(res => {
+		listDeptTreeV3({}).then(res => {
 			setDeptTreeList(res?.data)
 		})
 	}

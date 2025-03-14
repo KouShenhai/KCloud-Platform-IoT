@@ -18,8 +18,8 @@
 spring:
   config:
     import:
-      # 动态路由配置
-      - optional:nacos:router.yaml?refreshEnabled=true&group=${NACOS-GROUP}
+      # 临时配置文件【解决拉取nacos配置文件时，group默认为DEFAULT_GROUP问题】
+      - optional:nacos:laokou-gateway.yaml?refreshEnabled=true&group=${NACOS-GROUP}
   cloud:
     # nacos
     nacos:

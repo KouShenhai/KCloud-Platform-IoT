@@ -88,7 +88,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	}
 
 	@Override
-	public Result<List<MenuTreeCO>> treeList(MenuTreeListQry qry) {
+	public Result<List<MenuTreeCO>> listTree(MenuTreeListQry qry) {
 		return menuTreeListQryExe.execute(qry);
 	}
 

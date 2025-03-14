@@ -15,30 +15,20 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.oss.model;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.oss.entity.FileInfo;
-import org.laokou.common.oss.entity.OssInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class StorageTemplate {
+public class OssE extends FileInfo {
 
-	private final ExecutorService virtualThreadExecutor;
-
-	public Result<String> upload(MultipartFile file, OssInfo ossInfo) throws IOException {
-		return switch (ossInfo.getType()) {
-			case LOCAL -> Result.ok(new LocalStorage(new FileInfo(file), ossInfo, virtualThreadExecutor).upload());
-			case CLOUD -> Result.ok(new AmazonS3Storage(new FileInfo(file), ossInfo, virtualThreadExecutor).upload());
-		};
+	public OssE(MultipartFile file) throws IOException {
+		super(file);
 	}
 
 }

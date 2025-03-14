@@ -18,9 +18,12 @@
 package org.laokou.common.oss.entity;
 
 import lombok.Data;
+import org.laokou.common.core.utils.FileUtil;
+import org.springframework.util.DigestUtils;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
-import java.io.Serializable;
+import java.io.*;
+import java.util.UUID;
 
 /**
  * @author laokou
@@ -28,12 +31,35 @@ import java.io.Serializable;
 @Data
 public class FileInfo implements Serializable {
 
-	private InputStream in;
+	private final ByteArrayOutputStream cachedOutputStream;
 
-	private long size;
+	protected final long size;
 
-	private String name;
+	protected final String name;
 
-	private String md5;
+	protected final String md5;
+
+	protected final String contentType;
+
+	protected final long chunkSize;
+
+	public FileInfo(MultipartFile file) throws IOException {
+		this.cachedOutputStream = getCachedOutputStream(file.getInputStream());
+		this.size = file.getSize();
+		this.name = UUID.randomUUID() + FileUtil.getFileExt(file.getOriginalFilename());
+		this.md5 = DigestUtils.md5DigestAsHex(new ByteArrayInputStream(cachedOutputStream.toByteArray()));
+		this.contentType = file.getContentType();
+		this.chunkSize = this.size / 10;
+	}
+
+	public InputStream getInputStream() {
+		return new ByteArrayInputStream(cachedOutputStream.toByteArray());
+	}
+
+	private ByteArrayOutputStream getCachedOutputStream(InputStream in) throws IOException {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		bos.write(in.readAllBytes());
+		return bos;
+	}
 
 }

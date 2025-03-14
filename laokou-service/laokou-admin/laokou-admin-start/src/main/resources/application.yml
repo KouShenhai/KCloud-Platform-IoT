@@ -138,14 +138,6 @@ spring:
           max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
           max-idle: 500 #连接池最大空闲连接
           min-idle: 200 #连接池最小空间连接
-  # elasticsearch
-  elasticsearch:
-    uris:
-      - https://elasticsearch:9200
-    username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
-    password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-    connection-timeout: 30s
-    socket-timeout: 30s
   cloud:
     # sentinel
     sentinel:

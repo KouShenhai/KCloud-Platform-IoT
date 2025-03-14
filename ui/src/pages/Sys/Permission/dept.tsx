@@ -2,7 +2,7 @@ import {
 	ProColumns,
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {treeListV3, removeV3, getByIdV3} from "@/services/admin/dept";
+import {listTreeV3, removeV3, getByIdV3} from "@/services/admin/dept";
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
@@ -39,7 +39,7 @@ export default () => {
 	}
 
 	const getTreeList = async () => {
-		treeListV3({}).then(res => {
+		listTreeV3({}).then(res => {
 			setTreeList([{
 				id: '0',
 				name: '根目录',
@@ -191,7 +191,7 @@ export default () => {
 				columns={columns}
 				request={ async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return treeListV3(getPageQuery(params)).then(res => {
+					return listTreeV3(getPageQuery(params)).then(res => {
 						return Promise.resolve({
 							data: res.data,
 							success: true,

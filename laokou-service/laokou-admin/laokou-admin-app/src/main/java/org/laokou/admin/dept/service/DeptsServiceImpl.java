@@ -88,7 +88,7 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	@Override
-	public Result<List<DeptTreeCO>> treeList(DeptTreeListQry qry) {
+	public Result<List<DeptTreeCO>> listTree(DeptTreeListQry qry) {
 		return deptTreeListQryExe.execute(qry);
 	}
 

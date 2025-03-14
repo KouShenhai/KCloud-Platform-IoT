@@ -105,18 +105,18 @@ public class MenusControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("tree-list")
-	@PreAuthorize("hasAuthority('sys:menu:tree-list')")
+	@PostMapping("list-tree")
+	@PreAuthorize("hasAuthority('sys:menu:list-tree')")
 	@Operation(summary = "查询菜单树列表", description = "查询菜单树列表")
-	public Result<List<MenuTreeCO>> treeListV3(@RequestBody MenuTreeListQry qry) {
-		return menusServiceI.treeList(qry);
+	public Result<List<MenuTreeCO>> listTreeV3(@RequestBody MenuTreeListQry qry) {
+		return menusServiceI.listTree(qry);
 	}
 
 	@TraceLog
-	@PostMapping("user-tree-list")
+	@PostMapping("list-user-tree")
 	@Operation(summary = "查询用户菜单树列表", description = "查询用户菜单树列表")
-	public Result<List<MenuTreeCO>> userTreeListV3(@RequestBody MenuTreeListQry qry) {
-		return menusServiceI.treeList(qry);
+	public Result<List<MenuTreeCO>> listUserTreeV3(@RequestBody MenuTreeListQry qry) {
+		return menusServiceI.listTree(qry);
 	}
 
 	@TraceLog
