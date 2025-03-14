@@ -38,6 +38,48 @@ spring:
     name: ${SERVICE_ID:laokou-logstash}
   profiles:
     active: @PROFILE-ACTIVE@
+  # elasticsearch
+  elasticsearch:
+    uris:
+      - https://elasticsearch:9200
+    username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
+    password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+    connection-timeout: 30s
+    socket-timeout: 30s
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: laokou_trace_consumer_group
+      # 禁用自动提交（按周期）已消费offset
+      enable-auto-commit: false
+      # 单次poll()调用返回的记录数
+      max-poll-records: 50
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      # 发生错误后，消息重发的次数。
+      retries: 5
+      #当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
+      batch-size: 16384
+      # 设置生产者内存缓冲区的大小。
+      buffer-memory: 33554432
+      # 键的序列化方式
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 值的序列化方式
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      acks: 0
+    listener:
+      # 在侦听器容器中运行的线程数。
+      concurrency: 5
+      # listner负责ack，每调用一次，就立即commit
+      ack-mode: manual
+      # 批量batch类型
+      type: batch
+      # topic不存在报错
+      missing-topics-fatal: false
   cloud:
     # loadbalancer
     loadbalancer:
@@ -59,3 +101,6 @@ storage:
 
 loki:
   url: http://loki:3100/loki/api/v1/push
+jasypt:
+  encryptor:
+    password: 5201314wumeihua

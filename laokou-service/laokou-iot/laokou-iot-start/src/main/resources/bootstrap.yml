@@ -16,12 +16,6 @@
 #    */
 # spring
 spring:
-  config:
-    import:
-      - optional:nacos:application-common-redis.yaml?refreshEnabled=true&group=${NACOS-GROUP}
-      - optional:nacos:application-common-rocketmq.yaml?refreshEnabled=true&group=${NACOS-GROUP}
-      - optional:nacos:application-iot.yaml?refreshEnabled=true&group=${NACOS-GROUP}
-      - optional:nacos:application-common.yaml?refreshEnabled=true&group=${NACOS-GROUP}
   cloud:
     # nacos
     nacos:

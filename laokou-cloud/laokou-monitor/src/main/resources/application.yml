@@ -14,11 +14,69 @@
 #    * limitations under the License.
 #    *
 #    */
+jasypt:
+  encryptor:
+    password: @JASYPT-ENCRYPTOR-PASSWORD@
+
 server:
   port: ${SERVER_PORT:5000}
+  ssl:
+    # 开启证书
+    enabled: true
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: true
+  shutdown: graceful
 
 spring:
   application:
     name: ${SERVICE_ID:laokou-monitor}
   profiles:
     active: @PROFILE-ACTIVE@
+  threads:
+    virtual:
+      enabled: true
+  cloud:
+    config:
+      initialize-on-context-refresh: true
+  boot:
+    # admin
+    admin:
+      notify:
+        mail:
+          from: koushenhai@163.com
+          to: 2413176044@qq.com
+          template: META-INF/spring-boot-admin-server/mail/status-changed.html
+  # security
+  security:
+    user:
+      # root
+      name: ENC(esZnNM2DrSxZhgTOzu11W2fVsJDDZ1b12aPopMMHCS7lF5+BJun9ri6y5pTUdj6L)
+      # laokou123
+      password: ENC(mHjKcITM5U60bq7M4fxh4yUQ9L3PPWPskvnWRE0PVxIqQ34Ztx7zOESwWCdjeWPW)
+  # mail
+  mail:
+    host: smtp.163.com
+    username: koushenhai@163.com
+    password: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
+    default-encoding: UTF-8
+
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

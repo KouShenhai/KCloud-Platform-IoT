@@ -18,12 +18,8 @@
 spring:
   config:
     import:
-      # Redis公共配置
-      - optional:nacos:application-common-redis.yaml?refreshEnabled=true&group=${NACOS-GROUP}
-      # 网关公共配置
-      - optional:nacos:application-gateway.yaml?refreshEnabled=true&group=${NACOS-GROUP}
-      # 公共配置
-      - optional:nacos:application-common.yaml?refreshEnabled=true&group=${NACOS-GROUP}
+      # 动态路由配置
+      - optional:nacos:router.yaml?refreshEnabled=true&group=${NACOS-GROUP}
   cloud:
     # nacos
     nacos:

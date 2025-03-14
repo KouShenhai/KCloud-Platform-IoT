@@ -23,14 +23,6 @@
       <artifactId>laokou-common-security</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-log</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-nacos</artifactId>
-    </dependency>
-    <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>
@@ -38,6 +30,14 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-prometheus</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.ulisesbocchio</groupId>
+      <artifactId>jasypt-spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-nacos</artifactId>
     </dependency>
   </dependencies>
 

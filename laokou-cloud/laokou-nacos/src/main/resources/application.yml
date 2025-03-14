@@ -42,15 +42,15 @@ db:
       # see DataSourcePoolProperties
       # see HikariConfig
       # 最小空闲连接数
-      minimum-idle: 200
+      minimum-idle: 2
       # 空闲连接的最大存活时间
-      idle-timeout: 60000
+      idle-timeout: 10000
       # 连接时间
-      connection-timeout: 60000
+      connection-timeout: 30000
       # 超时时间
-      validation-timeout: 60000
+      validation-timeout: 10000
       # 最大连接数
-      maximum-pool-size: 500
+      maximum-pool-size: 20
       # 数据库驱动
       driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
 management:
