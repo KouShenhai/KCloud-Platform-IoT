@@ -108,8 +108,8 @@ export async function pageV3(body: API.MenuPageQry, options?: { [key: string]: a
 	});
 }
 
-export async function treeListV3(body: any,options?: { [key: string]: any }) {
-	return request<API.Result>('/api/admin/v3/menus/tree-list', {
+export async function listTreeV3(body: any,options?: { [key: string]: any }) {
+	return request<API.Result>('/api/admin/v3/menus/list-tree', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -119,8 +119,8 @@ export async function treeListV3(body: any,options?: { [key: string]: any }) {
 	});
 }
 
-export async function userTreeListV3(body: any,options?: { [key: string]: any }) {
-	return request<API.Result>('/api/admin/v3/menus/user-tree-list', {
+export async function listUserTreeV3(body: any,options?: { [key: string]: any }) {
+	return request<API.Result>('/api/admin/v3/menus/list-user-tree', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

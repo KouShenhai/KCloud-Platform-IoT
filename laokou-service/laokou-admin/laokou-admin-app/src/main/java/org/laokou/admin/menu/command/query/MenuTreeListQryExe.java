@@ -45,11 +45,11 @@ public class MenuTreeListQryExe {
 	private final MenuMapper menuMapper;
 
 	public Result<List<MenuTreeCO>> execute(MenuTreeListQry qry) {
-		MenuTreeCO co = TreeUtil.buildTreeNode(MenuConvertor.toClientObjs(getList(qry)), MenuTreeCO.class);
+		MenuTreeCO co = TreeUtil.buildTreeNode(MenuConvertor.toClientObjs(list(qry)), MenuTreeCO.class);
 		return Result.ok(co.getChildren());
 	}
 
-	private List<MenuDO> getList(MenuTreeListQry qry) {
+	private List<MenuDO> list(MenuTreeListQry qry) {
 		switch (TreeMenuType.getByCode(qry.getCode())) {
 			case USER -> {
 				qry.setStatus(MenuStatus.ENABLE.getCode());

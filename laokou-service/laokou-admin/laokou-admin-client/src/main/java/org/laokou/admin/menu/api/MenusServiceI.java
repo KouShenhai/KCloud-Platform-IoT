@@ -72,7 +72,7 @@ public interface MenusServiceI {
 	 * 查询菜单树.
 	 * @param qry 查询请求
 	 */
-	Result<List<MenuTreeCO>> treeList(MenuTreeListQry qry);
+	Result<List<MenuTreeCO>> listTree(MenuTreeListQry qry);
 
 	/**
 	 * 查看菜单.

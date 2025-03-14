@@ -39,7 +39,7 @@ public abstract class AbstractTraceLogStorage implements TraceLogStorage {
 			TraceLogIndex traceLogIndex = JacksonUtil.toBean(str, TraceLogIndex.class);
 			String traceId = traceLogIndex.getTraceId();
 			String spanId = traceLogIndex.getSpanId();
-			if (isTraceLog(traceId, spanId)) {
+			if (StringUtil.isNotEmpty(spanId) && StringUtil.isNotEmpty(traceId)) {
 				traceLogIndex.setId(String.valueOf(IdGenerator.defaultSnowflakeId()));
 				return traceLogIndex;
 			}
@@ -48,14 +48,6 @@ public abstract class AbstractTraceLogStorage implements TraceLogStorage {
 			log.error("分布式链路日志JSON转换失败，错误信息：{}", ex.getMessage());
 		}
 		return null;
-	}
-
-	private boolean isTraceLog(String traceId, String spanId) {
-		return isTraceLog(traceId) && isTraceLog(spanId);
-	}
-
-	private boolean isTraceLog(String str) {
-		return StringUtil.isNotEmpty(str) && !str.startsWith("${") && !str.endsWith("}");
 	}
 
 }

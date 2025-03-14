@@ -11,7 +11,7 @@ import { clearToken, getAccessToken, getRefreshToken, setToken } from '@/access'
 import React from "react";
 import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
 import {getProfileV3} from "@/services/admin/user";
-import {userTreeListV3} from "@/services/admin/menu";
+import {listUserTreeV3} from "@/services/admin/menu";
 import {ProBreadcrumb} from "@ant-design/pro-layout";
 import axios from 'axios';
 
@@ -62,7 +62,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 			locale: false,
 			params: initialState?.username,
 			request: async () => {
-				const result = await userTreeListV3({code: 0}).catch(console.log);
+				const result = await listUserTreeV3({code: 0}).catch(console.log);
 				return getRouters(result?.data)
 			}
 		},

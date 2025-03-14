@@ -72,7 +72,7 @@ public interface DeptsServiceI {
 	 * 查询部门树.
 	 * @param qry 查询请求
 	 */
-	Result<List<DeptTreeCO>> treeList(DeptTreeListQry qry);
+	Result<List<DeptTreeCO>> listTree(DeptTreeListQry qry);
 
 	/**
 	 * 查看部门.

@@ -10,7 +10,7 @@ import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {trim} from "@/utils/format";
 import { ResetPwdDrawer } from '@/pages/Sys/Permission/ResetPwdDrawer';
 import {UserDrawer} from "@/pages/Sys/Permission/UserDrawer";
-import {treeListV3} from "@/services/admin/dept";
+import {listTreeV3} from "@/services/admin/dept";
 import {pageV3 as rolePageV3} from "@/services/admin/role";
 import {UserModifyAuthorityDrawer} from "@/pages/Sys/Permission/UserModifyAuthorityDrawer";
 
@@ -39,7 +39,7 @@ export default () => {
 	const [roleList, setRoleList] = useState<any[]>([])
 
 	const getDeptTreeList = async () => {
-		treeListV3({}).then(res => {
+		listTreeV3({}).then(res => {
 			setDeptTreeList(res?.data)
 		})
 	}

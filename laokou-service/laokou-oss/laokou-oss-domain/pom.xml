@@ -11,8 +11,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-core</artifactId>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-oss</artifactId>
     </dependency>
   </dependencies>
 

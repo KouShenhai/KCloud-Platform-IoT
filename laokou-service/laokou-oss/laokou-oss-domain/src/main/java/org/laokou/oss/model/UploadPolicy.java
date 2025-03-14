@@ -15,14 +15,16 @@
  *
  */
 
-package org.laokou.common.oss.template;
-import java.io.IOException;
+package org.laokou.oss.model;
+
+import lombok.Getter;
 
 /**
+ * 上传策略.
+ *
  * @author laokou
  */
-public interface Storage {
-
-	String upload() throws IOException;
+@Getter
+public enum UploadPolicy {
 
 }

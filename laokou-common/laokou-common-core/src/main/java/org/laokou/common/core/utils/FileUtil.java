@@ -19,6 +19,7 @@ package org.laokou.common.core.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.utils.StringUtil;
 
 import java.io.*;
 import java.net.URI;
@@ -34,8 +35,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.DOT;
-import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
+import static org.laokou.common.i18n.common.constant.StringConstant.*;
 
 /**
  * 文件工具类.
@@ -67,6 +67,16 @@ public final class FileUtil {
 	public static Path create(String directory, String fileName) throws IOException {
 		Path directoryPath = Path.of(directory);
 		Path filePath = Path.of(directory, fileName);
+		return create(directoryPath, filePath);
+	}
+
+	/**
+	 * 创建目录及文件.
+	 * @param directoryPath 目录
+	 * @param filePath 文件名
+	 * @return 创建后的文件对象
+	 */
+	public static Path create(Path directoryPath, Path filePath) throws IOException {
 		if (!isExist(directoryPath)) {
 			Files.createDirectories(directoryPath);
 		}
@@ -116,6 +126,7 @@ public final class FileUtil {
 			ExecutorService virtualThreadExecutor) throws IOException {
 		if (in instanceof FileInputStream fis) {
 			// 最大偏移量2G【2^31】数据
+			assert chunkSize > 0L;
 			chunkSize = Math.min(chunkSize, 2L * 1024 * 1024 * 1024);
 			long chunkCount = (size / chunkSize) + (size % chunkSize == 0 ? 0 : 1);
 			try (FileChannel inChannel = fis.getChannel()) {
@@ -145,6 +156,9 @@ public final class FileUtil {
 	 * @return 文件扩展名
 	 */
 	public static String getFileExt(String fileName) {
+		if (StringUtil.isEmpty(fileName)) {
+			return EMPTY;
+		}
 		return fileName.substring(fileName.lastIndexOf(DOT));
 	}
 

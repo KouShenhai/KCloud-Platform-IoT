@@ -18,15 +18,42 @@
 package org.laokou.common.oss.template;
 
 import org.laokou.common.oss.entity.FileInfo;
+import org.laokou.common.oss.entity.OssInfo;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
  */
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<O> implements Storage {
+
+	protected final FileInfo fileInfo;
+
+	protected final OssInfo ossInfo;
+
+	protected final ExecutorService virtualThreadExecutor;
+
+	protected AbstractStorage(FileInfo fileInfo, OssInfo ossInfo, ExecutorService virtualThreadExecutor) {
+		this.fileInfo = fileInfo;
+		this.ossInfo = ossInfo;
+		this.virtualThreadExecutor = virtualThreadExecutor;
+	}
 
 	@Override
-	public void upload(FileInfo fileInfo) {
-
+	public String upload() throws IOException {
+		O obj = getObj();
+		createBucket(obj);
+		upload(obj);
+		return getUrl(obj);
 	}
+
+	protected abstract O getObj() throws IOException;
+
+	protected abstract void createBucket(O obj);
+
+	protected abstract void upload(O obj) throws IOException;
+
+	protected abstract String getUrl(O obj);
 
 }
