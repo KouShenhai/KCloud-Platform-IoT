@@ -14,10 +14,41 @@
 #    * limitations under the License.
 #    *
 #    */
+
+jasypt:
+  encryptor:
+    password: @JASYPT-ENCRYPTOR-PASSWORD@
+
 server:
   # 端口
   port: ${SERVER_PORT:5555}
-
+  # 开启请求压缩
+  compression:
+    enabled: true
+  servlet:
+    encoding:
+      charset: UTF-8
+  ssl:
+    # 开启证书
+    enabled: @SSL-ENABLED@
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+    # 证书密码
+    key-password: laokou
+  http2:
+    enabled: @SSL-ENABLED@
+  forward-headers-strategy: native
+  # 优雅停机
+  shutdown: graceful
+  netty:
+    # 请求的最大初始行长度
+    max-initial-line-length: 4096
 spring:
   application:
     # 应用名称
@@ -25,7 +56,111 @@ spring:
   profiles:
     # 环境
     active: @PROFILE-ACTIVE@
+  threads:
+    virtual:
+      enabled: true
+  webflux:
+    multipart:
+      max-parts: -1
+      max-disk-usage-per-part: -1
+      max-in-memory-size: 4096
+  # task
+  task-execution:
+    pool:
+      core-pool-size: 32
+      max-pool-size: 64
+      keep-alive: 60s
+      thread-priority: 10
+      allow-core-thread-timeout: false
+      queue-capacity: 500
+  # security
+  security:
+    oauth2:
+      resource-server:
+        enabled: true
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /**/v3/api-docs/**=laokou-gateway
+              - /swagger-ui.html=laokou-gateway
+              - /swagger-ui/**=laokou-gateway
+              - /actuator/**=laokou-gateway
+              - /favicon.ico=laokou-gateway
+              - /v3/captchas/{uuid}=laokou-gateway
+              - /v3/secrets=laokou-gateway
+              - /doc.html=laokou-gateway
+              - /webjars/**=laokou-gateway
+            POST:
+              - /v3/captchas/send/mail=laokou-gateway
+              - /v3/captchas/send/mobile=laokou-gateway
+            DELETE:
+              - /v3/tokens=laokou-gateway
+  data:
+    # redis
+    redis:
+      client-type: lettuce
+      host: redis
+      port: 6379
+      password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+      connect-timeout: 60000ms #连接超时时长（毫秒）
+      timeout: 60000ms #超时时长（毫秒）
+      lettuce:
+        pool:
+          max-active: -1 #连接池最大连接数（使用负值表示无极限）
+          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接
   cloud:
+    # loadbalancer
+    loadbalancer:
+      cache:
+        caffeine:
+          # 初始容量 => 30
+          # 最大容量 => 4096
+          # 淘汰规则 => 最后一次写操作后经过30s过期
+          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
+        # 开启缓存
+        enabled: true
+      nacos:
+        # 开启Nacos路由负载均衡
+        enabled: true
+    gateway:
+      discovery:
+        locator:
+          # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
+          # 查看DiscoveryLocatorProperties
+          enabled: false
+          # 开启服务ID强制小写
+          lower-case-service-id: true
+      httpclient:
+        ssl:
+          # 信任所有下游证书
+          use-insecure-trust-manager: @SSL-ENABLED@
+        # 关闭netty日志
+        wiretap: false
+        pool:
+          # 连接池中连接的最大空闲时间
+          max-idle-time: 10m
+          # 最大连接数
+          max-connections: 10000
+          # 连接池中连接的最大存活时间
+          max-life-time: 5m
+          # elastic   无线扩展的线程池（弹性线程池，连接数不可控）
+          # fixed     固定数量线程池
+          # disabled  不使用线程池（只有一个线程）
+          type: fixed
+          # 必须是fixed，线程池获取连接最大等待时间（毫秒）
+          acquire-timeout: 60000
+        # 连接超时时间（毫秒），默认30s
+        connect-timeout: 60000
+      httpserver:
+        # 关闭netty日志
+        wiretap: false
+      ip:
+        white:
+          enabled: false
+        black:
+          enabled: false
     # sentinel配置
     sentinel:
       datasource:
@@ -48,3 +183,61 @@ spring:
             password: @NACOS-PASSWORD@
             # 服务注册&发现-数据类型
             data-type: json
+      web-context-unify: false
+      # 开启饥饿加载，直接初始化
+      eager: true
+      transport:
+        dashboard: sentinel:8972
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      access: unrestricted
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+    # 采样率 => 100%
+    sampling:
+      probability: 1
+  otlp:
+    tracing:
+      endpoint: http://otel-collector:4317/v1/traces
+      compression: gzip
+      timeout: 10s
+      transport: grpc
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml
+
+knife4j:
+  gateway:
+    enabled: true
+    tags-sorter: order
+    operations-sorter: order
+    # 手动
+    strategy: manual
+    routes:
+      - name: 认证服务
+        url: /auth/v3/api-docs?group=default
+        service-name: laokou-auth
+        context-path: /auth
+        order: 1
+      - name: 管理服务
+        url: /admin/v3/api-docs?group=default
+        service-name: laokou-admin
+        context-path: /admin
+        order: 2

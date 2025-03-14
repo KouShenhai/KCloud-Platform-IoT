@@ -14,13 +14,138 @@
 #    * limitations under the License.
 #    *
 #    */
+jasypt:
+  encryptor:
+    password: @JASYPT-ENCRYPTOR-PASSWORD@
 server:
   port: ${SERVER_PORT:9990}
+  ssl:
+    # 开启证书
+    enabled: @SSL-ENABLED@
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: @SSL-ENABLED@
+  forward-headers-strategy: framework
+  shutdown: graceful
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 512
+    # 每块buffer的空间大小
+    buffer-size: 2048
+    # 分配堆外内存
+    direct-buffers: true
 spring:
   application:
     name: ${SERVICE_ID:laokou-admin}
   profiles:
     active: @PROFILE-ACTIVE@
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+  # 开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  # task
+  task-execution:
+    pool:
+      core-pool-size: 32
+      max-pool-size: 64
+      keep-alive: 60s
+      thread-priority: 10
+      allow-core-thread-timeout: false
+      queue-capacity: 500
+  security:
+    oauth2:
+      resource-server:
+        enabled: true
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /v3/api-docs/**=laokou-admin
+              - /swagger-ui.html=laokou-admin
+              - /swagger-ui/**=laokou-admin
+              - /actuator/**=laokou-admin
+              - /error=laokou-admin
+              - /doc.html=laokou-admin
+              - /webjars/**=laokou-admin
+  datasource:
+    dynamic:
+      # 默认false,建议线上关闭
+      p6spy: false
+      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
+          url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
+          url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
+          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  data:
+    # redis
+    redis:
+      client-type: lettuce
+      host: redis
+      port: 6379
+      password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+      connect-timeout: 60000ms #连接超时时长（毫秒）
+      timeout: 60000ms #超时时长（毫秒）
+      lettuce:
+        pool:
+          max-active: -1 #连接池最大连接数（使用负值表示无极限）
+          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接
+  # elasticsearch
+  elasticsearch:
+    uris:
+      - https://elasticsearch:9200
+    username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
+    password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+    connection-timeout: 30s
+    socket-timeout: 30s
   cloud:
     # sentinel
     sentinel:
@@ -35,3 +160,97 @@ spring:
             username: @NACOS-USERNAME@
             password: @NACOS-PASSWORD@
             rule-type: flow
+      filter:
+        enabled: true
+      web-context-unify: false
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        dashboard: sentinel:8972
+    # loadbalancer
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+
+
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: org.laokou.admin.web
+
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    ignore-tables:
+      - boot_sys_tenant
+      - boot_sys_source
+      - boot_sys_package_menu
+      - boot_sys_package
+    enabled: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+    # 采样率 => 100%
+    sampling:
+      probability: 1
+  otlp:
+    tracing:
+      endpoint: http://otel-collector:4317/v1/traces
+      compression: gzip
+      timeout: 10s
+      transport: grpc
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+rocketmq:
+  producer:
+    group: laokou_producer_group
+  name-server: rocketmq-namesrv:9876
+  consumer:
+    pull-batch-size: 32

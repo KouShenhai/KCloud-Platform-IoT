@@ -57,8 +57,9 @@ public class OAuth2ExceptionHandler {
 
 	public static void handleAuthentication(HttpServletResponse response, Throwable ex) throws IOException {
 		if (ex instanceof OAuth2AuthenticationException authenticationException) {
-			String msg = authenticationException.getError().getDescription();
-			String code = authenticationException.getError().getErrorCode();
+			OAuth2Error error = authenticationException.getError();
+			String code = error.getErrorCode();
+			String msg = error.getDescription();
 			ResponseUtil.responseOk(response, Result.fail(code, msg));
 			return;
 		}

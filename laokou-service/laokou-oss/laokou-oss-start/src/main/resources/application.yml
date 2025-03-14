@@ -2,8 +2,9 @@
 jasypt:
   encryptor:
     password: @JASYPT-ENCRYPTOR-PASSWORD@
+
 server:
-  port: ${SERVER_PORT:10005}
+  port: ${SERVER_PORT:9091}
   ssl:
     # 开启证书
     enabled: @SSL-ENABLED@
@@ -17,54 +18,20 @@ server:
     key-store-password: laokou
   http2:
     enabled: @SSL-ENABLED@
+  forward-headers-strategy: framework
   shutdown: graceful
-  servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
-    threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 512
-    # 每块buffer的空间大小
-    buffer-size: 2048
-    # 分配堆外内存
-    direct-buffers: true
+
 spring:
   application:
-    name: ${SERVICE_ID:laokou-iot}
+    name: ${SERVICE_ID:laokou-oss}
   profiles:
     active: @PROFILE-ACTIVE@
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
   # 开启虚拟线程
   threads:
     virtual:
       enabled: true
-  lifecycle:
-    timeout-per-shutdown-phase: "2m"
-  task-execution:
-    pool:
-      core-pool-size: 32
-      max-pool-size: 64
-      keep-alive: 60s
-      thread-priority: 10
-      allow-core-thread-timeout: false
-      queue-capacity: 500
-  # security
-  security:
-    oauth2:
-      resource-server:
-        enabled: true
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /v3/api-docs/**=laokou-iot
-              - /swagger-ui.html=laokou-iot
-              - /swagger-ui/**=laokou-iot
-              - /actuator/**=laokou-iot
-              - /error=laokou-iot
-              - /doc.html=laokou-iot
-              - /webjars/**=laokou-iot
   datasource:
     dynamic:
       # 默认false,建议线上关闭
@@ -76,21 +43,6 @@ spring:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
           url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
-          username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
-          password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        iot:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
-          url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
           username: ENC(OuDQnY2CK0z2t+sq1ihFaFHWve1KjJoRo1aPyAghuRAf9ad3BO6AjcJRA+1b/nZw)
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -128,14 +80,10 @@ spring:
       timeout: 60000ms #超时时长（毫秒）
       lettuce:
         pool:
-          # 连接池最大连接数（使用负值表示无极限）
-          max-active: -1
-          # 连接池最大阻塞等待时间（使用负值表示没有限制）
-          max-wait: -1
-          # 连接池最大空闲连接
-          max-idle: 500
-          # 连接池最小空间连接
-          min-idle: 200
+          max-active: -1 #连接池最大连接数（使用负值表示无极限）
+          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接
   cloud:
     # loadbalancer
     loadbalancer:
@@ -157,7 +105,7 @@ springdoc:
   group-configs:
     - group: 'default'
       paths-to-match: '/**'
-      packages-to-scan: org.laokou.iot.web
+      packages-to-scan: org.laokou.oss.web
 
 # mybatis-plus
 mybatis-plus:
@@ -171,47 +119,5 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
 
-# actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-  tracing:
-    enabled: true
-    propagation:
-      type: w3c
-    # 采样率 => 100%
-    sampling:
-      probability: 1
-  otlp:
-    tracing:
-      endpoint: http://otel-collector:4317/v1/traces
-      compression: gzip
-      timeout: 10s
-      transport: grpc
-    metrics:
-      export:
-        enabled: false
-  metrics:
-    tags:
-      application: ${spring.application.name}
-
-# knife4j的增强配置，不需要增强可以不配
-knife4j:
-  enable: true
-  setting:
-    language: zh_cn
-
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
-
-rocketmq:
-  producer:
-    group: laokou_producer_group
-  name-server: rocketmq-namesrv:9876
-  consumer:
-    pull-batch-size: 32

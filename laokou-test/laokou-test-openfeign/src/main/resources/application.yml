@@ -1,8 +1,29 @@
+server:
+  port: 8092
+jasypt:
+  encryptor:
+    password: @JASYPT-ENCRYPTOR-PASSWORD@
+
 spring:
   profiles:
     active: @PROFILE-ACTIVE@
   application:
     name: laokou-test-openfeign
+  data:
+    # redis
+    redis:
+      client-type: lettuce
+      host: redis
+      port: 6379
+      password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
+      connect-timeout: 60000ms #连接超时时长（毫秒）
+      timeout: 60000ms #超时时长（毫秒）
+      lettuce:
+        pool:
+          max-active: -1 #连接池最大连接数（使用负值表示无极限）
+          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接
   cloud:
     loadbalancer:
       nacos:
@@ -45,5 +66,3 @@ feign:
           timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
           statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
           minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
-server:
-  port: 8092

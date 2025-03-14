@@ -2,7 +2,7 @@ server:
   port: ${SERVER_PORT:8086}
   ssl:
     # 开启证书
-    enabled: true
+    enabled: @SSL-ENABLED@
     # 证书位置
     key-store: classpath:scg-keystore.p12
     # 证书别名
@@ -12,7 +12,7 @@ server:
     # 证书密码
     key-store-password: laokou
   http2:
-    enabled: true
+    enabled: @SSL-ENABLED@
   forward-headers-strategy: framework
   shutdown: graceful
 spring:
