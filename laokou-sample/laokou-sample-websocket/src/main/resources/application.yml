@@ -53,7 +53,7 @@ rocketmq:
     group: laokou_producer_group
   name-server: rocketmq-namesrv:9876
   consumer:
-    pull-batch-size: 16
+    pull-batch-size: 32
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
