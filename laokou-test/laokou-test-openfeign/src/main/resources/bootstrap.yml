@@ -16,9 +16,6 @@
 #    */
 # spring
 spring:
-  config:
-    import:
-      - optional:nacos:application-common-redis.yaml?refreshEnabled=true&group=DEFAULT_GROUP
   cloud:
     # nacos
     nacos:

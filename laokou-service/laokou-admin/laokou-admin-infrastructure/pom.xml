@@ -91,11 +91,11 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-openfeign</artifactId>
+      <artifactId>laokou-common-nacos</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-nacos</artifactId>
+      <artifactId>laokou-common-openfeign</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
