@@ -182,20 +182,22 @@ export default () => {
 				<a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   setTitle('查看用户')
-						   setModalVisit(true)
-						   setReadOnly(true)
-						   setDataSource(res?.data)
-						   const avatar = res?.data?.avatar;
-						   if (avatar) {
-							   setFileList([{
-								   uid: '-1',
-								   name: '用户头像.png',
-								   status: 'done',
-								   url: avatar,
-							   }])
-						   } else {
-							   setFileList([])
+						   if (res.code === 'OK') {
+							   setTitle('查看用户')
+							   setModalVisit(true)
+							   setReadOnly(true)
+							   setDataSource(res?.data)
+							   const avatar = res?.data?.avatar;
+							   if (avatar) {
+								   setFileList([{
+									   uid: '-1',
+									   name: '用户头像.png',
+									   status: 'done',
+									   url: avatar,
+								   }])
+							   } else {
+								   setFileList([])
+							   }
 						   }
 					   })
 				   }}
@@ -205,21 +207,23 @@ export default () => {
 				<a key="modify"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   setTitle('修改用户')
-						   setModalVisit(true)
-						   setReadOnly(false)
-						   setEdit(true)
-						   setDataSource(res?.data)
-						   const avatar = res?.data?.avatar;
-						   if (avatar) {
-							   setFileList([{
-								   uid: '-1',
-								   name: '用户头像.png',
-								   status: 'done',
-								   url: avatar,
-							   }])
-						   } else {
-							   setFileList([])
+						   if (res.code === 'OK') {
+							   setTitle('修改用户')
+							   setModalVisit(true)
+							   setReadOnly(false)
+							   setEdit(true)
+							   setDataSource(res?.data)
+							   const avatar = res?.data?.avatar;
+							   if (avatar) {
+								   setFileList([{
+									   uid: '-1',
+									   name: '用户头像.png',
+									   status: 'done',
+									   url: avatar,
+								   }])
+							   } else {
+								   setFileList([])
+							   }
 						   }
 					   })
 				   }}

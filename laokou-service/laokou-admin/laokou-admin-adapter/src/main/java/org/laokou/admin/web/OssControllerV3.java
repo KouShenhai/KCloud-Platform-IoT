@@ -107,7 +107,8 @@ public class OssControllerV3 {
 	@TraceLog
 	@PostMapping(value = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:oss:upload')")
-	@Operation(summary = "OSS上传文件", description = "OSS上传文件")
+	@Operation(summary = "上传文件", description = "上传文件")
+	@OperateLog(module = "OSS管理", operation = "上传文件")
 	public Result<String> uploadV3(@RequestPart("file") MultipartFile file) {
 		return ossServiceI.upload(new OssUploadCmd(file));
 	}

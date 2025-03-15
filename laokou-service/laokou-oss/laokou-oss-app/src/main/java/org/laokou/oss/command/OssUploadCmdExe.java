@@ -42,6 +42,8 @@ public class OssUploadCmdExe {
 		OssE ossE = new OssE(cmd.getFile());
 		// 校验文件大小
 		ossE.checkSize();
+		// 校验扩展名
+		ossE.checkExt();
 		return storageTemplate.upload(ossE, getInfo());
 	}
 
