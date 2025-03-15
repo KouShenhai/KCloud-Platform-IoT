@@ -90,7 +90,7 @@
     <!--mqttv5-client版本-->
     <mqttv5-client.version>1.2.5</mqttv5-client.version>
     <!--mockito版本-->
-    <mockito.version>5.16.0</mockito.version>
+    <mockito.version>5.16.1</mockito.version>
     <!--retry版本-->
     <retry.version>2.0.11</retry.version>
     <!--nacos版本-->
