@@ -19,13 +19,26 @@ package org.laokou.common.oss.entity;
 
 import lombok.Getter;
 import org.laokou.common.i18n.utils.EnumParser;
+import org.laokou.common.oss.template.AmazonS3Storage;
+import org.laokou.common.oss.template.LocalStorage;
+import org.laokou.common.oss.template.Storage;
 
 @Getter
 public enum Type {
 
-	LOCAL("local", "本地"),
+	LOCAL("local", "本地") {
+		@Override
+		public Storage getStorage(FileInfo fileInfo, OssInfo ossInfo) {
+			return new LocalStorage(fileInfo, ossInfo);
+		}
+	},
 
-	CLOUD("cloud", "云端");
+	CLOUD("cloud", "云端") {
+		@Override
+		public Storage getStorage(FileInfo fileInfo, OssInfo ossInfo) {
+			return new AmazonS3Storage(fileInfo, ossInfo);
+		}
+	};
 
 	private final String code;
 
@@ -39,5 +52,7 @@ public enum Type {
 	public static Type getByCode(String code) {
 		return EnumParser.parse(Type.class, Type::getCode, code);
 	}
+
+	public abstract Storage getStorage(FileInfo fileInfo, OssInfo ossInfo);
 
 }
