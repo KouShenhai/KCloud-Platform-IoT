@@ -52,7 +52,7 @@
     <!--elasticsearch版本-->
     <elasticsearch.version>8.17.3</elasticsearch.version>
     <!--rocketmq-spring版本-->
-    <rocketmq-spring.version>2.3.2</rocketmq-spring.version>
+    <rocketmq-spring.version>2.3.3</rocketmq-spring.version>
     <!--rocketmq版本-->
     <rocketmq.version>5.3.2</rocketmq.version>
     <!--jakarta.servlet-api版本-->
