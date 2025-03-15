@@ -5,7 +5,7 @@ import {ProTable} from '@ant-design/pro-components';
 import { pageV3, removeV3, getByIdV3 } from '@/services/admin/user';
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
-import {Button, message, Modal, Space, Switch, Tag} from 'antd';
+import {Button, message, Modal, Space, Switch, Tag, UploadFile} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {trim} from "@/utils/format";
 import { ResetPwdDrawer } from '@/pages/Sys/Permission/ResetPwdDrawer';
@@ -37,6 +37,7 @@ export default () => {
 	const [edit, setEdit] = useState(false)
 	const [deptTreeList, setDeptTreeList] = useState<any[]>([])
 	const [roleList, setRoleList] = useState<any[]>([])
+	const [fileList, setFileList] = useState<UploadFile[]>([])
 
 	const getDeptTreeList = async () => {
 		listTreeV3({}).then(res => {
@@ -185,6 +186,17 @@ export default () => {
 						   setModalVisit(true)
 						   setReadOnly(true)
 						   setDataSource(res?.data)
+						   const avatar = res?.data?.avatar;
+						   if (avatar) {
+							   setFileList([{
+								   uid: '-1',
+								   name: '用户头像.png',
+								   status: 'done',
+								   url: avatar,
+							   }])
+						   } else {
+							   setFileList([])
+						   }
 					   })
 				   }}
 				>
@@ -198,6 +210,17 @@ export default () => {
 						   setReadOnly(false)
 						   setEdit(true)
 						   setDataSource(res?.data)
+						   const avatar = res?.data?.avatar;
+						   if (avatar) {
+							   setFileList([{
+								   uid: '-1',
+								   name: '用户头像.png',
+								   status: 'done',
+								   url: avatar,
+							   }])
+						   } else {
+							   setFileList([])
+						   }
 					   })
 				   }}
 				>
@@ -264,6 +287,8 @@ export default () => {
 				title={title}
 				readOnly={readOnly}
 				dataSource={dataSource}
+				fileList={fileList}
+				setFileList={setFileList}
 			/>
 
 			<UserModifyAuthorityDrawer
@@ -311,6 +336,7 @@ export default () => {
 								superAdmin: 0,
 								status: 0,
 							})
+							setFileList([])
 						}}>
 							新增
 						</Button>,

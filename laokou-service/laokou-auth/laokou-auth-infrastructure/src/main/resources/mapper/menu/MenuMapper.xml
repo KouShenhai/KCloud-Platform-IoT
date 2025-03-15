@@ -34,6 +34,7 @@
     INNER JOIN boot_sys_user_role ur ON rm.role_id = ur.role_id
     WHERE ur.user_id = #{userId}
         AND m.del_flag = 0
+        and m.type = 1
   </select>
 
 </mapper>

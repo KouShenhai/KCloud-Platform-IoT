@@ -48,7 +48,7 @@ export async function getInitialState(): Promise<{
 	return {
 		id: result?.data?.id,
 		username: result?.data?.username,
-		avatar: result?.data?.avatar,
+		avatar: result?.data?.avatar ? result?.data?.avatar : '/1.png',
 		permissions: result?.data?.permissions,
 	};
 }
