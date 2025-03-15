@@ -36,6 +36,11 @@ public class OssInfo {
 	private String directory;
 
 	/**
+	 * OSS的路径【本地】.
+	 */
+	private String path;
+
+	/**
 	 * OSS的域名【本地】.
 	 */
 	private String domain;

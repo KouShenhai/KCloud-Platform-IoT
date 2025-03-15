@@ -15,16 +15,22 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.admin.oss.dto;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author laokou
  */
-public interface Storage {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class OssUploadCmd extends CommonCommand {
 
-	String upload() throws IOException, NoSuchAlgorithmException;
+	private MultipartFile file;
 
 }

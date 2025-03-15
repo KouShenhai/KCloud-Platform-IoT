@@ -23,15 +23,15 @@ import org.laokou.common.oss.entity.OssInfo;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.concurrent.ExecutorService;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author laokou
  */
 public class LocalStorage extends AbstractStorage<Path> {
 
-	public LocalStorage(FileInfo fileInfo, OssInfo ossInfo, ExecutorService virtualThreadExecutor) {
-		super(fileInfo, ossInfo, virtualThreadExecutor);
+	public LocalStorage(FileInfo fileInfo, OssInfo ossInfo) {
+		super(fileInfo, ossInfo);
 	}
 
 	@Override
@@ -44,14 +44,13 @@ public class LocalStorage extends AbstractStorage<Path> {
 	}
 
 	@Override
-	protected void upload(Path obj) throws IOException {
-		FileUtil.write(obj.toFile(), fileInfo.getInputStream(), fileInfo.getSize(), fileInfo.getChunkSize(),
-				virtualThreadExecutor);
+	protected void upload(Path obj) throws NoSuchAlgorithmException {
+		FileUtil.write(obj, fileInfo.getInputStream(), fileInfo.getSize());
 	}
 
 	@Override
 	protected String getUrl(Path obj) {
-		return ossInfo.getDomain() + obj.toString();
+		return ossInfo.getDomain() + ossInfo.getPath() + fileInfo.getName();
 	}
 
 }

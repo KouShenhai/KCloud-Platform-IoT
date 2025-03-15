@@ -14,10 +14,6 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-excel</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-core</artifactId>
-    </dependency>
   </dependencies>
 
 </project>

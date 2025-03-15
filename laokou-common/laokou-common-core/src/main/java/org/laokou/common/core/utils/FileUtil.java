@@ -20,14 +20,16 @@ package org.laokou.common.core.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.StringUtil;
-
 import java.io.*;
 import java.net.URI;
 import java.net.URLConnection;
+import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
+import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -108,6 +110,17 @@ public final class FileUtil {
 
 	public static void write(Path path, byte[] buff) throws IOException {
 		Files.write(path, buff);
+	}
+
+	public static void write(Path path, InputStream inputStream, long size) throws NoSuchAlgorithmException {
+		try (FileOutputStream fos = new FileOutputStream(path.toFile());
+				FileChannel outChannel = fos.getChannel();
+				ReadableByteChannel inChannel = Channels.newChannel(inputStream);) {
+			outChannel.transferFrom(inChannel, 0, size);
+		}
+		catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static void chunkWrite(File file, InputStream in, long start, long end, long size) {

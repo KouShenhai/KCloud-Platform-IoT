@@ -15,16 +15,16 @@
  *
  */
 
-package org.laokou.common.oss.template;
-
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
+package org.laokou.admin.common.constant;
 
 /**
  * @author laokou
  */
-public interface Storage {
+public final class ServiceConstant {
 
-	String upload() throws IOException, NoSuchAlgorithmException;
+	private ServiceConstant() {
+	}
+
+	public static final String OSS = "laokou-oss";
 
 }

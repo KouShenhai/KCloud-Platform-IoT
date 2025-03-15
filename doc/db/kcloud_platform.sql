@@ -792,7 +792,7 @@ INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", 
 INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (60, 1, 1, '2025-03-02 17:52:49.303296', '2025-03-02 17:54:03.34208', 0, 2, 0, 33, 'sys:operate-log:page', 1, '分页查询操作日志', NULL, NULL, 50, 0);
 INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (61, 1, 1, '2025-03-02 18:06:30.782409', '2025-03-02 18:07:31.180306', 0, 1, 0, 33, 'sys:operate-log:export', 1, '导出全部操作日志', NULL, NULL, 40, 0);
 INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (62, 1, 1, '2025-03-02 18:09:02.472121', '2025-03-02 18:09:02.472121', 0, 0, 0, 33, 'sys:operate-log:detail', 1, '查看操作日志', NULL, NULL, 30, 0);
-
+INSERT INTO "public"."boot_sys_menu" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "pid", "permission", "type", "name", "path", "icon", "sort", "status") VALUES (63, 1, 1, '2025-03-15 12:15:37.277552', '2025-03-15 12:15:37.278549', 0, 0, 0, 37, 'sys:oss:upload', 1, '上传文件', NULL, NULL, 5, 0);
 -- ----------------------------
 -- Table structure for boot_sys_menu_package
 -- ----------------------------

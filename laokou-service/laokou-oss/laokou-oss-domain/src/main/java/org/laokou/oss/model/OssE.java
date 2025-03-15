@@ -17,10 +17,14 @@
 
 package org.laokou.oss.model;
 
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.oss.entity.FileInfo;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 /**
  * @author laokou
@@ -29,6 +33,18 @@ public class OssE extends FileInfo {
 
 	public OssE(MultipartFile file) throws IOException {
 		super(file);
+	}
+
+	public void checkSize() {
+		if (super.size > 1024 * 1024 * 100) {
+			throw new BizException("B_Oss_SizeExceeding100M", "文件大小不能超过100M");
+		}
+	}
+
+	public String getMd5() throws IOException {
+		ByteBuffer buffer = ByteBuffer.wrap(super.inputStream.readAllBytes());
+		super.inputStream = new ByteArrayInputStream(buffer.array());
+		return DigestUtils.md5DigestAsHex(buffer.array());
 	}
 
 }

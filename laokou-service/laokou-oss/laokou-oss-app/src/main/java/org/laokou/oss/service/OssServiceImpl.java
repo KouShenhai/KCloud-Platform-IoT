@@ -15,7 +15,14 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.oss.service;
+
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.oss.api.OssServiceI;
+import org.laokou.oss.command.OssUploadCmdExe;
+import org.laokou.oss.dto.OssUploadCmd;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -23,8 +30,15 @@ import java.security.NoSuchAlgorithmException;
 /**
  * @author laokou
  */
-public interface Storage {
+@Service
+@RequiredArgsConstructor
+public class OssServiceImpl implements OssServiceI {
 
-	String upload() throws IOException, NoSuchAlgorithmException;
+	private final OssUploadCmdExe ossUploadCmdExe;
+
+	@Override
+	public Result<String> upload(OssUploadCmd cmd) throws IOException, NoSuchAlgorithmException {
+		return ossUploadCmdExe.execute(cmd);
+	}
 
 }

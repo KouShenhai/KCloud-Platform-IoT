@@ -50,7 +50,7 @@ public final class SslUtil {
 		// 怎么选择加密协议，请看 ProtocolVersion
 		// 为什么能找到对应的加密协议 请查看 SSLContextSpi
 		SSLContext sslContext = SSLContext.getInstance(TLS_PROTOCOL_VERSION);
-		sslContext.init(null, trustManagers, null);
+		sslContext.init(null, trustManagers, new java.security.SecureRandom());
 		return sslContext;
 	}
 

@@ -104,4 +104,12 @@ public class OssControllerV3 {
 		return ossServiceI.getById(new OssGetQry(id));
 	}
 
+	@TraceLog
+	@PostMapping(value = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PreAuthorize("hasAuthority('sys:oss:upload')")
+	@Operation(summary = "OSS上传文件", description = "OSS上传文件")
+	public Result<String> uploadV3(@RequestPart("file") MultipartFile file) {
+		return ossServiceI.upload(new OssUploadCmd(file));
+	}
+
 }

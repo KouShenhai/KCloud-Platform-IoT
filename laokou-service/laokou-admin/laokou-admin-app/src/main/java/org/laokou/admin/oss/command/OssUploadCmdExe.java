@@ -15,16 +15,25 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.admin.oss.command;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.oss.dto.OssUploadCmd;
+import org.laokou.admin.oss.gatewayimpl.rpc.OssFeignClient;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface Storage {
+@Component
+@RequiredArgsConstructor
+public class OssUploadCmdExe {
 
-	String upload() throws IOException, NoSuchAlgorithmException;
+	private final OssFeignClient ossFeignClient;
+
+	public Result<String> execute(OssUploadCmd cmd) {
+		return ossFeignClient.uploadV3(cmd.getFile());
+	}
 
 }
