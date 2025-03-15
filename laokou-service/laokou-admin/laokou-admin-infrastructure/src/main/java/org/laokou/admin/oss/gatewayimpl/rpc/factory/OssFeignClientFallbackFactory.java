@@ -15,16 +15,21 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.admin.oss.gatewayimpl.rpc.factory;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
+import org.laokou.admin.oss.gatewayimpl.rpc.fallback.OssFeignClientFallback;
+import org.springframework.cloud.openfeign.FallbackFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface Storage {
+@Component
+public class OssFeignClientFallbackFactory implements FallbackFactory<OssFeignClientFallback> {
 
-	String upload() throws IOException, NoSuchAlgorithmException;
+	@Override
+	public OssFeignClientFallback create(Throwable cause) {
+		return new OssFeignClientFallback(cause);
+	}
 
 }

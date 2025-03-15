@@ -21,8 +21,6 @@ import org.laokou.common.oss.template.StorageTemplate;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
-import java.util.concurrent.ExecutorService;
-
 /**
  * @author laokou
  */
@@ -30,8 +28,8 @@ import java.util.concurrent.ExecutorService;
 public class StorageAutoConfig {
 
 	@Bean
-	public StorageTemplate storageTemplate(ExecutorService virtualThreadExecutor) {
-		return new StorageTemplate(virtualThreadExecutor);
+	public StorageTemplate storageTemplate() {
+		return new StorageTemplate();
 	}
 
 }

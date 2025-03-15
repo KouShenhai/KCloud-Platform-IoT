@@ -159,8 +159,8 @@
     <bcpkix.version>1.80</bcpkix.version>
     <!--reactor-kafka版本-->
     <reactor-kafka.version>1.3.23</reactor-kafka.version>
-    <!--okhttp4-spring-boot-starter版本-->
-    <okhttp4-spring-boot-starter.version>3.4.2</okhttp4-spring-boot-starter.version>
+    <!--okhttp3版本-->
+    <okhttp3.version>3.14.9</okhttp3.version>
     <!--spring-ai-openai-spring-boot-starter版本-->
     <spring-ai-openai-spring-boot-starter.version>1.0.0-M6</spring-ai-openai-spring-boot-starter.version>
     <!--flink-connector-kafka版本-->
@@ -291,9 +291,9 @@
         <version>${spring-ai-openai-spring-boot-starter.version}</version>
       </dependency>
       <dependency>
-        <groupId>io.freefair.okhttp-spring-boot</groupId>
-        <artifactId>okhttp4-spring-boot-starter</artifactId>
-        <version>${okhttp4-spring-boot-starter.version}</version>
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>okhttp</artifactId>
+        <version>${okhttp3.version}</version>
       </dependency>
       <dependency>
         <groupId>io.projectreactor.kafka</groupId>

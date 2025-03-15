@@ -71,4 +71,10 @@ public interface OssServiceI {
 	 */
 	Result<OssCO> getById(OssGetQry qry);
 
+	/**
+	 * 上传文件.
+	 * @param cmd 上传命令
+	 */
+	Result<String> upload(OssUploadCmd cmd);
+
 }

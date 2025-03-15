@@ -15,16 +15,29 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.admin.oss.gatewayimpl.rpc.fallback;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.oss.gatewayimpl.rpc.OssFeignClient;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author laokou
  */
-public interface Storage {
+@Slf4j
+public class OssFeignClientFallback implements OssFeignClient {
 
-	String upload() throws IOException, NoSuchAlgorithmException;
+	private final Throwable cause;
+
+	public OssFeignClientFallback(Throwable cause) {
+		this.cause = cause;
+	}
+
+	@Override
+	public Result<String> uploadV3(MultipartFile file) {
+		log.error("文件上传失败，错误信息：{}", cause.getMessage(), cause);
+		return Result.fail("S_Oss_UploadFailed", "文件上传失败，服务正在维护，请联系管理员");
+	}
 
 }

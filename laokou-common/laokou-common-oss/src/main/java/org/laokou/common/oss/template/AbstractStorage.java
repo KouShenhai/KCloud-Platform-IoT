@@ -21,7 +21,7 @@ import org.laokou.common.oss.entity.FileInfo;
 import org.laokou.common.oss.entity.OssInfo;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author laokou
@@ -32,16 +32,13 @@ public abstract class AbstractStorage<O> implements Storage {
 
 	protected final OssInfo ossInfo;
 
-	protected final ExecutorService virtualThreadExecutor;
-
-	protected AbstractStorage(FileInfo fileInfo, OssInfo ossInfo, ExecutorService virtualThreadExecutor) {
+	protected AbstractStorage(FileInfo fileInfo, OssInfo ossInfo) {
 		this.fileInfo = fileInfo;
 		this.ossInfo = ossInfo;
-		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
 
 	@Override
-	public String upload() throws IOException {
+	public String upload() throws IOException, NoSuchAlgorithmException {
 		O obj = getObj();
 		createBucket(obj);
 		upload(obj);
@@ -52,7 +49,7 @@ public abstract class AbstractStorage<O> implements Storage {
 
 	protected abstract void createBucket(O obj);
 
-	protected abstract void upload(O obj) throws IOException;
+	protected abstract void upload(O obj) throws IOException, NoSuchAlgorithmException;
 
 	protected abstract String getUrl(O obj);
 

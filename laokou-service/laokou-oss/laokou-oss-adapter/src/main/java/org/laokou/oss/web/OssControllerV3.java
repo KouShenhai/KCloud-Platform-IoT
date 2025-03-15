@@ -17,15 +17,36 @@
 
 package org.laokou.oss.web;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.trace.annotation.TraceLog;
+import org.laokou.oss.api.OssServiceI;
+import org.laokou.oss.dto.OssUploadCmd;
+import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("v3/oss")
 @Tag(name = "OSS管理", description = "OSS管理")
 public class OssControllerV3 {
+
+	private final OssServiceI ossServiceI;
+
+	@TraceLog
+	@PostMapping(value = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PreAuthorize("hasAuthority('sys:oss:upload')")
+	@Operation(summary = "OSS上传文件", description = "OSS上传文件")
+	public Result<String> uploadV3(@RequestPart("file") MultipartFile file)
+			throws IOException, NoSuchAlgorithmException {
+		return ossServiceI.upload(new OssUploadCmd(file));
+	}
 
 }

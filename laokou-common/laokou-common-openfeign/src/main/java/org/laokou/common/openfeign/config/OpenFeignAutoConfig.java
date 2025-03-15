@@ -17,7 +17,6 @@
 
 package org.laokou.common.openfeign.config;
 
-import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
 import feign.*;
 import feign.codec.ErrorDecoder;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,12 +24,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.RequestUtil;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
-
 import java.util.Map;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
@@ -49,8 +45,6 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Slf4j
 @RequiredArgsConstructor
-@Import({ FeignClientsConfiguration.class })
-@AutoConfiguration(before = SentinelFeignAutoConfiguration.class)
 public class OpenFeignAutoConfig extends ErrorDecoder.Default implements RequestInterceptor {
 
 	private final IdempotentUtil idempotentUtil;

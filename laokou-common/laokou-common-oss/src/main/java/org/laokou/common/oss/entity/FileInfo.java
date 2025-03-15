@@ -19,9 +19,7 @@ package org.laokou.common.oss.entity;
 
 import lombok.Data;
 import org.laokou.common.core.utils.FileUtil;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.*;
 import java.util.UUID;
 
@@ -31,35 +29,22 @@ import java.util.UUID;
 @Data
 public class FileInfo implements Serializable {
 
-	private final ByteArrayOutputStream cachedOutputStream;
-
 	protected final long size;
 
 	protected final String name;
 
-	protected final String md5;
+	protected InputStream inputStream;
 
 	protected final String contentType;
 
 	protected final long chunkSize;
 
 	public FileInfo(MultipartFile file) throws IOException {
-		this.cachedOutputStream = getCachedOutputStream(file.getInputStream());
+		this.inputStream = file.getInputStream();
 		this.size = file.getSize();
 		this.name = UUID.randomUUID() + FileUtil.getFileExt(file.getOriginalFilename());
-		this.md5 = DigestUtils.md5DigestAsHex(new ByteArrayInputStream(cachedOutputStream.toByteArray()));
 		this.contentType = file.getContentType();
-		this.chunkSize = this.size / 10;
-	}
-
-	public InputStream getInputStream() {
-		return new ByteArrayInputStream(cachedOutputStream.toByteArray());
-	}
-
-	private ByteArrayOutputStream getCachedOutputStream(InputStream in) throws IOException {
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		bos.write(in.readAllBytes());
-		return bos;
+		this.chunkSize = Math.max(this.size / 100, 8192);
 	}
 
 }

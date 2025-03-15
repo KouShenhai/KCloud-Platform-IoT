@@ -24,6 +24,11 @@ server:
 spring:
   application:
     name: ${SERVICE_ID:laokou-oss}
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
   profiles:
     active: @PROFILE-ACTIVE@
   lifecycle:
@@ -32,6 +37,29 @@ spring:
   threads:
     virtual:
       enabled: true
+  task-execution:
+    pool:
+      core-pool-size: 32
+      max-pool-size: 64
+      keep-alive: 60s
+      thread-priority: 10
+      allow-core-thread-timeout: false
+      queue-capacity: 500
+  # security
+  security:
+    oauth2:
+      resource-server:
+        enabled: true
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /v3/api-docs/**=laokou-oss
+              - /swagger-ui.html=laokou-oss
+              - /swagger-ui/**=laokou-oss
+              - /actuator/**=laokou-oss
+              - /error=laokou-oss
+              - /doc.html=laokou-oss
+              - /webjars/**=laokou-oss
   datasource:
     dynamic:
       # 默认false,建议线上关闭

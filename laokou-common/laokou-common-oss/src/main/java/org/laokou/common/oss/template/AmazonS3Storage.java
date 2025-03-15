@@ -29,18 +29,15 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.laokou.common.oss.entity.FileInfo;
 import org.laokou.common.oss.entity.OssInfo;
-
-import java.io.ByteArrayInputStream;
 import java.net.URL;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
  */
 public class AmazonS3Storage extends AbstractStorage<AmazonS3> {
 
-	public AmazonS3Storage(FileInfo fileInfo, OssInfo ossInfo, ExecutorService virtualThreadExecutor) {
-		super(fileInfo, ossInfo, virtualThreadExecutor);
+	public AmazonS3Storage(FileInfo fileInfo, OssInfo ossInfo) {
+		super(fileInfo, ossInfo);
 	}
 
 	@Override
@@ -79,7 +76,7 @@ public class AmazonS3Storage extends AbstractStorage<AmazonS3> {
 		objectMetadata.setContentLength(fileInfo.getSize());
 		objectMetadata.setContentType(fileInfo.getContentType());
 		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fileInfo.getName(),
-				new ByteArrayInputStream(fileInfo.getCachedOutputStream().toByteArray()), objectMetadata);
+				fileInfo.getInputStream(), objectMetadata);
 		putObjectRequest.getRequestClientOptions().setReadLimit((int) (fileInfo.getSize() + 1));
 		obj.putObject(putObjectRequest);
 	}

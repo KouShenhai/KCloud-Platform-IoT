@@ -15,7 +15,10 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.oss.api;
+
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.oss.dto.OssUploadCmd;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -23,8 +26,8 @@ import java.security.NoSuchAlgorithmException;
 /**
  * @author laokou
  */
-public interface Storage {
+public interface OssServiceI {
 
-	String upload() throws IOException, NoSuchAlgorithmException;
+	Result<String> upload(OssUploadCmd cmd) throws IOException, NoSuchAlgorithmException;
 
 }

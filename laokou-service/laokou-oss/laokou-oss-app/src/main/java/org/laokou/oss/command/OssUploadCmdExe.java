@@ -15,26 +15,44 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.oss.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.oss.entity.FileInfo;
 import org.laokou.common.oss.entity.OssInfo;
+import org.laokou.common.oss.entity.Type;
+import org.laokou.common.oss.template.StorageTemplate;
+import org.laokou.oss.dto.OssUploadCmd;
+import org.laokou.oss.model.OssE;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 /**
  * @author laokou
  */
+@Component
 @RequiredArgsConstructor
-public class StorageTemplate {
+public class OssUploadCmdExe {
 
-	public Result<String> upload(FileInfo fileInfo, OssInfo ossInfo) throws IOException, NoSuchAlgorithmException {
-		return switch (ossInfo.getType()) {
-			case LOCAL -> Result.ok(new LocalStorage(fileInfo, ossInfo).upload());
-			case CLOUD -> Result.ok(new AmazonS3Storage(fileInfo, ossInfo).upload());
-		};
+	private final StorageTemplate storageTemplate;
+
+	public Result<String> execute(OssUploadCmd cmd) throws IOException, NoSuchAlgorithmException {
+		OssE ossE = new OssE(cmd.getFile());
+		// 校验文件大小
+		ossE.checkSize();
+		return storageTemplate.upload(ossE, getInfo());
+	}
+
+	// TODO 从数据库获取配置，根据系统设置进行负载均衡
+	private OssInfo getInfo() {
+		OssInfo ossInfo = new OssInfo();
+		ossInfo.setType(Type.LOCAL);
+		ossInfo.setDomain("http://localhost:82");
+		ossInfo.setDirectory("D:\\laokou\\temp");
+		ossInfo.setPath("/temp/");
+		return ossInfo;
 	}
 
 }
