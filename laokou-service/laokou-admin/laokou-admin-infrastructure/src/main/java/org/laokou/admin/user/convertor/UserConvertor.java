@@ -83,13 +83,13 @@ public final class UserConvertor {
 	public static UserDO toDataObject(PasswordEncoder passwordEncoder, UserE userE, boolean isInsert) {
 		UserDO userDO = new UserDO();
 		if (isInsert) {
-			long id = IdGenerator.defaultSnowflakeId();
-			userDO.setId(id);
+			userDO.setId(IdGenerator.defaultSnowflakeId());
 			userDO.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
 			userDO.setUsername(userE.getUsername());
 			userDO.setUsernamePhrase(userE.getUsernamePhrase());
 		}
 		else {
+			userDO.setId(userE.getId());
 			String password = userE.getPassword();
 			if (StringUtil.isNotEmpty(password)) {
 				userDO.setPassword(passwordEncoder.encode(password));

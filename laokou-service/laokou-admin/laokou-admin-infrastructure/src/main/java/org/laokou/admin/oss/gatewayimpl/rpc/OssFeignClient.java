@@ -30,8 +30,7 @@ import static org.laokou.admin.common.constant.ServiceConstant.OSS;
 /**
  * @author laokou
  */
-@FeignClient(value = OSS, contextId = "laokou-oss-consumer", path = "v3/oss",
-		fallbackFactory = OssFeignClientFallbackFactory.class)
+@FeignClient(value = OSS, contextId = OSS, path = "v3/oss", fallbackFactory = OssFeignClientFallbackFactory.class)
 public interface OssFeignClient {
 
 	@PostMapping(value = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

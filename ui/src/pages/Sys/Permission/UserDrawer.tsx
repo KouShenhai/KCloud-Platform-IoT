@@ -1,7 +1,10 @@
 import {DrawerForm, ProFormRadio, ProFormSelect, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
-import { message } from 'antd';
+import {Image, message, UploadFile} from 'antd';
 import {modifyV3, saveV3} from '@/services/admin/user';
 import {v7 as uuidV7} from "uuid";
+import {useState} from "react";
+import {UploadAvatarDrawer} from "@/pages/Sys/Permission/UploadAvatarDrawer";
+
 
 interface UserDrawerProps {
 	modalVisit: boolean;
@@ -13,6 +16,8 @@ interface UserDrawerProps {
 	onComponent: () => void;
 	deptTreeList: any[]
 	roleList: any[]
+	fileList: UploadFile[]
+	setFileList: (fileList: UploadFile[]) => void
 }
 
 type TableColumns = {
@@ -27,9 +32,10 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
+export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, edit, roleList, deptTreeList, fileList, setFileList }) => {
 
-
-export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, edit, roleList, deptTreeList }) => {
+	const [previewOpen, setPreviewOpen] = useState(false);
+	const [previewImage, setPreviewImage] = useState('');
 
 	return (
 		<DrawerForm<TableColumns>
@@ -51,13 +57,14 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 				}
 			}}
 			onFinish={ async (value) => {
+				const avatar = fileList.length > 0 ? (fileList[0]?.url ? fileList[0]?.url : fileList[0]?.response?.data) : ""
 				const co = {
 					id: value?.id,
 					username: value.username,
 					status: value?.status,
 					mail: value?.mail,
 					mobile: value?.mobile,
-					avatar: value?.avatar,
+					avatar: avatar ? avatar : "",
 				}
 				if (value.id === undefined) {
 					saveV3({co: co}, uuidV7()).then(res => {
@@ -121,6 +128,25 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 				]}
 			/>
 
+			{!readOnly && (
+				<UploadAvatarDrawer
+					setPreviewImage={setPreviewImage}
+					setPreviewOpen={setPreviewOpen}
+					fileList={fileList}
+					setFileList={setFileList}/>
+			)}
+
+			{previewImage && (
+				<Image
+					wrapperStyle={{ display: 'none' }}
+					preview={{
+						visible: previewOpen,
+						onVisibleChange: (visible) => setPreviewOpen(visible),
+						afterOpenChange: (visible) => !visible && setPreviewImage(''),
+					}}
+					src={previewImage}/>
+			)}
+
 			{ readOnly && (
 			<ProFormSelect
 				name="roleIds"
@@ -167,6 +193,13 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 					name="createTime"
 					rules={[{ required: true, message: '请输入创建时间' }]}
 					label="创建时间"
+				/>
+			)}
+
+			{readOnly && fileList.length > 0 && (
+				<Image
+					width={100}
+					src={fileList[0].url}
 				/>
 			)}
 

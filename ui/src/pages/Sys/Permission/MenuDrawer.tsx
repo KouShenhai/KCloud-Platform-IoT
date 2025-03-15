@@ -155,6 +155,16 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 				/>
 			)}
 
+			<ProFormDigit
+				name="sort"
+				label="排序"
+				readonly={readOnly}
+				placeholder={'请输入排序'}
+				min={1}
+				max={99999}
+				rules={[{ required: true, message: '请输入排序' }]}
+			/>
+
 			{typeValue === 0 && (
 				<ProFormRadio.Group
 					name="status"
@@ -167,16 +177,6 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 					]}
 				/>
 			)}
-
-			<ProFormDigit
-				name="sort"
-				label="排序"
-				readonly={readOnly}
-				placeholder={'请输入排序'}
-				min={1}
-				max={99999}
-				rules={[{ required: true, message: '请输入排序' }]}
-			/>
 
 			{ readOnly && (
 				<ProFormText
