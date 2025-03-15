@@ -25,19 +25,28 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.List;
 
 /**
  * @author laokou
  */
 public class OssE extends FileInfo {
 
+	private final List<String> EXT_LIST = List.of(".jpg", ".jpeg", ".png", ".gif", ".webp");
+
 	public OssE(MultipartFile file) throws IOException {
 		super(file);
 	}
 
 	public void checkSize() {
-		if (super.size > 1024 * 1024 * 100) {
-			throw new BizException("B_Oss_SizeExceeding100M", "文件大小不能超过100M");
+		if (super.size > 1024 * 1024 * 10) {
+			throw new BizException("B_Oss_SizeExceeding10M", "文件大小不能超过10M");
+		}
+	}
+
+	public void checkExt() {
+		if (!EXT_LIST.contains(ext)) {
+			throw new BizException("B_Oss_ExtError", "文件格式错误");
 		}
 	}
 

@@ -19,7 +19,6 @@ package org.laokou.common.core.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.StringUtil;
 import java.io.*;
 import java.net.URI;
 import java.net.URLConnection;
@@ -169,9 +168,6 @@ public final class FileUtil {
 	 * @return 文件扩展名
 	 */
 	public static String getFileExt(String fileName) {
-		if (StringUtil.isEmpty(fileName)) {
-			return EMPTY;
-		}
 		return fileName.substring(fileName.lastIndexOf(DOT));
 	}
 

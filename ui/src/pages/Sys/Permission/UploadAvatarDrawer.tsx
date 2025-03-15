@@ -47,6 +47,7 @@ export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({ setPrevi
 	return (
 		<ImgCrop rotationSlider>
 			<Upload
+				accept={'.jpg,.jpeg,.png,.gif,.webp'}
 				action={`/api/admin/v3/oss/upload`}
 				listType="picture-card"
 				fileList={fileList}

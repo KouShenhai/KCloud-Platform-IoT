@@ -149,8 +149,10 @@ export default () => {
 				<a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   setDataSource(res?.data)
-						   setModalVisit(true)
+						   if (res.code === 'OK') {
+							   setDataSource(res?.data)
+							   setModalVisit(true)
+						   }
 					   })
 				   }}
 				>

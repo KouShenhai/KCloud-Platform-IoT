@@ -129,10 +129,12 @@ export default () => {
 				<a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   setTitle('查看角色')
-						   setModalVisit(true)
-						   setReadOnly(true)
-						   setDataSource(res?.data)
+						   if (res.code === 'OK') {
+							   setTitle('查看角色')
+							   setModalVisit(true)
+							   setReadOnly(true)
+							   setDataSource(res?.data)
+						   }
 					   })
 				   }}
 				>
@@ -141,10 +143,12 @@ export default () => {
 				<a key="modify"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   setTitle('修改角色')
-						   setModalVisit(true)
-						   setReadOnly(false)
-						   setDataSource(res?.data)
+						   if (res.code === 'OK') {
+							   setTitle('修改角色')
+							   setModalVisit(true)
+							   setReadOnly(false)
+							   setDataSource(res?.data)
+						   }
 					   })
 				   }}
 				>

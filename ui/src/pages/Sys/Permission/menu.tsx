@@ -177,12 +177,14 @@ export default () => {
 				<a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   setTitle('查看菜单')
-						   setModalVisit(true)
-						   setReadOnly(true)
-						   const data = res?.data;
-						   setTypeValue(data.type)
-						   setDataSource(data)
+						   if (res.code === 'OK') {
+							   setTitle('查看菜单')
+							   setModalVisit(true)
+							   setReadOnly(true)
+							   const data = res?.data;
+							   setTypeValue(data.type)
+							   setDataSource(data)
+						   }
 					   })
 				   }}
 				>
@@ -210,12 +212,14 @@ export default () => {
 				<a key="modify"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   setTitle('修改菜单')
-						   setModalVisit(true)
-						   setReadOnly(false)
-						   const data = res?.data;
-						   setTypeValue(data.type)
-						   setDataSource(data)
+						   if (res.code === 'OK') {
+							   setTitle('修改菜单')
+							   setModalVisit(true)
+							   setReadOnly(false)
+							   const data = res?.data;
+							   setTypeValue(data.type)
+							   setDataSource(data)
+						   }
 					   })
 				   }}
 				>
