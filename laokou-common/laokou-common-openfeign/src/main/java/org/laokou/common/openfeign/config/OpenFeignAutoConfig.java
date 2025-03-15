@@ -28,6 +28,7 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
 import static org.laokou.common.i18n.common.constant.TraceConstant.*;
@@ -90,9 +91,9 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 
 	@Bean
 	public Retryer retryer() {
-		// 最大请求次数为5，初始间隔时间为100ms
-		// 下次间隔时间1.5倍递增，重试间最大间隔时间为1s
-		return new Retryer.Default();
+		// 最大请求次数为3，初始间隔时间为50ms
+		// 下次间隔时间1.5倍递增，重试间最大间隔时间为150ms
+		return new Retryer.Default(50L, TimeUnit.MILLISECONDS.toMillis(150L), 3);
 	}
 
 	@Override

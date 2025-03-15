@@ -31,10 +31,7 @@ import java.security.NoSuchAlgorithmException;
 public class StorageTemplate {
 
 	public Result<String> upload(FileInfo fileInfo, OssInfo ossInfo) throws IOException, NoSuchAlgorithmException {
-		return switch (ossInfo.getType()) {
-			case LOCAL -> Result.ok(new LocalStorage(fileInfo, ossInfo).upload());
-			case CLOUD -> Result.ok(new AmazonS3Storage(fileInfo, ossInfo).upload());
-		};
+		return Result.ok(ossInfo.getType().getStorage(fileInfo, ossInfo).upload());
 	}
 
 }
