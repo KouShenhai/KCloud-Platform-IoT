@@ -17,10 +17,11 @@
 
 package org.laokou.iot.thingModel.command.query;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.iot.thingModel.convertor.ModelConvertor;
+import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
 import org.laokou.iot.thingModel.dto.ThingModelPageQry;
 import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
 import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
@@ -41,9 +42,14 @@ public class ThingModelPageQryExe {
 	private final ThingModelMapper thingModelMapper;
 
 	public Result<Page<ThingModelCO>> execute(ThingModelPageQry qry) {
-		List<ThingModelDO> list = thingModelMapper.selectObjectPage(qry);
-		long total = thingModelMapper.selectObjectCount(qry);
-		return Result.ok(Page.create(list.stream().map(ModelConvertor::toClientObject).toList(), total));
+		try {
+			DynamicDataSourceContextHolder.push("iot");
+			List<ThingModelDO> list = thingModelMapper.selectObjectPage(qry);
+			long total = thingModelMapper.selectObjectCount(qry);
+			return Result.ok(Page.create(ThingModelConvertor.toClientObjects(list), total));
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

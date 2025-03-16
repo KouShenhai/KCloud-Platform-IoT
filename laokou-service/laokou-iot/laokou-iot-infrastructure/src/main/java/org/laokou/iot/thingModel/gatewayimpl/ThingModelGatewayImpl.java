@@ -18,7 +18,7 @@
 package org.laokou.iot.thingModel.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.iot.thingModel.convertor.ModelConvertor;
+import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
 import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
 import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
 import org.laokou.iot.thingModel.gateway.ThingModelGateway;
@@ -41,12 +41,12 @@ public class ThingModelGatewayImpl implements ThingModelGateway {
 
 	@Override
 	public void create(ThingModelE thingModelE) {
-		thingModelMapper.insert(ModelConvertor.toDataObject(thingModelE, true));
+		thingModelMapper.insert(ThingModelConvertor.toDataObject(thingModelE, true));
 	}
 
 	@Override
 	public void update(ThingModelE thingModelE) {
-		ThingModelDO thingModelDO = ModelConvertor.toDataObject(thingModelE, false);
+		ThingModelDO thingModelDO = ThingModelConvertor.toDataObject(thingModelE, false);
 		thingModelDO.setVersion(thingModelMapper.selectVersion(thingModelE.getId()));
 		thingModelMapper.updateById(thingModelDO);
 	}

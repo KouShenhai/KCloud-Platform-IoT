@@ -1,8 +1,11 @@
 import {DrawerForm} from '@ant-design/pro-components';
 import { message } from 'antd';
-import {modifyV3, saveV3} from "@/services/admin/dept";
+import {modifyV3, saveV3} from "@/services/iot/thingModel";
 import {v7 as uuidV7} from "uuid";
 import React from "react";
+import CodeMirror from '@uiw/react-codemirror';
+import { javascript } from '@codemirror/lang-javascript';
+import {ProFormItem} from "@ant-design/pro-form";
 
 interface ThingModelDrawerProps {
 	modalVisit: boolean;
@@ -11,13 +14,14 @@ interface ThingModelDrawerProps {
 	readOnly: boolean;
 	dataSource: TableColumns;
 	onComponent: () => void;
+	value: string;
+	setValue: (value: string) => void;
 }
 
 type TableColumns = {
 	id: number;
 	code: string | undefined;
 	name: string | undefined;
-	path: string | undefined;
 	sort: number | undefined;
 	dataType: string | undefined;
 	category: number | undefined;
@@ -28,7 +32,12 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent }) => {
+export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, value, setValue }) => {
+
+	const onChange = React.useCallback((val: any) => {
+		dataSource.expression = val;
+		setValue(val);
+	}, []);
 
 	return (
 		<DrawerForm<TableColumns>
@@ -50,6 +59,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				}
 			}}
 			onFinish={ async (value) => {
+				console.log(value)
 				if (value.id === undefined) {
 					saveV3({co: value}, uuidV7()).then(res => {
 						if (res.code === 'OK') {
@@ -68,7 +78,17 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 					})
 				}
 			}}>
-
+			<ProFormItem
+				label="表达式"
+				tooltip={"JS脚本，参数【inputMap】"}
+			>
+				<CodeMirror
+					value={value}
+					height="400px"
+					extensions={[javascript({ jsx: true, typescript: true })]}
+					onChange={onChange}
+				/>
+			</ProFormItem>
 		</DrawerForm>
 	);
 };

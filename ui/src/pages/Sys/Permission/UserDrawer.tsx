@@ -4,6 +4,7 @@ import {modifyV3, saveV3} from '@/services/admin/user';
 import {v7 as uuidV7} from "uuid";
 import React, {useState} from "react";
 import {UploadAvatarDrawer} from "@/pages/Sys/Permission/UploadAvatarDrawer";
+import {ProFormItem} from "@ant-design/pro-form";
 
 
 interface UserDrawerProps {
@@ -57,14 +58,13 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 				}
 			}}
 			onFinish={ async (value) => {
-				const avatar = fileList.length > 0 ? (fileList[0]?.url ? fileList[0]?.url : fileList[0]?.response?.data) : ""
 				const co = {
 					id: value?.id,
 					username: value.username,
 					status: value?.status,
 					mail: value?.mail,
 					mobile: value?.mobile,
-					avatar: avatar ? avatar : "",
+					avatar: fileList.length > 0 ? (fileList[0]?.url ? fileList[0]?.url : fileList[0]?.response?.data) : "",
 				}
 				if (value.id === undefined) {
 					saveV3({co: co}, uuidV7()).then(res => {
@@ -117,6 +117,22 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 				placeholder={'请输入手机号'}
 			/>
 
+			{!readOnly && (
+				<ProFormItem label={"头像"}>
+					<UploadAvatarDrawer
+						setPreviewImage={setPreviewImage}
+						setPreviewOpen={setPreviewOpen}
+						fileList={fileList}
+						setFileList={setFileList}/>
+				</ProFormItem>
+			)}
+
+			{readOnly && fileList.length > 0 && (
+				<ProFormItem label={"头像"}>
+					<Image width={100} src={fileList[0].url}/>
+				</ProFormItem>
+			)}
+
 			<ProFormRadio.Group
 				name="status"
 				label="状态"
@@ -127,14 +143,6 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 					{label:"禁用",value: 1 }
 				]}
 			/>
-
-			{!readOnly && (
-				<UploadAvatarDrawer
-					setPreviewImage={setPreviewImage}
-					setPreviewOpen={setPreviewOpen}
-					fileList={fileList}
-					setFileList={setFileList}/>
-			)}
 
 			{previewImage && (
 				<Image
@@ -193,13 +201,6 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 					name="createTime"
 					rules={[{ required: true, message: '请输入创建时间' }]}
 					label="创建时间"
-				/>
-			)}
-
-			{readOnly && fileList.length > 0 && (
-				<Image
-					width={100}
-					src={fileList[0].url}
 				/>
 			)}
 

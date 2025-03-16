@@ -76,4 +76,9 @@ public class ThingModelDO extends BaseDO {
 	 */
 	private String remark;
 
+	/**
+	 * 表达式标识 0否 1是.
+	 */
+	private Integer expressionFlag;
+
 }

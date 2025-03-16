@@ -22,13 +22,15 @@ import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
 import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
 import org.laokou.iot.thingModel.model.ThingModelE;
 
+import java.util.List;
+
 /**
  *
  * 物模型转换器.
  *
  * @author laokou
  */
-public class ModelConvertor {
+public class ThingModelConvertor {
 
 	public static ThingModelDO toDataObject(ThingModelE thingModelE, boolean isInsert) {
 		ThingModelDO thingModelDO = new ThingModelDO();
@@ -47,11 +49,17 @@ public class ModelConvertor {
 		thingModelDO.setSort(thingModelE.getSort());
 		thingModelDO.setSpecs(thingModelE.getSpecs());
 		thingModelDO.setRemark(thingModelE.getRemark());
+		thingModelDO.setExpressionFlag(thingModelE.getExpressionFlag());
 		return thingModelDO;
+	}
+
+	public static List<ThingModelCO> toClientObjects(List<ThingModelDO> list) {
+		return list.stream().map(ThingModelConvertor::toClientObject).toList();
 	}
 
 	public static ThingModelCO toClientObject(ThingModelDO thingModelDO) {
 		ThingModelCO thingModelCO = new ThingModelCO();
+		thingModelCO.setId(thingModelDO.getId());
 		thingModelCO.setName(thingModelDO.getName());
 		thingModelCO.setCode(thingModelDO.getCode());
 		thingModelCO.setDataType(thingModelDO.getDataType());
@@ -61,11 +69,14 @@ public class ModelConvertor {
 		thingModelCO.setSort(thingModelDO.getSort());
 		thingModelCO.setSpecs(thingModelDO.getSpecs());
 		thingModelCO.setRemark(thingModelDO.getRemark());
+		thingModelCO.setCreateTime(thingModelDO.getCreateTime());
+		thingModelCO.setExpressionFlag(thingModelDO.getExpressionFlag());
 		return thingModelCO;
 	}
 
 	public static ThingModelE toEntity(ThingModelCO thingModelCO) {
 		ThingModelE thingModelE = new ThingModelE();
+		thingModelE.setId(thingModelCO.getId());
 		thingModelE.setName(thingModelCO.getName());
 		thingModelE.setCode(thingModelCO.getCode());
 		thingModelE.setDataType(thingModelCO.getDataType());
@@ -75,6 +86,7 @@ public class ModelConvertor {
 		thingModelE.setSort(thingModelCO.getSort());
 		thingModelE.setSpecs(thingModelCO.getSpecs());
 		thingModelE.setRemark(thingModelCO.getRemark());
+		thingModelE.setExpressionFlag(thingModelCO.getExpressionFlag());
 		return thingModelE;
 	}
 

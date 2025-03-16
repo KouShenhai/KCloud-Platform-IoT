@@ -69,4 +69,7 @@ public class ThingModelCO extends ClientObject {
 	@Schema(name = "创建时间", description = "创建时间")
 	private Instant createTime;
 
+	@Schema(name = "表达式标识 0否 1是", description = "表达式标识 0否 1是")
+	private Integer expressionFlag;
+
 }

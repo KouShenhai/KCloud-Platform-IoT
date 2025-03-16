@@ -522,10 +522,11 @@ CACHE 1
   "data_type" varchar(20) COLLATE "pg_catalog"."default" NOT NULL,
   "category" int2 NOT NULL,
   "type" varchar(30) COLLATE "pg_catalog"."default" NOT NULL,
-  "expression" varchar(200) COLLATE "pg_catalog"."default",
+  "expression" text COLLATE "pg_catalog"."default",
   "sort" int4 NOT NULL DEFAULT 1,
   "specs" json,
-  "remark" varchar(400) COLLATE "pg_catalog"."default"
+  "remark" varchar(400) COLLATE "pg_catalog"."default",
+  "expression_flag" pg_catalog.int2 NOT NULL DEFAULT 0
 )
 ;
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."id" IS 'ID';
@@ -545,6 +546,7 @@ COMMENT ON COLUMN "public"."boot_iot_thing_model"."expression" IS '表达式';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."sort" IS '排序';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."specs" IS '规则说明';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."remark" IS '备注';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."expression_flag" IS '表达式标识 0否 1是';
 COMMENT ON TABLE "public"."boot_iot_thing_model" IS '物模型';
 
 -- ----------------------------

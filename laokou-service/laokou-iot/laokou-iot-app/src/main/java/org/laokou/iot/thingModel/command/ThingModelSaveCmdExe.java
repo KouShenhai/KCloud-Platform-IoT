@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.thingModel.dto.ThingModelSaveCmd;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.thingModel.convertor.ModelConvertor;
+import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
 import org.laokou.iot.thingModel.ability.ThingModelDomainService;
 
 /**
@@ -41,7 +41,7 @@ public class ThingModelSaveCmdExe {
 	public void executeVoid(ThingModelSaveCmd cmd) {
 		// 校验参数
 		transactionalUtil
-			.executeInTransaction(() -> thingModelDomainService.create(ModelConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> thingModelDomainService.create(ThingModelConvertor.toEntity(cmd.getCo())));
 	}
 
 }
