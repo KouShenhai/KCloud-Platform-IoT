@@ -27,7 +27,7 @@ public interface Server {
 	/**
 	 * 发送消息.
 	 * @param obj 对象
-	 * @param key 标识
+	 * @param key 键
 	 */
 	Future<Void> send(String key, Object obj) throws InterruptedException;
 

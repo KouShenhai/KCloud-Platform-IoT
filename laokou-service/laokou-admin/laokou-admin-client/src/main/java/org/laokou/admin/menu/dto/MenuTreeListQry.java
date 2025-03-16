@@ -28,7 +28,7 @@ import lombok.Data;
 public class MenuTreeListQry extends MenuPageQry {
 
 	/**
-	 * 菜单标识.
+	 * 菜单编码.
 	 */
 	private int code;
 

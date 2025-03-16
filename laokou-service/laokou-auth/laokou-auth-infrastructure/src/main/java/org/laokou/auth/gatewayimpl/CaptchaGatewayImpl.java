@@ -42,7 +42,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	/**
 	 * 写入Redis.
-	 * @param key 标识
+	 * @param key 键
 	 * @param captcha 验证码
 	 */
 	@Override
@@ -52,7 +52,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	/**
 	 * 写入Redis.
-	 * @param key 标识
+	 * @param key 键
 	 * @param captcha 验证码
 	 */
 	@Override
@@ -63,7 +63,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	/**
 	 * 检查验证码.
-	 * @param key 标识
+	 * @param key 键
 	 * @param code 验证码
 	 * @return 校验结果
 	 */
@@ -79,7 +79,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	/**
 	 * 从Redis根据UUID查看验证码.
-	 * @param key 标识
+	 * @param key 键
 	 * @return 验证码
 	 */
 	private String getValue(String key) {

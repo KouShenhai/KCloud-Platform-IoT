@@ -106,3 +106,15 @@ export async function pageV3(body: API.OssPageQry, options?: { [key: string]: an
 		...(options || {}),
 	});
 }
+
+/** 上传文件 上传文件 POST /v3/oss/upload */
+export async function uploadV3(body: FormData, options?: { [key: string]: any }) {
+	return request<API.Result>('/api/admin/v3/oss/upload', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'multipart/form-data',
+		},
+		data: body,
+		...(options || {}),
+	});
+}

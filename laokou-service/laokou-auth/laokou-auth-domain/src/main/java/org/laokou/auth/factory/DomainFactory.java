@@ -74,7 +74,7 @@ public final class DomainFactory {
 	public static final String CODE = "code";
 
 	/**
-	 * 租户标识.
+	 * 租户编码.
 	 */
 	public static final String TENANT_CODE = "tenant_code";
 

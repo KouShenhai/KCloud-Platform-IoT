@@ -31,7 +31,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 public class NoticeLogDO extends BaseDO {
 
 	/**
-	 * 标识.
+	 * 编码.
 	 */
 	private String code;
 

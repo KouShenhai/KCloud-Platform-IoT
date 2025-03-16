@@ -31,7 +31,7 @@ import java.time.Instant;
 public class NoticeLogE extends Identifier {
 
 	/**
-	 * 标识.
+	 * 编码.
 	 */
 	private String code;
 

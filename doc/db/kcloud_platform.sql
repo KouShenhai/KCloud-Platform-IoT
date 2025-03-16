@@ -445,7 +445,7 @@ COMMENT ON COLUMN "public"."boot_sys_cluster"."del_flag" IS '删除标识 0未�
 COMMENT ON COLUMN "public"."boot_sys_cluster"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_sys_cluster"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_sys_cluster"."name" IS '集群名称';
-COMMENT ON COLUMN "public"."boot_sys_cluster"."code" IS '集群标识';
+COMMENT ON COLUMN "public"."boot_sys_cluster"."code" IS '集群编码';
 COMMENT ON COLUMN "public"."boot_sys_cluster"."remark" IS '集群备注';
 COMMENT ON TABLE "public"."boot_sys_cluster" IS '集群';
 
@@ -628,7 +628,7 @@ COMMENT ON COLUMN "public"."boot_sys_i18n_message"."update_time" IS '修改时�
 COMMENT ON COLUMN "public"."boot_sys_i18n_message"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."boot_sys_i18n_message"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_sys_i18n_message"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."boot_sys_i18n_message"."code" IS '标识';
+COMMENT ON COLUMN "public"."boot_sys_i18n_message"."code" IS '编码';
 COMMENT ON COLUMN "public"."boot_sys_i18n_message"."zh_message" IS '中文';
 COMMENT ON COLUMN "public"."boot_sys_i18n_message"."en_message" IS '英文';
 COMMENT ON TABLE "public"."boot_sys_i18n_message" IS '国际化消息';
@@ -1153,7 +1153,7 @@ COMMENT ON COLUMN "public"."boot_sys_tenant"."del_flag" IS '删除标识 0未删
 COMMENT ON COLUMN "public"."boot_sys_tenant"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_sys_tenant"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_sys_tenant"."name" IS '租户名称';
-COMMENT ON COLUMN "public"."boot_sys_tenant"."code" IS '租户标识';
+COMMENT ON COLUMN "public"."boot_sys_tenant"."code" IS '租户编码';
 COMMENT ON COLUMN "public"."boot_sys_tenant"."source_id" IS '数据源ID';
 COMMENT ON COLUMN "public"."boot_sys_tenant"."package_id" IS '套餐ID';
 COMMENT ON TABLE "public"."boot_sys_tenant" IS '租户';
@@ -1679,7 +1679,7 @@ CREATE INDEX "code_tenant_id_idx" ON "public"."boot_sys_i18n_message" USING btre
   "code" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "tenant_id" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
-COMMENT ON INDEX "public"."code_tenant_id_idx" IS '标识_租户ID_唯一索引';
+COMMENT ON INDEX "public"."code_tenant_id_idx" IS '编码_租户ID_唯一索引';
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_i18n_message

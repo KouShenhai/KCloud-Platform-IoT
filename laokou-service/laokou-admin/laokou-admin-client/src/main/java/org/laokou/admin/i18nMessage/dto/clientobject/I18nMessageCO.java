@@ -38,7 +38,7 @@ public class I18nMessageCO extends ClientObject {
 	private Long id;
 
 	/**
-	 * 标识.
+	 * 编码.
 	 */
 	private String code;
 

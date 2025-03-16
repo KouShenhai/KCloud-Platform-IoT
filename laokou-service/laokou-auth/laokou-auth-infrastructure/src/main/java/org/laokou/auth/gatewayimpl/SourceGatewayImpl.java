@@ -39,7 +39,7 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	/**
 	 * 查看数据源.
-	 * @param tenantCode 租户标识
+	 * @param tenantCode 租户编码
 	 * @return 数据源
 	 */
 	@Override

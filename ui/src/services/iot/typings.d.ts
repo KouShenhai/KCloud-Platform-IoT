@@ -183,7 +183,7 @@ declare namespace API {
     Id?: number;
     /** 模型名称 */
     name?: string;
-    /** 模型标识 */
+    /** 模型编码 */
     code?: string;
     /** 数据类型 integer string decimal boolean */
     dataType?: string;
@@ -302,7 +302,7 @@ declare namespace API {
   };
 
 	type Result = {
-		/** 状态标识 */
+		/** 状态编码 */
 		code?: string;
 		/** 响应描述 */
 		msg?: string;
@@ -388,7 +388,7 @@ declare namespace API {
     Id?: number;
     /** 协议名称 */
     name?: string;
-    /** 协议标识 */
+    /** 协议编码 */
     code?: string;
     /** 排序 */
     sort?: number;

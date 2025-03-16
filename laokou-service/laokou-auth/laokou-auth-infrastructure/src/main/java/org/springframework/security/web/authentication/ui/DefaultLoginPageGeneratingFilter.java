@@ -183,10 +183,10 @@ public class DefaultLoginPageGeneratingFilter extends GenericFilterBean {
 			sb.append("        <h3 class=\"form-signin-heading\">老寇IoT云平台统一认证</h3>\n");
 			sb.append(createError(loginError, errorMsg)).append(createLogoutSuccess(logoutSuccess));
 			sb.append("        <p>\n");
-			sb.append("          <label for=\"tenant_code\" class=\"sr-only\">租户标识</label>\n");
+			sb.append("          <label for=\"tenant_code\" class=\"sr-only\">租户编码</label>\n");
 			sb.append("          <input autoComplete=\"off\" type=\"text\" id=\"tenant_code\" name=\"")
 				.append("tenant_code")
-				.append("\" class=\"form-control\" placeholder=\"租户标识\" required autofocus>\n");
+				.append("\" class=\"form-control\" placeholder=\"租户编码\" required autofocus>\n");
 			sb.append("        </p>\n");
 			sb.append("        <p>\n");
 			sb.append("          <label for=\"username\" class=\"sr-only\">用户名</label>\n");

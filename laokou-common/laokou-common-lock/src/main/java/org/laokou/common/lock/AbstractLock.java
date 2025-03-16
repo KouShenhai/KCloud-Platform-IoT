@@ -27,7 +27,7 @@ public abstract class AbstractLock<T> implements Lock {
 	/**
 	 * 尝试加锁.
 	 * @param type 类型
-	 * @param key 标识
+	 * @param key 键
 	 * @param timeout 锁等待超时时间
 	 * @return Boolean
 	 * @throws InterruptedException 线程中断异常

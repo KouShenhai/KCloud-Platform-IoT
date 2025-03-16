@@ -283,11 +283,11 @@ export default () => {
 						prefix: <TeamOutlined className={'prefixIcon'}/>,
 						autoComplete: 'new-password',
 					}}
-					placeholder={'请输入租户标识'}
+					placeholder={'请输入租户编码'}
 					rules={[
 						{
 							required: true,
-							message: '请输入租户标识',
+							message: '请输入租户编码',
 						},
 					]}
 				/>

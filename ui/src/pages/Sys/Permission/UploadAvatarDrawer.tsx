@@ -1,6 +1,6 @@
 import ImgCrop from "antd-img-crop";
-import {GetProp, message, Upload, UploadFile, UploadProps} from "antd";
-import {getAccessToken} from "@/access";
+import {GetProp, Upload, UploadFile, UploadProps} from "antd";
+import {uploadV3} from "@/services/admin/oss";
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -30,15 +30,8 @@ export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({ setPrevi
 	}
 
 	const onChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-		if (newFileList[0]?.response) {
-			const res = newFileList[0]?.response
-			if (res.code === 'OK') {
-				message.success("上传成功").then()
-				setFileList(newFileList);
-			} else {
-				message.error(res.msg).then()
-				setFileList([])
-			}
+		if (newFileList[0]?.response && newFileList[0]?.response.code !== 'OK') {
+			setFileList([])
 		} else {
 			setFileList(newFileList)
 		}
@@ -48,12 +41,27 @@ export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({ setPrevi
 		<ImgCrop rotationSlider>
 			<Upload
 				accept={'.jpg,.jpeg,.png,.gif,.webp'}
-				action={`/api/admin/v3/oss/upload`}
 				listType="picture-card"
 				fileList={fileList}
 				onChange={onChange}
 				onPreview={handlePreview}
-				headers={{ Authorization: `Bearer ${getAccessToken()}` }}
+				customRequest={async ( options ) => {
+					const { file, onProgress, onError, onSuccess } = options;
+					const formData = new FormData();
+					formData.append('file', file);
+					uploadV3(formData).then(res => {
+						// @ts-ignore
+						onProgress({ percent: 100 }, file)
+						if (res.code === 'OK') {
+							// @ts-ignore
+							onSuccess(res, file)
+						} else {
+							// @ts-ignore
+							onError({status: 500, url: '', method: 'POST'}, res)
+						}
+					})
+				}
+			}
 			>
 				{fileList.length < 1 && '上传头像'}
 			</Upload>

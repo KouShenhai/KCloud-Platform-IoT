@@ -41,8 +41,8 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({ modalVisit, se
 			<ProFormText
 				readonly={true}
 				name="code"
-				label="标识"
-				rules={[{ required: true, message: '请输入标识' }]}
+				label="编码"
+				rules={[{ required: true, message: '请输入编码' }]}
 			/>
 
 			<ProFormText

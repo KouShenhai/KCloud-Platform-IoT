@@ -28,7 +28,7 @@ import java.io.Serializable;
 public class MailResult implements Serializable {
 
 	/**
-	 * 标识.
+	 * 编码.
 	 */
 	private final String code = "sendMailCaptcha";
 

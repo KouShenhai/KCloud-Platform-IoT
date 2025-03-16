@@ -37,7 +37,7 @@ public class ThingModelDO extends BaseDO {
 	private String name;
 
 	/**
-	 * 模型标识.
+	 * 模型编码.
 	 */
 	private String code;
 

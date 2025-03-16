@@ -26,14 +26,14 @@ public interface CaptchaGateway {
 
 	/**
 	 * 写入Redis.
-	 * @param key 标识
+	 * @param key 键
 	 * @param captcha 验证码
 	 */
 	void set(String key, String captcha);
 
 	/**
 	 * 写入Redis.
-	 * @param key 标识
+	 * @param key 键
 	 * @param expireTime 过期时间
 	 * @param captcha 验证码
 	 */
@@ -41,7 +41,7 @@ public interface CaptchaGateway {
 
 	/**
 	 * 检查验证码.
-	 * @param key 标识
+	 * @param key 键
 	 * @param code 验证码
 	 * @return 校验结果
 	 */

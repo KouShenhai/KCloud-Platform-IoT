@@ -69,7 +69,7 @@ export default () => {
 		_param = {
 			sheetData: _list,
 			sheetFilter: ["code", "name", "status", "param", "errorMessage", "createTime"],
-			sheetHeader: ["标识", "名称", "状态", "参数", "错误信息", "创建时间"],
+			sheetHeader: ["编码", "名称", "状态", "参数", "错误信息", "创建时间"],
 			fileName: "通知日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
 			sheetName: "通知日志"
 		}
@@ -103,7 +103,7 @@ export default () => {
 			width: 60,
 		},
 		{
-			title: '标识',
+			title: '编码',
 			dataIndex: 'code',
 			ellipsis: true
 		},
@@ -198,8 +198,8 @@ export default () => {
 				<ProFormText
 					readonly={true}
 					name="code"
-					label="标识"
-					rules={[{ required: true, message: '请输入标识' }]}
+					label="编码"
+					rules={[{ required: true, message: '请输入编码' }]}
 				/>
 
 				<ProFormText
@@ -270,8 +270,8 @@ export default () => {
 				}
 				dateFormatter="string"
 				toolbar={{
-					title: '登录日志',
-					tooltip: '登录日志',
+					title: '物模型',
+					tooltip: '物模型',
 				}}
 			/>
 		</>

@@ -171,11 +171,11 @@ spring:
             server-addr: @NACOS-DISCOVERY-ADDRESS@
             # 服务注册&发现-命名空间
             namespace: @NACOS-NAMESPACE@
-            # 服务注册&发现-数据标识
+            # 服务注册&发现-数据ID
             data-id: gateway-flow.json
             # 服务注册&发现-规则类型【网关规则】
             rule-type: gw_flow
-            # 服务注册&发现-分组标识
+            # 服务注册&发现-分组ID
             group-id: @NACOS-GROUP@
             # 服务注册&发现-用户名
             username: @NACOS-USERNAME@

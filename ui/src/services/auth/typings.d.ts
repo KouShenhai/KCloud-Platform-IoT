@@ -52,7 +52,7 @@ declare namespace API {
 	};
 
     type Result = {
-		/** 状态标识 */
+		/** 状态编码 */
 		code?: string;
 		/** 响应描述 */
 		msg?: string;

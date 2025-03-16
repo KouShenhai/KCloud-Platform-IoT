@@ -35,7 +35,7 @@ public class ThingModelPageQry extends PageQuery {
 	private String name;
 
 	/**
-	 * 模型标识.
+	 * 模型编码.
 	 */
 	private String code;
 
