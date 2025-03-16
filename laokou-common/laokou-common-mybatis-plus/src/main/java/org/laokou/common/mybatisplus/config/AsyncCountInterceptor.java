@@ -47,6 +47,7 @@ import java.util.concurrent.TimeUnit;
 						BoundSql.class }),
 		@Signature(type = Executor.class, method = "query",
 				args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class }) })
+@Deprecated
 public class AsyncCountInterceptor implements Interceptor {
 
 	@Override

@@ -6,7 +6,7 @@ export async function modifyV3(
   body: API.TransportProtocolModifyCmd,
   options?: { [key: string]: any },
 ) {
-  return request<any>('/v3/transport-protocols', {
+  return request<any>('/api/iot/v3/transport-protocols', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ export async function modifyV3(
 
 /** 保存传输协议 保存传输协议 POST /v3/transport-protocols */
 export async function saveV3(body: API.TransportProtocolSaveCmd, options?: { [key: string]: any }) {
-  return request<any>('/v3/transport-protocols', {
+  return request<any>('/api/iot/v3/transport-protocols', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ export async function saveV3(body: API.TransportProtocolSaveCmd, options?: { [ke
 
 /** 删除传输协议 删除传输协议 DELETE /v3/transport-protocols */
 export async function removeV3(body: number[], options?: { [key: string]: any }) {
-  return request<any>('/v3/transport-protocols', {
+  return request<any>('/api/iot/v3/transport-protocols', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ export async function getByIdV3(
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<API.Result>(`/v3/transport-protocols/${param0}`, {
+  return request<API.Result>(`/api/iot/v3/transport-protocols/${param0}`, {
     method: 'GET',
     params: { ...queryParams },
     ...(options || {}),
@@ -59,7 +59,7 @@ export async function exportV3(
   body: API.TransportProtocolExportCmd,
   options?: { [key: string]: any },
 ) {
-  return request<any>('/v3/transport-protocols/export', {
+  return request<any>('/api/iot/v3/transport-protocols/export', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
     }
   });
 
-  return request<any>('/v3/transport-protocols/import', {
+  return request<any>('/api/iot/v3/transport-protocols/import', {
     method: 'POST',
     data: formData,
     requestType: 'form',
@@ -103,7 +103,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 
 /** 分页查询传输协议列表 分页查询传输协议列表 POST /v3/transport-protocols/page */
 export async function pageV3(body: API.TransportProtocolPageQry, options?: { [key: string]: any }) {
-  return request<API.Result>('/v3/transport-protocols/page', {
+  return request<API.Result>('/api/iot/v3/transport-protocols/page', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

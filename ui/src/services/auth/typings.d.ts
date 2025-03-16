@@ -9,11 +9,6 @@ declare namespace API {
 		token?: string;
 	};
 
-	type TenantOptionParam = {
-		label?: string;
-		value?: string;
-	}
-
 	type SendCaptchaParam = {
 		uuid: string;
 		tenantCode: string;

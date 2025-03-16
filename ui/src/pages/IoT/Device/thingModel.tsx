@@ -6,13 +6,16 @@ import {ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
 import {Excel, ExportToExcel} from "@/utils/export";
 import moment from "moment";
-import {useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {getStatus, STATUS} from "@/services/constant";
+import {ThingModelDrawer} from "@/pages/IoT/Device/ThingModelDrawer";
 
 export default () => {
 
 	const [modalVisit, setModalVisit] = useState(false);
 	const [dataSource, setDataSource] = useState({})
+	const [title, setTitle] = useState("")
+	const [readOnly, setReadOnly] = useState(false)
 
 	const statusEnum = {
 		0: '0',
@@ -170,6 +173,19 @@ export default () => {
 
 	return (
 		<>
+
+			<ThingModelDrawer
+				modalVisit={modalVisit}
+				setModalVisit={setModalVisit}
+				title={title}
+				readOnly={readOnly}
+				dataSource={dataSource}
+				onComponent={async () => {
+					// @ts-ignore
+					actionRef?.current?.reload();
+				}}
+			/>
+
 			<DrawerForm<{
 				code: string;
 				name: string;

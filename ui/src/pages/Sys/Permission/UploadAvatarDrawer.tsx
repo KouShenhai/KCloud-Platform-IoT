@@ -1,6 +1,7 @@
 import ImgCrop from "antd-img-crop";
 import {GetProp, Upload, UploadFile, UploadProps} from "antd";
 import {uploadV3} from "@/services/admin/oss";
+import React from "react";
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 

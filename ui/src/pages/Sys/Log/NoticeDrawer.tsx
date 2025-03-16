@@ -1,5 +1,6 @@
 import {DrawerForm, ProFormText} from '@ant-design/pro-components';
 import {getStatus} from "@/services/constant";
+import React from "react";
 
 interface NoticeLogDrawerProps {
 	modalVisit: boolean;
