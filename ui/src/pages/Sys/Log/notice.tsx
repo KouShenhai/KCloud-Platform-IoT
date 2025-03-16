@@ -60,7 +60,7 @@ export default () => {
 			width: 60,
 		},
 		{
-			title: '标识',
+			title: '编码',
 			dataIndex: 'code',
 			ellipsis: true
 		},
@@ -177,7 +177,7 @@ export default () => {
 							ExportToExcel({
 								sheetData: _list,
 								sheetFilter: ["code", "name", "status", "param", "errorMessage", "createTime"],
-								sheetHeader: ["标识", "名称", "状态", "参数", "错误信息", "创建时间"],
+								sheetHeader: ["编码", "名称", "状态", "参数", "错误信息", "创建时间"],
 								fileName: "通知日志_导出_" + moment(new Date()).format('YYYYMMDDHHmmss'),
 								sheetName: "通知日志"
 							})

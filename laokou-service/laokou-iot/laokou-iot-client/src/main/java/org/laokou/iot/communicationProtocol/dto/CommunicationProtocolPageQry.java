@@ -35,7 +35,7 @@ public class CommunicationProtocolPageQry extends PageQuery {
 	private String name;
 
 	/**
-	 * 协议标识.
+	 * 协议编码.
 	 */
 	private String code;
 

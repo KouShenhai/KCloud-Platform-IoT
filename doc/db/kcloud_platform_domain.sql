@@ -195,7 +195,7 @@ COMMENT ON COLUMN "public"."boot_sys_notice_log"."update_time" IS '修改时间'
 COMMENT ON COLUMN "public"."boot_sys_notice_log"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."boot_sys_notice_log"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_sys_notice_log"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."boot_sys_notice_log"."code" IS '通知标识';
+COMMENT ON COLUMN "public"."boot_sys_notice_log"."code" IS '通知编码';
 COMMENT ON COLUMN "public"."boot_sys_notice_log"."name" IS '通知名称';
 COMMENT ON COLUMN "public"."boot_sys_notice_log"."status" IS '通知状态 0成功 1失败';
 COMMENT ON COLUMN "public"."boot_sys_notice_log"."error_message" IS '错误信息';

@@ -36,7 +36,7 @@ public class TenantDO extends BaseDO {
 	private String name;
 
 	/**
-	 * 租户标识.
+	 * 租户编码.
 	 */
 	private String code;
 

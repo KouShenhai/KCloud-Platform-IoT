@@ -39,7 +39,7 @@ public class ClusterE {
 	private String name;
 
 	/**
-	 * 集群标识.
+	 * 集群编码.
 	 */
 	private String code;
 

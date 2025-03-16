@@ -1,6 +1,7 @@
 import { DrawerForm, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
 import { resetPwdV3 } from '@/services/admin/user';
+import React from "react";
 
 interface ResetPwdDrawerProps {
 	visible: boolean;

@@ -94,6 +94,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @NoArgsConstructor
 @SuppressWarnings({ "rawtypes" })
+@Deprecated
 public class AsyncPaginationInnerInterceptor implements InnerInterceptor {
 
 	/**

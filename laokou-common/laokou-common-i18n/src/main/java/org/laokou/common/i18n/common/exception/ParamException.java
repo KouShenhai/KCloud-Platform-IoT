@@ -69,7 +69,7 @@ public final class ParamException extends GlobalException {
 		public static final String MAIL_REQUIRE = "P_OAuth2_MailIsNull";
 
 		/**
-		 * 租户标识不能为空.
+		 * 租户编码不能为空.
 		 */
 		public static final String TENANT_CODE_REQUIRE = "P_OAuth2_TenantCodeIsNull";
 

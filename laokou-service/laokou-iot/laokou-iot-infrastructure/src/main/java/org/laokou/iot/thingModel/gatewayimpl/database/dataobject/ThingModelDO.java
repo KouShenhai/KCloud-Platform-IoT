@@ -37,7 +37,7 @@ public class ThingModelDO extends BaseDO {
 	private String name;
 
 	/**
-	 * 模型标识.
+	 * 模型编码.
 	 */
 	private String code;
 
@@ -75,5 +75,10 @@ public class ThingModelDO extends BaseDO {
 	 * 备注.
 	 */
 	private String remark;
+
+	/**
+	 * 表达式标识 0否 1是.
+	 */
+	private Integer expressionFlag;
 
 }

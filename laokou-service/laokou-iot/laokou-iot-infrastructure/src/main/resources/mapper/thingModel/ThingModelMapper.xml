@@ -20,47 +20,56 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper">
 
-	<select id="selectObjectPage"
-			resultType="org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO">
-		SELECT id,
-                 name,
-                 code,
-                 data_type,
-                 category,
-                 type,
-                 expression,
-                 sort,
-                 specs,
-                 remark,
-             create_time
-		from boot_iot_thing_model
-		where del_flag = 0
-        <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
-            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> ${pageQuery.params.startDate}
-        </if>
-        <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
-            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> ${pageQuery.params.endDate}
-        </if>
-		order by id desc
-		limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
-	</select>
+  <sql id="selectColumns">
+         id,
+         "name",
+         code,
+         data_type,
+         category,
+         "type",
+         sort,
+         create_time
+  </sql>
 
-	<select id="selectObjectCount" resultType="long">
-		SELECT count(1)
-		from boot_iot_thing_model
-		where del_flag = 0
-        <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
-            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> ${pageQuery.params.startDate}
-        </if>
-        <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
-            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> ${pageQuery.params.endDate}
-        </if>
-	</select>
+  <sql id="selectConditions">
+    where del_flag = 0
+    <if test="pageQuery.name != null and pageQuery.name != ''">
+      and "name" like #{pageQuery.name}
+    </if>
+    <if test="pageQuery.code != null and pageQuery.code != ''">
+      and "code" like #{pageQuery.code}
+    </if>
+    <if test="pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
+      and create_time <![CDATA[ >= ]]> #{pageQuery.params.startTime}
+    </if>
+    <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
+      and create_time <![CDATA[ <= ]]> #{pageQuery.params.endTime}
+    </if>
+  </sql>
 
-	<select id="selectVersion" resultType="integer">
-		select version
-		from boot_iot_thing_model
-		where id = #{id}
-	</select>
+  <sql id="selectObjectList">
+    SELECT <include refid="selectColumns"/>
+    from boot_iot_thing_model
+    <include refid="selectConditions"/>
+    order by id desc
+  </sql>
+
+  <select id="selectObjectPage"
+          resultType="org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO">
+    <include refid="selectObjectList"/>
+    limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
+  </select>
+
+  <select id="selectObjectCount" resultType="long">
+    SELECT count(1)
+    from boot_iot_thing_model
+    <include refid="selectConditions"/>
+  </select>
+
+  <select id="selectVersion" resultType="integer">
+    select version
+    from boot_iot_thing_model
+    where id = #{id}
+  </select>
 
 </mapper>

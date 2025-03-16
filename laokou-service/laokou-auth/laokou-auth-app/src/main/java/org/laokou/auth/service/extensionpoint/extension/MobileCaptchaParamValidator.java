@@ -35,7 +35,7 @@ public class MobileCaptchaParamValidator implements CaptchaParamValidatorExtPt {
 	@Override
 	public void validate(CaptchaE captcha) {
 		ParamValidator.validate(
-				// 校验租户标识
+				// 校验租户编码
 				OAuth2ParamValidator.validateTenantCode(captcha.getTenantCode()),
 				// 校验手机号
 				OAuth2ParamValidator.validateMobile(captcha.getUuid()));

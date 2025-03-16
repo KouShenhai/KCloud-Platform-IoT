@@ -201,7 +201,7 @@ class OAuth2ApiTest {
 	void testAuthorizationCodeAuthApi() {
 		log.info("---------- 授权码认证模式开始 ----------");
 		Map<String, String> tokenMap = authorizationCodeAuth();
-		log.info("标识：{}", CODE);
+		log.info("编码：{}", CODE);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
 		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
 		log.info("---------- 授权码认证模式结束 ----------");

@@ -34,7 +34,7 @@ import static org.redisson.api.RateType.OVERALL;
 public @interface RateLimiter {
 
 	/**
-	 * 标识.
+	 * 键.
 	 */
 	String key();
 

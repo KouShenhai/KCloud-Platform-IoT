@@ -14,11 +14,12 @@ export async function modifyV3(body: API.ThingModelModifyCmd, options?: { [key: 
 }
 
 /** 保存物模型 保存物模型 POST /v3/thing-models */
-export async function saveV3(body: API.ThingModelSaveCmd, options?: { [key: string]: any }) {
+export async function saveV3(body: API.ThingModelSaveCmd, requestId: string, options?: { [key: string]: any }) {
   return request<any>('/api/iot/v3/thing-models', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+		'request-id': requestId,
+		'Content-Type': 'application/json',
     },
     data: body,
     ...(options || {}),

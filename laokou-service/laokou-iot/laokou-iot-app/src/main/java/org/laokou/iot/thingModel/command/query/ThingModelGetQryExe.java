@@ -23,7 +23,7 @@ import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
 import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.thingModel.convertor.ModelConvertor;
+import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
 
 /**
  * 查看物模型请求执行器.
@@ -37,7 +37,7 @@ public class ThingModelGetQryExe {
 	private final ThingModelMapper thingModelMapper;
 
 	public Result<ThingModelCO> execute(ThingModelGetQry qry) {
-		return Result.ok(ModelConvertor.toClientObject(thingModelMapper.selectById(qry.getId())));
+		return Result.ok(ThingModelConvertor.toClientObject(thingModelMapper.selectById(qry.getId())));
 	}
 
 }

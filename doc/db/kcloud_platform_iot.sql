@@ -435,7 +435,7 @@ COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."del_flag" IS '删�
 COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."name" IS '协议名称';
-COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."code" IS '协议标识';
+COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."code" IS '协议编码';
 COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."sort" IS '排序';
 COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."remark" IS '备注';
 COMMENT ON TABLE "public"."boot_iot_communication_protocol" IS '通信协议';
@@ -522,10 +522,11 @@ CACHE 1
   "data_type" varchar(20) COLLATE "pg_catalog"."default" NOT NULL,
   "category" int2 NOT NULL,
   "type" varchar(30) COLLATE "pg_catalog"."default" NOT NULL,
-  "expression" varchar(200) COLLATE "pg_catalog"."default",
+  "expression" text COLLATE "pg_catalog"."default",
   "sort" int4 NOT NULL DEFAULT 1,
   "specs" json,
-  "remark" varchar(400) COLLATE "pg_catalog"."default"
+  "remark" varchar(400) COLLATE "pg_catalog"."default",
+  "expression_flag" pg_catalog.int2 NOT NULL DEFAULT 0
 )
 ;
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."id" IS 'ID';
@@ -537,7 +538,7 @@ COMMENT ON COLUMN "public"."boot_iot_thing_model"."del_flag" IS '删除标识 0�
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."name" IS '模型名称';
-COMMENT ON COLUMN "public"."boot_iot_thing_model"."code" IS '模型标识';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."code" IS '模型编码';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."data_type" IS '数据类型 integer string decimal boolean';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."category" IS '模型类别 1属性 2事件';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."type" IS '模型类型 read读 write写 report上报';
@@ -545,6 +546,7 @@ COMMENT ON COLUMN "public"."boot_iot_thing_model"."expression" IS '表达式';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."sort" IS '排序';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."specs" IS '规则说明';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."remark" IS '备注';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."expression_flag" IS '表达式标识 0否 1是';
 COMMENT ON TABLE "public"."boot_iot_thing_model" IS '物模型';
 
 -- ----------------------------
@@ -638,7 +640,7 @@ COMMENT ON COLUMN "public"."boot_iot_product_category"."name" IS '产品类别�
 COMMENT ON COLUMN "public"."boot_iot_product_category"."sort" IS '排序';
 COMMENT ON COLUMN "public"."boot_iot_product_category"."pid" IS '产品类别父节点ID';
 COMMENT ON COLUMN "public"."boot_iot_product_category"."remark" IS '备注';
-COMMENT ON COLUMN "public"."boot_iot_product_category"."code" IS '产品类别标识';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."code" IS '产品类别编码';
 COMMENT ON TABLE "public"."boot_iot_product_category" IS '产品类别';
 
 -- ----------------------------
@@ -1015,7 +1017,7 @@ CREATE UNIQUE INDEX "boot_iot_thing_model_name_code_tenant_id_idx" ON "public"."
   "code" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "tenant_id" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
-COMMENT ON INDEX "public"."boot_iot_thing_model_name_code_tenant_id_idx" IS '名称_标识_租户ID_唯一索引';
+COMMENT ON INDEX "public"."boot_iot_thing_model_name_code_tenant_id_idx" IS '名称_编码_租户ID_唯一索引';
 
 -- ----------------------------
 -- Primary Key structure for table boot_iot_thing_model

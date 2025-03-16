@@ -37,18 +37,6 @@ declare namespace API {
     creatTime?: string;
   };
 
-  type ProductModelCO = {
-    extValues?: Record<string, any>;
-    /** ID */
-    Id?: number;
-    /** 产品ID */
-    productId?: number;
-    /** 模型ID */
-    modelId?: number;
-    /** 创建时间 */
-    createTime?: string;
-  };
-
   type TransportProtocolCO = {
     extValues?: Record<string, any>;
     /** ID */
@@ -183,7 +171,7 @@ declare namespace API {
     Id?: number;
     /** 模型名称 */
     name?: string;
-    /** 模型标识 */
+    /** 模型编码 */
     code?: string;
     /** 数据类型 integer string decimal boolean */
     dataType?: string;
@@ -250,34 +238,6 @@ declare namespace API {
     remark?: string;
   };
 
-  type ProductModelExportCmd = {
-    pageNum?: number;
-    pageSize?: number;
-    pageIndex?: number;
-    sqlFilter?: string;
-    params?: Record<string, any>;
-    productId?: number;
-    modelId?: number;
-  };
-
-  type ProductModelModifyCmd = {
-    co?: ProductModelCO;
-  };
-
-  type ProductModelPageQry = {
-    pageNum?: number;
-    pageSize?: number;
-    pageIndex?: number;
-    sqlFilter?: string;
-    params?: Record<string, any>;
-    productId?: number;
-    modelId?: number;
-  };
-
-  type ProductModelSaveCmd = {
-    co?: ProductModelCO;
-  };
-
   type ProductModifyCmd = {
     co?: ProductCO;
   };
@@ -302,7 +262,7 @@ declare namespace API {
   };
 
 	type Result = {
-		/** 状态标识 */
+		/** 状态编码 */
 		code?: string;
 		/** 响应描述 */
 		msg?: string;
@@ -388,7 +348,7 @@ declare namespace API {
     Id?: number;
     /** 协议名称 */
     name?: string;
-    /** 协议标识 */
+    /** 协议编码 */
     code?: string;
     /** 排序 */
     sort?: number;

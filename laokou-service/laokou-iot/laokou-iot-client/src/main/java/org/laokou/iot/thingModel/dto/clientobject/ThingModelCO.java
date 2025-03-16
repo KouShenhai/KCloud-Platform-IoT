@@ -42,7 +42,7 @@ public class ThingModelCO extends ClientObject {
 	@Schema(name = "模型名称", description = "模型名称")
 	private String name;
 
-	@Schema(name = "模型标识", description = "模型标识")
+	@Schema(name = "模型编码", description = "模型编码")
 	private String code;
 
 	@Schema(name = "数据类型 integer string decimal boolean", description = "数据类型 integer string decimal boolean")
@@ -68,5 +68,8 @@ public class ThingModelCO extends ClientObject {
 
 	@Schema(name = "创建时间", description = "创建时间")
 	private Instant createTime;
+
+	@Schema(name = "表达式标识 0否 1是", description = "表达式标识 0否 1是")
+	private Integer expressionFlag;
 
 }

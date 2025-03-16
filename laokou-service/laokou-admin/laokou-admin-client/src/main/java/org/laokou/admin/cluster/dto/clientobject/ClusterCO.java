@@ -42,7 +42,7 @@ public class ClusterCO extends ClientObject {
 	@Schema(name = "集群名称", description = "集群名称")
 	private String name;
 
-	@Schema(name = "集群标识", description = "集群标识")
+	@Schema(name = "集群编码", description = "集群编码")
 	private String code;
 
 	@Schema(name = "集群备注", description = "集群备注")

@@ -6,7 +6,7 @@ export async function modifyV3(
   body: API.CommunicationProtocolModifyCmd,
   options?: { [key: string]: any },
 ) {
-  return request<any>('/v3/communication-protocols', {
+  return request<any>('/api/iot/v3/communication-protocols', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export async function saveV3(
   body: API.CommunicationProtocolSaveCmd,
   options?: { [key: string]: any },
 ) {
-  return request<any>('/v3/communication-protocols', {
+  return request<any>('/api/iot/v3/communication-protocols', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ export async function saveV3(
 
 /** 删除通讯协议 删除通讯协议 DELETE /v3/communication-protocols */
 export async function removeV3(body: number[], options?: { [key: string]: any }) {
-  return request<any>('/v3/communication-protocols', {
+  return request<any>('/api/iot/v3/communication-protocols', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export async function getByIdV3(
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<API.Result>(`/v3/communication-protocols/${param0}`, {
+  return request<API.Result>(`/api/iot/v3/communication-protocols/${param0}`, {
     method: 'GET',
     params: { ...queryParams },
     ...(options || {}),
@@ -62,7 +62,7 @@ export async function exportV3(
   body: API.CommunicationProtocolExportCmd,
   options?: { [key: string]: any },
 ) {
-  return request<any>('/v3/communication-protocols/export', {
+  return request<any>('/api/iot/v3/communication-protocols/export', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
     }
   });
 
-  return request<any>('/v3/communication-protocols/import', {
+  return request<any>('/api/iot/v3/communication-protocols/import', {
     method: 'POST',
     data: formData,
     requestType: 'form',
@@ -109,7 +109,7 @@ export async function pageV3(
   body: API.CommunicationProtocolPageQry,
   options?: { [key: string]: any },
 ) {
-  return request<API.Result>('/v3/communication-protocols/page', {
+  return request<API.Result>('/api/iot/v3/communication-protocols/page', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

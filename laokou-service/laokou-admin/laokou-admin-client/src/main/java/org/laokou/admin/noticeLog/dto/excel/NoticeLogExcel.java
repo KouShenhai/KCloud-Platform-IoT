@@ -33,12 +33,12 @@ import org.laokou.common.i18n.dto.DTO;
 public class NoticeLogExcel extends DTO {
 
 	/**
-	 * 标识.
+	 * 编码.
 	 */
 	@ColumnWidth(30)
 	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
 			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
-	@ExcelProperty(value = "标识", index = 0)
+	@ExcelProperty(value = "编码", index = 0)
 	private String code;
 
 	/**

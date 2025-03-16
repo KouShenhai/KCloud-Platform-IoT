@@ -189,12 +189,7 @@ export default () => {
 							   setDataSource(res?.data)
 							   const avatar = res?.data?.avatar;
 							   if (avatar) {
-								   setFileList([{
-									   uid: '-1',
-									   name: '用户头像.png',
-									   status: 'done',
-									   url: avatar,
-								   }])
+								   setFileList([{uid: '-1', name: '用户头像.png', status: 'done', url: avatar}])
 							   } else {
 								   setFileList([])
 							   }
@@ -215,12 +210,7 @@ export default () => {
 							   setDataSource(res?.data)
 							   const avatar = res?.data?.avatar;
 							   if (avatar) {
-								   setFileList([{
-									   uid: '-1',
-									   name: '用户头像.png',
-									   status: 'done',
-									   url: avatar,
-								   }])
+								   setFileList([{uid: '-1', name: '用户头像.png', status: 'done', url: avatar}])
 							   } else {
 								   setFileList([])
 							   }
