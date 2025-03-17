@@ -160,7 +160,7 @@
     <!--reactor-kafka版本-->
     <reactor-kafka.version>1.3.23</reactor-kafka.version>
     <!--okhttp3版本-->
-    <okhttp3.version>3.14.9</okhttp3.version>
+    <okhttp3.version>4.12.0</okhttp3.version>
     <!--spring-ai-openai-spring-boot-starter版本-->
     <spring-ai-openai-spring-boot-starter.version>1.0.0-M6</spring-ai-openai-spring-boot-starter.version>
     <!--flink-connector-kafka版本-->
