@@ -17,18 +17,22 @@
 
 package org.laokou.logstash.common.support;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.IdGenerator;
 import org.laokou.common.i18n.common.constant.StringConstant;
 import org.laokou.common.i18n.utils.DateUtil;
 import org.laokou.common.i18n.utils.JacksonUtil;
 import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.lock.support.IdentifierGenerator;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
 @Slf4j
+@RequiredArgsConstructor
 public abstract class AbstractTraceLogStorage implements TraceLogStorage {
 
 	protected static final String TRACE_INDEX = "laokou_trace";
+
+	private final IdentifierGenerator distributedIdentifierGenerator;
 
 	protected String getIndexName() {
 		return TRACE_INDEX + StringConstant.UNDER + DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMMDD);
@@ -40,7 +44,7 @@ public abstract class AbstractTraceLogStorage implements TraceLogStorage {
 			String traceId = traceLogIndex.getTraceId();
 			String spanId = traceLogIndex.getSpanId();
 			if (StringUtil.isNotEmpty(spanId) && StringUtil.isNotEmpty(traceId)) {
-				traceLogIndex.setId(String.valueOf(IdGenerator.defaultSnowflakeId()));
+				traceLogIndex.setId(String.valueOf(distributedIdentifierGenerator.generate()));
 				return traceLogIndex;
 			}
 		}

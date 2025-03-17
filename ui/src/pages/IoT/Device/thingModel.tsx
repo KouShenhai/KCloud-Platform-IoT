@@ -5,8 +5,8 @@ import {Button, message, Modal} from "antd";
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
 import React, {useRef, useState} from "react";
-import {getStatus, STATUS} from "@/services/constant";
 import {ThingModelDrawer} from "@/pages/IoT/Device/ThingModelDrawer";
+import {TableRowSelection} from "antd/es/table/interface";
 
 export default () => {
 
@@ -15,8 +15,8 @@ export default () => {
 	const [dataSource, setDataSource] = useState<any>({})
 	const [title, setTitle] = useState("")
 	const [readOnly, setReadOnly] = useState(false)
-	const [param, setParam] = useState<any>({});
 	const [value, setValue] = useState("");
+	const [ids, setIds] = useState<any>([])
 
 	type TableColumns = {
 		id: number;
@@ -27,28 +27,35 @@ export default () => {
 		category: number | undefined;
 		type: string | undefined;
 		expression: string | undefined;
+		expressionFlag: number;
 		specs: string | undefined;
 		remark: string | undefined;
 		createTime: string | undefined;
 	};
 
 	const getPageQuery = (params: any) => {
-		const param = {
+		return {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
 			code: trim(params?.code),
 			name: trim(params?.name),
-			status: params?.status,
-			errorMessage: trim(params?.errorMessage),
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
 			}
 		};
-		setParam(param)
-		return param
 	}
+
+	const rowSelection: TableRowSelection<TableColumns> = {
+		onChange: (selectedRowKeys) => {
+			const ids: number[] = []
+			selectedRowKeys.forEach(item => {
+				ids.push(item as number)
+			})
+			setIds(ids)
+		}
+	};
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
@@ -68,17 +75,28 @@ export default () => {
 			ellipsis: true
 		},
 		{
-			title: '状态',
-			dataIndex: 'status',
+			title: '数据类型',
+			dataIndex: 'dataType',
 			valueEnum: {
-				[STATUS.OK]: getStatus(STATUS.OK),
-				[STATUS.FAIL]: getStatus(STATUS.FAIL)
+				integer: "整数型",
+				string:  "字符串型",
+				decimal: "小数型",
+				boolean: "布尔型"
 			},
 			ellipsis: true
 		},
 		{
-			title: '错误信息',
-			dataIndex: 'errorMessage',
+			title: '模型类别',
+			dataIndex: 'category',
+			valueEnum: {
+				1: "属性",
+				2: "事件"
+			},
+			ellipsis: true
+		},
+		{
+			title: '模型类型',
+			dataIndex: 'type',
 			ellipsis: true
 		},
 		{
@@ -163,6 +181,7 @@ export default () => {
 					layout: 'vertical',
 					defaultCollapsed: true,
 				}}
+				rowSelection={{ ...rowSelection }}
 				toolBarRender={
 					() => [
 						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
@@ -179,11 +198,10 @@ export default () => {
 								okText: '确认',
 								cancelText: '取消',
 								onOk: async () => {
-									// if (ids.length === 0) {
-									// 	message.warning("请至少选择一条数据").then()
-									// 	return;
-									// }
-									// @ts-ignore
+									if (ids.length === 0) {
+										message.warning("请至少选择一条数据").then()
+										return;
+									}
 									removeV3(ids).then(res => {
 										if (res.code === 'OK') {
 											message.success("删除成功").then()

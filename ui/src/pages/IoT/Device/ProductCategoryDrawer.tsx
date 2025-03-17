@@ -1,13 +1,13 @@
 import {DrawerForm, ProFormDigit, ProFormRadio, ProFormSelect, ProFormText} from '@ant-design/pro-components';
 import { message } from 'antd';
-import {modifyV3, saveV3} from "@/services/iot/thingModel";
+import {modifyV3, saveV3} from "@/services/iot/device";
 import {v7 as uuidV7} from "uuid";
 import React from "react";
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import {ProFormItem} from "@ant-design/pro-form";
 
-interface ThingModelDrawerProps {
+interface ProductCategoryDrawerProps {
 	modalVisit: boolean;
 	setModalVisit: (visible: boolean) => void;
 	title: string;
@@ -33,7 +33,7 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, value, setValue }) => {
+export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, value, setValue }) => {
 
 	const onChange = React.useCallback((val: any) => {
 		dataSource.expression = val;
@@ -136,8 +136,8 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				readonly={readOnly}
 				rules={[{required: true, message: '请选择是否使用表达式',}]}
 				options={[
-					{label:"是",value: 1 },
-					{label:"否",value: 0 }
+					{label:"否",value: 0 },
+					{label:"是",value: 1 }
 				]}
 			/>
 

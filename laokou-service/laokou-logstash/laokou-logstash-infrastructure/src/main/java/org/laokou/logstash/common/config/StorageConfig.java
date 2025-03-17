@@ -18,6 +18,7 @@
 package org.laokou.logstash.common.config;
 
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
+import org.laokou.common.lock.support.IdentifierGenerator;
 import org.laokou.logstash.common.support.TraceLogElasticsearchStorage;
 import org.laokou.logstash.common.support.TraceLogLokiStorage;
 import org.laokou.logstash.common.support.TraceLogStorage;
@@ -37,14 +38,16 @@ public class StorageConfig {
 	@Bean("traceLogStorage")
 	@ConditionalOnProperty(prefix = "storage", matchIfMissing = true, name = "type", havingValue = "ELASTICSEARCH")
 	public TraceLogStorage traceLogElasticsearchStorage(ElasticsearchTemplate elasticsearchTemplate,
-			ExecutorService virtualThreadExecutor) {
-		return new TraceLogElasticsearchStorage(virtualThreadExecutor, elasticsearchTemplate);
+			ExecutorService virtualThreadExecutor, IdentifierGenerator distributedIdentifierGenerator) {
+		return new TraceLogElasticsearchStorage(distributedIdentifierGenerator, virtualThreadExecutor,
+				elasticsearchTemplate);
 	}
 
 	@Bean("traceLogStorage")
 	@ConditionalOnProperty(prefix = "storage", matchIfMissing = true, name = "type", havingValue = "LOKI")
-	public TraceLogStorage traceLogLokiStorage(WebClient webClient, LokiProperties lokiProperties) {
-		return new TraceLogLokiStorage(webClient, lokiProperties);
+	public TraceLogStorage traceLogLokiStorage(WebClient webClient, LokiProperties lokiProperties,
+			IdentifierGenerator distributedIdentifierGenerator) {
+		return new TraceLogLokiStorage(distributedIdentifierGenerator, webClient, lokiProperties);
 	}
 
 }

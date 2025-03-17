@@ -58,7 +58,6 @@ public class DeptGatewayImpl implements DeptGateway {
 		// 校验父级路径
 		checkParentPath(deptE, id);
 		deptDO.setPath(deptE.getPath());
-		deptDO.setVersion(deptMapper.selectVersion(id));
 		deptMapper.updateById(deptDO);
 		deptMapper.updateChildrenPath(deptE.getOldPath(), deptE.getOldPrefix(), deptE.getNewPrefix());
 	}

@@ -128,7 +128,7 @@ public class MybatisUtil {
 						sqlSession.clearCache();
 					}
 				}
-				// 阻塞线程【默认180秒】
+				// 阻塞线程
 				cyclicBarrier.await(timeout, TimeUnit.SECONDS);
 				// 提交事务
 				sqlSession.commit();

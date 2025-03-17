@@ -47,7 +47,8 @@ public class ThingModelPageQryExe {
 			List<ThingModelDO> list = thingModelMapper.selectObjectPage(qry);
 			long total = thingModelMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(ThingModelConvertor.toClientObjects(list), total));
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

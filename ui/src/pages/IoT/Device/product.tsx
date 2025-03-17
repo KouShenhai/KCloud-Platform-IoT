@@ -1,99 +1,61 @@
-import {DrawerForm, ProColumns, ProFormText} from '@ant-design/pro-components';
+import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {exportV3, pageV3, getByIdV3} from "@/services/iot/product";
-import {Button} from "antd";
-import {ExportOutlined} from "@ant-design/icons";
+import {pageV3, getByIdV3, removeV3} from "@/services/iot/device";
+import {Button, message, Modal} from "antd";
+import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
-import {Excel, ExportToExcel} from "@/utils/export";
-import moment from "moment";
-import {useRef, useState} from "react";
-import {getStatus, STATUS} from "@/services/constant";
+import React, {useRef, useState} from "react";
+import {TableRowSelection} from "antd/es/table/interface";
+import {ProductDrawer} from "@/pages/IoT/Device/ProductDrawer";
 
 export default () => {
 
+	const actionRef = useRef();
 	const [modalVisit, setModalVisit] = useState(false);
-	const [dataSource, setDataSource] = useState({})
-
-	const statusEnum = {
-		0: '0',
-		1: '1'
-	};
+	const [dataSource, setDataSource] = useState<any>({})
+	const [title, setTitle] = useState("")
+	const [readOnly, setReadOnly] = useState(false)
+	const [value, setValue] = useState("");
+	const [ids, setIds] = useState<any>([])
 
 	type TableColumns = {
 		id: number;
 		code: string | undefined;
 		name: string | undefined;
-		status: string | undefined;
-		param: string | undefined;
-		errorMessage: string | undefined;
+		sort: number | undefined;
+		dataType: string | undefined;
+		category: number | undefined;
+		type: string | undefined;
+		expression: string | undefined;
+		expressionFlag: number;
+		specs: string | undefined;
+		remark: string | undefined;
 		createTime: string | undefined;
 	};
 
-	const actionRef = useRef();
-
-	let list: TableColumns[]
-
-	let param: any
-
 	const getPageQuery = (params: any) => {
-		let startTime = params?.startDate;
-		let endTime = params?.endDate;
-		if (startTime && endTime) {
-			startTime += ' 00:00:00'
-			endTime += ' 23:59:59'
-		}
-		param = {
+		return {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
 			code: trim(params?.code),
 			name: trim(params?.name),
-			status: params?.status,
-			errorMessage: trim(params?.errorMessage),
 			params: {
-				startTime: startTime,
-				endTime: endTime
+				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
+				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
 			}
 		};
-		return param;
 	}
 
-	const exportToExcel = async () => {
-		let _param: Excel
-		const _list: TableColumns[] = [];
-		// 格式化数据
-		list.forEach(item => {
-			item.status = getStatus(item.status as '0')?.text
-			_list.push(item)
-		})
-		_param = {
-			sheetData: _list,
-			sheetFilter: ["code", "name", "status", "param", "errorMessage", "createTime"],
-			sheetHeader: ["编码", "名称", "状态", "参数", "错误信息", "创建时间"],
-			fileName: "通知日志" + "_" + moment(new Date()).format('YYYYMMDDHHmmss'),
-			sheetName: "通知日志"
+	const rowSelection: TableRowSelection<TableColumns> = {
+		onChange: (selectedRowKeys) => {
+			const ids: number[] = []
+			selectedRowKeys.forEach(item => {
+				ids.push(item as number)
+			})
+			setIds(ids)
 		}
-		ExportToExcel(_param)
-	}
-
-	const exportAllToExcel = async () => {
-		exportV3(param)
-	}
-
-	const list_ = async (params: any) => {
-		list = []
-		return pageV3(getPageQuery(params)).then(res => {
-			res?.data?.records?.forEach((item: TableColumns) => {
-				item.status = statusEnum[item.status as '0'];
-				list.push(item);
-			});
-			return Promise.resolve({
-				data: list,
-				total: parseInt(res.data.total),
-				success: true,
-			});
-		})
-	}
+	};
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
@@ -113,17 +75,28 @@ export default () => {
 			ellipsis: true
 		},
 		{
-			title: '状态',
-			dataIndex: 'status',
+			title: '数据类型',
+			dataIndex: 'dataType',
 			valueEnum: {
-				[STATUS.OK]: getStatus(STATUS.OK),
-				[STATUS.FAIL]: getStatus(STATUS.FAIL)
+				integer: "整数型",
+				string:  "字符串型",
+				decimal: "小数型",
+				boolean: "布尔型"
 			},
 			ellipsis: true
 		},
 		{
-			title: '错误信息',
-			dataIndex: 'errorMessage',
+			title: '模型类别',
+			dataIndex: 'category',
+			valueEnum: {
+				1: "属性",
+				2: "事件"
+			},
+			ellipsis: true
+		},
+		{
+			title: '模型类型',
+			dataIndex: 'type',
 			ellipsis: true
 		},
 		{
@@ -170,83 +143,33 @@ export default () => {
 
 	return (
 		<>
-			<DrawerForm<{
-				code: string;
-				name: string;
-				status: number;
-				param: string;
-				errorMessage: string;
-				createTime: string;
-			}>
-				open={modalVisit}
-				title="查看通知日志"
-				drawerProps={{
-					destroyOnClose: true,
-					closable: true,
-					maskClosable: true
-				}}
-				initialValues={dataSource}
-				onOpenChange={setModalVisit}
-				submitter={{
-					submitButtonProps: {
-						style: {
-							display: 'none',
-						},
-					}
-				}}
-			>
-				<ProFormText
-					readonly={true}
-					name="code"
-					label="编码"
-					rules={[{ required: true, message: '请输入编码' }]}
-				/>
 
-				<ProFormText
-					readonly={true}
-					name="name"
-					label="名称"
-					rules={[{ required: true, message: '请输入名称' }]}
-				/>
-
-				<ProFormText
-					readonly={true}
-					name="status"
-					label="状态"
-					rules={[{ required: true, message: '请输入状态' }]}
+			<ProductDrawer
+				modalVisit={modalVisit}
+				setModalVisit={setModalVisit}
+				title={title}
+				readOnly={readOnly}
+				dataSource={dataSource}
+				onComponent={async () => {
 					// @ts-ignore
-					convertValue={(value) => {
-						return getStatus(value as '0')?.text
-					}}
-				/>
+					actionRef?.current?.reload();
+				}}
+				value={value}
+				setValue={setValue}
+			/>
 
-				<ProFormText
-					readonly={true}
-					name="param"
-					label="参数"
-					rules={[{ required: true, message: '请输入参数' }]}
-				/>
-
-				<ProFormText
-					readonly={true}
-					name="errorMessage"
-					label="错误信息"
-					rules={[{ required: true, message: '请输入错误信息' }]}
-				/>
-
-				<ProFormText
-					readonly={true}
-					name="createTime"
-					label="创建时间"
-				/>
-
-			</DrawerForm>
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}
-				request={(params) => {
+				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return list_(params)
+					return pageV3(getPageQuery(params)).then(res => {
+						return Promise.resolve({
+							data: res?.data?.records,
+							total: parseInt(res.data.total),
+							success: true,
+						});
+					})
 				}}
 				rowKey="id"
 				pagination={{
@@ -258,20 +181,45 @@ export default () => {
 					layout: 'vertical',
 					defaultCollapsed: true,
 				}}
+				rowSelection={{ ...rowSelection }}
 				toolBarRender={
 					() => [
-						<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={exportToExcel}>
-							导出
+						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
+							setTitle('新增物模型')
+							setReadOnly(false)
+							setModalVisit(true)
+						}}>
+							新增
 						</Button>,
-						<Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={exportAllToExcel}>
-							导出全部
+						<Button key="remove" type="primary" danger icon={<DeleteOutlined />} onClick={() => {
+							Modal.confirm({
+								title: '确认删除?',
+								content: '您确定要删除吗?',
+								okText: '确认',
+								cancelText: '取消',
+								onOk: async () => {
+									if (ids.length === 0) {
+										message.warning("请至少选择一条数据").then()
+										return;
+									}
+									removeV3(ids).then(res => {
+										if (res.code === 'OK') {
+											message.success("删除成功").then()
+											// @ts-ignore
+											actionRef?.current?.reload();
+										}
+									})
+								},
+							});
+						}}>
+							删除
 						</Button>
 					]
 				}
 				dateFormatter="string"
 				toolbar={{
-					title: '登录日志',
-					tooltip: '登录日志',
+					title: '产品',
+					tooltip: '产品',
 				}}
 			/>
 		</>

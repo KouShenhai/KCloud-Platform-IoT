@@ -264,7 +264,6 @@ export default () => {
 										message.warning("请至少选择一条数据").then()
 										return;
 									}
-									// @ts-ignore
 									removeV3(ids).then(res => {
 										if (res.code === 'OK') {
 											message.success("删除成功").then()

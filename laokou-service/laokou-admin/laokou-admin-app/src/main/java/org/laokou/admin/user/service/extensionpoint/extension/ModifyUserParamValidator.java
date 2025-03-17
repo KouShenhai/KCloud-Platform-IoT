@@ -38,8 +38,6 @@ public class ModifyUserParamValidator implements UserParamValidatorExtPt {
 		ParamValidator.validate(
 				// 校验ID
 				UserParamValidator.validateId(userE),
-				// 校验用户名
-				UserParamValidator.validateUsername(userE, userMapper, false),
 				// 校验邮箱
 				UserParamValidator.validateMail(userE, userMapper, false),
 				// 校验手机号

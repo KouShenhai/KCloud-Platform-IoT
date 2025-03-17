@@ -17,8 +17,8 @@
 
 package org.laokou.logstash.common.support;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.lock.support.IdentifierGenerator;
 import org.laokou.logstash.common.config.LokiProperties;
 import org.laokou.logstash.convertor.TraceLogConvertor;
 import org.springframework.http.MediaType;
@@ -31,12 +31,18 @@ import java.util.Objects;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class TraceLogLokiStorage extends AbstractTraceLogStorage {
 
 	private final WebClient webClient;
 
 	private final LokiProperties lokiProperties;
+
+	public TraceLogLokiStorage(IdentifierGenerator distributedIdentifierGenerator, WebClient webClient,
+			LokiProperties lokiProperties) {
+		super(distributedIdentifierGenerator);
+		this.webClient = webClient;
+		this.lokiProperties = lokiProperties;
+	}
 
 	@Override
 	public Mono<Void> batchSave(Flux<String> messages) {

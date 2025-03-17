@@ -1,51 +1,50 @@
-import {
-	ProColumns,
-} from '@ant-design/pro-components';
+import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {listTreeV3, removeV3, getByIdV3} from "@/services/admin/dept";
-import {useEffect, useRef, useState} from "react";
-import {TableRowSelection} from "antd/es/table/interface";
-import {Button, message, Modal} from 'antd';
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import {pageV3, getByIdV3, removeV3} from "@/services/iot/device";
+import {Button, message, Modal} from "antd";
+import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
-import {DeptDrawer} from "@/pages/Sys/Permission/DeptDrawer";
+import React, {useRef, useState} from "react";
+import {TableRowSelection} from "antd/es/table/interface";
+import {TransportDrawer} from "@/pages/IoT/Device/DeviceDrawer";
 
 export default () => {
 
+	const actionRef = useRef();
+	const [modalVisit, setModalVisit] = useState(false);
+	const [dataSource, setDataSource] = useState<any>({})
+	const [title, setTitle] = useState("")
+	const [readOnly, setReadOnly] = useState(false)
+	const [value, setValue] = useState("");
+	const [ids, setIds] = useState<any>([])
+
 	type TableColumns = {
 		id: number;
+		code: string | undefined;
 		name: string | undefined;
-		path: string | undefined;
-		createTime: string | undefined;
 		sort: number | undefined;
+		dataType: string | undefined;
+		category: number | undefined;
+		type: string | undefined;
+		expression: string | undefined;
+		expressionFlag: number;
+		specs: string | undefined;
+		remark: string | undefined;
+		createTime: string | undefined;
 	};
-
-	const [readOnly, setReadOnly] = useState(false)
-	const [modalVisit, setModalVisit] = useState(false);
-	const actionRef = useRef();
-	const [dataSource, setDataSource] = useState<any>({})
-	const [ids, setIds] = useState<number[]>([])
-	const [title, setTitle] = useState("")
-	const [treeList, setTreeList] = useState<any[]>([])
 
 	const getPageQuery = (params: any) => {
 		return {
+			pageSize: params?.pageSize,
+			pageNum: params?.current,
+			pageIndex: params?.pageSize * (params?.current - 1),
+			code: trim(params?.code),
 			name: trim(params?.name),
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
 			}
-		}
-	}
-
-	const getTreeList = async () => {
-		listTreeV3({}).then(res => {
-			setTreeList([{
-				id: '0',
-				name: '根目录',
-				children: res?.data
-			}])
-		})
+		};
 	}
 
 	const rowSelection: TableRowSelection<TableColumns> = {
@@ -58,27 +57,47 @@ export default () => {
 		}
 	};
 
-	useEffect(() => {
-		getTreeList().catch(console.log)
-	}, []);
-
 	const columns: ProColumns<TableColumns>[] = [
+		{
+			title: '序号',
+			dataIndex: 'index',
+			valueType: 'indexBorder',
+			width: 60,
+		},
+		{
+			title: '编码',
+			dataIndex: 'code',
+			ellipsis: true
+		},
 		{
 			title: '名称',
 			dataIndex: 'name',
+			ellipsis: true
 		},
 		{
-			title: '路径',
-			dataIndex: 'path',
-			ellipsis: true,
-			hideInSearch: true,
+			title: '数据类型',
+			dataIndex: 'dataType',
+			valueEnum: {
+				integer: "整数型",
+				string:  "字符串型",
+				decimal: "小数型",
+				boolean: "布尔型"
+			},
+			ellipsis: true
 		},
 		{
-			title: '排序',
-			dataIndex: 'sort',
-			hideInSearch: true,
-			ellipsis: true,
-			width:80,
+			title: '模型类别',
+			dataIndex: 'category',
+			valueEnum: {
+				1: "属性",
+				2: "事件"
+			},
+			ellipsis: true
+		},
+		{
+			title: '模型类型',
+			dataIndex: 'type',
+			ellipsis: true
 		},
 		{
 			title: '创建时间',
@@ -108,66 +127,15 @@ export default () => {
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				<a key="get"
+				<a key="getable"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   if (res.code === 'OK') {
-							   setTitle('查看部门')
-							   setModalVisit(true)
-							   setReadOnly(true)
-							   setDataSource(res?.data)
-						   }
+						   setDataSource(res?.data)
+						   setModalVisit(true)
 					   })
 				   }}
 				>
 					查看
-				</a>,
-				<a key="save" onClick={() => {
-					setTitle('新增部门')
-					setReadOnly(false)
-					setModalVisit(true)
-					setDataSource({
-						id: undefined,
-						name: '',
-						path: '',
-						pid: record?.id,
-						sort: 1,
-					})
-				}}>
-					新增
-				</a>,
-				<a key="modify"
-				   onClick={() => {
-					   getByIdV3({id: record?.id}).then(res => {
-						   if (res.code === 'OK') {
-							   setTitle('修改部门')
-							   setModalVisit(true)
-							   setReadOnly(false)
-							   setDataSource(res?.data)
-						   }
-					   })
-				   }}
-				>
-					修改
-				</a>,
-				<a key="remove" onClick={() => {
-					Modal.confirm({
-						title: '确认删除?',
-						content: '您确定要删除吗?',
-						okText: '确认',
-						cancelText: '取消',
-						onOk: () => {
-							removeV3([record?.id]).then(res => {
-								if (res.code === 'OK') {
-									message.success("删除成功").then()
-									// @ts-ignore
-									actionRef?.current?.reload();
-								}
-							})
-						}
-					})
-				}}>
-					删除
 				</a>
 			],
 		},
@@ -176,7 +144,7 @@ export default () => {
 	return (
 		<>
 
-			<DeptDrawer
+			<TransportDrawer
 				modalVisit={modalVisit}
 				setModalVisit={setModalVisit}
 				title={title}
@@ -185,41 +153,41 @@ export default () => {
 				onComponent={async () => {
 					// @ts-ignore
 					actionRef?.current?.reload();
-					getTreeList().catch(console.log);
 				}}
-				treeList={treeList}
+				value={value}
+				setValue={setValue}
 			/>
 
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}
-				request={ async (params) => {
+				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return listTreeV3(getPageQuery(params)).then(res => {
+					return pageV3(getPageQuery(params)).then(res => {
 						return Promise.resolve({
-							data: res.data,
+							data: res?.data?.records,
+							total: parseInt(res.data.total),
 							success: true,
 						});
 					})
 				}}
-				rowSelection={{ ...rowSelection }}
 				rowKey="id"
+				pagination={{
+					showQuickJumper: true,
+					showSizeChanger: false,
+					pageSize: 10
+				}}
 				search={{
 					layout: 'vertical',
 					defaultCollapsed: true,
 				}}
+				rowSelection={{ ...rowSelection }}
 				toolBarRender={
 					() => [
 						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
-							setTitle('新增部门')
+							setTitle('新增物模型')
 							setReadOnly(false)
 							setModalVisit(true)
-							setDataSource({
-								id: undefined,
-								name: '',
-								path: '',
-								sort: 1,
-							})
 						}}>
 							新增
 						</Button>,
@@ -250,8 +218,8 @@ export default () => {
 				}
 				dateFormatter="string"
 				toolbar={{
-					title: '部门',
-					tooltip: '部门',
+					title: '传输协议',
+					tooltip: '传输协议',
 				}}
 			/>
 		</>

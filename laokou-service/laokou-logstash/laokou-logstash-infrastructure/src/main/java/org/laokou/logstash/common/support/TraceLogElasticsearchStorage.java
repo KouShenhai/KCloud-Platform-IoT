@@ -17,10 +17,10 @@
 
 package org.laokou.logstash.common.support;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.utils.MapUtil;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
+import org.laokou.common.lock.support.IdentifierGenerator;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -32,12 +32,18 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
-@RequiredArgsConstructor
 public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 
 	private final ExecutorService virtualThreadExecutor;
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
+
+	public TraceLogElasticsearchStorage(IdentifierGenerator distributedIdentifierGenerator,
+			ExecutorService virtualThreadExecutor, ElasticsearchTemplate elasticsearchTemplate) {
+		super(distributedIdentifierGenerator);
+		this.virtualThreadExecutor = virtualThreadExecutor;
+		this.elasticsearchTemplate = elasticsearchTemplate;
+	}
 
 	@Override
 	public Mono<Void> batchSave(Flux<String> messages) {
