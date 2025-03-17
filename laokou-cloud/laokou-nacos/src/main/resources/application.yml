@@ -14,7 +14,6 @@
 #    * limitations under the License.
 #    *
 #    */
-# 加密配置
 jasypt:
   encryptor:
     # 加密算法
@@ -56,11 +55,11 @@ db:
 management:
   metrics:
     export:
-      # 不暴露指标到Elastic
       elastic:
+        # 不暴露指标到Elastic
         enabled: false
-      # 不暴露指标到Influx
       influx:
+        # 不暴露指标到Influx
         enabled: false
 nacos:
   config:
@@ -73,38 +72,50 @@ nacos:
         # 启用认证信息的缓存，减少重复认证的开销
         enabled: true
       enable:
+        #  禁止通过 User-Agent 请求头进行白名单认证 => 设置为 false 表示所有请求必须携带有效凭证（如 Token）
         userAgentAuthWhite: false
       enabled: true
       plugin:
         nacos:
           token:
             cache:
+              # 禁用 Token 缓存，每次请求需重新验证 Token
               enable: false
             expire:
+              #  Token 的有效期，超时后需重新获取
               seconds: 18000
             secret:
+              # 生成和验证 Token 的密钥
               key: SecretKey012345678901234567890123456789012345678901234567890123456789
       server:
         identity:
+          # 服务节点间通信的认证标识，用于集群内部身份校验
           key: serverIdentity
           value: security
       system:
+        # 指定系统类型为 Nacos
         type: nacos
   istio:
     mcp:
       server:
+        # 禁用 Istio 的 Mesh Configuration Protocol (MCP) 服务 =>  若不使用 Istio 服务网格，可关闭此功能
         enabled: false
   naming:
     empty-service:
+      # 自动清理无实例注册的空服务
       auto-clean: true
       clean:
+        # 服务清理任务的初始延迟时间
         initial-delay-ms: 50000
+        # 服务清理任务的执行间隔，每 30 秒检查一次
         period-time-ms: 30000
   security:
     ignore:
+      # 配置无需认证即可访问的 URL 路径，通常用于静态资源或健康检查
       urls: /,/error,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-ui/public/**,/v1/auth/**,/v1/console/health/**,/actuator/**,/v1/console/server/**
 server:
   error:
+    # 应用程序在发生错误时，HTTP 响应中始终返回具体的错误消息
     include-message: always
   # 端口
   port: ${SERVER_PORT:8848}
@@ -127,6 +138,7 @@ server:
     # 关闭证书
     enabled: false
   http2:
+    # 关闭http2
     enabled: false
   # 优雅停机
   shutdown: graceful
@@ -144,9 +156,8 @@ spring:
     init:
       # 指定数据库类型
       platform: @DATASOURCE-PLATFORM@
-  # 数据库版本管理工具
   liquibase:
-    # 开启
+    # 开启数据库版本管理工具
     enabled: true
     # 数据库版本变更配置
     change-log: classpath:/db/changelog/db.changelog-master.xml

@@ -17,7 +17,6 @@
 
 package org.laokou.gateway.repository;
 
-import com.alibaba.nacos.api.config.ConfigService;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -132,8 +131,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		try {
 			// pull nacos config info
 			String group = configUtil.getGroup();
-			ConfigService configService = configUtil.getConfigService();
-			String configInfo = configService.getConfig(DATA_ID, group, 5000);
+			String configInfo = configUtil.getConfig(DATA_ID, group, 5000);
 			return JacksonUtil.toList(configInfo, RouteDefinition.class);
 		}
 		catch (Exception e) {

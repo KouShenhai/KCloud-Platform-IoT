@@ -14,10 +14,8 @@
 #    * limitations under the License.
 #    *
 #    */
-# spring
 spring:
   cloud:
-    # nacos
     nacos:
       config:
         server-addr: ${NACOS-CONFIG-ADDRESS}

@@ -14,14 +14,12 @@
 #    * limitations under the License.
 #    *
 #    */
-# spring
 spring:
   config:
     import:
       # 临时配置文件【解决拉取nacos配置文件时，group默认为DEFAULT_GROUP问题】
       - optional:nacos:laokou-gateway.yaml?refreshEnabled=true&group=${NACOS-GROUP}
   cloud:
-    # nacos
     nacos:
       discovery:
         # 服务注册&发现-地址
@@ -38,8 +36,15 @@ spring:
         secure: @SSL-ENABLED@
         # true 临时 false 持久
         ephemeral: true
-        # # 服务注册&发现-集群名称
+        # 服务注册&发现-集群名称
         cluster-name: ${NACOS-CLUSTER-NAME}
+        heart-beat:
+          # 开启心跳检测
+          enabled: true
+        # 每10秒发送一次心跳【单位毫秒】
+        heart-beat-interval: 10000
+        # 超过30秒，则标记为不健康
+        heart-beat-timeout: 30000
       config:
         # 配置中心-地址
         server-addr: ${NACOS-CONFIG-ADDRESS}

@@ -19,7 +19,6 @@ package org.laokou.common.nacos.annotation;
 
 import org.laokou.common.nacos.config.NacosShutDownConfig;
 import org.laokou.common.nacos.filter.ShutdownFilter;
-import org.laokou.common.nacos.utils.ServiceUtil;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Import;
 
@@ -28,7 +27,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ NacosShutDownConfig.class, ServiceUtil.class })
+@Import({ NacosShutDownConfig.class })
 @ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
 public @interface EnableNacosShutDown {
 

@@ -21,8 +21,7 @@ import com.alibaba.nacos.api.exception.NacosException;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.nacos.utils.ServiceUtil;
-import org.springframework.cloud.client.serviceregistry.Registration;
+import org.laokou.common.nacos.utils.NamingUtil;
 
 /**
  * @author laokou
@@ -31,16 +30,14 @@ import org.springframework.cloud.client.serviceregistry.Registration;
 @RequiredArgsConstructor
 public class NacosShutDownConfig {
 
-	private final ServiceUtil serviceUtil;
-
-	private final Registration registration;
+	private final NamingUtil namingUtil;
 
 	@PreDestroy
 	public void preDestroy() throws NacosException {
 		// 服务下线
 		log.info("开始执行服务下线");
-		serviceUtil.deregisterInstance(registration.getServiceId(), registration.getHost(), registration.getPort());
-		log.info("服务下线执行成功");
+		namingUtil.nacosServiceShutDown();
+		log.info("执行服务下线完成");
 	}
 
 }
