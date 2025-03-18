@@ -11,7 +11,7 @@
 
   <properties>
     <!--seata版本-->
-    <seata.version>2.2.0</seata.version>
+    <seata.version>2.3.0</seata.version>
     <!--spring-boot版本-->
     <spring-boot.version>2.7.18</spring-boot.version>
     <!--kafka-appender版本-->
