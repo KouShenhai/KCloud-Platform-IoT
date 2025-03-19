@@ -182,6 +182,11 @@
     <dependencies>
       <dependency>
         <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-seata</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-common-shardingsphere</artifactId>
         <version>${laokou.version}</version>
       </dependency>
