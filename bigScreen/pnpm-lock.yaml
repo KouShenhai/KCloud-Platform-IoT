@@ -10,14 +10,14 @@ importers:
     dependencies:
       umi:
         specifier: ^4.4.4
-        version: 4.4.6(@babel/core@7.26.9)(@types/react@18.3.18)(eslint@8.57.1)(prettier@3.5.2)(react-dom@18.3.1)(react@18.3.1)(stylelint@14.16.1)(typescript@5.8.2)(webpack@5.98.0)
+        version: 4.4.6(@babel/core@7.26.9)(@types/node@22.13.10)(@types/react@18.3.19)(eslint@8.57.1)(lightningcss@1.22.1)(prettier@3.5.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@3.29.5)(stylelint@14.16.1)(terser@5.39.0)(type-fest@0.20.2)(typescript@5.8.2)(webpack@5.98.0)
     devDependencies:
       '@types/react':
         specifier: ^18.0.33
-        version: 18.3.18
+        version: 18.3.19
       '@types/react-dom':
         specifier: ^18.0.11
-        version: 18.3.5(@types/react@18.3.18)
+        version: 18.3.5(@types/react@18.3.19)
       typescript:
         specifier: ^5.0.3
         version: 5.8.2
@@ -577,6 +577,12 @@ packages:
     peerDependencies:
       eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
 
+  '@eslint-community/eslint-utils@4.5.1':
+    resolution: {integrity: sha512-soEIOALTfTK6EjmKMMoLugwaP0rzkad90iIWd1hMO9ARkSAyjfMfkRRhLvD5qH7vvM0Cg72pieUfR6yh6XxC4w==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
+
   '@eslint-community/regexpp@4.12.1':
     resolution: {integrity: sha512-CCZCDJuduB9OUkFkY2IgppNZMi2lBQgD2qzwXkEia16cge2pijY/aXi96CJMquDMn3nJdlPV1A5KrJEXwfLNzQ==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
@@ -967,6 +973,9 @@ packages:
   '@types/minimist@1.2.5':
     resolution: {integrity: sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==}
 
+  '@types/node@22.13.10':
+    resolution: {integrity: sha512-I6LPUvlRH+O6VRUqYOcMudhaIdUVWfsjnZavnsraHvpBwaEyMN29ry+0UVJhImYL16xsscu0aske3yA+uPOWfw==}
+
   '@types/node@22.13.8':
     resolution: {integrity: sha512-G3EfaZS+iOGYWLLRCEAXdWK9my08oHNZ+FHluRiggIYJPOXzhOiDgpVCUHaUvyIC5/fj7C/p637jdzC666AOKQ==}
 
@@ -984,8 +993,8 @@ packages:
     peerDependencies:
       '@types/react': ^18.0.0
 
-  '@types/react@18.3.18':
-    resolution: {integrity: sha512-t4yC+vtgnkYjNSKlFx1jkAhH8LgTo2N/7Qvi83kdEaUtMDiwpbLAktKDaAMlRcJ5eSxZkH74eEGt1ky31d7kfQ==}
+  '@types/react@18.3.19':
+    resolution: {integrity: sha512-fcdJqaHOMDbiAwJnXv6XCzX0jDW77yI3tJqYh1Byn8EL5/S628WRx9b/y3DnNe55zTukUQKrfYxiZls2dHcUMw==}
 
   '@types/resolve@1.20.6':
     resolution: {integrity: sha512-A4STmOXPhMUtHH+S6ymgE2GiBSMqf4oTvcQZMcHzokuTLVYzXTB8ttjcgxOVaAp2lGwEdzZ0J+cRbbeevQj1UQ==}
@@ -1348,6 +1357,11 @@ packages:
 
   acorn@8.14.0:
     resolution: {integrity: sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+
+  acorn@8.14.1:
+    resolution: {integrity: sha512-OvQ/2pUDKmgfCg++xsTX1wGxfTaszcHVcTctW4UJB4hibJx2HXxxO5UmVgyjMa+ZDsiaf5wWLXYpRWMmBI0QHg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -4337,8 +4351,8 @@ packages:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
 
-  terser-webpack-plugin@5.3.12:
-    resolution: {integrity: sha512-jDLYqo7oF8tJIttjXO6jBY5Hk8p3A8W4ttih7cCEq64fQFWmgJ4VqAQjKr7WwIDlmXKEc6QeoRb5ecjZ+2afcg==}
+  terser-webpack-plugin@5.3.14:
+    resolution: {integrity: sha512-vkZjpUjb6OMS7dhV+tILUW6BhpDR7P2L/aQSAv+Uwk+m8KATX9EccViHTJR2qDtACKPIYndLGCyl3FMo+r2LMw==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
       '@swc/core': '*'
@@ -5174,6 +5188,11 @@ snapshots:
       eslint: 8.57.1
       eslint-visitor-keys: 3.4.3
 
+  '@eslint-community/eslint-utils@4.5.1(eslint@8.57.1)':
+    dependencies:
+      eslint: 8.57.1
+      eslint-visitor-keys: 3.4.3
+
   '@eslint-community/regexpp@4.12.1': {}
 
   '@eslint/eslintrc@2.1.4':
@@ -5198,23 +5217,23 @@ snapshots:
     dependencies:
       '@floating-ui/core': 0.6.2
 
-  '@floating-ui/react-dom-interactions@0.3.1(@types/react@18.3.18)(react-dom@18.3.1)(react@18.3.1)':
+  '@floating-ui/react-dom-interactions@0.3.1(@types/react@18.3.19)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@floating-ui/react-dom': 0.6.3(@types/react@18.3.18)(react-dom@18.3.1)(react@18.3.1)
+      '@floating-ui/react-dom': 0.6.3(@types/react@18.3.19)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       aria-hidden: 1.2.4
       point-in-polygon: 1.1.0
-      use-isomorphic-layout-effect: 1.2.0(@types/react@18.3.18)(react@18.3.1)
+      use-isomorphic-layout-effect: 1.2.0(@types/react@18.3.19)(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
       - react
       - react-dom
 
-  '@floating-ui/react-dom@0.6.3(@types/react@18.3.18)(react-dom@18.3.1)(react@18.3.1)':
+  '@floating-ui/react-dom@0.6.3(@types/react@18.3.19)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@floating-ui/dom': 0.4.5
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      use-isomorphic-layout-effect: 1.2.0(@types/react@18.3.18)(react@18.3.1)
+      use-isomorphic-layout-effect: 1.2.0(@types/react@18.3.19)(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
 
@@ -5458,7 +5477,7 @@ snapshots:
 
   '@sinclair/typebox@0.27.8': {}
 
-  '@stylelint/postcss-css-in-js@0.38.0(postcss-syntax@0.36.2)(postcss@8.5.3)':
+  '@stylelint/postcss-css-in-js@0.38.0(postcss-syntax@0.36.2(postcss@8.5.3))(postcss@8.5.3)':
     dependencies:
       '@babel/core': 7.23.6
       postcss: 8.5.3
@@ -5608,6 +5627,10 @@ snapshots:
 
   '@types/minimist@1.2.5': {}
 
+  '@types/node@22.13.10':
+    dependencies:
+      undici-types: 6.20.0
+
   '@types/node@22.13.8':
     dependencies:
       undici-types: 6.20.0
@@ -5618,11 +5641,11 @@ snapshots:
 
   '@types/prop-types@15.7.14': {}
 
-  '@types/react-dom@18.3.5(@types/react@18.3.18)':
+  '@types/react-dom@18.3.5(@types/react@18.3.19)':
     dependencies:
-      '@types/react': 18.3.18
+      '@types/react': 18.3.19
 
-  '@types/react@18.3.18':
+  '@types/react@18.3.19':
     dependencies:
       '@types/prop-types': 15.7.14
       csstype: 3.1.3
@@ -5645,7 +5668,7 @@ snapshots:
     dependencies:
       '@types/yargs-parser': 21.0.3
 
-  '@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.57.1)(typescript@5.8.2)':
+  '@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.8.2))(eslint@8.57.1)(typescript@5.8.2)':
     dependencies:
       '@eslint-community/regexpp': 4.12.1
       '@typescript-eslint/parser': 5.62.0(eslint@8.57.1)(typescript@5.8.2)
@@ -5659,6 +5682,7 @@ snapshots:
       natural-compare-lite: 1.4.0
       semver: 7.7.1
       tsutils: 3.21.0(typescript@5.8.2)
+    optionalDependencies:
       typescript: 5.8.2
     transitivePeerDependencies:
       - supports-color
@@ -5670,6 +5694,7 @@ snapshots:
       '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.8.2)
       debug: 4.4.0
       eslint: 8.57.1
+    optionalDependencies:
       typescript: 5.8.2
     transitivePeerDependencies:
       - supports-color
@@ -5686,6 +5711,7 @@ snapshots:
       debug: 4.4.0
       eslint: 8.57.1
       tsutils: 3.21.0(typescript@5.8.2)
+    optionalDependencies:
       typescript: 5.8.2
     transitivePeerDependencies:
       - supports-color
@@ -5701,6 +5727,7 @@ snapshots:
       is-glob: 4.0.3
       semver: 7.7.1
       tsutils: 3.21.0(typescript@5.8.2)
+    optionalDependencies:
       typescript: 5.8.2
     transitivePeerDependencies:
       - supports-color
@@ -5779,18 +5806,18 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@umijs/bundler-vite@4.4.6(postcss@8.5.3)':
+  '@umijs/bundler-vite@4.4.6(@types/node@22.13.10)(lightningcss@1.22.1)(postcss@8.5.3)(rollup@3.29.5)(terser@5.39.0)':
     dependencies:
       '@svgr/core': 6.5.1
       '@umijs/bundler-utils': 4.4.6
       '@umijs/utils': 4.4.6
-      '@vitejs/plugin-react': 4.0.0(vite@4.5.2)
+      '@vitejs/plugin-react': 4.0.0(vite@4.5.2(@types/node@22.13.10)(less@4.1.3)(lightningcss@1.22.1)(terser@5.39.0))
       core-js: 3.34.0
       less: 4.1.3
       postcss-preset-env: 7.5.0(postcss@8.5.3)
-      rollup-plugin-visualizer: 5.9.0
+      rollup-plugin-visualizer: 5.9.0(rollup@3.29.5)
       systemjs: 6.15.1
-      vite: 4.5.2(less@4.1.3)
+      vite: 4.5.2(@types/node@22.13.10)(less@4.1.3)(lightningcss@1.22.1)(terser@5.39.0)
     transitivePeerDependencies:
       - '@types/node'
       - lightningcss
@@ -5802,7 +5829,7 @@ snapshots:
       - supports-color
       - terser
 
-  '@umijs/bundler-webpack@4.4.6(typescript@5.8.2)(webpack@5.98.0)':
+  '@umijs/bundler-webpack@4.4.6(type-fest@0.20.2)(typescript@5.8.2)(webpack@5.98.0)':
     dependencies:
       '@svgr/core': 6.5.1
       '@svgr/plugin-jsx': 6.5.1(@svgr/core@6.5.1)
@@ -5812,7 +5839,7 @@ snapshots:
       '@umijs/bundler-utils': 4.4.6
       '@umijs/case-sensitive-paths-webpack-plugin': 1.0.1
       '@umijs/mfsu': 4.4.6
-      '@umijs/react-refresh-webpack-plugin': 0.5.11(react-refresh@0.14.0)(webpack@5.98.0)
+      '@umijs/react-refresh-webpack-plugin': 0.5.11(react-refresh@0.14.0)(type-fest@0.20.2)(webpack@5.98.0)
       '@umijs/utils': 4.4.6
       cors: 2.8.5
       css-loader: 6.7.1(webpack@5.98.0)
@@ -5895,11 +5922,11 @@ snapshots:
     dependencies:
       '@babel/core': 7.23.6
       '@babel/eslint-parser': 7.23.3(@babel/core@7.23.6)(eslint@8.57.1)
-      '@stylelint/postcss-css-in-js': 0.38.0(postcss-syntax@0.36.2)(postcss@8.5.3)
-      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.57.1)(typescript@5.8.2)
+      '@stylelint/postcss-css-in-js': 0.38.0(postcss-syntax@0.36.2(postcss@8.5.3))(postcss@8.5.3)
+      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.8.2))(eslint@8.57.1)(typescript@5.8.2)
       '@typescript-eslint/parser': 5.62.0(eslint@8.57.1)(typescript@5.8.2)
       '@umijs/babel-preset-umi': 4.4.6
-      eslint-plugin-jest: 27.2.3(@typescript-eslint/eslint-plugin@5.62.0)(eslint@8.57.1)(typescript@5.8.2)
+      eslint-plugin-jest: 27.2.3(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.8.2))(eslint@8.57.1)(typescript@5.8.2))(eslint@8.57.1)(typescript@5.8.2)
       eslint-plugin-react: 7.33.2(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.57.1)
       postcss: 8.5.3
@@ -5981,7 +6008,7 @@ snapshots:
     dependencies:
       tsx: 3.12.2
 
-  '@umijs/preset-umi@4.4.6(@types/react@18.3.18)(typescript@5.8.2)(webpack@5.98.0)':
+  '@umijs/preset-umi@4.4.6(@types/node@22.13.10)(@types/react@18.3.19)(lightningcss@1.22.1)(rollup@3.29.5)(terser@5.39.0)(type-fest@0.20.2)(typescript@5.8.2)(webpack@5.98.0)':
     dependencies:
       '@iconify/utils': 2.1.1
       '@svgr/core': 6.5.1
@@ -5990,22 +6017,22 @@ snapshots:
       '@umijs/bundler-esbuild': 4.4.6
       '@umijs/bundler-mako': 0.11.5
       '@umijs/bundler-utils': 4.4.6
-      '@umijs/bundler-vite': 4.4.6(postcss@8.5.3)
-      '@umijs/bundler-webpack': 4.4.6(typescript@5.8.2)(webpack@5.98.0)
+      '@umijs/bundler-vite': 4.4.6(@types/node@22.13.10)(lightningcss@1.22.1)(postcss@8.5.3)(rollup@3.29.5)(terser@5.39.0)
+      '@umijs/bundler-webpack': 4.4.6(type-fest@0.20.2)(typescript@5.8.2)(webpack@5.98.0)
       '@umijs/core': 4.4.6
       '@umijs/did-you-know': 1.0.3
       '@umijs/es-module-parser': 0.0.7
       '@umijs/history': 5.3.1
       '@umijs/mfsu': 4.4.6
       '@umijs/plugin-run': 4.4.6
-      '@umijs/renderer-react': 4.4.6(react-dom@18.3.1)(react@18.3.1)
+      '@umijs/renderer-react': 4.4.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@umijs/server': 4.4.6
       '@umijs/ui': 3.0.1
       '@umijs/utils': 4.4.6
       '@umijs/zod2ts': 4.4.6
       babel-plugin-dynamic-import-node: 2.3.3
       babel-plugin-react-compiler: 0.0.0-experimental-c23de8d-20240515
-      click-to-react-component: 1.1.0(@types/react@18.3.18)(react-dom@18.3.1)(react@18.3.1)
+      click-to-react-component: 1.1.0(@types/react@18.3.19)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       core-js: 3.34.0
       current-script-polyfill: 1.0.0
       enhanced-resolve: 5.9.3
@@ -6018,7 +6045,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router: 6.3.0(react@18.3.1)
-      react-router-dom: 6.3.0(react-dom@18.3.1)(react@18.3.1)
+      react-router-dom: 6.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       regenerator-runtime: 0.13.11
     transitivePeerDependencies:
       - '@types/node'
@@ -6039,7 +6066,7 @@ snapshots:
       - webpack-hot-middleware
       - webpack-plugin-serve
 
-  '@umijs/react-refresh-webpack-plugin@0.5.11(react-refresh@0.14.0)(webpack@5.98.0)':
+  '@umijs/react-refresh-webpack-plugin@0.5.11(react-refresh@0.14.0)(type-fest@0.20.2)(webpack@5.98.0)':
     dependencies:
       ansi-html-community: 0.0.8
       common-path-prefix: 3.0.0
@@ -6052,16 +6079,18 @@ snapshots:
       schema-utils: 3.3.0
       source-map: 0.7.4
       webpack: 5.98.0
+    optionalDependencies:
+      type-fest: 0.20.2
 
-  '@umijs/renderer-react@4.4.6(react-dom@18.3.1)(react@18.3.1)':
+  '@umijs/renderer-react@4.4.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.23.6
       '@loadable/component': 5.15.2(react@18.3.1)
       history: 5.3.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-helmet-async: 1.3.0(react-dom@18.3.1)(react@18.3.1)
-      react-router-dom: 6.3.0(react-dom@18.3.1)(react@18.3.1)
+      react-helmet-async: 1.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-router-dom: 6.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   '@umijs/server@4.4.6':
     dependencies:
@@ -6069,7 +6098,7 @@ snapshots:
       history: 5.3.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-router-dom: 6.3.0(react-dom@18.3.1)(react@18.3.1)
+      react-router-dom: 6.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -6098,13 +6127,13 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@vitejs/plugin-react@4.0.0(vite@4.5.2)':
+  '@vitejs/plugin-react@4.0.0(vite@4.5.2(@types/node@22.13.10)(less@4.1.3)(lightningcss@1.22.1)(terser@5.39.0))':
     dependencies:
       '@babel/core': 7.26.9
       '@babel/plugin-transform-react-jsx-self': 7.25.9(@babel/core@7.26.9)
       '@babel/plugin-transform-react-jsx-source': 7.25.9(@babel/core@7.26.9)
       react-refresh: 0.14.2
-      vite: 4.5.2(less@4.1.3)
+      vite: 4.5.2(@types/node@22.13.10)(less@4.1.3)(lightningcss@1.22.1)(terser@5.39.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -6193,14 +6222,16 @@ snapshots:
       mime-types: 2.1.35
       negotiator: 0.6.3
 
-  acorn-jsx@5.3.2(acorn@8.14.0):
+  acorn-jsx@5.3.2(acorn@8.14.1):
     dependencies:
-      acorn: 8.14.0
+      acorn: 8.14.1
 
   acorn@8.14.0: {}
 
+  acorn@8.14.1: {}
+
   ajv-formats@2.1.1(ajv@8.17.1):
-    dependencies:
+    optionalDependencies:
       ajv: 8.17.1
 
   ajv-keywords@3.5.2(ajv@6.12.6):
@@ -6628,9 +6659,9 @@ snapshots:
     dependencies:
       source-map: 0.6.1
 
-  click-to-react-component@1.1.0(@types/react@18.3.18)(react-dom@18.3.1)(react@18.3.1):
+  click-to-react-component@1.1.0(@types/react@18.3.19)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@floating-ui/react-dom-interactions': 0.3.1(@types/react@18.3.18)(react-dom@18.3.1)(react@18.3.1)
+      '@floating-ui/react-dom-interactions': 0.3.1(@types/react@18.3.19)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       htm: 3.1.1
       react: 18.3.1
       react-merge-refs: 1.1.0
@@ -7205,11 +7236,12 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-plugin-jest@27.2.3(@typescript-eslint/eslint-plugin@5.62.0)(eslint@8.57.1)(typescript@5.8.2):
+  eslint-plugin-jest@27.2.3(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.8.2))(eslint@8.57.1)(typescript@5.8.2))(eslint@8.57.1)(typescript@5.8.2):
     dependencies:
-      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.57.1)(typescript@5.8.2)
       '@typescript-eslint/utils': 5.62.0(eslint@8.57.1)(typescript@5.8.2)
       eslint: 8.57.1
+    optionalDependencies:
+      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.8.2))(eslint@8.57.1)(typescript@5.8.2)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -7254,7 +7286,7 @@ snapshots:
 
   eslint@8.57.1:
     dependencies:
-      '@eslint-community/eslint-utils': 4.4.1(eslint@8.57.1)
+      '@eslint-community/eslint-utils': 4.5.1(eslint@8.57.1)
       '@eslint-community/regexpp': 4.12.1
       '@eslint/eslintrc': 2.1.4
       '@eslint/js': 8.57.1
@@ -7297,8 +7329,8 @@ snapshots:
 
   espree@9.6.1:
     dependencies:
-      acorn: 8.14.0
-      acorn-jsx: 5.3.2(acorn@8.14.0)
+      acorn: 8.14.1
+      acorn-jsx: 5.3.2(acorn@8.14.1)
       eslint-visitor-keys: 3.4.3
 
   esprima@4.0.1: {}
@@ -8076,7 +8108,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 22.13.8
+      '@types/node': 22.13.10
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -8970,9 +9002,10 @@ snapshots:
 
   prettier-plugin-packagejson@2.4.3(prettier@3.5.2):
     dependencies:
-      prettier: 3.5.2
       sort-package-json: 2.4.1
       synckit: 0.8.5
+    optionalDependencies:
+      prettier: 3.5.2
 
   prettier@3.5.2: {}
 
@@ -9076,7 +9109,7 @@ snapshots:
 
   react-fast-compare@3.2.2: {}
 
-  react-helmet-async@1.3.0(react-dom@18.3.1)(react@18.3.1):
+  react-helmet-async@1.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.23.6
       invariant: 2.2.4
@@ -9094,7 +9127,7 @@ snapshots:
 
   react-refresh@0.14.2: {}
 
-  react-router-dom@6.3.0(react-dom@18.3.1)(react@18.3.1):
+  react-router-dom@6.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       history: 5.3.0
       react: 18.3.1
@@ -9227,12 +9260,14 @@ snapshots:
       hash-base: 3.0.5
       inherits: 2.0.4
 
-  rollup-plugin-visualizer@5.9.0:
+  rollup-plugin-visualizer@5.9.0(rollup@3.29.5):
     dependencies:
       open: 8.4.2
       picomatch: 2.3.1
       source-map: 0.7.4
       yargs: 17.7.2
+    optionalDependencies:
+      rollup: 3.29.5
 
   rollup@3.29.5:
     optionalDependencies:
@@ -9691,7 +9726,7 @@ snapshots:
 
   tapable@2.2.1: {}
 
-  terser-webpack-plugin@5.3.12(webpack@5.98.0):
+  terser-webpack-plugin@5.3.14(webpack@5.98.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
@@ -9810,15 +9845,15 @@ snapshots:
 
   typescript@5.8.2: {}
 
-  umi@4.4.6(@babel/core@7.26.9)(@types/react@18.3.18)(eslint@8.57.1)(prettier@3.5.2)(react-dom@18.3.1)(react@18.3.1)(stylelint@14.16.1)(typescript@5.8.2)(webpack@5.98.0):
+  umi@4.4.6(@babel/core@7.26.9)(@types/node@22.13.10)(@types/react@18.3.19)(eslint@8.57.1)(lightningcss@1.22.1)(prettier@3.5.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@3.29.5)(stylelint@14.16.1)(terser@5.39.0)(type-fest@0.20.2)(typescript@5.8.2)(webpack@5.98.0):
     dependencies:
       '@babel/runtime': 7.23.6
       '@umijs/bundler-utils': 4.4.6
-      '@umijs/bundler-webpack': 4.4.6(typescript@5.8.2)(webpack@5.98.0)
+      '@umijs/bundler-webpack': 4.4.6(type-fest@0.20.2)(typescript@5.8.2)(webpack@5.98.0)
       '@umijs/core': 4.4.6
       '@umijs/lint': 4.4.6(eslint@8.57.1)(stylelint@14.16.1)(typescript@5.8.2)
-      '@umijs/preset-umi': 4.4.6(@types/react@18.3.18)(typescript@5.8.2)(webpack@5.98.0)
-      '@umijs/renderer-react': 4.4.6(react-dom@18.3.1)(react@18.3.1)
+      '@umijs/preset-umi': 4.4.6(@types/node@22.13.10)(@types/react@18.3.19)(lightningcss@1.22.1)(rollup@3.29.5)(terser@5.39.0)(type-fest@0.20.2)(typescript@5.8.2)(webpack@5.98.0)
+      '@umijs/renderer-react': 4.4.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@umijs/server': 4.4.6
       '@umijs/test': 4.4.6(@babel/core@7.26.9)
       '@umijs/utils': 4.4.6
@@ -9894,10 +9929,11 @@ snapshots:
       punycode: 1.4.1
       qs: 6.14.0
 
-  use-isomorphic-layout-effect@1.2.0(@types/react@18.3.18)(react@18.3.1):
+  use-isomorphic-layout-effect@1.2.0(@types/react@18.3.19)(react@18.3.1):
     dependencies:
-      '@types/react': 18.3.18
       react: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.19
 
   util-deprecate@1.0.2: {}
 
@@ -9930,14 +9966,17 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vite@4.5.2(less@4.1.3):
+  vite@4.5.2(@types/node@22.13.10)(less@4.1.3)(lightningcss@1.22.1)(terser@5.39.0):
     dependencies:
       esbuild: 0.18.20
-      less: 4.1.3
       postcss: 8.5.3
       rollup: 3.29.5
     optionalDependencies:
+      '@types/node': 22.13.10
       fsevents: 2.3.3
+      less: 4.1.3
+      lightningcss: 1.22.1
+      terser: 5.39.0
 
   vm-browserify@1.1.2: {}
 
@@ -9970,7 +10009,7 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@webassemblyjs/wasm-edit': 1.14.1
       '@webassemblyjs/wasm-parser': 1.14.1
-      acorn: 8.14.0
+      acorn: 8.14.1
       browserslist: 4.24.4
       chrome-trace-event: 1.0.4
       enhanced-resolve: 5.18.1
@@ -9985,7 +10024,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.12(webpack@5.98.0)
+      terser-webpack-plugin: 5.3.14(webpack@5.98.0)
       watchpack: 2.4.2
       webpack-sources: 3.2.3
     transitivePeerDependencies:
