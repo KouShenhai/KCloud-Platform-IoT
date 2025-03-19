@@ -43,6 +43,8 @@ public class NacosApp {
 		// -Dnacos.standalone=true
 		// -Dnacos.home=./logs/nacos
 		// --add-opens=java.base/java.lang=ALL-UNNAMED
+		/// -XX:+UseZGC
+		/// -XX:+ZGenerational
 		// @formatter:on
 		new SpringApplicationBuilder(NacosApp.class).web(WebApplicationType.SERVLET).run(args);
 	}

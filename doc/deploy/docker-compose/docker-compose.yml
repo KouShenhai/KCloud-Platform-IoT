@@ -14,6 +14,28 @@
 #  * limitations under the License.
 #  */
 services:
+  seata:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-seata:3.4.3
+    container_name: seata
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    env_file:
+      - env/common.env
+      - env/seata.env
+    ports:
+      - "7091:7091"
+      - "8091:8091"
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./seata/logs:/opt
+    depends_on:
+      - redis
+      - nacos
+    networks:
+      - laokou_network
   loki:
     image: grafana/loki:3.4.2
     container_name: loki
