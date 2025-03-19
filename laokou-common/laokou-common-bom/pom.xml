@@ -48,7 +48,7 @@
     <!--captcha版本-->
     <easy-captcha.version>1.6.2</easy-captcha.version>
     <!--guava版本-->
-    <guava.version>33.4.0-jre</guava.version>
+    <guava.version>33.4.5-jre</guava.version>
     <!--oshi版本-->
     <oshi.version>6.7.1</oshi.version>
     <!--elasticsearch版本-->
@@ -114,7 +114,7 @@
     <!--proto-google-common-protos版本-->
     <proto-google-common-protos.version>2.54.1</proto-google-common-protos.version>
     <!--error_prone_annotations版本-->
-    <error_prone_annotations.version>2.36.0</error_prone_annotations.version>
+    <error_prone_annotations.version>2.37.0</error_prone_annotations.version>
     <!--okio-jvm版本-->
     <okio-jvm.version>3.10.2</okio-jvm.version>
     <!--checker-qual版本-->
