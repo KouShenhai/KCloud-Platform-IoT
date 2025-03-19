@@ -34,14 +34,13 @@
 
 package org.apache.rocketmq.spring.autoconfigure;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.producer.TransactionMQProducer;
 import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQUtil;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.BeansException;
@@ -55,10 +54,9 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Configuration
 public class RocketMQTransactionConfiguration implements ApplicationContextAware, SmartInitializingSingleton {
-
-	private final static Logger log = LoggerFactory.getLogger(RocketMQTransactionConfiguration.class);
 
 	private ConfigurableApplicationContext applicationContext;
 
@@ -77,7 +75,6 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
 			.stream()
 			.filter(entry -> !ScopedProxyUtils.isScopedTarget(entry.getKey()))
 			.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
 		beans.forEach(this::registerTransactionListener);
 	}
 

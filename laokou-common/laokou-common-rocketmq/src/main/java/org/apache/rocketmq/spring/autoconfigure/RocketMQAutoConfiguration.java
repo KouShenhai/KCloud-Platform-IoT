@@ -34,6 +34,7 @@
 
 package org.apache.rocketmq.spring.autoconfigure;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.AccessChannel;
 import org.apache.rocketmq.client.MQAdmin;
 import org.apache.rocketmq.client.consumer.DefaultLitePullConsumer;
@@ -45,8 +46,6 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQMessageConverter;
 import org.apache.rocketmq.spring.support.RocketMQUtil;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -69,7 +68,7 @@ import java.util.concurrent.ExecutorService;
  *
  * @author laokou
  */
-
+@Slf4j
 @Configuration
 @EnableConfigurationProperties(RocketMQProperties.class)
 @ConditionalOnClass({ MQAdmin.class })
@@ -86,8 +85,6 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 	public static final String PRODUCER_BEAN_NAME = "defaultMQProducer";
 
 	public static final String CONSUMER_BEAN_NAME = "defaultLitePullConsumer";
-
-	private static final Logger log = LoggerFactory.getLogger(RocketMQAutoConfiguration.class);
 
 	private final Environment environment;
 
@@ -115,7 +112,8 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 	@Bean(PRODUCER_BEAN_NAME)
 	@ConditionalOnMissingBean(DefaultMQProducer.class)
 	@ConditionalOnProperty(prefix = "rocketmq", value = { "name-server", "producer.group" })
-	public DefaultMQProducer defaultMQProducer(RocketMQProperties rocketMQProperties) {
+	public DefaultMQProducer defaultMQProducer(RocketMQProperties rocketMQProperties,
+			ExecutorService virtualThreadExecutor) {
 		RocketMQProperties.Producer producerConfig = rocketMQProperties.getProducer();
 		String nameServer = rocketMQProperties.getNameServer();
 		String groupName = producerConfig.getGroup();
@@ -150,6 +148,8 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 			producer.setNamespaceV2(producerConfig.getNamespaceV2());
 		}
 		producer.setInstanceName(producerConfig.getInstanceName());
+		// 设置虚拟线程
+		producer.setAsyncSenderExecutor(virtualThreadExecutor);
 		log.info("a producer ({}) init on namesrv {}", groupName, nameServer);
 		return producer;
 	}
@@ -203,9 +203,9 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware {
 		if (applicationContext.containsBean(CONSUMER_BEAN_NAME)) {
 			rocketMQTemplate.setConsumer((DefaultLitePullConsumer) applicationContext.getBean(CONSUMER_BEAN_NAME));
 		}
-		rocketMQTemplate.setMessageConverter(rocketMQMessageConverter.getMessageConverter());
 		// 虚拟线程
 		rocketMQTemplate.setAsyncSenderExecutor(virtualThreadExecutor);
+		rocketMQTemplate.setMessageConverter(rocketMQMessageConverter.getMessageConverter());
 		return rocketMQTemplate;
 	}
 

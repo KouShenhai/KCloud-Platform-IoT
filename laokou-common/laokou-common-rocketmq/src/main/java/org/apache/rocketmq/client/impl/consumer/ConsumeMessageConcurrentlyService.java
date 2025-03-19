@@ -54,7 +54,6 @@ package org.apache.rocketmq.client.impl.consumer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
@@ -108,11 +107,9 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 
 		this.defaultMQPushConsumer = this.defaultMQPushConsumerImpl.getDefaultMQPushConsumer();
 		this.consumerGroup = this.defaultMQPushConsumer.getConsumerGroup();
-		BlockingQueue<Runnable> consumeRequestQueue = new LinkedBlockingQueue<>();
 
 		String consumerGroupTag = (consumerGroup.length() > 100 ? consumerGroup.substring(0, 100) : consumerGroup)
 				+ "_";
-
 		// 虚拟线程
 		this.consumeExecutor = new ThreadPoolExecutor(0, // corePoolSize为0，因为不需要保留核心线程
 				Integer.MAX_VALUE, // maximumPoolSize: 无限制，允许任意数量的虚拟线程
@@ -129,18 +126,13 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 	}
 
 	public void start() {
-		this.cleanExpireMsgExecutors.scheduleAtFixedRate(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					cleanExpireMsg();
-				}
-				catch (Throwable e) {
-					log.error("scheduleAtFixedRate cleanExpireMsg exception", e);
-				}
+		this.cleanExpireMsgExecutors.scheduleAtFixedRate(() -> {
+			try {
+				cleanExpireMsg();
 			}
-
+			catch (Throwable e) {
+				log.error("scheduleAtFixedRate cleanExpireMsg exception", e);
+			}
 		}, this.defaultMQPushConsumer.getConsumeTimeout(), this.defaultMQPushConsumer.getConsumeTimeout(),
 				TimeUnit.MINUTES);
 	}
@@ -276,12 +268,9 @@ public class ConsumeMessageConcurrentlyService implements ConsumeMessageService 
 	}
 
 	private void cleanExpireMsg() {
-		Iterator<Map.Entry<MessageQueue, ProcessQueue>> it = this.defaultMQPushConsumerImpl.getRebalanceImpl()
+		for (Map.Entry<MessageQueue, ProcessQueue> next : this.defaultMQPushConsumerImpl.getRebalanceImpl()
 			.getProcessQueueTable()
-			.entrySet()
-			.iterator();
-		while (it.hasNext()) {
-			Map.Entry<MessageQueue, ProcessQueue> next = it.next();
+			.entrySet()) {
 			ProcessQueue pq = next.getValue();
 			pq.cleanExpiredMsg(this.defaultMQPushConsumer);
 		}
