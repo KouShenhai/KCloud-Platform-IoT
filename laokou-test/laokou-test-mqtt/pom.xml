@@ -13,7 +13,7 @@
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-mqtt</artifactId>
+      <artifactId>laokou-common-paho-mqtt-client</artifactId>
     </dependency>
     <dependency>
       <groupId>com.github.ulisesbocchio</groupId>

@@ -90,7 +90,6 @@ import static org.apache.seata.common.DefaultValues.DEFAULT_ENABLE_BRANCH_ASYNC_
 import static org.apache.seata.common.DefaultValues.DEFAULT_MAX_COMMIT_RETRY_TIMEOUT;
 import static org.apache.seata.common.DefaultValues.DEFAULT_MAX_ROLLBACK_RETRY_TIMEOUT;
 import static org.apache.seata.common.DefaultValues.DEFAULT_ROLLBACKING_RETRY_PERIOD;
-import static org.apache.seata.common.DefaultValues.DEFAULT_ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE;
 import static org.apache.seata.common.DefaultValues.DEFAULT_TIMEOUT_RETRY_PERIOD;
 import static org.apache.seata.common.DefaultValues.DEFAULT_UNDO_LOG_DELETE_PERIOD;
 
@@ -160,7 +159,7 @@ public class DefaultCoordinator extends AbstractTCInboundHandler implements Tran
 
 	private static final boolean ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE = ConfigurationFactory.getInstance()
 		.getBoolean(ConfigurationKeys.ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE,
-				DEFAULT_ROLLBACK_RETRY_TIMEOUT_UNLOCK_ENABLE);
+				true);
 
 	private static final int RETRY_DEAD_THRESHOLD = ConfigurationFactory.getInstance()
 		.getInt(org.apache.seata.common.ConfigurationKeys.RETRY_DEAD_THRESHOLD,
