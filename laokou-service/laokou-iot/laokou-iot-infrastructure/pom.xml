@@ -82,7 +82,7 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-mqtt</artifactId>
+      <artifactId>laokou-common-paho-mqtt-client</artifactId>
     </dependency>
   </dependencies>
 

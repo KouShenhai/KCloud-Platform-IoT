@@ -3,12 +3,12 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>laokou-common</artifactId>
+    <artifactId>laokou-common-mqtt-client</artifactId>
     <groupId>org.laokou</groupId>
     <version>3.4.3</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>laokou-common-mqtt</artifactId>
+  <artifactId>laokou-common-paho-mqtt-client</artifactId>
 
   <dependencies>
     <dependency>

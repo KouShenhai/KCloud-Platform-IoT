@@ -56,7 +56,6 @@
     <module>laokou-common-idempotent</module>
     <module>laokou-common-lock</module>
     <module>laokou-common-sensitive</module>
-    <module>laokou-common-mqtt</module>
     <module>laokou-common-rate-limiter</module>
     <module>laokou-common-domain</module>
     <module>laokou-common-log</module>
@@ -86,6 +85,11 @@
     <module>laokou-common-starrocks</module>
     <module>laokou-common-clickhouse</module>
     <module>laokou-common-shardingsphere</module>
+    <module>laokou-common-vertx-web</module>
+    <module>laokou-common-cassandra</module>
+    <module>laokou-common-mqtt-client</module>
+    <module>laokou-common-hive</module>
+    <module>laokou-common-hbase</module>
   </modules>
 
 </project>

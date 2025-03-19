@@ -25,7 +25,9 @@
   <version>3.4.3</version>
   <packaging>pom</packaging>
   <properties>
+    <!--编码-->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!--项目版本-->
     <laokou.version>3.4.3</laokou.version>
     <!--spring-boot版本-->
     <spring-boot.version>3.4.3</spring-boot.version>
@@ -798,7 +800,42 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-mqtt</artifactId>
+        <artifactId>laokou-common-mqtt-client</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-paho-mqtt-client</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-hivemq-mqtt-client</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-vertx-mqtt-client</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-hive</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-hbase</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-vertx-web</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-cassandra</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
