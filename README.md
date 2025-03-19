@@ -103,7 +103,17 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 
 ### 🔎 功能介绍
 
-🚀 正在重构，敬请期待
+🚀 登录【用户名密码/邮箱/手机号】
+
+🚀 菜单管理【查询/新增/修改/删除/查看】
+
+🚀 部门管理【查询/新增/修改/删除/查看】
+
+🚀 角色管理【查询/新增/修改/删除/查看/分配权限】
+
+🚀 用户管理【查询/新增/修改/删除/查看/分配权限/重置密码】
+
+🚀 操作日志/通知日志/登录日志【查看/导出/导出全部】
 
 ### 💡 系统架构
 
@@ -300,10 +310,6 @@ KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.or
 [Jetbrains社区](https://www.jetbrains.com/community)
 
 [阿里巴巴社区](https://github.com/alibaba)
-
-[人人社区](https://www.renren.io)
-
-[若依社区](https://www.ruoyi.vip)
 
 [苞米豆社区](https://baomidou.com)
 

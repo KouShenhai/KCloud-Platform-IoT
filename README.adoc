@@ -109,7 +109,17 @@ https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2[开发计划（需要登�
 
 === 🔎 功能介绍
 
-🚀 正在重构，敬请期待
+🚀 登录【用户名密码/邮箱/手机号】
+
+🚀 菜单管理【查询/新增/修改/删除/查看】
+
+🚀 部门管理【查询/新增/修改/删除/查看】
+
+🚀 角色管理【查询/新增/修改/删除/查看/分配权限】
+
+🚀 用户管理【查询/新增/修改/删除/查看/分配权限/重置密码】
+
+🚀 操作日志/通知日志/登录日志【查看/导出/导出全部】
 
 === 💡 系统架构
 
@@ -315,10 +325,6 @@ https://spring.io[Spring社区]
 https://www.jetbrains.com/community[Jetbrains社区]
 
 https://github.com/alibaba[阿里巴巴社区]
-
-https://www.renren.io[人人社区]
-
-https://www.ruoyi.vip[若依社区]
 
 https://baomidou.com[苞米豆社区]
 
