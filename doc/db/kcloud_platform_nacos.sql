@@ -1403,7 +1403,7 @@ server.raft.sync=true
 metrics.enabled=false
 metrics.registryType=compact
 metrics.exporterList=prometheus
-metrics.exporterPrometheusPort=9898', 'a7c7188f1828b0521c7ce82a105bc070', '2024-12-15 20:30:03.552', '2024-12-15 20:30:03.552', 'nacos', '127.0.0.1', 'laokou-sample-seata-server', '', 'seata server配置', NULL, NULL, 'properties', NULL, '');
+metrics.exporterPrometheusPort=9898', 'a7c7188f1828b0521c7ce82a105bc070', '2024-12-15 20:30:03.552', '2024-12-15 20:30:03.552', 'nacos', '127.0.0.1', 'laokou-seata', '', 'seata server配置', NULL, NULL, 'properties', NULL, '');
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (13, 'gateway-flow.json', 'LAOKOU_GROUP', '[
   {
     "resource": "laokou-auth",

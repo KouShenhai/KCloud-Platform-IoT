@@ -12,9 +12,4 @@
   <artifactId>laokou-sample-seata</artifactId>
   <packaging>pom</packaging>
 
-  <modules>
-    <module>laokou-sample-seata-server</module>
-  </modules>
-
-
 </project>

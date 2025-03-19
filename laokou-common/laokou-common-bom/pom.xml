@@ -184,7 +184,7 @@
     <dependencies>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-seata</artifactId>
+        <artifactId>laokou-seata</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
