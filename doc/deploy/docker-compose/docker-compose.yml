@@ -305,6 +305,7 @@ services:
     environment:
       - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
       - TZ=Asia/Shanghai
+      - NAMESRV_ADDR=rocketmq-namesrv:9876
     volumes:
       - ./rocketmq5/broker/conf/broker.conf:/home/rocketmq/conf/broker.conf
       # 挂载数据
