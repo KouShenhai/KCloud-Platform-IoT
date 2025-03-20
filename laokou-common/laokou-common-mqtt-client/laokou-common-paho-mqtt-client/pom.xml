@@ -28,6 +28,10 @@
       <artifactId>spring-boot-configuration-processor</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-mqtt-client-parent</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

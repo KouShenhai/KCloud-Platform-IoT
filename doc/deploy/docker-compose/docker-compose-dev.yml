@@ -61,6 +61,7 @@ services:
     environment:
       - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
       - TZ=Asia/Shanghai
+      - NAMESRV_ADDR=rocketmq-namesrv:9876
     networks:
       - laokou_network
   rocketmq-broker:

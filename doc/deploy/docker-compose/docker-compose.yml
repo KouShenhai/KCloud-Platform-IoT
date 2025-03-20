@@ -204,6 +204,13 @@ services:
       - "18083:18083"
     environment:
       - TZ=Asia/Shanghai
+    volumes:
+      # 挂载配置文件
+      - ./emqx/etc:/etc/emqx
+      # 挂载数据存储
+      - ./emqx/data:/opt/emqx/data
+      # 挂载日志文件
+      - ./emqx/log:/opt/emqx/log
     networks:
       - laokou_network
   postgresql:

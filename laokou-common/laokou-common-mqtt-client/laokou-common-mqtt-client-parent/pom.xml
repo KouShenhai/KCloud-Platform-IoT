@@ -11,4 +11,11 @@
 
   <artifactId>laokou-common-mqtt-client-parent</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-core</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

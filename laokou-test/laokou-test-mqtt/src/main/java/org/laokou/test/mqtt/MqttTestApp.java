@@ -17,12 +17,14 @@
 
 package org.laokou.test.mqtt;
 
+import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+@EnableTaskExecutor
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
 public class MqttTestApp {
 

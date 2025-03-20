@@ -184,6 +184,11 @@
     <dependencies>
       <dependency>
         <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-mqtt-client-parent</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-seata</artifactId>
         <version>${laokou.version}</version>
       </dependency>

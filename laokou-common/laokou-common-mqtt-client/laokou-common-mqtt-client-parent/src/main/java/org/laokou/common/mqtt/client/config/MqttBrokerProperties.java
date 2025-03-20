@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.mqtt.config;
+package org.laokou.common.mqtt.client.config;
 
 import lombok.Data;
 import org.laokou.common.core.utils.IdGenerator;
@@ -43,13 +43,13 @@ public class MqttBrokerProperties {
 
 	private boolean clearStart = false;
 
-	private int receiveMaximum = 5;
+	private int receiveMaximum = 200;
 
-	private long maximumPacketSize = 1024;
+	private long maximumPacketSize = 1024 * 1024;
 
-	private int connectionTimeout = 10;
+	private int connectionTimeout = 30;
 
-	private int keepAliveInterval = 15;
+	private int keepAliveInterval = 60;
 
 	private boolean automaticReconnect = true;
 
