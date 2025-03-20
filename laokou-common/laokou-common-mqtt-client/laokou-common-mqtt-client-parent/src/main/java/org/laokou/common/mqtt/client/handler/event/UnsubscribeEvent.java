@@ -15,25 +15,27 @@
  *
  */
 
-package org.laokou.common.mqtt.client;
+package org.laokou.common.mqtt.client.handler.event;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.context.ApplicationEvent;
 
 /**
- * MQTT客户端.
- *
  * @author laokou
  */
-public interface MqttClient {
+@Getter
+@Setter
+public class UnsubscribeEvent extends ApplicationEvent {
 
-	/**
-	 * 服务下线主题.
-	 */
-	String WILL_TOPIC = "will_topic";
+	private String clientId;
 
-	/**
-	 * 服务下线数据.
-	 */
-	byte[] WILL_DATA = "offline".getBytes(UTF_8);
+	private String[] topics;
+
+	public UnsubscribeEvent(Object source, String clientId, String[] topics) {
+		super(source);
+		this.clientId = clientId;
+		this.topics = topics;
+	}
 
 }

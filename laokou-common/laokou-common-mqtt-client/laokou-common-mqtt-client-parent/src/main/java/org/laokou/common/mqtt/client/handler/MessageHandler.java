@@ -15,9 +15,9 @@
  *
  */
 
-package org.laokou.common.mqtt.config;
+package org.laokou.common.mqtt.client.handler;
 
-import org.eclipse.paho.mqttv5.common.MqttMessage;
+import org.laokou.common.mqtt.client.MqttMessage;
 
 /**
  * @author laokou
@@ -26,6 +26,6 @@ public interface MessageHandler {
 
 	boolean isSubscribe(String topic);
 
-	void handle(String topic, MqttMessage message);
+	void handle(String topic, MqttMessage mqttMessage);
 
 }

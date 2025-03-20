@@ -18,8 +18,7 @@
 package org.laokou.test.mqtt.handler;
 
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.paho.mqttv5.common.MqttMessage;
-import org.laokou.common.mqtt.config.MessageHandler;
+import org.laokou.common.mqtt.client.handler.MessageHandler;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,8 +34,8 @@ public class DefaultMessageHandler implements MessageHandler {
 	}
 
 	@Override
-	public void handle(String topic, MqttMessage message) {
-		log.info("接收到MQTT消息 => topic: {}, message: {}", topic, new String(message.getPayload()));
+	public void handle(String topic, org.laokou.common.mqtt.client.MqttMessage mqttMessage) {
+		log.info("接收到MQTT消息 => topic: {}, message: {}", topic, new String(mqttMessage.getPayload()));
 	}
 
 }

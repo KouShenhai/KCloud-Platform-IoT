@@ -20,12 +20,13 @@ package org.laokou.common.mqtt.config;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.client.IMqttToken;
-import org.eclipse.paho.mqttv5.client.MqttAsyncClient;
 import org.eclipse.paho.mqttv5.client.MqttCallback;
 import org.eclipse.paho.mqttv5.client.MqttDisconnectResponse;
 import org.eclipse.paho.mqttv5.common.MqttException;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
+import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
+import org.laokou.common.mqtt.client.handler.MessageHandler;
 
 import java.util.List;
 
@@ -34,29 +35,27 @@ import java.util.List;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class MqttClientMessageCallback implements MqttCallback {
+public class PahoMqttClientMessageCallback implements MqttCallback {
 
 	private final List<MessageHandler> messageHandlers;
 
 	private final MqttBrokerProperties mqttBrokerProperties;
 
-	private final MqttAsyncClient client;
-
 	@Override
 	public void disconnected(MqttDisconnectResponse disconnectResponse) {
-		log.error("MQTT关闭连接");
+		log.error("【Paho】 => MQTT关闭连接");
 	}
 
 	@Override
 	public void mqttErrorOccurred(MqttException ex) {
-		log.error("MQTT报错，错误信息：{}", ex.getMessage());
+		log.error("【Paho】 => MQTT报错，错误信息：{}", ex.getMessage());
 	}
 
 	@Override
 	public void messageArrived(String topic, MqttMessage message) {
 		for (MessageHandler messageHandler : messageHandlers) {
 			if (messageHandler.isSubscribe(topic)) {
-				messageHandler.handle(topic, message);
+				messageHandler.handle(topic, new org.laokou.common.mqtt.client.MqttMessage(message.getPayload()));
 				break;
 			}
 		}
@@ -64,22 +63,22 @@ public class MqttClientMessageCallback implements MqttCallback {
 
 	@Override
 	public void deliveryComplete(IMqttToken token) {
-		log.info("MQTT消息发送成功，消息ID：{}", token.getMessageId());
+		log.info("【Paho】 => MQTT消息发送成功，消息ID：{}", token.getMessageId());
 	}
 
 	@Override
 	public void connectComplete(boolean reconnect, String uri) {
 		if (reconnect) {
-			log.info("MQTT重连成功，URI：{}", uri);
+			log.info("【Paho】 => MQTT重连成功，URI：{}", uri);
 		}
 		else {
-			log.info("MQTT建立连接，URI：{}", uri);
+			log.info("【Paho】 => MQTT建立连接，URI：{}", uri);
 		}
 	}
 
 	@Override
 	public void authPacketArrived(int reasonCode, MqttProperties properties) {
-		log.info("接收到身份验证数据包：{}", reasonCode);
+		log.info("【Paho】 => 接收到身份验证数据包：{}", reasonCode);
 	}
 
 }

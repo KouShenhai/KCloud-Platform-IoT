@@ -18,19 +18,17 @@
 package org.laokou.test.mqtt.config;
 
 import io.micrometer.common.lang.NonNullApi;
-import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.paho.mqttv5.common.MqttException;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.mqtt.config.MessageHandler;
-import org.laokou.common.mqtt.config.MqttBrokerProperties;
-import org.laokou.common.mqtt.config.MqttClientManager;
+import org.laokou.common.mqtt.client.handler.MessageHandler;
+import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
+import org.laokou.common.mqtt.config.PahoMqttClientManager;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author laokou
@@ -45,48 +43,24 @@ public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
-		MqttBrokerProperties properties = new MqttBrokerProperties();
-		properties.setPublishQos(2);
-		properties.setSubscribeQos(2);
-		MqttClientManager.add(properties.getClientId(), properties, messageHandlers);
-		// 启动MQTT客户端
-		MqttClientManager.open(properties.getClientId());
-		try {
-			Thread.sleep(5000);
-		}
-		catch (InterruptedException e) {
-			throw new RuntimeException(e);
-		}
-		// 订阅MQTT主题
-		try {
-			MqttClientManager.subscribe(properties.getClientId(), new String[] { "test" }, new int[] { 2 });
-		}
-		catch (MqttException e) {
-			log.error("订阅MQTT主题失败，错误信息：{}", e.getMessage());
-			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
-		}
-		try {
-			Thread.sleep(5000);
-		}
-		catch (InterruptedException e) {
-			throw new RuntimeException(e);
-		}
-		// 发送MQTT消息
-		for (int i = 0; i < 1000; i++) {
-			try {
-				Thread.sleep(100);
-				MqttClientManager.get(properties.getClientId()).publish("test", "hello".getBytes(), 2);
-			}
-			catch (MqttException | InterruptedException e) {
-				log.error("发送MQTT消息失败，错误信息：{}", e.getMessage());
-				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
-			}
-		}
+		testPahoMqttClient();
 	}
 
-	@PreDestroy
-	public void destroy() {
-		MqttClientManager.preDestroy();
+	private void testPahoMqttClient() {
+		for (int i = 1; i <= 100; i++) {
+			MqttBrokerProperties properties = new MqttBrokerProperties();
+			properties.setClientId("test-" + i);
+			properties.setTopics(Set.of("test-topic-" + i));
+			PahoMqttClientManager.add(properties.getClientId(), properties, messageHandlers);
+			// 启动MQTT客户端
+			PahoMqttClientManager.open(properties.getClientId());
+			try {
+				Thread.sleep(1000);
+			}
+			catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+		}
 	}
 
 }

@@ -15,27 +15,20 @@
  *
  */
 
-package org.laokou.common.mqtt.handler.event;
+package org.laokou.common.mqtt.client;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.context.ApplicationEvent;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author laokou
  */
-@Getter
-@Setter
-public class UnsubscribeEvent extends ApplicationEvent {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class MqttMessage {
 
-	private String clientId;
-
-	private String[] topics;
-
-	public UnsubscribeEvent(Object source, String clientId, String[] topics) {
-		super(source);
-		this.clientId = clientId;
-		this.topics = topics;
-	}
+	private byte[] payload;
 
 }

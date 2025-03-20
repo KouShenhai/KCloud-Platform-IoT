@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.mqtt.handler.event;
+package org.laokou.common.mqtt.client.handler.event;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -20,6 +20,9 @@ package org.laokou.common.mqtt.config;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.paho.mqttv5.common.MqttException;
 import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
+import org.laokou.common.mqtt.client.handler.MessageHandler;
 
 import java.util.List;
 import java.util.Map;
@@ -31,22 +34,25 @@ import java.util.concurrent.ScheduledExecutorService;
  * @author laokou
  */
 @RequiredArgsConstructor
-public class MqttClientManager {
+public class PahoMqttClientManager {
 
-	private static final Map<String, MqttClient> MQTT_CLIENT_MAP = new ConcurrentHashMap<>(4096);
+	private static final Map<String, PahoMqttClient> PAHO_MQTT_CLIENT_MAP = new ConcurrentHashMap<>(4096);
 
 	private static final ScheduledExecutorService EXECUTOR = ThreadUtil.newScheduledThreadPool(32);
 
-	public static MqttClient get(String clientId) {
-		return MQTT_CLIENT_MAP.get(clientId);
+	public static PahoMqttClient get(String clientId) {
+		if (PAHO_MQTT_CLIENT_MAP.containsKey(clientId)) {
+			return PAHO_MQTT_CLIENT_MAP.get(clientId);
+		}
+		throw new SystemException("S_Mqtt_NotExist", "MQTT客户端不存在");
 	}
 
 	public static void remove(String clientId) {
-		MQTT_CLIENT_MAP.remove(clientId);
+		PAHO_MQTT_CLIENT_MAP.remove(clientId);
 	}
 
 	public static void add(String clientId, MqttBrokerProperties properties, List<MessageHandler> messageHandlers) {
-		MQTT_CLIENT_MAP.putIfAbsent(clientId, new MqttClient(properties, messageHandlers, EXECUTOR));
+		PAHO_MQTT_CLIENT_MAP.putIfAbsent(clientId, new PahoMqttClient(properties, messageHandlers, EXECUTOR));
 	}
 
 	public static void open(String clientId) {
@@ -82,8 +88,8 @@ public class MqttClientManager {
 	}
 
 	public static void preDestroy() {
-		MQTT_CLIENT_MAP.values().forEach(MqttClient::close);
-		MQTT_CLIENT_MAP.clear();
+		PAHO_MQTT_CLIENT_MAP.values().forEach(PahoMqttClient::close);
+		PAHO_MQTT_CLIENT_MAP.clear();
 		ThreadUtil.shutdown(EXECUTOR, 60);
 	}
 

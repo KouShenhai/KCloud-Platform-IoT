@@ -18,11 +18,11 @@
 package org.laokou.common.mqtt.handler;
 
 import org.eclipse.paho.mqttv5.common.MqttException;
-import org.laokou.common.mqtt.config.MqttClientManager;
-import org.laokou.common.mqtt.handler.event.CloseEvent;
-import org.laokou.common.mqtt.handler.event.OpenEvent;
-import org.laokou.common.mqtt.handler.event.SubscribeEvent;
-import org.laokou.common.mqtt.handler.event.UnsubscribeEvent;
+import org.laokou.common.mqtt.client.handler.event.CloseEvent;
+import org.laokou.common.mqtt.client.handler.event.OpenEvent;
+import org.laokou.common.mqtt.client.handler.event.SubscribeEvent;
+import org.laokou.common.mqtt.client.handler.event.UnsubscribeEvent;
+import org.laokou.common.mqtt.config.PahoMqttClientManager;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -31,30 +31,30 @@ import org.springframework.stereotype.Component;
  * @author laokou
  */
 @Component
-public class EventHandler {
+public class PahoMqttClientEventHandler {
 
 	@Async
 	@EventListener
 	public void onSubscribeEvent(SubscribeEvent event) throws MqttException {
-		MqttClientManager.subscribe(event.getClientId(), event.getTopics(), event.getSubscribeQos());
+		PahoMqttClientManager.subscribe(event.getClientId(), event.getTopics(), event.getSubscribeQos());
 	}
 
 	@Async
 	@EventListener
 	public void onUnsubscribeEvent(UnsubscribeEvent event) throws MqttException {
-		MqttClientManager.unsubscribe(event.getClientId(), event.getTopics());
+		PahoMqttClientManager.unsubscribe(event.getClientId(), event.getTopics());
 	}
 
 	@Async
 	@EventListener
 	public void onOpenEvent(OpenEvent event) {
-		MqttClientManager.open(event.getClientId());
+		PahoMqttClientManager.open(event.getClientId());
 	}
 
 	@Async
 	@EventListener
 	public void onCloseEvent(CloseEvent event) {
-		MqttClientManager.close(event.getClientId());
+		PahoMqttClientManager.close(event.getClientId());
 	}
 
 }

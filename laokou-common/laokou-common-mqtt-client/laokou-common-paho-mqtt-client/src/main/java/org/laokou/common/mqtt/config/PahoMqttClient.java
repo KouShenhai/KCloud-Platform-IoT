@@ -30,17 +30,19 @@ import org.laokou.common.core.event.EventBus;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.mqtt.handler.event.CloseEvent;
-import org.laokou.common.mqtt.handler.event.OpenEvent;
-import org.laokou.common.mqtt.handler.event.SubscribeEvent;
-import org.laokou.common.mqtt.handler.event.UnsubscribeEvent;
+import org.laokou.common.mqtt.client.MqttClient;
+import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
+import org.laokou.common.mqtt.client.handler.event.CloseEvent;
+import org.laokou.common.mqtt.client.handler.event.OpenEvent;
+import org.laokou.common.mqtt.client.handler.event.SubscribeEvent;
+import org.laokou.common.mqtt.client.handler.event.UnsubscribeEvent;
+import org.laokou.common.mqtt.client.handler.MessageHandler;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * MQTT客户端.
@@ -48,17 +50,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * @author laokou
  */
 @Slf4j
-public class MqttClient {
-
-	/**
-	 * 服务下线主题.
-	 */
-	private static final String WILL_TOPIC = "will_topic";
-
-	/**
-	 * 服务下线数据.
-	 */
-	private static final byte[] WILL_DATA = "offline".getBytes(UTF_8);
+public class PahoMqttClient implements MqttClient {
 
 	private final MqttBrokerProperties mqttBrokerProperties;
 
@@ -68,7 +60,13 @@ public class MqttClient {
 
 	private volatile MqttAsyncClient client;
 
-	public MqttClient(MqttBrokerProperties mqttBrokerProperties, List<MessageHandler> messageHandlers,
+	private final Object OPEN_LOCK = new Object();
+
+	private final Object CLOSE_LOCK = new Object();
+
+	private final AtomicInteger ATOMIC = new AtomicInteger(0);
+
+	public PahoMqttClient(MqttBrokerProperties mqttBrokerProperties, List<MessageHandler> messageHandlers,
 			ScheduledExecutorService executor) {
 		this.mqttBrokerProperties = mqttBrokerProperties;
 		this.messageHandlers = messageHandlers;
@@ -78,66 +76,80 @@ public class MqttClient {
 	public void open() {
 		try {
 			if (ObjectUtil.isNull(client)) {
-				client = new MqttAsyncClient(mqttBrokerProperties.getUri(), mqttBrokerProperties.getClientId(),
-						new MqttDefaultFilePersistence(), null, executor);
-				client.setManualAcks(mqttBrokerProperties.isManualAcks());
-				client.setCallback(new MqttClientMessageCallback(messageHandlers, mqttBrokerProperties, client));
-				client.connect(options(), null, new MqttActionListener() {
-					@Override
-					public void onSuccess(IMqttToken asyncActionToken) {
-						log.info("MQTT连接成功");
-						// 发布订阅事件
-						publishSubscribeEvent(mqttBrokerProperties.getTopics(), mqttBrokerProperties.getSubscribeQos());
-					}
+				synchronized (OPEN_LOCK) {
+					if (ObjectUtil.isNull(client)) {
+						String clientId = mqttBrokerProperties.getClientId();
+						client = new MqttAsyncClient(mqttBrokerProperties.getUri(), clientId,
+								new MqttDefaultFilePersistence(), null, executor);
+						client.setManualAcks(mqttBrokerProperties.isManualAcks());
+						client.setCallback(new PahoMqttClientMessageCallback(messageHandlers, mqttBrokerProperties));
+						client.connect(options(), null, new MqttActionListener() {
+							@Override
+							public void onSuccess(IMqttToken asyncActionToken) {
+								log.info("【Paho】 => MQTT连接成功，客户端ID：{}", clientId);
+								// 发布订阅事件
+								publishSubscribeEvent(mqttBrokerProperties.getTopics(),
+										mqttBrokerProperties.getSubscribeQos());
+							}
 
-					@Override
-					public void onFailure(IMqttToken asyncActionToken, Throwable e) {
-						log.error("MQTT连接失败，错误信息：{}", e.getMessage(), e);
+							@Override
+							public void onFailure(IMqttToken asyncActionToken, Throwable e) {
+								log.error("【Paho】 => MQTT连接失败，客户端ID：{}，错误信息：{}", clientId, e.getMessage(), e);
+								if (ATOMIC.incrementAndGet() < 5) {
+									open();
+								}
+							}
+						});
 					}
-				});
+				}
 			}
 		}
 		catch (Exception e) {
-			log.error("MQTT连接失败，错误信息：{}", e.getMessage(), e);
+			log.error("【Paho】 => MQTT连接失败，错误信息：{}", e.getMessage(), e);
 			throw new SystemException("S_Mqtt_ConnectError", e.getMessage(), e);
 		}
 	}
 
 	public void close() {
 		if (ObjectUtil.isNotNull(client)) {
-			// 等待30秒
-			try {
-				client.disconnectForcibly(30);
-				client.close();
-				log.info("关闭MQTT连接成功");
-			}
-			catch (MqttException e) {
-				log.error("关闭MQTT连接失败，错误信息：{}", e.getMessage(), e);
-				throw new SystemException("S_Mqtt_CloseError", e.getMessage(), e);
+			synchronized (CLOSE_LOCK) {
+				if (ObjectUtil.isNotNull(client)) {
+					// 等待30秒
+					try {
+						client.disconnectForcibly(30);
+						client.close();
+						log.info("【Paho】 => 关闭MQTT连接成功");
+					}
+					catch (MqttException e) {
+						log.error("【Paho】 => 关闭MQTT连接失败，错误信息：{}", e.getMessage(), e);
+						throw new SystemException("S_Mqtt_CloseError", e.getMessage(), e);
+					}
+				}
 			}
 		}
 	}
 
 	public void subscribe(String[] topics, int[] qos) throws MqttException {
 		if (topics == null || qos == null) {
-			throw new IllegalArgumentException("Topics and QoS arrays cannot be null");
+			throw new IllegalArgumentException("【Paho】 => Topics and QoS arrays cannot be null");
 		}
 		if (topics.length != qos.length) {
-			throw new IllegalArgumentException("Topics and QoS arrays must have the same length");
+			throw new IllegalArgumentException("【Paho】 => Topics and QoS arrays must have the same length");
 		}
 		if (topics.length == 0) {
-			throw new IllegalArgumentException("Topics array cannot be empty");
+			throw new IllegalArgumentException("【Paho】 => Topics array cannot be empty");
 		}
 		if (ObjectUtil.isNotNull(client)) {
 			client.subscribe(topics, qos, null, new MqttActionListener() {
 				@Override
 				public void onSuccess(IMqttToken asyncActionToken) {
-					log.info("MQTT订阅成功，主题: {}", String.join(",", topics));
+					log.info("【Paho】 => MQTT订阅成功，主题: {}", String.join(",", topics));
 				}
 
 				@Override
 				public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-					log.error("MQTT订阅失败，主题：{}，错误信息：{}", String.join(",", topics), exception.getMessage(), exception);
+					log.error("【Paho】 => MQTT订阅失败，主题：{}，错误信息：{}", String.join(",", topics), exception.getMessage(),
+							exception);
 				}
 
 			});
@@ -146,18 +158,19 @@ public class MqttClient {
 
 	public void unsubscribe(String[] topics) throws MqttException {
 		if (topics.length == 0) {
-			throw new IllegalArgumentException("Topics array cannot be empty");
+			throw new IllegalArgumentException("【Paho】 => Topics array cannot be empty");
 		}
 		if (ObjectUtil.isNotNull(client)) {
 			client.unsubscribe(topics, null, new MqttActionListener() {
 				@Override
 				public void onSuccess(IMqttToken asyncActionToken) {
-					log.info("MQTT取消订阅成功，主题：{}", String.join(",", topics));
+					log.info("【Paho】 => MQTT取消订阅成功，主题：{}", String.join(",", topics));
 				}
 
 				@Override
 				public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-					log.error("MQTT取消订阅失败，主题：{}，错误信息：{}", String.join(",", topics), exception.getMessage(), exception);
+					log.error("【Paho】 => MQTT取消订阅失败，主题：{}，错误信息：{}", String.join(",", topics), exception.getMessage(),
+							exception);
 				}
 
 			}, new MqttProperties());
