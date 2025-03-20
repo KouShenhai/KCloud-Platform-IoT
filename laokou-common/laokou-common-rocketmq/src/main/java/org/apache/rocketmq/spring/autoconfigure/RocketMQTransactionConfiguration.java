@@ -88,14 +88,16 @@ public class RocketMQTransactionConfiguration implements ApplicationContextAware
 		RocketMQTransactionListener annotation = clazz.getAnnotation(RocketMQTransactionListener.class);
 		RocketMQTemplate rocketMQTemplate = (RocketMQTemplate) applicationContext
 			.getBean(annotation.rocketMQTemplateBeanName());
-		if (((TransactionMQProducer) rocketMQTemplate.getProducer()).getTransactionListener() != null) {
+		TransactionMQProducer producer = (TransactionMQProducer) rocketMQTemplate.getProducer();
+		if (producer.getTransactionListener() != null) {
 			throw new IllegalStateException(
 					annotation.rocketMQTemplateBeanName() + " already exists RocketMQLocalTransactionListener");
 		}
 		// 虚拟线程
-		((TransactionMQProducer) rocketMQTemplate.getProducer()).setExecutorService(virtualThreadExecutor);
-		((TransactionMQProducer) rocketMQTemplate.getProducer())
-			.setTransactionListener(RocketMQUtil.convert((RocketMQLocalTransactionListener) bean));
+		producer.setExecutorService(virtualThreadExecutor);
+		producer.setCallbackExecutor(virtualThreadExecutor);
+		producer.setAsyncSenderExecutor(virtualThreadExecutor);
+		producer.setTransactionListener(RocketMQUtil.convert((RocketMQLocalTransactionListener) bean));
 		log.debug("RocketMQLocalTransactionListener {} register to {} success", clazz.getName(),
 				annotation.rocketMQTemplateBeanName());
 	}
