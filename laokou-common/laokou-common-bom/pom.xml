@@ -63,8 +63,6 @@
     <fastexcel.version>1.1.0</fastexcel.version>
     <!--spring-security-oauth2-authorization-server版本-->
     <spring-security-oauth2-authorization-server.version>1.4.2</spring-security-oauth2-authorization-server.version>
-    <!--spring-boot-starter-oauth2版本-->
-    <spring-boot-starter-oauth2.version>3.4.4</spring-boot-starter-oauth2.version>
     <!--aws-java-sdk-s3版本-->
     <aws-java-sdk-s3.version>1.12.782</aws-java-sdk-s3.version>
     <!--dynamic-datasource版本-->
@@ -1273,7 +1271,7 @@
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-        <version>${spring-boot-starter-oauth2.version}</version>
+        <version>${spring-boot.version}</version>
       </dependency>
       <dependency>
         <groupId>org.bouncycastle</groupId>
