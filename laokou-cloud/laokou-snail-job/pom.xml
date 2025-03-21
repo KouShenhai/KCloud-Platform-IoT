@@ -4,7 +4,7 @@
   <parent>
     <artifactId>laokou-cloud</artifactId>
     <groupId>org.laokou</groupId>
-    <version>3.4.3</version>
+    <version>3.4.4</version>
   </parent>
   <artifactId>laokou-snail-job</artifactId>
 

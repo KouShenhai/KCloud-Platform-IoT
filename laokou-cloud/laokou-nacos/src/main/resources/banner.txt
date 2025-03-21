@@ -29,7 +29,7 @@ CSDN：https://kcloud.blog.csdn.net
 Juejin：https://juejin.cn/user/160945808873534
 Website：https://laokou.org.cn
 
-版本：3.4.3
+版本：3.4.4
 
 ${AnsiColor.CYAN}端口：${server.port}，PID：${PID}，启动环境：${spring.profiles.active}
 

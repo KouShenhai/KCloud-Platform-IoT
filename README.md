@@ -15,7 +15,7 @@
 
 <div style="text-align: center"><img src="doc/image/logo/logo.png" alt="LOGO" width="500"></div>
 
-KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的IoT云平台。基于Spring Boot 3.4.3、Spring Cloud 2024.0.1、Spring Cloud Alibaba 2023.0.3.2 最新版本开发的云服务多租户IoT平台。 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、灰度路由、服务限流、熔断降级、监控报警、多数据源、高亮搜索、分布式任务调度、分布式链路、分布式缓存、分布式事务、分布式存储、分布式锁等功能，用于快速构建IoT微服务项目。目前支持Shell、Docker、Kubernetes等多种部署方式，并且支持GraalVM和虚拟线程。实现RBAC权限、其中包含系统管理、物联管理、系统监控、数据分析等几大模块。 遵循阿里代码规范，采用RESTFul设计风格及DDD(领域驱动设计)思想，代码简洁、架构清晰，非常适合作为基础框架使用。
+KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的IoT云平台。基于Spring Boot 3.4.4、Spring Cloud 2024.0.1、Spring Cloud Alibaba 2023.0.3.2 最新版本开发的云服务多租户IoT平台。 遵循SpringBoot编程思想，使用阿里COLA应用框架构建，高度模块化和可配置化。具备服务注册&发现、配置中心、灰度路由、服务限流、熔断降级、监控报警、多数据源、高亮搜索、分布式任务调度、分布式链路、分布式缓存、分布式事务、分布式存储、分布式锁等功能，用于快速构建IoT微服务项目。目前支持Shell、Docker、Kubernetes等多种部署方式，并且支持GraalVM和虚拟线程。实现RBAC权限、其中包含系统管理、物联管理、系统监控、数据分析等几大模块。 遵循阿里代码规范，采用RESTFul设计风格及DDD(领域驱动设计)思想，代码简洁、架构清晰，非常适合作为基础框架使用。
 
 <a href="https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml" target="_blank"><img src="https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml/badge.svg?branch=master" alt="Maven Ci Build Stauts"/></a>
 <a href="https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/node.js.yml" target="_blank"><img src="https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/node.js.yml/badge.svg?branch=master" alt="Node.js CI Build Stauts"/></a>
@@ -36,8 +36,8 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 
 <a href="https://gitcode.com/qq_39893313/KCloud-Platform-IoT" target="_blank"><img src="https://gitcode.com/qq_39893313/KCloud-Platform-IoT/star/badge.svg?theme=dark" alt="GitCode star"/></a>
 
-<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.3&color=green" alt="Spring Framework"/></a>
-<a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Boot&message=3.4.3&color=green" alt="Spring Boot"/></a>
+<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.5&color=green" alt="Spring Framework"/></a>
+<a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Boot&message=3.4.4&color=green" alt="Spring Boot"/></a>
 <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud&message=2024.0.1&color=green" alt="Spring Cloud"/></a>
 <a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.3.2&color=orange" alt="Spring Cloud Alibaba"/></a>
 <a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=OAuth%202.1&message=1.4.2&color=blue" alt="OAuth 2.1"/></a>
@@ -125,7 +125,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 
 |             组件              |      版本       |
 |:---------------------------:|:-------------:|
-|         Spring Boot         |     3.4.3     |
+|         Spring Boot         |     3.4.4     |
 |        Spring Cloud         |   2024.0.1    |
 |    Spring Cloud Alibaba     |  2023.0.3.2   |
 |      Spring Boot Admin      |     3.4.4     |

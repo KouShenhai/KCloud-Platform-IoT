@@ -22,13 +22,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.laokou</groupId>
   <artifactId>laokou-common-bom</artifactId>
-  <version>3.4.3</version>
+  <version>3.4.4</version>
   <packaging>pom</packaging>
   <properties>
     <!--编码-->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!--项目版本-->
-    <laokou.version>3.4.3</laokou.version>
+    <laokou.version>3.4.4</laokou.version>
     <!--spring-boot版本-->
     <spring-boot.version>3.4.4</spring-boot.version>
     <!--lombok版本-->

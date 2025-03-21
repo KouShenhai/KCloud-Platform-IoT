@@ -5,10 +5,10 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-test</artifactId>
-    <version>3.4.3</version>
+    <version>3.4.4</version>
   </parent>
   <artifactId>laokou-test-mqtt</artifactId>
-  <version>3.4.3</version>
+  <version>3.4.4</version>
 
   <dependencies>
     <dependency>
@@ -56,5 +56,34 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <!-- 打包插件，将 Java 源代码编译为字节码（.class 文件） -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+      </plugin>
+      <!-- 专门用于 Spring Boot 应用的打包和运行，提供打包为可执行 JAR/WAR 文件的功能，还可以在开发过程中直接运行应用 -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring-boot-maven-plugin.version}</version>
+        <configuration>
+          <finalName>${project.artifactId}</finalName>
+          <!-- main方法的地址 只需要修改这个地址-->
+          <mainClass>org.laokou.test.mqtt.MqttTestApp</mainClass>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

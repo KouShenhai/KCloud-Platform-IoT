@@ -6,11 +6,11 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-test</artifactId>
-    <version>3.4.3</version>
+    <version>3.4.4</version>
   </parent>
 
   <artifactId>laokou-test-dubbo</artifactId>
-  <version>3.4.3</version>
+  <version>3.4.4</version>
 
   <dependencies>
     <dependency>
