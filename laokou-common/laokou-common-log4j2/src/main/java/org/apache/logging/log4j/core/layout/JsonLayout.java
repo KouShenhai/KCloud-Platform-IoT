@@ -67,7 +67,7 @@ import java.util.Map;
  *
  * <h2>Complete well-formed JSON vs. fragment JSON</h2>
  * <p>
- * If you configure {@code complete="false"}, the appender outputs a well-formed JSON
+ * If you configure {@code complete="true"}, the appender outputs a well-formed JSON
  * document. By default, with {@code complete="false"}, you should include the output as
  * an <em>external file</em> in a separate file to form a well-formed JSON document.
  * </p>
@@ -91,9 +91,9 @@ import java.util.Map;
  * <h2>Additional Fields</h2>
  * <p>
  * This property allows addition of custom fields into generated JSON.
- * {@code {"foo":"bar"} directly into JSON output. Supports Lookup expressions.
+ * {@code <JsonLayout><KeyValuePair key="foo" value="bar"/></JsonLayout>} inserts
+ * {@code "foo":"bar"} directly into JSON output. Supports Lookup expressions.
  * </p>
- * @author laokou
  */
 @Plugin(name = "JsonLayout", category = Node.CATEGORY, elementType = Layout.ELEMENT_TYPE, printObject = true)
 public final class JsonLayout extends AbstractJacksonLayout {
@@ -105,6 +105,61 @@ public final class JsonLayout extends AbstractJacksonLayout {
 	private static final String DEFAULT_HEADER = "[";
 
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+
+	public static class Builder<B extends Builder<B>> extends AbstractJacksonLayout.Builder<B>
+			implements org.apache.logging.log4j.core.util.Builder<JsonLayout> {
+
+		@Getter
+		@PluginBuilderAttribute
+		private boolean propertiesAsList;
+
+		@PluginBuilderAttribute
+		private boolean objectMessageAsJsonObject;
+
+		@PluginElement("AdditionalField")
+		private KeyValuePair[] additionalFields;
+
+		public Builder() {
+			setCharset(StandardCharsets.UTF_8);
+		}
+
+		@Override
+		public JsonLayout build() {
+			final boolean encodeThreadContextAsList = isProperties() && propertiesAsList;
+			final String headerPattern = toStringOrNull(getHeader());
+			final String footerPattern = toStringOrNull(getFooter());
+			return new JsonLayout(getConfiguration(), isLocationInfo(), isProperties(), encodeThreadContextAsList,
+					isComplete(), isCompact(), getEventEol(), getEndOfLine(), headerPattern, footerPattern,
+					getCharset(), isIncludeStacktrace(), isStacktraceAsString(), isIncludeNullDelimiter(),
+					isIncludeTimeMillis(), getAdditionalFields(), getObjectMessageAsJsonObject());
+		}
+
+		public B setPropertiesAsList(final boolean propertiesAsList) {
+			this.propertiesAsList = propertiesAsList;
+			return asBuilder();
+		}
+
+		public boolean getObjectMessageAsJsonObject() {
+			return objectMessageAsJsonObject;
+		}
+
+		public B setObjectMessageAsJsonObject(final boolean objectMessageAsJsonObject) {
+			this.objectMessageAsJsonObject = objectMessageAsJsonObject;
+			return asBuilder();
+		}
+
+		@Override
+		public KeyValuePair[] getAdditionalFields() {
+			return additionalFields;
+		}
+
+		@Override
+		public B setAdditionalFields(final KeyValuePair[] additionalFields) {
+			this.additionalFields = additionalFields;
+			return asBuilder();
+		}
+
+	}
 
 	/**
 	 * @deprecated Use {@link #newBuilder()} instead
@@ -311,61 +366,6 @@ public final class JsonLayout extends AbstractJacksonLayout {
 			throwable.printStackTrace(printWriter);
 		}
 		return stringWriter.toString();
-	}
-
-	public static class Builder<B extends Builder<B>> extends AbstractJacksonLayout.Builder<B>
-			implements org.apache.logging.log4j.core.util.Builder<JsonLayout> {
-
-		@Getter
-		@PluginBuilderAttribute
-		private boolean propertiesAsList;
-
-		@PluginBuilderAttribute
-		private boolean objectMessageAsJsonObject;
-
-		@PluginElement("AdditionalField")
-		private KeyValuePair[] additionalFields;
-
-		public Builder() {
-			setCharset(StandardCharsets.UTF_8);
-		}
-
-		@Override
-		public JsonLayout build() {
-			final boolean encodeThreadContextAsList = isProperties() && propertiesAsList;
-			final String headerPattern = toStringOrNull(super.getHeader());
-			final String footerPattern = toStringOrNull(super.getFooter());
-			return new JsonLayout(getConfiguration(), isLocationInfo(), isProperties(), encodeThreadContextAsList,
-					isComplete(), isCompact(), getEventEol(), getEndOfLine(), headerPattern, footerPattern,
-					getCharset(), isIncludeStacktrace(), isStacktraceAsString(), isIncludeNullDelimiter(),
-					isIncludeTimeMillis(), getAdditionalFields(), getObjectMessageAsJsonObject());
-		}
-
-		public B setPropertiesAsList(final boolean propertiesAsList) {
-			this.propertiesAsList = propertiesAsList;
-			return asBuilder();
-		}
-
-		public boolean getObjectMessageAsJsonObject() {
-			return objectMessageAsJsonObject;
-		}
-
-		public B setObjectMessageAsJsonObject(final boolean objectMessageAsJsonObject) {
-			this.objectMessageAsJsonObject = objectMessageAsJsonObject;
-			return asBuilder();
-		}
-
-		@Override
-		public KeyValuePair[] getAdditionalFields() {
-			return additionalFields;
-		}
-
-		@Override
-		public B setAdditionalFields(final KeyValuePair[] additionalFields) {
-			this.additionalFields = additionalFields;
-			return asBuilder();
-		}
-
 	}
 
 }

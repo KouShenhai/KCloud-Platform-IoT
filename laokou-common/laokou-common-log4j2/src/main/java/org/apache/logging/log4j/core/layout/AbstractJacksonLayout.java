@@ -207,8 +207,7 @@ public abstract class AbstractJacksonLayout extends AbstractStringLayout {
 	}
 
 	protected void toSerializable(final LogEvent event, final Writer writer) throws IOException {
-		Object o = wrapLogEvent(convertMutableToLog4jEvent(event));
-		objectWriter.writeValue(writer, o);
+		objectWriter.writeValue(writer, wrapLogEvent(convertMutableToLog4jEvent(event)));
 		writer.write(eol);
 		if (includeNullDelimiter) {
 			writer.write('\0');
@@ -244,7 +243,9 @@ public abstract class AbstractJacksonLayout extends AbstractStringLayout {
 		/**
 		 * -- GETTER -- If "true", includes the stacktrace of any Throwable in the
 		 * generated data, defaults to "true".
-		 *
+		 * <p/>
+		 * If "true", includes the stacktrace of any Throwable in the generated data,
+		 * defaults to "true".
 		 */
 		@Getter
 		@PluginBuilderAttribute
@@ -420,7 +421,7 @@ public abstract class AbstractJacksonLayout extends AbstractStringLayout {
 
 		@Override
 		public Map<String, String> getContextMap() {
-			return event.getContextMap();
+			return event.getContextData().toMap();
 		}
 
 		@Override
@@ -504,12 +505,12 @@ public abstract class AbstractJacksonLayout extends AbstractStringLayout {
 		}
 
 		@Override
-		public void setEndOfBatch(final boolean endOfBatch) {
+		public boolean isIncludeLocation() {
+			return event.isIncludeLocation();
 		}
 
 		@Override
-		public boolean isIncludeLocation() {
-			return event.isIncludeLocation();
+		public void setEndOfBatch(final boolean endOfBatch) {
 		}
 
 		@Override
