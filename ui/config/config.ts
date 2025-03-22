@@ -9,6 +9,7 @@ export default defineConfig({
 	antd: {
 		// theme: {}
 	},
+	esbuildMinifyIIFE: true,
 	access: {},
 	model: {},
 	initialState: {},

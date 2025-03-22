@@ -30,7 +30,7 @@ import org.laokou.common.core.event.EventBus;
 import org.laokou.common.core.utils.CollectionUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.mqtt.client.MqttClient;
+import org.laokou.common.mqtt.client.AbstractMqttClient;
 import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
 import org.laokou.common.mqtt.client.handler.event.CloseEvent;
 import org.laokou.common.mqtt.client.handler.event.OpenEvent;
@@ -50,7 +50,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author laokou
  */
 @Slf4j
-public class PahoMqttClient implements MqttClient {
+public class PahoMqttClient extends AbstractMqttClient {
 
 	private final MqttBrokerProperties mqttBrokerProperties;
 
