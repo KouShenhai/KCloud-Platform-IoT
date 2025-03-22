@@ -6,17 +6,13 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-IoT</artifactId>
-    <version>3.4.4</version>
+    <version>3.5.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>laokou-cola</artifactId>
-  <version>3.4.4</version>
+  <version>3.5.0</version>
   <packaging>pom</packaging>
-
-  <properties>
-    <version>3.4.4</version>
-  </properties>
 
   <modules>
     <module>laokou-cola-start</module>
@@ -32,32 +28,32 @@
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-cola-adapter</artifactId>
-        <version>${version}</version>
+        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-cola-app</artifactId>
-        <version>${version}</version>
+        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-cola-client</artifactId>
-        <version>${version}</version>
+        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-cola-domain</artifactId>
-        <version>${version}</version>
+        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-cola-infrastructure</artifactId>
-        <version>${version}</version>
+        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-cola-start</artifactId>
-        <version>${version}</version>
+        <version>${laokou.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

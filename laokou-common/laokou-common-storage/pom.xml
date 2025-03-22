@@ -6,12 +6,12 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common</artifactId>
-    <version>3.4.4</version>
+    <version>3.5.0</version>
   </parent>
 
   <artifactId>laokou-common-storage</artifactId>
   <packaging>pom</packaging>
-  <version>3.4.4</version>
+  <version>3.5.0</version>
 
   <dependencies>
     <dependency>
