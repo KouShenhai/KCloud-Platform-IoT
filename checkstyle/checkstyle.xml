@@ -47,6 +47,7 @@
     <!-- 匹配句子末尾的格式 https://checkstyle.sourceforge.io/checks/javadoc/javadocstyle.html#JavadocStyle -->
     <module name="JavadocStyleCheck">
       <property name="endOfSentenceFormat" value="([.?!。？！][ \t\n\r\f&lt;])|([.?!。？！]$)"/>
+      <property name="checkHtml" value="false"/>
     </module>
 
     <!-- 禁止导入未使用的依赖 https://checkstyle.sourceforge.io/checks/imports/unusedimports.html -->

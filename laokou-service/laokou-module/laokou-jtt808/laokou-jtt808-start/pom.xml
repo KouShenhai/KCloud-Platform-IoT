@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-jtt808</artifactId>
-    <version>3.4.4</version>
+    <version>3.5.0</version>
   </parent>
 
   <artifactId>laokou-jtt808-start</artifactId>

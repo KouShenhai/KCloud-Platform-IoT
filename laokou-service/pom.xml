@@ -22,12 +22,12 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-IoT</artifactId>
-    <version>3.4.4</version>
+    <version>3.5.0</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-service</artifactId>
-  <version>3.4.4</version>
+  <version>3.5.0</version>
   <packaging>pom</packaging>
   <modules>
     <module>laokou-admin</module>
