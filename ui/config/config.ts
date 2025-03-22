@@ -9,6 +9,7 @@ export default defineConfig({
 	antd: {
 		// theme: {}
 	},
+	// esbuild helpers冲突 => Cu和Go这两个helpers中存在冲突
 	esbuildMinifyIIFE: true,
 	access: {},
 	model: {},
