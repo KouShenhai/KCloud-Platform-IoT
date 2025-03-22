@@ -426,7 +426,7 @@ services:
     networks:
       - laokou_network
   monitor:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.4.3
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.5.0
     container_name: monitor
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -447,7 +447,7 @@ services:
     networks:
       - laokou_network
   gateway:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.4.3
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.5.0
     container_name: gateway
     tty: true
     env_file:
@@ -466,7 +466,7 @@ services:
       - kafka
       - redis
   auth:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.4.3
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.5.0
     container_name: auth
     tty: true
     env_file:
@@ -488,7 +488,7 @@ services:
       - kafka
       - redis
   iot:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-iot-start:3.4.3
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-iot-start:3.5.0
     container_name: iot
     tty: true
     env_file:
@@ -509,7 +509,7 @@ services:
       - kafka
       - redis
   admin:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.4.3
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.5.0
     container_name: admin
     tty: true
     env_file:
@@ -531,7 +531,7 @@ services:
       - kafka
       - redis
   logstash:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.4.3
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.5.0
     container_name: logstash
     tty: true
     env_file:
@@ -550,7 +550,7 @@ services:
       - elasticsearch
       - kafka
   job:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-snail-job:3.4.3
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-snail-job:3.5.0
     container_name: job
     tty: true
     env_file:
@@ -566,7 +566,7 @@ services:
     depends_on:
       - postgresql
   ui:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.4.3
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.5.0
     container_name: ui
     # 保持容器在没有守护程序的情况下运行
     tty: true

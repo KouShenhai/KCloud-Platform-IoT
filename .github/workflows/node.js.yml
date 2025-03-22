@@ -52,7 +52,7 @@ jobs:
           # 使用Dockerfile构建镜像
           docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.5.0
           # 推送镜像到镜像仓库
-          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.4.3
+          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.5.0
       - name: Use Node.js 16.x
         uses: actions/setup-node@v4
         with:
