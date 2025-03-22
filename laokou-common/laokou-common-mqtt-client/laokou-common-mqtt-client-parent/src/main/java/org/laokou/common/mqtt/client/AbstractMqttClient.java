@@ -17,11 +17,21 @@
 
 package org.laokou.common.mqtt.client;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 /**
- * MQTT客户端.
- *
  * @author laokou
  */
-public interface MqttClient {
+public abstract class AbstractMqttClient implements MqttClient {
+
+	/**
+	 * 服务下线主题.
+	 */
+	protected String WILL_TOPIC = "will_topic";
+
+	/**
+	 * 服务下线数据.
+	 */
+	protected byte[] WILL_DATA = "offline".getBytes(UTF_8);
 
 }
