@@ -18,17 +18,19 @@
 package org.laokou.test.mqtt.config;
 
 import io.micrometer.common.lang.NonNullApi;
+import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
 import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
-import org.laokou.common.mqtt.config.PahoMqttClientManager;
+import org.laokou.common.mqtt.config.HivemqMqttClientManager;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -41,26 +43,51 @@ public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 
 	private final List<MessageHandler> messageHandlers;
 
+	private final ExecutorService virtualThreadExecutor;
+
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
-		testPahoMqttClient();
+		// testPahoMqttClient();
+		testHiveMqttClient();
 	}
 
-	private void testPahoMqttClient() {
-		for (int i = 1; i <= 100; i++) {
+	private void testHiveMqttClient() {
+		for (int i = 1; i <= 100000; i++) {
 			MqttBrokerProperties properties = new MqttBrokerProperties();
 			properties.setClientId("test-" + i);
 			properties.setTopics(Set.of("test-topic-" + i));
-			PahoMqttClientManager.add(properties.getClientId(), properties, messageHandlers);
+			HivemqMqttClientManager.add(properties.getClientId(), properties, messageHandlers, virtualThreadExecutor);
 			// 启动MQTT客户端
-			PahoMqttClientManager.open(properties.getClientId());
+			HivemqMqttClientManager.open(properties.getClientId());
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(10);
 			}
 			catch (InterruptedException e) {
 				throw new RuntimeException(e);
 			}
 		}
 	}
+
+	@PreDestroy
+	public void preDestroy() {
+		HivemqMqttClientManager.preDestroy(virtualThreadExecutor);
+	}
+
+	// private void testPahoMqttClient() {
+	// for (int i = 1; i <= 100; i++) {
+	// MqttBrokerProperties properties = new MqttBrokerProperties();
+	// properties.setClientId("test-" + i);
+	// properties.setTopics(Set.of("test-topic-" + i));
+	// PahoMqttClientManager.add(properties.getClientId(), properties, messageHandlers);
+	// // 启动MQTT客户端
+	// PahoMqttClientManager.open(properties.getClientId());
+	// try {
+	// Thread.sleep(1000);
+	// }
+	// catch (InterruptedException e) {
+	// throw new RuntimeException(e);
+	// }
+	// }
+	// }
 
 }

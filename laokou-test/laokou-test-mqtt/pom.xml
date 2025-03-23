@@ -11,10 +11,12 @@
   <version>3.5.0</version>
 
   <dependencies>
+<!--
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-paho-mqtt-client</artifactId>
     </dependency>
+-->
     <dependency>
       <groupId>com.github.ulisesbocchio</groupId>
       <artifactId>jasypt-spring-boot-starter</artifactId>
@@ -54,6 +56,10 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-hivemq-mqtt-client</artifactId>
     </dependency>
   </dependencies>
 

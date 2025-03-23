@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.logstash.consumer.TraceLogConsumer;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
@@ -43,6 +44,7 @@ import java.util.concurrent.ExecutorService;
  * @author laokou
  */
 @Slf4j
+@EnableRedisRepository
 @EnableTaskExecutor
 @EnableDiscoveryClient
 @RequiredArgsConstructor

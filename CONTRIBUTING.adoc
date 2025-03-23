@@ -13,16 +13,16 @@
 - HTTP状态码，在REST中都有特定的意义：200，201，202，204，400，401，403，500。比如401表示用户身份认证失败，403表示没有操作资源的权限
 
 == 提交规范
-- fix：修改bug
-- test：添加或修改测试用例
-- feat：新功能(feature)
-- docs：文档(documentation)
-- chore：构建过程或辅助工具的变动
-- style：格式(不影响代码运行的改动)
-- refactor：重构(即不是新增功能,也不是修改bug的代码变动)
-- build：构建系统或者包依赖更新
-- revert：回滚代码
-- ci：脚本文件配置
+- fix		=>  【名称】修改bug
+- test		=>  【名称】添加或修改测试用例
+- feat		=>  【名称】新功能(feature)
+- docs		=>  【名称】文档(documentation)
+- chore		=>  【名称】构建过程或辅助工具的变动
+- style		=>  【名称】格式(不影响代码运行的改动)
+- refactor  =>  【名称】重构(即不是新增功能,也不是修改bug的代码变动)
+- build		=>  【名称】构建系统或者包依赖更新
+- revert	=>  【名称】回滚代码
+- ci		=>  【名称】脚本文件配置
 
 == 代码规范
 https://koushenhai.github.io/pages/59afe2[COLA代码规范]
