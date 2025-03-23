@@ -9,6 +9,27 @@
     <version>3.5.0</version>
   </parent>
 
+  <properties>
+    <hivemq.version>1.3.5</hivemq.version>
+  </properties>
+
   <artifactId>laokou-common-hivemq-mqtt-client</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.hivemq</groupId>
+      <artifactId>hivemq-mqtt-client-reactor</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.hivemq</groupId>
+      <artifactId>hivemq-mqtt-client-epoll</artifactId>
+      <version>${hivemq.version}</version>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-mqtt-client-parent</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>

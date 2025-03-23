@@ -29,25 +29,55 @@ import java.util.Set;
 @Data
 public class MqttBrokerProperties {
 
+	private boolean auth = true;
+
 	private String username = "emqx";
 
 	private String password = "laokou123";
 
-	private String uri = "tcp://127.0.0.1:1883";
+	private String host = "127.0.0.1";
+
+	private int port = 1883;
 
 	private String clientId = String.valueOf(IdGenerator.defaultSnowflakeId());
 
 	private int subscribeQos = 0;
 
-	private int publishQos = 1;
+	private int publishQos = 0;
+
+	private int willQos = 0;
 
 	private boolean clearStart = false;
 
-	private int receiveMaximum = 200;
+	private int receiveMaximum = 65_535;
 
-	private long maximumPacketSize = 1024 * 1024;
+	private int sendMaximum = 65_535;
 
-	private int connectionTimeout = 30;
+	private int maximumPacketSize = 268_435_460;
+
+	private int sendMaximumPacketSize = 268_435_460;
+
+	private int topicAliasMaximum = 32;
+
+	private int sendTopicAliasMaximum = 64;
+
+	private long messageExpiryInterval = Long.MAX_VALUE;
+
+	private boolean requestProblemInformation = true;
+
+	private boolean requestResponseInformation = true;
+
+	/**
+	 * 秒.
+	 */
+	private int connectionTimeout = 15;
+
+	/**
+	 * 毫秒.
+	 */
+	private int automaticReconnectMaxDelay = 100;
+
+	private long sessionExpiryInterval = 30;
 
 	private int keepAliveInterval = 60;
 

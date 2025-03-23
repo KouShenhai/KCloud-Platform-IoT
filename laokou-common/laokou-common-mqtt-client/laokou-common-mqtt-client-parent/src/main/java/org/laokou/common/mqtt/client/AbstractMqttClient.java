@@ -34,4 +34,22 @@ public abstract class AbstractMqttClient implements MqttClient {
 	 */
 	protected byte[] WILL_DATA = "offline".getBytes(UTF_8);
 
+	protected void checkTopicAndQos(String[] topics, int[] qos, String name) {
+		if (topics == null || qos == null) {
+			throw new IllegalArgumentException("【" + name + "】 => Topics and QoS arrays cannot be null");
+		}
+		if (topics.length != qos.length) {
+			throw new IllegalArgumentException("【" + name + "】 => Topics and QoS arrays must have the same length");
+		}
+		if (topics.length == 0) {
+			throw new IllegalArgumentException("【" + name + "】 => Topics array cannot be empty");
+		}
+	}
+
+	protected void checkTopic(String[] topics, String name) {
+		if (topics.length == 0) {
+			throw new IllegalArgumentException("【" + name + "】 => Topics array cannot be empty");
+		}
+	}
+
 }

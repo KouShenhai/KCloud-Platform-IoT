@@ -60,9 +60,7 @@ public class PahoMqttClient extends AbstractMqttClient {
 
 	private volatile MqttAsyncClient client;
 
-	private final Object OPEN_LOCK = new Object();
-
-	private final Object CLOSE_LOCK = new Object();
+	private final Object LOCK = new Object();
 
 	private final AtomicInteger ATOMIC = new AtomicInteger(0);
 
@@ -76,11 +74,12 @@ public class PahoMqttClient extends AbstractMqttClient {
 	public void open() {
 		try {
 			if (ObjectUtil.isNull(client)) {
-				synchronized (OPEN_LOCK) {
+				synchronized (LOCK) {
 					if (ObjectUtil.isNull(client)) {
 						String clientId = mqttBrokerProperties.getClientId();
-						client = new MqttAsyncClient(mqttBrokerProperties.getUri(), clientId,
-								new MqttDefaultFilePersistence(), null, executor);
+						client = new MqttAsyncClient(
+								"tcp://" + mqttBrokerProperties.getHost() + ":" + mqttBrokerProperties.getPort(),
+								clientId, new MqttDefaultFilePersistence(), null, executor);
 						client.setManualAcks(mqttBrokerProperties.isManualAcks());
 						client.setCallback(new PahoMqttClientMessageCallback(messageHandlers, mqttBrokerProperties));
 						client.connect(options(), null, new MqttActionListener() {
@@ -112,33 +111,21 @@ public class PahoMqttClient extends AbstractMqttClient {
 
 	public void close() {
 		if (ObjectUtil.isNotNull(client)) {
-			synchronized (CLOSE_LOCK) {
-				if (ObjectUtil.isNotNull(client)) {
-					// 等待30秒
-					try {
-						client.disconnectForcibly(30);
-						client.close();
-						log.info("【Paho】 => 关闭MQTT连接成功");
-					}
-					catch (MqttException e) {
-						log.error("【Paho】 => 关闭MQTT连接失败，错误信息：{}", e.getMessage(), e);
-						throw new SystemException("S_Mqtt_CloseError", e.getMessage(), e);
-					}
-				}
+			// 等待30秒
+			try {
+				client.disconnectForcibly(30);
+				client.close();
+				log.info("【Paho】 => 关闭MQTT连接成功");
+			}
+			catch (MqttException e) {
+				log.error("【Paho】 => 关闭MQTT连接失败，错误信息：{}", e.getMessage(), e);
+				throw new SystemException("S_Mqtt_CloseError", e.getMessage(), e);
 			}
 		}
 	}
 
 	public void subscribe(String[] topics, int[] qos) throws MqttException {
-		if (topics == null || qos == null) {
-			throw new IllegalArgumentException("【Paho】 => Topics and QoS arrays cannot be null");
-		}
-		if (topics.length != qos.length) {
-			throw new IllegalArgumentException("【Paho】 => Topics and QoS arrays must have the same length");
-		}
-		if (topics.length == 0) {
-			throw new IllegalArgumentException("【Paho】 => Topics array cannot be empty");
-		}
+		checkTopicAndQos(topics, qos, "Paho");
 		if (ObjectUtil.isNotNull(client)) {
 			client.subscribe(topics, qos, null, new MqttActionListener() {
 				@Override
@@ -157,9 +144,7 @@ public class PahoMqttClient extends AbstractMqttClient {
 	}
 
 	public void unsubscribe(String[] topics) throws MqttException {
-		if (topics.length == 0) {
-			throw new IllegalArgumentException("【Paho】 => Topics array cannot be empty");
-		}
+		checkTopic(topics, "Paho");
 		if (ObjectUtil.isNotNull(client)) {
 			client.unsubscribe(topics, null, new MqttActionListener() {
 				@Override
@@ -193,9 +178,9 @@ public class PahoMqttClient extends AbstractMqttClient {
 		options.setUserName(mqttBrokerProperties.getUsername());
 		options.setPassword(mqttBrokerProperties.getPassword().getBytes(StandardCharsets.UTF_8));
 		options.setReceiveMaximum(mqttBrokerProperties.getReceiveMaximum());
-		options.setMaximumPacketSize(mqttBrokerProperties.getMaximumPacketSize());
+		options.setMaximumPacketSize((long) mqttBrokerProperties.getMaximumPacketSize());
 		options.setWill(WILL_TOPIC,
-				new MqttMessage(WILL_DATA, mqttBrokerProperties.getPublishQos(), false, new MqttProperties()));
+				new MqttMessage(WILL_DATA, mqttBrokerProperties.getWillQos(), false, new MqttProperties()));
 		// 超时时间
 		options.setConnectionTimeout(mqttBrokerProperties.getConnectionTimeout());
 		// 会话心跳

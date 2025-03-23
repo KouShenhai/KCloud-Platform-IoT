@@ -18,7 +18,6 @@
 package org.laokou.common.mqtt.config;
 
 import lombok.RequiredArgsConstructor;
-import org.eclipse.paho.mqttv5.common.MqttException;
 import org.laokou.common.core.utils.ThreadUtil;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
@@ -28,19 +27,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
  */
 @RequiredArgsConstructor
-public class PahoMqttClientManager {
+public class HivemqMqttClientManager {
 
-	private static final Map<String, PahoMqttClient> PAHO_MQTT_CLIENT_MAP = new ConcurrentHashMap<>(4096);
+	private static final Map<String, HivemqMqttClient> PAHO_MQTT_CLIENT_MAP = new ConcurrentHashMap<>(4096);
 
-	private static final ScheduledExecutorService EXECUTOR = ThreadUtil.newScheduledThreadPool(32);
-
-	public static PahoMqttClient get(String clientId) {
+	public static HivemqMqttClient get(String clientId) {
 		if (PAHO_MQTT_CLIENT_MAP.containsKey(clientId)) {
 			return PAHO_MQTT_CLIENT_MAP.get(clientId);
 		}
@@ -52,8 +49,10 @@ public class PahoMqttClientManager {
 		PAHO_MQTT_CLIENT_MAP.remove(clientId);
 	}
 
-	public static void add(String clientId, MqttBrokerProperties properties, List<MessageHandler> messageHandlers) {
-		PAHO_MQTT_CLIENT_MAP.putIfAbsent(clientId, new PahoMqttClient(properties, messageHandlers, EXECUTOR));
+	public static void add(String clientId, MqttBrokerProperties properties, List<MessageHandler> messageHandlers,
+			ExecutorService virtualThreadExecutor) {
+		PAHO_MQTT_CLIENT_MAP.putIfAbsent(clientId,
+				new HivemqMqttClient(properties, messageHandlers, virtualThreadExecutor));
 	}
 
 	public static void open(String clientId) {
@@ -64,11 +63,15 @@ public class PahoMqttClientManager {
 		get(clientId).close();
 	}
 
-	public static void subscribe(String clientId, String[] topics, int[] qos) throws MqttException {
+	public static void subscribe(String clientId, String[] topics, int[] qos) {
 		get(clientId).subscribe(topics, qos);
 	}
 
-	public static void unsubscribe(String clientId, String[] topics) throws MqttException {
+	public static void consume(String clientId) {
+		get(clientId).consume();
+	}
+
+	public static void unsubscribe(String clientId, String[] topics) {
 		get(clientId).unsubscribe(topics);
 	}
 
@@ -88,10 +91,10 @@ public class PahoMqttClientManager {
 		get(clientId).publishCloseEvent(clientId);
 	}
 
-	public static void preDestroy() {
-		PAHO_MQTT_CLIENT_MAP.values().forEach(PahoMqttClient::close);
+	public static void preDestroy(ExecutorService virtualThreadExecutor) {
+		PAHO_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::close);
 		PAHO_MQTT_CLIENT_MAP.clear();
-		ThreadUtil.shutdown(EXECUTOR, 60);
+		ThreadUtil.shutdown(virtualThreadExecutor, 60);
 	}
 
 }

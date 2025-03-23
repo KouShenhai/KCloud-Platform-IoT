@@ -94,19 +94,6 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 			/>
 
 			<ProFormSelect
-				name="dataType"
-				label="数据类型"
-				placeholder={'请选择数据类型'}
-				rules={[{ required: true, message: '请选择数据类型' }]}
-				options={[
-					{value: 'integer', label: '整数型'},
-					{value: 'string', label: '字符串型'},
-					{value: 'decimal', label: '小数型'},
-					{value: 'boolean', label: '布尔型'}
-				]}
-			/>
-
-			<ProFormSelect
 				name="category"
 				label="模型类别"
 				placeholder={'请选择模型类别'}
@@ -128,6 +115,16 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 					{value: 'write', label: '写'},
 					{value: 'report', label: '上报'}
 				]}
+			/>
+
+			<ProFormDigit
+				name="sort"
+				label="排序"
+				readonly={readOnly}
+				placeholder={'请输入排序'}
+				min={1}
+				max={99999}
+				rules={[{ required: true, message: '请输入排序' }]}
 			/>
 
 			<ProFormRadio.Group
@@ -154,15 +151,17 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				/>
 			</ProFormItem>
 
-
-			<ProFormDigit
-				name="sort"
-				label="排序"
-				readonly={readOnly}
-				placeholder={'请输入排序'}
-				min={1}
-				max={99999}
-				rules={[{ required: true, message: '请输入排序' }]}
+			<ProFormSelect
+				name="dataType"
+				label="数据类型"
+				placeholder={'请选择数据类型'}
+				rules={[{ required: true, message: '请选择数据类型' }]}
+				options={[
+					{value: 'integer', label: '整数型'},
+					{value: 'string', label: '字符串型'},
+					{value: 'decimal', label: '小数型'},
+					{value: 'boolean', label: '布尔型'}
+				]}
 			/>
 
 		</DrawerForm>
