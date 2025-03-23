@@ -128,7 +128,7 @@
     <!--zstd-jni版本-->
     <zstd-jni.version>1.5.7-2</zstd-jni.version>
     <!--snail-job版本-->
-    <snail-job.version>1.3.0</snail-job.version>
+    <snail-job.version>1.4.0</snail-job.version>
     <!--feign版本-->
     <feign.version>13.5</feign.version>
     <!--archunit-junit5版本-->
