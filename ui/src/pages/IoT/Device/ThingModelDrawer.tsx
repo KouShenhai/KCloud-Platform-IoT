@@ -1,5 +1,5 @@
 import {DrawerForm, ProFormDigit, ProFormRadio, ProFormSelect, ProFormText} from '@ant-design/pro-components';
-import { message } from 'antd';
+import {Col, message, Row} from 'antd';
 import {modifyV3, saveV3} from "@/services/iot/thingModel";
 import {v7 as uuidV7} from "uuid";
 import React from "react";
@@ -61,7 +61,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 			}}
 			onFinish={ async (value) => {
 				console.log(value)
-				if (value.id === undefined) {
+/*				if (value.id === undefined) {
 					saveV3({co: value}, uuidV7()).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
@@ -77,7 +77,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 							onComponent()
 						}
 					})
-				}
+				}*/
 			}}>
 			<ProFormText
 				readonly={readOnly}
@@ -158,11 +158,45 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				rules={[{ required: true, message: '请选择数据类型' }]}
 				options={[
 					{value: 'integer', label: '整数型'},
-					{value: 'string', label: '字符串型'},
 					{value: 'decimal', label: '小数型'},
-					{value: 'boolean', label: '布尔型'}
+					{value: 'boolean', label: '布尔型'},
+					{value: 'string', label: '字符串型'},
 				]}
 			/>
+
+			<Row gutter={24}>
+				<Col span={12}>
+					<ProFormText
+						readonly={readOnly}
+						name="min"
+						label="最小值"
+						rules={[{ required: true, message: '请输入最小值' }]}
+					/>
+				</Col>
+				<Col span={12}>
+					<ProFormText
+						readonly={readOnly}
+						name="max"
+						label="最大值"
+						rules={[{ required: true, message: '请输入最大值' }]}
+					/>
+				</Col>
+				<Col span={12}>
+					<ProFormText
+						readonly={readOnly}
+						name="length"
+						label="长度"
+						rules={[{ required: true, message: '请输入长度' }]}
+					/>
+				</Col>
+				<Col span={12}>
+					<ProFormText
+						readonly={readOnly}
+						name="unit"
+						label="单位"
+					/>
+				</Col>
+			</Row>
 
 		</DrawerForm>
 	);
