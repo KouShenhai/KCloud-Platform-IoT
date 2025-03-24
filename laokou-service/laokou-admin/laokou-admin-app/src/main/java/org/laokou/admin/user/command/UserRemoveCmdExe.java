@@ -20,6 +20,7 @@ package org.laokou.admin.user.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.dto.UserRemoveCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -37,6 +38,7 @@ public class UserRemoveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public Flux<Void> executeVoid(UserRemoveCmd cmd) {
 		// 校验参数
 		return transactionalUtil.executeResultInTransaction(() -> userDomainService.delete(cmd.getIds()));

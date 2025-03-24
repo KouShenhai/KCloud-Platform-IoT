@@ -19,6 +19,7 @@ package org.laokou.admin.cluster.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.cluster.dto.ClusterExportCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ClusterExportCmdExe {
 
+	@CommandLog
 	public void executeVoid(ClusterExportCmd cmd) {
 		// 校验参数
 	}

@@ -19,6 +19,7 @@ package org.laokou.admin.ossLog.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.ossLog.dto.OssLogExportCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OssLogExportCmdExe {
 
+	@CommandLog
 	public void executeVoid(OssLogExportCmd cmd) {
 		// 校验参数
 	}

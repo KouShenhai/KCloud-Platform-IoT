@@ -19,6 +19,7 @@ package org.laokou.admin.i18nMessage.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.i18nMessage.dto.I18nMessageExportCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class I18nMessageExportCmdExe {
 
+	@CommandLog
 	public void executeVoid(I18nMessageExportCmd cmd) {
 		// 校验参数
 	}

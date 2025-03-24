@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dict.ability.DictDomainService;
 import org.laokou.admin.dict.convertor.DictConvertor;
 import org.laokou.admin.dict.dto.DictSaveCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +38,7 @@ public class DictSaveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(DictSaveCmd cmd) {
 		// 校验参数
 		transactionalUtil.executeInTransaction(() -> dictDomainService.create(DictConvertor.toEntity(cmd.getCo())));

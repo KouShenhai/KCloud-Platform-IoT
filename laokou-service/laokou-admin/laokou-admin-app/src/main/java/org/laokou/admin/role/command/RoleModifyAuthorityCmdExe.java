@@ -23,6 +23,7 @@ import org.laokou.admin.role.dto.RoleModifyAuthorityCmd;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -44,6 +45,7 @@ public class RoleModifyAuthorityCmdExe {
 		this.roleDomainService = roleDomainService;
 	}
 
+	@CommandLog
 	public Flux<Void> executeVoid(RoleModifyAuthorityCmd cmd) throws Exception {
 		RoleCO co = cmd.getCo();
 		RoleE roleE = RoleConvertor.toEntity(co, co.getId());

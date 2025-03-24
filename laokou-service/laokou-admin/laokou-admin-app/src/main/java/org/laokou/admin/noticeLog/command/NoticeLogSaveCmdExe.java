@@ -19,6 +19,7 @@ package org.laokou.admin.noticeLog.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.noticeLog.dto.NoticeLogSaveCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.noticeLog.convertor.NoticeLogConvertor;
@@ -37,6 +38,7 @@ public class NoticeLogSaveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(NoticeLogSaveCmd cmd) {
 		// 校验参数
 		transactionalUtil

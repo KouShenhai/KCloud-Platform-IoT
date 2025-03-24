@@ -23,6 +23,7 @@ import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserResetPwdCmd;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,7 @@ public class UserResetPwdCmdExe {
 		this.transactionalUtil = transactionalUtil;
 	}
 
+	@CommandLog
 	public void executeVoid(UserResetPwdCmd cmd) throws Exception {
 		UserE userE = UserConvertor.toEntity(cmd.getId(), cmd.getPassword());
 		resetPwdUserParamValidator.validate(userE);

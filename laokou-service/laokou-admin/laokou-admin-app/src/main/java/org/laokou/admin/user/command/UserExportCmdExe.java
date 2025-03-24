@@ -19,6 +19,7 @@ package org.laokou.admin.user.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.dto.UserExportCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserExportCmdExe {
 
+	@CommandLog
 	public void executeVoid(UserExportCmd cmd) {
 		// 校验参数
 	}

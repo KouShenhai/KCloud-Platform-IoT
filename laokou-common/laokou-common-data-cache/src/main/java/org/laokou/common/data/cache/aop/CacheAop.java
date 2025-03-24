@@ -103,6 +103,10 @@ public class CacheAop {
 			}
 			return point.proceed();
 		}
+		catch (SystemException | BizException | ParamException e) {
+			// 系统异常/业务异常/参数异常直接捕获并抛出
+			throw e;
+		}
 		catch (Throwable e) {
 			log.error("获取缓存失败", e);
 			throw new SystemException("S_Cache_GetError", "获取缓存失败", e);
@@ -136,7 +140,7 @@ public class CacheAop {
 		}
 		catch (Throwable e) {
 			log.error("获取缓存失败，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_Cache_GetError", String.format("获取缓存失败，%s", e.getMessage()), e);
+			throw new SystemException("S_Cache_DelError", String.format("删除缓存失败，%s", e.getMessage()), e);
 		}
 		finally {
 			if (isLocked) {

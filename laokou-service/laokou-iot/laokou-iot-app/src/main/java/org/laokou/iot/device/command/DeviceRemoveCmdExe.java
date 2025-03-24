@@ -18,6 +18,7 @@
 package org.laokou.iot.device.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.device.dto.DeviceRemoveCmd;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,7 @@ public class DeviceRemoveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(DeviceRemoveCmd cmd) {
 		// 校验参数
 		transactionalUtil.executeInTransaction(() -> deviceDomainService.delete(cmd.getIds()));

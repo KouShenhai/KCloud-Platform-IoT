@@ -19,6 +19,7 @@ package org.laokou.admin.ip.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.ip.dto.IpImportCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class IpImportCmdExe {
 
+	@CommandLog
 	public void executeVoid(IpImportCmd cmd) {
 		// 校验参数
 	}

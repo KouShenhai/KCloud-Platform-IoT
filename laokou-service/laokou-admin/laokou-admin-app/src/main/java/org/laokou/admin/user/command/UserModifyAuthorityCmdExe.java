@@ -23,6 +23,7 @@ import org.laokou.admin.user.dto.UserModifyAuthorityCmd;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -44,6 +45,7 @@ public class UserModifyAuthorityCmdExe {
 		this.userDomainService = userDomainService;
 	}
 
+	@CommandLog
 	public Flux<Void> executeVoid(UserModifyAuthorityCmd cmd) throws Exception {
 		// 校验参数
 		UserCO co = cmd.getCo();

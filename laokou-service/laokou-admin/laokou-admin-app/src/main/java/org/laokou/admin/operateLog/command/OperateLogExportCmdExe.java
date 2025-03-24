@@ -23,6 +23,7 @@ import org.laokou.admin.operateLog.convertor.OperateLogConvertor;
 import org.laokou.admin.operateLog.dto.OperateLogExportCmd;
 import org.laokou.admin.operateLog.dto.excel.OperateLogExcel;
 import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.excel.utils.ExcelUtil;
 import org.laokou.common.log.database.OperateLogMapper;
 import org.springframework.stereotype.Component;
@@ -42,6 +43,7 @@ public class OperateLogExportCmdExe {
 
 	private final OperateLogMapper operateLogMapper;
 
+	@CommandLog
 	public void executeVoid(OperateLogExportCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push("domain");

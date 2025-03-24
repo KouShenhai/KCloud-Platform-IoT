@@ -20,6 +20,7 @@ package org.laokou.admin.operateLog.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.operateLog.ability.OperateLogDomainService;
 import org.laokou.admin.operateLog.dto.OperateLogRemoveCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -36,6 +37,7 @@ public class OperateLogRemoveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(OperateLogRemoveCmd cmd) {
 		// 校验参数
 		transactionalUtil.executeInTransaction(() -> operateLogDomainService.delete(cmd.getIds()));

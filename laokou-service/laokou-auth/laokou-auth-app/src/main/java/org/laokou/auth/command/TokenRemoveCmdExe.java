@@ -19,6 +19,7 @@ package org.laokou.auth.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.TokenRemoveCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.utils.ObjectUtil;
 import org.laokou.common.i18n.utils.StringUtil;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
@@ -41,6 +42,7 @@ public class TokenRemoveCmdExe {
 	 * 执行退出登录.
 	 * @param cmd 退出登录参数
 	 */
+	@CommandLog
 	public void executeVoid(TokenRemoveCmd cmd) {
 		String token = cmd.getToken();
 		if (StringUtil.isEmpty(token)) {

@@ -19,6 +19,7 @@ package org.laokou.admin.dictItem.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dictItem.dto.DictItemSaveCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.dictItem.convertor.DictItemConvertor;
@@ -37,6 +38,7 @@ public class DictItemSaveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(DictItemSaveCmd cmd) {
 		// 校验参数
 		transactionalUtil

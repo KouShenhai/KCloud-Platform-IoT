@@ -18,6 +18,7 @@
 package org.laokou.iot.transportProtocol.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.iot.transportProtocol.dto.TransportProtocolImportCmd;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TransportProtocolImportCmdExe {
 
+	@CommandLog
 	public void executeVoid(TransportProtocolImportCmd cmd) {
 		// 校验参数
 	}

@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.oss.ability.OssDomainService;
 import org.laokou.admin.oss.convertor.OssConvertor;
 import org.laokou.admin.oss.dto.OssSaveCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +38,7 @@ public class OssSaveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(OssSaveCmd cmd) {
 		// 校验参数
 		transactionalUtil.executeInTransaction(() -> ossDomainService.create(OssConvertor.toEntity(cmd.getCo())));

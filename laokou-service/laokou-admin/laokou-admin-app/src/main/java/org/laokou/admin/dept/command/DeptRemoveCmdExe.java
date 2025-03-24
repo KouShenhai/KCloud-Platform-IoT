@@ -19,6 +19,7 @@ package org.laokou.admin.dept.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.dto.DeptRemoveCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.dept.ability.DeptDomainService;
@@ -36,6 +37,7 @@ public class DeptRemoveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(DeptRemoveCmd cmd) {
 		// 校验参数
 		transactionalUtil.executeInTransaction(() -> deptDomainService.delete(cmd.getIds()));

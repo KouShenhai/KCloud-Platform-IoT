@@ -18,6 +18,7 @@
 package org.laokou.iot.productCategory.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.productCategory.dto.ProductCategoryModifyCmd;
 import org.springframework.stereotype.Component;
@@ -38,6 +39,7 @@ public class ProductCategoryModifyCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(ProductCategoryModifyCmd cmd) {
 		// 校验参数
 		transactionalUtil.executeInTransaction(

@@ -19,6 +19,7 @@ package org.laokou.admin.source.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.source.dto.SourceImportCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SourceImportCmdExe {
 
+	@CommandLog
 	public void executeVoid(SourceImportCmd cmd) {
 		// 校验参数
 	}
