@@ -29,11 +29,7 @@ import com.alibaba.nacos.api.naming.pojo.ListView;
 import com.alibaba.nacos.api.naming.pojo.ServiceInfo;
 import com.alibaba.nacos.api.naming.selector.NamingSelector;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Properties;
 
@@ -48,10 +44,6 @@ import java.util.Properties;
 public final class NamingUtil {
 
 	private final NacosServiceManager nacosServiceManager;
-
-	private final LoadBalancerClient loadBalancerClient;
-
-	private final DiscoveryClient nacosDiscoveryClient;
 
 	/**
 	 * 创建服务发现.
@@ -89,32 +81,6 @@ public final class NamingUtil {
 	 */
 	public boolean isNacosDiscoveryInfoChanged(NacosDiscoveryProperties currentNacosDiscoveryPropertiesCache) {
 		return nacosServiceManager.isNacosDiscoveryInfoChanged(currentNacosDiscoveryPropertiesCache);
-	}
-
-	/**
-	 * 查询服务列表.
-	 * @return 服务列表
-	 */
-	public List<String> getServices() {
-		return nacosDiscoveryClient.getServices();
-	}
-
-	/**
-	 * 查询服务实例列表.
-	 * @param serviceId 服务ID
-	 * @return 服务实例列表
-	 */
-	public List<ServiceInstance> getInstances(String serviceId) {
-		return nacosDiscoveryClient.getInstances(serviceId);
-	}
-
-	/**
-	 * 通过负载均衡获取服务实例.
-	 * @param serviceId 服务ID
-	 * @return 服务实例
-	 */
-	public ServiceInstance getInstance(String serviceId) {
-		return loadBalancerClient.choose(serviceId);
 	}
 
 	/**

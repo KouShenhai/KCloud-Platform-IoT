@@ -51,7 +51,7 @@ class CommonTest {
 	protected MockMvc mockMvc;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(TOKEN, FULL);
 		Assertions.assertNotNull(authorization);
