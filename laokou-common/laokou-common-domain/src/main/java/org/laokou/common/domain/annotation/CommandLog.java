@@ -15,25 +15,16 @@
  *
  */
 
-package org.laokou.admin.source.command;
+package org.laokou.common.domain.annotation;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.source.dto.SourceExportCmd;
-import org.laokou.common.domain.annotation.CommandLog;
-import org.springframework.stereotype.Component;
+import java.lang.annotation.*;
 
 /**
- * 导出数据源命令执行器.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class SourceExportCmdExe {
-
-	@CommandLog
-	public void executeVoid(SourceExportCmd cmd) {
-		// 校验参数
-	}
+@Target({ ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface CommandLog {
 
 }

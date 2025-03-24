@@ -23,6 +23,7 @@ import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuModifyCmd;
 import org.laokou.admin.menu.model.MenuE;
 import org.laokou.admin.menu.service.extensionpoint.MenuParamValidatorExtPt;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -50,6 +51,7 @@ public class MenuModifyCmdExe {
 		this.transactionalUtil = transactionalUtil;
 	}
 
+	@CommandLog
 	public void executeVoid(MenuModifyCmd cmd) {
 		// 校验参数
 		MenuE menuE = MenuConvertor.toEntity(cmd.getCo());

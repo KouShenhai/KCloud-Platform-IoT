@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.source.ability.SourceDomainService;
 import org.laokou.admin.source.convertor.SourceConvertor;
 import org.laokou.admin.source.dto.SourceModifyCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +38,7 @@ public class SourceModifyCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(SourceModifyCmd cmd) {
 		// 校验参数
 		transactionalUtil.executeInTransaction(() -> sourceDomainService.update(SourceConvertor.toEntity(cmd.getCo())));

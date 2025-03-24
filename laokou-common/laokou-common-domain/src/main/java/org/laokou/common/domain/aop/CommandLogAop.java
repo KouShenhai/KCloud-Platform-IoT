@@ -15,25 +15,38 @@
  *
  */
 
-package org.laokou.admin.source.command;
+package org.laokou.common.domain.aop;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.source.dto.SourceExportCmd;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.domain.annotation.CommandLog;
+import org.laokou.common.i18n.dto.Command;
 import org.springframework.stereotype.Component;
 
 /**
- * 导出数据源命令执行器.
- *
  * @author laokou
  */
+@Slf4j
+@Aspect
 @Component
 @RequiredArgsConstructor
-public class SourceExportCmdExe {
+public class CommandLogAop {
 
-	@CommandLog
-	public void executeVoid(SourceExportCmd cmd) {
-		// 校验参数
+	@Around("@annotation(commandLog)")
+	public Object doAround(ProceedingJoinPoint joinPoint, CommandLog commandLog) throws Throwable {
+		Command cmd = (Command) joinPoint.getArgs()[0];
+		try {
+			Object proceed = joinPoint.proceed();
+			log.info("命令【{}】执行成功", cmd.getClass().getName());
+			return proceed;
+		}
+		catch (Throwable throwable) {
+			log.error("命令【{}】执行失败，错误信息：{}", cmd.getClass().getName(), throwable.getMessage(), throwable);
+			throw throwable;
+		}
 	}
 
 }

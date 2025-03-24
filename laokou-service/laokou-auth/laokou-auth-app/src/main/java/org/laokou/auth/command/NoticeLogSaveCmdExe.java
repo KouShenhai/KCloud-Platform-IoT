@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.NoticeLogConvertor;
 import org.laokou.auth.dto.NoticeLogSaveCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -38,6 +39,7 @@ public class NoticeLogSaveCmdExe {
 	private final TransactionalUtil transactionalUtil;
 
 	@Async
+	@CommandLog
 	public void executeVoid(NoticeLogSaveCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push("domain");

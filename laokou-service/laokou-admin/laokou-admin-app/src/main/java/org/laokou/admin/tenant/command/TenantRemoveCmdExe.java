@@ -20,6 +20,7 @@ package org.laokou.admin.tenant.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.tenant.ability.TenantDomainService;
 import org.laokou.admin.tenant.dto.TenantRemoveCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -36,6 +37,7 @@ public class TenantRemoveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(TenantRemoveCmd cmd) {
 		// 校验参数
 		transactionalUtil.executeInTransaction(() -> tenantDomainService.delete(cmd.getIds()));

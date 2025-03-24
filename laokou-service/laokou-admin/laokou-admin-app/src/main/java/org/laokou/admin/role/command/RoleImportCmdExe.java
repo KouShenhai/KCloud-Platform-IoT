@@ -19,6 +19,7 @@ package org.laokou.admin.role.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.dto.RoleImportCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RoleImportCmdExe {
 
+	@CommandLog
 	public void executeVoid(RoleImportCmd cmd) {
 		// 校验参数
 	}

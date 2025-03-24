@@ -23,6 +23,7 @@ import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserModifyCmd;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ public class UserModifyCmdExe {
 		this.transactionalUtil = transactionalUtil;
 	}
 
+	@CommandLog
 	public void executeVoid(UserModifyCmd cmd) throws Exception {
 		// 校验参数
 		UserE userE = UserConvertor.toEntity(cmd.getCo());

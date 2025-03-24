@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.i18nMessage.ability.I18nMessageDomainService;
 import org.laokou.admin.i18nMessage.convertor.I18nMessageConvertor;
 import org.laokou.admin.i18nMessage.dto.I18nMessageModifyCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +38,7 @@ public class I18nMessageModifyCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(I18nMessageModifyCmd cmd) {
 		// 校验参数
 		transactionalUtil

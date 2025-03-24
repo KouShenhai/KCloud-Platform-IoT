@@ -19,6 +19,7 @@ package org.laokou.admin.dept.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.dto.DeptImportCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DeptImportCmdExe {
 
+	@CommandLog
 	public void executeVoid(DeptImportCmd cmd) {
 		// 校验参数
 	}

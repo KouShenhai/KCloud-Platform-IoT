@@ -19,6 +19,7 @@ package org.laokou.admin.user.convertor;
 
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
+import org.laokou.admin.user.factory.UserDomainFactory;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
@@ -156,7 +157,7 @@ public final class UserConvertor {
 	}
 
 	public static UserE toEntity(UserCO userCO) {
-		UserE userE = new UserE();
+		UserE userE = UserDomainFactory.getUser();
 		userE.setId(userCO.getId());
 		userE.setUsername(userCO.getUsername());
 		userE.setSuperAdmin(userCO.getSuperAdmin());
@@ -169,7 +170,7 @@ public final class UserConvertor {
 	}
 
 	public static UserE toEntity(UserCO userCO, Long id) {
-		UserE userE = new UserE();
+		UserE userE = UserDomainFactory.getUser();
 		userE.setId(id);
 		userE.setUserIds(Collections.singletonList(id));
 		userE.setRoleIds(userCO.getRoleIds());
@@ -178,7 +179,7 @@ public final class UserConvertor {
 	}
 
 	public static UserE toEntity(Long id, String password) {
-		UserE userE = new UserE();
+		UserE userE = UserDomainFactory.getUser();
 		userE.setId(id);
 		userE.setPassword(password);
 		return userE;

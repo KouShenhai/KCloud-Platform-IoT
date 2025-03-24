@@ -19,6 +19,7 @@ package org.laokou.admin.menu.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.dto.MenuExportCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MenuExportCmdExe {
 
+	@CommandLog
 	public void executeVoid(MenuExportCmd cmd) {
 		// 校验参数
 	}

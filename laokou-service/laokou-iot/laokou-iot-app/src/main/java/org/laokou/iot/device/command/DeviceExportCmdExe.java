@@ -18,6 +18,7 @@
 package org.laokou.iot.device.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.iot.device.dto.DeviceExportCmd;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DeviceExportCmdExe {
 
+	@CommandLog
 	public void executeVoid(DeviceExportCmd cmd) {
 		// 校验参数
 	}

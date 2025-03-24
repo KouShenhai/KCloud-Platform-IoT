@@ -20,6 +20,7 @@ package org.laokou.admin.dept.command;
 import org.laokou.admin.dept.dto.DeptModifyCmd;
 import org.laokou.admin.dept.model.DeptE;
 import org.laokou.admin.dept.service.extensionpoint.DeptParamValidatorExtPt;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,6 +49,7 @@ public class DeptModifyCmdExe {
 		this.transactionalUtil = transactionalUtil;
 	}
 
+	@CommandLog
 	public void executeVoid(DeptModifyCmd cmd) {
 		// 校验参数
 		DeptE deptE = DeptConvertor.toEntity(cmd.getCo());

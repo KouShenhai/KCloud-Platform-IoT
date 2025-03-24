@@ -19,6 +19,7 @@ package org.laokou.admin.dictItem.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dictItem.dto.DictItemRemoveCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.dictItem.ability.DictItemDomainService;
@@ -36,6 +37,7 @@ public class DictItemRemoveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(DictItemRemoveCmd cmd) {
 		// 校验参数
 		transactionalUtil.executeInTransaction(() -> dictItemDomainService.delete(cmd.getIds()));

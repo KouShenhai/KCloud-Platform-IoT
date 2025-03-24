@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.ossLog.ability.OssLogDomainService;
 import org.laokou.admin.ossLog.convertor.OssLogConvertor;
 import org.laokou.admin.ossLog.dto.OssLogModifyCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +38,7 @@ public class OssLogModifyCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(OssLogModifyCmd cmd) {
 		// 校验参数
 		transactionalUtil.executeInTransaction(() -> ossLogDomainService.update(OssLogConvertor.toEntity(cmd.getCo())));

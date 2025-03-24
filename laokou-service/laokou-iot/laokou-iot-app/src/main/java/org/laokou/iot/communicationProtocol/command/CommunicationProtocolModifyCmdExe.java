@@ -18,6 +18,7 @@
 package org.laokou.iot.communicationProtocol.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.laokou.iot.communicationProtocol.dto.CommunicationProtocolModifyCmd;
 import org.springframework.stereotype.Component;
@@ -38,6 +39,7 @@ public class CommunicationProtocolModifyCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(CommunicationProtocolModifyCmd cmd) {
 		// 校验参数
 		transactionalUtil.executeInTransaction(

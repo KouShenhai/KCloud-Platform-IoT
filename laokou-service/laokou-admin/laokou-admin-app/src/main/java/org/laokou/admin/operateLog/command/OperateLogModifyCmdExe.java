@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.operateLog.ability.OperateLogDomainService;
 import org.laokou.admin.operateLog.convertor.OperateLogConvertor;
 import org.laokou.admin.operateLog.dto.OperateLogModifyCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +38,7 @@ public class OperateLogModifyCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(OperateLogModifyCmd cmd) {
 		// 校验参数
 		transactionalUtil

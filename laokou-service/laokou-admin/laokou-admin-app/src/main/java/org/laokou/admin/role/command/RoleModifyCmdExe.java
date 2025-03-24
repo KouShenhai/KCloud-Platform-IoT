@@ -22,6 +22,7 @@ import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleModifyCmd;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -49,6 +50,7 @@ public class RoleModifyCmdExe {
 		this.transactionalUtil = transactionalUtil;
 	}
 
+	@CommandLog
 	public Mono<Void> executeVoid(RoleModifyCmd cmd) {
 		// 校验参数
 		RoleE roleE = RoleConvertor.toEntity(cmd.getCo());

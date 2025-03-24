@@ -19,6 +19,7 @@ package org.laokou.admin.dictItem.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dictItem.dto.DictItemExportCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DictItemExportCmdExe {
 
+	@CommandLog
 	public void executeVoid(DictItemExportCmd cmd) {
 		// 校验参数
 	}

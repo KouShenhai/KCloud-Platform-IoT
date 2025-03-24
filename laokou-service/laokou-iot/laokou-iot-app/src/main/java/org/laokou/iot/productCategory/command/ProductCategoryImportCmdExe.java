@@ -18,6 +18,7 @@
 package org.laokou.iot.productCategory.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.iot.productCategory.dto.ProductCategoryImportCmd;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ProductCategoryImportCmdExe {
 
+	@CommandLog
 	public void executeVoid(ProductCategoryImportCmd cmd) {
 		// 校验参数
 	}

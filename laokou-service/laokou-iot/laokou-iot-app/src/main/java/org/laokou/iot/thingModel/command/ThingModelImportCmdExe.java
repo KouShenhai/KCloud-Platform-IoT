@@ -18,6 +18,7 @@
 package org.laokou.iot.thingModel.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.iot.thingModel.dto.ThingModelImportCmd;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ThingModelImportCmdExe {
 
+	@CommandLog
 	public void executeVoid(ThingModelImportCmd cmd) {
 		// 校验参数
 	}

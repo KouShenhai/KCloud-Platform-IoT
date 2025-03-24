@@ -20,6 +20,7 @@ package org.laokou.admin.ip.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.ip.ability.IpDomainService;
 import org.laokou.admin.ip.dto.IpRemoveCmd;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.utils.TransactionalUtil;
 import org.springframework.stereotype.Component;
 
@@ -36,6 +37,7 @@ public class IpRemoveCmdExe {
 
 	private final TransactionalUtil transactionalUtil;
 
+	@CommandLog
 	public void executeVoid(IpRemoveCmd cmd) {
 		// 校验参数
 		transactionalUtil.executeInTransaction(() -> ipDomainService.delete(cmd.getIds()));

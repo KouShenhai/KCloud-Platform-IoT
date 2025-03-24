@@ -26,6 +26,7 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.CaptchaE;
 import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
 import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
@@ -48,6 +49,7 @@ public class CaptchaSendCmdExe {
 
 	private final DomainService domainService;
 
+	@CommandLog
 	public void executeVoid(CaptchaSendCmd cmd) {
 		// 校验参数
 		CaptchaE entity = CaptchaConvertor.toEntity(cmd.getCo());

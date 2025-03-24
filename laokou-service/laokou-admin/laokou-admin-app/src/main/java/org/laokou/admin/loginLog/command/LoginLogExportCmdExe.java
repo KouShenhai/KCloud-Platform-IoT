@@ -24,6 +24,7 @@ import org.laokou.admin.loginLog.dto.LoginLogExportCmd;
 import org.laokou.admin.loginLog.dto.excel.LoginLogExcel;
 import org.laokou.admin.loginLog.gatewayimpl.database.LoginLogMapper;
 import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.excel.utils.ExcelUtil;
 import org.springframework.stereotype.Component;
 
@@ -42,6 +43,7 @@ public class LoginLogExportCmdExe {
 
 	private final ExecutorService virtualThreadExecutor;
 
+	@CommandLog
 	public void executeVoid(LoginLogExportCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push("domain");
