@@ -15,30 +15,18 @@
  *
  */
 
-package org.laokou.common.core;
+package org.laokou.common.nacos;
 
-import jakarta.servlet.http.HttpServletRequest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.utils.IpUtil;
-
-import static org.laokou.common.core.utils.IpUtil.LOCAL_IPV4;
-import static org.laokou.common.core.utils.IpUtil.UNKNOWN_IP;
-import static org.mockito.Mockito.mock;
 
 /**
  * @author laokou
  */
-class IpUtilTest {
+class ConfigUtilTest {
 
 	@Test
-	void testIp() {
-		HttpServletRequest request = mock(HttpServletRequest.class);
-		Assertions.assertNotNull(request);
-		String ip = IpUtil.getIpAddr(request);
-		Assertions.assertEquals(LOCAL_IPV4, ip);
-		ip = IpUtil.getIpAddr(null);
-		Assertions.assertEquals(UNKNOWN_IP, ip);
+	void testCreateConfigService() {
+
 	}
 
 }

@@ -36,14 +36,25 @@ public final class ConfigUtil {
 
 	private final NacosConfigManager nacosConfigManager;
 
+	/**
+	 * 获取分组名称.
+	 */
 	public String getGroup() {
 		return nacosConfigManager.getNacosConfigProperties().getGroup();
 	}
 
+	/**
+	 * 创建配置服务.
+	 * @param serverAddr 服务地址
+	 */
 	public static ConfigService createConfigService(String serverAddr) throws NacosException {
 		return NacosFactory.createConfigService(serverAddr);
 	}
 
+	/**
+	 * 创建服务地址.
+	 * @param properties 配置
+	 */
 	public static ConfigService createConfigService(Properties properties) throws NacosException {
 		return NacosFactory.createConfigService(properties);
 	}
@@ -151,16 +162,33 @@ public final class ConfigUtil {
 	}
 	// @formatter:on
 
+	// @formatter:off
+	/**
+	 * 移除配置.
+	 * @param dataId 配置 ID，采用类似 package.class（如com.taobao.tc.refund.log.level）的命名规则保证全局唯一性，class 部分建议是配置的业务含义。全部字符小写。只允许英文字符和 4 种特殊字符（”.”、”:”、”-”、”_”），不超过 256 字节
+	 * @param group 配置分组，建议填写产品名:模块名（Nacos）保证唯一性，只允许英文字符和4种特殊字符（”.”、”:”、”-”、”_”），不超过 128 字节
+	 */
 	public boolean removeConfig(String dataId, String group) throws NacosException {
 		return getConfigService().removeConfig(dataId, group);
 	}
+	// @formatter:on
 
+	// @formatter:off
+	/**
+	 * 获取服务状态.
+	 */
 	public String getServerStatus() {
 		return getConfigService().getServerStatus();
 	}
+	// @formatter:on
 
+	// @formatter:off
+	/**
+	 * 获取配置服务.
+	 */
 	private ConfigService getConfigService() {
 		return nacosConfigManager.getConfigService();
 	}
+	// @formatter:on
 
 }

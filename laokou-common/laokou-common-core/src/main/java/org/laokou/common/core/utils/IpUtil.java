@@ -40,7 +40,7 @@ public final class IpUtil {
 	/**
 	 * 未知IP.
 	 */
-	private static final String UNKNOWN_IP = "unknown";
+	public static final String UNKNOWN_IP = "unknown";
 
 	/**
 	 * 本地IP-IPV6.
@@ -75,8 +75,7 @@ public final class IpUtil {
 		if (conditionNull(ip)) {
 			ip = request.getRemoteAddr();
 		}
-		return LOCAL_IPV6.equals(ip) || ip.contains(LOCAL_IPV6) || StringUtil.isEmpty(ip) ? LOCAL_IPV4
-				: ip.split(COMMA)[0];
+		return ObjectUtil.equals(LOCAL_IPV6, ip) || StringUtil.isEmpty(ip) ? LOCAL_IPV4 : ip.split(COMMA)[0];
 	}
 
 	/**

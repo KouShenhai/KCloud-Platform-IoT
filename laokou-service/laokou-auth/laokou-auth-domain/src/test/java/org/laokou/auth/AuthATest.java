@@ -26,6 +26,7 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.InfoV;
 import org.laokou.auth.model.UserE;
 import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.utils.RedisKeyUtil;
 import org.mockito.Mockito;
 import org.springframework.util.DigestUtils;
 
@@ -107,9 +108,9 @@ class AuthATest {
 	void testCheckCaptcha() {
 		CaptchaGateway captchaGateway = mock(CaptchaGateway.class);
 		// 构造验证码校验
-		doReturn(true).when(captchaGateway).validate("5afa575608f21c0feac971f696132d6b", "1234");
-		doReturn(true).when(captchaGateway).validate("bd4b7e1f8b63d0b30ba136095dfa83d4", "123456");
-		doReturn(true).when(captchaGateway).validate("c538bfb1fc116d2a75109f56b00e5199", "123456");
+		doReturn(true).when(captchaGateway).validate(RedisKeyUtil.getUsernamePasswordAuthCaptchaKey("1"), "1234");
+		doReturn(true).when(captchaGateway).validate(RedisKeyUtil.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
+		doReturn(true).when(captchaGateway).validate(RedisKeyUtil.getMobileAuthCaptchaKey("18888888888"), "123456");
 		// 校验验证码【用户名密码登录】
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		auth.checkCaptcha(captchaGateway::validate);
@@ -120,9 +121,9 @@ class AuthATest {
 		auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
 		auth.checkCaptcha(captchaGateway::validate);
 		// 校验调用次数
-		verify(captchaGateway, times(1)).validate("5afa575608f21c0feac971f696132d6b", "1234");
-		verify(captchaGateway, times(1)).validate("bd4b7e1f8b63d0b30ba136095dfa83d4", "123456");
-		verify(captchaGateway, times(1)).validate("c538bfb1fc116d2a75109f56b00e5199", "123456");
+		verify(captchaGateway, times(1)).validate(RedisKeyUtil.getUsernamePasswordAuthCaptchaKey("1"), "1234");
+		verify(captchaGateway, times(1)).validate(RedisKeyUtil.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
+		verify(captchaGateway, times(1)).validate(RedisKeyUtil.getMobileAuthCaptchaKey("18888888888"), "123456");
 	}
 
 	@Test
