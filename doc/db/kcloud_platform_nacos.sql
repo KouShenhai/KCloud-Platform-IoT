@@ -3424,6 +3424,8 @@ props:
   # 显示SQL语句
   sql-show: true', 'b9fc8e8c42efd77d4029eaa4f9794bae', '2024-10-26 19:01:28.101', '2025-03-12 11:53:33.869', 'nacos', '0:0:0:0:0:0:0:1', '', '', '', '', '', 'yaml', '', '');
 
+INSERT INTO "public"."config_info" OVERRIDING SYSTEM VALUE VALUES (214, 'test.yaml', 'DEFAULT_GROUP', 'test: 123', '5e76b5e94b54e1372f8b452ef64dc55c', '2025-03-24 20:47:39.432', '2025-03-24 20:47:39.432', 'nacos', '0:0:0:0:0:0:0:1', '', '', NULL, NULL, NULL, 'yaml', NULL, '');
+
 
 -- ----------------------------
 -- Primary Key structure for table users
