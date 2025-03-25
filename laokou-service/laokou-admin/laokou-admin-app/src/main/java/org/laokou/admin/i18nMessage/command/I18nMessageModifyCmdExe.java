@@ -22,7 +22,7 @@ import org.laokou.admin.i18nMessage.ability.I18nMessageDomainService;
 import org.laokou.admin.i18nMessage.convertor.I18nMessageConvertor;
 import org.laokou.admin.i18nMessage.dto.I18nMessageModifyCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,12 +36,12 @@ public class I18nMessageModifyCmdExe {
 
 	private final I18nMessageDomainService i18nMessageDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(I18nMessageModifyCmd cmd) {
 		// 校验参数
-		transactionalUtil
+		transactionalUtils
 			.executeInTransaction(() -> i18nMessageDomainService.update(I18nMessageConvertor.toEntity(cmd.getCo())));
 	}
 

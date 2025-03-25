@@ -35,7 +35,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import static org.laokou.common.data.cache.constant.NameConstant.SOURCES;
+import static org.laokou.common.data.cache.constant.NameConstants.SOURCES;
 import static org.laokou.common.data.cache.constant.Type.DEL;
 
 /**

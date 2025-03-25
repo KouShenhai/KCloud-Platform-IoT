@@ -22,8 +22,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.core.util.IdGenerator;
+import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -54,7 +54,7 @@ final class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
-			HttpServletRequest request = RequestUtil.getHttpServletRequest();
+			HttpServletRequest request = RequestUtils.getHttpServletRequest();
 			String password = request.getParameter(PASSWORD);
 			String tenantCode = request.getParameter(TENANT_CODE);
 			AuthA auth = DomainFactory.getAuthorizationCodeAuth(IdGenerator.defaultSnowflakeId(), username, password,

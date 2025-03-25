@@ -17,7 +17,7 @@
 
 package org.laokou.iot.communicationProtocol.convertor;
 
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.util.IdGenerator;
 import org.laokou.iot.communicationProtocol.dto.clientobject.CommunicationProtocolCO;
 import org.laokou.iot.communicationProtocol.gatewayimpl.database.dataobject.CommunicationProtocolDO;
 import org.laokou.iot.communicationProtocol.model.CommunicationProtocolE;

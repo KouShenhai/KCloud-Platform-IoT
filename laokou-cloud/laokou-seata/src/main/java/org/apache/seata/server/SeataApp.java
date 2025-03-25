@@ -18,7 +18,7 @@
 package org.apache.seata.server;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.common.i18n.util.SslUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -34,7 +34,7 @@ public class SeataApp {
 
 	public static void main(String[] args) throws NoSuchAlgorithmException, KeyManagementException {
 		// 忽略SSL认证
-		SslUtil.ignoreSSLTrust();
+		SslUtils.ignoreSSLTrust();
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		SpringApplication.run(SeataApp.class, args);

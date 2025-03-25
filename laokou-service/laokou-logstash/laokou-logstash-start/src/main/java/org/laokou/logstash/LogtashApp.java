@@ -21,7 +21,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
-import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.logstash.consumer.TraceLogConsumer;
 import org.springframework.boot.CommandLineRunner;
@@ -70,7 +70,7 @@ public class LogtashApp implements CommandLineRunner {
 		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494
 		System.setProperty("management.health.sentinel.enabled", "false");
 		// 忽略SSL认证
-		SslUtil.ignoreSSLTrust();
+		SslUtils.ignoreSSLTrust();
 		new SpringApplicationBuilder(LogtashApp.class).web(WebApplicationType.REACTIVE).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());

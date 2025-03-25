@@ -33,7 +33,7 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.TRUE;
+import static org.laokou.common.i18n.common.constant.StringConstants.TRUE;
 
 /**
  * 跨域配置.

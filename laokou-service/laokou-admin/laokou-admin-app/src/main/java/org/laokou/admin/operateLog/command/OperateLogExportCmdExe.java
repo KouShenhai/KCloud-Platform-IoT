@@ -22,10 +22,10 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.operateLog.convertor.OperateLogConvertor;
 import org.laokou.admin.operateLog.dto.OperateLogExportCmd;
 import org.laokou.admin.operateLog.dto.excel.OperateLogExcel;
-import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.excel.utils.ExcelUtil;
-import org.laokou.common.log.database.OperateLogMapper;
+import org.laokou.common.log.mapper.OperateLogMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ExecutorService;
@@ -47,7 +47,7 @@ public class OperateLogExportCmdExe {
 	public void executeVoid(OperateLogExportCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push("domain");
-			ExcelUtil.doExport("操作日志", "操作日志", ResponseUtil.getHttpServletResponse(), cmd, operateLogMapper,
+			ExcelUtil.doExport("操作日志", "操作日志", ResponseUtils.getHttpServletResponse(), cmd, operateLogMapper,
 					OperateLogExcel.class, OperateLogConvertor.INSTANCE, virtualThreadExecutor);
 		}
 		finally {

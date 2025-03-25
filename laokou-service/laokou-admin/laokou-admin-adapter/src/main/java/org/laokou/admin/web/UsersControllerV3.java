@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.scheduler.Schedulers;
 import java.util.concurrent.ExecutorService;
-import static org.laokou.common.data.cache.constant.NameConstant.USERS;
+import static org.laokou.common.data.cache.constant.NameConstants.USERS;
 import static org.laokou.common.data.cache.constant.Type.DEL;
 
 /**

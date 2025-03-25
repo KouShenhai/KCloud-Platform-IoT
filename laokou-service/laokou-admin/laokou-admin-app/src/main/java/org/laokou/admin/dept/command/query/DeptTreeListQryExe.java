@@ -22,7 +22,7 @@ import org.laokou.admin.dept.convertor.DeptConvertor;
 import org.laokou.admin.dept.dto.DeptTreeListQry;
 import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
 import org.laokou.admin.dept.gatewayimpl.database.DeptMapper;
-import org.laokou.common.core.utils.TreeUtil;
+import org.laokou.common.core.util.TreeUtils;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -40,7 +40,7 @@ public class DeptTreeListQryExe {
 	private final DeptMapper deptMapper;
 
 	public Result<List<DeptTreeCO>> execute(DeptTreeListQry qry) {
-		DeptTreeCO co = TreeUtil.buildTreeNode(DeptConvertor.toClientObjs(deptMapper.selectObjectList(qry)),
+		DeptTreeCO co = TreeUtils.buildTreeNode(DeptConvertor.toClientObjs(deptMapper.selectObjectList(qry)),
 				DeptTreeCO.class);
 		return Result.ok(co.getChildren());
 	}

@@ -22,8 +22,8 @@ import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import org.laokou.common.core.annotation.AbstractContextualSerializer;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.xss.util.XssUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.xss.util.XssUtils;
 
 import java.io.IOException;
 
@@ -35,13 +35,13 @@ public class XssSerializer extends AbstractContextualSerializer {
 	@Override
 	public void serialize(String s, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
 			throws IOException {
-		jsonGenerator.writeString(XssUtil.clearSql(s));
+		jsonGenerator.writeString(XssUtils.clearSql(s));
 	}
 
 	@Override
 	public JsonSerializer<?> createContextual(SerializerProvider serializerProvider, BeanProperty beanProperty) {
 		XssSql xssSql = beanProperty.getAnnotation(XssSql.class);
-		if (ObjectUtil.isNotNull(xssSql)) {
+		if (ObjectUtils.isNotNull(xssSql)) {
 			return new XssSerializer();
 		}
 		throw new RuntimeException();

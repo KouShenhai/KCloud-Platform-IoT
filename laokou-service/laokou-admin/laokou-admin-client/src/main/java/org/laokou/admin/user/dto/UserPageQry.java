@@ -18,9 +18,9 @@
 package org.laokou.admin.user.dto;
 
 import lombok.Data;
-import org.laokou.common.crypto.utils.AESUtil;
+import org.laokou.common.crypto.utils.AESUtils;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.util.StringUtils;
 
 /**
  * 分页查询用户命令.
@@ -41,15 +41,15 @@ public class UserPageQry extends PageQuery {
 	private Integer superAdmin;
 
 	public void setUsername(String username) throws Exception {
-		this.username = StringUtil.like(AESUtil.encrypt(StringUtil.trim(username)));
+		this.username = StringUtils.like(AESUtils.encrypt(StringUtils.trim(username)));
 	}
 
 	public void setMobile(String mobile) throws Exception {
-		this.mobile = StringUtil.like(AESUtil.encrypt(StringUtil.trim(mobile)));
+		this.mobile = StringUtils.like(AESUtils.encrypt(StringUtils.trim(mobile)));
 	}
 
 	public void setMail(String mail) throws Exception {
-		this.mail = StringUtil.like(AESUtil.encrypt(StringUtil.trim(mail)));
+		this.mail = StringUtils.like(AESUtils.encrypt(StringUtils.trim(mail)));
 	}
 
 }

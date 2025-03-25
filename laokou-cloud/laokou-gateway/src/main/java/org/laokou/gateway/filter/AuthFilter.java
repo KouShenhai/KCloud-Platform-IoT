@@ -20,12 +20,12 @@ package org.laokou.gateway.filter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
-import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.core.utils.SpringUtil;
-import org.laokou.common.crypto.utils.RSAUtil;
+import org.laokou.common.core.util.MapUtils;
+import org.laokou.common.core.util.SpringUtils;
+import org.laokou.common.crypto.utils.RSAUtils;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.laokou.gateway.utils.ReactiveI18nUtil;
 import org.springframework.beans.factory.InitializingBean;
@@ -56,8 +56,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.AND;
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstants.AND;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.getContentType;
 import static org.laokou.common.nacos.utils.ReactiveRequestUtil.getMethodName;
@@ -111,11 +111,11 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 */
 	private static final String GRANT_TYPE = "grant_type";
 
-	private final Map<String, Set<String>> URI_MAP = new HashMap<>(MapUtil.initialCapacity(128));
+	private final Map<String, Set<String>> URI_MAP = new HashMap<>(MapUtils.initialCapacity(128));
 
 	private final OAuth2ResourceServerProperties oAuth2ResourceServerProperties;
 
-	private final SpringUtil springUtil;
+	private final SpringUtils springUtils;
 
 	// @formatter:off
 	@Override
@@ -137,7 +137,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			}
 			// 获取token
 			String token = getParamValue(request, AUTHORIZATION);
-			if (StringUtil.isEmpty(token)) {
+			if (StringUtils.isEmpty(token)) {
 				return ReactiveResponseUtil.responseOk(exchange, Result.fail(UNAUTHORIZED));
 			}
 			// 增加令牌
@@ -188,24 +188,24 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	private Function<String, Mono<String>> decrypt() {
 		return s -> {
 			// 获取请求密码并解密
-			Map<String, String> paramMap = MapUtil.getParameterMap(s, AND).asSingleValueMap();
-			if (ObjectUtil.equals(USERNAME_PASSWORD, paramMap.getOrDefault(GRANT_TYPE, EMPTY)) && paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
+			Map<String, String> paramMap = MapUtils.getParameterMap(s, AND).asSingleValueMap();
+			if (ObjectUtils.equals(USERNAME_PASSWORD, paramMap.getOrDefault(GRANT_TYPE, EMPTY)) && paramMap.containsKey(PASSWORD) && paramMap.containsKey(USERNAME)) {
 				try {
 					String password = paramMap.get(PASSWORD);
 					String username = paramMap.get(USERNAME);
 					// 返回修改后报文字符
-					if (StringUtil.isNotEmpty(password)) {
-						paramMap.put(PASSWORD, RSAUtil.decryptByPrivateKey(password));
+					if (StringUtils.isNotEmpty(password)) {
+						paramMap.put(PASSWORD, RSAUtils.decryptByPrivateKey(password));
 					}
-					if (StringUtil.isNotEmpty(username)) {
-						paramMap.put(USERNAME, RSAUtil.decryptByPrivateKey(username));
+					if (StringUtils.isNotEmpty(username)) {
+						paramMap.put(USERNAME, RSAUtils.decryptByPrivateKey(username));
 					}
 				}
 				catch (Exception e) {
 					log.error("用户名密码认证模式，错误信息：{}", e.getMessage());
 				}
 			}
-			return Mono.just(MapUtil.parseParamterString(paramMap));
+			return Mono.just(MapUtils.parseParamterString(paramMap));
 		};
 	}
 
@@ -244,7 +244,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() {
-		URI_MAP.putAll(MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(), springUtil.getServiceId()));
+		URI_MAP.putAll(MapUtils.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(), springUtils.getServiceId()));
 	}
 	// @formatter:on
 

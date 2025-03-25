@@ -19,7 +19,7 @@ package org.laokou.iot.device.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.iot.device.dto.DeviceSaveCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.device.convertor.DeviceConvertor;
@@ -37,12 +37,13 @@ public class DeviceSaveCmdExe {
 
 	private final DeviceDomainService deviceDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(DeviceSaveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> deviceDomainService.create(DeviceConvertor.toEntity(cmd.getCo())));
+		transactionalUtils
+			.executeInTransaction(() -> deviceDomainService.create(DeviceConvertor.toEntity(cmd.getCo())));
 	}
 
 }

@@ -22,13 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.core.utils.SpringUtil;
+import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.core.util.SpringUtils;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.convertor.OperateLogConvertor;
-import org.laokou.common.log.factory.DomainFactory;
-import org.laokou.common.log.model.OperateLogE;
+import org.laokou.common.log.entity.DomainFactory;
+import org.laokou.common.log.entity.OperateLogE;
 import org.laokou.common.rocketmq.template.SendMessageType;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.core.env.Environment;
@@ -47,7 +47,7 @@ import org.springframework.util.StopWatch;
 @RequiredArgsConstructor
 public class OperateLogAop {
 
-	private final SpringUtil springUtil;
+	private final SpringUtils springUtils;
 
 	private final Environment environment;
 
@@ -60,8 +60,8 @@ public class OperateLogAop {
 		OperateLogE operateLogE = DomainFactory.getOperateLog();
 		operateLogE.getModuleName(operateLog.module());
 		operateLogE.getName(operateLog.operation());
-		operateLogE.getServiceId(springUtil.getServiceId());
-		operateLogE.getRequest(RequestUtil.getHttpServletRequest());
+		operateLogE.getServiceId(springUtils.getServiceId());
+		operateLogE.getRequest(RequestUtils.getHttpServletRequest());
 		operateLogE.getProfile(environment.getActiveProfiles()[0]);
 		String className = point.getTarget().getClass().getName();
 		String methodName = point.getSignature().getName();

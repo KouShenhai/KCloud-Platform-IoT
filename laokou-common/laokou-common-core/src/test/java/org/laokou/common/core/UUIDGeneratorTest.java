@@ -19,7 +19,7 @@ package org.laokou.common.core;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.utils.UUIDGenerator;
+import org.laokou.common.core.util.UUIDGenerator;
 
 /**
  * @author laokou

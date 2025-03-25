@@ -21,8 +21,8 @@ import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.context.UserContextHolder;
-import org.laokou.common.security.utils.UserDetail;
-import org.laokou.common.security.utils.UserUtil;
+import org.laokou.common.security.util.UserDetails;
+import org.laokou.common.security.util.UserUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
@@ -34,7 +34,7 @@ public class UserContextInterceptor implements AsyncHandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		UserContextHolder.set(convert(UserUtil.user()));
+		UserContextHolder.set(convert(UserUtils.user()));
 		return true;
 	}
 
@@ -44,9 +44,9 @@ public class UserContextInterceptor implements AsyncHandlerInterceptor {
 		UserContextHolder.clear();
 	}
 
-	private UserContextHolder.User convert(UserDetail userDetail) {
-		return new UserContextHolder.User(userDetail.getId(), userDetail.getUsername(), userDetail.getTenantId(),
-				userDetail.getSourcePrefix());
+	private UserContextHolder.User convert(UserDetails userDetails) {
+		return new UserContextHolder.User(userDetails.getId(), userDetails.getUsername(), userDetails.getTenantId(),
+				userDetails.getSourcePrefix());
 	}
 
 }

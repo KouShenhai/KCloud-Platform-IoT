@@ -25,7 +25,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.CaptchaE;
 import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
@@ -33,8 +33,8 @@ import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.rocketmq.template.SendMessageType;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.auth.common.constant.BizConstants.SCENARIO;
 import static org.laokou.auth.dto.clientobject.CaptchaCO.USE_CASE_CAPTCHA;
-import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
  * @author laokou

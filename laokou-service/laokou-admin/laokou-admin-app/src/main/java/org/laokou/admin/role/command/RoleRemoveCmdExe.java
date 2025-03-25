@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.ability.RoleDomainService;
 import org.laokou.admin.role.dto.RoleRemoveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
@@ -36,12 +36,12 @@ public class RoleRemoveCmdExe {
 
 	private final RoleDomainService roleDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public Flux<Void> executeVoid(RoleRemoveCmd cmd) {
 		// 校验参数
-		return transactionalUtil.executeResultInTransaction(() -> roleDomainService.delete(cmd.getIds()));
+		return transactionalUtils.executeResultInTransaction(() -> roleDomainService.delete(cmd.getIds()));
 	}
 
 }

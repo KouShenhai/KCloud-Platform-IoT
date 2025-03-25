@@ -18,7 +18,7 @@
 package org.laokou.test.openfeign;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -42,7 +42,7 @@ public class OpenfeignTestApp {
 	public static void main(String[] args)
 			throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		// 忽略SSL认证
-		SslUtil.ignoreSSLTrust();
+		SslUtils.ignoreSSLTrust();
 		System.setProperty("jdk.internal.httpclient.disableHostnameVerification", "true");
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
 				System.getProperty("server.port", "8092")));

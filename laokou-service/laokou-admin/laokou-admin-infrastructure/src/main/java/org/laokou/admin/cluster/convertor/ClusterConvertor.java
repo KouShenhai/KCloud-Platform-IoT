@@ -20,7 +20,7 @@ package org.laokou.admin.cluster.convertor;
 import org.laokou.admin.cluster.dto.clientobject.ClusterCO;
 import org.laokou.admin.cluster.gatewayimpl.database.dataobject.ClusterDO;
 import org.laokou.admin.cluster.model.ClusterE;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.util.IdGenerator;
 
 /**
  *

@@ -19,7 +19,7 @@ package org.laokou.common.i18n.common.exception;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.util.MessageUtils;
 
 import java.io.Serial;
 
@@ -41,7 +41,7 @@ public abstract class GlobalException extends RuntimeException {
 
 	protected GlobalException(String code) {
 		this.code = code;
-		this.msg = MessageUtil.getMessage(code);
+		this.msg = MessageUtils.getMessage(code);
 	}
 
 	protected GlobalException(String code, String msg) {

@@ -25,7 +25,7 @@ import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import io.netty.util.concurrent.EventExecutorGroup;
-import org.laokou.common.i18n.utils.ResourceUtil;
+import org.laokou.common.i18n.util.ResourceUtils;
 import org.laokou.common.netty.annotation.WebSocketServer;
 import org.laokou.common.netty.config.AbstractWebSocketServerChannelInitializer;
 import org.laokou.common.netty.config.SpringWebSocketServerProperties;
@@ -70,9 +70,9 @@ public class WebSocketServerChannelInitializer extends AbstractWebSocketServerCh
 		// @formatter:off
 		String certPrivateKeyPassword = "laokou";
 		// 生成证书 => openssl pkcs12 -in scg-keystore.p12 -clcerts -nokeys -out certificate.crt
-		InputStream keyCertChainIn = ResourceUtil.getResource("classpath:certificate.crt").getInputStream();
+		InputStream keyCertChainIn = ResourceUtils.getResource("classpath:certificate.crt").getInputStream();
 		// 生成私钥 => openssl pkcs12 -in scg-keystore.p12 -nocerts -out private.key
-		InputStream certPrivateKeyIn = ResourceUtil.getResource("classpath:private.key").getInputStream();
+		InputStream certPrivateKeyIn = ResourceUtils.getResource("classpath:private.key").getInputStream();
 		return SslContextBuilder.forServer(keyCertChainIn, certPrivateKeyIn, certPrivateKeyPassword)
 			// 忽略SSL验证
 			.trustManager(InsecureTrustManagerFactory.INSTANCE)

@@ -26,7 +26,7 @@ import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.*;
-import org.laokou.common.i18n.utils.RedisKeyUtil;
+import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -104,7 +104,7 @@ class DomainServiceTest {
 		// 构造数据源
 		when(sourceGateway.getPrefix("laokou")).thenReturn("master");
 		// 构造验证码校验
-		doReturn(true).when(captchaGateway).validate(RedisKeyUtil.getUsernamePasswordAuthCaptchaKey("1"), "1234");
+		doReturn(true).when(captchaGateway).validate(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
 		// 构造用户信息
 		UserE user = auth.getUser();
 		user.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8)));
@@ -122,7 +122,7 @@ class DomainServiceTest {
 		verify(menuGateway, times(1)).getPermissions(user);
 		verify(passwordValidator, times(1)).validate("123", "202cb962ac59075b964b07152d234b70");
 		verify(userGateway, times(1)).getProfile(user, "laokou");
-		verify(captchaGateway, times(1)).validate(RedisKeyUtil.getUsernamePasswordAuthCaptchaKey("1"), "1234");
+		verify(captchaGateway, times(1)).validate(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
 		verify(sourceGateway, times(1)).getPrefix("laokou");
 		verify(tenantGateway, times(1)).getId("laokou");
 	}
@@ -137,7 +137,8 @@ class DomainServiceTest {
 		// 构造数据源
 		when(sourceGateway.getPrefix("laokou")).thenReturn("master");
 		// 构造验证码校验
-		doReturn(true).when(captchaGateway).validate(RedisKeyUtil.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
+		doReturn(true).when(captchaGateway)
+			.validate(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
 		// 构造用户信息
 		UserE user = auth.getUser();
 		when(userGateway.getProfile(user, "laokou")).thenReturn(user);
@@ -151,7 +152,7 @@ class DomainServiceTest {
 		verify(deptGateway, times(1)).getPaths(user);
 		verify(menuGateway, times(1)).getPermissions(user);
 		verify(userGateway, times(1)).getProfile(user, "laokou");
-		verify(captchaGateway, times(1)).validate(RedisKeyUtil.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
+		verify(captchaGateway, times(1)).validate(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
 		verify(sourceGateway, times(1)).getPrefix("laokou");
 		verify(tenantGateway, times(1)).getId("laokou");
 	}
@@ -166,7 +167,7 @@ class DomainServiceTest {
 		// 构造数据源
 		when(sourceGateway.getPrefix("laokou")).thenReturn("master");
 		// 构造验证码校验
-		doReturn(true).when(captchaGateway).validate(RedisKeyUtil.getMobileAuthCaptchaKey("18888888888"), "123456");
+		doReturn(true).when(captchaGateway).validate(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
 		// 构造用户信息
 		UserE user = auth.getUser();
 		when(userGateway.getProfile(user, "laokou")).thenReturn(user);
@@ -180,7 +181,7 @@ class DomainServiceTest {
 		verify(deptGateway, times(1)).getPaths(user);
 		verify(menuGateway, times(1)).getPermissions(user);
 		verify(userGateway, times(1)).getProfile(user, "laokou");
-		verify(captchaGateway, times(1)).validate(RedisKeyUtil.getMobileAuthCaptchaKey("18888888888"), "123456");
+		verify(captchaGateway, times(1)).validate(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
 		verify(sourceGateway, times(1)).getPrefix("laokou");
 		verify(tenantGateway, times(1)).getId("laokou");
 	}
@@ -242,7 +243,7 @@ class DomainServiceTest {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
 		noticeLog.setCode("sendMailCaptcha");
-		noticeLog.setStatus(SendCaptchaStatus.OK.getCode());
+		noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode());
 		domainService.createNoticeLog(noticeLog);
 	}
 
@@ -251,7 +252,7 @@ class DomainServiceTest {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
 		noticeLog.setCode("sendMobileCaptcha");
-		noticeLog.setStatus(SendCaptchaStatus.OK.getCode());
+		noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode());
 		domainService.createNoticeLog(noticeLog);
 	}
 

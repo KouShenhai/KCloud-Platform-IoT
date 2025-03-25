@@ -23,14 +23,15 @@ import org.laokou.auth.gateway.MenuGateway;
 import org.laokou.auth.gatewayimpl.database.MenuMapper;
 import org.laokou.auth.model.UserE;
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.util.MessageUtils;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.exception.BizException.OAuth2.DATA_TABLE_NOT_EXIST;
+import static org.laokou.auth.common.constant.BizConstants.MENU_QUERY_FAILED;
+import static org.laokou.auth.model.OAuth2Constants.DATA_TABLE_NOT_EXIST;
 import static org.laokou.common.tenant.constant.Constant.Master.MENU_TABLE;
 
 /**
@@ -61,11 +62,11 @@ public class MenuGatewayImpl implements MenuGateway {
 		catch (BadSqlGrammarException e) {
 			log.error("表 {} 不存在，错误信息：{}", MENU_TABLE, e.getMessage());
 			throw new BizException(DATA_TABLE_NOT_EXIST,
-					MessageUtil.getMessage(DATA_TABLE_NOT_EXIST, new String[] { MENU_TABLE }));
+					MessageUtils.getMessage(DATA_TABLE_NOT_EXIST, new String[] { MENU_TABLE }));
 		}
 		catch (Exception e) {
 			log.error("查询菜单失败，错误信息：{}", e.getMessage());
-			throw new BizException(BizException.Menu.QUERY_FAILED);
+			throw new BizException(MENU_QUERY_FAILED);
 		}
 	}
 

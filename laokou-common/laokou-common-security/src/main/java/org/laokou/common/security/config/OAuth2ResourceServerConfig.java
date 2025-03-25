@@ -19,8 +19,8 @@ package org.laokou.common.security.config;
 
 import jakarta.validation.constraints.NotNull;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
-import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.core.utils.SpringUtil;
+import org.laokou.common.core.util.MapUtils;
+import org.laokou.common.core.util.SpringUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -60,8 +60,8 @@ public class OAuth2ResourceServerConfig {
 	// @formatter:off
 	@NotNull
 	public static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> customizer(
-		OAuth2ResourceServerProperties oAuth2ResourceServerProperties, SpringUtil springUtil) {
-		Map<String, Set<String>> uriMap = MapUtil.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(), springUtil.getServiceId());
+		OAuth2ResourceServerProperties oAuth2ResourceServerProperties, SpringUtils springUtils) {
+		Map<String, Set<String>> uriMap = MapUtils.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(), springUtils.getServiceId());
 		return request -> request
 			.requestMatchers(HttpMethod.GET, Optional.ofNullable(uriMap.get(HttpMethod.GET.name())).orElseGet(HashSet::new).toArray(String[]::new))
 			.permitAll()
@@ -85,7 +85,7 @@ public class OAuth2ResourceServerConfig {
 	@Order(HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
 	SecurityFilterChain resourceFilterChain(GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector,
-			SpringUtil springUtil, OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http)
+			SpringUtils springUtils, OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http)
 			throws Exception {
 		return http
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer
@@ -101,7 +101,7 @@ public class OAuth2ResourceServerConfig {
 			.httpBasic(AbstractHttpConfigurer::disable)
 			// 基于token，关闭session
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.authorizeHttpRequests(customizer(oAuth2ResourceServerProperties, springUtil))
+			.authorizeHttpRequests(customizer(oAuth2ResourceServerProperties, springUtils))
 			// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
 			// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
 			.oauth2ResourceServer(resource -> resource

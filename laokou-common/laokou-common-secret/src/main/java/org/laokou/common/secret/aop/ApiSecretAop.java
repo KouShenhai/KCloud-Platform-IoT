@@ -22,11 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.laokou.common.core.utils.ArrayUtil;
-import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.i18n.utils.JacksonUtil;
-import org.laokou.common.secret.utils.SecretUtil;
+import org.laokou.common.core.util.ArrayUtils;
+import org.laokou.common.core.util.MapUtils;
+import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.secret.util.SecretUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -68,24 +68,24 @@ public class ApiSecretAop {
 
 	private static Map<String, String> getParameterMap(HttpServletRequest request) throws IOException {
 		Map<String, String[]> parameterMap = request.getParameterMap();
-		if (MapUtil.isNotEmpty(parameterMap)) {
-			return MapUtil.getParameterMap(parameterMap).toSingleValueMap();
+		if (MapUtils.isNotEmpty(parameterMap)) {
+			return MapUtils.getParameterMap(parameterMap).toSingleValueMap();
 		}
-		byte[] requestBody = RequestUtil.getRequestBody(request);
-		return ArrayUtil.isEmpty(requestBody) ? Collections.emptyMap()
-				: JacksonUtil.toMap(requestBody, String.class, String.class);
+		byte[] requestBody = RequestUtils.getRequestBody(request);
+		return ArrayUtils.isEmpty(requestBody) ? Collections.emptyMap()
+				: JacksonUtils.toMap(requestBody, String.class, String.class);
 	}
 
 	@Around("@annotation(org.laokou.common.secret.annotation.ApiSecret)")
 	public Object doAround(ProceedingJoinPoint point) throws Throwable {
-		HttpServletRequest request = RequestUtil.getHttpServletRequest();
+		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		String nonce = request.getHeader(NONCE);
 		String timestamp = request.getHeader(TIMESTAMP);
 		String sign = request.getHeader(SIGN);
 		String appKey = request.getHeader(APP_KEY);
 		String appSecret = request.getHeader(APP_SECRET);
 		Map<String, String> parameterMap = getParameterMap(request);
-		SecretUtil.verification(appKey, appSecret, sign, nonce, timestamp, parameterMap);
+		SecretUtils.verification(appKey, appSecret, sign, nonce, timestamp, parameterMap);
 		return point.proceed();
 	}
 

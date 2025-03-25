@@ -62,9 +62,9 @@ import java.time.Duration;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.laokou.common.i18n.utils.SslUtil.sslContext;
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
+import static org.laokou.common.i18n.util.SslUtils.sslContext;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstants.RISK;
 
 /**
  * @author laokou

@@ -18,7 +18,7 @@
 package org.laokou.common.core;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +31,7 @@ class TestEventListener {
 
 	@EventListener
 	public void onEvent(TestEvent event) {
-		log.info("接收事件：{}", JacksonUtil.toJsonStr(event));
+		log.info("接收事件：{}", JacksonUtils.toJsonStr(event));
 	}
 
 }

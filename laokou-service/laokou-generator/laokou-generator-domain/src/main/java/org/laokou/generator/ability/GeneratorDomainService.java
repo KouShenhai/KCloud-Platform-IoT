@@ -19,10 +19,10 @@ package org.laokou.generator.ability;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.FileUtil;
-import org.laokou.common.core.utils.TemplateUtil;
+import org.laokou.common.core.util.FileUtils;
+import org.laokou.common.core.util.TemplateUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.ResourceUtil;
+import org.laokou.common.i18n.util.ResourceUtils;
 import org.laokou.generator.gateway.TableGateway;
 import org.laokou.generator.model.GeneratorA;
 import org.laokou.generator.model.TableV;
@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
+import static org.laokou.common.i18n.common.constant.StringConstants.SLASH;
 
 /**
  * @author laokou
@@ -94,8 +94,8 @@ public class GeneratorDomainService {
 				String content = getContent(generatorA.toMap(), item.getTemplatePath(TEMPLATE_PATH));
 				// 写入文件
 				String directory = SOURCE_PATH + generatorA.getModuleName() + SLASH + item.getFileDirectory(generatorA);
-				Path path = FileUtil.create(directory, item.getFileName(generatorA));
-				FileUtil.write(path, content.getBytes(StandardCharsets.UTF_8));
+				Path path = FileUtils.create(directory, item.getFileName(generatorA));
+				FileUtils.write(path, content.getBytes(StandardCharsets.UTF_8));
 				return true;
 			}).toList();
 			virtualThreadExecutor.invokeAll(list);
@@ -108,8 +108,8 @@ public class GeneratorDomainService {
 	}
 
 	private String getContent(Map<String, Object> map, String templatePath) throws IOException {
-		String template = ResourceUtil.getResource(templatePath).getContentAsString(StandardCharsets.UTF_8).trim();
-		return TemplateUtil.getContent(template, map);
+		String template = ResourceUtils.getResource(templatePath).getContentAsString(StandardCharsets.UTF_8).trim();
+		return TemplateUtils.getContent(template, map);
 	}
 
 	private List<Template> getTemplates() {

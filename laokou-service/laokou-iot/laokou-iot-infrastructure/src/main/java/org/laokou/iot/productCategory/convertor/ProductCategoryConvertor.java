@@ -17,7 +17,7 @@
 
 package org.laokou.iot.productCategory.convertor;
 
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.util.IdGenerator;
 import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
 import org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO;
 import org.laokou.iot.productCategory.model.ProductCategoryE;

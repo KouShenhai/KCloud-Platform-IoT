@@ -38,7 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-import static org.laokou.common.data.cache.constant.NameConstant.DEPTS;
+import static org.laokou.common.data.cache.constant.NameConstants.DEPTS;
 import static org.laokou.common.data.cache.constant.Type.DEL;
 
 /**

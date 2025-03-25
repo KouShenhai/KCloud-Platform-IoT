@@ -19,12 +19,12 @@ package org.laokou.gateway.filter.ip;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.IpUtil;
+import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.laokou.common.redis.utils.ReactiveRedisUtil;
-import org.laokou.common.i18n.utils.RedisKeyUtil;
+import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolver;
@@ -35,7 +35,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.InetSocketAddress;
 
-import static org.laokou.common.i18n.common.exception.SystemException.Gateway.IP_RESTRICTED;
+import static org.laokou.gateway.constant.GatewayConstants.IP_RESTRICTED;
 
 /**
  * 白名单IP.
@@ -64,12 +64,12 @@ public class WhiteIp extends AbstractIp {
 	public Mono<Void> validate(ServerWebExchange exchange, GatewayFilterChain chain) {
 		InetSocketAddress remoteAddress = remoteAddressResolver.resolve(exchange);
 		String hostAddress = remoteAddress.getAddress().getHostAddress();
-		if (IpUtil.internalIp(hostAddress)) {
+		if (IpUtils.internalIp(hostAddress)) {
 			return chain.filter(exchange);
 		}
-		String ipCacheHashKey = RedisKeyUtil.getIpCacheHashKey(WHITE);
+		String ipCacheHashKey = RedisKeyUtils.getIpCacheHashKey(WHITE);
 		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
-			if (ObjectUtil.equals(Boolean.FALSE, r)) {
+			if (ObjectUtils.equals(Boolean.FALSE, r)) {
 				log.info("IP为{}被限制", hostAddress);
 				return ReactiveResponseUtil.responseOk(exchange, Result.fail(IP_RESTRICTED));
 			}

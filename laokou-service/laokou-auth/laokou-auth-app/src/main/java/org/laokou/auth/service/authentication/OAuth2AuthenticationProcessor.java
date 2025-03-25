@@ -27,10 +27,10 @@ import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.InfoV;
 import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
-import org.laokou.common.core.utils.AddressUtil;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.IpUtil;
-import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.core.util.AddressUtils;
+import org.laokou.common.core.util.IdGenerator;
+import org.laokou.common.core.util.IpUtils;
+import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
@@ -38,12 +38,12 @@ import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.ParamException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.rocketmq.template.SendMessageType;
-import org.laokou.common.security.utils.UserDetail;
+import org.laokou.common.security.util.UserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.auth.common.constant.BizConstants.SCENARIO;
 import static org.laokou.auth.model.AuthA.USE_CASE_AUTH;
-import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getOAuth2AuthenticationException;
 
@@ -66,17 +66,17 @@ final class OAuth2AuthenticationProcessor {
 		try {
 			// 校验参数
 			extensionExecutor.executeVoid(AuthParamValidatorExtPt.class,
-					BizScenario.valueOf(auth.getGrantType().getCode(), USE_CASE_AUTH, SCENARIO),
+					BizScenario.valueOf(auth.getGrantTypeEnum().getCode(), USE_CASE_AUTH, SCENARIO),
 					extension -> extension.validate(auth));
 			// 认证授权
 			domainService.auth(auth, getInfo(request));
 			// 记录日志
 			auth.recordLog(eventId, null);
 			// 登录成功，转换成用户对象【业务】
-			UserDetail userDetail = UserConvertor.to(auth);
+			UserDetails userDetails = UserConvertor.to(auth);
 			// 认证成功，转换成认证对象【系统】
-			return new UsernamePasswordAuthenticationToken(userDetail, userDetail.getUsername(),
-					userDetail.getAuthorities());
+			return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getUsername(),
+					userDetails.getAuthorities());
 		}
 		catch (ParamException | BizException e) {
 			// 记录日志
@@ -97,9 +97,9 @@ final class OAuth2AuthenticationProcessor {
 	}
 
 	private InfoV getInfo(HttpServletRequest request) throws Exception {
-		Capabilities capabilities = RequestUtil.getCapabilities(request);
-		String ip = IpUtil.getIpAddr(request);
-		String address = AddressUtil.getRealAddress(ip);
+		Capabilities capabilities = RequestUtils.getCapabilities(request);
+		String ip = IpUtils.getIpAddr(request);
+		String address = AddressUtils.getRealAddress(ip);
 		String os = capabilities.getPlatform();
 		String browser = capabilities.getBrowser();
 		return new InfoV(os, ip, address, browser);

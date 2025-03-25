@@ -20,7 +20,7 @@ package org.laokou.admin.dict.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dict.dto.DictModifyCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.dict.convertor.DictConvertor;
 import org.laokou.admin.dict.ability.DictDomainService;
@@ -36,12 +36,12 @@ public class DictModifyCmdExe {
 
 	private final DictDomainService dictDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(DictModifyCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> dictDomainService.update(DictConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(() -> dictDomainService.update(DictConvertor.toEntity(cmd.getCo())));
 	}
 
 }

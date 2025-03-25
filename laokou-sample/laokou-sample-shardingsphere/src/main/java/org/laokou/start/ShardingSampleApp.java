@@ -18,7 +18,7 @@
 package org.laokou.start;
 
 import org.laokou.common.core.annotation.EnableTaskExecutor;
-import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.common.i18n.util.SslUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -44,7 +44,7 @@ public class ShardingSampleApp {
 	public static void main(String[] args)
 			throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		// 忽略SSL认证
-		SslUtil.ignoreSSLTrust();
+		SslUtils.ignoreSSLTrust();
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),

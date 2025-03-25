@@ -19,9 +19,9 @@ package org.laokou.admin.tenant.convertor;
 
 import org.laokou.admin.tenant.dto.clientobject.TenantCO;
 import org.laokou.admin.tenant.model.TenantE;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.core.util.ConvertUtils;
+import org.laokou.common.core.util.IdGenerator;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.tenant.mapper.TenantDO;
 
 /**
@@ -32,19 +32,19 @@ import org.laokou.common.tenant.mapper.TenantDO;
 public class TenantConvertor {
 
 	public static TenantDO toDataObject(TenantE tenantE) {
-		TenantDO tenantDO = ConvertUtil.sourceToTarget(tenantE, TenantDO.class);
-		if (ObjectUtil.isNull(tenantDO.getId())) {
+		TenantDO tenantDO = ConvertUtils.sourceToTarget(tenantE, TenantDO.class);
+		if (ObjectUtils.isNull(tenantDO.getId())) {
 			tenantDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return tenantDO;
 	}
 
 	public static TenantCO toClientObject(TenantDO tenantDO) {
-		return ConvertUtil.sourceToTarget(tenantDO, TenantCO.class);
+		return ConvertUtils.sourceToTarget(tenantDO, TenantCO.class);
 	}
 
 	public static TenantE toEntity(TenantCO tenantCO) {
-		return ConvertUtil.sourceToTarget(tenantCO, TenantE.class);
+		return ConvertUtils.sourceToTarget(tenantCO, TenantE.class);
 	}
 
 }

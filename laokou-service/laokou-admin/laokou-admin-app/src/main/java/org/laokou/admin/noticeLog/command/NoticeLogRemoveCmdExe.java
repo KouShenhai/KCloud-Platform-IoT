@@ -20,7 +20,7 @@ package org.laokou.admin.noticeLog.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.noticeLog.dto.NoticeLogRemoveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.noticeLog.ability.NoticeLogDomainService;
 
@@ -35,12 +35,12 @@ public class NoticeLogRemoveCmdExe {
 
 	private final NoticeLogDomainService noticeLogDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(NoticeLogRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> noticeLogDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> noticeLogDomainService.delete(cmd.getIds()));
 	}
 
 }

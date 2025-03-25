@@ -17,7 +17,7 @@
 
 package org.laokou.common.lock.support;
 
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.lock.annotation.Lock4j;
 import org.springframework.stereotype.Component;
 

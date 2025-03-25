@@ -24,9 +24,9 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.common.core.utils.SpringExpressionUtil;
+import org.laokou.common.core.util.SpringExpressionUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.lock.Lock;
 import org.laokou.common.lock.RedissonLock;
 import org.laokou.common.lock.Type;
@@ -34,7 +34,7 @@ import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
+import static org.laokou.common.i18n.common.constant.StringConstants.UNDER;
 import static org.laokou.common.i18n.common.exception.StatusCode.TOO_MANY_REQUESTS;
 
 /**
@@ -58,8 +58,8 @@ public class LockAop {
 		String[] parameterNames = methodSignature.getParameterNames();
 		String name = lock4j.name();
 		String key = lock4j.key();
-		if (StringUtil.isNotEmpty(key) && key.contains("#")) {
-			key = name + UNDER + SpringExpressionUtil.parse(key, parameterNames, joinPoint.getArgs(), String.class);
+		if (StringUtils.isNotEmpty(key) && key.contains("#")) {
+			key = name + UNDER + SpringExpressionUtils.parse(key, parameterNames, joinPoint.getArgs(), String.class);
 		}
 		else {
 			key = name;

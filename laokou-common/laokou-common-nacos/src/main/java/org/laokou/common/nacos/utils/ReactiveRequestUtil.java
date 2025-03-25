@@ -17,17 +17,16 @@
 
 package org.laokou.common.nacos.utils;
 
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.AntPathMatcher;
-import org.springframework.util.StringUtils;
 
 import java.util.Map;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 响应式请求工具类.
@@ -48,10 +47,10 @@ public class ReactiveRequestUtil {
 		// 从header中获取
 		String paramValue = request.getHeaders().getFirst(paramName);
 		// 从参数中获取
-		if (StringUtil.isEmpty(paramValue)) {
+		if (StringUtils.isEmpty(paramValue)) {
 			paramValue = request.getQueryParams().getFirst(paramName);
 		}
-		return StringUtil.isEmpty(paramValue) ? EMPTY : paramValue.trim();
+		return StringUtils.isEmpty(paramValue) ? EMPTY : paramValue.trim();
 	}
 
 	/**
@@ -79,7 +78,7 @@ public class ReactiveRequestUtil {
 	 */
 	public static MediaType getContentType(ServerHttpRequest request) {
 		String value = request.getHeaders().getFirst("content-type");
-		return StringUtils.hasLength(value) ? MediaType.parseMediaType(value) : null;
+		return org.springframework.util.StringUtils.hasLength(value) ? MediaType.parseMediaType(value) : null;
 	}
 
 	/**
@@ -100,7 +99,7 @@ public class ReactiveRequestUtil {
 	 */
 	public static boolean pathMatcher(String requestMethod, String requestURL, Map<String, Set<String>> uriMap) {
 		Set<String> urls = uriMap.get(requestMethod);
-		if (CollectionUtil.isEmpty(urls)) {
+		if (CollectionUtils.isEmpty(urls)) {
 			return false;
 		}
 		for (String url : urls) {

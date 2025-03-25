@@ -27,13 +27,13 @@ import org.laokou.auth.dto.NoticeLogSaveCmd;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.common.domain.handler.AbstractDomainEventHandler;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.mail.service.MailService;
 import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.auth.model.Constant.*;
+import static org.laokou.auth.model.MqConstants.*;
 
 /**
  * @author laokou
@@ -56,7 +56,7 @@ public class SendMailCaptchaEventHandler extends AbstractDomainEventHandler {
 
 	@Override
 	protected void handleDomainEvent(DomainEvent domainEvent) throws JsonProcessingException {
-		SendCaptchaEvent evt = JacksonUtil.toBean(domainEvent.getPayload(), SendCaptchaEvent.class);
+		SendCaptchaEvent evt = JacksonUtils.toBean(domainEvent.getPayload(), SendCaptchaEvent.class);
 		noticeLogServiceI.save(new NoticeLogSaveCmd(
 				NoticeLogConvertor.toClientObject(domainEvent, mailService.send(evt.uuid()), evt.uuid())));
 	}

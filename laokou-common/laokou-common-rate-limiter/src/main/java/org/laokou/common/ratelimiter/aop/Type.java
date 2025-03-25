@@ -19,9 +19,9 @@ package org.laokou.common.ratelimiter.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.common.core.context.UserContextHolder;
-import org.laokou.common.core.utils.IpUtil;
+import org.laokou.common.core.util.IpUtils;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 类型枚举.
@@ -46,7 +46,7 @@ public enum Type {
 	IP {
 		@Override
 		public String resolve(HttpServletRequest request) {
-			return IpUtil.getIpAddr(request);
+			return IpUtils.getIpAddr(request);
 		}
 	},
 

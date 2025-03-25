@@ -12,6 +12,10 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-nacos</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.github.whvcse</groupId>
       <artifactId>easy-captcha</artifactId>
     </dependency>

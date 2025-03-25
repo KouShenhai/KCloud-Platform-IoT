@@ -26,7 +26,7 @@ import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.laokou.client.dto.clientobject.PayloadCO;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.netty.config.Server;
 import org.springframework.stereotype.Component;
 
@@ -61,7 +61,7 @@ public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 	public void onMessage(MessageExt message) {
 		try {
 			String msg = new String(message.getBody(), StandardCharsets.UTF_8);
-			PayloadCO co = JacksonUtil.toBean(msg, PayloadCO.class);
+			PayloadCO co = JacksonUtils.toBean(msg, PayloadCO.class);
 			TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(co.getContent());
 			List<Callable<Future<Void>>> callableList = co.getReceivers().stream().map(clientId -> (Callable<Future<Void>>) () -> webSocketServer.send(clientId, webSocketFrame)).toList();
 			virtualThreadExecutor.invokeAll(callableList);

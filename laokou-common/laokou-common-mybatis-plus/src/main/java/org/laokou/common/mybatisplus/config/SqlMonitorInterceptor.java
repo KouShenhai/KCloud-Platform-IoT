@@ -32,7 +32,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.SPACE;
+import static org.laokou.common.i18n.common.constant.StringConstants.SPACE;
 
 // @formatter:off
 /**

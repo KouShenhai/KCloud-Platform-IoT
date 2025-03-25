@@ -18,7 +18,7 @@
 package org.laokou.logstash.common.support;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.lock.support.IdentifierGenerator;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
@@ -53,7 +53,7 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 				.filter(Objects::nonNull)
 				.collect(Collectors.toMap(TraceLogIndex::getId, Function.identity(),
 						(existing, replacement) -> existing));
-			if (MapUtil.isEmpty(dataMap)) {
+			if (MapUtils.isEmpty(dataMap)) {
 				return Mono.empty();
 			}
 			return Mono.fromFuture(elasticsearchTemplate

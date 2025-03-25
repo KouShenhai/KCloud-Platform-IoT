@@ -20,13 +20,13 @@ package org.laokou.common.rocketmq.consumer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQLocalTransactionState;
-import org.laokou.common.core.utils.MDCUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.core.util.MDCUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.messaging.Message;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
-import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
-import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
+import static org.laokou.common.i18n.common.constant.TraceConstants.SPAN_ID;
+import static org.laokou.common.i18n.common.constant.TraceConstants.TRACE_ID;
 
 /**
  * @author laokou
@@ -88,13 +88,13 @@ public abstract class AbstractTransactionConsumer implements RocketMQLocalTransa
 	private void putTrace(Message message) {
 		Object obj1 = message.getHeaders().get(TRACE_ID);
 		Object obj2 = message.getHeaders().get(SPAN_ID);
-		String traceId = ObjectUtil.isNull(obj1) ? EMPTY : obj1.toString();
-		String spanId = ObjectUtil.isNull(obj2) ? EMPTY : obj2.toString();
-		MDCUtil.put(traceId, spanId);
+		String traceId = ObjectUtils.isNull(obj1) ? EMPTY : obj1.toString();
+		String spanId = ObjectUtils.isNull(obj2) ? EMPTY : obj2.toString();
+		MDCUtils.put(traceId, spanId);
 	}
 
 	private void clearTrace() {
-		MDCUtil.clear();
+		MDCUtils.clear();
 	}
 
 }

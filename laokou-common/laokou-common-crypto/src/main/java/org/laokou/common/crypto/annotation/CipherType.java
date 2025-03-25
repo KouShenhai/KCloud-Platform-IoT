@@ -17,31 +17,31 @@
 
 package org.laokou.common.crypto.annotation;
 
-import org.laokou.common.crypto.utils.AESUtil;
-import org.laokou.common.crypto.utils.RSAUtil;
+import org.laokou.common.crypto.utils.AESUtils;
+import org.laokou.common.crypto.utils.RSAUtils;
 
 public enum CipherType {
 
 	AES {
 		@Override
 		public String decrypt(String str) throws Exception {
-			return AESUtil.decrypt(str);
+			return AESUtils.decrypt(str);
 		}
 
 		@Override
 		public String encrypt(String str) throws Exception {
-			return AESUtil.encrypt(str);
+			return AESUtils.encrypt(str);
 		}
 	},
 	RSA {
 		@Override
 		public String decrypt(String str) {
-			return RSAUtil.decryptByPrivateKey(str);
+			return RSAUtils.decryptByPrivateKey(str);
 		}
 
 		@Override
 		public String encrypt(String str) {
-			return RSAUtil.encryptByPublicKey(str);
+			return RSAUtils.encryptByPublicKey(str);
 		}
 	};
 

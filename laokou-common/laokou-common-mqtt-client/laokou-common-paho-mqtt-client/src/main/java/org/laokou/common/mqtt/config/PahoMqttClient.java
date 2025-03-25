@@ -26,10 +26,10 @@ import org.eclipse.paho.mqttv5.client.persist.MqttDefaultFilePersistence;
 import org.eclipse.paho.mqttv5.common.MqttException;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
-import org.laokou.common.core.event.EventBus;
-import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.util.EventBus;
+import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.mqtt.client.AbstractMqttClient;
 import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
 import org.laokou.common.mqtt.client.handler.event.CloseEvent;
@@ -73,9 +73,9 @@ public class PahoMqttClient extends AbstractMqttClient {
 
 	public void open() {
 		try {
-			if (ObjectUtil.isNull(client)) {
+			if (ObjectUtils.isNull(client)) {
 				synchronized (LOCK) {
-					if (ObjectUtil.isNull(client)) {
+					if (ObjectUtils.isNull(client)) {
 						String clientId = mqttBrokerProperties.getClientId();
 						client = new MqttAsyncClient(
 								"tcp://" + mqttBrokerProperties.getHost() + ":" + mqttBrokerProperties.getPort(),
@@ -110,7 +110,7 @@ public class PahoMqttClient extends AbstractMqttClient {
 	}
 
 	public void close() {
-		if (ObjectUtil.isNotNull(client)) {
+		if (ObjectUtils.isNotNull(client)) {
 			// 等待30秒
 			try {
 				client.disconnectForcibly(30);
@@ -126,7 +126,7 @@ public class PahoMqttClient extends AbstractMqttClient {
 
 	public void subscribe(String[] topics, int[] qos) throws MqttException {
 		checkTopicAndQos(topics, qos, "Paho");
-		if (ObjectUtil.isNotNull(client)) {
+		if (ObjectUtils.isNotNull(client)) {
 			client.subscribe(topics, qos, null, new MqttActionListener() {
 				@Override
 				public void onSuccess(IMqttToken asyncActionToken) {
@@ -145,7 +145,7 @@ public class PahoMqttClient extends AbstractMqttClient {
 
 	public void unsubscribe(String[] topics) throws MqttException {
 		checkTopic(topics, "Paho");
-		if (ObjectUtil.isNotNull(client)) {
+		if (ObjectUtils.isNotNull(client)) {
 			client.unsubscribe(topics, null, new MqttActionListener() {
 				@Override
 				public void onSuccess(IMqttToken asyncActionToken) {
@@ -163,7 +163,7 @@ public class PahoMqttClient extends AbstractMqttClient {
 	}
 
 	public void publish(String topic, byte[] payload, int qos) throws MqttException {
-		if (ObjectUtil.isNotNull(client)) {
+		if (ObjectUtils.isNotNull(client)) {
 			client.publish(topic, payload, qos, false);
 		}
 	}
@@ -191,14 +191,14 @@ public class PahoMqttClient extends AbstractMqttClient {
 	}
 
 	public void publishSubscribeEvent(Set<String> topics, int qos) {
-		if (CollectionUtil.isNotEmpty(topics)) {
+		if (CollectionUtils.isNotEmpty(topics)) {
 			EventBus.publish(new SubscribeEvent(this, mqttBrokerProperties.getClientId(), topics.toArray(String[]::new),
 					topics.stream().mapToInt(item -> qos).toArray()));
 		}
 	}
 
 	public void publishUnsubscribeEvent(Set<String> topics) {
-		if (CollectionUtil.isNotEmpty(topics)) {
+		if (CollectionUtils.isNotEmpty(topics)) {
 			EventBus
 				.publish(new UnsubscribeEvent(this, mqttBrokerProperties.getClientId(), topics.toArray(String[]::new)));
 		}

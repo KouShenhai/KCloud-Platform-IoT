@@ -18,7 +18,7 @@
 package org.laokou.common.core.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.core.util.RequestUtils;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -42,7 +42,7 @@ public class WarmUpConfig {
 		public void init() {
 			log.info("加载Browscap预热...");
 			// 预热
-			RequestUtil.getUserAgentParser().parse(DEFAULT_USER_AGENT);
+			RequestUtils.getUserAgentParser().parse(DEFAULT_USER_AGENT);
 			log.info("完成Browscap预热...");
 		}
 

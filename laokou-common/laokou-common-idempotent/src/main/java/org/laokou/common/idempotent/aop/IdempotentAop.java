@@ -23,15 +23,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
-import org.laokou.common.i18n.utils.RedisKeyUtil;
+import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.constant.TraceConstant.REQUEST_ID;
+import static org.laokou.common.i18n.common.constant.TraceConstants.REQUEST_ID;
 import static org.laokou.common.redis.utils.RedisUtil.FIVE_MINUTE_EXPIRE;
 
 /**
@@ -50,10 +50,10 @@ public class IdempotentAop {
 	@Around("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
 	public Object doAround(ProceedingJoinPoint point) throws Throwable {
 		String requestId = getRequestId();
-		if (StringUtil.isEmpty(requestId)) {
+		if (StringUtils.isEmpty(requestId)) {
 			throw new SystemException("S_Idempotent_RequestIDIsNull", "请求ID不能为空");
 		}
-		String apiIdempotentKey = RedisKeyUtil.getApiIdempotentKey(requestId);
+		String apiIdempotentKey = RedisKeyUtils.getApiIdempotentKey(requestId);
 		if (!redisUtil.setIfAbsent(apiIdempotentKey, 0, FIVE_MINUTE_EXPIRE)) {
 			throw new SystemException("S_Idempotent_RequestRepeatedSubmit", "不可重复提交请求");
 		}
@@ -72,9 +72,9 @@ public class IdempotentAop {
 	}
 
 	private String getRequestId() {
-		HttpServletRequest request = RequestUtil.getHttpServletRequest();
+		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		String requestId = request.getHeader(REQUEST_ID);
-		if (StringUtil.isEmpty(requestId)) {
+		if (StringUtils.isEmpty(requestId)) {
 			return request.getParameter(REQUEST_ID);
 		}
 		return requestId;

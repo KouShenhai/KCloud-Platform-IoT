@@ -19,13 +19,13 @@ package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.common.i18n.common.constant.EventType;
-import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.common.constant.EventTypeEnum;
+import org.laokou.common.i18n.util.DateUtils;
 
 import java.io.Serial;
 import java.time.Instant;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 领域事件.
@@ -67,7 +67,7 @@ public final class DomainEvent extends Identifier {
 	/**
 	 * 时间.
 	 */
-	private final Instant instant = DateUtil.nowInstant();
+	private final Instant instant = DateUtils.nowInstant();
 
 	/**
 	 * 版本号【乐观锁】.
@@ -102,7 +102,7 @@ public final class DomainEvent extends Identifier {
 	}
 
 	public DomainEvent(Long id, Long tenantId, Long userId, Long aggregateId, String topic, String tag, int version,
-			String payload, EventType type, String sourcePrefix) {
+			String payload, EventTypeEnum type, String sourcePrefix) {
 		super.id = id;
 		this.payload = payload;
 		this.type = type.getCode();

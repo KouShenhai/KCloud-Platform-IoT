@@ -22,24 +22,24 @@ import org.laokou.auth.ability.validator.CaptchaValidator;
 import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
-import org.laokou.common.i18n.common.constant.EventType;
+import org.laokou.common.i18n.common.constant.EventTypeEnum;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.JacksonUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.RedisKeyUtil;
+import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
-import static org.laokou.auth.model.Constant.*;
-import static org.laokou.auth.model.GrantType.*;
-import static org.laokou.common.i18n.common.constant.EventType.LOGIN_EVENT;
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.auth.model.MqConstants.*;
+import static org.laokou.auth.model.GrantTypeEnum.*;
+import static org.laokou.auth.model.OAuth2Constants.*;
+import static org.laokou.common.i18n.common.constant.EventTypeEnum.LOGIN_EVENT;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
-import static org.laokou.common.i18n.common.exception.BizException.OAuth2.*;
 
 /**
  * 认证聚合.
@@ -72,7 +72,7 @@ public class AuthA extends AggregateRoot {
 	/**
 	 * 认证类型 mail邮箱 mobile手机号 username_password用户名密码 authorization_code授权码.
 	 */
-	private final GrantType grantType;
+	private final GrantTypeEnum grantTypeEnum;
 
 	/**
 	 * 验证码值对象.
@@ -114,17 +114,17 @@ public class AuthA extends AggregateRoot {
 		this.username = EMPTY;
 		this.password = EMPTY;
 		this.tenantCode = tenantCode;
-		this.grantType = USERNAME_PASSWORD;
+		this.grantTypeEnum = USERNAME_PASSWORD;
 		this.captcha = new CaptchaV(EMPTY, EMPTY);
 	}
 
-	public AuthA(Long id, String username, String password, String tenantCode, GrantType grantType, String uuid,
+	public AuthA(Long id, String username, String password, String tenantCode, GrantTypeEnum grantTypeEnum, String uuid,
 			String captcha) {
 		super.id = id;
 		this.username = username;
 		this.password = password;
 		this.tenantCode = tenantCode;
-		this.grantType = grantType;
+		this.grantTypeEnum = grantTypeEnum;
 		this.captcha = new CaptchaV(uuid, captcha);
 	}
 
@@ -146,8 +146,8 @@ public class AuthA extends AggregateRoot {
 
 	public void createCaptcha(Long eventId) {
 		addEvent(new DomainEvent(eventId, tenantId, null, super.id, LAOKOU_CAPTCHA_TOPIC, captchaE.getTag(),
-				super.version, JacksonUtil.toJsonStr(new SendCaptchaEvent(captchaE.getUuid())),
-				EventType.SEND_CAPTCHA_EVENT, sourcePrefix));
+				super.version, JacksonUtils.toJsonStr(new SendCaptchaEvent(captchaE.getUuid())),
+				EventTypeEnum.SEND_CAPTCHA_EVENT, sourcePrefix));
 		super.version++;
 	}
 
@@ -165,7 +165,7 @@ public class AuthA extends AggregateRoot {
 
 	public void getUserInfo(UserE user) {
 		this.user = user;
-		super.userId = ObjectUtil.isNotNull(this.user) ? this.user.getId() : null;
+		super.userId = ObjectUtils.isNotNull(this.user) ? this.user.getId() : null;
 	}
 
 	public void getMenuPermissions(Set<String> permissions) {
@@ -181,7 +181,7 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void checkTenantId() {
-		if (ObjectUtil.isNull(super.tenantId)) {
+		if (ObjectUtils.isNull(super.tenantId)) {
 			throw new BizException(TENANT_NOT_EXIST);
 		}
 	}
@@ -189,7 +189,7 @@ public class AuthA extends AggregateRoot {
 	public void checkCaptcha(CaptchaValidator captchaValidator) {
 		if (isUseCaptcha()) {
 			Boolean validate = captchaValidator.validate(getCaptchaCacheKey(), captcha.captcha());
-			if (ObjectUtil.isNull(validate)) {
+			if (ObjectUtils.isNull(validate)) {
 				throw new BizException(CAPTCHA_EXPIRED);
 			}
 			if (!validate) {
@@ -199,14 +199,14 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void checkSourcePrefix() {
-		if (ObjectUtil.isNull(sourcePrefix)) {
+		if (ObjectUtils.isNull(sourcePrefix)) {
 			throw new BizException(DATA_SOURCE_NOT_EXIST);
 		}
 	}
 
 	public void checkUsername() {
-		if (ObjectUtil.isNull(this.user)) {
-			this.grantType.checkUsernameNotExist();
+		if (ObjectUtils.isNull(this.user)) {
+			this.grantTypeEnum.checkUsernameNotExist();
 		}
 	}
 
@@ -217,7 +217,7 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void checkUserStatus() {
-		if (ObjectUtil.equals(UserStatus.DISABLE.getCode(), this.user.getStatus())) {
+		if (ObjectUtils.equals(UserStatusEnum.DISABLE.getCode(), this.user.getStatus())) {
 			throw new BizException(USER_DISABLED);
 		}
 	}
@@ -236,19 +236,19 @@ public class AuthA extends AggregateRoot {
 
 	public void recordLog(Long eventId, GlobalException e) {
 		LoginEvent event = getEvent(e);
-		if (ObjectUtil.isNotNull(event)) {
+		if (ObjectUtils.isNotNull(event)) {
 			addEvent(new DomainEvent(eventId, super.tenantId, super.userId, super.id, LAOKOU_LOG_TOPIC, LOGIN_TAG,
-					super.version, JacksonUtil.toJsonStr(event), LOGIN_EVENT, sourcePrefix));
+					super.version, JacksonUtils.toJsonStr(event), LOGIN_EVENT, sourcePrefix));
 			super.version++;
 		}
 	}
 
 	private boolean isUseCaptcha() {
-		return List.of(USERNAME_PASSWORD, MOBILE, MAIL).contains(grantType);
+		return List.of(USERNAME_PASSWORD, MOBILE, MAIL).contains(grantTypeEnum);
 	}
 
 	private boolean isUsePassword() {
-		return List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE).contains(grantType);
+		return List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE).contains(grantTypeEnum);
 	}
 
 	private Set<String> getPaths(List<String> list) {
@@ -275,30 +275,30 @@ public class AuthA extends AggregateRoot {
 	}
 
 	private String getLoginName() {
-		if (List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE).contains(grantType)) {
+		if (List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE).contains(grantTypeEnum)) {
 			return this.username;
 		}
 		return this.captcha.uuid();
 	}
 
 	private LoginEvent getEvent(GlobalException e) {
-		if (ObjectUtil.isNull(e)) {
+		if (ObjectUtils.isNull(e)) {
 			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
-					LoginStatus.OK.getCode(), EMPTY, grantType.getCode(), super.instant);
+					LoginStatusEnum.OK.getCode(), EMPTY, grantTypeEnum.getCode(), super.instant);
 		}
 		else if (e instanceof BizException ex) {
 			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
-					LoginStatus.FAIL.getCode(), ex.getMsg(), grantType.getCode(), super.instant);
+					LoginStatusEnum.FAIL.getCode(), ex.getMsg(), grantTypeEnum.getCode(), super.instant);
 		}
 		return null;
 	}
 
 	private String getCaptchaCacheKey() {
-		return switch (grantType) {
-			case MOBILE -> RedisKeyUtil.getMobileAuthCaptchaKey(captcha.uuid());
-			case MAIL -> RedisKeyUtil.getMailAuthCaptchaKey(captcha.uuid());
+		return switch (grantTypeEnum) {
+			case MOBILE -> RedisKeyUtils.getMobileAuthCaptchaKey(captcha.uuid());
+			case MAIL -> RedisKeyUtils.getMailAuthCaptchaKey(captcha.uuid());
 			case USERNAME_PASSWORD, AUTHORIZATION_CODE ->
-				RedisKeyUtil.getUsernamePasswordAuthCaptchaKey(captcha.uuid());
+				RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(captcha.uuid());
 		};
 	}
 

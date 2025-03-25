@@ -23,10 +23,10 @@ import org.laokou.admin.menu.dto.MenuTreeListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.admin.menu.model.MenuStatus;
-import org.laokou.admin.menu.model.MenuType;
-import org.laokou.admin.menu.model.TreeMenuType;
-import org.laokou.common.core.utils.TreeUtil;
+import org.laokou.admin.menu.model.MenuStatusEnum;
+import org.laokou.admin.menu.model.MenuTypeEnum;
+import org.laokou.admin.menu.model.TreeMenuTypeEnum;
+import org.laokou.common.core.util.TreeUtils;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -45,15 +45,15 @@ public class MenuTreeListQryExe {
 	private final MenuMapper menuMapper;
 
 	public Result<List<MenuTreeCO>> execute(MenuTreeListQry qry) {
-		MenuTreeCO co = TreeUtil.buildTreeNode(MenuConvertor.toClientObjs(list(qry)), MenuTreeCO.class);
+		MenuTreeCO co = TreeUtils.buildTreeNode(MenuConvertor.toClientObjs(list(qry)), MenuTreeCO.class);
 		return Result.ok(co.getChildren());
 	}
 
 	private List<MenuDO> list(MenuTreeListQry qry) {
-		switch (TreeMenuType.getByCode(qry.getCode())) {
+		switch (TreeMenuTypeEnum.getByCode(qry.getCode())) {
 			case USER -> {
-				qry.setStatus(MenuStatus.ENABLE.getCode());
-				qry.setType(MenuType.MENU.getCode());
+				qry.setStatus(MenuStatusEnum.ENABLE.getCode());
+				qry.setType(MenuTypeEnum.MENU.getCode());
 				return menuMapper.selectObjectList(qry);
 			}
 			case SYSTEM -> {

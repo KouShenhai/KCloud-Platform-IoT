@@ -19,7 +19,7 @@ package org.laokou.iot.transportProtocol.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.iot.transportProtocol.dto.TransportProtocolRemoveCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.transportProtocol.ability.TransportProtocolDomainService;
@@ -36,12 +36,12 @@ public class TransportProtocolRemoveCmdExe {
 
 	private final TransportProtocolDomainService transportProtocolDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(TransportProtocolRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> transportProtocolDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> transportProtocolDomainService.delete(cmd.getIds()));
 	}
 
 }

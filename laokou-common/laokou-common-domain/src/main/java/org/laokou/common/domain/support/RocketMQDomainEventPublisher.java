@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.common.rocketmq.template.SendMessageType;
-import org.laokou.common.trace.utils.TraceUtil;
+import org.laokou.common.trace.util.TraceUtils;
 import org.springframework.stereotype.Component;
 
 // @formatter:off
@@ -31,15 +31,15 @@ public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 
 	private final RocketMqTemplate rocketMqTemplate;
 
-	private final TraceUtil traceUtil;
+	private final TraceUtils traceUtils;
 
 	@Override
 	public void publish(DomainEvent payload, SendMessageType type) {
 		switch (type) {
-			case SYNC -> rocketMqTemplate.sendSyncMessage(payload.getTopic(), payload.getTag(), payload, traceUtil.getTraceId(), traceUtil.getSpanId());
-			case ASYNC -> rocketMqTemplate.sendAsyncMessage(payload.getTopic(), payload.getTag(), payload, traceUtil.getTraceId(), traceUtil.getSpanId());
-			case ONE_WAY -> rocketMqTemplate.sendOneWayMessage(payload.getTopic(), payload.getTag(), payload, traceUtil.getTraceId(), traceUtil.getSpanId());
-			case TRANSACTION -> rocketMqTemplate.sendTransactionMessage(payload.getTopic(), payload.getTag(), payload, payload.getId(), traceUtil.getTraceId(), traceUtil.getSpanId());
+			case SYNC -> rocketMqTemplate.sendSyncMessage(payload.getTopic(), payload.getTag(), payload, traceUtils.getTraceId(), traceUtils.getSpanId());
+			case ASYNC -> rocketMqTemplate.sendAsyncMessage(payload.getTopic(), payload.getTag(), payload, traceUtils.getTraceId(), traceUtils.getSpanId());
+			case ONE_WAY -> rocketMqTemplate.sendOneWayMessage(payload.getTopic(), payload.getTag(), payload, traceUtils.getTraceId(), traceUtils.getSpanId());
+			case TRANSACTION -> rocketMqTemplate.sendTransactionMessage(payload.getTopic(), payload.getTag(), payload, payload.getId(), traceUtils.getTraceId(), traceUtils.getSpanId());
 			default -> {}
 		}
 	}

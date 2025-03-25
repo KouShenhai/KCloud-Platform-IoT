@@ -38,10 +38,10 @@ import com.alibaba.nacos.api.exception.NacosException;
 import com.baomidou.dynamic.datasource.toolkit.CryptoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.infra.url.core.ShardingSphereURL;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.common.constant.StringConstant;
+import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -53,7 +53,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.WELL_NO;
+import static org.laokou.common.i18n.common.constant.StringConstants.WELL_NO;
 
 /**
  * Abstract ShardingSphere URL load engine.
@@ -93,8 +93,8 @@ public abstract class AbstractShardingSphereURLLoadEngine {
 			throw new SystemException("S_ShardingSphere_PullConfigError", "无法拉取ShardingSphere配置");
 		}
 		List<String> strList = list.stream().filter(i -> i.startsWith(PUBLIC_KEY)).toList();
-		String publicKey = StringConstant.EMPTY;
-		if (CollectionUtil.isNotEmpty(strList)) {
+		String publicKey = StringConstants.EMPTY;
+		if (CollectionUtils.isNotEmpty(strList)) {
 			publicKey = strList.getFirst().substring(11).trim();
 		}
 		StringBuilder stringBuilder = new StringBuilder();
@@ -102,7 +102,7 @@ public abstract class AbstractShardingSphereURLLoadEngine {
 		list.forEach(item -> {
 			if (!item.startsWith(PUBLIC_KEY)) {
 				if (item.contains(CRYPTO_PREFIX) && item.contains(CRYPTO_SUFFIX)) {
-					int index = item.indexOf(StringConstant.RISK);
+					int index = item.indexOf(StringConstants.RISK);
 					String key = item.substring(0, index + 2);
 					String val = item.substring(index + 2).trim();
 					stringBuilder.append(key).append(decrypt(finalPublicKey, val)).append("\n");
@@ -120,7 +120,7 @@ public abstract class AbstractShardingSphereURLLoadEngine {
 		try (LineNumberReader reader = new LineNumberReader(new InputStreamReader(
 				new ByteArrayInputStream(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8))) {
 			String str;
-			while (ObjectUtil.isNotNull((str = reader.readLine()))) {
+			while (ObjectUtils.isNotNull((str = reader.readLine()))) {
 				// #开头直接丢弃
 				if (!str.trim().startsWith(WELL_NO)) {
 					list.add(str);

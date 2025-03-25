@@ -18,7 +18,7 @@
 package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
-import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.util.DateUtils;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public abstract class AggregateRoot extends Identifier {
 	/**
 	 * 操作时间.
 	 */
-	protected final Instant instant = DateUtil.nowInstant();
+	protected final Instant instant = DateUtils.nowInstant();
 
 	/**
 	 * 事件集合.

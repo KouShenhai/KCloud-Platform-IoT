@@ -106,8 +106,8 @@ public class DomainService {
 	}
 
 	private void createCaptchaCache(NoticeLogE noticeLog) {
-		if (noticeLog.getStatus() == SendCaptchaStatus.OK.getCode()) {
-			String captchaCacheKey = SendCaptchaType.getByCode(noticeLog.getCode())
+		if (noticeLog.getStatus() == SendCaptchaStatusEnum.OK.getCode()) {
+			String captchaCacheKey = SendCaptchaTypeEnum.getByCode(noticeLog.getCode())
 				.getCaptchaCacheKey(noticeLog.getUuid());
 			// 5分钟有效
 			captchaGateway.set(captchaCacheKey, noticeLog.getCaptcha());

@@ -19,11 +19,11 @@ package org.laokou.infrastructure.config;
 
 import io.grpc.*;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.trace.utils.TraceUtil;
+import org.laokou.common.trace.util.TraceUtils;
 import org.laokou.domain.model.TraceLogV;
 
-import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
-import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
+import static org.laokou.common.i18n.common.constant.TraceConstants.SPAN_ID;
+import static org.laokou.common.i18n.common.constant.TraceConstants.TRACE_ID;
 
 /**
  * @author laokou
@@ -31,13 +31,13 @@ import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
 @RequiredArgsConstructor
 public class GrpcClientInterceptor implements ClientInterceptor {
 
-	private final TraceUtil traceUtil;
+	private final TraceUtils traceUtils;
 
 	@Override
 	public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(MethodDescriptor<ReqT, RespT> methodDescriptor,
 			CallOptions callOptions, Channel channel) {
-		String traceId = traceUtil.getTraceId();
-		String spanId = traceUtil.getSpanId();
+		String traceId = traceUtils.getTraceId();
+		String spanId = traceUtils.getSpanId();
 		return new WrapperTrace<>(methodDescriptor, callOptions, channel, new TraceLogV(traceId, spanId));
 	}
 

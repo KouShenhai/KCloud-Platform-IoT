@@ -18,7 +18,7 @@
 package org.laokou.common.mqtt.config;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
@@ -94,7 +94,7 @@ public class HivemqMqttClientManager {
 	public static void preDestroy(ExecutorService virtualThreadExecutor) {
 		PAHO_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::close);
 		PAHO_MQTT_CLIENT_MAP.clear();
-		ThreadUtil.shutdown(virtualThreadExecutor, 60);
+		ThreadUtils.shutdown(virtualThreadExecutor, 60);
 	}
 
 }

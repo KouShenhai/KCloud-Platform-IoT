@@ -23,7 +23,7 @@ import org.laokou.admin.role.dto.RoleModifyCmd;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -43,11 +43,11 @@ public class RoleModifyCmdExe {
 
 	private final RoleDomainService roleDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
-	public RoleModifyCmdExe(RoleDomainService roleDomainService, TransactionalUtil transactionalUtil) {
+	public RoleModifyCmdExe(RoleDomainService roleDomainService, TransactionalUtils transactionalUtils) {
 		this.roleDomainService = roleDomainService;
-		this.transactionalUtil = transactionalUtil;
+		this.transactionalUtils = transactionalUtils;
 	}
 
 	@CommandLog
@@ -55,7 +55,7 @@ public class RoleModifyCmdExe {
 		// 校验参数
 		RoleE roleE = RoleConvertor.toEntity(cmd.getCo());
 		modifyRoleParamValidator.validate(roleE);
-		return transactionalUtil.executeResultInTransaction(() -> roleDomainService.update(roleE));
+		return transactionalUtils.executeResultInTransaction(() -> roleDomainService.update(roleE));
 	}
 
 }

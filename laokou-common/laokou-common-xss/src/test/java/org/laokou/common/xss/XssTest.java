@@ -20,7 +20,7 @@ package org.laokou.common.xss;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.xss.util.XssUtil;
+import org.laokou.common.xss.util.XssUtils;
 
 /**
  * @author laokou
@@ -36,7 +36,7 @@ class XssTest {
 	@Test
 	void testHtmlScripTagJsonString() {
 		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[0] + "\"}";
-		String cleaned = XssUtil.clearHtml(json);
+		String cleaned = XssUtils.clearHtml(json);
 		Assertions.assertEquals("{\"s\": \"alert(1)\"}", cleaned);
 		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
 		Assertions.assertFalse(cleaned.contains("<script>"));
@@ -45,7 +45,7 @@ class XssTest {
 	@Test
 	void testHtmlTagJsonString() {
 		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[1] + "\"}";
-		String cleaned = XssUtil.clearHtml(json);
+		String cleaned = XssUtils.clearHtml(json);
 		Assertions.assertEquals("{\"s\": \"<img>\"}", cleaned);
 		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
 		Assertions.assertFalse(cleaned.contains("<IMG"));
@@ -54,7 +54,7 @@ class XssTest {
 	@Test
 	void testSvgJsonString() {
 		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[2] + "\"}";
-		String cleaned = XssUtil.clearHtml(json);
+		String cleaned = XssUtils.clearHtml(json);
 		Assertions.assertEquals("{\"s\": \"\"}", cleaned);
 		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
 		Assertions.assertFalse(cleaned.contains("<svg"));
@@ -63,7 +63,7 @@ class XssTest {
 	@Test
 	void testHtmlScriptJsonString() {
 		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[3] + "\"}";
-		String cleaned = XssUtil.clearHtml(json);
+		String cleaned = XssUtils.clearHtml(json);
 		Assertions.assertEquals(
 				"{\"s\": \"/*-/*`/*\\`/*'/*\"/**/(/* */onerror=alert(1) )//%0D%0A%0d%0a//\\x3csVg/\\x3e\"}", cleaned);
 		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
@@ -75,7 +75,7 @@ class XssTest {
 		String json = XSS_ATTACK_VECTORS[4];
 		boolean sqlInjection = false;
 		try {
-			XssUtil.clearSql(json);
+			XssUtils.clearSql(json);
 		}
 		catch (Exception e) {
 			sqlInjection = true;

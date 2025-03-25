@@ -22,9 +22,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.laokou.common.core.context.ShutdownHolder;
-import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.nacos.context.ShutdownHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -43,7 +43,7 @@ public class UsernamePasswordFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 		if (ShutdownHolder.status()) {
-			ResponseUtil.responseOk(response, Result.fail(SERVICE_UNAVAILABLE));
+			ResponseUtils.responseOk(response, Result.fail(SERVICE_UNAVAILABLE));
 			return;
 		}
 		chain.doFilter(request, response);

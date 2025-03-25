@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.generator.template.dto.TemplateRemoveCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.generator.template.ability.TemplateDomainService;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 
 /**
  *
@@ -35,11 +35,11 @@ public class TemplateRemoveCmdExe {
 
 	private final TemplateDomainService templateDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	public void executeVoid(TemplateRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> templateDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> templateDomainService.delete(cmd.getIds()));
 	}
 
 }

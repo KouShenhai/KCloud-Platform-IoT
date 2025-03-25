@@ -22,7 +22,7 @@ import org.laokou.admin.operateLog.ability.OperateLogDomainService;
 import org.laokou.admin.operateLog.convertor.OperateLogConvertor;
 import org.laokou.admin.operateLog.dto.OperateLogSaveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,12 +36,12 @@ public class OperateLogSaveCmdExe {
 
 	private final OperateLogDomainService operateLogDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(OperateLogSaveCmd cmd) {
 		// 校验参数
-		transactionalUtil
+		transactionalUtils
 			.executeInTransaction(() -> operateLogDomainService.create(OperateLogConvertor.toEntity(cmd.getCo())));
 	}
 

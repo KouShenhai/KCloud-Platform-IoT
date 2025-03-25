@@ -20,7 +20,7 @@ package org.laokou.admin.dictItem.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dictItem.dto.DictItemSaveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.dictItem.convertor.DictItemConvertor;
 import org.laokou.admin.dictItem.ability.DictItemDomainService;
@@ -36,12 +36,12 @@ public class DictItemSaveCmdExe {
 
 	private final DictItemDomainService dictItemDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(DictItemSaveCmd cmd) {
 		// 校验参数
-		transactionalUtil
+		transactionalUtils
 			.executeInTransaction(() -> dictItemDomainService.create(DictItemConvertor.toEntity(cmd.getCo())));
 	}
 

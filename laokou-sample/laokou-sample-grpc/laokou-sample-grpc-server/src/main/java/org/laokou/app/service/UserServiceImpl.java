@@ -17,7 +17,7 @@
 
 package org.laokou.app.service;
 
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.grpc.user.Result;
 import org.laokou.grpc.user.User;
 import org.laokou.grpc.user.UserGetQry;
@@ -33,7 +33,7 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 	@Override
 	public void getUserById(UserGetQry qry, io.grpc.stub.StreamObserver<Result> responseObserver) {
 		Result result;
-		if (ObjectUtil.equals(qry.getId(), 1L)) {
+		if (ObjectUtils.equals(qry.getId(), 1L)) {
 			User user = User.newBuilder().setId(1).setUsername("laokou").setPassword("laokou123").build();
 			result = Result.newBuilder().setMsg("请求成功").setCode("OK").setData(user).build();
 		}

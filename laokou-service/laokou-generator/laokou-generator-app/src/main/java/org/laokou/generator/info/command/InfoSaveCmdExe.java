@@ -22,7 +22,7 @@ import org.laokou.generator.info.dto.InfoSaveCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.generator.info.convertor.InfoConvertor;
 import org.laokou.generator.info.ability.InfoDomainService;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 
 /**
  *
@@ -36,11 +36,11 @@ public class InfoSaveCmdExe {
 
 	private final InfoDomainService infoDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	public void executeVoid(InfoSaveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> infoDomainService.create(InfoConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(() -> infoDomainService.create(InfoConvertor.toEntity(cmd.getCo())));
 	}
 
 }

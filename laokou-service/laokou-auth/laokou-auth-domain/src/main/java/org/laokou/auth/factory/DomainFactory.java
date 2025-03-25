@@ -20,7 +20,7 @@ package org.laokou.auth.factory;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.*;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -86,21 +86,21 @@ public final class DomainFactory {
 	}
 
 	public static AuthA getMailAuth(Long aggregateId, String mail, String code, String tenantCode) {
-		return new AuthA(aggregateId, EMPTY, EMPTY, tenantCode, GrantType.MAIL, mail, code);
+		return new AuthA(aggregateId, EMPTY, EMPTY, tenantCode, GrantTypeEnum.MAIL, mail, code);
 	}
 
 	public static AuthA getMobileAuth(Long aggregateId, String mobile, String code, String tenantCode) {
-		return new AuthA(aggregateId, EMPTY, EMPTY, tenantCode, GrantType.MOBILE, mobile, code);
+		return new AuthA(aggregateId, EMPTY, EMPTY, tenantCode, GrantTypeEnum.MOBILE, mobile, code);
 	}
 
 	public static AuthA getUsernamePasswordAuth(Long aggregateId, String username, String password, String tenantCode,
 			String uuid, String captcha) {
-		return new AuthA(aggregateId, username, password, tenantCode, GrantType.USERNAME_PASSWORD, uuid, captcha);
+		return new AuthA(aggregateId, username, password, tenantCode, GrantTypeEnum.USERNAME_PASSWORD, uuid, captcha);
 	}
 
 	public static AuthA getAuthorizationCodeAuth(Long aggregateId, String username, String password,
 			String tenantCode) {
-		return new AuthA(aggregateId, username, password, tenantCode, GrantType.AUTHORIZATION_CODE, EMPTY, EMPTY);
+		return new AuthA(aggregateId, username, password, tenantCode, GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
 	}
 
 	public static UserE getUser() {

@@ -22,7 +22,7 @@ import org.laokou.admin.loginLog.ability.LoginLogDomainService;
 import org.laokou.admin.loginLog.convertor.LoginLogConvertor;
 import org.laokou.admin.loginLog.dto.LoginLogModifyCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,12 +36,12 @@ public class LoginLogModifyCmdExe {
 
 	private final LoginLogDomainService loginLogDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(LoginLogModifyCmd cmd) {
 		// 校验参数
-		transactionalUtil
+		transactionalUtils
 			.executeInTransaction(() -> loginLogDomainService.update(LoginLogConvertor.toEntity(cmd.getCo())));
 	}
 

@@ -21,7 +21,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.UserE;
-import org.laokou.common.security.utils.UserDetail;
+import org.laokou.common.security.util.UserDetails;
 
 /**
  * @author laokou
@@ -31,9 +31,9 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static UserDetail to(AuthA authA) {
+	public static UserDetails to(AuthA authA) {
 		UserE userE = authA.getUser();
-		return new UserDetail(userE.getId(), userE.getUsername(), userE.getPassword(), userE.getAvatar(),
+		return new UserDetails(userE.getId(), userE.getUsername(), userE.getPassword(), userE.getAvatar(),
 				userE.isSuperAdministrator(), userE.getStatus(), userE.getMail(), userE.getMobile(),
 				authA.getDeptPaths(), authA.getPermissions(), userE.getTenantId(), authA.getSourcePrefix());
 	}

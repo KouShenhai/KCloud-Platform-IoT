@@ -19,7 +19,7 @@ package org.laokou.common.lock;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.redisson.api.RLock;
 
@@ -70,7 +70,7 @@ public class RedissonLock extends AbstractLock<RLock> {
 	 */
 	@Override
 	public void unlock(RLock lock) {
-		if (ObjectUtil.isNotNull(lock)) {
+		if (ObjectUtils.isNotNull(lock)) {
 			if (redisUtil.isLocked(lock) && redisUtil.isHeldByCurrentThread(lock)) {
 				log.info("分布式锁名：{}，线程名：{}，开始解锁", lock.getName(), Thread.currentThread().getName());
 				redisUtil.unlock(lock);

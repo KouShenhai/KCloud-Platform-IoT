@@ -18,7 +18,7 @@
 package org.laokou.common.oss.entity;
 
 import lombok.Data;
-import org.laokou.common.core.utils.FileUtil;
+import org.laokou.common.core.util.FileUtils;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
@@ -45,7 +45,7 @@ public class FileInfo implements Serializable {
 		Assert.notNull(fileName, "File name is null");
 		this.inputStream = file.getInputStream();
 		this.size = file.getSize();
-		this.ext = FileUtil.getFileExt(fileName);
+		this.ext = FileUtils.getFileExt(fileName);
 		this.name = UUID.randomUUID() + this.ext;
 		this.contentType = file.getContentType();
 	}

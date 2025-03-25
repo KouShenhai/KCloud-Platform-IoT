@@ -20,9 +20,9 @@ package org.laokou.admin.ip.convertor;
 import org.laokou.admin.ip.dto.clientobject.IpCO;
 import org.laokou.admin.ip.gatewayimpl.database.dataobject.IpDO;
 import org.laokou.admin.ip.model.IpE;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.core.util.ConvertUtils;
+import org.laokou.common.core.util.IdGenerator;
+import org.laokou.common.i18n.util.ObjectUtils;
 
 /**
  * IP转换器.
@@ -32,19 +32,19 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 public class IpConvertor {
 
 	public static IpDO toDataObject(IpE ipE) {
-		IpDO ipDO = ConvertUtil.sourceToTarget(ipE, IpDO.class);
-		if (ObjectUtil.isNull(ipDO.getId())) {
+		IpDO ipDO = ConvertUtils.sourceToTarget(ipE, IpDO.class);
+		if (ObjectUtils.isNull(ipDO.getId())) {
 			ipDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return ipDO;
 	}
 
 	public static IpCO toClientObject(IpDO ipDO) {
-		return ConvertUtil.sourceToTarget(ipDO, IpCO.class);
+		return ConvertUtils.sourceToTarget(ipDO, IpCO.class);
 	}
 
 	public static IpE toEntity(IpCO ipCO) {
-		return ConvertUtil.sourceToTarget(ipCO, IpE.class);
+		return ConvertUtils.sourceToTarget(ipCO, IpE.class);
 	}
 
 }

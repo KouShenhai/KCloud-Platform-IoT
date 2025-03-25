@@ -20,8 +20,8 @@ package org.laokou.logstash;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.kafka.template.KafkaSender;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,7 +45,7 @@ class KafkaTest {
 		index.setId("1");
 		index.setServiceId("laokou-logstash");
 		index.setProfile("dev");
-		index.setDateTime(DateUtil.format(DateUtil.nowInstant(), DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS));
+		index.setDateTime(DateUtils.format(DateUtils.nowInstant(), DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS));
 		index.setTraceId("1");
 		index.setSpanId("1");
 		index.setAddress("127.0.0.1");
@@ -54,7 +54,7 @@ class KafkaTest {
 		index.setPackageName("org.laokou.logstash");
 		index.setMessage("{\"testValue\": \"123456\"}");
 		index.setStacktrace("");
-		reactiveKafkaSender.send("laokou_trace_topic", JacksonUtil.toJsonStr(index))
+		reactiveKafkaSender.send("laokou_trace_topic", JacksonUtils.toJsonStr(index))
 			.subscribeOn(Schedulers.boundedElastic())
 			.subscribe();
 	}

@@ -24,7 +24,7 @@ import org.laokou.admin.menu.dto.MenuModifyCmd;
 import org.laokou.admin.menu.model.MenuE;
 import org.laokou.admin.menu.service.extensionpoint.MenuParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -40,15 +40,15 @@ public class MenuModifyCmdExe {
 
 	private final MenuDomainService menuDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@Autowired
 	@Qualifier("modifyMenuParamValidator")
 	private MenuParamValidatorExtPt modifyMenuParamValidator;
 
-	public MenuModifyCmdExe(MenuDomainService menuDomainService, TransactionalUtil transactionalUtil) {
+	public MenuModifyCmdExe(MenuDomainService menuDomainService, TransactionalUtils transactionalUtils) {
 		this.menuDomainService = menuDomainService;
-		this.transactionalUtil = transactionalUtil;
+		this.transactionalUtils = transactionalUtils;
 	}
 
 	@CommandLog
@@ -56,7 +56,7 @@ public class MenuModifyCmdExe {
 		// 校验参数
 		MenuE menuE = MenuConvertor.toEntity(cmd.getCo());
 		modifyMenuParamValidator.validate(menuE);
-		transactionalUtil.executeInTransaction(() -> menuDomainService.update(menuE));
+		transactionalUtils.executeInTransaction(() -> menuDomainService.update(menuE));
 	}
 
 }

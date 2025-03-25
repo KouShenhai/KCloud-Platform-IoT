@@ -27,12 +27,11 @@ import com.alibaba.csp.sentinel.slots.system.SystemBlockException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.i18n.dto.Result;
 
 import java.io.IOException;
-
-import static org.laokou.common.i18n.common.exception.SystemException.Sentinel.*;
+import static org.laokou.common.sentinel.constant.SentinelConstants.*;
 
 /**
  * @author laokou
@@ -46,31 +45,31 @@ public class SentinelExceptionHandler implements BlockExceptionHandler {
 		// 限流
 		if (e instanceof FlowException flowException) {
 			log.error("FlowException -> 已限流，错误信息：{}", flowException.getMessage());
-			ResponseUtil.responseOk(response, Result.fail(FLOWED));
+			ResponseUtils.responseOk(response, Result.fail(FLOWED));
 			return;
 		}
 		// 降级
 		if (e instanceof DegradeException degradeException) {
 			log.error("DegradeException -> 已降级，错误信息：{}", degradeException.getMessage());
-			ResponseUtil.responseOk(response, Result.fail(DEGRADED));
+			ResponseUtils.responseOk(response, Result.fail(DEGRADED));
 			return;
 		}
 		// 热点参数限流
 		if (e instanceof ParamFlowException paramFlowException) {
 			log.error("ParamFlowException -> 热点参数已限流，错误信息：{}", paramFlowException.getMessage());
-			ResponseUtil.responseOk(response, Result.fail(PARAM_FLOWED));
+			ResponseUtils.responseOk(response, Result.fail(PARAM_FLOWED));
 			return;
 		}
 		// 系统规则
 		if (e instanceof SystemBlockException systemBlockException) {
 			log.error("SystemBlockException -> 系统规则错误，错误信息：{}", systemBlockException.getMessage());
-			ResponseUtil.responseOk(response, Result.fail(SYSTEM_BLOCKED));
+			ResponseUtils.responseOk(response, Result.fail(SYSTEM_BLOCKED));
 			return;
 		}
 		// 授权规则
 		if (e instanceof AuthorityException authorityException) {
 			log.error("AuthorityException -> 授权规则错误，错误信息：{}", authorityException.getMessage());
-			ResponseUtil.responseOk(response, Result.fail(AUTHORITY));
+			ResponseUtils.responseOk(response, Result.fail(AUTHORITY));
 		}
 	}
 

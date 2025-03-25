@@ -22,12 +22,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.apache.rocketmq.spring.core.RocketMQListener;
-import org.laokou.common.core.utils.MDCUtil;
+import org.laokou.common.core.util.MDCUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.JacksonUtil;
-import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
-import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
+import org.laokou.common.i18n.util.JacksonUtils;
+import static org.laokou.common.i18n.common.constant.TraceConstants.SPAN_ID;
+import static org.laokou.common.i18n.common.constant.TraceConstants.TRACE_ID;
 
 /**
  * @author laokou
@@ -40,7 +40,7 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 	public void onMessage(MessageExt messageExt) {
 		try {
 			putTrace(messageExt);
-			handleDomainEvent(JacksonUtil.toBean(messageExt.getBody(), DomainEvent.class));
+			handleDomainEvent(JacksonUtils.toBean(messageExt.getBody(), DomainEvent.class));
 		}
 		catch (Exception e) {
 			log.error("消费失败，主题Topic：{}，偏移量Offset：{}，错误信息：{}", messageExt.getTopic(), messageExt.getCommitLogOffset(),
@@ -57,11 +57,11 @@ public abstract class AbstractDomainEventHandler implements RocketMQListener<Mes
 	private void putTrace(MessageExt messageExt) {
 		String traceId = messageExt.getProperty(TRACE_ID);
 		String spanId = messageExt.getProperty(SPAN_ID);
-		MDCUtil.put(traceId, spanId);
+		MDCUtils.put(traceId, spanId);
 	}
 
 	private void clearTrace() {
-		MDCUtil.clear();
+		MDCUtils.clear();
 	}
 
 }

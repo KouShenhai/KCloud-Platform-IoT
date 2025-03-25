@@ -17,7 +17,7 @@
 
 package org.laokou.generator.template.convertor;
 
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.util.IdGenerator;
 import org.laokou.generator.template.dto.clientobject.TemplateCO;
 import org.laokou.generator.template.gatewayimpl.database.dataobject.TemplateDO;
 import org.laokou.generator.template.model.TemplateE;

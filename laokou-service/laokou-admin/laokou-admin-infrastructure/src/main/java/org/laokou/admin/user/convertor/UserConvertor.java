@@ -24,10 +24,10 @@ import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.crypto.utils.AESUtil;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.security.utils.UserDetail;
+import org.laokou.common.core.util.IdGenerator;
+import org.laokou.common.crypto.utils.AESUtils;
+import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.security.util.UserDetails;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Collections;
@@ -92,7 +92,7 @@ public final class UserConvertor {
 		else {
 			userDO.setId(userE.getId());
 			String password = userE.getPassword();
-			if (StringUtil.isNotEmpty(password)) {
+			if (StringUtils.isNotEmpty(password)) {
 				userDO.setPassword(passwordEncoder.encode(password));
 			}
 		}
@@ -101,19 +101,19 @@ public final class UserConvertor {
 		userDO.setSuperAdmin(userE.getSuperAdmin());
 		userDO.setStatus(userE.getStatus());
 		userDO.setAvatar(userE.getAvatar());
-		userDO.setMail(StringUtil.isEmpty(mail) ? null : mail);
+		userDO.setMail(StringUtils.isEmpty(mail) ? null : mail);
 		userDO.setMailPhrase(userE.getMailPhrase());
-		userDO.setMobile(StringUtil.isEmpty(mobile) ? null : mobile);
+		userDO.setMobile(StringUtils.isEmpty(mobile) ? null : mobile);
 		userDO.setMobilePhrase(userE.getMobilePhrase());
 		return userDO;
 	}
 
-	public static UserProfileCO toClientObject(UserDetail userDetail) {
+	public static UserProfileCO toClientObject(UserDetails userDetails) {
 		UserProfileCO userProfileCO = new UserProfileCO();
-		userProfileCO.setId(userDetail.getId());
-		userProfileCO.setUsername(userDetail.getUsername());
-		userProfileCO.setAvatar(userDetail.getAvatar());
-		userProfileCO.setPermissions(userDetail.getPermissions());
+		userProfileCO.setId(userDetails.getId());
+		userProfileCO.setUsername(userDetails.getUsername());
+		userProfileCO.setAvatar(userDetails.getAvatar());
+		userProfileCO.setPermissions(userDetails.getPermissions());
 		return userProfileCO;
 	}
 
@@ -126,12 +126,12 @@ public final class UserConvertor {
 		userCO.setStatus(userDO.getStatus());
 		userCO.setAvatar(userDO.getAvatar());
 		userCO.setCreateTime(userDO.getCreateTime());
-		userCO.setUsername(AESUtil.decrypt(userDO.getUsername()));
-		if (StringUtil.isNotEmpty(mail)) {
-			userCO.setMail(AESUtil.decrypt(mail));
+		userCO.setUsername(AESUtils.decrypt(userDO.getUsername()));
+		if (StringUtils.isNotEmpty(mail)) {
+			userCO.setMail(AESUtils.decrypt(mail));
 		}
-		if (StringUtil.isNotEmpty(mobile)) {
-			userCO.setMobile(AESUtil.decrypt(mobile));
+		if (StringUtils.isNotEmpty(mobile)) {
+			userCO.setMobile(AESUtils.decrypt(mobile));
 		}
 		return userCO;
 	}
@@ -142,10 +142,10 @@ public final class UserConvertor {
 				UserCO userCO = toClientObject(item);
 				String mail = userCO.getMail();
 				String mobile = userCO.getMobile();
-				if (StringUtil.isNotEmpty(mail)) {
+				if (StringUtils.isNotEmpty(mail)) {
 					userCO.setMail(SensitiveUtil.formatMail(mail));
 				}
-				if (StringUtil.isNotEmpty(mobile)) {
+				if (StringUtils.isNotEmpty(mobile)) {
 					userCO.setMobile(SensitiveUtil.formatMobile(mobile));
 				}
 				return userCO;

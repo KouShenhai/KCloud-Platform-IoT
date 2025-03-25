@@ -18,7 +18,7 @@
 package org.laokou.common.core.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.context.annotation.Bean;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -33,7 +33,7 @@ public class SpringTaskExecutorConfig {
 
 	@Bean(name = "virtualThreadExecutor", destroyMethod = "close")
 	public ExecutorService virtualThreadExecutor() {
-		return ThreadUtil.newVirtualTaskExecutor();
+		return ThreadUtils.newVirtualTaskExecutor();
 	}
 
 	@Bean

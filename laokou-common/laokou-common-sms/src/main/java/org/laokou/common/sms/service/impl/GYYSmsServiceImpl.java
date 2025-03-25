@@ -20,11 +20,11 @@ package org.laokou.common.sms.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.HttpUtil;
-import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.core.utils.RandomStringUtil;
-import org.laokou.common.core.utils.TemplateUtil;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.core.util.HttpUtils;
+import org.laokou.common.core.util.MapUtils;
+import org.laokou.common.core.util.RandomStringUtils;
+import org.laokou.common.core.util.TemplateUtils;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
 import org.laokou.common.sms.config.SmsProperties;
 import org.laokou.common.sms.dto.SendStatus;
@@ -33,7 +33,7 @@ import org.laokou.common.sms.dto.SmsResult;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 /**
@@ -42,7 +42,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @Slf4j
 public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 
-	private static final Map<String, String> TEMPLATES = new HashMap<>(MapUtil.initialCapacity(15));
+	private static final Map<String, String> TEMPLATES = new HashMap<>(MapUtils.initialCapacity(15));
 
 	private static final String PARAMS_TEMPLATE = "**code**:${captcha},**minute**:${minute}";
 
@@ -74,10 +74,10 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 	@Override
 	public SmsResult send(String mobile) throws JsonProcessingException {
 		String name = "手机号验证码【国阳云】";
-		String captcha = RandomStringUtil.randomNumeric();
+		String captcha = RandomStringUtils.randomNumeric();
 		String templateId = smsProperties.getGyy().getTemplateId();
 		if (!TEMPLATES.containsKey(templateId)) {
-			return new SmsResult(name, SendStatus.FAIL.getCode(), "模板不存在", JacksonUtil.EMPTY_JSON, captcha);
+			return new SmsResult(name, SendStatus.FAIL.getCode(), "模板不存在", JacksonUtils.EMPTY_JSON, captcha);
 		}
 		/*
 		 * HttpUtils下载 => https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/src/main/java/com/aliyun/api/gateway/demo/util/HttpUtils.java
@@ -87,15 +87,15 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		String signId = smsProperties.getGyy().getSignId();
 		String appcode = smsProperties.getGyy().getAppcode();
 		Map<String, Object> param = Map.of("captcha", captcha, "minute", 5);
-		String paramValue = TemplateUtil.getContent(PARAMS_TEMPLATE, param);
+		String paramValue = TemplateUtils.getContent(PARAMS_TEMPLATE, param);
 		// 最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
 		Map<String, String> headers = Map.of(AUTHORIZATION, "APPCODE " + appcode);
 		// smsSignId（短信前缀）和templateId（短信模板），可登录国阳云控制台自助申请。参考文档：http://help.guoyangyun.com/Problem/Qm.html
 		Map<String, String> params = Map.of("mobile", mobile, "param", paramValue, "smsSignId", signId, "templateId",
 			templateId);
-		String paramString = JacksonUtil.toJsonStr(Map.of("mobile", SensitiveUtil.formatMobile(mobile), "content", TemplateUtil.getContent(TEMPLATES.get(templateId), param)));
-		String json = HttpUtil.doFormDataPost(URL, params, headers);
-		JsonNode jsonNode = JacksonUtil.readTree(json);
+		String paramString = JacksonUtils.toJsonStr(Map.of("mobile", SensitiveUtil.formatMobile(mobile), "content", TemplateUtils.getContent(TEMPLATES.get(templateId), param)));
+		String json = HttpUtils.doFormDataPost(URL, params, headers);
+		JsonNode jsonNode = JacksonUtils.readTree(json);
 		int code = jsonNode.get("code").asInt();
 		if (code != SendStatus.OK.getCode()) {
 			return new SmsResult(name, SendStatus.FAIL.getCode(), json, paramString, captcha);

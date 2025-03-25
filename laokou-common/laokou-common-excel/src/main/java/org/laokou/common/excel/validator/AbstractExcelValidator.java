@@ -17,7 +17,7 @@
 
 package org.laokou.common.excel.validator;
 
-import org.laokou.common.i18n.utils.ParamValidator;
+import org.laokou.common.i18n.util.ParamValidator;
 
 import java.util.Set;
 

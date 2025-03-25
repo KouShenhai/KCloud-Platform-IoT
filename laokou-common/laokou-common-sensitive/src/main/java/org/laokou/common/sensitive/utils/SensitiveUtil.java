@@ -17,9 +17,9 @@
 
 package org.laokou.common.sensitive.utils;
 
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.util.StringUtils;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.*;
+import static org.laokou.common.i18n.common.constant.StringConstants.*;
 
 /**
  * @author laokou
@@ -30,7 +30,7 @@ public final class SensitiveUtil {
 	}
 
 	public static String formatMail(String mail) {
-		if (StringUtil.isEmpty(mail)) {
+		if (StringUtils.isEmpty(mail)) {
 			return EMPTY;
 		}
 		int index = mail.indexOf(AT);
@@ -46,7 +46,7 @@ public final class SensitiveUtil {
 	}
 
 	public static String formatStr(String s, int length, int start, int end) {
-		if (StringUtil.isEmpty(s)) {
+		if (StringUtils.isEmpty(s)) {
 			return EMPTY;
 		}
 		if (s.length() != length) {

@@ -27,7 +27,7 @@ import org.springframework.web.client.RestClient;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
-import static org.laokou.common.core.utils.HttpUtil.getHttpClient;
+import static org.laokou.common.core.util.HttpUtils.getHttpClient;
 
 /**
  * @author laokou

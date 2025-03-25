@@ -19,7 +19,7 @@ package org.laokou.iot.productCategory.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.iot.productCategory.dto.ProductCategorySaveCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
@@ -37,12 +37,12 @@ public class ProductCategorySaveCmdExe {
 
 	private final ProductCategoryDomainService productCategoryDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(ProductCategorySaveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(
+		transactionalUtils.executeInTransaction(
 				() -> productCategoryDomainService.create(ProductCategoryConvertor.toEntity(cmd.getCo())));
 	}
 

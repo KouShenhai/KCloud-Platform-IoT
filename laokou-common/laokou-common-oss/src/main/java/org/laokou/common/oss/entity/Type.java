@@ -18,7 +18,7 @@
 package org.laokou.common.oss.entity;
 
 import lombok.Getter;
-import org.laokou.common.i18n.utils.EnumParser;
+import org.laokou.common.i18n.util.EnumParser;
 import org.laokou.common.oss.template.AmazonS3Storage;
 import org.laokou.common.oss.template.LocalStorage;
 import org.laokou.common.oss.template.Storage;

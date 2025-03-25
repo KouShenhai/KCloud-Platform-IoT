@@ -21,10 +21,10 @@ import org.laokou.admin.noticeLog.model.Status;
 import org.laokou.admin.operateLog.dto.clientobject.OperateLogCO;
 import org.laokou.admin.operateLog.dto.excel.OperateLogExcel;
 import org.laokou.admin.operateLog.model.OperateLogE;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.excel.utils.ExcelUtil;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.log.database.dataobject.OperateLogDO;
+import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.log.mapper.OperateLogDO;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -142,7 +142,7 @@ public final class OperateLogConvertor implements ExcelUtil.ExcelConvertor<Opera
 		operateLogExcel.setErrorMessage(operateLogDO.getErrorMessage());
 		operateLogExcel.setCostTime(operateLogDO.getCostTime());
 		operateLogExcel
-			.setCreateTime(DateUtil.format(operateLogDO.getCreateTime(), DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
+			.setCreateTime(DateUtils.format(operateLogDO.getCreateTime(), DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
 		return operateLogExcel;
 	}
 

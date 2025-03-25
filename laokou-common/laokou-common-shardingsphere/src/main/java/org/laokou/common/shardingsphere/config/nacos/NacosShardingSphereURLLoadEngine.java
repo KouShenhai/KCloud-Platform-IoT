@@ -41,8 +41,8 @@ import com.alibaba.nacos.api.exception.NacosException;
 import com.google.common.base.Preconditions;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.infra.url.core.ShardingSphereURL;
-import org.laokou.common.core.utils.PropertyUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.core.util.PropertyUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.shardingsphere.config.AbstractShardingSphereURLLoadEngine;
 import java.io.IOException;
 
@@ -67,13 +67,13 @@ public final class NacosShardingSphereURLLoadEngine extends AbstractShardingSphe
 	@Override
 	protected String getContent() throws IOException, NacosException {
 		// Nacos拉取配置
-		NacosConfigProperties properties = PropertyUtil.bindOrCreate(NACOS_CONFIG_PREFIX, NacosConfigProperties.class,
+		NacosConfigProperties properties = PropertyUtils.bindOrCreate(NACOS_CONFIG_PREFIX, NacosConfigProperties.class,
 				BIND_YAML_NAME, YAML_FORMAT);
 		String group = properties.getGroup();
 		NacosConfigManager nacosConfigManager = new NacosConfigManager(properties);
 		ConfigService configService = nacosConfigManager.getConfigService();
 		String dataId = url.getConfigurationSubject();
-		Preconditions.checkArgument(StringUtil.isNotEmpty(dataId),
+		Preconditions.checkArgument(StringUtils.isNotEmpty(dataId),
 				"Nacos dataId is required in ShardingSphere driver URL.");
 		return configService.getConfig(dataId, group, 5000);
 	}

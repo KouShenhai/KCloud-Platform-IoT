@@ -36,8 +36,8 @@ package org.springframework.boot.actuate.autoconfigure.tracing.prometheus;
 import io.micrometer.tracing.Span;
 import io.micrometer.tracing.Tracer;
 import io.prometheus.metrics.tracer.common.SpanContext;
-import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.boot.actuate.autoconfigure.metrics.export.prometheus.PrometheusMetricsExportAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.tracing.MicrometerTracingAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -81,19 +81,19 @@ public class PrometheusExemplarsAutoConfiguration {
 		@Override
 		public String getCurrentTraceId() {
 			Span currentSpan = currentSpan();
-			return ObjectUtil.isNotNull(currentSpan) ? currentSpan.context().traceId() : null;
+			return ObjectUtils.isNotNull(currentSpan) ? currentSpan.context().traceId() : null;
 		}
 
 		@Override
 		public String getCurrentSpanId() {
 			Span currentSpan = currentSpan();
-			return ObjectUtil.isNotNull(currentSpan) ? currentSpan.context().spanId() : null;
+			return ObjectUtils.isNotNull(currentSpan) ? currentSpan.context().spanId() : null;
 		}
 
 		@Override
 		public boolean isCurrentSpanSampled() {
 			Span currentSpan = currentSpan();
-			if (ObjectUtil.isNull(currentSpan)) {
+			if (ObjectUtils.isNull(currentSpan)) {
 				return false;
 			}
 			return Boolean.TRUE.equals(currentSpan.context().sampled());
@@ -106,10 +106,10 @@ public class PrometheusExemplarsAutoConfiguration {
 		private Span currentSpan() {
 			try {
 				// 双检锁
-				if (ObjectUtil.isNull(currentSpan)) {
+				if (ObjectUtils.isNull(currentSpan)) {
 					synchronized (LOCK) {
-						if (ObjectUtil.isNull(currentSpan)) {
-							currentSpan = SpringContextUtil.getBean(Tracer.class).currentSpan();
+						if (ObjectUtils.isNull(currentSpan)) {
+							currentSpan = SpringContextUtils.getBean(Tracer.class).currentSpan();
 						}
 					}
 				}

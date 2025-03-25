@@ -18,12 +18,12 @@
 package org.laokou.generator.model;
 
 import lombok.Getter;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.dto.AggregateRoot;
 
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.SLASH;
+import static org.laokou.common.i18n.common.constant.StringConstants.SLASH;
 
 /**
  * @author laokou
@@ -67,7 +67,7 @@ public class GeneratorA extends AggregateRoot {
 	}
 
 	public Map<String, Object> toMap() {
-		Map<String, Object> map = JacksonUtil.toMap(tableV, String.class, Object.class);
+		Map<String, Object> map = JacksonUtils.toMap(tableV, String.class, Object.class);
 		map.put("id", "#{id}");
 		map.put("author", author);
 		// map.put("version", version);

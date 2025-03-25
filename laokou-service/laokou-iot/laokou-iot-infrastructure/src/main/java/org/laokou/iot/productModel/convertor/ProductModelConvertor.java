@@ -17,7 +17,7 @@
 
 package org.laokou.iot.productModel.convertor;
 
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.util.IdGenerator;
 import org.laokou.iot.productModel.gatewayimpl.database.dataobject.ProductModelDO;
 import org.laokou.iot.productModel.model.ProductModelE;
 
