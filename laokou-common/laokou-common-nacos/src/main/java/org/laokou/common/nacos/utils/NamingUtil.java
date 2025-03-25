@@ -69,7 +69,7 @@ public final class NamingUtil {
 	}
 
 	/**
-	 * 获取维护服务.
+	 * 获取命名维护服务.
 	 * @param properties 配置
 	 */
 	public NamingMaintainService getNamingMaintainService(Properties properties) {

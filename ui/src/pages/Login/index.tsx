@@ -11,7 +11,7 @@ import {
 	WechatOutlined,
 } from '@ant-design/icons';
 import {CaptFieldRef, LoginFormPage, ProFormCaptcha, ProFormInstance, ProFormText,} from '@ant-design/pro-components';
-import {Col, Divider, Image, Row, Space, Tabs} from 'antd';
+import {Col, Divider, Image, message, Row, Space, Tabs} from 'antd';
 import {CSSProperties, useEffect, useRef, useState} from 'react';
 import {login} from '@/services/auth/auth';
 import {getCaptchaImageByUuidV3, sendCaptchaV3 } from '@/services/auth/captcha';
@@ -143,6 +143,12 @@ export default () => {
 		setFormField({mobile_captcha: ''})
 	}
 
+	const timeFix 	= () => {
+		const time = new Date();
+		const hour = time.getHours();
+		return hour < 9 ? '早上好' : hour <= 11 ? '上午好' : hour <= 13 ? '中午好' : hour < 20 ? '下午好' : '晚上好';
+	};
+
 	useEffect(() => {
 		clearToken()
 		getPublicKey().catch(console.log)
@@ -158,6 +164,8 @@ export default () => {
 				data: { access_token: string; refresh_token: string; expires_in: number; };
 			}) => {
 				if (res.code === 'OK') {
+					// 提示框【登录成功】
+					message.success(`${timeFix()}，欢迎回来`).then();
 					// 清空令牌
 					clearToken()
 					// 登录成功，存储令牌
@@ -165,8 +173,10 @@ export default () => {
 					// 跳转路由
 					const urlParams = new URL(window.location.href).searchParams;
 					history.push(urlParams.get('redirect') || '/');
-					// 刷新页面
-					window.location.reload();
+					// 1秒后刷新页面
+					setTimeout(() => {
+						window.location.reload();
+					}, 1000)
 				}
 			})
 			.catch(() => {

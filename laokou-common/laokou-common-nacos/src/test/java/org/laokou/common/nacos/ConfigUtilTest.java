@@ -161,7 +161,7 @@ class ConfigUtilTest {
 	@Test
 	void testRemoveConfig() throws NacosException, InterruptedException {
 		Assertions.assertTrue(configUtil.publishConfig("test1.yaml", nacosConfigProperties.getGroup(), "test: 123"));
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		Assertions.assertEquals("test: 123",
 				configUtil.getConfig("test1.yaml", nacosConfigProperties.getGroup(), 5000));
 

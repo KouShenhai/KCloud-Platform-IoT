@@ -38,5 +38,6 @@
     <module>laokou-iot</module>
     <module>laokou-module</module>
     <module>laokou-oss</module>
+    <module>laokou-mqtt</module>
   </modules>
 </project>
