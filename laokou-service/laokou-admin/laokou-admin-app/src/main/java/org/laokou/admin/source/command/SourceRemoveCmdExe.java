@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.source.ability.SourceDomainService;
 import org.laokou.admin.source.dto.SourceRemoveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,12 +35,12 @@ public class SourceRemoveCmdExe {
 
 	private final SourceDomainService sourceDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(SourceRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> sourceDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> sourceDomainService.delete(cmd.getIds()));
 	}
 
 }

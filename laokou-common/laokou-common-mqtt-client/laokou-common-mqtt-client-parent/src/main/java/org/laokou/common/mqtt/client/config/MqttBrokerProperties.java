@@ -18,7 +18,7 @@
 package org.laokou.common.mqtt.client.config;
 
 import lombok.Data;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.util.IdGenerator;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -22,7 +22,7 @@ import org.laokou.admin.tenant.ability.TenantDomainService;
 import org.laokou.admin.tenant.convertor.TenantConvertor;
 import org.laokou.admin.tenant.dto.TenantSaveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,12 +36,13 @@ public class TenantSaveCmdExe {
 
 	private final TenantDomainService tenantDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(TenantSaveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> tenantDomainService.create(TenantConvertor.toEntity(cmd.getCo())));
+		transactionalUtils
+			.executeInTransaction(() -> tenantDomainService.create(TenantConvertor.toEntity(cmd.getCo())));
 	}
 
 }

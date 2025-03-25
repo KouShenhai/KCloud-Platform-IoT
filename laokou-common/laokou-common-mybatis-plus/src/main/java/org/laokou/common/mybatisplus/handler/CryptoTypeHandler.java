@@ -20,8 +20,8 @@ package org.laokou.common.mybatisplus.handler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
-import org.laokou.common.crypto.utils.AESUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.crypto.utils.AESUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.sql.CallableStatement;
@@ -29,7 +29,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -42,8 +42,8 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 	public void setParameter(PreparedStatement preparedStatement, int parameterIndex, String content,
 			JdbcType jdbcType) {
 		try {
-			if (StringUtil.isNotEmpty(content)) {
-				content = AESUtil.encrypt(content);
+			if (StringUtils.isNotEmpty(content)) {
+				content = AESUtils.encrypt(content);
 			}
 			preparedStatement.setString(parameterIndex, content);
 		}
@@ -57,10 +57,10 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 	public String getResult(ResultSet resultSet, String columnName) {
 		try {
 			String data = resultSet.getString(columnName);
-			if (StringUtil.isEmpty(data)) {
+			if (StringUtils.isEmpty(data)) {
 				return EMPTY;
 			}
-			return AESUtil.decrypt(data.trim());
+			return AESUtils.decrypt(data.trim());
 		}
 		catch (Exception e) {
 			log.error("解密失败，错误信息：{}", e.getMessage(), e);
@@ -72,10 +72,10 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 	public String getResult(ResultSet resultSet, int columnIndex) {
 		try {
 			String data = resultSet.getString(columnIndex);
-			if (StringUtil.isEmpty(data)) {
+			if (StringUtils.isEmpty(data)) {
 				return EMPTY;
 			}
-			return AESUtil.decrypt(data.trim());
+			return AESUtils.decrypt(data.trim());
 		}
 		catch (Exception e) {
 			log.error("解密失败，错误信息：{}", e.getMessage(), e);
@@ -87,10 +87,10 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 	public String getResult(CallableStatement callableStatement, int columnIndex) throws SQLException {
 		try {
 			String data = callableStatement.getString(columnIndex);
-			if (StringUtil.isEmpty(data)) {
+			if (StringUtils.isEmpty(data)) {
 				return EMPTY;
 			}
-			return AESUtil.decrypt(data.trim());
+			return AESUtils.decrypt(data.trim());
 		}
 		catch (Exception e) {
 			log.error("解密失败，错误信息：{}", e.getMessage(), e);

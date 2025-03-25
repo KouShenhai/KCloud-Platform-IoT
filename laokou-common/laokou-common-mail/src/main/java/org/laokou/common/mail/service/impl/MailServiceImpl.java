@@ -18,9 +18,9 @@
 package org.laokou.common.mail.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.RandomStringUtil;
-import org.laokou.common.core.utils.TemplateUtil;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.core.util.RandomStringUtils;
+import org.laokou.common.core.util.TemplateUtils;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.mail.dto.MailResult;
 import org.laokou.common.mail.dto.SendStatus;
 import org.laokou.common.sensitive.utils.SensitiveUtil;
@@ -28,7 +28,7 @@ import org.springframework.boot.autoconfigure.mail.MailProperties;
 
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -46,12 +46,12 @@ public class MailServiceImpl extends AbstractMailServiceImpl {
 	public MailResult send(String mail) {
 		String subject = "验证码";
 		String name = "邮箱" + subject;
-		String captcha = RandomStringUtil.randomNumeric();
+		String captcha = RandomStringUtils.randomNumeric();
 		// 默认5分钟有效
 		Map<String, Object> param = Map.of("captcha", captcha, "minute", 5);
-		String content = TemplateUtil.getContent(CAPTCHA_TEMPLATE, param);
+		String content = TemplateUtils.getContent(CAPTCHA_TEMPLATE, param);
 		// 敏感信息过滤
-		String paramString = JacksonUtil.toJsonStr(Map.of("mail", SensitiveUtil.formatMail(mail), "content", content));
+		String paramString = JacksonUtils.toJsonStr(Map.of("mail", SensitiveUtil.formatMail(mail), "content", content));
 		try {
 			// 发送邮件
 			sendMail(subject, content, mail);

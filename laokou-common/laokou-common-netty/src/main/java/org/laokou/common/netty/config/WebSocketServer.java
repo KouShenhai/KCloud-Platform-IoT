@@ -25,7 +25,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import io.netty.util.concurrent.Future;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 
 import static io.netty.channel.ChannelOption.SO_KEEPALIVE;
 
@@ -74,7 +74,7 @@ public final class WebSocketServer extends AbstractServer {
 	@Override
 	public Future<Void> send(String clientId, Object obj) throws InterruptedException {
 		Channel channel = WebSocketSessionManager.get(clientId);
-		if (ObjectUtil.isNotNull(channel) && channel.isActive() && channel.isWritable()) {
+		if (ObjectUtils.isNotNull(channel) && channel.isActive() && channel.isWritable()) {
 			return channel.writeAndFlush(obj);
 		}
 		return null;

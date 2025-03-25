@@ -20,10 +20,10 @@ package org.laokou.common.nacos.handler;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.ResourceUtil;
-import org.laokou.common.core.utils.SpringUtil;
-import org.laokou.common.core.utils.TemplateUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.common.core.util.SpringUtils;
+import org.laokou.common.core.util.TemplateUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.util.Assert;
@@ -43,13 +43,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class RouterHandler implements ApplicationListener<ApplicationReadyEvent> {
 
-	private final SpringUtil springUtil;
+	private final SpringUtils springUtils;
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
 		try {
-			String serviceId = springUtil.getServiceId();
-			Assert.isTrue(StringUtil.isNotEmpty(serviceId), "ServiceID is empty");
+			String serviceId = springUtils.getServiceId();
+			Assert.isTrue(StringUtils.isNotEmpty(serviceId), "ServiceID is empty");
 			Map<String, Object> map = new HashMap<>(2);
 			String abbr = serviceId.substring(7);
 			map.put("serviceId", serviceId);
@@ -69,10 +69,10 @@ public class RouterHandler implements ApplicationListener<ApplicationReadyEvent>
 	 * @return 路由配置
 	 */
 	private String getRouter(Map<String, Object> dataMap) throws IOException {
-		String template = ResourceUtil.getResource("templates/router_template.json")
+		String template = ResourceUtils.getResource("templates/router_template.json")
 			.getContentAsString(StandardCharsets.UTF_8)
 			.trim();
-		return TemplateUtil.getContent(template, dataMap);
+		return TemplateUtils.getContent(template, dataMap);
 	}
 
 }

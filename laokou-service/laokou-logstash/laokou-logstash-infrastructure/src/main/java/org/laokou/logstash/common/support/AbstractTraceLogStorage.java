@@ -19,10 +19,10 @@ package org.laokou.logstash.common.support;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.constant.StringConstant;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.JacksonUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.common.constant.StringConstants;
+import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.lock.support.IdentifierGenerator;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
@@ -35,15 +35,15 @@ public abstract class AbstractTraceLogStorage implements TraceLogStorage {
 	private final IdentifierGenerator distributedIdentifierGenerator;
 
 	protected String getIndexName() {
-		return TRACE_INDEX + StringConstant.UNDER + DateUtil.format(DateUtil.nowDate(), DateUtil.YYYYMMDD);
+		return TRACE_INDEX + StringConstants.UNDER + DateUtils.format(DateUtils.nowDate(), DateUtils.YYYYMMDD);
 	}
 
 	protected TraceLogIndex getTraceLogIndex(String str) {
 		try {
-			TraceLogIndex traceLogIndex = JacksonUtil.toBean(str, TraceLogIndex.class);
+			TraceLogIndex traceLogIndex = JacksonUtils.toBean(str, TraceLogIndex.class);
 			String traceId = traceLogIndex.getTraceId();
 			String spanId = traceLogIndex.getSpanId();
-			if (StringUtil.isNotEmpty(spanId) && StringUtil.isNotEmpty(traceId)) {
+			if (StringUtils.isNotEmpty(spanId) && StringUtils.isNotEmpty(traceId)) {
 				traceLogIndex.setId(String.valueOf(distributedIdentifierGenerator.generate()));
 				return traceLogIndex;
 			}

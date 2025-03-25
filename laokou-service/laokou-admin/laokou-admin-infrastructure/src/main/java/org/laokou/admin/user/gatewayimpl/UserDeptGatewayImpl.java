@@ -23,8 +23,8 @@ import org.laokou.admin.user.gateway.UserDeptGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserDeptMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.mybatisplus.utils.MybatisUtil;
+import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -39,7 +39,7 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 public class UserDeptGatewayImpl implements UserDeptGateway {
 
-	private final MybatisUtil mybatisUtil;
+	private final MybatisUtils mybatisUtils;
 
 	private final ExecutorService virtualThreadExecutor;
 
@@ -65,16 +65,16 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 	private void insertUserDept(UserE userE) {
 		// 新增用户部门关联表
 		List<UserDeptDO> list = UserConvertor.toDataObjs(userE, userE.getId());
-		if (CollectionUtil.isNotEmpty(list)) {
-			mybatisUtil.batch(list, UserDeptMapper.class, UserDeptMapper::insert);
+		if (CollectionUtils.isNotEmpty(list)) {
+			mybatisUtils.batch(list, UserDeptMapper.class, UserDeptMapper::insert);
 		}
 	}
 
 	private void deleteUserDept(UserE userE) {
 		// 删除用户部门关联表
 		List<UserDeptDO> list = UserConvertor.toDataObjs(userE);
-		if (CollectionUtil.isNotEmpty(list)) {
-			mybatisUtil.batch(list, UserDeptMapper.class, UserDeptMapper::deleteObjById);
+		if (CollectionUtils.isNotEmpty(list)) {
+			mybatisUtils.batch(list, UserDeptMapper.class, UserDeptMapper::deleteObjById);
 		}
 	}
 

@@ -18,7 +18,7 @@
 package org.laokou.tool;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.FileUtil;
+import org.laokou.common.core.util.FileUtils;
 import org.springframework.util.StopWatch;
 
 import java.io.File;
@@ -31,7 +31,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
-import static org.laokou.common.core.utils.SystemUtil.isWindows;
+import static org.laokou.common.core.util.SystemUtils.isWindows;
 
 /**
  * 一键修改项目.
@@ -78,7 +78,7 @@ final class ModifyProjectBoot {
 		stopWatch.start();
 		// 修改projectName、packageName、groupId、artifactId
 		String projectPath = System.getProperty("user.dir");
-		FileUtil.walkFileTree(Paths.get(projectPath), new SimpleFileVisitor<>() {
+		FileUtils.walkFileTree(Paths.get(projectPath), new SimpleFileVisitor<>() {
 
 			@Override
 			public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
@@ -97,9 +97,9 @@ final class ModifyProjectBoot {
 					buff = getXmlFileAsByte(filePath);
 				}
 				else {
-					buff = FileUtil.getBytes(Paths.get(filePath));
+					buff = FileUtils.getBytes(Paths.get(filePath));
 				}
-				FileUtil.write(Paths.get(newPath), buff);
+				FileUtils.write(Paths.get(newPath), buff);
 				return FileVisitResult.CONTINUE;
 			}
 
@@ -133,7 +133,7 @@ final class ModifyProjectBoot {
 		int index = path.lastIndexOf(File.separator);
 		String dir = path.substring(0, index);
 		String fileName = path.substring(index + 1);
-		FileUtil.create(dir, fileName);
+		FileUtils.create(dir, fileName);
 	}
 
 	private static String getNewPath(String path) {
@@ -143,12 +143,12 @@ final class ModifyProjectBoot {
 	}
 
 	private static byte[] getJavaFileAsByte(String path) throws IOException {
-		String str = FileUtil.getStr(path);
+		String str = FileUtils.getStr(path);
 		return str.replaceAll("org.laokou", NEW_PACKAGE_NAME).getBytes(StandardCharsets.UTF_8);
 	}
 
 	private static byte[] getPomFileAsByte(String path) throws IOException {
-		String str = FileUtil.getStr(path);
+		String str = FileUtils.getStr(path);
 		return str.replaceAll("org.laokou", NEW_GROUP_ID)
 			.replaceAll("laokou-", NEW_MODULE_NAME + "-")
 			.replace("KCloud-Platform-IoT", NEW_PROJECT_NAME)
@@ -156,7 +156,7 @@ final class ModifyProjectBoot {
 	}
 
 	private static byte[] getXmlFileAsByte(String path) throws IOException {
-		String str = FileUtil.getStr(path);
+		String str = FileUtils.getStr(path);
 		return str.replaceAll("org.laokou", NEW_PACKAGE_NAME).getBytes(StandardCharsets.UTF_8);
 	}
 

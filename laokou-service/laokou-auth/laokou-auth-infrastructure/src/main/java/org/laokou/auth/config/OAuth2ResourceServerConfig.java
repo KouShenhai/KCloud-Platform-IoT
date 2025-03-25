@@ -19,7 +19,7 @@ package org.laokou.auth.config;
 
 import lombok.Data;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
-import org.laokou.common.core.utils.SpringUtil;
+import org.laokou.common.core.util.SpringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
@@ -51,13 +51,13 @@ class OAuth2ResourceServerConfig {
 	 * <a href="https://github.com/spring-projects/spring-security/issues/10938">优化配置</a>
 	 * @param http http配置
 	 * @param oAuth2ResourceServerProperties OAuth2配置文件
-	 * @param springUtil Spring工具类
+	 * @param springUtils Spring工具类
 	 * @return 认证过滤器
 	 * @throws Exception 异常
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
-		SpringUtil springUtil,
+		SpringUtils springUtils,
 		OAuth2ResourceServerProperties oAuth2ResourceServerProperties,
 		SessionExpiredStrategy sessionExpiredStrategy,
         SessionInvalidStrategy sessionInvalidStrategy,
@@ -77,7 +77,7 @@ class OAuth2ResourceServerConfig {
 					.includeSubDomains(true)
 					.preload(true)
 					.maxAgeInSeconds(31536000)))
-			.authorizeHttpRequests(customizer(oAuth2ResourceServerProperties, springUtil))
+			.authorizeHttpRequests(customizer(oAuth2ResourceServerProperties, springUtils))
 			.cors(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)

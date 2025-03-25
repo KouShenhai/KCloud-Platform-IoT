@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
-import org.laokou.common.i18n.utils.ParamValidator;
+import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
 /**

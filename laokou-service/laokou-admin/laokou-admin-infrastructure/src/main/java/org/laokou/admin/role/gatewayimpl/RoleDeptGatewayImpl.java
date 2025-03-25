@@ -23,8 +23,8 @@ import org.laokou.admin.role.gateway.RoleDeptGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleDeptMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.role.model.RoleE;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.mybatisplus.utils.MybatisUtil;
+import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -42,7 +42,7 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 
 	private final RoleDeptMapper roleDeptMapper;
 
-	private final MybatisUtil mybatisUtil;
+	private final MybatisUtils mybatisUtils;
 
 	private final ExecutorService virtualThreadExecutor;
 
@@ -66,16 +66,16 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 	private void insertRoleDept(RoleE roleE) {
 		// 新增角色菜单关联表
 		List<RoleDeptDO> list = RoleConvertor.toDataObjs(roleE, roleE.getId());
-		if (CollectionUtil.isNotEmpty(list)) {
-			mybatisUtil.batch(list, RoleDeptMapper.class, RoleDeptMapper::insert);
+		if (CollectionUtils.isNotEmpty(list)) {
+			mybatisUtils.batch(list, RoleDeptMapper.class, RoleDeptMapper::insert);
 		}
 	}
 
 	private void deleteRoleDept(RoleE roleE) {
 		// 删除角色菜单关联表
 		List<RoleDeptDO> list = RoleConvertor.toDataObjs(roleE);
-		if (CollectionUtil.isNotEmpty(list)) {
-			mybatisUtil.batch(list, RoleDeptMapper.class, RoleDeptMapper::deleteObjById);
+		if (CollectionUtils.isNotEmpty(list)) {
+			mybatisUtils.batch(list, RoleDeptMapper.class, RoleDeptMapper::deleteObjById);
 		}
 	}
 

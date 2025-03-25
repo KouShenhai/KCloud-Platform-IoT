@@ -21,16 +21,16 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.model.RoleE;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.ParamValidator;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.ParamValidator;
+import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.mybatisplus.annotation.DataScope;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.utils.ParamValidator.invalidate;
-import static org.laokou.common.i18n.utils.ParamValidator.validate;
+import static org.laokou.common.i18n.util.ParamValidator.invalidate;
+import static org.laokou.common.i18n.util.ParamValidator.validate;
 
 /**
  * @author laokou
@@ -42,7 +42,7 @@ public final class RoleParamValidator {
 
 	public static ParamValidator.Validate validateSort(RoleE roleE) {
 		Integer sort = roleE.getSort();
-		if (ObjectUtil.isNull(sort)) {
+		if (ObjectUtils.isNull(sort)) {
 			return invalidate("排序不能为空");
 		}
 		if (sort < 1 || sort > 99999) {
@@ -53,7 +53,7 @@ public final class RoleParamValidator {
 
 	public static ParamValidator.Validate validateId(RoleE roleE) {
 		Long id = roleE.getId();
-		if (ObjectUtil.isNull(id)) {
+		if (ObjectUtils.isNull(id)) {
 			return invalidate("ID不能为空");
 		}
 		return validate();
@@ -61,7 +61,7 @@ public final class RoleParamValidator {
 
 	public static ParamValidator.Validate validateDataScope(RoleE roleE) {
 		String dataScope = roleE.getDataScope();
-		if (StringUtil.isEmpty(dataScope)) {
+		if (StringUtils.isEmpty(dataScope)) {
 			return invalidate("数据范围不能为空");
 		}
 		return validate();
@@ -69,7 +69,7 @@ public final class RoleParamValidator {
 
 	public static ParamValidator.Validate validateMenuIds(RoleE roleE) {
 		List<String> menuIds = roleE.getMenuIds();
-		if (CollectionUtil.isEmpty(menuIds)) {
+		if (CollectionUtils.isEmpty(menuIds)) {
 			return invalidate("菜单IDS不能为空");
 		}
 		return validate();
@@ -77,7 +77,7 @@ public final class RoleParamValidator {
 
 	public static ParamValidator.Validate validateDeptIds(RoleE roleE) {
 		List<String> deptIds = roleE.getDeptIds();
-		if (ObjectUtil.equals(roleE.getDataScope(), DataScope.CUSTOM.getCode()) && CollectionUtil.isEmpty(deptIds)) {
+		if (ObjectUtils.equals(roleE.getDataScope(), DataScope.CUSTOM.getCode()) && CollectionUtils.isEmpty(deptIds)) {
 			return invalidate("部门IDS不能为空");
 		}
 		return validate();
@@ -86,7 +86,7 @@ public final class RoleParamValidator {
 	public static ParamValidator.Validate validateName(RoleE roleE, RoleMapper roleMapper, boolean isSave) {
 		Long id = roleE.getId();
 		String name = roleE.getName();
-		if (StringUtil.isEmpty(name)) {
+		if (StringUtils.isEmpty(name)) {
 			return invalidate("名称不能为空");
 		}
 		if (isSave && roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, name)) > 0) {

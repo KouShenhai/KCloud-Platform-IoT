@@ -26,7 +26,7 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.InfoV;
 import org.laokou.auth.model.UserE;
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.utils.RedisKeyUtil;
+import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.mockito.Mockito;
 import org.springframework.util.DigestUtils;
 
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.exception.BizException.OAuth2.USERNAME_PASSWORD_ERROR;
+import static org.laokou.auth.model.OAuth2Constants.USERNAME_PASSWORD_ERROR;
 import static org.mockito.Mockito.*;
 
 /**
@@ -108,9 +108,10 @@ class AuthATest {
 	void testCheckCaptcha() {
 		CaptchaGateway captchaGateway = mock(CaptchaGateway.class);
 		// 构造验证码校验
-		doReturn(true).when(captchaGateway).validate(RedisKeyUtil.getUsernamePasswordAuthCaptchaKey("1"), "1234");
-		doReturn(true).when(captchaGateway).validate(RedisKeyUtil.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
-		doReturn(true).when(captchaGateway).validate(RedisKeyUtil.getMobileAuthCaptchaKey("18888888888"), "123456");
+		doReturn(true).when(captchaGateway).validate(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
+		doReturn(true).when(captchaGateway)
+			.validate(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
+		doReturn(true).when(captchaGateway).validate(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
 		// 校验验证码【用户名密码登录】
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		auth.checkCaptcha(captchaGateway::validate);
@@ -121,9 +122,9 @@ class AuthATest {
 		auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
 		auth.checkCaptcha(captchaGateway::validate);
 		// 校验调用次数
-		verify(captchaGateway, times(1)).validate(RedisKeyUtil.getUsernamePasswordAuthCaptchaKey("1"), "1234");
-		verify(captchaGateway, times(1)).validate(RedisKeyUtil.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
-		verify(captchaGateway, times(1)).validate(RedisKeyUtil.getMobileAuthCaptchaKey("18888888888"), "123456");
+		verify(captchaGateway, times(1)).validate(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
+		verify(captchaGateway, times(1)).validate(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
+		verify(captchaGateway, times(1)).validate(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
 	}
 
 	@Test

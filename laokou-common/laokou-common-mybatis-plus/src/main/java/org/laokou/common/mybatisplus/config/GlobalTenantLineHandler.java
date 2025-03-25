@@ -22,7 +22,7 @@ import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
 import net.sf.jsqlparser.schema.Column;
 import org.laokou.common.core.context.UserContextHolder;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -46,7 +46,7 @@ public class GlobalTenantLineHandler implements TenantLineHandler {
 	@Override
 	public Expression getTenantId() {
 		Long tenantId = UserContextHolder.get().getTenantId();
-		return ObjectUtil.isNull(tenantId) ? new LongValue(0L) : new LongValue(tenantId);
+		return ObjectUtils.isNull(tenantId) ? new LongValue(0L) : new LongValue(tenantId);
 	}
 
 	@Override

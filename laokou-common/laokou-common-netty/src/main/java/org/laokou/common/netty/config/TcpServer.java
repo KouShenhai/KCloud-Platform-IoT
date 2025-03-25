@@ -26,7 +26,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import io.netty.util.concurrent.Future;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 
 import static io.netty.channel.ChannelOption.SO_KEEPALIVE;
 
@@ -68,7 +68,7 @@ public final class TcpServer extends AbstractServer {
 	@Override
 	public Future<Void> send(String clientId, Object obj) throws InterruptedException {
 		Channel channel = SessionManager.get(clientId);
-		if (ObjectUtil.isNotNull(channel) && channel.isActive() && channel.isWritable()) {
+		if (ObjectUtils.isNotNull(channel) && channel.isActive() && channel.isWritable()) {
 			return channel.writeAndFlush(obj);
 		}
 		return null;

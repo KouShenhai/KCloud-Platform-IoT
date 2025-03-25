@@ -17,7 +17,7 @@
 
 package org.laokou.generator.column.convertor;
 
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.util.IdGenerator;
 import org.laokou.generator.column.dto.clientobject.ColumnCO;
 import org.laokou.generator.column.gatewayimpl.database.dataobject.ColumnDO;
 import org.laokou.generator.column.model.ColumnE;

@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.oss.ability.OssDomainService;
 import org.laokou.admin.oss.dto.OssRemoveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,12 +35,12 @@ public class OssRemoveCmdExe {
 
 	private final OssDomainService ossDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(OssRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> ossDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> ossDomainService.delete(cmd.getIds()));
 	}
 
 }

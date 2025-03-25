@@ -18,13 +18,13 @@
 package org.laokou.admin.user.model;
 
 import lombok.Data;
-import org.laokou.common.crypto.utils.AESUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.crypto.utils.AESUtils;
+import org.laokou.common.i18n.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 用户领域对象【实体】.
@@ -115,34 +115,34 @@ public class UserE {
 	private List<Long> userIds;
 
 	public void encryptUsername() throws Exception {
-		this.usernamePhrase = StringUtil.isEmpty(username) ? EMPTY : encryptStr(username);
-		this.username = AESUtil.encrypt(username);
+		this.usernamePhrase = StringUtils.isEmpty(username) ? EMPTY : encryptStr(username);
+		this.username = AESUtils.encrypt(username);
 	}
 
 	public void encryptMail() throws Exception {
-		this.mailPhrase = StringUtil.isEmpty(mail) ? EMPTY : encryptStr(mail);
-		this.mail = AESUtil.encrypt(mail);
+		this.mailPhrase = StringUtils.isEmpty(mail) ? EMPTY : encryptStr(mail);
+		this.mail = AESUtils.encrypt(mail);
 	}
 
 	public void encryptMobile() throws Exception {
-		this.mobilePhrase = StringUtil.isEmpty(mobile) ? EMPTY : encryptMobile(mobile);
-		this.mobile = AESUtil.encrypt(mobile);
+		this.mobilePhrase = StringUtils.isEmpty(mobile) ? EMPTY : encryptMobile(mobile);
+		this.mobile = AESUtils.encrypt(mobile);
 	}
 
 	private String encryptMobile(String str) throws Exception {
 		List<String> list = new ArrayList<>(3);
-		list.add(AESUtil.encrypt(str.substring(0, 3)));
-		list.add(AESUtil.encrypt(str.substring(3, 7)));
-		list.add(AESUtil.encrypt(str.substring(7)));
-		return StringUtil.collectionToDelimitedString(list, "~");
+		list.add(AESUtils.encrypt(str.substring(0, 3)));
+		list.add(AESUtils.encrypt(str.substring(3, 7)));
+		list.add(AESUtils.encrypt(str.substring(7)));
+		return StringUtils.collectionToDelimitedString(list, "~");
 	}
 
 	private String encryptStr(String str) throws Exception {
 		List<String> list = new ArrayList<>(30);
 		for (int i = 0; i <= str.length() - 4; i++) {
-			list.add(AESUtil.encrypt(str.substring(i, i + 4)));
+			list.add(AESUtils.encrypt(str.substring(i, i + 4)));
 		}
-		return StringUtil.collectionToDelimitedString(list, "~");
+		return StringUtils.collectionToDelimitedString(list, "~");
 	}
 
 }

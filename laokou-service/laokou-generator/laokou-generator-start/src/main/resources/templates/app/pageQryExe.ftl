@@ -24,7 +24,7 @@ import ${packageName}.${instanceName}.dto.${className}PageQry;
 import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
 import ${packageName}.${instanceName}.gatewayimpl.database.${className}Mapper;
 import ${packageName}.${instanceName}.gatewayimpl.database.dataobject.${className}DO;
-import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.core.util.ThreadUtil;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;

@@ -22,7 +22,7 @@ import org.laokou.admin.source.ability.SourceDomainService;
 import org.laokou.admin.source.convertor.SourceConvertor;
 import org.laokou.admin.source.dto.SourceSaveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,12 +36,13 @@ public class SourceSaveCmdExe {
 
 	private final SourceDomainService sourceDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(SourceSaveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> sourceDomainService.create(SourceConvertor.toEntity(cmd.getCo())));
+		transactionalUtils
+			.executeInTransaction(() -> sourceDomainService.create(SourceConvertor.toEntity(cmd.getCo())));
 	}
 
 }

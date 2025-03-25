@@ -19,9 +19,9 @@ package org.laokou.common.dubbo.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.dubbo.rpc.*;
-import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.util.StringUtils;
 
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -30,9 +30,9 @@ public class OAuth2ConsumerFilter implements Filter {
 
 	@Override
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-		HttpServletRequest request = RequestUtil.getHttpServletRequest();
+		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		String token = request.getHeader(AUTHORIZATION);
-		if (StringUtil.isEmpty(token)) {
+		if (StringUtils.isEmpty(token)) {
 			throw new BizException(UNAUTHORIZED);
 		}
 		RpcContext.getClientAttachment().setAttachment(AUTHORIZATION, token);

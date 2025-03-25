@@ -25,12 +25,12 @@ import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.dto.clientobject.CaptchaCO;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
-import org.laokou.common.core.utils.*;
-import org.laokou.common.crypto.utils.RSAUtil;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.JacksonUtil;
-import org.laokou.common.i18n.utils.RedisKeyUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.core.util.*;
+import org.laokou.common.crypto.utils.RSAUtils;
+import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.i18n.util.RedisKeyUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -51,8 +51,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
-import static org.laokou.common.i18n.common.constant.TraceConstant.REQUEST_ID;
+import static org.laokou.common.i18n.common.constant.StringConstants.RISK;
+import static org.laokou.common.i18n.common.constant.TraceConstants.REQUEST_ID;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpMethod.POST;
 
@@ -126,16 +126,16 @@ class OAuth2ApiTest {
 
 	@Test
 	void testTtlMDC() {
-		MDCUtil.put("111", "222");
-		try (ExecutorService executor = ThreadUtil.newTtlVirtualTaskExecutor()) {
-			executor.execute(() -> log.info("TraceId：{}，SpanId：{}", MDCUtil.getSpanId(), MDCUtil.getSpanId()));
+		MDCUtils.put("111", "222");
+		try (ExecutorService executor = ThreadUtils.newTtlVirtualTaskExecutor()) {
+			executor.execute(() -> log.info("TraceId：{}，SpanId：{}", MDCUtils.getSpanId(), MDCUtils.getSpanId()));
 		}
 	}
 
 	@Test
 	void testSetInstant() {
 		String key = "test:instant";
-		redisUtil.set(key, DateUtil.nowInstant());
+		redisUtil.set(key, DateUtils.nowInstant());
 		log.info("获取Instant值：{}", redisUtil.get(key));
 		redisUtil.del(key);
 	}
@@ -150,11 +150,11 @@ class OAuth2ApiTest {
 	@Test
 	void testUsernamePasswordAuthApi() {
 		log.info("---------- 用户名密码认证模式开始 ----------");
-		String captcha = getCaptcha(RedisKeyUtil.getUsernamePasswordAuthCaptchaKey(UUID));
-		String encryptUsername = RSAUtil.encryptByPublicKey(USERNAME);
-		String encryptPassword = RSAUtil.encryptByPublicKey(PASSWORD);
-		String decryptUsername = RSAUtil.decryptByPrivateKey(encryptUsername);
-		String decryptPassword = RSAUtil.decryptByPrivateKey(encryptPassword);
+		String captcha = getCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(UUID));
+		String encryptUsername = RSAUtils.encryptByPublicKey(USERNAME);
+		String encryptPassword = RSAUtils.encryptByPublicKey(PASSWORD);
+		String decryptUsername = RSAUtils.decryptByPrivateKey(encryptUsername);
+		String decryptPassword = RSAUtils.decryptByPrivateKey(encryptPassword);
 		Map<String, String> tokenMap = usernamePasswordAuth(captcha, decryptUsername, decryptPassword);
 		log.info("验证码：{}", captcha);
 		log.info("加密用户名：{}", encryptUsername);
@@ -168,7 +168,7 @@ class OAuth2ApiTest {
 		log.info("---------- 模拟认证开始 ----------");
 		assertNotNull(token);
 		GlobalOpaqueTokenIntrospector introspector = new GlobalOpaqueTokenIntrospector(oAuth2AuthorizationService);
-		log.info("认证数据：{}", JacksonUtil.toJsonStr(introspector.introspect(token)));
+		log.info("认证数据：{}", JacksonUtils.toJsonStr(introspector.introspect(token)));
 		log.info("---------- 模拟认证结束 ----------");
 		log.info("---------- 用户名密码认证模式结束 ----------");
 	}
@@ -176,7 +176,7 @@ class OAuth2ApiTest {
 	@Test
 	void testMailAuthApi() {
 		log.info("---------- 邮箱认证开始 ----------");
-		String code = getCode(RedisKeyUtil.getMailAuthCaptchaKey(MAIL));
+		String code = getCode(RedisKeyUtils.getMailAuthCaptchaKey(MAIL));
 		Map<String, String> tokenMap = mailAuth(code);
 		log.info("验证码：{}", code);
 		log.info("验证码：{}", MAIL);
@@ -188,7 +188,7 @@ class OAuth2ApiTest {
 	@Test
 	void testMobileAuthApi() {
 		log.info("---------- 手机号认证开始 ----------");
-		String code = getCode(RedisKeyUtil.getMobileAuthCaptchaKey(MOBILE));
+		String code = getCode(RedisKeyUtils.getMobileAuthCaptchaKey(MOBILE));
 		Map<String, String> tokenMap = mobileAuth(code);
 		log.info("验证码：{}", code);
 		log.info("手机号：{}", MOBILE);
@@ -247,11 +247,11 @@ class OAuth2ApiTest {
 					"urn:ietf:params:oauth:grant-type:device_code");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
-			String json = HttpUtil.doFormDataPost(apiUrl, params, headers);
+			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("设备授权码认证模式，返回信息：{}", json);
-			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
-			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
-			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
+			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
+			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
+			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
 		catch (Exception e) {
@@ -265,10 +265,10 @@ class OAuth2ApiTest {
 			Map<String, String> params = Map.of("grant_type", "client_credentials");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
-			String json = HttpUtil.doFormDataPost(apiUrl, params, headers);
+			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("客户端认证模式，返回信息：{}", json);
-			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
-			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
+			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
+			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken);
 		}
 		catch (Exception e) {
@@ -283,11 +283,11 @@ class OAuth2ApiTest {
 					"authorization_code");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
-			String json = HttpUtil.doFormDataPost(apiUrl, params, headers);
+			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("授权码认证模式，返回信息：{}", json);
-			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
-			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
-			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
+			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
+			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
+			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
 		catch (Exception e) {
@@ -309,11 +309,11 @@ class OAuth2ApiTest {
 			Map<String, String> headers = Map.of("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "User-Agent",
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
-			String json = HttpUtil.doFormDataPost(apiUrl, params, headers);
+			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("手机号认证，返回信息：{}", json);
-			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
-			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
-			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
+			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
+			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
+			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
 		catch (Exception e) {
@@ -329,11 +329,11 @@ class OAuth2ApiTest {
 			Map<String, String> headers = Map.of("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "User-Agent",
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
-			String json = HttpUtil.doFormDataPost(apiUrl, params, headers);
+			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("邮箱认证，返回信息：{}", json);
-			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
-			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
-			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
+			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
+			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
+			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
 		catch (Exception e) {
@@ -350,11 +350,11 @@ class OAuth2ApiTest {
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "trace-id",
 					String.valueOf(IdGenerator.defaultSnowflakeId()), "User-Agent",
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
-			String json = OkHttpUtil.doFormDataPost(apiUrl, params, headers);
+			String json = OkHttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("用户名密码认证模式，返回信息：{}", json);
-			String accessToken = JacksonUtil.readTree(json).get("access_token").asText();
-			String refreshToken = JacksonUtil.readTree(json).get("refresh_token").asText();
-			Assert.isTrue(StringUtil.isNotEmpty(accessToken), "access token is empty");
+			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
+			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
+			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
 		catch (Exception e) {
@@ -368,9 +368,9 @@ class OAuth2ApiTest {
 			Map<String, String> params = Map.of("refresh_token", refreshToken, "grant_type", "refresh_token");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
-			String json = HttpUtil.doFormDataPost(apiUrl, params, headers);
+			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("刷新令牌模式，返回信息；{}", json);
-			return JacksonUtil.readTree(json).get("access_token").asText();
+			return JacksonUtils.readTree(json).get("access_token").asText();
 		}
 		catch (Exception e) {
 			return null;
@@ -380,7 +380,7 @@ class OAuth2ApiTest {
 	private String getCaptcha(String key) {
 		restClient.get().uri(URI.create(getCaptchaApiUrlV3())).retrieve().toBodilessEntity();
 		String captcha = redisUtil.get(key).toString();
-		Assert.isTrue(StringUtil.isNotEmpty(captcha), "captcha is empty");
+		Assert.isTrue(StringUtils.isNotEmpty(captcha), "captcha is empty");
 		return captcha;
 	}
 
@@ -392,7 +392,7 @@ class OAuth2ApiTest {
 				.contentType(MediaType.MULTIPART_FORM_DATA)
 				.retrieve()
 				.body(String.class);
-			return JacksonUtil.readTree(json).get(DEVICE_CODE).asText();
+			return JacksonUtils.readTree(json).get(DEVICE_CODE).asText();
 		}
 		catch (Exception e) {
 			return null;

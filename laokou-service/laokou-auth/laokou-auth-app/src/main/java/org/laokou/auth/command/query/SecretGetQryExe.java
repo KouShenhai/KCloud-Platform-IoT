@@ -19,7 +19,7 @@ package org.laokou.auth.command.query;
 
 import org.laokou.auth.dto.clientobject.SecretCO;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.crypto.utils.RSAUtil;
+import org.laokou.common.crypto.utils.RSAUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,7 +35,7 @@ public class SecretGetQryExe {
 	 * @return 密钥
 	 */
 	public Result<SecretCO> execute() {
-		return Result.ok(new SecretCO(RSAUtil.getPublicKey()));
+		return Result.ok(new SecretCO(RSAUtils.getPublicKey()));
 	}
 
 }

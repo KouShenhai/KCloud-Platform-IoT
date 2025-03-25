@@ -22,7 +22,7 @@ import org.laokou.generator.column.dto.ColumnModifyCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.generator.column.convertor.ColumnConvertor;
 import org.laokou.generator.column.ability.ColumnDomainService;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 
 /**
  *
@@ -36,11 +36,12 @@ public class ColumnModifyCmdExe {
 
 	private final ColumnDomainService columnDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	public void executeVoid(ColumnModifyCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> columnDomainService.update(ColumnConvertor.toEntity(cmd.getCo())));
+		transactionalUtils
+			.executeInTransaction(() -> columnDomainService.update(ColumnConvertor.toEntity(cmd.getCo())));
 	}
 
 }

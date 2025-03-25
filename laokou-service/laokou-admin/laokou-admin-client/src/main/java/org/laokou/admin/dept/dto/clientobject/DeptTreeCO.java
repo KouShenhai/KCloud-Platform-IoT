@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.core.utils.TreeUtil;
+import org.laokou.common.core.util.TreeUtils;
 
 import java.time.Instant;
 
@@ -34,7 +34,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class DeptTreeCO extends TreeUtil.TreeNode<DeptTreeCO> {
+public class DeptTreeCO extends TreeUtils.TreeNode<DeptTreeCO> {
 
 	/**
 	 * 部门路径.

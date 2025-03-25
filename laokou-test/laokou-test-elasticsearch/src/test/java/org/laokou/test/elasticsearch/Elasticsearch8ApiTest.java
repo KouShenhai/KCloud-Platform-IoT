@@ -29,7 +29,7 @@ import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.test.elasticsearch.entity.Project;
 import org.laokou.test.elasticsearch.entity.Resource;
 import org.laokou.test.elasticsearch.entity.Resp;
@@ -99,7 +99,7 @@ class Elasticsearch8ApiTest {
 		try {
 			Map<String, IndexState> result = elasticsearchTemplate
 				.getIndex(List.of("laokou_res_1", "laokou_pro_1", "laokou_resp_1"));
-			log.info("索引信息：{}", JacksonUtil.toJsonStr(result));
+			log.info("索引信息：{}", JacksonUtils.toJsonStr(result));
 		}
 		catch (Exception e) {
 			log.error("错误信息：{}", e.getMessage());

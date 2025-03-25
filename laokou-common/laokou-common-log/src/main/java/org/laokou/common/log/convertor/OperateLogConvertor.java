@@ -19,17 +19,17 @@ package org.laokou.common.log.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.laokou.common.core.context.UserContextHolder;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.JacksonUtil;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.log.database.dataobject.OperateLogDO;
-import org.laokou.common.log.event.OperateEvent;
-import org.laokou.common.log.model.OperateLogE;
+import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.log.mapper.OperateLogDO;
+import org.laokou.common.log.handler.event.OperateEvent;
+import org.laokou.common.log.entity.OperateLogE;
 
-import static org.laokou.common.i18n.common.constant.EventType.OPERATE_EVENT;
-import static org.laokou.common.log.constant.Constant.LAOKOU_LOG_TOPIC;
-import static org.laokou.common.log.constant.Constant.OPERATE_TAG;
+import static org.laokou.common.i18n.common.constant.EventTypeEnum.OPERATE_EVENT;
+import static org.laokou.common.log.constant.MqConstants.LAOKOU_LOG_TOPIC;
+import static org.laokou.common.log.constant.MqConstants.OPERATE_TAG;
 
 public final class OperateLogConvertor {
 
@@ -37,7 +37,7 @@ public final class OperateLogConvertor {
 	}
 
 	public static OperateLogDO toDataObject(DomainEvent event) throws JsonProcessingException {
-		OperateEvent operateEvent = JacksonUtil.toBean(event.getPayload(), OperateEvent.class);
+		OperateEvent operateEvent = JacksonUtils.toBean(event.getPayload(), OperateEvent.class);
 		OperateLogDO operateLogDO = new OperateLogDO();
 		operateLogDO.setName(operateEvent.name());
 		operateLogDO.setModuleName(operateEvent.moduleName());
@@ -76,12 +76,12 @@ public final class OperateLogConvertor {
 	public static DomainEvent toDomainEvent(OperateLogE operateLogE) {
 		UserContextHolder.User user = UserContextHolder.get();
 		return new DomainEvent(IdGenerator.defaultSnowflakeId(), user.getTenantId(), user.getId(), null,
-				LAOKOU_LOG_TOPIC, OPERATE_TAG, 0, JacksonUtil.toJsonStr(toEvent(operateLogE)), OPERATE_EVENT,
+				LAOKOU_LOG_TOPIC, OPERATE_TAG, 0, JacksonUtils.toJsonStr(toEvent(operateLogE)), OPERATE_EVENT,
 				user.getSourcePrefix());
 	}
 
 	private static String truncate(String str) {
-		if (!StringUtil.isNotEmpty(str)) {
+		if (!StringUtils.isNotEmpty(str)) {
 			return null;
 		}
 		return str.length() > 2000 ? str.substring(0, 2000) : str;

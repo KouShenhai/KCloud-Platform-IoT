@@ -43,13 +43,12 @@ import io.swagger.v3.oas.models.OpenAPI;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
-import org.laokou.common.core.utils.CollectionUtil;
+import org.laokou.common.core.util.CollectionUtils;
 import org.springdoc.core.customizers.GlobalOpenApiCustomizer;
 import org.springdoc.core.properties.SpringDocConfigProperties;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
@@ -92,17 +91,17 @@ public class Knife4jOpenApiCustomizer implements GlobalOpenApiCustomizer {
 	 * @param openApi openApi
 	 */
 	private void addOrderExtension(OpenAPI openApi) {
-		if (CollectionUtil.isEmpty(properties.getGroupConfigs())) {
+		if (CollectionUtils.isEmpty(properties.getGroupConfigs())) {
 			return;
 		}
 		// 获取包扫描路径
 		Set<String> packagesToScan = properties.getGroupConfigs()
 			.stream()
 			.map(SpringDocConfigProperties.GroupConfig::getPackagesToScan)
-			.filter(toScan -> !CollectionUtils.isEmpty(toScan))
+			.filter(toScan -> !org.springframework.util.CollectionUtils.isEmpty(toScan))
 			.flatMap(List::stream)
 			.collect(Collectors.toSet());
-		if (CollectionUtils.isEmpty(packagesToScan)) {
+		if (org.springframework.util.CollectionUtils.isEmpty(packagesToScan)) {
 			return;
 		}
 		// 扫描包下被ApiSupport注解的RestController Class
@@ -111,7 +110,7 @@ public class Knife4jOpenApiCustomizer implements GlobalOpenApiCustomizer {
 			.flatMap(Set::stream)
 			.filter(clazz -> clazz.isAnnotationPresent(ApiSupport.class))
 			.collect(Collectors.toSet());
-		if (!CollectionUtils.isEmpty(classes)) {
+		if (!org.springframework.util.CollectionUtils.isEmpty(classes)) {
 			// ApiSupport oder值存入tagSortMap<Tag.name,ApiSupport.order>
 			Map<String, Integer> tagOrderMap = new HashMap<>();
 			classes.forEach(clazz -> {

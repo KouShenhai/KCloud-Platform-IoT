@@ -31,9 +31,9 @@ import com.hivemq.client.mqtt.mqtt5.message.unsubscribe.Mqtt5Unsubscribe;
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.event.EventBus;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.core.util.EventBus;
+import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.mqtt.client.AbstractMqttClient;
 import org.laokou.common.mqtt.client.MqttMessage;
 import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
@@ -74,9 +74,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 	}
 
 	public void open() {
-		if (ObjectUtil.isNull(client)) {
+		if (ObjectUtils.isNull(client)) {
 			synchronized (LOCK) {
-				if (ObjectUtil.isNull(client)) {
+				if (ObjectUtils.isNull(client)) {
 					String clientId = mqttBrokerProperties.getClientId();
 					client = getClient(clientId);
 					client.connectWith()
@@ -115,7 +115,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 	}
 
 	public void close() {
-		if (ObjectUtil.isNotNull(client)) {
+		if (ObjectUtils.isNotNull(client)) {
 			client.disconnectWith()
 				.applyDisconnect()
 				.doOnError(e -> log.error("【Hivemq】 => MQTT断开连接失败，错误信息：{}", e.getMessage(), e))
@@ -126,7 +126,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	public void subscribe(String[] topics, int[] qos) {
 		checkTopicAndQos(topics, qos, "Hivemq");
-		if (ObjectUtil.isNotNull(client)) {
+		if (ObjectUtils.isNotNull(client)) {
 			List<Mqtt5Subscription> subscriptions = new ArrayList<>(topics.length);
 			for (int i = 0; i < topics.length; i++) {
 				subscriptions.add(Mqtt5Subscription.builder().topicFilter(topics[i]).qos(getMqttQos(qos[i])).build());
@@ -144,7 +144,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	public void unsubscribe(String[] topics) {
 		checkTopic(topics, "Hivemq");
-		if (ObjectUtil.isNotNull(client)) {
+		if (ObjectUtils.isNotNull(client)) {
 			List<MqttTopicFilter> matchedTopics = new ArrayList<>(topics.length);
 			for (String topic : topics) {
 				matchedTopics.add(MqttTopicFilter.of(topic));
@@ -159,7 +159,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 	}
 
 	public void consume() {
-		if (ObjectUtil.isNotNull(client)) {
+		if (ObjectUtils.isNotNull(client)) {
 			client.publishes(MqttGlobalPublishFilter.ALL)
 				.doOnNext(publish -> messageHandlers.forEach(messageHandler -> {
 					if (messageHandler.isSubscribe(publish.getTopic().toString())) {
@@ -174,7 +174,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 	}
 
 	public void publish(String topic, byte[] payload, int qos) {
-		if (ObjectUtil.isNotNull(client)) {
+		if (ObjectUtils.isNotNull(client)) {
 			client
 				.publish(Flowable.just(Mqtt5Publish.builder()
 					.topic(topic)
@@ -219,14 +219,14 @@ public class HivemqMqttClient extends AbstractMqttClient {
 	}
 
 	public void publishSubscribeEvent(Set<String> topics, int qos) {
-		if (CollectionUtil.isNotEmpty(topics)) {
+		if (CollectionUtils.isNotEmpty(topics)) {
 			EventBus.publish(new SubscribeEvent(this, mqttBrokerProperties.getClientId(), topics.toArray(String[]::new),
 					topics.stream().mapToInt(item -> qos).toArray()));
 		}
 	}
 
 	public void publishUnsubscribeEvent(Set<String> topics) {
-		if (CollectionUtil.isNotEmpty(topics)) {
+		if (CollectionUtils.isNotEmpty(topics)) {
 			EventBus
 				.publish(new UnsubscribeEvent(this, mqttBrokerProperties.getClientId(), topics.toArray(String[]::new)));
 		}

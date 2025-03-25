@@ -19,7 +19,7 @@ package org.laokou.common.netty.config;
 
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -95,7 +95,7 @@ public class SessionManager {
 			while (!isLocked && --retry > 0);
 			if (isLocked) {
 				String clientId = CHANNEL_CACHE.get(channelId);
-				if (StringUtil.isNotEmpty(clientId)) {
+				if (StringUtils.isNotEmpty(clientId)) {
 					CLIENT_CACHE.remove(clientId);
 					CHANNEL_CACHE.remove(channelId);
 				}

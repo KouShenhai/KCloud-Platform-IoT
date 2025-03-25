@@ -17,7 +17,7 @@
 
 package org.laokou.generator.info.convertor;
 
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.util.IdGenerator;
 import org.laokou.generator.info.dto.clientobject.InfoCO;
 import org.laokou.generator.info.gatewayimpl.database.dataobject.InfoDO;
 import org.laokou.generator.info.model.InfoE;

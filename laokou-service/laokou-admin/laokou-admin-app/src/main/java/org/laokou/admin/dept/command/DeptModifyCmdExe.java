@@ -21,7 +21,7 @@ import org.laokou.admin.dept.dto.DeptModifyCmd;
 import org.laokou.admin.dept.model.DeptE;
 import org.laokou.admin.dept.service.extensionpoint.DeptParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -42,11 +42,11 @@ public class DeptModifyCmdExe {
 
 	private final DeptDomainService deptDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
-	public DeptModifyCmdExe(DeptDomainService deptDomainService, TransactionalUtil transactionalUtil) {
+	public DeptModifyCmdExe(DeptDomainService deptDomainService, TransactionalUtils transactionalUtils) {
 		this.deptDomainService = deptDomainService;
-		this.transactionalUtil = transactionalUtil;
+		this.transactionalUtils = transactionalUtils;
 	}
 
 	@CommandLog
@@ -54,7 +54,7 @@ public class DeptModifyCmdExe {
 		// 校验参数
 		DeptE deptE = DeptConvertor.toEntity(cmd.getCo());
 		modifyDeptParamValidator.validate(deptE);
-		transactionalUtil.executeInTransaction(() -> deptDomainService.update(deptE));
+		transactionalUtils.executeInTransaction(() -> deptDomainService.update(deptE));
 	}
 
 }

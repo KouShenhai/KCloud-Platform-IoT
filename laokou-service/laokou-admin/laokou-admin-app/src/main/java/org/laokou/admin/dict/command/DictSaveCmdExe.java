@@ -22,7 +22,7 @@ import org.laokou.admin.dict.ability.DictDomainService;
 import org.laokou.admin.dict.convertor.DictConvertor;
 import org.laokou.admin.dict.dto.DictSaveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,12 +36,12 @@ public class DictSaveCmdExe {
 
 	private final DictDomainService dictDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(DictSaveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> dictDomainService.create(DictConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(() -> dictDomainService.create(DictConvertor.toEntity(cmd.getCo())));
 	}
 
 }

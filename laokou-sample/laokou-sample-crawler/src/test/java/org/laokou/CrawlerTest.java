@@ -23,8 +23,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.utils.FileUtil;
-import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.common.core.util.FileUtils;
+import org.laokou.common.i18n.util.SslUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -47,7 +47,7 @@ class CrawlerTest {
 	static {
 		try {
 			MAP.put("xxx", "xxx");
-			SslUtil.ignoreSSLTrust();
+			SslUtils.ignoreSSLTrust();
 		}
 		catch (NoSuchAlgorithmException | KeyManagementException e) {
 			throw new RuntimeException(e);
@@ -78,7 +78,7 @@ class CrawlerTest {
 			String linkHref = link.attr("abs:href");
 			if (linkHref.startsWith("https://xxx/%")) {
 				try {
-					FileUtil.write(FileUtil.create(directory, linkText.replace(".md", ".html")),
+					FileUtils.write(FileUtils.create(directory, linkText.replace(".md", ".html")),
 							getContent(directory, index, linkHref).getBytes(StandardCharsets.UTF_8));
 				}
 				catch (Exception e) {
@@ -113,8 +113,8 @@ class CrawlerTest {
 		int offset = 0;
 		for (Element e : imgElement) {
 			String src = e.attr("abs:src");
-			Path path = FileUtil.create(getImgDirectory(directory, index), offset + ".png");
-			FileUtil.write(path, FileUtil.getBytes(src));
+			Path path = FileUtils.create(getImgDirectory(directory, index), offset + ".png");
+			FileUtils.write(path, FileUtils.getBytes(src));
 			e.attr("style", "width: 100%;");
 			e.attr("src", getImgPath(path, index));
 			offset++;

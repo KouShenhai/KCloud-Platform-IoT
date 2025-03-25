@@ -21,9 +21,9 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.GlobalException;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
-import org.laokou.common.security.utils.UserDetail;
+import org.laokou.common.security.util.UserDetails;
 import org.laokou.common.tenant.annotation.Master;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
@@ -60,7 +60,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
 		// 低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, FULL);
-		if (ObjectUtil.isNull(authorization)) {
+		if (ObjectUtils.isNull(authorization)) {
 			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED);
 		}
 		OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken = authorization.getRefreshToken();
@@ -69,10 +69,10 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 		Assert.notNull(refreshToken, "refreshToken is null");
 		if (accessToken.isActive()) {
             Object obj = authorization.getAttribute(Principal.class.getName());
-            if (ObjectUtil.isNotNull(obj)) {
-                UserDetail userDetail = (UserDetail) ((UsernamePasswordAuthenticationToken) obj).getPrincipal();
+            if (ObjectUtils.isNotNull(obj)) {
+                UserDetails userDetails = (UserDetails) ((UsernamePasswordAuthenticationToken) obj).getPrincipal();
                 // 解密
-                return decryptInfo(userDetail);
+                return decryptInfo(userDetails);
             }
 		}
 		if (!refreshToken.isActive()) {
@@ -84,13 +84,13 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 
 	/**
 	 * 解密字段.
-	 * @param userDetail 用户信息
+	 * @param userDetails 用户信息
 	 * @return UserDetail
 	 */
-	private UserDetail decryptInfo(UserDetail userDetail) {
+	private UserDetails decryptInfo(UserDetails userDetails) {
 		try {
 			// 解密
-			return userDetail.getDecryptInfo();
+			return userDetails.getDecryptInfo();
 		}
 		catch (GlobalException e) {
 			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);

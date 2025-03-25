@@ -17,7 +17,7 @@
 
 package org.laokou.auth.config;
 
-import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.security.web.session.SessionInformationExpiredEvent;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static org.laokou.common.i18n.common.exception.BizException.OAuth2.SESSION_EXPIRED;
+import static org.laokou.auth.model.OAuth2Constants.SESSION_EXPIRED;
 
 /**
  * @author laokou
@@ -35,7 +35,7 @@ public class SessionExpiredStrategy implements SessionInformationExpiredStrategy
 
 	@Override
 	public void onExpiredSessionDetected(SessionInformationExpiredEvent event) throws IOException {
-		ResponseUtil.responseOk(event.getResponse(), Result.fail(SESSION_EXPIRED));
+		ResponseUtils.responseOk(event.getResponse(), Result.fail(SESSION_EXPIRED));
 	}
 
 }

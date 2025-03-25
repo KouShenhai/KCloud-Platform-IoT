@@ -23,7 +23,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.client.dto.clientobject.SensorCO;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.netty.config.SessionManager;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +48,7 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 			if (msg instanceof SensorCO co) {
 				String clientId = String.valueOf(co.getId());
 				SessionManager.add(clientId, ctx.channel());
-				log.info("接收数据：{}", JacksonUtil.toJsonStr(co));
+				log.info("接收数据：{}", JacksonUtils.toJsonStr(co));
 				co.setId(co.getId());
 				co.setX((byte) (co.getX() + 1));
 				co.setY((byte) (co.getY() + 1));

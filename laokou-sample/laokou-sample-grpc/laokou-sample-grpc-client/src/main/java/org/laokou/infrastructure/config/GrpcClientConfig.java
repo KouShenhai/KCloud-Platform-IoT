@@ -20,7 +20,7 @@ package org.laokou.infrastructure.config;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import org.laokou.common.grpc.config.SpringGrpcClientProperties;
-import org.laokou.common.trace.utils.TraceUtil;
+import org.laokou.common.trace.util.TraceUtils;
 import org.laokou.grpc.user.UserServiceGrpc;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,12 +34,12 @@ import java.util.concurrent.TimeUnit;
 public class GrpcClientConfig {
 
 	@Bean
-	public ManagedChannel managedChannel(SpringGrpcClientProperties springGrpcClientProperties, TraceUtil traceUtil) {
+	public ManagedChannel managedChannel(SpringGrpcClientProperties springGrpcClientProperties, TraceUtils traceUtils) {
 		return ManagedChannelBuilder
 			.forAddress(springGrpcClientProperties.getIp(), springGrpcClientProperties.getPort())
 			.usePlaintext()
 			.idleTimeout(10, TimeUnit.MINUTES)
-			.intercept(new GrpcClientInterceptor(traceUtil))
+			.intercept(new GrpcClientInterceptor(traceUtils))
 			.build();
 	}
 

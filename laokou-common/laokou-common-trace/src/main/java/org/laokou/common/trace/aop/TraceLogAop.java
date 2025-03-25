@@ -23,7 +23,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.trace.utils.TraceUtil;
+import org.laokou.common.trace.util.TraceUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,14 +35,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TraceLogAop {
 
-	private final TraceUtil traceUtil;
+	private final TraceUtils traceUtils;
 
 	@Around("@annotation(org.laokou.common.trace.annotation.TraceLog)")
 	public Object doAround(ProceedingJoinPoint point) throws Throwable {
 		Object proceed = point.proceed();
 		if (proceed instanceof Result<?> result) {
-			result.setTraceId(traceUtil.getTraceId());
-			result.setSpanId(traceUtil.getSpanId());
+			result.setTraceId(traceUtils.getTraceId());
+			result.setSpanId(traceUtils.getSpanId());
 			return result;
 		}
 		return proceed;

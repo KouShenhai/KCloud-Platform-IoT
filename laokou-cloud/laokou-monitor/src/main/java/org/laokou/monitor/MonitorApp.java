@@ -19,7 +19,7 @@ package org.laokou.monitor;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
-import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.common.i18n.util.SslUtils;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -50,7 +50,7 @@ public class MonitorApp {
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		// 忽略SSL认证
-		SslUtil.ignoreSSLTrust();
+		SslUtils.ignoreSSLTrust();
 		new SpringApplicationBuilder(MonitorApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
     // @formatter:on

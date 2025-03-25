@@ -21,13 +21,13 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuE;
-import org.laokou.admin.menu.model.MenuType;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.ParamValidator;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.admin.menu.model.MenuTypeEnum;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.ParamValidator;
+import org.laokou.common.i18n.util.StringUtils;
 
-import static org.laokou.common.i18n.utils.ParamValidator.invalidate;
-import static org.laokou.common.i18n.utils.ParamValidator.validate;
+import static org.laokou.common.i18n.util.ParamValidator.invalidate;
+import static org.laokou.common.i18n.util.ParamValidator.validate;
 
 /**
  * @author laokou
@@ -40,8 +40,8 @@ public final class MenuParamValidator {
 	public static ParamValidator.Validate validatePermission(MenuE menuE, MenuMapper menuMapper, boolean isSave) {
 		Integer type = menuE.getType();
 		String permission = menuE.getPermission();
-		if (MenuType.BUTTON.getCode() == type) {
-			if (StringUtil.isEmpty(permission)) {
+		if (MenuTypeEnum.BUTTON.getCode() == type) {
+			if (StringUtils.isEmpty(permission)) {
 				return invalidate("权限标识不能为空");
 			}
 			if (isSave && menuMapper
@@ -59,7 +59,7 @@ public final class MenuParamValidator {
 
 	public static ParamValidator.Validate validateParentId(MenuE menuE) {
 		Long pid = menuE.getPid();
-		if (ObjectUtil.isNull(pid)) {
+		if (ObjectUtils.isNull(pid)) {
 			return invalidate("父级ID不能为空");
 		}
 		return validate();
@@ -67,7 +67,7 @@ public final class MenuParamValidator {
 
 	public static ParamValidator.Validate validateType(MenuE menuE) {
 		Integer type = menuE.getType();
-		if (ObjectUtil.isNull(type)) {
+		if (ObjectUtils.isNull(type)) {
 			return invalidate("类型不能为空");
 		}
 		return validate();
@@ -76,8 +76,8 @@ public final class MenuParamValidator {
 	public static ParamValidator.Validate validatePath(MenuE menuE, MenuMapper menuMapper, boolean isSave) {
 		Integer type = menuE.getType();
 		String path = menuE.getPath();
-		if (MenuType.MENU.getCode() == type) {
-			if (StringUtil.isEmpty(path)) {
+		if (MenuTypeEnum.MENU.getCode() == type) {
+			if (StringUtils.isEmpty(path)) {
 				return invalidate("路径不能为空");
 			}
 			if (isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getPath, path)) > 0) {
@@ -94,7 +94,7 @@ public final class MenuParamValidator {
 
 	public static ParamValidator.Validate validateSort(MenuE menuE) {
 		Integer sort = menuE.getSort();
-		if (ObjectUtil.isNull(sort)) {
+		if (ObjectUtils.isNull(sort)) {
 			return invalidate("排序不能为空");
 		}
 		if (sort < 1 || sort > 99999) {
@@ -106,7 +106,7 @@ public final class MenuParamValidator {
 	public static ParamValidator.Validate validateStatus(MenuE menuE) {
 		Integer type = menuE.getType();
 		Integer status = menuE.getStatus();
-		if (MenuType.MENU.getCode() == type && ObjectUtil.isNull(status)) {
+		if (MenuTypeEnum.MENU.getCode() == type && ObjectUtils.isNull(status)) {
 			return invalidate("状态不能为空");
 		}
 		return validate();
@@ -114,7 +114,7 @@ public final class MenuParamValidator {
 
 	public static ParamValidator.Validate validateId(MenuE menuE) {
 		Long id = menuE.getId();
-		if (ObjectUtil.isNull(id)) {
+		if (ObjectUtils.isNull(id)) {
 			return invalidate("ID不能为空");
 		}
 		return validate();
@@ -123,10 +123,10 @@ public final class MenuParamValidator {
 	public static ParamValidator.Validate validateName(MenuE menuE, MenuMapper menuMapper, boolean isSave) {
 		String name = menuE.getName();
 		Integer type = menuE.getType();
-		if (StringUtil.isEmpty(name)) {
+		if (StringUtils.isEmpty(name)) {
 			return invalidate("名称不能为空");
 		}
-		if (MenuType.MENU.getCode() == type) {
+		if (MenuTypeEnum.MENU.getCode() == type) {
 			if (isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, name)) > 0) {
 				return invalidate("名称已存在");
 			}

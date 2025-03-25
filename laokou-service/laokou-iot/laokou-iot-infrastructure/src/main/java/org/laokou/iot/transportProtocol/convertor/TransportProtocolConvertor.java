@@ -17,7 +17,7 @@
 
 package org.laokou.iot.transportProtocol.convertor;
 
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.util.IdGenerator;
 import org.laokou.iot.transportProtocol.dto.clientobject.TransportProtocolCO;
 import org.laokou.iot.transportProtocol.gatewayimpl.database.dataobject.TransportProtocolDO;
 import org.laokou.iot.transportProtocol.model.TransportProtocolE;

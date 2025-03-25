@@ -19,11 +19,11 @@ package org.laokou.auth.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.common.crypto.utils.AESUtil;
+import org.laokou.common.crypto.utils.AESUtils;
 import org.laokou.common.i18n.dto.Identifier;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 
-import static org.laokou.auth.model.SuperAdmin.YES;
+import static org.laokou.auth.model.SuperAdminEnum.YES;
 
 /**
  * 用户实体.
@@ -78,13 +78,13 @@ public class UserE extends Identifier {
 	}
 
 	public UserE(String username, String mail, String mobile) throws Exception {
-		this.username = AESUtil.encrypt(username);
-		this.mail = AESUtil.encrypt(mail);
-		this.mobile = AESUtil.encrypt(mobile);
+		this.username = AESUtils.encrypt(username);
+		this.mail = AESUtils.encrypt(mail);
+		this.mobile = AESUtils.encrypt(mobile);
 	}
 
 	public boolean isSuperAdministrator() {
-		return ObjectUtil.equals(YES.getCode(), this.superAdmin);
+		return ObjectUtils.equals(YES.getCode(), this.superAdmin);
 	}
 
 }

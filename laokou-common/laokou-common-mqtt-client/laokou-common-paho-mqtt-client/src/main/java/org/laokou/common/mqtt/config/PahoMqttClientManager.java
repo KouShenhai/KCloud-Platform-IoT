@@ -19,7 +19,7 @@ package org.laokou.common.mqtt.config;
 
 import lombok.RequiredArgsConstructor;
 import org.eclipse.paho.mqttv5.common.MqttException;
-import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
@@ -38,7 +38,7 @@ public class PahoMqttClientManager {
 
 	private static final Map<String, PahoMqttClient> PAHO_MQTT_CLIENT_MAP = new ConcurrentHashMap<>(4096);
 
-	private static final ScheduledExecutorService EXECUTOR = ThreadUtil.newScheduledThreadPool(32);
+	private static final ScheduledExecutorService EXECUTOR = ThreadUtils.newScheduledThreadPool(32);
 
 	public static PahoMqttClient get(String clientId) {
 		if (PAHO_MQTT_CLIENT_MAP.containsKey(clientId)) {
@@ -91,7 +91,7 @@ public class PahoMqttClientManager {
 	public static void preDestroy() {
 		PAHO_MQTT_CLIENT_MAP.values().forEach(PahoMqttClient::close);
 		PAHO_MQTT_CLIENT_MAP.clear();
-		ThreadUtil.shutdown(EXECUTOR, 60);
+		ThreadUtils.shutdown(EXECUTOR, 60);
 	}
 
 }

@@ -17,7 +17,7 @@
 
 package org.laokou.logstash.convertor;
 
-import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.logstash.dto.clientobject.LokiPushDTO;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
@@ -41,7 +41,8 @@ public final class TraceLogConvertor {
 	}
 
 	private static LokiPushDTO.Stream toDTO(TraceLogIndex traceLogIndex) {
-		Instant instant = DateUtil.parsInstant(traceLogIndex.getDateTime(), DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS);
+		Instant instant = DateUtils.parsInstant(traceLogIndex.getDateTime(),
+				DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS);
 		// 毫秒转纳秒
 		String lokiTimestamp = String.valueOf(instant.toEpochMilli() * 1000000);
 		LokiPushDTO.Label label = new LokiPushDTO.Label();

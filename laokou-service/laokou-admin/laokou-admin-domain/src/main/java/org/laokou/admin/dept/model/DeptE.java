@@ -19,7 +19,7 @@ package org.laokou.admin.dept.model;
 
 import lombok.Data;
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 
 /**
  * 部门领域对象【实体】.
@@ -73,14 +73,14 @@ public class DeptE {
 	}
 
 	public void checkParentPath(Long id) {
-		if (ObjectUtil.isNull(this.parentPath)) {
+		if (ObjectUtils.isNull(this.parentPath)) {
 			throw new BizException("B_Dept_ParentPathNotExist", "父级部门路径不存在");
 		}
 		this.path = this.parentPath + "," + id;
 	}
 
 	public void checkOldPath() {
-		if (ObjectUtil.isNull(this.oldPath)) {
+		if (ObjectUtils.isNull(this.oldPath)) {
 			throw new BizException("B_Dept_OldPathNotExist", "旧部门路径不存在");
 		}
 	}

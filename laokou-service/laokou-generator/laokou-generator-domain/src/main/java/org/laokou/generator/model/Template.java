@@ -17,7 +17,7 @@
 
 package org.laokou.generator.model;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.ROD;
+import static org.laokou.common.i18n.common.constant.StringConstants.ROD;
 import static org.laokou.generator.model.Template.Constant.*;
 
 public enum Template {

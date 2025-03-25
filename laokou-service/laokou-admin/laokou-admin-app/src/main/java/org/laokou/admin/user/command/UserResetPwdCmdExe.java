@@ -25,7 +25,7 @@ import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -43,18 +43,18 @@ public class UserResetPwdCmdExe {
 
 	private final UserDomainService userDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
-	public UserResetPwdCmdExe(UserDomainService userDomainService, TransactionalUtil transactionalUtil) {
+	public UserResetPwdCmdExe(UserDomainService userDomainService, TransactionalUtils transactionalUtils) {
 		this.userDomainService = userDomainService;
-		this.transactionalUtil = transactionalUtil;
+		this.transactionalUtils = transactionalUtils;
 	}
 
 	@CommandLog
 	public void executeVoid(UserResetPwdCmd cmd) throws Exception {
 		UserE userE = UserConvertor.toEntity(cmd.getId(), cmd.getPassword());
 		resetPwdUserParamValidator.validate(userE);
-		transactionalUtil.executeInTransaction(() -> {
+		transactionalUtils.executeInTransaction(() -> {
 			try {
 				userDomainService.update(userE);
 			}

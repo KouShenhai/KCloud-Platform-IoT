@@ -20,8 +20,8 @@ package org.laokou.generator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.i18n.utils.JacksonUtil;
-import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.generator.ability.GeneratorDomainService;
 import org.laokou.generator.gatewayimpl.database.TableColumnMapper;
 import org.laokou.generator.gatewayimpl.database.TableMapper;
@@ -56,13 +56,13 @@ class TableTest {
 	@Test
 	void testTable() {
 		List<TableDO> tables = tableMapper.selectObjects("boot_sys_user");
-		log.info("获取表：{}", JacksonUtil.toJsonStr(tables));
+		log.info("获取表：{}", JacksonUtils.toJsonStr(tables));
 	}
 
 	@Test
 	void testTableColumn() {
 		List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects("boot_sys_user");
-		log.info("获取字段：{}", JacksonUtil.toJsonStr(tableColumns));
+		log.info("获取字段：{}", JacksonUtils.toJsonStr(tableColumns));
 	}
 
 	@Test
@@ -164,7 +164,7 @@ class TableTest {
 
 	private void generateCode(String sourceName, String version, String author, String tablePrefix, String moduleName,
 			String packageName, Set<String> tableNames, App app) {
-		try (ExecutorService executor = ThreadUtil.newVirtualTaskExecutor()) {
+		try (ExecutorService executor = ThreadUtils.newVirtualTaskExecutor()) {
 			tableNames.stream().map(item -> CompletableFuture.runAsync(() -> {
 				TableE tableE = new TableE(item, tablePrefix, sourceName);
 				GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE, app);

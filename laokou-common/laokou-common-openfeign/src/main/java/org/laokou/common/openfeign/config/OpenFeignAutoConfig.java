@@ -22,7 +22,7 @@ import feign.codec.ErrorDecoder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.idempotent.utils.IdempotentUtil;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.cloud.openfeign.FeignClientsConfiguration;
@@ -30,8 +30,8 @@ import org.springframework.context.annotation.Bean;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
-import static org.laokou.common.i18n.common.constant.TraceConstant.*;
+import static org.laokou.common.i18n.common.constant.StringConstants.UNDER;
+import static org.laokou.common.i18n.common.constant.TraceConstants.*;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 // @formatter:off
@@ -63,7 +63,7 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 	// @formatter:on
 	@Override
 	public void apply(RequestTemplate template) {
-		HttpServletRequest request = RequestUtil.getHttpServletRequest();
+		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		template.header(AUTHORIZATION, request.getHeader(AUTHORIZATION));
 		template.header(SERVICE_HOST, request.getHeader(SERVICE_HOST));
 		template.header(SERVICE_PORT, request.getHeader(SERVICE_PORT));

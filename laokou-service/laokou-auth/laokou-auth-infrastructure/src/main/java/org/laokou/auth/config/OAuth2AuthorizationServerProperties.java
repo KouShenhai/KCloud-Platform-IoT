@@ -18,8 +18,8 @@
 package org.laokou.auth.config;
 
 import lombok.Data;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
@@ -89,13 +89,13 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 	 * @param client 客户端
 	 */
 	private void validateClient(Client client) {
-		if (StringUtil.isEmpty(client.getRegistration().getClientId())) {
+		if (StringUtils.isEmpty(client.getRegistration().getClientId())) {
 			throw new IllegalStateException("Client id must not be empty.");
 		}
-		if (CollectionUtil.isEmpty(client.getRegistration().getClientAuthenticationMethods())) {
+		if (CollectionUtils.isEmpty(client.getRegistration().getClientAuthenticationMethods())) {
 			throw new IllegalStateException("Client authentication methods must not be empty.");
 		}
-		if (CollectionUtil.isEmpty(client.getRegistration().getAuthorizationGrantTypes())) {
+		if (CollectionUtils.isEmpty(client.getRegistration().getAuthorizationGrantTypes())) {
 			throw new IllegalStateException("Authorization grant types must not be empty.");
 		}
 	}

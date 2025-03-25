@@ -20,7 +20,7 @@ package org.laokou.common.core.config;
 import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.laokou.common.core.utils.I18nUtil;
+import org.laokou.common.core.util.I18nUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
@@ -32,14 +32,14 @@ public class I18nInterceptor implements AsyncHandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		I18nUtil.set(request);
+		I18nUtils.set(request);
 		return true;
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
 			@Nullable Exception ex) {
-		I18nUtil.reset();
+		I18nUtils.reset();
 	}
 
 }

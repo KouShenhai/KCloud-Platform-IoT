@@ -19,12 +19,12 @@ package org.laokou.auth.service.extensionpoint.extension;
 
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
-import org.laokou.common.i18n.utils.ParamValidator;
+import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.common.extension.Extension;
 
+import static org.laokou.auth.common.constant.BizConstants.SCENARIO;
 import static org.laokou.auth.factory.DomainFactory.AUTHORIZATION_CODE;
 import static org.laokou.auth.model.AuthA.USE_CASE_AUTH;
-import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
 
 /**
  * @author laokou

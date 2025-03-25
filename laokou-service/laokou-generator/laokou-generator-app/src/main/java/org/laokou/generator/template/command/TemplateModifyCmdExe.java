@@ -22,7 +22,7 @@ import org.laokou.generator.template.dto.TemplateModifyCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.generator.template.convertor.TemplateConvertor;
 import org.laokou.generator.template.ability.TemplateDomainService;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 
 /**
  *
@@ -36,11 +36,11 @@ public class TemplateModifyCmdExe {
 
 	private final TemplateDomainService templateDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	public void executeVoid(TemplateModifyCmd cmd) {
 		// 校验参数
-		transactionalUtil
+		transactionalUtils
 			.executeInTransaction(() -> templateDomainService.update(TemplateConvertor.toEntity(cmd.getCo())));
 	}
 

@@ -36,7 +36,7 @@ package org.laokou.common.shardingsphere.config;
 
 import org.apache.shardingsphere.driver.api.yaml.YamlShardingSphereDataSourceFactory;
 import org.apache.shardingsphere.infra.url.core.ShardingSphereURL;
-import org.laokou.common.core.utils.MapUtil;
+import org.laokou.common.core.util.MapUtils;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -51,7 +51,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public abstract class AbstractDriverDataSourceCache {
 
-	private final Map<String, DataSource> DATASOURCE_MAP = new ConcurrentHashMap<>(MapUtil.initialCapacity(16));
+	private final Map<String, DataSource> DATASOURCE_MAP = new ConcurrentHashMap<>(MapUtils.initialCapacity(16));
 
 	/**
 	 * Get data source.

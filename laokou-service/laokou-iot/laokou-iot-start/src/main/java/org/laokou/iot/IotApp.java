@@ -20,7 +20,7 @@ package org.laokou.iot;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.core.annotation.EnableWarmUp;
-import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnableNacosShutDown;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
@@ -81,7 +81,7 @@ public class IotApp {
 		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494
 		System.setProperty("management.health.sentinel.enabled", "false");
 		// 忽略SSL认证
-		SslUtil.ignoreSSLTrust();
+		SslUtils.ignoreSSLTrust();
 		new SpringApplicationBuilder(IotApp.class).web(WebApplicationType.SERVLET).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());

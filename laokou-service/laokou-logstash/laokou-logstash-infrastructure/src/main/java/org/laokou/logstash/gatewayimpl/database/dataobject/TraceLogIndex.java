@@ -25,7 +25,7 @@ import org.laokou.common.elasticsearch.annotation.Type;
 
 import java.io.Serializable;
 
-import static org.laokou.common.i18n.utils.DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS;
+import static org.laokou.common.i18n.util.DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS;
 
 @Data
 @Index(setting = @Setting(refreshInterval = "1"))

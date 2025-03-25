@@ -22,7 +22,7 @@ import org.laokou.admin.ossLog.ability.OssLogDomainService;
 import org.laokou.admin.ossLog.convertor.OssLogConvertor;
 import org.laokou.admin.ossLog.dto.OssLogModifyCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,12 +36,13 @@ public class OssLogModifyCmdExe {
 
 	private final OssLogDomainService ossLogDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(OssLogModifyCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> ossLogDomainService.update(OssLogConvertor.toEntity(cmd.getCo())));
+		transactionalUtils
+			.executeInTransaction(() -> ossLogDomainService.update(OssLogConvertor.toEntity(cmd.getCo())));
 	}
 
 }

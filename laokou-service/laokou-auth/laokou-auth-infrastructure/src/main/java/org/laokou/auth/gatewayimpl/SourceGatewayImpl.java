@@ -20,7 +20,7 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.SourceGateway;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.tenant.mapper.SourceDO;
 import org.laokou.common.tenant.mapper.SourceMapper;
 import org.springframework.stereotype.Component;
@@ -45,7 +45,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	@Override
 	public String getPrefix(String tenantCode) {
 		SourceDO sourceDO = sourceMapper.selectOneByTenantCode(tenantCode);
-		return ObjectUtil.isNull(sourceDO) ? null : sourceDO.getName();
+		return ObjectUtils.isNull(sourceDO) ? null : sourceDO.getName();
 	}
 
 }

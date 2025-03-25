@@ -20,7 +20,7 @@ package org.laokou.admin.cluster.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.cluster.dto.ClusterRemoveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.cluster.ability.ClusterDomainService;
 
@@ -36,12 +36,12 @@ public class ClusterRemoveCmdExe {
 
 	private final ClusterDomainService clusterDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(ClusterRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> clusterDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> clusterDomainService.delete(cmd.getIds()));
 	}
 
 }

@@ -22,9 +22,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.AuthA;
-import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -48,7 +48,7 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.laokou.common.i18n.common.exception.BizException.OAuth2.*;
+import static org.laokou.auth.model.OAuth2Constants.*;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
@@ -75,7 +75,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	 * @param authentication 认证对象
 	 */
 	public Authentication authenticate(Authentication authentication) {
-		HttpServletRequest request = RequestUtil.getHttpServletRequest();
+		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		try {
 			return authentication(authentication, getPrincipal(request));
 		}
@@ -123,7 +123,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(
 				auth2BaseAuthenticationToken);
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
-		if (ObjectUtil.isNull(registeredClient)) {
+		if (ObjectUtils.isNull(registeredClient)) {
 			throw getException(REGISTERED_CLIENT_NOT_EXIST);
 		}
 		// 获取认证范围
@@ -208,7 +208,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		if (OAuth2ClientAuthenticationToken.class.isAssignableFrom(authentication.getPrincipal().getClass())) {
 			clientPrincipal = (OAuth2ClientAuthenticationToken) authentication.getPrincipal();
 		}
-		if (ObjectUtil.isNotNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {
+		if (ObjectUtils.isNotNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {
 			return clientPrincipal;
 		}
 		throw getException(INVALID_CLIENT);

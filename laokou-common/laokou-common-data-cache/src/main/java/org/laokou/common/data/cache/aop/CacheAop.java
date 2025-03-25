@@ -22,13 +22,13 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.laokou.common.core.utils.SpringExpressionUtil;
+import org.laokou.common.core.util.SpringExpressionUtils;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.constant.Type;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.ParamException;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.Cache;
@@ -69,7 +69,7 @@ public class CacheAop {
 		String[] parameterNames = signature.getParameterNames();
 		Type type = dataCache.type();
 		String name = dataCache.name();
-		String key = SpringExpressionUtil.parse(dataCache.key(), parameterNames, point.getArgs(), String.class);
+		String key = SpringExpressionUtils.parse(dataCache.key(), parameterNames, point.getArgs(), String.class);
 		return switch (type) {
 			case GET -> get(name, key, point);
 			case DEL -> del(name, key, point);
@@ -87,12 +87,12 @@ public class CacheAop {
 			if (isLocked) {
 				Cache caffineCache = getCaffineCache(name);
 				Cache.ValueWrapper caffineValueWrapper = caffineCache.get(key);
-				if (ObjectUtil.isNotNull(caffineValueWrapper)) {
+				if (ObjectUtils.isNotNull(caffineValueWrapper)) {
 					return caffineValueWrapper.get();
 				}
 				Cache redissonCache = getRedissonCache(name);
 				Cache.ValueWrapper redissonValueWrapper = redissonCache.get(key);
-				if (ObjectUtil.isNotNull(redissonValueWrapper)) {
+				if (ObjectUtils.isNotNull(redissonValueWrapper)) {
 					Object value = redissonValueWrapper.get();
 					caffineCache.putIfAbsent(key, value);
 					return value;
@@ -151,7 +151,7 @@ public class CacheAop {
 
 	private Cache getRedissonCache(String name) {
 		Cache cache = redissonCacheManager.getCache(name);
-		if (ObjectUtil.isNull(cache)) {
+		if (ObjectUtils.isNull(cache)) {
 			throw new SystemException("S_Cache_NameNotExist", "缓存名称不存在");
 		}
 		return cache;
@@ -159,7 +159,7 @@ public class CacheAop {
 
 	private Cache getCaffineCache(String name) {
 		Cache cache = caffineCacheManager.getCache(name);
-		if (ObjectUtil.isNull(cache)) {
+		if (ObjectUtils.isNull(cache)) {
 			throw new SystemException("S_Cache_NameNotExist", "缓存名称不存在");
 		}
 		return cache;

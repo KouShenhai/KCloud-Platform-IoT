@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.util.StringUtils;
 
 import java.time.Instant;
 import java.util.List;
@@ -72,7 +72,7 @@ public class RoleCO extends ClientObject {
 	private List<String> deptIds;
 
 	public void setName(String name) {
-		this.name = StringUtil.trim(name);
+		this.name = StringUtils.trim(name);
 	}
 
 }

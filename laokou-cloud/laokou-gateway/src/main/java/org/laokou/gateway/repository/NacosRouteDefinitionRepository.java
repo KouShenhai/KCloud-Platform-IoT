@@ -20,9 +20,9 @@ package org.laokou.gateway.repository;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.nacos.utils.ConfigUtil;
-import org.laokou.common.i18n.utils.RedisKeyUtil;
+import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
@@ -38,7 +38,7 @@ import reactor.core.publisher.Mono;
 import java.util.Collection;
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.exception.SystemException.Gateway.ROUTER_NOT_EXIST;
+import static org.laokou.gateway.constant.GatewayConstants.ROUTER_NOT_EXIST;
 
 // @formatter:off
 /**
@@ -85,7 +85,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 */
 	@Override
 	public Flux<RouteDefinition> getRouteDefinitions() {
-		return reactiveHashOperations.entries(RedisKeyUtil.getRouteDefinitionHashKey())
+		return reactiveHashOperations.entries(RedisKeyUtils.getRouteDefinitionHashKey())
 			.mapNotNull(Map.Entry::getValue)
 			.onErrorContinue((throwable, routeDefinition) -> {
 				if (log.isErrorEnabled()) {
@@ -112,7 +112,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 */
 	public Flux<Boolean> saveRouters() {
 		return Flux.fromIterable(pullRouters())
-			.flatMap(router -> reactiveHashOperations.putIfAbsent(RedisKeyUtil.getRouteDefinitionHashKey(), router.getId(), router)).doFinally(c -> refreshEvent());
+			.flatMap(router -> reactiveHashOperations.putIfAbsent(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router)).doFinally(c -> refreshEvent());
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * @return 删除结果
 	 */
 	public Mono<Boolean> removeRouters() {
-		return reactiveHashOperations.delete(RedisKeyUtil.getRouteDefinitionHashKey()).doFinally(c -> refreshEvent());
+		return reactiveHashOperations.delete(RedisKeyUtils.getRouteDefinitionHashKey()).doFinally(c -> refreshEvent());
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			// pull nacos config info
 			String group = configUtil.getGroup();
 			String configInfo = configUtil.getConfig(DATA_ID, group, 5000);
-			return JacksonUtil.toList(configInfo, RouteDefinition.class);
+			return JacksonUtils.toList(configInfo, RouteDefinition.class);
 		}
 		catch (Exception e) {
 			log.error("错误信息：{}", e.getMessage());

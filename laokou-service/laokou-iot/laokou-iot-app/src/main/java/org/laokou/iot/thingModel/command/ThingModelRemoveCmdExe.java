@@ -19,7 +19,7 @@ package org.laokou.iot.thingModel.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.iot.thingModel.dto.ThingModelRemoveCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.thingModel.ability.ThingModelDomainService;
@@ -36,12 +36,12 @@ public class ThingModelRemoveCmdExe {
 
 	private final ThingModelDomainService thingModelDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(ThingModelRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> thingModelDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> thingModelDomainService.delete(cmd.getIds()));
 	}
 
 }

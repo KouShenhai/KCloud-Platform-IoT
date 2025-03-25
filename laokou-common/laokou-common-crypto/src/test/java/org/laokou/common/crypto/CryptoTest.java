@@ -19,8 +19,8 @@ package org.laokou.common.crypto;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.crypto.utils.AESUtil;
-import org.laokou.common.crypto.utils.RSAUtil;
+import org.laokou.common.crypto.utils.AESUtils;
+import org.laokou.common.crypto.utils.RSAUtils;
 
 /**
  * @author laokou
@@ -33,18 +33,18 @@ class CryptoTest {
 
 	@Test
 	void testRSA() {
-		String encryptUsername = RSAUtil.encryptByPublicKey(USERNAME);
-		String encryptPassword = RSAUtil.encryptByPublicKey(PASSWORD);
-		String decryptUsername = RSAUtil.decryptByPrivateKey(encryptUsername);
-		String decryptPassword = RSAUtil.decryptByPrivateKey(encryptPassword);
+		String encryptUsername = RSAUtils.encryptByPublicKey(USERNAME);
+		String encryptPassword = RSAUtils.encryptByPublicKey(PASSWORD);
+		String decryptUsername = RSAUtils.decryptByPrivateKey(encryptUsername);
+		String decryptPassword = RSAUtils.decryptByPrivateKey(encryptPassword);
 		Assertions.assertEquals(USERNAME, decryptUsername);
 		Assertions.assertEquals(PASSWORD, decryptPassword);
 	}
 
 	@Test
 	void testAES() throws Exception {
-		String encryptUsername = AESUtil.encrypt(USERNAME);
-		String decryptUsername = AESUtil.decrypt(encryptUsername);
+		String encryptUsername = AESUtils.encrypt(USERNAME);
+		String decryptUsername = AESUtils.decrypt(encryptUsername);
 		Assertions.assertEquals(USERNAME, decryptUsername);
 	}
 

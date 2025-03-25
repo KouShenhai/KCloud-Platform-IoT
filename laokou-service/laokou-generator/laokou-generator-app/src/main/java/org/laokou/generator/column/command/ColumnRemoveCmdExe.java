@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.generator.column.dto.ColumnRemoveCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.generator.column.ability.ColumnDomainService;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 
 /**
  *
@@ -35,11 +35,11 @@ public class ColumnRemoveCmdExe {
 
 	private final ColumnDomainService columnDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	public void executeVoid(ColumnRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> columnDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> columnDomainService.delete(cmd.getIds()));
 	}
 
 }

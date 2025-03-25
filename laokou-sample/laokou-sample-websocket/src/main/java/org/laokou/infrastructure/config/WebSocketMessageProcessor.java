@@ -22,14 +22,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.client.dto.clientobject.MessageCO;
 import org.laokou.client.dto.clientobject.PayloadCO;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.netty.config.WebSocketSessionHeartBeatManager;
 import org.laokou.common.netty.config.WebSocketSessionManager;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
 import org.laokou.domain.model.MessageType;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.laokou.infrastructure.common.constant.MqConstant.LAOKOU_WS_MESSAGE_TOPIC;
 
 /**
@@ -62,8 +62,8 @@ final class WebSocketMessageProcessor {
 	}
 
 	private void publishMessage(Object payload) {
-		rocketMqTemplate.sendAsyncMessage(LAOKOU_WS_MESSAGE_TOPIC, EMPTY, JacksonUtil.toValue(payload, PayloadCO.class),
-				"0", "0");
+		rocketMqTemplate.sendAsyncMessage(LAOKOU_WS_MESSAGE_TOPIC, EMPTY,
+				JacksonUtils.toValue(payload, PayloadCO.class), "0", "0");
 	}
 
 }

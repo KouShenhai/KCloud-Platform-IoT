@@ -18,7 +18,7 @@
 package org.laokou.admin.noticeLog.model;
 
 import lombok.Getter;
-import org.laokou.common.i18n.utils.EnumParser;
+import org.laokou.common.i18n.util.EnumParser;
 
 /**
  * 状态枚举.

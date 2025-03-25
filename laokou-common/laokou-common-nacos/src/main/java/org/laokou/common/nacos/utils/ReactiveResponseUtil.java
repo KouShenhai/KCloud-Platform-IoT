@@ -17,7 +17,7 @@
 
 package org.laokou.common.nacos.utils;
 
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,7 +34,7 @@ import java.nio.charset.StandardCharsets;
 public class ReactiveResponseUtil {
 
 	public static Mono<Void> responseOk(ServerWebExchange exchange, Object data) {
-		return responseOk(exchange, JacksonUtil.toJsonStr(data), MediaType.APPLICATION_JSON);
+		return responseOk(exchange, JacksonUtils.toJsonStr(data), MediaType.APPLICATION_JSON);
 	}
 
 	public static Mono<Void> responseOk(ServerWebExchange exchange, String str, MediaType contentType) {

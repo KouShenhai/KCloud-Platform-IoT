@@ -29,10 +29,10 @@ import io.netty.util.ReferenceCountUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.client.dto.clientobject.MessageCO;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.netty.config.SpringWebSocketServerProperties;
 import org.laokou.common.netty.config.WebSocketSessionHeartBeatManager;
 import org.laokou.common.netty.config.WebSocketSessionManager;
@@ -104,7 +104,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
 		// 读空闲事件
 		if (evt instanceof IdleStateEvent idleStateEvent
-				&& ObjectUtil.equals(idleStateEvent.state(), IdleStateEvent.READER_IDLE_STATE_EVENT.state())) {
+				&& ObjectUtils.equals(idleStateEvent.state(), IdleStateEvent.READER_IDLE_STATE_EVENT.state())) {
 			Channel channel = ctx.channel();
 			String clientId = channel.id().asLongText();
 			int maxHeartBeatCount = springWebSocketServerProperties.getMaxHeartBeatCount();
@@ -127,12 +127,12 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 			throws JsonProcessingException, InterruptedException {
 		Channel channel = ctx.channel();
 		String str = frame.text();
-		if (StringUtil.isEmpty(str)) {
-			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtil.toJsonStr(Result.fail(UNAUTHORIZED))));
+		if (StringUtils.isEmpty(str)) {
+			channel.writeAndFlush(new TextWebSocketFrame(JacksonUtils.toJsonStr(Result.fail(UNAUTHORIZED))));
 			ctx.close();
 			return;
 		}
-		MessageCO message = JacksonUtil.toBean(str, MessageCO.class);
+		MessageCO message = JacksonUtils.toBean(str, MessageCO.class);
 		Assert.notNull(message.getPayload(), "payload must not be null");
 		Assert.notNull(message.getType(), "type must not bee null");
 		messageProcessor.processMessage(message, channel);

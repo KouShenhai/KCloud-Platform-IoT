@@ -20,9 +20,9 @@ package org.laokou.admin.dictItem.convertor;
 import org.laokou.admin.dictItem.dto.clientobject.DictItemCO;
 import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
 import org.laokou.admin.dictItem.model.DictItemE;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.core.util.ConvertUtils;
+import org.laokou.common.core.util.IdGenerator;
+import org.laokou.common.i18n.util.ObjectUtils;
 
 /**
  * 字典项转换器.
@@ -32,19 +32,19 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 public class DictItemConvertor {
 
 	public static DictItemDO toDataObject(DictItemE dictItemE) {
-		DictItemDO dictItemDO = ConvertUtil.sourceToTarget(dictItemE, DictItemDO.class);
-		if (ObjectUtil.isNull(dictItemDO.getId())) {
+		DictItemDO dictItemDO = ConvertUtils.sourceToTarget(dictItemE, DictItemDO.class);
+		if (ObjectUtils.isNull(dictItemDO.getId())) {
 			dictItemDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return dictItemDO;
 	}
 
 	public static DictItemCO toClientObject(DictItemDO dictItemDO) {
-		return ConvertUtil.sourceToTarget(dictItemDO, DictItemCO.class);
+		return ConvertUtils.sourceToTarget(dictItemDO, DictItemCO.class);
 	}
 
 	public static DictItemE toEntity(DictItemCO dictItemCO) {
-		return ConvertUtil.sourceToTarget(dictItemCO, DictItemE.class);
+		return ConvertUtils.sourceToTarget(dictItemCO, DictItemE.class);
 	}
 
 }

@@ -19,8 +19,8 @@ package org.laokou.common.core;
 
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.event.EventBus;
-import org.laokou.common.core.utils.SpringContextUtil;
+import org.laokou.common.core.util.EventBus;
+import org.laokou.common.core.util.SpringContextUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
@@ -30,7 +30,7 @@ import org.springframework.test.context.TestConstructor;
  */
 @SpringBootTest
 @RequiredArgsConstructor
-@ContextConfiguration(classes = { SpringContextUtil.class, TestEventListener.class })
+@ContextConfiguration(classes = { SpringContextUtils.class, TestEventListener.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class EventBusTest {
 

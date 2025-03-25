@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.laokou.common.core.annotation.AbstractContextualSerializer;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 
 import java.io.IOException;
 
@@ -45,7 +45,7 @@ public class SensitiveSerializer extends AbstractContextualSerializer {
 	@Override
 	public JsonSerializer<?> createContextual(SerializerProvider provider, BeanProperty beanProperty) {
 		Sensitive sensitive = beanProperty.getAnnotation(Sensitive.class);
-		if (ObjectUtil.isNotNull(sensitive)) {
+		if (ObjectUtils.isNotNull(sensitive)) {
 			return new SensitiveSerializer(sensitive.type());
 		}
 		throw new RuntimeException();

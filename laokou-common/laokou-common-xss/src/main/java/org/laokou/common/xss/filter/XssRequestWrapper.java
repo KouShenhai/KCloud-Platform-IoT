@@ -20,11 +20,11 @@ package org.laokou.common.xss.filter;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
-import org.laokou.common.core.utils.ArrayUtil;
-import org.laokou.common.core.utils.MapUtil;
-import org.laokou.common.core.utils.RequestUtil;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.xss.util.XssUtil;
+import org.laokou.common.core.util.ArrayUtils;
+import org.laokou.common.core.util.MapUtils;
+import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.xss.util.XssUtils;
 import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
 import java.io.IOException;
@@ -57,20 +57,20 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 			return super.getInputStream();
 		}
 		// 请求为空直接返回
-		byte[] requestBody = RequestUtil.getRequestBody(request);
+		byte[] requestBody = RequestUtils.getRequestBody(request);
 		String json = new String(requestBody, StandardCharsets.UTF_8);
-		if (StringUtil.isEmpty(json)) {
+		if (StringUtils.isEmpty(json)) {
 			return super.getInputStream();
 		}
 		// xss过滤
-		return RequestUtil.getInputStream(XssUtil.clearHtml(json).getBytes(StandardCharsets.UTF_8));
+		return RequestUtils.getInputStream(XssUtils.clearHtml(json).getBytes(StandardCharsets.UTF_8));
 	}
 
 	@Override
 	public String getParameter(String name) {
 		String parameterValue = super.getParameter(name);
-		if (StringUtil.isNotEmpty(parameterValue)) {
-			parameterValue = XssUtil.clearHtml(parameterValue);
+		if (StringUtils.isNotEmpty(parameterValue)) {
+			parameterValue = XssUtils.clearHtml(parameterValue);
 		}
 		return parameterValue;
 	}
@@ -78,12 +78,12 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 	@Override
 	public String[] getParameterValues(String name) {
 		String[] parameterValues = super.getParameterValues(name);
-		if (ArrayUtil.isEmpty(parameterValues)) {
+		if (ArrayUtils.isEmpty(parameterValues)) {
 			return new String[0];
 		}
 		List<String> list = new ArrayList<>(parameterValues.length);
 		for (String parameterValue : parameterValues) {
-			list.add(XssUtil.clearHtml(parameterValue));
+			list.add(XssUtils.clearHtml(parameterValue));
 		}
 		return list.toArray(String[]::new);
 	}
@@ -95,13 +95,13 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 	@Override
 	public Map<String, String[]> getParameterMap() {
 		Map<String, String[]> parameterMap = super.getParameterMap();
-		Map<String, String[]> newParameterMap = new LinkedHashMap<>(MapUtil.initialCapacity(parameterMap.size()));
+		Map<String, String[]> newParameterMap = new LinkedHashMap<>(MapUtils.initialCapacity(parameterMap.size()));
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String key = entry.getKey();
 			String[] values = entry.getValue();
 			List<String> list = new ArrayList<>(values.length);
 			for (String str : values) {
-				list.add(XssUtil.clearHtml(str));
+				list.add(XssUtils.clearHtml(str));
 			}
 			newParameterMap.put(key, list.toArray(String[]::new));
 		}
@@ -110,16 +110,16 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 
 	@Override
 	public String getHeader(String name) {
-		String value = super.getHeader(XssUtil.clearHtml(name));
-		if (StringUtil.isNotEmpty(value)) {
-			value = XssUtil.clearHtml(value);
+		String value = super.getHeader(XssUtils.clearHtml(name));
+		if (StringUtils.isNotEmpty(value)) {
+			value = XssUtils.clearHtml(value);
 		}
 		return value;
 	}
 
 	private boolean checkJson() {
 		String header = super.getHeader(CONTENT_TYPE);
-		return StringUtil.startWith(header, APPLICATION_JSON_VALUE);
+		return StringUtils.startWith(header, APPLICATION_JSON_VALUE);
 	}
 
 }

@@ -12,10 +12,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-nacos</artifactId>
-    </dependency>
-    <dependency>
       <groupId>com.github.ulisesbocchio</groupId>
       <artifactId>jasypt-spring-boot-starter</artifactId>
       <exclusions>

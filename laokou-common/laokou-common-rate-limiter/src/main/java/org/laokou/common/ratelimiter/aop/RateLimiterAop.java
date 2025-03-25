@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.laokou.common.core.utils.RequestUtil;
+import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.redis.utils.RedisUtil;
@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.UNDER;
+import static org.laokou.common.i18n.common.constant.StringConstants.UNDER;
 import static org.laokou.common.i18n.common.exception.StatusCode.TOO_MANY_REQUESTS;
 
 /**
@@ -56,7 +56,7 @@ public class RateLimiterAop {
 	public Object doAround(ProceedingJoinPoint point, RateLimiter rateLimiter) throws Throwable {
 		String key = getKey(rateLimiter.key()
 			.concat(UNDER)
-			.concat(rateLimiter.type().resolve(RequestUtil.getHttpServletRequest())));
+			.concat(rateLimiter.type().resolve(RequestUtils.getHttpServletRequest())));
 		long rate = rateLimiter.rate();
 		long ttl = rateLimiter.ttl();
 		long interval = rateLimiter.interval();

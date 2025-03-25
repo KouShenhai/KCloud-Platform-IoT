@@ -17,8 +17,8 @@
 
 package org.laokou.common.redis.config;
 
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.RedisKeyUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.redisson.Redisson;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
@@ -33,7 +33,7 @@ import org.springframework.context.annotation.Bean;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.RISK;
+import static org.laokou.common.i18n.common.constant.StringConstants.RISK;
 
 /**
  * @author livk
@@ -56,7 +56,7 @@ public class RedissonAutoConfig {
 
 	@Bean
 	public RBloomFilter<String> bloomFilter(RedissonClient redisson) {
-		RBloomFilter<String> bloomFilter = redisson.getBloomFilter(RedisKeyUtil.getBloomFilterKey());
+		RBloomFilter<String> bloomFilter = redisson.getBloomFilter(RedisKeyUtils.getBloomFilterKey());
 		bloomFilter.tryInit(10000, 0.01);
 		return bloomFilter;
 	}
@@ -73,7 +73,7 @@ public class RedissonAutoConfig {
 		int timeout = (int) properties.getTimeout().toMillis();
 		int connectTimeout = (int) properties.getConnectTimeout().toMillis();
 		boolean isSsl = properties.getSsl().isEnabled();
-		if (ObjectUtil.isNotNull(properties.getSentinel())) {
+		if (ObjectUtils.isNotNull(properties.getSentinel())) {
 			config.useSentinelServers()
 				.setMasterName(properties.getSentinel().getMaster())
 				.addSentinelAddress(convertNodes(isSsl, properties.getSentinel().getNodes()))
@@ -82,7 +82,7 @@ public class RedissonAutoConfig {
 				.setConnectTimeout(connectTimeout)
 				.setPassword(properties.getPassword());
 		}
-		else if (ObjectUtil.isNotNull(properties.getCluster())) {
+		else if (ObjectUtils.isNotNull(properties.getCluster())) {
 			config.useClusterServers()
 				.addNodeAddress(convertNodes(isSsl, properties.getCluster().getNodes()))
 				.setPassword(properties.getPassword())

@@ -23,11 +23,11 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.context.ShutdownHolder;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.core.utils.ResponseUtil;
-import org.laokou.common.core.utils.SpringContextUtil;
-import org.laokou.common.core.utils.ThreadUtil;
+import org.laokou.common.nacos.context.ShutdownHolder;
+import org.laokou.common.core.util.IdGenerator;
+import org.laokou.common.core.util.ResponseUtils;
+import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.nacos.utils.ReactiveResponseUtil;
 import org.springframework.boot.SpringApplication;
@@ -40,7 +40,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAILABLE;
 
 /**
@@ -63,10 +63,10 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException {
 		if (open()) {
-			ResponseUtil.responseOk((HttpServletResponse) response, Result.ok(EMPTY));
+			ResponseUtils.responseOk((HttpServletResponse) response, Result.ok(EMPTY));
 			return;
 		}
-		ResponseUtil.responseOk((HttpServletResponse) response, Result.fail(SERVICE_UNAVAILABLE));
+		ResponseUtils.responseOk((HttpServletResponse) response, Result.fail(SERVICE_UNAVAILABLE));
 	}
 
 	@Override
@@ -94,9 +94,9 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 				NEWED_SCHEDULED_THREAD_POOL.scheduleWithFixedDelay(() -> {
 					// 一分钟内没完成 或 计数器为0 -> 结束
 					if (IdGenerator.SystemClock.now() - start >= second || ShutdownHolder.get() == 0) {
-						ThreadUtil.shutdown(NEWED_SCHEDULED_THREAD_POOL, 30);
+						ThreadUtils.shutdown(NEWED_SCHEDULED_THREAD_POOL, 30);
 						log.info("关闭应用");
-						int exitCode = SpringApplication.exit(SpringContextUtil.getApplicationContext(),
+						int exitCode = SpringApplication.exit(SpringContextUtils.getApplicationContext(),
 								new ExitCodeGeneratorImpl());
 						System.exit(exitCode);
 					}

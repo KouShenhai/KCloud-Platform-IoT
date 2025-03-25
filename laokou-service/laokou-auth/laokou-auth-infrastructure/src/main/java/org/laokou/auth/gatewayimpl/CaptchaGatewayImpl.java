@@ -20,12 +20,12 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.CaptchaGateway;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.redis.utils.RedisUtil;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.laokou.common.redis.utils.RedisUtil.FIVE_MINUTE_EXPIRE;
 
 /**
@@ -71,7 +71,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	public Boolean validate(String key, String code) {
 		// 获取验证码
 		String captcha = getValue(key);
-		if (StringUtil.isEmpty(captcha)) {
+		if (StringUtils.isEmpty(captcha)) {
 			return null;
 		}
 		return code.equalsIgnoreCase(captcha);
@@ -84,10 +84,10 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	 */
 	private String getValue(String key) {
 		Object captcha = redisUtil.get(key);
-		if (ObjectUtil.isNotNull(captcha)) {
+		if (ObjectUtils.isNotNull(captcha)) {
 			redisUtil.del(key);
 		}
-		return ObjectUtil.isNotNull(captcha) ? captcha.toString() : EMPTY;
+		return ObjectUtils.isNotNull(captcha) ? captcha.toString() : EMPTY;
 	}
 
 }

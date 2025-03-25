@@ -34,12 +34,12 @@ import co.elastic.clients.elasticsearch.indices.*;
 import co.elastic.clients.transport.endpoints.BooleanResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.elasticsearch.annotation.*;
 import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
@@ -54,7 +54,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.COMMA;
+import static org.laokou.common.i18n.common.constant.StringConstants.COMMA;
 
 /**
  * @author laokou
@@ -113,16 +113,16 @@ public class ElasticsearchTemplate {
 
 	public void deleteIndex(List<String> names) throws IOException {
 		if (!exist(names)) {
-			log.info("索引：{} -> 删除索引失败，索引不存在", StringUtil.collectionToDelimitedString(names, COMMA));
+			log.info("索引：{} -> 删除索引失败，索引不存在", StringUtils.collectionToDelimitedString(names, COMMA));
 			return;
 		}
 		DeleteIndexResponse deleteIndexResponse = elasticsearchClient.indices().delete(getDeleteIndexRequest(names));
 		boolean acknowledged = deleteIndexResponse.acknowledged();
 		if (acknowledged) {
-			log.info("索引：{} -> 删除索引成功", StringUtil.collectionToDelimitedString(names, COMMA));
+			log.info("索引：{} -> 删除索引成功", StringUtils.collectionToDelimitedString(names, COMMA));
 		}
 		else {
-			log.info("索引：{} -> 删除索引失败", StringUtil.collectionToDelimitedString(names, COMMA));
+			log.info("索引：{} -> 删除索引失败", StringUtils.collectionToDelimitedString(names, COMMA));
 		}
 	}
 
@@ -133,7 +133,7 @@ public class ElasticsearchTemplate {
 	public <T> void createDocument(String index, String id, T obj) throws IOException {
 		IndexResponse response = elasticsearchClient
 			.index(idx -> idx.index(index).refresh(Refresh.True).id(id).document(obj));
-		if (StringUtil.isNotEmpty(response.result().jsonValue())) {
+		if (StringUtils.isNotEmpty(response.result().jsonValue())) {
 			log.info("索引：{} -> 同步索引成功", index);
 		}
 		else {
@@ -144,7 +144,7 @@ public class ElasticsearchTemplate {
 	public <T> CompletableFuture<Void> asyncCreateDocument(String index, String id, T obj) {
 		return elasticsearchAsyncClient.index(idx -> idx.index(index).refresh(Refresh.True).id(id).document(obj))
 			.thenAcceptAsync(resp -> {
-				if (StringUtil.isNotEmpty(resp.result().jsonValue())) {
+				if (StringUtils.isNotEmpty(resp.result().jsonValue())) {
 					log.info("索引：{} -> 异步同步索引成功", index);
 				}
 				else {
@@ -261,7 +261,7 @@ public class ElasticsearchTemplate {
 		// match_phrase查询text类型字段，顺序必须相同，而且必须都是连续的（分词）
 		// term精准匹配
 		// match模糊匹配（分词）
-		if (ObjectUtil.isNotNull(query)) {
+		if (ObjectUtils.isNotNull(query)) {
 			builder.query(query);
 		}
 		return builder.build();
@@ -360,7 +360,7 @@ public class ElasticsearchTemplate {
 		Map<String, String> map = options.stream()
 			.collect(Collectors.toMap(Document.Option::getKey, Document.Option::getValue));
 		filterBuilder.definition(fn -> fn
-			.withJson(new ByteArrayInputStream(JacksonUtil.toJsonStr(map).getBytes(StandardCharsets.UTF_8))));
+			.withJson(new ByteArrayInputStream(JacksonUtils.toJsonStr(map).getBytes(StandardCharsets.UTF_8))));
 		return filterBuilder.build();
 	}
 
@@ -374,7 +374,7 @@ public class ElasticsearchTemplate {
 		boolean annotationPresent = clazz.isAnnotationPresent(Index.class);
 		if (annotationPresent) {
 			Index index = clazz.getAnnotation(Index.class);
-			alias = StringUtil.isNotEmpty(alias) ? alias : name;
+			alias = StringUtils.isNotEmpty(alias) ? alias : name;
 			return new Document(name, alias, getMappings(clazz), getSetting(index), getAnalysis(index));
 		}
 		throw new RuntimeException("Not found @Index");
@@ -419,7 +419,7 @@ public class ElasticsearchTemplate {
 
 	private Document.Mapping getMapping(Field item, org.laokou.common.elasticsearch.annotation.Field field) {
 		String value = field.value();
-		value = StringUtil.isEmpty(value) ? item.getName() : value;
+		value = StringUtils.isEmpty(value) ? item.getName() : value;
 		Type type = field.type();
 		String searchAnalyzer = field.searchAnalyzer();
 		String analyzer = field.analyzer();

@@ -20,8 +20,8 @@ package org.laokou.auth.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.stereotype.Component;
@@ -45,11 +45,11 @@ public class TokenRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(TokenRemoveCmd cmd) {
 		String token = cmd.getToken();
-		if (StringUtil.isEmpty(token)) {
+		if (StringUtils.isEmpty(token)) {
 			return;
 		}
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, FULL);
-		if (ObjectUtil.isNotNull(authorization)) {
+		if (ObjectUtils.isNotNull(authorization)) {
 			// 删除token
 			oAuth2AuthorizationService.remove(authorization);
 		}

@@ -20,8 +20,8 @@ package org.laokou.common.core;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.laokou.common.core.utils.RandomIdGenerator.generateBase64RandomId;
-import static org.laokou.common.core.utils.RandomIdGenerator.generateRandomId;
+import static org.laokou.common.core.util.RandomIdGenerator.generateBase64RandomId;
+import static org.laokou.common.core.util.RandomIdGenerator.generateRandomId;
 
 /**
  * @author laokou

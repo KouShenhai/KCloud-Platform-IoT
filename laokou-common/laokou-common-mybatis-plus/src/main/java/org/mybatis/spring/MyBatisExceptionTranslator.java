@@ -36,7 +36,7 @@ package org.mybatis.spring;
 import io.micrometer.common.lang.NonNullApi;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.laokou.common.core.utils.SpringContextUtil;
+import org.laokou.common.core.util.SpringContextUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.jdbc.UncategorizedSQLException;
@@ -125,7 +125,7 @@ public class MyBatisExceptionTranslator implements PersistenceExceptionTranslato
 		if (this.exceptionTranslator == null) {
 			synchronized (LOCK) {
 				if (this.exceptionTranslator == null) {
-					SqlSessionFactory sessionFactory = SpringContextUtil.getBean(SqlSessionFactory.class);
+					SqlSessionFactory sessionFactory = SpringContextUtils.getBean(SqlSessionFactory.class);
 					this.exceptionTranslator = new SQLErrorCodeSQLExceptionTranslator(
 							sessionFactory.getConfiguration().getEnvironment().getDataSource());
 				}

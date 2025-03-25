@@ -20,7 +20,7 @@ package org.laokou.admin.dept.service.extensionpoint.extension;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.model.DeptE;
 import org.laokou.admin.dept.service.extensionpoint.DeptParamValidatorExtPt;
-import org.laokou.common.i18n.utils.ParamValidator;
+import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
 /**

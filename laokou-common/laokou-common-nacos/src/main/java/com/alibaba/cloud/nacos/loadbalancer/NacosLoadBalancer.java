@@ -50,15 +50,14 @@
 
 package com.alibaba.cloud.nacos.loadbalancer;
 
-import com.alibaba.cloud.commons.lang.StringUtils;
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
 import com.alibaba.nacos.client.naming.utils.CollectionUtils;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.RegexUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.core.util.RegexUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.nacos.utils.ReactiveRequestUtil;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
@@ -77,8 +76,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.TRUE;
-import static org.laokou.common.i18n.common.constant.TraceConstant.*;
+import static org.laokou.common.i18n.common.constant.StringConstants.TRUE;
+import static org.laokou.common.i18n.common.constant.TraceConstants.*;
 
 /**
  * nacos路由负载均衡.
@@ -156,8 +155,8 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	@PostConstruct
 	public void init() {
 		String ip = nacosDiscoveryProperties.getIp();
-		if (StringUtils.isNotEmpty(ip)) {
-			ipv6 = RegexUtil.ipRegex(ip) ? nacosDiscoveryProperties.getMetadata().get(IPV6_KEY) : ip;
+		if (com.alibaba.cloud.commons.lang.StringUtils.isNotEmpty(ip)) {
+			ipv6 = RegexUtils.ipRegex(ip) ? nacosDiscoveryProperties.getMetadata().get(IPV6_KEY) : ip;
 		}
 		else {
 			ipv6 = inetIPv6Utils.findIPv6Address();
@@ -170,11 +169,11 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 * @return 服务实例列表
 	 */
 	private List<ServiceInstance> filterInstanceByIpType(List<ServiceInstance> instances) {
-		if (StringUtils.isNotEmpty(ipv6)) {
+		if (com.alibaba.cloud.commons.lang.StringUtils.isNotEmpty(ipv6)) {
 			List<ServiceInstance> ipv6InstanceList = new ArrayList<>();
 			for (ServiceInstance instance : instances) {
-				if (RegexUtil.ipRegex(instance.getHost())) {
-					if (StringUtils.isNotEmpty(instance.getMetadata().get(IPV6_KEY))) {
+				if (RegexUtils.ipRegex(instance.getHost())) {
+					if (com.alibaba.cloud.commons.lang.StringUtils.isNotEmpty(instance.getMetadata().get(IPV6_KEY))) {
 						ipv6InstanceList.add(instance);
 					}
 				}
@@ -185,7 +184,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			// Provider has no IPv6, should use IPv4.
 			if (ipv6InstanceList.isEmpty()) {
 				return instances.stream()
-					.filter(instance -> RegexUtil.ipRegex(instance.getHost()))
+					.filter(instance -> RegexUtils.ipRegex(instance.getHost()))
 					.collect(Collectors.toList());
 			}
 			else {
@@ -193,7 +192,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			}
 		}
 		return instances.stream()
-			.filter(instance -> RegexUtil.ipRegex(instance.getHost()))
+			.filter(instance -> RegexUtils.ipRegex(instance.getHost()))
 			.collect(Collectors.toList());
 	}
 
@@ -231,14 +230,14 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 					.filter(instance -> match(instance, headers))
 					.findFirst()
 					.orElse(null);
-				if (ObjectUtil.isNotNull(serviceInstance)) {
+				if (ObjectUtils.isNotNull(serviceInstance)) {
 					return new DefaultResponse(serviceInstance);
 				}
 			}
 			// 服务灰度路由
 			if (isGrayRouter(headers)) {
-				String version = RegexUtil.getRegexValue(path, "/(v\\d+)/");
-				if (StringUtils.isNotEmpty(version)) {
+				String version = RegexUtils.getRegexValue(path, "/(v\\d+)/");
+				if (com.alibaba.cloud.commons.lang.StringUtils.isNotEmpty(version)) {
 					serviceInstances = serviceInstances.stream()
 						.filter(item -> item.getMetadata().getOrDefault(VERSION, DEFAULT_VERSION_VALUE).equals(version))
 						.toList();
@@ -261,10 +260,10 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		try {
 			String clusterName = this.nacosDiscoveryProperties.getClusterName();
 			List<ServiceInstance> instancesToChoose = serviceInstances;
-			if (StringUtils.isNotBlank(clusterName)) {
+			if (com.alibaba.cloud.commons.lang.StringUtils.isNotBlank(clusterName)) {
 				List<ServiceInstance> sameClusterInstances = serviceInstances.stream().filter(serviceInstance -> {
 					String cluster = serviceInstance.getMetadata().get(CLUSTER_CONFIG);
-					return StringUtils.equals(cluster, clusterName);
+					return com.alibaba.cloud.commons.lang.StringUtils.equals(cluster, clusterName);
 				}).collect(Collectors.toList());
 				if (!CollectionUtils.isEmpty(sameClusterInstances)) {
 					instancesToChoose = sameClusterInstances;
@@ -307,7 +306,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 */
 	private boolean isGrayRouter(HttpHeaders headers) {
 		String gray = headers.getFirst(SERVICE_GRAY);
-		return ObjectUtil.equals(TRUE, gray);
+		return ObjectUtils.equals(TRUE, gray);
 	}
 
 	/**
@@ -319,9 +318,9 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	private boolean match(ServiceInstance serviceInstance, HttpHeaders headers) {
 		String host = headers.getFirst(SERVICE_HOST);
 		String port = headers.getFirst(SERVICE_PORT);
-		Assert.isTrue(StringUtil.isNotEmpty(host), "service-host is empty");
-		Assert.isTrue(StringUtil.isNotEmpty(port), "service-port is empty");
-		return ObjectUtil.equals(host, serviceInstance.getHost())
+		Assert.isTrue(StringUtils.isNotEmpty(host), "service-host is empty");
+		Assert.isTrue(StringUtils.isNotEmpty(port), "service-port is empty");
+		return ObjectUtils.equals(host, serviceInstance.getHost())
 				&& Integer.parseInt(port) == serviceInstance.getPort();
 	}
 

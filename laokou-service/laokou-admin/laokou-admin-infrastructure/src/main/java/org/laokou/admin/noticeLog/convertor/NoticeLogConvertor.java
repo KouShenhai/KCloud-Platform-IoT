@@ -22,9 +22,9 @@ import org.laokou.admin.noticeLog.dto.excel.NoticeLogExcel;
 import org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.admin.noticeLog.model.NoticeLogE;
 import org.laokou.admin.noticeLog.model.Status;
-import org.laokou.common.core.utils.IdGenerator;
+import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.excel.utils.ExcelUtil;
-import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.util.DateUtils;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -105,7 +105,7 @@ public final class NoticeLogConvertor implements ExcelUtil.ExcelConvertor<Notice
 		noticeLogExcel.setParam(noticeLogDO.getParam());
 		noticeLogExcel.setErrorMessage(noticeLogDO.getErrorMessage());
 		noticeLogExcel
-			.setCreateTime(DateUtil.format(noticeLogDO.getCreateTime(), DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
+			.setCreateTime(DateUtils.format(noticeLogDO.getCreateTime(), DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
 		return noticeLogExcel;
 	}
 

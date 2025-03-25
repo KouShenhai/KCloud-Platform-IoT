@@ -17,7 +17,7 @@
 
 package org.laokou.common.oss.template;
 
-import org.laokou.common.core.utils.FileUtil;
+import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.oss.entity.FileInfo;
 import org.laokou.common.oss.entity.OssInfo;
 
@@ -36,7 +36,7 @@ public class LocalStorage extends AbstractStorage<Path> {
 
 	@Override
 	protected Path getObj() throws IOException {
-		return FileUtil.create(ossInfo.getDirectory(), fileInfo.getName());
+		return FileUtils.create(ossInfo.getDirectory(), fileInfo.getName());
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class LocalStorage extends AbstractStorage<Path> {
 
 	@Override
 	protected void upload(Path obj) throws NoSuchAlgorithmException {
-		FileUtil.write(obj, fileInfo.getInputStream(), fileInfo.getSize());
+		FileUtils.write(obj, fileInfo.getInputStream(), fileInfo.getSize());
 	}
 
 	@Override

@@ -31,7 +31,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.laokou.common.core.config.CustomInstantDeserializer;
 import org.laokou.common.core.config.CustomInstantSerializer;
-import org.laokou.common.i18n.utils.DateUtil;
+import org.laokou.common.i18n.util.DateUtils;
 import org.redisson.codec.JsonJacksonCodec;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -68,7 +68,7 @@ public final class GlobalJsonJacksonCodec extends JsonJacksonCodec {
 	 */
 	private static ObjectMapper objectMapper() {
 		ObjectMapper objectMapper = new ObjectMapper();
-		DateTimeFormatter dateTimeFormatter = DateUtil.getDateTimeFormatter(DateUtil.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
+		DateTimeFormatter dateTimeFormatter = DateUtils.getDateTimeFormatter(DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
 		JavaTimeModule javaTimeModule = new JavaTimeModule();
 		// Long类型转String类型
 		javaTimeModule.addSerializer(Long.class, ToStringSerializer.instance);

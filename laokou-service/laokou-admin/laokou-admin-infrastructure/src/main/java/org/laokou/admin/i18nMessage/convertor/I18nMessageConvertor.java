@@ -20,9 +20,9 @@ package org.laokou.admin.i18nMessage.convertor;
 import org.laokou.admin.i18nMessage.dto.clientobject.I18nMessageCO;
 import org.laokou.admin.i18nMessage.gatewayimpl.database.dataobject.I18nMessageDO;
 import org.laokou.admin.i18nMessage.model.I18nMessageE;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.core.util.ConvertUtils;
+import org.laokou.common.core.util.IdGenerator;
+import org.laokou.common.i18n.util.ObjectUtils;
 
 /**
  * 国际化消息转换器.
@@ -32,19 +32,19 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 public class I18nMessageConvertor {
 
 	public static I18nMessageDO toDataObject(I18nMessageE i18nMessageE) {
-		I18nMessageDO i18nMessageDO = ConvertUtil.sourceToTarget(i18nMessageE, I18nMessageDO.class);
-		if (ObjectUtil.isNull(i18nMessageDO.getId())) {
+		I18nMessageDO i18nMessageDO = ConvertUtils.sourceToTarget(i18nMessageE, I18nMessageDO.class);
+		if (ObjectUtils.isNull(i18nMessageDO.getId())) {
 			i18nMessageDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return i18nMessageDO;
 	}
 
 	public static I18nMessageCO toClientObject(I18nMessageDO i18nMessageDO) {
-		return ConvertUtil.sourceToTarget(i18nMessageDO, I18nMessageCO.class);
+		return ConvertUtils.sourceToTarget(i18nMessageDO, I18nMessageCO.class);
 	}
 
 	public static I18nMessageE toEntity(I18nMessageCO i18nMessageCO) {
-		return ConvertUtil.sourceToTarget(i18nMessageCO, I18nMessageE.class);
+		return ConvertUtils.sourceToTarget(i18nMessageCO, I18nMessageE.class);
 	}
 
 }

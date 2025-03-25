@@ -18,10 +18,10 @@
 package org.laokou.common.security.handler;
 
 import jakarta.servlet.http.HttpServletResponse;
-import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.MessageUtil;
+import org.laokou.common.i18n.util.MessageUtils;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -42,16 +42,16 @@ public class OAuth2ExceptionHandler {
 	}
 
 	public static OAuth2AuthenticationException getException(String code, String uri) {
-		return getOAuth2AuthenticationException(code, MessageUtil.getMessage(code), uri);
+		return getOAuth2AuthenticationException(code, MessageUtils.getMessage(code), uri);
 	}
 
 	public static OAuth2AuthenticationException getException(String code) {
-		return getOAuth2AuthenticationException(code, MessageUtil.getMessage(code), ERROR_URL);
+		return getOAuth2AuthenticationException(code, MessageUtils.getMessage(code), ERROR_URL);
 	}
 
 	public static void handleAccessDenied(HttpServletResponse response, Throwable ex) throws IOException {
 		if (ex instanceof AccessDeniedException) {
-			ResponseUtil.responseOk(response, Result.fail(StatusCode.FORBIDDEN));
+			ResponseUtils.responseOk(response, Result.fail(StatusCode.FORBIDDEN));
 		}
 	}
 
@@ -60,11 +60,11 @@ public class OAuth2ExceptionHandler {
 			OAuth2Error error = authenticationException.getError();
 			String code = error.getErrorCode();
 			String msg = error.getDescription();
-			ResponseUtil.responseOk(response, Result.fail(code, msg));
+			ResponseUtils.responseOk(response, Result.fail(code, msg));
 			return;
 		}
 		if (ex instanceof InsufficientAuthenticationException) {
-			ResponseUtil.responseOk(response, Result.fail(StatusCode.UNAUTHORIZED));
+			ResponseUtils.responseOk(response, Result.fail(StatusCode.UNAUTHORIZED));
 		}
 	}
 

@@ -23,8 +23,8 @@ import org.laokou.admin.user.gateway.UserRoleGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.mybatisplus.utils.MybatisUtil;
+import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -40,7 +40,7 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 public class UserRoleGatewayImpl implements UserRoleGateway {
 
-	private final MybatisUtil mybatisUtil;
+	private final MybatisUtils mybatisUtils;
 
 	private final ExecutorService virtualThreadExecutor;
 
@@ -66,16 +66,16 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 	private void insertUserRole(UserE userE) {
 		// 新增用户角色关联表
 		List<UserRoleDO> list = UserConvertor.toDataObjects(userE, userE.getId());
-		if (CollectionUtil.isNotEmpty(list)) {
-			mybatisUtil.batch(list, UserRoleMapper.class, UserRoleMapper::insert);
+		if (CollectionUtils.isNotEmpty(list)) {
+			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::insert);
 		}
 	}
 
 	private void deleteUserRole(UserE userE) {
 		// 删除用户角色关联表
 		List<UserRoleDO> list = UserConvertor.toDataObjects(userE);
-		if (CollectionUtil.isNotEmpty(list)) {
-			mybatisUtil.batch(list, UserRoleMapper.class, UserRoleMapper::deleteObjById);
+		if (CollectionUtils.isNotEmpty(list)) {
+			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::deleteObjById);
 		}
 	}
 

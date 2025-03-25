@@ -22,7 +22,7 @@ import org.laokou.admin.ip.ability.IpDomainService;
 import org.laokou.admin.ip.convertor.IpConvertor;
 import org.laokou.admin.ip.dto.IpModifyCmd;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,12 +36,12 @@ public class IpModifyCmdExe {
 
 	private final IpDomainService ipDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(IpModifyCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> ipDomainService.update(IpConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(() -> ipDomainService.update(IpConvertor.toEntity(cmd.getCo())));
 	}
 
 }

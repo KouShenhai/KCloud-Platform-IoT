@@ -20,9 +20,9 @@ package org.laokou.admin.ossLog.convertor;
 import org.laokou.admin.ossLog.dto.clientobject.OssLogCO;
 import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.admin.ossLog.model.OssLogE;
-import org.laokou.common.core.utils.ConvertUtil;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.core.util.ConvertUtils;
+import org.laokou.common.core.util.IdGenerator;
+import org.laokou.common.i18n.util.ObjectUtils;
 
 /**
  * OSS日志转换器.
@@ -32,19 +32,19 @@ import org.laokou.common.i18n.utils.ObjectUtil;
 public class OssLogConvertor {
 
 	public static OssLogDO toDataObject(OssLogE ossLogE) {
-		OssLogDO ossLogDO = ConvertUtil.sourceToTarget(ossLogE, OssLogDO.class);
-		if (ObjectUtil.isNull(ossLogDO.getId())) {
+		OssLogDO ossLogDO = ConvertUtils.sourceToTarget(ossLogE, OssLogDO.class);
+		if (ObjectUtils.isNull(ossLogDO.getId())) {
 			ossLogDO.setId(IdGenerator.defaultSnowflakeId());
 		}
 		return ossLogDO;
 	}
 
 	public static OssLogCO toClientObject(OssLogDO ossLogDO) {
-		return ConvertUtil.sourceToTarget(ossLogDO, OssLogCO.class);
+		return ConvertUtils.sourceToTarget(ossLogDO, OssLogCO.class);
 	}
 
 	public static OssLogE toEntity(OssLogCO ossLogCO) {
-		return ConvertUtil.sourceToTarget(ossLogCO, OssLogE.class);
+		return ConvertUtils.sourceToTarget(ossLogCO, OssLogE.class);
 	}
 
 }

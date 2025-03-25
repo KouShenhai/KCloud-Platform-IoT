@@ -24,9 +24,9 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.auth.model.LoginLogE;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.utils.JacksonUtil;
+import org.laokou.common.i18n.util.JacksonUtils;
 
-import static org.laokou.common.i18n.utils.StringUtil.truncate;
+import static org.laokou.common.i18n.util.StringUtils.truncate;
 
 /**
  * @author laokou
@@ -70,7 +70,7 @@ public final class LoginLogConvertor {
 	}
 
 	public static LoginLogCO toClientObject(DomainEvent domainEvent) throws JsonProcessingException {
-		LoginEvent loginEvent = JacksonUtil.toBean(domainEvent.getPayload(), LoginEvent.class);
+		LoginEvent loginEvent = JacksonUtils.toBean(domainEvent.getPayload(), LoginEvent.class);
 		LoginLogCO loginLogCO = new LoginLogCO();
 		loginLogCO.setId(domainEvent.getAggregateId());
 		loginLogCO.setUsername(loginEvent.username());

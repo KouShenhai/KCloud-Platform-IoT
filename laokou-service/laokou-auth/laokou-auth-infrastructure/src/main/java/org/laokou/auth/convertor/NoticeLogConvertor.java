@@ -25,7 +25,7 @@ import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.mail.dto.MailResult;
 import org.laokou.common.sms.dto.SmsResult;
 
-import static org.laokou.common.i18n.utils.StringUtil.truncate;
+import static org.laokou.common.i18n.util.StringUtils.truncate;
 
 /**
  * @author laokou

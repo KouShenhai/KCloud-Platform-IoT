@@ -23,9 +23,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.laokou.common.core.utils.ResponseUtil;
-import org.laokou.common.i18n.utils.ResourceUtil;
-import org.laokou.common.i18n.utils.StringUtil;
+import org.laokou.common.core.util.ResponseUtils;
+import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -46,7 +46,7 @@ public class Knife4jFilter extends OncePerRequestFilter {
 
 	static {
 		try {
-			HTML_CONTENT = ResourceUtil.getResource("oauth2.html").getContentAsString(StandardCharsets.UTF_8).trim();
+			HTML_CONTENT = ResourceUtils.getResource("oauth2.html").getContentAsString(StandardCharsets.UTF_8).trim();
 		}
 		catch (IOException e) {
 			throw new RuntimeException(e);
@@ -57,7 +57,7 @@ public class Knife4jFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response,
 			@NotNull FilterChain chain) throws IOException, ServletException {
 		if (isOAuth2UrlRequest(request)) {
-			ResponseUtil.responseOk(response, HTML_CONTENT, MimeTypeUtils.TEXT_HTML_VALUE);
+			ResponseUtils.responseOk(response, HTML_CONTENT, MimeTypeUtils.TEXT_HTML_VALUE);
 		}
 		else {
 			chain.doFilter(request, response);
@@ -76,7 +76,7 @@ public class Knife4jFilter extends OncePerRequestFilter {
 		if (request.getQueryString() != null) {
 			uri += "?" + request.getQueryString();
 		}
-		if (StringUtil.isEmpty(request.getContextPath())) {
+		if (StringUtils.isEmpty(request.getContextPath())) {
 			return uri.equals(OAUTH2_PAGE_URL);
 		}
 		return uri.equals(request.getContextPath() + OAUTH2_PAGE_URL);

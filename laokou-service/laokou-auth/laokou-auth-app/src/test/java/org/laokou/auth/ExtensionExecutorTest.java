@@ -35,11 +35,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 
+import static org.laokou.auth.common.constant.BizConstants.SCENARIO;
 import static org.laokou.auth.dto.clientobject.CaptchaCO.USE_CASE_CAPTCHA;
 import static org.laokou.auth.model.AuthA.USE_CASE_AUTH;
-import static org.laokou.auth.model.Constant.MAIL_TAG;
-import static org.laokou.auth.model.Constant.MOBILE_TAG;
-import static org.laokou.common.i18n.common.constant.Constant.SCENARIO;
+import static org.laokou.auth.model.MqConstants.MAIL_TAG;
+import static org.laokou.auth.model.MqConstants.MOBILE_TAG;
 
 /**
  * 测试扩展点执行器.
@@ -140,7 +140,7 @@ class ExtensionExecutorTest {
 
 	private void execute(AuthA auth) {
 		extensionExecutor.executeVoid(AuthParamValidatorExtPt.class,
-				BizScenario.valueOf(auth.getGrantType().getCode(), USE_CASE_AUTH, SCENARIO),
+				BizScenario.valueOf(auth.getGrantTypeEnum().getCode(), USE_CASE_AUTH, SCENARIO),
 				extension -> extension.validate(auth));
 	}
 

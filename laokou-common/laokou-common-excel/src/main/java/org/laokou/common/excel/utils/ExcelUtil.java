@@ -27,19 +27,19 @@ import com.google.common.collect.Lists;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.CollectionUtil;
-import org.laokou.common.core.utils.ResponseUtil;
+import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.excel.validator.ExcelValidator;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.DateUtil;
-import org.laokou.common.i18n.utils.ObjectUtil;
-import org.laokou.common.i18n.utils.StringUtil;
-import org.laokou.common.i18n.utils.ValidatorUtil;
+import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.ValidatorUtils;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.laokou.common.mybatisplus.utils.MybatisUtil;
+import org.laokou.common.mybatisplus.util.MybatisUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,8 +53,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.function.BiConsumer;
 
-import static org.laokou.common.i18n.common.constant.StringConstant.DROP;
-import static org.laokou.common.i18n.common.constant.StringConstant.EMPTY;
+import static org.laokou.common.i18n.common.constant.StringConstants.DROP;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * Excel工具类.
@@ -75,16 +75,16 @@ public final class ExcelUtil {
 
 	public static <MAPPER extends CrudMapper<?, ?, DO>, EXCEL, DO> void doImport(String sheetName, Class<EXCEL> excel,
 			ExcelConvertor<DO, EXCEL> convert, InputStream inputStream, HttpServletResponse response,
-			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil) {
-		doImport(sheetName, excel, convert, inputStream, response, clazz, consumer, mybatisUtil, null);
+			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtils mybatisUtils) {
+		doImport(sheetName, excel, convert, inputStream, response, clazz, consumer, mybatisUtils, null);
 	}
 
 	public static <MAPPER extends CrudMapper<?, ?, DO>, EXCEL, DO> void doImport(String sheetName, Class<EXCEL> excel,
 			ExcelConvertor<DO, EXCEL> convert, InputStream inputStream, HttpServletResponse response,
-			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtil mybatisUtil,
+			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtils mybatisUtils,
 			ExcelValidator<EXCEL> validator) {
 		FastExcel
-			.read(inputStream, excel, new DataListener<>(clazz, consumer, response, mybatisUtil, convert, validator))
+			.read(inputStream, excel, new DataListener<>(clazz, consumer, response, mybatisUtils, convert, validator))
 			.sheet(sheetName)
 			.doRead();
 	}
@@ -150,7 +150,7 @@ public final class ExcelUtil {
 	}
 
 	private static void setHeader(String fileName, HttpServletResponse response) {
-		fileName = fileName + "_导出全部_" + DateUtil.format(DateUtil.now(), DateUtil.YYYYMMDDHHMMSS) + ".xlsx";
+		fileName = fileName + "_导出全部_" + DateUtils.format(DateUtils.now(), DateUtils.YYYYMMDDHHMMSS) + ".xlsx";
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType("application/vnd.ms-excel;charset=UTF-8");
 		response.setHeader("Content-disposition",
@@ -180,7 +180,7 @@ public final class ExcelUtil {
 
 		private final HttpServletResponse response;
 
-		private final MybatisUtil mybatisUtil;
+		private final MybatisUtils mybatisUtils;
 
 		private final Class<MAPPER> clazz;
 
@@ -191,13 +191,13 @@ public final class ExcelUtil {
 		private final ExcelValidator<EXCEL> validator;
 
 		DataListener(Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, HttpServletResponse response,
-				MybatisUtil mybatisUtil, ExcelConvertor<DO, EXCEL> convertor, ExcelValidator<EXCEL> validator) {
+				MybatisUtils mybatisUtils, ExcelConvertor<DO, EXCEL> convertor, ExcelValidator<EXCEL> validator) {
 			this.clazz = clazz;
 			this.response = response;
 			this.validator = validator;
 			this.ERRORS = new ArrayList<>();
 			this.CACHED_DATA_LIST = ListUtils.newArrayListWithExpectedSize(DEFAULT_SIZE);
-			this.mybatisUtil = mybatisUtil;
+			this.mybatisUtils = mybatisUtils;
 			this.consumer = consumer;
 			this.convertor = convertor;
 		}
@@ -207,14 +207,14 @@ public final class ExcelUtil {
 			int currentRowNum = context.readRowHolder().getRowIndex() + 1;
 			// 校验数据
 			Set<String> validates;
-			if (ObjectUtil.isNotNull(validator)) {
+			if (ObjectUtils.isNotNull(validator)) {
 				validates = validator.validate(excel);
 			}
 			else {
-				validates = ValidatorUtil.validate(excel);
+				validates = ValidatorUtils.validate(excel);
 			}
-			if (CollectionUtil.isNotEmpty(validates)) {
-				ERRORS.add(getTemplate(currentRowNum, StringUtil.collectionToDelimitedString(validates, DROP)));
+			if (CollectionUtils.isNotEmpty(validates)) {
+				ERRORS.add(getTemplate(currentRowNum, StringUtils.collectionToDelimitedString(validates, DROP)));
 			}
 			else {
 				CACHED_DATA_LIST.add(convertor.toDataObject(excel));
@@ -230,9 +230,9 @@ public final class ExcelUtil {
 		@Override
 		public void doAfterAllAnalysed(AnalysisContext context) {
 			// log.info("完成数据解析");
-			if (CollectionUtil.isNotEmpty(ERRORS)) {
+			if (CollectionUtils.isNotEmpty(ERRORS)) {
 				try {
-					ResponseUtil.responseOk(response, Result.fail("S_Excel_ImportFailed", "Excel导入失败【仅显示前100条】",
+					ResponseUtils.responseOk(response, Result.fail("S_Excel_ImportFailed", "Excel导入失败【仅显示前100条】",
 							ERRORS.subList(0, Math.min(ERRORS.size(), 100))));
 					// 清除数据
 					CACHED_DATA_LIST.clear();
@@ -243,13 +243,13 @@ public final class ExcelUtil {
 					throw new SystemException("S_Excel_ImportFailed", e.getMessage(), e);
 				}
 			}
-			if (CollectionUtil.isNotEmpty(CACHED_DATA_LIST)) {
-				mybatisUtil.batch(CACHED_DATA_LIST, clazz, consumer);
+			if (CollectionUtils.isNotEmpty(CACHED_DATA_LIST)) {
+				mybatisUtils.batch(CACHED_DATA_LIST, clazz, consumer);
 				// 清除数据
 				CACHED_DATA_LIST.clear();
 			}
 			try {
-				ResponseUtil.responseOk(response, Result.ok(EMPTY));
+				ResponseUtils.responseOk(response, Result.ok(EMPTY));
 			}
 			catch (IOException e) {
 				log.error("Excel导入失败，错误信息：{}", e.getMessage(), e);

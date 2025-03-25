@@ -19,8 +19,8 @@ package org.laokou.common.idempotent.utils;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.utils.IdGenerator;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.core.util.IdGenerator;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -49,7 +49,7 @@ public class IdempotentUtil {
 	 */
 	public static boolean isIdempotent() {
 		Boolean status = IS_IDEMPOTENT_LOCAL.get();
-		return ObjectUtil.isNotNull(status) && status;
+		return ObjectUtils.isNotNull(status) && status;
 	}
 
 	/**

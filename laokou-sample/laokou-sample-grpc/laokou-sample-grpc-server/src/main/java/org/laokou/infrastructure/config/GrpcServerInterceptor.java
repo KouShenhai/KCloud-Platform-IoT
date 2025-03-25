@@ -19,11 +19,11 @@ package org.laokou.infrastructure.config;
 
 import io.grpc.*;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.utils.MDCUtil;
+import org.laokou.common.core.util.MDCUtils;
 import org.laokou.domain.model.TraceLogV;
 
-import static org.laokou.common.i18n.common.constant.TraceConstant.SPAN_ID;
-import static org.laokou.common.i18n.common.constant.TraceConstant.TRACE_ID;
+import static org.laokou.common.i18n.common.constant.TraceConstants.SPAN_ID;
+import static org.laokou.common.i18n.common.constant.TraceConstants.TRACE_ID;
 
 /**
  * @author laokou
@@ -33,11 +33,11 @@ public class GrpcServerInterceptor implements ServerInterceptor {
 
 	private static void executeWithTrace(TraceLogV traceLog, Runnable action) {
 		try {
-			MDCUtil.put(traceLog.traceId(), traceLog.spanId());
+			MDCUtils.put(traceLog.traceId(), traceLog.spanId());
 			action.run();
 		}
 		finally {
-			MDCUtil.clear();
+			MDCUtils.clear();
 		}
 	}
 
@@ -47,11 +47,11 @@ public class GrpcServerInterceptor implements ServerInterceptor {
 		try {
 			String traceId = metadata.get(Metadata.Key.of(TRACE_ID, Metadata.ASCII_STRING_MARSHALLER));
 			String spanId = metadata.get(Metadata.Key.of(SPAN_ID, Metadata.ASCII_STRING_MARSHALLER));
-			MDCUtil.put(traceId, spanId);
+			MDCUtils.put(traceId, spanId);
 			return new WrapperTraceListener<>(serverCall, serverCallHandler, metadata, new TraceLogV(traceId, spanId));
 		}
 		finally {
-			MDCUtil.clear();
+			MDCUtils.clear();
 		}
 	}
 

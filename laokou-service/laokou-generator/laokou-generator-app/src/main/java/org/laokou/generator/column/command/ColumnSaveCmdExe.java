@@ -22,7 +22,7 @@ import org.laokou.generator.column.dto.ColumnSaveCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.generator.column.convertor.ColumnConvertor;
 import org.laokou.generator.column.ability.ColumnDomainService;
-import org.laokou.common.mybatisplus.utils.TransactionalUtil;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 
 /**
  *
@@ -36,11 +36,12 @@ public class ColumnSaveCmdExe {
 
 	private final ColumnDomainService columnDomainService;
 
-	private final TransactionalUtil transactionalUtil;
+	private final TransactionalUtils transactionalUtils;
 
 	public void executeVoid(ColumnSaveCmd cmd) {
 		// 校验参数
-		transactionalUtil.executeInTransaction(() -> columnDomainService.create(ColumnConvertor.toEntity(cmd.getCo())));
+		transactionalUtils
+			.executeInTransaction(() -> columnDomainService.create(ColumnConvertor.toEntity(cmd.getCo())));
 	}
 
 }

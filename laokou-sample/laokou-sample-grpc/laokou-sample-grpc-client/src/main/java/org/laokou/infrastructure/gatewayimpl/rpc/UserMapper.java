@@ -20,7 +20,7 @@ package org.laokou.infrastructure.gatewayimpl.rpc;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.grpc.user.Result;
 import org.laokou.grpc.user.UserGetQry;
 import org.laokou.grpc.user.UserServiceGrpc;
@@ -45,7 +45,7 @@ public class UserMapper {
 		log.info("开始调用GRPC");
 		Result result = userServiceBlockingStub.getUserById(userGetQry);
 		log.info("结束调用GRPC");
-		if (ObjectUtil.equals(result.getCode(), OK)) {
+		if (ObjectUtils.equals(result.getCode(), OK)) {
 			return UserConvertor.toDataObject(result.getData());
 		}
 		else {

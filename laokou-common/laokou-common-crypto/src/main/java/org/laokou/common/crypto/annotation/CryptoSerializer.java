@@ -25,7 +25,7 @@ import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.utils.ObjectUtil;
+import org.laokou.common.i18n.util.ObjectUtils;
 
 /**
  * @author laokou
@@ -57,7 +57,7 @@ public class CryptoSerializer extends JsonSerializer<String> implements Contextu
 	@Override
 	public JsonSerializer<?> createContextual(SerializerProvider provider, BeanProperty beanProperty) {
 		Cipher cipher = beanProperty.getAnnotation(Cipher.class);
-		if (ObjectUtil.isNotNull(cipher)) {
+		if (ObjectUtils.isNotNull(cipher)) {
 			return new CryptoSerializer(cipher.type(), cipher.isEncrypt());
 		}
 		throw new RuntimeException();

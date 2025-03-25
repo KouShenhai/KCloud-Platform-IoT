@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.CaptchaGetQry;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.utils.RedisKeyUtil;
+import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -48,7 +48,7 @@ public class CaptchaGetQryExe {
 		Captcha ca = generate();
 		String captcha = ca.text();
 		String base64 = ca.toBase64();
-		captchaGateway.set(RedisKeyUtil.getUsernamePasswordAuthCaptchaKey(qry.getUuid()), captcha);
+		captchaGateway.set(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(qry.getUuid()), captcha);
 		return Result.ok(base64);
 	}
 

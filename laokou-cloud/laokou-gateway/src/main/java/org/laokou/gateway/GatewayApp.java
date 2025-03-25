@@ -21,7 +21,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
-import org.laokou.common.i18n.utils.SslUtil;
+import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnableNacosShutDown;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
 import org.laokou.gateway.repository.NacosRouteDefinitionRepository;
@@ -86,7 +86,7 @@ public class GatewayApp implements CommandLineRunner {
 		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494
 		System.setProperty("management.health.sentinel.enabled", "false");
 		// 忽略SSL认证
-		SslUtil.ignoreSSLTrust();
+		SslUtils.ignoreSSLTrust();
 		// 开启reactor的上下文传递
 		Hooks.enableAutomaticContextPropagation();
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
