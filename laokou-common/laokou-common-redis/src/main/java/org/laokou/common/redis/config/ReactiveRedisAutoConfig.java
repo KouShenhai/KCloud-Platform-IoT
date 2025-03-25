@@ -17,7 +17,7 @@
 
 package org.laokou.common.redis.config;
 
-import org.laokou.common.redis.utils.ReactiveRedisUtil;
+import org.laokou.common.redis.util.ReactiveRedisUtils;
 import org.redisson.api.RedissonClient;
 import org.redisson.api.RedissonReactiveClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -73,10 +73,10 @@ public class ReactiveRedisAutoConfig {
 	}
 
 	@Bean
-	@ConditionalOnMissingBean(ReactiveRedisUtil.class)
-	public ReactiveRedisUtil reactiveRedisUtil(RedissonReactiveClient redissonReactiveClient,
+	@ConditionalOnMissingBean(ReactiveRedisUtils.class)
+	public ReactiveRedisUtils reactiveRedisUtil(RedissonReactiveClient redissonReactiveClient,
 			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
-		return new ReactiveRedisUtil(reactiveRedisTemplate, redissonReactiveClient);
+		return new ReactiveRedisUtils(reactiveRedisTemplate, redissonReactiveClient);
 	}
 
 }

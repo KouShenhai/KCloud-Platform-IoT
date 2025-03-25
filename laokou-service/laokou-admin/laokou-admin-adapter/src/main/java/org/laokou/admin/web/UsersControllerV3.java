@@ -38,7 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 import reactor.core.scheduler.Schedulers;
 import java.util.concurrent.ExecutorService;
 import static org.laokou.common.data.cache.constant.NameConstants.USERS;
-import static org.laokou.common.data.cache.constant.Type.DEL;
+import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
 
 /**
  * 用户管理控制器.

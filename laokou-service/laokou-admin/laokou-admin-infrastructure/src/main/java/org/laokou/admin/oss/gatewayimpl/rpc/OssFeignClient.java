@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import static org.laokou.admin.common.constant.ServiceConstant.OSS;
+import static org.laokou.admin.common.constant.ServiceConstants.OSS;
 
 /**
  * @author laokou

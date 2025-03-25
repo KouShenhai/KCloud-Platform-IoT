@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
-import static org.laokou.common.tenant.constant.Constant.Master.DEPT_TABLE;
+import static org.laokou.common.tenant.constant.DSConstants.Master.DEPT_TABLE;
 
 /**
  * 部门数据对象.

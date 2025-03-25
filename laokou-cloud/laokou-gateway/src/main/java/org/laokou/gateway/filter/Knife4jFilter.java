@@ -19,7 +19,7 @@ package org.laokou.gateway.filter;
 
 import io.micrometer.common.lang.NonNullApi;
 import org.laokou.common.i18n.util.ResourceUtils;
-import org.laokou.common.nacos.utils.ReactiveResponseUtil;
+import org.laokou.common.nacos.util.ReactiveResponseUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
@@ -33,7 +33,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Set;
 
-import static org.laokou.common.nacos.utils.ReactiveRequestUtil.*;
+import static org.laokou.common.nacos.util.ReactiveRequestUtils.*;
 import static org.springframework.http.HttpMethod.GET;
 
 /**
@@ -70,7 +70,7 @@ public class Knife4jFilter implements WebFilter {
 		String requestURL = getRequestURL(request);
 		// OAuth2认证页面
 		if (pathMatcher(getMethodName(request), requestURL, Map.of(GET.name(), Set.of(OAUTH2_PAGE_URL)))) {
-			return ReactiveResponseUtil.responseOk(exchange, HTML_CONTENT, MediaType.TEXT_HTML);
+			return ReactiveResponseUtils.responseOk(exchange, HTML_CONTENT, MediaType.TEXT_HTML);
 		}
 		return chain.filter(exchange);
 	}

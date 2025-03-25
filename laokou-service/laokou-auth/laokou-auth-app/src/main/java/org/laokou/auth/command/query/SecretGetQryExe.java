@@ -19,7 +19,7 @@ package org.laokou.auth.command.query;
 
 import org.laokou.auth.dto.clientobject.SecretCO;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.crypto.utils.RSAUtils;
+import org.laokou.common.crypto.util.RSAUtils;
 import org.springframework.stereotype.Component;
 
 /**

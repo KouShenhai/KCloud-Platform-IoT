@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 
 import static org.laokou.auth.common.constant.BizConstants.USER_QUERY_FAILED;
 import static org.laokou.auth.model.OAuth2Constants.DATA_TABLE_NOT_EXIST;
-import static org.laokou.common.tenant.constant.Constant.Master.USER_TABLE;
+import static org.laokou.common.tenant.constant.DSConstants.Master.USER_TABLE;
 
 /**
  * 用户.

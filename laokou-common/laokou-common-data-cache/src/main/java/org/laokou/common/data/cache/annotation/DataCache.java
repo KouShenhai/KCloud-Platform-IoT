@@ -17,7 +17,7 @@
 
 package org.laokou.common.data.cache.annotation;
 
-import org.laokou.common.data.cache.constant.Type;
+import org.laokou.common.data.cache.constant.TypeEnum;
 
 import java.lang.annotation.*;
 
@@ -44,6 +44,6 @@ public @interface DataCache {
 	/**
 	 * 操作类型.
 	 */
-	Type type() default Type.GET;
+	TypeEnum type() default TypeEnum.GET;
 
 }

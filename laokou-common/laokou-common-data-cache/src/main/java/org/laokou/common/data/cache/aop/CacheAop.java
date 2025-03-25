@@ -24,7 +24,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.util.SpringExpressionUtils;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.constant.Type;
+import org.laokou.common.data.cache.constant.TypeEnum;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.ParamException;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -67,10 +67,10 @@ public class CacheAop {
 	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) throws InterruptedException {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		String[] parameterNames = signature.getParameterNames();
-		Type type = dataCache.type();
+		TypeEnum typeEnum = dataCache.type();
 		String name = dataCache.name();
 		String key = SpringExpressionUtils.parse(dataCache.key(), parameterNames, point.getArgs(), String.class);
-		return switch (type) {
+		return switch (typeEnum) {
 			case GET -> get(name, key, point);
 			case DEL -> del(name, key, point);
 		};

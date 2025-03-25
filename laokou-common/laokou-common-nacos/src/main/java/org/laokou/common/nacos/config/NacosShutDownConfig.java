@@ -21,7 +21,7 @@ import com.alibaba.nacos.api.exception.NacosException;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.nacos.utils.NamingUtil;
+import org.laokou.common.nacos.util.NamingUtils;
 
 /**
  * @author laokou
@@ -30,13 +30,13 @@ import org.laokou.common.nacos.utils.NamingUtil;
 @RequiredArgsConstructor
 public class NacosShutDownConfig {
 
-	private final NamingUtil namingUtil;
+	private final NamingUtils namingUtils;
 
 	@PreDestroy
 	public void preDestroy() throws NacosException {
 		// 服务下线
 		log.info("开始执行服务下线");
-		namingUtil.nacosServiceShutDown();
+		namingUtils.nacosServiceShutDown();
 		log.info("执行服务下线完成");
 	}
 

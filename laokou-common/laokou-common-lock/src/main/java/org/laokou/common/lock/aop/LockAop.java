@@ -31,7 +31,7 @@ import org.laokou.common.lock.Lock;
 import org.laokou.common.lock.RedissonLock;
 import org.laokou.common.lock.Type;
 import org.laokou.common.lock.annotation.Lock4j;
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.constant.StringConstants.UNDER;
@@ -48,7 +48,7 @@ import static org.laokou.common.i18n.common.exception.StatusCode.TOO_MANY_REQUES
 @RequiredArgsConstructor
 public class LockAop {
 
-	private final RedisUtil redisUtil;
+	private final RedisUtils redisUtils;
 
 	@Around("@annotation(lock4j)")
 	public Object doAround(ProceedingJoinPoint joinPoint, Lock4j lock4j) throws Throwable {
@@ -67,7 +67,7 @@ public class LockAop {
 		long timeout = lock4j.timeout();
 		int retry = lock4j.retry();
 		final Type lockType = lock4j.type();
-		Lock lock = new RedissonLock(redisUtil);
+		Lock lock = new RedissonLock(redisUtils);
 		boolean isLocked = false;
 		try {
 			do {

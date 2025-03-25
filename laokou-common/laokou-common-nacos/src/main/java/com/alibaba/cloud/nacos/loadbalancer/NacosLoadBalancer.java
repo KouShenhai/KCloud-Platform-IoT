@@ -58,7 +58,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.nacos.utils.ReactiveRequestUtil;
+import org.laokou.common.nacos.util.ReactiveRequestUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.*;
@@ -224,7 +224,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			// IP优先（优雅停机）
 			String path = context.getClientRequest().getUrl().getPath();
 			HttpHeaders headers = context.getClientRequest().getHeaders();
-			if (ReactiveRequestUtil.pathMatcher(HttpMethod.GET.name(), path,
+			if (ReactiveRequestUtils.pathMatcher(HttpMethod.GET.name(), path,
 					Map.of(HttpMethod.GET.name(), Collections.singleton(GRACEFUL_SHUTDOWN_URL)))) {
 				ServiceInstance serviceInstance = serviceInstances.stream()
 					.filter(instance -> match(instance, headers))

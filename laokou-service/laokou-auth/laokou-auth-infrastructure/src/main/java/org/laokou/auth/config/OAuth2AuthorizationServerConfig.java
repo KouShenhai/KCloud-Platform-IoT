@@ -64,7 +64,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.List;
 import java.util.UUID;
 
-import static org.laokou.common.crypto.utils.RSAUtils.RSA;
+import static org.laokou.common.crypto.util.RSAUtils.RSA;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 // @formatter:off

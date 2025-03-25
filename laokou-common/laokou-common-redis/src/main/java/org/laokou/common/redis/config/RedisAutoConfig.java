@@ -17,7 +17,7 @@
 
 package org.laokou.common.redis.config;
 
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.redis.util.RedisUtils;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -67,8 +67,8 @@ public class RedisAutoConfig {
 	}
 
 	@Bean
-	public RedisUtil redisUtil(RedissonClient redissonClient, RedisTemplate<String, Object> redisTemplate) {
-		return new RedisUtil(redisTemplate, redissonClient);
+	public RedisUtils redisUtil(RedissonClient redissonClient, RedisTemplate<String, Object> redisTemplate) {
+		return new RedisUtils(redisTemplate, redissonClient);
 	}
 
 }

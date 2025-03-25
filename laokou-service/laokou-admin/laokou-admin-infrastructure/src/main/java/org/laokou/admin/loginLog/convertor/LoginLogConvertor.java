@@ -24,7 +24,7 @@ import org.laokou.admin.loginLog.model.LoginLogE;
 import org.laokou.admin.loginLog.model.LoginStatusEnum;
 import org.laokou.admin.loginLog.model.LoginTypeEnum;
 import org.laokou.common.core.util.IdGenerator;
-import org.laokou.common.excel.utils.ExcelUtil;
+import org.laokou.common.excel.util.ExcelUtils;
 import org.laokou.common.i18n.util.DateUtils;
 import org.springframework.util.Assert;
 
@@ -35,7 +35,7 @@ import java.util.List;
  *
  * @author laokou
  */
-public final class LoginLogConvertor implements ExcelUtil.ExcelConvertor<LoginLogDO, LoginLogExcel> {
+public final class LoginLogConvertor implements ExcelUtils.ExcelConvertor<LoginLogDO, LoginLogExcel> {
 
 	public static final LoginLogConvertor INSTANCE = new LoginLogConvertor();
 

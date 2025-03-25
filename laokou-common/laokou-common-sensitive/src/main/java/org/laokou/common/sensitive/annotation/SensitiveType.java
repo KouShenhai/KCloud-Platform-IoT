@@ -17,7 +17,7 @@
 
 package org.laokou.common.sensitive.annotation;
 
-import org.laokou.common.sensitive.utils.SensitiveUtil;
+import org.laokou.common.sensitive.util.SensitiveUtils;
 
 /**
  * @author laokou
@@ -27,13 +27,13 @@ public enum SensitiveType {
 	MAIL {
 		@Override
 		public String format(String str) {
-			return SensitiveUtil.formatMail(str);
+			return SensitiveUtils.formatMail(str);
 		}
 	},
 	MOBILE {
 		@Override
 		public String format(String str) {
-			return SensitiveUtil.formatMobile(str);
+			return SensitiveUtils.formatMobile(str);
 		}
 	};
 

@@ -26,12 +26,12 @@ import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.dto.clientobject.CaptchaCO;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.core.util.*;
-import org.laokou.common.crypto.utils.RSAUtils;
+import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -86,7 +86,7 @@ class OAuth2ApiTest {
 
 	private static final String TOKEN = "eyJraWQiOiI2MTIyYjcyOC0xOTMxLTQ3NWMtYjMyMS0yYjdmYmVjMGQ0OTEiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZCI6Ijk1VHhTc1RQRkEzdEYxMlRCU01tVVZLMGRhIiwibmJmIjoxNzEwMzEzMTEyLCJzY29wZSI6WyJwYXNzd29yZCIsIm1haWwiLCJvcGVuaWQiLCJtb2JpbGUiXSwiaXNzIjoiaHR0cDovLzEyNy4wLjAuMTo1NTU1L2F1dGgiLCJleHAiOjE3MTAzMTY3MTIsImlhdCI6MTcxMDMxMzExMiwianRpIjoiZjRlYWU1YjctOWQzNy00NTM1LWEyODgtNWFjNWEwNzc2MjU1In0.Sg4LYn6hoYKB3vDM4NnFfDd3MBxpu-Bja-iYTNDDVBTkDMPjWXdbSTpupplud5aQ-mwRMhSuMF_ctzMFT5So1VckhNV8dg35DhKsRzEYfLaya_vk4eiFUaSU8ibfSPSEACa524L01SHb8wgb04LnvVAuJnPEzDZNRZxwHKbxA0irqwCafuTax8EFKGxHskHsxeuaaCvQdGLKSbYCdC3tHA85SIUKdsnm8fSS4_5El9gztbFUxDHZWRgagN_fHRqyDSd32PCulPeG3uOut-uUwC2Dv4xodLuaCYEouyn0aMY_juz2uHkpf1MnLh74caeE30lmbqBF5tv2ErOsqdMIaw";
 
-	private final RedisUtil redisUtil;
+	private final RedisUtils redisUtils;
 
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 
@@ -135,9 +135,9 @@ class OAuth2ApiTest {
 	@Test
 	void testSetInstant() {
 		String key = "test:instant";
-		redisUtil.set(key, DateUtils.nowInstant());
-		log.info("获取Instant值：{}", redisUtil.get(key));
-		redisUtil.del(key);
+		redisUtils.set(key, DateUtils.nowInstant());
+		log.info("获取Instant值：{}", redisUtils.get(key));
+		redisUtils.del(key);
 	}
 
 	@Test
@@ -297,7 +297,7 @@ class OAuth2ApiTest {
 
 	private String getCode(String key) {
 		String value = "123456";
-		redisUtil.set(key, value, RedisUtil.FIVE_MINUTE_EXPIRE);
+		redisUtils.set(key, value, RedisUtils.FIVE_MINUTE_EXPIRE);
 		return value;
 	}
 
@@ -379,7 +379,7 @@ class OAuth2ApiTest {
 
 	private String getCaptcha(String key) {
 		restClient.get().uri(URI.create(getCaptchaApiUrlV3())).retrieve().toBodilessEntity();
-		String captcha = redisUtil.get(key).toString();
+		String captcha = redisUtils.get(key).toString();
 		Assert.isTrue(StringUtils.isNotEmpty(captcha), "captcha is empty");
 		return captcha;
 	}

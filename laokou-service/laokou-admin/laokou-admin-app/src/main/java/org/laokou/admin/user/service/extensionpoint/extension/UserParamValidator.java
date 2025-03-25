@@ -23,7 +23,7 @@ import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.core.util.RegexUtils;
-import org.laokou.common.crypto.utils.AESUtils;
+import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.common.i18n.util.StringUtils;

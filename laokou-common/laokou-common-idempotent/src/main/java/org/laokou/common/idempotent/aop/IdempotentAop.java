@@ -26,13 +26,13 @@ import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.idempotent.utils.IdempotentUtil;
+import org.laokou.common.idempotent.util.IdempotentUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.constant.TraceConstants.REQUEST_ID;
-import static org.laokou.common.redis.utils.RedisUtil.FIVE_MINUTE_EXPIRE;
+import static org.laokou.common.redis.util.RedisUtils.FIVE_MINUTE_EXPIRE;
 
 /**
  * 幂等性Aop.
@@ -45,7 +45,7 @@ import static org.laokou.common.redis.utils.RedisUtil.FIVE_MINUTE_EXPIRE;
 @RequiredArgsConstructor
 public class IdempotentAop {
 
-	private final RedisUtil redisUtil;
+	private final RedisUtils redisUtils;
 
 	@Around("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
 	public Object doAround(ProceedingJoinPoint point) throws Throwable {
@@ -54,7 +54,7 @@ public class IdempotentAop {
 			throw new SystemException("S_Idempotent_RequestIDIsNull", "请求ID不能为空");
 		}
 		String apiIdempotentKey = RedisKeyUtils.getApiIdempotentKey(requestId);
-		if (!redisUtil.setIfAbsent(apiIdempotentKey, 0, FIVE_MINUTE_EXPIRE)) {
+		if (!redisUtils.setIfAbsent(apiIdempotentKey, 0, FIVE_MINUTE_EXPIRE)) {
 			throw new SystemException("S_Idempotent_RequestRepeatedSubmit", "不可重复提交请求");
 		}
 		doBefore();
@@ -64,11 +64,11 @@ public class IdempotentAop {
 	}
 
 	public void doBefore() {
-		IdempotentUtil.openIdempotent();
+		IdempotentUtils.openIdempotent();
 	}
 
 	public void doAfter() {
-		IdempotentUtil.cleanIdempotent();
+		IdempotentUtils.cleanIdempotent();
 	}
 
 	private String getRequestId() {

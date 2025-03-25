@@ -21,7 +21,7 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.JacksonUtils;
-import org.laokou.common.nacos.utils.ConfigUtil;
+import org.laokou.common.nacos.util.ConfigUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
@@ -59,15 +59,15 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 */
 	private static final String DATA_ID = "router.json";
 
-	private final ConfigUtil configUtil;
+	private final ConfigUtils configUtils;
 
 	private final ReactiveHashOperations<String, String, RouteDefinition> reactiveHashOperations;
 
 	private ApplicationEventPublisher applicationEventPublisher;
 
-	public NacosRouteDefinitionRepository(ConfigUtil configUtil,
+	public NacosRouteDefinitionRepository(ConfigUtils configUtils,
 			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
-		this.configUtil = configUtil;
+		this.configUtils = configUtils;
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
 	}
 
@@ -130,8 +130,8 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	private Collection<RouteDefinition> pullRouters() {
 		try {
 			// pull nacos config info
-			String group = configUtil.getGroup();
-			String configInfo = configUtil.getConfig(DATA_ID, group, 5000);
+			String group = configUtils.getGroup();
+			String configInfo = configUtils.getConfig(DATA_ID, group, 5000);
 			return JacksonUtils.toList(configInfo, RouteDefinition.class);
 		}
 		catch (Exception e) {

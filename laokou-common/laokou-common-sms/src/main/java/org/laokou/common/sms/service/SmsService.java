@@ -18,7 +18,7 @@
 package org.laokou.common.sms.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.laokou.common.sms.dto.SmsResult;
+import org.laokou.common.sms.entity.SmsResult;
 
 /**
  * @author laokou

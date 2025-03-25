@@ -23,7 +23,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 import java.io.Serial;
 
-import static org.laokou.common.tenant.constant.Constant.Domain.LOGIN_LOG_TABLE;
+import static org.laokou.common.tenant.constant.DSConstants.Domain.LOGIN_LOG_TABLE;
 
 /**
  * 登录日志.
