@@ -18,7 +18,7 @@
 package org.laokou.admin.user.model;
 
 import lombok.Data;
-import org.laokou.common.crypto.utils.AESUtils;
+import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.util.StringUtils;
 
 import java.util.ArrayList;

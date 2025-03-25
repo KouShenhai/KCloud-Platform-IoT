@@ -23,7 +23,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 import java.time.Instant;
 
-import static org.laokou.common.tenant.constant.Constant.Domain.OPERATE_LOG_TABLE;
+import static org.laokou.common.tenant.constant.DSConstants.Domain.OPERATE_LOG_TABLE;
 
 /**
  * @author laokou

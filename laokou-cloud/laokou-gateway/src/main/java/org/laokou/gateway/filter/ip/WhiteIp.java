@@ -22,8 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.nacos.utils.ReactiveResponseUtil;
-import org.laokou.common.redis.utils.ReactiveRedisUtil;
+import org.laokou.common.nacos.util.ReactiveResponseUtils;
+import org.laokou.common.redis.util.ReactiveRedisUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -50,7 +50,7 @@ import static org.laokou.gateway.constant.GatewayConstants.IP_RESTRICTED;
 		name = "enabled")
 public class WhiteIp extends AbstractIp {
 
-	private final ReactiveRedisUtil reactiveRedisUtil;
+	private final ReactiveRedisUtils reactiveRedisUtils;
 
 	private final RemoteAddressResolver remoteAddressResolver;
 
@@ -68,10 +68,10 @@ public class WhiteIp extends AbstractIp {
 			return chain.filter(exchange);
 		}
 		String ipCacheHashKey = RedisKeyUtils.getIpCacheHashKey(WHITE);
-		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
+		return reactiveRedisUtils.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
 			if (ObjectUtils.equals(Boolean.FALSE, r)) {
 				log.info("IP为{}被限制", hostAddress);
-				return ReactiveResponseUtil.responseOk(exchange, Result.fail(IP_RESTRICTED));
+				return ReactiveResponseUtils.responseOk(exchange, Result.fail(IP_RESTRICTED));
 			}
 			return chain.filter(exchange);
 		});

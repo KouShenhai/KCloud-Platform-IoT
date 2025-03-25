@@ -22,7 +22,7 @@ import org.laokou.admin.operateLog.dto.clientobject.OperateLogCO;
 import org.laokou.admin.operateLog.dto.excel.OperateLogExcel;
 import org.laokou.admin.operateLog.model.OperateLogE;
 import org.laokou.common.core.util.IdGenerator;
-import org.laokou.common.excel.utils.ExcelUtil;
+import org.laokou.common.excel.util.ExcelUtils;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.springframework.util.Assert;
@@ -34,7 +34,7 @@ import java.util.List;
  *
  * @author laokou
  */
-public final class OperateLogConvertor implements ExcelUtil.ExcelConvertor<OperateLogDO, OperateLogExcel> {
+public final class OperateLogConvertor implements ExcelUtils.ExcelConvertor<OperateLogDO, OperateLogExcel> {
 
 	public static final OperateLogConvertor INSTANCE = new OperateLogConvertor();
 

@@ -31,7 +31,7 @@ import java.util.List;
 
 import static org.laokou.auth.common.constant.BizConstants.DEPT_QUERY_FAILED;
 import static org.laokou.auth.model.OAuth2Constants.DATA_TABLE_NOT_EXIST;
-import static org.laokou.common.tenant.constant.Constant.Master.DEPT_TABLE;
+import static org.laokou.common.tenant.constant.DSConstants.Master.DEPT_TABLE;
 
 /**
  * 部门.

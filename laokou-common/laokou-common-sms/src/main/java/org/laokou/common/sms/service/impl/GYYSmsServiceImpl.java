@@ -25,10 +25,10 @@ import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.RandomStringUtils;
 import org.laokou.common.core.util.TemplateUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
-import org.laokou.common.sensitive.utils.SensitiveUtil;
+import org.laokou.common.sensitive.util.SensitiveUtils;
 import org.laokou.common.sms.config.SmsProperties;
-import org.laokou.common.sms.dto.SendStatus;
-import org.laokou.common.sms.dto.SmsResult;
+import org.laokou.common.sms.entity.SendStatusEnum;
+import org.laokou.common.sms.entity.SmsResult;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +77,7 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		String captcha = RandomStringUtils.randomNumeric();
 		String templateId = smsProperties.getGyy().getTemplateId();
 		if (!TEMPLATES.containsKey(templateId)) {
-			return new SmsResult(name, SendStatus.FAIL.getCode(), "模板不存在", JacksonUtils.EMPTY_JSON, captcha);
+			return new SmsResult(name, SendStatusEnum.FAIL.getCode(), "模板不存在", JacksonUtils.EMPTY_JSON, captcha);
 		}
 		/*
 		 * HttpUtils下载 => https://github.com/aliyun/api-gateway-demo-sign-java/blob/master/src/main/java/com/aliyun/api/gateway/demo/util/HttpUtils.java
@@ -93,14 +93,14 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		// smsSignId（短信前缀）和templateId（短信模板），可登录国阳云控制台自助申请。参考文档：http://help.guoyangyun.com/Problem/Qm.html
 		Map<String, String> params = Map.of("mobile", mobile, "param", paramValue, "smsSignId", signId, "templateId",
 			templateId);
-		String paramString = JacksonUtils.toJsonStr(Map.of("mobile", SensitiveUtil.formatMobile(mobile), "content", TemplateUtils.getContent(TEMPLATES.get(templateId), param)));
+		String paramString = JacksonUtils.toJsonStr(Map.of("mobile", SensitiveUtils.formatMobile(mobile), "content", TemplateUtils.getContent(TEMPLATES.get(templateId), param)));
 		String json = HttpUtils.doFormDataPost(URL, params, headers);
 		JsonNode jsonNode = JacksonUtils.readTree(json);
 		int code = jsonNode.get("code").asInt();
-		if (code != SendStatus.OK.getCode()) {
-			return new SmsResult(name, SendStatus.FAIL.getCode(), json, paramString, captcha);
+		if (code != SendStatusEnum.OK.getCode()) {
+			return new SmsResult(name, SendStatusEnum.FAIL.getCode(), json, paramString, captcha);
 		}
-		return new SmsResult(name, SendStatus.OK.getCode(), EMPTY, paramString, captcha);
+		return new SmsResult(name, SendStatusEnum.OK.getCode(), EMPTY, paramString, captcha);
 	}
 	// @formatter:on
 

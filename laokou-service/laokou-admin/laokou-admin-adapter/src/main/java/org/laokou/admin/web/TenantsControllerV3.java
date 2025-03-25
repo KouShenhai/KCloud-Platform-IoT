@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import static org.laokou.common.data.cache.constant.NameConstants.TENANTS;
-import static org.laokou.common.data.cache.constant.Type.DEL;
+import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
 
 /**
  * 租户管理控制器.

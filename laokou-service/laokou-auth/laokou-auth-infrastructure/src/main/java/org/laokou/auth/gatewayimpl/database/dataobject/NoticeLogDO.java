@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
-import static org.laokou.common.tenant.constant.Constant.Domain.NOTICE_LOG_TABLE;
+import static org.laokou.common.tenant.constant.DSConstants.Domain.NOTICE_LOG_TABLE;
 
 /**
  * @author laokou

@@ -23,7 +23,7 @@ import org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.admin.noticeLog.model.NoticeLogE;
 import org.laokou.admin.noticeLog.model.Status;
 import org.laokou.common.core.util.IdGenerator;
-import org.laokou.common.excel.utils.ExcelUtil;
+import org.laokou.common.excel.util.ExcelUtils;
 import org.laokou.common.i18n.util.DateUtils;
 import org.springframework.util.Assert;
 
@@ -34,7 +34,7 @@ import java.util.List;
  *
  * @author laokou
  */
-public final class NoticeLogConvertor implements ExcelUtil.ExcelConvertor<NoticeLogDO, NoticeLogExcel> {
+public final class NoticeLogConvertor implements ExcelUtils.ExcelConvertor<NoticeLogDO, NoticeLogExcel> {
 
 	public static final NoticeLogConvertor INSTANCE = new NoticeLogConvertor();
 

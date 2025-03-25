@@ -18,12 +18,12 @@
 package org.laokou.common.tenant.annotation;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
-import org.laokou.common.tenant.constant.Constant;
+import org.laokou.common.tenant.constant.DSConstants;
 
 import java.lang.annotation.*;
 
 @Documented
-@DS(Constant.GENERATOR)
+@DS(DSConstants.GENERATOR)
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Generator {

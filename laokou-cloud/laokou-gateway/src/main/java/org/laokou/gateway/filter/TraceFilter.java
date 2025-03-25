@@ -18,7 +18,7 @@
 package org.laokou.gateway.filter;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.nacos.utils.ReactiveRequestUtil;
+import org.laokou.common.nacos.util.ReactiveRequestUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -41,9 +41,9 @@ public class TraceFilter implements GlobalFilter, Ordered {
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerHttpRequest request = exchange.getRequest();
-		String serviceGray = ReactiveRequestUtil.getParamValue(request, SERVICE_GRAY);
-		String serviceHost = ReactiveRequestUtil.getParamValue(request, SERVICE_HOST);
-		String servicePort = ReactiveRequestUtil.getParamValue(request, SERVICE_PORT);
+		String serviceGray = ReactiveRequestUtils.getParamValue(request, SERVICE_GRAY);
+		String serviceHost = ReactiveRequestUtils.getParamValue(request, SERVICE_HOST);
+		String servicePort = ReactiveRequestUtils.getParamValue(request, SERVICE_PORT);
 		return chain.filter(exchange.mutate()
 			.request(request.mutate()
 				.header(SERVICE_HOST, serviceHost)

@@ -22,7 +22,7 @@ import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 import java.io.Serial;
 
-import static org.laokou.common.tenant.constant.Constant.Master.USER_TABLE;
+import static org.laokou.common.tenant.constant.DSConstants.Master.USER_TABLE;
 
 /**
  * 用户.

@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
-import static org.laokou.common.tenant.constant.Constant.Master.ROLE_MENU_TABLE;
+import static org.laokou.common.tenant.constant.DSConstants.Master.ROLE_MENU_TABLE;
 
 /**
  * 角色菜单数据对象.

@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.RequestUtils;
-import org.laokou.common.idempotent.utils.IdempotentUtil;
+import org.laokou.common.idempotent.util.IdempotentUtils;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -48,7 +48,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @RequiredArgsConstructor
 public class OpenFeignAutoConfig extends ErrorDecoder.Default implements RequestInterceptor {
 
-	private final IdempotentUtil idempotentUtil;
+	private final IdempotentUtils idempotentUtils;
 
 	@Bean
 	public feign.Logger.Level loggerLevel() {
@@ -68,7 +68,7 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 		template.header(SERVICE_HOST, request.getHeader(SERVICE_HOST));
 		template.header(SERVICE_PORT, request.getHeader(SERVICE_PORT));
 		template.header(SERVICE_GRAY, request.getHeader(SERVICE_GRAY));
-		final boolean idempotent = IdempotentUtil.isIdempotent();
+		final boolean idempotent = IdempotentUtils.isIdempotent();
 		if (idempotent) {
 			// 获取当前Feign客户端的接口名称
 			String clientName = template.feignTarget().type().getName();
@@ -77,12 +77,12 @@ public class OpenFeignAutoConfig extends ErrorDecoder.Default implements Request
 			String method = template.method();
 			// 将接口名称 + URL + 请求方式组合成一个key
 			String uniqueKey = clientName + UNDER + url + UNDER + method;
-			Map<String, String> idMap = IdempotentUtil.getRequestId();
+			Map<String, String> idMap = IdempotentUtils.getRequestId();
 			// 检查是否已经为这个键生成了ID
 			String idempotentKey = idMap.get(uniqueKey);
 			if (!idMap.containsKey(uniqueKey)) {
 				// 如果没有，生成一个新的幂等性ID
-				idempotentKey = idempotentUtil.getIdempotentKey();
+				idempotentKey = idempotentUtils.getIdempotentKey();
 				idMap.put(uniqueKey, idempotentKey);
 			}
 			template.header(REQUEST_ID, idempotentKey);

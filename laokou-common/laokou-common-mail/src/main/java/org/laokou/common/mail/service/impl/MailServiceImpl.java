@@ -23,7 +23,7 @@ import org.laokou.common.core.util.TemplateUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.mail.dto.MailResult;
 import org.laokou.common.mail.dto.SendStatus;
-import org.laokou.common.sensitive.utils.SensitiveUtil;
+import org.laokou.common.sensitive.util.SensitiveUtils;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 
 import java.util.Map;
@@ -51,7 +51,8 @@ public class MailServiceImpl extends AbstractMailServiceImpl {
 		Map<String, Object> param = Map.of("captcha", captcha, "minute", 5);
 		String content = TemplateUtils.getContent(CAPTCHA_TEMPLATE, param);
 		// 敏感信息过滤
-		String paramString = JacksonUtils.toJsonStr(Map.of("mail", SensitiveUtil.formatMail(mail), "content", content));
+		String paramString = JacksonUtils
+			.toJsonStr(Map.of("mail", SensitiveUtils.formatMail(mail), "content", content));
 		try {
 			// 发送邮件
 			sendMail(subject, content, mail);

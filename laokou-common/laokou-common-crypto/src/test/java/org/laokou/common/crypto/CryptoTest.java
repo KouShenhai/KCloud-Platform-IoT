@@ -19,8 +19,8 @@ package org.laokou.common.crypto;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.crypto.utils.AESUtils;
-import org.laokou.common.crypto.utils.RSAUtils;
+import org.laokou.common.crypto.util.AESUtils;
+import org.laokou.common.crypto.util.RSAUtils;
 
 /**
  * @author laokou

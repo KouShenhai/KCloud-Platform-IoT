@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
-import org.laokou.logstash.consumer.TraceLogConsumer;
+import org.laokou.logstash.consumer.handler.TraceLogHandler;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -53,7 +53,7 @@ import java.util.concurrent.ExecutorService;
 @SpringBootApplication(scanBasePackages = "org.laokou")
 public class LogtashApp implements CommandLineRunner {
 
-	private final TraceLogConsumer tracingLogConsumer;
+	private final TraceLogHandler tracingLogConsumer;
 
 	private final ExecutorService virtualThreadExecutor;
 

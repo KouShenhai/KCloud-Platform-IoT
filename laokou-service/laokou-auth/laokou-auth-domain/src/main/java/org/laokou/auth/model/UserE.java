@@ -19,7 +19,7 @@ package org.laokou.auth.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.common.crypto.utils.AESUtils;
+import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.ObjectUtils;
 

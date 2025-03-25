@@ -32,7 +32,7 @@ import java.util.Set;
 
 import static org.laokou.auth.common.constant.BizConstants.MENU_QUERY_FAILED;
 import static org.laokou.auth.model.OAuth2Constants.DATA_TABLE_NOT_EXIST;
-import static org.laokou.common.tenant.constant.Constant.Master.MENU_TABLE;
+import static org.laokou.common.tenant.constant.DSConstants.Master.MENU_TABLE;
 
 /**
  * 菜单.

@@ -39,7 +39,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import static org.laokou.common.data.cache.constant.NameConstants.MENUS;
-import static org.laokou.common.data.cache.constant.Type.DEL;
+import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
 
 /**
  * 菜单管理控制器.

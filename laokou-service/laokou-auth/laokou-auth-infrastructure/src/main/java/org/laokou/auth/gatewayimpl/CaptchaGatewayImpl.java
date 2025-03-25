@@ -22,11 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
-import static org.laokou.common.redis.utils.RedisUtil.FIVE_MINUTE_EXPIRE;
+import static org.laokou.common.redis.util.RedisUtils.FIVE_MINUTE_EXPIRE;
 
 /**
  * 验证码.
@@ -38,7 +38,7 @@ import static org.laokou.common.redis.utils.RedisUtil.FIVE_MINUTE_EXPIRE;
 @RequiredArgsConstructor
 public class CaptchaGatewayImpl implements CaptchaGateway {
 
-	private final RedisUtil redisUtil;
+	private final RedisUtils redisUtils;
 
 	/**
 	 * 写入Redis.
@@ -57,8 +57,8 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	 */
 	@Override
 	public void set(String key, String captcha, long expireTime) {
-		redisUtil.del(key);
-		redisUtil.set(key, captcha, expireTime);
+		redisUtils.del(key);
+		redisUtils.set(key, captcha, expireTime);
 	}
 
 	/**
@@ -83,9 +83,9 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 	 * @return 验证码
 	 */
 	private String getValue(String key) {
-		Object captcha = redisUtil.get(key);
+		Object captcha = redisUtils.get(key);
 		if (ObjectUtils.isNotNull(captcha)) {
-			redisUtil.del(key);
+			redisUtils.del(key);
 		}
 		return ObjectUtils.isNotNull(captcha) ? captcha.toString() : EMPTY;
 	}

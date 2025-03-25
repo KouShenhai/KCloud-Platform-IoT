@@ -17,8 +17,8 @@
 
 package org.laokou.common.crypto.annotation;
 
-import org.laokou.common.crypto.utils.AESUtils;
-import org.laokou.common.crypto.utils.RSAUtils;
+import org.laokou.common.crypto.util.AESUtils;
+import org.laokou.common.crypto.util.RSAUtils;
 
 public enum CipherType {
 

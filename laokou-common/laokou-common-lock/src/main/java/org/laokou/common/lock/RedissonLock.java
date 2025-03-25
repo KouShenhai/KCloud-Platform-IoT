@@ -20,7 +20,7 @@ package org.laokou.common.lock;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.redis.util.RedisUtils;
 import org.redisson.api.RLock;
 
 /**
@@ -32,7 +32,7 @@ import org.redisson.api.RLock;
 @Slf4j
 public class RedissonLock extends AbstractLock<RLock> {
 
-	private final RedisUtil redisUtil;
+	private final RedisUtils redisUtils;
 
 	/**
 	 * 获取锁.
@@ -42,7 +42,7 @@ public class RedissonLock extends AbstractLock<RLock> {
 	 */
 	@Override
 	public RLock getLock(Type type, String key) {
-		return type.getLock(redisUtil, key);
+		return type.getLock(redisUtils, key);
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class RedissonLock extends AbstractLock<RLock> {
 	public boolean tryLock(RLock lock, long timeout) throws InterruptedException {
 		// 线程名称
 		String threadName = Thread.currentThread().getName();
-		if (redisUtil.tryLock(lock, timeout)) {
+		if (redisUtils.tryLock(lock, timeout)) {
 			log.info("线程：{}，加锁成功", threadName);
 			return true;
 		}
@@ -71,9 +71,9 @@ public class RedissonLock extends AbstractLock<RLock> {
 	@Override
 	public void unlock(RLock lock) {
 		if (ObjectUtils.isNotNull(lock)) {
-			if (redisUtil.isLocked(lock) && redisUtil.isHeldByCurrentThread(lock)) {
+			if (redisUtils.isLocked(lock) && redisUtils.isHeldByCurrentThread(lock)) {
 				log.info("分布式锁名：{}，线程名：{}，开始解锁", lock.getName(), Thread.currentThread().getName());
-				redisUtil.unlock(lock);
+				redisUtils.unlock(lock);
 				log.info("解锁成功");
 			}
 			else {

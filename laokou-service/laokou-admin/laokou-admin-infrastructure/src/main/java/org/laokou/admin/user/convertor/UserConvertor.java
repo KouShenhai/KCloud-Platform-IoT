@@ -25,10 +25,10 @@ import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.util.IdGenerator;
-import org.laokou.common.crypto.utils.AESUtils;
+import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.security.util.UserDetails;
-import org.laokou.common.sensitive.utils.SensitiveUtil;
+import org.laokou.common.sensitive.util.SensitiveUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Collections;
 import java.util.List;
@@ -143,10 +143,10 @@ public final class UserConvertor {
 				String mail = userCO.getMail();
 				String mobile = userCO.getMobile();
 				if (StringUtils.isNotEmpty(mail)) {
-					userCO.setMail(SensitiveUtil.formatMail(mail));
+					userCO.setMail(SensitiveUtils.formatMail(mail));
 				}
 				if (StringUtils.isNotEmpty(mobile)) {
-					userCO.setMobile(SensitiveUtil.formatMobile(mobile));
+					userCO.setMobile(SensitiveUtils.formatMobile(mobile));
 				}
 				return userCO;
 			}

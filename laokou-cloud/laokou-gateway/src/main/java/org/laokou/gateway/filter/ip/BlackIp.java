@@ -22,8 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.nacos.utils.ReactiveResponseUtil;
-import org.laokou.common.redis.utils.ReactiveRedisUtil;
+import org.laokou.common.nacos.util.ReactiveResponseUtils;
+import org.laokou.common.redis.util.ReactiveRedisUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -50,7 +50,7 @@ import static org.laokou.gateway.constant.GatewayConstants.IP_BLACKED;
 		name = "enabled")
 public class BlackIp extends AbstractIp {
 
-	private final ReactiveRedisUtil reactiveRedisUtil;
+	private final ReactiveRedisUtils reactiveRedisUtils;
 
 	private final RemoteAddressResolver remoteAddressResolver;
 
@@ -68,10 +68,10 @@ public class BlackIp extends AbstractIp {
 			return chain.filter(exchange);
 		}
 		String ipCacheHashKey = RedisKeyUtils.getIpCacheHashKey(BLACK);
-		return reactiveRedisUtil.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
+		return reactiveRedisUtils.hasHashKey(ipCacheHashKey, hostAddress).flatMap(r -> {
 			if (ObjectUtils.equals(Boolean.TRUE, r)) {
 				log.info("IP为{}已列入黑名单", hostAddress);
-				return ReactiveResponseUtil.responseOk(exchange, Result.fail(IP_BLACKED));
+				return ReactiveResponseUtils.responseOk(exchange, Result.fail(IP_BLACKED));
 			}
 			return chain.filter(exchange);
 		});

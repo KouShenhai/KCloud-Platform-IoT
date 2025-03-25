@@ -17,7 +17,7 @@
 
 package org.laokou.common.lock;
 
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.redis.util.RedisUtils;
 import org.redisson.api.RLock;
 
 /**
@@ -32,8 +32,8 @@ public enum Type {
 	 */
 	LOCK {
 		@Override
-		public RLock getLock(RedisUtil redisUtil, String key) {
-			return redisUtil.getLock(key);
+		public RLock getLock(RedisUtils redisUtils, String key) {
+			return redisUtils.getLock(key);
 		}
 	},
 
@@ -42,8 +42,8 @@ public enum Type {
 	 */
 	FAIR_LOCK {
 		@Override
-		public RLock getLock(RedisUtil redisUtil, String key) {
-			return redisUtil.getFairLock(key);
+		public RLock getLock(RedisUtils redisUtils, String key) {
+			return redisUtils.getFairLock(key);
 		}
 	},
 
@@ -52,8 +52,8 @@ public enum Type {
 	 */
 	READ_LOCK {
 		@Override
-		public RLock getLock(RedisUtil redisUtil, String key) {
-			return redisUtil.getReadLock(key);
+		public RLock getLock(RedisUtils redisUtils, String key) {
+			return redisUtils.getReadLock(key);
 		}
 	},
 
@@ -62,8 +62,8 @@ public enum Type {
 	 */
 	WRITE_LOCK {
 		@Override
-		public RLock getLock(RedisUtil redisUtil, String key) {
-			return redisUtil.getWriteLock(key);
+		public RLock getLock(RedisUtils redisUtils, String key) {
+			return redisUtils.getWriteLock(key);
 		}
 	},
 
@@ -72,11 +72,11 @@ public enum Type {
 	 */
 	FENCED_LOCK {
 		@Override
-		public RLock getLock(RedisUtil redisUtil, String key) {
-			return redisUtil.getFencedLock(key);
+		public RLock getLock(RedisUtils redisUtils, String key) {
+			return redisUtils.getFencedLock(key);
 		}
 	};
 
-	public abstract RLock getLock(RedisUtil redisUtil, String key);
+	public abstract RLock getLock(RedisUtils redisUtils, String key);
 
 }

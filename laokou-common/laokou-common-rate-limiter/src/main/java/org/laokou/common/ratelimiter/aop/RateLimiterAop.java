@@ -25,7 +25,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
-import org.laokou.common.redis.utils.RedisUtil;
+import org.laokou.common.redis.util.RedisUtils;
 import org.redisson.api.RateType;
 import org.springframework.stereotype.Component;
 
@@ -50,7 +50,7 @@ public class RateLimiterAop {
 	 */
 	private static final String RATE_LIMITER_KEY = "___%s_KEY___";
 
-	private final RedisUtil redisUtil;
+	private final RedisUtils redisUtils;
 
 	@Around("@annotation(rateLimiter)")
 	public Object doAround(ProceedingJoinPoint point, RateLimiter rateLimiter) throws Throwable {
@@ -61,7 +61,7 @@ public class RateLimiterAop {
 		long ttl = rateLimiter.ttl();
 		long interval = rateLimiter.interval();
 		RateType mode = rateLimiter.mode();
-		if (!redisUtil.rateLimiter(key, mode, rate, Duration.ofSeconds(interval), Duration.ofSeconds(ttl))) {
+		if (!redisUtils.rateLimiter(key, mode, rate, Duration.ofSeconds(interval), Duration.ofSeconds(ttl))) {
 			throw new SystemException(TOO_MANY_REQUESTS);
 		}
 		return point.proceed();
