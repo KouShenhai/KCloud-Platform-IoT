@@ -191,7 +191,7 @@ services:
     networks:
       - laokou_network
   emqx:
-    image: emqx/emqx:5.8.5
+    image: emqx/emqx:5.8.6
     container_name: emqx
     # 保持容器在没有守护程序的情况下运行
     tty: true
