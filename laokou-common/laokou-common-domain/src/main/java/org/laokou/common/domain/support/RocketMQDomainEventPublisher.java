@@ -18,9 +18,10 @@
 package org.laokou.common.domain.support;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.domain.config.RocketMQFuryFactory;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.rocketmq.template.RocketMqTemplate;
-import org.laokou.common.rocketmq.template.SendMessageType;
+import org.laokou.common.rocketmq.template.SendMessageTypeEnum;
 import org.laokou.common.trace.util.TraceUtils;
 import org.springframework.stereotype.Component;
 
@@ -34,12 +35,12 @@ public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 	private final TraceUtils traceUtils;
 
 	@Override
-	public void publish(DomainEvent payload, SendMessageType type) {
+	public void publish(DomainEvent payload, SendMessageTypeEnum type) {
 		switch (type) {
-			case SYNC -> rocketMqTemplate.sendSyncMessage(payload.getTopic(), payload.getTag(), payload, traceUtils.getTraceId(), traceUtils.getSpanId());
-			case ASYNC -> rocketMqTemplate.sendAsyncMessage(payload.getTopic(), payload.getTag(), payload, traceUtils.getTraceId(), traceUtils.getSpanId());
-			case ONE_WAY -> rocketMqTemplate.sendOneWayMessage(payload.getTopic(), payload.getTag(), payload, traceUtils.getTraceId(), traceUtils.getSpanId());
-			case TRANSACTION -> rocketMqTemplate.sendTransactionMessage(payload.getTopic(), payload.getTag(), payload, payload.getId(), traceUtils.getTraceId(), traceUtils.getSpanId());
+			case SYNC -> rocketMqTemplate.sendSyncMessage(payload.getTopic(), payload.getTag(), RocketMQFuryFactory.getFuryFactory().serialize(payload), traceUtils.getTraceId(), traceUtils.getSpanId());
+			case ASYNC -> rocketMqTemplate.sendAsyncMessage(payload.getTopic(), payload.getTag(), RocketMQFuryFactory.getFuryFactory().serialize(payload), traceUtils.getTraceId(), traceUtils.getSpanId());
+			case ONE_WAY -> rocketMqTemplate.sendOneWayMessage(payload.getTopic(), payload.getTag(), RocketMQFuryFactory.getFuryFactory().serialize(payload), traceUtils.getTraceId(), traceUtils.getSpanId());
+			case TRANSACTION -> rocketMqTemplate.sendTransactionMessage(payload.getTopic(), payload.getTag(), RocketMQFuryFactory.getFuryFactory().serialize(payload), payload.getId(), traceUtils.getTraceId(), traceUtils.getSpanId());
 			default -> {}
 		}
 	}

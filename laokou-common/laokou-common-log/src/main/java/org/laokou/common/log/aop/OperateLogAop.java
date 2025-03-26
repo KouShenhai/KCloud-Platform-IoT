@@ -29,7 +29,7 @@ import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.convertor.OperateLogConvertor;
 import org.laokou.common.log.entity.DomainFactory;
 import org.laokou.common.log.entity.OperateLogE;
-import org.laokou.common.rocketmq.template.SendMessageType;
+import org.laokou.common.rocketmq.template.SendMessageTypeEnum;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -83,7 +83,8 @@ public class OperateLogAop {
 			// 获取错误
 			operateLogE.getThrowable(throwable);
 			// 发布事件
-			rocketMQDomainEventPublisher.publish(OperateLogConvertor.toDomainEvent(operateLogE), SendMessageType.ASYNC);
+			rocketMQDomainEventPublisher.publish(OperateLogConvertor.toDomainEvent(operateLogE),
+					SendMessageTypeEnum.ASYNC);
 		}
 		return proceed;
 	}

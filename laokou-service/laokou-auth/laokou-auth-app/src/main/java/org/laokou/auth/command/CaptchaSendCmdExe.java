@@ -30,7 +30,7 @@ import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
-import org.laokou.common.rocketmq.template.SendMessageType;
+import org.laokou.common.rocketmq.template.SendMessageTypeEnum;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.auth.common.constant.BizConstants.SCENARIO;
@@ -60,7 +60,7 @@ public class CaptchaSendCmdExe {
 		// 创建验证码
 		domainService.createCaptcha(IdGenerator.defaultSnowflakeId(), auth, entity);
 		// 发布事件
-		auth.releaseEvents().forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageType.ASYNC));
+		auth.releaseEvents().forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageTypeEnum.ASYNC));
 	}
 
 }

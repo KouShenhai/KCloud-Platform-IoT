@@ -23,7 +23,7 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum SendMessageType {
+public enum SendMessageTypeEnum {
 
 	// @formatter:off
 	ASYNC("async", "异步消息"),
@@ -38,7 +38,7 @@ public enum SendMessageType {
 
 	private final String desc;
 
-	SendMessageType(String code, String desc) {
+	SendMessageTypeEnum(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
