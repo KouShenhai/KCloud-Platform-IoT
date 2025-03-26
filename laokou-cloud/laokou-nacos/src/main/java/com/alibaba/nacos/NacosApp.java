@@ -17,10 +17,12 @@
 package com.alibaba.nacos;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.util.StopWatch;
 
 /**
  * Nacos starter.
@@ -31,12 +33,15 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
  *
  * @author nacos
  */
+@Slf4j
 @ServletComponentScan
 @SpringBootApplication
 @EnableEncryptableProperties
 public class NacosApp {
 
 	public static void main(String[] args) {
+		StopWatch stopWatch = new StopWatch("Nacos应用程序");
+		stopWatch.start();
 		// @formatter:off
 		// -Dnacos.home => Nacos的根目录
 		// Nacos控制台 => http://【ip:8848】/nacos
@@ -47,6 +52,8 @@ public class NacosApp {
 		/// -XX:+ZGenerational
 		// @formatter:on
 		new SpringApplicationBuilder(NacosApp.class).web(WebApplicationType.SERVLET).run(args);
+		stopWatch.stop();
+		log.info("{}", stopWatch.prettyPrint());
 	}
 
 }

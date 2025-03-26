@@ -36,6 +36,7 @@ import java.util.concurrent.Executors;
  */
 class ConfigUtilsTest {
 
+	// @formatter:off
 	private ConfigUtils configUtils;
 
 	private NacosConfigProperties nacosConfigProperties;
@@ -55,6 +56,7 @@ class ConfigUtilsTest {
 		Assertions.assertEquals("nacos", nacosConfigProperties.getPassword());
 		Assertions.assertEquals("nacos", nacosConfigProperties.getUsername());
 		Assertions.assertEquals("DEFAULT_GROUP", nacosConfigProperties.getGroup());
+		Assertions.assertNotNull(nacosConfigProperties.assembleConfigServiceProperties());
 
 		NacosConfigManager nacosConfigManager = new NacosConfigManager(nacosConfigProperties);
 		Assertions.assertNotNull(nacosConfigManager);
@@ -136,39 +138,30 @@ class ConfigUtilsTest {
 	void testPublishConfig() throws NacosException, InterruptedException {
 		Assertions.assertTrue(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 123"));
 		Thread.sleep(100);
-		Assertions.assertEquals("test: 123",
-				configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
+		Assertions.assertEquals("test: 123", configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
 
-		Assertions
-			.assertTrue(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 456", "yaml"));
-		Assertions.assertEquals("test: 456",
-				configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
+		Assertions.assertTrue(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 456", "yaml"));
+		Assertions.assertEquals("test: 456", configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
 
 		Assertions.assertTrue(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 123"));
-		Assertions.assertEquals("test: 123",
-				configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
+		Assertions.assertEquals("test: 123", configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
 
 		String md5 = DigestUtils.md5DigestAsHex("test: 123".getBytes());
 		Assertions.assertEquals("5e76b5e94b54e1372f8b452ef64dc55c", md5);
-		Assertions
-			.assertTrue(configUtils.publishConfigCas("test.yaml", nacosConfigProperties.getGroup(), "test: 456", md5));
-		Assertions.assertEquals("test: 456",
-				configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
+		Assertions.assertTrue(configUtils.publishConfigCas("test.yaml", nacosConfigProperties.getGroup(), "test: 456", md5));
+		Assertions.assertEquals("test: 456", configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
 
 		md5 = DigestUtils.md5DigestAsHex("test: 456".getBytes());
 		Assertions.assertEquals("76e2eabbf24a8c90dc3b4372c20a72cf", md5);
-		Assertions.assertTrue(
-				configUtils.publishConfigCas("test.yaml", nacosConfigProperties.getGroup(), "test: 789", md5, "yaml"));
-		Assertions.assertEquals("test: 789",
-				configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
+		Assertions.assertTrue(configUtils.publishConfigCas("test.yaml", nacosConfigProperties.getGroup(), "test: 789", md5, "yaml"));
+		Assertions.assertEquals("test: 789", configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
 	}
 
 	@Test
 	void testRemoveConfig() throws NacosException, InterruptedException {
 		Assertions.assertTrue(configUtils.publishConfig("test1.yaml", nacosConfigProperties.getGroup(), "test: 123"));
 		Thread.sleep(2000);
-		Assertions.assertEquals("test: 123",
-				configUtils.getConfig("test1.yaml", nacosConfigProperties.getGroup(), 5000));
+		Assertions.assertEquals("test: 123", configUtils.getConfig("test1.yaml", nacosConfigProperties.getGroup(), 5000));
 
 		Assertions.assertTrue(configUtils.removeConfig("test1.yaml", nacosConfigProperties.getGroup()));
 		Assertions.assertNull(configUtils.getConfig("test1.yaml", nacosConfigProperties.getGroup(), 5000));
@@ -178,5 +171,6 @@ class ConfigUtilsTest {
 	void testGetServerStatus() {
 		Assertions.assertEquals("UP", configUtils.getServerStatus());
 	}
+	// @formatter:on
 
 }

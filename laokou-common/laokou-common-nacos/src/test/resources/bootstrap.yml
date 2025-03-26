@@ -23,7 +23,6 @@ spring:
         username: nacos
         password: nacos
         group: DEFAULT_GROUP
-        enabled: true
         cluster-name: laokou-cluster
       username: nacos
       password: nacos
