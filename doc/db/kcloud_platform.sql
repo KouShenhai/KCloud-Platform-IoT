@@ -1676,11 +1676,11 @@ SELECT setval('"public"."boot_sys_dict_id_seq1"', 1, false);
 -- ----------------------------
 -- Indexes structure for table boot_sys_dict
 -- ----------------------------
-CREATE UNIQUE INDEX "type_tenant_id_idx" ON "public"."boot_sys_dict" USING btree (
+CREATE UNIQUE INDEX "boot_sys_dict_type_tenantId_idx" ON "public"."boot_sys_dict" USING btree (
   "type" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "tenant_id" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
-COMMENT ON INDEX "public"."type_tenant_id_idx" IS '类型_租户ID_唯一索引';
+COMMENT ON INDEX "public"."boot_sys_dict_type_tenantId_idx" IS '类型_租户ID_唯一索引';
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_dict
@@ -1705,11 +1705,11 @@ SELECT setval('"public"."boot_sys_i18n_message_id_seq1"', 1, false);
 -- ----------------------------
 -- Indexes structure for table boot_sys_i18n_message
 -- ----------------------------
-CREATE INDEX "code_tenant_id_idx" ON "public"."boot_sys_i18n_message" USING btree (
+CREATE INDEX "boot_sys_i18n_message_code_tenantId_idx" ON "public"."boot_sys_i18n_message" USING btree (
   "code" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "tenant_id" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
-COMMENT ON INDEX "public"."code_tenant_id_idx" IS '编码_租户ID_唯一索引';
+COMMENT ON INDEX "public"."boot_sys_i18n_message_code_tenantId_idx" IS '编码_租户ID_唯一索引';
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_i18n_message
@@ -1791,8 +1791,9 @@ ALTER TABLE "public"."boot_sys_role" ADD CONSTRAINT "boot_sys_role_pkey" PRIMARY
 -- ----------------------------
 -- Indexes structure for table boot_sys_role_dept
 -- ----------------------------
-CREATE INDEX "boot_sys_role_dept_role_id_idx" ON "public"."boot_sys_role_dept" USING btree (
-  "role_id" "pg_catalog"."int8_ops" ASC NULLS LAST
+CREATE INDEX "boot_sys_role_dept_roleId_deptId_idx" ON "public"."boot_sys_role_dept" USING btree (
+	"role_id" "pg_catalog"."int8_ops" ASC NULLS LAST,
+	"dept_id" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
 
 -- ----------------------------
@@ -1803,7 +1804,7 @@ ALTER TABLE "public"."boot_sys_role_dept" ADD CONSTRAINT "boot_sys_role_dept_pke
 -- ----------------------------
 -- Indexes structure for table boot_sys_role_menu
 -- ----------------------------
-CREATE UNIQUE INDEX "boot_sys_role_menu_role_menu_id_idx" ON "public"."boot_sys_role_menu" USING btree (
+CREATE UNIQUE INDEX "boot_sys_role_menu_roleId_menuId_idx" ON "public"."boot_sys_role_menu" USING btree (
 																										"menu_id" "pg_catalog"."int8_ops" ASC NULLS LAST,
 																										"role_id" "pg_catalog"."int8_ops" ASC NULLS LAST
 	);
@@ -1841,21 +1842,21 @@ SELECT setval('"public"."boot_sys_user_id_seq1"', 1, false);
 -- ----------------------------
 -- Indexes structure for table boot_sys_user
 -- ----------------------------
-CREATE UNIQUE INDEX "mail_tenant_id_idx" ON "public"."boot_sys_user" USING btree (
+CREATE UNIQUE INDEX "boot_sys_user_mail_tenantId_idx" ON "public"."boot_sys_user" USING btree (
   "mail" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "tenant_id" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
-COMMENT ON INDEX "public"."mail_tenant_id_idx" IS '邮箱_租户ID_唯一索引';
-CREATE UNIQUE INDEX "mobile_tenant_id_idx" ON "public"."boot_sys_user" USING btree (
+COMMENT ON INDEX "public"."boot_sys_user_mail_tenantId_idx" IS '邮箱_租户ID_唯一索引';
+CREATE UNIQUE INDEX "boot_sys_user_mobile_tenantId_idx" ON "public"."boot_sys_user" USING btree (
   "mobile" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "tenant_id" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
-COMMENT ON INDEX "public"."mobile_tenant_id_idx" IS '手机号_租户ID_唯一索引';
-CREATE UNIQUE INDEX "username_tenant_id_idx" ON "public"."boot_sys_user" USING btree (
+COMMENT ON INDEX "public"."boot_sys_user_mobile_tenantId_idx" IS '手机号_租户ID_唯一索引';
+CREATE UNIQUE INDEX "boot_sys_user_username_tenantId_idx" ON "public"."boot_sys_user" USING btree (
   "username" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "tenant_id" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
-COMMENT ON INDEX "public"."username_tenant_id_idx" IS '用户名_租户ID_唯一索引';
+COMMENT ON INDEX "public"."boot_sys_user_username_tenantId_idx" IS '用户名_租户ID_唯一索引';
 
 -- ----------------------------
 -- Primary Key structure for table boot_sys_user
@@ -1880,7 +1881,7 @@ SELECT setval('"public"."boot_sys_message_detail_id_seq1"', 1, false);
 -- ----------------------------
 -- Indexes structure for table boot_sys_user_message
 -- ----------------------------
-CREATE INDEX "boot_sys_message_detail_read_flag_user_id_idx" ON "public"."boot_sys_user_message" USING btree (
+CREATE INDEX "boot_sys_user_message_readFlag_userId_idx" ON "public"."boot_sys_user_message" USING btree (
   "read_flag" "pg_catalog"."int2_ops" ASC NULLS LAST,
   "user_id" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
@@ -1898,11 +1899,9 @@ SELECT setval('"public"."boot_sys_user_role_id_seq1"', 1, false);
 -- ----------------------------
 -- Indexes structure for table boot_sys_user_role
 -- ----------------------------
-CREATE INDEX "boot_sys_user_role_role_id_idx" ON "public"."boot_sys_user_role" USING btree (
-  "role_id" "pg_catalog"."int8_ops" ASC NULLS LAST
-);
-CREATE INDEX "boot_sys_user_role_user_id_idx" ON "public"."boot_sys_user_role" USING btree (
-  "user_id" "pg_catalog"."int8_ops" ASC NULLS LAST
+CREATE INDEX "boot_sys_user_role_userId_roleId_idx" ON "public"."boot_sys_user_role" USING btree (
+	"user_id" "pg_catalog"."int8_ops" ASC NULLS LAST,
+	"role_id" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
 
 -- ----------------------------

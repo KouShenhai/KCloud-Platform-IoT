@@ -1012,12 +1012,12 @@ SELECT setval('"public"."boot_iot_thing_model_id_seq4"', 1, false);
 -- ----------------------------
 -- Indexes structure for table boot_iot_thing_model
 -- ----------------------------
-CREATE UNIQUE INDEX "boot_iot_thing_model_name_code_tenant_id_idx" ON "public"."boot_iot_thing_model" USING btree (
+CREATE UNIQUE INDEX "boot_iot_thing_model_name_code_tenantId_idx" ON "public"."boot_iot_thing_model" USING btree (
   "name" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "code" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST,
   "tenant_id" "pg_catalog"."int8_ops" ASC NULLS LAST
 );
-COMMENT ON INDEX "public"."boot_iot_thing_model_name_code_tenant_id_idx" IS '名称_编码_租户ID_唯一索引';
+COMMENT ON INDEX "public"."boot_iot_thing_model_name_code_tenantId_idx" IS '名称_编码_租户ID_唯一索引';
 
 -- ----------------------------
 -- Primary Key structure for table boot_iot_thing_model
