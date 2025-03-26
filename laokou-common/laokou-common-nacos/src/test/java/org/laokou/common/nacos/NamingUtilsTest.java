@@ -46,12 +46,18 @@ import java.util.List;
 /**
  * @author laokou
  */
+// @formatter:off
 @Slf4j
 @SpringBootTest
 @RequiredArgsConstructor
-@ContextConfiguration(classes = { NamingUtils.class, NacosServiceManager.class, NacosDiscoveryProperties.class,
-		ApplicationEventPublisher.class, InetUtilsProperties.class, Environment.class, InetUtils.class,
-		InetIPv6Utils.class })
+@ContextConfiguration(classes = { NamingUtils.class,
+	NacosServiceManager.class,
+	NacosDiscoveryProperties.class,
+	ApplicationEventPublisher.class,
+	InetUtilsProperties.class,
+	Environment.class,
+	InetUtils.class,
+	InetIPv6Utils.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class NamingUtilsTest {
 
@@ -70,6 +76,7 @@ class NamingUtilsTest {
 		Assertions.assertEquals("", nacosDiscoveryProperties.getEndpoint());
 		Assertions.assertEquals("", nacosDiscoveryProperties.getAccessKey());
 		Assertions.assertEquals("", nacosDiscoveryProperties.getSecretKey());
+		Assertions.assertEquals("laokou-cluster", nacosDiscoveryProperties.getClusterName());
 		Assertions.assertNotNull(nacosDiscoveryProperties.getNacosProperties());
 		Assertions.assertNotNull(namingUtils);
 	}
@@ -84,8 +91,7 @@ class NamingUtilsTest {
 
 	@Test
 	void testGetNamingMaintainService() {
-		NamingMaintainService namingMaintainService = namingUtils
-			.getNamingMaintainService(nacosDiscoveryProperties.getNacosProperties());
+		NamingMaintainService namingMaintainService = namingUtils.getNamingMaintainService(nacosDiscoveryProperties.getNacosProperties());
 		Assertions.assertNotNull(namingMaintainService);
 	}
 
@@ -123,94 +129,62 @@ class NamingUtilsTest {
 
 		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "DEFAULT_GROUP", instance));
 		Thread.sleep(1000);
-		Assertions.assertTrue(
-				namingUtils.getAllInstances("test-service", "DEFAULT_GROUP", Collections.emptyList()).isEmpty());
+		Assertions.assertTrue(namingUtils.getAllInstances("test-service", "DEFAULT_GROUP", Collections.emptyList()).isEmpty());
 
-		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "DEFAULT_GROUP", "127.0.0.1",
-				8080, nacosDiscoveryProperties.getClusterName()));
+		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
-		Assertions.assertFalse(
-				namingUtils.getAllInstances("test-service", List.of(nacosDiscoveryProperties.getClusterName()), false)
-					.isEmpty());
+		Assertions.assertFalse(namingUtils.getAllInstances("test-service", List.of(nacosDiscoveryProperties.getClusterName()), false).isEmpty());
 
-		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "DEFAULT_GROUP", "127.0.0.1",
-				8080, nacosDiscoveryProperties.getClusterName()));
+		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
-		Assertions.assertTrue(namingUtils
-			.getAllInstances("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()), false)
-			.isEmpty());
+		Assertions.assertTrue(namingUtils.getAllInstances("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()), false).isEmpty());
 
-		Assertions
-			.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080));
+		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080));
 		Thread.sleep(1000);
 		Assertions.assertFalse(namingUtils.getAllInstances("test-service", "DEFAULT_GROUP", false).isEmpty());
 
-		Assertions.assertDoesNotThrow(
-				() -> namingUtils.deregisterInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080));
+		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080));
 		Thread.sleep(1000);
 		Assertions.assertTrue(namingUtils.getAllInstances("test-service", "DEFAULT_GROUP", false).isEmpty());
 
-		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080,
-				nacosDiscoveryProperties.getClusterName()));
+		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
-		Assertions.assertFalse(namingUtils
-			.getAllInstances("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()), false)
-			.isEmpty());
+		Assertions.assertFalse(namingUtils.getAllInstances("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()), false).isEmpty());
 
-		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "127.0.0.1", 8080,
-				nacosDiscoveryProperties.getClusterName()));
+		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
-		Assertions.assertTrue(namingUtils
-			.getAllInstances("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()), false)
-			.isEmpty());
+		Assertions.assertTrue(namingUtils.getAllInstances("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()), false).isEmpty());
 	}
 
 	@Test
 	void testSelectInstances() throws NacosException, InterruptedException {
-		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080,
-				nacosDiscoveryProperties.getClusterName()));
+		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		Assertions.assertFalse(namingUtils.selectInstances("test-service", true).isEmpty());
 
-		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "127.0.0.1", 8080,
-				nacosDiscoveryProperties.getClusterName()));
+		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		Assertions.assertTrue(namingUtils.selectInstances("test-service", true).isEmpty());
 
-		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080,
-				nacosDiscoveryProperties.getClusterName()));
+		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		Assertions.assertFalse(namingUtils.selectInstances("test-service", true, false).isEmpty());
 
 		Assertions.assertFalse(namingUtils.selectInstances("test-service", "DEFAULT_GROUP", true, false).isEmpty());
-		Assertions.assertFalse(
-				namingUtils.selectInstances("test-service", List.of(nacosDiscoveryProperties.getClusterName()), true)
-					.isEmpty());
-		Assertions
-			.assertFalse(namingUtils
-				.selectInstances("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()),
-						true, false)
-				.isEmpty());
-		Assertions.assertFalse(namingUtils
-			.selectInstances("test-service", List.of(nacosDiscoveryProperties.getClusterName()), true, false)
-			.isEmpty());
+		Assertions.assertFalse(namingUtils.selectInstances("test-service", List.of(nacosDiscoveryProperties.getClusterName()), true).isEmpty());
+		Assertions.assertFalse(namingUtils.selectInstances("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()), true, false).isEmpty());
+		Assertions.assertFalse(namingUtils.selectInstances("test-service", List.of(nacosDiscoveryProperties.getClusterName()), true, false).isEmpty());
 		Assertions.assertFalse(namingUtils.selectInstances("test-service", "DEFAULT_GROUP", true).isEmpty());
-		Assertions.assertFalse(namingUtils
-			.selectInstances("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()), true)
-			.isEmpty());
+		Assertions.assertFalse(namingUtils.selectInstances("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()), true).isEmpty());
 
-		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "127.0.0.1", 8080,
-				nacosDiscoveryProperties.getClusterName()));
+		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
-		Assertions.assertTrue(namingUtils
-			.getAllInstances("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()), false)
-			.isEmpty());
+		Assertions.assertTrue(namingUtils.getAllInstances("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()), false).isEmpty());
 	}
 
 	@Test
 	void testSelectOneHealthyInstance() throws NacosException, InterruptedException {
-		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080,
-				nacosDiscoveryProperties.getClusterName()));
+		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		Assertions.assertFalse(namingUtils.selectInstances("test-service", true).isEmpty());
 
@@ -218,75 +192,60 @@ class NamingUtilsTest {
 		Assertions.assertNotNull(namingUtils.selectOneHealthyInstance("test-service", "DEFAULT_GROUP"));
 		Assertions.assertNotNull(namingUtils.selectOneHealthyInstance("test-service", false));
 		Assertions.assertNotNull(namingUtils.selectOneHealthyInstance("test-service", "DEFAULT_GROUP", false));
-		Assertions.assertNotNull(namingUtils.selectOneHealthyInstance("test-service",
-				List.of(nacosDiscoveryProperties.getClusterName())));
-		Assertions.assertNotNull(namingUtils.selectOneHealthyInstance("test-service", "DEFAULT_GROUP",
-				List.of(nacosDiscoveryProperties.getClusterName())));
-		Assertions.assertNotNull(namingUtils.selectOneHealthyInstance("test-service",
-				List.of(nacosDiscoveryProperties.getClusterName()), false));
-		Assertions.assertNotNull(namingUtils.selectOneHealthyInstance("test-service", "DEFAULT_GROUP",
-				List.of(nacosDiscoveryProperties.getClusterName()), false));
+		Assertions.assertNotNull(namingUtils.selectOneHealthyInstance("test-service", List.of(nacosDiscoveryProperties.getClusterName())));
+		Assertions.assertNotNull(namingUtils.selectOneHealthyInstance("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName())));
+		Assertions.assertNotNull(namingUtils.selectOneHealthyInstance("test-service", List.of(nacosDiscoveryProperties.getClusterName()), false));
+		Assertions.assertNotNull(namingUtils.selectOneHealthyInstance("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()), false));
 
-		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "127.0.0.1", 8080,
-				nacosDiscoveryProperties.getClusterName()));
+		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		Assertions.assertTrue(namingUtils.selectInstances("test-service", true).isEmpty());
 	}
 
 	@Test
 	void testSubscribeService() throws NacosException, InterruptedException {
-		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080,
-				nacosDiscoveryProperties.getClusterName()));
+		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		Assertions.assertFalse(namingUtils.selectInstances("test-service", true).isEmpty());
 
-		Assertions.assertDoesNotThrow(
-				() -> namingUtils.subscribe("test-service", "DEFAULT_GROUP", Assertions::assertNotNull));
-		Assertions.assertDoesNotThrow(
-				() -> namingUtils.unsubscribe("test-service", "DEFAULT_GROUP", Assertions::assertNotNull));
+		Assertions.assertDoesNotThrow(() -> namingUtils.subscribe("test-service", "DEFAULT_GROUP", Assertions::assertNotNull));
+		Assertions.assertDoesNotThrow(() -> namingUtils.unsubscribe("test-service", "DEFAULT_GROUP", Assertions::assertNotNull));
+
 		Assertions.assertDoesNotThrow(() -> namingUtils.subscribe("test-service", Assertions::assertNotNull));
 		Assertions.assertDoesNotThrow(() -> namingUtils.unsubscribe("test-service", Assertions::assertNotNull));
-		Assertions.assertDoesNotThrow(() -> namingUtils.subscribe("test-service", "DEFAULT_GROUP",
-				List.of(nacosDiscoveryProperties.getClusterName()), Assertions::assertNotNull));
-		Assertions.assertDoesNotThrow(() -> namingUtils.unsubscribe("test-service", "DEFAULT_GROUP",
-				List.of(nacosDiscoveryProperties.getClusterName()), Assertions::assertNotNull));
-		Assertions.assertDoesNotThrow(() -> namingUtils.subscribe("test-service",
-				List.of(nacosDiscoveryProperties.getClusterName()), Assertions::assertNotNull));
-		Assertions.assertDoesNotThrow(() -> namingUtils.unsubscribe("test-service",
-				List.of(nacosDiscoveryProperties.getClusterName()), Assertions::assertNotNull));
+
+		Assertions.assertDoesNotThrow(() -> namingUtils.subscribe("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()), Assertions::assertNotNull));
+		Assertions.assertDoesNotThrow(() -> namingUtils.unsubscribe("test-service", "DEFAULT_GROUP", List.of(nacosDiscoveryProperties.getClusterName()), Assertions::assertNotNull));
+
+		Assertions.assertDoesNotThrow(() -> namingUtils.subscribe("test-service", List.of(nacosDiscoveryProperties.getClusterName()), Assertions::assertNotNull));
+		Assertions.assertDoesNotThrow(() -> namingUtils.unsubscribe("test-service", List.of(nacosDiscoveryProperties.getClusterName()), Assertions::assertNotNull));
 
 		// 只选择订阅ip为`127.0`开头的实例。
 		NamingSelector selector = NamingSelectorFactory.newIpSelector("127.0.*");
-		Assertions.assertDoesNotThrow(
-				() -> namingUtils.subscribe("test-service", "DEFAULT_GROUP", selector, Assertions::assertNotNull));
-		Assertions.assertDoesNotThrow(
-				() -> namingUtils.unsubscribe("test-service", "DEFAULT_GROUP", selector, Assertions::assertNotNull));
-		Assertions.assertDoesNotThrow(() -> namingUtils.subscribe("test-service", selector, Assertions::assertNotNull));
-		Assertions
-			.assertDoesNotThrow(() -> namingUtils.unsubscribe("test-service", selector, Assertions::assertNotNull));
+		Assertions.assertDoesNotThrow(() -> namingUtils.subscribe("test-service", "DEFAULT_GROUP", selector, Assertions::assertNotNull));
+		Assertions.assertDoesNotThrow(() -> namingUtils.unsubscribe("test-service", "DEFAULT_GROUP", selector, Assertions::assertNotNull));
 
-		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "127.0.0.1", 8080,
-				nacosDiscoveryProperties.getClusterName()));
+		Assertions.assertDoesNotThrow(() -> namingUtils.subscribe("test-service", selector, Assertions::assertNotNull));
+		Assertions.assertDoesNotThrow(() -> namingUtils.unsubscribe("test-service", selector, Assertions::assertNotNull));
+
+		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		Assertions.assertTrue(namingUtils.selectInstances("test-service", true).isEmpty());
 	}
 
 	@Test
 	void testGetServicesOfServer() throws NacosException, InterruptedException {
-		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "DEFAULT_GROUP", "127.0.0.1",
-				8080, nacosDiscoveryProperties.getClusterName()));
+		Assertions.assertDoesNotThrow(() -> namingUtils.registerInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		Assertions.assertFalse(namingUtils.selectInstances("test-service", true).isEmpty());
 
 		Assertions.assertTrue(namingUtils.getServicesOfServer(1, 10, "DEFAULT_GROUP").getCount() > 0);
 		Assertions.assertTrue(namingUtils.getServicesOfServer(1, 10).getCount() > 0);
 
-		Assertions.assertDoesNotThrow(
-				() -> namingUtils.subscribe("test-service", "DEFAULT_GROUP", Assertions::assertNotNull));
+		Assertions.assertDoesNotThrow(() -> namingUtils.subscribe("test-service", "DEFAULT_GROUP", Assertions::assertNotNull));
 		Assertions.assertFalse(namingUtils.getSubscribeServices().isEmpty());
 
-		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "DEFAULT_GROUP", "127.0.0.1",
-				8080, nacosDiscoveryProperties.getClusterName()));
+		Assertions.assertDoesNotThrow(() -> namingUtils.deregisterInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		Assertions.assertTrue(namingUtils.selectInstances("test-service", true).isEmpty());
 	}
@@ -296,13 +255,11 @@ class NamingUtilsTest {
 		Instance instance = new Instance();
 		instance.setIp("127.0.0.1");
 		instance.setPort(8080);
-		Assertions.assertDoesNotThrow(
-				() -> namingUtils.batchRegisterInstance("test-service", "DEFAULT_GROUP", List.of(instance)));
+		Assertions.assertDoesNotThrow(() -> namingUtils.batchRegisterInstance("test-service", "DEFAULT_GROUP", List.of(instance)));
 		Thread.sleep(1000);
 		Assertions.assertNotEquals(2, namingUtils.selectInstances("test-service", true).size());
 
-		Assertions.assertDoesNotThrow(
-				() -> namingUtils.batchDeregisterInstance("test-service", "DEFAULT_GROUP", List.of(instance)));
+		Assertions.assertDoesNotThrow(() -> namingUtils.batchDeregisterInstance("test-service", "DEFAULT_GROUP", List.of(instance)));
 		Thread.sleep(1000);
 		Assertions.assertEquals(0, namingUtils.selectInstances("test-service", false).size());
 	}
@@ -314,3 +271,4 @@ class NamingUtilsTest {
 	}
 
 }
+// @formatter:on

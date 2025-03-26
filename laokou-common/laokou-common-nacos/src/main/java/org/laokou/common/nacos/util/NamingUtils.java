@@ -632,7 +632,7 @@ public final class NamingUtils {
 	}
 
 	/**
-	 * 获取服务.
+	 * 获取发现服务.
 	 */
 	private NamingService getNamingService() {
 		return nacosServiceManager.getNamingService();
