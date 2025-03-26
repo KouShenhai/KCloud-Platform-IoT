@@ -327,10 +327,10 @@ KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.or
 | 序号 |                                      头像                                      |                      名字                       |
 |:--:|:----------------------------------------------------------------------------:|:---------------------------------------------:|
 | 1  | ![KouShenhai的头像](https://avatars.githubusercontent.com/u/48756217?s=64&v=4)  |  [KouShenhai](https://github.com/KouShenhai)  |
-| 2  |   ![liang99的头像](https://avatars.githubusercontent.com/u/26246537?s=64&v=4)   |     [liang99](https://github.com/liang99)     |
+| 2  |   ![liang99的头像](https://avatars.githubusercontent.com/u/58894276?v=4&s=64)   |     [liang99](https://github.com/liang99)     |
 | 3  | ![livk-cloud的头像](https://avatars.githubusercontent.com/u/50291874?s=64&v=4)  |  [livk-cloud](https://github.com/livk-cloud)  |
 | 4  | ![liukefu2050的头像](https://avatars.githubusercontent.com/u/21030225?s=64&v=4) | [liukefu2050](https://github.com/liukefu2050) |
-| 5  | ![HalfPomelo的头像](https://avatars.githubusercontent.com/u/127269482?s=64&v=4) |  [HalfPomelo](https://github.com/HalfPomelo)  |
+| 5  | ![HalfPomelo的头像](https://avatars.githubusercontent.com/u/58894276?v=4&s=64) |  [HalfPomelo](https://github.com/HalfPomelo)  |
 | 6  |    ![lixin的头像](https://avatars.githubusercontent.com/u/69209385?s=64&v=4)    |       [lixin](https://github.com/lixin)       |
 | 7  |    ![simman的头像](https://avatars.githubusercontent.com/u/2041471?s=64&v=4)    |      [simman](https://github.com/simman)      |
 | 8  |  ![suhengli的头像](https://avatars.githubusercontent.com/u/43296325?s=64&v=4)   |    [suhengli](https://github.com/suhengli)    |

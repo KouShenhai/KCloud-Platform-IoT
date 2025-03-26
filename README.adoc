@@ -343,10 +343,10 @@ image::doc/image/jb_beam.png[jb_beam,100,100,link=https://www.jetbrains.com/comm
 |序号 |头像 |名字
 
 |1   |image:https://avatars.githubusercontent.com/u/48756217?s=64&v=4[KouShenhai的头像,50,50]       |https://github.com/KouShenhai[KouShenhai]
-|2   |image:https://avatars.githubusercontent.com/u/26246537?s=64&v=4[liang99的头像,50,50]          |https://github.com/liang99[liang99]
+|2   |image:https://avatars.githubusercontent.com/u/58894276?v=4&s=64[liang99的头像,50,50]          |https://github.com/liang99[liang99]
 |3   |image:https://avatars.githubusercontent.com/u/50291874?s=64&v=4[livk-cloud的头像,50,50]       |https://github.com/livk-cloud[livk-cloud]
 |4   |image:https://avatars.githubusercontent.com/u/21030225?s=64&v=4[liukefu2050的头像,50,50]      |https://github.com/liukefu2050[liukefu2050]
-|5   |image:https://avatars.githubusercontent.com/u/127269482?s=64&v=4[HalfPomelo的头像,50,50]      |https://github.com/HalfPomelo[HalfPomelo]
+|5   |image:https://avatars.githubusercontent.com/u/58894276?v=4&s=64[HalfPomelo的头像,50,50]      |https://github.com/HalfPomelo[HalfPomelo]
 |6   |image:https://avatars.githubusercontent.com/u/69209385?s=64&v=4[lixin的头像,50,50]            |https://github.com/lixin[lixin]
 |7   |image:https://avatars.githubusercontent.com/u/2041471?s=64&v=4[simman的头像,50,50]            |https://github.com/simman[simman]
 |8   |image:https://avatars.githubusercontent.com/u/43296325?s=64&v=4[suhengli的头像,50,50]         |https://github.com/suhengli[suhengli]
