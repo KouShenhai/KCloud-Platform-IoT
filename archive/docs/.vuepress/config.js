@@ -134,7 +134,10 @@ module.exports = {
 					},
 					{
 						text: '其他', link: '/pages/643da2/', items: [
-							{text: 'Java如何快速转Go', link: '/pages/643da2/'}
+							{text: 'Java如何快速转Go', link: '/pages/643da2/'},
+							{text: 'Go快速开发API', link: '/pages/b4322a/'},
+							{text: 'Vue快速开发Api', link: '/pages/52f121/'},
+							{text: 'React快速开发Api', link: '/pages/3de3af/'},
 						]
 					},
 				]
