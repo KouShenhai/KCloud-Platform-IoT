@@ -173,10 +173,10 @@ export default () => {
 					// 跳转路由
 					const urlParams = new URL(window.location.href).searchParams;
 					history.push(urlParams.get('redirect') || '/');
-					// 1秒后刷新页面
+					// 1.5秒后刷新页面
 					setTimeout(() => {
 						window.location.reload();
-					}, 1000)
+					}, 1500)
 				}
 			})
 			.catch(() => {
