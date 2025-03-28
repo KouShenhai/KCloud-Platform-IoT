@@ -336,6 +336,12 @@ https://github.com/laokouyun[laokouyun社区]
 
 image::doc/image/jb_beam.png[jb_beam,100,100,link=https://www.jetbrains.com/community/opensource/?utm_campaign=opensource&utm_content=approved&utm_medium=email&utm_source=newsletter&utm_term=jblogo#support]
 
+=== 🌞 开源512（感谢各位贡献者）
+
+开源三年的旅程，我们共同跨越了无数技术鸿沟与成长阵痛。衷心感谢每一位代码贡献者的智慧结晶，感恩行业前辈的悉心指导，感激社区伙伴的温暖陪伴。是你们的每一次commit、每一条issue、每一份star，让这个开源项目在风雨中绽放出耀眼的光芒。
+
+值此开源三周年之际，我们准备了承载心意的特别礼物。感谢10位贡献者的代码筑城，致敬40个开源先驱项目的火炬传递，珍藏社区累计900次的温暖互动。每一份实体礼物都将镌刻您的GitHub ID，这不仅是致谢，更是属于技术人的浪漫勋章。
+
 === 🐼 鸣谢个人
 
 [width=100%]
