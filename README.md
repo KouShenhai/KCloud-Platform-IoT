@@ -321,7 +321,7 @@ KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.or
 
 <a target="_blank" href="https://www.jetbrains.com/community/opensource/?utm_campaign=opensource&utm_content=approved&utm_medium=email&utm_source=newsletter&utm_term=jblogo#support"><img src="doc/image/jb_beam.png" alt="jb_beam" width=100 height=100 /></a>
 
-### 🌞 开源512活动
+### 🌞 开源512（感谢各位大佬）
 
 开源三年的旅程，我们共同跨越了无数技术鸿沟与成长阵痛。衷心感谢每一位代码贡献者的智慧结晶，感恩行业前辈的悉心指导，感激社区伙伴的温暖陪伴。是你们的每一次commit、每一条issue、每一份star，让这个开源项目在风雨中绽放出耀眼的光芒。
 
