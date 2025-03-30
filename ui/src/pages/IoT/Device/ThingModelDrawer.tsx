@@ -1,11 +1,11 @@
-import {DrawerForm, ProFormDigit, ProFormRadio, ProFormSelect, ProFormText} from '@ant-design/pro-components';
+import {DrawerForm, ProFormDigit, ProFormSelect, ProFormText} from '@ant-design/pro-components';
 import {Col, message, Row} from 'antd';
-import {modifyV3, saveV3} from "@/services/iot/thingModel";
-import {v7 as uuidV7} from "uuid";
 import React from "react";
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
-import {ProFormItem} from "@ant-design/pro-form";
+import {ProFormItem, ProFormTextArea} from "@ant-design/pro-form";
+import {v7 as uuidV7} from "uuid";
+import {modifyV3, saveV3} from "@/services/iot/thingModel";
 
 interface ThingModelDrawerProps {
 	modalVisit: boolean;
@@ -16,6 +16,8 @@ interface ThingModelDrawerProps {
 	onComponent: () => void;
 	value: string;
 	setValue: (value: string) => void;
+	flag: number;
+	setFlag: (flag: number) => void;
 }
 
 type TableColumns = {
@@ -33,12 +35,27 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, value, setValue }) => {
+export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, value, setValue, flag, setFlag }) => {
 
 	const onChange = React.useCallback((val: any) => {
 		dataSource.expression = val;
 		setValue(val);
 	}, []);
+
+	const getSpecs = (value: any) => {
+		switch (value.dataType) {
+			case 'integer': return {
+				min: value.min,
+				max: value.max,
+				length: value.length,
+				unit: value.unit,
+			}
+			case 'decimal': return {}
+			case 'boolean': return {}
+			case 'string': return {}
+			default: return {}
+		}
+	}
 
 	return (
 		<DrawerForm<TableColumns>
@@ -60,8 +77,10 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				}
 			}}
 			onFinish={ async (value) => {
-				console.log(value)
-/*				if (value.id === undefined) {
+				value.specs = JSON.stringify(getSpecs(value))
+				// @ts-ignore
+				value.type = value.type.join(',')
+				if (value.id === undefined) {
 					saveV3({co: value}, uuidV7()).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
@@ -77,7 +96,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 							onComponent()
 						}
 					})
-				}*/
+				}
 			}}>
 			<ProFormText
 				readonly={readOnly}
@@ -127,7 +146,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				rules={[{ required: true, message: '请输入排序' }]}
 			/>
 
-			<ProFormRadio.Group
+			<ProFormSelect
 				name="expressionFlag"
 				label="是否使用表达式"
 				readonly={readOnly}
@@ -136,20 +155,23 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 					{label:"是",value: 1 },
 					{label:"否",value: 0 }
 				]}
+				onChange={setFlag}
 			/>
 
-			<ProFormItem
-				label="表达式"
-				tooltip={"JS脚本，参数【inputMap】"}
-			>
-				<CodeMirror
-					readOnly={readOnly}
-					value={value}
-					height="400px"
-					extensions={[javascript({ jsx: true, typescript: true })]}
-					onChange={onChange}
-				/>
-			</ProFormItem>
+			{flag === 1 && (
+				<ProFormItem
+					label="表达式"
+					tooltip={"JS脚本，参数【inputMap】"}
+				>
+					<CodeMirror
+						readOnly={readOnly}
+						value={value}
+						height="400px"
+						extensions={[javascript({ jsx: true, typescript: true })]}
+						onChange={onChange}
+					/>
+				</ProFormItem>
+			)}
 
 			<ProFormSelect
 				name="dataType"
@@ -170,33 +192,35 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 						readonly={readOnly}
 						name="min"
 						label="最小值"
-						rules={[{ required: true, message: '请输入最小值' }]}
-					/>
+						rules={[{ required: true, message: '请输入最小值' }]}/>
 				</Col>
 				<Col span={12}>
 					<ProFormText
 						readonly={readOnly}
 						name="max"
 						label="最大值"
-						rules={[{ required: true, message: '请输入最大值' }]}
-					/>
+						rules={[{ required: true, message: '请输入最大值' }]}/>
 				</Col>
 				<Col span={12}>
 					<ProFormText
 						readonly={readOnly}
 						name="length"
 						label="长度"
-						rules={[{ required: true, message: '请输入长度' }]}
-					/>
+						rules={[{ required: true, message: '请输入长度' }]}/>
 				</Col>
 				<Col span={12}>
 					<ProFormText
 						readonly={readOnly}
 						name="unit"
-						label="单位"
-					/>
+						label="单位"/>
 				</Col>
 			</Row>
+
+			<ProFormTextArea
+				readonly={readOnly}
+				name="remark"
+				label="备注"
+			/>
 
 		</DrawerForm>
 	);

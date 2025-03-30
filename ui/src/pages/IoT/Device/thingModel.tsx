@@ -17,6 +17,7 @@ export default () => {
 	const [readOnly, setReadOnly] = useState(false)
 	const [value, setValue] = useState("");
 	const [ids, setIds] = useState<any>([])
+	const [flag, setFlag] = useState(0)
 
 	type TableColumns = {
 		id: number;
@@ -156,6 +157,8 @@ export default () => {
 				}}
 				value={value}
 				setValue={setValue}
+				flag={flag}
+				setFlag={setFlag}
 			/>
 
 			<ProTable<TableColumns>
@@ -188,6 +191,14 @@ export default () => {
 							setTitle('新增物模型')
 							setReadOnly(false)
 							setModalVisit(true)
+							setFlag(0)
+							setDataSource({
+								id: undefined,
+								sort: 1,
+								expressionFlag: 0,
+								dataType: 'integer',
+								category: 1,
+							})
 						}}>
 							新增
 						</Button>,
