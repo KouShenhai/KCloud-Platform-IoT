@@ -43,7 +43,7 @@ import org.springframework.util.StopWatch;
 @Slf4j
 @Aspect
 @Component
-@MapperScan(basePackages = "org.laokou.common.log.database")
+@MapperScan(basePackages = "org.laokou.common.log.mapper")
 @RequiredArgsConstructor
 public class OperateLogAop {
 
