@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
 import static org.laokou.common.log.constant.MqConstants.*;
+import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * @author laokou
@@ -48,7 +49,7 @@ public class OperateEventHandler extends AbstractDomainEventHandler {
 	@Override
 	protected void handleDomainEvent(DomainEvent domainEvent) {
 		try {
-			DynamicDataSourceContextHolder.push("domain");
+			DynamicDataSourceContextHolder.push(DOMAIN);
 			transactionalUtils
 				.executeInTransaction(() -> operateLogMapper.insert(OperateLogConvertor.toDataObject(domainEvent)));
 		}

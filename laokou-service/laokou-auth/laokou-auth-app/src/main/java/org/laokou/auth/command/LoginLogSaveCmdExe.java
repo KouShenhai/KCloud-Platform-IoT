@@ -27,6 +27,8 @@ import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
+
 /**
  * @author laokou
  */
@@ -42,7 +44,7 @@ public class LoginLogSaveCmdExe {
 	@CommandLog
 	public void executeVoid(LoginLogSaveCmd cmd) {
 		try {
-			DynamicDataSourceContextHolder.push("domain");
+			DynamicDataSourceContextHolder.push(DOMAIN);
 			transactionalUtils
 				.executeInTransaction(() -> domainService.createLoginLog(LoginLogConvertor.toEntity(cmd.getCo())));
 		}
