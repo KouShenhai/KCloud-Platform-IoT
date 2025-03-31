@@ -32,7 +32,7 @@
     <!--spring-boot版本-->
     <spring-boot.version>3.5.0-M3</spring-boot.version>
     <!--lombok版本-->
-    <lombok.version>1.18.36</lombok.version>
+    <lombok.version>1.18.38</lombok.version>
     <!--postgresql版本-->
     <postgresql.version>42.7.5</postgresql.version>
     <!--admin版本-->
