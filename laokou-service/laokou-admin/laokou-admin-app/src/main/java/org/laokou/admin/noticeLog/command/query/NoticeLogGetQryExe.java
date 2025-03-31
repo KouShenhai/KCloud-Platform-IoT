@@ -26,6 +26,8 @@ import org.laokou.admin.noticeLog.gatewayimpl.database.NoticeLogMapper;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
+
 /**
  * 查看通知日志请求执行器.
  *
@@ -39,7 +41,7 @@ public class NoticeLogGetQryExe {
 
 	public Result<NoticeLogCO> execute(NoticeLogGetQry qry) {
 		try {
-			DynamicDataSourceContextHolder.push("domain");
+			DynamicDataSourceContextHolder.push(DOMAIN);
 			return Result.ok(NoticeLogConvertor.toClientObject(noticeLogMapper.selectById(qry.getId())));
 		}
 		finally {

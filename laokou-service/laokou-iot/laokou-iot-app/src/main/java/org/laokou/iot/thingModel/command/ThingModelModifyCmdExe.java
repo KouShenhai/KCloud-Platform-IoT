@@ -17,6 +17,7 @@
 
 package org.laokou.iot.thingModel.command;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
@@ -24,6 +25,8 @@ import org.laokou.iot.thingModel.dto.ThingModelModifyCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
 import org.laokou.iot.thingModel.ability.ThingModelDomainService;
+
+import static org.laokou.common.tenant.constant.DSConstants.IOT;
 
 /**
  *
@@ -41,9 +44,16 @@ public class ThingModelModifyCmdExe {
 
 	@CommandLog
 	public void executeVoid(ThingModelModifyCmd cmd) {
-		// 校验参数
-		transactionalUtils
-			.executeInTransaction(() -> thingModelDomainService.update(ThingModelConvertor.toEntity(cmd.getCo())));
+		try {
+			DynamicDataSourceContextHolder.push(IOT);
+			// 校验参数
+			transactionalUtils
+				.executeInTransaction(() -> thingModelDomainService.update(ThingModelConvertor.toEntity(cmd.getCo())));
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
+
 	}
 
 }

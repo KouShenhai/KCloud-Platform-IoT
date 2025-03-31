@@ -31,6 +31,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
+
 /**
  * 分页查询登录日志请求执行器.
  *
@@ -45,7 +47,7 @@ public class LoginLogPageQryExe {
 
 	public Result<Page<LoginLogCO>> execute(LoginLogPageQry qry) {
 		try {
-			DynamicDataSourceContextHolder.push("domain");
+			DynamicDataSourceContextHolder.push(DOMAIN);
 			List<LoginLogDO> list = loginLogMapper.selectObjectPage(qry);
 			long total = loginLogMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(LoginLogConvertor.toClientObjects(list), total));

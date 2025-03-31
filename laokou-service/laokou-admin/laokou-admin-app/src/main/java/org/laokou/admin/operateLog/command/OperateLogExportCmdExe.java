@@ -30,6 +30,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ExecutorService;
 
+import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
+
 /**
  * 导出操作日志命令执行器.
  *
@@ -46,7 +48,7 @@ public class OperateLogExportCmdExe {
 	@CommandLog
 	public void executeVoid(OperateLogExportCmd cmd) {
 		try {
-			DynamicDataSourceContextHolder.push("domain");
+			DynamicDataSourceContextHolder.push(DOMAIN);
 			ExcelUtils.doExport("操作日志", "操作日志", ResponseUtils.getHttpServletResponse(), cmd, operateLogMapper,
 					OperateLogExcel.class, OperateLogConvertor.INSTANCE, virtualThreadExecutor);
 		}
