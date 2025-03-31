@@ -17,37 +17,52 @@
 
 package org.laokou.common.data.cache.handler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.RequiredArgsConstructor;
+import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
+import org.laokou.common.data.cache.handler.event.RemovedCacheEvent;
+import org.laokou.common.domain.handler.AbstractDomainEventHandler;
+import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.StringUtils;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
+import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
+import static org.laokou.common.data.cache.constant.MqConstants.LAOKOU_CACHE_CONSUMER_GROUP;
+import static org.laokou.common.data.cache.constant.MqConstants.LAOKOU_CACHE_TOPIC;
+
 /**
  * @author laokou
  */
-// @Component
-// @RocketMQMessageListener(consumerGroup = LAOKOU_CACHE_CONSUMER_GROUP, topic =
-// LAOKOU_CACHE_TOPIC,
-// messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
-public class RemoveCacheEventHandler {
+@Component
+@RequiredArgsConstructor
+@RocketMQMessageListener(consumerGroup = LAOKOU_CACHE_CONSUMER_GROUP, topic = LAOKOU_CACHE_TOPIC,
+		messageModel = BROADCASTING, consumeMode = CONCURRENTLY, consumeThreadMax = 128, consumeThreadNumber = 64)
+public class RemoveCacheEventHandler extends AbstractDomainEventHandler {
 
-	// private final List<CacheManager> cacheManagers;
-	//
-	// public RemoveCacheEventHandler(DomainEventPublisher rocketMQDomainEventPublisher,
-	// List<CacheManager> cacheManagers) {
-	// super(rocketMQDomainEventPublisher);
-	// this.cacheManagers = cacheManagers;
-	// }
+	private final List<CacheManager> cacheManagers;
 
-	// @Override
-	// protected void handleDomainEvent(DefaultDomainEvent domainEvent) {
-	//// RemovedCacheEvent event = (RemovedCacheEvent) domainEvent;
-	//// cacheManagers.forEach(item -> {
-	//// Cache cache = item.getCache(event.getName());
-	//// if (ObjectUtil.isNotNull(cache)) {
-	//// cache.evictIfPresent(event.getKey());
-	//// }
-	//// });
-	// }
-	//
-	// @Override
-	// protected DefaultDomainEvent convert(String msg) {
-	// return null;
-	// }
+	@Override
+	protected void handleDomainEvent(DomainEvent domainEvent) throws JsonProcessingException {
+		RemovedCacheEvent evt = JacksonUtils.toBean(domainEvent.getPayload(), RemovedCacheEvent.class);
+		cacheManagers.forEach(item -> {
+			Cache cache = item.getCache(evt.name());
+			if (ObjectUtils.isNotNull(cache)) {
+				String key = evt.key();
+				if (StringUtils.isNotEmpty(key)) {
+					cache.evictIfPresent(key);
+				}
+				else {
+					cache.clear();
+				}
+			}
+		});
+	}
 
 }

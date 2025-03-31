@@ -22,7 +22,8 @@ package org.laokou.common.data.cache.constant;
  * 命名格式如下：
  * name 		=> 缓存名称.
  * ttl 			=> 过期时间，默认为0（不过期）.
- * maxIdleTime 	=> 最大空闲时间（保持存活的最长时间），默认为0 maxSize => 最大长度，默认为0（没有长度限制）.
+ * maxIdleTime 	=> 最大空闲时间（保持存活的最长时间），默认为0.
+ * maxSize      => 最大长度，默认为0（没有长度限制）.
  * 格式 			=> name_ttl_maxIdleTime_maxSize.
  * @author laokou
  */
@@ -78,6 +79,11 @@ public final class NameConstants {
 	 * 用户缓存配置.
 	 */
 	public static final String USERS = "users" + DEFAULT;
+
+	/**
+	 * 用户菜单缓存配置.
+	 */
+	public static final String USER_MENU = "user_menu" + "#5m#10m#1024";
 
 	private NameConstants() {
 	}

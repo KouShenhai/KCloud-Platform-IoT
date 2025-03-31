@@ -18,20 +18,19 @@
 package org.laokou.admin.menu.command.query;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuTreeListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
-import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.admin.menu.model.MenuStatusEnum;
-import org.laokou.admin.menu.model.MenuTypeEnum;
-import org.laokou.admin.menu.model.TreeMenuTypeEnum;
-import org.laokou.common.core.util.TreeUtils;
+import org.laokou.admin.menu.service.extensionpoint.MenuTreeBuilderExtPt;
+import org.laokou.common.core.context.UserContextHolder;
+import org.laokou.common.extension.BizScenario;
+import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
 import java.util.List;
+
+import static org.laokou.admin.common.constant.BizConstants.SCENARIO;
+import static org.laokou.admin.common.constant.BizConstants.USE_CASE_MENU;
 
 /**
  * 查询菜单请求执行器.
@@ -44,25 +43,13 @@ public class MenuTreeListQryExe {
 
 	private final MenuMapper menuMapper;
 
-	public Result<List<MenuTreeCO>> execute(MenuTreeListQry qry) {
-		MenuTreeCO co = TreeUtils.buildTreeNode(MenuConvertor.toClientObjs(list(qry)), MenuTreeCO.class);
-		return Result.ok(co.getChildren());
-	}
+	private final ExtensionExecutor extensionExecutor;
 
-	private List<MenuDO> list(MenuTreeListQry qry) {
-		switch (TreeMenuTypeEnum.getByCode(qry.getCode())) {
-			case USER -> {
-				qry.setStatus(MenuStatusEnum.ENABLE.getCode());
-				qry.setType(MenuTypeEnum.MENU.getCode());
-				return menuMapper.selectObjectList(qry);
-			}
-			case SYSTEM -> {
-				return menuMapper.selectObjectList(qry);
-			}
-			case null -> {
-				return new ArrayList<>(0);
-			}
-		}
+	public Result<List<MenuTreeCO>> execute(MenuTreeListQry qry) {
+		MenuTreeCO co = extensionExecutor.execute(MenuTreeBuilderExtPt.class,
+				BizScenario.valueOf(String.valueOf(qry.getCode()), USE_CASE_MENU, SCENARIO),
+				extension -> extension.build(qry, UserContextHolder.get().getId(), menuMapper));
+		return Result.ok(co.getChildren());
 	}
 
 }

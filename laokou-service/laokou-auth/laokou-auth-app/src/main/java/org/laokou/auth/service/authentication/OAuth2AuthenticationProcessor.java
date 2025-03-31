@@ -43,7 +43,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Component;
 
 import static org.laokou.auth.common.constant.BizConstants.SCENARIO;
-import static org.laokou.auth.model.AuthA.USE_CASE_AUTH;
+import static org.laokou.auth.common.constant.BizConstants.USE_CASE_AUTH;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getOAuth2AuthenticationException;
 

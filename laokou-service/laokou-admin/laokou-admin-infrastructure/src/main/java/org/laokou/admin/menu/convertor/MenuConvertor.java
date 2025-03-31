@@ -19,6 +19,7 @@ package org.laokou.admin.menu.convertor;
 
 import org.laokou.admin.menu.dto.clientobject.MenuCO;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
+import org.laokou.admin.menu.factory.MenuDomainFactory;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuE;
 import org.laokou.common.core.util.IdGenerator;
@@ -94,7 +95,7 @@ public final class MenuConvertor {
 	}
 
 	public static MenuE toEntity(MenuCO menuCO) {
-		MenuE menuE = new MenuE();
+		MenuE menuE = MenuDomainFactory.getMenu();
 		menuE.setId(menuCO.getId());
 		menuE.setPid(menuCO.getPid());
 		menuE.setPermission(menuCO.getPermission());

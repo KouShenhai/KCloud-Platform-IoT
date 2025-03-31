@@ -45,7 +45,7 @@ import static org.laokou.infrastructure.common.constant.MqConstant.*;
  */
 @Slf4j
 @Component
-@RocketMQMessageListener(consumerGroup = LAOKOU_WS_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_WS_MESSAGE_TOPIC, messageModel = BROADCASTING, consumeMode = CONCURRENTLY)
+@RocketMQMessageListener(consumerGroup = LAOKOU_WS_MESSAGE_CONSUMER_GROUP, topic = LAOKOU_WS_MESSAGE_TOPIC, messageModel = BROADCASTING, consumeMode = CONCURRENTLY, consumeThreadMax = 128, consumeThreadNumber = 64)
 public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 
 	private final Server webSocketServer;

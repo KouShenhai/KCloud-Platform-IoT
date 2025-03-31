@@ -76,7 +76,7 @@ public class CacheAop {
 		};
 	}
 
-	private Object get(String name, String key, ProceedingJoinPoint point) throws InterruptedException {
+	private Object get(String name, String key, ProceedingJoinPoint point) {
 		boolean isLocked = false;
 		int retry = 3;
 		try {

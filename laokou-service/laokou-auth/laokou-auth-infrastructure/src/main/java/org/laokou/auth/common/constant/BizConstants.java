@@ -31,6 +31,16 @@ public final class BizConstants {
 	public static final String SCENARIO = "iot";
 
 	/**
+	 * 业务用例.
+	 */
+	public static final String USE_CASE_AUTH = "auth";
+
+	/**
+	 * 业务用例.
+	 */
+	public static final String USE_CASE_CAPTCHA = "captcha";
+
+	/**
 	 * 查询用户失败.
 	 */
 	public static final String DEPT_QUERY_FAILED = "B_Dept_QueryFailed";

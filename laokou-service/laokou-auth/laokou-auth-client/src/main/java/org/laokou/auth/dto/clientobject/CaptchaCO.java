@@ -30,11 +30,6 @@ import org.laokou.common.i18n.dto.ClientObject;
 @AllArgsConstructor
 public class CaptchaCO extends ClientObject {
 
-	/**
-	 * 业务用例.
-	 */
-	public static final String USE_CASE_CAPTCHA = "captcha";
-
 	private String uuid;
 
 	private String tag;

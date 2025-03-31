@@ -50,11 +50,6 @@ import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
 public class AuthA extends AggregateRoot {
 
 	/**
-	 * 业务用例.
-	 */
-	public static final String USE_CASE_AUTH = "auth";
-
-	/**
 	 * 用户名.
 	 */
 	private final String username;
@@ -69,9 +64,15 @@ public class AuthA extends AggregateRoot {
 	 */
 	private final String tenantCode;
 
+	// @formatter:off
 	/**
-	 * 认证类型 mail邮箱 mobile手机号 username_password用户名密码 authorization_code授权码.
+	 * 认证类型.
+	 * mail邮箱
+	 * mobile手机号
+	 * username_password用户名密码
+	 * authorization_code授权码
 	 */
+	// @formatter:on
 	private final GrantTypeEnum grantTypeEnum;
 
 	/**

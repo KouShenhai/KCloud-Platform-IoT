@@ -19,6 +19,7 @@ package org.laokou.admin.noticeLog.convertor;
 
 import org.laokou.admin.noticeLog.dto.clientobject.NoticeLogCO;
 import org.laokou.admin.noticeLog.dto.excel.NoticeLogExcel;
+import org.laokou.admin.noticeLog.factory.NoticeLogDomainFactory;
 import org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.admin.noticeLog.model.NoticeLogE;
 import org.laokou.admin.noticeLog.model.Status;
@@ -75,7 +76,7 @@ public final class NoticeLogConvertor implements ExcelUtils.ExcelConvertor<Notic
 	}
 
 	public static NoticeLogE toEntity(NoticeLogCO noticeLogCO) {
-		NoticeLogE noticeLogE = new NoticeLogE();
+		NoticeLogE noticeLogE = NoticeLogDomainFactory.getNoticeLog();
 		noticeLogE.setId(noticeLogCO.getId());
 		noticeLogE.setCode(noticeLogCO.getCode());
 		noticeLogE.setName(noticeLogCO.getName());

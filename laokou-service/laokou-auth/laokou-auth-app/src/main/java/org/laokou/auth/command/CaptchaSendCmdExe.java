@@ -34,7 +34,7 @@ import org.laokou.common.rocketmq.template.SendMessageTypeEnum;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.auth.common.constant.BizConstants.SCENARIO;
-import static org.laokou.auth.dto.clientobject.CaptchaCO.USE_CASE_CAPTCHA;
+import static org.laokou.auth.common.constant.BizConstants.USE_CASE_CAPTCHA;
 
 /**
  * @author laokou
