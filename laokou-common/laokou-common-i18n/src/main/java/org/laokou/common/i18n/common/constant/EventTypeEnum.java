@@ -31,7 +31,9 @@ public enum EventTypeEnum {
 
 	LOGIN_EVENT("loginEvent", "登录事件"),
 
-	OPERATE_EVENT("operateEvent", "操作事件");
+	OPERATE_EVENT("operateEvent", "操作事件"),
+
+	REMOVE_CACHE_EVENT("removeCacheEvent", "移除缓存事件");
 
 	private final String code;
 

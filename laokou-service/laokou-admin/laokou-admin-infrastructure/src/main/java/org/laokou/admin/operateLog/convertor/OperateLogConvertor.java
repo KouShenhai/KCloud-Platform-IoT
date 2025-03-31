@@ -20,6 +20,7 @@ package org.laokou.admin.operateLog.convertor;
 import org.laokou.admin.noticeLog.model.Status;
 import org.laokou.admin.operateLog.dto.clientobject.OperateLogCO;
 import org.laokou.admin.operateLog.dto.excel.OperateLogExcel;
+import org.laokou.admin.operateLog.factory.OperateLogDomainFactory;
 import org.laokou.admin.operateLog.model.OperateLogE;
 import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.excel.util.ExcelUtils;
@@ -97,7 +98,7 @@ public final class OperateLogConvertor implements ExcelUtils.ExcelConvertor<Oper
 	}
 
 	public static OperateLogE toEntity(OperateLogCO operateLogCO) {
-		OperateLogE operateLogE = new OperateLogE();
+		OperateLogE operateLogE = OperateLogDomainFactory.getOperateLog();
 		operateLogE.setId(operateLogCO.getId());
 		operateLogE.setName(operateLogCO.getName());
 		operateLogE.setModuleName(operateLogCO.getModuleName());

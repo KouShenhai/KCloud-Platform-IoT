@@ -30,6 +30,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
+
 /**
  * 分页查询操作日志请求执行器.
  *
@@ -43,7 +45,7 @@ public class OperateLogPageQryExe {
 
 	public Result<Page<OperateLogCO>> execute(OperateLogPageQry qry) {
 		try {
-			DynamicDataSourceContextHolder.push("domain");
+			DynamicDataSourceContextHolder.push(DOMAIN);
 			List<OperateLogDO> list = operateLogMapper.selectObjectPage(qry);
 			long total = operateLogMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(OperateLogConvertor.toClientObjects(list), total));

@@ -19,6 +19,7 @@ package org.laokou.admin.dept.convertor;
 
 import org.laokou.admin.dept.dto.clientobject.DeptCO;
 import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
+import org.laokou.admin.dept.factory.DeptDomainFactory;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.dept.model.DeptE;
 import org.laokou.common.core.util.IdGenerator;
@@ -58,7 +59,7 @@ public class DeptConvertor {
 	}
 
 	public static DeptE toEntity(DeptCO deptCO) {
-		DeptE deptE = new DeptE();
+		DeptE deptE = DeptDomainFactory.getDept();
 		deptE.setId(deptCO.getId());
 		deptE.setPid(deptCO.getPid());
 		deptE.setName(deptCO.getName());

@@ -30,6 +30,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
+
 /**
  * 分页查询通知日志请求执行器.
  *
@@ -43,7 +45,7 @@ public class NoticeLogPageQryExe {
 
 	public Result<Page<NoticeLogCO>> execute(NoticeLogPageQry qry) {
 		try {
-			DynamicDataSourceContextHolder.push("domain");
+			DynamicDataSourceContextHolder.push(DOMAIN);
 			List<NoticeLogDO> list = noticeLogMapper.selectObjectPage(qry);
 			long total = noticeLogMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(NoticeLogConvertor.toClientObjects(list), total));

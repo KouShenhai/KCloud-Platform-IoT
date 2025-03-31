@@ -19,6 +19,7 @@ package org.laokou.admin.loginLog.convertor;
 
 import org.laokou.admin.loginLog.dto.clientobject.LoginLogCO;
 import org.laokou.admin.loginLog.dto.excel.LoginLogExcel;
+import org.laokou.admin.loginLog.factory.LoginLogDomainFactory;
 import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.loginLog.model.LoginLogE;
 import org.laokou.admin.loginLog.model.LoginStatusEnum;
@@ -81,7 +82,7 @@ public final class LoginLogConvertor implements ExcelUtils.ExcelConvertor<LoginL
 	}
 
 	public static LoginLogE toEntity(LoginLogCO loginLogCO) {
-		LoginLogE loginLogE = new LoginLogE();
+		LoginLogE loginLogE = LoginLogDomainFactory.getLoginLog();
 		loginLogE.setId(loginLogCO.getId());
 		loginLogE.setUsername(loginLogCO.getUsername());
 		loginLogE.setIp(loginLogCO.getIp());

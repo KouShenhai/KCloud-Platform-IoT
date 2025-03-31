@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
 import static org.laokou.common.log.constant.MqConstants.*;
+import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * @author laokou
@@ -38,7 +39,8 @@ import static org.laokou.common.log.constant.MqConstants.*;
 @Component
 @RequiredArgsConstructor
 @RocketMQMessageListener(consumerGroup = LAOKOU_OPERATE_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
-		selectorExpression = OPERATE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+		selectorExpression = OPERATE_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY, consumeThreadMax = 128,
+		consumeThreadNumber = 64)
 public class OperateEventHandler extends AbstractDomainEventHandler {
 
 	private final OperateLogMapper operateLogMapper;
@@ -48,7 +50,7 @@ public class OperateEventHandler extends AbstractDomainEventHandler {
 	@Override
 	protected void handleDomainEvent(DomainEvent domainEvent) {
 		try {
-			DynamicDataSourceContextHolder.push("domain");
+			DynamicDataSourceContextHolder.push(DOMAIN);
 			transactionalUtils
 				.executeInTransaction(() -> operateLogMapper.insert(OperateLogConvertor.toDataObject(domainEvent)));
 		}

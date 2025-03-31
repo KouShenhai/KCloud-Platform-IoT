@@ -30,6 +30,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ExecutorService;
 
+import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
+
 /**
  * 导出通知日志命令执行器.
  *
@@ -47,7 +49,7 @@ public class NoticeLogExportCmdExe {
 	public void executeVoid(NoticeLogExportCmd cmd) {
 		// 校验参数
 		try {
-			DynamicDataSourceContextHolder.push("domain");
+			DynamicDataSourceContextHolder.push(DOMAIN);
 			ExcelUtils.doExport("通知日志", "通知日志", ResponseUtils.getHttpServletResponse(), cmd, noticeLogMapper,
 					NoticeLogExcel.class, NoticeLogConvertor.INSTANCE, virtualThreadExecutor);
 		}

@@ -17,22 +17,9 @@
 
 package org.laokou.common.data.cache.handler.event;
 
-import lombok.Getter;
-
 /**
  * @author laokou
  */
-@Getter
-public class RemovedCacheEvent {
-
-	private String name;
-
-	private String key;
-
-	// protected RemovedCacheEvent(String serviceId, Long tenantId, Long userId, Long
-	// aggregateId, String sourcePrefix,
-	// String topic, String tag) {
-	// super(serviceId, tenantId, userId, aggregateId, sourcePrefix, topic, tag);
-	// }
+public record RemovedCacheEvent(String name, String key) {
 
 }

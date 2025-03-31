@@ -42,7 +42,8 @@ import static org.laokou.auth.model.MqConstants.*;
 @Component
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
-		selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY)
+		selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY, consumeThreadMax = 128,
+		consumeThreadNumber = 64)
 public class SendMailCaptchaEventHandler extends AbstractDomainEventHandler {
 
 	private final MailService mailService;

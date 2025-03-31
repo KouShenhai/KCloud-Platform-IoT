@@ -18,6 +18,7 @@
 package org.laokou.admin.role.convertor;
 
 import org.laokou.admin.role.dto.clientobject.RoleCO;
+import org.laokou.admin.role.factory.RoleDomainFactory;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
@@ -99,7 +100,7 @@ public class RoleConvertor {
 	}
 
 	public static RoleE toEntity(RoleCO roleCO) {
-		RoleE roleE = new RoleE();
+		RoleE roleE = RoleDomainFactory.getRole();
 		roleE.setId(roleCO.getId());
 		roleE.setName(roleCO.getName());
 		roleE.setSort(roleCO.getSort());
@@ -107,7 +108,7 @@ public class RoleConvertor {
 	}
 
 	public static RoleE toEntity(RoleCO roleCO, Long id) {
-		RoleE roleE = new RoleE();
+		RoleE roleE = RoleDomainFactory.getRole();
 		roleE.setId(id);
 		roleE.setMenuIds(roleCO.getMenuIds());
 		roleE.setDataScope(roleCO.getDataScope());

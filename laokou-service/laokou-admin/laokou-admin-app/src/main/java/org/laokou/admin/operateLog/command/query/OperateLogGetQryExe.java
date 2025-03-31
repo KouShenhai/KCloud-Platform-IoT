@@ -26,6 +26,8 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.log.mapper.OperateLogMapper;
 import org.springframework.stereotype.Component;
 
+import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
+
 /**
  * 查看操作日志请求执行器.
  *
@@ -39,7 +41,7 @@ public class OperateLogGetQryExe {
 
 	public Result<OperateLogCO> execute(OperateLogGetQry qry) {
 		try {
-			DynamicDataSourceContextHolder.push("domain");
+			DynamicDataSourceContextHolder.push(DOMAIN);
 			return Result.ok(OperateLogConvertor.toClientObject(operateLogMapper.selectById(qry.getId())));
 		}
 		finally {
