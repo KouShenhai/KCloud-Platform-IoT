@@ -19,7 +19,7 @@ importers:
         version: 2.31.6(antd@5.24.5(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(rc-field-form@2.7.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@ant-design/pro-layout':
         specifier: ^7.22.3
-        version: 7.22.3(antd@5.24.5(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 7.22.4(antd@5.24.5(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@codemirror/lang-javascript':
         specifier: ^6.2.3
         version: 6.2.3
@@ -196,13 +196,6 @@ packages:
     peerDependencies:
       antd: ^4.24.15 || ^5.11.2
       rc-field-form: '>=1.22.0'
-      react: '>=17.0.0'
-      react-dom: '>=17.0.0'
-
-  '@ant-design/pro-layout@7.22.3':
-    resolution: {integrity: sha512-di/EOMDuoMDRjBweqesYyCxEYr2LCmO82y6A4bSwmmJ6ehxN7HGC73Wx4RuBkzDR7kHLTOXt7WxI6875ENT8mg==}
-    peerDependencies:
-      antd: ^4.24.15 || ^5.11.2
       react: '>=17.0.0'
       react-dom: '>=17.0.0'
 
@@ -6314,8 +6307,8 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
-  use-sync-external-store@1.4.0:
-    resolution: {integrity: sha512-9WXSPC5fMv61vaupRkCKCxsPxBocVnwakBEkMIHHpkTTg6icbJtg6jzgtLDm4bl3cSHAca52rYWih0k4K3PfHw==}
+  use-sync-external-store@1.5.0:
+    resolution: {integrity: sha512-Rb46I4cGGVBmjamjphe8L/UnvJD+uPPtTkNvX5mZgqdbavhI4EbgIWJiIHXJ8bc/i9EQGPRh4DwEURJ552Do0A==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -6592,7 +6585,7 @@ snapshots:
 
   '@ant-design/cssinjs@1.23.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.26.10
+      '@babel/runtime': 7.27.0
       '@emotion/hash': 0.8.0
       '@emotion/unitless': 0.7.5
       classnames: 2.5.1
@@ -6625,7 +6618,7 @@ snapshots:
     dependencies:
       '@ant-design/colors': 7.2.0
       '@ant-design/icons-svg': 4.4.2
-      '@babel/runtime': 7.26.10
+      '@babel/runtime': 7.27.0
       classnames: 2.5.1
       rc-util: 5.44.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -6855,27 +6848,6 @@ snapshots:
       rc-util: 5.44.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-
-  '@ant-design/pro-layout@7.22.3(antd@5.24.5(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@ant-design/cssinjs': 1.23.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@ant-design/icons': 5.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@ant-design/pro-provider': 2.15.3(antd@5.24.5(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@ant-design/pro-utils': 2.16.4(antd@5.24.5(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@babel/runtime': 7.26.10
-      '@umijs/route-utils': 4.0.1
-      '@umijs/use-params': 1.0.9(react@18.3.1)
-      antd: 5.24.5(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      classnames: 2.5.1
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      path-to-regexp: 8.2.0
-      rc-resize-observer: 1.4.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      rc-util: 5.44.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      swr: 2.3.3(react@18.3.1)
-      warning: 4.0.3
 
   '@ant-design/pro-layout@7.22.4(antd@4.24.16(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -8232,13 +8204,13 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       superjson: 1.13.3
-      use-sync-external-store: 1.4.0(react@18.3.1)
+      use-sync-external-store: 1.5.0(react@18.3.1)
 
   '@tanstack/react-query@4.36.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@tanstack/query-core': 4.36.1
       react: 18.3.1
-      use-sync-external-store: 1.4.0(react@18.3.1)
+      use-sync-external-store: 1.5.0(react@18.3.1)
     optionalDependencies:
       react-dom: 18.3.1(react@18.3.1)
 
@@ -13051,7 +13023,7 @@ snapshots:
 
   rc-resize-observer@1.4.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.26.10
+      '@babel/runtime': 7.27.0
       classnames: 2.5.1
       rc-util: 5.44.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -13307,7 +13279,7 @@ snapshots:
 
   rc-util@5.44.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.26.10
+      '@babel/runtime': 7.27.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-is: 18.3.1
@@ -13392,7 +13364,7 @@ snapshots:
       hoist-non-react-statics: 3.3.2
       react: 18.3.1
       react-is: 18.3.1
-      use-sync-external-store: 1.4.0(react@18.3.1)
+      use-sync-external-store: 1.5.0(react@18.3.1)
     optionalDependencies:
       '@types/react': 18.3.20
       '@types/react-dom': 18.3.5(@types/react@18.3.20)
@@ -14217,7 +14189,7 @@ snapshots:
     dependencies:
       dequal: 2.0.3
       react: 18.3.1
-      use-sync-external-store: 1.4.0(react@18.3.1)
+      use-sync-external-store: 1.5.0(react@18.3.1)
 
   symbol-observable@1.2.0: {}
 
@@ -14531,7 +14503,7 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  use-sync-external-store@1.4.0(react@18.3.1):
+  use-sync-external-store@1.5.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 
