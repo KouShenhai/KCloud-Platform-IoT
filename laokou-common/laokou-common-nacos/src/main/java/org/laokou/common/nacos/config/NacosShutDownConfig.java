@@ -35,9 +35,9 @@ public class NacosShutDownConfig {
 	@PreDestroy
 	public void preDestroy() throws NacosException {
 		// 服务下线
-		log.info("开始执行服务下线");
+		log.info("开始执行服务下线，Nacos开始剔除服务");
 		namingUtils.nacosServiceShutDown();
-		log.info("执行服务下线完成");
+		log.info("执行服务下线完成，Nacos完成服务剔除");
 	}
 
 }
