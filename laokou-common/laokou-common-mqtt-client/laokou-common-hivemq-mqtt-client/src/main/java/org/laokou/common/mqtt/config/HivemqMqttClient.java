@@ -28,10 +28,13 @@ import com.hivemq.client.mqtt.mqtt5.message.publish.Mqtt5Publish;
 import com.hivemq.client.mqtt.mqtt5.message.subscribe.Mqtt5Subscription;
 import com.hivemq.client.mqtt.mqtt5.message.unsubscribe.Mqtt5Unsubscribe;
 import io.reactivex.Flowable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.EventBus;
 import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.MapUtils;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.mqtt.client.AbstractMqttClient;
 import org.laokou.common.mqtt.client.MqttMessage;
@@ -41,9 +44,9 @@ import org.laokou.common.mqtt.client.handler.event.CloseEvent;
 import org.laokou.common.mqtt.client.handler.event.OpenEvent;
 import org.laokou.common.mqtt.client.handler.event.SubscribeEvent;
 import org.laokou.common.mqtt.client.handler.event.UnsubscribeEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -64,6 +67,8 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	private final Object LOCK = new Object();
 
+	private final Map<String, Disposable> DISPOSABLE_MAP = new ConcurrentHashMap<>(MapUtils.initialCapacity(6));
+
 	public HivemqMqttClient(MqttClientProperties mqttClientProperties, List<MessageHandler> messageHandlers,
 			ExecutorService virtualThreadExecutor) {
 		this.mqttClientProperties = mqttClientProperties;
@@ -77,7 +82,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				if (ObjectUtils.isNull(client)) {
 					String clientId = mqttClientProperties.getClientId();
 					client = getClient(clientId);
-					client.connectWith()
+					Disposable open = client.connectWith()
 						.willPublish()
 						.topic(WILL_TOPIC)
 						.payload(WILL_DATA)
@@ -106,7 +111,11 @@ public class HivemqMqttClient extends AbstractMqttClient {
 						})
 						.doOnError(e -> log.error("【Hivemq】 => MQTT连接失败，错误信息：{}", e.getMessage(), e))
 						.subscribeOn(Schedulers.from(virtualThreadExecutor))
-						.subscribe();
+						.subscribe(s -> {
+						}, r -> {
+							throw new SystemException("S_Mqtt_ConnectError", r.getMessage(), r);
+						});
+					DISPOSABLE_MAP.putIfAbsent("open", open);
 				}
 			}
 		}
@@ -114,11 +123,12 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	public void close() {
 		if (ObjectUtils.isNotNull(client)) {
-			client.disconnectWith()
+			Disposable close = client.disconnectWith()
 				.applyDisconnect()
 				.doOnError(e -> log.error("【Hivemq】 => MQTT断开连接失败，错误信息：{}", e.getMessage(), e))
 				.subscribeOn(Schedulers.from(virtualThreadExecutor))
 				.subscribe();
+			DISPOSABLE_MAP.putIfAbsent("close", close);
 		}
 	}
 
@@ -129,7 +139,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			for (int i = 0; i < topics.length; i++) {
 				subscriptions.add(Mqtt5Subscription.builder().topicFilter(topics[i]).qos(getMqttQos(qos[i])).build());
 			}
-			client.subscribeWith()
+			Disposable subscribe = client.subscribeWith()
 				.addSubscriptions(subscriptions)
 				.applySubscribe()
 				.doOnSuccess(subscribeAck -> log.info("【Hivemq】 => MQTT订阅成功，主题: {}", String.join(",", topics)))
@@ -137,6 +147,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 						r.getMessage(), r))
 				.subscribeOn(Schedulers.from(virtualThreadExecutor))
 				.subscribe();
+			DISPOSABLE_MAP.putIfAbsent("subscribe", subscribe);
 		}
 	}
 
@@ -147,18 +158,20 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			for (String topic : topics) {
 				matchedTopics.add(MqttTopicFilter.of(topic));
 			}
-			client.unsubscribe(Mqtt5Unsubscribe.builder().addTopicFilters(matchedTopics).build())
+			Disposable unsubscribe = client
+				.unsubscribe(Mqtt5Unsubscribe.builder().addTopicFilters(matchedTopics).build())
 				.doOnSuccess(r -> log.info("【Hivemq】 => MQTT取消订阅成功，主题：{}", String.join(",", topics)))
 				.doOnError(r -> log.error("【Hivemq】 => MQTT取消订阅失败，主题：{}，错误信息：{}", String.join(",", topics),
 						r.getMessage(), r))
 				.subscribeOn(Schedulers.from(virtualThreadExecutor))
 				.subscribe();
+			DISPOSABLE_MAP.putIfAbsent("unsubscribe", unsubscribe);
 		}
 	}
 
 	public void consume() {
 		if (ObjectUtils.isNotNull(client)) {
-			client.publishes(MqttGlobalPublishFilter.ALL)
+			Disposable consume = client.publishes(MqttGlobalPublishFilter.ALL)
 				.doOnNext(publish -> messageHandlers.forEach(messageHandler -> {
 					if (messageHandler.isSubscribe(publish.getTopic().toString())) {
 						messageHandler
@@ -168,12 +181,13 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				.doOnError(e -> log.error("【Hivemq】 => MQTT消息处理失败，错误信息：{}", e.getMessage(), e))
 				.subscribeOn(Schedulers.from(virtualThreadExecutor))
 				.subscribe();
+			DISPOSABLE_MAP.putIfAbsent("consume", consume);
 		}
 	}
 
 	public void publish(String topic, byte[] payload, int qos) {
 		if (ObjectUtils.isNotNull(client)) {
-			client
+			Disposable publish = client
 				.publish(Flowable.just(Mqtt5Publish.builder()
 					.topic(topic)
 					.qos(getMqttQos(qos))
@@ -185,6 +199,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				.doOnError(e -> log.error("【Hivemq】 => MQTT消息发布失败，错误信息：{}", e.getMessage(), e))
 				.subscribeOn(Schedulers.from(virtualThreadExecutor))
 				.subscribe();
+			DISPOSABLE_MAP.putIfAbsent("publish", publish);
 		}
 	}
 
@@ -227,6 +242,15 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	public void publishCloseEvent(String clientId) {
 		EventBus.publish(new CloseEvent(this, clientId));
+	}
+
+	public void dispose() {
+		DISPOSABLE_MAP.values().forEach(disposable -> {
+			if (disposable != null && !disposable.isDisposed()) {
+				// 显式取消订阅
+				disposable.dispose();
+			}
+		});
 	}
 
 	private MqttQos getMqttQos(int qos) {

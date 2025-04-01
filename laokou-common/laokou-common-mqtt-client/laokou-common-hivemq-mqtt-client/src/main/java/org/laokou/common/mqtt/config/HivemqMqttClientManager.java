@@ -18,7 +18,6 @@
 package org.laokou.common.mqtt.config;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
@@ -93,8 +92,8 @@ public class HivemqMqttClientManager {
 
 	public static void preDestroy(ExecutorService virtualThreadExecutor) {
 		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::close);
+		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::dispose);
 		HIVE_MQTT_CLIENT_MAP.clear();
-		ThreadUtils.shutdown(virtualThreadExecutor, 60);
 	}
 
 }
