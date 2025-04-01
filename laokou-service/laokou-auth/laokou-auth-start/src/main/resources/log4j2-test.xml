@@ -41,7 +41,7 @@
         %d 日期
         %t 线程
     -->
-    <property name="LOG_CONSOLE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:address} - ${PROFILE}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
+    <property name="LOG_CONSOLE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:address:-} - ${PROFILE}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
   </Properties>
   <Appenders>
     <!-- 控制台输出 -->
@@ -70,7 +70,7 @@
       </Policies>
       <DefaultRolloverStrategy max="${LOG_DAYS}"/>
     </RollingRandomAccessFile>
-    <Async name="async_file" bufferSize="2000" blocking="false">
+    <Async name="async_file" bufferSize="2000" blocking="false" shutdownTimeout="30000">
       <AppenderRef ref="file"/>
     </Async>
   </Appenders>

@@ -28,8 +28,6 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
@@ -40,7 +38,6 @@ import static org.laokou.common.data.cache.constant.MqConstants.LAOKOU_CACHE_TOP
 /**
  * @author laokou
  */
-@Component
 @RequiredArgsConstructor
 @RocketMQMessageListener(consumerGroup = LAOKOU_CACHE_CONSUMER_GROUP, topic = LAOKOU_CACHE_TOPIC,
 		messageModel = BROADCASTING, consumeMode = CONCURRENTLY, consumeThreadMax = 128, consumeThreadNumber = 64)

@@ -53,7 +53,7 @@ spring:
   profiles:
     active: @PROFILE-ACTIVE@
   lifecycle:
-    timeout-per-shutdown-phase: "2m"
+    timeout-per-shutdown-phase: 2m
   servlet:
     multipart:
       enabled: true

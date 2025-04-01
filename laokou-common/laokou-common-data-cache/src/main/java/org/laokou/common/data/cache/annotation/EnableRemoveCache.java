@@ -15,22 +15,17 @@
  *
  */
 
-package org.laokou.common.log4j2.config;
+package org.laokou.common.data.cache.annotation;
 
-import jakarta.annotation.PreDestroy;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
+import org.laokou.common.data.cache.handler.RemoveCacheEventHandler;
+import org.springframework.context.annotation.Import;
 
-/**
- * @author laokou
- */
-@Slf4j
-public class Log4j2ShutDownConfig {
+import java.lang.annotation.*;
 
-	@PreDestroy
-	public void preDestroy() {
-		log.info("优雅关闭Log4j2");
-		LogManager.shutdown();
-	}
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import(RemoveCacheEventHandler.class)
+public @interface EnableRemoveCache {
 
 }

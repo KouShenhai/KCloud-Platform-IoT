@@ -57,7 +57,7 @@ spring:
     virtual:
       enabled: true
   lifecycle:
-    timeout-per-shutdown-phase: "2m"
+    timeout-per-shutdown-phase: 2m
   session:
     redis:
       repository-type: indexed
@@ -159,11 +159,11 @@ spring:
           password: ENC(XVR9OF604T3+2BINpvvCohjr7/KM/vuP3ZgYpu+FX/h3uogFI3sh26h8wHPBE+rj)
           # https://blog.csdn.net/u014644574/article/details/123680515
           hikari:
-            connection-timeout: 60000
+            connection-timeout: 180000
             validation-timeout: 3000
-            idle-timeout: 60000
-            max-lifetime: 60000
-            maximum-pool-size: 30
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
             minimum-idle: 10
             is-read-only: false
         domain:

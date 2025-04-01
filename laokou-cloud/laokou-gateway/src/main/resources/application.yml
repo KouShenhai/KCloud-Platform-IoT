@@ -59,6 +59,8 @@ spring:
   threads:
     virtual:
       enabled: true
+  lifecycle:
+    timeout-per-shutdown-phase: 2m
   webflux:
     multipart:
       max-parts: -1
