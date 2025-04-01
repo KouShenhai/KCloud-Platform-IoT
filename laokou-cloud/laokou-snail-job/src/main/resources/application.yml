@@ -35,7 +35,7 @@ spring:
       minimum-idle: 5
       maximum-pool-size: 20
       auto-commit: true
-      idle-timeout: 30000
+      idle-timeout: 180000
       pool-name: snail_job
       max-lifetime: 1800000
   web:
