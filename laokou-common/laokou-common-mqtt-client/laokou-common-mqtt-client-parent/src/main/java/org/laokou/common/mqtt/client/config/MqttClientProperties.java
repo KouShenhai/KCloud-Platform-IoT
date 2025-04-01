@@ -27,7 +27,7 @@ import java.util.Set;
  * @author laokou
  */
 @Data
-public class MqttBrokerProperties {
+public class MqttClientProperties {
 
 	private boolean auth = true;
 
@@ -71,11 +71,6 @@ public class MqttBrokerProperties {
 	 * 秒.
 	 */
 	private int connectionTimeout = 15;
-
-	/**
-	 * 毫秒.
-	 */
-	private int automaticReconnectMaxDelay = 100;
 
 	private long sessionExpiryInterval = 30;
 

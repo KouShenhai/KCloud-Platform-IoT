@@ -26,6 +26,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * @author laokou
  */
@@ -47,7 +49,7 @@ public class HivemqMqttClientEventHandler {
 
 	@Async
 	@EventListener
-	public void onOpenEvent(OpenEvent event) {
+	public void onOpenEvent(OpenEvent event) throws ExecutionException, InterruptedException {
 		HivemqMqttClientManager.open(event.getClientId());
 	}
 

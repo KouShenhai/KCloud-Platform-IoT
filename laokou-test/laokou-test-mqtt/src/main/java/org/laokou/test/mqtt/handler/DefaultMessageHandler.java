@@ -34,8 +34,8 @@ public class DefaultMessageHandler implements MessageHandler {
 	}
 
 	@Override
-	public void handle(String topic, org.laokou.common.mqtt.client.MqttMessage mqttMessage) {
-		log.info("接收到MQTT消息 => topic: {}, message: {}", topic, new String(mqttMessage.getPayload()));
+	public void handle(org.laokou.common.mqtt.client.MqttMessage mqttMessage) {
+		log.info("接收到MQTT消息 => topic: {}, message: {}", mqttMessage.getTopic(), new String(mqttMessage.getPayload()));
 	}
 
 }

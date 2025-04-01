@@ -18,7 +18,6 @@
 package org.laokou.common.mqtt.config;
 
 import com.hivemq.client.mqtt.MqttClientExecutorConfig;
-import com.hivemq.client.mqtt.MqttClientTransportConfig;
 import com.hivemq.client.mqtt.MqttGlobalPublishFilter;
 import com.hivemq.client.mqtt.datatypes.MqttQos;
 import com.hivemq.client.mqtt.datatypes.MqttTopicFilter;
@@ -36,7 +35,7 @@ import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.mqtt.client.AbstractMqttClient;
 import org.laokou.common.mqtt.client.MqttMessage;
-import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
+import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
 import org.laokou.common.mqtt.client.handler.event.CloseEvent;
 import org.laokou.common.mqtt.client.handler.event.OpenEvent;
@@ -46,7 +45,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * MQTT客户端.
@@ -56,7 +54,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class HivemqMqttClient extends AbstractMqttClient {
 
-	private final MqttBrokerProperties mqttBrokerProperties;
+	private final MqttClientProperties mqttClientProperties;
 
 	private final List<MessageHandler> messageHandlers;
 
@@ -66,9 +64,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	private final Object LOCK = new Object();
 
-	public HivemqMqttClient(MqttBrokerProperties mqttBrokerProperties, List<MessageHandler> messageHandlers,
+	public HivemqMqttClient(MqttClientProperties mqttClientProperties, List<MessageHandler> messageHandlers,
 			ExecutorService virtualThreadExecutor) {
-		this.mqttBrokerProperties = mqttBrokerProperties;
+		this.mqttClientProperties = mqttClientProperties;
 		this.messageHandlers = messageHandlers;
 		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
@@ -77,34 +75,34 @@ public class HivemqMqttClient extends AbstractMqttClient {
 		if (ObjectUtils.isNull(client)) {
 			synchronized (LOCK) {
 				if (ObjectUtils.isNull(client)) {
-					String clientId = mqttBrokerProperties.getClientId();
+					String clientId = mqttClientProperties.getClientId();
 					client = getClient(clientId);
 					client.connectWith()
 						.willPublish()
 						.topic(WILL_TOPIC)
 						.payload(WILL_DATA)
-						.qos(getMqttQos(mqttBrokerProperties.getWillQos()))
+						.qos(getMqttQos(mqttClientProperties.getWillQos()))
 						.retain(false)
 						.applyWillPublish()
-						.keepAlive(mqttBrokerProperties.getKeepAliveInterval())
-						.cleanStart(mqttBrokerProperties.isClearStart())
-						.sessionExpiryInterval(mqttBrokerProperties.getSessionExpiryInterval())
+						.keepAlive(mqttClientProperties.getKeepAliveInterval())
+						.cleanStart(mqttClientProperties.isClearStart())
+						.sessionExpiryInterval(mqttClientProperties.getSessionExpiryInterval())
 						.restrictions()
-						.receiveMaximum(mqttBrokerProperties.getReceiveMaximum())
-						.sendMaximum(mqttBrokerProperties.getSendMaximum())
-						.maximumPacketSize(mqttBrokerProperties.getMaximumPacketSize())
-						.sendMaximumPacketSize(mqttBrokerProperties.getSendMaximumPacketSize())
-						.topicAliasMaximum(mqttBrokerProperties.getTopicAliasMaximum())
-						.sendTopicAliasMaximum(mqttBrokerProperties.getSendTopicAliasMaximum())
-						.requestProblemInformation(mqttBrokerProperties.isRequestProblemInformation())
-						.requestResponseInformation(mqttBrokerProperties.isRequestProblemInformation())
+						.receiveMaximum(mqttClientProperties.getReceiveMaximum())
+						.sendMaximum(mqttClientProperties.getSendMaximum())
+						.maximumPacketSize(mqttClientProperties.getMaximumPacketSize())
+						.sendMaximumPacketSize(mqttClientProperties.getSendMaximumPacketSize())
+						.topicAliasMaximum(mqttClientProperties.getTopicAliasMaximum())
+						.sendTopicAliasMaximum(mqttClientProperties.getSendTopicAliasMaximum())
+						.requestProblemInformation(mqttClientProperties.isRequestProblemInformation())
+						.requestResponseInformation(mqttClientProperties.isRequestResponseInformation())
 						.applyRestrictions()
 						.applyConnect()
 						.doOnSuccess(s -> {
 							log.info("【Hivemq】 => MQTT连接成功，客户端ID：{}", clientId);
 							// 发布订阅事件
-							publishSubscribeEvent(mqttBrokerProperties.getTopics(),
-									mqttBrokerProperties.getSubscribeQos());
+							publishSubscribeEvent(mqttClientProperties.getTopics(),
+									mqttClientProperties.getSubscribeQos());
 						})
 						.doOnError(e -> log.error("【Hivemq】 => MQTT连接失败，错误信息：{}", e.getMessage(), e))
 						.subscribeOn(Schedulers.from(virtualThreadExecutor))
@@ -163,8 +161,8 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			client.publishes(MqttGlobalPublishFilter.ALL)
 				.doOnNext(publish -> messageHandlers.forEach(messageHandler -> {
 					if (messageHandler.isSubscribe(publish.getTopic().toString())) {
-						messageHandler.handle(publish.getTopic().toString(),
-								new MqttMessage(publish.getPayloadAsBytes()));
+						messageHandler
+							.handle(new MqttMessage(publish.getPayloadAsBytes(), publish.getTopic().toString()));
 					}
 				}))
 				.doOnError(e -> log.error("【Hivemq】 => MQTT消息处理失败，错误信息：{}", e.getMessage(), e))
@@ -181,7 +179,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					.qos(getMqttQos(qos))
 					.payload(payload)
 					.retain(false)
-					.messageExpiryInterval(mqttBrokerProperties.getMessageExpiryInterval())
+					.messageExpiryInterval(mqttClientProperties.getMessageExpiryInterval())
 					.build()))
 				.singleOrError()
 				.doOnError(e -> log.error("【Hivemq】 => MQTT消息发布失败，错误信息：{}", e.getMessage(), e))
@@ -191,28 +189,19 @@ public class HivemqMqttClient extends AbstractMqttClient {
 	}
 
 	public void publish(String topic, byte[] payload) {
-		publish(topic, payload, mqttBrokerProperties.getPublishQos());
+		publish(topic, payload, mqttClientProperties.getPublishQos());
 	}
 
 	private Mqtt5RxClient getClient(String clientId) {
 		Mqtt5ClientBuilder builder = Mqtt5Client.builder()
 			.identifier(clientId)
-			.serverHost(mqttBrokerProperties.getHost())
-			.serverPort(mqttBrokerProperties.getPort())
-			.transportConfig(MqttClientTransportConfig.builder()
-				.socketConnectTimeout(mqttBrokerProperties.getConnectionTimeout(), TimeUnit.SECONDS)
-				.build())
+			.serverHost(mqttClientProperties.getHost())
+			.serverPort(mqttClientProperties.getPort())
 			.executorConfig(MqttClientExecutorConfig.builder().nettyExecutor(virtualThreadExecutor).build());
-		// 开启重连
-		if (mqttBrokerProperties.isAutomaticReconnect()) {
-			builder.automaticReconnect()
-				.maxDelay(mqttBrokerProperties.getAutomaticReconnectMaxDelay(), TimeUnit.MILLISECONDS)
-				.applyAutomaticReconnect();
-		}
-		if (mqttBrokerProperties.isAuth()) {
+		if (mqttClientProperties.isAuth()) {
 			builder.simpleAuth()
-				.username(mqttBrokerProperties.getUsername())
-				.password(mqttBrokerProperties.getPassword().getBytes())
+				.username(mqttClientProperties.getUsername())
+				.password(mqttClientProperties.getPassword().getBytes())
 				.applySimpleAuth();
 		}
 		return builder.buildRx();
@@ -220,7 +209,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	public void publishSubscribeEvent(Set<String> topics, int qos) {
 		if (CollectionUtils.isNotEmpty(topics)) {
-			EventBus.publish(new SubscribeEvent(this, mqttBrokerProperties.getClientId(), topics.toArray(String[]::new),
+			EventBus.publish(new SubscribeEvent(this, mqttClientProperties.getClientId(), topics.toArray(String[]::new),
 					topics.stream().mapToInt(item -> qos).toArray()));
 		}
 	}
@@ -228,7 +217,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 	public void publishUnsubscribeEvent(Set<String> topics) {
 		if (CollectionUtils.isNotEmpty(topics)) {
 			EventBus
-				.publish(new UnsubscribeEvent(this, mqttBrokerProperties.getClientId(), topics.toArray(String[]::new)));
+				.publish(new UnsubscribeEvent(this, mqttClientProperties.getClientId(), topics.toArray(String[]::new)));
 		}
 	}
 

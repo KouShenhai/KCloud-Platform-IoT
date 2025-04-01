@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.eclipse.paho.mqttv5.common.MqttException;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
+import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
 
 import java.util.List;
@@ -52,7 +52,7 @@ public class PahoMqttClientManager {
 		PAHO_MQTT_CLIENT_MAP.remove(clientId);
 	}
 
-	public static void add(String clientId, MqttBrokerProperties properties, List<MessageHandler> messageHandlers) {
+	public static void add(String clientId, MqttClientProperties properties, List<MessageHandler> messageHandlers) {
 		PAHO_MQTT_CLIENT_MAP.putIfAbsent(clientId, new PahoMqttClient(properties, messageHandlers, EXECUTOR));
 	}
 

@@ -20,7 +20,7 @@ package org.laokou.common.mqtt.config;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
+import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
 
 import java.util.List;
@@ -35,23 +35,23 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 public class HivemqMqttClientManager {
 
-	private static final Map<String, HivemqMqttClient> PAHO_MQTT_CLIENT_MAP = new ConcurrentHashMap<>(4096);
+	private static final Map<String, HivemqMqttClient> HIVE_MQTT_CLIENT_MAP = new ConcurrentHashMap<>(4096);
 
 	public static HivemqMqttClient get(String clientId) {
-		if (PAHO_MQTT_CLIENT_MAP.containsKey(clientId)) {
-			return PAHO_MQTT_CLIENT_MAP.get(clientId);
+		if (HIVE_MQTT_CLIENT_MAP.containsKey(clientId)) {
+			return HIVE_MQTT_CLIENT_MAP.get(clientId);
 		}
 		throw new SystemException("S_Mqtt_NotExist", "MQTT客户端不存在");
 	}
 
 	public static void remove(String clientId) {
 		close(clientId);
-		PAHO_MQTT_CLIENT_MAP.remove(clientId);
+		HIVE_MQTT_CLIENT_MAP.remove(clientId);
 	}
 
-	public static void add(String clientId, MqttBrokerProperties properties, List<MessageHandler> messageHandlers,
+	public static void add(String clientId, MqttClientProperties properties, List<MessageHandler> messageHandlers,
 			ExecutorService virtualThreadExecutor) {
-		PAHO_MQTT_CLIENT_MAP.putIfAbsent(clientId,
+		HIVE_MQTT_CLIENT_MAP.putIfAbsent(clientId,
 				new HivemqMqttClient(properties, messageHandlers, virtualThreadExecutor));
 	}
 
@@ -92,8 +92,8 @@ public class HivemqMqttClientManager {
 	}
 
 	public static void preDestroy(ExecutorService virtualThreadExecutor) {
-		PAHO_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::close);
-		PAHO_MQTT_CLIENT_MAP.clear();
+		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::close);
+		HIVE_MQTT_CLIENT_MAP.clear();
 		ThreadUtils.shutdown(virtualThreadExecutor, 60);
 	}
 

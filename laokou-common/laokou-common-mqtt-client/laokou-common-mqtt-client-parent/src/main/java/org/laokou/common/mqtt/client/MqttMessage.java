@@ -31,4 +31,6 @@ public class MqttMessage {
 
 	private byte[] payload;
 
+	private String topic;
+
 }

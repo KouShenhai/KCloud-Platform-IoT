@@ -31,7 +31,7 @@ import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.mqtt.client.AbstractMqttClient;
-import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
+import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.client.handler.event.CloseEvent;
 import org.laokou.common.mqtt.client.handler.event.OpenEvent;
 import org.laokou.common.mqtt.client.handler.event.SubscribeEvent;
@@ -52,7 +52,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class PahoMqttClient extends AbstractMqttClient {
 
-	private final MqttBrokerProperties mqttBrokerProperties;
+	private final MqttClientProperties mqttClientProperties;
 
 	private final List<MessageHandler> messageHandlers;
 
@@ -64,9 +64,9 @@ public class PahoMqttClient extends AbstractMqttClient {
 
 	private final AtomicInteger ATOMIC = new AtomicInteger(0);
 
-	public PahoMqttClient(MqttBrokerProperties mqttBrokerProperties, List<MessageHandler> messageHandlers,
+	public PahoMqttClient(MqttClientProperties mqttClientProperties, List<MessageHandler> messageHandlers,
 			ScheduledExecutorService executor) {
-		this.mqttBrokerProperties = mqttBrokerProperties;
+		this.mqttClientProperties = mqttClientProperties;
 		this.messageHandlers = messageHandlers;
 		this.executor = executor;
 	}
@@ -76,19 +76,19 @@ public class PahoMqttClient extends AbstractMqttClient {
 			if (ObjectUtils.isNull(client)) {
 				synchronized (LOCK) {
 					if (ObjectUtils.isNull(client)) {
-						String clientId = mqttBrokerProperties.getClientId();
+						String clientId = mqttClientProperties.getClientId();
 						client = new MqttAsyncClient(
-								"tcp://" + mqttBrokerProperties.getHost() + ":" + mqttBrokerProperties.getPort(),
+								"tcp://" + mqttClientProperties.getHost() + ":" + mqttClientProperties.getPort(),
 								clientId, new MqttDefaultFilePersistence(), null, executor);
-						client.setManualAcks(mqttBrokerProperties.isManualAcks());
-						client.setCallback(new PahoMqttClientMessageCallback(messageHandlers, mqttBrokerProperties));
+						client.setManualAcks(mqttClientProperties.isManualAcks());
+						client.setCallback(new PahoMqttClientMessageCallback(messageHandlers, mqttClientProperties));
 						client.connect(options(), null, new MqttActionListener() {
 							@Override
 							public void onSuccess(IMqttToken asyncActionToken) {
 								log.info("【Paho】 => MQTT连接成功，客户端ID：{}", clientId);
 								// 发布订阅事件
-								publishSubscribeEvent(mqttBrokerProperties.getTopics(),
-										mqttBrokerProperties.getSubscribeQos());
+								publishSubscribeEvent(mqttClientProperties.getTopics(),
+										mqttClientProperties.getSubscribeQos());
 							}
 
 							@Override
@@ -169,30 +169,30 @@ public class PahoMqttClient extends AbstractMqttClient {
 	}
 
 	public void publish(String topic, byte[] payload) throws MqttException {
-		publish(topic, payload, mqttBrokerProperties.getPublishQos());
+		publish(topic, payload, mqttClientProperties.getPublishQos());
 	}
 
 	private MqttConnectionOptions options() {
 		MqttConnectionOptions options = new MqttConnectionOptions();
-		options.setCleanStart(mqttBrokerProperties.isClearStart());
-		options.setUserName(mqttBrokerProperties.getUsername());
-		options.setPassword(mqttBrokerProperties.getPassword().getBytes(StandardCharsets.UTF_8));
-		options.setReceiveMaximum(mqttBrokerProperties.getReceiveMaximum());
-		options.setMaximumPacketSize((long) mqttBrokerProperties.getMaximumPacketSize());
+		options.setCleanStart(mqttClientProperties.isClearStart());
+		options.setUserName(mqttClientProperties.getUsername());
+		options.setPassword(mqttClientProperties.getPassword().getBytes(StandardCharsets.UTF_8));
+		options.setReceiveMaximum(mqttClientProperties.getReceiveMaximum());
+		options.setMaximumPacketSize((long) mqttClientProperties.getMaximumPacketSize());
 		options.setWill(WILL_TOPIC,
-				new MqttMessage(WILL_DATA, mqttBrokerProperties.getWillQos(), false, new MqttProperties()));
+				new MqttMessage(WILL_DATA, mqttClientProperties.getWillQos(), false, new MqttProperties()));
 		// 超时时间
-		options.setConnectionTimeout(mqttBrokerProperties.getConnectionTimeout());
+		options.setConnectionTimeout(mqttClientProperties.getConnectionTimeout());
 		// 会话心跳
-		options.setKeepAliveInterval(mqttBrokerProperties.getKeepAliveInterval());
+		options.setKeepAliveInterval(mqttClientProperties.getKeepAliveInterval());
 		// 开启重连
-		options.setAutomaticReconnect(mqttBrokerProperties.isAutomaticReconnect());
+		options.setAutomaticReconnect(mqttClientProperties.isAutomaticReconnect());
 		return options;
 	}
 
 	public void publishSubscribeEvent(Set<String> topics, int qos) {
 		if (CollectionUtils.isNotEmpty(topics)) {
-			EventBus.publish(new SubscribeEvent(this, mqttBrokerProperties.getClientId(), topics.toArray(String[]::new),
+			EventBus.publish(new SubscribeEvent(this, mqttClientProperties.getClientId(), topics.toArray(String[]::new),
 					topics.stream().mapToInt(item -> qos).toArray()));
 		}
 	}
@@ -200,7 +200,7 @@ public class PahoMqttClient extends AbstractMqttClient {
 	public void publishUnsubscribeEvent(Set<String> topics) {
 		if (CollectionUtils.isNotEmpty(topics)) {
 			EventBus
-				.publish(new UnsubscribeEvent(this, mqttBrokerProperties.getClientId(), topics.toArray(String[]::new)));
+				.publish(new UnsubscribeEvent(this, mqttClientProperties.getClientId(), topics.toArray(String[]::new)));
 		}
 	}
 

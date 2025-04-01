@@ -190,6 +190,7 @@ services:
       - ./tdengine/logs:/var/log/taos
     networks:
       - laokou_network
+  # docker部署 => sudo docker run -d --name emqx  --restart always --network bridge -v /home/ubuntu/emqx/etc:/etc/emqx:rw -v /home/ubuntu/emqx/data:/opt/emqx/data:rw -v /home/ubuntu/emqx/log:/opt/emqx/log:rw -p 1883:1883 -p 8083:8083 -p 8084:8084 -p 8883:8883 -p 18083:18083 emqx/emqx:5.8.6
   emqx:
     image: emqx/emqx:5.8.6
     container_name: emqx

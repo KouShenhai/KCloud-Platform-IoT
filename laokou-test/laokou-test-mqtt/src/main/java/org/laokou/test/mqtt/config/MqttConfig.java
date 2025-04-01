@@ -22,7 +22,7 @@ import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
-import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
+import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.config.HivemqMqttClientManager;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -47,13 +47,16 @@ public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
-		// testPahoMqttClient();
 		testHiveMqttClient();
 	}
 
 	private void testHiveMqttClient() {
-		for (int i = 1; i <= 100000; i++) {
-			MqttBrokerProperties properties = new MqttBrokerProperties();
+		for (int i = 1; i <= 100; i++) {
+			MqttClientProperties properties = new MqttClientProperties();
+			properties.setHost("127.0.0.1");
+			properties.setPort(1883);
+			properties.setUsername("emqx");
+			properties.setPassword("laokou123");
 			properties.setClientId("test-" + i);
 			properties.setTopics(Set.of("test-topic-" + i));
 			HivemqMqttClientManager.add(properties.getClientId(), properties, messageHandlers, virtualThreadExecutor);
@@ -72,22 +75,5 @@ public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 	public void preDestroy() {
 		HivemqMqttClientManager.preDestroy(virtualThreadExecutor);
 	}
-
-	// private void testPahoMqttClient() {
-	// for (int i = 1; i <= 100; i++) {
-	// MqttBrokerProperties properties = new MqttBrokerProperties();
-	// properties.setClientId("test-" + i);
-	// properties.setTopics(Set.of("test-topic-" + i));
-	// PahoMqttClientManager.add(properties.getClientId(), properties, messageHandlers);
-	// // 启动MQTT客户端
-	// PahoMqttClientManager.open(properties.getClientId());
-	// try {
-	// Thread.sleep(1000);
-	// }
-	// catch (InterruptedException e) {
-	// throw new RuntimeException(e);
-	// }
-	// }
-	// }
 
 }

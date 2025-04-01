@@ -25,7 +25,7 @@ import org.eclipse.paho.mqttv5.client.MqttDisconnectResponse;
 import org.eclipse.paho.mqttv5.common.MqttException;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
-import org.laokou.common.mqtt.client.config.MqttBrokerProperties;
+import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public class PahoMqttClientMessageCallback implements MqttCallback {
 
 	private final List<MessageHandler> messageHandlers;
 
-	private final MqttBrokerProperties mqttBrokerProperties;
+	private final MqttClientProperties mqttClientProperties;
 
 	@Override
 	public void disconnected(MqttDisconnectResponse disconnectResponse) {
@@ -55,7 +55,7 @@ public class PahoMqttClientMessageCallback implements MqttCallback {
 	public void messageArrived(String topic, MqttMessage message) {
 		for (MessageHandler messageHandler : messageHandlers) {
 			if (messageHandler.isSubscribe(topic)) {
-				messageHandler.handle(topic, new org.laokou.common.mqtt.client.MqttMessage(message.getPayload()));
+				messageHandler.handle(new org.laokou.common.mqtt.client.MqttMessage(message.getPayload(), topic));
 				break;
 			}
 		}
