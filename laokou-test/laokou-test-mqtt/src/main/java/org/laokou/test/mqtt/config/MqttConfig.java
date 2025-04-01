@@ -61,19 +61,20 @@ public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 			properties.setTopics(Set.of("test-topic-" + i));
 			HivemqMqttClientManager.add(properties.getClientId(), properties, messageHandlers, virtualThreadExecutor);
 			// 启动MQTT客户端
-			HivemqMqttClientManager.open(properties.getClientId());
+			HivemqMqttClientManager.publishOpenEvent(properties.getClientId());
 			try {
 				Thread.sleep(10);
 			}
 			catch (InterruptedException e) {
 				throw new RuntimeException(e);
 			}
+			// HivemqMqttClientManager.publishCloseEvent(properties.getClientId());
 		}
 	}
 
 	@PreDestroy
 	public void preDestroy() {
-		HivemqMqttClientManager.preDestroy(virtualThreadExecutor);
+		HivemqMqttClientManager.preDestroy();
 	}
 
 }

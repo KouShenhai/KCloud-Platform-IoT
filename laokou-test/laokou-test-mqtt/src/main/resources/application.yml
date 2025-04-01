@@ -3,5 +3,8 @@ spring:
     active: @PROFILE-ACTIVE@
   application:
     name: laokou-test-mqtt
+  main:
+    register-shutdown-hook: true
 server:
   port: 8090
+  shutdown: graceful
