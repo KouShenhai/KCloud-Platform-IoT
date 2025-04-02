@@ -362,13 +362,14 @@ public final class IdGenerator {
 
 		private void scheduleClockUpdating() {
 			// System.currentTimeMillis() => 线程安全
-			ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(runnable -> {
+			try (ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(runnable -> {
 				Thread thread = new Thread(runnable, "system-clock-thread");
 				thread.setDaemon(false);
 				return thread;
-			});
-			scheduler.scheduleAtFixedRate(() -> now.set(System.currentTimeMillis()), initialDelay, period,
-					TimeUnit.MILLISECONDS);
+			})) {
+				scheduler.scheduleAtFixedRate(() -> now.set(System.currentTimeMillis()), initialDelay, period,
+						TimeUnit.MILLISECONDS);
+			}
 		}
 
 		private long currentTimeMillis() {

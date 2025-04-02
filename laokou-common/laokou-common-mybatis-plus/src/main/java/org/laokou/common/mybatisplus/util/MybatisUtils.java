@@ -151,7 +151,7 @@ public class MybatisUtils {
 	private void handleException(AtomicBoolean rollback, Exception e, CyclicBarrier cyclicBarrier) {
 		// 回滚标识
 		rollback.compareAndSet(false, true);
-		log.error("批量插入数据异常，已设置回滚标识，错误信息", e);
+		log.error("批量插入数据异常，已设置回滚标识，错误信息：{}", e.getMessage(), e);
 		cyclicBarrier.reset();
 	}
 

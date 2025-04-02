@@ -152,6 +152,10 @@ public final class DateUtils {
 		return Instant.now();
 	}
 
+	public static Instant plusHours(Instant instant, long hours) {
+		return instant.plus(Duration.ofHours(hours));
+	}
+
 	public static long betweenSeconds(Instant instant1, Instant instant2) {
 		return ChronoUnit.SECONDS.between(instant1, instant2);
 	}

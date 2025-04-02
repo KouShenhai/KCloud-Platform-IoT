@@ -90,6 +90,8 @@
     <module>laokou-common-mqtt-client</module>
     <module>laokou-common-hive</module>
     <module>laokou-common-hbase</module>
+    <module>laokou-common-plugin</module>
+    <module>laokou-common-csv</module>
   </modules>
 
 </project>

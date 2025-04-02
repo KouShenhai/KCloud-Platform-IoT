@@ -114,11 +114,12 @@ public final class FileUtils {
 	public static void write(Path path, InputStream inputStream, long size) throws NoSuchAlgorithmException {
 		try (FileOutputStream fos = new FileOutputStream(path.toFile());
 				FileChannel outChannel = fos.getChannel();
-				ReadableByteChannel inChannel = Channels.newChannel(inputStream);) {
+				ReadableByteChannel inChannel = Channels.newChannel(inputStream)) {
 			outChannel.transferFrom(inChannel, 0, size);
 		}
 		catch (IOException e) {
-			throw new RuntimeException(e);
+			log.error("未知错误，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 	}
 
@@ -128,7 +129,7 @@ public final class FileUtils {
 				chunkWrite(file, inChannel, start, end, size);
 			}
 			catch (IOException e) {
-				log.error("错误信息：{}", e.getMessage());
+				log.error("未知错误，错误信息：{}", e.getMessage(), e);
 				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 			}
 		}
@@ -278,7 +279,7 @@ public final class FileUtils {
 			}
 		}
 		catch (IOException e) {
-			log.error("错误信息：{}", e.getMessage());
+			log.error("未知错误，错误信息：{}", e.getMessage(), e);
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 	}
@@ -294,7 +295,7 @@ public final class FileUtils {
 			inChannel.transferTo(start, Math.min(end, size), outChannel);
 		}
 		catch (IOException e) {
-			log.error("错误信息：{}", e.getMessage());
+			log.error("未知错误，错误信息：{}", e.getMessage(), e);
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 	}
