@@ -50,8 +50,8 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.projectreactor</groupId>
-      <artifactId>reactor-core</artifactId>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-reactor</artifactId>
     </dependency>
   </dependencies>
 </project>

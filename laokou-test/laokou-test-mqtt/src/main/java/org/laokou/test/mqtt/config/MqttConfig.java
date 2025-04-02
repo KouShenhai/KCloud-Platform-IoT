@@ -18,7 +18,6 @@
 package org.laokou.test.mqtt.config;
 
 import io.micrometer.common.lang.NonNullApi;
-import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
@@ -53,10 +52,10 @@ public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 	private void testHiveMqttClient() {
 		for (int i = 1; i <= 100; i++) {
 			MqttClientProperties properties = new MqttClientProperties();
-			properties.setHost("127.0.0.1");
+			properties.setHost("192.168.1.7");
 			properties.setPort(1883);
 			properties.setUsername("emqx");
-			properties.setPassword("laokou123");
+			properties.setPassword("aixot0823");
 			properties.setClientId("test-" + i);
 			properties.setTopics(Set.of("test-topic-" + i));
 			HivemqMqttClientManager.add(properties.getClientId(), properties, messageHandlers, virtualThreadExecutor);
@@ -70,11 +69,6 @@ public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 			}
 			// HivemqMqttClientManager.publishCloseEvent(properties.getClientId());
 		}
-	}
-
-	@PreDestroy
-	public void preDestroy() {
-		HivemqMqttClientManager.preDestroy();
 	}
 
 }

@@ -20,19 +20,24 @@ package org.laokou.admin.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.role.api.RolesServiceI;
 import org.laokou.admin.role.dto.*;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
+import org.laokou.common.core.util.EventBus;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
+import org.laokou.reactor.handler.event.UnsubscribeEvent;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import reactor.core.Disposable;
 import reactor.core.scheduler.Schedulers;
 import java.util.concurrent.ExecutorService;
 
@@ -41,6 +46,7 @@ import java.util.concurrent.ExecutorService;
  *
  * @author laokou
  */
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("v3/roles")
@@ -65,7 +71,9 @@ public class RolesControllerV3 {
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@Operation(summary = "修改角色", description = "修改角色")
 	public void modifyV3(@RequestBody RoleModifyCmd cmd) {
-		rolesServiceI.modify(cmd).subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor)).subscribe();
+		rolesServiceI.modify(cmd).doOnError(e -> log.error("修改角色失败：{}", e.getMessage(), e)).onErrorResume(e -> {
+			throw new BizException("B_Role_ModifyFailed", e.getMessage(), e);
+		}).block();
 	}
 
 	@DeleteMapping
@@ -73,9 +81,14 @@ public class RolesControllerV3 {
 	@OperateLog(module = "角色管理", operation = "删除角色")
 	@Operation(summary = "删除角色", description = "删除角色")
 	public void removeV3(@RequestBody Long[] ids) {
-		rolesServiceI.remove(new RoleRemoveCmd(ids))
+		Disposable disposable = rolesServiceI.remove(new RoleRemoveCmd(ids))
+			.doOnError(e -> log.error("删除角色失败：{}", e.getMessage(), e))
 			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
-			.subscribe();
+			.subscribe(v -> {
+			}, e -> {
+				throw new BizException("B_Role_RemoveFailed", e.getMessage(), e);
+			});
+		EventBus.publish(new UnsubscribeEvent(this, disposable, 5000));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -99,9 +112,14 @@ public class RolesControllerV3 {
 	@OperateLog(module = "用户管理", operation = "修改角色权限")
 	@Operation(summary = "修改角色权限", description = "修改角色权限")
 	public void modifyAuthorityV3(@RequestBody RoleModifyAuthorityCmd cmd) throws Exception {
-		rolesServiceI.modifyAuthority(cmd)
+		Disposable disposable = rolesServiceI.modifyAuthority(cmd)
+			.doOnError(e -> log.error("修改角色权限失败：{}", e.getMessage(), e))
 			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
-			.subscribe();
+			.subscribe(v -> {
+			}, e -> {
+				throw new BizException("B_Role_ModifyAuthorityFailed", e.getMessage(), e);
+			});
+		EventBus.publish(new UnsubscribeEvent(this, disposable, 5000));
 	}
 
 	@TraceLog

@@ -101,7 +101,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 						.requestResponseInformation(mqttClientProperties.isRequestResponseInformation())
 						.applyRestrictions()
 						.applyConnect()
-						.doOnSuccess(s -> {
+						.doOnSuccess(ack -> {
 							log.info("【Hivemq】 => MQTT连接成功，客户端ID：{}", clientId);
 							// 发布订阅事件
 							publishSubscribeEvent(mqttClientProperties.getTopics(),
@@ -109,9 +109,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 						})
 						.doOnError(e -> log.error("【Hivemq】 => MQTT连接失败，错误信息：{}", e.getMessage(), e))
 						.subscribeOn(Schedulers.from(virtualThreadExecutor))
-						.subscribe(s -> {
-						}, r -> {
-							throw new SystemException("S_Mqtt_ConnectError", r.getMessage(), r);
+						.subscribe(ack -> {
+						}, e -> {
+							throw new SystemException("S_Mqtt_ConnectError", e.getMessage(), e);
 						});
 					disposables.add(disposable);
 				}
@@ -140,13 +140,13 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			Disposable disposable = client.subscribeWith()
 				.addSubscriptions(subscriptions)
 				.applySubscribe()
-				.doOnSuccess(subscribeAck -> log.info("【Hivemq】 => MQTT订阅成功，主题: {}", String.join(",", topics)))
-				.doOnError(r -> log.error("【Hivemq】 => MQTT订阅失败，主题：{}，错误信息：{}", String.join(",", topics),
-						r.getMessage(), r))
+				.doOnSuccess(ack -> log.info("【Hivemq】 => MQTT订阅成功，主题: {}", String.join(",", topics)))
+				.doOnError(e -> log.error("【Hivemq】 => MQTT订阅失败，主题：{}，错误信息：{}", String.join(",", topics),
+						e.getMessage(), e))
 				.subscribeOn(Schedulers.from(virtualThreadExecutor))
-				.subscribe(s -> {
-				}, r -> {
-					throw new SystemException("S_Mqtt_SubscribeError", r.getMessage(), r);
+				.subscribe(ack -> {
+				}, e -> {
+					throw new SystemException("S_Mqtt_SubscribeError", e.getMessage(), e);
 				});
 			disposables.add(disposable);
 		}
@@ -161,13 +161,13 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			}
 			Disposable disposable = client
 				.unsubscribe(Mqtt5Unsubscribe.builder().addTopicFilters(matchedTopics).build())
-				.doOnSuccess(r -> log.info("【Hivemq】 => MQTT取消订阅成功，主题：{}", String.join(",", topics)))
-				.doOnError(r -> log.error("【Hivemq】 => MQTT取消订阅失败，主题：{}，错误信息：{}", String.join(",", topics),
-						r.getMessage(), r))
+				.doOnSuccess(ack -> log.info("【Hivemq】 => MQTT取消订阅成功，主题：{}", String.join(",", topics)))
+				.doOnError(e -> log.error("【Hivemq】 => MQTT取消订阅失败，主题：{}，错误信息：{}", String.join(",", topics),
+						e.getMessage(), e))
 				.subscribeOn(Schedulers.from(virtualThreadExecutor))
-				.subscribe(s -> {
-				}, r -> {
-					throw new SystemException("S_Mqtt_UnSubscribeError", r.getMessage(), r);
+				.subscribe(ack -> {
+				}, e -> {
+					throw new SystemException("S_Mqtt_UnSubscribeError", e.getMessage(), e);
 				});
 			disposables.add(disposable);
 		}
@@ -184,9 +184,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				}))
 				.doOnError(e -> log.error("【Hivemq】 => MQTT消息处理失败，错误信息：{}", e.getMessage(), e))
 				.subscribeOn(Schedulers.from(virtualThreadExecutor))
-				.subscribe(s -> {
-				}, r -> {
-					throw new SystemException("S_Mqtt_ConsumeError", r.getMessage(), r);
+				.subscribe(ack -> {
+				}, e -> {
+					throw new SystemException("S_Mqtt_ConsumeError", e.getMessage(), e);
 				});
 			disposables.add(disposable);
 		}
@@ -205,9 +205,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				.singleOrError()
 				.doOnError(e -> log.error("【Hivemq】 => MQTT消息发布失败，错误信息：{}", e.getMessage(), e))
 				.subscribeOn(Schedulers.from(virtualThreadExecutor))
-				.subscribe(s -> {
-				}, r -> {
-					throw new SystemException("S_Mqtt_PublishError", r.getMessage(), r);
+				.subscribe(ack -> {
+				}, e -> {
+					throw new SystemException("S_Mqtt_PublishError", e.getMessage(), e);
 				});
 			disposables.add(disposable);
 		}
