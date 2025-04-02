@@ -52,10 +52,10 @@ public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 	private void testHiveMqttClient() {
 		for (int i = 1; i <= 100; i++) {
 			MqttClientProperties properties = new MqttClientProperties();
-			properties.setHost("192.168.1.7");
+			properties.setHost("127.0.0.1");
 			properties.setPort(1883);
 			properties.setUsername("emqx");
-			properties.setPassword("aixot0823");
+			properties.setPassword("laokou123");
 			properties.setClientId("test-" + i);
 			properties.setTopics(Set.of("test-topic-" + i));
 			HivemqMqttClientManager.add(properties.getClientId(), properties, messageHandlers, virtualThreadExecutor);
