@@ -100,6 +100,7 @@ spring:
               client-authentication-methods:
                 - client_secret_basic
               authorization-grant-types:
+                - test
                 - username_password
                 - mail
                 - mobile

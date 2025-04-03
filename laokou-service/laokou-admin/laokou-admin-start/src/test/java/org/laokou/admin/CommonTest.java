@@ -17,11 +17,13 @@
 
 package org.laokou.admin;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.laokou.admin.rpc.OAuth2Feign;
-import org.laokou.common.test.annotation.EnableRestfulApiStyleCheck;
+import org.laokou.common.core.util.OkHttpUtils;
+import org.laokou.common.i18n.util.JacksonUtils;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,19 +35,16 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.security.Principal;
-
+import java.util.Map;
 import static org.laokou.common.security.config.GlobalOpaqueTokenIntrospector.FULL;
 
 /**
  * @author laokou
  */
-@EnableRestfulApiStyleCheck
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class CommonTest {
-
-	private final OAuth2Feign oAuth2Feign;
 
 	private final WebApplicationContext webApplicationContext;
 
@@ -53,14 +52,37 @@ class CommonTest {
 
 	protected MockMvc mockMvc;
 
+	private final ServerProperties serverProperties;
+
 	@BeforeEach
-	void setUp() {
+	void setUp() throws JsonProcessingException {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken("", FULL);
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(getToken(), FULL);
 		Assertions.assertNotNull(authorization);
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = authorization
 			.getAttribute(Principal.class.getName());
 		SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+	}
+
+	private String getToken() throws JsonProcessingException {
+		Map<String, String> params = Map.of("username", "admin", "password", "admin123", "tenant_code", "laokou",
+				"grant_type", "test");
+		Map<String, String> headers = Map.of("Authorization",
+				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+		String json = OkHttpUtils.doFormDataPost(getOAuthApiUrl(), params, headers);
+		return JacksonUtils.readTree(json).get("access_token").asText();
+	}
+
+	private String getOAuthApiUrl() {
+		return getSchema(disabledSsl()) + "auth:1111/oauth2/token";
+	}
+
+	private String getSchema(boolean disabled) {
+		return disabled ? "https://" : "http://";
+	}
+
+	private boolean disabledSsl() {
+		return serverProperties.getSsl().isEnabled();
 	}
 
 }

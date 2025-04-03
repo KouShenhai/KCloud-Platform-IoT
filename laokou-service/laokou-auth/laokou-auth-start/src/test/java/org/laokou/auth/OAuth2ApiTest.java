@@ -78,6 +78,8 @@ class OAuth2ApiTest {
 
 	private static final String MOBILE = "18888888888";
 
+	private static final String TENANT_CODE = "laokou";
+
 	private static final String DEVICE_CODE = "device_code";
 
 	private static final String CODE = "iQWEh8YSpdwZ8_5QsA8C_1tVpR-6_fcLMYDKGnhozJW9MmTzf30aYvq6F_O3sSL0PP0bEVVdoXeau8QOuTln3ABn2c-00x7irutqFKAHRJVFZGln_6Wmuab4ostt-3-y";
@@ -99,7 +101,7 @@ class OAuth2ApiTest {
 	@Test
 	void testSendMailCaptcha() {
 		CaptchaCO co = new CaptchaCO();
-		co.setTenantCode("laokou");
+		co.setTenantCode(TENANT_CODE);
 		co.setUuid(MAIL);
 		restClient.post()
 			.uri(getSendMailCaptchaUrl())
@@ -113,7 +115,7 @@ class OAuth2ApiTest {
 	@Test
 	void testSendMobileCaptcha() {
 		CaptchaCO co = new CaptchaCO();
-		co.setTenantCode("laokou");
+		co.setTenantCode(TENANT_CODE);
 		co.setUuid(MOBILE);
 		restClient.post()
 			.uri(getSendMobileCaptchaUrl())
@@ -205,6 +207,20 @@ class OAuth2ApiTest {
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
 		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
 		log.info("---------- 授权码认证模式结束 ----------");
+	}
+
+	@Test
+	void testTestAuthApi() {
+		log.info("---------- 测试认证模式开始 ----------");
+		String encryptUsername = RSAUtils.encryptByPublicKey(USERNAME);
+		String encryptPassword = RSAUtils.encryptByPublicKey(PASSWORD);
+		String decryptUsername = RSAUtils.decryptByPrivateKey(encryptUsername);
+		String decryptPassword = RSAUtils.decryptByPrivateKey(encryptPassword);
+		Map<String, String> tokenMap = testAuth(decryptUsername, decryptPassword);
+		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
+		String token = getRefreshToken(tokenMap.get(REFRESH_TOKEN));
+		log.info("刷新token：{}", token);
+		log.info("---------- 测试认证模式结束 ----------");
 	}
 
 	@Test
@@ -304,8 +320,8 @@ class OAuth2ApiTest {
 	private Map<String, String> mobileAuth(String code) {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("code", code, "mobile", MOBILE, "tenant_code", "laokou", "grant_type",
-					"mobile");
+			Map<String, String> params = Map.of("code", code, "mobile", MOBILE, "tenant_code", TENANT_CODE,
+					"grant_type", "mobile");
 			Map<String, String> headers = Map.of("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "User-Agent",
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
@@ -324,7 +340,7 @@ class OAuth2ApiTest {
 	private Map<String, String> mailAuth(String code) {
 		try {
 			String apiUrl = getOAuthApiUrl();
-			Map<String, String> params = Map.of("code", code, "mail", MAIL, "tenant_code", "laokou", "grant_type",
+			Map<String, String> params = Map.of("code", code, "mail", MAIL, "tenant_code", TENANT_CODE, "grant_type",
 					"mail");
 			Map<String, String> headers = Map.of("Authorization",
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "User-Agent",
@@ -345,13 +361,32 @@ class OAuth2ApiTest {
 		try {
 			String apiUrl = getOAuthApiUrl();
 			Map<String, String> params = Map.of("uuid", UUID, "username", username, "password", password, "tenant_code",
-					"laokou", "grant_type", "username_password", "captcha", captcha);
+					TENANT_CODE, "grant_type", "username_password", "captcha", captcha);
 			Map<String, String> headers = Map.of("Authorization",
-					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "trace-id",
-					String.valueOf(IdGenerator.defaultSnowflakeId()), "User-Agent",
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "User-Agent",
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = OkHttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("用户名密码认证模式，返回信息：{}", json);
+			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
+			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
+			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
+			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
+		}
+		catch (Exception e) {
+			return Collections.emptyMap();
+		}
+	}
+
+	private Map<String, String> testAuth(String username, String password) {
+		try {
+			String apiUrl = getOAuthApiUrl();
+			Map<String, String> params = Map.of("username", username, "password", password, "tenant_code", TENANT_CODE,
+					"grant_type", "test");
+			Map<String, String> headers = Map.of("Authorization",
+					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=", "User-Agent",
+					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
+			String json = OkHttpUtils.doFormDataPost(apiUrl, params, headers);
+			log.info("测试认证模式，返回信息：{}", json);
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");

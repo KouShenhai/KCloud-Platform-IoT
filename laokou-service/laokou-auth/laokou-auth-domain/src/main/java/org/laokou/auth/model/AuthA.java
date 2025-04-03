@@ -71,6 +71,7 @@ public class AuthA extends AggregateRoot {
 	 * mobile手机号
 	 * username_password用户名密码
 	 * authorization_code授权码
+	 * test测试
 	 */
 	// @formatter:on
 	private final GrantTypeEnum grantTypeEnum;
@@ -142,6 +143,10 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void createUserByAuthorizationCode() throws Exception {
+		this.user = new UserE(this.username, EMPTY, EMPTY);
+	}
+
+	public void createUserByTest() throws Exception {
 		this.user = new UserE(this.username, EMPTY, EMPTY);
 	}
 
@@ -249,7 +254,7 @@ public class AuthA extends AggregateRoot {
 	}
 
 	private boolean isUsePassword() {
-		return List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE).contains(grantTypeEnum);
+		return List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE, TEST).contains(grantTypeEnum);
 	}
 
 	private Set<String> getPaths(List<String> list) {
@@ -276,7 +281,7 @@ public class AuthA extends AggregateRoot {
 	}
 
 	private String getLoginName() {
-		if (List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE).contains(grantTypeEnum)) {
+		if (List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE, TEST).contains(grantTypeEnum)) {
 			return this.username;
 		}
 		return this.captcha.uuid();
@@ -298,7 +303,7 @@ public class AuthA extends AggregateRoot {
 		return switch (grantTypeEnum) {
 			case MOBILE -> RedisKeyUtils.getMobileAuthCaptchaKey(captcha.uuid());
 			case MAIL -> RedisKeyUtils.getMailAuthCaptchaKey(captcha.uuid());
-			case USERNAME_PASSWORD, AUTHORIZATION_CODE ->
+			case USERNAME_PASSWORD, AUTHORIZATION_CODE, TEST ->
 				RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(captcha.uuid());
 		};
 	}

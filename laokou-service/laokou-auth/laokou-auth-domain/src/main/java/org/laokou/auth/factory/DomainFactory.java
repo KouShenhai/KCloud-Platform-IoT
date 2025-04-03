@@ -39,6 +39,11 @@ public final class DomainFactory {
 	public static final String MOBILE = "mobile";
 
 	/**
+	 * 测试.
+	 */
+	public static final String TEST = "test";
+
+	/**
 	 * 用户名密码.
 	 */
 	public static final String USERNAME_PASSWORD = "username_password";
@@ -101,6 +106,10 @@ public final class DomainFactory {
 	public static AuthA getAuthorizationCodeAuth(Long aggregateId, String username, String password,
 			String tenantCode) {
 		return new AuthA(aggregateId, username, password, tenantCode, GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
+	}
+
+	public static AuthA getTestAuth(Long aggregateId, String username, String password, String tenantCode) {
+		return new AuthA(aggregateId, username, password, tenantCode, GrantTypeEnum.TEST, EMPTY, EMPTY);
 	}
 
 	public static UserE getUser() {

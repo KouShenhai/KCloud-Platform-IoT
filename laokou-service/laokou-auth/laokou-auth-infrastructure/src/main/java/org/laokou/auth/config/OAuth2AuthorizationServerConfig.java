@@ -89,16 +89,19 @@ class OAuth2AuthorizationServerConfig {
 	}
 	// @formatter:on
 
+	// @formatter:off
 	/**
 	 * OAuth2AuthorizationServer核心配置.
 	 * @param http http配置
 	 * @param usernamePasswordAuthenticationProvider 用户名密码认证Provider
 	 * @param mailAuthenticationProvider 邮箱认证Provider
 	 * @param mobileAuthenticationProvider 手机号认证Provider
+	 * @param testAuthenticationProvider 测试认证Provider
 	 * @param authorizationServerSettings OAuth2配置
 	 * @param authorizationService 认证配置
 	 * @param mailAuthenticationConverter 邮箱认证Converter
 	 * @param mobileAuthenticationConverter 手机号认证Converter
+	 * @param testAuthenticationConverter 测试认证Converter
 	 * @param usernamePasswordAuthenticationConverter 用户名密码认证Converter
 	 * @return 认证过滤器
 	 * @throws Exception 异常
@@ -107,10 +110,15 @@ class OAuth2AuthorizationServerConfig {
 	@Order(HIGHEST_PRECEDENCE)
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
 			AuthenticationProvider usernamePasswordAuthenticationProvider,
-			AuthenticationProvider mailAuthenticationProvider, AuthenticationProvider mobileAuthenticationProvider,
+			AuthenticationProvider testAuthenticationProvider,
+			AuthenticationProvider mailAuthenticationProvider,
+			AuthenticationProvider mobileAuthenticationProvider,
 			AuthenticationConverter usernamePasswordAuthenticationConverter,
-			AuthenticationConverter mailAuthenticationConverter, AuthenticationConverter mobileAuthenticationConverter,
-			AuthorizationServerSettings authorizationServerSettings, OAuth2AuthorizationService authorizationService)
+			AuthenticationConverter testAuthenticationConverter,
+			AuthenticationConverter mailAuthenticationConverter,
+			AuthenticationConverter mobileAuthenticationConverter,
+			AuthorizationServerSettings authorizationServerSettings,
+			OAuth2AuthorizationService authorizationService)
 			throws Exception {
 		// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/configuration-model.html
 		OAuth2AuthorizationServerConfig.applyDefaultSecurity(http);
@@ -118,19 +126,24 @@ class OAuth2AuthorizationServerConfig {
 			// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
 			.tokenEndpoint((tokenEndpoint) -> tokenEndpoint
 				.accessTokenRequestConverter(
-						new DelegatingAuthenticationConverter(List.of(usernamePasswordAuthenticationConverter,
-								mobileAuthenticationConverter, mailAuthenticationConverter)))
+					new DelegatingAuthenticationConverter(List.of(usernamePasswordAuthenticationConverter,
+							testAuthenticationConverter,
+							mobileAuthenticationConverter,
+							mailAuthenticationConverter)
+					)
+				)
 				.authenticationProvider(usernamePasswordAuthenticationProvider)
 				.authenticationProvider(mobileAuthenticationProvider)
+				.authenticationProvider(testAuthenticationProvider)
 				.authenticationProvider(mailAuthenticationProvider))
 			.oidc(Customizer.withDefaults())
 			.authorizationService(authorizationService)
 			.authorizationServerSettings(authorizationServerSettings);
 		return http.addFilterBefore(UsernamePasswordFilter.INSTANCE, UsernamePasswordAuthenticationFilter.class)
-			.exceptionHandling(
-					configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")))
+			.exceptionHandling(configurer -> configurer.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")))
 			.build();
 	}
+	// @formatter:on
 
 	/**
 	 * 构造注册信息.

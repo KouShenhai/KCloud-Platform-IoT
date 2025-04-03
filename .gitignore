@@ -47,5 +47,3 @@ info.log.*.gz
 hs_err_pid*
 
 .xcodemap
-__MACOSX
-.idea/

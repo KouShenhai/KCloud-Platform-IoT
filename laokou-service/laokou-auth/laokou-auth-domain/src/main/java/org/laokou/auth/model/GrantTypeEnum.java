@@ -58,6 +58,13 @@ public enum GrantTypeEnum {
 		public void checkUsernameNotExist() {
 			throw new BizException(MAIL_NOT_REGISTERED);
 		}
+	},
+
+	TEST(DomainFactory.TEST, "测试登录") {
+		@Override
+		public void checkUsernameNotExist() {
+			throw new BizException(USERNAME_PASSWORD_ERROR);
+		}
 	};
 
 	private final String code;

@@ -15,20 +15,31 @@
  *
  */
 
-package org.laokou.common.test.annotation;
+package org.laokou.auth.service.authentication;
 
-import org.laokou.common.test.config.RestfulApiStyleCheckConfig;
-import org.springframework.context.annotation.Import;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
-import java.lang.annotation.*;
+import java.util.Map;
+
+import static org.laokou.auth.factory.DomainFactory.TEST;
 
 /**
+ * 测试转换器.
+ *
  * @author laokou
  */
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({ RestfulApiStyleCheckConfig.class })
-public @interface EnableRestfulApiStyleCheck {
+@Component("testAuthenticationConverter")
+final class OAuth2TestAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
+
+	@Override
+	String getGrantType() {
+		return TEST;
+	}
+
+	@Override
+	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
+		return new OAuth2TestAuthenticationToken(clientPrincipal, additionalParameters);
+	}
 
 }

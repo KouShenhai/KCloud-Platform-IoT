@@ -19,7 +19,7 @@ package org.laokou.admin.oss.gatewayimpl.rpc.fallback;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.oss.gatewayimpl.rpc.OssFeignClient;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,7 +38,7 @@ public class OssFeignClientFallback implements OssFeignClient {
 	@Override
 	public Result<String> uploadV3(MultipartFile file) {
 		log.error("文件上传失败，错误信息：{}", cause.getMessage(), cause);
-		throw new SystemException("S_Oss_UploadFailed", "文件上传失败，服务正在维护，请联系管理员", cause);
+		throw new BizException("B_Oss_UploadFailed", "文件上传失败，服务正在维护，请联系管理员", cause);
 	}
 
 }
