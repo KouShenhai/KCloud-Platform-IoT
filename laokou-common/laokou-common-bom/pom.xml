@@ -78,7 +78,7 @@
     <!--spring-kafka版本-->
     <spring-kafka.version>3.3.4</spring-kafka.version>
     <!--netty版本-->
-    <netty.version>4.1.119.Final</netty.version>
+    <netty.version>4.2.0.Final</netty.version>
     <!--gson版本-->
     <gson.version>2.12.1</gson.version>
     <!--swagger-annotations-jakarta版本-->
