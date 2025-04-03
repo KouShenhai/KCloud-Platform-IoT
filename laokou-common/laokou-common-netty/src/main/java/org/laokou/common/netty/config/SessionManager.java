@@ -69,7 +69,7 @@ public class SessionManager {
 		int retry = 3;
 		try {
 			do {
-				// 使用 读锁 可以在多个线程同时调用 getChannel 时避免阻塞，提高并发性能.
+				// 数据强一致性，确保读操作能立刻看到写操作的结果
 				isLocked = READ_LOCK.tryLock(50, TimeUnit.MILLISECONDS);
 			}
 			while (!isLocked && --retry > 0);
