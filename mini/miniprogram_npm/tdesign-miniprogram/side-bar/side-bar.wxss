@@ -1,0 +1,41 @@
+.t-float-left {
+  float: left;
+}
+.t-float-right {
+  float: right;
+}
+@keyframes tdesign-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.hotspot-expanded.relative {
+  position: relative;
+}
+.hotspot-expanded::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  transform: scale(1.5);
+}
+.t-side-bar {
+  display: flex;
+  flex-direction: column;
+  width: var(--td-side-bar-width, 206rpx);
+  height: var(--td-side-bar-height, 100%);
+  overflow-y: auto;
+}
+.t-side-bar::-webkit-scrollbar {
+  display: none;
+}
+.t-side-bar__padding {
+  flex: 1;
+  background-color: var(--td-side-bar-bg-color, var(--td-bg-color-secondarycontainer, var(--td-gray-color-1, #f3f3f3)));
+}

@@ -1,0 +1,133 @@
+.card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32rpx;
+  width: 100%;
+  padding: 24rpx 32rpx 32rpx 32rpx;
+  box-sizing: border-box;
+  background-color: #fff;
+
+  .card-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    &__title {
+      color: rgba(0, 0, 0, 0.9);
+      font-size: 32rpx;
+      font-weight: 600;
+      line-height: 48rpx;
+    }
+
+    &__desc {
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 24rpx;
+      line-height: 40rpx;
+    }
+  }
+
+  .card-content {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    gap: 32rpx;
+
+    &__item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex: 1 0 0;
+
+      &--desc {
+        color: rgba(0, 0, 0, 0.4);
+        font-size: 24rpx;
+        line-height: 40rpx;
+      }
+
+      &--count {
+        font-size: 48rpx;
+        font-weight: 600;
+        line-height: 64rpx;
+      }
+    }
+  }
+}
+
+.first {
+  .card-content {
+    &__item {
+      &:first-child {
+        .card-content__item--count {
+          color: #0052d9;
+        }
+      }
+    }
+  }
+}
+
+.second,
+.third,
+.forth {
+  gap: 24rpx;
+  padding: 32rpx;
+  margin: 32rpx 32rpx 0;
+  width: calc(100% - 64rpx);
+  border-radius: 9px;
+
+  .card-header__title {
+    font-size: 28rpx;
+    line-height: 44rpx;
+  }
+}
+
+.second {
+  .card-content__item--desc {
+    font-size: 20rpx;
+    line-height: 32rpx;
+  }
+
+  .card-content__item--count {
+    margin-top: 8rpx;
+    font-size: 40rpx;
+    line-height: 56rpx;
+  }
+
+  .unit {
+    margin-left: 4rpx;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 20rpx;
+    font-weight: 400;
+    line-height: 32rpx;
+  }
+}
+
+.third {
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16rpx;
+  }
+
+  .card-content__item {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16rpx;
+    align-self: stretch;
+  }
+
+  .progress__content {
+    flex: 1 0 0;
+  }
+}
+
+.forth {
+  .card-content {
+    display: flex;
+    justify-content: center;
+  }
+
+  margin-bottom: 16rpx;
+}

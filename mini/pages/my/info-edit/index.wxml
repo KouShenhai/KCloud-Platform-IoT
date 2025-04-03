@@ -1,0 +1,84 @@
+<t-navbar left-arrow title="个人信息" />
+<view class="info-edit">
+  <t-cell class="info-edit__cell" title="用户名">
+    <t-input bind:change="onNameChange" borderless placeholder="请输入用户名" slot="note" value="{{personInfo.name}}" />
+  </t-cell>
+  <t-cell class="info-edit__cell" title="性别">
+    <t-radio-group
+      bind:change="onGenderChange"
+      borderless
+      defaultValue="{{personInfo.gender}}"
+      options="{{genderOptions}}"
+      slot="note"
+      t-class="info-edit__gender"
+      value="{{personInfo.gender}}"
+    />
+  </t-cell>
+  <t-cell arrow bind:click="showPicker" data-mode="birth" note="{{personInfo.birth || ''}}" title="生日" />
+  <t-cell arrow bind:click="showPicker" data-mode="address" note="{{addressText || ''}}" title="地址" />
+  <t-cell class="info-edit__cell" title="个人简介">
+    <t-textarea
+      bind:blur="onIntroductionChange"
+      disableDefaultPadding="{{true}}"
+      indicator
+      maxcharacter="50"
+      placeholder="请输入个人简介"
+      slot="note"
+      t-class="info-edit__introduction"
+      value="{{personInfo.introduction}}"
+    />
+  </t-cell>
+  <t-cell bordered="{{false}}" class="info-edit__cell" title="相片墙">
+    <t-upload
+      bind:drop="onPhotosDrop"
+      bind:remove="onPhotosRemove"
+      bind:success="onPhotosSuccess"
+      draggable
+      files="{{personInfo.photos}}"
+      gridConfig="{{gridConfig}}"
+      media-type="{{ ['image'] }}"
+      slot="note"
+      t-class="info-edit__photos"
+    />
+  </t-cell>
+</view>
+
+<view class="info-edit__save">
+  <t-button bind:tap="onSaveInfo" block size="medium" theme="primary">保存</t-button>
+</view>
+
+<t-date-time-picker
+  auto-close
+  bind:cancel="hidePicker"
+  bind:change="onPickerChange"
+  cancelBtn="取消"
+  confirmBtn="确认"
+  data-mode="birth"
+  defaultValue="{{personInfo.birth}}"
+  end="{{birthEnd}}"
+  filter="{{birthFilter}}"
+  format="YYYY-MM-DD"
+  mode="date"
+  popup-props="{{ { usingCustomNavbar: true } }}"
+  start="{{birthStart}}"
+  title="选择生日"
+  value="{{personInfo.birth}}"
+  visible="{{birthVisible}}"
+/>
+
+<t-picker
+  bind:cancel="hidePicker"
+  bind:change="onPickerChange"
+  bind:close="hidePicker"
+  bind:pick="onAreaPick"
+  cancelBtn="取消"
+  confirmBtn="确认"
+  data-mode="address"
+  mode="address"
+  title="选择地址"
+  value="{{personInfo.address}}"
+  visible="{{addressVisible}}"
+>
+  <t-picker-item options="{{provinces}}" />
+  <t-picker-item options="{{cities}}" />
+</t-picker>

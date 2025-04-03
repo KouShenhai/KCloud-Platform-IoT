@@ -1,0 +1,21 @@
+<t-navbar title="设置" left-arrow />
+<view class="setting">
+  <t-cell-group wx:for="{{menuData}}" wx:for-item="item" wx:key="index" t-class="cell-group-class" theme="card">
+    <t-cell
+      wx:for="{{item}}"
+      wx:for-item="carditem"
+      wx:key="cardkey"
+      title="{{carditem.title}}"
+      hover
+      arrow
+      left-icon="app"
+      url="{{carditem.url}}"
+      bordered="true"
+      leftIcon="{{carditem.icon}}"
+      data-data="{{carditem}}"
+      bindclick="onEleClick"
+    />
+  </t-cell-group>
+</view>
+
+<t-toast id="t-toast" />

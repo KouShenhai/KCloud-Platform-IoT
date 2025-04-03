@@ -20,6 +20,8 @@ package org.laokou.admin;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.laokou.admin.rpc.OAuth2Feign;
+import org.laokou.common.test.annotation.EnableRestfulApiStyleCheck;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,12 +39,13 @@ import static org.laokou.common.security.config.GlobalOpaqueTokenIntrospector.FU
 /**
  * @author laokou
  */
+@EnableRestfulApiStyleCheck
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class CommonTest {
 
-	private static final String TOKEN = "eyJraWQiOiI5ZmJhYjBhMi00ODEzLTRkMDUtYmY4OS05MzQzZTVmZDdlNzgiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJZbGg0UVRGMFltZEVXV0pSaW1GTVBHYUptbGR5dVdJYjlCTm1VTjFVTE1JNyIsImF1ZCI6Ijk1VHhTc1RQRkEzdEYxMlRCU01tVVZLMGRhIiwibmJmIjoxNzMyMDIwNzUwLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiaXNzIjoiaHR0cHM6Ly9nYXRld2F5OjU1NTUvYXV0aCIsImV4cCI6MTczMjAyNDM1MCwiaWF0IjoxNzMyMDIwNzUwLCJqdGkiOiJjNWZmMTc0Ny0wMWJmLTQ2ZDYtOGI4Zi02MDBhNDE2ZmZmMWQifQ.jcfqP27WgVzo4M2ryZ5G1QOSWFYmWFaJntHulgMLowUUXMIiODicUMd5mrB7GjBKV_hYiVyz2Ls15Q_6--IQhlG9g96a9lw6ZsvSIpb4wr7zSodtwYjny_03BAjm_1GwngfKHZTfGR2VoAGjaWdNKWiRTyKWAmzcUPp7G4oovYQ5pYf-xHyVXaI2Wnd-GihpOQooIbFvlqZMAMIVT1yfv496UYpMUJnQnhAZaGaqocImjzclfCW5X69agnncH4tjacR4k-IOz3swTasAU53F0D-eaJC8ynOmnq-OcQi21sWyPP09Ju1n-_KzJMt94pT8iNun1GxZFmKuxBnBpCdPDQ";
+	private final OAuth2Feign oAuth2Feign;
 
 	private final WebApplicationContext webApplicationContext;
 
@@ -53,7 +56,7 @@ class CommonTest {
 	@BeforeEach
 	void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(TOKEN, FULL);
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken("", FULL);
 		Assertions.assertNotNull(authorization);
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = authorization
 			.getAttribute(Principal.class.getName());

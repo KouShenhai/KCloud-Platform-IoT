@@ -1,0 +1,65 @@
+<t-navbar title="搜索" left-arrow />
+<view class="page search-page">
+  <view class="search-input">
+    <t-search
+      t-class-input-container="t-class__input-container"
+      t-class-input="t-search__input"
+      value="{{searchValue}}"
+      leftIcon="search"
+      action="取消"
+      shape="round"
+      placeholder="请搜索你想要的内容"
+      bind:submit="handleSubmit"
+      bind:action-click="actionHandle"
+      focus
+    ></t-search>
+  </view>
+  <view class="search-wrap">
+    <view class="history-wrap">
+      <view class="search-header">
+        <text class="search-title">历史记录</text>
+        <t-icon name="delete" size="large" class="search-clear" bind:click="handleClearHistory" />
+      </view>
+      <view class="search-content">
+        <view
+          class="search-item"
+          hover-class="hover-history-item"
+          wx:for="{{historyWords}}"
+          bind:tap="handleHistoryTap"
+          bindlongpress="deleteCurr"
+          data-index="{{index}}"
+          wx:key="*this"
+        >
+          <t-tag class="history-item margin-12" max-width="{{343}}" variant="light">{{item}}</t-tag>
+        </view>
+      </view>
+    </view>
+    <view class="popular-wrap">
+      <view class="search-header">
+        <text class="search-title">搜索发现</text>
+      </view>
+      <view class="search-content">
+        <view
+          class="search-item"
+          hover-class="hover-history-item"
+          wx:for="{{popularWords}}"
+          bind:tap="handlePopularTap"
+          data-index="{{index}}"
+          wx:key="*this"
+        >
+          <t-tag class="popular-item margin-12" max-width="{{343}}" variant="light" icon="search"> {{item}} </t-tag>
+        </view>
+      </view>
+    </view>
+  </view>
+  <t-dialog
+    visible="{{dialogShow}}"
+    content="{{dialog.message}}"
+    bindconfirm="confirm"
+    bind:close="close"
+    confirm-btn="确定"
+    cancel-btn="{{dialog.showCancelButton ? '取消' : null}}"
+    t-class-confirm="dialog__button-confirm"
+    t-class-cancel="dialog__button-cancel"
+  />
+</view>

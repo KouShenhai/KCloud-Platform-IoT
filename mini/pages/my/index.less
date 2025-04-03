@@ -1,0 +1,102 @@
+.my {
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+
+  --td-navbar-bg-color: transparent;
+  .nav-bg {
+    width: 750rpx;
+    height: 200rpx;
+    position: fixed;
+    top: 0;
+  }
+
+  &-info,
+  &-service,
+  &-setting {
+    background-color: #fff;
+  }
+
+  &-info {
+    border-radius: 24rpx;
+    margin: 8rpx 32rpx 0rpx 32rpx;
+    padding-bottom: 32rpx;
+    overflow: hidden;
+
+    .cell-class-title {
+      font-weight: 600 !important;
+    }
+
+    .cell-class-center {
+      display: flex;
+      align-items: center !important;
+    }
+
+    .divider-class {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .grid-class {
+      margin-top: 40rpx;
+    }
+
+    .grid-item .t-grid-item__content {
+      padding: 0px !important;
+    }
+
+    .split-line {
+      border-right: 1px solid #e7e7e7;
+    }
+
+    // 头像margin-right
+    --td-spacer-1: 32rpx;
+
+    &__person {
+      .name {
+        line-height: 48rpx;
+        font-size: 32rpx;
+        color: #000000e6;
+        font-weight: 600;
+      }
+
+      .tags {
+        display: flex;
+        margin-top: 16rpx;
+
+        --td-text-color-primary: #000000e6;
+        --td-tag-medium-font-size: 20rpx;
+        --td-tag-medium-icon-size: 24rpx;
+      }
+
+      .tag:not(:last-child) {
+        margin-right: 16rpx;
+      }
+    }
+  }
+
+  &-service {
+    border-radius: 24rpx;
+    margin: 32rpx;
+    padding-bottom: 8rpx;
+    overflow: hidden;
+
+    &__list-item {
+      .t-grid-item__content {
+        padding-bottom: 16rpx !important;
+      }
+      .t-grid-item__text {
+        height: 40rpx !important;
+      }
+    }
+
+    &--tips {
+      height: 44rpx;
+      line-height: 44rpx;
+      padding-left: 40rpx;
+      margin-top: 32rpx;
+      color: #000000e6;
+      font-size: 28rpx;
+      font-weight: 600;
+    }
+  }
+}

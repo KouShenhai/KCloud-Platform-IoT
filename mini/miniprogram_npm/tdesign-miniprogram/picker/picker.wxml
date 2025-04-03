@@ -1,0 +1,17 @@
+<wxs src="../common/utils.wxs" module="_" />
+
+<t-popup
+  wx:if="{{usePopup}}"
+  class="class"
+  visible="{{visible}}"
+  placement="bottom"
+  using-custom-navbar="{{usingCustomNavbar || popupProps.usingCustomNavbar}}"
+  z-index="{{ popupProps.zIndex || defaultPopUpzIndex }}"
+  overlay-props="{{ popupProps.overlayProps || defaultPopUpProps }}"
+  bind:visible-change="onPopupChange"
+>
+  <include src="./template.wxml" />
+</t-popup>
+<block wx:else>
+  <include src="./template.wxml" />
+</block>

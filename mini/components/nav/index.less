@@ -1,0 +1,30 @@
+@import '/variable.less';
+
+.home-navbar {
+  .t-navbar {
+    &__left {
+      margin-left: 12rpx;
+    }
+  }
+
+  &__icon {
+    padding: 12rpx;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    padding: 0 16rpx;
+
+    .t-search {
+      --td-search-height: 64rpx;
+      --td-search-font-size: @font-size-mini;
+      width: 375rpx;
+
+      .t-icon {
+        font-size: @font-size-default !important;
+      }
+    }
+  }
+  --td-drawer-title-font-size: 48rpx;
+}

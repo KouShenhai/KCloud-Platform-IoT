@@ -1,0 +1,90 @@
+.t-float-left {
+  float: left;
+}
+.t-float-right {
+  float: right;
+}
+@keyframes tdesign-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.hotspot-expanded.relative {
+  position: relative;
+}
+.hotspot-expanded::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  transform: scale(1.5);
+}
+.t-drawer {
+  background: var(--td-drawer-bg-color, var(--td-bg-color-container, var(--td-font-white-1, #ffffff)));
+  height: 100vh;
+  width: var(--td-drawer-width, 560rpx);
+  display: flex;
+  flex-direction: column;
+}
+.t-drawer--hover {
+  background-color: var(--td-drawer-hover-color, var(--td-bg-color-secondarycontainer, var(--td-gray-color-1, #f3f3f3)));
+}
+.t-drawer__title {
+  font-weight: 600;
+  font-size: var(--td-drawer-title-font-size, 36rpx);
+  padding: 48rpx 32rpx 16rpx;
+  color: var(--td-drawer-title-color, var(--td-text-color-primary, var(--td-font-gray-1, rgba(0, 0, 0, 0.9))));
+}
+.t-drawer__sidebar {
+  height: var(--td-drawer-sidebar-height, 70vh);
+}
+.t-drawer__sidebar-item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-top: var(--td-drawer-item-padding, 32rpx);
+  padding-right: 0;
+  padding-bottom: var(--td-drawer-item-padding, 32rpx);
+  padding-left: var(--td-drawer-item-padding, 32rpx);
+  line-height: var(--td-drawer-item-height, 48rpx);
+}
+.t-drawer__sidebar-item::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: unset;
+  bottom: 0;
+  left: unset;
+  right: unset;
+  background-color: var(--td-drawer-border-color, var(--td-border-level-1-color, var(--td-gray-color-3, #e7e7e7)));
+}
+.t-drawer__sidebar-item::after {
+  height: 1px;
+  left: 0;
+  right: 0;
+  transform: scaleY(0.5);
+}
+.t-drawer__sidebar-item::after {
+  left: var(--td-drawer-item-padding, 32rpx);
+}
+.t-drawer__sidebar-item-title {
+  flex: 1;
+  color: var(--td-drawer-title-color, var(--td-text-color-primary, var(--td-font-gray-1, rgba(0, 0, 0, 0.9))));
+}
+.t-drawer__sidebar-item-icon {
+  padding-right: 16rpx;
+  color: var(--td-drawer-item-icon-color, var(--td-drawer-title-color, var(--td-text-color-primary, var(--td-font-gray-1, rgba(0, 0, 0, 0.9)))));
+  font-size: var(--td-drawer-item-icon-size, 48rpx);
+}
+.t-drawer__footer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--td-drawer-footer-padding-bottom, 40rpx);
+}

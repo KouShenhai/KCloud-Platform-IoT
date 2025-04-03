@@ -1,0 +1,26 @@
+<t-navbar title="发布动态" left-arrow />
+<view class="page">
+  <view class="release-container">
+    <view class="upload box">
+      <t-upload t-class="upload-class" media-type="{{['image']}}" files="{{originFiles}}" gridConfig="{{gridConfig}}" bind:success="handleSuccess" bind:remove="handleRemove" max="4" />
+    </view>
+    <view class="desc box">
+      <view class="desc-label">添加描述</view>
+      <t-textarea t-class="desc-class" t-class-textarea="placeholder-class" placeholder="分享你此刻的想法" maxlength="500" disableDefaultPadding="{{true}}" indicator />
+    </view>
+    <view class="taggroup box">
+      <t-cell t-class-title="cell-title-class" t-class-note="cell-note-class" title="添加标签">
+        <block wx:for="{{tags}}" wx:key="index">
+          <t-check-tag t-class="tag-class" size="medium" default-checked="{{index===0}}" variant="dark" content="#{{item}}" slot="note" />
+        </block>
+      </t-cell>
+    </view>
+    <view class="location box">
+      <t-cell title="所在位置" hover arrow leftIcon="location" bindtap="gotoMap" />
+    </view>
+    <view class="btngroup box">
+      <t-button t-class="btn-class" theme="light" icon="file-copy" content="存草稿" size="large" bindtap="saveDraft"></t-button>
+      <t-button t-class="btn-class" theme="primary" icon="upload" content="发布" size="large" bindtap="release"></t-button>
+    </view>
+  </view>
+</view>

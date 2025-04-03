@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "styleIsolation": "apply-shared",
+  "usingComponents": {
+    "t-popup": "../popup/popup",
+    "t-icon": "../icon/icon",
+    "t-button": "../button/button"
+  }
+}

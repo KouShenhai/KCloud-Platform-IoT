@@ -1,0 +1,49 @@
+<wxs src="./action-sheet.wxs" module="_this" />
+<wxs src="../common/utils.wxs" module="_" />
+<import src="./template/list.wxml" />
+<import src="./template/grid.wxml" />
+
+<view id="{{classPrefix}}" style="{{_._style([style, customStyle])}}" class="{{classPrefix}} class {{prefix}}-class">
+  <t-popup
+    visible="{{visible}}"
+    placement="bottom"
+    usingCustomNavbar="{{usingCustomNavbar}}"
+    bind:visible-change="onPopupVisibleChange"
+    show-overlay="{{showOverlay}}"
+    z-index="{{ popupProps.zIndex || defaultPopUpzIndex }}"
+    overlay-props="{{ popupProps.overlayProps || defaultPopUpProps }}"
+  >
+    <view
+      class="{{_.cls(classPrefix + '__content', [['grid', gridThemeItems.length]])}} {{prefix}}-class-content"
+      tabindex="0"
+    >
+      <view wx:if="{{description}}" tabindex="0" class="{{_.cls(classPrefix + '__description', [align])}}"
+        >{{description}}</view
+      >
+      <block wx:if="{{gridThemeItems.length}}">
+        <template is="grid" data="{{classPrefix, prefix, gridThemeItems, count, currentSwiperIndex}}" />
+      </block>
+      <view wx:elif="{{items && items.length}}" class="{{classPrefix}}__list">
+        <block wx:for="{{ items }}" wx:key="index">
+          <template
+            is="list"
+            data="{{index, classPrefix, listThemeItemClass: _.cls(classPrefix + '__list-item', [align, [disabled, item.disabled]]), item}}"
+          />
+        </block>
+      </view>
+    </view>
+    <slot />
+    <view wx:if="{{showCancel}}" class="{{classPrefix}}__footer">
+      <view class="{{classPrefix}}__gap-{{theme}}" />
+      <view
+        class="{{classPrefix}}__cancel {{prefix}}-class-cancel"
+        hover-class="{{classPrefix}}__cancel--hover"
+        hover-stay-time="70"
+        bind:tap="onCancel"
+        aria-role="button"
+      >
+        {{ cancelText || '取消' }}
+      </view>
+    </view>
+  </t-popup>
+</view>

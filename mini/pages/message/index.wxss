@@ -1,0 +1,27 @@
+/* pages/message/message.wxss */
+page {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100vh;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 112rpx);
+}
+.nav-bar {
+  border-bottom: 1rpx solid #e7e7e7;
+}
+.message-list {
+  height: 0;
+  flex-grow: 1;
+}
+.avatar {
+  border-radius: 50% !important;
+}
+.content > view {
+  width: 560rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.content.unread > view {
+  width: 510rpx;
+}
