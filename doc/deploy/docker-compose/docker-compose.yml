@@ -55,7 +55,7 @@ services:
     networks:
       - laokou_network
   promtail:
-    image: grafana/promtail:3.4.2
+    image: grafana/promtail:3.4.3
     container_name: promtail
     # 保持容器在没有守护程序的情况下运行
     tty: true
