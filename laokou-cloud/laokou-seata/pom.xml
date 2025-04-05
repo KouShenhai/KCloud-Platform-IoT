@@ -21,7 +21,7 @@
     <!--fastjson版本-->
     <fastjson.version>2.0.57</fastjson.version>
     <!--logstash-logback-encoder版本-->
-    <logstash-logback-encoder.version>8.0</logstash-logback-encoder.version>
+    <logstash-logback-encoder.version>8.1</logstash-logback-encoder.version>
     <!--druid版本-->
     <druid.version>1.2.24</druid.version>
     <!--jcommander版本-->
