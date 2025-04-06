@@ -18,6 +18,8 @@ interface ThingModelDrawerProps {
 	setValue: (value: string) => void;
 	flag: number;
 	setFlag: (flag: number) => void;
+	type: string;
+	setType: (type: string) => void;
 }
 
 type TableColumns = {
@@ -35,7 +37,7 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, value, setValue, flag, setFlag }) => {
+export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, value, setValue, flag, setFlag, type, setType }) => {
 
 	const onChange = React.useCallback((val: any) => {
 		dataSource.expression = val;
@@ -52,7 +54,9 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 			}
 			case 'decimal': return {}
 			case 'boolean': return {}
-			case 'string': return {}
+			case 'string': return {
+				length: value.length,
+			}
 			default: return {}
 		}
 	}
@@ -184,37 +188,48 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 					{value: 'boolean', label: '布尔型'},
 					{value: 'string', label: '字符串型'},
 				]}
+				onChange={setType}
 			/>
 
-			<Row gutter={24}>
-				<Col span={12}>
-					<ProFormText
-						readonly={readOnly}
-						name="min"
-						label="最小值"
-						rules={[{ required: true, message: '请输入最小值' }]}/>
-				</Col>
-				<Col span={12}>
-					<ProFormText
-						readonly={readOnly}
-						name="max"
-						label="最大值"
-						rules={[{ required: true, message: '请输入最大值' }]}/>
-				</Col>
-				<Col span={12}>
-					<ProFormText
-						readonly={readOnly}
-						name="length"
-						label="长度"
-						rules={[{ required: true, message: '请输入长度' }]}/>
-				</Col>
-				<Col span={12}>
-					<ProFormText
-						readonly={readOnly}
-						name="unit"
-						label="单位"/>
-				</Col>
-			</Row>
+			{ type === 'string' && (
+				<ProFormText
+					readonly={readOnly}
+					name="length"
+					label="长度"
+					rules={[{ required: true, message: '请输入长度' }]}/>
+			)}
+
+			{ type === 'integer' && (
+				<Row gutter={24}>
+					<Col span={12}>
+						<ProFormText
+							readonly={readOnly}
+							name="min"
+							label="最小值"
+							rules={[{ required: true, message: '请输入最小值' }]}/>
+					</Col>
+					<Col span={12}>
+						<ProFormText
+							readonly={readOnly}
+							name="max"
+							label="最大值"
+							rules={[{ required: true, message: '请输入最大值' }]}/>
+					</Col>
+					<Col span={12}>
+						<ProFormText
+							readonly={readOnly}
+							name="length"
+							label="长度"
+							rules={[{ required: true, message: '请输入长度' }]}/>
+					</Col>
+					<Col span={12}>
+						<ProFormText
+							readonly={readOnly}
+							name="unit"
+							label="单位"/>
+					</Col>
+				</Row>
+			)}
 
 			<ProFormTextArea
 				readonly={readOnly}

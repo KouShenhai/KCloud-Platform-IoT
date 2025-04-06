@@ -18,10 +18,13 @@
 package org.laokou.iot.thingModel.command;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
-import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.iot.thingModel.dto.ThingModelModifyCmd;
+import org.laokou.iot.thingModel.model.ThingModelE;
+import org.laokou.iot.thingModel.service.extensionpoint.ThingModelParamValidatorExtPt;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
 import org.laokou.iot.thingModel.ability.ThingModelDomainService;
@@ -35,20 +38,29 @@ import static org.laokou.common.tenant.constant.DSConstants.IOT;
  * @author laokou
  */
 @Component
-@RequiredArgsConstructor
 public class ThingModelModifyCmdExe {
 
-	private final ThingModelDomainService thingModelDomainService;
+	@Autowired
+	@Qualifier("modifyThingModelParamValidator")
+	private ThingModelParamValidatorExtPt modifyThingModelParamValidator;
 
-	private final TransactionalUtils transactionalUtils;
+	@Autowired
+	private ThingModelDomainService thingModelDomainService;
+
+	@Autowired
+	private TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(ThingModelModifyCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(IOT);
 			// 校验参数
-			transactionalUtils
-				.executeInTransaction(() -> thingModelDomainService.update(ThingModelConvertor.toEntity(cmd.getCo())));
+			ThingModelE thingModelE = ThingModelConvertor.toEntity(cmd.getCo());
+			modifyThingModelParamValidator.validate(thingModelE);
+			transactionalUtils.executeInTransaction(() -> thingModelDomainService.update(thingModelE));
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

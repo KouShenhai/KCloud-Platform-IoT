@@ -53,7 +53,7 @@ public class ThingThingModelsServiceImpl implements ThingModelsServiceI {
 	private final ThingModelGetQryExe thingModelGetQryExe;
 
 	@Override
-	public void save(ThingModelSaveCmd cmd) {
+	public void save(ThingModelSaveCmd cmd) throws Exception {
 		thingModelSaveCmdExe.executeVoid(cmd);
 	}
 

@@ -15,29 +15,29 @@
  *
  */
 
-package org.laokou.common.i18n.util;
+package org.laokou.iot.thingModel.model;
 
-import org.laokou.common.i18n.common.exception.BizException;
-import java.util.Arrays;
-import java.util.function.Function;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-public final class EnumParser {
+@Getter
+public enum TypeEnum {
 
-	private EnumParser() {
-	}
+	READ("read", "读"),
 
-	public static <E extends Enum<E>, O> E parse(Class<E> clazz, Function<E, O> field, O value) {
-		if (value == null) {
-			return null;
-		}
-		return Arrays.stream(clazz.getEnumConstants())
-			.filter(e -> ObjectUtils.equals(field.apply(e), value))
-			.findFirst()
-			.orElseThrow(() -> new BizException("B_Enum_TypeNotExist",
-					String.format("枚举类型不存在 - enum class: %s, invalid value: %s", clazz.getName(), value)));
+	WRITE("write", "写"),
+
+	REPORT("report", "上报");
+
+	private final String code;
+
+	private final String desc;
+
+	TypeEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }

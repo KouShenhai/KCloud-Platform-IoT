@@ -53,7 +53,7 @@ public class ThingModelsControllerV3 {
 	@PreAuthorize("hasAuthority('iot:thing-model:save')")
 	@OperateLog(module = "物模型管理", operation = "保存物模型")
 	@Operation(summary = "保存物模型", description = "保存物模型")
-	public void saveV3(@RequestBody ThingModelSaveCmd cmd) {
+	public void saveV3(@RequestBody ThingModelSaveCmd cmd) throws Exception {
 		thingModelsServiceI.save(cmd);
 	}
 
