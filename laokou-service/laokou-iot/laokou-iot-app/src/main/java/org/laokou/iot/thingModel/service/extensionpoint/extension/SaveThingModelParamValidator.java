@@ -17,8 +17,10 @@
 
 package org.laokou.iot.thingModel.service.extensionpoint.extension;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.ParamValidator;
+import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
 import org.laokou.iot.thingModel.model.ThingModelE;
 import org.laokou.iot.thingModel.service.extensionpoint.ThingModelParamValidatorExtPt;
 import org.springframework.stereotype.Component;
@@ -30,9 +32,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SaveThingModelParamValidator implements ThingModelParamValidatorExtPt {
 
+	private final ThingModelMapper thingModelMapper;
+
 	@Override
-	public void validate(ThingModelE thingModelE) {
-		ParamValidator.validate();
+	public void validate(ThingModelE thingModelE) throws JsonProcessingException {
+		ParamValidator.validate(ThingModelParamValidator.validateCodeAndName(thingModelE, true, thingModelMapper),
+				ThingModelParamValidator.validateCategory(thingModelE),
+				ThingModelParamValidator.validateDataType(thingModelE),
+				ThingModelParamValidator.validateSpecs(thingModelE), ThingModelParamValidator.validateType(thingModelE),
+				ThingModelParamValidator.validateSort(thingModelE));
 	}
 
 }

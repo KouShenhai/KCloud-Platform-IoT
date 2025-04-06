@@ -51,9 +51,9 @@ app.service('GatewayFlowService', ['$http', function ($http) {
     }
 
     if (rule.paramItem != null) {
-      if (rule.paramItem.parseStrategy == 2 ||
-          rule.paramItem.parseStrategy == 3 ||
-          rule.paramItem.parseStrategy == 4) {
+      if (rule.paramItem.parseStrategy === 2 ||
+          rule.paramItem.parseStrategy === 3 ||
+          rule.paramItem.parseStrategy === 4) {
         if (rule.paramItem.fieldName === undefined || rule.paramItem.fieldName === '') {
           alert('当参数属性为Header、URL参数、Cookie时，参数名称不能为空');
           return false;

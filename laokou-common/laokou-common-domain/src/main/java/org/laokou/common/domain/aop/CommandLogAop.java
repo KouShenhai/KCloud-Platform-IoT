@@ -44,7 +44,7 @@ public class CommandLogAop {
 			return proceed;
 		}
 		catch (Throwable throwable) {
-			log.error("命令【{}】执行失败，错误信息：{}", cmd.getClass().getName(), throwable.getMessage(), throwable);
+			log.error("命令【{}】执行失败", cmd.getClass().getName());
 			throw throwable;
 		}
 	}

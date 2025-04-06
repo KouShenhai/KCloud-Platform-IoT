@@ -18,6 +18,7 @@ export default () => {
 	const [value, setValue] = useState("");
 	const [ids, setIds] = useState<any>([])
 	const [flag, setFlag] = useState(0)
+	const [type, setType] = useState('integer')
 
 	type TableColumns = {
 		id: number;
@@ -159,6 +160,8 @@ export default () => {
 				setValue={setValue}
 				flag={flag}
 				setFlag={setFlag}
+				setType={setType}
+				type={type}
 			/>
 
 			<ProTable<TableColumns>

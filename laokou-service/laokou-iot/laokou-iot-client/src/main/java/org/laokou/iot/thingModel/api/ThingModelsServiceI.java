@@ -34,7 +34,7 @@ public interface ThingModelsServiceI {
 	 * 保存物模型.
 	 * @param cmd 保存命令
 	 */
-	void save(ThingModelSaveCmd cmd);
+	void save(ThingModelSaveCmd cmd) throws Exception;
 
 	/**
 	 * 修改物模型.
