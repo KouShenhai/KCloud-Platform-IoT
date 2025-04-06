@@ -35,8 +35,8 @@ class Jasypt3Test {
 
 	@Test
 	void testJasypt3() {
-		String factor = "slat";
-		String plainText = "laokou";
+		String factor = "laokou";
+		String plainText = "laokou123";
 		String encryptWithMD5ANDAES256Str = encryptWithHMACSHA512ANDAES256(plainText, factor);
 		String decryptWithMD5ANDAES256Str = decryptWithHMACSHA512ANDAES256(encryptWithMD5ANDAES256Str, factor);
 		log.info("采用PBEWITHHMACSHA512ANDAES_256加密后：{}", encryptWithMD5ANDAES256Str);

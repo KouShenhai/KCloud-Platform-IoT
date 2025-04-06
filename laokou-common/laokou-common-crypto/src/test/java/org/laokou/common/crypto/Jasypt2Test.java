@@ -35,8 +35,8 @@ class Jasypt2Test {
 
 	@Test
 	void testJasypt2() {
-		String factor = "slat";
-		String plainText = "laokou";
+		String factor = "laokou";
+		String plainText = "laokou123";
 		String encryptWithMD5AndDESStr = encryptWithMD5AndDES(plainText, factor);
 		String decryptWithMD5AndDESStr = decryptWithMD5AndDES(encryptWithMD5AndDESStr, factor);
 		log.info("采用PBEWithMD5AndDES加密后：{}", encryptWithMD5AndDESStr);
