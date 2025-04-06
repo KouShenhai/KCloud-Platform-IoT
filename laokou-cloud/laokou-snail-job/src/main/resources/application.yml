@@ -67,7 +67,7 @@ snail-job:
     enabled: true
     from: koushenhai@163.com
     host: smtp.163.com
-    pass: ENC(f9S1dcXET/YKM04p66g9WLHu38+02CDn+Wf+6CBfaAFq93R7ukbNfj9nMstp32rvxF9uDDMd20/FtxmpETnecQ==)
+    pass: ENC(lyyF4qBHGnbwEHfz/RSj2JtahbLqWjMrkFz0hGqcND3Hp19Ea6aJejxqNBYCCGnL7iw8n11Y1xvM7Hp9EDPgtg==)
     port: 465
     sslEnable: false
     starttlsEnable: false
