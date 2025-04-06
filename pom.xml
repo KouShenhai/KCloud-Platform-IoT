@@ -83,7 +83,7 @@
     <docker.namespace>koushenhai</docker.namespace>
     <docker.username>username</docker.username>
     <docker.password>password</docker.password>
-    <docker-maven-plugin.version>0.45.1</docker-maven-plugin.version>
+    <docker-maven-plugin.version>0.46.0</docker-maven-plugin.version>
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <native-maven-plugin.version>0.10.6</native-maven-plugin.version>
     <versions-maven-plugin.version>2.18.0</versions-maven-plugin.version>
