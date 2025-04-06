@@ -75,6 +75,11 @@
       <artifactId>spring-webmvc</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations-jakarta</artifactId>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 
 </project>

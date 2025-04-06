@@ -24,12 +24,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.laokou.common.core.util.OkHttpUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.test.context.TestConstructor;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -41,9 +39,7 @@ import static org.laokou.common.security.config.GlobalOpaqueTokenIntrospector.FU
 /**
  * @author laokou
  */
-@SpringBootTest
 @RequiredArgsConstructor
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class CommonTest {
 
 	private final WebApplicationContext webApplicationContext;

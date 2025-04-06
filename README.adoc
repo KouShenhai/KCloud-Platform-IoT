@@ -144,7 +144,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 |Redis                       |7.4.2
 |Elasticsearch               |8.17.3
 |RocketMQ                    |5.3.2
-|Netty                       |4.1.118.Final
+|Netty                       |4.2.0.Final
 |Kafka                       |3.9.0
 |EMQX                        |5.8.4
 |TimescaleDB                 |17

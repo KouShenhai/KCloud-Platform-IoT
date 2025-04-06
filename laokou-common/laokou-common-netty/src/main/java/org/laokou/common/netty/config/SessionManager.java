@@ -70,7 +70,7 @@ public class SessionManager {
 		try {
 			do {
 				// 防止读到中间状态数据，保证读取的完整性【数据强一致性】
-    // 在数据读取频繁的场景（如缓存、数据库查询），读锁允许大量读操作并行执行，避免线程因等待锁而阻塞
+				// 在数据读取频繁的场景（如缓存、数据库查询），读锁允许大量读操作并行执行，避免线程因等待锁而阻塞
 				isLocked = READ_LOCK.tryLock(50, TimeUnit.MILLISECONDS);
 			}
 			while (!isLocked && --retry > 0);
