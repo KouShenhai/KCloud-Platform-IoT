@@ -123,26 +123,26 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 
 #### 🎯 Spring全家桶及核心技术版本
 
-|             组件              |      版本       |
-|:---------------------------:|:-------------:|
-|         Spring Boot         |     3.5.0     |
-|        Spring Cloud         |   2024.0.1    |
-|    Spring Cloud Alibaba     |  2023.0.3.2   |
-|      Spring Boot Admin      |     3.4.5     |
-| Spring Authorization Server |     1.5.0     |
-|        Mybatis Plus         |    3.5.11     |
-|            Nacos            |     2.5.0     |
-|          Sentinel           |     1.8.8     |
-|            Redis            |     7.4.2     |
-|        Elasticsearch        |    8.17.3     |
-|          RocketMQ           |     5.3.2     |
-|            Netty            | 4.1.118.Final |
-|            Kafka            |     3.9.0     |
-|            EMQX             |     5.8.4     |
-|         TimescaleDB         |      17       |
-|          TDengine           |    3.3.5.0    |
-|          Liquibase          |    4.30.0     |
-|          Snail Job          |     1.1.2     |
+|             组件              |     版本      |
+|:---------------------------:|:-----------:|
+|         Spring Boot         |    3.5.0    |
+|        Spring Cloud         |  2024.0.1   |
+|    Spring Cloud Alibaba     | 2023.0.3.2  |
+|      Spring Boot Admin      |    3.4.5    |
+| Spring Authorization Server |    1.5.0    |
+|        Mybatis Plus         |   3.5.11    |
+|            Nacos            |    2.5.0    |
+|          Sentinel           |    1.8.8    |
+|            Redis            |    7.4.2    |
+|        Elasticsearch        |   8.17.3    |
+|          RocketMQ           |    5.3.2    |
+|            Netty            | 4.2.0.Final |
+|            Kafka            |    3.9.0    |
+|            EMQX             |    5.8.4    |
+|         TimescaleDB         |     17      |
+|          TDengine           |   3.3.5.0   |
+|          Liquibase          |   4.30.0    |
+|          Snail Job          |    1.1.2    |
 
 #### 🍺 相关技术
 

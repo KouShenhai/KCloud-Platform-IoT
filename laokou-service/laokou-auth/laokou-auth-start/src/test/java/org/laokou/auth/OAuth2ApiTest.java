@@ -265,6 +265,7 @@ class OAuth2ApiTest {
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("设备授权码认证模式，返回信息：{}", json);
+			Assertions.assertNotNull(json);
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -283,6 +284,7 @@ class OAuth2ApiTest {
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("客户端认证模式，返回信息：{}", json);
+			Assertions.assertNotNull(json);
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken);
@@ -301,6 +303,7 @@ class OAuth2ApiTest {
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("授权码认证模式，返回信息：{}", json);
+			Assertions.assertNotNull(json);
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -327,6 +330,7 @@ class OAuth2ApiTest {
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("手机号认证，返回信息：{}", json);
+			Assertions.assertNotNull(json);
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -347,6 +351,7 @@ class OAuth2ApiTest {
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("邮箱认证，返回信息：{}", json);
+			Assertions.assertNotNull(json);
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -367,6 +372,7 @@ class OAuth2ApiTest {
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = OkHttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("用户名密码认证模式，返回信息：{}", json);
+			Assertions.assertNotNull(json);
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -387,6 +393,7 @@ class OAuth2ApiTest {
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = OkHttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("测试认证模式，返回信息：{}", json);
+			Assertions.assertNotNull(json);
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -405,6 +412,7 @@ class OAuth2ApiTest {
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("刷新令牌模式，返回信息；{}", json);
+			Assertions.assertNotNull(json);
 			return JacksonUtils.readTree(json).get("access_token").asText();
 		}
 		catch (Exception e) {
