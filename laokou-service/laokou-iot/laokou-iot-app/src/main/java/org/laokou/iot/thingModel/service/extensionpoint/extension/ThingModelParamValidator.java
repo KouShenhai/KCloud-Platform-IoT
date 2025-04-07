@@ -29,8 +29,8 @@ import org.laokou.iot.thingModel.model.ThingModelE;
 import org.laokou.iot.thingModel.model.TypeEnum;
 
 import java.util.Arrays;
-import java.util.List;
 
+import static org.laokou.common.i18n.common.constant.StringConstants.COMMA;
 import static org.laokou.common.i18n.util.ParamValidator.invalidate;
 import static org.laokou.common.i18n.util.ParamValidator.validate;
 
@@ -38,8 +38,6 @@ import static org.laokou.common.i18n.util.ParamValidator.validate;
  * @author laokou
  */
 public final class ThingModelParamValidator {
-
-	private static final List<String> TYPE_LIST = Arrays.stream(TypeEnum.values()).map(TypeEnum::getCode).toList();
 
 	private ThingModelParamValidator() {
 
@@ -99,10 +97,10 @@ public final class ThingModelParamValidator {
 		if (ObjectUtils.isNull(type)) {
 			return invalidate("模型类型不能为空");
 		}
-		for (String str : TYPE_LIST) {
-			if (!type.contains(str)) {
-				return invalidate("模型类型不存在");
-			}
+		boolean isExist = Arrays.stream(type.split(COMMA))
+			.anyMatch(Arrays.stream(TypeEnum.values()).map(TypeEnum::getCode).toList()::contains);
+		if (!isExist) {
+			return invalidate("模型类型不存在");
 		}
 		return validate();
 	}
