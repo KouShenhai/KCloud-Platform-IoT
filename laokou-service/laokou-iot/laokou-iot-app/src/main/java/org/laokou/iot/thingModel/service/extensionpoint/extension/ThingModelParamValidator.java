@@ -28,6 +28,7 @@ import org.laokou.iot.thingModel.model.DataTypeEnum;
 import org.laokou.iot.thingModel.model.ThingModelE;
 import org.laokou.iot.thingModel.model.TypeEnum;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.laokou.common.i18n.util.ParamValidator.invalidate;
@@ -38,8 +39,7 @@ import static org.laokou.common.i18n.util.ParamValidator.validate;
  */
 public final class ThingModelParamValidator {
 
-	private static final List<String> TYPE_LIST = List.of(TypeEnum.READ.getCode(), TypeEnum.WRITE.getCode(),
-			TypeEnum.REPORT.getCode());
+	private static final List<String> TYPE_LIST = Arrays.stream(TypeEnum.values()).map(TypeEnum::getCode).toList();
 
 	private ThingModelParamValidator() {
 
@@ -112,7 +112,7 @@ public final class ThingModelParamValidator {
 		if (ObjectUtils.isNull(category)) {
 			return invalidate("模型类别不能为空");
 		}
-		if (!List.of(CategoryEnum.EVENT.getCode(), CategoryEnum.PROPERTY.getCode()).contains(category)) {
+		if (!Arrays.stream(CategoryEnum.values()).map(CategoryEnum::getCode).toList().contains(category)) {
 			return invalidate("模型类别不存在");
 		}
 		return validate();
@@ -123,10 +123,7 @@ public final class ThingModelParamValidator {
 		if (ObjectUtils.isNull(dataType)) {
 			return invalidate("数据类型不能为空");
 		}
-		if (!List
-			.of(DataTypeEnum.INTEGER.getCode(), DataTypeEnum.STRING.getCode(), DataTypeEnum.DECIMAL.getCode(),
-					DataTypeEnum.BOOLEAN.getCode())
-			.contains(dataType)) {
+		if (!Arrays.stream(DataTypeEnum.values()).map(DataTypeEnum::getCode).toList().contains(dataType)) {
 			return invalidate("数据类型不存在");
 		}
 		return validate();

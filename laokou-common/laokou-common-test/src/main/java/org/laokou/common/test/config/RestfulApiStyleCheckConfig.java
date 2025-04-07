@@ -50,15 +50,15 @@ public class RestfulApiStyleCheckConfig implements ApplicationListener<Applicati
 	@Qualifier("requestMappingHandlerMapping")
 	private RequestMappingHandlerMapping requestMappingHandlerMapping;
 
-	private final Set<String> WHITE_LIST = Set.of("/error", "/v3/api-docs", "/swagger-ui.html", "/v3/api-docs/{group}",
+	private final Set<String> whiteList = Set.of("/error", "/v3/api-docs", "/swagger-ui.html", "/v3/api-docs/{group}",
 			"/v3/api-docs.yaml", "/v3/api-docs/swagger-config", "/v3/api-docs.yaml/{group}");
 
-	private final Set<String> WHITE_METHOD_LIST = Set.of("resetPwd");
+	private final Set<String> whiteMethodList = Set.of("resetPwd");
 
-	private final Set<String> METHOD_NAME_PREFIX_LIST = Set.of("save", "modify", "remove", "import", "export", "page",
+	private final Set<String> methodNamePrefixList = Set.of("save", "modify", "remove", "import", "export", "page",
 			"list", "count", "get", "upload");
 
-	private final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
+	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -110,12 +110,12 @@ public class RestfulApiStyleCheckConfig implements ApplicationListener<Applicati
 
 	private String checkMethodNameAndResult(String methodName) {
 		boolean isExist = false;
-		for (String prefix : WHITE_METHOD_LIST) {
+		for (String prefix : whiteMethodList) {
 			if (methodName.startsWith(prefix)) {
 				return "";
 			}
 		}
-		for (String prefix : METHOD_NAME_PREFIX_LIST) {
+		for (String prefix : methodNamePrefixList) {
 			if (methodName.startsWith(prefix)) {
 				isExist = true;
 				break;
@@ -134,7 +134,7 @@ public class RestfulApiStyleCheckConfig implements ApplicationListener<Applicati
 		if (url.contains("//")) {
 			str += "URL格式不符合规范，URL中不能出现连续的斜杠、";
 		}
-		for (String s : METHOD_NAME_PREFIX_LIST) {
+		for (String s : methodNamePrefixList) {
 			if (segments[segments.length - 1].startsWith(s)) {
 				isExist = true;
 				break;
@@ -173,8 +173,8 @@ public class RestfulApiStyleCheckConfig implements ApplicationListener<Applicati
 	}
 
 	private boolean checkWhiteUrl(String url) {
-		for (String str : WHITE_LIST) {
-			if (ANT_PATH_MATCHER.match(str, url)) {
+		for (String str : whiteList) {
+			if (antPathMatcher.match(str, url)) {
 				return true;
 			}
 		}

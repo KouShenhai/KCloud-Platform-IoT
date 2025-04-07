@@ -59,7 +59,7 @@ public class MqttClientAutoReconnectImpl implements MqttClientAutoReconnect, Mqt
 
 	private final long maxDelayNanos;
 
-	private final AtomicInteger count = new AtomicInteger(0);
+	private final AtomicInteger attempts = new AtomicInteger(0);
 
 	MqttClientAutoReconnectImpl(final long initialDelayNanos, final long maxDelayNanos) {
 		this.initialDelayNanos = initialDelayNanos;
@@ -68,9 +68,9 @@ public class MqttClientAutoReconnectImpl implements MqttClientAutoReconnect, Mqt
 
 	@Override
 	public void onDisconnected(final @NotNull MqttClientDisconnectedContext context) {
-		int num = count.incrementAndGet();
-		int maxNum = 5;
-		if (context.getSource() != MqttDisconnectSource.USER && num <= maxNum) {
+		int num = attempts.incrementAndGet();
+		int maxRetryNum = 5;
+		if (context.getSource() != MqttDisconnectSource.USER && num <= maxRetryNum) {
 			log.info("连接失败，客户端ID：{}，进行第{}次重连", context.getClientConfig().getClientIdentifier(), num);
 			final MqttClientReconnector reconnector = context.getReconnector();
 			final long delay = (long) Math.min(initialDelayNanos * Math.pow(2, reconnector.getAttempts()),
@@ -97,9 +97,10 @@ public class MqttClientAutoReconnectImpl implements MqttClientAutoReconnect, Mqt
 
 	@Override
 	public void onConnected(@NotNull MqttClientConnectedContext context) {
-		int num = count.get();
+		int num = attempts.get();
 		if (num > 0) {
-			count.compareAndSet(num, 0);
+			attempts.compareAndSet(num, 0);
 		}
 	}
+
 }

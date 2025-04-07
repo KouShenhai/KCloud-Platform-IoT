@@ -47,7 +47,7 @@ public class MqttClientProperties {
 
 	private int willQos = 0;
 
-	private int maxNum = 5;
+	private int maxRetryNum = 5;
 
 	/**
 	 * 控制是否创建新会话（true=新建，false=复用历史会话）. clearStart=true => Broker 会在连接断开后立即清除所有会话信息

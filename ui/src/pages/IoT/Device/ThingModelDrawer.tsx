@@ -206,21 +206,39 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 							readonly={readOnly}
 							name="min"
 							label="最小值"
-							rules={[{ required: true, message: '请输入最小值' }]}/>
+							rules={[
+								{ required: true, message: '请输入最小值' },
+								{
+									pattern: /^[1-9]\d*$/,
+									message: '请输入正整数'
+								}
+							]}/>
 					</Col>
 					<Col span={12}>
 						<ProFormText
 							readonly={readOnly}
 							name="max"
 							label="最大值"
-							rules={[{ required: true, message: '请输入最大值' }]}/>
+							rules={[
+								{ required: true, message: '请输入最大值' },
+								{
+									pattern: /^[1-9]\d*$/,
+									message: '请输入正整数'
+								}
+							]}/>
 					</Col>
 					<Col span={12}>
 						<ProFormText
 							readonly={readOnly}
 							name="length"
 							label="长度"
-							rules={[{ required: true, message: '请输入长度' }]}/>
+							rules={[
+								{ required: true, message: '请输入长度' },
+								{
+									pattern: /^[1-9]\d*$/,
+									message: '请输入正整数'
+								}
+							]}/>
 					</Col>
 					<Col span={12}>
 						<ProFormText

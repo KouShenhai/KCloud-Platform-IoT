@@ -19,10 +19,7 @@ package org.laokou.iot.thingModel.model;
 
 import lombok.Data;
 import org.laokou.common.core.util.CollectionUtils;
-import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.i18n.util.ParamValidator;
-import org.laokou.common.i18n.util.StringUtils;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +39,10 @@ public class IntegerType implements Serializable {
 
 	private String unit;
 
-	private String length;
+	private Integer length;
 
 	public ParamValidator.Validate checkValue() {
-		List<String> list = new ArrayList<>(4);
+		List<String> list = new ArrayList<>(3);
 		if (min == null) {
 			list.add("最小值不能为空");
 		}
@@ -57,9 +54,6 @@ public class IntegerType implements Serializable {
 		}
 		if (length == null) {
 			list.add("长度不能为空");
-		}
-		if (StringUtils.isNotEmpty(length) && !RegexUtils.numberRegex(length)) {
-			list.add("长度必须为数字");
 		}
 		return CollectionUtils.isEmpty(list) ? ParamValidator.validate() : invalidate(String.join(DROP, list));
 	}
