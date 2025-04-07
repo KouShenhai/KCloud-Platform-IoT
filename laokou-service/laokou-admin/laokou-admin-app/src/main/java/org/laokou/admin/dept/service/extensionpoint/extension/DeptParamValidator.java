@@ -36,7 +36,7 @@ public final class DeptParamValidator {
 	public static ParamValidator.Validate validateParentId(DeptE deptE) {
 		Long pid = deptE.getPid();
 		if (ObjectUtils.isNull(pid)) {
-			return invalidate("父级ID不能为空");
+			return invalidate("部门父级ID不能为空");
 		}
 		return validate();
 	}
@@ -44,10 +44,10 @@ public final class DeptParamValidator {
 	public static ParamValidator.Validate validateSort(DeptE deptE) {
 		Integer sort = deptE.getSort();
 		if (ObjectUtils.isNull(sort)) {
-			return invalidate("排序不能为空");
+			return invalidate("部门排序不能为空");
 		}
 		if (sort < 1 || sort > 99999) {
-			return invalidate("排序范围1-99999");
+			return invalidate("部门排序范围1-99999");
 		}
 		return validate();
 	}
@@ -55,7 +55,7 @@ public final class DeptParamValidator {
 	public static ParamValidator.Validate validateId(DeptE deptE) {
 		Long id = deptE.getId();
 		if (ObjectUtils.isNull(id)) {
-			return invalidate("ID不能为空");
+			return invalidate("部门ID不能为空");
 		}
 		return validate();
 	}
@@ -63,7 +63,7 @@ public final class DeptParamValidator {
 	public static ParamValidator.Validate validateName(DeptE deptE) {
 		String name = deptE.getName();
 		if (StringUtils.isEmpty(name)) {
-			return invalidate("名称不能为空");
+			return invalidate("部门名称不能为空");
 		}
 		return validate();
 	}

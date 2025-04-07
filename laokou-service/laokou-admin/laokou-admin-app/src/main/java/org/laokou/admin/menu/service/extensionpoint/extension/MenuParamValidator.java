@@ -42,16 +42,16 @@ public final class MenuParamValidator {
 		String permission = menuE.getPermission();
 		if (MenuTypeEnum.BUTTON.getCode() == type) {
 			if (StringUtils.isEmpty(permission)) {
-				return invalidate("权限标识不能为空");
+				return invalidate("菜单权限标识不能为空");
 			}
 			if (isSave && menuMapper
 				.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getPermission, permission)) > 0) {
-				return invalidate("权限标识已存在");
+				return invalidate("菜单权限标识已存在");
 			}
 			if (!isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class)
 				.eq(MenuDO::getPermission, permission)
 				.ne(MenuDO::getId, menuE.getId())) > 0) {
-				return invalidate("权限标识已存在");
+				return invalidate("菜单权限标识已存在");
 			}
 		}
 		return validate();
@@ -60,7 +60,7 @@ public final class MenuParamValidator {
 	public static ParamValidator.Validate validateParentId(MenuE menuE) {
 		Long pid = menuE.getPid();
 		if (ObjectUtils.isNull(pid)) {
-			return invalidate("父级ID不能为空");
+			return invalidate("菜单父级ID不能为空");
 		}
 		return validate();
 	}
@@ -68,7 +68,7 @@ public final class MenuParamValidator {
 	public static ParamValidator.Validate validateType(MenuE menuE) {
 		Integer type = menuE.getType();
 		if (ObjectUtils.isNull(type)) {
-			return invalidate("类型不能为空");
+			return invalidate("菜单类型不能为空");
 		}
 		return validate();
 	}
@@ -78,15 +78,15 @@ public final class MenuParamValidator {
 		String path = menuE.getPath();
 		if (MenuTypeEnum.MENU.getCode() == type) {
 			if (StringUtils.isEmpty(path)) {
-				return invalidate("路径不能为空");
+				return invalidate("菜单路径不能为空");
 			}
 			if (isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getPath, path)) > 0) {
-				return invalidate("路径已存在");
+				return invalidate("菜单路径已存在");
 			}
 			if (!isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class)
 				.eq(MenuDO::getPath, path)
 				.ne(MenuDO::getId, menuE.getId())) > 0) {
-				return invalidate("路径已存在");
+				return invalidate("菜单路径已存在");
 			}
 		}
 		return validate();
@@ -95,10 +95,10 @@ public final class MenuParamValidator {
 	public static ParamValidator.Validate validateSort(MenuE menuE) {
 		Integer sort = menuE.getSort();
 		if (ObjectUtils.isNull(sort)) {
-			return invalidate("排序不能为空");
+			return invalidate("菜单排序不能为空");
 		}
 		if (sort < 1 || sort > 99999) {
-			return invalidate("排序范围1-99999");
+			return invalidate("菜单排序范围1-99999");
 		}
 		return validate();
 	}
@@ -107,7 +107,7 @@ public final class MenuParamValidator {
 		Integer type = menuE.getType();
 		Integer status = menuE.getStatus();
 		if (MenuTypeEnum.MENU.getCode() == type && ObjectUtils.isNull(status)) {
-			return invalidate("状态不能为空");
+			return invalidate("菜单状态不能为空");
 		}
 		return validate();
 	}
@@ -115,7 +115,7 @@ public final class MenuParamValidator {
 	public static ParamValidator.Validate validateId(MenuE menuE) {
 		Long id = menuE.getId();
 		if (ObjectUtils.isNull(id)) {
-			return invalidate("ID不能为空");
+			return invalidate("菜单ID不能为空");
 		}
 		return validate();
 	}
@@ -124,16 +124,16 @@ public final class MenuParamValidator {
 		String name = menuE.getName();
 		Integer type = menuE.getType();
 		if (StringUtils.isEmpty(name)) {
-			return invalidate("名称不能为空");
+			return invalidate("菜单名称不能为空");
 		}
 		if (MenuTypeEnum.MENU.getCode() == type) {
 			if (isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, name)) > 0) {
-				return invalidate("名称已存在");
+				return invalidate("菜单名称已存在");
 			}
 			if (!isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class)
 				.eq(MenuDO::getName, name)
 				.ne(MenuDO::getId, menuE.getId())) > 0) {
-				return invalidate("名称已存在");
+				return invalidate("菜单名称已存在");
 			}
 		}
 		return validate();

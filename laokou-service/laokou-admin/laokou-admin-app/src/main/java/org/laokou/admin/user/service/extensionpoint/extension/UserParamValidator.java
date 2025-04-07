@@ -45,7 +45,7 @@ public final class UserParamValidator {
 	public static ParamValidator.Validate validateId(UserE userE) {
 		Long id = userE.getId();
 		if (ObjectUtils.isNull(id)) {
-			return invalidate("ID不能为空");
+			return invalidate("用户ID不能为空");
 		}
 		return validate();
 	}
@@ -54,17 +54,17 @@ public final class UserParamValidator {
 			UserMapper userMapper) {
 		String password = userE.getPassword();
 		if (StringUtils.isEmpty(password)) {
-			return invalidate("密码不能为空");
+			return invalidate("用户密码不能为空");
 		}
 		if (password.length() < 6 || password.length() > 30) {
-			return invalidate("密码长度为6-30个字符");
+			return invalidate("用户密码长度为6-30个字符");
 		}
 		UserDO userDO = userMapper.selectById(userE.getId());
 		if (ObjectUtils.isNull(userDO)) {
 			return invalidate("用户不存在");
 		}
 		if (passwordEncoder.matches(password, userDO.getPassword())) {
-			return invalidate("新密码不能与旧密码相同");
+			return invalidate("用户新密码不能与旧密码相同");
 		}
 		return validate();
 	}
@@ -100,20 +100,20 @@ public final class UserParamValidator {
 		String mail = userE.getMail();
 		if (StringUtils.isNotEmpty(mail)) {
 			if (!RegexUtils.mailRegex(mail)) {
-				return invalidate("邮箱错误");
+				return invalidate("用户邮箱错误");
 			}
 			if (mail.length() > 30) {
-				return invalidate("邮箱不能超过30个字符");
+				return invalidate("用户邮箱不能超过30个字符");
 			}
 			Long id = userE.getId();
 			String encryptMail = AESUtils.encrypt(mail);
 			if (isSave && userMapper
 				.selectCount(Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMail, encryptMail)) > 0) {
-				return invalidate("邮箱已存在");
+				return invalidate("用户邮箱已存在");
 			}
 			if (!isSave && userMapper.selectCount(
 					Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMail, encryptMail).ne(UserDO::getId, id)) > 0) {
-				return invalidate("邮箱已存在");
+				return invalidate("用户邮箱已存在");
 			}
 		}
 		return validate();
@@ -124,18 +124,18 @@ public final class UserParamValidator {
 		String mobile = userE.getMobile();
 		if (StringUtils.isNotEmpty(mobile)) {
 			if (!RegexUtils.mobileRegex(mobile)) {
-				return invalidate("手机号错误");
+				return invalidate("用户手机号错误");
 			}
 			Long id = userE.getId();
 			String encryptMobile = AESUtils.encrypt(mobile);
 			if (isSave && userMapper
 				.selectCount(Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMobile, encryptMobile)) > 0) {
-				return invalidate("手机号已存在");
+				return invalidate("用户手机号已存在");
 			}
 			if (!isSave && userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class)
 				.eq(UserDO::getMobile, encryptMobile)
 				.ne(UserDO::getId, id)) > 0) {
-				return invalidate("手机号已存在");
+				return invalidate("用户手机号已存在");
 			}
 		}
 		return validate();
@@ -144,7 +144,7 @@ public final class UserParamValidator {
 	public static ParamValidator.Validate validateRoleIds(UserE userE) {
 		List<String> roleIds = userE.getRoleIds();
 		if (CollectionUtils.isEmpty(roleIds)) {
-			return invalidate("角色IDS不能为空");
+			return invalidate("用户角色IDS不能为空");
 		}
 		return validate();
 	}
@@ -152,7 +152,7 @@ public final class UserParamValidator {
 	public static ParamValidator.Validate validateDeptIds(UserE userE) {
 		List<String> deptIds = userE.getDeptIds();
 		if (CollectionUtils.isEmpty(deptIds)) {
-			return invalidate("部门IDS不能为空");
+			return invalidate("用户部门IDS不能为空");
 		}
 		return validate();
 	}

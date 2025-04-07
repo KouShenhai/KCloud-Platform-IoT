@@ -81,4 +81,16 @@ public final class CollectionUtils {
 		return Splitter.on(on).trimResults().splitToList(str);
 	}
 
+	public static <E> boolean contains(Collection<E> collections, E element) {
+		return collections.contains(element);
+	}
+
+	public static <E> boolean anyMatch(Collection<E> collections, Collection<E> allCollections) {
+		return collections.stream().anyMatch(allCollections::contains);
+	}
+
+	public static <E> boolean containsAll(Collection<E> collections, Collection<E> allCollections) {
+		return allCollections.containsAll(collections);
+	}
+
 }
