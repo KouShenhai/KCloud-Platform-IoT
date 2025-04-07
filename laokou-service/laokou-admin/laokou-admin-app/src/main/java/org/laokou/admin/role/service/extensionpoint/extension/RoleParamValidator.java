@@ -43,10 +43,10 @@ public final class RoleParamValidator {
 	public static ParamValidator.Validate validateSort(RoleE roleE) {
 		Integer sort = roleE.getSort();
 		if (ObjectUtils.isNull(sort)) {
-			return invalidate("排序不能为空");
+			return invalidate("角色排序不能为空");
 		}
 		if (sort < 1 || sort > 99999) {
-			return invalidate("排序范围1-99999");
+			return invalidate("角色排序范围1-99999");
 		}
 		return validate();
 	}
@@ -54,7 +54,7 @@ public final class RoleParamValidator {
 	public static ParamValidator.Validate validateId(RoleE roleE) {
 		Long id = roleE.getId();
 		if (ObjectUtils.isNull(id)) {
-			return invalidate("ID不能为空");
+			return invalidate("角色ID不能为空");
 		}
 		return validate();
 	}
@@ -62,7 +62,7 @@ public final class RoleParamValidator {
 	public static ParamValidator.Validate validateDataScope(RoleE roleE) {
 		String dataScope = roleE.getDataScope();
 		if (StringUtils.isEmpty(dataScope)) {
-			return invalidate("数据范围不能为空");
+			return invalidate("角色数据范围不能为空");
 		}
 		return validate();
 	}
@@ -70,7 +70,7 @@ public final class RoleParamValidator {
 	public static ParamValidator.Validate validateMenuIds(RoleE roleE) {
 		List<String> menuIds = roleE.getMenuIds();
 		if (CollectionUtils.isEmpty(menuIds)) {
-			return invalidate("菜单IDS不能为空");
+			return invalidate("角色菜单IDS不能为空");
 		}
 		return validate();
 	}
@@ -78,7 +78,7 @@ public final class RoleParamValidator {
 	public static ParamValidator.Validate validateDeptIds(RoleE roleE) {
 		List<String> deptIds = roleE.getDeptIds();
 		if (ObjectUtils.equals(roleE.getDataScope(), DataScope.CUSTOM.getCode()) && CollectionUtils.isEmpty(deptIds)) {
-			return invalidate("部门IDS不能为空");
+			return invalidate("角色部门IDS不能为空");
 		}
 		return validate();
 	}
@@ -87,14 +87,14 @@ public final class RoleParamValidator {
 		Long id = roleE.getId();
 		String name = roleE.getName();
 		if (StringUtils.isEmpty(name)) {
-			return invalidate("名称不能为空");
+			return invalidate("角色名称不能为空");
 		}
 		if (isSave && roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, name)) > 0) {
-			return invalidate("名称已存在");
+			return invalidate("角色名称已存在");
 		}
 		if (!isSave && roleMapper
 			.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, name).ne(RoleDO::getId, id)) > 0) {
-			return invalidate("名称已存在");
+			return invalidate("角色名称已存在");
 		}
 		return validate();
 	}
