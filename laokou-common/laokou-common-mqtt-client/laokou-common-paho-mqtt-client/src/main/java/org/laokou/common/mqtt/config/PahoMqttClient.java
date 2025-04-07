@@ -175,6 +175,7 @@ public class PahoMqttClient extends AbstractMqttClient {
 	private MqttConnectionOptions options() {
 		MqttConnectionOptions options = new MqttConnectionOptions();
 		options.setCleanStart(mqttClientProperties.isClearStart());
+		options.setSessionExpiryInterval(mqttClientProperties.getSessionExpiryInterval());
 		options.setUserName(mqttClientProperties.getUsername());
 		options.setPassword(mqttClientProperties.getPassword().getBytes(StandardCharsets.UTF_8));
 		options.setReceiveMaximum(mqttClientProperties.getReceiveMaximum());

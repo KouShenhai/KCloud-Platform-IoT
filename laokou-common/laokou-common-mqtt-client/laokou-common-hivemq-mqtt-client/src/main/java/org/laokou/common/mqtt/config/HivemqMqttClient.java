@@ -46,6 +46,7 @@ import org.laokou.common.mqtt.client.handler.event.UnsubscribeEvent;
 
 import java.util.*;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * MQTT客户端.
@@ -111,7 +112,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 						.subscribeOn(Schedulers.from(virtualThreadExecutor))
 						.subscribe(ack -> {
 						}, e -> {
-							throw new SystemException("S_Mqtt_ConnectError", e.getMessage(), e);
+							throw new SystemException("S_Mqtt_ConnectFailed", e.getMessage(), e);
 						});
 					disposables.add(disposable);
 				}
@@ -222,7 +223,18 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			.identifier(clientId)
 			.serverHost(mqttClientProperties.getHost())
 			.serverPort(mqttClientProperties.getPort())
-			.executorConfig(MqttClientExecutorConfig.builder().nettyExecutor(virtualThreadExecutor).build());
+			.executorConfig(MqttClientExecutorConfig.builder()
+				.nettyExecutor(virtualThreadExecutor)
+				.nettyThreads(mqttClientProperties.getNettyThreads())
+				.applicationScheduler(Schedulers.from(virtualThreadExecutor))
+				.build());
+		// 开启重连
+		if (mqttClientProperties.isAutomaticReconnect()) {
+			builder.automaticReconnect()
+				.initialDelay(mqttClientProperties.getAutomaticReconnectInitialDelay(), TimeUnit.SECONDS)
+				.maxDelay(mqttClientProperties.getAutomaticReconnectMaxDelay(), TimeUnit.SECONDS)
+				.applyAutomaticReconnect();
+		}
 		if (mqttClientProperties.isAuth()) {
 			builder.simpleAuth()
 				.username(mqttClientProperties.getUsername())
