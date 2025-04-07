@@ -25,7 +25,8 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-i18n</artifactId>
+      <artifactId>laokou-common-core</artifactId>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 

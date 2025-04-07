@@ -47,6 +47,12 @@ public class MqttClientProperties {
 
 	private int willQos = 0;
 
+	private int maxNum = 5;
+
+	/**
+	 * 控制是否创建新会话（true=新建，false=复用历史会话）. clearStart=true => Broker 会在连接断开后立即清除所有会话信息
+	 * clearStart=false => Broker 会在连接断开后保存会话信息，并在重新连接后复用会话信息
+	 */
 	private boolean clearStart = false;
 
 	private int receiveMaximum = 65_535;
@@ -72,14 +78,23 @@ public class MqttClientProperties {
 	 */
 	private int connectionTimeout = 15;
 
-	private long sessionExpiryInterval = 30;
+	/**
+	 * 会话过期时间【永不过期，单位秒】. 定义客户端断开后会话保留的时间（仅在 Clean Session = false 时生效）.
+	 */
+	private long sessionExpiryInterval = 4294967295L;
 
 	private int keepAliveInterval = 60;
 
 	private boolean automaticReconnect = true;
 
+	private long automaticReconnectMaxDelay = 5;
+
+	private long automaticReconnectInitialDelay = 1;
+
 	private boolean manualAcks = true;
 
 	private Set<String> topics = new HashSet<>(0);
+
+	private int nettyThreads = 32;
 
 }
