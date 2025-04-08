@@ -39,6 +39,15 @@
     <if test="pageQuery.code != null and pageQuery.code != ''">
       and "code" like #{pageQuery.code}
     </if>
+    <if test="pageQuery.dataType != null and pageQuery.dataType != ''">
+      and data_type = #{pageQuery.dataType}
+    </if>
+    <if test="pageQuery.category != null">
+      and "category" = #{pageQuery.category}
+    </if>
+    <if test="pageQuery.type != null and pageQuery.type != ''">
+      and "type" like #{pageQuery.type}
+    </if>
     <if test="pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
       and create_time <![CDATA[ >= ]]> #{pageQuery.params.startTime}
     </if>
