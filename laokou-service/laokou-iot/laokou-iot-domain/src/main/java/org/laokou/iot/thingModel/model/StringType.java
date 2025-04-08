@@ -18,8 +18,10 @@
 package org.laokou.iot.thingModel.model;
 
 import lombok.Data;
+import org.laokou.common.i18n.util.ParamValidator;
 
 import java.io.Serializable;
+import static org.laokou.common.i18n.util.ParamValidator.invalidate;
 
 /**
  * @author laokou
@@ -27,6 +29,18 @@ import java.io.Serializable;
 @Data
 public class StringType implements Serializable {
 
-	private String length;
+	private Integer length;
+
+	public ParamValidator.Validate checkValue() {
+		if (length == null) {
+			return invalidate("长度不能为空");
+		}
+		else {
+			if (length <= 0) {
+				return invalidate("长度不能小于或等于0");
+			}
+		}
+		return ParamValidator.validate();
+	}
 
 }

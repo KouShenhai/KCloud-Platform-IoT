@@ -37,21 +37,20 @@ public enum DataTypeEnum {
 	},
 	DECIMAL("decimal", "小数型") {
 		@Override
-		public ParamValidator.Validate validate(String specs) {
-			return null;
+		public ParamValidator.Validate validate(String specs) throws JsonProcessingException {
+			return JacksonUtils.toBean(specs, DecimalType.class).checkValue();
 		}
 	},
 	STRING("string", "字符串型") {
 		@Override
 		public ParamValidator.Validate validate(String specs) throws JsonProcessingException {
-			StringType stringType = JacksonUtils.toBean(specs, StringType.class);
-			return ParamValidator.validate();
+			return JacksonUtils.toBean(specs, StringType.class).checkValue();
 		}
 	},
 	BOOLEAN("boolean", "布尔型") {
 		@Override
-		public ParamValidator.Validate validate(String specs) {
-			return null;
+		public ParamValidator.Validate validate(String specs) throws JsonProcessingException {
+			return JacksonUtils.toBean(specs, BooleanType.class).checkValue();
 		}
 	};
 

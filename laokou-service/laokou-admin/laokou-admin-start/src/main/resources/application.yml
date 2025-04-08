@@ -181,6 +181,11 @@ spring:
         hc5:
           enabled: false
         disable-ssl-validation: true
+        max-connections: 500
+        time-to-live: 10
+        time-to-live-unit: minutes
+        ok-http:
+          read-timeout: 120s
       client:
         config:
           default:

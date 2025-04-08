@@ -42,18 +42,27 @@ public class IntegerType implements Serializable {
 	private Integer length;
 
 	public ParamValidator.Validate checkValue() {
-		List<String> list = new ArrayList<>(3);
-		if (min == null) {
-			list.add("最小值不能为空");
+		List<String> list = new ArrayList<>(2);
+		if (max == null || min == null) {
+			list.add("最大值和最小值不能为空");
 		}
-		if (max == null) {
-			list.add("最大值不能为空");
-		}
-		if (max != null && min != null && min > max) {
-			list.add("最小值不能大于最大值");
+		else {
+			if (min < 0 || max < 0) {
+				list.add("最大值和最小值不能小于0");
+			}
+			else {
+				if (min > max) {
+					list.add("最小值不能大于最大值");
+				}
+			}
 		}
 		if (length == null) {
 			list.add("长度不能为空");
+		}
+		else {
+			if (length <= 0) {
+				list.add("长度不能小于或等于0");
+			}
 		}
 		return CollectionUtils.isEmpty(list) ? ParamValidator.validate() : invalidate(String.join(DROP, list));
 	}
