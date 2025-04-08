@@ -170,7 +170,7 @@
     <!--mysql-connector-j版本-->
     <mysql-connector-j.version>9.2.0</mysql-connector-j.version>
     <!--clickhouse-jdbc版本-->
-    <clickhouse-jdbc.version>0.8.2</clickhouse-jdbc.version>
+    <clickhouse-jdbc.version>0.8.3</clickhouse-jdbc.version>
     <!--reactor-core版本-->
     <reactor-core.version>3.7.4</reactor-core.version>
     <!--sentinel版本-->
