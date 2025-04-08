@@ -173,8 +173,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin.version}</version>
         <configuration>
-          <source>21</source>
-          <target>21</target>
+          <source>24</source>
+          <target>24</target>
           <encoding>UTF-8</encoding>
           <compilerArgs>
             <arg>-Xlint:deprecation</arg>
