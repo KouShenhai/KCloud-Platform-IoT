@@ -52,7 +52,12 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				length: value.length,
 				unit: value.unit,
 			}
-			case 'decimal': return {}
+			case 'decimal': return {
+				min: value.min,
+				max: value.max,
+				length: value.length,
+				unit: value.unit,
+			}
 			case 'boolean': return {}
 			case 'string': return {
 				length: value.length,
@@ -285,8 +290,8 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 							rules={[
 								{ required: true, message: '请输入长度' },
 								{
-									pattern: /^([1-9]\d?)(,\d{1,2})?$/,
-									message: '长度格式无效【正确格式：整数位数,小数位数，并且整数位必须大于0，最多2位整数位和小数位】'
+									pattern: /([1-9]|[1-5][0-9]|6[0-4]),2?$/,
+									message: '长度格式无效【正确格式：整数位数,小数位数，并且整数位必须大于0，小于65，小数位只能为2】'
 								}
 							]}/>
 					</Col>

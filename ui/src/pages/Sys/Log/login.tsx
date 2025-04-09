@@ -8,6 +8,7 @@ import {ExportToExcel} from "@/utils/export";
 import moment from "moment";
 import {useRef, useState} from "react";
 import {getLoginStatus, getLoginType, LOGIN_STATUS, LOGIN_TYPE} from "@/services/constant";
+import {useAccess} from "@@/exports";
 
 export default () => {
 
@@ -24,6 +25,7 @@ export default () => {
 		createTime: string | undefined;
 	};
 
+	const access = useAccess();
 	const actionRef = useRef();
 	const [list, setList] = useState<TableColumns[]>([]);
 	const [param, setParam] = useState<any>({});
@@ -184,11 +186,11 @@ export default () => {
 					}}>
 						导出
 					</Button>,
-					<Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={() => {
+					( access.canLoginLogExport && <Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={() => {
 						exportV3(param)
 					}}>
 						导出全部
-					</Button>
+					</Button>)
 				]
 			}
 			dateFormatter="string"

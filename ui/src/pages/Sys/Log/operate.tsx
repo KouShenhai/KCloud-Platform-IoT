@@ -9,6 +9,7 @@ import moment from "moment";
 import {useRef, useState} from "react";
 import {getStatus, STATUS} from "@/services/constant";
 import {OperateLogDrawer} from "@/pages/Sys/Log/OperateDrawer";
+import {useAccess} from "@@/exports";
 
 export default () => {
 
@@ -34,6 +35,7 @@ export default () => {
 		costTime: number | string;
 	};
 
+	const access = useAccess()
 	const actionRef = useRef();
 	const [list, setList] = useState<TableColumns[]>([]);
 	const [param, setParam] = useState<any>({});
@@ -146,7 +148,7 @@ export default () => {
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				<a key="get"
+				( access.canOperateLogGetDetail && <a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
@@ -157,7 +159,7 @@ export default () => {
 				   }}
 				>
 					查看
-				</a>
+				</a>)
 			],
 		},
 	];
@@ -218,11 +220,11 @@ export default () => {
 						}}>
 							导出
 						</Button>,
-						<Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={() => {
+						( access.canOperateLogExport && <Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={() => {
 							exportV3(param)
 						}}>
 							导出全部
-						</Button>
+						</Button>)
 					]
 				}
 				dateFormatter="string"

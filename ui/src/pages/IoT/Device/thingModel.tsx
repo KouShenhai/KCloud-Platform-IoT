@@ -7,9 +7,11 @@ import {trim} from "@/utils/format";
 import React, {useRef, useState} from "react";
 import {ThingModelDrawer} from "@/pages/IoT/Device/ThingModelDrawer";
 import {TableRowSelection} from "antd/es/table/interface";
+import {useAccess} from "@@/exports";
 
 export default () => {
 
+	const access = useAccess()
 	const actionRef = useRef();
 	const [modalVisit, setModalVisit] = useState(false);
 	const [dataSource, setDataSource] = useState<any>({})
@@ -140,7 +142,7 @@ export default () => {
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				<a key="getable"
+				( access.canThingModelGetDetail && <a key="getable"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
 						   setDataSource(res?.data)
@@ -149,7 +151,7 @@ export default () => {
 				   }}
 				>
 					查看
-				</a>
+				</a>)
 			],
 		},
 	];
@@ -201,7 +203,7 @@ export default () => {
 				rowSelection={{ ...rowSelection }}
 				toolBarRender={
 					() => [
-						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
+						( access.canThingModelSave && <Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
 							setTitle('新增物模型')
 							setReadOnly(false)
 							setModalVisit(true)
@@ -215,8 +217,8 @@ export default () => {
 							})
 						}}>
 							新增
-						</Button>,
-						<Button key="remove" type="primary" danger icon={<DeleteOutlined />} onClick={() => {
+						</Button>),
+						( access.canThingModelRemove && <Button key="remove" type="primary" danger icon={<DeleteOutlined />} onClick={() => {
 							Modal.confirm({
 								title: '确认删除?',
 								content: '您确定要删除吗?',
@@ -238,7 +240,7 @@ export default () => {
 							});
 						}}>
 							删除
-						</Button>
+						</Button>)
 					]
 				}
 				dateFormatter="string"

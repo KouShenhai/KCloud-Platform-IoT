@@ -13,6 +13,7 @@ import {UserDrawer} from "@/pages/Sys/Permission/UserDrawer";
 import {listTreeV3} from "@/services/admin/dept";
 import {pageV3 as rolePageV3} from "@/services/admin/role";
 import {UserModifyAuthorityDrawer} from "@/pages/Sys/Permission/UserModifyAuthorityDrawer";
+import {useAccess} from "@@/exports";
 
 export default () => {
 
@@ -26,6 +27,7 @@ export default () => {
 		superAdmin: number | undefined;
 	};
 
+	const access = useAccess()
 	const [readOnly, setReadOnly] = useState(false)
 	const [modalVisit, setModalVisit] = useState(false);
 	const [modalModifyAuthorityVisit, setModalModifyAuthorityVisit] = useState(false);
@@ -179,7 +181,7 @@ export default () => {
 			key: 'option',
 			width: 250,
 			render: (_, record) => [
-				<a key="get"
+				( access.canUserGetDetail && <a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
@@ -198,8 +200,8 @@ export default () => {
 				   }}
 				>
 					查看
-				</a>,
-				<a key="modify"
+				</a>),
+				( access.canUserModify && <a key="modify"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
@@ -219,8 +221,8 @@ export default () => {
 				   }}
 				>
 					修改
-				</a>,
-				<a key={'modifyAuthority'} onClick={() => {
+				</a>),
+				( access.canUserModify && <a key={'modifyAuthority'} onClick={() => {
 					getByIdV3({id: record?.id}).then(res => {
 						setTitle('分配权限')
 						setModalModifyAuthorityVisit(true)
@@ -228,16 +230,16 @@ export default () => {
 					})
 				}}>
 					分配权限
-				</a>,
-				<a key={'resetPwd'} onClick={() => {
+				</a>),
+				( access.canUserModify && <a key={'resetPwd'} onClick={() => {
 					getByIdV3({id: record?.id}).then(res => {
 						setModalRestPwdVisit(true)
 						setDataSource(res?.data)
 					})
 				}}>
 					重置密码
-				</a>,
-				<a key="remove" onClick={() => {
+				</a>),
+				( access.canUserRemove && <a key="remove" onClick={() => {
 					Modal.confirm({
 						title: '确认删除?',
 						content: '您确定要删除吗?',
@@ -255,7 +257,7 @@ export default () => {
 					})
 				}}>
 					删除
-				</a>
+				</a>)
 			],
 		},
 	];
@@ -319,7 +321,7 @@ export default () => {
 				}}
 				toolBarRender={
 					() => [
-						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
+						( access.canUserSave && <Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
 							setTitle('新增用户')
 							setReadOnly(false)
 							setModalVisit(true)
@@ -333,8 +335,8 @@ export default () => {
 							setFileList([])
 						}}>
 							新增
-						</Button>,
-						<Button key="remove" type="primary" danger icon={<DeleteOutlined />} onClick={() => {
+						</Button>),
+						( access.canUserRemove && <Button key="remove" type="primary" danger icon={<DeleteOutlined />} onClick={() => {
 							Modal.confirm({
 								title: '确认删除?',
 								content: '您确定要删除吗?',
@@ -356,7 +358,7 @@ export default () => {
 							});
 						}}>
 							删除
-						</Button>
+						</Button>)
 					]
 				}
 				dateFormatter="string"

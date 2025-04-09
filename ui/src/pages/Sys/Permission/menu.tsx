@@ -8,6 +8,7 @@ import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal, Space, Switch, Tag} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {MenuDrawer} from "@/pages/Sys/Permission/MenuDrawer";
+import {useAccess} from "@@/exports";
 
 export default () => {
 
@@ -22,6 +23,7 @@ export default () => {
 		sort: number | undefined;
 	};
 
+	const access = useAccess()
 	const [readOnly, setReadOnly] = useState(false)
 	const [modalVisit, setModalVisit] = useState(false);
 	const actionRef = useRef();
@@ -174,7 +176,7 @@ export default () => {
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				<a key="get"
+				( access.canMenuGetDetail && <a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
@@ -189,8 +191,8 @@ export default () => {
 				   }}
 				>
 					查看
-				</a>,
-				<a key="save" onClick={() => {
+				</a>),
+				( access.canMenuSave && <a key="save" onClick={() => {
 					setTitle('新增菜单')
 					setTypeValue(0)
 					setReadOnly(false)
@@ -208,8 +210,8 @@ export default () => {
 					})
 				}}>
 					新增
-				</a>,
-				<a key="modify"
+				</a>),
+				( access.canMenuModify && <a key="modify"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
@@ -224,8 +226,8 @@ export default () => {
 				   }}
 				>
 					修改
-				</a>,
-				<a key="remove" onClick={() => {
+				</a>),
+				( access.canMenuRemove && <a key="remove" onClick={() => {
 					Modal.confirm({
 						title: '确认删除?',
 						content: '您确定要删除吗?',
@@ -243,7 +245,7 @@ export default () => {
 					})
 				}}>
 					删除
-				</a>
+				</a>)
 			],
 			width: 200
 		},
@@ -288,7 +290,7 @@ export default () => {
 				}}
 				toolBarRender={
 					() => [
-						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
+						( access.canMenuSave && <Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
 							setTitle('新增菜单')
 							setTypeValue(0)
 							setReadOnly(false)
@@ -305,8 +307,8 @@ export default () => {
 							})
 						}}>
 							新增
-						</Button>,
-						<Button key="remove" type="primary" danger icon={<DeleteOutlined />} onClick={() => {
+						</Button>),
+						( access.canMenuRemove && <Button key="remove" type="primary" danger icon={<DeleteOutlined />} onClick={() => {
 							Modal.confirm({
 								title: '确认删除?',
 								content: '您确定要删除吗?',
@@ -328,7 +330,7 @@ export default () => {
 							});
 						}}>
 							删除
-						</Button>
+						</Button>)
 					]
 				}
 				dateFormatter="string"
