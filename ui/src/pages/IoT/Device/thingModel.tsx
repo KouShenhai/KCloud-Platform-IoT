@@ -42,6 +42,9 @@ export default () => {
 			pageIndex: params?.pageSize * (params?.current - 1),
 			code: trim(params?.code),
 			name: trim(params?.name),
+			dataType: params?.dataType,
+			category: params?.category,
+			type: params?.type,
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
