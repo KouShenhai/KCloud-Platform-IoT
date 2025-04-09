@@ -25,7 +25,7 @@
          "name",
          code,
          data_type,
-         category,
+         "category",
          "type",
          sort,
          create_time
@@ -46,7 +46,7 @@
       and "category" = #{pageQuery.category}
     </if>
     <if test="pageQuery.type != null and pageQuery.type != ''">
-      and "type" like #{pageQuery.type}
+      and string_to_array("type", ',') @> string_to_array(#{pageQuery.type}, ',')
     </if>
     <if test="pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
       and create_time <![CDATA[ >= ]]> #{pageQuery.params.startTime}

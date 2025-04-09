@@ -43,7 +43,7 @@ export default () => {
 			code: trim(params?.code),
 			name: trim(params?.name),
 			dataType: params?.dataType,
-			category: params?.category,
+			category: params?.category ? params?.category.join(',') : '',
 			type: params?.type,
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
@@ -70,17 +70,17 @@ export default () => {
 			width: 60,
 		},
 		{
-			title: '编码',
+			title: '物数据编码',
 			dataIndex: 'code',
 			ellipsis: true
 		},
 		{
-			title: '名称',
+			title: '物数据名称',
 			dataIndex: 'name',
 			ellipsis: true
 		},
 		{
-			title: '数据类型',
+			title: '物数据类型',
 			dataIndex: 'dataType',
 			valueEnum: {
 				integer: "整数型",
@@ -91,7 +91,7 @@ export default () => {
 			ellipsis: true
 		},
 		{
-			title: '模型类别',
+			title: '物模型类别',
 			dataIndex: 'category',
 			valueEnum: {
 				1: "属性",
@@ -100,9 +100,17 @@ export default () => {
 			ellipsis: true
 		},
 		{
-			title: '模型类型',
+			title: '物模型类型',
 			dataIndex: 'type',
-			ellipsis: true
+			ellipsis: true,
+			fieldProps: {
+				multiple: true,
+			},
+			valueEnum: {
+				read: "读",
+				write:  "写",
+				report: "上报",
+			},
 		},
 		{
 			title: '创建时间',

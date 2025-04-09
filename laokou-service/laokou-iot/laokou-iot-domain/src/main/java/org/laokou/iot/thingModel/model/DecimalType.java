@@ -27,8 +27,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.COMMA;
 import static org.laokou.common.i18n.common.constant.StringConstants.DROP;
 
 /**
@@ -52,7 +50,7 @@ public class DecimalType implements Serializable {
 		}
 		else {
 			if (min.compareTo(BigDecimal.ZERO) < 0 || max.compareTo(BigDecimal.ZERO) < 0) {
-				list.add("最大值和最小值不能小于0");
+				list.add("最大值和最小值必须大于0");
 			}
 			else {
 				if (min.compareTo(max) > 0) {
@@ -64,32 +62,8 @@ public class DecimalType implements Serializable {
 			list.add("长度不能为空");
 		}
 		else {
-			if (!length.contains(COMMA)) {
-				list.add("格式不正确，正确格式：整数位数,小数位数");
-			}
-			else {
-				String[] split = length.split(COMMA);
-				if (split.length != 2) {
-					list.add("格式不正确，正确格式：整数位数,小数位数");
-				}
-				else {
-					if (StringUtils.isEmpty(split[0]) || StringUtils.isEmpty(split[1])) {
-						list.add("整数位数和小数位不能为空");
-					}
-					else {
-						if (!RegexUtils.numberRegex(split[0]) || !RegexUtils.numberRegex(split[1])) {
-							list.add("整数位数和小数位数只能是正整数");
-						}
-						else {
-							if (Integer.parseInt(split[0]) <= 0) {
-								list.add("整数位数不能小于或等于0");
-							}
-							if (Integer.parseInt(split[1]) <= 0) {
-								list.add("小数位数不能小于或等于0");
-							}
-						}
-					}
-				}
+			if (!RegexUtils.matches("^([1-9]\\d?)(\\,\\d{1,2})?$", length)) {
+				list.add("长度格式无效【正确格式：整数位数,小数位数，并且整数位必须大于0，最多2位整数位和小数位】");
 			}
 		}
 		return CollectionUtils.isEmpty(list) ? ParamValidator.validate()

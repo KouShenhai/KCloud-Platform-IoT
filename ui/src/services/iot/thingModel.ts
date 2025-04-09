@@ -45,7 +45,7 @@ export async function getByIdV3(
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<API.Result>(`/v3/thing-models/${param0}`, {
+  return request<API.Result>(`/api/iot/v3/thing-models/${param0}`, {
     method: 'GET',
     params: { ...queryParams },
     ...(options || {}),

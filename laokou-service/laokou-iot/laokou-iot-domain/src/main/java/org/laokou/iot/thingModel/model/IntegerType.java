@@ -48,7 +48,7 @@ public class IntegerType implements Serializable {
 		}
 		else {
 			if (min < 0 || max < 0) {
-				list.add("最大值和最小值不能小于0");
+				list.add("最大值和最小值必须大于0");
 			}
 			else {
 				if (min > max) {
@@ -61,7 +61,7 @@ public class IntegerType implements Serializable {
 		}
 		else {
 			if (length <= 0) {
-				list.add("长度不能小于或等于0");
+				list.add("长度必须大于0");
 			}
 		}
 		return CollectionUtils.isEmpty(list) ? ParamValidator.validate() : invalidate(String.join(DROP, list));

@@ -37,7 +37,7 @@ public class StringType implements Serializable {
 		}
 		else {
 			if (length <= 0) {
-				return invalidate("长度不能小于或等于0");
+				return invalidate("长度必须大于0");
 			}
 		}
 		return ParamValidator.validate();

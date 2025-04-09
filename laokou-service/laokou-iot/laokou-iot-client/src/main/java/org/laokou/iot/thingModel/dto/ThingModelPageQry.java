@@ -89,7 +89,7 @@ public class ThingModelPageQry extends PageQuery {
 	}
 
 	public void setType(String type) {
-		this.type = StringUtils.like(StringUtils.trim(type));
+		this.type = StringUtils.trim(type);
 	}
 
 }

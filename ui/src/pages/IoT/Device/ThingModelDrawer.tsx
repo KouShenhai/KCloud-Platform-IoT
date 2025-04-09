@@ -249,6 +249,56 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				</Row>
 			)}
 
+			{ type === 'decimal' && (
+				<Row gutter={24}>
+					<Col span={12}>
+						<ProFormText
+							readonly={readOnly}
+							name="min"
+							label="最小值"
+							rules={[
+								{ required: true, message: '请输入最小值' },
+								{
+									pattern: /^(0|[1-9]\d*)(\.\d+)?$/,
+									message: '请输入小数【禁止负数】'
+								}
+							]}/>
+					</Col>
+					<Col span={12}>
+						<ProFormText
+							readonly={readOnly}
+							name="max"
+							label="最大值"
+							rules={[
+								{ required: true, message: '请输入最大值' },
+								{
+									pattern: /^(0|[1-9]\d*)(\.\d+)?$/,
+									message: '请输入小数【禁止负数】'
+								}
+							]}/>
+					</Col>
+					<Col span={12}>
+						<ProFormText
+							readonly={readOnly}
+							name="length"
+							label="长度"
+							rules={[
+								{ required: true, message: '请输入长度' },
+								{
+									pattern: /^([1-9]\d?)(,\d{1,2})?$/,
+									message: '长度格式无效【正确格式：整数位数,小数位数，并且整数位必须大于0，最多2位整数位和小数位】'
+								}
+							]}/>
+					</Col>
+					<Col span={12}>
+						<ProFormText
+							readonly={readOnly}
+							name="unit"
+							label="单位"/>
+					</Col>
+				</Row>
+			)}
+
 			<ProFormTextArea
 				readonly={readOnly}
 				name="remark"
