@@ -12,6 +12,7 @@ import {listTreeV3 as listMenuTreeV3} from "@/services/admin/menu";
 import {listTreeV3 as listDeptTreeV3} from "@/services/admin/dept";
 import {RoleDrawer} from "@/pages/Sys/Permission/RoleDrawer";
 import {RoleModifyAuthorityDrawer} from "@/pages/Sys/Permission/RoleModifyAuthorityDrawer";
+import {useAccess} from "@@/exports";
 
 export default () => {
 
@@ -23,6 +24,7 @@ export default () => {
 		dataScope: string | undefined;
 	};
 
+	const access = useAccess()
 	const [readOnly, setReadOnly] = useState(false)
 	const [modalVisit, setModalVisit] = useState(false);
 	const actionRef = useRef();
@@ -126,7 +128,7 @@ export default () => {
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				<a key="get"
+				( access.canRoleGetDetail && <a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
@@ -139,8 +141,8 @@ export default () => {
 				   }}
 				>
 					查看
-				</a>,
-				<a key="modify"
+				</a>),
+				( access.canRoleModify && <a key="modify"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
@@ -153,8 +155,8 @@ export default () => {
 				   }}
 				>
 					修改
-				</a>,
-				<a key={'modifyAuthority'} onClick={() => {
+				</a>),
+				( access.canRoleModify && <a key={'modifyAuthority'} onClick={() => {
 					getByIdV3({id: record?.id}).then(res => {
 						setTitle('分配权限')
 						setModalModifyAuthorityVisit(true)
@@ -163,8 +165,8 @@ export default () => {
 					})
 				}}>
 					分配权限
-				</a>,
-				<a key="remove" onClick={() => {
+				</a>),
+				( access.canRoleRemove && <a key="remove" onClick={() => {
 					Modal.confirm({
 						title: '确认删除?',
 						content: '您确定要删除吗?',
@@ -182,7 +184,7 @@ export default () => {
 					})
 				}}>
 					删除
-				</a>
+				</a>)
 			],
 		},
 	];
@@ -239,7 +241,7 @@ export default () => {
 				}}
 				toolBarRender={
 					() => [
-						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
+						( access.canRoleSave && <Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
 							setTitle('新增角色')
 							setReadOnly(false)
 							setModalVisit(true)
@@ -252,8 +254,8 @@ export default () => {
 							})
 						}}>
 							新增
-						</Button>,
-						<Button key="remove" type="primary" danger icon={<DeleteOutlined />} onClick={() => {
+						</Button>),
+						( access.canRoleRemove && <Button key="remove" type="primary" danger icon={<DeleteOutlined />} onClick={() => {
 							Modal.confirm({
 								title: '确认删除?',
 								content: '您确定要删除吗?',
@@ -275,7 +277,7 @@ export default () => {
 							});
 						}}>
 							删除
-						</Button>
+						</Button>)
 					]
 				}
 				dateFormatter="string"
