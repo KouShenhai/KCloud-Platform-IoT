@@ -47,18 +47,18 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 	const getSpecs = (value: any) => {
 		switch (value.dataType) {
 			case 'integer': return {
-				min: value.min,
-				max: value.max,
 				length: value.length,
 				unit: value.unit,
 			}
 			case 'decimal': return {
-				min: value.min,
-				max: value.max,
-				length: value.length,
+				integerLength: value.integerLength,
+				decimalLength: value.decimalLength,
 				unit: value.unit,
 			}
-			case 'boolean': return {}
+			case 'boolean': return {
+				trueText: value?.trueText,
+				falseText: value?.falseText,
+			}
 			case 'string': return {
 				length: value.length,
 			}
@@ -201,7 +201,31 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 					readonly={readOnly}
 					name="length"
 					label="长度"
-					rules={[{ required: true, message: '请输入长度' }]}/>
+					rules={[{ required: true, message: '请输入长度' },
+						{ pattern: /^(2000|1\d{3}|[1-9]\d{0,2})$/, message:"长度必须为1-2000的整数" },
+					]}
+				/>
+			)}
+
+			{ type === 'boolean' && (
+				<Row gutter={24}>
+					<Col span={12}>
+						<ProFormText
+							readonly={readOnly}
+							name="trueText"
+							label="1对应文本"
+							rules={[{ required: true, message: '请输入1对应文本' }]}
+						/>
+					</Col>
+					<Col span={12}>
+						<ProFormText
+							readonly={readOnly}
+							name="falseText"
+							label="0对应文本"
+							rules={[{ required: true, message: '请输入0对应文本' }]}
+						/>
+					</Col>
+				</Row>
 			)}
 
 			{ type === 'integer' && (
@@ -209,97 +233,63 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 					<Col span={12}>
 						<ProFormText
 							readonly={readOnly}
-							name="min"
-							label="最小值"
-							rules={[
-								{ required: true, message: '请输入最小值' },
-								{
-									pattern: /^[1-9]\d*$/,
-									message: '请输入正整数'
-								}
-							]}/>
-					</Col>
-					<Col span={12}>
-						<ProFormText
-							readonly={readOnly}
-							name="max"
-							label="最大值"
-							rules={[
-								{ required: true, message: '请输入最大值' },
-								{
-									pattern: /^[1-9]\d*$/,
-									message: '请输入正整数'
-								}
-							]}/>
-					</Col>
-					<Col span={12}>
-						<ProFormText
-							readonly={readOnly}
 							name="length"
 							label="长度"
 							rules={[
 								{ required: true, message: '请输入长度' },
 								{
-									pattern: /^[1-9]\d*$/,
-									message: '请输入正整数'
+									pattern: /^(8|16|32|64)$/,
+									message: '长度必须为8、16、32、64的整数'
 								}
-							]}/>
+							]}
+						/>
 					</Col>
 					<Col span={12}>
 						<ProFormText
 							readonly={readOnly}
 							name="unit"
-							label="单位"/>
+							label="单位"
+						/>
 					</Col>
 				</Row>
 			)}
 
 			{ type === 'decimal' && (
 				<Row gutter={24}>
-					<Col span={12}>
+					<Col span={8}>
 						<ProFormText
 							readonly={readOnly}
-							name="min"
-							label="最小值"
+							name="integerLength"
+							label="整数位长度"
 							rules={[
-								{ required: true, message: '请输入最小值' },
+								{ required: true, message: '请输入整数位长度' },
 								{
-									pattern: /^(0|[1-9]\d*)(\.\d+)?$/,
-									message: '请输入小数【禁止负数】'
+									pattern: /^([1-9]|[1-5][0-9]|6[0-4])$/,
+									message: '整数位长度必须为1-64的整数'
 								}
-							]}/>
+							]}
+						/>
 					</Col>
-					<Col span={12}>
+					<Col span={8}>
 						<ProFormText
 							readonly={readOnly}
-							name="max"
-							label="最大值"
+							name="decimalLength"
+							label="小数位长度"
 							rules={[
-								{ required: true, message: '请输入最大值' },
+								{ required: true, message: '请输入小数位长度' },
 								{
-									pattern: /^(0|[1-9]\d*)(\.\d+)?$/,
-									message: '请输入小数【禁止负数】'
+									pattern: /^[1-4]$/,
+									message: '小数位长度必须为1-4的整数'
 								}
-							]}/>
+							]}
+						/>
 					</Col>
-					<Col span={12}>
-						<ProFormText
-							readonly={readOnly}
-							name="length"
-							label="长度"
-							rules={[
-								{ required: true, message: '请输入长度' },
-								{
-									pattern: /([1-9]|[1-5][0-9]|6[0-4]),2?$/,
-									message: '长度格式无效【正确格式：整数位数,小数位数，并且整数位必须大于0，小于65，小数位只能为2】'
-								}
-							]}/>
-					</Col>
-					<Col span={12}>
+					<Col span={8}>
 						<ProFormText
 							readonly={readOnly}
 							name="unit"
-							label="单位"/>
+							label="单位"
+						/>
 					</Col>
 				</Row>
 			)}

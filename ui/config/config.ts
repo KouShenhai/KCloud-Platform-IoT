@@ -4,7 +4,6 @@ import routes from './routes';
 
 const {REACT_APP_ENV = 'dev'} = process.env;
 
-// @ts-ignore
 export default defineConfig({
 	antd: {
 		// theme: {}

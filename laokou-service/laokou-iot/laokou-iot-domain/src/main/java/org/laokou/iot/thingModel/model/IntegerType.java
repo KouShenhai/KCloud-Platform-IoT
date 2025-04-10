@@ -18,13 +18,11 @@
 package org.laokou.iot.thingModel.model;
 
 import lombok.Data;
-import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.i18n.util.ParamValidator;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import static org.laokou.common.i18n.common.constant.StringConstants.DROP;
+import java.io.Serial;
+import java.io.Serializable;
+
 import static org.laokou.common.i18n.util.ParamValidator.invalidate;
 
 /**
@@ -33,38 +31,21 @@ import static org.laokou.common.i18n.util.ParamValidator.invalidate;
 @Data
 public class IntegerType implements Serializable {
 
-	private Integer min;
-
-	private Integer max;
-
-	private String unit;
+	@Serial
+	private static final long serialVersionUID = -1L;
 
 	private Integer length;
 
+	private String unit;
+
 	public ParamValidator.Validate checkValue() {
-		List<String> list = new ArrayList<>(2);
-		if (max == null || min == null) {
-			list.add("最大值和最小值不能为空");
-		}
-		else {
-			if (min < 0 || max < 0) {
-				list.add("最大值和最小值必须大于0");
-			}
-			else {
-				if (min > max) {
-					list.add("最小值不能大于最大值");
-				}
-			}
-		}
 		if (length == null) {
-			list.add("长度不能为空");
+			return invalidate("长度不能为空");
 		}
-		else {
-			if (length <= 0) {
-				list.add("长度必须大于0");
-			}
+		if (length != 8 && length != 16 && length != 32 && length != 64) {
+			return invalidate("长度必须为8、16、32、64");
 		}
-		return CollectionUtils.isEmpty(list) ? ParamValidator.validate() : invalidate(String.join(DROP, list));
+		return ParamValidator.validate();
 	}
 
 }
