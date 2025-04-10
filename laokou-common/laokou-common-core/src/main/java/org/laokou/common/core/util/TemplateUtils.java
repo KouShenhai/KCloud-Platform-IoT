@@ -56,7 +56,7 @@ public final class TemplateUtils extends FreeMarkerTemplateUtils {
 			return FreeMarkerTemplateUtils.processTemplateIntoString(temp, params);
 		}
 		catch (Exception e) {
-			log.error("错误信息：{}", e.getMessage());
+			log.error("模板解析失败，错误信息：{}", e.getMessage(), e);
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 	}

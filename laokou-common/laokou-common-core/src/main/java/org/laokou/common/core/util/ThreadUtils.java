@@ -45,6 +45,7 @@ public final class ThreadUtils {
 	 * @param timeout 超时时间
 	 */
 	public static void shutdown(ExecutorService executorService, int timeout) {
+		log.info("开始关闭线程池");
 		if (ObjectUtils.isNotNull(executorService) && !executorService.isShutdown()) {
 			executorService.shutdown();
 			try {
@@ -57,7 +58,7 @@ public final class ThreadUtils {
 				Thread.currentThread().interrupt();
 			}
 			finally {
-				log.info("关闭线程池");
+				log.info("关闭线程池结束");
 			}
 		}
 	}
