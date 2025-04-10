@@ -62,6 +62,7 @@ export const DeviceDrawer: React.FC<DeviceDrawerProps> = ({ modalVisit, setModal
 			onFinish={ async (value) => {
 				console.log(value)
 				if (value.id === undefined) {
+					// @ts-ignore
 					saveV3({co: value}, uuidV7()).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()

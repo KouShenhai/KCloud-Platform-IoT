@@ -18,6 +18,7 @@
 package org.laokou.common.core.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.laokou.common.i18n.common.exception.SystemException;
 import java.io.*;
 import java.net.URI;
@@ -196,20 +197,23 @@ public final class FileUtils {
 		if (isExist(path)) {
 			walkFileTree(path, new SimpleFileVisitor<>() {
 
+				@NotNull
 				@Override
-				public FileVisitResult visitFile(Path filePath, BasicFileAttributes attrs) throws IOException {
+				public FileVisitResult visitFile(Path filePath, @NotNull BasicFileAttributes attrs) throws IOException {
 					delete(filePath);
 					return FileVisitResult.CONTINUE;
 				}
 
+				@NotNull
 				@Override
 				public FileVisitResult postVisitDirectory(Path dirPath, IOException exc) throws IOException {
 					delete(dirPath);
 					return FileVisitResult.CONTINUE;
 				}
 
+				@NotNull
 				@Override
-				public FileVisitResult visitFileFailed(Path file, IOException exc) {
+				public FileVisitResult visitFileFailed(Path file, @NotNull IOException exc) {
 					return FileVisitResult.CONTINUE;
 				}
 			});
@@ -230,8 +234,9 @@ public final class FileUtils {
 			Path sourceDir = Path.of(sourcePath);
 			walkFileTree(sourceDir, new SimpleFileVisitor<>() {
 
+				@NotNull
 				@Override
-				public FileVisitResult visitFile(Path filePath, BasicFileAttributes attrs) throws IOException {
+				public FileVisitResult visitFile(Path filePath, @NotNull BasicFileAttributes attrs) throws IOException {
 					// 对于每个文件，创建一个 ZipEntry 并写入
 					Path targetPath = sourceDir.relativize(filePath);
 					zos.putNextEntry(new ZipEntry(sourceDir.getFileName() + SLASH + targetPath));
@@ -240,8 +245,10 @@ public final class FileUtils {
 					return FileVisitResult.CONTINUE;
 				}
 
+				@NotNull
 				@Override
-				public FileVisitResult preVisitDirectory(Path dirPath, BasicFileAttributes attrs) throws IOException {
+				public FileVisitResult preVisitDirectory(Path dirPath, @NotNull BasicFileAttributes attrs)
+						throws IOException {
 					// 对于每个目录，创建一个 ZipEntry（目录也需要在 ZIP 中存在）
 					Path targetPath = sourceDir.relativize(dirPath);
 					zos.putNextEntry(new ZipEntry(sourceDir.getFileName() + SLASH + targetPath + SLASH));
@@ -249,8 +256,9 @@ public final class FileUtils {
 					return FileVisitResult.CONTINUE;
 				}
 
+				@NotNull
 				@Override
-				public FileVisitResult visitFileFailed(Path file, IOException exc) {
+				public FileVisitResult visitFileFailed(Path file, @NotNull IOException exc) {
 					return FileVisitResult.CONTINUE;
 				}
 			});
