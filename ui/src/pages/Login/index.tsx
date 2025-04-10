@@ -39,6 +39,7 @@ export default () => {
 		MOBILE,
 		MAIL
 	];
+	const [loading, setLoading] = useState<boolean>(false);
 	const [loginType, setLoginType] = useState<LoginType>('username_password');
 	const [captchaImage, setCaptchaImage] = useState<string>('');
 	const [uuid, setUuid] = useState<string>('');
@@ -156,6 +157,7 @@ export default () => {
 	}, []);
 
 	const onSubmit = async (form: API.LoginParam) => {
+		setLoading(true)
 		const params = getParams(form);
 		login({...params})
 			// @ts-ignore
@@ -184,7 +186,7 @@ export default () => {
 				getCaptchaImage();
 				clearMailCaptcha();
 				clearMobileCaptcha();
-			});
+			}).finally(() => setLoading(false));
 	};
 
 	return (
@@ -202,6 +204,7 @@ export default () => {
 				logo={<img alt="logo" src="/logo.png"/>}
 				title="老寇IoT云平台"
 				subTitle="企业级微服务架构云服务多租户IoT平台"
+				loading={loading}
 				actions={
 					<div
 						style={{
@@ -287,6 +290,7 @@ export default () => {
 				></Tabs>
 
 				<ProFormText
+					disabled={loading}
 					name="tenant_code"
 					fieldProps={{
 						size: 'large',
@@ -305,6 +309,7 @@ export default () => {
 				{loginType === USERNAME_PASSWORD.key && (
 					<>
 						<ProFormText
+							disabled={loading}
 							name="username"
 							fieldProps={{
 								size: 'large',
@@ -320,6 +325,7 @@ export default () => {
 							]}
 						/>
 						<ProFormText.Password
+							disabled={loading}
 							name="password"
 							fieldProps={{
 								size: 'large',
@@ -337,6 +343,7 @@ export default () => {
 						<Row>
 							<Col flex={3}>
 								<ProFormText
+									disabled={loading}
 									width={"sm"}
 									fieldProps={{
 										size: 'large',
@@ -378,6 +385,7 @@ export default () => {
 				{loginType === MOBILE.key && (
 					<>
 						<ProFormText
+							disabled={loading}
 							fieldProps={{
 								size: 'large',
 								prefix: <MobileOutlined className={'prefixIcon'}/>,
@@ -431,6 +439,7 @@ export default () => {
 				{loginType === MAIL.key && (
 					<>
 						<ProFormText
+							disabled={loading}
 							fieldProps={{
 								size: 'large',
 								prefix: <MailOutlined className={'prefixIcon'}/>,

@@ -45,8 +45,8 @@ export default () => {
 			code: trim(params?.code),
 			name: trim(params?.name),
 			dataType: params?.dataType,
-			category: params?.category ? params?.category.join(',') : '',
-			type: params?.type,
+			category: params?.category,
+			type: params?.type ? params?.type.join(',') : '',
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
@@ -72,46 +72,96 @@ export default () => {
 			width: 60,
 		},
 		{
-			title: '物数据编码',
+			title: '物模型编码',
 			dataIndex: 'code',
-			ellipsis: true
+			valueType: 'text',
+			ellipsis: true,
+			fieldProps: {
+				placeholder: '请输入物模型编码',
+			}
 		},
 		{
-			title: '物数据名称',
+			title: '物模型名称',
 			dataIndex: 'name',
-			ellipsis: true
+			valueType: 'text',
+			ellipsis: true,
+			fieldProps: {
+				placeholder: '请输入物模型名称',
+			}
 		},
 		{
-			title: '物数据类型',
+			title: '物模型类型',
 			dataIndex: 'dataType',
-			valueEnum: {
-				integer: "整数型",
-				string:  "字符串型",
-				decimal: "小数型",
-				boolean: "布尔型"
+			valueType: 'select',
+			fieldProps: {
+				valueType: 'select',
+				mode: 'single',
+				placeholder: '请选择物模型类型',
+				options: [
+					{
+						value: 'integer',
+						label: '整数型',
+					},
+					{
+						value: 'decimal',
+						label: '小数型',
+					},
+					{
+						value: 'boolean',
+						label: '布尔型'
+					},
+					{
+						value: 'string',
+						label: '字符串型',
+					},
+				]
 			},
 			ellipsis: true
 		},
 		{
 			title: '物模型类别',
 			dataIndex: 'category',
-			valueEnum: {
-				1: "属性",
-				2: "事件"
+			valueType: 'select',
+			fieldProps: {
+				valueType: 'select',
+				mode: 'single',
+				placeholder: '请选择物模型类别',
+				options: [
+					{
+						value: 1,
+						label: '属性',
+					},
+					{
+						value: 2,
+						label: '事件',
+					},
+				]
 			},
 			ellipsis: true
 		},
 		{
 			title: '物模型类型',
 			dataIndex: 'type',
+			valueType: 'select',
 			ellipsis: true,
 			fieldProps: {
-				multiple: true,
-			},
-			valueEnum: {
-				read: "读",
-				write:  "写",
-				report: "上报",
+				valueType: 'select',
+				mode: 'multiple',
+				placeholder: '请选择物模型类型',
+				options: [
+					{
+						value: 'read',
+						label: '读',
+					},
+					{
+						value: 'write',
+						label: '写',
+					},
+					{
+						value: 'report',
+						label: '上报',
+					},
+				]
 			},
 		},
 		{
@@ -128,6 +178,9 @@ export default () => {
 			dataIndex: 'createTime',
 			valueType: 'dateRange',
 			hideInTable: true,
+			fieldProps: {
+				placeholder: ['请选择开始时间', '请选择结束时间'],
+			},
 			search: {
 				transform: (value) => {
 					return {

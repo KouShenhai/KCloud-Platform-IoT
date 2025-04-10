@@ -99,7 +99,7 @@ public class DevicesControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
-	@PreAuthorize("hasAuthority('sys:device:detail')")
+	@PreAuthorize("hasAuthority('iot:device:detail')")
 	@Operation(summary = "查看设备详情", description = "查看设备详情")
 	public Result<DeviceCO> getByIdV3(@PathVariable("id") Long id) {
 		return devicesServiceI.getById(new DeviceGetQry(id));
