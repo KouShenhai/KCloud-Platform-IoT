@@ -33,39 +33,39 @@ import org.laokou.common.i18n.dto.DTO;
 public class NoticeLogExcel extends DTO {
 
 	/**
-	 * 编码.
+	 * 通知编码.
 	 */
 	@ColumnWidth(30)
 	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
 			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
-	@ExcelProperty(value = "编码", index = 0)
+	@ExcelProperty(value = "通知编码", index = 0)
 	private String code;
 
 	/**
-	 * 名称.
+	 * 通知名称.
 	 */
 	@ColumnWidth(30)
 	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
 			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
-	@ExcelProperty(value = "名称", index = 1)
+	@ExcelProperty(value = "通知名称", index = 1)
 	private String name;
 
 	/**
-	 * 状态.
+	 * 通知状态.
 	 */
 	@ColumnWidth(30)
 	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
 			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
-	@ExcelProperty(value = "状态", index = 2)
+	@ExcelProperty(value = "通知状态", index = 2)
 	private String status;
 
 	/**
-	 * 参数.
+	 * 通知参数.
 	 */
 	@ColumnWidth(30)
 	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
 			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
-	@ExcelProperty(value = "参数", index = 3)
+	@ExcelProperty(value = "通知参数", index = 3)
 	private String param;
 
 	/**

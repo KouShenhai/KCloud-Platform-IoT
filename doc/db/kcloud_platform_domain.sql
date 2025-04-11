@@ -199,7 +199,7 @@ COMMENT ON COLUMN "public"."boot_sys_notice_log"."code" IS '通知编码';
 COMMENT ON COLUMN "public"."boot_sys_notice_log"."name" IS '通知名称';
 COMMENT ON COLUMN "public"."boot_sys_notice_log"."status" IS '通知状态 0成功 1失败';
 COMMENT ON COLUMN "public"."boot_sys_notice_log"."error_message" IS '错误信息';
-COMMENT ON COLUMN "public"."boot_sys_notice_log"."param" IS '发送参数';
+COMMENT ON COLUMN "public"."boot_sys_notice_log"."param" IS '通知参数';
 COMMENT ON TABLE "public"."boot_sys_notice_log" IS '通知日志';
 
 -- ----------------------------

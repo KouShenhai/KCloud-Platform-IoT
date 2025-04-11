@@ -33,7 +33,7 @@ import static org.laokou.common.tenant.constant.DSConstants.Master.USER_TABLE;
 public class UserDO extends BaseDO {
 
 	/**
-	 * 密码.
+	 * 用户密码.
 	 */
 	private String password;
 
@@ -43,12 +43,12 @@ public class UserDO extends BaseDO {
 	private Integer superAdmin;
 
 	/**
-	 * 邮箱.
+	 * 用户邮箱.
 	 */
 	private String mail;
 
 	/**
-	 * 手机号.
+	 * 用户手机号.
 	 */
 	private String mobile;
 
@@ -58,7 +58,7 @@ public class UserDO extends BaseDO {
 	private Integer status;
 
 	/**
-	 * 头像.
+	 * 用户头像.
 	 */
 	private String avatar;
 
@@ -68,12 +68,12 @@ public class UserDO extends BaseDO {
 	private String usernamePhrase;
 
 	/**
-	 * 邮箱短语.
+	 * 用户邮箱短语.
 	 */
 	private String mailPhrase;
 
 	/**
-	 * 手机号短语.
+	 * 用户手机号短语.
 	 */
 	private String mobilePhrase;
 

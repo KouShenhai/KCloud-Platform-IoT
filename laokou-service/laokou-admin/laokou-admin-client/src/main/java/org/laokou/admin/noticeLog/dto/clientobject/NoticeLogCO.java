@@ -40,17 +40,17 @@ public class NoticeLogCO extends ClientObject {
 	private Long id;
 
 	/**
-	 * Api编码.
+	 * 通知编码.
 	 */
 	private String code;
 
 	/**
-	 * Api名称.
+	 * 通知名称.
 	 */
 	private String name;
 
 	/**
-	 * Api状态 0成功 1失败.
+	 * 通知状态 0成功 1失败.
 	 */
 	private Integer status;
 
@@ -60,7 +60,7 @@ public class NoticeLogCO extends ClientObject {
 	private String errorMessage;
 
 	/**
-	 * Api参数.
+	 * 通知参数.
 	 */
 	private String param;
 

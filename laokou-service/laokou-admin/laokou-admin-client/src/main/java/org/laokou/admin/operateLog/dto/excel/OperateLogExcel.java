@@ -92,7 +92,7 @@ public class OperateLogExcel extends DTO {
 	@ColumnWidth(30)
 	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
 			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
-	@ExcelProperty(value = "状态", index = 6)
+	@ExcelProperty(value = "操作状态", index = 6)
 	private String status;
 
 	/**
