@@ -1,7 +1,7 @@
 import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {pageV3, getByIdV3, removeV3} from "@/services/iot/thingModel";
-import {Button, message, Modal} from "antd";
+import {Button, message, Modal, Space, Tag} from "antd";
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
 import React, {useRef, useState} from "react";
@@ -162,6 +162,48 @@ export default () => {
 						label: '上报',
 					},
 				]
+			},
+			renderFormItem: (_, { defaultRender }) => {
+				return defaultRender(_);
+			},
+			render: (_, record) => (
+				<Space>
+					{record?.type?.split(',').map((item: string) => {
+						if (item === 'read') {
+							return <Tag color={'green-inverse'} key={'read'}>
+								读
+							</Tag>
+						} else if (item === 'write') {
+							return <Tag color={'#fd5251'} key={'write'}>
+								写
+							</Tag>
+						} else if (item === 'report') {
+							return <Tag color={'#f4a300'} key={'report'}>
+								上报
+							</Tag>
+						}
+					})}
+				</Space>
+			),
+		},
+		{
+			title: '物模型规则说明',
+			dataIndex: 'specs',
+			valueType: 'text',
+			hideInSearch: true,
+			renderFormItem: (_, { defaultRender }) => {
+				return defaultRender(_);
+			},
+			render: (_, record) => {
+				const data = JSON.parse(typeof record?.specs === "string" ? record?.specs : "{}")
+				return <>
+					{ (record?.dataType === 'integer' || record?.dataType === 'string') && <div>长度：<span style={{color: '#fd5251'}}>{data?.length}</span></div>}
+					{ record?.dataType === 'decimal' && <div>整数位长度：<span style={{color: '#fd5251'}}>{data?.integerLength}</span></div>}
+					{ record?.dataType === 'decimal' && <div>小数位长度：<span style={{color: '#fd5251'}}>{data?.decimalLength}</span></div>}
+					{ (record?.dataType === 'decimal' || record?.dataType === 'integer') && <div>单位：<span style={{color: '#fd5251'}}>{data?.unit ? data?.unit : '无'}</span></div>}
+					{ record?.dataType === 'boolean' && <div>0：<span style={{color: '#fd5251'}}>{data?.falseText}</span></div>}
+					{ record?.dataType === 'boolean' && <div>1：<span style={{color: '#fd5251'}}>{data?.trueText}</span></div>}
+				</>
 			},
 		},
 		{

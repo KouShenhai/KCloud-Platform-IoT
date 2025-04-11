@@ -90,7 +90,7 @@ public class HivemqMqttClientManager {
 		get(clientId).publishCloseEvent(clientId);
 	}
 
-	public static void preDestroy() {
+	public static void destroy() {
 		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::close);
 		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::dispose);
 		HIVE_MQTT_CLIENT_MAP.clear();

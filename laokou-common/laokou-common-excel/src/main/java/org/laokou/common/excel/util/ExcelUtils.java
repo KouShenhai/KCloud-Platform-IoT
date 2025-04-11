@@ -75,16 +75,17 @@ public final class ExcelUtils {
 
 	public static <MAPPER extends CrudMapper<?, ?, DO>, EXCEL, DO> void doImport(String sheetName, Class<EXCEL> excel,
 			ExcelConvertor<DO, EXCEL> convert, InputStream inputStream, HttpServletResponse response,
-			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtils mybatisUtils) {
-		doImport(sheetName, excel, convert, inputStream, response, clazz, consumer, mybatisUtils, null);
+			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtils mybatisUtils, Class<?>... groups) {
+		doImport(sheetName, excel, convert, inputStream, response, clazz, consumer, mybatisUtils, null, groups);
 	}
 
 	public static <MAPPER extends CrudMapper<?, ?, DO>, EXCEL, DO> void doImport(String sheetName, Class<EXCEL> excel,
 			ExcelConvertor<DO, EXCEL> convert, InputStream inputStream, HttpServletResponse response,
 			Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, MybatisUtils mybatisUtils,
-			ExcelValidator<EXCEL> validator) {
+			ExcelValidator<EXCEL> validator, Class<?>... groups) {
 		FastExcel
-			.read(inputStream, excel, new DataListener<>(clazz, consumer, response, mybatisUtils, convert, validator))
+			.read(inputStream, excel,
+					new DataListener<>(clazz, consumer, response, mybatisUtils, convert, validator, groups))
 			.sheet(sheetName)
 			.doRead();
 	}
@@ -190,8 +191,11 @@ public final class ExcelUtils {
 
 		private final ExcelValidator<EXCEL> validator;
 
+		private final Class<?>[] groups;
+
 		DataListener(Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, HttpServletResponse response,
-				MybatisUtils mybatisUtils, ExcelConvertor<DO, EXCEL> convertor, ExcelValidator<EXCEL> validator) {
+				MybatisUtils mybatisUtils, ExcelConvertor<DO, EXCEL> convertor, ExcelValidator<EXCEL> validator,
+				Class<?>[] groups) {
 			this.clazz = clazz;
 			this.response = response;
 			this.validator = validator;
@@ -200,6 +204,7 @@ public final class ExcelUtils {
 			this.mybatisUtils = mybatisUtils;
 			this.consumer = consumer;
 			this.convertor = convertor;
+			this.groups = groups;
 		}
 
 		@Override
@@ -211,7 +216,7 @@ public final class ExcelUtils {
 				validates = validator.validate(excel);
 			}
 			else {
-				validates = ValidatorUtils.validate(excel);
+				validates = ValidatorUtils.validate(excel, groups);
 			}
 			if (CollectionUtils.isNotEmpty(validates)) {
 				ERRORS.add(getTemplate(currentRowNum, StringUtils.collectionToDelimitedString(validates, DROP)));
@@ -259,6 +264,10 @@ public final class ExcelUtils {
 
 		private String getTemplate(int num, String msg) {
 			return String.format("第%s行，%s", num, msg);
+		}
+
+		public Class<?>[] getGroups() {
+			return groups;
 		}
 
 	}

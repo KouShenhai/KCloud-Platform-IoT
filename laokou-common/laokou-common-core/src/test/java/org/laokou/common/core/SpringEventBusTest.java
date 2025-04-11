@@ -19,7 +19,7 @@ package org.laokou.common.core;
 
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.EventBus;
+import org.laokou.common.core.util.SpringEventBus;
 import org.laokou.common.core.util.SpringContextUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,11 +32,11 @@ import org.springframework.test.context.TestConstructor;
 @RequiredArgsConstructor
 @ContextConfiguration(classes = { SpringContextUtils.class, TestEventListener.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-class EventBusTest {
+class SpringEventBusTest {
 
 	@Test
 	void publish() {
-		EventBus.publish(new TestEvent(this, "123"));
+		SpringEventBus.publish(new TestEvent(this, "123"));
 	}
 
 }

@@ -28,6 +28,7 @@
          "category",
          "type",
          sort,
+         specs,
          create_time
   </sql>
 

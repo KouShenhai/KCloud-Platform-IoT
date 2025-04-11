@@ -36,11 +36,11 @@ public class SpringTaskExecutionProperties {
 	@Data
 	public static class Pool {
 
-		private int queueCapacity = 500;
+		private int queueCapacity = 200;
 
-		private int corePoolSize = 32;
+		private int corePoolSize = 8;
 
-		private int maxPoolSize = 64;
+		private int maxPoolSize = 16;
 
 		private boolean allowCoreThreadTimeout = false;
 

@@ -31,7 +31,7 @@ import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.util.EventBus;
+import org.laokou.common.core.util.SpringEventBus;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -246,24 +246,24 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	public void publishSubscribeEvent(Set<String> topics, int qos) {
 		if (CollectionUtils.isNotEmpty(topics)) {
-			EventBus.publish(new SubscribeEvent(this, mqttClientProperties.getClientId(), topics.toArray(String[]::new),
-					topics.stream().mapToInt(item -> qos).toArray()));
+			SpringEventBus.publish(new SubscribeEvent(this, mqttClientProperties.getClientId(),
+					topics.toArray(String[]::new), topics.stream().mapToInt(item -> qos).toArray()));
 		}
 	}
 
 	public void publishUnsubscribeEvent(Set<String> topics) {
 		if (CollectionUtils.isNotEmpty(topics)) {
-			EventBus
+			SpringEventBus
 				.publish(new UnsubscribeEvent(this, mqttClientProperties.getClientId(), topics.toArray(String[]::new)));
 		}
 	}
 
 	public void publishOpenEvent(String clientId) {
-		EventBus.publish(new OpenEvent(this, clientId));
+		SpringEventBus.publish(new OpenEvent(this, clientId));
 	}
 
 	public void publishCloseEvent(String clientId) {
-		EventBus.publish(new CloseEvent(this, clientId));
+		SpringEventBus.publish(new CloseEvent(this, clientId));
 	}
 
 	public void dispose() {

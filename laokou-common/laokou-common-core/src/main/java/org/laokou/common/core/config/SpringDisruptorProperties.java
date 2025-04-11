@@ -15,22 +15,20 @@
  *
  */
 
-package org.laokou.common.core.util;
+package org.laokou.common.core.config;
 
-import org.springframework.context.ApplicationEvent;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
- * 事件总线.
- *
  * @author laokou
  */
-public final class EventBus {
+@Data
+@Component
+@ConfigurationProperties(prefix = "spring.disruptor")
+public class SpringDisruptorProperties {
 
-	private EventBus() {
-	}
-
-	public static void publish(ApplicationEvent event) {
-		SpringContextUtils.publishEvent(event);
-	}
+	private int bufferSize = 1024;
 
 }

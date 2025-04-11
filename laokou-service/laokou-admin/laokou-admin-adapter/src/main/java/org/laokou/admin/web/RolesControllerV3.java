@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.role.api.RolesServiceI;
 import org.laokou.admin.role.dto.*;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
-import org.laokou.common.core.util.EventBus;
+import org.laokou.common.core.util.SpringEventBus;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
@@ -88,7 +88,7 @@ public class RolesControllerV3 {
 			}, e -> {
 				throw new BizException("B_Role_RemoveFailed", e.getMessage(), e);
 			});
-		EventBus.publish(new UnsubscribeEvent(this, disposable, 5000));
+		SpringEventBus.publish(new UnsubscribeEvent(this, disposable, 5000));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -119,7 +119,7 @@ public class RolesControllerV3 {
 			}, e -> {
 				throw new BizException("B_Role_ModifyAuthorityFailed", e.getMessage(), e);
 			});
-		EventBus.publish(new UnsubscribeEvent(this, disposable, 5000));
+		SpringEventBus.publish(new UnsubscribeEvent(this, disposable, 5000));
 	}
 
 	@TraceLog

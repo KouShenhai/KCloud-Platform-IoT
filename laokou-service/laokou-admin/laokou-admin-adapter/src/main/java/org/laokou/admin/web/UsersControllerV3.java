@@ -25,7 +25,7 @@ import org.laokou.admin.user.api.UsersServiceI;
 import org.laokou.admin.user.dto.*;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
-import org.laokou.common.core.util.EventBus;
+import org.laokou.common.core.util.SpringEventBus;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Page;
@@ -91,7 +91,7 @@ public class UsersControllerV3 {
 			}, e -> {
 				throw new BizException("B_User_RemoveFailed", e.getMessage(), e);
 			});
-		EventBus.publish(new UnsubscribeEvent(this, disposable, 5000));
+		SpringEventBus.publish(new UnsubscribeEvent(this, disposable, 5000));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -131,7 +131,7 @@ public class UsersControllerV3 {
 			}, e -> {
 				throw new BizException("B_User_ModifyAuthorityFailed", e.getMessage(), e);
 			});
-		EventBus.publish(new UnsubscribeEvent(this, disposable, 5000));
+		SpringEventBus.publish(new UnsubscribeEvent(this, disposable, 5000));
 	}
 
 	@TraceLog

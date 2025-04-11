@@ -15,28 +15,22 @@
  *
  */
 
-package org.laokou.common.core.config;
+package org.laokou.common.core.util;
 
-import org.springframework.lang.NonNull;
-
-import java.util.concurrent.ThreadFactory;
+import org.springframework.context.ApplicationEvent;
 
 /**
- * 自定义线程工厂【虚拟】.
+ * 事件总线.
  *
  * @author laokou
  */
-public final class VirtualThreadFactory implements ThreadFactory {
+public final class SpringEventBus {
 
-	public static final VirtualThreadFactory INSTANCE = new VirtualThreadFactory();
+	private SpringEventBus() {
+	}
 
-	@Override
-	public Thread newThread(@NonNull Runnable r) {
-		Thread thread = new Thread(r);
-		return Thread.ofVirtual()
-			.name("laokou-virtual-" + thread.getName())
-			.inheritInheritableThreadLocals(true)
-			.unstarted(r);
+	public static void publish(ApplicationEvent event) {
+		SpringContextUtils.publishEvent(event);
 	}
 
 }

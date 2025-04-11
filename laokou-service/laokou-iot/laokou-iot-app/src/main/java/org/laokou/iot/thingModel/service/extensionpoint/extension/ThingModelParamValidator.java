@@ -76,7 +76,7 @@ public final class ThingModelParamValidator {
 	public static ParamValidator.Validate validateSpecs(ThingModelE thingModelE) throws JsonProcessingException {
 		String specs = thingModelE.getSpecs();
 		if (ObjectUtils.isNull(specs)) {
-			return invalidate("物模型规格不能为空");
+			return invalidate("物模型规则说明不能为空");
 		}
 		DataTypeEnum dataTypeEnum = DataTypeEnum.getByCode(thingModelE.getDataType());
 		return dataTypeEnum.validate(specs);

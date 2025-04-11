@@ -70,8 +70,7 @@ public class MybatisPlusAutoConfig {
 	// @formatter:on
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
-	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties,
-			DataSource dataSource) {
+	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties) {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 		// 数据权限插件
 		interceptor.addInnerInterceptor(new DataFilterInterceptor());
@@ -81,9 +80,7 @@ public class MybatisPlusAutoConfig {
 					new GlobalTenantLineHandler(mybatisPlusExtProperties.getTenant().getIgnoreTables())));
 		}
 		// 动态表名插件
-		DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
-		dynamicTableNameInnerInterceptor.setTableNameHandler(new DynamicTableNameHandler());
-		interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
+		interceptor.addInnerInterceptor(new DynamicTableNameInnerInterceptor(new DynamicTableNameHandler()));
 		// 分页插件
 		interceptor.addInnerInterceptor(paginationInnerInterceptor());
 		// 乐观锁插件
