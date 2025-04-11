@@ -1,11 +1,11 @@
 import {DrawerForm, ProFormText} from '@ant-design/pro-components';
-import {getStatus} from "@/services/constant";
 import React from "react";
 
 interface NoticeLogDrawerProps {
 	modalVisit: boolean;
 	setModalVisit: (visible: boolean) => void;
 	dataSource: TableColumns;
+	getStatus: (status: string) => string;
 }
 
 type TableColumns = {
@@ -18,7 +18,7 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({ modalVisit, setModalVisit, dataSource }) => {
+export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({ modalVisit, setModalVisit, dataSource, getStatus }) => {
 
 	return (
 		<DrawerForm<TableColumns>
@@ -42,33 +42,32 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({ modalVisit, se
 			<ProFormText
 				readonly={true}
 				name="code"
-				label="编码"
-				rules={[{ required: true, message: '请输入编码' }]}
+				label="通知编码"
+				rules={[{ required: true, message: '请输入通知编码' }]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="name"
-				label="名称"
-				rules={[{ required: true, message: '请输入名称' }]}
+				label="通知名称"
+				rules={[{ required: true, message: '请输入通知名称' }]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="status"
-				label="状态"
-				rules={[{ required: true, message: '请输入状态' }]}
-				// @ts-ignore
+				label="通知状态"
+				rules={[{ required: true, message: '请输入通知状态' }]}
 				convertValue={(value) => {
-					return getStatus(value as '0')?.text
+					return getStatus(value as string)
 				}}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="param"
-				label="参数"
-				rules={[{ required: true, message: '请输入参数' }]}
+				label="通知参数"
+				rules={[{ required: true, message: '请输入通知参数' }]}
 			/>
 
 			<ProFormText

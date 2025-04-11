@@ -90,24 +90,51 @@ export default () => {
 			title: '用户名',
 			dataIndex: 'username',
 			tooltip: "仅支持四个字符的模糊查询",
+			valueType: 'text',
+			ellipsis: true,
+			fieldProps: {
+				placeholder: '请输入用户名',
+			}
 		},
 		{
-			title: '邮箱',
+			title: '用户邮箱',
 			dataIndex: 'mail',
 			tooltip: "仅支持四个字符的模糊查询",
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入用户邮箱',
+			},
+			ellipsis: true,
 		},
 		{
-			title: '手机号',
+			title: '用户手机号',
 			dataIndex: 'mobile',
 			tooltip: "仅支持三个或四个字符的模糊查询",
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入用户手机号',
+			},
+			ellipsis: true,
 		},
 		{
 			title: '超级管理员',
 			dataIndex: 'superAdmin',
+			valueType: 'select',
 			hideInTable: true,
-			valueEnum: {
-				0: {text: '否', status: 'Processing'},
-				1: {text: '是', status: 'Default'},
+			fieldProps: {
+				valueType: 'select',
+				mode: 'single',
+				placeholder: '请选择超级管理员',
+				options: [
+					{
+						label: '否',
+						value: 0,
+					},
+					{
+						label: '是',
+						value: 1,
+					},
+				],
 			},
 			ellipsis: true
 		},
@@ -115,7 +142,7 @@ export default () => {
 			disable: true,
 			title: '超级管理员',
 			dataIndex: 'superAdmin',
-			search: false,
+			hideInSearch: true,
 			renderFormItem: (_, { defaultRender }) => {
 				return defaultRender(_);
 			},
@@ -135,19 +162,31 @@ export default () => {
 			),
 		},
 		{
-			title: '状态',
+			title: '用户状态',
 			dataIndex: 'status',
 			hideInTable: true,
-			valueEnum: {
-				0: {text: '启用', status: 'Success'},
-				1: {text: '禁用', status: 'Error'},
+			valueType: 'select',
+			fieldProps: {
+				valueType: 'select',
+				mode: 'single',
+				placeholder: '请选择用户状态',
+				options: [
+					{
+						label: '启用',
+						value: 0,
+					},
+					{
+						label: '禁用',
+						value: 1,
+					},
+				],
 			},
 			ellipsis: true
 		},
 		{
-			title: '状态',
+			title: '用户状态',
 			dataIndex: 'status',
-			search: false,
+			hideInSearch: true,
 			render: (_, record) => (
 				<Switch checkedChildren="启用" unCheckedChildren="禁用" disabled={true} checked={record?.status === 0} />
 			),
@@ -166,6 +205,9 @@ export default () => {
 			dataIndex: 'createTime',
 			valueType: 'dateRange',
 			hideInTable: true,
+			fieldProps: {
+				placeholder: ['请选择开始时间', '请选择结束时间'],
+			},
 			search: {
 				transform: (value) => {
 					return {

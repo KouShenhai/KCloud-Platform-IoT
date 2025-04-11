@@ -144,6 +144,7 @@ export default () => {
 			dataIndex: 'type',
 			valueType: 'select',
 			ellipsis: true,
+			hideInTable: true,
 			fieldProps: {
 				valueType: 'select',
 				mode: 'multiple',
@@ -162,7 +163,13 @@ export default () => {
 						label: '上报',
 					},
 				]
-			},
+			}
+		},
+		{
+			title: '物模型类型',
+			dataIndex: 'type',
+			disable: true,
+			hideInSearch: true,
 			renderFormItem: (_, { defaultRender }) => {
 				return defaultRender(_);
 			},

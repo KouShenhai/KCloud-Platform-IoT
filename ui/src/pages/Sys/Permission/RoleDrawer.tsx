@@ -88,20 +88,20 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 
 			<ProFormText
 				name="name"
-				label="名称"
+				label="角色名称"
 				readonly={readOnly}
-				placeholder={'请输入名称'}
-				rules={[{ required: true, message: '请输入名称' }]}
+				placeholder={'请输入角色名称'}
+				rules={[{ required: true, message: '请输入角色名称' }]}
 			/>
 
 			<ProFormDigit
 				name="sort"
-				label="排序"
+				label="角色排序"
 				readonly={readOnly}
-				placeholder={'请输入排序'}
+				placeholder={'请输入角色排序'}
 				min={1}
 				max={99999}
-				rules={[{ required: true, message: '请输入排序' }]}
+				rules={[{ required: true, message: '请输入角色排序' }]}
 			/>
 
 			{ readOnly && (

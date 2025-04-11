@@ -7,7 +7,6 @@ import {trim} from "@/utils/format";
 import {ExportToExcel} from "@/utils/export";
 import moment from "moment";
 import {useRef, useState} from "react";
-import {getStatus, STATUS} from "@/services/constant";
 import {NoticeLogDrawer} from "@/pages/Sys/Log/NoticeDrawer";
 import {useAccess} from "@@/exports";
 
@@ -15,11 +14,6 @@ export default () => {
 
 	const [modalVisit, setModalVisit] = useState(false);
 	const [dataSource, setDataSource] = useState<any>({})
-
-	const statusEnum = {
-		0: '0',
-		1: '1'
-	};
 
 	type TableColumns = {
 		id: number;
@@ -35,6 +29,13 @@ export default () => {
 	const actionRef = useRef();
 	const [list, setList] = useState<TableColumns[]>([]);
 	const [param, setParam] = useState<any>({});
+
+	const getStatus = (status: string) => {
+		return {
+			'0': '成功',
+			'1': '失败',
+		}[status]
+	}
 
 	const getPageQuery = (params: any) => {
 		const param = {
@@ -62,28 +63,62 @@ export default () => {
 			width: 60,
 		},
 		{
-			title: '编码',
+			title: '通知编码',
 			dataIndex: 'code',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入通知编码',
+			}
 		},
 		{
-			title: '名称',
+			title: '通知名称',
 			dataIndex: 'name',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入通知名称',
+			}
 		},
 		{
-			title: '状态',
+			title: '通知状态',
 			dataIndex: 'status',
+			hideInTable: true,
+			valueType: 'select',
+			fieldProps: {
+				valueType: 'select',
+				mode: 'single',
+				placeholder: '请选择通知状态',
+				options: [
+					{
+						label: '成功',
+						value: '0',
+					},
+					{
+						label: '失败',
+						value: '1',
+					},
+				],
+			}
+		},
+		{
+			title: '通知状态',
+			dataIndex: 'status',
+			hideInSearch: true,
 			valueEnum: {
-				[STATUS.OK]: getStatus(STATUS.OK),
-				[STATUS.FAIL]: getStatus(STATUS.FAIL)
+				'0': {text: '成功', status: 'Success'},
+				'1': {text: '失败', status: 'Error'},
 			},
 			ellipsis: true
 		},
 		{
 			title: '错误信息',
 			dataIndex: 'errorMessage',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入错误信息',
+			}
 		},
 		{
 			title: '创建时间',
@@ -99,6 +134,9 @@ export default () => {
 			dataIndex: 'createTime',
 			valueType: 'dateRange',
 			hideInTable: true,
+			fieldProps: {
+				placeholder: ['请选择开始时间', '请选择结束时间'],
+			},
 			search: {
 				transform: (value) => {
 					return {
@@ -136,6 +174,8 @@ export default () => {
 				modalVisit={modalVisit}
 				setModalVisit={setModalVisit}
 				dataSource={dataSource}
+				// @ts-ignore
+				getStatus={getStatus}
 			/>
 
 			<ProTable<TableColumns>
@@ -146,7 +186,7 @@ export default () => {
 					const list: TableColumns[] = []
 					return pageV3(getPageQuery(params)).then(res => {
 						res?.data?.records?.forEach((item: TableColumns) => {
-							item.status = statusEnum[item.status as '0'];
+							item.status = item.status as string;
 							list.push(item);
 						});
 						setList(list)
@@ -173,13 +213,13 @@ export default () => {
 							const _list: TableColumns[] = [];
 							// 格式化数据
 							list.forEach(item => {
-								item.status = getStatus(item.status as '0')?.text
+								item.status = getStatus(item.status as string)
 								_list.push(item)
 							})
 							ExportToExcel({
 								sheetData: _list,
 								sheetFilter: ["code", "name", "status", "param", "errorMessage", "createTime"],
-								sheetHeader: ["编码", "名称", "状态", "参数", "错误信息", "创建时间"],
+								sheetHeader: ["通知编码", "通知名称", "通知状态", "通知参数", "错误信息", "创建时间"],
 								fileName: "通知日志_导出_" + moment(new Date()).format('YYYYMMDDHHmmss'),
 								sheetName: "通知日志"
 							})

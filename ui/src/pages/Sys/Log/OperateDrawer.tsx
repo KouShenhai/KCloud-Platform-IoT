@@ -1,5 +1,4 @@
 import {DrawerForm, ProFormText} from '@ant-design/pro-components';
-import {getStatus} from "@/services/constant";
 import {ProFormTextArea} from "@ant-design/pro-form";
 import React from "react";
 
@@ -7,6 +6,7 @@ interface OperateLogDrawerProps {
 	modalVisit: boolean;
 	setModalVisit: (visible: boolean) => void;
 	dataSource: TableColumns;
+	getStatus: (status: string) => string;
 }
 
 type TableColumns = {
@@ -32,7 +32,7 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({ modalVisit, setModalVisit, dataSource }) => {
+export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({ modalVisit, setModalVisit, dataSource, getStatus }) => {
 
 	return (
 		<DrawerForm<TableColumns>
@@ -127,11 +127,10 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({ modalVisit, 
 			<ProFormText
 				readonly={true}
 				name="status"
-				label="状态"
-				rules={[{ required: true, message: '请输入状态' }]}
-				// @ts-ignore
+				label="操作状态"
+				rules={[{ required: true, message: '请输入操作状态' }]}
 				convertValue={(value) => {
-					return getStatus(value as '0')?.text
+					return getStatus(value as string)
 				}}
 			/>
 

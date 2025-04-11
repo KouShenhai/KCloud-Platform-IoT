@@ -67,7 +67,7 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 
 			<ProFormText
 				name="username"
-				label="名称"
+				label="用户名"
 				tooltip={"密码登录【不允许重复，不允许修改】"}
 				disabled={true}
 				placeholder={'请输入用户名'}

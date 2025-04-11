@@ -77,10 +77,10 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 
 			<ProFormText
 				name="name"
-				label="名称"
+				label="角色名称"
 				disabled={true}
-				placeholder={'请输入名称'}
-				rules={[{ required: true, message: '请输入名称' }]}
+				placeholder={'请输入角色名称'}
+				rules={[{ required: true, message: '请输入角色名称' }]}
 			/>
 
 			<ProFormTreeSelect

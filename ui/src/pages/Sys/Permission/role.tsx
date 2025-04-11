@@ -79,22 +79,47 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '名称',
-			dataIndex: 'name'
+			title: '角色名称',
+			dataIndex: 'name',
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入角色名称',
+			}
 		},
 		{
 			title: '数据范围',
 			dataIndex: 'dataScope',
-			valueEnum: {
-				all: '全部',
-				custom: '自定义',
-				dept_self: '仅本部门',
-				dept: '部门及以下',
-				self: '仅本人',
+			valueType: 'select',
+			fieldProps: {
+				valueType: 'select',
+				mode: 'single',
+				placeholder: '请选择数据范围',
+				options: [
+					{
+						value: 'all',
+						label: '全部',
+					},
+					{
+						value: 'custom',
+						label: '自定义',
+					},
+					{
+						value: 'dept_self',
+						label: '仅本部门',
+					},
+					{
+						value: 'dept',
+						label: '部门及以下',
+					},
+					{
+						value: 'self',
+						label:'仅本人',
+					}
+				]
 			},
 		},
 		{
-			title: '排序',
+			title: '角色排序',
 			dataIndex: 'sort',
 			hideInSearch: true,
 			ellipsis: true,
@@ -114,6 +139,9 @@ export default () => {
 			dataIndex: 'createTime',
 			valueType: 'dateRange',
 			hideInTable: true,
+			fieldProps: {
+				placeholder: ['请选择开始时间', '请选择结束时间'],
+			},
 			search: {
 				transform: (value) => {
 					return {
