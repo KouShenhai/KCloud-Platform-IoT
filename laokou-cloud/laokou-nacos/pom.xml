@@ -39,7 +39,7 @@
     <!--protobuf-java版本-->
     <protobuf-java.version>3.25.5</protobuf-java.version>
     <!--commons-io版本-->
-    <commons-io.version>2.18.0</commons-io.version>
+    <commons-io.version>2.19.0</commons-io.version>
     <!--grpc版本-->
     <grpc.version>1.71.0</grpc.version>
     <!--error_prone_annotations版本-->
