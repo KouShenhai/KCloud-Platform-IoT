@@ -20,7 +20,7 @@ export default () => {
 	const [value, setValue] = useState("");
 	const [ids, setIds] = useState<any>([])
 	const [flag, setFlag] = useState(0)
-	const [type, setType] = useState('integer')
+	const [dataType, setDataType] = useState('integer')
 
 	type TableColumns = {
 		id: number;
@@ -52,6 +52,18 @@ export default () => {
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
 			}
 		};
+	}
+
+	const getData = (data: any) => {
+		const specs = JSON.parse(data?.specs)
+		data.length = specs?.length
+		data.integerLength = specs?.integerLength
+		data.decimalLength = specs?.decimalLength
+		data.unit = specs?.unit
+		data.trueText = specs?.trueText
+		data.falseText = specs?.falseText
+		data.type = data?.type?.split(',')
+		return data
 	}
 
 	const rowSelection: TableRowSelection<TableColumns> = {
@@ -173,25 +185,19 @@ export default () => {
 			renderFormItem: (_, { defaultRender }) => {
 				return defaultRender(_);
 			},
-			render: (_, record) => (
-				<Space>
-					{record?.type?.split(',').map((item: string) => {
-						if (item === 'read') {
-							return <Tag color={'green-inverse'} key={'read'}>
-								读
-							</Tag>
-						} else if (item === 'write') {
-							return <Tag color={'#fd5251'} key={'write'}>
-								写
-							</Tag>
-						} else if (item === 'report') {
-							return <Tag color={'#f4a300'} key={'report'}>
-								上报
-							</Tag>
-						}
-					})}
-				</Space>
-			),
+			render: (_, record) => {
+				const element: any = []
+				record?.type?.split(',').forEach(item => {
+					if (item === 'read') {
+						element.push(<Tag color={'green-inverse'} key={'read'}>读</Tag>);
+					} else if (item === 'write') {
+						element.push(<Tag color={'#fd5251'} key={'write'}>写</Tag>);
+					} else if (item === 'report') {
+						element.push(<Tag color={'#f4a300'} key={'report'}>上报</Tag>);
+					}
+				})
+				return <Space>{element}</Space>;
+			}
 		},
 		{
 			title: '物模型规则说明',
@@ -247,12 +253,49 @@ export default () => {
 				( access.canThingModelGetDetail && <a key="getable"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
-						   setDataSource(res?.data)
+						   setTitle('查看物模型')
+						   const data = getData(res?.data)
+						   setDataSource(data)
 						   setModalVisit(true)
+						   setReadOnly(true)
+						   setDataType(data?.dataType)
 					   })
 				   }}
 				>
 					查看
+				</a>),
+				( access.canThingModelModify && <a key="modify"
+				 onClick={() => {
+					 getByIdV3({id: record?.id}).then(res => {
+						 setTitle('修改物模型')
+						 const data = getData(res?.data)
+						 setDataSource(data)
+						 setModalVisit(true)
+						 setReadOnly(false)
+						 setDataType(data?.dataType)
+					 })
+				 }}
+				>
+					修改
+				</a>),
+				( access.canThingModelRemove && <a key="remove" onClick={() => {
+					Modal.confirm({
+						title: '确认删除?',
+						content: '您确定要删除吗?',
+						okText: '确认',
+						cancelText: '取消',
+						onOk: () => {
+							removeV3([record?.id]).then(res => {
+								if (res.code === 'OK') {
+									message.success("删除成功").then()
+									// @ts-ignore
+									actionRef?.current?.reload();
+								}
+							})
+						}
+					})
+				}}>
+					删除
 				</a>)
 			],
 		},
@@ -275,8 +318,8 @@ export default () => {
 				setValue={setValue}
 				flag={flag}
 				setFlag={setFlag}
-				setType={setType}
-				type={type}
+				setDataType={setDataType}
+				dataType={dataType}
 			/>
 
 			<ProTable<TableColumns>

@@ -55,7 +55,7 @@ public class AuthA extends AggregateRoot {
 	private final String username;
 
 	/**
-	 * 密码.
+	 * 用户密码.
 	 */
 	private final String password;
 

@@ -18,8 +18,8 @@ interface ThingModelDrawerProps {
 	setValue: (value: string) => void;
 	flag: number;
 	setFlag: (flag: number) => void;
-	type: string;
-	setType: (type: string) => void;
+	dataType: string;
+	setDataType: (type: string) => void;
 }
 
 type TableColumns = {
@@ -37,7 +37,7 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, value, setValue, flag, setFlag, type, setType }) => {
+export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, value, setValue, flag, setFlag, dataType, setDataType }) => {
 
 	const onChange = React.useCallback((val: any) => {
 		dataSource.expression = val;
@@ -107,25 +107,33 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 					})
 				}
 			}}>
+
+			<ProFormText
+				name="id"
+				label="ID"
+				hidden={true}
+			/>
+
 			<ProFormText
 				readonly={readOnly}
 				name="code"
-				label="编码"
-				rules={[{ required: true, message: '请输入编码' }]}
+				label="物模型编码"
+				rules={[{ required: true, message: '请输入物模型编码' }]}
 			/>
 
 			<ProFormText
 				readonly={readOnly}
 				name="name"
-				label="名称"
-				rules={[{ required: true, message: '请输入名称' }]}
+				label="物模型名称"
+				rules={[{ required: true, message: '请输入物模型名称' }]}
 			/>
 
 			<ProFormSelect
 				name="category"
-				label="模型类别"
+				label="物模型类别"
+				readonly={readOnly}
 				placeholder={'请选择模型类别'}
-				rules={[{ required: true, message: '请选择模型类别' }]}
+				rules={[{ required: true, message: '请选择物模型类别' }]}
 				options={[
 					{value: 1, label: '属性'},
 					{value: 2, label: '事件'}
@@ -134,10 +142,11 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 
 			<ProFormSelect
 				name="type"
-				label="模型类型"
+				label="物模型类型"
 				mode={'multiple'}
-				placeholder={'请选择模型类型'}
-				rules={[{ required: true, message: '请选择模型类型' }]}
+				readonly={readOnly}
+				placeholder={'请选择物模型类型'}
+				rules={[{ required: true, message: '请选择物模型类型' }]}
 				options={[
 					{value: 'read', label: '读'},
 					{value: 'write', label: '写'},
@@ -147,9 +156,9 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 
 			<ProFormDigit
 				name="sort"
-				label="排序"
+				label="物模型排序"
 				readonly={readOnly}
-				placeholder={'请输入排序'}
+				placeholder={'请输入物模型排序'}
 				min={1}
 				max={99999}
 				rules={[{ required: true, message: '请输入排序' }]}
@@ -184,19 +193,20 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 
 			<ProFormSelect
 				name="dataType"
-				label="数据类型"
+				label="物模型数据类型"
+				readonly={readOnly}
 				placeholder={'请选择数据类型'}
-				rules={[{ required: true, message: '请选择数据类型' }]}
+				rules={[{ required: true, message: '请选择物模型数据类型' }]}
 				options={[
 					{value: 'integer', label: '整数型'},
 					{value: 'decimal', label: '小数型'},
 					{value: 'boolean', label: '布尔型'},
 					{value: 'string', label: '字符串型'},
 				]}
-				onChange={setType}
+				onChange={setDataType}
 			/>
 
-			{ type === 'string' && (
+			{ dataType === 'string' && (
 				<ProFormText
 					readonly={readOnly}
 					name="length"
@@ -207,7 +217,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				/>
 			)}
 
-			{ type === 'boolean' && (
+			{ dataType === 'boolean' && (
 				<Row gutter={24}>
 					<Col span={12}>
 						<ProFormText
@@ -228,7 +238,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				</Row>
 			)}
 
-			{ type === 'integer' && (
+			{ dataType === 'integer' && (
 				<Row gutter={24}>
 					<Col span={12}>
 						<ProFormText
@@ -254,7 +264,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				</Row>
 			)}
 
-			{ type === 'decimal' && (
+			{ dataType === 'decimal' && (
 				<Row gutter={24}>
 					<Col span={8}>
 						<ProFormText
