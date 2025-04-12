@@ -40,7 +40,7 @@ public class UserE extends Identifier {
 	private String username;
 
 	/**
-	 * 密码.
+	 * 用户密码.
 	 */
 	private String password;
 
@@ -50,12 +50,12 @@ public class UserE extends Identifier {
 	private Integer superAdmin;
 
 	/**
-	 * 头像.
+	 * 用户头像.
 	 */
 	private String avatar;
 
 	/**
-	 * 邮箱.
+	 * 用户邮箱.
 	 */
 	private String mail;
 
@@ -65,7 +65,7 @@ public class UserE extends Identifier {
 	private Integer status;
 
 	/**
-	 * 手机号.
+	 * 用户手机号.
 	 */
 	private String mobile;
 

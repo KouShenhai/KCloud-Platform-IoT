@@ -7,7 +7,6 @@ import {trim} from "@/utils/format";
 import {ExportToExcel} from "@/utils/export";
 import moment from "moment";
 import {useRef, useState} from "react";
-import {getStatus, STATUS} from "@/services/constant";
 import {OperateLogDrawer} from "@/pages/Sys/Log/OperateDrawer";
 import {useAccess} from "@@/exports";
 
@@ -15,11 +14,6 @@ export default () => {
 
 	const [modalVisit, setModalVisit] = useState(false);
 	const [dataSource, setDataSource] = useState<any>({})
-
-	const statusEnum = {
-		0: '0',
-		1: '1'
-	};
 
 	type TableColumns = {
 		id: number;
@@ -39,6 +33,13 @@ export default () => {
 	const actionRef = useRef();
 	const [list, setList] = useState<TableColumns[]>([]);
 	const [param, setParam] = useState<any>({});
+
+	const getStatus = (status: string) => {
+		return {
+			'0': '成功',
+			'1': '失败',
+		}[status]
+	}
 
 	const getPageQuery = (params: any) => {
 		const param = {
@@ -72,27 +73,47 @@ export default () => {
 		{
 			title: '模块名称',
 			dataIndex: 'moduleName',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入模块名称',
+			}
 		},
 		{
 			title: '操作名称',
 			dataIndex: 'name',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入操作名称',
+			}
 		},
 		{
 			title: '请求类型',
 			dataIndex: 'requestType',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入请求类型',
+			}
 		},
 		{
 			title: '操作人员',
 			dataIndex: 'operator',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入操作人员',
+			}
 		},
 		{
 			title: 'IP地址',
 			dataIndex: 'ip',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入IP地址',
+			}
 		},
 		{
 			title: 'IP归属地',
@@ -101,18 +122,44 @@ export default () => {
 			hideInSearch: true
 		},
 		{
-			title: '状态',
+			title: '操作状态',
 			dataIndex: 'status',
+			valueType: 'select',
+			hideInTable: true,
+			fieldProps: {
+				valueType: 'select',
+				mode: 'single',
+				options: [
+					{
+						label: '成功',
+						value: '0',
+					},
+					{
+						label: '失败',
+						value: '1',
+					},
+				],
+				placeholder: '请选择操作状态',
+			}
+		},
+		{
+			title: '操作状态',
+			dataIndex: 'status',
+			hideInSearch: true,
 			valueEnum: {
-				[STATUS.OK]: getStatus(STATUS.OK),
-				[STATUS.FAIL]: getStatus(STATUS.FAIL)
+				'0': {text: '成功', status: 'Success'},
+				'1': {text: '失败', status: 'Error'},
 			},
-			ellipsis: true
+			width: 80
 		},
 		{
 			title: '错误信息',
 			dataIndex: 'errorMessage',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入错误信息',
+			}
 		},
 		{
 			title: '消耗时间(毫秒)',
@@ -134,6 +181,9 @@ export default () => {
 			dataIndex: 'createTime',
 			valueType: 'dateRange',
 			hideInTable: true,
+			fieldProps: {
+				placeholder: ['请选择开始时间', '请选择结束时间'],
+ 			},
 			search: {
 				transform: (value) => {
 					return {
@@ -170,6 +220,8 @@ export default () => {
 				modalVisit={modalVisit}
 				setModalVisit={setModalVisit}
 				dataSource={dataSource}
+				// @ts-ignore
+				getStatus={getStatus}
 			/>
 
 			<ProTable<TableColumns>
@@ -180,7 +232,7 @@ export default () => {
 					const list: TableColumns[] = []
 					return pageV3(getPageQuery(params)).then(res => {
 						res?.data?.records?.forEach((item: TableColumns) => {
-							item.status = statusEnum[item.status as '0'];
+							item.status = item.status as string;
 							list.push(item);
 						});
 						setList(list)
@@ -207,13 +259,13 @@ export default () => {
 							const _list: TableColumns[] = [];
 							// 格式化数据
 							list.forEach(item => {
-								item.status = getStatus(item.status as '0')?.text
+								item.status = getStatus(item.status as string)
 								_list.push(item)
 							})
 							ExportToExcel({
 								sheetData: _list,
 								sheetFilter: ["moduleName", "name", "requestType", "operator", "ip", "address", "status", "errorMessage", "costTime", "createTime"],
-								sheetHeader: ["模块名称", "操作名称", "请求类型", "操作人员", "IP地址", "IP归属地", "状态", "错误信息", "消耗时间(毫秒)", "创建时间"],
+								sheetHeader: ["模块名称", "操作名称", "请求类型", "操作人员", "IP地址", "IP归属地", "操作状态", "错误信息", "消耗时间(毫秒)", "创建时间"],
 								fileName: "操作日志_导出_" + moment(new Date()).format('YYYYMMDDHHmmss'),
 								sheetName: "操作日志"
 							})

@@ -71,41 +71,53 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '名称',
+			title: '菜单名称',
 			dataIndex: 'name',
 			hideInSearch: true,
 			ellipsis: true,
 			width: 200,
 		},
 		{
-			title: '路径',
+			title: '菜单路径',
 			dataIndex: 'path',
 			ellipsis: true,
 			hideInSearch: true,
 			width: 180
 		},
 		{
-			title: '权限标识',
+			title: '菜单权限标识',
 			dataIndex: 'permission',
 			ellipsis: true,
 			hideInSearch: true,
 			width: 180
 		},
 		{
-			title: '类型',
+			title: '菜单类型',
 			dataIndex: 'type',
 			hideInTable: true,
-			valueEnum: {
-				0: {text: '菜单', status: 'Processing'},
-				1: {text: '按钮', status: 'Default'},
+			valueType: 'select',
+			fieldProps: {
+				valueType: 'select',
+				mode: 'single',
+				placeholder: '请选择菜单类型',
+				options: [
+					{
+						value: 0,
+						label: '菜单',
+					},
+					{
+						value: 1,
+						label: '按钮',
+					},
+				],
 			},
 			ellipsis: true
 		},
 		{
 			disable: true,
-			title: '类型',
+			title: '菜单类型',
 			dataIndex: 'type',
-			search: false,
+			hideInSearch: false,
 			renderFormItem: (_, { defaultRender }) => {
 				return defaultRender(_);
 			},
@@ -125,25 +137,37 @@ export default () => {
 			),
 		},
 		{
-			title: '状态',
+			title: '菜单状态',
 			dataIndex: 'status',
 			hideInTable: true,
-			valueEnum: {
-				0: {text: '启用', status: 'Success'},
-				1: {text: '禁用', status: 'Error'},
+			valueType: 'select',
+			fieldProps: {
+				valueType: 'select',
+				mode: 'single',
+				placeholder: '请选择菜单状态',
+				options: [
+					{
+						value: 0,
+						label: '启用',
+					},
+					{
+						value: 1,
+						label: '禁用',
+					},
+				]
 			},
 			ellipsis: true
 		},
 		{
-			title: '状态',
+			title: '菜单状态',
 			dataIndex: 'status',
-			search: false,
+			hideInSearch: true,
 			render: (_, record) => (
 				<Switch checkedChildren="启用" unCheckedChildren="禁用" disabled={true} checked={record?.status === 0} />
 			),
 		},
 		{
-			title: '排序',
+			title: '菜单排序',
 			dataIndex: 'sort',
 			hideInSearch: true,
 			ellipsis: true
@@ -162,6 +186,9 @@ export default () => {
 			dataIndex: 'createTime',
 			valueType: 'dateRange',
 			hideInTable: true,
+			fieldProps: {
+				placeholder: ['请选择开始时间', '请选择结束时间'],
+			},
 			search: {
 				transform: (value) => {
 					return {

@@ -93,7 +93,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 
 			<ProFormText
 				name="username"
-				label="名称"
+				label="用户名"
 				tooltip={"密码登录【不允许重复，不允许修改】"}
 				disabled={edit}
 				readonly={readOnly}
@@ -103,22 +103,22 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 
 			<ProFormText
 				name="mail"
-				label="邮箱"
+				label="用户邮箱"
 				tooltip={"邮箱登录【不允许重复】"}
 				readonly={readOnly}
-				placeholder={'请输入邮箱'}
+				placeholder={'请输入用户邮箱'}
 			/>
 
 			<ProFormText
 				name="mobile"
-				label="手机号"
+				label="用户手机号"
 				tooltip={"手机号登录【不允许重复】"}
 				readonly={readOnly}
-				placeholder={'请输入手机号'}
+				placeholder={'请输入用户手机号'}
 			/>
 
 			{!readOnly && (
-				<ProFormItem label={"头像"}>
+				<ProFormItem label={"用户头像"}>
 					<UploadAvatarDrawer
 						setPreviewImage={setPreviewImage}
 						setPreviewOpen={setPreviewOpen}
@@ -128,16 +128,16 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 			)}
 
 			{readOnly && fileList.length > 0 && (
-				<ProFormItem label={"头像"}>
+				<ProFormItem label={"用户头像"}>
 					<Image width={100} src={fileList[0].url}/>
 				</ProFormItem>
 			)}
 
 			<ProFormRadio.Group
 				name="status"
-				label="状态"
+				label="用户状态"
 				readonly={readOnly}
-				rules={[{required: true, message: '请选择状态',}]}
+				rules={[{required: true, message: '请选择用户状态',}]}
 				options={[
 					{label:"启用",value: 0 },
 					{label:"禁用",value: 1 }

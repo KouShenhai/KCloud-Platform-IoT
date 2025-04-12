@@ -40,7 +40,7 @@ public class UserE {
 	private Long id;
 
 	/**
-	 * 密码.
+	 * 用户密码.
 	 */
 	private String password;
 
@@ -50,12 +50,12 @@ public class UserE {
 	private Integer superAdmin;
 
 	/**
-	 * 邮箱.
+	 * 用户邮箱.
 	 */
 	private String mail;
 
 	/**
-	 * 手机号.
+	 * 用户手机号.
 	 */
 	private String mobile;
 
@@ -65,7 +65,7 @@ public class UserE {
 	private Integer status;
 
 	/**
-	 * 头像.
+	 * 用户头像.
 	 */
 	private String avatar;
 
@@ -75,12 +75,12 @@ public class UserE {
 	private String usernamePhrase;
 
 	/**
-	 * 邮箱短语.
+	 * 用户邮箱短语.
 	 */
 	private String mailPhrase;
 
 	/**
-	 * 手机号短语.
+	 * 用户手机号短语.
 	 */
 	private String mobilePhrase;
 

@@ -66,17 +66,21 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '名称',
+			title: '部门名称',
 			dataIndex: 'name',
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入部门名称',
+			}
 		},
 		{
-			title: '路径',
+			title: '部门路径',
 			dataIndex: 'path',
 			ellipsis: true,
 			hideInSearch: true,
 		},
 		{
-			title: '排序',
+			title: '部门排序',
 			dataIndex: 'sort',
 			hideInSearch: true,
 			ellipsis: true,
@@ -96,6 +100,9 @@ export default () => {
 			dataIndex: 'createTime',
 			valueType: 'dateRange',
 			hideInTable: true,
+			fieldProps: {
+				placeholder: ['请选择开始时间', '请选择结束时间'],
+			},
 			search: {
 				transform: (value) => {
 					return {

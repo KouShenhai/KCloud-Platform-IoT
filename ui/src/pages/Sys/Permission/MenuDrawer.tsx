@@ -84,11 +84,11 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 
 			<ProFormTreeSelect
 				name="pid"
-				label="父级"
+				label="父级菜单"
 				readonly={readOnly}
 				allowClear={true}
-				placeholder={'请选择父级'}
-				rules={[{ required: true, message: '请选择父级' }]}
+				placeholder={'请选择父级菜单'}
+				rules={[{ required: true, message: '请选择父级菜单' }]}
 				fieldProps={{
 					fieldNames: {
 						label: 'name',
@@ -103,18 +103,18 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 
 			<ProFormText
 				name="name"
-				label="名称"
+				label="菜单名称"
 				readonly={readOnly}
-				placeholder={'请输入名称'}
-				rules={[{ required: true, message: '请输入名称' }]}
+				placeholder={'请输入菜单名称'}
+				rules={[{ required: true, message: '请输入菜单名称' }]}
 			/>
 
 			<ProFormSelect
 				name="type"
-				label="类型"
+				label="菜单类型"
 				readonly={readOnly}
-				placeholder={'请选择类型'}
-				rules={[{ required: true, message: '请选择类型' }]}
+				placeholder={'请选择菜单类型'}
+				rules={[{ required: true, message: '请选择菜单类型' }]}
 				onChange={(value: number) => {
 					setTypeValue(value)
 				}}
@@ -127,51 +127,51 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 			{typeValue === 0 && (
 				<ProFormText
 					name="path"
-					label="路径"
+					label="菜单路径"
 					tooltip={'只对菜单有效【不允许重复】'}
 					readonly={readOnly}
-					placeholder={'请输入路径'}
-					rules={[{ required: true, message: '请输入路径' }]}
+					placeholder={'请输入菜单路径'}
+					rules={[{ required: true, message: '请输入菜单路径' }]}
 				/>
 			)}
 
 			{typeValue === 1 && (
 				<ProFormText
 					name="permission"
-					label="权限标识"
+					label="菜单权限标识"
 					tooltip={'只对按钮有效【不允许重复】'}
 					readonly={readOnly}
-					placeholder={'请输入权限标识'}
-					rules={[{ required: true, message: '请输入权限标识' }]}
+					placeholder={'请输入菜单权限标识'}
+					rules={[{ required: true, message: '请输入菜单权限标识' }]}
 				/>
 			)}
 
 			{typeValue === 0 && (
 				<ProFormText
 					name="icon"
-					label="图标"
+					label="菜单图标"
 					tooltip={'只支持目录菜单显示图标'}
 					readonly={readOnly}
-					placeholder={'请输入图标'}
+					placeholder={'请输入菜单图标'}
 				/>
 			)}
 
 			<ProFormDigit
 				name="sort"
-				label="排序"
+				label="菜单排序"
 				readonly={readOnly}
-				placeholder={'请输入排序'}
+				placeholder={'请输入菜单排序'}
 				min={1}
 				max={99999}
-				rules={[{ required: true, message: '请输入排序' }]}
+				rules={[{ required: true, message: '请输入菜单排序' }]}
 			/>
 
 			{typeValue === 0 && (
 				<ProFormRadio.Group
 					name="status"
-					label="状态"
+					label="菜单状态"
 					readonly={readOnly}
-					rules={[{required: true, message: '请选择状态',}]}
+					rules={[{required: true, message: '请选择菜单状态',}]}
 					options={[
 						{label:"启用",value: 0 },
 						{label:"禁用",value: 1 }

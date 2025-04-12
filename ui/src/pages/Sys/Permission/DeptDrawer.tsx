@@ -73,11 +73,11 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 
 			<ProFormTreeSelect
 				name="pid"
-				label="父级"
+				label="父级部门"
 				readonly={readOnly}
 				allowClear={true}
-				placeholder={'请选择父级'}
-				rules={[{ required: true, message: '请选择父级' }]}
+				placeholder={'请选择父级部门'}
+				rules={[{ required: true, message: '请选择父级部门' }]}
 				fieldProps={{
 					fieldNames: {
 						label: 'name',
@@ -92,28 +92,28 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 
 			<ProFormText
 				name="name"
-				label="名称"
+				label="部门名称"
 				readonly={readOnly}
-				placeholder={'请输入名称'}
-				rules={[{ required: true, message: '请输入名称' }]}
+				placeholder={'请输入部门名称'}
+				rules={[{ required: true, message: '请输入部门名称' }]}
 			/>
 
 			{ readOnly && (
 			<ProFormText
 				name="path"
-				label="路径"
+				label="部门路径"
 				readonly={readOnly}
 			/>
 			)}
 
 			<ProFormDigit
 				name="sort"
-				label="排序"
+				label="部门排序"
 				readonly={readOnly}
-				placeholder={'请输入排序'}
+				placeholder={'请输入部门排序'}
 				min={1}
 				max={99999}
-				rules={[{ required: true, message: '请输入排序' }]}
+				rules={[{ required: true, message: '请输入部门排序' }]}
 			/>
 
 			{ readOnly && (

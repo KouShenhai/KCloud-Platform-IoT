@@ -7,7 +7,6 @@ import {trim} from "@/utils/format";
 import {ExportToExcel} from "@/utils/export";
 import moment from "moment";
 import {useRef, useState} from "react";
-import {getLoginStatus, getLoginType, LOGIN_STATUS, LOGIN_TYPE} from "@/services/constant";
 import {useAccess} from "@@/exports";
 
 export default () => {
@@ -29,6 +28,22 @@ export default () => {
 	const actionRef = useRef();
 	const [list, setList] = useState<TableColumns[]>([]);
 	const [param, setParam] = useState<any>({});
+
+	const getLoginType = (type: string) => {
+		return {
+			'username_password': '用户名密码登录',
+			'mobile': '手机号登录',
+			'mail': '邮箱登录',
+			'authorization_code': '授权码登录',
+		}[type]
+	}
+
+	const getLoginStatus = (status: string) => {
+		return {
+			'0': '登录成功',
+			'1': '登录失败',
+		}[status]
+	}
 
 	const getPageQuery = (params: any) => {
 		const param = {
@@ -62,50 +77,126 @@ export default () => {
 		{
 			title: '用户名',
 			dataIndex: 'username',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入用户名',
+			}
 		},
 		{
 			title: 'IP地址',
 			dataIndex: 'ip',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入IP地址',
+			}
 		},
 		{
 			title: '归属地',
 			dataIndex: 'address',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入归属地',
+			}
 		},
 		{
 			title: '浏览器',
 			dataIndex: 'browser',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入浏览器',
+			}
 		},
 		{
 			title: '操作系统',
 			dataIndex: 'os',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入操作系统',
+			}
 		},
 		{
 			title: '登录状态',
 			dataIndex: 'status',
+			valueType: 'select',
+			hideInTable: true,
+			fieldProps: {
+				valueType: 'select',
+				mode: 'single',
+				options: [
+
+					{
+						value: '0',
+						label: '登录成功',
+					},
+					{
+						value: '1',
+						label: '登录失败',
+					},
+				],
+				placeholder: '请选择登录状态',
+			}
+		},
+		{
+			title: '登录状态',
+			dataIndex: 'status',
+			hideInSearch: true,
 			valueEnum: {
-				[LOGIN_STATUS.OK]: getLoginStatus(LOGIN_STATUS.OK),
-				[LOGIN_STATUS.FAIL]: getLoginStatus(LOGIN_STATUS.FAIL)
+				'0': { text: '登录成功', status: 'Success'},
+				'1': { text: '登录失败', status: 'Error'}
 			},
 			ellipsis: true
 		},
 		{
 			title: '错误信息',
 			dataIndex: 'errorMessage',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入错误信息',
+			}
 		},
 		{
 			title: '登录类型',
 			dataIndex: 'type',
+			valueType: 'select',
+			fieldProps: {
+				valueType: 'select',
+				mode: 'single',
+				options: [
+					{
+							value: "authorization_code",
+							label: "授权码登录",
+					},
+					{
+							value: "mail",
+							label: "邮箱登录",
+					},
+					{
+							value: "mobile",
+							label: "手机号登录",
+					},
+					{
+							value: "username_password",
+							label: "用户名密码登录",
+					},
+				],
+				placeholder: '请选择登录类型',
+			},
+		},
+		{
+			title: '登录类型',
+			dataIndex: 'type',
+			hideInSearch: true,
 			valueEnum: {
-				[LOGIN_TYPE.AUTHORIZATION_CODE]: getLoginType(LOGIN_TYPE.AUTHORIZATION_CODE),
-				[LOGIN_TYPE.MAIL]: getLoginType(LOGIN_TYPE.MAIL),
-				[LOGIN_TYPE.MOBILE]: getLoginType(LOGIN_TYPE.MOBILE),
-				[LOGIN_TYPE.USERNAME_PASSWORD]: getLoginType(LOGIN_TYPE.USERNAME_PASSWORD)
+				'authorization_code':{ text: '授权码登录', status: 'Error'},
+				'mail': { text: '邮箱登录', status: 'Success'},
+				'mobile': { text: '手机号登录', status: 'Default' },
+				'username_password': { text: '用户名密码登录', status: 'Processing' }
 			},
 			width: 160,
 			ellipsis: true
@@ -124,6 +215,9 @@ export default () => {
 			dataIndex: 'createTime',
 			valueType: 'dateRange',
 			hideInTable: true,
+			fieldProps: {
+				placeholder: ['请选择开始日期', '请选择结束日期'],
+			},
 			search: {
 				transform: (value) => {
 					return {
@@ -172,8 +266,8 @@ export default () => {
 						const _list: TableColumns[] = [];
 						// 格式化数据
 						list.forEach(item => {
-							item.status = getLoginStatus(item.status as '0').text
-							item.type = getLoginType(item.type as '0')?.text
+							item.status = getLoginStatus(item.status as string)
+							item.type = getLoginType(item.type as string)
 							_list.push(item)
 						})
 						ExportToExcel({
