@@ -18,7 +18,7 @@ export async function modifyV3(
 
 /** 保存产品类别 保存产品类别 POST /v3/product-categorys */
 export async function saveV3(body: API.ProductCategorySaveCmd, options?: { [key: string]: any }) {
-  return request<any>('/v3/product-categorys', {
+  return request<any>('/api/iot/v3/product-categorys', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
