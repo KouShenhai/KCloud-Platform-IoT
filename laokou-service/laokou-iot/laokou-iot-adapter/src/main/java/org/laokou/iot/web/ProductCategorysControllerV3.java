@@ -34,6 +34,8 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  *
  * 产品类别管理控制器.
@@ -91,10 +93,18 @@ public class ProductCategorysControllerV3 {
 
 	@TraceLog
 	@PostMapping("page")
-	@PreAuthorize("hasAuthority('iot:product-category:page')")
+	@PreAuthorize("hasAuthority('sys:dept:page')")
 	@Operation(summary = "分页查询产品类别列表", description = "分页查询产品类别列表")
 	public Result<Page<ProductCategoryCO>> pageV3(@Validated @RequestBody ProductCategoryPageQry qry) {
 		return productCategorysServiceI.page(qry);
+	}
+
+	@TraceLog
+	@PostMapping("list-tree")
+	@PreAuthorize("hasAuthority('iot:product-category:list-tree')")
+	@Operation(summary = "查询产品类别树列表", description = "查询产品类别树列表")
+	public Result<List<ProductCategoryCO>> listTreeV3(@Validated @RequestBody ProductCategoryTreeListQry qry) {
+		return productCategorysServiceI.listTree(qry);
 	}
 
 	@TraceLog

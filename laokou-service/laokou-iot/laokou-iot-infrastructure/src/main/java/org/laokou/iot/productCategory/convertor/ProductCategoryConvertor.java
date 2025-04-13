@@ -22,6 +22,8 @@ import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
 import org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO;
 import org.laokou.iot.productCategory.model.ProductCategoryE;
 
+import java.util.List;
+
 /**
  *
  * 产品类别转换器.
@@ -61,6 +63,23 @@ public class ProductCategoryConvertor {
 		productCategoryE.setPid(productCategoryCO.getPid());
 		productCategoryE.setRemark(productCategoryCO.getRemark());
 		return productCategoryE;
+	}
+
+	public static ProductCategoryCO toClientObj(ProductCategoryDO productCategoryDO) {
+		ProductCategoryCO co = new ProductCategoryCO();
+		co.setId(productCategoryDO.getId());
+		co.setName(productCategoryDO.getName());
+		co.setPid(productCategoryDO.getPid());
+		co.setSort(productCategoryDO.getSort());
+		co.setCreateTime(productCategoryDO.getCreateTime());
+		co.setRemark(productCategoryDO.getRemark());
+		co.setCode(productCategoryDO.getCode());
+		return co;
+
+	}
+
+	public static List<ProductCategoryCO> toClientObjs(List<ProductCategoryDO> list) {
+		return list.stream().map(ProductCategoryConvertor::toClientObj).toList();
 	}
 
 }

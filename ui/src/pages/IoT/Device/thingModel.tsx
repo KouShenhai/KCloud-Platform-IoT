@@ -37,7 +37,7 @@ export default () => {
 		createTime: string | undefined;
 	};
 
-	const getPageQuery = (params: any) => {
+	const getPageQueryParam = (params: any) => {
 		return {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
@@ -46,7 +46,7 @@ export default () => {
 			name: trim(params?.name),
 			dataType: params?.dataType,
 			category: params?.category,
-			type: params?.type ? params?.type.join(',') : '',
+			type: params?.typeValue ? params?.typeValue.join(',') : '',
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
@@ -78,12 +78,6 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '序号',
-			dataIndex: 'index',
-			valueType: 'indexBorder',
-			width: 60,
-		},
-		{
 			title: '物模型编码',
 			dataIndex: 'code',
 			valueType: 'text',
@@ -102,13 +96,14 @@ export default () => {
 			}
 		},
 		{
-			title: '物模型类型',
+			title: '物模型数据类型',
+			key: "dataType",
 			dataIndex: 'dataType',
 			valueType: 'select',
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: '请选择物模型类型',
+				placeholder: '请选择物模型数据类型',
 				options: [
 					{
 						value: 'integer',
@@ -132,6 +127,7 @@ export default () => {
 		},
 		{
 			title: '物模型类别',
+			key: "category",
 			dataIndex: 'category',
 			valueType: 'select',
 			fieldProps: {
@@ -153,7 +149,8 @@ export default () => {
 		},
 		{
 			title: '物模型类型',
-			dataIndex: 'type',
+			key: "typeValue",
+			dataIndex: 'typeValue',
 			valueType: 'select',
 			ellipsis: true,
 			hideInTable: true,
@@ -230,7 +227,7 @@ export default () => {
 		},
 		{
 			title: '创建时间',
-			dataIndex: 'createTime',
+			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
@@ -327,7 +324,7 @@ export default () => {
 				columns={columns}
 				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return pageV3(getPageQuery(params)).then(res => {
+					return pageV3(getPageQueryParam(params)).then(res => {
 						return Promise.resolve({
 							data: res?.data?.records,
 							total: parseInt(res.data.total),

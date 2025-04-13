@@ -26,44 +26,44 @@ import java.time.Instant;
 
 /**
  *
- * 模型客户端对象.
+ * 物模型客户端对象.
  *
  * @author laokou
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "模型客户端对象", description = "模型客户端对象")
+@Schema(name = "物模型客户端对象", description = "物模型客户端对象")
 public class ThingModelCO extends ClientObject {
 
 	@Schema(name = "ID", description = "ID")
 	private Long id;
 
-	@Schema(name = "模型名称", description = "模型名称")
+	@Schema(name = "物模型名称", description = "物模型名称")
 	private String name;
 
-	@Schema(name = "模型编码", description = "模型编码")
+	@Schema(name = "物模型编码", description = "物模型编码")
 	private String code;
 
 	@Schema(name = "数据类型 integer string decimal boolean", description = "数据类型 integer string decimal boolean")
 	private String dataType;
 
-	@Schema(name = "模型类别 1属性 2事件", description = "模型类别 1属性 2事件")
+	@Schema(name = "物模型类别 1属性 2事件", description = "物模型类别 1属性 2事件")
 	private Integer category;
 
-	@Schema(name = "模型类型 read读 write写 report上报", description = "模型类型 read读 write写 report上报")
+	@Schema(name = "物模型类型 read读 write写 report上报", description = "物模型类型 read读 write写 report上报")
 	private String type;
 
 	@Schema(name = "表达式", description = "表达式")
 	private String expression;
 
-	@Schema(name = "排序", description = "排序")
+	@Schema(name = "物模型排序", description = "物模型排序")
 	private Integer sort;
 
-	@Schema(name = "规则说明", description = "规则说明")
+	@Schema(name = "物模型规则说明", description = "物模型规则说明")
 	private String specs;
 
-	@Schema(name = "备注", description = "备注")
+	@Schema(name = "物模型备注", description = "物模型备注")
 	private String remark;
 
 	@Schema(name = "创建时间", description = "创建时间")

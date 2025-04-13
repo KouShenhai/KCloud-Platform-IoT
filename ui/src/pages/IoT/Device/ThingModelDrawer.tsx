@@ -307,7 +307,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 			<ProFormTextArea
 				readonly={readOnly}
 				name="remark"
-				label="备注"
+				label="物模型备注"
 			/>
 
 		</DrawerForm>

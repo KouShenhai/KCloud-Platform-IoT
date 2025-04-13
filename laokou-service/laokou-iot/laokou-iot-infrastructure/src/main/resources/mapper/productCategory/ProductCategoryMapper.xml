@@ -20,36 +20,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.iot.productCategory.gatewayimpl.database.ProductCategoryMapper">
 
+  <sql id="selectColumns">
+     id,
+     "code",
+     "name",
+     sort,
+     pid,
+     remark,
+    create_time
+  </sql>
+
+  <sql id="selectConditions">
+    where del_flag = 0
+    <if test="pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
+      and create_time <![CDATA[ >= ]]> #{pageQuery.params.startTime}
+    </if>
+    <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
+      and create_time <![CDATA[ <= ]]> #{pageQuery.params.endTime}
+    </if>
+  </sql>
+
+  <sql id="selectObjectList">
+    SELECT <include refid="selectColumns"/>
+    from boot_iot_product_category
+    <include refid="selectConditions"/>
+    order by "sort" desc
+  </sql>
+
 	<select id="selectObjectPage"
 			resultType="org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO">
-		SELECT id,
-                 name,
-                 sort,
-                 pid,
-                 remark,
-             create_time
-		from boot_iot_product_category
-		where del_flag = 0
-        <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
-            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> ${pageQuery.params.startDate}
-        </if>
-        <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
-            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> ${pageQuery.params.endDate}
-        </if>
-		order by id desc
-		limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
+    <include refid="selectObjectList"/>
+    limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
 	</select>
 
 	<select id="selectObjectCount" resultType="long">
-		SELECT count(1)
-		from boot_iot_product_category
-		where del_flag = 0
-        <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
-            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> ${pageQuery.params.startDate}
-        </if>
-        <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
-            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> ${pageQuery.params.endDate}
-        </if>
+    SELECT count(1)
+    from boot_iot_product_category
+    <include refid="selectConditions"/>
 	</select>
 
 	<select id="selectVersion" resultType="integer">
@@ -57,5 +64,9 @@
 		from boot_iot_product_category
 		where id = #{id}
 	</select>
+
+  <select id="selectObjectList" resultType="org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO">
+    <include refid="selectObjectList"/>
+  </select>
 
 </mapper>

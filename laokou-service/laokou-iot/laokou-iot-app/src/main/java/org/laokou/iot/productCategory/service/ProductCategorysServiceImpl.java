@@ -22,11 +22,14 @@ import org.laokou.iot.productCategory.api.ProductCategorysServiceI;
 import org.laokou.iot.productCategory.command.*;
 import org.laokou.iot.productCategory.command.query.ProductCategoryGetQryExe;
 import org.laokou.iot.productCategory.command.query.ProductCategoryPageQryExe;
+import org.laokou.iot.productCategory.command.query.ProductCategoryTreeListQryExe;
 import org.laokou.iot.productCategory.dto.*;
 import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *
@@ -51,6 +54,8 @@ public class ProductCategorysServiceImpl implements ProductCategorysServiceI {
 	private final ProductCategoryPageQryExe productCategoryPageQryExe;
 
 	private final ProductCategoryGetQryExe productCategoryGetQryExe;
+
+	private final ProductCategoryTreeListQryExe productCategoryTreeListQryExe;
 
 	@Override
 	public void save(ProductCategorySaveCmd cmd) {
@@ -80,6 +85,11 @@ public class ProductCategorysServiceImpl implements ProductCategorysServiceI {
 	@Override
 	public Result<Page<ProductCategoryCO>> page(ProductCategoryPageQry qry) {
 		return productCategoryPageQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<List<ProductCategoryCO>> listTree(ProductCategoryTreeListQry qry) {
+		return productCategoryTreeListQryExe.execute(qry);
 	}
 
 	@Override

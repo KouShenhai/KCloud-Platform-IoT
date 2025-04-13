@@ -1,6 +1,6 @@
 import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {pageV3, getByIdV3, removeV3} from "@/services/iot/productCategory";
+import {getByIdV3, removeV3, listTreeV3} from "@/services/iot/productCategory";
 import {Button, message, Modal} from "antd";
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
@@ -23,21 +23,13 @@ export default () => {
 		code: string | undefined;
 		name: string | undefined;
 		sort: number | undefined;
-		dataType: string | undefined;
-		category: number | undefined;
-		type: string | undefined;
-		expression: string | undefined;
-		expressionFlag: number;
-		specs: string | undefined;
+		pid: number | undefined;
 		remark: string | undefined;
 		createTime: string | undefined;
 	};
 
-	const getPageQuery = (params: any) => {
+	const getListTreeQueryParam = (params: any) => {
 		return {
-			pageSize: params?.pageSize,
-			pageNum: params?.current,
-			pageIndex: params?.pageSize * (params?.current - 1),
 			code: trim(params?.code),
 			name: trim(params?.name),
 			params: {
@@ -59,45 +51,22 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '序号',
-			dataIndex: 'index',
-			valueType: 'indexBorder',
-			width: 60,
-		},
-		{
-			title: '编码',
+			title: '产品类别编码',
 			dataIndex: 'code',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入产品类别编码',
+			}
 		},
 		{
-			title: '名称',
+			title: '产品类别名称',
 			dataIndex: 'name',
-			ellipsis: true
-		},
-		{
-			title: '数据类型',
-			dataIndex: 'dataType',
-			valueEnum: {
-				integer: "整数型",
-				string:  "字符串型",
-				decimal: "小数型",
-				boolean: "布尔型"
-			},
-			ellipsis: true
-		},
-		{
-			title: '模型类别',
-			dataIndex: 'category',
-			valueEnum: {
-				1: "属性",
-				2: "事件"
-			},
-			ellipsis: true
-		},
-		{
-			title: '模型类型',
-			dataIndex: 'type',
-			ellipsis: true
+			ellipsis: true,
+			valueType: 'text',
+			fieldProps: {
+				placeholder: '请输入产品类别名称',
+			}
 		},
 		{
 			title: '创建时间',
@@ -113,6 +82,9 @@ export default () => {
 			dataIndex: 'createTime',
 			valueType: 'dateRange',
 			hideInTable: true,
+			fieldProps: {
+				placeholder: ['请选择开始时间', '请选择结束时间'],
+			},
 			search: {
 				transform: (value) => {
 					return {
@@ -163,20 +135,14 @@ export default () => {
 				columns={columns}
 				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return pageV3(getPageQuery(params)).then(res => {
+					return listTreeV3(getListTreeQueryParam(params)).then(res => {
 						return Promise.resolve({
-							data: res?.data?.records,
-							total: parseInt(res.data.total),
+							data: res?.data,
 							success: true,
 						});
 					})
 				}}
 				rowKey="id"
-				pagination={{
-					showQuickJumper: true,
-					showSizeChanger: false,
-					pageSize: 10
-				}}
 				search={{
 					layout: 'vertical',
 					defaultCollapsed: true,

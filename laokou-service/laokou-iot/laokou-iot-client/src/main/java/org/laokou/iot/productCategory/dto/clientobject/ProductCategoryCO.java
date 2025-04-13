@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.common.core.util.TreeUtils;
 import org.laokou.common.i18n.dto.ClientObject;
 import java.time.Instant;
 
@@ -34,21 +35,15 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(name = "产品类别客户端对象", description = "产品类别客户端对象")
-public class ProductCategoryCO extends ClientObject {
+public class ProductCategoryCO extends TreeUtils.TreeNode<ProductCategoryCO> {
 
-	@Schema(name = "ID", description = "ID")
-	private Long id;
+	@Schema(name = "产品类别编码", description = "产品类别编码")
+	private String code;
 
-	@Schema(name = "产品类别名称", description = "产品类别名称")
-	private String name;
-
-	@Schema(name = "排序", description = "排序")
+	@Schema(name = "产品类别排序", description = "产品类别排序")
 	private Integer sort;
 
-	@Schema(name = "产品类别父节点ID", description = "产品类别父节点ID")
-	private Long pid;
-
-	@Schema(name = "备注", description = "备注")
+	@Schema(name = "产品类别备注", description = "产品类别备注")
 	private String remark;
 
 	@Schema(name = "创建时间", description = "创建时间")

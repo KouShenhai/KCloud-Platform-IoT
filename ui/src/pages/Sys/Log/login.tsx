@@ -45,7 +45,7 @@ export default () => {
 		}[status]
 	}
 
-	const getPageQuery = (params: any) => {
+	const getPageQueryParam = (params: any) => {
 		const param = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
@@ -54,9 +54,9 @@ export default () => {
 			ip: trim(params?.ip),
 			address: trim(params?.address),
 			browser: trim(params?.browser),
-			status: params?.status,
+			status: params?.statusValue,
 			os: trim(params?.os),
-			type: params?.type,
+			type: params?.typeValue,
 			errorMessage: trim(params?.errorMessage),
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
@@ -68,12 +68,6 @@ export default () => {
 	}
 
 	const columns: ProColumns<TableColumns>[] = [
-		{
-			title: '序号',
-			dataIndex: 'index',
-			valueType: 'indexBorder',
-			width: 60,
-		},
 		{
 			title: '用户名',
 			dataIndex: 'username',
@@ -121,7 +115,8 @@ export default () => {
 		},
 		{
 			title: '登录状态',
-			dataIndex: 'status',
+			key: 'statusValue',
+			dataIndex: 'statusValue',
 			valueType: 'select',
 			hideInTable: true,
 			fieldProps: {
@@ -162,7 +157,8 @@ export default () => {
 		},
 		{
 			title: '登录类型',
-			dataIndex: 'type',
+			key: 'typeValue',
+			dataIndex: 'typeValue',
 			valueType: 'select',
 			fieldProps: {
 				valueType: 'select',
@@ -212,7 +208,7 @@ export default () => {
 		},
 		{
 			title: '登录日期',
-			dataIndex: 'createTime',
+			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
@@ -236,7 +232,7 @@ export default () => {
 			request={async (params) => {
 				// 表单搜索项会从 params 传入，传递给后端接口。
 				const list: TableColumns[] 	= []
-				return pageV3(getPageQuery(params)).then(res => {
+				return pageV3(getPageQueryParam(params)).then(res => {
 					res?.data?.records?.forEach((item: TableColumns) => {
 						item.status = item.status as '0';
 						item.type = item.type as '0';

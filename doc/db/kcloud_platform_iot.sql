@@ -537,15 +537,15 @@ COMMENT ON COLUMN "public"."boot_iot_thing_model"."update_time" IS '修改时间
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."boot_iot_thing_model"."name" IS '模型名称';
-COMMENT ON COLUMN "public"."boot_iot_thing_model"."code" IS '模型编码';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."name" IS '物模型名称';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."code" IS '物模型编码';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."data_type" IS '数据类型 integer string decimal boolean';
-COMMENT ON COLUMN "public"."boot_iot_thing_model"."category" IS '模型类别 1属性 2事件';
-COMMENT ON COLUMN "public"."boot_iot_thing_model"."type" IS '模型类型 read读 write写 report上报';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."category" IS '物模型类别 1属性 2事件';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."type" IS '物模型类型 read读 write写 report上报';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."expression" IS '表达式';
-COMMENT ON COLUMN "public"."boot_iot_thing_model"."sort" IS '排序';
-COMMENT ON COLUMN "public"."boot_iot_thing_model"."specs" IS '规则说明';
-COMMENT ON COLUMN "public"."boot_iot_thing_model"."remark" IS '备注';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."sort" IS '物模型排序';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."specs" IS '物模型规则说明';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."remark" IS '物模型备注';
 COMMENT ON COLUMN "public"."boot_iot_thing_model"."expression_flag" IS '表达式标识 0否 1是';
 COMMENT ON TABLE "public"."boot_iot_thing_model" IS '物模型';
 

@@ -112,3 +112,14 @@ export async function pageV3(body: API.ProductCategoryPageQry, options?: { [key:
     ...(options || {}),
   });
 }
+
+export async function listTreeV3(body: any,options?: { [key: string]: any }) {
+	return request<API.Result>('/api/iot/v3/product-categorys/list-tree', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}

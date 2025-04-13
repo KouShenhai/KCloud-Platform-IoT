@@ -63,13 +63,13 @@ public interface MenusServiceI {
 	void export(MenuExportCmd cmd);
 
 	/**
-	 * 分页查询菜单.
+	 * 分页查询菜单列表.
 	 * @param qry 分页查询请求
 	 */
 	Result<Page<MenuCO>> page(MenuPageQry qry);
 
 	/**
-	 * 查询菜单树.
+	 * 查询菜单树列表.
 	 * @param qry 查询请求
 	 */
 	Result<List<MenuTreeCO>> listTree(MenuTreeListQry qry);

@@ -72,7 +72,7 @@ public class ThingModelDO extends BaseDO {
 	private String specs;
 
 	/**
-	 * 备注.
+	 * 物模型备注.
 	 */
 	private String remark;
 

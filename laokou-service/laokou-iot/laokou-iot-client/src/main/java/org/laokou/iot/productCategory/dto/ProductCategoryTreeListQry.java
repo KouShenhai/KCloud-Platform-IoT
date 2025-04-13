@@ -15,45 +15,11 @@
  *
  */
 
-package org.laokou.iot.productCategory.gatewayimpl.database.dataobject;
-
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
+package org.laokou.iot.productCategory.dto;
 
 /**
- *
- * 产品类别数据对象.
- *
  * @author laokou
  */
-@Data
-@TableName("boot_iot_product_category")
-public class ProductCategoryDO extends BaseDO {
-
-	/**
-	 * 产品类别编码.
-	 */
-	private String code;
-
-	/**
-	 * 产品类别名称.
-	 */
-	private String name;
-
-	/**
-	 * 排序.
-	 */
-	private Integer sort;
-
-	/**
-	 * 产品类别父节点ID.
-	 */
-	private Long pid;
-
-	/**
-	 * 备注.
-	 */
-	private String remark;
+public class ProductCategoryTreeListQry extends ProductCategoryPageQry {
 
 }

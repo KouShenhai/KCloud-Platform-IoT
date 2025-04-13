@@ -30,7 +30,7 @@ export default () => {
 	const [title, setTitle] = useState("")
 	const [treeList, setTreeList] = useState<any[]>([])
 
-	const getPageQuery = (params: any) => {
+	const getListTreeQueryParam = (params: any) => {
 		return {
 			name: trim(params?.name),
 			params: {
@@ -97,7 +97,7 @@ export default () => {
 		},
 		{
 			title: '创建时间',
-			dataIndex: 'createTime',
+			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
@@ -204,7 +204,7 @@ export default () => {
 				columns={columns}
 				request={ async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return listTreeV3(getPageQuery(params)).then(res => {
+					return listTreeV3(getListTreeQueryParam(params)).then(res => {
 						return Promise.resolve({
 							data: res.data,
 							success: true,
