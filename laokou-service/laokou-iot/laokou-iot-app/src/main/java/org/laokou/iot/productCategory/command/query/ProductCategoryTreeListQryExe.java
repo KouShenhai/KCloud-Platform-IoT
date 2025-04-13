@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ package org.laokou.iot.productCategory.command.query;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.util.TreeUtils;
-import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 import org.laokou.iot.productCategory.dto.ProductCategoryPageQry;
@@ -46,9 +45,11 @@ public class ProductCategoryTreeListQryExe {
 		try {
 			DynamicDataSourceContextHolder.push(IOT);
 			List<ProductCategoryDO> list = productCategoryMapper.selectObjectList(qry);
-			ProductCategoryCO productCategory = TreeUtils.buildTreeNode(ProductCategoryConvertor.toClientObjs(list), ProductCategoryCO.class);
+			ProductCategoryCO productCategory = TreeUtils.buildTreeNode(ProductCategoryConvertor.toClientObjs(list),
+					ProductCategoryCO.class);
 			return Result.ok(productCategory.getChildren());
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
