@@ -43,7 +43,8 @@ public class ProductCategoryGetQryExe {
 		try {
 			DynamicDataSourceContextHolder.push(IOT);
 			return Result.ok(ProductCategoryConvertor.toClientObject(productCategoryMapper.selectById(qry.getId())));
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
