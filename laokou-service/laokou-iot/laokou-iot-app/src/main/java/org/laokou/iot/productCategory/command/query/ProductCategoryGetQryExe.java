@@ -17,6 +17,7 @@
 
 package org.laokou.iot.productCategory.command.query;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.iot.productCategory.dto.ProductCategoryGetQry;
 import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
@@ -24,6 +25,8 @@ import org.laokou.iot.productCategory.gatewayimpl.database.ProductCategoryMapper
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
+
+import static org.laokou.common.tenant.constant.DSConstants.IOT;
 
 /**
  * 查看产品类别请求执行器.
@@ -37,7 +40,12 @@ public class ProductCategoryGetQryExe {
 	private final ProductCategoryMapper productCategoryMapper;
 
 	public Result<ProductCategoryCO> execute(ProductCategoryGetQry qry) {
-		return Result.ok(ProductCategoryConvertor.toClientObject(productCategoryMapper.selectById(qry.getId())));
+		try {
+			DynamicDataSourceContextHolder.push(IOT);
+			return Result.ok(ProductCategoryConvertor.toClientObject(productCategoryMapper.selectById(qry.getId())));
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

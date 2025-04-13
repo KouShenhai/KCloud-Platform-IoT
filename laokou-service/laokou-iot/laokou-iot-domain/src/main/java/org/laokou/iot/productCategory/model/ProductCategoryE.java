@@ -34,12 +34,17 @@ public class ProductCategoryE {
 	private Long id;
 
 	/**
+	 * 产品类别编码.
+	 */
+	private String code;
+
+	/**
 	 * 产品类别名称.
 	 */
 	private String name;
 
 	/**
-	 * 排序.
+	 * 产品类别排序.
 	 */
 	private Integer sort;
 
@@ -49,7 +54,7 @@ public class ProductCategoryE {
 	private Long pid;
 
 	/**
-	 * 备注.
+	 * 产品类别备注.
 	 */
 	private String remark;
 

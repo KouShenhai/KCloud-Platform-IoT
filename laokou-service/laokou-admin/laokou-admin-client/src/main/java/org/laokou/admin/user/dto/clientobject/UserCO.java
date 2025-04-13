@@ -17,6 +17,7 @@
 
 package org.laokou.admin.user.dto.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,61 +34,40 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "用户客户端对象", description = "用户客户端对象")
 public class UserCO extends ClientObject {
 
-	/**
-	 * ID.
-	 */
+	@Schema(name = "ID", description = "ID")
 	private Long id;
 
-	/**
-	 * 用户密码.
-	 */
+	@Schema(name = "用户密码", description = "用户密码")
 	private String password;
 
-	/**
-	 * 超级管理员标识 0否 1是.
-	 */
+	@Schema(name = "超级管理员标识", description = "超级管理员标识 0否 1是")
 	private Integer superAdmin;
 
-	/**
-	 * 用户邮箱.
-	 */
+	@Schema(name = "用户邮箱", description = "用户邮箱")
 	private String mail;
 
-	/**
-	 * 用户手机号.
-	 */
+	@Schema(name = "用户手机号", description = "用户手机号")
 	private String mobile;
 
-	/**
-	 * 用户状态 0启用 1禁用.
-	 */
+	@Schema(name = "用户状态", description = "用户状态 0启用 1禁用")
 	private Integer status;
 
-	/**
-	 * 用户头像.
-	 */
+	@Schema(name = "用户头像", description = "用户头像")
 	private String avatar;
 
-	/**
-	 * 用户名.
-	 */
+	@Schema(name = "用户名", description = "用户名")
 	private String username;
 
-	/**
-	 * 创建时间.
-	 */
+	@Schema(name = "创建时间", description = "创建时间")
 	private Instant createTime;
 
-	/**
-	 * 角色IDS.
-	 */
+	@Schema(name = "角色IDS", description = "角色IDS")
 	private List<String> roleIds;
 
-	/**
-	 * 部门IDS.
-	 */
+	@Schema(name = "部门IDS", description = "部门IDS")
 	private List<String> deptIds;
 
 }

@@ -17,6 +17,7 @@
 
 package org.laokou.admin.tenant.dto.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,31 +31,22 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "租户客户端对象", description = "租户客户端对象")
 public class TenantCO extends ClientObject {
 
-	/**
-	 * ID.
-	 */
+	@Schema(name = "ID", description = "ID")
 	private Long id;
 
-	/**
-	 * 租户名称.
-	 */
+	@Schema(name = "租户名称", description = "租户名称")
 	private String name;
 
-	/**
-	 * 租户编码.
-	 */
+	@Schema(name = "租户编码", description = "租户编码")
 	private String code;
 
-	/**
-	 * 数据源ID.
-	 */
+	@Schema(name = "数据源ID", description = "数据源ID")
 	private Long sourceId;
 
-	/**
-	 * 套餐ID.
-	 */
+	@Schema(name = "套餐ID", description = "套餐ID")
 	private Long packageId;
 
 }

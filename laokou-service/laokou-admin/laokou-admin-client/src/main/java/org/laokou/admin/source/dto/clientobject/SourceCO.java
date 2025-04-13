@@ -17,6 +17,7 @@
 
 package org.laokou.admin.source.dto.clientobject;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,36 +31,25 @@ import org.laokou.common.i18n.dto.ClientObject;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(name = "数据源客户端对象", description = "数据源客户端对象")
 public class SourceCO extends ClientObject {
 
-	/**
-	 * ID.
-	 */
+	@Schema(name = "ID", description = "ID")
 	private Long id;
 
-	/**
-	 * 数据源名称.
-	 */
+	@Schema(name = "数据源名称", description = "数据源名称")
 	private String name;
 
-	/**
-	 * 数据源的驱动名称.
-	 */
+	@Schema(name = "数据源驱动名称", description = "数据源驱动名称")
 	private String driverClassName;
 
-	/**
-	 * 数据源的连接信息.
-	 */
+	@Schema(name = "数据源连接信息", description = "数据源连接信息")
 	private String url;
 
-	/**
-	 * 数据源的用户名.
-	 */
+	@Schema(name = "数据源用户名", description = "数据源用户名")
 	private String username;
 
-	/**
-	 * 数据源的密码.
-	 */
+	@Schema(name = "数据源的密码", description = "数据源的密码")
 	private String password;
 
 }

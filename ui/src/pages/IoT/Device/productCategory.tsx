@@ -151,7 +151,7 @@ export default () => {
 				toolBarRender={
 					() => [
 						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
-							setTitle('新增物模型')
+							setTitle('新增产品类别')
 							setReadOnly(false)
 							setModalVisit(true)
 						}}>
