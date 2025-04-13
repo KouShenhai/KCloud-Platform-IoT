@@ -307,7 +307,7 @@ export default () => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
 					return listTreeV3(getListTreeQueryParam(params)).then(res => {
 						return Promise.resolve({
-							data: res.data,
+							data: res?.data,
 							success: true,
 						});
 					})

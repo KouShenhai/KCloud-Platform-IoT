@@ -232,7 +232,7 @@ export default () => {
 						setList(list)
 						return Promise.resolve({
 							data: list,
-							total: parseInt(res.data.total),
+							total: parseInt(res?.data?.total || 0),
 							success: true,
 						});
 					})

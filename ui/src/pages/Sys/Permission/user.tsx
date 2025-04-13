@@ -350,7 +350,7 @@ export default () => {
 					return pageV3(getPageQueryParam(params)).then(res => {
 						return Promise.resolve({
 							data: res?.data?.records,
-							total: parseInt(res.data.total),
+							total: parseInt(res?.data?.total || 0),
 							success: true,
 						});
 					})

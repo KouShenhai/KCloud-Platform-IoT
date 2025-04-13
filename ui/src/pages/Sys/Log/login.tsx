@@ -234,14 +234,14 @@ export default () => {
 				const list: TableColumns[] 	= []
 				return pageV3(getPageQueryParam(params)).then(res => {
 					res?.data?.records?.forEach((item: TableColumns) => {
-						item.status = item.status as '0';
-						item.type = item.type as '0';
+						item.status = item.status as string;
+						item.type = item.type as string;
 						list.push(item);
 					});
 					setList(list)
 					return Promise.resolve({
 						data: list,
-						total: parseInt(res.data.total),
+						total: parseInt(res?.data?.total || 0),
 						success: true,
 					});
 				})
