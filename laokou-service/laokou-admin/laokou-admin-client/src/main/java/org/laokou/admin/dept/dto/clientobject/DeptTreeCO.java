@@ -18,6 +18,7 @@
 package org.laokou.admin.dept.dto.clientobject;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,19 +37,13 @@ import java.time.Instant;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class DeptTreeCO extends TreeUtils.TreeNode<DeptTreeCO> {
 
-	/**
-	 * 部门路径.
-	 */
+	@Schema(name = "部门路径", description = "部门路径")
 	private String path;
 
-	/**
-	 * 部门排序.
-	 */
+	@Schema(name = "部门排序", description = "部门排序")
 	private Integer sort;
 
-	/**
-	 * 创建时间.
-	 */
+	@Schema(name = "创建时间", description = "创建时间")
 	private Instant createTime;
 
 }

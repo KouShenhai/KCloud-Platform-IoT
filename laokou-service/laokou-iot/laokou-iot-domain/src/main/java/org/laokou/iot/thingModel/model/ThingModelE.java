@@ -34,12 +34,12 @@ public class ThingModelE {
 	private Long id;
 
 	/**
-	 * 模型名称.
+	 * 物模型名称.
 	 */
 	private String name;
 
 	/**
-	 * 模型编码.
+	 * 物模型编码.
 	 */
 	private String code;
 
@@ -49,12 +49,12 @@ public class ThingModelE {
 	private String dataType;
 
 	/**
-	 * 模型类别 1属性 2事件.
+	 * 物模型类别 1属性 2事件.
 	 */
 	private Integer category;
 
 	/**
-	 * 模型类型 read读 write写 report上报.
+	 * 物模型类型 read读 write写 report上报.
 	 */
 	private String type;
 
@@ -64,17 +64,17 @@ public class ThingModelE {
 	private String expression;
 
 	/**
-	 * 排序.
+	 * 物模型排序.
 	 */
 	private Integer sort;
 
 	/**
-	 * 规则说明.
+	 * 物模型规则说明.
 	 */
 	private String specs;
 
 	/**
-	 * 备注.
+	 * 物模型备注.
 	 */
 	private String remark;
 

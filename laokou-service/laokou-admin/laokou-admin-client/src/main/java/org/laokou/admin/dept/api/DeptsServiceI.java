@@ -63,13 +63,13 @@ public interface DeptsServiceI {
 	void export(DeptExportCmd cmd);
 
 	/**
-	 * 分页查询部门.
+	 * 分页查询部门列表.
 	 * @param qry 分页查询请求
 	 */
 	Result<Page<DeptCO>> page(DeptPageQry qry);
 
 	/**
-	 * 查询部门树.
+	 * 查询部门树列表.
 	 * @param qry 查询请求
 	 */
 	Result<List<DeptTreeCO>> listTree(DeptTreeListQry qry);

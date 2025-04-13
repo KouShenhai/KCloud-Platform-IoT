@@ -33,14 +33,14 @@ export default () => {
 	const [typeValue, setTypeValue] = useState(0);
 	const [treeList, setTreeList] = useState<any[]>([])
 
-	const getPageQuery = (params: any) => {
+	const getListTreeQueryParam = (params: any) => {
 		return {
 			code: 1,
-			type: params?.type,
-			status: params?.status,
+			type: params?.typeValue,
+			status: params?.statusValue,
 			params: {
-				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
-				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
+				startTime: params?.startDateValue ? `${params.startDateValue} 00:00:00` : undefined,
+				endTime: params?.endDateValue ? `${params.endDateValue} 23:59:59` : undefined
 			}
 		}
 	}
@@ -75,7 +75,7 @@ export default () => {
 			dataIndex: 'name',
 			hideInSearch: true,
 			ellipsis: true,
-			width: 200,
+			width: 210,
 		},
 		{
 			title: '菜单路径',
@@ -93,7 +93,8 @@ export default () => {
 		},
 		{
 			title: '菜单类型',
-			dataIndex: 'type',
+			key: 'typeValue',
+			dataIndex: 'typeValue',
 			hideInTable: true,
 			valueType: 'select',
 			fieldProps: {
@@ -117,7 +118,7 @@ export default () => {
 			disable: true,
 			title: '菜单类型',
 			dataIndex: 'type',
-			hideInSearch: false,
+			hideInSearch: true,
 			renderFormItem: (_, { defaultRender }) => {
 				return defaultRender(_);
 			},
@@ -138,7 +139,8 @@ export default () => {
 		},
 		{
 			title: '菜单状态',
-			dataIndex: 'status',
+			key: 'statusValue',
+			dataIndex: 'statusValue',
 			hideInTable: true,
 			valueType: 'select',
 			fieldProps: {
@@ -183,7 +185,8 @@ export default () => {
 		},
 		{
 			title: '创建时间',
-			dataIndex: 'createTime',
+			key: 'createTimeValue',
+			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
@@ -192,8 +195,8 @@ export default () => {
 			search: {
 				transform: (value) => {
 					return {
-						startDate: value[0],
-						endDate: value[1],
+						startDateValue: value[0],
+						endDateValue: value[1],
 					};
 				},
 			}
@@ -274,7 +277,7 @@ export default () => {
 					删除
 				</a>)
 			],
-			width: 200
+			width: 190
 		},
 	];
 
@@ -302,9 +305,9 @@ export default () => {
 				columns={columns}
 				request={ async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return listTreeV3(getPageQuery(params)).then(res => {
+					return listTreeV3(getListTreeQueryParam(params)).then(res => {
 						return Promise.resolve({
-							data: res.data,
+							data: res?.data,
 							success: true,
 						});
 					})

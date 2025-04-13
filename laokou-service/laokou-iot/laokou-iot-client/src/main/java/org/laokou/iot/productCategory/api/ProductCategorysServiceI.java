@@ -22,6 +22,8 @@ import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
 
+import java.util.List;
+
 /**
  *
  * 产品类别接口.
@@ -65,6 +67,12 @@ public interface ProductCategorysServiceI {
 	 * @param qry 分页查询请求
 	 */
 	Result<Page<ProductCategoryCO>> page(ProductCategoryPageQry qry);
+
+	/**
+	 * 查询产品类别树列表.
+	 * @param qry 查询请求
+	 */
+	Result<List<ProductCategoryCO>> listTree(ProductCategoryTreeListQry qry);
 
 	/**
 	 * 查看产品类别.

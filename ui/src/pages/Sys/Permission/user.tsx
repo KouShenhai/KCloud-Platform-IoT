@@ -53,7 +53,7 @@ export default () => {
 		})
 	}
 
-	const getPageQuery = (params: any) => {
+	const getPageQueryParam = (params: any) => {
 		return {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
@@ -202,7 +202,7 @@ export default () => {
 		},
 		{
 			title: '创建时间',
-			dataIndex: 'createTime',
+			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
@@ -347,10 +347,10 @@ export default () => {
 				columns={columns}
 				request={ async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return pageV3(getPageQuery(params)).then(res => {
+					return pageV3(getPageQueryParam(params)).then(res => {
 						return Promise.resolve({
 							data: res?.data?.records,
-							total: parseInt(res.data.total),
+							total: parseInt(res?.data?.total || 0),
 							success: true,
 						});
 					})

@@ -22,6 +22,8 @@ import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
 import org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO;
 import org.laokou.iot.productCategory.model.ProductCategoryE;
 
+import java.util.List;
+
 /**
  *
  * 产品类别转换器.
@@ -38,6 +40,7 @@ public class ProductCategoryConvertor {
 		else {
 			productCategoryDO.setId(productCategoryE.getId());
 		}
+		productCategoryDO.setCode(productCategoryE.getCode());
 		productCategoryDO.setName(productCategoryE.getName());
 		productCategoryDO.setSort(productCategoryE.getSort());
 		productCategoryDO.setPid(productCategoryE.getPid());
@@ -51,6 +54,9 @@ public class ProductCategoryConvertor {
 		productCategoryCO.setSort(productCategoryDO.getSort());
 		productCategoryCO.setPid(productCategoryDO.getPid());
 		productCategoryCO.setRemark(productCategoryDO.getRemark());
+		productCategoryCO.setCode(productCategoryDO.getCode());
+		productCategoryCO.setId(productCategoryDO.getId());
+		productCategoryCO.setCreateTime(productCategoryDO.getCreateTime());
 		return productCategoryCO;
 	}
 
@@ -60,7 +66,26 @@ public class ProductCategoryConvertor {
 		productCategoryE.setSort(productCategoryCO.getSort());
 		productCategoryE.setPid(productCategoryCO.getPid());
 		productCategoryE.setRemark(productCategoryCO.getRemark());
+		productCategoryE.setCode(productCategoryCO.getCode());
+		productCategoryE.setId(productCategoryCO.getId());
 		return productCategoryE;
+	}
+
+	public static ProductCategoryCO toClientObj(ProductCategoryDO productCategoryDO) {
+		ProductCategoryCO co = new ProductCategoryCO();
+		co.setId(productCategoryDO.getId());
+		co.setName(productCategoryDO.getName());
+		co.setPid(productCategoryDO.getPid());
+		co.setSort(productCategoryDO.getSort());
+		co.setCreateTime(productCategoryDO.getCreateTime());
+		co.setRemark(productCategoryDO.getRemark());
+		co.setCode(productCategoryDO.getCode());
+		return co;
+
+	}
+
+	public static List<ProductCategoryCO> toClientObjs(List<ProductCategoryDO> list) {
+		return list.stream().map(ProductCategoryConvertor::toClientObj).toList();
 	}
 
 }

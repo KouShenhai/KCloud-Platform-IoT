@@ -19,30 +19,35 @@ package org.laokou.iot.productCategory.command.query;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
-import org.laokou.iot.productCategory.dto.ProductCategoryGetQry;
+import org.laokou.common.core.util.TreeUtils;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
+import org.laokou.iot.productCategory.dto.ProductCategoryPageQry;
 import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
 import org.laokou.iot.productCategory.gatewayimpl.database.ProductCategoryMapper;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
+
+import java.util.List;
 
 import static org.laokou.common.tenant.constant.DSConstants.IOT;
 
 /**
- * 查看产品类别请求执行器.
- *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class ProductCategoryGetQryExe {
+public class ProductCategoryTreeListQryExe {
 
 	private final ProductCategoryMapper productCategoryMapper;
 
-	public Result<ProductCategoryCO> execute(ProductCategoryGetQry qry) {
+	public Result<List<ProductCategoryCO>> execute(ProductCategoryPageQry qry) {
 		try {
 			DynamicDataSourceContextHolder.push(IOT);
-			return Result.ok(ProductCategoryConvertor.toClientObject(productCategoryMapper.selectById(qry.getId())));
+			List<ProductCategoryDO> list = productCategoryMapper.selectObjectList(qry);
+			ProductCategoryCO productCategory = TreeUtils.buildTreeNode(ProductCategoryConvertor.toClientObjs(list),
+					ProductCategoryCO.class);
+			return Result.ok(productCategory.getChildren());
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

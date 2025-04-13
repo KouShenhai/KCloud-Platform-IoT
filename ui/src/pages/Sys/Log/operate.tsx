@@ -41,13 +41,13 @@ export default () => {
 		}[status]
 	}
 
-	const getPageQuery = (params: any) => {
+	const getPageQueryParam = (params: any) => {
 		const param = {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
 			name: trim(params?.name),
-			status: params?.status,
+			status: params?.statusValue,
 			moduleName: trim(params?.moduleName),
 			ip: trim(params?.ip),
 			requestType: trim(params?.requestType),
@@ -64,12 +64,6 @@ export default () => {
 	}
 
 	const columns: ProColumns<TableColumns>[] = [
-		{
-			title: '序号',
-			dataIndex: 'index',
-			valueType: 'indexBorder',
-			width: 60,
-		},
 		{
 			title: '模块名称',
 			dataIndex: 'moduleName',
@@ -123,7 +117,7 @@ export default () => {
 		},
 		{
 			title: '操作状态',
-			dataIndex: 'status',
+			dataIndex: 'statusValue',
 			valueType: 'select',
 			hideInTable: true,
 			fieldProps: {
@@ -178,7 +172,7 @@ export default () => {
 		},
 		{
 			title: '创建时间',
-			dataIndex: 'createTime',
+			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
@@ -230,7 +224,7 @@ export default () => {
 				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
 					const list: TableColumns[] = []
-					return pageV3(getPageQuery(params)).then(res => {
+					return pageV3(getPageQueryParam(params)).then(res => {
 						res?.data?.records?.forEach((item: TableColumns) => {
 							item.status = item.status as string;
 							list.push(item);
@@ -238,7 +232,7 @@ export default () => {
 						setList(list)
 						return Promise.resolve({
 							data: list,
-							total: parseInt(res.data.total),
+							total: parseInt(res?.data?.total || 0),
 							success: true,
 						});
 					})

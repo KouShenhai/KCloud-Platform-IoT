@@ -1,6 +1,6 @@
 import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {pageV3, getByIdV3, removeV3} from "@/services/iot/device";
+import {pageV3, getByIdV3, removeV3} from "@/services/iot/product";
 import {Button, message, Modal} from "antd";
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
@@ -166,7 +166,7 @@ export default () => {
 					return pageV3(getPageQuery(params)).then(res => {
 						return Promise.resolve({
 							data: res?.data?.records,
-							total: parseInt(res.data.total),
+							total: parseInt(res?.data?.total || 0),
 							success: true,
 						});
 					})
