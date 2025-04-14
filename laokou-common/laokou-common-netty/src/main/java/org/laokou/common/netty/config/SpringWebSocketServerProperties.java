@@ -84,17 +84,17 @@ public class SpringWebSocketServerProperties {
 	/**
 	 * 监听核心线程数.
 	 */
-	private Integer bossCorePoolSize = 1;
+	private Integer bossCorePoolSize = 2;
 
 	/**
 	 * 读写核心线程数.
 	 */
-	private Integer workerCorePoolSize = 8;
+	private Integer workerCorePoolSize = 32;
 
 	/**
 	 * 组核心线程数.
 	 */
-	private Integer groupCorePoolSize = 16;
+	private Integer groupCorePoolSize = 32;
 
 	/**
 	 * 延迟发送 => true实时，false延迟.
