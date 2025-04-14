@@ -66,10 +66,6 @@ public class HivemqMqttClientManager {
 		get(clientId).subscribe(topics, qos);
 	}
 
-	public static void consume(String clientId) {
-		get(clientId).consume();
-	}
-
 	public static void unsubscribe(String clientId, String[] topics) {
 		get(clientId).unsubscribe(topics);
 	}

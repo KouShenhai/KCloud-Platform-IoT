@@ -97,4 +97,6 @@ public class MqttClientProperties {
 
 	private int nettyThreads = 32;
 
+	private boolean retain = false;
+
 }

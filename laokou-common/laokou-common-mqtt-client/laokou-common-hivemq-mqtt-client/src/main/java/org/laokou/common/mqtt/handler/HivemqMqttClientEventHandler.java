@@ -36,7 +36,6 @@ public class HivemqMqttClientEventHandler {
 	@EventListener
 	public void onSubscribeEvent(SubscribeEvent event) {
 		HivemqMqttClientManager.subscribe(event.getClientId(), event.getTopics(), event.getSubscribeQos());
-		HivemqMqttClientManager.consume(event.getClientId());
 	}
 
 	@Async

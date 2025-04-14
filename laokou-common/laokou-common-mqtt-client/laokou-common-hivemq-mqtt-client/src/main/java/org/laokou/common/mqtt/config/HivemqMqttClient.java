@@ -18,7 +18,6 @@
 package org.laokou.common.mqtt.config;
 
 import com.hivemq.client.mqtt.MqttClientExecutorConfig;
-import com.hivemq.client.mqtt.MqttGlobalPublishFilter;
 import com.hivemq.client.mqtt.datatypes.MqttQos;
 import com.hivemq.client.mqtt.datatypes.MqttTopicFilter;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5Client;
@@ -66,7 +65,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	private final Object LOCK = new Object();
 
-	private final List<Disposable> disposables = new ArrayList<>(6);
+	private final List<Disposable> disposables = new ArrayList<>(5);
 
 	public HivemqMqttClient(MqttClientProperties mqttClientProperties, List<MessageHandler> messageHandlers,
 			ExecutorService virtualThreadExecutor) {
@@ -124,6 +123,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 		if (ObjectUtils.isNotNull(client)) {
 			Disposable disposable = client.disconnectWith()
 				.applyDisconnect()
+				.doOnComplete(() -> log.info("【Hivemq】 => MQTT断开连接成功，客户端ID：{}", mqttClientProperties.getClientId()))
 				.doOnError(e -> log.error("【Hivemq】 => MQTT断开连接失败，错误信息：{}", e.getMessage(), e))
 				.subscribeOn(Schedulers.from(virtualThreadExecutor))
 				.subscribe();
@@ -136,18 +136,31 @@ public class HivemqMqttClient extends AbstractMqttClient {
 		if (ObjectUtils.isNotNull(client)) {
 			List<Mqtt5Subscription> subscriptions = new ArrayList<>(topics.length);
 			for (int i = 0; i < topics.length; i++) {
-				subscriptions.add(Mqtt5Subscription.builder().topicFilter(topics[i]).qos(getMqttQos(qos[i])).build());
+				subscriptions.add(Mqtt5Subscription.builder()
+					.topicFilter(topics[i])
+					.qos(getMqttQos(qos[i]))
+					.retainAsPublished(mqttClientProperties.isRetain())
+					.build());
 			}
-			Disposable disposable = client.subscribeWith()
+			Disposable disposable = client.subscribePublishesWith()
 				.addSubscriptions(subscriptions)
 				.applySubscribe()
-				.doOnSuccess(ack -> log.info("【Hivemq】 => MQTT订阅成功，主题: {}", String.join(",", topics)))
-				.doOnError(e -> log.error("【Hivemq】 => MQTT订阅失败，主题：{}，错误信息：{}", String.join(",", topics),
-						e.getMessage(), e))
+				.doOnSingle(ack -> log.info("【Hivemq】 => MQTT订阅成功，主题: {}", String.join(",", topics)))
+				.doOnError(e -> log.error("【Hivemq】 => MQTT订阅失败，主题：{}，错误信息：{}", String.join(",", topics), e.getMessage(), e))
+				.doOnNext(publish -> {
+					for (MessageHandler messageHandler : messageHandlers) {
+						if (messageHandler.isSubscribe(publish.getTopic().toString())) {
+							messageHandler
+								.handle(new MqttMessage(publish.getPayloadAsBytes(), publish.getTopic().toString()));
+							break;
+						}
+					}
+				})
+				.doOnError(e -> log.error("【Hivemq】 => MQTT消息处理失败，错误信息：{}", e.getMessage(), e))
 				.subscribeOn(Schedulers.from(virtualThreadExecutor))
 				.subscribe(ack -> {
 				}, e -> {
-					throw new SystemException("S_Mqtt_SubscribeError", e.getMessage(), e);
+					throw new SystemException("S_Mqtt_ConsumeError", e.getMessage(), e);
 				});
 			disposables.add(disposable);
 		}
@@ -174,25 +187,6 @@ public class HivemqMqttClient extends AbstractMqttClient {
 		}
 	}
 
-	public void consume() {
-		if (ObjectUtils.isNotNull(client)) {
-			Disposable disposable = client.publishes(MqttGlobalPublishFilter.ALL)
-				.doOnNext(publish -> messageHandlers.forEach(messageHandler -> {
-					if (messageHandler.isSubscribe(publish.getTopic().toString())) {
-						messageHandler
-							.handle(new MqttMessage(publish.getPayloadAsBytes(), publish.getTopic().toString()));
-					}
-				}))
-				.doOnError(e -> log.error("【Hivemq】 => MQTT消息处理失败，错误信息：{}", e.getMessage(), e))
-				.subscribeOn(Schedulers.from(virtualThreadExecutor))
-				.subscribe(ack -> {
-				}, e -> {
-					throw new SystemException("S_Mqtt_ConsumeError", e.getMessage(), e);
-				});
-			disposables.add(disposable);
-		}
-	}
-
 	public void publish(String topic, byte[] payload, int qos) {
 		if (ObjectUtils.isNotNull(client)) {
 			Disposable disposable = client
@@ -200,7 +194,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					.topic(topic)
 					.qos(getMqttQos(qos))
 					.payload(payload)
-					.retain(false)
+					.retain(mqttClientProperties.isRetain())
 					.messageExpiryInterval(mqttClientProperties.getMessageExpiryInterval())
 					.build()))
 				.singleOrError()
