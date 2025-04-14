@@ -310,6 +310,15 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				label="物模型备注"
 			/>
 
+			{ readOnly && (
+				<ProFormText
+					readonly={true}
+					name="createTime"
+					rules={[{ required: true, message: '请输入创建时间' }]}
+					label="创建时间"
+				/>
+			)}
+
 		</DrawerForm>
 	);
 };

@@ -3,13 +3,13 @@ import { message } from 'antd';
 import { resetPwdV3 } from '@/services/admin/user';
 import React from "react";
 
-interface ResetPwdDrawerProps {
+interface UserResetPwdDrawerProps {
 	visible: boolean;
 	setVisible: (visible: boolean) => void;
 	dataSource: any;
 }
 
-export const ResetPwdDrawer: React.FC<ResetPwdDrawerProps> = ({ visible, setVisible, dataSource}) => {
+export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({ visible, setVisible, dataSource}) => {
 
 	return (
 		<DrawerForm

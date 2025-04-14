@@ -146,7 +146,8 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				.addSubscriptions(subscriptions)
 				.applySubscribe()
 				.doOnSingle(ack -> log.info("【Hivemq】 => MQTT订阅成功，主题: {}", String.join(",", topics)))
-				.doOnError(e -> log.error("【Hivemq】 => MQTT订阅失败，主题：{}，错误信息：{}", String.join(",", topics), e.getMessage(), e))
+				.doOnError(e -> log.error("【Hivemq】 => MQTT订阅失败，主题：{}，错误信息：{}", String.join(",", topics),
+						e.getMessage(), e))
 				.doOnNext(publish -> {
 					for (MessageHandler messageHandler : messageHandlers) {
 						if (messageHandler.isSubscribe(publish.getTopic().toString())) {
