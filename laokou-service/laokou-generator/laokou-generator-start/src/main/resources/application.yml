@@ -1,3 +1,7 @@
+jasypt:
+  encryptor:
+    password: @JASYPT-ENCRYPTOR-PASSWORD@
+
 server:
   port: ${SERVER_PORT:8086}
   ssl:
@@ -21,32 +25,90 @@ spring:
       enabled: true
   application:
     name: ${SERVICE_ID:laokou-generator}
+  data:
+    # redis
+    redis:
+      client-type: lettuce
+      host: redis
+      port: 6379
+      password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+      connect-timeout: 60000ms #连接超时时长（毫秒）
+      timeout: 60000ms #超时时长（毫秒）
+      lettuce:
+        pool:
+          max-active: -1 #连接池最大连接数（使用负值表示无极限）
+          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接
   datasource:
     dynamic:
       datasource:
         master:
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false
-          username: root
-          password: laokou123
+          driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
+          url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false
+          username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
+          password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
         domain:
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false
-          username: root
-          password: laokou123
+          driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
+          url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false
+          username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
+          password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
         iot:
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false
-          username: root
-          password: laokou123
+          driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
+          url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false
+          username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
+          password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
         generator:
-          driver-class-name: org.postgresql.Driver
-          url: jdbc:postgresql://postgresql:5432/kcloud_platform_generator?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false
-          username: root
-          password: laokou123
+          driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
+          url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform_generator?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-generator&useSSL=false
+          username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
+          password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*.xml
 
 logging:
   config: classpath:log4j2-test.xml
+
+rocketmq:
+  producer:
+    group: laokou_producer_group
+  name-server: rocketmq-namesrv:9876
+  consumer:
+    pull-batch-size: 32
