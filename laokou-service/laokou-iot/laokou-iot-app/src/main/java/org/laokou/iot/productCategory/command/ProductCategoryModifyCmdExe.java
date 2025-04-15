@@ -18,14 +18,16 @@
 package org.laokou.iot.productCategory.command;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
-import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.iot.productCategory.dto.ProductCategoryModifyCmd;
+import org.laokou.iot.productCategory.model.ProductCategoryE;
+import org.laokou.iot.productCategory.service.extensionpoint.extension.ModifyProductCategoryParamValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 import org.laokou.iot.productCategory.ability.ProductCategoryDomainService;
-
 import static org.laokou.common.tenant.constant.DSConstants.IOT;
 
 /**
@@ -35,20 +37,27 @@ import static org.laokou.common.tenant.constant.DSConstants.IOT;
  * @author laokou
  */
 @Component
-@RequiredArgsConstructor
 public class ProductCategoryModifyCmdExe {
 
-	private final ProductCategoryDomainService productCategoryDomainService;
+	@Autowired
+	@Qualifier("modifyProductCategoryParamValidator")
+	private ModifyProductCategoryParamValidator modifyProductCategoryParamValidator;
 
-	private final TransactionalUtils transactionalUtils;
+	@Autowired
+	private ProductCategoryDomainService productCategoryDomainService;
+
+	@Autowired
+	private TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(ProductCategoryModifyCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(IOT);
+			ProductCategoryE productCategoryE = ProductCategoryConvertor.toEntity(cmd.getCo());
 			// 校验参数
+			modifyProductCategoryParamValidator.validate(productCategoryE);
 			transactionalUtils.executeInTransaction(
-					() -> productCategoryDomainService.update(ProductCategoryConvertor.toEntity(cmd.getCo())));
+					() -> productCategoryDomainService.update(productCategoryE));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

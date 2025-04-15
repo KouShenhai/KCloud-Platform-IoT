@@ -55,31 +55,6 @@ public class ThingModelPageQry extends PageQuery {
 	 */
 	private String type;
 
-	/**
-	 * 表达式.
-	 */
-	private String expression;
-
-	/**
-	 * 排序.
-	 */
-	private Integer sort;
-
-	/**
-	 * 规则说明.
-	 */
-	private String specs;
-
-	/**
-	 * 备注.
-	 */
-	private String remark;
-
-	/**
-	 * 表达式标识 0否 1是.
-	 */
-	private Integer expressionFlag;
-
 	public void setCode(String code) {
 		this.code = StringUtils.like(StringUtils.trim(code));
 	}

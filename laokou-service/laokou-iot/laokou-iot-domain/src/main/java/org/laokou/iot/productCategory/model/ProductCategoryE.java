@@ -34,11 +34,6 @@ public class ProductCategoryE {
 	private Long id;
 
 	/**
-	 * 产品类别编码.
-	 */
-	private String code;
-
-	/**
 	 * 产品类别名称.
 	 */
 	private String name;

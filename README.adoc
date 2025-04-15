@@ -74,7 +74,7 @@ image:doc/image/img.png[COLA架构图,400,400,align=center]
 |image:doc/image/project/3.png[部门页面]    |image:doc/image/project/4.png[角色页面]
 |image:doc/image/project/5.png[用户页面]    |image:doc/image/project/6.png[登录日志页面]
 |image:doc/image/project/7.png[通知日志页面]    |image:doc/image/project/8.png[操作日志页面]
-|image:doc/image/project/9.png[物模型页面]    |
+|image:doc/image/project/9.png[物模型页面]    |image:doc/image/project/10.png[产品类别页面]
 |===
 
 === 🌿 服务器配置

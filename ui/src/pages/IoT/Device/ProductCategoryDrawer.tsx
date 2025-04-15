@@ -95,13 +95,6 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ mo
 
 			<ProFormText
 				readonly={readOnly}
-				name="code"
-				label="产品类别编码"
-				rules={[{ required: true, message: '请输入产品类别编码' }]}
-			/>
-
-			<ProFormText
-				readonly={readOnly}
 				name="name"
 				label="产品类别名称"
 				rules={[{ required: true, message: '请输入产品类别名称' }]}
