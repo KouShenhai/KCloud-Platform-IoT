@@ -22,7 +22,7 @@
     <!--scala-library版本-->
     <scala-library.version>2.13.16</scala-library.version>
     <!--grpc版本-->
-    <grpc.version>1.71.0</grpc.version>
+    <grpc.version>1.72.0</grpc.version>
   </properties>
 
   <dependencies>
