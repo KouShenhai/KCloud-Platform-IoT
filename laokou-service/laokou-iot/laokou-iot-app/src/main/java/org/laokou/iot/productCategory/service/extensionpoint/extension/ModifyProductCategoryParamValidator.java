@@ -35,12 +35,10 @@ public class ModifyProductCategoryParamValidator implements ProductCategoryParam
 
 	@Override
 	public void validate(ProductCategoryE productCategoryE) {
-		ParamValidator.validate(
-			ProductCategoryParamValidator.validateId(productCategoryE),
-			ProductCategoryParamValidator.validateName(productCategoryE, false, productCategoryMapper),
-			ProductCategoryParamValidator.validateSort(productCategoryE),
-			ProductCategoryParamValidator.validateParentId(productCategoryE)
-		);
+		ParamValidator.validate(ProductCategoryParamValidator.validateId(productCategoryE),
+				ProductCategoryParamValidator.validateName(productCategoryE, false, productCategoryMapper),
+				ProductCategoryParamValidator.validateSort(productCategoryE),
+				ProductCategoryParamValidator.validateParentId(productCategoryE));
 	}
 
 }

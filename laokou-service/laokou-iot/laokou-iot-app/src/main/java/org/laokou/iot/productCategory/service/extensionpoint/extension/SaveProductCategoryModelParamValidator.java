@@ -16,6 +16,7 @@
  */
 
 package org.laokou.iot.productCategory.service.extensionpoint.extension;
+
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.iot.productCategory.gatewayimpl.database.ProductCategoryMapper;
@@ -37,8 +38,7 @@ public class SaveProductCategoryModelParamValidator implements ProductCategoryPa
 		ParamValidator.validate(
 				ProductCategoryParamValidator.validateName(productCategoryE, true, productCategoryMapper),
 				ProductCategoryParamValidator.validateSort(productCategoryE),
-				ProductCategoryParamValidator.validateParentId(productCategoryE)
-		);
+				ProductCategoryParamValidator.validateParentId(productCategoryE));
 	}
 
 }

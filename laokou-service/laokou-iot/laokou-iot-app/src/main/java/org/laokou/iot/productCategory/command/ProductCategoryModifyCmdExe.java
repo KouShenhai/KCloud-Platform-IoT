@@ -56,8 +56,7 @@ public class ProductCategoryModifyCmdExe {
 			ProductCategoryE productCategoryE = ProductCategoryConvertor.toEntity(cmd.getCo());
 			// 校验参数
 			modifyProductCategoryParamValidator.validate(productCategoryE);
-			transactionalUtils.executeInTransaction(
-					() -> productCategoryDomainService.update(productCategoryE));
+			transactionalUtils.executeInTransaction(() -> productCategoryDomainService.update(productCategoryE));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

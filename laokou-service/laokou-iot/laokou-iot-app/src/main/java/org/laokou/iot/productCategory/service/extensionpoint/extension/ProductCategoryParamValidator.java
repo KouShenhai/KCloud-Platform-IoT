@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,13 +42,14 @@ public final class ProductCategoryParamValidator {
 		return validate();
 	}
 
-	public static ParamValidator.Validate validateName(ProductCategoryE productCategoryE, boolean isSave, ProductCategoryMapper productCategoryMapper) {
+	public static ParamValidator.Validate validateName(ProductCategoryE productCategoryE, boolean isSave,
+			ProductCategoryMapper productCategoryMapper) {
 		String name = productCategoryE.getName();
 		if (ObjectUtils.isNull(name)) {
 			return invalidate("产品类别名称不能为空");
 		}
-		if (isSave && productCategoryMapper.selectCount(Wrappers.lambdaQuery(ProductCategoryDO.class)
-			.eq(ProductCategoryDO::getName, name)) > 0) {
+		if (isSave && productCategoryMapper
+			.selectCount(Wrappers.lambdaQuery(ProductCategoryDO.class).eq(ProductCategoryDO::getName, name)) > 0) {
 			return invalidate("产品类别名称已存在");
 		}
 		if (!isSave && productCategoryMapper.selectCount(Wrappers.lambdaQuery(ProductCategoryDO.class)
