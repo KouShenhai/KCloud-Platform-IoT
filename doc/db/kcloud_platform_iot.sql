@@ -637,9 +637,9 @@ COMMENT ON COLUMN "public"."boot_iot_product_category"."del_flag" IS '删除标�
 COMMENT ON COLUMN "public"."boot_iot_product_category"."version" IS '版本号';
 COMMENT ON COLUMN "public"."boot_iot_product_category"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."boot_iot_product_category"."name" IS '产品类别名称';
-COMMENT ON COLUMN "public"."boot_iot_product_category"."sort" IS '排序';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."sort" IS '产品类别排序';
 COMMENT ON COLUMN "public"."boot_iot_product_category"."pid" IS '产品类别父节点ID';
-COMMENT ON COLUMN "public"."boot_iot_product_category"."remark" IS '备注';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."remark" IS '产品类别备注';
 COMMENT ON COLUMN "public"."boot_iot_product_category"."code" IS '产品类别编码';
 COMMENT ON TABLE "public"."boot_iot_product_category" IS '产品类别';
 

@@ -17,6 +17,7 @@
 
 package org.laokou.iot.productCategory.command;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
@@ -24,6 +25,8 @@ import org.laokou.iot.productCategory.dto.ProductCategoryModifyCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 import org.laokou.iot.productCategory.ability.ProductCategoryDomainService;
+
+import static org.laokou.common.tenant.constant.DSConstants.IOT;
 
 /**
  *
@@ -41,9 +44,15 @@ public class ProductCategoryModifyCmdExe {
 
 	@CommandLog
 	public void executeVoid(ProductCategoryModifyCmd cmd) {
-		// 校验参数
-		transactionalUtils.executeInTransaction(
-				() -> productCategoryDomainService.update(ProductCategoryConvertor.toEntity(cmd.getCo())));
+		try {
+			DynamicDataSourceContextHolder.push(IOT);
+			// 校验参数
+			transactionalUtils.executeInTransaction(
+					() -> productCategoryDomainService.update(ProductCategoryConvertor.toEntity(cmd.getCo())));
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

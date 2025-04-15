@@ -127,7 +127,7 @@ export default () => {
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				<a key="getable"
+				<a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
 						   setDataSource(res?.data)

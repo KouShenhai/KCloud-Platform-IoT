@@ -8,7 +8,7 @@ import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal, Space, Switch, Tag, UploadFile} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {trim} from "@/utils/format";
-import { ResetPwdDrawer } from '@/pages/Sys/Permission/ResetPwdDrawer';
+import { UserResetPwdDrawer } from '@/pages/Sys/Permission/UserResetPwdDrawer';
 import {UserDrawer} from "@/pages/Sys/Permission/UserDrawer";
 import {listTreeV3} from "@/services/admin/dept";
 import {pageV3 as rolePageV3} from "@/services/admin/role";
@@ -307,9 +307,9 @@ export default () => {
 	return (
 		<>
 
-			<ResetPwdDrawer visible={modalRestPwdVisit}
-				setVisible={setModalRestPwdVisit}
-				dataSource={dataSource}
+			<UserResetPwdDrawer visible={modalRestPwdVisit}
+                                setVisible={setModalRestPwdVisit}
+                                dataSource={dataSource}
 			/>
 
 			<UserDrawer

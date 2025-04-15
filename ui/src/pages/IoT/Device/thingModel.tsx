@@ -247,7 +247,7 @@ export default () => {
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				( access.canThingModelGetDetail && <a key="getable"
+				( access.canThingModelGetDetail && <a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
 						   setTitle('查看物模型')

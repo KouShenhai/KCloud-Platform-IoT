@@ -7,16 +7,18 @@ import {trim} from "@/utils/format";
 import React, {useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {ProductCategoryDrawer} from "@/pages/IoT/Device/ProductCategoryDrawer";
+import {useAccess} from "@@/exports";
 
 export default () => {
 
+	const access = useAccess()
 	const actionRef = useRef();
 	const [modalVisit, setModalVisit] = useState(false);
 	const [dataSource, setDataSource] = useState<any>({})
 	const [title, setTitle] = useState("")
 	const [readOnly, setReadOnly] = useState(false)
-	const [value, setValue] = useState("");
 	const [ids, setIds] = useState<any>([])
+	const [treeList, setTreeList] = useState<any[]>([])
 
 	type TableColumns = {
 		id: number;
@@ -69,6 +71,12 @@ export default () => {
 			}
 		},
 		{
+			title: '产品类别排序',
+			dataIndex: 'sort',
+			hideInSearch: true,
+			ellipsis: true,
+		},
+		{
 			title: '创建时间',
 			key: 'createTime',
 			dataIndex: 'createTime',
@@ -99,16 +107,49 @@ export default () => {
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				<a key="getable"
+				( access.canProductCategoryGetDetail && <a key="get"
 				   onClick={() => {
 					   getByIdV3({id: record?.id}).then(res => {
+						   setTitle('查看产品类别')
 						   setDataSource(res?.data)
 						   setModalVisit(true)
+						   setReadOnly(true)
 					   })
 				   }}
 				>
 					查看
-				</a>
+				</a>),
+				( access.canProductCategoryModify && <a key="modify"
+				   onClick={() => {
+					   getByIdV3({id: record?.id}).then(res => {
+						   setTitle('修改产品类别')
+						   setDataSource(res?.data)
+						   setModalVisit(true)
+						   setReadOnly(false)
+					   })
+				   }}
+				>
+					修改
+				</a>),
+				( access.canProductCategoryRemove && <a key="remove" onClick={() => {
+					Modal.confirm({
+						title: '确认删除?',
+						content: '您确定要删除吗?',
+						okText: '确认',
+						cancelText: '取消',
+						onOk: () => {
+							removeV3([record?.id]).then(res => {
+								if (res.code === 'OK') {
+									message.success("删除成功").then()
+									// @ts-ignore
+									actionRef?.current?.reload();
+								}
+							})
+						}
+					})
+				}}>
+					删除
+				</a>)
 			],
 		},
 	];
@@ -126,8 +167,7 @@ export default () => {
 					// @ts-ignore
 					actionRef?.current?.reload();
 				}}
-				value={value}
-				setValue={setValue}
+				treeList={treeList}
 			/>
 
 			<ProTable<TableColumns>
@@ -136,6 +176,11 @@ export default () => {
 				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
 					return listTreeV3(getListTreeQueryParam(params)).then(res => {
+						setTreeList([{
+							id: '0',
+							name: '根目录',
+							children: res?.data
+						}])
 						return Promise.resolve({
 							data: res?.data,
 							success: true,
@@ -150,14 +195,14 @@ export default () => {
 				rowSelection={{ ...rowSelection }}
 				toolBarRender={
 					() => [
-						<Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
+						( access.canProductCategorySave && <Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
 							setTitle('新增产品类别')
 							setReadOnly(false)
 							setModalVisit(true)
 						}}>
 							新增
-						</Button>,
-						<Button key="remove" type="primary" danger icon={<DeleteOutlined />} onClick={() => {
+						</Button>),
+						( access.canProductCategoryRemove && <Button key="remove" type="primary" danger icon={<DeleteOutlined />} onClick={() => {
 							Modal.confirm({
 								title: '确认删除?',
 								content: '您确定要删除吗?',
@@ -179,7 +224,7 @@ export default () => {
 							});
 						}}>
 							删除
-						</Button>
+						</Button>)
 					]
 				}
 				dateFormatter="string"
