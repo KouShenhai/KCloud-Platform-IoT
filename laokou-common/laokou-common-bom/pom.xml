@@ -172,7 +172,7 @@
     <!--clickhouse-jdbc版本-->
     <clickhouse-jdbc.version>0.8.3</clickhouse-jdbc.version>
     <!--reactor-core版本-->
-    <reactor-core.version>3.7.4</reactor-core.version>
+    <reactor-core.version>3.7.5</reactor-core.version>
     <!--sentinel版本-->
     <sentinel.version>1.8.8</sentinel.version>
     <!--hivemq-mqtt-client-reactor版本-->
