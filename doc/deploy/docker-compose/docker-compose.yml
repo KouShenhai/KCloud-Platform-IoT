@@ -624,7 +624,7 @@ services:
       - laokou_network
   # rabbitmq-plugins enable rabbitmq_management
   rabbitmq:
-    image: rabbitmq:4.0.8-management
+    image: rabbitmq:4.0.9-management
     container_name: rabbitmq
     # 保持容器在没有守护程序的情况下运行
     tty: true
