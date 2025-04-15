@@ -40,7 +40,6 @@ public class ProductCategoryConvertor {
 		else {
 			productCategoryDO.setId(productCategoryE.getId());
 		}
-		productCategoryDO.setCode(productCategoryE.getCode());
 		productCategoryDO.setName(productCategoryE.getName());
 		productCategoryDO.setSort(productCategoryE.getSort());
 		productCategoryDO.setPid(productCategoryE.getPid());
@@ -54,7 +53,6 @@ public class ProductCategoryConvertor {
 		productCategoryCO.setSort(productCategoryDO.getSort());
 		productCategoryCO.setPid(productCategoryDO.getPid());
 		productCategoryCO.setRemark(productCategoryDO.getRemark());
-		productCategoryCO.setCode(productCategoryDO.getCode());
 		productCategoryCO.setId(productCategoryDO.getId());
 		productCategoryCO.setCreateTime(productCategoryDO.getCreateTime());
 		return productCategoryCO;
@@ -66,7 +64,6 @@ public class ProductCategoryConvertor {
 		productCategoryE.setSort(productCategoryCO.getSort());
 		productCategoryE.setPid(productCategoryCO.getPid());
 		productCategoryE.setRemark(productCategoryCO.getRemark());
-		productCategoryE.setCode(productCategoryCO.getCode());
 		productCategoryE.setId(productCategoryCO.getId());
 		return productCategoryE;
 	}
@@ -79,7 +76,6 @@ public class ProductCategoryConvertor {
 		co.setSort(productCategoryDO.getSort());
 		co.setCreateTime(productCategoryDO.getCreateTime());
 		co.setRemark(productCategoryDO.getRemark());
-		co.setCode(productCategoryDO.getCode());
 		return co;
 
 	}

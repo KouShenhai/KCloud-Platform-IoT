@@ -39,14 +39,4 @@ public class CommunicationProtocolPageQry extends PageQuery {
 	 */
 	private String code;
 
-	/**
-	 * 排序.
-	 */
-	private Integer sort;
-
-	/**
-	 * 备注.
-	 */
-	private String remark;
-
 }

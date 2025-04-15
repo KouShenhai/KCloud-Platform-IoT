@@ -624,8 +624,7 @@ CACHE 1
   "name" varchar(50) COLLATE "pg_catalog"."default" NOT NULL,
   "sort" int4 NOT NULL,
   "pid" int8 NOT NULL,
-  "remark" varchar(400) COLLATE "pg_catalog"."default",
-  "code" varchar(50) COLLATE "pg_catalog"."default" NOT NULL
+  "remark" varchar(400) COLLATE "pg_catalog"."default"
 )
 ;
 COMMENT ON COLUMN "public"."boot_iot_product_category"."id" IS 'ID';
@@ -640,7 +639,6 @@ COMMENT ON COLUMN "public"."boot_iot_product_category"."name" IS '产品类别�
 COMMENT ON COLUMN "public"."boot_iot_product_category"."sort" IS '产品类别排序';
 COMMENT ON COLUMN "public"."boot_iot_product_category"."pid" IS '产品类别父节点ID';
 COMMENT ON COLUMN "public"."boot_iot_product_category"."remark" IS '产品类别备注';
-COMMENT ON COLUMN "public"."boot_iot_product_category"."code" IS '产品类别编码';
 COMMENT ON TABLE "public"."boot_iot_product_category" IS '产品类别';
 
 -- ----------------------------

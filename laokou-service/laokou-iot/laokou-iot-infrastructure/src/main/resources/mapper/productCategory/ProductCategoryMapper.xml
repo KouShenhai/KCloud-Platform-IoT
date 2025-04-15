@@ -22,7 +22,6 @@
 
   <sql id="selectColumns">
      id,
-     "code",
      "name",
      sort,
      pid,

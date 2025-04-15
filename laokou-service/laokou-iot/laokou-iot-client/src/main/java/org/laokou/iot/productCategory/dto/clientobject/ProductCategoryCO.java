@@ -38,9 +38,6 @@ import java.time.Instant;
 @Schema(name = "产品类别客户端对象", description = "产品类别客户端对象")
 public class ProductCategoryCO extends TreeUtils.TreeNode<ProductCategoryCO> {
 
-	@Schema(name = "产品类别编码", description = "产品类别编码")
-	private String code;
-
 	@Schema(name = "产品类别排序", description = "产品类别排序")
 	private Integer sort;
 

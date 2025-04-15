@@ -45,29 +45,9 @@ public class DevicePageQry extends PageQuery {
 	private Integer status;
 
 	/**
-	 * 设备经度.
-	 */
-	private Double longitude;
-
-	/**
-	 * 设备纬度.
-	 */
-	private Double latitude;
-
-	/**
-	 * 设备图片URL.
-	 */
-	private String imgUrl;
-
-	/**
 	 * 设备地址.
 	 */
 	private String address;
-
-	/**
-	 * 设备备注.
-	 */
-	private String remark;
 
 	/**
 	 * 产品ID.

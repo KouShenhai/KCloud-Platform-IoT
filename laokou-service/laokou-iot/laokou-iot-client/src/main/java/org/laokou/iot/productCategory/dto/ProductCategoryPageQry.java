@@ -29,24 +29,4 @@ import org.laokou.common.i18n.dto.PageQuery;
 @Data
 public class ProductCategoryPageQry extends PageQuery {
 
-	/**
-	 * 产品类别名称.
-	 */
-	private String name;
-
-	/**
-	 * 排序.
-	 */
-	private Integer sort;
-
-	/**
-	 * 产品类别父节点ID.
-	 */
-	private Long pid;
-
-	/**
-	 * 备注.
-	 */
-	private String remark;
-
 }

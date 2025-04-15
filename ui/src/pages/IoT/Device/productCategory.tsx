@@ -3,7 +3,6 @@ import {ProTable} from '@ant-design/pro-components';
 import {getByIdV3, removeV3, listTreeV3} from "@/services/iot/productCategory";
 import {Button, message, Modal} from "antd";
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
-import {trim} from "@/utils/format";
 import React, {useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {ProductCategoryDrawer} from "@/pages/IoT/Device/ProductCategoryDrawer";
@@ -32,8 +31,6 @@ export default () => {
 
 	const getListTreeQueryParam = (params: any) => {
 		return {
-			code: trim(params?.code),
-			name: trim(params?.name),
 			params: {
 				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
 				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
@@ -53,22 +50,11 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '产品类别编码',
-			dataIndex: 'code',
-			ellipsis: true,
-			valueType: 'text',
-			fieldProps: {
-				placeholder: '请输入产品类别编码',
-			}
-		},
-		{
 			title: '产品类别名称',
 			dataIndex: 'name',
 			ellipsis: true,
 			valueType: 'text',
-			fieldProps: {
-				placeholder: '请输入产品类别名称',
-			}
+			hideInSearch: true,
 		},
 		{
 			title: '产品类别排序',
@@ -118,6 +104,16 @@ export default () => {
 				   }}
 				>
 					查看
+				</a>),
+				( access.canProductCategorySave && <a key="save"
+				   onClick={() => {
+					   setTitle('新增产品类别')
+					   setReadOnly(false)
+					   setModalVisit(true)
+					   setDataSource({sort: 1, pid: record?.id, id: undefined, name: '', remark: ''})
+				   }}
+				>
+					新增
 				</a>),
 				( access.canProductCategoryModify && <a key="modify"
 				   onClick={() => {
@@ -199,6 +195,7 @@ export default () => {
 							setTitle('新增产品类别')
 							setReadOnly(false)
 							setModalVisit(true)
+							setDataSource({sort: 1, pid: undefined, id: undefined, name: '', remark: ''})
 						}}>
 							新增
 						</Button>),

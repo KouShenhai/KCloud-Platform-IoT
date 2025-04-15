@@ -45,11 +45,6 @@ public class ProductPageQry extends PageQuery {
 	private Integer deviceType;
 
 	/**
-	 * 产品图片URL.
-	 */
-	private String imgUrl;
-
-	/**
 	 * 通讯协议ID.
 	 */
 	private Long cpId;
@@ -58,10 +53,5 @@ public class ProductPageQry extends PageQuery {
 	 * 传输协议ID.
 	 */
 	private Long tpId;
-
-	/**
-	 * 备注.
-	 */
-	private String remark;
 
 }

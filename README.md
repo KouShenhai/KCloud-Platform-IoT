@@ -67,13 +67,13 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 <img src="doc/image/img.png" width=400 height=400 alt="COLA架构图"/>
 
 ### 📙 项目截图
-|                                    |                                    |
-|:----------------------------------:|:----------------------------------:|
-|  ![登录页面](doc/image/project/1.png)  |  ![菜单页面](doc/image/project/2.png)  |
-|  ![部门页面](doc/image/project/3.png)  |  ![角色页面](doc/image/project/4.png)  |
-|  ![用户页面](doc/image/project/5.png)  | ![登录日志页面](doc/image/project/6.png) |
-| ![通知日志页面](doc/image/project/7.png) | ![操作日志页面](doc/image/project/8.png) |                                  |
-| ![物模型页面](doc/image/project/9.png)  |                                    |
+|                                    |                                     |
+|:----------------------------------:|:-----------------------------------:|
+|  ![登录页面](doc/image/project/1.png)  |  ![菜单页面](doc/image/project/2.png)   |
+|  ![部门页面](doc/image/project/3.png)  |  ![角色页面](doc/image/project/4.png)   |
+|  ![用户页面](doc/image/project/5.png)  | ![登录日志页面](doc/image/project/6.png)  |
+| ![通知日志页面](doc/image/project/7.png) | ![操作日志页面](doc/image/project/8.png)  |
+| ![物模型页面](doc/image/project/9.png)  | ![产品类别页面](doc/image/project/10.png) |
 
 ### 🌿 服务器配置
 
