@@ -24,7 +24,6 @@ import org.laokou.common.mqtt.client.handler.MessageHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 
@@ -44,7 +43,6 @@ public class HivemqMqttClientManager {
 	}
 
 	public static void remove(String clientId) {
-		close(clientId);
 		HIVE_MQTT_CLIENT_MAP.remove(clientId);
 	}
 
@@ -62,22 +60,6 @@ public class HivemqMqttClientManager {
 		get(clientId).close();
 	}
 
-	public static void subscribe(String clientId, String[] topics, int[] qos) {
-		get(clientId).subscribe(topics, qos);
-	}
-
-	public static void unsubscribe(String clientId, String[] topics) {
-		get(clientId).unsubscribe(topics);
-	}
-
-	public static void publishSubscribeEvent(String clientId, Set<String> topics, int qos) {
-		get(clientId).publishSubscribeEvent(topics, qos);
-	}
-
-	public static void publishUnsubscribeEvent(String clientId, Set<String> topics) {
-		get(clientId).publishUnsubscribeEvent(topics);
-	}
-
 	public static void publishOpenEvent(String clientId) {
 		get(clientId).publishOpenEvent(clientId);
 	}
@@ -86,7 +68,12 @@ public class HivemqMqttClientManager {
 		get(clientId).publishCloseEvent(clientId);
 	}
 
+	public static void publish(String clientId, String topic, byte[] payload) {
+		get(clientId).publish(topic, payload);
+	}
+
 	public static void destroy() {
+		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::dispose);
 		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::close);
 		HIVE_MQTT_CLIENT_MAP.clear();
 	}

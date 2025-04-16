@@ -344,7 +344,7 @@ services:
     depends_on:
       - rocketmq-namesrv
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:9.0.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.18.0
     container_name: elasticsearch
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -354,10 +354,10 @@ services:
       - "9200:9200"
       - "9300:9300"
     volumes:
-      - ./elasticsearch8/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./elasticsearch8/data:/usr/share/elasticsearch/data
       - ./elasticsearch8/logs:/usr/share/elasticsearch/logs
       - ./elasticsearch8/plugins:/usr/share/elasticsearch/plugins
+      - ./elasticsearch8/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - ./elasticsearch8/config/certs/elastic-certificates.p12:/usr/share/elasticsearch/config/certs/elastic-certificates.p12
     environment:
       - TZ=Asia/Shanghai
@@ -371,7 +371,7 @@ services:
         hard: -1
   # ./bin/elasticsearch-setup-passwords interactive
   kibana:
-    image: kibana:8.17.3
+    image: kibana:8.18.0
     container_name: kibana
     # 保持容器在没有守护程序的情况下运行
     tty: true
