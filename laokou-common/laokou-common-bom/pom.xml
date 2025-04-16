@@ -52,7 +52,7 @@
     <!--oshi版本-->
     <oshi.version>6.8.1</oshi.version>
     <!--elasticsearch版本-->
-    <elasticsearch.version>8.17.5</elasticsearch.version>
+    <elasticsearch.version>8.18.0</elasticsearch.version>
     <!--rocketmq-spring版本-->
     <rocketmq-spring.version>2.3.3</rocketmq-spring.version>
     <!--rocketmq版本-->
