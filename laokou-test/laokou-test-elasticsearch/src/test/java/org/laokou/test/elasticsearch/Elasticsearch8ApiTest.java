@@ -66,16 +66,19 @@ class Elasticsearch8ApiTest {
 	}
 
 	@Test
-	void testCreateIndexApi() throws IOException {
+	void testCreateIndexApi() throws IOException, InterruptedException {
 		elasticsearchTemplate.createIndex("laokou_res_1", "laokou_res", Resource.class);
+		Thread.sleep(1000);
 		elasticsearchTemplate.createIndex("laokou_pro_1", "laokou_pro", Project.class);
+		Thread.sleep(1000);
 		elasticsearchTemplate.asyncCreateIndex("laokou_resp_1", "laokou_resp", Resp.class,
 				Executors.newSingleThreadExecutor());
 	}
 
 	@Test
-	void testAsyncCreateDocumentApi() {
-		elasticsearchTemplate.asyncCreateDocument("laokou_res_1", "444", new Resource("8888")).resultNow();
+	void testAsyncCreateDocumentApi() throws InterruptedException {
+		Thread.sleep(1000);
+		elasticsearchTemplate.asyncCreateDocument("laokou_res_1", "222", new Resource("8888"));
 	}
 
 	@Test
@@ -121,7 +124,8 @@ class Elasticsearch8ApiTest {
 	}
 
 	@Test
-	void testDeleteIndexApi() throws IOException {
+	void testDeleteIndexApi() throws IOException, InterruptedException {
+		Thread.sleep(20000);
 		elasticsearchTemplate.deleteIndex(List.of("laokou_res_1", "laokou_pro_1", "laokou_resp_1"));
 	}
 

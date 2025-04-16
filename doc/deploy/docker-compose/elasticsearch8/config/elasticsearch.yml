@@ -1,8 +1,10 @@
 http.cors.enabled: true
 http.cors.allow-origin: "*"
 network.host: 0.0.0.0
-cluster.name: laokou-elasticsearch #可自定义
-node.name: node-elasticsearch #可自定义
+# 可自定义
+cluster.name: laokou-elasticsearch
+# 可自定义
+node.name: node-elasticsearch
 http.port: 9200
 discovery.type: single-node
 # 内存交换的选项，官网建议为true
