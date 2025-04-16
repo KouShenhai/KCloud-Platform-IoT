@@ -19,6 +19,8 @@ package org.laokou.common.mybatisplus.config;
 
 import org.apache.fury.Fury;
 import org.apache.fury.ThreadSafeFury;
+import org.apache.fury.config.CompatibleMode;
+import org.apache.fury.config.Language;
 
 /**
  * @author laokou
@@ -27,7 +29,23 @@ public final class FuryFactory {
 
 	private static final FuryFactory FACTORY = new FuryFactory();
 
-	private final ThreadSafeFury FURY = Fury.builder().withAsyncCompilation(true).buildThreadSafeFury();
+	private final ThreadSafeFury FURY = Fury.builder()
+		.withLanguage(Language.JAVA)
+		// enable reference tracking for shared/circular reference.
+		// Disable it will have better performance if no duplicate reference.
+		.withRefTracking(false)
+		// compress int for smaller size
+		// .withIntCompressed(true)
+		// compress long for smaller size
+		// .withLongCompressed(true)
+		.withCompatibleMode(CompatibleMode.SCHEMA_CONSISTENT)
+		// enable type forward/backward compatibility
+		// disable it for small size and better performance.
+		// .withCompatibleMode(CompatibleMode.COMPATIBLE)
+		// enable async multi-threaded compilation.
+		.withAsyncCompilation(true)
+		.requireClassRegistration(true)
+		.buildThreadSafeFury();
 
 	private FuryFactory() {
 		FURY.register(net.sf.jsqlparser.expression.Alias.class);

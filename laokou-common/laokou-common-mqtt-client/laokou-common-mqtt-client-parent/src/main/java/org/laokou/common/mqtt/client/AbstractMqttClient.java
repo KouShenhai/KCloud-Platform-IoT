@@ -27,12 +27,16 @@ public abstract class AbstractMqttClient implements MqttClient {
 	/**
 	 * 服务下线主题.
 	 */
-	protected String WILL_TOPIC = "will_topic";
+	protected String WILL_TOPIC = "/will/topic";
+
+	protected String RESPONSE_TOPIC = "response/topic";
 
 	/**
 	 * 服务下线数据.
 	 */
-	protected byte[] WILL_DATA = "offline".getBytes(UTF_8);
+	protected byte[] WILL_PAYLOAD = "offline".getBytes(UTF_8);
+
+	protected byte[] CORRELATION_DATA = "correlationData".getBytes(UTF_8);
 
 	protected void checkTopicAndQos(String[] topics, int[] qos, String name) {
 		if (topics == null || qos == null) {

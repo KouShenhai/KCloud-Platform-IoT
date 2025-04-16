@@ -26,6 +26,6 @@ public interface MessageHandler {
 
 	boolean isSubscribe(String topic);
 
-	void handle(MqttMessage mqttMessage);
+	void handle(MqttMessage mqttMessage) throws Exception;
 
 }

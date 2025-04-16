@@ -118,6 +118,8 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 
 🚀 物模型管理【查询/新增/修改/删除/查看】
 
+🚀 产品类别管理【查询/新增/修改/删除/查看】
+
 ### 💡 系统架构
 
 <div style="text-align: center"><img src="doc/image/老寇IoT云平台架构图.png" alt="架构图"/></div>

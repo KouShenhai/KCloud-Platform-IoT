@@ -181,7 +181,7 @@ public class PahoMqttClient extends AbstractMqttClient {
 		options.setReceiveMaximum(mqttClientProperties.getReceiveMaximum());
 		options.setMaximumPacketSize((long) mqttClientProperties.getMaximumPacketSize());
 		options.setWill(WILL_TOPIC,
-				new MqttMessage(WILL_DATA, mqttClientProperties.getWillQos(), false, new MqttProperties()));
+				new MqttMessage(WILL_PAYLOAD, mqttClientProperties.getWillQos(), false, new MqttProperties()));
 		// 超时时间
 		options.setConnectionTimeout(mqttClientProperties.getConnectionTimeout());
 		// 会话心跳

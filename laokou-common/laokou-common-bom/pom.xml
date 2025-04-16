@@ -100,7 +100,7 @@
     <!--taos-jdbcdriver版本-->
     <taos-jdbcdriver.version>3.6.1</taos-jdbcdriver.version>
     <!--fury-core版本-->
-    <fury-core.version>0.10.1</fury-core.version>
+    <fury-core.version>0.10.0</fury-core.version>
     <!--browscap-java版本-->
     <browscap-java.version>1.5.0</browscap-java.version>
     <!--liquibase-core版本-->
@@ -175,8 +175,8 @@
     <reactor-core.version>3.7.5</reactor-core.version>
     <!--sentinel版本-->
     <sentinel.version>1.8.8</sentinel.version>
-    <!--hivemq-mqtt-client-reactor版本-->
-    <hivemq-mqtt-client-reactor.version>1.3.5</hivemq-mqtt-client-reactor.version>
+    <!--hivemq-mqtt-client版本-->
+    <hivemq-mqtt-client.version>1.3.5</hivemq-mqtt-client.version>
     <!--opencsv版本-->
     <opencsv.version>5.10</opencsv.version>
   </properties>
@@ -191,8 +191,8 @@
       </dependency>
       <dependency>
         <groupId>com.hivemq</groupId>
-        <artifactId>hivemq-mqtt-client-reactor</artifactId>
-        <version>${hivemq-mqtt-client-reactor.version}</version>
+        <artifactId>hivemq-mqtt-client</artifactId>
+        <version>${hivemq-mqtt-client.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>

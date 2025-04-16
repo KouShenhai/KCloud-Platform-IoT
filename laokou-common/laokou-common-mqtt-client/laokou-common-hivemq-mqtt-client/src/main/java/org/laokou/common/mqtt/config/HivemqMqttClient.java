@@ -20,28 +20,26 @@ package org.laokou.common.mqtt.config;
 import com.hivemq.client.mqtt.MqttClientExecutorConfig;
 import com.hivemq.client.mqtt.datatypes.MqttQos;
 import com.hivemq.client.mqtt.datatypes.MqttTopicFilter;
+import com.hivemq.client.mqtt.mqtt5.Mqtt5AsyncClient;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5Client;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5ClientBuilder;
-import com.hivemq.client.mqtt.mqtt5.Mqtt5RxClient;
-import com.hivemq.client.mqtt.mqtt5.message.publish.Mqtt5Publish;
+import com.hivemq.client.mqtt.mqtt5.message.Mqtt5ReasonCode;
+import com.hivemq.client.mqtt.mqtt5.message.connect.connack.Mqtt5ConnAckReasonCode;
+import com.hivemq.client.mqtt.mqtt5.message.publish.Mqtt5PayloadFormatIndicator;
 import com.hivemq.client.mqtt.mqtt5.message.subscribe.Mqtt5Subscription;
 import com.hivemq.client.mqtt.mqtt5.message.unsubscribe.Mqtt5Unsubscribe;
-import io.reactivex.Flowable;
-import io.reactivex.disposables.Disposable;
+import com.hivemq.client.mqtt.mqtt5.message.unsubscribe.unsuback.Mqtt5UnsubAck;
+import io.micrometer.common.util.StringUtils;
 import io.reactivex.schedulers.Schedulers;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.SpringEventBus;
 import org.laokou.common.core.util.CollectionUtils;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.mqtt.client.AbstractMqttClient;
 import org.laokou.common.mqtt.client.MqttMessage;
 import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
-import org.laokou.common.mqtt.client.handler.event.CloseEvent;
-import org.laokou.common.mqtt.client.handler.event.OpenEvent;
-import org.laokou.common.mqtt.client.handler.event.SubscribeEvent;
-import org.laokou.common.mqtt.client.handler.event.UnsubscribeEvent;
+import org.laokou.common.mqtt.client.handler.event.*;
 
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -61,11 +59,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	private final ExecutorService virtualThreadExecutor;
 
-	private volatile Mqtt5RxClient client;
+	private volatile Mqtt5AsyncClient client;
 
 	private final Object LOCK = new Object();
-
-	private final List<Disposable> disposables = new ArrayList<>(5);
 
 	public HivemqMqttClient(MqttClientProperties mqttClientProperties, List<MessageHandler> messageHandlers,
 			ExecutorService virtualThreadExecutor) {
@@ -80,12 +76,18 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				if (ObjectUtils.isNull(client)) {
 					String clientId = mqttClientProperties.getClientId();
 					client = getClient(clientId);
-					Disposable disposable = client.connectWith()
+					client.connectWith()
 						.willPublish()
 						.topic(WILL_TOPIC)
-						.payload(WILL_DATA)
+						.payload(WILL_PAYLOAD)
 						.qos(getMqttQos(mqttClientProperties.getWillQos()))
-						.retain(false)
+						.retain(true)
+						.messageExpiryInterval(100)
+						.delayInterval(10)
+						.payloadFormatIndicator(Mqtt5PayloadFormatIndicator.UTF_8)
+						.contentType("text/plain")
+						.responseTopic(RESPONSE_TOPIC)
+						.correlationData(CORRELATION_DATA)
 						.applyWillPublish()
 						.keepAlive(mqttClientProperties.getKeepAliveInterval())
 						.cleanStart(mqttClientProperties.isClearStart())
@@ -100,20 +102,19 @@ public class HivemqMqttClient extends AbstractMqttClient {
 						.requestProblemInformation(mqttClientProperties.isRequestProblemInformation())
 						.requestResponseInformation(mqttClientProperties.isRequestResponseInformation())
 						.applyRestrictions()
-						.applyConnect()
-						.doOnSuccess(ack -> {
-							log.info("【Hivemq】 => MQTT连接成功，客户端ID：{}", clientId);
-							// 发布订阅事件
-							publishSubscribeEvent(mqttClientProperties.getTopics(),
-									mqttClientProperties.getSubscribeQos());
-						})
-						.doOnError(e -> log.error("【Hivemq】 => MQTT连接失败，错误信息：{}", e.getMessage(), e))
-						.subscribeOn(Schedulers.from(virtualThreadExecutor))
-						.subscribe(ack -> {
-						}, e -> {
-							throw new SystemException("S_Mqtt_ConnectFailed", e.getMessage(), e);
+						.send()
+						.thenAcceptAsync(ack -> {
+							Mqtt5ConnAckReasonCode reasonCode = ack.getReasonCode();
+							if (!reasonCode.isError()) {
+								log.info("【Hivemq】 => MQTT连接成功，客户端ID：{}", clientId);
+								// 发布订阅事件
+								publishSubscribeEvent(mqttClientProperties.getTopics(),
+										mqttClientProperties.getSubscribeQos());
+							}
+							else {
+								log.error("【Hivemq】 => MQTT连接失败，客户端ID：{}，错误信息：{}", clientId, reasonCode.name());
+							}
 						});
-					disposables.add(disposable);
 				}
 			}
 		}
@@ -121,13 +122,11 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	public void close() {
 		if (ObjectUtils.isNotNull(client)) {
-			Disposable disposable = client.disconnectWith()
-				.applyDisconnect()
-				.doOnComplete(() -> log.info("【Hivemq】 => MQTT断开连接成功，客户端ID：{}", mqttClientProperties.getClientId()))
-				.doOnError(e -> log.error("【Hivemq】 => MQTT断开连接失败，错误信息：{}", e.getMessage(), e))
-				.subscribeOn(Schedulers.from(virtualThreadExecutor))
-				.subscribe();
-			disposables.add(disposable);
+			client.disconnectWith()
+				.sessionExpiryInterval(mqttClientProperties.getSessionExpiryInterval())
+				.send()
+				.thenAcceptAsync(
+						ack -> log.info("【Hivemq】 => MQTT断开连接成功，客户端ID：{}", mqttClientProperties.getClientId()));
 		}
 	}
 
@@ -142,28 +141,28 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					.retainAsPublished(mqttClientProperties.isRetain())
 					.build());
 			}
-			Disposable disposable = client.subscribePublishesWith()
-				.addSubscriptions(subscriptions)
-				.applySubscribe()
-				.doOnSingle(ack -> log.info("【Hivemq】 => MQTT订阅成功，主题: {}", String.join(",", topics)))
-				.doOnError(e -> log.error("【Hivemq】 => MQTT订阅失败，主题：{}，错误信息：{}", String.join(",", topics),
-						e.getMessage(), e))
-				.doOnNext(publish -> {
-					for (MessageHandler messageHandler : messageHandlers) {
-						if (messageHandler.isSubscribe(publish.getTopic().toString())) {
-							messageHandler
-								.handle(new MqttMessage(publish.getPayloadAsBytes(), publish.getTopic().toString()));
+			client.subscribeWith().addSubscriptions(subscriptions).callback(ack -> {
+				for (MessageHandler messageHandler : messageHandlers) {
+					String topic = ack.getTopic().toString();
+					if (messageHandler.isSubscribe(topic)) {
+						try {
+							messageHandler.handle(new MqttMessage(ack.getPayloadAsBytes(), topic));
 							break;
 						}
+						catch (Exception e) {
+							log.error("【Hivemq】 => MQTT消费失败，主题: {}，错误信息：{}", ack.getTopic(), e.getMessage(), e);
+						}
 					}
-				})
-				.doOnError(e -> log.error("【Hivemq】 => MQTT消息处理失败，错误信息：{}", e.getMessage(), e))
-				.subscribeOn(Schedulers.from(virtualThreadExecutor))
-				.subscribe(ack -> {
-				}, e -> {
-					throw new SystemException("S_Mqtt_ConsumeError", e.getMessage(), e);
-				});
-			disposables.add(disposable);
+				}
+			}).executor(virtualThreadExecutor).send().thenAcceptAsync(ack -> {
+				if (!ack.getReasonCodes().stream().filter(Mqtt5ReasonCode::isError).toList().isEmpty()) {
+					log.info("【Hivemq】 => MQTT订阅失败，主题: {}，错误信息：{}", String.join("、", topics),
+							String.join("、", ack.getReasonCodes().stream().map(Enum::name).toList()));
+				}
+				else {
+					log.info("【Hivemq】 => MQTT订阅成功，主题: {}", String.join("、", topics));
+				}
+			});
 		}
 	}
 
@@ -174,38 +173,42 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			for (String topic : topics) {
 				matchedTopics.add(MqttTopicFilter.of(topic));
 			}
-			Disposable disposable = client
-				.unsubscribe(Mqtt5Unsubscribe.builder().addTopicFilters(matchedTopics).build())
-				.doOnSuccess(ack -> log.info("【Hivemq】 => MQTT取消订阅成功，主题：{}", String.join(",", topics)))
-				.doOnError(e -> log.error("【Hivemq】 => MQTT取消订阅失败，主题：{}，错误信息：{}", String.join(",", topics),
-						e.getMessage(), e))
-				.subscribeOn(Schedulers.from(virtualThreadExecutor))
-				.subscribe(ack -> {
-				}, e -> {
-					throw new SystemException("S_Mqtt_UnSubscribeError", e.getMessage(), e);
-				});
-			disposables.add(disposable);
+			Mqtt5UnsubAck ack = client.unsubscribe(Mqtt5Unsubscribe.builder().addTopicFilters(matchedTopics).build())
+				.join();
+			if (!ack.getReasonCodes().stream().filter(Mqtt5ReasonCode::isError).toList().isEmpty()) {
+				log.info("【Hivemq】 => MQTT取消订阅失败，主题: {}，错误信息：{}", String.join("、", topics),
+						String.join("、", ack.getReasonCodes().stream().map(Enum::name).toList()));
+			}
+			else {
+				log.info("【Hivemq】 => MQTT取消订阅成功，主题: {}", String.join("、", topics));
+			}
 		}
 	}
 
 	public void publish(String topic, byte[] payload, int qos) {
 		if (ObjectUtils.isNotNull(client)) {
-			Disposable disposable = client
-				.publish(Flowable.just(Mqtt5Publish.builder()
-					.topic(topic)
-					.qos(getMqttQos(qos))
-					.payload(payload)
-					.retain(mqttClientProperties.isRetain())
-					.messageExpiryInterval(mqttClientProperties.getMessageExpiryInterval())
-					.build()))
-				.singleOrError()
-				.doOnError(e -> log.error("【Hivemq】 => MQTT消息发布失败，错误信息：{}", e.getMessage(), e))
-				.subscribeOn(Schedulers.from(virtualThreadExecutor))
-				.subscribe(ack -> {
-				}, e -> {
-					throw new SystemException("S_Mqtt_PublishError", e.getMessage(), e);
+			client.publishWith()
+				.topic(topic)
+				.qos(getMqttQos(qos))
+				.payload(payload)
+				.retain(mqttClientProperties.isRetain())
+				.messageExpiryInterval(mqttClientProperties.getMessageExpiryInterval())
+				.payloadFormatIndicator(Mqtt5PayloadFormatIndicator.UTF_8)
+				.contentType("text/plain")
+				.responseTopic(RESPONSE_TOPIC)
+				.send()
+				.thenAcceptAsync(ack -> {
+					if (ack.getError().isPresent()) {
+						Throwable throwable = ack.getError().get();
+						String message = throwable.getMessage();
+						if (StringUtils.isBlank(message)) {
+							log.info("【Hivemq】 => MQTT消息发送成功，主题：{}", topic);
+						}
+						else {
+							log.error("【Hivemq】 => MQTT消息发送失败，主题：{}，错误信息：{}", topic, message, throwable);
+						}
+					}
 				});
-			disposables.add(disposable);
 		}
 	}
 
@@ -213,7 +216,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 		publish(topic, payload, mqttClientProperties.getPublishQos());
 	}
 
-	private Mqtt5RxClient getClient(String clientId) {
+	private Mqtt5AsyncClient getClient(String clientId) {
 		Mqtt5ClientBuilder builder = Mqtt5Client.builder()
 			.identifier(clientId)
 			.serverHost(mqttClientProperties.getHost())
@@ -236,7 +239,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				.password(mqttClientProperties.getPassword().getBytes())
 				.applySimpleAuth();
 		}
-		return builder.buildRx();
+		return builder.buildAsync();
 	}
 
 	public void publishSubscribeEvent(Set<String> topics, int qos) {
@@ -259,15 +262,6 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	public void publishCloseEvent(String clientId) {
 		SpringEventBus.publish(new CloseEvent(this, clientId));
-	}
-
-	public void dispose() {
-		disposables.forEach(disposable -> {
-			if (ObjectUtils.isNotNull(disposable) && !disposable.isDisposed()) {
-				// 显式取消订阅
-				disposable.dispose();
-			}
-		});
 	}
 
 	private MqttQos getMqttQos(int qos) {

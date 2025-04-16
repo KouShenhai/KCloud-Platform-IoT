@@ -15,6 +15,7 @@
     "@ant-design/pro-components": "^2.8.6",
     "@ant-design/pro-form": "^2.31.6",
     "@ant-design/pro-layout": "^7.22.3",
+    "@codemirror/lang-java": "^6.0.1",
     "@codemirror/lang-javascript": "^6.2.3",
     "@uiw/react-codemirror": "^4.23.10",
     "@umijs/max": "^4.4.6",

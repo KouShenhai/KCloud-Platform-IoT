@@ -37,7 +37,7 @@ import java.util.List;
 @Schema(name = "用户客户端对象", description = "用户客户端对象")
 public class UserCO extends ClientObject {
 
-	@Schema(name = "ID", description = "ID")
+	@Schema(name = "用户ID", description = "用户ID")
 	private Long id;
 
 	@Schema(name = "用户密码", description = "用户密码")

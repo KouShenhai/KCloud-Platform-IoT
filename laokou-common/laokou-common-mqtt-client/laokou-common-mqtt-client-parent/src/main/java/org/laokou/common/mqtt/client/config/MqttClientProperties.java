@@ -45,7 +45,7 @@ public class MqttClientProperties {
 
 	private int publishQos = 0;
 
-	private int willQos = 0;
+	private int willQos = 1;
 
 	private int maxRetryNum = 5;
 
@@ -98,5 +98,7 @@ public class MqttClientProperties {
 	private int nettyThreads = 32;
 
 	private boolean retain = false;
+
+	private boolean noLocal = false;
 
 }
