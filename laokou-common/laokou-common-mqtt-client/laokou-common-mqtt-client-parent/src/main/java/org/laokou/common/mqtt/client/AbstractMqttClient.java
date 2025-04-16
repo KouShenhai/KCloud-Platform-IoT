@@ -27,8 +27,11 @@ public abstract class AbstractMqttClient implements MqttClient {
 	/**
 	 * 服务下线主题.
 	 */
-	protected String WILL_TOPIC = "/will/topic";
+	protected String WILL_TOPIC = "will/topic";
 
+	/**
+	 * 响应主题.
+	 */
 	protected String RESPONSE_TOPIC = "response/topic";
 
 	/**
@@ -36,13 +39,16 @@ public abstract class AbstractMqttClient implements MqttClient {
 	 */
 	protected byte[] WILL_PAYLOAD = "offline".getBytes(UTF_8);
 
+	/**
+	 * 相关数据.
+	 */
 	protected byte[] CORRELATION_DATA = "correlationData".getBytes(UTF_8);
 
-	protected void checkTopicAndQos(String[] topics, int[] qos, String name) {
-		if (topics == null || qos == null) {
+	protected void checkTopicAndQos(String[] topics, int[] qosArray, String name) {
+		if (topics == null || qosArray == null) {
 			throw new IllegalArgumentException("【" + name + "】 => Topics and QoS arrays cannot be null");
 		}
-		if (topics.length != qos.length) {
+		if (topics.length != qosArray.length) {
 			throw new IllegalArgumentException("【" + name + "】 => Topics and QoS arrays must have the same length");
 		}
 		if (topics.length == 0) {
