@@ -11,10 +11,11 @@
 
   <properties>
     <resource.delimiter>@</resource.delimiter>
+    <java.version>17</java.version>
     <!--sentinel版本-->
     <sentinel.version>1.8.8</sentinel.version>
     <!--spring-boot版本-->
-    <spring-boot.version>2.7.18</spring-boot.version>
+    <spring-boot.version>2.5.12</spring-boot.version>
     <!--curator版本-->
     <curator.version>5.8.0</curator.version>
     <!--log4j版本-->
@@ -180,8 +181,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin.version}</version>
           <configuration>
-              <source>17</source>
-              <target>17</target>
+              <source>${java.version}</source>
+              <target>${java.version}</target>
               <encoding>${project.build.sourceEncoding}</encoding>
               <compilerArgs>
                   <!-- 启用对使用过时 API 的警告 -->

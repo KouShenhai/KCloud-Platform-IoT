@@ -256,12 +256,18 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				.doOnNext(publish -> {
 					for (MessageHandler messageHandler : messageHandlers) {
 						if (messageHandler.isSubscribe(publish.getTopic().toString())) {
-							messageHandler
-								.handle(new MqttMessage(publish.getPayloadAsBytes(), publish.getTopic().toString()));
-							break;
+							try {
+								messageHandler.handle(
+										new MqttMessage(publish.getPayloadAsBytes(), publish.getTopic().toString()));
+								break;
+							}
+							catch (Exception e) {
+								log.error("【Hivemq】 => MQTT消息处理失败，错误信息：{}", e.getMessage(), e);
+							}
 						}
 					}
 				})
+				.observeOn(Schedulers.from(virtualThreadExecutor))
 				.doOnError(e -> log.error("【Hivemq】 => MQTT消息处理失败，错误信息：{}", e.getMessage(), e))
 				.subscribeOn(Schedulers.from(virtualThreadExecutor))
 				.subscribe(ack -> {
