@@ -292,3 +292,20 @@ ALTER TABLE "public"."boot_sys_user_202411" ADD CONSTRAINT "boot_sys_user_202411
 -- Primary Key structure for table boot_sys_user_202412
 -- ----------------------------
 ALTER TABLE "public"."boot_sys_user_202412" ADD CONSTRAINT "boot_sys_user_202412_pkey" PRIMARY KEY ("id");
+
+
+CREATE TABLE "public"."t_user" (
+   "id" int8 NOT NULL,
+   "name" varchar(20) COLLATE "pg_catalog"."default" NOT NULL,
+   CONSTRAINT "t_user_pkey" PRIMARY KEY ("id")
+)
+;
+
+ALTER TABLE "public"."t_user"
+	OWNER TO "root";
+
+COMMENT ON COLUMN "public"."t_user"."id" IS 'ID';
+
+COMMENT ON COLUMN "public"."t_user"."name" IS '名称';
+
+INSERT INTO "public"."t_user" ("id", "name") VALUES (1, '老寇');

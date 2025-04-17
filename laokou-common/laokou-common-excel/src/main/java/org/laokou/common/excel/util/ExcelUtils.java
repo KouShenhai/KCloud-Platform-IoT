@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.excel.validator.ExcelValidator;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.dto.Result;
@@ -43,6 +44,7 @@ import org.laokou.common.mybatisplus.util.MybatisUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -100,11 +102,26 @@ public final class ExcelUtils {
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, String sheetName, int size,
 			HttpServletResponse response, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper,
 			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor, ExecutorService virtualThreadExecutor) {
+		// 设置请求头
+		setHeader(fileName, response);
+		// 写入数据
+		try (ServletOutputStream outputStream = response.getOutputStream()) {
+			doExport(sheetName, size, outputStream, pageQuery, crudMapper, clazz, convertor, virtualThreadExecutor);
+		}
+		catch (GlobalException e) {
+			throw e;
+		}
+		catch (Exception e) {
+			log.error("Excel导出失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_Excel_ExportFailed", "Excel导出失败，系统繁忙", e);
+		}
+	}
+
+	public static <EXCEL, DO extends BaseDO> void doExport(String sheetName, int size, OutputStream out,
+			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
+			ExcelConvertor<DO, EXCEL> convertor, ExecutorService virtualThreadExecutor) {
 		if (crudMapper.selectObjectCount(pageQuery) > 0) {
-			try (ServletOutputStream out = response.getOutputStream();
-					ExcelWriter excelWriter = FastExcel.write(out, clazz).build()) {
-				// 设置请求头
-				setHeader(fileName, response);
+			try (ExcelWriter excelWriter = FastExcel.write(out, clazz).build()) {
 				// https://idev.cn/fastexcel/zh-CN/docs/write/write_hard
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
 				// 设置sheet页
@@ -139,10 +156,6 @@ public final class ExcelUtils {
 				}
 				// 刷新数据
 				excelWriter.finish();
-			}
-			catch (Exception e) {
-				log.error("Excel导出失败，错误信息：{}", e.getMessage());
-				throw new SystemException("S_Excel_ExportFailed", "Excel导出失败，系统繁忙", e);
 			}
 		}
 		else {
@@ -264,10 +277,6 @@ public final class ExcelUtils {
 
 		private String getTemplate(int num, String msg) {
 			return String.format("第%s行，%s", num, msg);
-		}
-
-		public Class<?>[] getGroups() {
-			return groups;
 		}
 
 	}

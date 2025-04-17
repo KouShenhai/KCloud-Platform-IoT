@@ -25,6 +25,7 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -62,7 +63,7 @@ final class UserDetailsServiceImpl implements UserDetailsService {
 			auth.createUserByAuthorizationCode();
 			return (UserDetails) authProcessor.authenticationToken(auth, request).getPrincipal();
 		}
-		catch (BizException e) {
+		catch (GlobalException e) {
 			throw new UsernameNotFoundException(e.getMsg(), e);
 		}
 		catch (Exception e) {

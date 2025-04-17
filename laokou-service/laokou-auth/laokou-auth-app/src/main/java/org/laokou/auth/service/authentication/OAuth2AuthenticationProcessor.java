@@ -34,8 +34,7 @@ import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
-import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.common.exception.ParamException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.rocketmq.template.SendMessageTypeEnum;
 import org.laokou.common.security.util.UserDetails;
@@ -78,7 +77,7 @@ final class OAuth2AuthenticationProcessor {
 			return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getUsername(),
 					userDetails.getAuthorities());
 		}
-		catch (ParamException | BizException e) {
+		catch (GlobalException e) {
 			// 记录日志
 			auth.recordLog(eventId, e);
 			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端

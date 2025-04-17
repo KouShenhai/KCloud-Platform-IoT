@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.util.*;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -169,8 +170,13 @@ public class OperateLogE {
 
 	public void getThrowable(Throwable throwable) {
 		if (ObjectUtils.isNotNull(throwable)) {
+			if (throwable instanceof GlobalException globalException) {
+				this.errorMessage = globalException.getMsg();
+			}
+			else {
+				this.errorMessage = throwable.getMessage();
+			}
 			this.stackTrace = getStackTraceAsString(throwable);
-			this.errorMessage = throwable.getMessage();
 			this.status = StatusEnum.FAIL.getCode();
 		}
 		else {

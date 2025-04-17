@@ -1,0 +1,43 @@
+jasypt:
+  encryptor:
+    password: laokou
+
+server:
+  port: 8095
+
+spring:
+  application:
+    name: laokou-common-excel
+  profiles:
+    active: test
+  threads:
+    virtual:
+      enabled: true
+  task-execution:
+    pool:
+      core-pool-size: 32
+      max-pool-size: 64
+      keep-alive: 60s
+      thread-priority: 10
+      allow-core-thread-timeout: false
+      queue-capacity: 500
+  datasource:
+    dynamic:
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://postgresql:5432/kcloud_platform_test?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
+          password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: false
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl

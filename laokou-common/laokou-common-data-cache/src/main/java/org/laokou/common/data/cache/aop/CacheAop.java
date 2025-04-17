@@ -25,8 +25,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.util.SpringExpressionUtils;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.constant.TypeEnum;
-import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.common.exception.ParamException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +63,7 @@ public class CacheAop {
 	private CacheManager caffineCacheManager;
 
 	@Around("@annotation(dataCache)")
-	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) throws InterruptedException {
+	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		String[] parameterNames = signature.getParameterNames();
 		TypeEnum typeEnum = dataCache.type();
@@ -103,7 +102,7 @@ public class CacheAop {
 			}
 			return point.proceed();
 		}
-		catch (SystemException | BizException | ParamException e) {
+		catch (GlobalException e) {
 			// 系统异常/业务异常/参数异常直接捕获并抛出
 			throw e;
 		}
@@ -118,7 +117,7 @@ public class CacheAop {
 		}
 	}
 
-	private Object del(String name, String key, ProceedingJoinPoint point) throws InterruptedException {
+	private Object del(String name, String key, ProceedingJoinPoint point) {
 		boolean isLocked = false;
 		int retry = 3;
 		try {
@@ -134,7 +133,7 @@ public class CacheAop {
 			}
 			return point.proceed();
 		}
-		catch (SystemException | BizException | ParamException e) {
+		catch (GlobalException e) {
 			// 系统异常/业务异常/参数异常直接捕获并抛出
 			throw e;
 		}
