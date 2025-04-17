@@ -67,7 +67,7 @@
     <spring-boot-maven-plugin.version>3.4.4</spring-boot-maven-plugin.version>
     <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
     <!--spring-boot版本-->
-    <spring-boot.version>3.5.0-M3</spring-boot.version>
+    <spring-boot.version>3.5.0-SNAPSHOT</spring-boot.version>
     <!--spring-cloud版本-->
     <spring-cloud.version>2025.0.0-M2</spring-cloud.version>
     <!--spring-framework版本-->
