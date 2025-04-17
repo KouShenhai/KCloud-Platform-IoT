@@ -71,7 +71,7 @@
     <!--spring-cloud版本-->
     <spring-cloud.version>2025.0.0-M3</spring-cloud.version>
     <!--spring-framework版本-->
-    <spring-framework.version>6.2.5</spring-framework.version>
+    <spring-framework.version>6.2.6</spring-framework.version>
     <!--cloud-alibaba版本-->
     <spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
     <!--springdoc-openapi版本-->
