@@ -19,6 +19,7 @@ package org.laokou.common.excel;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.laokou.common.core.annotation.EnableTaskExecutor;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -30,6 +31,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableTaskExecutor
 @EnableEncryptableProperties
 @EnableConfigurationProperties
+@MapperScan(basePackages = "org.laokou.common.excel")
 @SpringBootApplication(scanBasePackages = "org.laokou")
 class AppTest {
 

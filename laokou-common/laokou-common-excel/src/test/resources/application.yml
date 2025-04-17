@@ -37,7 +37,7 @@ mybatis-plus:
     db-config:
       column-format: "\"%s\""
   tenant:
-    enabled: false
+    enabled: true
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl

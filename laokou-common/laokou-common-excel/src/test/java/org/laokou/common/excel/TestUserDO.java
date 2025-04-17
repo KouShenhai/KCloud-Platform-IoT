@@ -21,23 +21,21 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
 
-import java.io.Serializable;
 
 /**
  * @author laokou
  */
 @Data
 @TableName("t_user")
-class TestUser implements Serializable {
-
-	private Long id;
+class TestUserDO extends BaseDO {
 
 	private String name;
 
 	@Test
 	void test() {
-		TestUser user = new TestUser();
+		TestUserDO user = new TestUserDO();
 		user.setId(1L);
 		Assertions.assertEquals(1L, user.getId());
 	}
