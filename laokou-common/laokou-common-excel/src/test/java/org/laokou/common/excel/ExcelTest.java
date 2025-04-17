@@ -20,12 +20,19 @@ package org.laokou.common.excel;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.excel.util.ExcelUtils;
+import org.laokou.common.i18n.dto.PageQuery;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -38,12 +45,18 @@ class ExcelTest {
 
 	private final TestUserMapper testUserMapper;
 
+	private final ExecutorService virtualThreadExecutor;
+
 	@Test
-	void testExport() {
+	void testExport() throws IOException, InterruptedException {
 		Assertions.assertNotNull(testUserMapper);
-		List<TestUser> list = testUserMapper.selectList(Wrappers.emptyWrapper());
-		Assertions.assertEquals(1, list.size());
-		Assertions.assertTrue(list.stream().map(TestUser::getName).toList().contains("老寇"));
+		List<TestUserDO> list = testUserMapper.selectList(Wrappers.emptyWrapper());
+		Assertions.assertFalse(list.isEmpty());
+		Assertions.assertTrue(list.stream().map(TestUserDO::getName).toList().contains("老寇"));
+		ExcelUtils.doExport("测试用户Sheet页", 1000, new FileOutputStream("test.xlsx"), new PageQuery(), testUserMapper,
+				TestUserExcel.class, TestUserConvertor.INSTANCE, virtualThreadExecutor);
+		Thread.sleep(1000);
+		FileUtils.forceDeleteOnExit(new File("test.xlsx"));
 	}
 
 }

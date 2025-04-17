@@ -44,7 +44,8 @@ public class TraceLogHandler {
 	public Flux<Void> consumeMessages() {
 		return reactiveKafkaReceiver.receiveBatch(1000)
 			// 控制消费速率（背压）
-			.delayElements(Duration.ofMillis(100))
+			.delayElements(Duration.ofMillis(10))
+			.onBackpressureDrop()
 			.flatMap(records -> traceLogServiceI.save(new TraceLogSaveCmd(
 					records.doOnNext(record -> record.receiverOffset().acknowledge()).map(ConsumerRecord::value))))
 			.onErrorResume(e -> {
