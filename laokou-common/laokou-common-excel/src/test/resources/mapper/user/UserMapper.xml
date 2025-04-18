@@ -28,4 +28,13 @@
    select id, "name" from t_user
   </select>
 
+  <delete id="deleteUser">
+    delete
+    from t_user
+    where id in
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+
 </mapper>

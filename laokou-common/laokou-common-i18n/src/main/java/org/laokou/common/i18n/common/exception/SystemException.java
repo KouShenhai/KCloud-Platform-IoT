@@ -36,4 +36,8 @@ public final class SystemException extends GlobalException {
 		super(code, msg, throwable);
 	}
 
+	public SystemException(String code, String msg, Object data) {
+		super(code, msg, data);
+	}
+
 }

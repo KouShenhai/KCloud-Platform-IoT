@@ -15,28 +15,22 @@
  *
  */
 
-package org.laokou.common.excel;
+package org.laokou.common.mybatisplus;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
-@Data
-@TableName("t_user")
-class TestUserDO extends BaseDO {
+@Mapper
+@Repository
+interface TestUserMapper extends CrudMapper<Long, Integer, TestUserDO> {
 
-	private String name;
-
-	@Test
-	void test() {
-		TestUserDO user = new TestUserDO();
-		user.setId(1L);
-		Assertions.assertEquals(1L, user.getId());
-	}
+	int deleteUser(@Param("ids") List<Long> ids);
 
 }

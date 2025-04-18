@@ -20,19 +20,22 @@ package org.laokou.common.excel;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.excel.util.ExcelUtils;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
-
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -47,16 +50,34 @@ class ExcelTest {
 
 	private final ExecutorService virtualThreadExecutor;
 
+	private final MybatisUtils mybatisUtils;
+
 	@Test
-	void testExport() throws IOException, InterruptedException {
+	void testExport() throws IOException {
 		Assertions.assertNotNull(testUserMapper);
 		List<TestUserDO> list = testUserMapper.selectList(Wrappers.emptyWrapper());
-		Assertions.assertFalse(list.isEmpty());
+		Assertions.assertEquals(1, list.size());
 		Assertions.assertTrue(list.stream().map(TestUserDO::getName).toList().contains("老寇"));
+		ExcelUtils.doImport(EMPTY, TestUserExcel.class, TestUserConvertor.INSTANCE,
+				ResourceUtils.getResource("classpath:test3.xlsx").getInputStream(), TestUserMapper.class,
+				TestUserMapper::insert, mybatisUtils);
+		ExcelUtils.doImport("test", TestUserExcel.class, TestUserConvertor.INSTANCE,
+				ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
+				TestUserMapper::insert, mybatisUtils);
+		ExcelUtils.doImport("test2", TestUserExcel.class, TestUserConvertor.INSTANCE,
+				ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
+				TestUserMapper::insert, mybatisUtils);
+		ExcelUtils.doImport("test3", TestUserExcel.class, TestUserConvertor.INSTANCE,
+				ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
+				TestUserMapper::insert, mybatisUtils);
+		long count = testUserMapper.selectObjectCount(new PageQuery());
+		Assertions.assertEquals(7, count);
 		ExcelUtils.doExport("测试用户Sheet页", 1000, new FileOutputStream("test.xlsx"), new PageQuery(), testUserMapper,
 				TestUserExcel.class, TestUserConvertor.INSTANCE, virtualThreadExecutor);
-		Thread.sleep(1000);
-		FileUtils.forceDeleteOnExit(new File("test.xlsx"));
+		FileUtils.deleteIfExists(Path.of("test.xlsx"));
+		testUserMapper.deleteUser(List.of(2L, 3L, 4L, 5L, 6L, 7L));
+		count = testUserMapper.selectObjectCount(new PageQuery());
+		Assertions.assertEquals(1, count);
 	}
 
 }

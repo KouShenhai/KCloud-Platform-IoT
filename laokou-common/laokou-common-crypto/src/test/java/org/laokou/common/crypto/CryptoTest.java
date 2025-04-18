@@ -46,6 +46,9 @@ class CryptoTest {
 		String encryptUsername = AESUtils.encrypt(USERNAME);
 		String decryptUsername = AESUtils.decrypt(encryptUsername);
 		Assertions.assertEquals(USERNAME, decryptUsername);
+		String encryptPassword = AESUtils.encrypt(PASSWORD);
+		String decryptPassword = AESUtils.decrypt(encryptPassword);
+		Assertions.assertEquals(PASSWORD, decryptPassword);
 	}
 
 }

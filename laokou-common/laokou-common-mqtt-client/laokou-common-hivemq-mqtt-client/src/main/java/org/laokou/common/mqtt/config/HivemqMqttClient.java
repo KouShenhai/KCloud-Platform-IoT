@@ -268,7 +268,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					}
 				})
 				.onBackpressureDrop()
-				.observeOn(Schedulers.from(virtualThreadExecutor))
+				.observeOn(Schedulers.from(virtualThreadExecutor), false, 4096)
 				.doOnError(e -> log.error("【Hivemq】 => MQTT消息处理失败，错误信息：{}", e.getMessage(), e))
 				.subscribeOn(Schedulers.from(virtualThreadExecutor))
 				.subscribe(ack -> {

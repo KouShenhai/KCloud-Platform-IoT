@@ -36,4 +36,8 @@ public final class ParamException extends GlobalException {
 		super(code, msg, throwable);
 	}
 
+	public ParamException(String code, String msg, Object data) {
+		super(code, msg, data);
+	}
+
 }

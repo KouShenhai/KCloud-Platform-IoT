@@ -30,7 +30,15 @@ import org.laokou.common.i18n.common.exception.SystemException;
 @Slf4j
 public class SqlUtils {
 
-	public static Statement parseSql(String sql) {
+	public static String formatSql(String sql) {
+		return parseSql(sql).toString();
+	}
+
+	public static PlainSelect plainSelect(String sql) {
+		return ((Select) parseSql(sql)).getPlainSelect();
+	}
+
+	private static Statement parseSql(String sql) {
 		try {
 			return CCJSqlParserUtil.parse(sql);
 		}
@@ -38,14 +46,6 @@ public class SqlUtils {
 			log.error("SQL解析失败", e);
 			throw new SystemException("S_DS_SqlParseFailed", "SQL解析失败", e);
 		}
-	}
-
-	public static String formatSql(String sql) {
-		return parseSql(sql).toString();
-	}
-
-	public static PlainSelect plainSelect(String sql) {
-		return ((Select) parseSql(sql)).getPlainSelect();
 	}
 
 }

@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 /*
  * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
@@ -14,29 +16,21 @@
  * limitations under the License.
  *
  */
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.laokou.common.mybatisplus.TestUserMapper">
 
-package org.laokou.common.excel;
+  <select id="selectObjectCount" resultType="long">
+    SELECT count(1) from t_user
+  </select>
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
+  <delete id="deleteUser">
+    delete
+    from t_user
+    where id in
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
 
-/**
- * @author laokou
- */
-@Data
-@TableName("t_user")
-class TestUserDO extends BaseDO {
-
-	private String name;
-
-	@Test
-	void test() {
-		TestUserDO user = new TestUserDO();
-		user.setId(1L);
-		Assertions.assertEquals(1L, user.getId());
-	}
-
-}
+</mapper>
