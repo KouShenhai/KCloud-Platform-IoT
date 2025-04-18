@@ -69,7 +69,7 @@ public class MqttClientAutoReconnectImpl implements MqttClientAutoReconnect, Mqt
 	@Override
 	public void onDisconnected(final @NotNull MqttClientDisconnectedContext context) {
 		int num = attempts.incrementAndGet();
-		int maxRetryNum = 5;
+		int maxRetryNum = 10000;
 		if (context.getSource() != MqttDisconnectSource.USER && num <= maxRetryNum) {
 			log.info("连接失败，客户端ID：{}，进行第{}次重连", context.getClientConfig().getClientIdentifier(), num);
 			final MqttClientReconnector reconnector = context.getReconnector();

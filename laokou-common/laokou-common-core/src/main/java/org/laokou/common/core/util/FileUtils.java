@@ -60,6 +60,10 @@ public final class FileUtils {
 		return Files.newBufferedReader(Path.of(path));
 	}
 
+	public static void deleteIfExists(Path path) throws IOException {
+		Files.deleteIfExists(path);
+	}
+
 	/**
 	 * 创建目录及文件.
 	 * @param directory 目录
@@ -199,21 +203,22 @@ public final class FileUtils {
 
 				@NotNull
 				@Override
-				public FileVisitResult visitFile(Path filePath, @NotNull BasicFileAttributes attrs) throws IOException {
+				public FileVisitResult visitFile(@NotNull Path filePath, @NotNull BasicFileAttributes attrs)
+						throws IOException {
 					delete(filePath);
 					return FileVisitResult.CONTINUE;
 				}
 
 				@NotNull
 				@Override
-				public FileVisitResult postVisitDirectory(Path dirPath, IOException exc) throws IOException {
+				public FileVisitResult postVisitDirectory(@NotNull Path dirPath, IOException exc) throws IOException {
 					delete(dirPath);
 					return FileVisitResult.CONTINUE;
 				}
 
 				@NotNull
 				@Override
-				public FileVisitResult visitFileFailed(Path file, @NotNull IOException exc) {
+				public FileVisitResult visitFileFailed(@NotNull Path file, @NotNull IOException exc) {
 					return FileVisitResult.CONTINUE;
 				}
 			});
@@ -236,7 +241,8 @@ public final class FileUtils {
 
 				@NotNull
 				@Override
-				public FileVisitResult visitFile(Path filePath, @NotNull BasicFileAttributes attrs) throws IOException {
+				public FileVisitResult visitFile(@NotNull Path filePath, @NotNull BasicFileAttributes attrs)
+						throws IOException {
 					// 对于每个文件，创建一个 ZipEntry 并写入
 					Path targetPath = sourceDir.relativize(filePath);
 					zos.putNextEntry(new ZipEntry(sourceDir.getFileName() + SLASH + targetPath));
@@ -247,7 +253,7 @@ public final class FileUtils {
 
 				@NotNull
 				@Override
-				public FileVisitResult preVisitDirectory(Path dirPath, @NotNull BasicFileAttributes attrs)
+				public FileVisitResult preVisitDirectory(@NotNull Path dirPath, @NotNull BasicFileAttributes attrs)
 						throws IOException {
 					// 对于每个目录，创建一个 ZipEntry（目录也需要在 ZIP 中存在）
 					Path targetPath = sourceDir.relativize(dirPath);
@@ -258,7 +264,7 @@ public final class FileUtils {
 
 				@NotNull
 				@Override
-				public FileVisitResult visitFileFailed(Path file, @NotNull IOException exc) {
+				public FileVisitResult visitFileFailed(@NotNull Path file, @NotNull IOException exc) {
 					return FileVisitResult.CONTINUE;
 				}
 			});

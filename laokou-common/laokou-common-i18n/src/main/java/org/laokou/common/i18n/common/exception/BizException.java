@@ -36,4 +36,8 @@ public final class BizException extends GlobalException {
 		super(code, msg, throwable);
 	}
 
+	public BizException(String code, String msg, Object data) {
+		super(code, msg, data);
+	}
+
 }

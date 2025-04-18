@@ -15,28 +15,33 @@
  *
  */
 
-package org.laokou.common.excel;
+package org.laokou.common.core;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.core.util.ServerUtils;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestConstructor;
+
+import java.net.UnknownHostException;
 
 /**
  * @author laokou
  */
-@Data
-@TableName("t_user")
-class TestUserDO extends BaseDO {
-
-	private String name;
+@Slf4j
+@SpringBootTest
+@RequiredArgsConstructor
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+class ServerUtilsTest {
 
 	@Test
-	void test() {
-		TestUserDO user = new TestUserDO();
-		user.setId(1L);
-		Assertions.assertEquals(1L, user.getId());
+	void testServerInfo() throws UnknownHostException {
+		ServerUtils.Server serverInfo = ServerUtils.getServerInfo();
+		log.info("获取系统参数：{}", serverInfo);
+		Assertions.assertEquals("Windows 11", serverInfo.getSys().getOsName());
+		Assertions.assertEquals("amd64", serverInfo.getSys().getOsArch());
 	}
 
 }

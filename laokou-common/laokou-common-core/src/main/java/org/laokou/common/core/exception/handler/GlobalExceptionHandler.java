@@ -47,8 +47,8 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(SystemException.class)
 	public Result<?> handle(SystemException ex) {
-		// log.error("系统异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg(), ex);
-		return Result.fail(ex.getCode(), ex.getMsg());
+		// log.error("系统异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg(), ex.getData(), ex);
+		return Result.fail(ex.getCode(), ex.getMsg(), ex.getData());
 	}
 
 	/**
@@ -58,8 +58,8 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(BizException.class)
 	public Result<?> handle(BizException ex) {
-		// log.error("业务异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg(), ex);
-		return Result.fail(ex.getCode(), ex.getMsg());
+		// log.error("业务异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg(), ex.getData(), ex);
+		return Result.fail(ex.getCode(), ex.getMsg(), ex.getData());
 	}
 
 	/**
@@ -69,8 +69,8 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(ParamException.class)
 	public Result<?> handle(ParamException ex) {
-		// log.error("参数异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg(), ex);
-		return Result.fail(ex.getCode(), ex.getMsg());
+		// log.error("参数异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg(), ex.getData(), ex);
+		return Result.fail(ex.getCode(), ex.getMsg(), ex.getData());
 	}
 
 	/**

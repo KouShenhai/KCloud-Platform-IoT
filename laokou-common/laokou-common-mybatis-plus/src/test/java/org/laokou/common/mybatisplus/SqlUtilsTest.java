@@ -15,28 +15,25 @@
  *
  */
 
-package org.laokou.common.excel;
+package org.laokou.common.mybatisplus;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
+import net.sf.jsqlparser.statement.select.PlainSelect;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.mybatisplus.util.SqlUtils;
 
 /**
  * @author laokou
  */
-@Data
-@TableName("t_user")
-class TestUserDO extends BaseDO {
-
-	private String name;
+class SqlUtilsTest {
 
 	@Test
 	void test() {
-		TestUserDO user = new TestUserDO();
-		user.setId(1L);
-		Assertions.assertEquals(1L, user.getId());
+		String sql = "select * from t_user \nwhere id = 1";
+		PlainSelect plainSelect = SqlUtils.plainSelect(sql);
+		Assertions.assertEquals("t_user", plainSelect.getFromItem().toString());
+		Assertions.assertEquals("id = 1", plainSelect.getWhere().toString());
+		Assertions.assertEquals("SELECT * FROM t_user WHERE id = 1", SqlUtils.formatSql(sql));
 	}
 
 }

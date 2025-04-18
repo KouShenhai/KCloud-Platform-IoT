@@ -18,8 +18,11 @@
 package org.laokou.common.excel;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -27,5 +30,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 interface TestUserMapper extends CrudMapper<Long, Integer, TestUserDO> {
+
+	void deleteUser(@Param("ids") List<Long> ids);
 
 }

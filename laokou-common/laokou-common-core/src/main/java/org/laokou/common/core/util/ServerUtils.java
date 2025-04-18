@@ -33,7 +33,7 @@ import java.util.Properties;
 /**
  * @author laokou
  */
-final class ServerUtils {
+public final class ServerUtils {
 
 	private static final long SIZE_1G = 1024 * 1024 * 1024;
 

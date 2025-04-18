@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.excel;
+package org.laokou.common.mybatisplus;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
