@@ -65,15 +65,6 @@ public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 				throw new RuntimeException(e);
 			}
 		}
-		while (true) {
-			try {
-				HivemqMqttClientManager.publish("test-1", "test-topic-1", "laokou".getBytes());
-				Thread.sleep(1);
-			}
-			catch (InterruptedException e) {
-				throw new RuntimeException(e);
-			}
-		}
 	}
 
 }

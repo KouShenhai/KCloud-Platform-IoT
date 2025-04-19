@@ -156,7 +156,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	public void init() {
 		String ip = nacosDiscoveryProperties.getIp();
 		if (com.alibaba.cloud.commons.lang.StringUtils.isNotEmpty(ip)) {
-			ipv6 = RegexUtils.ipRegex(ip) ? nacosDiscoveryProperties.getMetadata().get(IPV6_KEY) : ip;
+			ipv6 = RegexUtils.ipv4Regex(ip) ? nacosDiscoveryProperties.getMetadata().get(IPV6_KEY) : ip;
 		}
 		else {
 			ipv6 = inetIPv6Utils.findIPv6Address();
@@ -172,7 +172,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		if (com.alibaba.cloud.commons.lang.StringUtils.isNotEmpty(ipv6)) {
 			List<ServiceInstance> ipv6InstanceList = new ArrayList<>();
 			for (ServiceInstance instance : instances) {
-				if (RegexUtils.ipRegex(instance.getHost())) {
+				if (RegexUtils.ipv4Regex(instance.getHost())) {
 					if (com.alibaba.cloud.commons.lang.StringUtils.isNotEmpty(instance.getMetadata().get(IPV6_KEY))) {
 						ipv6InstanceList.add(instance);
 					}
@@ -184,7 +184,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			// Provider has no IPv6, should use IPv4.
 			if (ipv6InstanceList.isEmpty()) {
 				return instances.stream()
-					.filter(instance -> RegexUtils.ipRegex(instance.getHost()))
+					.filter(instance -> RegexUtils.ipv4Regex(instance.getHost()))
 					.collect(Collectors.toList());
 			}
 			else {
@@ -192,7 +192,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			}
 		}
 		return instances.stream()
-			.filter(instance -> RegexUtils.ipRegex(instance.getHost()))
+			.filter(instance -> RegexUtils.ipv4Regex(instance.getHost()))
 			.collect(Collectors.toList());
 	}
 
