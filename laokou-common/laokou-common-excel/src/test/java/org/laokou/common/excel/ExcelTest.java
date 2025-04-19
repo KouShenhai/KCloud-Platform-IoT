@@ -33,7 +33,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
@@ -47,8 +46,6 @@ import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 class ExcelTest {
 
 	private final TestUserMapper testUserMapper;
-
-	private final ExecutorService virtualThreadExecutor;
 
 	private final MybatisUtils mybatisUtils;
 
@@ -73,7 +70,7 @@ class ExcelTest {
 		long count = testUserMapper.selectObjectCount(new PageQuery());
 		Assertions.assertEquals(7, count);
 		ExcelUtils.doExport("测试用户Sheet页", 1000, new FileOutputStream("test.xlsx"), new PageQuery(), testUserMapper,
-				TestUserExcel.class, TestUserConvertor.INSTANCE, virtualThreadExecutor);
+				TestUserExcel.class, TestUserConvertor.INSTANCE);
 		FileUtils.deleteIfExists(Path.of("test.xlsx"));
 		testUserMapper.deleteUser(List.of(2L, 3L, 4L, 5L, 6L, 7L));
 		count = testUserMapper.selectObjectCount(new PageQuery());
