@@ -17,19 +17,28 @@
 
 package org.laokou.common.core;
 
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.util.JacksonUtils;
-import org.springframework.context.event.EventListener;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.core.util.RequestUtils;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestConstructor;
 
 /**
  * @author laokou
  */
-@Slf4j
-class TestEventListener {
+@SpringBootTest
+@RequiredArgsConstructor
+@ContextConfiguration(classes = { RequestUtils.class })
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+class RequestUtilsTest {
 
-	@EventListener
-	public void onEvent(TestEvent event) {
-		log.info("接收事件：{}", JacksonUtils.toJsonStr(event));
+	@Test
+	void test() {
+		HttpServletRequest request = RequestUtils.getHttpServletRequest();
+		Assertions.assertNotNull(request);
 	}
 
 }

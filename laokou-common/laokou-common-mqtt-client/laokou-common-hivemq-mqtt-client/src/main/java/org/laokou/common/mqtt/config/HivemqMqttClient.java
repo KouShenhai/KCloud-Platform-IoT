@@ -42,6 +42,7 @@ import org.laokou.common.mqtt.client.handler.MessageHandler;
 import org.laokou.common.mqtt.client.handler.event.CloseEvent;
 import org.laokou.common.mqtt.client.handler.event.OpenEvent;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
@@ -61,7 +62,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	private final Object lock = new Object();
 
-	private final List<Disposable> disposables = new ArrayList<>(5);
+	private final List<Disposable> disposableList = new CopyOnWriteArrayList<>();
 
 	public HivemqMqttClient(MqttClientProperties mqttClientProperties, List<MessageHandler> messageHandlers) {
 		this.mqttClientProperties = mqttClientProperties;
@@ -87,7 +88,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				.doOnError(e -> log.error("【Hivemq】 => MQTT断开连接失败，错误信息：{}", e.getMessage(), e))
 				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
 				.subscribe();
-			disposables.add(disposable);
+			disposableList.add(disposable);
 		}
 	}
 
@@ -108,7 +109,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				}, e -> {
 					throw new SystemException("S_Mqtt_UnSubscribeError", e.getMessage(), e);
 				});
-			disposables.add(disposable);
+			disposableList.add(disposable);
 		}
 	}
 
@@ -132,7 +133,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				}, e -> {
 					throw new SystemException("S_Mqtt_PublishError", e.getMessage(), e);
 				});
-			disposables.add(disposable);
+			disposableList.add(disposable);
 		}
 	}
 
@@ -175,12 +176,13 @@ public class HivemqMqttClient extends AbstractMqttClient {
 	}
 
 	public void dispose() {
-		disposables.forEach(disposable -> {
+		disposableList.forEach(disposable -> {
 			if (ObjectUtils.isNotNull(disposable) && !disposable.isDisposed()) {
 				// 显式取消订阅
 				disposable.dispose();
 			}
 		});
+		disposableList.clear();
 	}
 
 	private MqttQos getMqttQos(int qos) {
@@ -226,7 +228,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			}, e -> {
 				throw new SystemException("S_Mqtt_ConnectFailed", e.getMessage(), e);
 			});
-		disposables.add(disposable);
+		disposableList.add(disposable);
 	}
 
 	private void subscribe() {
@@ -271,7 +273,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				}, e -> {
 					throw new SystemException("S_Mqtt_ConsumeError", e.getMessage(), e);
 				});
-			disposables.add(disposable);
+			disposableList.add(disposable);
 		}
 	}
 
