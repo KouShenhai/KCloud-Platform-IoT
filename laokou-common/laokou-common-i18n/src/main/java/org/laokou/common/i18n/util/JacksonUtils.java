@@ -18,7 +18,6 @@
 package org.laokou.common.i18n.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +29,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+
+import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
+import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
 
 /**
  * Jackson工具类.
@@ -55,7 +57,8 @@ public final class JacksonUtils {
 	private static ObjectMapper getMapper() {
 		return new ObjectMapper()
 			// 没有的属性不报错
-			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+			.configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
+			.configure(FAIL_ON_EMPTY_BEANS, false)
 			.registerModule(new JavaTimeModule());
 	}
 
