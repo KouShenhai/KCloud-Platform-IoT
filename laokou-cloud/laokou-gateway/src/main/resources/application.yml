@@ -66,15 +66,6 @@ spring:
       max-parts: -1
       max-disk-usage-per-part: -1
       max-in-memory-size: 4096
-  # task
-  task-execution:
-    pool:
-      core-pool-size: 32
-      max-pool-size: 64
-      keep-alive: 60s
-      thread-priority: 10
-      allow-core-thread-timeout: false
-      queue-capacity: 500
   # security
   security:
     oauth2:

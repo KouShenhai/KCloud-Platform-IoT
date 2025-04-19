@@ -29,7 +29,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -41,8 +40,6 @@ import java.util.concurrent.ExecutorService;
 public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 
 	private final List<MessageHandler> messageHandlers;
-
-	private final ExecutorService virtualThreadExecutor;
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -58,7 +55,7 @@ public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 			properties.setPassword("laokou123");
 			properties.setClientId("test-" + i);
 			properties.setTopics(Set.of("test-topic-" + i));
-			HivemqMqttClientManager.add(properties.getClientId(), properties, messageHandlers, virtualThreadExecutor);
+			HivemqMqttClientManager.add(properties.getClientId(), properties, messageHandlers);
 			// 启动MQTT客户端
 			HivemqMqttClientManager.publishOpenEvent(properties.getClientId());
 			try {
@@ -67,7 +64,15 @@ public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 			catch (InterruptedException e) {
 				throw new RuntimeException(e);
 			}
-			// HivemqMqttClientManager.publishCloseEvent(properties.getClientId());
+		}
+		while (true) {
+			try {
+				HivemqMqttClientManager.publish("test-1", "test-topic-1", "laokou".getBytes());
+				Thread.sleep(1);
+			}
+			catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
 		}
 	}
 

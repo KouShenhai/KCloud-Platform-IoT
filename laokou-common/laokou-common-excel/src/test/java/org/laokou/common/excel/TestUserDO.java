@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
-
 /**
  * @author laokou
  */

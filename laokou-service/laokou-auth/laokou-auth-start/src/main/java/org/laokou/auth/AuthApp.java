@@ -19,7 +19,6 @@ package org.laokou.auth;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnableNacosShutDown;
@@ -51,7 +50,6 @@ import java.security.NoSuchAlgorithmException;
 @EnableRouter
 @EnableWarmUp
 @EnableScheduling
-@EnableTaskExecutor
 @EnableNacosShutDown
 @EnableRedisRepository
 @EnableDiscoveryClient

@@ -15,20 +15,20 @@
  *
  */
 
-package org.laokou.common.core.annotation;
+package org.laokou.common.graalvmjs.config;
 
-import org.laokou.common.core.config.AsyncConfig;
-import org.laokou.common.core.config.SpringTaskExecutorConfig;
-import org.springframework.context.annotation.Import;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import java.lang.annotation.*;
+/**
+ * @author laokou
+ */
+@Configuration
+public class GraalvmJsConfig {
 
-@Documented
-@EnableAsync
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({ SpringTaskExecutorConfig.class, AsyncConfig.class })
-public @interface EnableTaskExecutor {
+	@Bean(initMethod = "init", destroyMethod = "close")
+	public Executor jsExecutor() {
+		return new JsExecutor();
+	}
 
 }

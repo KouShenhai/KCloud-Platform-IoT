@@ -25,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.dto.Page;
@@ -47,7 +46,6 @@ import java.util.concurrent.Executors;
  */
 @Slf4j
 @SpringBootTest
-@EnableTaskExecutor
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class Elasticsearch8ApiTest {

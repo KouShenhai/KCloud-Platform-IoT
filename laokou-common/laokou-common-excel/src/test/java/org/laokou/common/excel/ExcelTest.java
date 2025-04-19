@@ -32,7 +32,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -45,8 +44,6 @@ class ExcelTest {
 
 	private final TestUserMapper testUserMapper;
 
-	private final ExecutorService virtualThreadExecutor;
-
 	@Test
 	void testExport() throws IOException, InterruptedException {
 		Assertions.assertNotNull(testUserMapper);
@@ -54,7 +51,7 @@ class ExcelTest {
 		Assertions.assertFalse(list.isEmpty());
 		Assertions.assertTrue(list.stream().map(TestUserDO::getName).toList().contains("老寇"));
 		ExcelUtils.doExport("测试用户Sheet页", 1000, new FileOutputStream("test.xlsx"), new PageQuery(), testUserMapper,
-				TestUserExcel.class, TestUserConvertor.INSTANCE, virtualThreadExecutor);
+				TestUserExcel.class, TestUserConvertor.INSTANCE);
 		Thread.sleep(1000);
 		FileUtils.forceDeleteOnExit(new File("test.xlsx"));
 	}

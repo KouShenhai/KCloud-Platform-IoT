@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.dto.clientobject.CaptchaCO;
-import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.core.util.*;
 import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.i18n.util.DateUtils;
@@ -47,7 +46,6 @@ import org.springframework.web.client.RestClient;
 import java.net.URI;
 import java.util.Collections;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -61,7 +59,6 @@ import static org.springframework.http.HttpMethod.POST;
  */
 @Slf4j
 @SpringBootTest
-@EnableTaskExecutor
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class OAuth2ApiTest {
@@ -129,9 +126,8 @@ class OAuth2ApiTest {
 	@Test
 	void testTtlMDC() {
 		MDCUtils.put("111", "222");
-		try (ExecutorService executor = ThreadUtils.newTtlVirtualTaskExecutor()) {
-			executor.execute(() -> log.info("TraceId：{}，SpanId：{}", MDCUtils.getSpanId(), MDCUtils.getSpanId()));
-		}
+		ThreadUtils.newTtlVirtualTaskExecutor()
+			.execute(() -> log.info("TraceId：{}，SpanId：{}", MDCUtils.getSpanId(), MDCUtils.getSpanId()));
 	}
 
 	@Test

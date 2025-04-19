@@ -17,7 +17,6 @@
 
 package org.laokou.start;
 
-import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.netty.annotation.EnableTcpServer;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,7 +32,6 @@ import java.net.UnknownHostException;
  * @author laokou
  */
 @EnableTcpServer
-@EnableTaskExecutor
 @EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
 public class TcpSampleApp {

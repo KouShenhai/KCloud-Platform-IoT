@@ -36,7 +36,6 @@ import org.springframework.test.context.TestConstructor;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -164,16 +163,14 @@ class TableTest {
 
 	private void generateCode(String sourceName, String version, String author, String tablePrefix, String moduleName,
 			String packageName, Set<String> tableNames, App app) {
-		try (ExecutorService executor = ThreadUtils.newVirtualTaskExecutor()) {
-			tableNames.stream().map(item -> CompletableFuture.runAsync(() -> {
-				TableE tableE = new TableE(item, tablePrefix, sourceName);
-				GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE, app);
-				// 已注释代码生成【跑CI已注释】
-				// 已注释代码生成【跑CI已注释】
-				// 已注释代码生成【跑CI已注释】
-				// generatorDomainService.generateCode(generatorA);
-			}, executor)).forEach(CompletableFuture::join);
-		}
+		tableNames.stream().map(item -> CompletableFuture.runAsync(() -> {
+			TableE tableE = new TableE(item, tablePrefix, sourceName);
+			GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE, app);
+			// 已注释代码生成【跑CI已注释】
+			// 已注释代码生成【跑CI已注释】
+			// 已注释代码生成【跑CI已注释】
+			// generatorDomainService.generateCode(generatorA);
+		}, ThreadUtils.newVirtualTaskExecutor())).forEach(CompletableFuture::join);
 	}
 
 }

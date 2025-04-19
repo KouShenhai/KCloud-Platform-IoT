@@ -29,6 +29,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.core.util.ResponseUtils;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.excel.validator.ExcelValidator;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -52,7 +53,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
 import java.util.function.BiConsumer;
 
 import static org.laokou.common.i18n.common.constant.StringConstants.DROP;
@@ -94,19 +94,18 @@ public final class ExcelUtils {
 
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, String sheetName,
 			HttpServletResponse response, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper,
-			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor, ExecutorService virtualThreadExecutor) {
-		doExport(fileName, sheetName, BATCH_SIZE, response, pageQuery, crudMapper, clazz, convertor,
-				virtualThreadExecutor);
+			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor) {
+		doExport(fileName, sheetName, BATCH_SIZE, response, pageQuery, crudMapper, clazz, convertor);
 	}
 
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, String sheetName, int size,
 			HttpServletResponse response, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper,
-			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor, ExecutorService virtualThreadExecutor) {
+			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor) {
 		// 设置请求头
 		setHeader(fileName, response);
 		// 写入数据
 		try (ServletOutputStream outputStream = response.getOutputStream()) {
-			doExport(sheetName, size, outputStream, pageQuery, crudMapper, clazz, convertor, virtualThreadExecutor);
+			doExport(sheetName, size, outputStream, pageQuery, crudMapper, clazz, convertor);
 		}
 		catch (GlobalException e) {
 			throw e;
@@ -119,7 +118,7 @@ public final class ExcelUtils {
 
 	public static <EXCEL, DO extends BaseDO> void doExport(String sheetName, int size, OutputStream out,
 			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
-			ExcelConvertor<DO, EXCEL> convertor, ExecutorService virtualThreadExecutor) {
+			ExcelConvertor<DO, EXCEL> convertor) {
 		if (crudMapper.selectObjectCount(pageQuery) > 0) {
 			try (ExcelWriter excelWriter = FastExcel.write(out, clazz).build()) {
 				// https://idev.cn/fastexcel/zh-CN/docs/write/write_hard
@@ -137,7 +136,7 @@ public final class ExcelUtils {
 								excelWriter.write(convertor.toExcels(list), writeSheet);
 								return true;
 							}).toList();
-							virtualThreadExecutor.invokeAll(futures);
+							ThreadUtils.newVirtualTaskExecutor().invokeAll(futures);
 						}
 						catch (InterruptedException e) {
 							Thread.currentThread().interrupt();

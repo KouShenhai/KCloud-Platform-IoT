@@ -17,7 +17,6 @@
 
 package org.laokou.start;
 
-import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.i18n.util.SslUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
@@ -34,7 +33,6 @@ import java.security.NoSuchAlgorithmException;
 /**
  * @author laokou
  */
-@EnableTaskExecutor
 @EnableConfigurationProperties
 @EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = { "org.laokou" })

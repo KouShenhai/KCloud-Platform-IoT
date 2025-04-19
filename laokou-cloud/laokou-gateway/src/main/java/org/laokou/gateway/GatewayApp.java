@@ -20,8 +20,8 @@ package org.laokou.gateway;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.laokou.common.core.util.SpringEventBus;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnableNacosShutDown;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
@@ -46,7 +46,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.ExecutorService;
 
 /**
  * 网关服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
@@ -54,7 +53,6 @@ import java.util.concurrent.ExecutorService;
  * @author laokou
  */
 @Slf4j
-@EnableTaskExecutor
 @EnableNacosShutDown
 @EnableDiscoveryClient
 @EnableEncryptableProperties
@@ -67,8 +65,6 @@ import java.util.concurrent.ExecutorService;
 public class GatewayApp implements CommandLineRunner {
 
 	private final NacosRouteDefinitionRepository nacosRouteDefinitionRepository;
-
-	private final ExecutorService virtualThreadExecutor;
 
 	// @formatter:off
     /// ```properties
@@ -106,7 +102,7 @@ public class GatewayApp implements CommandLineRunner {
 
 	private void syncRouters() {
 		// 删除路由
-		Disposable disposable1 = nacosRouteDefinitionRepository.removeRouters().subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor)).subscribe(delFlag -> {
+		Disposable disposable1 = nacosRouteDefinitionRepository.removeRouters().subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor())).subscribe(delFlag -> {
 			if (delFlag) {
 				log.info("删除路由成功");
 			} else {
@@ -114,7 +110,7 @@ public class GatewayApp implements CommandLineRunner {
 			}
 		});
 		// 保存路由
-		Disposable disposable2 = nacosRouteDefinitionRepository.saveRouters().subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor)).subscribe(saveFlag -> {
+		Disposable disposable2 = nacosRouteDefinitionRepository.saveRouters().subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor())).subscribe(saveFlag -> {
 			if (saveFlag) {
 				log.info("保存路由成功");
 			} else {

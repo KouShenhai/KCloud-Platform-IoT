@@ -27,9 +27,6 @@ import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.excel.util.ExcelUtils;
 import org.laokou.common.log.mapper.OperateLogMapper;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.ExecutorService;
-
 import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
@@ -41,8 +38,6 @@ import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 @RequiredArgsConstructor
 public class OperateLogExportCmdExe {
 
-	private final ExecutorService virtualThreadExecutor;
-
 	private final OperateLogMapper operateLogMapper;
 
 	@CommandLog
@@ -50,7 +45,7 @@ public class OperateLogExportCmdExe {
 		try {
 			DynamicDataSourceContextHolder.push(DOMAIN);
 			ExcelUtils.doExport("操作日志", "操作日志", ResponseUtils.getHttpServletResponse(), cmd, operateLogMapper,
-					OperateLogExcel.class, OperateLogConvertor.INSTANCE, virtualThreadExecutor);
+					OperateLogExcel.class, OperateLogConvertor.INSTANCE);
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

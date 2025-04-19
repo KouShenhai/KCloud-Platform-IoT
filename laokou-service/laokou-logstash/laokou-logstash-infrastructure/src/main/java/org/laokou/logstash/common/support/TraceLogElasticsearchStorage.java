@@ -19,6 +19,7 @@ package org.laokou.logstash.common.support;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.MapUtils;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.lock.support.IdentifierGenerator;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
@@ -27,21 +28,17 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
 public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 
-	private final ExecutorService virtualThreadExecutor;
-
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	public TraceLogElasticsearchStorage(IdentifierGenerator distributedIdentifierGenerator,
-			ExecutorService virtualThreadExecutor, ElasticsearchTemplate elasticsearchTemplate) {
+			ElasticsearchTemplate elasticsearchTemplate) {
 		super(distributedIdentifierGenerator);
-		this.virtualThreadExecutor = virtualThreadExecutor;
 		this.elasticsearchTemplate = elasticsearchTemplate;
 	}
 
@@ -56,10 +53,15 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 			if (MapUtils.isEmpty(dataMap)) {
 				return Mono.empty();
 			}
-			return Mono.fromFuture(elasticsearchTemplate
-				.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, virtualThreadExecutor)
-				.thenComposeAsync(result -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap,
-						virtualThreadExecutor), virtualThreadExecutor));
+			return Mono
+				.fromFuture(
+						elasticsearchTemplate
+							.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class,
+									ThreadUtils.newVirtualTaskExecutor())
+							.thenComposeAsync(
+									result -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap,
+											ThreadUtils.newVirtualTaskExecutor()),
+									ThreadUtils.newVirtualTaskExecutor()));
 		}).onErrorResume(e -> {
 			log.error("分布式链路写入失败，错误信息：{}", e.getMessage(), e);
 			return Mono.error(e);

@@ -23,13 +23,13 @@ import org.laokou.admin.user.gateway.UserGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
+import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import java.util.Arrays;
-import java.util.concurrent.ExecutorService;
 
 /**
  * 用户网关实现.
@@ -43,8 +43,6 @@ public class UserGatewayImpl implements UserGateway {
 	private final PasswordEncoder passwordEncoder;
 
 	private final UserMapper userMapper;
-
-	private final ExecutorService virtualThreadExecutor;
 
 	@Override
 	public void create(UserE userE) {
@@ -62,7 +60,7 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	public Mono<Void> delete(Long[] ids) {
 		return Mono.fromCallable(() -> userMapper.deleteByIds(Arrays.asList(ids)))
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()))
 			.then();
 	}
 

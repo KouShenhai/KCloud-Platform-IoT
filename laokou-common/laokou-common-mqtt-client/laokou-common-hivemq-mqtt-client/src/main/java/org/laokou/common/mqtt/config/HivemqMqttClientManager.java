@@ -25,7 +25,6 @@ import org.laokou.common.mqtt.client.handler.MessageHandler;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -46,10 +45,8 @@ public class HivemqMqttClientManager {
 		HIVE_MQTT_CLIENT_MAP.remove(clientId);
 	}
 
-	public static void add(String clientId, MqttClientProperties properties, List<MessageHandler> messageHandlers,
-			ExecutorService virtualThreadExecutor) {
-		HIVE_MQTT_CLIENT_MAP.putIfAbsent(clientId,
-				new HivemqMqttClient(properties, messageHandlers, virtualThreadExecutor));
+	public static void add(String clientId, MqttClientProperties properties, List<MessageHandler> messageHandlers) {
+		HIVE_MQTT_CLIENT_MAP.putIfAbsent(clientId, new HivemqMqttClient(properties, messageHandlers));
 	}
 
 	public static void open(String clientId) {

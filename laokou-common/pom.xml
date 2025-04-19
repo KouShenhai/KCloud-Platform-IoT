@@ -92,6 +92,7 @@
     <module>laokou-common-hbase</module>
     <module>laokou-common-plugin</module>
     <module>laokou-common-csv</module>
+    <module>laokou-common-graalvm-js</module>
   </modules>
 
 </project>

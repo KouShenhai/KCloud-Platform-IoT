@@ -15,28 +15,22 @@
  *
  */
 
-package org.laokou.common.core.config;
+package org.laokou.common.graalvmjs;
 
-import org.springframework.lang.NonNull;
-
-import java.util.concurrent.ThreadFactory;
+import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
- * 自定义线程工厂【虚拟】.
- *
  * @author laokou
  */
-public final class VirtualThreadFactory implements ThreadFactory {
+@EnableConfigurationProperties
+@SpringBootApplication(scanBasePackages = "org.laokou")
+class AppTest {
 
-	public static final VirtualThreadFactory INSTANCE = new VirtualThreadFactory();
-
-	@Override
-	public Thread newThread(@NonNull Runnable r) {
-		Thread thread = new Thread(r);
-		return Thread.ofVirtual()
-			.name("laokou-virtual-" + thread.getName())
-			.inheritInheritableThreadLocals(true)
-			.unstarted(r);
+	public static void main(String[] args) {
+		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }

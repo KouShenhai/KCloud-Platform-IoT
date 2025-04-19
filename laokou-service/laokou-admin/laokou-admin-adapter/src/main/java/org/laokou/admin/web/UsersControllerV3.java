@@ -26,6 +26,7 @@ import org.laokou.admin.user.dto.*;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.common.core.util.SpringEventBus;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Page;
@@ -41,7 +42,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.Disposable;
 import reactor.core.scheduler.Schedulers;
-import java.util.concurrent.ExecutorService;
 import static org.laokou.common.data.cache.constant.NameConstants.USERS;
 import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
 
@@ -58,8 +58,6 @@ import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
 public class UsersControllerV3 {
 
 	private final UsersServiceI usersServiceI;
-
-	private final ExecutorService virtualThreadExecutor;
 
 	@Idempotent
 	@PostMapping
@@ -86,7 +84,7 @@ public class UsersControllerV3 {
 	public void removeV3(@RequestBody Long[] ids) {
 		Disposable disposable = usersServiceI.remove(new UserRemoveCmd(ids))
 			.doOnError(e -> log.error("删除用户失败：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()))
 			.subscribe(v -> {
 			}, e -> {
 				throw new BizException("B_User_RemoveFailed", e.getMessage(), e);
@@ -126,7 +124,7 @@ public class UsersControllerV3 {
 	public void modifyAuthorityV3(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {
 		Disposable disposable = usersServiceI.modifyAuthority(cmd)
 			.doOnError(e -> log.error("修改用户权限失败：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()))
 			.subscribe(v -> {
 			}, e -> {
 				throw new BizException("B_User_ModifyAuthorityFailed", e.getMessage(), e);
