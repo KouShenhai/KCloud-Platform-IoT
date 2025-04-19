@@ -60,16 +60,6 @@ public final class ResponseUtils {
 		response(response, str, contentType);
 	}
 
-	private static void response(HttpServletResponse response, String str, String contentType) throws IOException {
-		response.setContentType(contentType);
-		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-		response.setContentLength(str.getBytes(StandardCharsets.UTF_8).length);
-		try (PrintWriter writer = response.getWriter()) {
-			writer.write(str);
-			writer.flush();
-		}
-	}
-
 	/**
 	 * 获取响应对象.
 	 * @return 请求对象
@@ -78,6 +68,16 @@ public final class ResponseUtils {
 		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
 		Assert.notNull(requestAttributes, "requestAttributes not be null");
 		return ((ServletRequestAttributes) requestAttributes).getResponse();
+	}
+
+	private static void response(HttpServletResponse response, String str, String contentType) throws IOException {
+		response.setContentType(contentType);
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+		response.setContentLength(str.getBytes(StandardCharsets.UTF_8).length);
+		try (PrintWriter writer = response.getWriter()) {
+			writer.write(str);
+			writer.flush();
+		}
 	}
 
 }

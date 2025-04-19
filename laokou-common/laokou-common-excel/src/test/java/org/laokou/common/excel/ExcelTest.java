@@ -30,7 +30,6 @@ import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -50,29 +49,29 @@ class ExcelTest {
 	private final MybatisUtils mybatisUtils;
 
 	@Test
-	void testExport() throws IOException {
+	void testExport() {
 		Assertions.assertNotNull(testUserMapper);
 		List<TestUserDO> list = testUserMapper.selectList(Wrappers.emptyWrapper());
 		Assertions.assertEquals(1, list.size());
 		Assertions.assertTrue(list.stream().map(TestUserDO::getName).toList().contains("老寇"));
-		ExcelUtils.doImport(EMPTY, TestUserExcel.class, TestUserConvertor.INSTANCE,
+		Assertions.assertDoesNotThrow(() -> ExcelUtils.doImport(EMPTY, TestUserExcel.class, TestUserConvertor.INSTANCE,
 				ResourceUtils.getResource("classpath:test3.xlsx").getInputStream(), TestUserMapper.class,
-				TestUserMapper::insert, mybatisUtils);
-		ExcelUtils.doImport("test", TestUserExcel.class, TestUserConvertor.INSTANCE,
+				TestUserMapper::insert, mybatisUtils));
+		Assertions.assertDoesNotThrow(() -> ExcelUtils.doImport("test", TestUserExcel.class, TestUserConvertor.INSTANCE,
 				ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
-				TestUserMapper::insert, mybatisUtils);
-		ExcelUtils.doImport("test2", TestUserExcel.class, TestUserConvertor.INSTANCE,
-				ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
-				TestUserMapper::insert, mybatisUtils);
-		ExcelUtils.doImport("test3", TestUserExcel.class, TestUserConvertor.INSTANCE,
-				ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
-				TestUserMapper::insert, mybatisUtils);
+				TestUserMapper::insert, mybatisUtils));
+		Assertions.assertDoesNotThrow(() -> ExcelUtils.doImport("test2", TestUserExcel.class,
+				TestUserConvertor.INSTANCE, ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(),
+				TestUserMapper.class, TestUserMapper::insert, mybatisUtils));
+		Assertions.assertDoesNotThrow(() -> ExcelUtils.doImport("test3", TestUserExcel.class,
+				TestUserConvertor.INSTANCE, ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(),
+				TestUserMapper.class, TestUserMapper::insert, mybatisUtils));
 		long count = testUserMapper.selectObjectCount(new PageQuery());
 		Assertions.assertEquals(7, count);
-		ExcelUtils.doExport("测试用户Sheet页", 1000, new FileOutputStream("test.xlsx"), new PageQuery(), testUserMapper,
-				TestUserExcel.class, TestUserConvertor.INSTANCE);
-		FileUtils.deleteIfExists(Path.of("test.xlsx"));
-		testUserMapper.deleteUser(List.of(2L, 3L, 4L, 5L, 6L, 7L));
+		Assertions.assertDoesNotThrow(() -> ExcelUtils.doExport("测试用户Sheet页", 1000, new FileOutputStream("test.xlsx"),
+				new PageQuery(), testUserMapper, TestUserExcel.class, TestUserConvertor.INSTANCE));
+		Assertions.assertDoesNotThrow(() -> FileUtils.deleteIfExists(Path.of("test.xlsx")));
+		Assertions.assertDoesNotThrow(() -> testUserMapper.deleteUser(List.of(2L, 3L, 4L, 5L, 6L, 7L)));
 		count = testUserMapper.selectObjectCount(new PageQuery());
 		Assertions.assertEquals(1, count);
 	}

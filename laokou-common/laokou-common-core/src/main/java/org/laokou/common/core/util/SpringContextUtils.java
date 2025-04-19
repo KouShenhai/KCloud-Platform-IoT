@@ -136,9 +136,12 @@ public final class SpringContextUtils implements ApplicationContextAware, Dispos
 	 * @param name 名称
 	 * @param <T> 泛型
 	 */
-	public static <T> void registerBean(Class<T> clazz, String name) {
-		BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(clazz);
-		getFactory().registerBeanDefinition(name, beanDefinitionBuilder.getBeanDefinition());
+	public static <T> void registerBean(String name, Class<T> clazz) {
+		DefaultListableBeanFactory beanFactory = getFactory();
+		if (!beanFactory.containsBeanDefinition(name)) {
+			beanFactory.registerBeanDefinition(name,
+					BeanDefinitionBuilder.genericBeanDefinition(clazz).getBeanDefinition());
+		}
 	}
 
 	/**
