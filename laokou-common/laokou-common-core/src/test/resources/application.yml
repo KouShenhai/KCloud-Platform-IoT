@@ -6,3 +6,5 @@ spring:
     name: laokou-common-core
   profiles:
     active: test
+  disruptor:
+    buffer-size: 1024
