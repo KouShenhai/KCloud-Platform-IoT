@@ -34,6 +34,19 @@ public final class RegexUtils {
 	 */
 	private static final String IPV4_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
 
+	// @formatter:off
+	private static final String IPV6_REGEX =
+		"^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|" + 			// 1:2:3:4:5:6:7:8
+		"(([0-9a-fA-F]{1,4}:){1,7}:|" + 						// 1:: 或 1:2:: 至 1:2:3:4:5:6:7::
+		"(([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|" + 		// 1::8 或 1:2:3:4:5:6::8
+		"(([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|" + 	// 1::7:8 或 1:2:3:4:5::8
+		"(([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|" + 	// 1::6:7:8 或 1:2:3:4::8
+		"(([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|" + 	// 1::5:6:7:8 或 1:2:3::8
+		"(([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|" + 	// 1::4:5:6:7:8 或 1:2::8
+		"[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|" + 		// 1::3:4:5:6:7:8 或 ::2:3:4:5:6:7:8
+		":((:[0-9a-fA-F]{1,4}){1,7}|:))))))))$"; 				// ::8 或 ::
+	// @formatter:on
+
 	/**
 	 * 邮箱正则表达式.
 	 */
@@ -62,12 +75,21 @@ public final class RegexUtils {
 	}
 
 	/**
-	 * IP验证.
+	 * IPv4验证.
 	 * @param ip IP地址
 	 * @return IP匹配结果
 	 */
-	public static boolean ipRegex(String ip) {
+	public static boolean ipv4Regex(String ip) {
 		return Pattern.matches(IPV4_REGEX, ip);
+	}
+
+	/**
+	 * IPv6验证.
+	 * @param ip IP地址
+	 * @return IP匹配结果
+	 */
+	public static boolean ipv6Regex(String ip) {
+		return Pattern.matches(IPV6_REGEX, ip);
 	}
 
 	/**
