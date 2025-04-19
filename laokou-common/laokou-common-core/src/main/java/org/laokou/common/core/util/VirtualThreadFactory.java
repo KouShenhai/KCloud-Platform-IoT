@@ -15,39 +15,28 @@
  *
  */
 
-package org.laokou.common.core.config;
+package org.laokou.common.core.util;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.lang.NonNull;
 
-import java.time.Duration;
+import java.util.concurrent.ThreadFactory;
 
 /**
+ * 自定义线程工厂【虚拟】.
+ *
  * @author laokou
  */
-@Data
-@Component
-@ConfigurationProperties(prefix = "spring.task-execution")
-public class SpringTaskExecutionProperties {
+final class VirtualThreadFactory implements ThreadFactory {
 
-	private Pool pool = new Pool();
+	public static final VirtualThreadFactory INSTANCE = new VirtualThreadFactory();
 
-	@Data
-	public static class Pool {
-
-		private int queueCapacity = 200;
-
-		private int corePoolSize = 8;
-
-		private int maxPoolSize = 16;
-
-		private boolean allowCoreThreadTimeout = false;
-
-		private int threadPriority = 5;
-
-		private Duration keepAlive = Duration.ofSeconds(60L);
-
+	@Override
+	public Thread newThread(@NonNull Runnable r) {
+		Thread thread = new Thread(r);
+		return Thread.ofVirtual()
+			.name("laokou-virtual-" + thread.getName())
+			.inheritInheritableThreadLocals(true)
+			.unstarted(r);
 	}
 
 }

@@ -67,7 +67,7 @@ public class MqttClientProperties {
 
 	private int sendTopicAliasMaximum = 64;
 
-	private long messageExpiryInterval = Long.MAX_VALUE;
+	private long messageExpiryInterval = 4294967295L;
 
 	private boolean requestProblemInformation = true;
 
@@ -83,7 +83,7 @@ public class MqttClientProperties {
 	 */
 	private long sessionExpiryInterval = 4294967295L;
 
-	private int keepAliveInterval = 60;
+	private int keepAliveInterval = 3600;
 
 	private boolean automaticReconnect = true;
 

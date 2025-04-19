@@ -33,7 +33,11 @@ public final class CsvUtils {
 	}
 
 	public static void execute(File file, Executor executor) throws IOException {
-		try (CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(file, true)))) {
+		execute(file, executor, true);
+	}
+
+	public static void execute(File file, Executor executor, boolean append) throws IOException {
+		try (CSVWriter csvWriter = new CSVWriter(new BufferedWriter(new FileWriter(file, append)))) {
 			executor.execute(csvWriter);
 		}
 	}

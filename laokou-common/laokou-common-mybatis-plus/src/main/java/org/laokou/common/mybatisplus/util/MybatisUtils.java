@@ -25,6 +25,7 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Component;
@@ -32,11 +33,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
-
 import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 
 /**
@@ -53,8 +52,6 @@ public class MybatisUtils {
 	private static final int DEFAULT_BATCH_SIZE = 10000;
 
 	private final SqlSessionFactory sqlSessionFactory;
-
-	private final ExecutorService virtualThreadExecutor;
 
 	public <DO, MAPPER extends CrudMapper<?, ?, DO>> void batch(List<DO> dataList, int partitionSize, int batchSize,
 			int timeout, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer) {
@@ -97,7 +94,7 @@ public class MybatisUtils {
 					return true;
 				}).toList();
 				// 执行任务
-				virtualThreadExecutor.invokeAll(futures);
+				ThreadUtils.newVirtualTaskExecutor().invokeAll(futures);
 				if (rollback.get()) {
 					throw new SystemException("S_DS_TransactionRolledBack", "事务已回滚");
 				}

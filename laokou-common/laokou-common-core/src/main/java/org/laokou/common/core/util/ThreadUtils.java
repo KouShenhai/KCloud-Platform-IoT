@@ -19,7 +19,6 @@ package org.laokou.common.core.util;
 
 import com.alibaba.ttl.threadpool.TtlExecutors;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.config.VirtualThreadFactory;
 import org.laokou.common.i18n.util.ObjectUtils;
 
 import java.util.concurrent.ExecutorService;

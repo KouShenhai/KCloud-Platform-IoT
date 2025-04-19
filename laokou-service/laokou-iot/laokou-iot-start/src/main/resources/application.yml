@@ -42,14 +42,6 @@ spring:
       enabled: true
   lifecycle:
     timeout-per-shutdown-phase: "2m"
-  task-execution:
-    pool:
-      core-pool-size: 32
-      max-pool-size: 64
-      keep-alive: 60s
-      thread-priority: 10
-      allow-core-thread-timeout: false
-      queue-capacity: 500
   # security
   security:
     oauth2:

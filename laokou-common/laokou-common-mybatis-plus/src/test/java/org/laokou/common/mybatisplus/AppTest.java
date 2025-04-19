@@ -18,7 +18,6 @@
 package org.laokou.common.mybatisplus;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,7 +27,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 /**
  * @author laokou
  */
-@EnableTaskExecutor
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @MapperScan(basePackages = "org.laokou.common.mybatisplus")

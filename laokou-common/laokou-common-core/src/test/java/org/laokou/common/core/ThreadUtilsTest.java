@@ -40,16 +40,14 @@ class ThreadUtilsTest {
 
 	@Test
 	void testNewVirtualTaskExecutor() {
-		try (ExecutorService executorService = ThreadUtils.newVirtualTaskExecutor()) {
-			executorService.execute(() -> Assertions.assertNotNull(executorService));
-		}
+		ExecutorService executorService = ThreadUtils.newVirtualTaskExecutor();
+		executorService.execute(() -> Assertions.assertNotNull(executorService));
 	}
 
 	@Test
 	void testNewTtlVirtualTaskExecutor() {
-		try (ExecutorService executorService = ThreadUtils.newTtlVirtualTaskExecutor()) {
-			executorService.execute(() -> Assertions.assertNotNull(executorService));
-		}
+		ExecutorService executorService = ThreadUtils.newTtlVirtualTaskExecutor();
+		executorService.execute(() -> Assertions.assertNotNull(executorService));
 	}
 
 }

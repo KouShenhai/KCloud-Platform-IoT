@@ -25,6 +25,7 @@ import org.laokou.admin.role.api.RolesServiceI;
 import org.laokou.admin.role.dto.*;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.common.core.util.SpringEventBus;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
@@ -39,7 +40,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.Disposable;
 import reactor.core.scheduler.Schedulers;
-import java.util.concurrent.ExecutorService;
 
 /**
  * 角色管理控制器.
@@ -54,8 +54,6 @@ import java.util.concurrent.ExecutorService;
 public class RolesControllerV3 {
 
 	private final RolesServiceI rolesServiceI;
-
-	private final ExecutorService virtualThreadExecutor;
 
 	@Idempotent
 	@PostMapping
@@ -83,7 +81,7 @@ public class RolesControllerV3 {
 	public void removeV3(@RequestBody Long[] ids) {
 		Disposable disposable = rolesServiceI.remove(new RoleRemoveCmd(ids))
 			.doOnError(e -> log.error("删除角色失败：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()))
 			.subscribe(v -> {
 			}, e -> {
 				throw new BizException("B_Role_RemoveFailed", e.getMessage(), e);
@@ -114,7 +112,7 @@ public class RolesControllerV3 {
 	public void modifyAuthorityV3(@RequestBody RoleModifyAuthorityCmd cmd) throws Exception {
 		Disposable disposable = rolesServiceI.modifyAuthority(cmd)
 			.doOnError(e -> log.error("修改角色权限失败：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()))
 			.subscribe(v -> {
 			}, e -> {
 				throw new BizException("B_Role_ModifyAuthorityFailed", e.getMessage(), e);

@@ -33,7 +33,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -140,8 +139,7 @@ public final class FileUtils {
 		}
 	}
 
-	public static void write(File file, InputStream in, long size, long chunkSize,
-			ExecutorService virtualThreadExecutor) throws IOException {
+	public static void write(File file, InputStream in, long size, long chunkSize) throws IOException {
 		if (in instanceof FileInputStream fis) {
 			// 最大偏移量2G【2^31】数据
 			assert chunkSize > 0L;
@@ -158,7 +156,7 @@ public final class FileUtils {
 						return true;
 					});
 				}
-				virtualThreadExecutor.invokeAll(futures);
+				ThreadUtils.newVirtualTaskExecutor().invokeAll(futures);
 			}
 			catch (InterruptedException e) {
 				Thread.currentThread().interrupt();

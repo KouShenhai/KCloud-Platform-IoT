@@ -24,6 +24,7 @@ import org.laokou.admin.role.gatewayimpl.database.RoleDeptMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -31,7 +32,6 @@ import reactor.core.scheduler.Schedulers;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -43,8 +43,6 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 	private final RoleDeptMapper roleDeptMapper;
 
 	private final MybatisUtils mybatisUtils;
-
-	private final ExecutorService virtualThreadExecutor;
 
 	@Override
 	public Mono<Void> update(RoleE roleE) {
@@ -81,7 +79,7 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 
 	private Mono<List<Long>> getRoleDeptIds(List<Long> roleIds) {
 		return Mono.fromCallable(() -> roleDeptMapper.selectIdsByRoleIds(roleIds))
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
+			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()));
 	}
 
 }

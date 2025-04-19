@@ -32,6 +32,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.SpringEventBus;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.mqtt.client.AbstractMqttClient;
@@ -41,7 +42,6 @@ import org.laokou.common.mqtt.client.handler.MessageHandler;
 import org.laokou.common.mqtt.client.handler.event.CloseEvent;
 import org.laokou.common.mqtt.client.handler.event.OpenEvent;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
@@ -57,24 +57,20 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	private final List<MessageHandler> messageHandlers;
 
-	private final ExecutorService virtualThreadExecutor;
-
 	private volatile Mqtt5RxClient client;
 
-	private final Object LOCK = new Object();
+	private final Object lock = new Object();
 
 	private final List<Disposable> disposables = new ArrayList<>(5);
 
-	public HivemqMqttClient(MqttClientProperties mqttClientProperties, List<MessageHandler> messageHandlers,
-			ExecutorService virtualThreadExecutor) {
+	public HivemqMqttClient(MqttClientProperties mqttClientProperties, List<MessageHandler> messageHandlers) {
 		this.mqttClientProperties = mqttClientProperties;
 		this.messageHandlers = messageHandlers;
-		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
 
 	public void open() {
 		if (ObjectUtils.isNull(client)) {
-			synchronized (LOCK) {
+			synchronized (lock) {
 				if (ObjectUtils.isNull(client)) {
 					connect();
 					subscribe();
@@ -89,7 +85,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				.applyDisconnect()
 				.doOnComplete(() -> log.info("【Hivemq】 => MQTT断开连接成功，客户端ID：{}", mqttClientProperties.getClientId()))
 				.doOnError(e -> log.error("【Hivemq】 => MQTT断开连接失败，错误信息：{}", e.getMessage(), e))
-				.subscribeOn(Schedulers.from(virtualThreadExecutor))
+				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
 				.subscribe();
 			disposables.add(disposable);
 		}
@@ -107,7 +103,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				.doOnSuccess(ack -> log.info("【Hivemq】 => MQTT取消订阅成功，主题：{}", String.join("、", topics)))
 				.doOnError(e -> log.error("【Hivemq】 => MQTT取消订阅失败，主题：{}，错误信息：{}", String.join("、", topics),
 						e.getMessage(), e))
-				.subscribeOn(Schedulers.from(virtualThreadExecutor))
+				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
 				.subscribe(ack -> {
 				}, e -> {
 					throw new SystemException("S_Mqtt_UnSubscribeError", e.getMessage(), e);
@@ -131,7 +127,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					.build()))
 				.singleOrError()
 				.doOnError(e -> log.error("【Hivemq】 => MQTT消息发布失败，错误信息：{}", e.getMessage(), e))
-				.subscribeOn(Schedulers.from(virtualThreadExecutor))
+				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
 				.subscribe(ack -> {
 				}, e -> {
 					throw new SystemException("S_Mqtt_PublishError", e.getMessage(), e);
@@ -150,9 +146,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			.serverHost(mqttClientProperties.getHost())
 			.serverPort(mqttClientProperties.getPort())
 			.executorConfig(MqttClientExecutorConfig.builder()
-				.nettyExecutor(virtualThreadExecutor)
+				.nettyExecutor(ThreadUtils.newVirtualTaskExecutor())
 				.nettyThreads(mqttClientProperties.getNettyThreads())
-				.applicationScheduler(Schedulers.from(virtualThreadExecutor))
+				.applicationScheduler(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
 				.build());
 		// 开启重连
 		if (mqttClientProperties.isAutomaticReconnect()) {
@@ -225,7 +221,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				log.info("【Hivemq】 => MQTT连接成功，客户端ID：{}", clientId);
 			})
 			.doOnError(e -> log.error("【Hivemq】 => MQTT连接失败，错误信息：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.from(virtualThreadExecutor))
+			.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
 			.subscribe(ack -> {
 			}, e -> {
 				throw new SystemException("S_Mqtt_ConnectFailed", e.getMessage(), e);
@@ -268,9 +264,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					}
 				})
 				.onBackpressureDrop()
-				.observeOn(Schedulers.from(virtualThreadExecutor), false, 4096)
+				.observeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()), false, 4096)
 				.doOnError(e -> log.error("【Hivemq】 => MQTT消息处理失败，错误信息：{}", e.getMessage(), e))
-				.subscribeOn(Schedulers.from(virtualThreadExecutor))
+				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
 				.subscribe(ack -> {
 				}, e -> {
 					throw new SystemException("S_Mqtt_ConsumeError", e.getMessage(), e);

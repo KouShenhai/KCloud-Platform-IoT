@@ -20,7 +20,7 @@ package org.laokou.logstash;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.annotation.EnableTaskExecutor;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnableNacosShutDown;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
@@ -39,14 +39,12 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
  */
 @Slf4j
 @EnableRedisRepository
-@EnableTaskExecutor
 @EnableNacosShutDown
 @EnableDiscoveryClient
 @RequiredArgsConstructor
@@ -56,8 +54,6 @@ import java.util.concurrent.ExecutorService;
 public class LogtashApp implements CommandLineRunner {
 
 	private final TraceLogHandler tracingLogConsumer;
-
-	private final ExecutorService virtualThreadExecutor;
 
 	// @formatter:off
     /// ```properties
@@ -88,7 +84,7 @@ public class LogtashApp implements CommandLineRunner {
 
 	private void listenMessages() {
 		tracingLogConsumer.consumeMessages()
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()))
 			.subscribe();
 	}
 

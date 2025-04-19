@@ -27,9 +27,6 @@ import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.excel.util.ExcelUtils;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.ExecutorService;
-
 import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
@@ -43,14 +40,12 @@ public class LoginLogExportCmdExe {
 
 	private final LoginLogMapper loginLogMapper;
 
-	private final ExecutorService virtualThreadExecutor;
-
 	@CommandLog
 	public void executeVoid(LoginLogExportCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(DOMAIN);
 			ExcelUtils.doExport("登录日志", "登录日志", ResponseUtils.getHttpServletResponse(), cmd, loginLogMapper,
-					LoginLogExcel.class, LoginLogConvertor.INSTANCE, virtualThreadExecutor);
+					LoginLogExcel.class, LoginLogConvertor.INSTANCE);
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

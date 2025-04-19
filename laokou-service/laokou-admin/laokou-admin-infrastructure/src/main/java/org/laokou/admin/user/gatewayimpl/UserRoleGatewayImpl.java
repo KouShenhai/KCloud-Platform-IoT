@@ -24,6 +24,7 @@ import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -31,7 +32,6 @@ import reactor.core.scheduler.Schedulers;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -41,8 +41,6 @@ import java.util.concurrent.ExecutorService;
 public class UserRoleGatewayImpl implements UserRoleGateway {
 
 	private final MybatisUtils mybatisUtils;
-
-	private final ExecutorService virtualThreadExecutor;
 
 	private final UserRoleMapper userRoleMapper;
 
@@ -81,7 +79,7 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 
 	private Mono<List<Long>> getUserRoleIds(List<Long> userIds) {
 		return Mono.fromCallable(() -> userRoleMapper.selectIdsByUserIds(userIds))
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
+			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()));
 	}
 
 }

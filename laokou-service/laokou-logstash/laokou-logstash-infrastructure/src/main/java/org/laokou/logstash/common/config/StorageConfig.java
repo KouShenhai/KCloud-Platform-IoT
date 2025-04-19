@@ -27,8 +27,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.concurrent.ExecutorService;
-
 /**
  * @author laokou
  */
@@ -38,9 +36,8 @@ public class StorageConfig {
 	@Bean("traceLogStorage")
 	@ConditionalOnProperty(prefix = "storage", matchIfMissing = true, name = "type", havingValue = "ELASTICSEARCH")
 	public TraceLogStorage traceLogElasticsearchStorage(ElasticsearchTemplate elasticsearchTemplate,
-			ExecutorService virtualThreadExecutor, IdentifierGenerator distributedIdentifierGenerator) {
-		return new TraceLogElasticsearchStorage(distributedIdentifierGenerator, virtualThreadExecutor,
-				elasticsearchTemplate);
+			IdentifierGenerator distributedIdentifierGenerator) {
+		return new TraceLogElasticsearchStorage(distributedIdentifierGenerator, elasticsearchTemplate);
 	}
 
 	@Bean("traceLogStorage")

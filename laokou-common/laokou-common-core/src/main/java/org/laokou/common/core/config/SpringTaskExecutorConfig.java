@@ -18,10 +18,12 @@
 package org.laokou.common.core.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import java.time.Duration;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 
 /**
  * 异步配置.
@@ -29,21 +31,33 @@ import java.util.concurrent.ExecutorService;
  * @author laokou
  */
 @Slf4j
+@Configuration
 public class SpringTaskExecutorConfig {
 
-	@Bean(name = "virtualThreadExecutor", destroyMethod = "close")
-	public ExecutorService virtualThreadExecutor() {
-		return ThreadUtils.newVirtualTaskExecutor();
-	}
-
 	@Bean
-	public Executor bootstrapExecutor(SpringTaskExecutionProperties properties) {
+	public Executor bootstrapExecutor() {
 		log.info("{} => Initializing BootstrapExecutor", Thread.currentThread().getName());
-		return new SpringTaskExecutorBuilder().withPool(properties.getPool())
-			.enableDaemon()
-			.withPriority(5)
-			.withPrefix("bootstrap-task-")
-			.build(false);
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		// 核心池大小
+		executor.setCorePoolSize(32);
+		// 最大线程数
+		executor.setMaxPoolSize(64);
+		// 队列容量
+		executor.setQueueCapacity(500);
+		// 允许核心线程在空闲时超时并被销毁[任务始终有一定负载或者你需要一直保持线程池中的线程活动，则禁用该选项会更合适]
+		executor.setAllowCoreThreadTimeOut(false);
+		// 线程空闲时间
+		executor.setKeepAliveSeconds((int) Duration.ofSeconds(60L).toSeconds());
+		// 线程池优先级
+		executor.setThreadPriority(5);
+		// 线程池前缀名词
+		executor.setThreadNamePrefix("bootstrap-task-");
+		// 开启守护线程[不影响程序退出]
+		// 注意：数据库操作关闭守护线程
+		executor.setDaemon(true);
+		// 初始化线程池
+		executor.initialize();
+		return executor;
 	}
 
 }

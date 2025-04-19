@@ -23,11 +23,11 @@ import org.laokou.admin.role.gateway.RoleGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.model.RoleE;
+import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 import java.util.Arrays;
-import java.util.concurrent.ExecutorService;
 
 /**
  * 角色网关实现.
@@ -39,8 +39,6 @@ import java.util.concurrent.ExecutorService;
 public class RoleGatewayImpl implements RoleGateway {
 
 	private final RoleMapper roleMapper;
-
-	private final ExecutorService virtualThreadExecutor;
 
 	@Override
 	public void create(RoleE roleE) {
@@ -60,13 +58,13 @@ public class RoleGatewayImpl implements RoleGateway {
 	@Override
 	public Mono<Void> delete(Long[] ids) {
 		return Mono.fromCallable(() -> roleMapper.deleteByIds(Arrays.asList(ids)))
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor))
+			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()))
 			.then();
 	}
 
 	private Mono<Integer> getVersion(RoleE roleE) {
 		return Mono.fromCallable(() -> roleMapper.selectVersion(roleE.getId()))
-			.subscribeOn(Schedulers.fromExecutorService(virtualThreadExecutor));
+			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()));
 	}
 
 }

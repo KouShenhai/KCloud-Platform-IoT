@@ -18,7 +18,6 @@
 package org.laokou.test.elasticsearch;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.laokou.common.core.annotation.EnableTaskExecutor;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -28,7 +27,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-@EnableTaskExecutor
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy

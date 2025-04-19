@@ -18,10 +18,9 @@
 package org.laokou.common.netty.config;
 
 import io.netty.channel.ChannelHandler;
+import io.netty.util.concurrent.DefaultThreadFactory;
 import io.netty.util.concurrent.EventExecutorGroup;
 import io.netty.util.concurrent.UnorderedThreadPoolEventExecutor;
-import org.laokou.common.core.config.VirtualThreadFactory;
-import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
 
@@ -38,12 +37,12 @@ public class WebSocketServerConfig {
 		List<ChannelHandler> webSocketServerList = channelHandlers.stream().filter(item -> item.getClass().isAnnotationPresent(org.laokou.common.netty.annotation.WebSocketServer.class)).toList();
 		Assert.noNullElements(webSocketServerList, "WebSocket Server not found");
 		Assert.isTrue(webSocketServerList.size() == 1, "There must be only one WebSocket Server handler present");
-		return new WebSocketServer(webSocketServerList.getFirst(), springWebSocketServerProperties, ThreadUtils.newVirtualTaskExecutor());
+		return new WebSocketServer(webSocketServerList.getFirst(), springWebSocketServerProperties);
     }
 
     @Bean(name = "webSocketEventExecutorGroup")
     public EventExecutorGroup webSocketEventExecutorGroup(SpringWebSocketServerProperties springWebSocketServerProperties) {
-        return new UnorderedThreadPoolEventExecutor(springWebSocketServerProperties.getGroupCorePoolSize(), VirtualThreadFactory.INSTANCE);
+        return new UnorderedThreadPoolEventExecutor(springWebSocketServerProperties.getGroupCorePoolSize(), new DefaultThreadFactory("webSocketHandler"));
     }
 
 }
