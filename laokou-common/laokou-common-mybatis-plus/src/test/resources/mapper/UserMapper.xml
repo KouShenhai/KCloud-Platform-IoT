@@ -18,14 +18,10 @@
  */
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.common.excel.TestUserMapper">
+<mapper namespace="org.laokou.common.mybatisplus.TestUserMapper">
 
   <select id="selectObjectCount" resultType="long">
     SELECT count(1) from t_user
-  </select>
-
-  <select id="selectObjectListHandler" fetchSize="100000" resultSetType="FORWARD_ONLY" resultType="org.laokou.common.excel.TestUserDO">
-   select id, "name" from t_user
   </select>
 
   <delete id="deleteUser">

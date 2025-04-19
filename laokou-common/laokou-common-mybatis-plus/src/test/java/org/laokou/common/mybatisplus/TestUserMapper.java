@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.excel;
+package org.laokou.common.mybatisplus;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -31,6 +31,6 @@ import java.util.List;
 @Repository
 interface TestUserMapper extends CrudMapper<Long, Integer, TestUserDO> {
 
-	void deleteUser(@Param("ids") List<Long> ids);
+	int deleteUser(@Param("ids") List<Long> ids);
 
 }

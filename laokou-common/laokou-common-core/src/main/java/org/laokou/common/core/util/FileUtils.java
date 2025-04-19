@@ -59,6 +59,10 @@ public final class FileUtils {
 		return Files.newBufferedReader(Path.of(path));
 	}
 
+	public static void deleteIfExists(Path path) throws IOException {
+		Files.deleteIfExists(path);
+	}
+
 	/**
 	 * 创建目录及文件.
 	 * @param directory 目录

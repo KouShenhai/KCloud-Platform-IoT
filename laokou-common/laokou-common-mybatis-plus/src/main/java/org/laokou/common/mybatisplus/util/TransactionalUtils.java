@@ -40,71 +40,71 @@ public class TransactionalUtils {
 
 	private final TransactionTemplate transactionTemplate;
 
-	public void executeInTransaction(DatabaseOperation operation) {
-		defaultExecuteWithoutResult(r -> {
-			try {
-				operation.execute();
-			}
-			catch (Exception e) {
-				r.setRollbackOnly();
-				log.error("操作失败，错误信息：{}", e.getMessage());
-				throw new SystemException("S_DS_OperateError", e.getMessage(), e);
-			}
-		});
-	}
-
-	public <T> T executeResultInTransaction(DatabaseExecutor<T> operation) {
-		return defaultExecute(r -> {
-			try {
-				return operation.execute();
-			}
-			catch (Exception e) {
-				r.setRollbackOnly();
-				log.error("操作失败，错误信息：{}", e.getMessage());
-				throw new SystemException("S_DS_OperateError", e.getMessage(), e);
-			}
-		});
-	}
-
 	// @formatter:off
+	public void executeInTransaction(DatabaseExecutor executor) {
+		executeInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRED, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
+	}
+
+	public void executeInTransaction(DatabaseExecutor executor, int isolationLevel, boolean readOnly) {
+		executeInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRED, isolationLevel, readOnly);
+	}
+
+	public void executeInNewTransaction(DatabaseExecutor executor) {
+		executeInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRES_NEW, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
+	}
+
+	public void executeInNewTransaction(DatabaseExecutor executor, int isolationLevel, boolean readOnly) {
+		executeInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRES_NEW, isolationLevel, readOnly);
+	}
+
+	public <T> T executeResultInTransaction(DatabaseResultExecutor<T> executor) {
+		return executeResultInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRED, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
+	}
+
+	public <T> T executeResultInTransaction(DatabaseResultExecutor<T> executor, int isolationLevel, boolean readOnly) {
+		return executeResultInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRED, isolationLevel, readOnly);
+	}
+
+	public <T> T executeResultInNewTransaction(DatabaseResultExecutor<T> executor) {
+		return executeResultInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRES_NEW, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
+	}
+
+	public <T> T executeResultInNewTransaction(DatabaseResultExecutor<T> executor, int isolationLevel, boolean readOnly) {
+		return executeResultInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRES_NEW, isolationLevel, readOnly);
+	}
+
+	public void executeInTransaction(DatabaseExecutor executor, int propagationBehavior, int isolationLevel, boolean readOnly) {
+		executeWithoutResult(r -> {
+			try {
+				executor.execute();
+			}
+			catch (Exception e) {
+				r.setRollbackOnly();
+				log.error("操作失败，错误信息：{}", e.getMessage());
+				throw new SystemException("S_DS_OperateError", e.getMessage(), e);
+			}
+		}, propagationBehavior,isolationLevel, readOnly);
+	}
+
+	public <T> T executeResultInTransaction(DatabaseResultExecutor<T> executor, int propagationBehavior, int isolationLevel, boolean readOnly) {
+		return execute(r -> {
+			try {
+				return executor.execute();
+			}
+			catch (Exception e) {
+				r.setRollbackOnly();
+				log.error("操作失败，错误信息：{}", e.getMessage());
+				throw new SystemException("S_DS_OperateError", e.getMessage(), e);
+			}
+		}, propagationBehavior,isolationLevel, readOnly);
+	}
+
 	private <T> T execute(TransactionCallback<T> action, int propagationBehavior, int isolationLevel, boolean readOnly) {
         return convert(propagationBehavior, isolationLevel, readOnly).execute(action);
 	}
 
-	private <T> T defaultExecute(TransactionCallback<T> action, int isolationLevel, boolean readOnly) {
-		return execute(action, TransactionDefinition.PROPAGATION_REQUIRED, isolationLevel, readOnly);
-	}
-
-	private  <T> T defaultExecute(TransactionCallback<T> action) {
-		return execute(action, TransactionDefinition.PROPAGATION_REQUIRED, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
-	}
-
-	private <T> T newExecute(TransactionCallback<T> action, int isolationLevel, boolean readOnly) {
-		return execute(action, TransactionDefinition.PROPAGATION_REQUIRES_NEW, isolationLevel, readOnly);
-	}
-
-	private <T> T newExecute(TransactionCallback<T> action) {
-		return execute(action, TransactionDefinition.PROPAGATION_REQUIRES_NEW, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
-	}
-
 	private void executeWithoutResult(Consumer<TransactionStatus> action, int propagationBehavior, int isolationLevel, boolean readOnly) {
         convert(propagationBehavior, isolationLevel, readOnly).executeWithoutResult(action);
-	}
-
-	private void defaultExecuteWithoutResult(Consumer<TransactionStatus> action, int isolationLevel, boolean readOnly) {
-		executeWithoutResult(action, TransactionDefinition.PROPAGATION_REQUIRED, isolationLevel, readOnly);
-	}
-
-	private void defaultExecuteWithoutResult(Consumer<TransactionStatus> action) {
-		executeWithoutResult(action, TransactionDefinition.PROPAGATION_REQUIRED, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
-	}
-
-	private void newExecuteWithoutResult(Consumer<TransactionStatus> action) {
-		executeWithoutResult(action, TransactionDefinition.PROPAGATION_REQUIRES_NEW, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
-	}
-
-	private void newExecuteWithoutResult(Consumer<TransactionStatus> action, int isolationLevel, boolean readOnly) {
-		executeWithoutResult(action, TransactionDefinition.PROPAGATION_REQUIRES_NEW, isolationLevel, readOnly);
 	}
 
 	private TransactionTemplate convert(int propagationBehavior, int isolationLevel, boolean readOnly) {
@@ -118,14 +118,14 @@ public class TransactionalUtils {
 	}
 
 	@FunctionalInterface
-	public interface DatabaseOperation {
+	public interface DatabaseExecutor {
 
 		void execute() throws Exception;
 
 	}
 
 	@FunctionalInterface
-	public interface DatabaseExecutor<T> {
+	public interface DatabaseResultExecutor<T> {
 
 		T execute() throws Exception;
 

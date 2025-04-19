@@ -29,7 +29,7 @@ import lombok.Data;
  * @author laokou
  */
 @Data
-class TestUserExcel {
+public class TestUserExcel {
 
 	@ColumnWidth(30)
 	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,

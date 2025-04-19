@@ -15,22 +15,25 @@
  *
  */
 
-package org.laokou.common.excel;
+package org.laokou.common.mybatisplus;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import net.sf.jsqlparser.statement.select.PlainSelect;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.mybatisplus.util.SqlUtils;
 
 /**
  * @author laokou
  */
-@Mapper
-@Repository
-interface TestUserMapper extends CrudMapper<Long, Integer, TestUserDO> {
+class SqlUtilsTest {
 
-	void deleteUser(@Param("ids") List<Long> ids);
+	@Test
+	void test() {
+		String sql = "select * from t_user \nwhere id = 1";
+		PlainSelect plainSelect = SqlUtils.plainSelect(sql);
+		Assertions.assertEquals("t_user", plainSelect.getFromItem().toString());
+		Assertions.assertEquals("id = 1", plainSelect.getWhere().toString());
+		Assertions.assertEquals("SELECT * FROM t_user WHERE id = 1", SqlUtils.formatSql(sql));
+	}
 
 }
