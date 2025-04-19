@@ -219,9 +219,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			.requestResponseInformation(mqttClientProperties.isRequestResponseInformation())
 			.applyRestrictions()
 			.applyConnect()
-			.doOnSuccess(ack -> {
-				log.info("【Hivemq】 => MQTT连接成功，客户端ID：{}", clientId);
-			})
+			.doOnSuccess(ack -> log.info("【Hivemq】 => MQTT连接成功，客户端ID：{}", clientId))
 			.doOnError(e -> log.error("【Hivemq】 => MQTT连接失败，错误信息：{}", e.getMessage(), e))
 			.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
 			.subscribe(ack -> {
