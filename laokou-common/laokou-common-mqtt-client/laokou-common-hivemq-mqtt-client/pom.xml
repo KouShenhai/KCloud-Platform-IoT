@@ -30,6 +30,18 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-mqtt-client-parent</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-test</artifactId>
+      <scope>test</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-logging</artifactId>
+      <scope>test</scope>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 
 </project>

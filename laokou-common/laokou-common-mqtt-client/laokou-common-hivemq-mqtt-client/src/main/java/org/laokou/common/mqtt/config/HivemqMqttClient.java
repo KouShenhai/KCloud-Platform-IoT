@@ -40,8 +40,8 @@ import org.laokou.common.mqtt.client.AbstractMqttClient;
 import org.laokou.common.mqtt.client.MqttMessage;
 import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
-import org.laokou.common.mqtt.client.handler.event.CloseEvent;
-import org.laokou.common.mqtt.client.handler.event.OpenEvent;
+import org.laokou.common.mqtt.client.handler.event.*;
+
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
@@ -130,12 +130,12 @@ public class HivemqMqttClient extends AbstractMqttClient {
 		}
 	}
 
-	public void unsubscribe() {
+	public void unSubscribe() {
 		String[] topics = mqttClientProperties.getTopics().toArray(String[]::new);
-		unsubscribe(topics);
+		unSubscribe(topics);
 	}
 
-	public void unsubscribe(String[] topics) {
+	public void unSubscribe(String[] topics) {
 		checkTopic(topics, "Hivemq");
 		if (ObjectUtils.isNotNull(client)) {
 			List<MqttTopicFilter> matchedTopics = new ArrayList<>(topics.length);
@@ -184,9 +184,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 		publish(topic, payload, mqttClientProperties.getPublishQos());
 	}
 
-	private Mqtt5RxClient getClient(String clientId) {
+	private Mqtt5RxClient getClient() {
 		Mqtt5ClientBuilder builder = Mqtt5Client.builder()
-			.identifier(clientId)
+			.identifier(mqttClientProperties.getClientId())
 			.serverHost(mqttClientProperties.getHost())
 			.serverPort(mqttClientProperties.getPort())
 			.executorConfig(MqttClientExecutorConfig.builder()
@@ -210,12 +210,24 @@ public class HivemqMqttClient extends AbstractMqttClient {
 		return builder.buildRx();
 	}
 
-	public void publishOpenEvent(String clientId) {
-		SpringEventBus.publish(new OpenEvent(this, clientId));
+	public void publishOpenEvent() {
+		SpringEventBus.publish(new OpenEvent(this, mqttClientProperties.getClientId()));
 	}
 
-	public void publishCloseEvent(String clientId) {
-		SpringEventBus.publish(new CloseEvent(this, clientId));
+	public void publishCloseEvent() {
+		SpringEventBus.publish(new CloseEvent(this, mqttClientProperties.getClientId()));
+	}
+
+	public void publishMessageEvent(String topic, byte[] payload) {
+		SpringEventBus.publish(new PublishMessageEvent(this, mqttClientProperties.getClientId(), topic, payload));
+	}
+
+	public void publishSubscribeEvent(String[] topics, int[] qosArray) {
+		SpringEventBus.publish(new SubscribeEvent(this, mqttClientProperties.getClientId(), topics, qosArray));
+	}
+
+	public void publishUnSubscribeEvent(String[] topics) {
+		SpringEventBus.publish(new UnSubscribeEvent(this, mqttClientProperties.getClientId(), topics));
 	}
 
 	public void dispose() {
@@ -233,8 +245,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 	}
 
 	private void connect() {
-		String clientId = mqttClientProperties.getClientId();
-		client = getClient(clientId);
+		client = getClient();
 		Disposable disposable = client.connectWith()
 			.willPublish()
 			.topic(WILL_TOPIC)
@@ -262,7 +273,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			.requestResponseInformation(mqttClientProperties.isRequestResponseInformation())
 			.applyRestrictions()
 			.applyConnect()
-			.doOnSuccess(ack -> log.info("【Hivemq】 => MQTT连接成功，客户端ID：{}", clientId))
+			.doOnSuccess(ack -> log.info("【Hivemq】 => MQTT连接成功，客户端ID：{}", mqttClientProperties.getClientId()))
 			.doOnError(e -> log.error("【Hivemq】 => MQTT连接失败，错误信息：{}", e.getMessage(), e))
 			.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
 			.subscribe(ack -> {

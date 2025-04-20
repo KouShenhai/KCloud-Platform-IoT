@@ -29,7 +29,7 @@ import java.util.HashMap;
 class OkHttpUtilsTest {
 
 	@Test
-	void test() {
+	void testOkHttp() {
 		String url = "https://www.baidu.com";
 		String result = OkHttpUtils.doFormDataPost(url, new HashMap<>(0), new HashMap<>(0));
 		Assertions.assertNotNull(result);

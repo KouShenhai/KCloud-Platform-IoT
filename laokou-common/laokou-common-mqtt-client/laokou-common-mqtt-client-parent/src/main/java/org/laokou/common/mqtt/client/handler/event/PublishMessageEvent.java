@@ -26,16 +26,19 @@ import org.springframework.context.ApplicationEvent;
  */
 @Getter
 @Setter
-public class UnsubscribeEvent extends ApplicationEvent {
+public class PublishMessageEvent extends ApplicationEvent {
 
 	private String clientId;
 
-	private String[] topics;
+	private String topic;
 
-	public UnsubscribeEvent(Object source, String clientId, String[] topics) {
+	private byte[] payload;
+
+	public PublishMessageEvent(Object source, String clientId, String topic, byte[] payload) {
 		super(source);
 		this.clientId = clientId;
-		this.topics = topics;
+		this.topic = topic;
+		this.payload = payload;
 	}
 
 }

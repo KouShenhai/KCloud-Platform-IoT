@@ -31,7 +31,7 @@ import java.time.LocalDateTime;
 class IdGeneratorTest {
 
 	@Test
-	void test() {
+	void testGenerateID() {
 		long snowflakeId = IdGenerator.defaultSnowflakeId();
 		LocalDateTime localDateTime = IdGenerator.getLocalDateTime(snowflakeId, DateUtils.getDefaultZoneId());
 		String time1 = DateUtils.format(localDateTime, DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS);

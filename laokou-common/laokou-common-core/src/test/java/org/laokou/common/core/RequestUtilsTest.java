@@ -46,7 +46,7 @@ class RequestUtilsTest {
 	private HandlerMapping handlerMapping;
 
 	@Test
-	void test() throws Exception {
+	void testRequest() throws Exception {
 		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		Assertions.assertNotNull(request);
 		Assertions.assertNotNull(handlerMapping);

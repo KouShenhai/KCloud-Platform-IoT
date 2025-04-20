@@ -17,8 +17,7 @@
 
 package org.laokou.common.mqtt.handler;
 
-import org.laokou.common.mqtt.client.handler.event.CloseEvent;
-import org.laokou.common.mqtt.client.handler.event.OpenEvent;
+import org.laokou.common.mqtt.client.handler.event.*;
 import org.laokou.common.mqtt.config.HivemqMqttClientManager;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -40,6 +39,24 @@ public class HivemqMqttClientEventHandler {
 	@EventListener
 	public void onCloseEvent(CloseEvent event) {
 		HivemqMqttClientManager.close(event.getClientId());
+	}
+
+	@Async
+	@EventListener
+	public void onPublishMessageEvent(PublishMessageEvent event) {
+		HivemqMqttClientManager.publish(event.getClientId(), event.getTopic(), event.getPayload());
+	}
+
+	@Async
+	@EventListener
+	public void onSubscribeEvent(SubscribeEvent event) {
+		HivemqMqttClientManager.subscribe(event.getClientId(), event.getTopics(), event.getQosArray());
+	}
+
+	@Async
+	@EventListener
+	public void onUnSubscribeEvent(UnSubscribeEvent event) {
+		HivemqMqttClientManager.unSubscribe(event.getClientId(), event.getTopics());
 	}
 
 }

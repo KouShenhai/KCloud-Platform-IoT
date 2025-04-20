@@ -30,14 +30,14 @@ public class SubscribeEvent extends ApplicationEvent {
 
 	private String clientId;
 
-	private int[] subscribeQos;
+	private int[] qosArray;
 
 	private String[] topics;
 
-	public SubscribeEvent(Object source, String clientId, String[] topics, int[] subscribeQos) {
+	public SubscribeEvent(Object source, String clientId, String[] topics, int[] qosArray) {
 		super(source);
 		this.clientId = clientId;
-		this.subscribeQos = subscribeQos;
+		this.qosArray = qosArray;
 		this.topics = topics;
 	}
 

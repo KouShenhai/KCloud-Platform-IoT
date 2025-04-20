@@ -43,6 +43,7 @@ jobs:
             ./laokou-common/laokou-common-elasticsearch/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-graalvm-js/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-mybatis-plus/target/site/jacoco/jacoco.xml,
+            ./laokou-common/laokou-common-mqtt-client/laokou-common-hivemq-mqtt-client/target/site/jacoco/jacoco.xml,
             ./laokou-service/laokou-admin/laokou-admin-start/target/site/jacoco/jacoco.xml,
             ./laokou-service/laokou-auth/laokou-auth-start/target/site/jacoco/jacoco.xml,
             ./laokou-service/laokou-generator/laokou-generator-start/target/site/jacoco/jacoco.xml,

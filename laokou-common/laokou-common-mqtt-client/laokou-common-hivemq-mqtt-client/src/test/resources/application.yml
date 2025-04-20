@@ -1,8 +1,8 @@
 spring:
   profiles:
-    active: @PROFILE-ACTIVE@
+    active: teset
   application:
-    name: laokou-test-mqtt
+    name: laokou-common-hivemq-mqtt-client
   main:
     register-shutdown-hook: true
 server:

@@ -60,15 +60,35 @@ public class HivemqMqttClientManager {
 	}
 
 	public static void publishOpenEvent(String clientId) {
-		get(clientId).publishOpenEvent(clientId);
+		get(clientId).publishOpenEvent();
 	}
 
 	public static void publishCloseEvent(String clientId) {
-		get(clientId).publishCloseEvent(clientId);
+		get(clientId).publishCloseEvent();
+	}
+
+	public static void publishMessageEvent(String clientId, String topic, byte[] payload) {
+		get(clientId).publishMessageEvent(topic, payload);
+	}
+
+	public static void publishSubscribeEvent(String clientId, String[] topics, int[] qosArray) {
+		get(clientId).publishSubscribeEvent(topics, qosArray);
+	}
+
+	public static void publishUnSubscribeEvent(String clientId, String[] topics) {
+		get(clientId).publishUnSubscribeEvent(topics);
 	}
 
 	public static void publish(String clientId, String topic, byte[] payload) {
 		get(clientId).publish(topic, payload);
+	}
+
+	public static void subscribe(String clientId, String[] topics, int[] qosArray) {
+		get(clientId).subscribe(topics, qosArray);
+	}
+
+	public static void unSubscribe(String clientId, String[] topics) {
+		get(clientId).unSubscribe(topics);
 	}
 
 	public static void destroy() {

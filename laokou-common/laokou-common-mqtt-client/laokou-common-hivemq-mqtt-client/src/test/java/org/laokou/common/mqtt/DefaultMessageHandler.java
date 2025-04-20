@@ -15,25 +15,27 @@
  *
  */
 
-package org.laokou.common.core;
+package org.laokou.common.mqtt;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.MDCUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.mqtt.client.handler.MessageHandler;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-class MDCUtilsTest {
+@Slf4j
+@Component
+class DefaultMessageHandler implements MessageHandler {
 
-	@Test
-	void testMDC() {
-		MDCUtils.put("111", "222");
-		Assertions.assertNotNull(MDCUtils.getTraceId());
-		Assertions.assertNotNull(MDCUtils.getSpanId());
-		Assertions.assertDoesNotThrow(MDCUtils::clear);
-		Assertions.assertNull(MDCUtils.getTraceId());
-		Assertions.assertNull(MDCUtils.getSpanId());
+	@Override
+	public boolean isSubscribe(String topic) {
+		return true;
+	}
+
+	@Override
+	public void handle(org.laokou.common.mqtt.client.MqttMessage mqttMessage) {
+		log.info("接收到MQTT消息 => topic: {}, message: {}", mqttMessage.getTopic(), new String(mqttMessage.getPayload()));
 	}
 
 }
