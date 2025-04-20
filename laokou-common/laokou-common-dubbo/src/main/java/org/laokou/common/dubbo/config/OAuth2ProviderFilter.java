@@ -20,6 +20,7 @@ package org.laokou.common.dubbo.config;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.rpc.*;
 import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.security.annotation.EnableSecurity;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
@@ -28,6 +29,7 @@ import org.springframework.stereotype.Component;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Component
+@EnableSecurity
 @RequiredArgsConstructor
 public class OAuth2ProviderFilter implements Filter {
 

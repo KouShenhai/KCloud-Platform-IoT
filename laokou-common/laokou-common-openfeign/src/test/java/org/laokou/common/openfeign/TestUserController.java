@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,20 @@
  *
  */
 
-package org.laokou;
+package org.laokou.common.openfeign;
 
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.factory.UserShardingFeignClientFallbackFactory;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author laokou
  */
-@FeignClient(value = "laokou-sample-shardingsphere", fallbackFactory = UserShardingFeignClientFallbackFactory.class)
-public interface UserShardingFeignClient {
+@RestController
+class TestUserController {
 
-	@GetMapping
-	Result<List<UserCO>> list();
+	@GetMapping("/user")
+	public TestUser getUser() {
+		return new TestUser(1L, "laokou");
+	}
 
 }

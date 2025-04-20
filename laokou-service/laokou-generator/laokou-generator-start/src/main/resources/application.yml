@@ -26,7 +26,6 @@ spring:
   application:
     name: ${SERVICE_ID:laokou-generator}
   data:
-    # redis
     redis:
       client-type: lettuce
       host: redis

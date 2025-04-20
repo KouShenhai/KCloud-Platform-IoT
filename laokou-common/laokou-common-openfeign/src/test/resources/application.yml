@@ -1,16 +1,19 @@
-server:
-  port: 8092
 jasypt:
   encryptor:
-    password: @JASYPT-ENCRYPTOR-PASSWORD@
+    password: laokou
+
+server:
+  port: 8092
 
 spring:
   profiles:
-    active: @PROFILE-ACTIVE@
+    active: test
   application:
-    name: laokou-test-openfeign
+    name: laokou-common-openfeign
+  threads:
+    virtual:
+      enabled: true
   data:
-    # redis
     redis:
       client-type: lettuce
       host: redis
@@ -30,13 +33,15 @@ spring:
         enabled: true
     # 解决集成sentinel，openfeign启动报错，官方下个版本修复
     openfeign:
+      http2client:
+        enabled: false
       compression:
         response:
-          enabled: true
+          enabled: false
         request:
-          enabled: true
+          enabled: false
       # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
+      # 在BeanFactory调用getBean()时，不是调用getBean，而是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
       okhttp:
         enabled: true
       circuitbreaker:
@@ -45,6 +50,11 @@ spring:
         hc5:
           enabled: false
         disable-ssl-validation: true
+        max-connections: 500
+        time-to-live: 10
+        time-to-live-unit: minutes
+        ok-http:
+          read-timeout: 120s
       client:
         config:
           default:
@@ -52,8 +62,12 @@ spring:
             readTimeout: 120000 #读取超时
             logger-level: none
       lazy-attributes-resolution: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
 
-  # feign
+# Feign配置
 feign:
   sentinel:
     enabled: true
@@ -66,3 +80,6 @@ feign:
           timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
           statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
           minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
+
+logging:
+  config: classpath:log4j2-test.xml

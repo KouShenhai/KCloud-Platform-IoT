@@ -89,7 +89,6 @@ spring:
             DELETE:
               - /v3/tokens=laokou-gateway
   data:
-    # redis
     redis:
       client-type: lettuce
       host: redis

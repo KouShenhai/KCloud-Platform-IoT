@@ -15,20 +15,20 @@
  *
  */
 
-package org.laokou.fallback;
+package org.laokou.common.openfeign;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.UserFeignClient;
+import org.laokou.common.i18n.common.exception.BizException;
 
 /**
  * @author laokou
  */
 @Slf4j
-public class UserFeignClientFallback implements UserFeignClient {
+class TestUserFeignClientFallback implements TestUserFeignClient {
 
 	@Override
-	public String getUsername() {
-		return "test";
+	public TestUser getUser() {
+		return null;
 	}
 
 }
