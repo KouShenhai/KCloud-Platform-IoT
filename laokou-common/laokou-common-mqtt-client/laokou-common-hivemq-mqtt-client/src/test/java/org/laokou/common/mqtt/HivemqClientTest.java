@@ -41,7 +41,7 @@ import java.util.Set;
 @ContextConfiguration(
 		classes = { DefaultMessageHandler.class, SpringContextUtils.class, HivemqMqttClientEventHandler.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-class HivemqClientTest {
+class HivemqMqttClientTest {
 
 	private final List<MessageHandler> messageHandlers;
 
