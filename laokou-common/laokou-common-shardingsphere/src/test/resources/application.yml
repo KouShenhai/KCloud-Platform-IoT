@@ -1,0 +1,32 @@
+server:
+  port: 9033
+  shutdown: graceful
+spring:
+  threads:
+    virtual:
+      # 开启虚拟线程
+      enabled: true
+  profiles:
+    active: test
+  application:
+    name: laokou-common-shardingsphere
+  datasource:
+    dynamic:
+      datasource:
+        master:
+          url: jdbc:shardingsphere:nacos:application-shardingsphere.yaml
+          driver-class-name: org.laokou.common.shardingsphere.config.nacos.NacosShardingSphereDriver
+# mybatis-plus
+mybatis-plus:
+  # 全局处理
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: false
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+logging:
+  config: classpath:log4j2-test.xml

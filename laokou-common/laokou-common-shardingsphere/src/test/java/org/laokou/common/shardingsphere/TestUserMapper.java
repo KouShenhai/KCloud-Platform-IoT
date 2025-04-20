@@ -15,18 +15,17 @@
  *
  */
 
-package org.laokou.common.core;
+package org.laokou.common.shardingsphere;
 
-import org.junit.jupiter.api.Test;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author laokou
  */
-class I18nUtilsTest {
-
-	@Test
-	void test() {
-
-	}
+@Mapper
+@Repository
+interface TestUserMapper extends BaseMapper<TestUserDO> {
 
 }

@@ -15,18 +15,28 @@
  *
  */
 
-package org.laokou.common.core;
+package org.laokou.common.shardingsphere;
 
-import org.junit.jupiter.api.Test;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.time.Instant;
 
 /**
  * @author laokou
  */
-class I18nUtilsTest {
+@Data
+@TableName("boot_sys_user")
+class TestUserDO implements Serializable {
 
-	@Test
-	void test() {
+	@TableId(type = IdType.INPUT)
+	private Long id;
 
-	}
+	private String name;
+
+	private Instant createTime;
 
 }

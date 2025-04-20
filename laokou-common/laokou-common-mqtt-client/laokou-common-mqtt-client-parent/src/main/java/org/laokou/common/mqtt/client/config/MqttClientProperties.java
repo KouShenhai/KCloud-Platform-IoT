@@ -78,11 +78,18 @@ public class MqttClientProperties {
 	 */
 	private int connectionTimeout = 15;
 
+	// @formatter:off
 	/**
-	 * 最大值，4294967295L，会话过期时间【永不过期，单位秒】. 定义客户端断开后会话保留的时间（仅在 Clean Session = false 时生效）.
+	 * 默认会话保留一天.
+	 * 最大值，4294967295L，会话过期时间【永不过期，单位秒】.
+	 * 定义客户端断开后会话保留的时间（仅在 Clean Session = false 时生效）.
 	 */
-	private long sessionExpiryInterval = 4294967295L;
+	private long sessionExpiryInterval = 86400L;
+	// @formatter:on
 
+	/**
+	 * 心跳包每隔60秒发一次.
+	 */
 	private int keepAliveInterval = 60;
 
 	private boolean automaticReconnect = true;
