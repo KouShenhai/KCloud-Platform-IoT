@@ -17,17 +17,15 @@
 spring:
   cloud:
     nacos:
+      username: nacos
+      password: nacos
       discovery:
         server-addr: nacos:8848
-        username: nacos
-        password: nacos
         namespace: public
         cluster-name: laokou-cluster
         group: DEFAULT_GROUP
       config:
         server-addr: nacos:8848
-        username: nacos
-        password: nacos
         namespace: public
         cluster-name: laokou-cluster
         # https://github.com/alibaba/spring-cloud-alibaba/blob/2021.x/spring-cloud-alibaba-docs/src/main/asciidoc-zh/nacos-config.adoc

@@ -39,6 +39,7 @@ jobs:
             ./laokou-common/laokou-common-xss/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-excel/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-nacos/target/site/jacoco/jacoco.xml,
+            ./laokou-common/laokou-common-shardingsphere/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-elasticsearch/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-graalvm-js/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-mybatis-plus/target/site/jacoco/jacoco.xml,

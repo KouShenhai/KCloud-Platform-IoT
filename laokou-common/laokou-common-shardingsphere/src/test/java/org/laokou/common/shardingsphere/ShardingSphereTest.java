@@ -35,12 +35,16 @@
 package org.laokou.common.shardingsphere;
 
 import com.baomidou.dynamic.datasource.toolkit.CryptoUtils;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author laokou
@@ -50,6 +54,8 @@ import org.springframework.test.context.TestConstructor;
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class ShardingSphereTest {
+
+	private final TestUserMapper testUserMapper;
 
 	@Test
 	void test() throws Exception {
@@ -61,9 +67,16 @@ class ShardingSphereTest {
 		log.info("密码加密后：{}", encryptPassword);
 		String decryptUsername = CryptoUtils.decrypt(encryptUsername);
 		String decryptPassword = CryptoUtils.decrypt(encryptPassword);
+		log.info("用户名解密后：{}", decryptUsername);
+		log.info("密码解密后：{}", decryptPassword);
 		Assertions.assertEquals(username, decryptUsername);
 		Assertions.assertEquals(password, decryptPassword);
-		// testUserMapper.selectList(Wrappers.emptyWrapper());
+		List<TestUserDO> list = testUserMapper.selectList(Wrappers.emptyWrapper());
+		Assertions.assertFalse(list.isEmpty());
+		Assertions.assertTrue(list.stream()
+			.map(TestUserDO::getName)
+			.collect(Collectors.joining(","))
+			.contains("boot_sys_user_202410"));
 	}
 
 }
