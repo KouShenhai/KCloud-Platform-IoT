@@ -18,7 +18,6 @@
 package org.laokou.common.openfeign;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.exception.BizException;
 
 /**
  * @author laokou
