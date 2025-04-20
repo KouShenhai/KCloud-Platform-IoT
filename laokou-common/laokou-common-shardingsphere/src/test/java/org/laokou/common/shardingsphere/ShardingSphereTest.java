@@ -33,8 +33,8 @@
  */
 
 package org.laokou.common.shardingsphere;
+
 import com.baomidou.dynamic.datasource.toolkit.CryptoUtils;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -63,7 +63,7 @@ class ShardingSphereTest {
 		String decryptPassword = CryptoUtils.decrypt(encryptPassword);
 		Assertions.assertEquals(username, decryptUsername);
 		Assertions.assertEquals(password, decryptPassword);
-		//testUserMapper.selectList(Wrappers.emptyWrapper());
+		// testUserMapper.selectList(Wrappers.emptyWrapper());
 	}
 
 }
