@@ -27,11 +27,11 @@ import org.laokou.common.core.util.MDCUtils;
 class MDCUtilsTest {
 
 	@Test
-	void testMDC() {
+	void test() {
 		MDCUtils.put("111", "222");
 		Assertions.assertNotNull(MDCUtils.getTraceId());
 		Assertions.assertNotNull(MDCUtils.getSpanId());
-		MDCUtils.clear();
+		Assertions.assertDoesNotThrow(MDCUtils::clear);
 		Assertions.assertNull(MDCUtils.getTraceId());
 		Assertions.assertNull(MDCUtils.getSpanId());
 	}
