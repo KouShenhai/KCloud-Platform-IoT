@@ -37,7 +37,7 @@ import java.net.UnknownHostException;
 class ServerUtilsTest {
 
 	@Test
-	void testServerInfo() throws UnknownHostException {
+	void testGetServerInfo() throws UnknownHostException {
 		ServerUtils.Server serverInfo = ServerUtils.getServerInfo();
 		log.info("获取系统参数：{}", serverInfo);
 		Assertions.assertEquals("Windows 11", serverInfo.getSys().getOsName());

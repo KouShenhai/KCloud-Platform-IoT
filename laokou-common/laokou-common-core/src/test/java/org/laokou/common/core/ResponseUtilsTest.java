@@ -38,7 +38,7 @@ import java.io.IOException;
 class ResponseUtilsTest {
 
 	@Test
-	void test() throws IOException {
+	void testResponse() throws IOException {
 		HttpServletResponse response = ResponseUtils.getHttpServletResponse();
 		Assertions.assertNotNull(response);
 		Assertions.assertDoesNotThrow(() -> ResponseUtils.responseOk(response, "ok"));

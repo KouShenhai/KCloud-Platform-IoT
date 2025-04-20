@@ -36,7 +36,7 @@ import java.io.IOException;
 class PropertyUtilsTest {
 
 	@Test
-	void test() throws IOException {
+	void testBindProperties() throws IOException {
 		SpringDisruptorProperties properties = PropertyUtils.bindOrCreate("spring.disruptor",
 				SpringDisruptorProperties.class, "application.yml", "yaml");
 		Assertions.assertNotNull(properties);

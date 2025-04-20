@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 class I18nUtilsTest {
 
 	@Test
-	void test() {
+	void testI18n() {
 
 	}
 
