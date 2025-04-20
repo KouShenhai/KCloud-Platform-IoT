@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,8 @@ class OpenFeignTest {
 		if (ObjectUtils.isNotNull(user)) {
 			Assertions.assertEquals("laokou", user.getUsername());
 			Assertions.assertEquals(1L, user.getId());
-		} else {
+		}
+		else {
 			Assertions.fail("OpenFeign调用失败，请启动AppTest服务");
 		}
 	}
