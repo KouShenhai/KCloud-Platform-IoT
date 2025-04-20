@@ -15,21 +15,20 @@
  *
  */
 
-package org.laokou.test.mqtt;
+package org.laokou.common.mqtt;
 
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
+/**
+ * @author laokou
+ */
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
-public class MqttTestApp {
+class AppTest {
 
-	public static void main(String[] args) throws UnknownHostException {
-		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
-				System.getProperty("server.port", "8090")));
-		SpringApplication.run(MqttTestApp.class, args);
+	public static void main(String[] args) {
+		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }

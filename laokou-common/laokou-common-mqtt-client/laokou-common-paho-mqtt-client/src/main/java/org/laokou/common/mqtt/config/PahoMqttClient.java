@@ -35,7 +35,7 @@ import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.client.handler.event.CloseEvent;
 import org.laokou.common.mqtt.client.handler.event.OpenEvent;
 import org.laokou.common.mqtt.client.handler.event.SubscribeEvent;
-import org.laokou.common.mqtt.client.handler.event.UnsubscribeEvent;
+import org.laokou.common.mqtt.client.handler.event.UnSubscribeEvent;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
 
 import java.nio.charset.StandardCharsets;
@@ -201,7 +201,7 @@ public class PahoMqttClient extends AbstractMqttClient {
 	public void publishUnsubscribeEvent(Set<String> topics) {
 		if (CollectionUtils.isNotEmpty(topics)) {
 			SpringEventBus
-				.publish(new UnsubscribeEvent(this, mqttClientProperties.getClientId(), topics.toArray(String[]::new)));
+				.publish(new UnSubscribeEvent(this, mqttClientProperties.getClientId(), topics.toArray(String[]::new)));
 		}
 	}
 

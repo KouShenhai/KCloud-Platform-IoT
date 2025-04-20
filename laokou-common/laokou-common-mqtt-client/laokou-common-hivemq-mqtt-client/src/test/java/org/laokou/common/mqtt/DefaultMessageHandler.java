@@ -15,30 +15,27 @@
  *
  */
 
-package org.laokou.common.mqtt.client.handler.event;
+package org.laokou.common.mqtt;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.context.ApplicationEvent;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.mqtt.client.handler.MessageHandler;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Setter
-@Getter
-public class SubscribeEvent extends ApplicationEvent {
+@Slf4j
+@Component
+class DefaultMessageHandler implements MessageHandler {
 
-	private String clientId;
+	@Override
+	public boolean isSubscribe(String topic) {
+		return true;
+	}
 
-	private int[] qosArray;
-
-	private String[] topics;
-
-	public SubscribeEvent(Object source, String clientId, String[] topics, int[] qosArray) {
-		super(source);
-		this.clientId = clientId;
-		this.qosArray = qosArray;
-		this.topics = topics;
+	@Override
+	public void handle(org.laokou.common.mqtt.client.MqttMessage mqttMessage) {
+		log.info("接收到MQTT消息 => topic: {}, message: {}", mqttMessage.getTopic(), new String(mqttMessage.getPayload()));
 	}
 
 }

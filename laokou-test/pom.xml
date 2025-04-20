@@ -14,7 +14,6 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>laokou-test-mqtt</module>
     <module>laokou-test-openfeign</module>
     <module>laokou-test-dubbo</module>
   </modules>

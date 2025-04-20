@@ -21,7 +21,7 @@ import org.eclipse.paho.mqttv5.common.MqttException;
 import org.laokou.common.mqtt.client.handler.event.CloseEvent;
 import org.laokou.common.mqtt.client.handler.event.OpenEvent;
 import org.laokou.common.mqtt.client.handler.event.SubscribeEvent;
-import org.laokou.common.mqtt.client.handler.event.UnsubscribeEvent;
+import org.laokou.common.mqtt.client.handler.event.UnSubscribeEvent;
 import org.laokou.common.mqtt.config.PahoMqttClientManager;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
@@ -36,12 +36,12 @@ public class PahoMqttClientEventHandler {
 	@Async
 	@EventListener
 	public void onSubscribeEvent(SubscribeEvent event) throws MqttException {
-		PahoMqttClientManager.subscribe(event.getClientId(), event.getTopics(), event.getSubscribeQos());
+		PahoMqttClientManager.subscribe(event.getClientId(), event.getTopics(), event.getQosArray());
 	}
 
 	@Async
 	@EventListener
-	public void onUnsubscribeEvent(UnsubscribeEvent event) throws MqttException {
+	public void onUnsubscribeEvent(UnSubscribeEvent event) throws MqttException {
 		PahoMqttClientManager.unsubscribe(event.getClientId(), event.getTopics());
 	}
 
