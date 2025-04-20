@@ -15,23 +15,20 @@
  *
  */
 
-package org.laokou;
+package org.laokou.common.openfeign;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.ClientObject;
+import org.springframework.cloud.openfeign.FallbackFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class UserCO extends ClientObject {
+@Component
+class TestUserFeignClientFallbackFactory implements FallbackFactory<TestUserFeignClientFallback> {
 
-	private Long id;
-
-	private String name;
+	@Override
+	public TestUserFeignClientFallback create(Throwable cause) {
+		return new TestUserFeignClientFallback();
+	}
 
 }

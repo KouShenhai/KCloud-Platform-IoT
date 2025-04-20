@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,12 @@
  *
  */
 
-package org.laokou;
+package org.laokou.common.openfeign;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.nacos.annotation.EnableNacosShutDown;
-import org.laokou.test.openfeign.OpenfeignTestApp;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.test.context.TestConstructor;
@@ -29,22 +28,24 @@ import org.springframework.test.context.TestConstructor;
 /**
  * @author laokou
  */
-@Slf4j
-@EnableNacosShutDown
-@EnableFeignClients
-@SpringBootTest(classes = OpenfeignTestApp.class)
+@SpringBootTest
 @RequiredArgsConstructor
+@EnableFeignClients(basePackages = { "org.laokou.common.openfeign" })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class OpenFeignTest {
 
-	private final UserFeignClient userFeignClient;
-
-	private final UserShardingFeignClient userShardingFeignClient;
+	private final TestUserFeignClient testUserFeignClient;
 
 	@Test
-	void testOpenFeign() {
-		log.info("1 => OpenFeign获取数据：{}", userFeignClient.getUsername());
-		log.info("2 => OpenFeign获取数据：{}", userShardingFeignClient.list());
+	void test() {
+		Assertions.assertNotNull(testUserFeignClient);
+		TestUser user = testUserFeignClient.getUser();
+		if (ObjectUtils.isNotNull(user)) {
+			Assertions.assertEquals("laokou", user.getUsername());
+			Assertions.assertEquals(1L, user.getId());
+		} else {
+			Assertions.fail("OpenFeign调用失败，请启动AppTest服务");
+		}
 	}
 
 }

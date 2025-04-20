@@ -15,17 +15,24 @@
  *
  */
 
-package org.laokou.common.dubbo.annotation;
+package org.laokou.common.openfeign;
 
-import org.laokou.common.security.annotation.EnableSecurity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.lang.annotation.*;
+import java.io.Serializable;
 
-@Documented
-@EnableSecurity
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@org.apache.dubbo.config.spring.context.annotation.EnableDubbo
-public @interface EnableDubbo {
+/**
+ * @author laokou
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class TestUser implements Serializable {
+
+	private Long id;
+
+	private String username;
 
 }

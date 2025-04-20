@@ -15,38 +15,38 @@
  *
  */
 
-package org.laokou.test.openfeign;
+package org.laokou.common.openfeign;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.SslUtils;
+import org.laokou.common.nacos.annotation.EnableNacosShutDown;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
-@EnableFeignClients
+/**
+ * @author laokou
+ */
+@EnableNacosShutDown
 @EnableConfigurationProperties
 @EnableDiscoveryClient
 @EnableRedisRepository
 @EnableEncryptableProperties
+@RequiredArgsConstructor
 @SpringBootApplication(scanBasePackages = { "org.laokou" })
-public class OpenfeignTestApp {
+class AppTest {
 
-	public static void main(String[] args)
-			throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
+	public static void main(String[] args) throws NoSuchAlgorithmException, KeyManagementException {
 		// 忽略SSL认证
 		SslUtils.ignoreSSLTrust();
 		System.setProperty("jdk.internal.httpclient.disableHostnameVerification", "true");
-		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
-				System.getProperty("server.port", "8092")));
-		SpringApplication.run(OpenfeignTestApp.class, args);
+		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }

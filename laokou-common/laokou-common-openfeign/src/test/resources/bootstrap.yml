@@ -18,20 +18,18 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: ${NACOS-DISCOVERY-ADDRESS}
-        username: ${NACOS-USERNAME}
-        password: ${NACOS-PASSWORD}
+        server-addr: nacos:8848
         namespace: public
-        cluster-name: ${NACOS-CLUSTER-NAME}
+        cluster-name: laokou-cluster
         group: DEFAULT_GROUP
       config:
-        server-addr: ${NACOS-CONFIG-ADDRESS}
-        username: ${NACOS-USERNAME}
-        password: ${NACOS-PASSWORD}
-        namespace: public
-        cluster-name: ${NACOS-CLUSTER-NAME}
+        server-addr: nacos:8848
         # https://github.com/alibaba/spring-cloud-alibaba/blob/2021.x/spring-cloud-alibaba-docs/src/main/asciidoc-zh/nacos-config.adoc
+        namespace: public
+        cluster-name: laokou-cluster
         # 指定读取的文件格式
         file-extension: yaml
         group: DEFAULT_GROUP
         refresh-enabled: true
+      username: nacos
+      password: nacos

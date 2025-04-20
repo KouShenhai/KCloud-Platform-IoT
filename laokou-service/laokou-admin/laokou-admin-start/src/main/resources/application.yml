@@ -115,7 +115,6 @@ spring:
             minimum-idle: 10
             is-read-only: false
   data:
-    # redis
     redis:
       client-type: lettuce
       host: redis
@@ -130,7 +129,7 @@ spring:
           max-idle: 500 #连接池最大空闲连接
           min-idle: 200 #连接池最小空间连接
   cloud:
-    # sentinel
+    # Sentinel配置
     sentinel:
       datasource:
         db0:
@@ -149,7 +148,6 @@ spring:
       eager: true #开启饥饿加载，直接初始化
       transport:
         dashboard: sentinel:8972
-    # loadbalancer
     loadbalancer:
       nacos:
         enabled: true
@@ -269,7 +267,7 @@ rocketmq:
   consumer:
     pull-batch-size: 32
 
-  # feign
+# Feign配置
 feign:
   sentinel:
     enabled: true

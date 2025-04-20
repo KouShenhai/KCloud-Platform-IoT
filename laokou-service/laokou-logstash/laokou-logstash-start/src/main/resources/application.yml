@@ -39,7 +39,6 @@ spring:
   profiles:
     active: @PROFILE-ACTIVE@
   data:
-    # redis
     redis:
       client-type: lettuce
       host: redis

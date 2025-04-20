@@ -15,21 +15,18 @@
  *
  */
 
-package org.laokou.factory;
+package org.laokou.common.openfeign;
 
-import org.laokou.fallback.UserShardingFeignClientFallback;
-import org.springframework.cloud.openfeign.FallbackFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * @author laokou
  */
-@Component
-public class UserShardingFeignClientFallbackFactory implements FallbackFactory<UserShardingFeignClientFallback> {
+@FeignClient(contextId = "laokou-common-openfeign", value = "laokou-common-openfeign", fallbackFactory = TestUserFeignClientFallbackFactory.class)
+interface TestUserFeignClient {
 
-	@Override
-	public UserShardingFeignClientFallback create(Throwable cause) {
-		return new UserShardingFeignClientFallback();
-	}
+	@GetMapping("/user")
+	TestUser getUser();
 
 }
