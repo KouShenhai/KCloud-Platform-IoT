@@ -24,6 +24,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
@@ -36,11 +39,14 @@ import java.security.NoSuchAlgorithmException;
 @SpringBootApplication(scanBasePackages = "org.laokou")
 class AppTest {
 
-	public static void main(String[] args) throws NoSuchAlgorithmException, KeyManagementException {
+	public static void main(String[] args)
+			throws NoSuchAlgorithmException, KeyManagementException, UnknownHostException {
 		// 忽略SSL认证
 		SslUtils.ignoreSSLTrust();
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
+		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
+				System.getProperty("server.port", "9033")));
 		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
