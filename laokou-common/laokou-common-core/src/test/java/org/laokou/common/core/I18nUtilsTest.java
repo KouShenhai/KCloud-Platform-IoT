@@ -17,9 +17,16 @@
 
 package org.laokou.common.core;
 
+import org.junit.jupiter.api.Test;
+
 /**
  * @author laokou
  */
 class I18nUtilsTest {
+
+	@Test
+	void test() {
+
+	}
 
 }

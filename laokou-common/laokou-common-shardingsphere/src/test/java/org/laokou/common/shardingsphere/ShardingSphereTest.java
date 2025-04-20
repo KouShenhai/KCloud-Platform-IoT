@@ -32,26 +32,38 @@
  * limitations under the License.
  */
 
-package org.laokou.common.shardingsphere.test;
-
+package org.laokou.common.shardingsphere;
 import com.baomidou.dynamic.datasource.toolkit.CryptoUtils;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestConstructor;
 
 /**
  * @author laokou
  */
+@Slf4j
+@SpringBootTest
+@RequiredArgsConstructor
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class ShardingSphereTest {
 
 	@Test
-	void testCrypto() throws Exception {
-		// 私钥加密，公钥解密
-		// 根据该例子对shardingsphere数据库用户名/密码进行加密与解密
-		String str = "123456";
-		String publicKey = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ4o6sn4WoPmbs7DR9mGQzuuUQM9erQTVPpwxIzB0ETYkyKffO097qXVRLA6KPmaV+/siWewR7vpfYYjWajw5KkCAwEAAQ==";
-		String encryptStr = CryptoUtils.encrypt(str);
-		String decryptStr = CryptoUtils.decrypt(publicKey, encryptStr);
-		Assertions.assertEquals(str, decryptStr);
+	void test() throws Exception {
+		String username = "root";
+		String password = "laokou123";
+		String encryptUsername = CryptoUtils.encrypt(username);
+		String encryptPassword = CryptoUtils.encrypt(password);
+		log.info("用户名加密后：{}", encryptUsername);
+		log.info("密码加密后：{}", encryptPassword);
+		String decryptUsername = CryptoUtils.decrypt(encryptUsername);
+		String decryptPassword = CryptoUtils.decrypt(encryptPassword);
+		Assertions.assertEquals(username, decryptUsername);
+		Assertions.assertEquals(password, decryptPassword);
+		//testUserMapper.selectList(Wrappers.emptyWrapper());
 	}
 
 }

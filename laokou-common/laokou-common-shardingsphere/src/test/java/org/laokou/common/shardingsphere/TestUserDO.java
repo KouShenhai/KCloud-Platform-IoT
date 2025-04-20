@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.infrastructure.gatewayimpl.database.dataobject;
+package org.laokou.common.shardingsphere;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -30,7 +30,7 @@ import java.time.Instant;
  */
 @Data
 @TableName("boot_sys_user")
-public class UserDO implements Serializable {
+class TestUserDO implements Serializable {
 
 	@TableId(type = IdType.INPUT)
 	private Long id;

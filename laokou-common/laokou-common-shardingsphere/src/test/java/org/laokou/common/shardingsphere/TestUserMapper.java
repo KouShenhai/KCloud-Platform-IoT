@@ -15,11 +15,10 @@
  *
  */
 
-package org.laokou.infrastructure.gatewayimpl.database;
+package org.laokou.common.shardingsphere;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.laokou.infrastructure.gatewayimpl.database.dataobject.UserDO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,6 +26,6 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
+interface TestUserMapper extends BaseMapper<TestUserDO> {
 
 }

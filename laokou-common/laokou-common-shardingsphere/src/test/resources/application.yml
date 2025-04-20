@@ -1,6 +1,5 @@
 server:
   port: 9033
-  # 优雅停机
   shutdown: graceful
 spring:
   threads:
@@ -8,9 +7,9 @@ spring:
       # 开启虚拟线程
       enabled: true
   profiles:
-    active: @PROFILE-ACTIVE@
+    active: test
   application:
-    name: laokou-sample-shardingsphere
+    name: laokou-common-shardingsphere
   datasource:
     dynamic:
       datasource:
@@ -30,4 +29,4 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
 
 logging:
-  config: classpath:log4j2-@PROFILE-ACTIVE@.xml
+  config: classpath:log4j2-test.xml
