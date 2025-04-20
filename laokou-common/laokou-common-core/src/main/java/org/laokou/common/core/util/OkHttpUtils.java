@@ -28,6 +28,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
@@ -69,8 +70,15 @@ public final class OkHttpUtils {
 		return EMPTY;
 	}
 
-	public static void destroy() {
-		CLIENT.connectionPool().evictAll();
+	public static void destroy() throws IOException {
+		try (Cache cache = CLIENT.cache(); ExecutorService executorService = CLIENT.dispatcher().executorService();) {
+			CLIENT.connectionPool().evictAll();
+			if (cache != null) {
+				cache.close();
+			}
+			executorService.shutdown();
+		}
+
 	}
 
 	private static OkHttpClient getOkHttpClient() throws NoSuchAlgorithmException, KeyManagementException {

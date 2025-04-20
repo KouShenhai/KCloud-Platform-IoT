@@ -17,28 +17,23 @@
 
 package org.laokou.common.core;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.IpUtils;
-import static org.laokou.common.core.util.IpUtils.LOCAL_IPV4;
-import static org.laokou.common.core.util.IpUtils.UNKNOWN_IP;
-import static org.mockito.Mockito.mock;
+import org.laokou.common.core.util.OkHttpUtils;
+
+import java.util.HashMap;
 
 /**
  * @author laokou
  */
-class IpUtilsTest {
+class OkHttpUtilsTest {
 
 	@Test
-	void testIp() {
-		HttpServletRequest request = mock(HttpServletRequest.class);
-		Assertions.assertNotNull(request);
-		String ip = IpUtils.getIpAddr(request);
-		Assertions.assertEquals(LOCAL_IPV4, ip);
-		ip = IpUtils.getIpAddr(null);
-		Assertions.assertEquals(UNKNOWN_IP, ip);
-		Assertions.assertFalse(IpUtils.internalIp(ip));
+	void test() {
+		String url = "https://www.baidu.com";
+		String result = OkHttpUtils.doFormDataPost(url, new HashMap<>(0), new HashMap<>(0));
+		Assertions.assertNotNull(result);
+		Assertions.assertDoesNotThrow(OkHttpUtils::destroy);
 	}
 
 }

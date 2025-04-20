@@ -241,7 +241,7 @@ public final class IdGenerator {
 		 * @param datacenterId 机器标识ID
 		 * @return 最大机器标识ID
 		 */
-		protected long getMaxMachineId(long datacenterId) {
+		private long getMaxMachineId(long datacenterId) {
 			StringBuilder mpid = new StringBuilder();
 			mpid.append(datacenterId);
 			String name = ManagementFactory.getRuntimeMXBean().getName();
@@ -261,7 +261,7 @@ public final class IdGenerator {
 		 * 生产雪花ID.
 		 * @return 雪花ID
 		 */
-		public synchronized long nextId() {
+		private synchronized long nextId() {
 			long currTimeStamp = getNewTimeStamp();
 			int maxOffset = 5;
 			if (currTimeStamp < lastTimeStamp) {

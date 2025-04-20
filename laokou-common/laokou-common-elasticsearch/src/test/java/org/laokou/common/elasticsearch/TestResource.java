@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.test.elasticsearch.entity;
+package org.laokou.common.elasticsearch;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,7 +37,7 @@ import java.io.Serializable;
 				@Analyzer(name = "ik_pinyin", args = @Args(filter = "pinyin_filter", tokenizer = "ik_max_word")) }))
 @NoArgsConstructor
 @AllArgsConstructor
-public class Resource implements Serializable {
+class TestResource implements Serializable {
 
 	@Field(type = Type.TEXT, searchAnalyzer = "ik_smart", analyzer = "ik_pinyin")
 	private String name;

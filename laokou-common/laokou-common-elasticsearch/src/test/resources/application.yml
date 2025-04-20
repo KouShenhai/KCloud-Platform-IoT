@@ -1,8 +1,18 @@
+jasypt:
+  encryptor:
+    password: laokou
+
+server:
+  port: 8082
+
 spring:
   application:
-    name: laokou-test-elasticsearch
+    name: laokou-common-elasticsearch
   profiles:
-    active: @PROFILE-ACTIVE@
+    active: test
+  threads:
+    virtual:
+      enabled: true
   elasticsearch:
     uris:
       - https://elasticsearch:9200
@@ -10,12 +20,3 @@ spring:
     password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
     connection-timeout: 30s
     socket-timeout: 30s
-server:
-  port: 8082
-
-jasypt:
-  encryptor:
-    password: @JASYPT-ENCRYPTOR-PASSWORD@
-
-logging:
-  config: classpath:log4j2-@PROFILE-ACTIVE@.xml

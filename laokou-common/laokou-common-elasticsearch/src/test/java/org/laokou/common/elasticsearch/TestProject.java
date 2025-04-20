@@ -15,17 +15,23 @@
  *
  */
 
-package org.laokou.test.elasticsearch.entity;
+package org.laokou.common.elasticsearch;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
+import org.laokou.common.elasticsearch.annotation.Field;
+import org.laokou.common.elasticsearch.annotation.Index;
+import org.laokou.common.elasticsearch.annotation.Type;
 
 import java.io.Serializable;
 
 @Data
-public class Result implements Serializable {
+@Index
+class TestProject implements Serializable {
 
-	private String id;
-
-	private String name;
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Field(type = Type.LONG)
+	private Long businessKey;
 
 }

@@ -31,8 +31,17 @@ class MapUtilsTest {
 
 	@Test
 	void testEmptyMap() {
-		Map<String, Set<String>> map = MapUtils.toUriMap(Map.of(), "test");
-		Assertions.assertTrue(MapUtils.isEmpty(map));
+		Map<String, Set<String>> map = MapUtils.toUriMap(
+				Map.of("POST",
+						Set.of("/test=laokou-common-core", "/test2=laokou-common-core", "/test3=laokou-common-i18n")),
+				"laokou-common-core");
+		Set<String> set = map.get("POST");
+		Assertions.assertNotNull(map);
+		Assertions.assertEquals(1, map.size());
+		Assertions.assertEquals(2, set.size());
+		Assertions.assertTrue(set.contains("/test"));
+		Assertions.assertTrue(set.contains("/test2"));
+		Assertions.assertFalse(set.contains("/test3"));
 	}
 
 }

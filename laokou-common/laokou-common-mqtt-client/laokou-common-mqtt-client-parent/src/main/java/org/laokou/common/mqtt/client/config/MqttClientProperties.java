@@ -79,9 +79,9 @@ public class MqttClientProperties {
 	private int connectionTimeout = 15;
 
 	/**
-	 * 最大值，4294967295L. 会话过期时间【永不过期，单位秒】. 定义客户端断开后会话保留的时间（仅在 Clean Session = false 时生效）.
+	 * 最大值，4294967295L，会话过期时间【永不过期，单位秒】. 定义客户端断开后会话保留的时间（仅在 Clean Session = false 时生效）.
 	 */
-	private long sessionExpiryInterval = 3600L;
+	private long sessionExpiryInterval = 4294967295L;
 
 	private int keepAliveInterval = 60;
 

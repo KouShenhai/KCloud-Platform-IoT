@@ -15,28 +15,24 @@
  *
  */
 
-package org.laokou.test.elasticsearch;
+package org.laokou.common.elasticsearch;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
+/**
+ * @author laokou
+ */
 @EnableEncryptableProperties
 @EnableConfigurationProperties
-@EnableAspectJAutoProxy
-@SpringBootApplication(scanBasePackages = { "org.laokou" })
-public class EsTestApp {
+@SpringBootApplication(scanBasePackages = "org.laokou")
+class AppTest {
 
-	public static void main(String[] args) throws UnknownHostException {
-		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(),
-				System.getProperty("server.port", "8082")));
-		new SpringApplicationBuilder(EsTestApp.class).web(WebApplicationType.SERVLET).run(args);
+	public static void main(String[] args) {
+		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }

@@ -54,7 +54,7 @@ public class MqttConfig implements ApplicationListener<ApplicationReadyEvent> {
 			properties.setUsername("emqx");
 			properties.setPassword("laokou123");
 			properties.setClientId("test-" + i);
-			properties.setTopics(Set.of("test-topic-" + i));
+			properties.setTopics(Set.of("test-topic-" + i + "/#"));
 			HivemqMqttClientManager.add(properties.getClientId(), properties, messageHandlers);
 			// 启动MQTT客户端
 			HivemqMqttClientManager.publishOpenEvent(properties.getClientId());

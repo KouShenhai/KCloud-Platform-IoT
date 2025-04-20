@@ -18,6 +18,7 @@
 package org.laokou.common.mqtt.config;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
@@ -29,6 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author laokou
  */
+@Slf4j
 @RequiredArgsConstructor
 public class HivemqMqttClientManager {
 
@@ -70,9 +72,10 @@ public class HivemqMqttClientManager {
 	}
 
 	public static void destroy() {
-		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::dispose);
+		log.info("HiveMQ MQTT客户端销毁开始执行");
 		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::close);
-		HIVE_MQTT_CLIENT_MAP.clear();
+		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::dispose);
+		log.info("HiveMQ MQTT客户端销毁执行完毕");
 	}
 
 }
