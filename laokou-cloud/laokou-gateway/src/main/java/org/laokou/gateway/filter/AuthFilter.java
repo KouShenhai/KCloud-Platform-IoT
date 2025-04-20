@@ -51,9 +51,9 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 import static org.laokou.common.i18n.common.constant.StringConstants.AND;
@@ -111,7 +111,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	 */
 	private static final String GRANT_TYPE = "grant_type";
 
-	private final Map<String, Set<String>> URI_MAP = new HashMap<>(MapUtils.initialCapacity(128));
+	private final Map<String, Set<String>> uriMap = new ConcurrentHashMap<>(1024);
 
 	private final OAuth2ResourceServerProperties oAuth2ResourceServerProperties;
 
@@ -128,7 +128,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			// 获取uri
 			String requestURL = getRequestURL(request);
 			// 请求放行，无需验证权限
-			if (pathMatcher(getMethodName(request), requestURL, URI_MAP)) {
+			if (pathMatcher(getMethodName(request), requestURL, uriMap)) {
 				// 无需验证权限的URL，需要将令牌置空
 				return chain.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, EMPTY).build()).build());
 			}
@@ -244,7 +244,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() {
-		URI_MAP.putAll(MapUtils.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(), springUtils.getServiceId()));
+		uriMap.putAll(MapUtils.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(), springUtils.getServiceId()));
 	}
 	// @formatter:on
 

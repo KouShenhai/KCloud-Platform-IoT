@@ -18,6 +18,7 @@
 package org.laokou.common.mqtt.config;
 
 import com.hivemq.client.mqtt.MqttClientExecutorConfig;
+import com.hivemq.client.mqtt.MqttGlobalPublishFilter;
 import com.hivemq.client.mqtt.datatypes.MqttQos;
 import com.hivemq.client.mqtt.datatypes.MqttTopicFilter;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5Client;
@@ -75,6 +76,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				if (ObjectUtils.isNull(client)) {
 					connect();
 					subscribe();
+					consume();
 				}
 			}
 		}
@@ -87,9 +89,50 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				.doOnComplete(() -> log.info("【Hivemq】 => MQTT断开连接成功，客户端ID：{}", mqttClientProperties.getClientId()))
 				.doOnError(e -> log.error("【Hivemq】 => MQTT断开连接失败，错误信息：{}", e.getMessage(), e))
 				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
-				.subscribe();
+				.subscribe(() -> {
+				}, e -> {
+					throw new SystemException("S_Mqtt_CloseError", e.getMessage(), e);
+				});
 			disposableList.add(disposable);
 		}
+	}
+
+	public void subscribe() {
+		String[] topics = mqttClientProperties.getTopics().toArray(String[]::new);
+		int[] qosArray = Stream.of(topics).mapToInt(item -> mqttClientProperties.getSubscribeQos()).toArray();
+		subscribe(topics, qosArray);
+	}
+
+	public void subscribe(String[] topics, int[] qosArray) {
+		checkTopicAndQos(topics, qosArray, "Hivemq");
+		if (ObjectUtils.isNotNull(client)) {
+			List<Mqtt5Subscription> subscriptions = new ArrayList<>(topics.length);
+			for (int i = 0; i < topics.length; i++) {
+				subscriptions.add(Mqtt5Subscription.builder()
+					.topicFilter(topics[i])
+					.qos(getMqttQos(qosArray[i]))
+					.retainAsPublished(mqttClientProperties.isRetain())
+					.noLocal(mqttClientProperties.isNoLocal())
+					.build());
+			}
+			Disposable disposable = client.subscribePublishesWith()
+				.addSubscriptions(subscriptions)
+				.applySubscribe()
+				.doOnSingle(ack -> log.info("【Hivemq】 => MQTT订阅成功，主题: {}", String.join("、", topics)))
+				.doOnError(e -> log.error("【Hivemq】 => MQTT订阅失败，主题：{}，错误信息：{}", String.join("、", topics),
+						e.getMessage(), e))
+				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
+				.subscribe(ack -> {
+				}, e -> {
+					throw new SystemException("S_Mqtt_ConsumeError", e.getMessage(), e);
+				});
+			disposableList.add(disposable);
+		}
+	}
+
+	public void unsubscribe() {
+		String[] topics = mqttClientProperties.getTopics().toArray(String[]::new);
+		unsubscribe(topics);
 	}
 
 	public void unsubscribe(String[] topics) {
@@ -229,26 +272,11 @@ public class HivemqMqttClient extends AbstractMqttClient {
 		disposableList.add(disposable);
 	}
 
-	private void subscribe() {
-		String[] topics = mqttClientProperties.getTopics().toArray(String[]::new);
-		int[] qosArray = Stream.of(topics).mapToInt(item -> mqttClientProperties.getSubscribeQos()).toArray();
-		checkTopicAndQos(topics, qosArray, "Hivemq");
+	private void consume() {
 		if (ObjectUtils.isNotNull(client)) {
-			List<Mqtt5Subscription> subscriptions = new ArrayList<>(topics.length);
-			for (int i = 0; i < topics.length; i++) {
-				subscriptions.add(Mqtt5Subscription.builder()
-					.topicFilter(topics[i])
-					.qos(getMqttQos(qosArray[i]))
-					.retainAsPublished(mqttClientProperties.isRetain())
-					.noLocal(mqttClientProperties.isNoLocal())
-					.build());
-			}
-			Disposable disposable = client.subscribePublishesWith()
-				.addSubscriptions(subscriptions)
-				.applySubscribe()
-				.doOnSingle(ack -> log.info("【Hivemq】 => MQTT订阅成功，主题: {}", String.join("、", topics)))
-				.doOnError(e -> log.error("【Hivemq】 => MQTT订阅失败，主题：{}，错误信息：{}", String.join("、", topics),
-						e.getMessage(), e))
+			Disposable disposable = client.publishes(MqttGlobalPublishFilter.ALL)
+				.onBackpressureDrop()
+				.observeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()), false, 4096)
 				.doOnNext(publish -> {
 					for (MessageHandler messageHandler : messageHandlers) {
 						if (messageHandler.isSubscribe(publish.getTopic().toString())) {
@@ -263,11 +291,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 						}
 					}
 				})
-				.onBackpressureDrop()
-				.observeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()), false, 4096)
 				.doOnError(e -> log.error("【Hivemq】 => MQTT消息处理失败，错误信息：{}", e.getMessage(), e))
 				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
-				.subscribe(ack -> {
+				.subscribe(v -> {
 				}, e -> {
 					throw new SystemException("S_Mqtt_ConsumeError", e.getMessage(), e);
 				});
