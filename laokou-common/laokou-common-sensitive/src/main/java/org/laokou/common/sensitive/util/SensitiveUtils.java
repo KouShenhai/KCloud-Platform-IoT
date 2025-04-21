@@ -33,31 +33,39 @@ public final class SensitiveUtils {
 		if (StringUtils.isEmpty(mail)) {
 			return EMPTY;
 		}
-		int index = mail.indexOf(AT);
-		if (index == -1) {
-			return mail;
-		}
-		String str = mail.substring(index);
-		return getStar(mail.length() - str.length()).concat(str);
+		return mail.replaceAll("(^\\w)[^@]*(@.*$)", "$1****$2");
 	}
 
 	public static String formatMobile(String mobile) {
-		return formatStr(mobile, 11, 3, 6);
+		return formatStr(mobile, "****", 3, 7);
 	}
 
-	public static String formatStr(String s, int length, int start, int end) {
-		if (StringUtils.isEmpty(s)) {
-			return EMPTY;
+	public static String formatStr(String str, String overlay, int start, int end) {
+		if (str == null) {
+			return null;
 		}
-		if (s.length() != length) {
-			return s;
+		if (overlay == null) {
+			overlay = EMPTY;
 		}
-		String str = s.substring(start, end + 1);
-		return s.replace(str, getStar(end - start));
-	}
-
-	private static String getStar(int len) {
-		return START.repeat(Math.max(0, len));
+		int len = str.length();
+		if (start < 0) {
+			start = 0;
+		}
+		if (start > len) {
+			start = len;
+		}
+		if (end < 0) {
+			end = 0;
+		}
+		if (end > len) {
+			end = len;
+		}
+		if (start > end) {
+			int temp = start;
+			start = end;
+			end = temp;
+		}
+		return str.substring(0, start) + overlay + str.substring(end);
 	}
 
 }
