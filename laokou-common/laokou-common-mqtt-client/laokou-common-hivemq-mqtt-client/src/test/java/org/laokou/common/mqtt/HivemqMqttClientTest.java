@@ -56,33 +56,42 @@ class HivemqMqttClientTest {
 		properties.setTopics(Set.of("/test-topic-1/#"));
 		Assertions.assertDoesNotThrow(
 				() -> HivemqMqttClientManager.add(properties.getClientId(), properties, messageHandlers));
-		// 启动MQTT客户端
+		// 发布打开事件
 		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishOpenEvent(properties.getClientId()));
 		Thread.sleep(1000);
+		// 发布消息事件
 		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishMessageEvent(properties.getClientId(),
 				"/test-topic-1/1", "hello hivemq mqtt client payload 000".getBytes(StandardCharsets.UTF_8)));
 		Thread.sleep(1000);
+		// 发布取消订阅主题事件
 		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishUnSubscribeEvent(properties.getClientId(),
 				new String[] { "/test-topic-1/#" }));
 		Thread.sleep(1000);
+		// 发布消息事件
 		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishMessageEvent(properties.getClientId(),
 				"/test-topic-1/1", "hello hivemq mqtt client payload 123".getBytes(StandardCharsets.UTF_8)));
 		Thread.sleep(1000);
+		// 发布订阅主题事件
 		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishSubscribeEvent(properties.getClientId(),
 				new String[] { "/test-topic-1/#" }, new int[] { 0 }));
 		Thread.sleep(1000);
+		// 发布消息事件
 		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishMessageEvent(properties.getClientId(),
 				"/test-topic-1/2", "hello hivemq mqtt client payload 456".getBytes(StandardCharsets.UTF_8)));
 		Thread.sleep(1000);
+		// 发布订阅主题事件
 		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishSubscribeEvent(properties.getClientId(),
 				new String[] { "/test/#" }, new int[] { 0 }));
 		Thread.sleep(1000);
+		// 发布消息事件
 		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishMessageEvent(properties.getClientId(),
 				"/test/1", "hello hivemq mqtt client payload 789".getBytes(StandardCharsets.UTF_8)));
 		Thread.sleep(1000);
+		// 发布消息事件
 		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishMessageEvent(properties.getClientId(),
 				"/test/2", "hello hivemq mqtt client payload 999".getBytes(StandardCharsets.UTF_8)));
 		Thread.sleep(1000);
+		// 发布关闭连接事件
 		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishCloseEvent(properties.getClientId()));
 	}
 

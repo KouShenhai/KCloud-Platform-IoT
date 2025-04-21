@@ -31,11 +31,12 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
-
 import static org.laokou.common.i18n.common.constant.StringConstants.*;
 
 /**
@@ -46,21 +47,27 @@ import static org.laokou.common.i18n.common.constant.StringConstants.*;
 @Slf4j
 public final class FileUtils {
 
-	private static final String RW = "rw";
-
 	private FileUtils() {
 	}
 
-	public static InputStream newInputStream(String path) throws IOException {
-		return Files.newInputStream(Path.of(path));
+	public static InputStream newInputStream(String dir) throws IOException {
+		return newInputStream(Path.of(dir));
 	}
 
-	public static BufferedReader newBufferedReader(String path) throws IOException {
-		return Files.newBufferedReader(Path.of(path));
+	public static InputStream newInputStream(Path path, OpenOption... options) throws IOException {
+		return Files.newInputStream(path, options);
 	}
 
-	public static void deleteIfExists(Path path) throws IOException {
-		Files.deleteIfExists(path);
+	public static OutputStream newOutputStream(Path path, OpenOption... options) throws IOException {
+		return Files.newOutputStream(path, options);
+	}
+
+	public static BufferedReader newBufferedReader(Path path) throws IOException {
+		return Files.newBufferedReader(path);
+	}
+
+	public static boolean deleteIfExists(Path path) throws IOException {
+		return Files.deleteIfExists(path);
 	}
 
 	/**
@@ -83,12 +90,20 @@ public final class FileUtils {
 	 */
 	public static Path create(Path directoryPath, Path filePath) throws IOException {
 		if (!isExist(directoryPath)) {
-			Files.createDirectories(directoryPath);
+			createDirectories(directoryPath);
 		}
 		if (!isExist(filePath)) {
-			Files.createFile(filePath);
+			createFile(filePath);
 		}
 		return filePath;
+	}
+
+	public static void createFile(Path filePath) throws IOException {
+		Files.createFile(filePath);
+	}
+
+	public static void createDirectories(Path directoryPath) throws IOException {
+		Files.createDirectories(directoryPath);
 	}
 
 	public static byte[] getBytes(String url) throws IOException {
@@ -115,8 +130,12 @@ public final class FileUtils {
 		Files.write(path, buff);
 	}
 
-	public static void write(Path path, InputStream inputStream, long size) throws NoSuchAlgorithmException {
-		try (FileOutputStream fos = new FileOutputStream(path.toFile());
+	public static void writeString(Path path, CharSequence csq, OpenOption... options) throws IOException {
+		Files.writeString(path, csq, options);
+	}
+
+	public static void write(Path sourcePath, InputStream inputStream, long size) throws NoSuchAlgorithmException {
+		try (FileOutputStream fos = new FileOutputStream(sourcePath.toFile());
 				FileChannel outChannel = fos.getChannel();
 				ReadableByteChannel inChannel = Channels.newChannel(inputStream)) {
 			outChannel.transferFrom(inChannel, 0, size);
@@ -179,6 +198,10 @@ public final class FileUtils {
 		Files.copy(source, out);
 	}
 
+	public static void copy(InputStream in, Path target, CopyOption... options) throws IOException {
+		Files.copy(in, target, options);
+	}
+
 	public static void delete(Path path) throws IOException {
 		Files.delete(path);
 	}
@@ -223,8 +246,58 @@ public final class FileUtils {
 		}
 	}
 
-	public static void zip(String sourcePath, String targetPath) throws IOException {
-		zip(sourcePath, Files.newOutputStream(Path.of(targetPath)));
+	public static void unzip(String sourceDir, String targetDir) {
+		unzip(Path.of(sourceDir), Path.of(targetDir));
+	}
+
+	public static void unzip(Path sourcePath, Path targetPath) {
+		try (ZipFile zipFile = new ZipFile(sourcePath.toFile(), StandardCharsets.UTF_8)) {
+			Enumeration<? extends ZipEntry> entries = zipFile.entries();
+			while (entries.hasMoreElements()) {
+				ZipEntry entry = entries.nextElement();
+				Path entryPath = targetPath.resolve(entry.getName());
+				if (entry.isDirectory()) {
+					createDirectories(entryPath);
+				}
+				else {
+					write(entryPath, zipFile.getInputStream(entry), entry.getSize());
+				}
+			}
+		}
+		catch (IOException e) {
+			log.error("ZIP解压失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_File_UnZipFailed", e.getMessage(), e);
+		}
+		catch (NoSuchAlgorithmException e) {
+			log.error("未知错误，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+		}
+	}
+
+	public static void zip(String sourceDir, String targetDir) throws IOException {
+		try (OutputStream out = newOutputStream(Path.of(targetDir), StandardOpenOption.CREATE,
+				StandardOpenOption.APPEND)) {
+			zip(Path.of(sourceDir), out);
+		}
+	}
+
+	public static void zipFile(String fileDir, String targetDir) {
+		try (OutputStream out = newOutputStream(Path.of(targetDir), StandardOpenOption.CREATE,
+				StandardOpenOption.APPEND)) {
+			zipFile(Path.of(fileDir), out);
+		}
+		catch (IOException e) {
+			log.error("ZIP压缩失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_File_ZipFailed", e.getMessage(), e);
+		}
+	}
+
+	public static void zipFile(Path filePath, OutputStream out) throws IOException {
+		try (ZipOutputStream zos = new ZipOutputStream(out)) {
+			zos.putNextEntry(new ZipEntry(filePath.toString()));
+			copy(filePath, zos);
+			zos.closeEntry();
+		}
 	}
 
 	/**
@@ -232,18 +305,17 @@ public final class FileUtils {
 	 * @param sourcePath 源路径
 	 * @param out 输出流
 	 */
-	public static void zip(String sourcePath, OutputStream out) throws IOException {
+	public static void zip(Path sourcePath, OutputStream out) throws IOException {
 		try (ZipOutputStream zos = new ZipOutputStream(out)) {
-			Path sourceDir = Path.of(sourcePath);
-			walkFileTree(sourceDir, new SimpleFileVisitor<>() {
+			walkFileTree(sourcePath, new SimpleFileVisitor<>() {
 
 				@NotNull
 				@Override
 				public FileVisitResult visitFile(@NotNull Path filePath, @NotNull BasicFileAttributes attrs)
 						throws IOException {
 					// 对于每个文件，创建一个 ZipEntry 并写入
-					Path targetPath = sourceDir.relativize(filePath);
-					zos.putNextEntry(new ZipEntry(sourceDir.getFileName() + SLASH + targetPath));
+					Path targetPath = sourcePath.relativize(filePath);
+					zos.putNextEntry(new ZipEntry(sourcePath.getFileName() + SLASH + targetPath));
 					copy(filePath, zos);
 					zos.closeEntry();
 					return FileVisitResult.CONTINUE;
@@ -254,8 +326,8 @@ public final class FileUtils {
 				public FileVisitResult preVisitDirectory(@NotNull Path dirPath, @NotNull BasicFileAttributes attrs)
 						throws IOException {
 					// 对于每个目录，创建一个 ZipEntry（目录也需要在 ZIP 中存在）
-					Path targetPath = sourceDir.relativize(dirPath);
-					zos.putNextEntry(new ZipEntry(sourceDir.getFileName() + SLASH + targetPath + SLASH));
+					Path targetPath = sourcePath.relativize(dirPath);
+					zos.putNextEntry(new ZipEntry(sourcePath.getFileName() + SLASH + targetPath));
 					zos.closeEntry();
 					return FileVisitResult.CONTINUE;
 				}
@@ -269,16 +341,16 @@ public final class FileUtils {
 		}
 	}
 
-	public static void replaceFirstFromEnd(String sourcePath, char oldChar, char newChar) {
-		replaceFromEnd(sourcePath, oldChar, newChar, true);
+	public static void replaceFirstFromEnd(String sourceDir, char oldChar, char newChar) {
+		replaceFromEnd(sourceDir, oldChar, newChar, true);
 	}
 
-	public static void replaceAllFromEnd(String sourcePath, char oldChar, char newChar) {
-		replaceFromEnd(sourcePath, oldChar, newChar, false);
+	public static void replaceAllFromEnd(String sourceDir, char oldChar, char newChar) {
+		replaceFromEnd(sourceDir, oldChar, newChar, false);
 	}
 
-	private static void replaceFromEnd(String sourcePath, char oldChar, char newChar, boolean stopAfterFirst) {
-		try (RandomAccessFile raf = new RandomAccessFile(sourcePath, RW)) {
+	private static void replaceFromEnd(String sourceDir, char oldChar, char newChar, boolean stopAfterFirst) {
+		try (RandomAccessFile raf = new RandomAccessFile(sourceDir, "rw")) {
 			for (long pos = raf.length() - 1; pos >= 0; pos--) {
 				raf.seek(pos);
 				if ((char) raf.read() == oldChar) {
@@ -297,7 +369,7 @@ public final class FileUtils {
 	}
 
 	private static void chunkWrite(File file, FileChannel inChannel, long start, long end, long size) {
-		try (RandomAccessFile accessFile = new RandomAccessFile(file, RW);
+		try (RandomAccessFile accessFile = new RandomAccessFile(file, "rw");
 				FileChannel outChannel = accessFile.getChannel()) {
 			// 零拷贝
 			// transferFrom 与 transferTo 区别

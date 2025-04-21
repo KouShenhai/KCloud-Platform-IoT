@@ -224,9 +224,8 @@ class OAuth2AuthorizationServerConfig {
 	@Bean
 	AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder,
 			UserDetailsService userDetailsServiceImpl) {
-		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(userDetailsServiceImpl);
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-		daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImpl);
 		return daoAuthenticationProvider;
 	}
 

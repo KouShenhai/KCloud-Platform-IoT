@@ -27,11 +27,6 @@ import java.math.RoundingMode;
  */
 public final class BigDecimalUtils {
 
-	/**
-	 * 默认除法运算精度.
-	 */
-	private static final int DEF_DIV_SCALE = 10;
-
 	private BigDecimalUtils() {
 	}
 
@@ -78,7 +73,7 @@ public final class BigDecimalUtils {
 	 * @return 两个参数的商
 	 */
 	public static double divide(double v1, double v2) {
-		return divide(v1, v2, DEF_DIV_SCALE);
+		return divide(v1, v2, 10);
 	}
 
 	/**

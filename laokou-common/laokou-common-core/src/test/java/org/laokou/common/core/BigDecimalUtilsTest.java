@@ -17,7 +17,9 @@
 
 package org.laokou.common.core;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.core.util.BigDecimalUtils;
 
 /**
  * @author laokou
@@ -26,8 +28,18 @@ class BigDecimalUtilsTest {
 
 	@Test
 	void test() {
-		double v1 = 1.0;
-		double v2 = 1.0;
+		double a = 2.0;
+		double b = 1.0;
+		Assertions.assertEquals(3.0, BigDecimalUtils.add(a, b));
+		Assertions.assertEquals(1.0, BigDecimalUtils.subtract(a, b));
+		Assertions.assertEquals(2.0, BigDecimalUtils.multiply(a, b));
+		Assertions.assertEquals(2.0, BigDecimalUtils.divide(a, b));
+		Assertions.assertEquals(2.0, BigDecimalUtils.divide(a, b, 0));
+		Assertions.assertEquals(3.12, BigDecimalUtils.round(3.118, 2));
+		Assertions.assertEquals(a, BigDecimalUtils.returnMax(a, b));
+		Assertions.assertEquals(b, BigDecimalUtils.returnMin(a, b));
+		Assertions.assertTrue(BigDecimalUtils.compareTo(a, b) > 0);
+		Assertions.assertFalse(BigDecimalUtils.compareTo(a, b) < 0);
 	}
 
 }
