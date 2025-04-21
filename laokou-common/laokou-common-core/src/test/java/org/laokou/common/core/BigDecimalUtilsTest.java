@@ -15,20 +15,19 @@
  *
  */
 
-package org.laokou.test.dubbo.service.impl;
+package org.laokou.common.core;
 
-import org.apache.dubbo.config.annotation.DubboService;
-import org.laokou.test.dubbo.service.UserService;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author laokou
  */
-@DubboService
-public class UserServiceImpl implements UserService {
+class BigDecimalUtilsTest {
 
-	@Override
-	public String getUsername() {
-		return "laokou";
+	@Test
+	void test() {
+		double v1 = 1.0;
+		double v2 = 1.0;
 	}
 
 }

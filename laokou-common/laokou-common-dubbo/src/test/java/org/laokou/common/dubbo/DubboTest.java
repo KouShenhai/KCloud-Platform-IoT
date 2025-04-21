@@ -15,33 +15,36 @@
  *
  */
 
-package org.laokou.test.dubbo;
+package org.laokou.common.dubbo;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
-import org.laokou.test.dubbo.service.UserService;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestConstructor;
 
+/**
+ * @author laokou
+ */
 @Slf4j
-@EnableDubbo
-@EnableConfigurationProperties
-@SpringBootApplication(scanBasePackages = { "org.laokou" })
-public class DubboTestApp implements CommandLineRunner {
+@SpringBootTest
+@EnableDubbo(scanBasePackages = { "org.laokou.common.dubbo" })
+@DubboComponentScan(basePackages = "org.laokou.common.dubbo")
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+class DubboTest {
 
 	@DubboReference
-	private UserService userService;
+	private TestUserService testUserService;
 
-	public static void main(String[] args) {
-		SpringApplication.run(DubboTestApp.class, args);
-	}
-
-	@Override
-	public void run(String... args) {
-		log.info("返回值：{}", userService.getUsername());
+	@Test
+	void test() {
+		String username = testUserService.getUsername();
+		log.info("Dubbo调用服务，获取用户名:{}", username);
+		Assertions.assertNotNull(username);
+		Assertions.assertEquals("laokou", username);
 	}
 
 }

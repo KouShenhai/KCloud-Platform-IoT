@@ -15,13 +15,19 @@
  *
  */
 
-package org.laokou.test.dubbo.service;
+package org.laokou.common.dubbo;
+
+import org.apache.dubbo.config.annotation.DubboService;
 
 /**
  * @author laokou
  */
-public interface UserService {
+@DubboService
+class TestUserServiceImpl implements TestUserService {
 
-	String getUsername();
+	@Override
+	public String getUsername() {
+		return "laokou";
+	}
 
 }

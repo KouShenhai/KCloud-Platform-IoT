@@ -15,36 +15,13 @@
  *
  */
 
-package org.laokou.common.core;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.ArrayUtils;
+package org.laokou.common.dubbo;
 
 /**
  * @author laokou
  */
-class ArrayUtilsTest {
+public interface TestUserService {
 
-	@Test
-	void testByteArray() {
-		byte[] bytes = { 1 };
-		Assertions.assertTrue(ArrayUtils.isNotEmpty(bytes));
-		Assertions.assertFalse(ArrayUtils.isEmpty(bytes));
-	}
-
-	@Test
-	void testStrArray() {
-		String[] str = { "1" };
-		Assertions.assertTrue(ArrayUtils.isNotEmpty(str));
-		Assertions.assertFalse(ArrayUtils.isEmpty(str));
-	}
-
-	@Test
-	void testObjArray() {
-		Object[] obj = { "1" };
-		Assertions.assertTrue(ArrayUtils.isNotEmpty(obj));
-		Assertions.assertFalse(ArrayUtils.isEmpty(obj));
-	}
+	String getUsername();
 
 }
