@@ -70,6 +70,10 @@ public final class FileUtils {
 		return Files.deleteIfExists(path);
 	}
 
+	public static boolean notExists(Path path, LinkOption... options) {
+		return Files.notExists(path, options);
+	}
+
 	/**
 	 * 创建目录及文件.
 	 * @param directory 目录
@@ -275,28 +279,8 @@ public final class FileUtils {
 	}
 
 	public static void zip(String sourceDir, String targetDir) throws IOException {
-		try (OutputStream out = newOutputStream(Path.of(targetDir), StandardOpenOption.CREATE,
-				StandardOpenOption.APPEND)) {
+		try (OutputStream out = newOutputStream(Path.of(targetDir))) {
 			zip(Path.of(sourceDir), out);
-		}
-	}
-
-	public static void zipFile(String fileDir, String targetDir) {
-		try (OutputStream out = newOutputStream(Path.of(targetDir), StandardOpenOption.CREATE,
-				StandardOpenOption.APPEND)) {
-			zipFile(Path.of(fileDir), out);
-		}
-		catch (IOException e) {
-			log.error("ZIP压缩失败，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_File_ZipFailed", e.getMessage(), e);
-		}
-	}
-
-	public static void zipFile(Path filePath, OutputStream out) throws IOException {
-		try (ZipOutputStream zos = new ZipOutputStream(out)) {
-			zos.putNextEntry(new ZipEntry(filePath.toString()));
-			copy(filePath, zos);
-			zos.closeEntry();
 		}
 	}
 
@@ -308,7 +292,6 @@ public final class FileUtils {
 	public static void zip(Path sourcePath, OutputStream out) throws IOException {
 		try (ZipOutputStream zos = new ZipOutputStream(out)) {
 			walkFileTree(sourcePath, new SimpleFileVisitor<>() {
-
 				@NotNull
 				@Override
 				public FileVisitResult visitFile(@NotNull Path filePath, @NotNull BasicFileAttributes attrs)
