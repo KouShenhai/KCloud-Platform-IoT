@@ -100,7 +100,7 @@
     <!--taos-jdbcdriver版本-->
     <taos-jdbcdriver.version>3.6.1</taos-jdbcdriver.version>
     <!--fury-core版本-->
-    <fury-core.version>0.10.0</fury-core.version>
+    <fury-core.version>0.10.1</fury-core.version>
     <!--browscap-java版本-->
     <browscap-java.version>1.5.0</browscap-java.version>
     <!--liquibase-core版本-->
