@@ -50,4 +50,11 @@ class ThreadUtilsTest {
 		executorService.execute(() -> Assertions.assertNotNull(executorService));
 	}
 
+	@Test
+	void testNewScheduledThreadPool() {
+		try (ExecutorService executorService = ThreadUtils.newScheduledThreadPool(1)) {
+			executorService.execute(() -> Assertions.assertNotNull(executorService));
+		}
+	}
+
 }

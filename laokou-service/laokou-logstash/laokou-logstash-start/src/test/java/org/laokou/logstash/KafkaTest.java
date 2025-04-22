@@ -20,6 +20,7 @@ package org.laokou.logstash;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.kafka.template.KafkaSender;
@@ -27,6 +28,9 @@ import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 import reactor.core.scheduler.Schedulers;
+import reactor.util.retry.Retry;
+
+import java.time.Duration;
 
 /**
  * @author laokou
@@ -55,7 +59,11 @@ class KafkaTest {
 		index.setMessage("{\"testValue\": \"123456\"}");
 		index.setStacktrace("");
 		reactiveKafkaSender.send("laokou_trace_topic", JacksonUtils.toJsonStr(index))
-			.subscribeOn(Schedulers.boundedElastic())
+			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
+				.maxBackoff(Duration.ofSeconds(30))
+				.jitter(0.5)
+				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
 			.subscribe();
 	}
 

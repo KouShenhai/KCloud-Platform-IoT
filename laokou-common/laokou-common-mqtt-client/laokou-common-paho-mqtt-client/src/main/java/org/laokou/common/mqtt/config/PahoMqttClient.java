@@ -28,7 +28,6 @@ import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 import org.laokou.common.core.util.SpringEventBus;
 import org.laokou.common.core.util.CollectionUtils;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.mqtt.client.AbstractMqttClient;
 import org.laokou.common.mqtt.client.config.MqttClientProperties;
@@ -76,36 +75,16 @@ public class PahoMqttClient extends AbstractMqttClient {
 			if (ObjectUtils.isNull(client)) {
 				synchronized (LOCK) {
 					if (ObjectUtils.isNull(client)) {
-						String clientId = mqttClientProperties.getClientId();
 						client = new MqttAsyncClient(
 								"tcp://" + mqttClientProperties.getHost() + ":" + mqttClientProperties.getPort(),
-								clientId, new MqttDefaultFilePersistence(), null, executor);
-						client.setManualAcks(mqttClientProperties.isManualAcks());
-						client.setCallback(new PahoMqttClientMessageCallback(messageHandlers, mqttClientProperties));
-						client.connect(options(), null, new MqttActionListener() {
-							@Override
-							public void onSuccess(IMqttToken asyncActionToken) {
-								log.info("【Paho】 => MQTT连接成功，客户端ID：{}", clientId);
-								// 发布订阅事件
-								publishSubscribeEvent(mqttClientProperties.getTopics(),
-										mqttClientProperties.getSubscribeQos());
-							}
-
-							@Override
-							public void onFailure(IMqttToken asyncActionToken, Throwable e) {
-								log.error("【Paho】 => MQTT连接失败，客户端ID：{}，错误信息：{}", clientId, e.getMessage(), e);
-								if (ATOMIC.incrementAndGet() < 5) {
-									open();
-								}
-							}
-						});
+								mqttClientProperties.getClientId(), new MqttDefaultFilePersistence(), null, executor);
 					}
 				}
 			}
+			connect();
 		}
 		catch (Exception e) {
 			log.error("【Paho】 => MQTT连接失败，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_Mqtt_ConnectError", e.getMessage(), e);
 		}
 	}
 
@@ -119,7 +98,6 @@ public class PahoMqttClient extends AbstractMqttClient {
 			}
 			catch (MqttException e) {
 				log.error("【Paho】 => 关闭MQTT连接失败，错误信息：{}", e.getMessage(), e);
-				throw new SystemException("S_Mqtt_CloseError", e.getMessage(), e);
 			}
 		}
 	}
@@ -211,6 +189,28 @@ public class PahoMqttClient extends AbstractMqttClient {
 
 	public void publishCloseEvent(String clientId) {
 		SpringEventBus.publish(new CloseEvent(this, clientId));
+	}
+
+	private void connect() throws MqttException {
+		client.setManualAcks(mqttClientProperties.isManualAcks());
+		client.setCallback(new PahoMqttClientMessageCallback(messageHandlers));
+		client.connect(options(), null, new MqttActionListener() {
+			@Override
+			public void onSuccess(IMqttToken asyncActionToken) {
+				log.info("【Paho】 => MQTT连接成功，客户端ID：{}", mqttClientProperties.getClientId());
+				// 发布订阅事件
+				publishSubscribeEvent(mqttClientProperties.getTopics(), mqttClientProperties.getSubscribeQos());
+			}
+
+			@Override
+			public void onFailure(IMqttToken asyncActionToken, Throwable e) {
+				log.error("【Paho】 => MQTT连接失败，客户端ID：{}，错误信息：{}", mqttClientProperties.getClientId(), e.getMessage(), e);
+				if (ATOMIC.incrementAndGet() < 10) {
+					log.error("【Paho】 => MQTT第{}次重现连接", ATOMIC.get());
+					open();
+				}
+			}
+		});
 	}
 
 }

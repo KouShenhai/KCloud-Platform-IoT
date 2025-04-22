@@ -18,18 +18,17 @@
 package org.laokou.common.core.config;
 
 import org.laokou.common.core.util.ThreadUtils;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.stereotype.Component;
-
 import java.util.concurrent.Executor;
 
 /**
  * @author laokou
  */
 @EnableAsync
-@Component
+@Configuration
 public class AsyncConfig implements AsyncConfigurer {
 
 	@Nullable

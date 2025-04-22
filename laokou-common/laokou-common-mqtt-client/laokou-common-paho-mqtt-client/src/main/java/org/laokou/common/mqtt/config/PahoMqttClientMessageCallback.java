@@ -25,8 +25,8 @@ import org.eclipse.paho.mqttv5.client.MqttDisconnectResponse;
 import org.eclipse.paho.mqttv5.common.MqttException;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
-import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
+import org.springframework.dao.DuplicateKeyException;
 
 import java.util.List;
 
@@ -38,8 +38,6 @@ import java.util.List;
 public class PahoMqttClientMessageCallback implements MqttCallback {
 
 	private final List<MessageHandler> messageHandlers;
-
-	private final MqttClientProperties mqttClientProperties;
 
 	@Override
 	public void disconnected(MqttDisconnectResponse disconnectResponse) {
@@ -55,8 +53,16 @@ public class PahoMqttClientMessageCallback implements MqttCallback {
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
 		for (MessageHandler messageHandler : messageHandlers) {
 			if (messageHandler.isSubscribe(topic)) {
-				messageHandler.handle(new org.laokou.common.mqtt.client.MqttMessage(message.getPayload(), topic));
-				break;
+				try {
+					messageHandler.handle(new org.laokou.common.mqtt.client.MqttMessage(message.getPayload(), topic));
+					break;
+				}
+				catch (DuplicateKeyException e) {
+					// 忽略重复键异常
+				}
+				catch (Exception e) {
+					log.error("【Paho】 => MQTT消息处理失败，Topic：{}，错误信息：{}", topic, e.getMessage(), e);
+				}
 			}
 		}
 	}

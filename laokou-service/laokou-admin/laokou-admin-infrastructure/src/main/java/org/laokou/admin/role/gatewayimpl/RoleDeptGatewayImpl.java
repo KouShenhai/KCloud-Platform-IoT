@@ -18,6 +18,7 @@
 package org.laokou.admin.role.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.gateway.RoleDeptGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleDeptMapper;
@@ -29,13 +30,16 @@ import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+import reactor.util.retry.Retry;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class RoleDeptGatewayImpl implements RoleDeptGateway {
@@ -79,7 +83,11 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 
 	private Mono<List<Long>> getRoleDeptIds(List<Long> roleIds) {
 		return Mono.fromCallable(() -> roleDeptMapper.selectIdsByRoleIds(roleIds))
-			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()));
+			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
+				.maxBackoff(Duration.ofSeconds(30))
+				.jitter(0.5)
+				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))); // 增强型指数退避策略
 	}
 
 }

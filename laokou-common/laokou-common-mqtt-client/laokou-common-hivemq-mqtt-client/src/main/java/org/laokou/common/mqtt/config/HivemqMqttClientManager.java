@@ -19,7 +19,6 @@ package org.laokou.common.mqtt.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
 
@@ -32,7 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class HivemqMqttClientManager {
+public final class HivemqMqttClientManager {
 
 	private static final Map<String, HivemqMqttClient> HIVE_MQTT_CLIENT_MAP = new ConcurrentHashMap<>(4096);
 
@@ -40,7 +39,7 @@ public class HivemqMqttClientManager {
 		if (HIVE_MQTT_CLIENT_MAP.containsKey(clientId)) {
 			return HIVE_MQTT_CLIENT_MAP.get(clientId);
 		}
-		throw new SystemException("S_Mqtt_NotExist", "MQTT客户端不存在");
+		throw new IllegalArgumentException("【HiveMQ】 => MQTT客户端不存在");
 	}
 
 	public static void remove(String clientId) {
@@ -92,10 +91,10 @@ public class HivemqMqttClientManager {
 	}
 
 	public static void destroy() {
-		log.info("HiveMQ MQTT客户端销毁开始执行");
+		log.info("【HiveMQ】 => MQTT客户端销毁开始执行");
 		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::close);
 		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::dispose);
-		log.info("HiveMQ MQTT客户端销毁执行完毕");
+		log.info("【HiveMQ】 => MQTT客户端销毁执行完毕");
 	}
 
 }

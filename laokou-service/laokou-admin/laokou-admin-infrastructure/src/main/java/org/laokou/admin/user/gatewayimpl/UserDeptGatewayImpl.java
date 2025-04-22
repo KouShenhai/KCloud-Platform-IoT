@@ -18,6 +18,7 @@
 package org.laokou.admin.user.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.gateway.UserDeptGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserDeptMapper;
@@ -29,12 +30,16 @@ import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+import reactor.util.retry.Retry;
+
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class UserDeptGatewayImpl implements UserDeptGateway {
@@ -78,7 +83,12 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 
 	private Mono<List<Long>> getUserDeptIds(List<Long> userIds) {
 		return Mono.fromCallable(() -> userDeptMapper.selectIdsByUserIds(userIds))
-			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()));
+			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
+				.maxBackoff(Duration.ofSeconds(30))
+				.jitter(0.5)
+				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))); // 增强型指数退避策略
+
 	}
 
 }

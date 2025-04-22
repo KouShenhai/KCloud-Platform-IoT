@@ -17,8 +17,6 @@
 
 package org.laokou.common.core;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Assertions;
@@ -42,10 +40,6 @@ class TreeUtilsTest {
 	@NoArgsConstructor
 	static class Node extends TreeUtils.TreeNode<Node> {
 
-		@JsonIgnore
-		private Long id;
-
-		@JsonProperty("routers")
 		private List<Node> children = new ArrayList<>(16);
 
 		public Node(Long id, String name, Long pid) {

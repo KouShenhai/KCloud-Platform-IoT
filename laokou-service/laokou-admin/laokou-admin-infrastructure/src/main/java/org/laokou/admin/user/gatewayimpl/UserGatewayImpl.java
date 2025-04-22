@@ -18,6 +18,7 @@
 package org.laokou.admin.user.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.gateway.UserGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
@@ -28,7 +29,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+import reactor.util.retry.Retry;
 
+import java.time.Duration;
 import java.util.Arrays;
 
 /**
@@ -36,6 +39,7 @@ import java.util.Arrays;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class UserGatewayImpl implements UserGateway {
@@ -60,7 +64,11 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	public Mono<Void> delete(Long[] ids) {
 		return Mono.fromCallable(() -> userMapper.deleteByIds(Arrays.asList(ids)))
-			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
+				.maxBackoff(Duration.ofSeconds(30))
+				.jitter(0.5)
+				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
 			.then();
 	}
 

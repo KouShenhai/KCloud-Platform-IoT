@@ -21,15 +21,37 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.sensitive.util.SensitiveUtils;
 
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
+
 /**
  * @author laokou
  */
 class SensitiveUtilsTest {
 
 	@Test
-	void test() {
-		Assertions.assertEquals("2****@qq.com", SensitiveUtils.formatMail("2413176044@qq.com"));
+	void testMobile() {
 		Assertions.assertEquals("188****8888", SensitiveUtils.formatMobile("18888888888"));
+		Assertions.assertEquals(EMPTY, SensitiveUtils.formatMobile(EMPTY));
+		Assertions.assertEquals(EMPTY, SensitiveUtils.formatMobile(null));
+	}
+
+	@Test
+	void testStr() {
+		Assertions.assertEquals(EMPTY, SensitiveUtils.formatStr(null, "", 3, 7));
+		Assertions.assertEquals(EMPTY, SensitiveUtils.formatStr("", "", 3, 7));
+		Assertions.assertEquals("123890", SensitiveUtils.formatStr("1234567890", null, 3, 7));
+		Assertions.assertEquals("123890", SensitiveUtils.formatStr("1234567890", EMPTY, 3, 7));
+		Assertions.assertEquals("890", SensitiveUtils.formatStr("1234567890", EMPTY, -1, 7));
+		Assertions.assertEquals("1234567", SensitiveUtils.formatStr("1234567890", EMPTY, 11, 7));
+		Assertions.assertEquals("1", SensitiveUtils.formatStr("1234567890", EMPTY, 1, 12));
+		Assertions.assertEquals("234567890", SensitiveUtils.formatStr("1234567890", EMPTY, 1, -1));
+	}
+
+	@Test
+	void testMail() {
+		Assertions.assertEquals("2****@qq.com", SensitiveUtils.formatMail("2413176044@qq.com"));
+		Assertions.assertEquals(EMPTY, SensitiveUtils.formatMail(null));
+		Assertions.assertEquals(EMPTY, SensitiveUtils.formatMail(EMPTY));
 	}
 
 }

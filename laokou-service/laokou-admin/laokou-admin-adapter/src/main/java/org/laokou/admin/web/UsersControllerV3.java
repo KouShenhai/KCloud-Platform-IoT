@@ -42,6 +42,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.Disposable;
 import reactor.core.scheduler.Schedulers;
+import reactor.util.retry.Retry;
+
+import java.time.Duration;
+
 import static org.laokou.common.data.cache.constant.NameConstants.USERS;
 import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
 
@@ -84,7 +88,11 @@ public class UsersControllerV3 {
 	public void removeV3(@RequestBody Long[] ids) {
 		Disposable disposable = usersServiceI.remove(new UserRemoveCmd(ids))
 			.doOnError(e -> log.error("删除用户失败：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
+				.maxBackoff(Duration.ofSeconds(30))
+				.jitter(0.5)
+				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
 			.subscribe(v -> {
 			}, e -> {
 				throw new BizException("B_User_RemoveFailed", e.getMessage(), e);
@@ -124,7 +132,11 @@ public class UsersControllerV3 {
 	public void modifyAuthorityV3(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {
 		Disposable disposable = usersServiceI.modifyAuthority(cmd)
 			.doOnError(e -> log.error("修改用户权限失败：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
+				.maxBackoff(Duration.ofSeconds(30))
+				.jitter(0.5)
+				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
 			.subscribe(v -> {
 			}, e -> {
 				throw new BizException("B_User_ModifyAuthorityFailed", e.getMessage(), e);

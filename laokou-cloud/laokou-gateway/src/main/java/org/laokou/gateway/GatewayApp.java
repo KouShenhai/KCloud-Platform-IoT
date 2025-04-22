@@ -41,11 +41,13 @@ import org.springframework.util.StopWatch;
 import reactor.core.Disposable;
 import reactor.core.publisher.Hooks;
 import reactor.core.scheduler.Schedulers;
+import reactor.util.retry.Retry;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
 
 /**
  * 网关服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
@@ -102,7 +104,14 @@ public class GatewayApp implements CommandLineRunner {
 
 	private void syncRouters() {
 		// 删除路由
-		Disposable disposable1 = nacosRouteDefinitionRepository.removeRouters().subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor())).subscribe(delFlag -> {
+		Disposable disposable1 = nacosRouteDefinitionRepository.removeRouters()
+			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
+				.maxBackoff(Duration.ofSeconds(30))
+				.jitter(0.5)
+				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))
+			)  // 增强型指数退避策略
+			.subscribe(delFlag -> {
 			if (delFlag) {
 				log.info("删除路由成功");
 			} else {
@@ -110,7 +119,14 @@ public class GatewayApp implements CommandLineRunner {
 			}
 		});
 		// 保存路由
-		Disposable disposable2 = nacosRouteDefinitionRepository.saveRouters().subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor())).subscribe(saveFlag -> {
+		Disposable disposable2 = nacosRouteDefinitionRepository.saveRouters()
+			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
+				.maxBackoff(Duration.ofSeconds(30))
+				.jitter(0.5)
+				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))
+			)  // 增强型指数退避策略
+			.subscribe(saveFlag -> {
 			if (saveFlag) {
 				log.info("保存路由成功");
 			} else {

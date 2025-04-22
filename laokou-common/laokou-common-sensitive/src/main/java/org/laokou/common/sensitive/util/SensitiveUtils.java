@@ -41,10 +41,10 @@ public final class SensitiveUtils {
 	}
 
 	public static String formatStr(String str, String overlay, int start, int end) {
-		if (str == null) {
-			return null;
+		if (StringUtils.isEmpty(str)) {
+			return EMPTY;
 		}
-		if (overlay == null) {
+		if (StringUtils.isEmpty(overlay)) {
 			overlay = EMPTY;
 		}
 		int len = str.length();

@@ -18,9 +18,9 @@
 package org.laokou.common.mqtt.config;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.common.MqttException;
 import org.laokou.common.core.util.ThreadUtils;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
 
@@ -33,8 +33,9 @@ import java.util.concurrent.ScheduledExecutorService;
 /**
  * @author laokou
  */
+@Slf4j
 @RequiredArgsConstructor
-public class PahoMqttClientManager {
+public final class PahoMqttClientManager {
 
 	private static final Map<String, PahoMqttClient> PAHO_MQTT_CLIENT_MAP = new ConcurrentHashMap<>(4096);
 
@@ -44,7 +45,7 @@ public class PahoMqttClientManager {
 		if (PAHO_MQTT_CLIENT_MAP.containsKey(clientId)) {
 			return PAHO_MQTT_CLIENT_MAP.get(clientId);
 		}
-		throw new SystemException("S_Mqtt_NotExist", "MQTT客户端不存在");
+		throw new IllegalArgumentException("【Paho】 => MQTT客户端不存在");
 	}
 
 	public static void remove(String clientId) {
@@ -88,10 +89,11 @@ public class PahoMqttClientManager {
 		get(clientId).publishCloseEvent(clientId);
 	}
 
-	public static void preDestroy() {
+	public static void destroy() {
+		log.info("【Paho】 => MQTT客户端销毁开始执行");
 		PAHO_MQTT_CLIENT_MAP.values().forEach(PahoMqttClient::close);
 		PAHO_MQTT_CLIENT_MAP.clear();
-		ThreadUtils.shutdown(EXECUTOR, 60);
+		log.info("【Paho】 => MQTT客户端销毁执行完毕");
 	}
 
 }

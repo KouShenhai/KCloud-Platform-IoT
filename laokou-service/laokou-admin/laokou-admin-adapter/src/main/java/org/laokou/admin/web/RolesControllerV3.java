@@ -40,6 +40,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.Disposable;
 import reactor.core.scheduler.Schedulers;
+import reactor.util.retry.Retry;
+
+import java.time.Duration;
 
 /**
  * 角色管理控制器.
@@ -81,7 +84,11 @@ public class RolesControllerV3 {
 	public void removeV3(@RequestBody Long[] ids) {
 		Disposable disposable = rolesServiceI.remove(new RoleRemoveCmd(ids))
 			.doOnError(e -> log.error("删除角色失败：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
+				.maxBackoff(Duration.ofSeconds(30))
+				.jitter(0.5)
+				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
 			.subscribe(v -> {
 			}, e -> {
 				throw new BizException("B_Role_RemoveFailed", e.getMessage(), e);
@@ -112,7 +119,11 @@ public class RolesControllerV3 {
 	public void modifyAuthorityV3(@RequestBody RoleModifyAuthorityCmd cmd) throws Exception {
 		Disposable disposable = rolesServiceI.modifyAuthority(cmd)
 			.doOnError(e -> log.error("修改角色权限失败：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.fromExecutorService(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
+				.maxBackoff(Duration.ofSeconds(30))
+				.jitter(0.5)
+				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
 			.subscribe(v -> {
 			}, e -> {
 				throw new BizException("B_Role_ModifyAuthorityFailed", e.getMessage(), e);
