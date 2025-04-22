@@ -326,7 +326,7 @@ services:
       - rocketmq-namesrv
   # 账号密码 admin/admin
   rocketmq-dashboard:
-    image: apacherocketmq/rocketmq-dashboard:1.0.0
+    image: apacherocketmq/rocketmq-dashboard:2.0.1
     container_name: rocketmq-dashboard
     # 保持容器在没有守护程序的情况下运行
     tty: true
