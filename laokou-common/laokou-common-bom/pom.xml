@@ -164,7 +164,7 @@
     <!--spring-ai-openai-spring-boot-starter版本-->
     <spring-ai-openai-spring-boot-starter.version>1.0.0-M6</spring-ai-openai-spring-boot-starter.version>
     <!--flink-connector-kafka版本-->
-    <flink-connector-kafka.version>3.4.0-1.20</flink-connector-kafka.version>
+    <flink-connector-kafka.version>4.0.0-2.0</flink-connector-kafka.version>
     <!--spark版本-->
     <spark.version>3.5.5</spark.version>
     <!--mysql-connector-j版本-->
