@@ -98,7 +98,7 @@ public class MqttClientProperties {
 
 	private long automaticReconnectInitialDelay = 1;
 
-	private boolean manualAcks = true;
+	private boolean manualAcks = false;
 
 	private Set<String> topics = new HashSet<>(0);
 

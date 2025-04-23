@@ -205,10 +205,6 @@ public class PahoMqttClient extends AbstractMqttClient {
 			@Override
 			public void onFailure(IMqttToken asyncActionToken, Throwable e) {
 				log.error("【Paho】 => MQTT连接失败，客户端ID：{}，错误信息：{}", mqttClientProperties.getClientId(), e.getMessage(), e);
-				if (ATOMIC.incrementAndGet() < 10) {
-					log.error("【Paho】 => MQTT第{}次重现连接", ATOMIC.get());
-					open();
-				}
 			}
 		});
 	}

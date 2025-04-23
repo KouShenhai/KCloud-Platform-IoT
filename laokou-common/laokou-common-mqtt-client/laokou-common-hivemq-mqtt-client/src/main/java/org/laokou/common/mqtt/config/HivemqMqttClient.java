@@ -283,6 +283,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					for (MessageHandler messageHandler : messageHandlers) {
 						if (messageHandler.isSubscribe(publish.getTopic().toString())) {
 							try {
+								log.info("【Hivemq】 => MQTT接收到消息，Topic：{}", publish.getTopic());
 								messageHandler.handle(
 										new MqttMessage(publish.getPayloadAsBytes(), publish.getTopic().toString()));
 								break;

@@ -50,10 +50,11 @@ public class PahoMqttClientMessageCallback implements MqttCallback {
 	}
 
 	@Override
-	public void messageArrived(String topic, MqttMessage message) throws Exception {
+	public void messageArrived(String topic, MqttMessage message) {
 		for (MessageHandler messageHandler : messageHandlers) {
 			if (messageHandler.isSubscribe(topic)) {
 				try {
+					log.info("【Paho】 => MQTT接收到消息，Topic：{}", topic);
 					messageHandler.handle(new org.laokou.common.mqtt.client.MqttMessage(message.getPayload(), topic));
 					break;
 				}
