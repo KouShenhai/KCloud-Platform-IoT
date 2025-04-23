@@ -17,9 +17,25 @@
 
 package org.laokou.common.core;
 
+import com.github.tomakehurst.wiremock.WireMockServer;
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestConstructor;
+
 /**
  * @author laokou
  */
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@RequiredArgsConstructor
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class HttpUtilsTest {
+
+	private final WireMockServer wireMockServer;
+
+	@Test
+	void test() {
+		wireMockServer.start();
+	}
 
 }

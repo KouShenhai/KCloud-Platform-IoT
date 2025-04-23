@@ -150,5 +150,11 @@
       <groupId>com.github.oshi</groupId>
       <artifactId>oshi-core</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.wiremock</groupId>
+      <artifactId>wiremock</artifactId>
+      <scope>test</scope>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 </project>
