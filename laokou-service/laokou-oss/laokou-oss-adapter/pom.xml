@@ -14,43 +14,6 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-oss-app</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-openapi-doc</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-core</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-cors</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-idempotent</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-redis</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-trace</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
   </dependencies>
 
 </project>

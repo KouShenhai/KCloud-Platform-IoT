@@ -126,7 +126,7 @@ springdoc:
       paths-to-match: '/**'
       packages-to-scan: org.laokou.oss.web
 
-# mybatis-plus
+# MybatisPlus配置
 mybatis-plus:
   # 全局处理
   global-config:
@@ -138,5 +138,41 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
 
+rocketmq:
+  producer:
+    group: laokou_producer_group
+  name-server: rocketmq-namesrv:9876
+  consumer:
+    pull-batch-size: 32
+
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
+
+# Actuator配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+    # 采样率 => 100%
+    sampling:
+      probability: 1
+  otlp:
+    tracing:
+      endpoint: http://otel-collector:4317/v1/traces
+      compression: gzip
+      timeout: 10s
+      transport: grpc
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    tags:
+      application: ${spring.application.name}

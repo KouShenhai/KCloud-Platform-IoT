@@ -224,7 +224,7 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
 
-# actuator
+# Actuator配置
 management:
   endpoints:
     web:
