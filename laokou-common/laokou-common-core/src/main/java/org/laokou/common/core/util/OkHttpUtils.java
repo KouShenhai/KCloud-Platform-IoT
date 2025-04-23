@@ -71,11 +71,8 @@ public final class OkHttpUtils {
 	}
 
 	public static void destroy() throws IOException {
-		try (Cache cache = CLIENT.cache(); ExecutorService executorService = CLIENT.dispatcher().executorService();) {
+		try (Cache ignored = CLIENT.cache(); ExecutorService executorService = CLIENT.dispatcher().executorService();) {
 			CLIENT.connectionPool().evictAll();
-			if (cache != null) {
-				cache.close();
-			}
 			executorService.shutdown();
 		}
 
