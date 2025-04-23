@@ -24,7 +24,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.nacos.context.ShutdownHolder;
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.core.util.SpringContextUtils;
 import org.laokou.common.core.util.ThreadUtils;
@@ -52,7 +51,7 @@ import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAIL
 @WebFilter(filterName = "shutdownFilter", urlPatterns = "/graceful-shutdown")
 public class ShutdownFilter implements Filter, org.springframework.web.server.WebFilter {
 
-	private static final ScheduledExecutorService NEWED_SCHEDULED_THREAD_POOL = Executors.newScheduledThreadPool(1);
+	private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -89,13 +88,12 @@ public class ShutdownFilter implements Filter, org.springframework.web.server.We
 			// 注册关闭钩子函数
 			log.info("钩子函数注册成功");
 			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-				int second = 60 * 1000;
-				long start = IdGenerator.SystemClock.now();
-				NEWED_SCHEDULED_THREAD_POOL.scheduleWithFixedDelay(() -> {
+				long second = 60_000L + System.currentTimeMillis();
+				executorService.scheduleWithFixedDelay(() -> {
 					// 一分钟内没完成 或 计数器为0 -> 结束
-					if (IdGenerator.SystemClock.now() - start >= second || ShutdownHolder.get() == 0) {
-						ThreadUtils.shutdown(NEWED_SCHEDULED_THREAD_POOL, 30);
-						log.info("关闭应用");
+					if (System.currentTimeMillis() >= second || ShutdownHolder.get() == 0) {
+						ThreadUtils.shutdown(executorService, 60);
+						log.info("优雅关闭应用。。。");
 						int exitCode = SpringApplication.exit(SpringContextUtils.getApplicationContext(),
 								new ExitCodeGeneratorImpl());
 						System.exit(exitCode);

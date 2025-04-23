@@ -38,7 +38,6 @@ class IdGeneratorTest {
 		Instant instant = IdGenerator.getInstant(snowflakeId);
 		String time2 = DateUtils.format(instant, DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
 		Assertions.assertEquals(time1, time2);
-		Assertions.assertNotEquals(System.currentTimeMillis(), IdGenerator.SystemClock.now());
 	}
 
 }

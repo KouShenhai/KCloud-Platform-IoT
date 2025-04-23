@@ -64,8 +64,8 @@ public class RoleGatewayImpl implements RoleGateway {
 	public Mono<Void> delete(Long[] ids) {
 		return Mono.fromCallable(() -> roleMapper.deleteByIds(Arrays.asList(ids)))
 			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
-			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
-				.maxBackoff(Duration.ofSeconds(30))
+			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
+				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)
 				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
 			.then();
@@ -74,8 +74,8 @@ public class RoleGatewayImpl implements RoleGateway {
 	private Mono<Integer> getVersion(RoleE roleE) {
 		return Mono.fromCallable(() -> roleMapper.selectVersion(roleE.getId()))
 			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
-			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
-				.maxBackoff(Duration.ofSeconds(30))
+			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
+				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)
 				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))); // 增强型指数退避策略
 	}

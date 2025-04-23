@@ -30,11 +30,7 @@ import java.net.UnknownHostException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.*;
 import static org.laokou.common.i18n.common.constant.StringConstants.AT;
 
 /**
@@ -196,16 +192,12 @@ public final class IdGenerator {
 			MACHINE_ID = getMaxMachineId(DATACENTER_ID);
 		}
 
-		private long getNextMill() {
-			long mill = getNewTimeStamp();
-			while (mill <= lastTimeStamp) {
-				mill = getNewTimeStamp();
+		private long getNextTimeMillis() {
+			long millis = System.currentTimeMillis();
+			while (millis <= lastTimeStamp) {
+				millis = System.currentTimeMillis();
 			}
-			return mill;
-		}
-
-		private long getNewTimeStamp() {
-			return SystemClock.now();
+			return millis;
 		}
 
 		/**
@@ -262,14 +254,14 @@ public final class IdGenerator {
 		 * @return 雪花ID
 		 */
 		private synchronized long nextId() {
-			long currTimeStamp = getNewTimeStamp();
+			long currTimeStamp = getNextTimeMillis();
 			int maxOffset = 5;
 			if (currTimeStamp < lastTimeStamp) {
 				long offset = lastTimeStamp - currTimeStamp;
 				if (offset <= maxOffset) {
 					try {
 						wait(offset << 1);
-						currTimeStamp = getNewTimeStamp();
+						currTimeStamp = getNextTimeMillis();
 						if (currTimeStamp < lastTimeStamp) {
 							throw new RuntimeException(String
 								.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", offset));
@@ -289,7 +281,7 @@ public final class IdGenerator {
 				sequence = (sequence + 1) & MAX_SEQUENCE;
 				// 同一毫秒的序列数已经达到最大
 				if (sequence == 0L) {
-					currTimeStamp = getNextMill();
+					currTimeStamp = getNextTimeMillis();
 				}
 			}
 			else {
@@ -305,81 +297,6 @@ public final class IdGenerator {
 					| MACHINE_ID << MACHINE_LEFT
 					// 序列标识部分
 					| sequence;
-		}
-
-	}
-
-	/**
-	 * 高并发场景下System.currentTimeMillis()的性能问题的优化.
-	 *
-	 * <p>
-	 * System.currentTimeMillis()的调用比new一个普通对象要耗时的多（具体耗时高出多少我还没测试过，有人说是100倍左右）
-	 * </p>
-	 * <p>
-	 * System.currentTimeMillis()之所以慢是因为去跟系统打了一次交道
-	 * </p>
-	 * <p>
-	 * 后台定时更新时钟，JVM退出时，线程自动回收
-	 * </p>
-	 * <p>
-	 * 10亿：43410,206,210.72815533980582%
-	 * </p>
-	 * <p>
-	 * 1亿：4699,29,162.0344827586207%
-	 * </p>
-	 * <p>
-	 * 1000万：480,12,40.0%
-	 * </p>
-	 * <p>
-	 * 100万：50,10,5.0%
-	 * </p>
-	 *
-	 * @author hubin
-	 * @since 2016-08-01
-	 */
-	public final static class SystemClock {
-
-		private final long initialDelay;
-
-		private final long period;
-
-		private final AtomicLong now;
-
-		private SystemClock(long initialDelay, long period) {
-			this.initialDelay = initialDelay;
-			this.period = period;
-			this.now = new AtomicLong(System.currentTimeMillis());
-			scheduleClockUpdating();
-		}
-
-		private static SystemClock instance() {
-			return InstanceHolder.INSTANCE;
-		}
-
-		public static long now() {
-			return instance().currentTimeMillis();
-		}
-
-		private void scheduleClockUpdating() {
-			// System.currentTimeMillis() => 线程安全
-			try (ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(runnable -> {
-				Thread thread = new Thread(runnable, "system-clock-thread");
-				thread.setDaemon(false);
-				return thread;
-			})) {
-				scheduler.scheduleAtFixedRate(() -> now.set(System.currentTimeMillis()), initialDelay, period,
-						TimeUnit.MILLISECONDS);
-			}
-		}
-
-		private long currentTimeMillis() {
-			return now.get();
-		}
-
-		private static class InstanceHolder {
-
-			public static final SystemClock INSTANCE = new SystemClock(1, 1);
-
 		}
 
 	}

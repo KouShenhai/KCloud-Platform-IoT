@@ -84,8 +84,8 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 	private Mono<List<Long>> getRoleDeptIds(List<Long> roleIds) {
 		return Mono.fromCallable(() -> roleDeptMapper.selectIdsByRoleIds(roleIds))
 			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
-			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
-				.maxBackoff(Duration.ofSeconds(30))
+			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
+				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)
 				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))); // 增强型指数退避策略
 	}

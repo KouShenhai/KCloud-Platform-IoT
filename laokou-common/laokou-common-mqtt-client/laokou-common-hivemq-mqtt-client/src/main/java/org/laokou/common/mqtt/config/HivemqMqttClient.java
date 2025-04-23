@@ -92,9 +92,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				.sessionExpiryInterval(mqttClientProperties.getSessionExpiryInterval())
 				.applyDisconnect()
 				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
-				.retryWhen(errors -> errors.scan(1, (retryCount, error) -> retryCount > 3 ? -1 : retryCount + 1)
+				.retryWhen(errors -> errors.scan(1, (retryCount, error) -> retryCount > 5 ? -1 : retryCount + 1)
 					.takeWhile(retryCount -> retryCount != -1)
-					.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount), TimeUnit.SECONDS)))
+					.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount) * 100, TimeUnit.MILLISECONDS)))
 				.subscribe(() -> log.info("【Hivemq】 => MQTT断开连接成功，客户端ID：{}", mqttClientProperties.getClientId()),
 						e -> log.error("【Hivemq】 => MQTT断开连接失败，错误信息：{}", e.getMessage(), e));
 			disposableList.add(disposable);
@@ -123,9 +123,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				.addSubscriptions(subscriptions)
 				.applySubscribe()
 				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
-				.retryWhen(errors -> errors.scan(1, (retryCount, error) -> retryCount > 3 ? -1 : retryCount + 1)
+				.retryWhen(errors -> errors.scan(1, (retryCount, error) -> retryCount > 5 ? -1 : retryCount + 1)
 					.takeWhile(retryCount -> retryCount != -1)
-					.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount), TimeUnit.SECONDS)))
+					.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount) * 100, TimeUnit.MILLISECONDS)))
 				.subscribe(ack -> log.info("【Hivemq】 => MQTT订阅成功，主题: {}", String.join("、", topics)), e -> log
 					.error("【Hivemq】 => MQTT订阅失败，主题：{}，错误信息：{}", String.join("、", topics), e.getMessage(), e));
 			disposableList.add(disposable);
@@ -148,9 +148,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				.addTopicFilters(matchedTopics)
 				.applyUnsubscribe()
 				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
-				.retryWhen(errors -> errors.scan(1, (retryCount, error) -> retryCount > 3 ? -1 : retryCount + 1)
+				.retryWhen(errors -> errors.scan(1, (retryCount, error) -> retryCount > 5 ? -1 : retryCount + 1)
 					.takeWhile(retryCount -> retryCount != -1)
-					.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount), TimeUnit.SECONDS)))
+					.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount) * 100, TimeUnit.MILLISECONDS)))
 				.subscribe(ack -> log.info("【Hivemq】 => MQTT取消订阅成功，主题：{}", String.join("、", topics)), e -> log
 					.error("【Hivemq】 => MQTT取消订阅失败，主题：{}，错误信息：{}", String.join("、", topics), e.getMessage(), e));
 			disposableList.add(disposable);
@@ -173,9 +173,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					.responseTopic(RESPONSE_TOPIC)
 					.build()))
 				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
-				.retryWhen(errors -> errors.scan(1, (retryCount, error) -> retryCount > 3 ? -1 : retryCount + 1)
+				.retryWhen(errors -> errors.scan(1, (retryCount, error) -> retryCount > 5 ? -1 : retryCount + 1)
 					.takeWhile(retryCount -> retryCount != -1)
-					.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount), TimeUnit.SECONDS)))
+					.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount) * 100, TimeUnit.MILLISECONDS)))
 				.subscribe(ack -> log.info("【Hivemq】 => MQTT消息发布成功，topic：{}", topic),
 						e -> log.error("【Hivemq】 => MQTT消息发布失败，topic：{}，错误信息：{}", topic, e.getMessage(), e));
 			disposableList.add(disposable);
@@ -259,9 +259,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			.toFlowable()
 			.firstElement()
 			.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
-			.retryWhen(errors -> errors.scan(1, (retryCount, error) -> retryCount > 3 ? -1 : retryCount + 1)
+			.retryWhen(errors -> errors.scan(1, (retryCount, error) -> retryCount > 5 ? -1 : retryCount + 1)
 				.takeWhile(retryCount -> retryCount != -1)
-				.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount), TimeUnit.SECONDS)))
+				.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount) * 100, TimeUnit.MILLISECONDS)))
 			.subscribe(
 					ack -> log.info("【Hivemq】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}", mqttClientProperties.getHost(),
 							mqttClientProperties.getPort(), mqttClientProperties.getClientId()),
@@ -276,9 +276,9 @@ public class HivemqMqttClient extends AbstractMqttClient {
 				.observeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()), false, 8192)
 				.doOnSubscribe(subscribe -> log.info("【Hivemq】 => MQTT开始订阅消息，请稍候。。。。。。"))
 				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
-				.retryWhen(errors -> errors.scan(1, (retryCount, error) -> retryCount > 3 ? -1 : retryCount + 1)
+				.retryWhen(errors -> errors.scan(1, (retryCount, error) -> retryCount > 5 ? -1 : retryCount + 1)
 					.takeWhile(retryCount -> retryCount != -1)
-					.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount), TimeUnit.SECONDS)))
+					.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount) * 100, TimeUnit.MILLISECONDS)))
 				.subscribe(publish -> {
 					for (MessageHandler messageHandler : messageHandlers) {
 						if (messageHandler.isSubscribe(publish.getTopic().toString())) {

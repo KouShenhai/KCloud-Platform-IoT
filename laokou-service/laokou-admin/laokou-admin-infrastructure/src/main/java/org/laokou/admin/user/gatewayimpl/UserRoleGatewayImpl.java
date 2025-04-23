@@ -84,8 +84,8 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 	private Mono<List<Long>> getUserRoleIds(List<Long> userIds) {
 		return Mono.fromCallable(() -> userRoleMapper.selectIdsByUserIds(userIds))
 			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
-			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
-				.maxBackoff(Duration.ofSeconds(30))
+			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
+				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)
 				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))); // 增强型指数退避策略
 	}

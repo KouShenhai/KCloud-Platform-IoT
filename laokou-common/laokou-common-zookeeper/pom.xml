@@ -11,4 +11,19 @@
 
   <artifactId>laokou-common-zookeeper</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.curator</groupId>
+      <artifactId>curator-framework</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.curator</groupId>
+      <artifactId>curator-recipes</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-core</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

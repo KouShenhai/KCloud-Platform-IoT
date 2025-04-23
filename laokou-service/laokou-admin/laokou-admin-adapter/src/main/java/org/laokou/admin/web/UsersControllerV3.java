@@ -89,8 +89,8 @@ public class UsersControllerV3 {
 		Disposable disposable = usersServiceI.remove(new UserRemoveCmd(ids))
 			.doOnError(e -> log.error("删除用户失败：{}", e.getMessage(), e))
 			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
-			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
-				.maxBackoff(Duration.ofSeconds(30))
+			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
+				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)
 				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
 			.subscribe(v -> {
@@ -133,8 +133,8 @@ public class UsersControllerV3 {
 		Disposable disposable = usersServiceI.modifyAuthority(cmd)
 			.doOnError(e -> log.error("修改用户权限失败：{}", e.getMessage(), e))
 			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
-			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
-				.maxBackoff(Duration.ofSeconds(30))
+			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
+				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)
 				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
 			.subscribe(v -> {

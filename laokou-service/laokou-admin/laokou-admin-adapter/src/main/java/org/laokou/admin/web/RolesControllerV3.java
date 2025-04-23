@@ -85,8 +85,8 @@ public class RolesControllerV3 {
 		Disposable disposable = rolesServiceI.remove(new RoleRemoveCmd(ids))
 			.doOnError(e -> log.error("删除角色失败：{}", e.getMessage(), e))
 			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
-			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
-				.maxBackoff(Duration.ofSeconds(30))
+			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
+				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)
 				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
 			.subscribe(v -> {
@@ -120,7 +120,7 @@ public class RolesControllerV3 {
 		Disposable disposable = rolesServiceI.modifyAuthority(cmd)
 			.doOnError(e -> log.error("修改角色权限失败：{}", e.getMessage(), e))
 			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
-			.retryWhen(Retry.backoff(3, Duration.ofSeconds(5))
+			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(30))
 				.jitter(0.5)
 				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
