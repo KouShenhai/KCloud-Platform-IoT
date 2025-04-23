@@ -81,7 +81,7 @@ public class LockAop {
 			return joinPoint.proceed();
 		}
 		catch (Throwable throwable) {
-			log.error("错误信息：{}", throwable.getMessage(), throwable);
+			log.error("【分布式锁】 => 加锁失败，错误信息：{}", throwable.getMessage(), throwable);
 			throw throwable;
 		}
 		finally {

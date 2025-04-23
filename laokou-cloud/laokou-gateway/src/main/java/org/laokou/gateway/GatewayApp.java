@@ -36,7 +36,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.util.StopWatch;
 import reactor.core.Disposable;
 import reactor.core.publisher.Hooks;
@@ -95,7 +94,6 @@ public class GatewayApp implements CommandLineRunner {
 		log.info("{}", stopWatch.prettyPrint());
 	}
 
-	@Async
 	@Override
     public void run(String... args)  {
 		// 同步路由

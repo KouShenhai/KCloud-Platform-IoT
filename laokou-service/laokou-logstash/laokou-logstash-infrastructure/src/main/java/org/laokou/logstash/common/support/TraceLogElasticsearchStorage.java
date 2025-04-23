@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
-import org.laokou.common.lock.support.IdentifierGenerator;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -36,9 +35,7 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
-	public TraceLogElasticsearchStorage(IdentifierGenerator distributedIdentifierGenerator,
-			ElasticsearchTemplate elasticsearchTemplate) {
-		super(distributedIdentifierGenerator);
+	public TraceLogElasticsearchStorage(ElasticsearchTemplate elasticsearchTemplate) {
 		this.elasticsearchTemplate = elasticsearchTemplate;
 	}
 

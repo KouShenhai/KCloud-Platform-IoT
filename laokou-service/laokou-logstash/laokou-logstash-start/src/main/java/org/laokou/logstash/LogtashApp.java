@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnableNacosShutDown;
-import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.logstash.consumer.handler.TraceLogHandler;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
@@ -31,7 +30,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.util.StopWatch;
 import reactor.core.scheduler.Schedulers;
 import reactor.util.retry.Retry;
@@ -46,7 +44,6 @@ import java.time.Duration;
  * @author laokou
  */
 @Slf4j
-@EnableRedisRepository
 @EnableNacosShutDown
 @EnableDiscoveryClient
 @RequiredArgsConstructor
@@ -76,7 +73,6 @@ public class LogtashApp implements CommandLineRunner {
 		log.info("{}", stopWatch.prettyPrint());
 	}
 
-	@Async
 	@Override
     public void run(String... args)  {
 		// 监听消息

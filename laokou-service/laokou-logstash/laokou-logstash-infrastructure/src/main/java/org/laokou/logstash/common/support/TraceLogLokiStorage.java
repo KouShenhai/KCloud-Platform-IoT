@@ -18,7 +18,6 @@
 package org.laokou.logstash.common.support;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.lock.support.IdentifierGenerator;
 import org.laokou.logstash.common.config.LokiProperties;
 import org.laokou.logstash.convertor.TraceLogConvertor;
 import org.springframework.http.MediaType;
@@ -37,9 +36,7 @@ public class TraceLogLokiStorage extends AbstractTraceLogStorage {
 
 	private final LokiProperties lokiProperties;
 
-	public TraceLogLokiStorage(IdentifierGenerator distributedIdentifierGenerator, WebClient webClient,
-			LokiProperties lokiProperties) {
-		super(distributedIdentifierGenerator);
+	public TraceLogLokiStorage(WebClient webClient, LokiProperties lokiProperties) {
 		this.webClient = webClient;
 		this.lokiProperties = lokiProperties;
 	}

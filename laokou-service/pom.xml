@@ -39,5 +39,6 @@
     <module>laokou-module</module>
     <module>laokou-oss</module>
     <module>laokou-mqtt</module>
+    <module>laokou-distributed-identifier</module>
   </modules>
 </project>
