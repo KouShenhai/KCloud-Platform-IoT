@@ -55,11 +55,11 @@ public class RedissonLock extends AbstractLock<RLock> {
 		// 线程名称
 		String threadName = Thread.currentThread().getName();
 		if (redisUtils.tryLock(lock, timeout)) {
-			log.info("线程：{}，加锁成功", threadName);
+			log.info("【分布式锁】 => 线程名称：{}，加锁成功", threadName);
 			return true;
 		}
 		else {
-			log.info("线程：{}，获取锁失败", threadName);
+			log.info("【分布式锁】 => 线程名称：{}，获取锁失败", threadName);
 			return false;
 		}
 	}
@@ -72,12 +72,12 @@ public class RedissonLock extends AbstractLock<RLock> {
 	public void unlock(RLock lock) {
 		if (ObjectUtils.isNotNull(lock)) {
 			if (redisUtils.isLocked(lock) && redisUtils.isHeldByCurrentThread(lock)) {
-				log.info("分布式锁名：{}，线程名：{}，开始解锁", lock.getName(), Thread.currentThread().getName());
+				log.info("【分布式锁】 => 名称：{}，线程名：{}，开始解锁", lock.getName(), Thread.currentThread().getName());
 				redisUtils.unlock(lock);
-				log.info("解锁成功");
+				log.info("【分布式锁】 => 解锁成功");
 			}
 			else {
-				log.info("无线程持有，无需解锁");
+				log.info("【分布式锁】 => 无线程持有，无需解锁");
 			}
 		}
 	}
