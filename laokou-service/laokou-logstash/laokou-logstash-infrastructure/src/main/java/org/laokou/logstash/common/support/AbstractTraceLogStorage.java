@@ -23,7 +23,6 @@ import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.lock.support.IdentifierGenerator;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
 @Slf4j
@@ -31,8 +30,6 @@ import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 public abstract class AbstractTraceLogStorage implements TraceLogStorage {
 
 	protected static final String TRACE_INDEX = "laokou_trace";
-
-	private final IdentifierGenerator distributedIdentifierGenerator;
 
 	protected String getIndexName() {
 		return TRACE_INDEX + StringConstants.UNDER + DateUtils.format(DateUtils.nowDate(), DateUtils.YYYYMMDD);
@@ -44,7 +41,6 @@ public abstract class AbstractTraceLogStorage implements TraceLogStorage {
 			String traceId = traceLogIndex.getTraceId();
 			String spanId = traceLogIndex.getSpanId();
 			if (StringUtils.isNotEmpty(spanId) && StringUtils.isNotEmpty(traceId)) {
-				traceLogIndex.setId(String.valueOf(distributedIdentifierGenerator.generate()));
 				return traceLogIndex;
 			}
 		}

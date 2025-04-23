@@ -14,7 +14,11 @@
 #    * limitations under the License.
 #    *
 #    */
-# server
+jasypt:
+  encryptor:
+    password: laokou
+
+# Server配置
 server:
   port: ${SERVER_PORT:10003}
   ssl:
@@ -32,27 +36,16 @@ server:
     enabled: @SSL-ENABLED@
   forward-headers-strategy: framework
   shutdown: graceful
-# spring
+
 spring:
   application:
     name: ${SERVICE_ID:laokou-logstash}
   profiles:
     active: @PROFILE-ACTIVE@
-  data:
-    redis:
-      client-type: lettuce
-      host: redis
-      port: 6379
-      password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
-      connect-timeout: 60000ms #连接超时时长（毫秒）
-      timeout: 60000ms #超时时长（毫秒）
-      lettuce:
-        pool:
-          max-active: -1 #连接池最大连接数（使用负值表示无极限）
-          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
-          max-idle: 500 #连接池最大空闲连接
-          min-idle: 200 #连接池最小空间连接
-  # elasticsearch
+  threads:
+    virtual:
+      enabled: true
+  # Elasticsearch配置
   elasticsearch:
     uris:
       - https://elasticsearch:9200
@@ -103,9 +96,6 @@ spring:
       ignored-interfaces:
         - docker0
         - veth.*
-  threads:
-    virtual:
-      enabled: true
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
@@ -115,6 +105,3 @@ storage:
 
 loki:
   url: http://loki:3100/loki/api/v1/push
-jasypt:
-  encryptor:
-    password: laokou

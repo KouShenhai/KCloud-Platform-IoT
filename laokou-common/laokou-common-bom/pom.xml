@@ -181,6 +181,8 @@
     <opencsv.version>5.10</opencsv.version>
     <!--curator版本-->
     <curator.version>5.8.0</curator.version>
+    <!--wiremock版本-->
+    <wiremock.version>3.12.1</wiremock.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
@@ -195,6 +197,11 @@
         <groupId>org.apache.curator</groupId>
         <artifactId>curator-recipes</artifactId>
         <version>${curator.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.wiremock</groupId>
+        <artifactId>wiremock</artifactId>
+        <version>${wiremock.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>

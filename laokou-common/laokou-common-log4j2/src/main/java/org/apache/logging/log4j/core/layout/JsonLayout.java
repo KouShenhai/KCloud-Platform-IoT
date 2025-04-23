@@ -31,6 +31,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.logging.log4j.core.layout;
 
 import lombok.Getter;
@@ -345,6 +346,7 @@ public final class JsonLayout extends AbstractJacksonLayout {
 		Map<String, String> additionalFieldsMap = resolveAdditionalFields(evt);
 		additionalFieldsMap.putAll(evt.getContextData().toMap());
 		additionalFieldsMap.putAll(Map.of(
+			 "id", String.valueOf(evt.getTimeMillis()),
 			"address", System.getProperty("address", ""),
 			"dateTime", FORMATTER.format(getLocalDateTimeOfTimestamp(evt.getTimeMillis())),
 			"level", evt.getLevel().name(),
