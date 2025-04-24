@@ -81,7 +81,7 @@ class OAuth2ApiTest {
 
 	private static final String CODE = "iQWEh8YSpdwZ8_5QsA8C_1tVpR-6_fcLMYDKGnhozJW9MmTzf30aYvq6F_O3sSL0PP0bEVVdoXeau8QOuTln3ABn2c-00x7irutqFKAHRJVFZGln_6Wmuab4ostt-3-y";
 
-	private static final String UUID = String.valueOf(IdGenerator.defaultSnowflakeId());
+	private static final String UUID = UUIDGenerator.generateUUID();
 
 	private static final String TOKEN = "eyJraWQiOiI2MTIyYjcyOC0xOTMxLTQ3NWMtYjMyMS0yYjdmYmVjMGQ0OTEiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1ZCI6Ijk1VHhTc1RQRkEzdEYxMlRCU01tVVZLMGRhIiwibmJmIjoxNzEwMzEzMTEyLCJzY29wZSI6WyJwYXNzd29yZCIsIm1haWwiLCJvcGVuaWQiLCJtb2JpbGUiXSwiaXNzIjoiaHR0cDovLzEyNy4wLjAuMTo1NTU1L2F1dGgiLCJleHAiOjE3MTAzMTY3MTIsImlhdCI6MTcxMDMxMzExMiwianRpIjoiZjRlYWU1YjctOWQzNy00NTM1LWEyODgtNWFjNWEwNzc2MjU1In0.Sg4LYn6hoYKB3vDM4NnFfDd3MBxpu-Bja-iYTNDDVBTkDMPjWXdbSTpupplud5aQ-mwRMhSuMF_ctzMFT5So1VckhNV8dg35DhKsRzEYfLaya_vk4eiFUaSU8ibfSPSEACa524L01SHb8wgb04LnvVAuJnPEzDZNRZxwHKbxA0irqwCafuTax8EFKGxHskHsxeuaaCvQdGLKSbYCdC3tHA85SIUKdsnm8fSS4_5El9gztbFUxDHZWRgagN_fHRqyDSd32PCulPeG3uOut-uUwC2Dv4xodLuaCYEouyn0aMY_juz2uHkpf1MnLh74caeE30lmbqBF5tv2ErOsqdMIaw";
 
@@ -102,7 +102,7 @@ class OAuth2ApiTest {
 		co.setUuid(MAIL);
 		restClient.post()
 			.uri(getSendMailCaptchaUrl())
-			.header(REQUEST_ID, String.valueOf(IdGenerator.defaultSnowflakeId()))
+			.header(REQUEST_ID, UUIDGenerator.generateUUID())
 			.body(new CaptchaSendCmd(co))
 			.accept(MediaType.APPLICATION_JSON)
 			.retrieve()
@@ -116,7 +116,7 @@ class OAuth2ApiTest {
 		co.setUuid(MOBILE);
 		restClient.post()
 			.uri(getSendMobileCaptchaUrl())
-			.header(REQUEST_ID, String.valueOf(IdGenerator.defaultSnowflakeId()))
+			.header(REQUEST_ID, UUIDGenerator.generateUUID())
 			.body(new CaptchaSendCmd(co))
 			.accept(MediaType.APPLICATION_JSON)
 			.retrieve()

@@ -10,4 +10,11 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-report-start</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-report-app</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

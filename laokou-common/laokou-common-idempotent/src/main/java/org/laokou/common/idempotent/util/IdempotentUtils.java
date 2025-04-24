@@ -19,7 +19,7 @@ package org.laokou.common.idempotent.util;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.util.IdGenerator;
+import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.stereotype.Component;
 
@@ -72,7 +72,7 @@ public class IdempotentUtils {
 	 * @return {@link String }
 	 */
 	public String getIdempotentKey() {
-		return String.valueOf(IdGenerator.defaultSnowflakeId());
+		return UUIDGenerator.generateUUID();
 	}
 
 }

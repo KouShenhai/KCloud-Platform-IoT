@@ -18,7 +18,7 @@
 package org.laokou.common.mqtt.client.config;
 
 import lombok.Data;
-import org.laokou.common.core.util.IdGenerator;
+import org.laokou.common.core.util.UUIDGenerator;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -39,7 +39,7 @@ public class MqttClientProperties {
 
 	private int port = 1883;
 
-	private String clientId = String.valueOf(IdGenerator.defaultSnowflakeId());
+	private String clientId = UUIDGenerator.generateUUID();
 
 	private int subscribeQos = 0;
 
