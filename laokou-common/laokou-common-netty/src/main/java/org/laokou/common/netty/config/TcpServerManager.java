@@ -58,6 +58,7 @@ public final class TcpServerManager {
 				"Some Tcp Server handlers do not have corresponding config entries");
 		for (ChannelHandler channelHandler : tcpServerList) {
 			TcpServer tcpServer = channelHandler.getClass().getAnnotation(TcpServer.class);
+			Assert.notNull(tcpServer, "TcpServer annotation not found");
 			String key = tcpServer.key();
 			SpringTcpServerProperties.Config config = configs.get(key);
 			Assert.notNull(config, "Tcp Server Config not found");

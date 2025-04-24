@@ -28,4 +28,8 @@ public interface SnowflakeGenerator {
 
 	Instant getInstant(long id);
 
+	void init();
+
+	void close();
+
 }

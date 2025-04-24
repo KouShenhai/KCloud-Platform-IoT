@@ -97,6 +97,16 @@ public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 		return DateUtils.getInstantOfTimestamp(getTimestamp(id));
 	}
 
+	@Override
+	public void init() {
+
+	}
+
+	@Override
+	public void close() {
+
+	}
+
 	/**
 	 * 生产雪花ID.
 	 * @return 雪花ID
