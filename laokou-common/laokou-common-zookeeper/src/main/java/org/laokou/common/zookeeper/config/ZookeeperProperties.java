@@ -15,17 +15,24 @@
  *
  */
 
-package org.laokou.common.zookeeper.support;
+package org.laokou.common.zookeeper.config;
 
-import java.time.Instant;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface SnowflakeGenerator {
+@Data
+@Component
+@ConfigurationProperties(prefix = "spring.zookeeper")
+public class ZookeeperProperties {
 
-	long nextId();
+	private String address = "zookeeper:2181";
 
-	Instant getInstant(long id);
+	private int sessionTimeoutMs = 60000;
+
+	private int connectionTimeoutMs = 15000;
 
 }

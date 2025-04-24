@@ -10,5 +10,14 @@
   </parent>
 
   <artifactId>laokou-distributed-identifier</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+    <module>laokou-distributed-identifier-adapter</module>
+    <module>laokou-distributed-identifier-app</module>
+    <module>laokou-distributed-identifier-domain</module>
+    <module>laokou-distributed-identifier-start</module>
+    <module>laokou-distributed-identifier-client</module>
+    <module>laokou-distributed-identifier-infrastructure</module>
+  </modules>
 
 </project>

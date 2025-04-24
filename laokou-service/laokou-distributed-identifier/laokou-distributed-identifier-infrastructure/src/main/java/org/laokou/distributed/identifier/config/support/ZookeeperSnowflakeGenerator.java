@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.zookeeper.support;
+package org.laokou.distributed.identifier.config.support;
 
 import org.laokou.common.i18n.util.DateUtils;
 import org.springframework.util.Assert;
