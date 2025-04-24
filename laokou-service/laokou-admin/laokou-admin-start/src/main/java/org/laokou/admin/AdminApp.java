@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.data.cache.annotation.EnableRemoveCache;
 import org.laokou.common.i18n.util.SslUtils;
-import org.laokou.common.nacos.annotation.EnableNacosShutDown;
+import org.laokou.common.nacos.annotation.EnableServiceShutDown;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.secret.annotation.EnableApiSecret;
@@ -58,7 +58,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableScheduling
 @EnableFeignClients
 @EnableRemoveCache
-@EnableNacosShutDown
+@EnableServiceShutDown
 @EnableRedisRepository
 @EnableDiscoveryClient
 @EnableEncryptableProperties

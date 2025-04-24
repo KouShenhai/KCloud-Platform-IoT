@@ -16,44 +16,6 @@
       <artifactId>laokou-logstash-adapter</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.github.ulisesbocchio</groupId>
-      <artifactId>jasypt-spring-boot-starter</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-tomcat</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.tomcat.embed</groupId>
-          <artifactId>tomcat-embed-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-logging</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-configuration-processor</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-nacos</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-core</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
       <scope>test</scope>

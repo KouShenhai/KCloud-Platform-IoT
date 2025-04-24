@@ -28,7 +28,6 @@
                  host,
                  port,
                  client_id,
-                 topic,
                  username,
                  password,
                  remark,

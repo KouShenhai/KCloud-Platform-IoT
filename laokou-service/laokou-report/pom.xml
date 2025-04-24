@@ -16,6 +16,7 @@
     <module>laokou-report-client</module>
     <module>laokou-report-start</module>
     <module>laokou-report-app</module>
+    <module>laokou-report-infrastructure</module>
   </modules>
 
 </project>

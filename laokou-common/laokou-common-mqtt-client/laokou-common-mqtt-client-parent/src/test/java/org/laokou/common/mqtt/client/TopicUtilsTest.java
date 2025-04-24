@@ -15,62 +15,25 @@
  *
  */
 
-package org.laokou.iot.transportProtocol.model;
+package org.laokou.common.mqtt.client;
 
-import lombok.Data;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.mqtt.client.util.TopicUtils;
 
 /**
- *
- * 传输协议领域对象【实体】.
- *
  * @author laokou
  */
-@Data
-public class TransportProtocolE {
+class TopicUtilsTest {
 
-	/**
-	 * ID.
-	 */
-	private Long id;
-
-	/**
-	 * 协议名称.
-	 */
-	private String name;
-
-	/**
-	 * 协议类型.
-	 */
-	private String type;
-
-	/**
-	 * 主机.
-	 */
-	private String host;
-
-	/**
-	 * 端口.
-	 */
-	private String port;
-
-	/**
-	 * 客户端ID.
-	 */
-	private String clientId;
-
-	/**
-	 * 用户名.
-	 */
-	private String username;
-
-	/**
-	 * 密码.
-	 */
-	private String password;
-
-	/**
-	 * 备注.
-	 */
-	private String remark;
+	@Test
+	void testMatch() {
+		Assertions.assertTrue(TopicUtils.match("test/topic", "test/topic"));
+		Assertions.assertFalse(TopicUtils.match("test/topic", "test/topic/"));
+		Assertions.assertTrue(TopicUtils.match("test/#", "test/topic/test"));
+		Assertions.assertTrue(TopicUtils.match("test/+", "test/topic"));
+		Assertions.assertTrue(TopicUtils.match("test/+/test", "test/topic/test"));
+		Assertions.assertTrue(TopicUtils.match("test/+/+", "test/topic/test"));
+	}
 
 }

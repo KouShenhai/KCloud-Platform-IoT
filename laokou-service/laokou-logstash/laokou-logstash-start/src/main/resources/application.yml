@@ -49,10 +49,10 @@ spring:
   elasticsearch:
     uris:
       - https://elasticsearch:9200
-    username: ENC(svQedUe/LhX4+kE58LA73GTbkn0xR1Nz4P9hIalcloHMkQ8BCur8LiptBZ9DI78f)
+    username: ENC(288BcA+5uF75oMpMHekXLLG+DBnzJbj3eFEY5uEG9G1TWvv7dR2TXJ8jc13MtHDk)
     password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
-    connection-timeout: 30s
-    socket-timeout: 30s
+    connection-timeout: 60s
+    socket-timeout: 60s
   kafka:
     bootstrap-servers: kafka:9092
     consumer:

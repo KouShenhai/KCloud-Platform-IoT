@@ -15,62 +15,17 @@
  *
  */
 
-package org.laokou.iot.transportProtocol.model;
+package org.laokou.common.nacos.annotation;
 
-import lombok.Data;
+import org.laokou.common.nacos.filter.ShutdownFilter;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
-/**
- *
- * 传输协议领域对象【实体】.
- *
- * @author laokou
- */
-@Data
-public class TransportProtocolE {
+import java.lang.annotation.*;
 
-	/**
-	 * ID.
-	 */
-	private Long id;
-
-	/**
-	 * 协议名称.
-	 */
-	private String name;
-
-	/**
-	 * 协议类型.
-	 */
-	private String type;
-
-	/**
-	 * 主机.
-	 */
-	private String host;
-
-	/**
-	 * 端口.
-	 */
-	private String port;
-
-	/**
-	 * 客户端ID.
-	 */
-	private String clientId;
-
-	/**
-	 * 用户名.
-	 */
-	private String username;
-
-	/**
-	 * 密码.
-	 */
-	private String password;
-
-	/**
-	 * 备注.
-	 */
-	private String remark;
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
+public @interface EnableServiceShutDown {
 
 }

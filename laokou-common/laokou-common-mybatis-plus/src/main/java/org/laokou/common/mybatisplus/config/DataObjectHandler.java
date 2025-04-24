@@ -22,8 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.util.DateUtils;
-import org.springframework.stereotype.Component;
-
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import java.time.Instant;
 
 import static org.laokou.common.mybatisplus.mapper.BaseDO.*;
@@ -31,8 +30,8 @@ import static org.laokou.common.mybatisplus.mapper.BaseDO.*;
 /**
  * @author laokou
  */
-@Component
 @Slf4j
+@AutoConfiguration
 public class DataObjectHandler implements MetaObjectHandler {
 
 	@Override

@@ -286,7 +286,6 @@ public class HivemqMqttClient extends AbstractMqttClient {
 								log.info("【Hivemq】 => MQTT接收到消息，Topic：{}", publish.getTopic());
 								messageHandler.handle(
 										new MqttMessage(publish.getPayloadAsBytes(), publish.getTopic().toString()));
-								break;
 							}
 							catch (DuplicateKeyException e) {
 								// 忽略重复键异常

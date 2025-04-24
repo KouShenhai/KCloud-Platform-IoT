@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.SpringEventBus;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.SslUtils;
-import org.laokou.common.nacos.annotation.EnableNacosShutDown;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
 import org.laokou.gateway.repository.NacosRouteDefinitionRepository;
 import org.laokou.reactor.handler.event.UnsubscribeEvent;
@@ -54,7 +53,6 @@ import java.time.Duration;
  * @author laokou
  */
 @Slf4j
-@EnableNacosShutDown
 @EnableDiscoveryClient
 @EnableEncryptableProperties
 @EnableConfigurationProperties

@@ -56,7 +56,6 @@ public class PahoMqttClientMessageCallback implements MqttCallback {
 				try {
 					log.info("【Paho】 => MQTT接收到消息，Topic：{}", topic);
 					messageHandler.handle(new org.laokou.common.mqtt.client.MqttMessage(message.getPayload(), topic));
-					break;
 				}
 				catch (DuplicateKeyException e) {
 					// 忽略重复键异常

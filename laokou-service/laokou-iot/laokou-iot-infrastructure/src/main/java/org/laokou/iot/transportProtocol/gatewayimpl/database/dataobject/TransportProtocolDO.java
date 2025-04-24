@@ -57,11 +57,6 @@ public class TransportProtocolDO extends BaseDO {
 	private String clientId;
 
 	/**
-	 * 主题.
-	 */
-	private String topic;
-
-	/**
 	 * 用户名.
 	 */
 	private String username;

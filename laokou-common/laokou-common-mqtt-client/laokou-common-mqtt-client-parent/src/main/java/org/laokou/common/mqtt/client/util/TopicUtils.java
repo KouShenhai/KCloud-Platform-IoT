@@ -15,20 +15,24 @@
  *
  */
 
-package org.laokou.common.nacos.annotation;
+package org.laokou.common.mqtt.client.util;
 
-import org.laokou.common.nacos.config.NacosShutDownConfig;
-import org.laokou.common.nacos.filter.ShutdownFilter;
-import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.context.annotation.Import;
+import java.util.regex.Pattern;
 
-import java.lang.annotation.*;
+/**
+ * @author laokou
+ */
+public final class TopicUtils {
 
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({ NacosShutDownConfig.class })
-@ServletComponentScan(basePackageClasses = { ShutdownFilter.class })
-public @interface EnableNacosShutDown {
+	private TopicUtils() {
+	}
+
+	public static boolean match(String subscribeTopic, String publishTopic) {
+		if (subscribeTopic.equals(publishTopic)) {
+			return true;
+		}
+		String regex = subscribeTopic.replace("+", "[^/]+").replace("#", ".+");
+		return Pattern.matches(regex, publishTopic);
+	}
 
 }

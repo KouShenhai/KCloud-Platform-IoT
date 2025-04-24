@@ -22,13 +22,15 @@ import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.nacos.util.NamingUtils;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 
 /**
  * @author laokou
  */
 @Slf4j
+@AutoConfiguration
 @RequiredArgsConstructor
-public class NacosShutDownConfig {
+public class NacosShutDownAutoConfig {
 
 	private final NamingUtils namingUtils;
 

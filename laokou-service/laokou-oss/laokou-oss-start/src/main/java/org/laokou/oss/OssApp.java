@@ -21,7 +21,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
-import org.laokou.common.nacos.annotation.EnableNacosShutDown;
+import org.laokou.common.nacos.annotation.EnableServiceShutDown;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.security.annotation.EnableSecurity;
@@ -51,7 +51,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableRouter
 @EnableSecurity
 @EnableScheduling
-@EnableNacosShutDown
+@EnableServiceShutDown
 @EnableRedisRepository
 @EnableDiscoveryClient
 @EnableAspectJAutoProxy

@@ -708,7 +708,6 @@ CACHE 1
   "host" varchar(20) COLLATE "pg_catalog"."default" NOT NULL,
   "port" varchar(10) COLLATE "pg_catalog"."default" NOT NULL,
   "client_id" varchar(100) COLLATE "pg_catalog"."default",
-  "topic" varchar(100) COLLATE "pg_catalog"."default",
   "username" varchar(50) COLLATE "pg_catalog"."default",
   "password" varchar(50) COLLATE "pg_catalog"."default",
   "remark" varchar(400) COLLATE "pg_catalog"."default"
@@ -727,7 +726,6 @@ COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."type" IS '协议类型
 COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."host" IS '主机';
 COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."port" IS '端口';
 COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."client_id" IS '客户端ID';
-COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."topic" IS '主题';
 COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."username" IS '用户名';
 COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."password" IS '密码';
 COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."remark" IS '备注';

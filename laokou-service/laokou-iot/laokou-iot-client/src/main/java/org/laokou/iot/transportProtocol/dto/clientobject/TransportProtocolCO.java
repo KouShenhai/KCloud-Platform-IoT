@@ -54,9 +54,6 @@ public class TransportProtocolCO extends ClientObject {
 	@Schema(name = "客户端ID", description = "客户端ID")
 	private String clientId;
 
-	@Schema(name = "主题", description = "主题")
-	private String topic;
-
 	@Schema(name = "用户名", description = "用户名")
 	private String username;
 

@@ -20,7 +20,7 @@ package org.laokou.common.openfeign;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.SslUtils;
-import org.laokou.common.nacos.annotation.EnableNacosShutDown;
+import org.laokou.common.nacos.annotation.EnableServiceShutDown;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -36,7 +36,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * @author laokou
  */
-@EnableNacosShutDown
+@EnableServiceShutDown
 @EnableConfigurationProperties
 @EnableDiscoveryClient
 @EnableRedisRepository

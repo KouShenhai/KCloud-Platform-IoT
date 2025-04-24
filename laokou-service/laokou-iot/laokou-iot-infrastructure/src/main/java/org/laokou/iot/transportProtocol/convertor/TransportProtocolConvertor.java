@@ -43,7 +43,6 @@ public class TransportProtocolConvertor {
 		transportProtocolDO.setHost(transportProtocolE.getHost());
 		transportProtocolDO.setPort(transportProtocolE.getPort());
 		transportProtocolDO.setClientId(transportProtocolE.getClientId());
-		transportProtocolDO.setTopic(transportProtocolE.getTopic());
 		transportProtocolDO.setUsername(transportProtocolE.getUsername());
 		transportProtocolDO.setPassword(transportProtocolE.getPassword());
 		transportProtocolDO.setRemark(transportProtocolE.getRemark());
@@ -57,7 +56,6 @@ public class TransportProtocolConvertor {
 		transportProtocolCO.setHost(transportProtocolDO.getHost());
 		transportProtocolCO.setPort(transportProtocolDO.getPort());
 		transportProtocolCO.setClientId(transportProtocolDO.getClientId());
-		transportProtocolCO.setTopic(transportProtocolDO.getTopic());
 		transportProtocolCO.setUsername(transportProtocolDO.getUsername());
 		transportProtocolCO.setPassword(transportProtocolDO.getPassword());
 		transportProtocolCO.setRemark(transportProtocolDO.getRemark());
@@ -71,7 +69,6 @@ public class TransportProtocolConvertor {
 		transportProtocolE.setHost(transportProtocolCO.getHost());
 		transportProtocolE.setPort(transportProtocolCO.getPort());
 		transportProtocolE.setClientId(transportProtocolCO.getClientId());
-		transportProtocolE.setTopic(transportProtocolCO.getTopic());
 		transportProtocolE.setUsername(transportProtocolCO.getUsername());
 		transportProtocolE.setPassword(transportProtocolCO.getPassword());
 		transportProtocolE.setRemark(transportProtocolCO.getRemark());

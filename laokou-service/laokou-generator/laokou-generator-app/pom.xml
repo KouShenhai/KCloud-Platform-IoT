@@ -12,10 +12,6 @@
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-generator-client</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
       <artifactId>laokou-generator-infrastructure</artifactId>
     </dependency>
   </dependencies>

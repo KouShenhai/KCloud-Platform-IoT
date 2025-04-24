@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.SslUtils;
-import org.laokou.common.nacos.annotation.EnableNacosShutDown;
 import org.laokou.logstash.consumer.handler.TraceLogHandler;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
@@ -44,7 +43,6 @@ import java.time.Duration;
  * @author laokou
  */
 @Slf4j
-@EnableNacosShutDown
 @EnableDiscoveryClient
 @RequiredArgsConstructor
 @EnableConfigurationProperties

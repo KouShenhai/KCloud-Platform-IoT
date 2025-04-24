@@ -19,7 +19,10 @@ package org.laokou.common.mqtt;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
+import org.laokou.common.mqtt.client.util.TopicUtils;
 import org.springframework.stereotype.Component;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author laokou
@@ -30,13 +33,13 @@ class DefaultMessageHandler implements MessageHandler {
 
 	@Override
 	public boolean isSubscribe(String topic) {
-		return true;
+		return TopicUtils.match("/test-topic-1/#", topic);
 	}
 
 	@Override
 	public void handle(org.laokou.common.mqtt.client.MqttMessage mqttMessage) {
 		log.info("【Hivemq】 => 接收到MQTT消息，topic: {}, message: {}", mqttMessage.getTopic(),
-				new String(mqttMessage.getPayload()));
+				new String(mqttMessage.getPayload(), StandardCharsets.UTF_8));
 	}
 
 }
