@@ -62,12 +62,6 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-nacos</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-core</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
 

@@ -53,8 +53,8 @@ spring:
             validation-timeout: 3000
             idle-timeout: 180000
             max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
+            maximum-pool-size: 200
+            minimum-idle: 100
             is-read-only: false
         domain:
           driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
@@ -67,8 +67,8 @@ spring:
             validation-timeout: 3000
             idle-timeout: 180000
             max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
+            maximum-pool-size: 200
+            minimum-idle: 100
             is-read-only: false
         iot:
           driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
@@ -81,8 +81,8 @@ spring:
             validation-timeout: 3000
             idle-timeout: 180000
             max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
+            maximum-pool-size: 200
+            minimum-idle: 100
             is-read-only: false
         generator:
           driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
@@ -95,8 +95,8 @@ spring:
             validation-timeout: 3000
             idle-timeout: 180000
             max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
+            maximum-pool-size: 200
+            minimum-idle: 100
             is-read-only: false
 
 mybatis-plus:

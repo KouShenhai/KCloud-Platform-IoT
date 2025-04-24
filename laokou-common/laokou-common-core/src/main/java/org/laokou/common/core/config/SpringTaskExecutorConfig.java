@@ -39,11 +39,11 @@ public class SpringTaskExecutorConfig {
 		log.info("{} => Initializing BootstrapExecutor", Thread.currentThread().getName());
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 		// 核心池大小
-		executor.setCorePoolSize(32);
+		executor.setCorePoolSize(8);
 		// 最大线程数
-		executor.setMaxPoolSize(64);
+		executor.setMaxPoolSize(16);
 		// 队列容量
-		executor.setQueueCapacity(500);
+		executor.setQueueCapacity(128);
 		// 允许核心线程在空闲时超时并被销毁[任务始终有一定负载或者你需要一直保持线程池中的线程活动，则禁用该选项会更合适]
 		executor.setAllowCoreThreadTimeOut(false);
 		// 线程空闲时间

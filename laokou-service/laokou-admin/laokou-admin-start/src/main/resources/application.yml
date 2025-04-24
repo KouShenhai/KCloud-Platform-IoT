@@ -96,8 +96,8 @@ spring:
             validation-timeout: 3000
             idle-timeout: 180000
             max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
+            maximum-pool-size: 200
+            minimum-idle: 100
             is-read-only: false
         domain:
           type: com.zaxxer.hikari.HikariDataSource
@@ -111,8 +111,8 @@ spring:
             validation-timeout: 3000
             idle-timeout: 180000
             max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
+            maximum-pool-size: 200
+            minimum-idle: 100
             is-read-only: false
   data:
     redis:
