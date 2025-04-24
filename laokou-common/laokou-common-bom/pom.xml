@@ -182,7 +182,7 @@
     <!--curator版本-->
     <curator.version>5.8.0</curator.version>
     <!--wiremock版本-->
-    <wiremock.version>3.12.1</wiremock.version>
+    <wiremock.version>3.13.0</wiremock.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
