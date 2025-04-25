@@ -47,7 +47,8 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 @Component("propertiesMapper")
-@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.security.oauth2.authorization-server", name = "enabled")
+@ConditionalOnProperty(havingValue = "true", matchIfMissing = true,
+		prefix = "spring.security.oauth2.authorization-server", name = "enabled")
 final class OAuth2AuthorizationServerPropertiesMapper {
 
 	private final OAuth2AuthorizationServerProperties properties;

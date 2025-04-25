@@ -161,7 +161,8 @@ class OAuth2ApiTest {
 		log.info("解密密码：{}", decryptPassword);
 		log.info("uuid：{}", UUID);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		String token = getRefreshToken(tokenMap.get(REFRESH_TOKEN), "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+		String token = getRefreshToken(tokenMap.get(REFRESH_TOKEN),
+				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 		log.info("刷新token：{}", token);
 		log.info("---------- 模拟认证开始 ----------");
 		assertNotNull(token);
@@ -179,7 +180,8 @@ class OAuth2ApiTest {
 		log.info("验证码：{}", code);
 		log.info("验证码：{}", MAIL);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN), "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8="));
+		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN),
+				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8="));
 		log.info("---------- 邮箱认证结束 ----------");
 	}
 
@@ -191,7 +193,8 @@ class OAuth2ApiTest {
 		log.info("验证码：{}", code);
 		log.info("手机号：{}", MOBILE);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN), "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8="));
+		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN),
+				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8="));
 		log.info("---------- 手机号认证结束 ----------");
 	}
 
@@ -201,7 +204,8 @@ class OAuth2ApiTest {
 		Map<String, String> tokenMap = authorizationCodeAuth();
 		log.info("编码：{}", CODE);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN), "Basic ZWI3RGVkNWJiRmJkNzg5NmY4YTJjZmREYzk6RHBBa1BmejRlVzE4ZDI="));
+		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN),
+				"Basic ZWI3RGVkNWJiRmJkNzg5NmY4YTJjZmREYzk6RHBBa1BmejRlVzE4ZDI="));
 		log.info("---------- 授权码认证模式结束 ----------");
 	}
 
@@ -214,7 +218,8 @@ class OAuth2ApiTest {
 		String decryptPassword = RSAUtils.decryptByPrivateKey(encryptPassword);
 		Map<String, String> tokenMap = testAuth(decryptUsername, decryptPassword);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		String token = getRefreshToken(tokenMap.get(REFRESH_TOKEN), "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+		String token = getRefreshToken(tokenMap.get(REFRESH_TOKEN),
+				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 		log.info("刷新token：{}", token);
 		log.info("---------- 测试认证模式结束 ----------");
 	}
@@ -235,7 +240,8 @@ class OAuth2ApiTest {
 		Map<String, String> tokenMap = deviceAuthorizationCodeAuth(deviceCode);
 		log.info("设备码：{}", deviceCode);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN), "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8="));
+		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN),
+				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8="));
 		log.info("---------- 设备授权码认证模式结束 ----------");
 	}
 
