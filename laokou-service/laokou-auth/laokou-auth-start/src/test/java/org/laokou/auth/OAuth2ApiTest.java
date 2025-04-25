@@ -161,7 +161,7 @@ class OAuth2ApiTest {
 		log.info("解密密码：{}", decryptPassword);
 		log.info("uuid：{}", UUID);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		String token = getRefreshToken(tokenMap.get(REFRESH_TOKEN));
+		String token = getRefreshToken(tokenMap.get(REFRESH_TOKEN), "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 		log.info("刷新token：{}", token);
 		log.info("---------- 模拟认证开始 ----------");
 		assertNotNull(token);
@@ -179,7 +179,7 @@ class OAuth2ApiTest {
 		log.info("验证码：{}", code);
 		log.info("验证码：{}", MAIL);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
+		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN), "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8="));
 		log.info("---------- 邮箱认证结束 ----------");
 	}
 
@@ -191,7 +191,7 @@ class OAuth2ApiTest {
 		log.info("验证码：{}", code);
 		log.info("手机号：{}", MOBILE);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
+		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN), "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8="));
 		log.info("---------- 手机号认证结束 ----------");
 	}
 
@@ -201,7 +201,7 @@ class OAuth2ApiTest {
 		Map<String, String> tokenMap = authorizationCodeAuth();
 		log.info("编码：{}", CODE);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
+		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN), "Basic ZWI3RGVkNWJiRmJkNzg5NmY4YTJjZmREYzk6RHBBa1BmejRlVzE4ZDI="));
 		log.info("---------- 授权码认证模式结束 ----------");
 	}
 
@@ -214,7 +214,7 @@ class OAuth2ApiTest {
 		String decryptPassword = RSAUtils.decryptByPrivateKey(encryptPassword);
 		Map<String, String> tokenMap = testAuth(decryptUsername, decryptPassword);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		String token = getRefreshToken(tokenMap.get(REFRESH_TOKEN));
+		String token = getRefreshToken(tokenMap.get(REFRESH_TOKEN), "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 		log.info("刷新token：{}", token);
 		log.info("---------- 测试认证模式结束 ----------");
 	}
@@ -235,7 +235,7 @@ class OAuth2ApiTest {
 		Map<String, String> tokenMap = deviceAuthorizationCodeAuth(deviceCode);
 		log.info("设备码：{}", deviceCode);
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
-		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN)));
+		log.info("刷新token：{}", getRefreshToken(tokenMap.get(REFRESH_TOKEN), "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8="));
 		log.info("---------- 设备授权码认证模式结束 ----------");
 	}
 
@@ -296,7 +296,7 @@ class OAuth2ApiTest {
 			Map<String, String> params = Map.of("code", CODE, "redirect_uri", "http://127.0.0.1:8001", "grant_type",
 					"authorization_code");
 			Map<String, String> headers = Collections.singletonMap("Authorization",
-					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+					"Basic ZWI3RGVkNWJiRmJkNzg5NmY4YTJjZmREYzk6RHBBa1BmejRlVzE4ZDI=");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("授权码认证模式，返回信息：{}", json);
 			Assertions.assertNotNull(json);
@@ -400,12 +400,11 @@ class OAuth2ApiTest {
 		}
 	}
 
-	private String getRefreshToken(String refreshToken) {
+	private String getRefreshToken(String refreshToken, String secretHeadValue) {
 		try {
 			String apiUrl = getOAuthApiUrl();
 			Map<String, String> params = Map.of("refresh_token", refreshToken, "grant_type", "refresh_token");
-			Map<String, String> headers = Collections.singletonMap("Authorization",
-					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+			Map<String, String> headers = Collections.singletonMap("Authorization", secretHeadValue);
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("刷新令牌模式，返回信息；{}", json);
 			Assertions.assertNotNull(json);

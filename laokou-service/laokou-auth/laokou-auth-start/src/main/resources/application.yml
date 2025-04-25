@@ -84,9 +84,11 @@ spring:
               refresh-token-time-to-live: 1h
               device-code-time-to-live: 5m
             registration:
+              # Base64编码 OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=
               id: 95TxSsTPFA3tF12TBSMmUVK0da
               client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-name: OAuth2.1认证
+              client-name: OAuth2.1认证【用户名密码/邮箱/手机号/测试/设备授权码/客户端】
+              # 对client-secret进行加密【原值 => FpHwIfw4wY92dO】
               client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
               client-authentication-methods:
                 - client_secret_basic
@@ -95,12 +97,36 @@ spring:
                 - username_password
                 - mail
                 - mobile
-                - client_credentials
                 - refresh_token
-                - authorization_code
+                - client_credentials
                 - urn:ietf:params:oauth:grant-type:device_code
                 - urn:ietf:params:oauth:grant-type:jwt-bearer
                 - urn:ietf:params:oauth:grant-type:token-exchange
+              scopes:
+                - read
+                - write
+            # 客户端请求访问时需要授权同意
+            require-authorization-consent: false
+            # PKCE
+            require-proof-key: false
+          pkce:
+            token:
+              authorization-code-time-to-live: 5m
+              access-token-time-to-live: 5m
+              refresh-token-time-to-live: 1h
+              device-code-time-to-live: 5m
+            registration:
+              # Base64编码 ZWI3RGVkNWJiRmJkNzg5NmY4YTJjZmREYzk6RHBBa1BmejRlVzE4ZDI=
+              id: eb7Ded5bbFbd7896f8a2cfdDc9
+              client-id: eb7Ded5bbFbd7896f8a2cfdDc9
+              client-name: OAuth2.1认证【授权码】
+              # 对client-secret进行加密【原值 => DpAkPfz4eW18d2】
+              client-secret: "{bcrypt}$2a$10$i2Y4II7czKcLqwAxWLgHqeJaIczss4wHArWmthzn3QoLhpCZtdN0O"
+              client-authentication-methods:
+                - none
+              authorization-grant-types:
+                - authorization_code
+                - refresh_token
               scopes:
                 - read
                 - write
@@ -115,7 +141,7 @@ spring:
             # 客户端请求访问时需要授权同意
             require-authorization-consent: true
             # PKCE
-            require-proof-key: false
+            require-proof-key: true
       resource-server:
         enabled: true
         request-matcher:
@@ -155,8 +181,8 @@ spring:
             validation-timeout: 3000
             idle-timeout: 180000
             max-lifetime: 1800000
-            maximum-pool-size: 200
-            minimum-idle: 100
+            maximum-pool-size: 100
+            minimum-idle: 30
             is-read-only: false
         domain:
           type: com.zaxxer.hikari.HikariDataSource
@@ -170,8 +196,8 @@ spring:
             validation-timeout: 3000
             idle-timeout: 180000
             max-lifetime: 1800000
-            maximum-pool-size: 200
-            minimum-idle: 100
+            maximum-pool-size: 100
+            minimum-idle: 30
             is-read-only: false
   data:
     redis:

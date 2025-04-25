@@ -74,7 +74,7 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
  * @author laokou
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnClass(OAuth2Authorization.class)
+@ConditionalOnClass({OAuth2Authorization.class, OAuth2AuthorizationServerPropertiesMapper.class})
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.security.oauth2.authorization-server", name = "enabled")
 class OAuth2AuthorizationServerConfig {
