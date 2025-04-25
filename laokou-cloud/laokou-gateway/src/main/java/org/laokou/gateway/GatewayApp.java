@@ -86,6 +86,7 @@ public class GatewayApp implements CommandLineRunner {
 		// 忽略SSL认证
 		SslUtils.ignoreSSLTrust();
 		// 开启reactor的上下文传递
+		// https://spring.io/blog/2023/03/30/context-propagation-with-project-reactor-3-unified-bridging-between-reactive
 		Hooks.enableAutomaticContextPropagation();
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
 		stopWatch.stop();
