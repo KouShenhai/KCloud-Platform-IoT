@@ -11,4 +11,11 @@
 
   <artifactId>laokou-distributed-identifier-client</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-i18n</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

@@ -26,7 +26,6 @@ import org.laokou.admin.user.dto.*;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.common.core.util.SpringEventBus;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Page;
@@ -88,7 +87,7 @@ public class UsersControllerV3 {
 	public void removeV3(@RequestBody Long[] ids) {
 		Disposable disposable = usersServiceI.remove(new UserRemoveCmd(ids))
 			.doOnError(e -> log.error("删除用户失败：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)
@@ -132,7 +131,7 @@ public class UsersControllerV3 {
 	public void modifyAuthorityV3(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {
 		Disposable disposable = usersServiceI.modifyAuthority(cmd)
 			.doOnError(e -> log.error("修改用户权限失败：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)

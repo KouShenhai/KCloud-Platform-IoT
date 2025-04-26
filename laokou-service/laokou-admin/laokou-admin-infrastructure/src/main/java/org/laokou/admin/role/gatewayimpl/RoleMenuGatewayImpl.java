@@ -25,7 +25,6 @@ import org.laokou.admin.role.gatewayimpl.database.RoleMenuMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.core.util.CollectionUtils;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -83,7 +82,7 @@ public class RoleMenuGatewayImpl implements RoleMenuGateway {
 
 	private Mono<List<Long>> getRoleMenuIds(List<Long> roleIds) {
 		return Mono.fromCallable(() -> roleMenuMapper.selectIdsByRoleIds(roleIds))
-			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)

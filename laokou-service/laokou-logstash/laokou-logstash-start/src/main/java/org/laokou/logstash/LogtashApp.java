@@ -20,7 +20,6 @@ package org.laokou.logstash;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.logstash.consumer.handler.TraceLogHandler;
 import org.springframework.boot.CommandLineRunner;
@@ -66,6 +65,8 @@ public class LogtashApp implements CommandLineRunner {
 		System.setProperty("management.health.sentinel.enabled", "false");
 		// 忽略SSL认证
 		SslUtils.ignoreSSLTrust();
+		// 启用虚拟线程支持
+		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
 		new SpringApplicationBuilder(LogtashApp.class).web(WebApplicationType.REACTIVE).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
@@ -80,7 +81,7 @@ public class LogtashApp implements CommandLineRunner {
 
 	private void listenMessages() {
 		tracingLogConsumer.consumeMessages()
-			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)

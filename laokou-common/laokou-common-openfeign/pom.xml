@@ -87,6 +87,10 @@
       <optional>true</optional>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-distributed-identifier-client</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

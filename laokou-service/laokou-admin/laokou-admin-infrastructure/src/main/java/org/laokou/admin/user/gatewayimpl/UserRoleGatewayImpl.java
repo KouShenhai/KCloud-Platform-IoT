@@ -25,8 +25,8 @@ import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.util.CollectionUtils;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClient;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -48,6 +48,8 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 
 	private final UserRoleMapper userRoleMapper;
 
+	private final DistributedIdentifierFeignClient distributedIdentifierFeignClient;
+
 	@Override
 	public Mono<Void> update(UserE userE) {
 		return getUserRoleIds(userE.getUserIds()).map(ids -> {
@@ -67,7 +69,8 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 
 	private void insertUserRole(UserE userE) {
 		// 新增用户角色关联表
-		List<UserRoleDO> list = UserConvertor.toDataObjects(userE, userE.getId());
+		List<UserRoleDO> list = UserConvertor.toDataObjects(
+				distributedIdentifierFeignClient.generateSnowflakeV3().getData().getId(), userE, userE.getId());
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::insert);
 		}
@@ -83,7 +86,7 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 
 	private Mono<List<Long>> getUserRoleIds(List<Long> userIds) {
 		return Mono.fromCallable(() -> userRoleMapper.selectIdsByUserIds(userIds))
-			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)

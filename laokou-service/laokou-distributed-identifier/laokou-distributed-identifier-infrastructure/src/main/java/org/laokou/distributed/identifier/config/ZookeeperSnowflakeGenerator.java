@@ -15,17 +15,29 @@
  *
  */
 
-package org.laokou.distributed.identifier.config.support;
+package org.laokou.distributed.identifier.config;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.recipes.locks.InterProcessMutex;
+import org.apache.curator.utils.ZKPaths;
+import org.apache.zookeeper.KeeperException;
 import org.laokou.common.i18n.util.DateUtils;
 import org.springframework.util.Assert;
 import java.time.Instant;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
  */
+@Slf4j
 public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
+
+	private static final String MACHINE_PATH = "/snowflake/machines";
+
+	private final CuratorFramework curatorFramework;
 
 	/**
 	 * 序列标识占用的位数.
@@ -43,14 +55,14 @@ public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 	private final long datacenterBit = 5;
 
 	/**
-	 * 机器标识ID.
-	 */
-	private final long machineId;
-
-	/**
 	 * 数据标识ID.
 	 */
 	private final long dataCenterId;
+
+	/**
+	 * 机器标识ID.
+	 */
+	private volatile long machineId;
 
 	/**
 	 * 起始的时间戳.
@@ -70,21 +82,19 @@ public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 	/**
 	 * 根据指定的数据中心ID和机器标志ID生成指定的序列号.
 	 * @param dataCenterId 数据中心ID
-	 * @param machineId 机器标志ID
 	 */
-	public ZookeeperSnowflakeGenerator(final long startTimestamp, final long dataCenterId, final long machineId) {
+	public ZookeeperSnowflakeGenerator(final long startTimestamp, final long dataCenterId,
+			CuratorFramework curatorFramework) {
 		// 数据标识最大值
 		long maxDatacenter = ~(-1L << datacenterBit);
 		// 机器标识最大值
 		long maxMachine = ~(-1L << machineBit);
-		Assert.isTrue(startTimestamp > getNextTimestamp(), "Snowflake not support current timestamp");
-		Assert.isTrue(machineId <= maxMachine && machineId >= 0,
-				String.format("MachineId can't be greater than %s or less than 0", maxMachine));
+		Assert.isTrue(startTimestamp <= getNextTimestamp(), "Snowflake not support current timestamp");
 		Assert.isTrue(dataCenterId <= maxDatacenter && dataCenterId >= 0,
 				String.format("DtaCenterId can't be greater than %s or less than 0", maxDatacenter));
 		this.startTimestamp = startTimestamp;
-		this.machineId = machineId;
 		this.dataCenterId = dataCenterId;
+		this.curatorFramework = curatorFramework;
 	}
 
 	/**
@@ -98,13 +108,51 @@ public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 	}
 
 	@Override
-	public void init() {
-
+	public synchronized void init() throws Exception { // 机器标识最大值
+		long maxMachine = ~(-1L << machineBit);
+		// 定义分布式锁路径
+		String lockPath = ZKPaths.makePath(MACHINE_PATH, "lock");
+		InterProcessMutex lock = new InterProcessMutex(curatorFramework, lockPath);
+		try {
+			// 获取分布式锁
+			if (!lock.acquire(5, TimeUnit.SECONDS)) {
+				throw new RuntimeException("Failed to acquire distributed lock");
+			}
+			// 检查并创建父路径
+			if (curatorFramework.checkExists().forPath(MACHINE_PATH) == null) {
+				curatorFramework.create().creatingParentsIfNeeded().forPath(MACHINE_PATH);
+			}
+			// 检查子节点数量是否超过限制
+			List<String> children = curatorFramework.getChildren().forPath(MACHINE_PATH);
+			long machineId = children.size();
+			if (machineId >= maxMachine) {
+				throw new RuntimeException(String.format("MachineId exceeds the maximum limit: %s", maxMachine));
+			}
+			// 创建新的子节点
+			String newNodePath = ZKPaths.makePath(MACHINE_PATH, String.valueOf(machineId));
+			curatorFramework.create().forPath(newNodePath, new byte[0]);
+			this.machineId = machineId;
+		}
+		catch (KeeperException e) {
+			// 捕获 KeeperException 并记录详细日志
+			log.error("Zookeeper operation failed", e);
+		}
+		catch (Exception e) {
+			// 捕获其他异常并记录日志
+			log.error("Unexpected error occurred", e);
+			throw new RuntimeException(e);
+		}
+		finally {
+			// 释放分布式锁
+			if (lock.isAcquiredInThisProcess()) {
+				lock.release();
+			}
+		}
 	}
 
 	@Override
-	public void close() {
-
+	public synchronized void close() throws Exception {
+		curatorFramework.delete().forPath(ZKPaths.makePath(MACHINE_PATH, String.valueOf(machineId)));
 	}
 
 	/**

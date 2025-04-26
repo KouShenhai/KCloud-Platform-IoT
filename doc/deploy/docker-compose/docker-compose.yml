@@ -248,6 +248,19 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - laokou_network
+  zookeeper:
+    image: bitnami/zookeeper:3.9.3
+    container_name: zookeeper
+    tty: true
+    ports:
+      - '2181:2181'
+    environment:
+      # 允许匿名登录
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    restart: always
+    privileged: true
+    networks:
+      - laokou_network
   kafka:
     image: bitnami/kafka:4.0.0
     container_name: kafka

@@ -24,7 +24,6 @@ import org.laokou.admin.role.gateway.RoleGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.model.RoleE;
-import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -63,7 +62,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	@Override
 	public Mono<Void> delete(Long[] ids) {
 		return Mono.fromCallable(() -> roleMapper.deleteByIds(Arrays.asList(ids)))
-			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)
@@ -73,7 +72,7 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	private Mono<Integer> getVersion(RoleE roleE) {
 		return Mono.fromCallable(() -> roleMapper.selectVersion(roleE.getId()))
-			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)

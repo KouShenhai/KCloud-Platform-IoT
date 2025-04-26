@@ -56,7 +56,6 @@ import java.security.NoSuchAlgorithmException;
 @EnableSecurity
 @EnableApiSecret
 @EnableScheduling
-@EnableFeignClients
 @EnableRemoveCache
 @EnableServiceShutDown
 @EnableRedisRepository
@@ -64,6 +63,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
+@EnableFeignClients(basePackages = { "org.laokou.admin.**.gatewayimpl.rpc", "org.laokou.common.openfeign.rpc" })
 @MapperScan(basePackages = "org.laokou.admin.**.gatewayimpl.database")
 @SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
 public class AdminApp {
@@ -90,6 +90,8 @@ public class AdminApp {
 		System.setProperty("management.health.sentinel.enabled", "false");
 		// 忽略SSL认证
 		SslUtils.ignoreSSLTrust();
+		// 启用虚拟线程支持
+		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
 		new SpringApplicationBuilder(AdminApp.class).web(WebApplicationType.SERVLET).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());

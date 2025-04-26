@@ -15,21 +15,16 @@
  *
  */
 
-package org.laokou.distributed.identifier.config.support;
-
-import java.time.Instant;
+package org.laokou.common.openfeign.constant;
 
 /**
  * @author laokou
  */
-public interface SnowflakeGenerator {
+public final class FeignConstants {
 
-	long nextId();
+	private FeignConstants() {
+	}
 
-	Instant getInstant(long id);
-
-	void init();
-
-	void close();
+	public static final String DISTRIBUTED_IDENTIFIER = "laokou-distributed-identifier";
 
 }

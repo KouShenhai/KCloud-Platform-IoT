@@ -20,14 +20,14 @@ package org.laokou.common.zookeeper.config;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author laokou
  */
-@AutoConfiguration
-public class ZookeeperAutoConfig {
+@Configuration
+public class ZookeeperConfig {
 
 	@Bean(initMethod = "start", destroyMethod = "close")
 	public CuratorFramework curatorFramework(ZookeeperProperties zookeeperProperties) {

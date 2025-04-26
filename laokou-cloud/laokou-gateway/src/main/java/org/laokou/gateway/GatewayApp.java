@@ -21,7 +21,6 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.SpringEventBus;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
 import org.laokou.gateway.repository.NacosRouteDefinitionRepository;
@@ -102,7 +101,7 @@ public class GatewayApp implements CommandLineRunner {
 	private void syncRouters() {
 		// 删除路由
 		Disposable disposable1 = nacosRouteDefinitionRepository.removeRouters()
-			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)
@@ -117,7 +116,7 @@ public class GatewayApp implements CommandLineRunner {
 		});
 		// 保存路由
 		Disposable disposable2 = nacosRouteDefinitionRepository.saveRouters()
-			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)

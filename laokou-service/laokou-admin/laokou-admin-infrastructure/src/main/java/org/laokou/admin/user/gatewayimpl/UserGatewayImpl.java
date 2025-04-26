@@ -24,7 +24,7 @@ import org.laokou.admin.user.gateway.UserGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.common.core.util.ThreadUtils;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClient;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -48,15 +48,18 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final UserMapper userMapper;
 
+	private final DistributedIdentifierFeignClient distributedIdentifierFeignClient;
+
 	@Override
 	public void create(UserE userE) {
-		UserDO userDO = UserConvertor.toDataObject(passwordEncoder, userE, true);
+		UserDO userDO = UserConvertor.toDataObject(
+				distributedIdentifierFeignClient.generateSnowflakeV3().getData().getId(), passwordEncoder, userE, true);
 		userMapper.insert(userDO);
 	}
 
 	@Override
 	public void update(UserE userE) {
-		UserDO userDO = UserConvertor.toDataObject(passwordEncoder, userE, false);
+		UserDO userDO = UserConvertor.toDataObject(null, passwordEncoder, userE, false);
 		userDO.setVersion(userMapper.selectVersion(userE.getId()));
 		userMapper.updateById(userDO);
 	}
@@ -64,7 +67,7 @@ public class UserGatewayImpl implements UserGateway {
 	@Override
 	public Mono<Void> delete(Long[] ids) {
 		return Mono.fromCallable(() -> userMapper.deleteByIds(Arrays.asList(ids)))
-			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)

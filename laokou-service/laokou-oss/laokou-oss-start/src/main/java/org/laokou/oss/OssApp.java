@@ -62,7 +62,7 @@ public class OssApp {
 
 	// @formatter:off
     /// ```properties
-    /// -Dcsp.sentinel.api.port=8723
+    /// -Dcsp.sentinel.api.port=8724
     /// -Dserver.port=9991
     /// ```
 	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {

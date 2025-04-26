@@ -24,7 +24,6 @@ import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.security.util.UserDetails;
@@ -40,25 +39,23 @@ import java.util.List;
  */
 public final class UserConvertor {
 
-	private static final String DEFAULT_PASSWORD = "laokou123";
-
 	private UserConvertor() {
 	}
 
-	public static List<UserRoleDO> toDataObjects(UserE userE, Long userId) {
+	public static List<UserRoleDO> toDataObjects(Long id, UserE userE, Long userId) {
 		return userE.getRoleIds().stream().map(roleId -> {
 			UserRoleDO userRoleDO = new UserRoleDO();
-			userRoleDO.setId(IdGenerator.defaultSnowflakeId());
+			userRoleDO.setId(id);
 			userRoleDO.setRoleId(Long.valueOf(roleId));
 			userRoleDO.setUserId(userId);
 			return userRoleDO;
 		}).toList();
 	}
 
-	public static List<UserDeptDO> toDataObjs(UserE userE, Long userId) {
+	public static List<UserDeptDO> toDataObjs(Long id, UserE userE, Long userId) {
 		return userE.getDeptIds().stream().map(deptId -> {
 			UserDeptDO userDeptDO = new UserDeptDO();
-			userDeptDO.setId(IdGenerator.defaultSnowflakeId());
+			userDeptDO.setId(id);
 			userDeptDO.setDeptId(Long.valueOf(deptId));
 			userDeptDO.setUserId(userId);
 			return userDeptDO;
@@ -81,11 +78,11 @@ public final class UserConvertor {
 		}).toList();
 	}
 
-	public static UserDO toDataObject(PasswordEncoder passwordEncoder, UserE userE, boolean isInsert) {
+	public static UserDO toDataObject(Long id, PasswordEncoder passwordEncoder, UserE userE, boolean isInsert) {
 		UserDO userDO = new UserDO();
 		if (isInsert) {
-			userDO.setId(IdGenerator.defaultSnowflakeId());
-			userDO.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
+			userDO.setId(id);
+			userDO.setPassword(passwordEncoder.encode("laokou123"));
 			userDO.setUsername(userE.getUsername());
 			userDO.setUsernamePhrase(userE.getUsernamePhrase());
 		}

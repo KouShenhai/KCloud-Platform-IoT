@@ -80,6 +80,8 @@ public class IotApp {
 		System.setProperty("management.health.sentinel.enabled", "false");
 		// 忽略SSL认证
 		SslUtils.ignoreSSLTrust();
+		// 启用虚拟线程支持
+		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
 		new SpringApplicationBuilder(IotApp.class).web(WebApplicationType.SERVLET).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());

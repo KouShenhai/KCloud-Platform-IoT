@@ -25,8 +25,8 @@ import org.laokou.admin.user.gatewayimpl.database.UserDeptMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.util.CollectionUtils;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClient;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -48,6 +48,8 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 
 	private final UserDeptMapper userDeptMapper;
 
+	private final DistributedIdentifierFeignClient distributedIdentifierFeignClient;
+
 	@Override
 	public Mono<Void> update(UserE userE) {
 		return getUserDeptIds(userE.getUserIds()).map(ids -> {
@@ -67,7 +69,8 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 
 	private void insertUserDept(UserE userE) {
 		// 新增用户部门关联表
-		List<UserDeptDO> list = UserConvertor.toDataObjs(userE, userE.getId());
+		List<UserDeptDO> list = UserConvertor
+			.toDataObjs(distributedIdentifierFeignClient.generateSnowflakeV3().getData().getId(), userE, userE.getId());
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, UserDeptMapper.class, UserDeptMapper::insert);
 		}
@@ -83,7 +86,7 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 
 	private Mono<List<Long>> getUserDeptIds(List<Long> userIds) {
 		return Mono.fromCallable(() -> userDeptMapper.selectIdsByUserIds(userIds))
-			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)

@@ -20,7 +20,6 @@ package org.laokou.logstash;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.kafka.template.KafkaSender;
@@ -59,7 +58,7 @@ class KafkaTest {
 		index.setMessage("{\"testValue\": \"123456\"}");
 		index.setStacktrace("");
 		reactiveKafkaSender.send("laokou_trace_topic", JacksonUtils.toJsonStr(index))
-			.subscribeOn(Schedulers.fromExecutor(ThreadUtils.newVirtualTaskExecutor()))
+			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))
 				.jitter(0.5)
