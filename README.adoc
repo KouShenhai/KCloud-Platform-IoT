@@ -190,6 +190,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 - 离线批处理：Spark
 - 列式数据库：ClickHouse
 - 链路&指标采集：Micrometer
+- 分布式ID：Zookeeper
 
 ==== 🌴 项目结构
 

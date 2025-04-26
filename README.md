@@ -181,6 +181,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - 离线批处理：Spark
 - 列式数据库：ClickHouse
 - 链路&指标采集：Micrometer
+- 分布式ID：Zookeeper
 
 #### 🌴 项目结构
 
