@@ -30,7 +30,7 @@
     <!--项目版本-->
     <laokou.version>3.5.0</laokou.version>
     <!--spring-boot版本-->
-    <spring-boot.version>3.5.0-M3</spring-boot.version>
+    <spring-boot.version>3.5.0-RC1</spring-boot.version>
     <!--lombok版本-->
     <lombok.version>1.18.38</lombok.version>
     <!--postgresql版本-->
@@ -62,7 +62,7 @@
     <!--fastexcel-->
     <fastexcel.version>1.2.0</fastexcel.version>
     <!--spring-security-oauth2-authorization-server版本-->
-    <spring-security-oauth2-authorization-server.version>1.5.0-M2</spring-security-oauth2-authorization-server.version>
+    <spring-security-oauth2-authorization-server.version>1.5.0-RC1</spring-security-oauth2-authorization-server.version>
     <!--aws-java-sdk-s3版本-->
     <aws-java-sdk-s3.version>1.12.782</aws-java-sdk-s3.version>
     <!--dynamic-datasource版本-->

@@ -82,7 +82,6 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			}
 		}
 		connect();
-		subscribe();
 		consume();
 	}
 
@@ -102,9 +101,16 @@ public class HivemqMqttClient extends AbstractMqttClient {
 	}
 
 	public void subscribe() {
-		String[] topics = mqttClientProperties.getTopics().toArray(String[]::new);
-		int[] qosArray = Stream.of(topics).mapToInt(item -> mqttClientProperties.getSubscribeQos()).toArray();
-		subscribe(topics, qosArray);
+		String[] topics = getTopics();
+		subscribe(topics, getQosArray(topics));
+	}
+
+	public String[] getTopics() {
+		return mqttClientProperties.getTopics().toArray(String[]::new);
+	}
+
+	public int[] getQosArray(String[] topics) {
+		return Stream.of(topics).mapToInt(item -> mqttClientProperties.getSubscribeQos()).toArray();
 	}
 
 	public void subscribe(String[] topics, int[] qosArray) {
@@ -199,6 +205,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 	}
 
 	public void publishSubscribeEvent(String[] topics, int[] qosArray) {
+		log.error("【Hivemq】 => 发布订阅Topic事件");
 		SpringEventBus.publish(new SubscribeEvent(this, mqttClientProperties.getClientId(), topics, qosArray));
 	}
 
@@ -311,6 +318,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					mqttClientConnectionConfig.getKeepAlive()));
 			log.info("【Hivemq】 => MQTT已连接，客户端ID：{}", mqttClientProperties.getClientId());
 			isConnected.compareAndSet(false, true);
+			subscribe();
 		}).addDisconnectedListener(listener -> {
 			log.info("【Hivemq】 => MQTT已断开连接，客户端ID：{}", mqttClientProperties.getClientId());
 			isConnected.compareAndSet(true, false);

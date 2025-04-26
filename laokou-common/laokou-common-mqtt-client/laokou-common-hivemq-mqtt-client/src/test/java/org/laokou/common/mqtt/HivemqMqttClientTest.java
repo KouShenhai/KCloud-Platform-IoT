@@ -53,7 +53,7 @@ class HivemqMqttClientTest {
 		properties.setUsername("emqx");
 		properties.setPassword("laokou123");
 		properties.setClientId("test-client-1");
-		properties.setTopics(Set.of("/test-topic-1/#"));
+		properties.setTopics(Set.of("$shard/+/#"));
 		Assertions.assertDoesNotThrow(
 				() -> HivemqMqttClientManager.add(properties.getClientId(), properties, messageHandlers));
 		// 发布打开事件
