@@ -87,11 +87,8 @@ public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 			CuratorFramework curatorFramework) {
 		// 数据标识最大值
 		long maxDatacenter = ~(-1L << datacenterBit);
-		// 机器标识最大值
-		long maxMachine = ~(-1L << machineBit);
 		Assert.isTrue(startTimestamp <= getNextTimestamp(), "Snowflake not support current timestamp");
-		Assert.isTrue(dataCenterId <= maxDatacenter && dataCenterId >= 0,
-				String.format("DtaCenterId can't be greater than %s or less than 0", maxDatacenter));
+		Assert.isTrue(dataCenterId < maxDatacenter && dataCenterId >= 0, String.format("DtaCenterId exceeds the maximum limit: %s", maxDatacenter));
 		this.startTimestamp = startTimestamp;
 		this.dataCenterId = dataCenterId;
 		this.curatorFramework = curatorFramework;
@@ -108,7 +105,8 @@ public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 	}
 
 	@Override
-	public synchronized void init() throws Exception { // 机器标识最大值
+	public synchronized void init() throws Exception {
+		// 机器标识最大值
 		long maxMachine = ~(-1L << machineBit);
 		// 定义分布式锁路径
 		String lockPath = ZKPaths.makePath(MACHINE_PATH, "lock");
@@ -125,9 +123,7 @@ public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 			// 检查子节点数量是否超过限制
 			List<String> children = curatorFramework.getChildren().forPath(MACHINE_PATH);
 			long machineId = children.size();
-			if (machineId >= maxMachine) {
-				throw new RuntimeException(String.format("MachineId exceeds the maximum limit: %s", maxMachine));
-			}
+			Assert.isTrue(machineId < maxMachine, String.format("MachineId exceeds the maximum limit: %s", maxMachine));
 			// 创建新的子节点
 			String newNodePath = ZKPaths.makePath(MACHINE_PATH, String.valueOf(machineId));
 			curatorFramework.create().forPath(newNodePath, new byte[0]);
