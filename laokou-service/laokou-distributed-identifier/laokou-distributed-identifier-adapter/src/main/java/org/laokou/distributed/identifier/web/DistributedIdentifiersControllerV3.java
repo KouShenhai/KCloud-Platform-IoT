@@ -22,6 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.secret.annotation.ApiSecret;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.laokou.distributed.identifier.api.DistributedIdentifierServiceI;
 import org.laokou.distributed.identifier.dto.clientobject.DistributedIdentifierCO;
@@ -39,6 +40,7 @@ public class DistributedIdentifiersControllerV3 {
 	private final DistributedIdentifierServiceI distributedIdentifierServiceI;
 
 	@TraceLog
+	@ApiSecret
 	@PostMapping("snowflake")
 	@Operation(summary = "生成雪花ID", description = "生成雪花ID")
 	public Result<DistributedIdentifierCO> generateSnowflakeV3() {

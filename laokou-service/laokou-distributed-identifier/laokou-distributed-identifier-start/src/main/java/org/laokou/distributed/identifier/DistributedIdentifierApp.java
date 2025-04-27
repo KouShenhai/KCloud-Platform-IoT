@@ -20,6 +20,7 @@ package org.laokou.distributed.identifier;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.nacos.annotation.EnableServiceShutDown;
+import org.laokou.common.secret.annotation.EnableApiSecret;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -37,6 +38,7 @@ import java.net.UnknownHostException;
  * @author laokou
  */
 @Slf4j
+@EnableApiSecret
 @EnableServiceShutDown
 @EnableDiscoveryClient
 @EnableConfigurationProperties

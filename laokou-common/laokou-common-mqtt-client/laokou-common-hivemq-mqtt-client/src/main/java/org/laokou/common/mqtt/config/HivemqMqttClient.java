@@ -43,7 +43,6 @@ import org.laokou.common.mqtt.client.handler.event.*;
 import org.springframework.dao.DuplicateKeyException;
 
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
@@ -64,7 +63,17 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	private final Object lock = new Object();
 
-	private final List<Disposable> disposableList = new CopyOnWriteArrayList<>();
+	private volatile Disposable connectDisposable;
+
+	private volatile Disposable subscribeDisposable;
+
+	private volatile Disposable unSubscribeDisposable;
+
+	private volatile Disposable publishDisposable;
+
+	private volatile Disposable disconnectDisposable;
+
+	private volatile Disposable consumeDisposable;
 
 	private final AtomicBoolean isConnected = new AtomicBoolean(false);
 
@@ -87,7 +96,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 
 	public void close() {
 		if (ObjectUtils.isNotNull(client)) {
-			Disposable disposable = client.disconnectWith()
+			disconnectDisposable = client.disconnectWith()
 				.sessionExpiryInterval(mqttClientProperties.getSessionExpiryInterval())
 				.applyDisconnect()
 				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
@@ -96,7 +105,6 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount) * 100, TimeUnit.MILLISECONDS)))
 				.subscribe(() -> log.info("【Hivemq】 => MQTT断开连接成功，客户端ID：{}", mqttClientProperties.getClientId()),
 						e -> log.error("【Hivemq】 => MQTT断开连接失败，错误信息：{}", e.getMessage(), e));
-			disposableList.add(disposable);
 		}
 	}
 
@@ -125,7 +133,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					.noLocal(mqttClientProperties.isNoLocal())
 					.build());
 			}
-			Disposable disposable = client.subscribeWith()
+			subscribeDisposable = client.subscribeWith()
 				.addSubscriptions(subscriptions)
 				.applySubscribe()
 				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
@@ -134,7 +142,6 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount) * 100, TimeUnit.MILLISECONDS)))
 				.subscribe(ack -> log.info("【Hivemq】 => MQTT订阅成功，主题: {}", String.join("、", topics)), e -> log
 					.error("【Hivemq】 => MQTT订阅失败，主题：{}，错误信息：{}", String.join("、", topics), e.getMessage(), e));
-			disposableList.add(disposable);
 		}
 	}
 
@@ -150,7 +157,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			for (String topic : topics) {
 				matchedTopics.add(MqttTopicFilter.of(topic));
 			}
-			Disposable disposable = client.unsubscribeWith()
+			unSubscribeDisposable = client.unsubscribeWith()
 				.addTopicFilters(matchedTopics)
 				.applyUnsubscribe()
 				.subscribeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()))
@@ -159,13 +166,12 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount) * 100, TimeUnit.MILLISECONDS)))
 				.subscribe(ack -> log.info("【Hivemq】 => MQTT取消订阅成功，主题：{}", String.join("、", topics)), e -> log
 					.error("【Hivemq】 => MQTT取消订阅失败，主题：{}，错误信息：{}", String.join("、", topics), e.getMessage(), e));
-			disposableList.add(disposable);
 		}
 	}
 
 	public void publish(String topic, byte[] payload, int qos) {
 		if (ObjectUtils.isNotNull(client)) {
-			Disposable disposable = client
+			publishDisposable = client
 				.publish(Flowable.just(Mqtt5Publish.builder()
 					.topic(topic)
 					.qos(getMqttQos(qos))
@@ -184,7 +190,6 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					.flatMap(retryCount -> Flowable.timer((long) Math.pow(2, retryCount) * 100, TimeUnit.MILLISECONDS)))
 				.subscribe(ack -> log.info("【Hivemq】 => MQTT消息发布成功，topic：{}", topic),
 						e -> log.error("【Hivemq】 => MQTT消息发布失败，topic：{}，错误信息：{}", topic, e.getMessage(), e));
-			disposableList.add(disposable);
 		}
 	}
 
@@ -213,14 +218,29 @@ public class HivemqMqttClient extends AbstractMqttClient {
 		SpringEventBus.publish(new UnSubscribeEvent(this, mqttClientProperties.getClientId(), topics));
 	}
 
+	public void dispose(Disposable disposable) {
+		if (ObjectUtils.isNotNull(disposable) && !disposable.isDisposed()) {
+			// 显式取消订阅
+			disposable.dispose();
+		}
+	}
+
 	public void dispose() {
-		disposableList.forEach(disposable -> {
-			if (ObjectUtils.isNotNull(disposable) && !disposable.isDisposed()) {
-				// 显式取消订阅
-				disposable.dispose();
-			}
-		});
-		disposableList.clear();
+		dispose(connectDisposable);
+		dispose(subscribeDisposable);
+		dispose(unSubscribeDisposable);
+		dispose(publishDisposable);
+		dispose(consumeDisposable);
+		dispose(disconnectDisposable);
+	}
+
+	public void reSubscribe() {
+		log.info("【Hivemq】 => MQTT重新订阅开始");
+		dispose(subscribeDisposable);
+		dispose(consumeDisposable);
+		subscribe();
+		consume();
+		log.info("【Hivemq】 => MQTT重新订阅结束");
 	}
 
 	public boolean isDisConnected() {
@@ -236,7 +256,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 	}
 
 	private void connect() {
-		Disposable disposable = client.connectWith()
+		connectDisposable = client.connectWith()
 			.keepAlive(mqttClientProperties.getKeepAliveInterval())
 			.cleanStart(mqttClientProperties.isClearStart())
 			.sessionExpiryInterval(mqttClientProperties.getSessionExpiryInterval())
@@ -273,12 +293,11 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					ack -> log.info("【Hivemq】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}", mqttClientProperties.getHost(),
 							mqttClientProperties.getPort(), mqttClientProperties.getClientId()),
 					e -> log.error("【Hivemq】 => MQTT连接失败，错误信息：{}", e.getMessage(), e));
-		disposableList.add(disposable);
 	}
 
 	private void consume() {
 		if (ObjectUtils.isNotNull(client)) {
-			Disposable disposable = client.publishes(MqttGlobalPublishFilter.ALL)
+			consumeDisposable = client.publishes(MqttGlobalPublishFilter.ALL)
 				.onBackpressureBuffer(8192)
 				.observeOn(Schedulers.from(ThreadUtils.newVirtualTaskExecutor()), false, 8192)
 				.doOnSubscribe(subscribe -> log.info("【Hivemq】 => MQTT开始订阅消息，请稍候。。。。。。"))
@@ -305,7 +324,6 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					}
 				}, e -> log.error("【Hivemq】 => MQTT消息处理失败，错误信息：{}", e.getMessage(), e),
 						() -> log.info("【Hivemq】 => MQTT订阅消息结束，请稍候。。。。。。"));
-			disposableList.add(disposable);
 		}
 	}
 
@@ -318,7 +336,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 					mqttClientConnectionConfig.getKeepAlive()));
 			log.info("【Hivemq】 => MQTT已连接，客户端ID：{}", mqttClientProperties.getClientId());
 			isConnected.compareAndSet(false, true);
-			subscribe();
+			reSubscribe();
 		}).addDisconnectedListener(listener -> {
 			log.info("【Hivemq】 => MQTT已断开连接，客户端ID：{}", mqttClientProperties.getClientId());
 			isConnected.compareAndSet(true, false);

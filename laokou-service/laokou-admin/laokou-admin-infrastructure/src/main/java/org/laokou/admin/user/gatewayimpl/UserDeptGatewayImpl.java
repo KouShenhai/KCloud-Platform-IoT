@@ -26,7 +26,7 @@ import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClient;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -48,7 +48,7 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 
 	private final UserDeptMapper userDeptMapper;
 
-	private final DistributedIdentifierFeignClient distributedIdentifierFeignClient;
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
 	public Mono<Void> update(UserE userE) {
@@ -69,8 +69,8 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 
 	private void insertUserDept(UserE userE) {
 		// 新增用户部门关联表
-		List<UserDeptDO> list = UserConvertor
-			.toDataObjs(distributedIdentifierFeignClient.generateSnowflakeV3().getData().getId(), userE, userE.getId());
+		List<UserDeptDO> list = UserConvertor.toDataObjs(distributedIdentifierFeignClientWrapper.getId(), userE,
+				userE.getId());
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, UserDeptMapper.class, UserDeptMapper::insert);
 		}

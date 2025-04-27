@@ -22,8 +22,10 @@ import org.laokou.common.openfeign.rpc.factory.DistributedIdentifierFeignClientF
 import org.laokou.distributed.identifier.dto.clientobject.DistributedIdentifierCO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import static org.laokou.common.openfeign.constant.FeignConstants.DISTRIBUTED_IDENTIFIER;
+import static org.laokou.common.secret.aop.ApiSecretAop.*;
 
 /**
  * @author laokou
@@ -33,6 +35,8 @@ import static org.laokou.common.openfeign.constant.FeignConstants.DISTRIBUTED_ID
 public interface DistributedIdentifierFeignClient {
 
 	@PostMapping("snowflake")
-	Result<DistributedIdentifierCO> generateSnowflakeV3();
+	Result<DistributedIdentifierCO> generateSnowflakeV3(@RequestParam(APP_KEY) String appKey,
+			@RequestParam(APP_SECRET) String appSecret, @RequestParam(TIMESTAMP) Long timestamp,
+			@RequestParam(NONCE) String nonce, @RequestParam(SIGN) String sign);
 
 }

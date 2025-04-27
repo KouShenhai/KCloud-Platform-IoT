@@ -88,7 +88,8 @@ public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 		// 数据标识最大值
 		long maxDatacenter = ~(-1L << datacenterBit);
 		Assert.isTrue(startTimestamp <= getNextTimestamp(), "Snowflake not support current timestamp");
-		Assert.isTrue(dataCenterId < maxDatacenter && dataCenterId >= 0, String.format("DtaCenterId exceeds the maximum limit: %s", maxDatacenter));
+		Assert.isTrue(dataCenterId < maxDatacenter && dataCenterId >= 0,
+				String.format("DtaCenterId exceeds the maximum limit: %s", maxDatacenter));
 		this.startTimestamp = startTimestamp;
 		this.dataCenterId = dataCenterId;
 		this.curatorFramework = curatorFramework;
