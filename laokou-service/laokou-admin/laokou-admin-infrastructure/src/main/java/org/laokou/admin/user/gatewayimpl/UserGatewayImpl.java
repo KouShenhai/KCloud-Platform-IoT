@@ -24,7 +24,7 @@ import org.laokou.admin.user.gateway.UserGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClient;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -48,12 +48,12 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final UserMapper userMapper;
 
-	private final DistributedIdentifierFeignClient distributedIdentifierFeignClient;
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
 	public void create(UserE userE) {
-		UserDO userDO = UserConvertor.toDataObject(
-				distributedIdentifierFeignClient.generateSnowflakeV3().getData().getId(), passwordEncoder, userE, true);
+		UserDO userDO = UserConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), passwordEncoder,
+				userE, true);
 		userMapper.insert(userDO);
 	}
 

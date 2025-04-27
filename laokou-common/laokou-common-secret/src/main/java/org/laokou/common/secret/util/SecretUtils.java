@@ -20,7 +20,6 @@ package org.laokou.common.secret.util;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.StringUtils;
-import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
@@ -29,13 +28,15 @@ import java.util.Map;
 /**
  * @author laokou
  */
-@Component
-public class SecretUtils {
+public final class SecretUtils {
+
+	private SecretUtils() {
+	}
 
 	/**
 	 * 应用Key.
 	 */
-	public static final String APP_KEY = "laokou2024";
+	public static final String APP_KEY = "laokou2025";
 
 	/**
 	 * 应用密钥.

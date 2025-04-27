@@ -36,7 +36,8 @@ public class DistributedIdentifierFeignClientFallback implements DistributedIden
 	}
 
 	@Override
-	public Result<DistributedIdentifierCO> generateSnowflakeV3() {
+	public Result<DistributedIdentifierCO> generateSnowflakeV3(String appKey, String appSecret, Long timestamp,
+			String nonce, String sign) {
 		log.error("分布式ID调用失败，错误信息：{}", cause.getMessage(), cause);
 		return Result.ok(new DistributedIdentifierCO(System.currentTimeMillis(),
 				DateUtils.format(DateUtils.now(), DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS)));
