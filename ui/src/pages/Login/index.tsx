@@ -340,8 +340,8 @@ export default () => {
 								},
 							]}
 						/>
-						<Row>
-							<Col flex={3}>
+						<Row gutter={24}>
+							<Col span={16}>
 								<ProFormText
 									disabled={loading}
 									width={"sm"}
@@ -364,16 +364,13 @@ export default () => {
 									]}
 								/>
 							</Col>
-							<Col flex={2}>
+							<Col span={8}>
 								<Image
 									src={captchaImage}
 									alt="验证码"
 									style={{
-										display: 'inline-block',
-										verticalAlign: 'top',
-										cursor: 'pointer',
-										paddingLeft: '10px',
-										width: '100px',
+										maxWidth: "100%",
+										minHeight: "32px"
 									}}
 									preview={false}
 									onClick={() => getCaptchaImage()}
