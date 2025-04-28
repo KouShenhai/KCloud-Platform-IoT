@@ -9,6 +9,7 @@ import {Button, message, Modal, Space, Switch, Tag} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {MenuDrawer} from "@/pages/Sys/Permission/MenuDrawer";
 import {useAccess} from "@@/exports";
+import {v7 as uuidV7} from "uuid";
 
 export default () => {
 
@@ -32,6 +33,7 @@ export default () => {
 	const [title, setTitle] = useState("")
 	const [typeValue, setTypeValue] = useState(0);
 	const [treeList, setTreeList] = useState<any[]>([])
+	const [requestId, setRequestId] = useState('')
 
 	const getListTreeQueryParam = (params: any) => {
 		return {
@@ -224,6 +226,7 @@ export default () => {
 				</a>),
 				( access.canMenuSave && <a key="save" onClick={() => {
 					setTitle('新增菜单')
+					setRequestId(uuidV7())
 					setTypeValue(0)
 					setReadOnly(false)
 					setModalVisit(true)
@@ -298,6 +301,8 @@ export default () => {
 					actionRef?.current?.reload();
 					getTreeList().catch(console.log);
 				}}
+				requestId={requestId}
+				setRequestId={setRequestId}
 			/>
 
 			<ProTable<TableColumns>
@@ -322,6 +327,7 @@ export default () => {
 					() => [
 						( access.canMenuSave && <Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
 							setTitle('新增菜单')
+							setRequestId(uuidV7())
 							setTypeValue(0)
 							setReadOnly(false)
 							setModalVisit(true)

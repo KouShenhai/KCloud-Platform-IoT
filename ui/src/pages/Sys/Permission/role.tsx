@@ -13,6 +13,7 @@ import {listTreeV3 as listDeptTreeV3} from "@/services/admin/dept";
 import {RoleDrawer} from "@/pages/Sys/Permission/RoleDrawer";
 import {RoleModifyAuthorityDrawer} from "@/pages/Sys/Permission/RoleModifyAuthorityDrawer";
 import {useAccess} from "@@/exports";
+import {v7 as uuidV7} from "uuid";
 
 export default () => {
 
@@ -35,6 +36,7 @@ export default () => {
 	const [modalModifyAuthorityVisit, setModalModifyAuthorityVisit] = useState(false);
 	const [deptTreeList, setDeptTreeList] = useState<any[]>([])
 	const [typeValue, setTypeValue] = useState('all');
+	const [requestId, setRequestId] = useState('')
 
 	const getPageQueryParam = (params: any) => {
 		return {
@@ -231,6 +233,8 @@ export default () => {
 					actionRef?.current?.reload();
 				}}
 				menuTreeList={menuTreeList}
+				requestId={requestId}
+				setRequestId={setRequestId}
 			/>
 
 			<RoleModifyAuthorityDrawer
@@ -271,6 +275,7 @@ export default () => {
 					() => [
 						( access.canRoleSave && <Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
 							setTitle('新增角色')
+							setRequestId(uuidV7())
 							setReadOnly(false)
 							setModalVisit(true)
 							setDataSource({

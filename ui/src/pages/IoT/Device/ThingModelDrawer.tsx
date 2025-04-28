@@ -1,6 +1,6 @@
 import {DrawerForm, ProFormDigit, ProFormSelect, ProFormText} from '@ant-design/pro-components';
 import {Col, message, Row} from 'antd';
-import React from "react";
+import React, {useState} from "react";
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import {ProFormItem, ProFormTextArea} from "@ant-design/pro-form";
@@ -20,6 +20,8 @@ interface ThingModelDrawerProps {
 	setFlag: (flag: number) => void;
 	dataType: string;
 	setDataType: (type: string) => void;
+	requestId: string
+	setRequestId: (requestId: string) => void
 }
 
 type TableColumns = {
@@ -37,7 +39,9 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, value, setValue, flag, setFlag, dataType, setDataType }) => {
+export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, value, setValue, flag, setFlag, dataType, setDataType, requestId, setRequestId }) => {
+
+	const [loading, setLoading] = useState(false)
 
 	const onChange = React.useCallback((val: any) => {
 		dataSource.expression = val;
@@ -80,22 +84,27 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 			autoFocusFirstInput
 			submitter={{
 				submitButtonProps: {
+					disabled: loading,
 					style: {
 						display: readOnly ? 'none' : 'inline-block',
 					},
 				}
 			}}
 			onFinish={ async (value) => {
+				setLoading(true)
 				value.specs = JSON.stringify(getSpecs(value))
 				// @ts-ignore
 				value.type = value.type.join(',')
 				if (value.id === undefined) {
-					saveV3({co: value}, uuidV7()).then(res => {
+					saveV3({co: value}, requestId).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
 							setModalVisit(false)
 							onComponent()
 						}
+					}).finally(() => {
+						setRequestId(uuidV7())
+						setLoading(false)
 					})
 				} else {
 					modifyV3({co: value}).then(res => {
@@ -104,17 +113,21 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 							setModalVisit(false)
 							onComponent()
 						}
+					}).finally(() => {
+						setLoading(false)
 					})
 				}
 			}}>
 
 			<ProFormText
+				disabled={loading}
 				name="id"
 				label="ID"
 				hidden={true}
 			/>
 
 			<ProFormText
+				disabled={loading}
 				readonly={readOnly}
 				name="code"
 				label="物模型编码"
@@ -122,6 +135,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 			/>
 
 			<ProFormText
+				disabled={loading}
 				readonly={readOnly}
 				name="name"
 				label="物模型名称"
@@ -129,6 +143,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 			/>
 
 			<ProFormSelect
+				disabled={loading}
 				name="category"
 				label="物模型类别"
 				readonly={readOnly}
@@ -141,6 +156,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 			/>
 
 			<ProFormSelect
+				disabled={loading}
 				name="type"
 				label="物模型类型"
 				mode={'multiple'}
@@ -155,6 +171,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 			/>
 
 			<ProFormDigit
+				disabled={loading}
 				name="sort"
 				label="物模型排序"
 				readonly={readOnly}
@@ -165,6 +182,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 			/>
 
 			<ProFormSelect
+				disabled={loading}
 				name="expressionFlag"
 				label="是否使用表达式"
 				readonly={readOnly}
@@ -192,6 +210,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 			)}
 
 			<ProFormSelect
+				disabled={loading}
 				name="dataType"
 				label="物模型数据类型"
 				readonly={readOnly}
@@ -208,6 +227,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 
 			{ dataType === 'string' && (
 				<ProFormText
+					disabled={loading}
 					readonly={readOnly}
 					name="length"
 					label="长度"
@@ -221,6 +241,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				<Row gutter={24}>
 					<Col span={12}>
 						<ProFormText
+							disabled={loading}
 							readonly={readOnly}
 							name="trueText"
 							label="1对应文本"
@@ -229,6 +250,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 					</Col>
 					<Col span={12}>
 						<ProFormText
+							disabled={loading}
 							readonly={readOnly}
 							name="falseText"
 							label="0对应文本"
@@ -242,6 +264,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				<Row gutter={24}>
 					<Col span={12}>
 						<ProFormText
+							disabled={loading}
 							readonly={readOnly}
 							name="length"
 							label="长度"
@@ -256,6 +279,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 					</Col>
 					<Col span={12}>
 						<ProFormText
+							disabled={loading}
 							readonly={readOnly}
 							name="unit"
 							label="单位"
@@ -268,6 +292,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				<Row gutter={24}>
 					<Col span={8}>
 						<ProFormText
+							disabled={loading}
 							readonly={readOnly}
 							name="integerLength"
 							label="整数位长度"
@@ -282,6 +307,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 					</Col>
 					<Col span={8}>
 						<ProFormText
+							disabled={loading}
 							readonly={readOnly}
 							name="decimalLength"
 							label="小数位长度"
@@ -296,6 +322,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 					</Col>
 					<Col span={8}>
 						<ProFormText
+							disabled={loading}
 							readonly={readOnly}
 							name="unit"
 							label="单位"
@@ -305,6 +332,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 			)}
 
 			<ProFormTextArea
+				disabled={loading}
 				readonly={readOnly}
 				name="remark"
 				label="物模型备注"
@@ -312,6 +340,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 
 			{ readOnly && (
 				<ProFormText
+					disabled={loading}
 					readonly={true}
 					name="createTime"
 					rules={[{ required: true, message: '请输入创建时间' }]}

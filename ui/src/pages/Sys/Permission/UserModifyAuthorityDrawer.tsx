@@ -1,7 +1,7 @@
 import {DrawerForm, ProFormSelect, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
 import { message } from 'antd';
 import {modifyAuthorityV3} from '@/services/admin/user';
-import React from "react";
+import React, {useState} from "react";
 
 interface UserAuthorityProps {
 	modalModifyAuthorityVisit: boolean;
@@ -24,6 +24,8 @@ type TableColumns = {
 
 export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalModifyAuthorityVisit, setModalModifyAuthorityVisit, title, dataSource, onComponent, roleList, deptTreeList }) => {
 
+	const [loading, setLoading] = useState(false)
+
 	return (
 		<DrawerForm<TableColumns>
 			open={modalModifyAuthorityVisit}
@@ -38,12 +40,14 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 			autoFocusFirstInput
 			submitter={{
 				submitButtonProps: {
+					disabled: loading,
 					style: {
 						display: 'inline-block',
 					},
 				}
 			}}
 			onFinish={ async (value) => {
+				setLoading(true)
 				const deptIds = value?.deptIds.map((item: any) => item?.value ? item?.value : item)
 				const co = {
 					id: value?.id,
@@ -56,10 +60,13 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 						setModalModifyAuthorityVisit(false)
 						onComponent();
 					}
+				}).finally(() => {
+					setLoading(false)
 				})
 			}}>
 
 			<ProFormText
+				disabled={loading}
 				name="id"
 				label="ID"
 				hidden={true}
@@ -75,6 +82,7 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 			/>
 
 			<ProFormSelect
+				disabled={loading}
 				name="roleIds"
 				allowClear={true}
 				label="所属角色"
@@ -91,6 +99,7 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 			/>
 
 			<ProFormTreeSelect
+				disabled={loading}
 				name="deptIds"
 				label="所属部门"
 				allowClear={true}

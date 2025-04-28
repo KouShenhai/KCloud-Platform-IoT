@@ -2,7 +2,7 @@ import {DrawerForm, ProFormDigit, ProFormText, ProFormTreeSelect} from '@ant-des
 import { message } from 'antd';
 import {modifyV3, saveV3} from "@/services/iot/productCategory";
 import {v7 as uuidV7} from "uuid";
-import React from "react";
+import React, {useState} from "react";
 import {ProFormTextArea} from "@ant-design/pro-form";
 
 interface ProductCategoryDrawerProps {
@@ -13,6 +13,8 @@ interface ProductCategoryDrawerProps {
 	dataSource: TableColumns;
 	onComponent: () => void;
 	treeList: any[]
+	requestId: string
+	setRequestId: (requestId: string) => void
 }
 
 type TableColumns = {
@@ -25,7 +27,9 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, treeList }) => {
+export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, treeList, requestId, setRequestId }) => {
+
+	const [loading, setLoading] = useState(false)
 
 	return (
 		<DrawerForm<TableColumns>
@@ -41,21 +45,25 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ mo
 			autoFocusFirstInput
 			submitter={{
 				submitButtonProps: {
+					disabled: loading,
 					style: {
 						display: readOnly ? 'none' : 'inline-block',
 					},
 				}
 			}}
 			onFinish={ async (value) => {
-				console.log(value)
+				setLoading(true)
 				if (value.id === undefined) {
 					// @ts-ignore
-					saveV3({co: value}, uuidV7()).then(res => {
+					saveV3({co: value}, requestId).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
 							setModalVisit(false)
 							onComponent()
 						}
+					}).finally(() => {
+						setRequestId(uuidV7())
+						setLoading(false)
 					})
 				} else {
 					modifyV3({co: value}).then(res => {
@@ -64,17 +72,21 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ mo
 							setModalVisit(false)
 							onComponent()
 						}
+					}).finally(() => {
+						setLoading(false)
 					})
 				}
 			}}>
 
 			<ProFormText
+				disabled={loading}
 				name="id"
 				label="ID"
 				hidden={true}
 			/>
 
 			<ProFormTreeSelect
+				disabled={loading}
 				name="pid"
 				label="父级产品类别"
 				readonly={readOnly}
@@ -94,6 +106,7 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ mo
 			/>
 
 			<ProFormText
+				disabled={loading}
 				readonly={readOnly}
 				name="name"
 				label="产品类别名称"
@@ -101,6 +114,7 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ mo
 			/>
 
 			<ProFormDigit
+				disabled={loading}
 				name="sort"
 				label="产品类别排序"
 				readonly={readOnly}
@@ -111,6 +125,7 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ mo
 			/>
 
 			<ProFormTextArea
+				disabled={loading}
 				readonly={readOnly}
 				name="remark"
 				label="产品类别备注"
@@ -118,6 +133,7 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ mo
 
 			{ readOnly && (
 				<ProFormText
+					disabled={loading}
 					readonly={true}
 					name="createTime"
 					rules={[{ required: true, message: '请输入创建时间' }]}

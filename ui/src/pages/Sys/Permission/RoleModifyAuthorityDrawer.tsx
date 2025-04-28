@@ -1,7 +1,7 @@
 import {DrawerForm, ProFormSelect, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
 import { message } from 'antd';
 import {modifyAuthorityV3} from '@/services/admin/role';
-import React from "react";
+import React, {useState} from "react";
 
 interface RoleAuthorityProps {
 	modalModifyAuthorityVisit: boolean;
@@ -26,6 +26,8 @@ type TableColumns = {
 
 export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalModifyAuthorityVisit, setModalModifyAuthorityVisit, title, dataSource, onComponent, menuTreeList, deptTreeList, typeValue, setTypeValue }) => {
 
+	const [loading, setLoading] = useState(false)
+
 	return (
 		<DrawerForm<TableColumns>
 			open={modalModifyAuthorityVisit}
@@ -40,12 +42,14 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 			autoFocusFirstInput
 			submitter={{
 				submitButtonProps: {
+					disabled: loading,
 					style: {
 						display: 'inline-block',
 					},
 				}
 			}}
 			onFinish={ async (value) => {
+				setLoading(true)
 				let menuIds: any[] = []
 				let deptIds: any[] = []
 				if (value?.menuIds) {
@@ -66,10 +70,13 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 						setModalModifyAuthorityVisit(false)
 						onComponent();
 					}
+				}).finally(() => {
+					setLoading(false)
 				})
 			}}>
 
 			<ProFormText
+				disabled={loading}
 				name="id"
 				label="ID"
 				hidden={true}
@@ -84,6 +91,7 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 			/>
 
 			<ProFormTreeSelect
+				disabled={loading}
 				name="menuIds"
 				label="菜单权限"
 				allowClear={true}
@@ -120,6 +128,7 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 			/>
 
 			<ProFormSelect
+				disabled={loading}
 				name="dataScope"
 				label="数据范围"
 				placeholder={'请选择数据范围'}
@@ -138,6 +147,7 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 
 			{typeValue === 'custom' && (
 				<ProFormTreeSelect
+					disabled={loading}
 					name="deptIds"
 					label="部门权限"
 					allowClear={true}

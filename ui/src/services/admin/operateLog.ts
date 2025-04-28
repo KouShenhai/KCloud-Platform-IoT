@@ -55,7 +55,7 @@ export async function getByIdV3(
 
 /** 导出操作日志 导出操作日志 POST /v3/operate-logs/export */
 export async function exportV3(body: API.OperateLogExportCmd, options?: { [key: string]: any }) {
-	ExportAllToExcel("操作日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/api/admin/v3/operate-logs/export', 'POST', body, options)
+	return ExportAllToExcel("操作日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/api/admin/v3/operate-logs/export', 'POST', body, options)
 }
 
 /** 导入操作日志 导入操作日志 POST /v3/operate-logs/import */

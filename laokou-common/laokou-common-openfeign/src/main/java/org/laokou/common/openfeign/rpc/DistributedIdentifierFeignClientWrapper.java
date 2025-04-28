@@ -43,7 +43,7 @@ public class DistributedIdentifierFeignClientWrapper {
 		if (result.success()) {
 			return result.getData().getId();
 		}
-		throw new BizException("B_DistributedIdentifier_OpenFeignFailed", result.getMsg());
+		throw new BizException("B_DistributedIdentifier_OpenFeignInvocationFailed", result.getMsg());
 	}
 
 }

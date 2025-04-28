@@ -28,6 +28,7 @@ export default () => {
 	const actionRef = useRef();
 	const [list, setList] = useState<TableColumns[]>([]);
 	const [param, setParam] = useState<any>({});
+	const [loading, setLoading] = useState(false)
 
 	const getLoginType = (type: string) => {
 		return {
@@ -276,8 +277,11 @@ export default () => {
 					}}>
 						导出
 					</Button>,
-					( access.canLoginLogExport && <Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={() => {
-						exportV3(param)
+					( access.canLoginLogExport && <Button loading={loading} key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={() => {
+						setLoading(true)
+						exportV3(param).finally(() => {
+							setLoading(false)
+						})
 					}}>
 						导出全部
 					</Button>)

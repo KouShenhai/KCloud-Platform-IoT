@@ -2,7 +2,7 @@ import {DrawerForm, ProFormDigit, ProFormText, ProFormTreeSelect} from '@ant-des
 import { message } from 'antd';
 import {modifyV3, saveV3} from "@/services/admin/dept";
 import {v7 as uuidV7} from "uuid";
-import React from "react";
+import React, {useState} from "react";
 
 interface DeptDrawerProps {
 	modalVisit: boolean;
@@ -12,6 +12,8 @@ interface DeptDrawerProps {
 	dataSource: TableColumns;
 	onComponent: () => void;
 	treeList: any[]
+	requestId: string
+	setRequestId: (requestId: string) => void
 }
 
 type TableColumns = {
@@ -23,7 +25,9 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, treeList }) => {
+export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, treeList, requestId, setRequestId }) => {
+
+	const [loading, setLoading] = useState(false)
 
 	return (
 		<DrawerForm<TableColumns>
@@ -40,19 +44,24 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 			width={1200}
 			submitter={{
 				submitButtonProps: {
+					disabled: loading,
 					style: {
 						display: readOnly ? 'none' : 'inline-block',
 					},
 				}
 			}}
 			onFinish={ async (value) => {
+				setLoading(true)
 				if (value.id === undefined) {
-					saveV3({co: value}, uuidV7()).then(res => {
+					saveV3({co: value}, requestId).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
 							setModalVisit(false)
 							onComponent()
 						}
+					}).finally(() => {
+						setRequestId(uuidV7())
+						setLoading(false)
 					})
 				} else {
 					modifyV3({co: value}).then(res => {
@@ -61,17 +70,21 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 							setModalVisit(false)
 							onComponent()
 						}
+					}).finally(() => {
+						setLoading(false)
 					})
 				}
 			}}>
 
 			<ProFormText
+				disabled={loading}
 				name="id"
 				label="ID"
 				hidden={true}
 			/>
 
 			<ProFormTreeSelect
+				disabled={loading}
 				name="pid"
 				label="父级部门"
 				readonly={readOnly}
@@ -91,6 +104,7 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 			/>
 
 			<ProFormText
+				disabled={loading}
 				name="name"
 				label="部门名称"
 				readonly={readOnly}
@@ -100,6 +114,7 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 
 			{ readOnly && (
 			<ProFormText
+				disabled={loading}
 				name="path"
 				label="部门路径"
 				readonly={readOnly}
@@ -107,6 +122,7 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 			)}
 
 			<ProFormDigit
+				disabled={loading}
 				name="sort"
 				label="部门排序"
 				readonly={readOnly}
@@ -118,6 +134,7 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 
 			{ readOnly && (
 				<ProFormText
+					disabled={loading}
 					readonly={true}
 					name="createTime"
 					rules={[{ required: true, message: '请输入创建时间' }]}

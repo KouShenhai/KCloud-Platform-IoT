@@ -14,6 +14,7 @@ export default () => {
 
 	const [modalVisit, setModalVisit] = useState(false);
 	const [dataSource, setDataSource] = useState<any>({})
+	const [loading, setLoading] = useState(false)
 
 	type TableColumns = {
 		id: number;
@@ -221,8 +222,11 @@ export default () => {
 						}}>
 							导出
 						</Button>,
-						( access.canNoticeLogExport && <Button key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={() => {
-							exportV3(param)
+						( access.canNoticeLogExport && <Button loading={loading} key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={() => {
+							setLoading(true)
+							exportV3(param).finally(() => {
+								setLoading(false)
+							})
 						}}>
 							导出全部
 						</Button>)

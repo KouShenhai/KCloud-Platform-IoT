@@ -8,6 +8,7 @@ import React, {useRef, useState} from "react";
 import {ThingModelDrawer} from "@/pages/IoT/Device/ThingModelDrawer";
 import {TableRowSelection} from "antd/es/table/interface";
 import {useAccess} from "@@/exports";
+import {v7 as uuidV7} from "uuid";
 
 export default () => {
 
@@ -21,6 +22,7 @@ export default () => {
 	const [ids, setIds] = useState<any>([])
 	const [flag, setFlag] = useState(0)
 	const [dataType, setDataType] = useState('integer')
+	const [requestId, setRequestId] = useState('')
 
 	type TableColumns = {
 		id: number;
@@ -317,6 +319,8 @@ export default () => {
 				setFlag={setFlag}
 				setDataType={setDataType}
 				dataType={dataType}
+				requestId={requestId}
+				setRequestId={setRequestId}
 			/>
 
 			<ProTable<TableColumns>
@@ -347,6 +351,7 @@ export default () => {
 					() => [
 						( access.canThingModelSave && <Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
 							setTitle('新增物模型')
+							setRequestId(uuidV7())
 							setReadOnly(false)
 							setModalVisit(true)
 							setFlag(0)

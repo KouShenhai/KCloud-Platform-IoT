@@ -54,8 +54,8 @@ export async function getByIdV3(
 }
 
 /** 导出通知日志 导出通知日志 POST /v3/notice-logs/export */
-export function exportV3(body: API.NoticeLogExportCmd, options?: { [key: string]: any }) {
-	ExportAllToExcel("通知日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/api/admin/v3/notice-logs/export', 'POST', body, options)
+export async function exportV3(body: API.NoticeLogExportCmd, options?: { [key: string]: any }) {
+	return ExportAllToExcel("通知日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/api/admin/v3/notice-logs/export', 'POST', body, options)
 }
 
 /** 导入通知日志 导入通知日志 POST /v3/notice-logs/import */

@@ -7,6 +7,7 @@ import React, {useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {ProductCategoryDrawer} from "@/pages/IoT/Device/ProductCategoryDrawer";
 import {useAccess} from "@@/exports";
+import {v7 as uuidV7} from "uuid";
 
 export default () => {
 
@@ -18,6 +19,7 @@ export default () => {
 	const [readOnly, setReadOnly] = useState(false)
 	const [ids, setIds] = useState<any>([])
 	const [treeList, setTreeList] = useState<any[]>([])
+	const [requestId, setRequestId] = useState('')
 
 	type TableColumns = {
 		id: number;
@@ -108,6 +110,7 @@ export default () => {
 				( access.canProductCategorySave && <a key="save"
 				   onClick={() => {
 					   setTitle('新增产品类别')
+					   setRequestId(uuidV7())
 					   setReadOnly(false)
 					   setModalVisit(true)
 					   setDataSource({sort: 1, pid: record?.id, id: undefined, name: '', remark: ''})
@@ -164,6 +167,8 @@ export default () => {
 					actionRef?.current?.reload();
 				}}
 				treeList={treeList}
+				requestId={requestId}
+				setRequestId={setRequestId}
 			/>
 
 			<ProTable<TableColumns>
@@ -193,6 +198,7 @@ export default () => {
 					() => [
 						( access.canProductCategorySave && <Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
 							setTitle('新增产品类别')
+							setRequestId(uuidV7())
 							setReadOnly(false)
 							setModalVisit(true)
 							setDataSource({sort: 1, pid: undefined, id: undefined, name: '', remark: ''})

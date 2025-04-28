@@ -89,13 +89,13 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 							onComponent();
 						}
 					}).finally(() => {
-						setRequestId(uuidV7())
 						setLoading(false)
 					})
 				}
 			}}>
 
 			<ProFormText
+				disabled={loading}
 				name="id"
 				label="ID"
 				hidden={true}
@@ -112,6 +112,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 			/>
 
 			<ProFormText
+				disabled={loading}
 				name="mail"
 				label="用户邮箱"
 				tooltip={"邮箱登录【不允许重复】"}
@@ -120,6 +121,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 			/>
 
 			<ProFormText
+				disabled={loading}
 				name="mobile"
 				label="用户手机号"
 				tooltip={"手机号登录【不允许重复】"}
@@ -138,12 +140,14 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 			)}
 
 			{readOnly && fileList.length > 0 && (
-				<ProFormItem label={"用户头像"}>
+				<ProFormItem
+					label={"用户头像"}>
 					<Image width={100} src={fileList[0].url}/>
 				</ProFormItem>
 			)}
 
 			<ProFormRadio.Group
+				disabled={loading}
 				name="status"
 				label="用户状态"
 				readonly={readOnly}
@@ -167,6 +171,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 
 			{ readOnly && (
 			<ProFormSelect
+				disabled={loading}
 				name="roleIds"
 				allowClear={true}
 				label="所属角色"
@@ -186,6 +191,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 
 			{ readOnly && (
 			<ProFormTreeSelect
+				disabled={loading}
 				name="deptIds"
 				label="所属部门"
 				readonly={readOnly}
@@ -207,6 +213,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 
 			{ readOnly && (
 				<ProFormText
+					disabled={loading}
 					readonly={true}
 					name="createTime"
 					rules={[{ required: true, message: '请输入创建时间' }]}

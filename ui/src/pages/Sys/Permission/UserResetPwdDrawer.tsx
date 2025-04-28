@@ -1,7 +1,7 @@
 import { DrawerForm, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
 import { resetPwdV3 } from '@/services/admin/user';
-import React from "react";
+import React, {useState} from "react";
 
 interface UserResetPwdDrawerProps {
 	visible: boolean;
@@ -10,6 +10,8 @@ interface UserResetPwdDrawerProps {
 }
 
 export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({ visible, setVisible, dataSource}) => {
+
+	const [loading, setLoading] = useState(false)
 
 	return (
 		<DrawerForm
@@ -20,9 +22,18 @@ export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({ visible,
 				closable: true,
 				maskClosable: true,
 			}}
+			submitter={{
+				submitButtonProps: {
+					style: {
+						display: 'inline-block',
+					},
+					loading: loading
+				}
+			}}
 			initialValues={dataSource}
 			onOpenChange={setVisible}
 			onFinish={async (value: any) => {
+				setLoading(true);
 				const { password, confirmPassword } = value;
 				if (password !== confirmPassword) {
 					message.error("两次密码不一致");
@@ -34,10 +45,13 @@ export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({ visible,
 						setVisible(false);
 						return true;
 					}
+				}).finally(() => {
+					setLoading(false);
 				});
 			}}
 		>
 			<ProFormText
+				disabled={loading}
 				name="id"
 				label="ID"
 				hidden
@@ -53,6 +67,7 @@ export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({ visible,
 			/>
 
 			<ProFormText.Password
+				disabled={loading}
 				name="password"
 				label="密码"
 				tooltip="默认密码：laokou123"
@@ -61,6 +76,7 @@ export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({ visible,
 				rules={[{ required: true, message: '请输入密码' }]}
 			/>
 			<ProFormText.Password
+				disabled={loading}
 				name="confirmPassword"
 				label="确认密码"
 				tooltip="默认密码：laokou123"

@@ -9,7 +9,7 @@ import {
 import { message } from 'antd';
 import {modifyV3, saveV3} from "@/services/admin/menu";
 import {v7 as uuidV7} from "uuid";
-import React from "react";
+import React, {useState} from "react";
 
 interface MenuDrawerProps {
 	modalVisit: boolean;
@@ -21,6 +21,8 @@ interface MenuDrawerProps {
 	typeValue: number;
 	setTypeValue: (value: number) => void;
 	treeList: any[]
+	requestId: string
+	setRequestId: (requestId: string) => void
 }
 
 type TableColumns = {
@@ -35,7 +37,9 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, typeValue, setTypeValue, treeList }) => {
+export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, typeValue, setTypeValue, treeList, requestId, setRequestId }) => {
+
+	const [loading, setLoading] = useState(false)
 
 	return (
 		<DrawerForm<TableColumns>
@@ -51,19 +55,24 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 			autoFocusFirstInput
 			submitter={{
 				submitButtonProps: {
+					disabled: loading,
 					style: {
 						display: readOnly ? 'none' : 'inline-block',
 					},
 				}
 			}}
 			onFinish={ async (value) => {
+				setLoading(true)
 				if (value.id === undefined) {
-					saveV3({co: value}, uuidV7()).then(res => {
+					saveV3({co: value}, requestId).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
 							setModalVisit(false)
 							onComponent()
 						}
+					}).finally(() => {
+						setRequestId(uuidV7())
+						setLoading(false)
 					})
 				} else {
 					modifyV3({co: value}).then(res => {
@@ -72,17 +81,21 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 							setModalVisit(false)
 							onComponent()
 						}
+					}).finally(() => {
+						setLoading(false)
 					})
 				}
 			}}>
 
 			<ProFormText
+				disabled={loading}
 				name="id"
 				label="ID"
 				hidden={true}
 			/>
 
 			<ProFormTreeSelect
+				disabled={loading}
 				name="pid"
 				label="父级菜单"
 				readonly={readOnly}
@@ -102,6 +115,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 			/>
 
 			<ProFormText
+				disabled={loading}
 				name="name"
 				label="菜单名称"
 				readonly={readOnly}
@@ -110,6 +124,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 			/>
 
 			<ProFormSelect
+				disabled={loading}
 				name="type"
 				label="菜单类型"
 				readonly={readOnly}
@@ -126,6 +141,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 
 			{typeValue === 0 && (
 				<ProFormText
+					disabled={loading}
 					name="path"
 					label="菜单路径"
 					tooltip={'只对菜单有效【不允许重复】'}
@@ -137,6 +153,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 
 			{typeValue === 1 && (
 				<ProFormText
+					disabled={loading}
 					name="permission"
 					label="菜单权限标识"
 					tooltip={'只对按钮有效【不允许重复】'}
@@ -148,6 +165,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 
 			{typeValue === 0 && (
 				<ProFormText
+					disabled={loading}
 					name="icon"
 					label="菜单图标"
 					tooltip={'只支持目录菜单显示图标'}
@@ -157,6 +175,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 			)}
 
 			<ProFormDigit
+				disabled={loading}
 				name="sort"
 				label="菜单排序"
 				readonly={readOnly}
@@ -168,6 +187,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 
 			{typeValue === 0 && (
 				<ProFormRadio.Group
+					disabled={loading}
 					name="status"
 					label="菜单状态"
 					readonly={readOnly}
@@ -181,6 +201,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 
 			{ readOnly && (
 				<ProFormText
+					disabled={loading}
 					readonly={true}
 					name="createTime"
 					rules={[{ required: true, message: '请输入创建时间' }]}

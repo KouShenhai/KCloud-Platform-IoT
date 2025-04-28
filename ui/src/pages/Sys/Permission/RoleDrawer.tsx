@@ -8,7 +8,7 @@ import {
 import { message } from 'antd';
 import {modifyV3, saveV3} from '@/services/admin/role';
 import {v7 as uuidV7} from "uuid";
-import React from "react";
+import React, {useState} from "react";
 
 interface RoleDrawerProps {
 	modalVisit: boolean;
@@ -18,6 +18,8 @@ interface RoleDrawerProps {
 	dataSource: TableColumns;
 	onComponent: () => void;
 	menuTreeList: any[]
+	requestId: string
+	setRequestId: (requestId: string) => void
 }
 
 type TableColumns = {
@@ -32,7 +34,9 @@ type TableColumns = {
 
 
 
-export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, menuTreeList }) => {
+export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, menuTreeList, requestId, setRequestId }) => {
+
+	const [loading, setLoading] = useState(false)
 
 	return (
 		<DrawerForm<TableColumns>
@@ -48,12 +52,14 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 			autoFocusFirstInput
 			submitter={{
 				submitButtonProps: {
+					disabled: loading,
 					style: {
 						display: readOnly ? 'none' : 'inline-block',
 					},
 				}
 			}}
 			onFinish={ async (value) => {
+				setLoading(true)
 				const co = {
 					id: value.id,
 					sort: value.sort,
@@ -62,12 +68,15 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 					deptIds: []
 				}
 				if (value.id === undefined) {
-					saveV3({co: co}, uuidV7()).then(res => {
+					saveV3({co: co}, requestId).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
 							setModalVisit(false)
 							onComponent()
 						}
+					}).finally(() => {
+						setRequestId(uuidV7())
+						setLoading(false)
 					})
 				} else {
 					modifyV3({co: co}).then(res => {
@@ -76,17 +85,21 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 							setModalVisit(false)
 							onComponent()
 						}
+					}).finally(() => {
+						setLoading(false)
 					})
 				}
 			}}>
 
 			<ProFormText
+				disabled={loading}
 				name="id"
 				label="ID"
 				hidden={true}
 			/>
 
 			<ProFormText
+				disabled={loading}
 				name="name"
 				label="角色名称"
 				readonly={readOnly}
@@ -95,6 +108,7 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 			/>
 
 			<ProFormDigit
+				disabled={loading}
 				name="sort"
 				label="角色排序"
 				readonly={readOnly}
@@ -106,6 +120,7 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 
 			{ readOnly && (
 			<ProFormSelect
+				disabled={loading}
 				name="dataScope"
 				label="数据范围"
 				readonly={readOnly}
@@ -123,6 +138,7 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 
 			{ readOnly && (
 			<ProFormTreeSelect
+				disabled={loading}
 				name="menuIds"
 				label="菜单权限"
 				readonly={readOnly}
@@ -144,6 +160,7 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 
 			{ readOnly && (
 				<ProFormText
+					disabled={loading}
 					readonly={true}
 					name="createTime"
 					rules={[{ required: true, message: '请输入创建时间' }]}

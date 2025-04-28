@@ -10,6 +10,7 @@ import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {trim} from "@/utils/format";
 import {DeptDrawer} from "@/pages/Sys/Permission/DeptDrawer";
 import {useAccess} from "@@/exports";
+import {v7 as uuidV7} from "uuid";
 
 export default () => {
 
@@ -29,6 +30,7 @@ export default () => {
 	const [ids, setIds] = useState<number[]>([])
 	const [title, setTitle] = useState("")
 	const [treeList, setTreeList] = useState<any[]>([])
+	const [requestId, setRequestId] = useState('')
 
 	const getListTreeQueryParam = (params: any) => {
 		return {
@@ -133,6 +135,7 @@ export default () => {
 				</a>),
 				( access.canDeptSave && <a key="save" onClick={() => {
 					setTitle('新增部门')
+					setRequestId(uuidV7())
 					setReadOnly(false)
 					setModalVisit(true)
 					setDataSource({
@@ -197,6 +200,8 @@ export default () => {
 					getTreeList().catch(console.log);
 				}}
 				treeList={treeList}
+				setRequestId={setRequestId}
+				requestId={requestId}
 			/>
 
 			<ProTable<TableColumns>
@@ -221,6 +226,7 @@ export default () => {
 					() => [
 						( access.canDeptSave && <Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
 							setTitle('新增部门')
+							setRequestId(uuidV7())
 							setReadOnly(false)
 							setModalVisit(true)
 							setDataSource({
