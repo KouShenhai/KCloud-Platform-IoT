@@ -18,24 +18,42 @@
 package org.laokou.common.core;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.client.WireMock;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.core.util.HttpUtils;
+import org.laokou.common.test.config.WireMockServerConfig;
+import org.laokou.common.test.config.WireMockServerProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
+
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
 /**
  * @author laokou
  */
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@EnableConfigurationProperties
+@SpringBootTest
 @RequiredArgsConstructor
+@ContextConfiguration(classes = { WireMockServerConfig.class, WireMockServerProperties.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class HttpUtilsTest {
 
 	private final WireMockServer wireMockServer;
 
 	@Test
-	void test() {
-		wireMockServer.start();
+	void test() throws NoSuchAlgorithmException, KeyManagementException {
+		wireMockServer.stubFor(WireMock.post("/test").willReturn(WireMock.ok("hello wiremock")));
+		String resultJson = HttpUtils.doFormDataPost("http://localhost:" + wireMockServer.port() + "/test",
+				new HashMap<>(0), new HashMap<>(0));
+		Assertions.assertEquals("hello wiremock", resultJson);
+		Assertions.assertNotNull(HttpUtils.getHttpClient());
+		Assertions.assertDoesNotThrow(HttpUtils::destroy);
 	}
 
 }

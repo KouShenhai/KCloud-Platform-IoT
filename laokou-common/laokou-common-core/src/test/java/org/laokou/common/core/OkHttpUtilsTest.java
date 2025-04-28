@@ -17,22 +17,39 @@
 
 package org.laokou.common.core;
 
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.client.WireMock;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.OkHttpUtils;
+import org.laokou.common.test.config.WireMockServerConfig;
+import org.laokou.common.test.config.WireMockServerProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestConstructor;
 
 import java.util.HashMap;
 
 /**
  * @author laokou
  */
+@EnableConfigurationProperties
+@SpringBootTest
+@RequiredArgsConstructor
+@ContextConfiguration(classes = { WireMockServerConfig.class, WireMockServerProperties.class })
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class OkHttpUtilsTest {
+
+	private final WireMockServer wireMockServer;
 
 	@Test
 	void testOkHttp() {
-		String url = "https://www.baidu.com";
-		String result = OkHttpUtils.doFormDataPost(url, new HashMap<>(0), new HashMap<>(0));
-		Assertions.assertNotNull(result);
+		wireMockServer.stubFor(WireMock.post("/test").willReturn(WireMock.ok("hello wiremock")));
+		String resultJson = OkHttpUtils.doFormDataPost("http://localhost:" + wireMockServer.port() + "/test",
+				new HashMap<>(0), new HashMap<>(0));
+		Assertions.assertEquals("hello wiremock", resultJson);
 		Assertions.assertDoesNotThrow(OkHttpUtils::destroy);
 	}
 

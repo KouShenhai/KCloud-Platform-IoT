@@ -405,6 +405,7 @@ export default () => {
 							]}
 						/>
 						<ProFormCaptcha
+							disabled={loading}
 							fieldProps={{
 								size: 'large',
 								prefix: <SafetyCertificateOutlined className={'prefixIcon'}/>,
@@ -459,6 +460,7 @@ export default () => {
 							]}
 						/>
 						<ProFormCaptcha
+							disabled={loading}
 							fieldProps={{
 								size: 'large',
 								prefix: <SafetyCertificateOutlined className={'prefixIcon'}/>,

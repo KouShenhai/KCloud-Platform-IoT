@@ -18,7 +18,10 @@
 package org.laokou.common.openfeign.rpc;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.secret.util.SecretUtils;
+import org.laokou.distributed.identifier.dto.clientobject.DistributedIdentifierCO;
 import org.springframework.stereotype.Component;
 
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
@@ -35,9 +38,12 @@ public class DistributedIdentifierFeignClientWrapper {
 		String nonce = "laokou";
 		long timestamp = System.currentTimeMillis();
 		String sign = SecretUtils.sign(APP_KEY, APP_SECRET, nonce, timestamp, EMPTY);
-		return distributedIdentifierFeignClient.generateSnowflakeV3(APP_KEY, APP_SECRET, timestamp, nonce, sign)
-			.getData()
-			.getId();
+		Result<DistributedIdentifierCO> result = distributedIdentifierFeignClient.generateSnowflakeV3(APP_KEY,
+				APP_SECRET, timestamp, nonce, sign);
+		if (result.success()) {
+			return result.getData().getId();
+		}
+		throw new BizException("B_DistributedIdentifier_OpenFeignFailed", result.getMsg());
 	}
 
 }

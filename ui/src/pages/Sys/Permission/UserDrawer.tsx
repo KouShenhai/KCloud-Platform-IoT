@@ -1,11 +1,10 @@
 import {DrawerForm, ProFormRadio, ProFormSelect, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
 import {Image, message, UploadFile} from 'antd';
 import {modifyV3, saveV3} from '@/services/admin/user';
-import {v7 as uuidV7} from "uuid";
 import React, {useState} from "react";
 import {UploadAvatarDrawer} from "@/pages/Sys/Permission/UploadAvatarDrawer";
 import {ProFormItem} from "@ant-design/pro-form";
-
+import {v7 as uuidV7} from "uuid";
 
 interface UserDrawerProps {
 	modalVisit: boolean;
@@ -19,6 +18,8 @@ interface UserDrawerProps {
 	roleList: any[]
 	fileList: UploadFile[]
 	setFileList: (fileList: UploadFile[]) => void
+	requestId: string
+	setRequestId: (requestId: string) => void
 }
 
 type TableColumns = {
@@ -33,10 +34,11 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, edit, roleList, deptTreeList, fileList, setFileList }) => {
+export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, edit, roleList, deptTreeList, fileList, setFileList, requestId, setRequestId }) => {
 
 	const [previewOpen, setPreviewOpen] = useState(false);
 	const [previewImage, setPreviewImage] = useState('');
+	const [loading, setLoading] = useState(false)
 
 	return (
 		<DrawerForm<TableColumns>
@@ -52,12 +54,14 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 			autoFocusFirstInput
 			submitter={{
 				submitButtonProps: {
+					disabled: loading,
 					style: {
 						display: readOnly ? 'none' : 'inline-block',
 					},
 				}
 			}}
 			onFinish={ async (value) => {
+				setLoading(true)
 				const co = {
 					id: value?.id,
 					username: value.username,
@@ -67,12 +71,15 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 					avatar: fileList.length > 0 ? (fileList[0]?.url ? fileList[0]?.url : fileList[0]?.response?.data) : "",
 				}
 				if (value.id === undefined) {
-					saveV3({co: co}, uuidV7()).then(res => {
+					saveV3({co: co}, requestId).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
 							setModalVisit(false)
 							onComponent();
 						}
+					}).finally(() => {
+						setRequestId(uuidV7())
+						setLoading(false)
 					})
 				} else {
 					modifyV3({co: co}).then(res => {
@@ -81,6 +88,9 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 							setModalVisit(false)
 							onComponent();
 						}
+					}).finally(() => {
+						setRequestId(uuidV7())
+						setLoading(false)
 					})
 				}
 			}}>

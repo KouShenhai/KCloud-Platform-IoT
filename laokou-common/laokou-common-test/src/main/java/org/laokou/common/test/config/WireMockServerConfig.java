@@ -15,24 +15,22 @@
  *
  */
 
-package org.laokou.common.mqtt.config;
+package org.laokou.common.test.config;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @author laokou
  */
-@Slf4j
-@Component
-public class HivemqMqttClientScheduler {
+public class WireMockServerConfig {
 
-	@Scheduled(cron = "0 0 */1 * * ?")
-	public void reConnect() {
-		log.info("MQTT重新订阅任务开始");
-		HivemqMqttClientManager.reSubscribe();
-		log.info("MQTT重新订阅任务结束");
+	@Bean(initMethod = "start", destroyMethod = "stop")
+	public WireMockServer wireMockServer(WireMockServerProperties wireMockServerProperties) {
+		return new WireMockServer(WireMockConfiguration.options()
+			.port(wireMockServerProperties.getPort())
+			.httpsPort(wireMockServerProperties.getHttpsPort()));
 	}
 
 }

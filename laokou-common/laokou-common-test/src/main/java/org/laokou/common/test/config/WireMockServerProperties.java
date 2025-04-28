@@ -15,17 +15,17 @@
  *
  */
 
-package org.laokou.common.mqtt.client.handler;
+package org.laokou.common.test.config;
 
-import org.laokou.common.mqtt.client.MqttMessage;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
-/**
- * @author laokou
- */
-public interface MessageHandler {
+@Data
+@ConfigurationProperties(prefix = "spring.wiremock-server")
+public class WireMockServerProperties {
 
-	boolean isSubscribe(String topic);
+	private int port = 8884;
 
-	void handle(MqttMessage mqttMessage);
+	private int httpsPort = 8885;
 
 }

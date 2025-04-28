@@ -14,6 +14,7 @@ import {listTreeV3} from "@/services/admin/dept";
 import {pageV3 as rolePageV3} from "@/services/admin/role";
 import {UserModifyAuthorityDrawer} from "@/pages/Sys/Permission/UserModifyAuthorityDrawer";
 import {useAccess} from "@@/exports";
+import {v7 as uuidV7} from "uuid";
 
 export default () => {
 
@@ -40,6 +41,7 @@ export default () => {
 	const [deptTreeList, setDeptTreeList] = useState<any[]>([])
 	const [roleList, setRoleList] = useState<any[]>([])
 	const [fileList, setFileList] = useState<UploadFile[]>([])
+	const [requestId, setRequestId] = useState('')
 
 	const getDeptTreeList = async () => {
 		listTreeV3({}).then(res => {
@@ -327,6 +329,8 @@ export default () => {
 				dataSource={dataSource}
 				fileList={fileList}
 				setFileList={setFileList}
+				requestId={requestId}
+				setRequestId={setRequestId}
 			/>
 
 			<UserModifyAuthorityDrawer
@@ -365,6 +369,7 @@ export default () => {
 					() => [
 						( access.canUserSave && <Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
 							setTitle('新增用户')
+							setRequestId(uuidV7())
 							setReadOnly(false)
 							setModalVisit(true)
 							setEdit(false)

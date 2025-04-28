@@ -86,10 +86,6 @@ public final class HivemqMqttClientManager {
 		get(clientId).subscribe(topics, qosArray);
 	}
 
-	public static void reSubscribe() {
-		HIVE_MQTT_CLIENT_MAP.keySet().forEach(clientId -> get(clientId).reSubscribe());
-	}
-
 	public static void unSubscribe(String clientId, String[] topics) {
 		get(clientId).unSubscribe(topics);
 	}

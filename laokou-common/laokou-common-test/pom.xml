@@ -64,12 +64,12 @@
       <groupId>org.objenesis</groupId>
       <artifactId>objenesis</artifactId>
     </dependency>
-      <dependency>
-          <groupId>org.projectlombok</groupId>
-          <artifactId>lombok</artifactId>
-          <scope>provided</scope>
-        <optional>true</optional>
-      </dependency>
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
@@ -79,6 +79,10 @@
       <groupId>io.swagger.core.v3</groupId>
       <artifactId>swagger-annotations-jakarta</artifactId>
       <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.wiremock</groupId>
+      <artifactId>wiremock</artifactId>
     </dependency>
   </dependencies>
 

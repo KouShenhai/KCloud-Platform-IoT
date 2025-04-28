@@ -21,7 +21,7 @@
     OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL
     monitorInterval: 间隔秒数，自动检测配置文件的变更和重新配置本身
  -->
-<Configuration status="ERROR" monitorInterval="5">
+<Configuration status="INFO" monitorInterval="5">
   <!-- 变量配置 -->
   <Properties>
     <!-- 存放目录 -->

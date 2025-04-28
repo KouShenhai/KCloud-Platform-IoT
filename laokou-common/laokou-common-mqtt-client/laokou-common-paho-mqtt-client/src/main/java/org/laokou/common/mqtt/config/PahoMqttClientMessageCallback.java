@@ -26,7 +26,6 @@ import org.eclipse.paho.mqttv5.common.MqttException;
 import org.eclipse.paho.mqttv5.common.MqttMessage;
 import org.eclipse.paho.mqttv5.common.packet.MqttProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
-import org.springframework.dao.DuplicateKeyException;
 
 import java.util.List;
 
@@ -53,16 +52,8 @@ public class PahoMqttClientMessageCallback implements MqttCallback {
 	public void messageArrived(String topic, MqttMessage message) {
 		for (MessageHandler messageHandler : messageHandlers) {
 			if (messageHandler.isSubscribe(topic)) {
-				try {
-					log.info("【Paho】 => MQTT接收到消息，Topic：{}", topic);
-					messageHandler.handle(new org.laokou.common.mqtt.client.MqttMessage(message.getPayload(), topic));
-				}
-				catch (DuplicateKeyException e) {
-					// 忽略重复键异常
-				}
-				catch (Exception e) {
-					log.error("【Paho】 => MQTT消息处理失败，Topic：{}，错误信息：{}", topic, e.getMessage(), e);
-				}
+				log.info("【Paho】 => MQTT接收到消息，Topic：{}", topic);
+				messageHandler.handle(new org.laokou.common.mqtt.client.MqttMessage(message.getPayload(), topic));
 			}
 		}
 	}

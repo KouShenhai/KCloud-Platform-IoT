@@ -20,6 +20,8 @@ package org.laokou.common.mqtt;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
 import org.laokou.common.mqtt.client.util.TopicUtils;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -36,10 +38,19 @@ class DefaultMessageHandler implements MessageHandler {
 		return TopicUtils.match("/test-topic-1/#", topic);
 	}
 
+	@Async
 	@Override
 	public void handle(org.laokou.common.mqtt.client.MqttMessage mqttMessage) {
-		log.info("【Hivemq】 => 接收到MQTT消息，topic: {}, message: {}", mqttMessage.getTopic(),
-				new String(mqttMessage.getPayload(), StandardCharsets.UTF_8));
+		try {
+			log.info("【Hivemq】 => 接收到MQTT消息，topic: {}, message: {}", mqttMessage.getTopic(),
+					new String(mqttMessage.getPayload(), StandardCharsets.UTF_8));
+		}
+		catch (DuplicateKeyException e) {
+			// 忽略重复键异常
+		}
+		catch (Exception e) {
+			log.error("【Hivemq】 => MQTT消息处理失败，Topic：{}，错误信息：{}", mqttMessage.getTopic(), e.getMessage(), e);
+		}
 	}
 
 }
