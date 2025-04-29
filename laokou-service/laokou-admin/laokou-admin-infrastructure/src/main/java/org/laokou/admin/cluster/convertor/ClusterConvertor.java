@@ -20,7 +20,6 @@ package org.laokou.admin.cluster.convertor;
 import org.laokou.admin.cluster.dto.clientobject.ClusterCO;
 import org.laokou.admin.cluster.gatewayimpl.database.dataobject.ClusterDO;
 import org.laokou.admin.cluster.model.ClusterE;
-import org.laokou.common.core.util.IdGenerator;
 
 /**
  *
@@ -30,10 +29,10 @@ import org.laokou.common.core.util.IdGenerator;
  */
 public class ClusterConvertor {
 
-	public static ClusterDO toDataObject(ClusterE clusterE, boolean isInsert) {
+	public static ClusterDO toDataObject(Long id, ClusterE clusterE, boolean isInsert) {
 		ClusterDO clusterDO = new ClusterDO();
 		if (isInsert) {
-			clusterDO.setId(IdGenerator.defaultSnowflakeId());
+			clusterDO.setId(id);
 		}
 		else {
 			clusterDO.setId(clusterE.getId());

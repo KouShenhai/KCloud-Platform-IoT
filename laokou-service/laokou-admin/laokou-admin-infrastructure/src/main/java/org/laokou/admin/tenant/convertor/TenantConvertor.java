@@ -20,7 +20,6 @@ package org.laokou.admin.tenant.convertor;
 import org.laokou.admin.tenant.dto.clientobject.TenantCO;
 import org.laokou.admin.tenant.model.TenantE;
 import org.laokou.common.core.util.ConvertUtils;
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.tenant.mapper.TenantDO;
 
@@ -31,10 +30,10 @@ import org.laokou.common.tenant.mapper.TenantDO;
  */
 public class TenantConvertor {
 
-	public static TenantDO toDataObject(TenantE tenantE) {
+	public static TenantDO toDataObject(Long id, TenantE tenantE) {
 		TenantDO tenantDO = ConvertUtils.sourceToTarget(tenantE, TenantDO.class);
 		if (ObjectUtils.isNull(tenantDO.getId())) {
-			tenantDO.setId(IdGenerator.defaultSnowflakeId());
+			tenantDO.setId(id);
 		}
 		return tenantDO;
 	}

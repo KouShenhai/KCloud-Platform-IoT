@@ -28,7 +28,6 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.InfoV;
 import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.common.core.util.AddressUtils;
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.domain.support.DomainEventPublisher;
@@ -60,8 +59,8 @@ final class OAuth2AuthenticationProcessor {
 
 	private final DomainEventPublisher rocketMQDomainEventPublisher;
 
-	public UsernamePasswordAuthenticationToken authenticationToken(AuthA auth, HttpServletRequest request) {
-		long eventId = IdGenerator.defaultSnowflakeId();
+	public UsernamePasswordAuthenticationToken authenticationToken(Long eventId, AuthA auth,
+			HttpServletRequest request) {
 		try {
 			// 校验参数
 			extensionExecutor.executeVoid(AuthParamValidatorExtPt.class,

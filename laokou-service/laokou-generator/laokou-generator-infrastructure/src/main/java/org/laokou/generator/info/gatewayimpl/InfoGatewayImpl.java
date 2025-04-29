@@ -18,6 +18,7 @@
 package org.laokou.generator.info.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.laokou.generator.info.model.InfoE;
 import org.springframework.stereotype.Component;
 import org.laokou.generator.info.gateway.InfoGateway;
@@ -38,14 +39,16 @@ public class InfoGatewayImpl implements InfoGateway {
 
 	private final InfoMapper infoMapper;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public void create(InfoE infoE) {
-		infoMapper.insert(InfoConvertor.toDataObject(infoE, true));
+		infoMapper.insert(InfoConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), infoE, true));
 	}
 
 	@Override
 	public void update(InfoE infoE) {
-		InfoDO infoDO = InfoConvertor.toDataObject(infoE, false);
+		InfoDO infoDO = InfoConvertor.toDataObject(null, infoE, false);
 		infoDO.setVersion(infoMapper.selectVersion(infoE.getId()));
 		infoMapper.updateById(infoDO);
 	}

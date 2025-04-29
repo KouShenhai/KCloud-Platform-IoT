@@ -41,33 +41,34 @@ public class MqttClientProperties {
 
 	private String clientId = UUIDGenerator.generateUUID();
 
-	private int subscribeQos = 0;
+	private int subscribeQos = 1;
 
 	private int publishQos = 0;
 
 	private int willQos = 1;
 
-	private int maxRetryNum = 5;
-
+	// @formatter:off
 	/**
-	 * 控制是否创建新会话（true=新建，false=复用历史会话）. clearStart=true => Broker 会在连接断开后立即清除所有会话信息
-	 * clearStart=false => Broker 会在连接断开后保存会话信息，并在重新连接后复用会话信息
+	 * 控制是否创建新会话（true=新建，false=复用历史会话）. clearStart=true => Broker 会在连接断开后立即清除所有会话信息.
+	 * clearStart=false => Broker 会在连接断开后保存会话信息，并在重新连接后复用会话信息.
+	 * <a href="https://github.com/hivemq/hivemq-mqtt-client/issues/627">...</a>
 	 */
-	private boolean clearStart = false;
+	// @formatter:on
+	private boolean clearStart = true;
 
-	private int receiveMaximum = 65_535;
+	private int receiveMaximum = 10000;
 
-	private int sendMaximum = 65_535;
+	private int sendMaximum = 10000;
 
-	private int maximumPacketSize = 268_435_460;
+	private int maximumPacketSize = 10000;
 
-	private int sendMaximumPacketSize = 268_435_460;
+	private int sendMaximumPacketSize = 10000;
 
-	private int topicAliasMaximum = 32;
+	private int topicAliasMaximum = 1024;
 
-	private int sendTopicAliasMaximum = 64;
+	private int sendTopicAliasMaximum = 2048;
 
-	private long messageExpiryInterval = 4294967295L;
+	private long messageExpiryInterval = 86400L;
 
 	private boolean requestProblemInformation = true;
 
@@ -76,7 +77,7 @@ public class MqttClientProperties {
 	/**
 	 * 秒.
 	 */
-	private int connectionTimeout = 15;
+	private int connectionTimeout = 30;
 
 	// @formatter:off
 	/**

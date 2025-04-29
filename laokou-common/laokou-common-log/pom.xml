@@ -21,6 +21,11 @@
       <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-openfeign</artifactId>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 
 </project>

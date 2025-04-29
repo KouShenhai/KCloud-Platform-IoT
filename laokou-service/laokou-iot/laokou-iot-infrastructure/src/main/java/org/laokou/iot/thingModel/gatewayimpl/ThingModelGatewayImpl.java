@@ -18,6 +18,7 @@
 package org.laokou.iot.thingModel.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
 import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
 import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
@@ -39,14 +40,17 @@ public class ThingModelGatewayImpl implements ThingModelGateway {
 
 	private final ThingModelMapper thingModelMapper;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public void create(ThingModelE thingModelE) {
-		thingModelMapper.insert(ThingModelConvertor.toDataObject(thingModelE, true));
+		thingModelMapper.insert(
+				ThingModelConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), thingModelE, true));
 	}
 
 	@Override
 	public void update(ThingModelE thingModelE) {
-		ThingModelDO thingModelDO = ThingModelConvertor.toDataObject(thingModelE, false);
+		ThingModelDO thingModelDO = ThingModelConvertor.toDataObject(null, thingModelE, false);
 		thingModelDO.setVersion(thingModelMapper.selectVersion(thingModelE.getId()));
 		thingModelMapper.updateById(thingModelDO);
 	}

@@ -21,7 +21,6 @@ import org.laokou.admin.ossLog.dto.clientobject.OssLogCO;
 import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.admin.ossLog.model.OssLogE;
 import org.laokou.common.core.util.ConvertUtils;
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 
 /**
@@ -31,10 +30,10 @@ import org.laokou.common.i18n.util.ObjectUtils;
  */
 public class OssLogConvertor {
 
-	public static OssLogDO toDataObject(OssLogE ossLogE) {
+	public static OssLogDO toDataObject(Long id, OssLogE ossLogE) {
 		OssLogDO ossLogDO = ConvertUtils.sourceToTarget(ossLogE, OssLogDO.class);
 		if (ObjectUtils.isNull(ossLogDO.getId())) {
-			ossLogDO.setId(IdGenerator.defaultSnowflakeId());
+			ossLogDO.setId(id);
 		}
 		return ossLogDO;
 	}

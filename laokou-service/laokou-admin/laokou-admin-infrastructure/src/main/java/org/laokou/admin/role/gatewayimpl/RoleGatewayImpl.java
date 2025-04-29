@@ -24,6 +24,7 @@ import org.laokou.admin.role.gateway.RoleGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.model.RoleE;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -44,16 +45,18 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	private final RoleMapper roleMapper;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public void create(RoleE roleE) {
-		RoleDO roleDO = RoleConvertor.toDataObject(roleE, true);
+		RoleDO roleDO = RoleConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), roleE, true);
 		roleMapper.insert(roleDO);
 	}
 
 	@Override
 	public Mono<Void> update(RoleE roleE) {
 		return getVersion(roleE).map(version -> {
-			RoleDO roleDO = RoleConvertor.toDataObject(roleE, false);
+			RoleDO roleDO = RoleConvertor.toDataObject(null, roleE, false);
 			roleDO.setVersion(version);
 			return roleDO;
 		}).doOnNext(roleMapper::updateById).then();

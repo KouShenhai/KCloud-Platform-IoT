@@ -19,7 +19,6 @@ package org.laokou.admin.oss.convertor;
 
 import org.laokou.admin.oss.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.core.util.ConvertUtils;
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.admin.oss.dto.clientobject.OssCO;
 import org.laokou.admin.oss.model.OssE;
@@ -31,10 +30,10 @@ import org.laokou.admin.oss.model.OssE;
  */
 public class OssConvertor {
 
-	public static OssDO toDataObject(OssE ossE) {
+	public static OssDO toDataObject(Long id, OssE ossE) {
 		OssDO ossDO = ConvertUtils.sourceToTarget(ossE, OssDO.class);
 		if (ObjectUtils.isNull(ossDO.getId())) {
-			ossDO.setId(IdGenerator.defaultSnowflakeId());
+			ossDO.setId(id);
 		}
 		return ossDO;
 	}

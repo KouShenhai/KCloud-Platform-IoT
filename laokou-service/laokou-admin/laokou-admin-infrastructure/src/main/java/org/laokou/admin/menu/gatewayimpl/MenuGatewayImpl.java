@@ -23,6 +23,7 @@ import org.laokou.admin.menu.gateway.MenuGateway;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuE;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -38,14 +39,16 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	private final MenuMapper menuMapper;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public void create(MenuE menuE) {
-		menuMapper.insert(MenuConvertor.toDataObject(menuE, true));
+		menuMapper.insert(MenuConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), menuE, true));
 	}
 
 	@Override
 	public void update(MenuE menuE) {
-		MenuDO menuDO = MenuConvertor.toDataObject(menuE, false);
+		MenuDO menuDO = MenuConvertor.toDataObject(null, menuE, false);
 		menuDO.setVersion(menuMapper.selectVersion(menuE.getId()));
 		menuMapper.updateById(menuDO);
 	}

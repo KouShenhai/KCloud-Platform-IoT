@@ -23,6 +23,7 @@ import org.laokou.admin.dictItem.gateway.DictItemGateway;
 import org.laokou.admin.dictItem.gatewayimpl.database.DictItemMapper;
 import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
 import org.laokou.admin.dictItem.model.DictItemE;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -38,14 +39,17 @@ public class DictItemGatewayImpl implements DictItemGateway {
 
 	private final DictItemMapper dictItemMapper;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public void create(DictItemE dictItemE) {
-		dictItemMapper.insert(DictItemConvertor.toDataObject(dictItemE));
+		dictItemMapper
+			.insert(DictItemConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), dictItemE));
 	}
 
 	@Override
 	public void update(DictItemE dictItemE) {
-		DictItemDO dictItemDO = DictItemConvertor.toDataObject(dictItemE);
+		DictItemDO dictItemDO = DictItemConvertor.toDataObject(null, dictItemE);
 		dictItemDO.setVersion(dictItemMapper.selectVersion(dictItemE.getId()));
 		dictItemMapper.updateById(dictItemDO);
 	}

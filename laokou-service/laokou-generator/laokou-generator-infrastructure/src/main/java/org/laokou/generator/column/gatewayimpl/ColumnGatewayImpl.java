@@ -18,6 +18,7 @@
 package org.laokou.generator.column.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.laokou.generator.column.model.ColumnE;
 import org.springframework.stereotype.Component;
 import org.laokou.generator.column.gateway.ColumnGateway;
@@ -38,14 +39,17 @@ public class ColumnGatewayImpl implements ColumnGateway {
 
 	private final ColumnMapper columnMapper;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public void create(ColumnE columnE) {
-		columnMapper.insert(ColumnConvertor.toDataObject(columnE, true));
+		columnMapper
+			.insert(ColumnConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), columnE, true));
 	}
 
 	@Override
 	public void update(ColumnE columnE) {
-		ColumnDO columnDO = ColumnConvertor.toDataObject(columnE, false);
+		ColumnDO columnDO = ColumnConvertor.toDataObject(null, columnE, false);
 		columnDO.setVersion(columnMapper.selectVersion(columnE.getId()));
 		columnMapper.updateById(columnDO);
 	}

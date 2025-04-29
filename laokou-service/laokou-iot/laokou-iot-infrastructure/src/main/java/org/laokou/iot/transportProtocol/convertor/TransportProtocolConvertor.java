@@ -17,7 +17,6 @@
 
 package org.laokou.iot.transportProtocol.convertor;
 
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.iot.transportProtocol.dto.clientobject.TransportProtocolCO;
 import org.laokou.iot.transportProtocol.gatewayimpl.database.dataobject.TransportProtocolDO;
 import org.laokou.iot.transportProtocol.model.TransportProtocolE;
@@ -30,10 +29,10 @@ import org.laokou.iot.transportProtocol.model.TransportProtocolE;
  */
 public class TransportProtocolConvertor {
 
-	public static TransportProtocolDO toDataObject(TransportProtocolE transportProtocolE, boolean isInsert) {
+	public static TransportProtocolDO toDataObject(Long id, TransportProtocolE transportProtocolE, boolean isInsert) {
 		TransportProtocolDO transportProtocolDO = new TransportProtocolDO();
 		if (isInsert) {
-			transportProtocolDO.setId(IdGenerator.defaultSnowflakeId());
+			transportProtocolDO.setId(id);
 		}
 		else {
 			transportProtocolDO.setId(transportProtocolE.getId());

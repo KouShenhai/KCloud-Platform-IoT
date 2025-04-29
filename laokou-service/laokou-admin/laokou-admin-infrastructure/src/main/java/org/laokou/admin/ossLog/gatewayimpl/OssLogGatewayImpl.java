@@ -19,6 +19,7 @@ package org.laokou.admin.ossLog.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.ossLog.model.OssLogE;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.ossLog.gateway.OssLogGateway;
 import org.laokou.admin.ossLog.gatewayimpl.database.OssLogMapper;
@@ -38,14 +39,16 @@ public class OssLogGatewayImpl implements OssLogGateway {
 
 	private final OssLogMapper ossLogMapper;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public void create(OssLogE ossLogE) {
-		ossLogMapper.insert(OssLogConvertor.toDataObject(ossLogE));
+		ossLogMapper.insert(OssLogConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), ossLogE));
 	}
 
 	@Override
 	public void update(OssLogE ossLogE) {
-		OssLogDO ossLogDO = OssLogConvertor.toDataObject(ossLogE);
+		OssLogDO ossLogDO = OssLogConvertor.toDataObject(null, ossLogE);
 		ossLogDO.setVersion(ossLogMapper.selectVersion(ossLogE.getId()));
 		ossLogMapper.updateById(ossLogDO);
 	}

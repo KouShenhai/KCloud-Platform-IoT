@@ -18,6 +18,7 @@
 package org.laokou.iot.productModel.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.laokou.iot.productModel.model.ProductModelE;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.productModel.gateway.ProductModelGateway;
@@ -38,14 +39,17 @@ public class ProductModelGatewayImpl implements ProductModelGateway {
 
 	private final ProductModelMapper productModelMapper;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public void create(ProductModelE productModelE) {
-		productModelMapper.insert(ProductModelConvertor.toDataObject(productModelE, true));
+		productModelMapper.insert(ProductModelConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(),
+				productModelE, true));
 	}
 
 	@Override
 	public void update(ProductModelE productModelE) {
-		ProductModelDO productModelDO = ProductModelConvertor.toDataObject(productModelE, false);
+		ProductModelDO productModelDO = ProductModelConvertor.toDataObject(null, productModelE, false);
 		productModelDO.setVersion(productModelMapper.selectVersion(productModelE.getId()));
 		productModelMapper.updateById(productModelDO);
 	}

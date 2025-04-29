@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.operateLog.model.OperateLogE;
 import org.laokou.common.log.mapper.OperateLogMapper;
 import org.laokou.common.log.mapper.OperateLogDO;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.operateLog.gateway.OperateLogGateway;
 
@@ -38,14 +39,17 @@ public class OperateLogGatewayImpl implements OperateLogGateway {
 
 	private final OperateLogMapper operateLogMapper;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public void create(OperateLogE operateLogE) {
-		operateLogMapper.insert(OperateLogConvertor.toDataObject(operateLogE, true));
+		operateLogMapper.insert(
+				OperateLogConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), operateLogE, true));
 	}
 
 	@Override
 	public void update(OperateLogE operateLogE) {
-		OperateLogDO operateLogDO = OperateLogConvertor.toDataObject(operateLogE, false);
+		OperateLogDO operateLogDO = OperateLogConvertor.toDataObject(null, operateLogE, false);
 		operateLogDO.setVersion(operateLogMapper.selectVersion(operateLogE.getId()));
 		operateLogMapper.updateById(operateLogDO);
 	}

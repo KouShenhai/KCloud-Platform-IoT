@@ -24,7 +24,6 @@ import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.loginLog.model.LoginLogE;
 import org.laokou.admin.loginLog.model.LoginStatusEnum;
 import org.laokou.admin.loginLog.model.LoginTypeEnum;
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.excel.util.ExcelUtils;
 import org.laokou.common.i18n.util.DateUtils;
 import org.springframework.util.Assert;
@@ -43,10 +42,10 @@ public final class LoginLogConvertor implements ExcelUtils.ExcelConvertor<LoginL
 	private LoginLogConvertor() {
 	}
 
-	public static LoginLogDO toDataObject(LoginLogE loginLogE, boolean isInsert) {
+	public static LoginLogDO toDataObject(Long id, LoginLogE loginLogE, boolean isInsert) {
 		LoginLogDO loginLogDO = new LoginLogDO();
 		if (isInsert) {
-			loginLogDO.setId(IdGenerator.defaultSnowflakeId());
+			loginLogDO.setId(id);
 		}
 		else {
 			loginLogDO.setId(loginLogE.getId());

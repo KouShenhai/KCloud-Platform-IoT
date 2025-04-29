@@ -22,7 +22,6 @@ import org.laokou.admin.operateLog.dto.clientobject.OperateLogCO;
 import org.laokou.admin.operateLog.dto.excel.OperateLogExcel;
 import org.laokou.admin.operateLog.factory.OperateLogDomainFactory;
 import org.laokou.admin.operateLog.model.OperateLogE;
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.excel.util.ExcelUtils;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.log.mapper.OperateLogDO;
@@ -42,10 +41,10 @@ public final class OperateLogConvertor implements ExcelUtils.ExcelConvertor<Oper
 	private OperateLogConvertor() {
 	}
 
-	public static OperateLogDO toDataObject(OperateLogE operateLogE, boolean isInsert) {
+	public static OperateLogDO toDataObject(Long id, OperateLogE operateLogE, boolean isInsert) {
 		OperateLogDO operateLogDO = new OperateLogDO();
 		if (isInsert) {
-			operateLogDO.setId(IdGenerator.defaultSnowflakeId());
+			operateLogDO.setId(id);
 		}
 		else {
 			operateLogDO.setId(operateLogE.getId());

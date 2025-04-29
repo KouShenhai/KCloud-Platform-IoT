@@ -23,7 +23,6 @@ import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.admin.role.model.RoleE;
-import org.laokou.common.core.util.IdGenerator;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,10 +34,10 @@ import java.util.List;
  */
 public class RoleConvertor {
 
-	public static RoleDO toDataObject(RoleE roleE, boolean isInsert) {
+	public static RoleDO toDataObject(Long id, RoleE roleE, boolean isInsert) {
 		RoleDO roleDO = new RoleDO();
 		if (isInsert) {
-			roleDO.setId(IdGenerator.defaultSnowflakeId());
+			roleDO.setId(id);
 		}
 		else {
 			roleDO.setId(roleE.getId());
@@ -49,10 +48,10 @@ public class RoleConvertor {
 		return roleDO;
 	}
 
-	public static List<RoleMenuDO> toDataObjects(RoleE roleE, Long roleId) {
+	public static List<RoleMenuDO> toDataObjects(Long id, RoleE roleE, Long roleId) {
 		return roleE.getMenuIds().stream().map(menuId -> {
 			RoleMenuDO roleMenuDO = new RoleMenuDO();
-			roleMenuDO.setId(IdGenerator.defaultSnowflakeId());
+			roleMenuDO.setId(id);
 			roleMenuDO.setRoleId(roleId);
 			roleMenuDO.setMenuId(Long.valueOf(menuId));
 			return roleMenuDO;
@@ -67,10 +66,10 @@ public class RoleConvertor {
 		}).toList();
 	}
 
-	public static List<RoleDeptDO> toDataObjs(RoleE roleE, Long roleId) {
+	public static List<RoleDeptDO> toDataObjs(Long id, RoleE roleE, Long roleId) {
 		return roleE.getDeptIds().stream().map(deptId -> {
 			RoleDeptDO roleDeptDO = new RoleDeptDO();
-			roleDeptDO.setId(IdGenerator.defaultSnowflakeId());
+			roleDeptDO.setId(id);
 			roleDeptDO.setRoleId(roleId);
 			roleDeptDO.setDeptId(Long.valueOf(deptId));
 			return roleDeptDO;

@@ -17,7 +17,6 @@
 
 package org.laokou.iot.productCategory.convertor;
 
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
 import org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO;
 import org.laokou.iot.productCategory.model.ProductCategoryE;
@@ -32,10 +31,10 @@ import java.util.List;
  */
 public class ProductCategoryConvertor {
 
-	public static ProductCategoryDO toDataObject(ProductCategoryE productCategoryE, boolean isInsert) {
+	public static ProductCategoryDO toDataObject(Long id, ProductCategoryE productCategoryE, boolean isInsert) {
 		ProductCategoryDO productCategoryDO = new ProductCategoryDO();
 		if (isInsert) {
-			productCategoryDO.setId(IdGenerator.defaultSnowflakeId());
+			productCategoryDO.setId(id);
 		}
 		else {
 			productCategoryDO.setId(productCategoryE.getId());

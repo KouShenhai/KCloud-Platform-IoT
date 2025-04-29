@@ -18,6 +18,7 @@
 package org.laokou.iot.communicationProtocol.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.laokou.iot.communicationProtocol.model.CommunicationProtocolE;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.communicationProtocol.gateway.CommunicationProtocolGateway;
@@ -38,15 +39,18 @@ public class CommunicationProtocolGatewayImpl implements CommunicationProtocolGa
 
 	private final CommunicationProtocolMapper communicationProtocolMapper;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public void create(CommunicationProtocolE communicationProtocolE) {
-		communicationProtocolMapper.insert(CommunicationProtocolConvertor.toDataObject(communicationProtocolE, true));
+		communicationProtocolMapper.insert(CommunicationProtocolConvertor
+			.toDataObject(distributedIdentifierFeignClientWrapper.getId(), communicationProtocolE, true));
 	}
 
 	@Override
 	public void update(CommunicationProtocolE communicationProtocolE) {
-		CommunicationProtocolDO communicationProtocolDO = CommunicationProtocolConvertor
-			.toDataObject(communicationProtocolE, false);
+		CommunicationProtocolDO communicationProtocolDO = CommunicationProtocolConvertor.toDataObject(null,
+				communicationProtocolE, false);
 		communicationProtocolDO.setVersion(communicationProtocolMapper.selectVersion(communicationProtocolE.getId()));
 		communicationProtocolMapper.updateById(communicationProtocolDO);
 	}

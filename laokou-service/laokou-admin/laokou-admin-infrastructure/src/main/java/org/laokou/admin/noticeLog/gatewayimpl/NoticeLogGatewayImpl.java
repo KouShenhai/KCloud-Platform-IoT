@@ -23,6 +23,7 @@ import org.laokou.admin.noticeLog.gateway.NoticeLogGateway;
 import org.laokou.admin.noticeLog.gatewayimpl.database.NoticeLogMapper;
 import org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.admin.noticeLog.model.NoticeLogE;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -38,14 +39,17 @@ public class NoticeLogGatewayImpl implements NoticeLogGateway {
 
 	private final NoticeLogMapper noticeLogMapper;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public void create(NoticeLogE noticeLogE) {
-		noticeLogMapper.insert(NoticeLogConvertor.toDataObject(noticeLogE, true));
+		noticeLogMapper
+			.insert(NoticeLogConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), noticeLogE, true));
 	}
 
 	@Override
 	public void update(NoticeLogE noticeLogE) {
-		NoticeLogDO noticeLogDO = NoticeLogConvertor.toDataObject(noticeLogE, false);
+		NoticeLogDO noticeLogDO = NoticeLogConvertor.toDataObject(null, noticeLogE, false);
 		noticeLogDO.setVersion(noticeLogMapper.selectVersion(noticeLogE.getId()));
 		noticeLogMapper.updateById(noticeLogDO);
 	}

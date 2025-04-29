@@ -21,7 +21,6 @@ import org.laokou.admin.ip.dto.clientobject.IpCO;
 import org.laokou.admin.ip.gatewayimpl.database.dataobject.IpDO;
 import org.laokou.admin.ip.model.IpE;
 import org.laokou.common.core.util.ConvertUtils;
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 
 /**
@@ -31,10 +30,10 @@ import org.laokou.common.i18n.util.ObjectUtils;
  */
 public class IpConvertor {
 
-	public static IpDO toDataObject(IpE ipE) {
+	public static IpDO toDataObject(Long id, IpE ipE) {
 		IpDO ipDO = ConvertUtils.sourceToTarget(ipE, IpDO.class);
 		if (ObjectUtils.isNull(ipDO.getId())) {
-			ipDO.setId(IdGenerator.defaultSnowflakeId());
+			ipDO.setId(id);
 		}
 		return ipDO;
 	}

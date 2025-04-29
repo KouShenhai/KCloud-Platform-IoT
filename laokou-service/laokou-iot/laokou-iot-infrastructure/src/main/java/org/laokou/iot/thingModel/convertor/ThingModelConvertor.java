@@ -17,7 +17,6 @@
 
 package org.laokou.iot.thingModel.convertor;
 
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
 import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
 import org.laokou.iot.thingModel.model.ThingModelE;
@@ -32,10 +31,10 @@ import java.util.List;
  */
 public class ThingModelConvertor {
 
-	public static ThingModelDO toDataObject(ThingModelE thingModelE, boolean isInsert) {
+	public static ThingModelDO toDataObject(Long id, ThingModelE thingModelE, boolean isInsert) {
 		ThingModelDO thingModelDO = new ThingModelDO();
 		if (isInsert) {
-			thingModelDO.setId(IdGenerator.defaultSnowflakeId());
+			thingModelDO.setId(id);
 		}
 		else {
 			thingModelDO.setId(thingModelE.getId());

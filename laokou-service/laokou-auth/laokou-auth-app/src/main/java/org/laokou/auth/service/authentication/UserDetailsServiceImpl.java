@@ -22,10 +22,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -46,6 +46,8 @@ final class UserDetailsServiceImpl implements UserDetailsService {
 
 	private final OAuth2AuthenticationProcessor authProcessor;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	/**
 	 * 获取用户信息.
 	 * @param username 用户名
@@ -58,10 +60,12 @@ final class UserDetailsServiceImpl implements UserDetailsService {
 			HttpServletRequest request = RequestUtils.getHttpServletRequest();
 			String password = request.getParameter(PASSWORD);
 			String tenantCode = request.getParameter(TENANT_CODE);
-			AuthA auth = DomainFactory.getAuthorizationCodeAuth(IdGenerator.defaultSnowflakeId(), username, password,
-					tenantCode);
+			AuthA auth = DomainFactory.getAuthorizationCodeAuth(distributedIdentifierFeignClientWrapper.getId(),
+					username, password, tenantCode);
 			auth.createUserByAuthorizationCode();
-			return (UserDetails) authProcessor.authenticationToken(auth, request).getPrincipal();
+			return (UserDetails) authProcessor
+				.authenticationToken(distributedIdentifierFeignClientWrapper.getId(), auth, request)
+				.getPrincipal();
 		}
 		catch (GlobalException e) {
 			throw new UsernameNotFoundException(e.getMsg(), e);

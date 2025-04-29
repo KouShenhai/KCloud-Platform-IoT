@@ -18,6 +18,7 @@
 package org.laokou.iot.transportProtocol.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.laokou.iot.transportProtocol.model.TransportProtocolE;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.transportProtocol.gateway.TransportProtocolGateway;
@@ -38,14 +39,18 @@ public class TransportProtocolGatewayImpl implements TransportProtocolGateway {
 
 	private final TransportProtocolMapper transportProtocolMapper;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public void create(TransportProtocolE transportProtocolE) {
-		transportProtocolMapper.insert(TransportProtocolConvertor.toDataObject(transportProtocolE, true));
+		transportProtocolMapper.insert(TransportProtocolConvertor
+			.toDataObject(distributedIdentifierFeignClientWrapper.getId(), transportProtocolE, true));
 	}
 
 	@Override
 	public void update(TransportProtocolE transportProtocolE) {
-		TransportProtocolDO transportProtocolDO = TransportProtocolConvertor.toDataObject(transportProtocolE, false);
+		TransportProtocolDO transportProtocolDO = TransportProtocolConvertor.toDataObject(null, transportProtocolE,
+				false);
 		transportProtocolDO.setVersion(transportProtocolMapper.selectVersion(transportProtocolE.getId()));
 		transportProtocolMapper.updateById(transportProtocolDO);
 	}

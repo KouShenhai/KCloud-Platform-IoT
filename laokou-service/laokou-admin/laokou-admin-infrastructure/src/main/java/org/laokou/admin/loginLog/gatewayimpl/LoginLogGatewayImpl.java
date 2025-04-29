@@ -23,6 +23,7 @@ import org.laokou.admin.loginLog.gateway.LoginLogGateway;
 import org.laokou.admin.loginLog.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.loginLog.model.LoginLogE;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -38,14 +39,17 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 
 	private final LoginLogMapper loginLogMapper;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public void create(LoginLogE loginLogE) {
-		loginLogMapper.insert(LoginLogConvertor.toDataObject(loginLogE, true));
+		loginLogMapper
+			.insert(LoginLogConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), loginLogE, true));
 	}
 
 	@Override
 	public void update(LoginLogE loginLogE) {
-		LoginLogDO loginLogDO = LoginLogConvertor.toDataObject(loginLogE, false);
+		LoginLogDO loginLogDO = LoginLogConvertor.toDataObject(null, loginLogE, false);
 		loginLogDO.setVersion(loginLogMapper.selectVersion(loginLogE.getId()));
 		loginLogMapper.updateById(loginLogDO);
 	}

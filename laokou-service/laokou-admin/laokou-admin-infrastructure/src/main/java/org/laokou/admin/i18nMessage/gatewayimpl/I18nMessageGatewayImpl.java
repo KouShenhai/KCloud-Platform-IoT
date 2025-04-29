@@ -23,6 +23,7 @@ import org.laokou.admin.i18nMessage.gateway.I18nMessageGateway;
 import org.laokou.admin.i18nMessage.gatewayimpl.database.I18nMessageMapper;
 import org.laokou.admin.i18nMessage.gatewayimpl.database.dataobject.I18nMessageDO;
 import org.laokou.admin.i18nMessage.model.I18nMessageE;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -38,14 +39,17 @@ public class I18nMessageGatewayImpl implements I18nMessageGateway {
 
 	private final I18nMessageMapper i18nMessageMapper;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public void create(I18nMessageE i18nMessageE) {
-		i18nMessageMapper.insert(I18nMessageConvertor.toDataObject(i18nMessageE));
+		i18nMessageMapper
+			.insert(I18nMessageConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), i18nMessageE));
 	}
 
 	@Override
 	public void update(I18nMessageE i18nMessageE) {
-		I18nMessageDO i18nMessageDO = I18nMessageConvertor.toDataObject(i18nMessageE);
+		I18nMessageDO i18nMessageDO = I18nMessageConvertor.toDataObject(null, i18nMessageE);
 		i18nMessageDO.setVersion(i18nMessageMapper.selectVersion(i18nMessageE.getId()));
 		i18nMessageMapper.updateById(i18nMessageDO);
 	}

@@ -17,7 +17,6 @@
 
 package org.laokou.iot.device.convertor;
 
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.iot.device.dto.clientobject.DeviceCO;
 import org.laokou.iot.device.gatewayimpl.database.dataobject.DeviceDO;
 import org.laokou.iot.device.model.DeviceE;
@@ -30,10 +29,10 @@ import org.laokou.iot.device.model.DeviceE;
  */
 public class DeviceConvertor {
 
-	public static DeviceDO toDataObject(DeviceE deviceE, boolean isInsert) {
+	public static DeviceDO toDataObject(Long id, DeviceE deviceE, boolean isInsert) {
 		DeviceDO deviceDO = new DeviceDO();
 		if (isInsert) {
-			deviceDO.setId(IdGenerator.defaultSnowflakeId());
+			deviceDO.setId(id);
 		}
 		else {
 			deviceDO.setId(deviceE.getId());

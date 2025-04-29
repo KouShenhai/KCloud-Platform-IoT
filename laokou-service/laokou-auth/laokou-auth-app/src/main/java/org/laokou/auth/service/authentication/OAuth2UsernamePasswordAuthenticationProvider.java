@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
-import org.laokou.common.core.util.IdGenerator;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -40,9 +40,10 @@ import static org.laokou.auth.factory.DomainFactory.*;
 @Component("usernamePasswordAuthenticationProvider")
 final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
-	OAuth2UsernamePasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor) {
-		super(authorizationService, tokenGenerator, authProcessor);
+	public OAuth2UsernamePasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor,
+			DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper) {
+		super(authorizationService, tokenGenerator, authProcessor, distributedIdentifierFeignClientWrapper);
 	}
 
 	@Override
@@ -57,8 +58,8 @@ final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2A
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(IdGenerator.defaultSnowflakeId(), username, password,
-				tenantCode, uuid, captcha);
+		AuthA auth = DomainFactory.getUsernamePasswordAuth(distributedIdentifierFeignClientWrapper.getId(), username,
+				password, tenantCode, uuid, captcha);
 		auth.createUserByUsernamePassword();
 		return authenticationToken(auth, request);
 	}

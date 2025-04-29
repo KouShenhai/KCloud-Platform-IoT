@@ -17,7 +17,6 @@
 
 package org.laokou.iot.communicationProtocol.convertor;
 
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.iot.communicationProtocol.dto.clientobject.CommunicationProtocolCO;
 import org.laokou.iot.communicationProtocol.gatewayimpl.database.dataobject.CommunicationProtocolDO;
 import org.laokou.iot.communicationProtocol.model.CommunicationProtocolE;
@@ -30,11 +29,11 @@ import org.laokou.iot.communicationProtocol.model.CommunicationProtocolE;
  */
 public class CommunicationProtocolConvertor {
 
-	public static CommunicationProtocolDO toDataObject(CommunicationProtocolE communicationProtocolE,
+	public static CommunicationProtocolDO toDataObject(Long id, CommunicationProtocolE communicationProtocolE,
 			boolean isInsert) {
 		CommunicationProtocolDO communicationProtocolDO = new CommunicationProtocolDO();
 		if (isInsert) {
-			communicationProtocolDO.setId(IdGenerator.defaultSnowflakeId());
+			communicationProtocolDO.setId(id);
 		}
 		else {
 			communicationProtocolDO.setId(communicationProtocolE.getId());

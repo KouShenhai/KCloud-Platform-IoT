@@ -25,6 +25,7 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -69,6 +70,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	private final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
 
 	private final OAuth2AuthenticationProcessor authProcessor;
+
+	protected final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	/**
 	 * 认证授权.
@@ -199,7 +202,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	 * @return 用户信息
 	 */
 	protected UsernamePasswordAuthenticationToken authenticationToken(AuthA auth, HttpServletRequest request) {
-		return authProcessor.authenticationToken(auth, request);
+		return authProcessor.authenticationToken(distributedIdentifierFeignClientWrapper.getId(), auth, request);
 	}
 
 	private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(

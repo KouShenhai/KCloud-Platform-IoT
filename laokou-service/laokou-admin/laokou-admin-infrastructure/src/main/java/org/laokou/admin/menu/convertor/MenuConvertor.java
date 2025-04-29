@@ -22,7 +22,6 @@ import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.factory.MenuDomainFactory;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuE;
-import org.laokou.common.core.util.IdGenerator;
 
 import java.util.List;
 
@@ -36,10 +35,10 @@ public final class MenuConvertor {
 	private MenuConvertor() {
 	}
 
-	public static MenuDO toDataObject(MenuE menuE, boolean isInsert) {
+	public static MenuDO toDataObject(Long id, MenuE menuE, boolean isInsert) {
 		MenuDO menuDO = new MenuDO();
 		if (isInsert) {
-			menuDO.setId(IdGenerator.defaultSnowflakeId());
+			menuDO.setId(id);
 		}
 		else {
 			menuDO.setId(menuE.getId());

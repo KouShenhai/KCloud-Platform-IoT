@@ -22,7 +22,6 @@ import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
 import org.laokou.admin.dept.factory.DeptDomainFactory;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.dept.model.DeptE;
-import org.laokou.common.core.util.IdGenerator;
 
 import java.util.List;
 
@@ -33,9 +32,9 @@ import java.util.List;
  */
 public class DeptConvertor {
 
-	public static DeptDO toDataObject(DeptE deptE) {
+	public static DeptDO toDataObject(Long id, DeptE deptE) {
 		DeptDO deptDO = new DeptDO();
-		deptDO.setId(IdGenerator.defaultSnowflakeId());
+		deptDO.setId(id);
 		deptDO.setPid(deptE.getPid());
 		deptDO.setName(deptE.getName());
 		deptDO.setPath(deptE.getPath());

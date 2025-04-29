@@ -26,6 +26,7 @@ import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -47,6 +48,8 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 
 	private final MybatisUtils mybatisUtils;
 
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
+
 	@Override
 	public Mono<Void> update(RoleE roleE) {
 		return getRoleDeptIds(roleE.getRoleIds()).map(ids -> {
@@ -66,7 +69,8 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 
 	private void insertRoleDept(RoleE roleE) {
 		// 新增角色菜单关联表
-		List<RoleDeptDO> list = RoleConvertor.toDataObjs(roleE, roleE.getId());
+		List<RoleDeptDO> list = RoleConvertor.toDataObjs(distributedIdentifierFeignClientWrapper.getId(), roleE,
+				roleE.getId());
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, RoleDeptMapper.class, RoleDeptMapper::insert);
 		}

@@ -19,7 +19,6 @@ package org.laokou.common.log.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.laokou.common.core.context.UserContextHolder;
-import org.laokou.common.core.util.IdGenerator;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.StringUtils;
@@ -73,11 +72,10 @@ public final class OperateLogConvertor {
 				operateLogE.getStackTrace());
 	}
 
-	public static DomainEvent toDomainEvent(OperateLogE operateLogE) {
+	public static DomainEvent toDomainEvent(Long id, OperateLogE operateLogE) {
 		UserContextHolder.User user = UserContextHolder.get();
-		return new DomainEvent(IdGenerator.defaultSnowflakeId(), user.getTenantId(), user.getId(), null,
-				LAOKOU_LOG_TOPIC, OPERATE_TAG, 0, JacksonUtils.toJsonStr(toEvent(operateLogE)), OPERATE_EVENT,
-				user.getSourcePrefix());
+		return new DomainEvent(id, user.getTenantId(), user.getId(), null, LAOKOU_LOG_TOPIC, OPERATE_TAG, 0,
+				JacksonUtils.toJsonStr(toEvent(operateLogE)), OPERATE_EVENT, user.getSourcePrefix());
 	}
 
 	private static String truncate(String str) {
