@@ -33,6 +33,7 @@ import com.hivemq.client.mqtt.mqtt5.message.unsubscribe.unsuback.Mqtt5UnsubAck;
 import io.reactivex.schedulers.Schedulers;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.ThreadUtils;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.mqtt.client.AbstractMqttClient;
 import org.laokou.common.mqtt.client.MqttMessage;
@@ -204,7 +205,7 @@ public class HivemqMqttClient extends AbstractMqttClient {
 			.thenAcceptAsync(ack -> log.info("【Hivemq】 => MQTT订阅成功，主题: {}", String.join("、", topics)))
 			.exceptionallyAsync(e -> {
 				log.error("【Hivemq】 => MQTT订阅失败，主题：{}，错误信息：{}", String.join("、", topics), e.getMessage(), e);
-				return null;
+				throw new BizException("B_HivemqMqttClient_SubscribeFailed", "MQTT订阅失败", e);
 			})
 			.join();
 	}

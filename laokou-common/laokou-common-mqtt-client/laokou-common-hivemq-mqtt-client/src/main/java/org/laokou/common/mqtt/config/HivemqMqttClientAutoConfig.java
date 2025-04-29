@@ -27,9 +27,9 @@ public class HivemqMqttClientAutoConfig {
 
 	@PreDestroy
 	public void preDestroy() {
-		log.info("开始执行HiveMQ MQTT客户端销毁");
+		log.info("【Hivemq】 => 开始执行MQTT客户端销毁");
 		HivemqMqttClientManager.destroy();
-		log.info("执行HiveMQ MQTT客户端销毁完成");
+		log.info("【Hivemq】 => 执行MQTT客户端销毁完成");
 	}
 
 }

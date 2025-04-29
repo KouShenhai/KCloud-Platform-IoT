@@ -59,10 +59,10 @@ public final class HivemqMqttClientManager {
 	}
 
 	public static void destroy() {
-		log.info("【HiveMQ】 => MQTT客户端销毁开始执行");
+		log.info("【Hivemq】 => MQTT客户端销毁开始执行");
 		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::close);
 		HIVE_MQTT_CLIENT_MAP.clear();
-		log.info("【HiveMQ】 => MQTT客户端销毁执行完毕");
+		log.info("【Hivemq】 => MQTT客户端销毁执行完毕");
 	}
 
 }
