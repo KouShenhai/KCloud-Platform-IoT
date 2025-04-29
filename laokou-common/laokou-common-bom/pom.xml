@@ -168,7 +168,7 @@
     <!--spark版本-->
     <spark.version>3.5.5</spark.version>
     <!--mysql-connector-j版本-->
-    <mysql-connector-j.version>9.2.0</mysql-connector-j.version>
+    <mysql-connector-j.version>9.3.0</mysql-connector-j.version>
     <!--clickhouse-jdbc版本-->
     <clickhouse-jdbc.version>0.8.5</clickhouse-jdbc.version>
     <!--reactor-core版本-->
