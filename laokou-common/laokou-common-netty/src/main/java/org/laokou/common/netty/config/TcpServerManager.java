@@ -19,6 +19,7 @@ package org.laokou.common.netty.config;
 
 import io.netty.channel.ChannelHandler;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.netty.annotation.TcpServer;
 import org.springframework.util.Assert;
 
@@ -39,14 +40,18 @@ public final class TcpServerManager {
 	private final List<ChannelHandler> channelHandlers;
 
 	public synchronized void start() {
-		SERVER_MAP.values().forEach(Server::start);
+		if (MapUtils.isNotEmpty(SERVER_MAP)) {
+			SERVER_MAP.values().forEach(Server::start);
+		}
 	}
 
 	public synchronized void stop() {
-		SERVER_MAP.values().forEach(Server::stop);
+		if (MapUtils.isNotEmpty(SERVER_MAP)) {
+			SERVER_MAP.values().forEach(Server::stop);
+		}
 	}
 
-	public synchronized void initialize() {
+	public void initialize() {
 		List<ChannelHandler> tcpServerList = channelHandlers.stream()
 			.filter(item -> item.getClass().isAnnotationPresent(org.laokou.common.netty.annotation.TcpServer.class))
 			.toList();

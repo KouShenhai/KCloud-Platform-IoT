@@ -183,11 +183,18 @@
     <curator.version>5.8.0</curator.version>
     <!--wiremock版本-->
     <wiremock.version>4.0.0-beta.2</wiremock.version>
+    <!--commons-net版本-->
+    <commons-net.version>3.11.1</commons-net.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>commons-net</groupId>
+        <artifactId>commons-net</artifactId>
+        <version>${commons-net.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-distributed-identifier-start</artifactId>

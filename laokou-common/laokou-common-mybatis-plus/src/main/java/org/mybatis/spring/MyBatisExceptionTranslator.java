@@ -63,7 +63,7 @@ public class MyBatisExceptionTranslator implements PersistenceExceptionTranslato
 
 	private volatile SQLExceptionTranslator exceptionTranslator;
 
-	private static final Object LOCK = new Object();
+	private static final Object lock = new Object();
 
 	/**
 	 * Creates a new {@code PersistenceExceptionTranslator} instance with
@@ -123,7 +123,7 @@ public class MyBatisExceptionTranslator implements PersistenceExceptionTranslato
 	private void initExceptionTranslator() {
 		// 双检锁
 		if (this.exceptionTranslator == null) {
-			synchronized (LOCK) {
+			synchronized (lock) {
 				if (this.exceptionTranslator == null) {
 					SqlSessionFactory sessionFactory = SpringContextUtils.getBean(SqlSessionFactory.class);
 					this.exceptionTranslator = new SQLErrorCodeSQLExceptionTranslator(

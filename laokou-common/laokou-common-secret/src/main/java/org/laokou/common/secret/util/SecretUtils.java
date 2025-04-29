@@ -18,7 +18,7 @@
 package org.laokou.common.secret.util;
 
 import org.laokou.common.core.util.MapUtils;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.util.DigestUtils;
 
@@ -48,25 +48,25 @@ public final class SecretUtils {
 	public static void verification(String appKey, String appSecret, String sign, String nonce, String timestamp,
 			Map<String, String> map) {
 		if (StringUtils.isEmpty(appKey)) {
-			throw new SystemException("S_Api_AppKeyIsNull", "appKey不为空");
+			throw new BizException("B_Api_AppKeyIsNull", "appKey不为空");
 		}
 		if (StringUtils.isEmpty(appSecret)) {
-			throw new SystemException("S_Api_AppKeyIsNull", "appSecret不为空");
+			throw new BizException("B_Api_AppKeyIsNull", "appSecret不为空");
 		}
 		if (StringUtils.isEmpty(nonce)) {
-			throw new SystemException("S_Api_NonceIsNull", "nonce不为空");
+			throw new BizException("B_Api_NonceIsNull", "nonce不为空");
 		}
 		if (StringUtils.isEmpty(timestamp)) {
-			throw new SystemException("S_Api_TimestampIsNull", "timestamp不为空");
+			throw new BizException("B_Api_TimestampIsNull", "timestamp不为空");
 		}
 		if (StringUtils.isEmpty(sign)) {
-			throw new SystemException("S_Api_SignIsNull", "sign不能为空");
+			throw new BizException("B_Api_SignIsNull", "sign不能为空");
 		}
 		if (!APP_KEY.equals(appKey)) {
-			throw new SystemException("S_Api_AppKeyNotExist", "appKey不存在");
+			throw new BizException("B_Api_AppKeyNotExist", "appKey不存在");
 		}
 		if (!APP_SECRET.equals(appSecret)) {
-			throw new SystemException("S_Api_AppSecretNotExist", "appSecret不存在");
+			throw new BizException("B_Api_AppSecretNotExist", "appSecret不存在");
 		}
 		long ts = Long.parseLong(timestamp);
 		// 判断时间戳
@@ -74,12 +74,12 @@ public final class SecretUtils {
 		long maxTimestamp = ts + TIMEOUT_MILLIS;
 		long minTimestamp = ts - TIMEOUT_MILLIS;
 		if (nowTimestamp > maxTimestamp || nowTimestamp < minTimestamp) {
-			throw new SystemException("S_Api_TimestampIsExpired", "timestamp已过期");
+			throw new BizException("B_Api_TimestampIsExpired", "timestamp已过期");
 		}
 		String params = MapUtils.parseParamterString(map, false);
 		String newSing = sign(appKey, appSecret, nonce, ts, params);
 		if (!sign.equals(newSing)) {
-			throw new SystemException("S_Api_CheckSignFailed", "Api验签失败");
+			throw new BizException("B_Api_CheckSignFailed", "Api验签失败");
 		}
 	}
 

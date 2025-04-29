@@ -673,6 +673,26 @@ services:
       - ./nexus/data:/nexus-data
     networks:
       - laokou_network
+  ftp:
+    image: fauria/vsftpd
+    container_name: ftp
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    environment:
+      - FTP_USER=root             # 自定义 FTP 用户名
+      - FTP_PASS=laokou123        # 自定义 FTP 密码
+      - PASV_ADDRESS=127.0.0.1    # 宿主机 IP（如果是云服务器，填写公网 IP）
+      - PASV_MIN_PORT=30000       # 被动模式端口范围下限
+      - PASV_MAX_PORT=30009       # 被动模式端口范围上限
+    ports:
+      - "21:21"                   # FTP 控制端口
+      - "30000-30009:30000-30009" # 被动模式端口范围
+    volumes:
+      - ./ftp/data:/home/vsftpd   # 挂载本地目录保存 FTP 文件
+    networks:
+      - laokou_network
 networks:
   laokou_network:
     driver: bridge

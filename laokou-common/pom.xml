@@ -94,6 +94,7 @@
     <module>laokou-common-csv</module>
     <module>laokou-common-graalvm-js</module>
     <module>laokou-common-zookeeper</module>
+    <module>laokou-common-ftp</module>
   </modules>
 
 </project>
