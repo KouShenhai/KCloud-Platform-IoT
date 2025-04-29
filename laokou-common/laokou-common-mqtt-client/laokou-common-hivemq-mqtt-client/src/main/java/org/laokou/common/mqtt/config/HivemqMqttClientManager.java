@@ -50,50 +50,18 @@ public final class HivemqMqttClientManager {
 		HIVE_MQTT_CLIENT_MAP.putIfAbsent(clientId, new HivemqMqttClient(properties, messageHandlers));
 	}
 
-	public static void open(String clientId) {
-		get(clientId).open();
+	public static void open() {
+		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::open);
 	}
 
-	public static void close(String clientId) {
-		get(clientId).close();
-	}
-
-	public static void publishOpenEvent(String clientId) {
-		get(clientId).publishOpenEvent();
-	}
-
-	public static void publishCloseEvent(String clientId) {
-		get(clientId).publishCloseEvent();
-	}
-
-	public static void publishMessageEvent(String clientId, String topic, byte[] payload) {
-		get(clientId).publishMessageEvent(topic, payload);
-	}
-
-	public static void publishSubscribeEvent(String clientId, String[] topics, int[] qosArray) {
-		get(clientId).publishSubscribeEvent(topics, qosArray);
-	}
-
-	public static void publishUnSubscribeEvent(String clientId, String[] topics) {
-		get(clientId).publishUnSubscribeEvent(topics);
-	}
-
-	public static void publish(String clientId, String topic, byte[] payload) {
-		get(clientId).publish(topic, payload);
-	}
-
-	public static void subscribe(String clientId, String[] topics, int[] qosArray) {
-		get(clientId).subscribe(topics, qosArray);
-	}
-
-	public static void unSubscribe(String clientId, String[] topics) {
-		get(clientId).unSubscribe(topics);
+	public static void publish(String clientId, String topic, int qos, byte[] payload) {
+		HIVE_MQTT_CLIENT_MAP.get(clientId).publish(topic, qos, payload);
 	}
 
 	public static void destroy() {
 		log.info("【HiveMQ】 => MQTT客户端销毁开始执行");
 		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::close);
-		HIVE_MQTT_CLIENT_MAP.values().forEach(HivemqMqttClient::dispose);
+		HIVE_MQTT_CLIENT_MAP.clear();
 		log.info("【HiveMQ】 => MQTT客户端销毁执行完毕");
 	}
 

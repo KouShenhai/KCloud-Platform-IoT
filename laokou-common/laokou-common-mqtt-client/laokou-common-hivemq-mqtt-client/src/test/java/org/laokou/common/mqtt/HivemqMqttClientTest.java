@@ -24,7 +24,6 @@ import org.laokou.common.core.util.SpringContextUtils;
 import org.laokou.common.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.mqtt.client.handler.MessageHandler;
 import org.laokou.common.mqtt.config.HivemqMqttClientManager;
-import org.laokou.common.mqtt.handler.HivemqMqttClientEventHandler;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
@@ -38,61 +37,27 @@ import java.util.Set;
  */
 @SpringBootTest
 @RequiredArgsConstructor
-@ContextConfiguration(
-		classes = { DefaultMessageHandler.class, SpringContextUtils.class, HivemqMqttClientEventHandler.class })
+@ContextConfiguration(classes = { DefaultMessageHandler.class, SpringContextUtils.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class HivemqMqttClientTest {
 
 	private final List<MessageHandler> messageHandlers;
 
 	@Test
-	void testMqttClient() throws InterruptedException {
+	void testMqttClient() {
 		MqttClientProperties properties = new MqttClientProperties();
 		properties.setHost("127.0.0.1");
 		properties.setPort(1883);
 		properties.setUsername("emqx");
 		properties.setPassword("laokou123");
 		properties.setClientId("test-client-1");
-		properties.setTopics(Set.of("$shard/+/#"));
+		properties.setTopics(Set.of("$share/test-topic-1/#"));
 		Assertions.assertDoesNotThrow(
 				() -> HivemqMqttClientManager.add(properties.getClientId(), properties, messageHandlers));
-		// 发布打开事件
-		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishOpenEvent(properties.getClientId()));
-		Thread.sleep(1000);
-		// 发布消息事件
-		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishMessageEvent(properties.getClientId(),
-				"/test-topic-1/1", "hello hivemq mqtt client payload 000".getBytes(StandardCharsets.UTF_8)));
-		Thread.sleep(1000);
-		// 发布取消订阅主题事件
-		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishUnSubscribeEvent(properties.getClientId(),
-				new String[] { "/test-topic-1/#" }));
-		Thread.sleep(1000);
-		// 发布消息事件
-		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishMessageEvent(properties.getClientId(),
-				"/test-topic-1/1", "hello hivemq mqtt client payload 123".getBytes(StandardCharsets.UTF_8)));
-		Thread.sleep(1000);
-		// 发布订阅主题事件
-		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishSubscribeEvent(properties.getClientId(),
-				new String[] { "/test-topic-1/#" }, new int[] { 0 }));
-		Thread.sleep(1000);
-		// 发布消息事件
-		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishMessageEvent(properties.getClientId(),
-				"/test-topic-1/2", "hello hivemq mqtt client payload 456".getBytes(StandardCharsets.UTF_8)));
-		Thread.sleep(1000);
-		// 发布订阅主题事件
-		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishSubscribeEvent(properties.getClientId(),
-				new String[] { "/test/#" }, new int[] { 0 }));
-		Thread.sleep(1000);
-		// 发布消息事件
-		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishMessageEvent(properties.getClientId(),
-				"/test/1", "hello hivemq mqtt client payload 789".getBytes(StandardCharsets.UTF_8)));
-		Thread.sleep(1000);
-		// 发布消息事件
-		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishMessageEvent(properties.getClientId(),
-				"/test/2", "hello hivemq mqtt client payload 999".getBytes(StandardCharsets.UTF_8)));
-		Thread.sleep(1000);
-		// 发布关闭连接事件
-		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publishCloseEvent(properties.getClientId()));
+		Assertions.assertDoesNotThrow(HivemqMqttClientManager::open);
+		Assertions.assertDoesNotThrow(() -> HivemqMqttClientManager.publish(properties.getClientId(),
+				"/test-topic-1/123", 1, "test11".getBytes(StandardCharsets.UTF_8)));
+		Assertions.assertDoesNotThrow(HivemqMqttClientManager::destroy);
 	}
 
 }
