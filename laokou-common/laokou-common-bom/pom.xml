@@ -40,7 +40,7 @@
     <!--mybatis-plus版本 -->
     <mybatis-plus.version>3.5.12</mybatis-plus.version>
     <!--redisson版本-->
-    <redisson.version>3.45.1</redisson.version>
+    <redisson.version>3.46.0</redisson.version>
     <!--jsoup版本-->
     <jsoup.version>1.20.1</jsoup.version>
     <!--jasypt版本-->
