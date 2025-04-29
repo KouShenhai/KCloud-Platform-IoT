@@ -40,7 +40,7 @@ importers:
         version: 5.24.9(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       antd-img-crop:
         specifier: ^4.24.0
-        version: 4.24.0(antd@5.24.9(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 4.25.0(antd@5.24.9(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       axios:
         specifier: ^1.8.4
         version: 1.9.0
@@ -1982,8 +1982,8 @@ packages:
     peerDependencies:
       dayjs: '*'
 
-  antd-img-crop@4.24.0:
-    resolution: {integrity: sha512-RqY/XqvmUnHlj7oLV2kN/ytdZdHUFAZyM3TN+QlTlLrze1Q74isAePgG+QTkLAbrkR9L/IgVRpjsuH/nevpU7Q==}
+  antd-img-crop@4.25.0:
+    resolution: {integrity: sha512-2bFno50sfEnIl0ttGjOCC32z82yvz/wb4+UMfd9akKQrcNnbuadlfzL9f5n37Vuqb5l9Tdw4U4V+3sMY9EWW7g==}
     peerDependencies:
       antd: '>=4.0.0'
       react: '>=16.8.0'
@@ -9221,7 +9221,7 @@ snapshots:
     dependencies:
       dayjs: 1.11.13
 
-  antd-img-crop@4.24.0(antd@5.24.9(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  antd-img-crop@4.25.0(antd@5.24.9(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       antd: 5.24.9(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
