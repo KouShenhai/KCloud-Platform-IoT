@@ -17,8 +17,10 @@
 
 package org.laokou.common.ftp.config;
 
+import jakarta.annotation.PreDestroy;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTPClient;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
@@ -26,20 +28,21 @@ import java.io.IOException;
 /**
  * @author laokou
  */
+@Slf4j
 @Configuration
-public class FtpConfig {
+@RequiredArgsConstructor
+public class FtpExtConfig {
 
-	@Bean
-	public FTPClient ftpClient(FtpProperties ftpProperties) throws IOException {
-		FTPClient ftpClient = new FTPClient();
-		ftpClient.connect(ftpProperties.getHost(), ftpProperties.getPort());
-		if (ftpClient.login(ftpProperties.getUsername(), ftpProperties.getPassword())) {
-			ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+	private final FTPClient ftpClient;
+
+	@PreDestroy
+	public void destroy() throws IOException {
+		log.info("【FTP】 => 开始执行FTP客户端销毁");
+		if (ftpClient.isConnected()) {
+			ftpClient.logout();
+			ftpClient.disconnect();
 		}
-		// 被动模式
-		ftpClient.enterLocalPassiveMode();
-		ftpClient.setControlEncoding("UTF-8");
-		return ftpClient;
+		log.info("【FTP】 => 执行FTP客户端销毁完成");
 	}
 
 }

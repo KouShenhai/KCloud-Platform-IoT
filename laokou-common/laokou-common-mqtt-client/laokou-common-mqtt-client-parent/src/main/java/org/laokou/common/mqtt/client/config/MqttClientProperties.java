@@ -54,7 +54,7 @@ public class MqttClientProperties {
 	 * <a href="https://github.com/hivemq/hivemq-mqtt-client/issues/627">...</a>
 	 */
 	// @formatter:on
-	private boolean clearStart = true;
+	private boolean clearStart = false;
 
 	private int receiveMaximum = 10000;
 
