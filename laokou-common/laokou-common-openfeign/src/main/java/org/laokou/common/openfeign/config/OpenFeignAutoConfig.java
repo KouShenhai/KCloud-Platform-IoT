@@ -24,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.idempotent.util.IdempotentUtils;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -45,6 +46,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 // @formatter:on
 
 @Slf4j
+@AutoConfiguration
 @RequiredArgsConstructor
 public class OpenFeignAutoConfig extends ErrorDecoder.Default implements RequestInterceptor {
 

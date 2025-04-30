@@ -19,7 +19,6 @@ package org.laokou.distributed.identifier.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.distributed.identifier.config.SnowflakeGenerator;
 import org.laokou.distributed.identifier.dto.clientobject.DistributedIdentifierCO;
 import org.springframework.stereotype.Component;
@@ -35,8 +34,7 @@ public class DistributedIdentifierGenerateCmdExe {
 
 	public Result<DistributedIdentifierCO> execute() {
 		long id = snowflakeGenerator.nextId();
-		return Result.ok(new DistributedIdentifierCO(id,
-				DateUtils.format(snowflakeGenerator.getInstant(id), DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS)));
+		return Result.ok(new DistributedIdentifierCO(id, snowflakeGenerator.getInstant(id)));
 	}
 
 }

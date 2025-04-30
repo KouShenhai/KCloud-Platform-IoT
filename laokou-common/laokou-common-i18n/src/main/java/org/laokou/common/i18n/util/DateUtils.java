@@ -72,9 +72,19 @@ public final class DateUtils {
 	public static final String DEFAULT_TIMEZONE = "GMT+8";
 
 	/**
+	 * UTC.
+	 */
+	public static final String UTC_TIMEZONE = "UTC";
+
+	/**
 	 * yyyy-MM-dd HH:mm:ss.SSS.
 	 */
 	public static final String YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
+
+	/**
+	 * yyyy-MM-dd'T'HH:mm:ss.SSS'Z'.
+	 */
+	public static final String YYYY_B_MM_B_DD_T_HH_R_MM_R_SS_D_SSS_Z = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
 	private DateUtils() {
 	}

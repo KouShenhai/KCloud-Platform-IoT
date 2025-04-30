@@ -20,7 +20,8 @@ package org.laokou.common.openfeign;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
+import org.laokou.distributed.identifier.dto.clientobject.DistributedIdentifierCO;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.test.context.TestConstructor;
@@ -34,19 +35,14 @@ import org.springframework.test.context.TestConstructor;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class OpenFeignTest {
 
-	private final TestUserFeignClient testUserFeignClient;
+	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Test
-	void test() {
-		Assertions.assertNotNull(testUserFeignClient);
-		TestUser user = testUserFeignClient.getUser();
-		if (ObjectUtils.isNotNull(user)) {
-			Assertions.assertEquals("laokou", user.getUsername());
-			Assertions.assertEquals(1L, user.getId());
-		}
-		else {
-			Assertions.fail("OpenFeign调用失败，请启动AppTest服务");
-		}
+	void testDistributedIdentifier() {
+		DistributedIdentifierCO data = distributedIdentifierFeignClientWrapper.getData();
+		Assertions.assertNotNull(data);
+		Assertions.assertNotNull(data.getId());
+		Assertions.assertNotNull(data.getTime());
 	}
 
 }

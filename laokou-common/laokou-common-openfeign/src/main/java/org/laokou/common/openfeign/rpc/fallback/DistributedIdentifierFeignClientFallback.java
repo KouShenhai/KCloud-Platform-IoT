@@ -40,8 +40,7 @@ public class DistributedIdentifierFeignClientFallback implements DistributedIden
 			String nonce, String sign) {
 		log.error("分布式ID调用失败，错误信息：{}", cause.getMessage(), cause);
 		long id = System.currentTimeMillis();
-		return Result.ok(new DistributedIdentifierCO(id,
-				DateUtils.format(DateUtils.getInstantOfTimestamp(id), DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS)));
+		return Result.ok(new DistributedIdentifierCO(id, DateUtils.getInstantOfTimestamp(id)));
 	}
 
 }

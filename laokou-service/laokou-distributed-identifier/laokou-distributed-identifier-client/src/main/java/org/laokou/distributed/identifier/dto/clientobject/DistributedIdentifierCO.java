@@ -17,10 +17,16 @@
 
 package org.laokou.distributed.identifier.dto.clientobject;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
+
+import java.time.Instant;
+
+import static org.laokou.common.i18n.util.DateUtils.UTC_TIMEZONE;
+import static org.laokou.common.i18n.util.DateUtils.YYYY_B_MM_B_DD_T_HH_R_MM_R_SS_D_SSS_Z;
 
 /**
  * @author laokou
@@ -32,6 +38,7 @@ public class DistributedIdentifierCO extends ClientObject {
 
 	private Long id;
 
-	private String time;
+	@JsonFormat(pattern = YYYY_B_MM_B_DD_T_HH_R_MM_R_SS_D_SSS_Z, timezone = UTC_TIMEZONE)
+	private Instant time;
 
 }

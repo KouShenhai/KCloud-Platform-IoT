@@ -24,6 +24,8 @@ import org.laokou.common.secret.util.SecretUtils;
 import org.laokou.distributed.identifier.dto.clientobject.DistributedIdentifierCO;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.laokou.common.secret.util.SecretUtils.APP_KEY;
 import static org.laokou.common.secret.util.SecretUtils.APP_SECRET;
@@ -35,13 +37,21 @@ public class DistributedIdentifierFeignClientWrapper {
 	private final DistributedIdentifierFeignClient distributedIdentifierFeignClient;
 
 	public Long getId() {
+		return getData().getId();
+	}
+
+	public Instant getTime() {
+		return getData().getTime();
+	}
+
+	public DistributedIdentifierCO getData() {
 		String nonce = "laokou";
 		long timestamp = System.currentTimeMillis();
 		String sign = SecretUtils.sign(APP_KEY, APP_SECRET, nonce, timestamp, EMPTY);
 		Result<DistributedIdentifierCO> result = distributedIdentifierFeignClient.generateSnowflakeV3(APP_KEY,
 				APP_SECRET, timestamp, nonce, sign);
 		if (result.success()) {
-			return result.getData().getId();
+			return result.getData();
 		}
 		throw new BizException("B_DistributedIdentifier_OpenFeignInvocationFailed", result.getMsg());
 	}
