@@ -28,7 +28,6 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import reactor.core.publisher.Sinks;
-import reactor.core.scheduler.Schedulers;
 
 /**
  * @author laokou
@@ -43,11 +42,13 @@ public class TestVertxApp implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) throws InterruptedException {
+	public void run(String... args) {
 		Vertx vertx = Vertx.vertx();
 		Sinks.Many<Buffer> messageSink = Sinks.many().multicast().onBackpressureBuffer(Integer.MAX_VALUE, false);
 		MqttClientOptions options = new MqttClientOptions();
-		options.setClientId("test-client")
+		options.setUsername("emqx")
+			.setPassword("laokou123")
+			.setClientId("test-client")
 			.setCleanSession(false)
 			.setKeepAliveInterval(60)
 			.setAutoKeepAlive(true)
@@ -56,7 +57,7 @@ public class TestVertxApp implements CommandLineRunner {
 		client.connect(1883, "127.0.0.1", connectResult -> {
 			if (connectResult.succeeded()) {
 				log.info("MQTT连接成功");
-				client.subscribe("/YB/IMM/#", 1, subscribeResult -> {
+				client.subscribe("/test/#", 1, subscribeResult -> {
 					if (subscribeResult.succeeded()) {
 						log.info("MQTT订阅成功");
 					}
@@ -69,23 +70,21 @@ public class TestVertxApp implements CommandLineRunner {
 				log.error("MQTT连接失败", connectResult.cause());
 			}
 		});
-		// 异常处理器
-		client.exceptionHandler(e -> {
-			log.error("Exception occurred: {}", e.getMessage());
-		});
-		messageSink.asFlux()
-			.doOnNext(buffer -> log.info("收到消息：{}", buffer.toString()))
-			.subscribeOn(Schedulers.boundedElastic())
-			.subscribe();
-		Thread.sleep(30000);
-		client.disconnect(res -> {
-			if (res.succeeded()) {
-				log.info("MQTT断开连接成功");
-			}
-			else {
-				log.error("MQTT断开连接失败");
-			}
-		}).closeHandler(v -> log.info("MQTT连接关闭"));
+		// // 异常处理器
+		// client.exceptionHandler(e -> log.error("Exception occurred: {}",
+		// e.getMessage()));
+		// messageSink.asFlux()
+		// .doOnNext(buffer -> log.info("收到消息：{}", buffer.toString()))
+		// .subscribeOn(Schedulers.boundedElastic())
+		// .subscribe();
+		// client.disconnect(res -> {
+		// if (res.succeeded()) {
+		// log.info("MQTT断开连接成功");
+		// }
+		// else {
+		// log.error("MQTT断开连接失败");
+		// }
+		// }).closeHandler(v -> log.info("MQTT连接关闭"));
 	}
 
 }
