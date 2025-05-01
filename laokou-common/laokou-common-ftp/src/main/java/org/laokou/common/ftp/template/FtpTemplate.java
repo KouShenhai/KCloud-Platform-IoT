@@ -20,8 +20,11 @@ package org.laokou.common.ftp.template;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTPClient;
+import org.laokou.common.ftp.config.FtpProperties;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -32,40 +35,104 @@ import java.io.InputStream;
 @RequiredArgsConstructor
 public class FtpTemplate {
 
-	private final FTPClient ftpClient;
+	private final FtpProperties ftpProperties;
 
-	public void upload(String directory, String fileName, InputStream in) {
-		try {
-			if (!ftpClient.changeWorkingDirectory(directory)) {
-				ftpClient.makeDirectory(directory);
-				ftpClient.changeWorkingDirectory(directory);
+	public void upload(String directory, String fileName, InputStream in) throws IOException {
+		execute((ftpClient) -> {
+			try {
+				if (!ftpClient.changeWorkingDirectory(directory)) {
+					ftpClient.makeDirectory(directory);
+					ftpClient.changeWorkingDirectory(directory);
+				}
+				ftpClient.storeFile(fileName, in);
 			}
-			ftpClient.storeFile(fileName, in);
-		}
-		catch (Exception e) {
-			log.error("【FTP】 => 上传文件失败，错误信息：{}", e.getMessage(), e);
-		}
+			catch (Exception e) {
+				log.error("【FTP】 => 上传文件失败，错误信息：{}", e.getMessage(), e);
+			}
+		});
 	}
 
-	public InputStream download(String directory, String fileName) {
+	public InputStream download(String directory, String fileName) throws IOException {
+		return execute((ftpClient) -> {
+			try {
+				ftpClient.changeWorkingDirectory(directory);
+				return ftpClient.retrieveFileStream(fileName);
+			}
+			catch (Exception e) {
+				log.error("【FTP】 => 下载文件失败，错误信息：{}", e.getMessage(), e);
+				return null;
+			}
+		});
+	}
+
+	public void delete(String directory, String fileName) throws IOException {
+		execute((ftpClient) -> {
+			try {
+				ftpClient.changeWorkingDirectory(directory);
+				ftpClient.deleteFile(fileName);
+			}
+			catch (Exception e) {
+				log.error("【FTP】 => 删除文件失败，错误信息：{}", e.getMessage(), e);
+			}
+		});
+	}
+
+	private <T> T execute(FtpExecutor<T> executor) throws IOException {
+		FTPClient ftpClient = null;
 		try {
-			ftpClient.changeWorkingDirectory(directory);
-			return ftpClient.retrieveFileStream(fileName);
+			ftpClient = getFtpClient();
+			return executor.execute(ftpClient);
 		}
 		catch (Exception e) {
-			log.error("【FTP】 => 下载文件失败，错误信息：{}", e.getMessage(), e);
 			return null;
 		}
+		finally {
+			close(ftpClient);
+		}
 	}
 
-	public void delete(String directory, String fileName) {
+	private void execute(FtpExecutorVoid executor) throws IOException {
+		FTPClient ftpClient = null;
 		try {
-			ftpClient.changeWorkingDirectory(directory);
-			ftpClient.deleteFile(fileName);
+			ftpClient = getFtpClient();
+			executor.execute(ftpClient);
 		}
-		catch (Exception e) {
-			log.error("【FTP】 => 删除文件失败，错误信息：{}", e.getMessage(), e);
+		finally {
+			close(ftpClient);
 		}
+	}
+
+	private FTPClient getFtpClient() throws IOException {
+		FTPClient ftpClient = new FTPClient();
+		ftpClient.connect(ftpProperties.getHost(), ftpProperties.getPort());
+		if (ftpClient.login(ftpProperties.getUsername(), ftpProperties.getPassword())) {
+			ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+		}
+		// 被动模式
+		ftpClient.enterLocalPassiveMode();
+		ftpClient.setControlEncoding("UTF-8");
+		return ftpClient;
+	}
+
+	private void close(FTPClient ftpClient) throws IOException {
+		if (ObjectUtils.isNotNull(ftpClient) && ftpClient.isConnected()) {
+			ftpClient.logout();
+			ftpClient.disconnect();
+		}
+	}
+
+	@FunctionalInterface
+	public interface FtpExecutor<T> {
+
+		T execute(FTPClient ftpClient);
+
+	}
+
+	@FunctionalInterface
+	public interface FtpExecutorVoid {
+
+		void execute(FTPClient ftpClient);
+
 	}
 
 }

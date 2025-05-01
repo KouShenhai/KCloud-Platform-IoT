@@ -41,39 +41,39 @@ public class TransactionalUtils {
 	private final TransactionTemplate transactionTemplate;
 
 	// @formatter:off
-	public void executeInTransaction(DatabaseExecutor executor) {
+	public void executeInTransaction(DatabaseExecutorVoid executor) {
 		executeInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRED, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 	}
 
-	public void executeInTransaction(DatabaseExecutor executor, int isolationLevel, boolean readOnly) {
+	public void executeInTransaction(DatabaseExecutorVoid executor, int isolationLevel, boolean readOnly) {
 		executeInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRED, isolationLevel, readOnly);
 	}
 
-	public void executeInNewTransaction(DatabaseExecutor executor) {
+	public void executeInNewTransaction(DatabaseExecutorVoid executor) {
 		executeInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRES_NEW, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 	}
 
-	public void executeInNewTransaction(DatabaseExecutor executor, int isolationLevel, boolean readOnly) {
+	public void executeInNewTransaction(DatabaseExecutorVoid executor, int isolationLevel, boolean readOnly) {
 		executeInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRES_NEW, isolationLevel, readOnly);
 	}
 
-	public <T> T executeResultInTransaction(DatabaseResultExecutor<T> executor) {
+	public <T> T executeResultInTransaction(DatabaseExecutor<T> executor) {
 		return executeResultInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRED, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 	}
 
-	public <T> T executeResultInTransaction(DatabaseResultExecutor<T> executor, int isolationLevel, boolean readOnly) {
+	public <T> T executeResultInTransaction(DatabaseExecutor<T> executor, int isolationLevel, boolean readOnly) {
 		return executeResultInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRED, isolationLevel, readOnly);
 	}
 
-	public <T> T executeResultInNewTransaction(DatabaseResultExecutor<T> executor) {
+	public <T> T executeResultInNewTransaction(DatabaseExecutor<T> executor) {
 		return executeResultInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRES_NEW, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 	}
 
-	public <T> T executeResultInNewTransaction(DatabaseResultExecutor<T> executor, int isolationLevel, boolean readOnly) {
+	public <T> T executeResultInNewTransaction(DatabaseExecutor<T> executor, int isolationLevel, boolean readOnly) {
 		return executeResultInTransaction(executor, TransactionDefinition.PROPAGATION_REQUIRES_NEW, isolationLevel, readOnly);
 	}
 
-	public void executeInTransaction(DatabaseExecutor executor, int propagationBehavior, int isolationLevel, boolean readOnly) {
+	public void executeInTransaction(DatabaseExecutorVoid executor, int propagationBehavior, int isolationLevel, boolean readOnly) {
 		executeWithoutResult(r -> {
 			try {
 				executor.execute();
@@ -86,7 +86,7 @@ public class TransactionalUtils {
 		}, propagationBehavior,isolationLevel, readOnly);
 	}
 
-	public <T> T executeResultInTransaction(DatabaseResultExecutor<T> executor, int propagationBehavior, int isolationLevel, boolean readOnly) {
+	public <T> T executeResultInTransaction(DatabaseExecutor<T> executor, int propagationBehavior, int isolationLevel, boolean readOnly) {
 		return execute(r -> {
 			try {
 				return executor.execute();
@@ -118,16 +118,16 @@ public class TransactionalUtils {
 	}
 
 	@FunctionalInterface
-	public interface DatabaseExecutor {
+	public interface DatabaseExecutorVoid {
 
-		void execute() throws Exception;
+		void execute();
 
 	}
 
 	@FunctionalInterface
-	public interface DatabaseResultExecutor<T> {
+	public interface DatabaseExecutor<T> {
 
-		T execute() throws Exception;
+		T execute();
 
 	}
     // @formatter:on

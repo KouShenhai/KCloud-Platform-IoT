@@ -20,7 +20,6 @@ package org.laokou.common.ftp;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.ftp.config.FtpConfig;
 import org.laokou.common.ftp.config.FtpProperties;
 import org.laokou.common.ftp.template.FtpTemplate;
 import org.laokou.common.i18n.util.ResourceUtils;
