@@ -36,7 +36,7 @@ import java.io.InputStream;
 @SpringBootTest
 @RequiredArgsConstructor
 @EnableConfigurationProperties
-@ContextConfiguration(classes = { FtpProperties.class, FtpTemplate.class, FtpConfig.class })
+@ContextConfiguration(classes = { FtpProperties.class, FtpTemplate.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class FtpTest {
 
