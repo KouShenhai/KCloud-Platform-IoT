@@ -53,9 +53,7 @@ class VertxMqttClientTest {
 		properties.setPassword("laokou123");
 		properties.setClientId("test-client-1");
 		properties.setTopics(Map.of("/test-topic-1/#", 1));
-		Assertions.assertDoesNotThrow(() -> {
-			new VertxMqttClient(vertx, properties, messageHandlers).open();
-		});
+		Assertions.assertDoesNotThrow(() -> new VertxMqttClient(vertx, properties, messageHandlers).open());
 		Thread.sleep(1000);
 	}
 

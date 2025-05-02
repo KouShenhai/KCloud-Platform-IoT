@@ -62,8 +62,8 @@ public class VertxMqttClient {
 
 	private final AtomicBoolean loaded = new AtomicBoolean(false);
 
-	public VertxMqttClient(Vertx vertx, MqttClientProperties mqttClientProperties,
-			List<MessageHandler> messageHandlers) {
+	public VertxMqttClient(final Vertx vertx, final MqttClientProperties mqttClientProperties,
+			final List<MessageHandler> messageHandlers) {
 		this.vertx = vertx;
 		this.mqttClientProperties = mqttClientProperties;
 		this.mqttClient = MqttClient.create(vertx, getOptions());
