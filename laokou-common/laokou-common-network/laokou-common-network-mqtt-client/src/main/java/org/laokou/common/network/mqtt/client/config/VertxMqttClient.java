@@ -75,8 +75,7 @@ public class VertxMqttClient {
 		mqttClient.closeHandler(v -> {
 			connected.set(false);
 			log.error("【Vertx-MQTT】 => MQTT连接断开，客户端ID：{}", mqttClientProperties.getClientId());
-			vertx.setTimer(mqttClientProperties.getReconnectInterval(),
-					handler -> ThreadUtils.newVirtualTaskExecutor().execute(this::open));
+			reconnect();
 		})
 			.publishHandler(messageSink::tryEmitNext)
 			.connect(mqttClientProperties.getPort(), mqttClientProperties.getHost(), connectResult -> {
@@ -91,14 +90,19 @@ public class VertxMqttClient {
 					Throwable ex = connectResult.cause();
 					log.error("【Vertx-MQTT】 => MQTT连接失败，原因：{}，客户端ID：{}", ex.getMessage(),
 							mqttClientProperties.getClientId(), ex);
-					vertx.setTimer(mqttClientProperties.getReconnectInterval(),
-							handler -> ThreadUtils.newVirtualTaskExecutor().execute(this::open));
+					reconnect();
 				}
 			});
 	}
 
 	public void close() {
 		disconnect();
+	}
+
+	private void reconnect() {
+		log.info("【Vertx-MQTT】 => MQTT尝试重连");
+		vertx.setTimer(mqttClientProperties.getReconnectInterval(),
+			handler -> ThreadUtils.newVirtualTaskExecutor().execute(this::open));
 	}
 
 	private void subscribe() {
