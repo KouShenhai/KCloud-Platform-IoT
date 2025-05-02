@@ -15,36 +15,24 @@
  *
  */
 
-package org.laokou.common.algorithm.template.select;
+package org.laokou.common.network.mqtt.client.util;
 
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Pattern;
 
 /**
- * 负载均衡-轮询算法.
- *
  * @author laokou
  */
-public class PollSelectAlgorithm extends AbstractSelectAlgorithm {
+public final class TopicUtils {
 
-	/**
-	 * 自增序列.
-	 */
-	private final AtomicInteger atomic = new AtomicInteger(-1);
+	private TopicUtils() {
+	}
 
-	/**
-	 * 轮询算法.
-	 * @param list 集合
-	 * @param arg 参数
-	 * @param <T> 泛型
-	 * @return 实例
-	 */
-	@Override
-	public <T> T select(List<T> list, Object arg) {
-		if (atomic.incrementAndGet() == list.size()) {
-			atomic.set(0);
+	public static boolean match(String subscribeTopic, String publishTopic) {
+		if (subscribeTopic.equals(publishTopic)) {
+			return true;
 		}
-		return list.get(atomic.get());
+		String regex = subscribeTopic.replace("+", "[^/]+").replace("#", ".+");
+		return Pattern.matches(regex, publishTopic);
 	}
 
 }

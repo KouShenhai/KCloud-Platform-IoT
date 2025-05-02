@@ -15,36 +15,21 @@
  *
  */
 
-package org.laokou.common.algorithm.template.select;
+package org.laokou.common.network.mqtt.client.config;
 
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import io.vertx.core.Vertx;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * 负载均衡-轮询算法.
- *
  * @author laokou
  */
-public class PollSelectAlgorithm extends AbstractSelectAlgorithm {
+@Configuration
+public class VertxConfig {
 
-	/**
-	 * 自增序列.
-	 */
-	private final AtomicInteger atomic = new AtomicInteger(-1);
-
-	/**
-	 * 轮询算法.
-	 * @param list 集合
-	 * @param arg 参数
-	 * @param <T> 泛型
-	 * @return 实例
-	 */
-	@Override
-	public <T> T select(List<T> list, Object arg) {
-		if (atomic.incrementAndGet() == list.size()) {
-			atomic.set(0);
-		}
-		return list.get(atomic.get());
+	@Bean
+	public Vertx vertx() {
+		return Vertx.vertx();
 	}
 
 }

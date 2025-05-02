@@ -15,36 +15,22 @@
  *
  */
 
-package org.laokou.common.algorithm.template.select;
+package org.laokou.common.network.mqtt.client;
 
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 /**
- * 负载均衡-轮询算法.
- *
  * @author laokou
  */
-public class PollSelectAlgorithm extends AbstractSelectAlgorithm {
+@SpringBootApplication(scanBasePackages = { "org.laokou" })
+class AppTest {
 
-	/**
-	 * 自增序列.
-	 */
-	private final AtomicInteger atomic = new AtomicInteger(-1);
-
-	/**
-	 * 轮询算法.
-	 * @param list 集合
-	 * @param arg 参数
-	 * @param <T> 泛型
-	 * @return 实例
-	 */
-	@Override
-	public <T> T select(List<T> list, Object arg) {
-		if (atomic.incrementAndGet() == list.size()) {
-			atomic.set(0);
-		}
-		return list.get(atomic.get());
+	public static void main(String[] args) {
+		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
+		// 启用虚拟线程支持
+		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
 	}
 
 }
