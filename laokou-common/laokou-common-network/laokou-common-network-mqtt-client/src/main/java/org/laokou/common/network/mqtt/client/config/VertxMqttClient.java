@@ -17,6 +17,7 @@
 
 package org.laokou.common.network.mqtt.client.config;
 
+import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.mqtt.MqttClient;
@@ -58,9 +59,11 @@ public class VertxMqttClient {
 
 	private final List<Disposable> disposables;
 
-	private final AtomicBoolean connected = new AtomicBoolean(false);
+	private final AtomicBoolean isConnected = new AtomicBoolean(false);
 
-	private final AtomicBoolean loaded = new AtomicBoolean(false);
+	private final AtomicBoolean isLoaded = new AtomicBoolean(false);
+
+	private final AtomicBoolean isReconnected = new AtomicBoolean(true);
 
 	public VertxMqttClient(final Vertx vertx, final MqttClientProperties mqttClientProperties,
 			final List<MessageHandler> messageHandlers) {
@@ -73,20 +76,25 @@ public class VertxMqttClient {
 
 	public void open() {
 		mqttClient.closeHandler(v -> {
-			connected.set(false);
+				isConnected.set(false);
 			log.error("【Vertx-MQTT】 => MQTT连接断开，客户端ID：{}", mqttClientProperties.getClientId());
 			reconnect();
 		})
 			.publishHandler(messageSink::tryEmitNext)
+			// 仅接收QoS1和QoS2的消息
+			.publishCompletionHandler(id -> log.info("【Vertx-MQTT】 => 接收MQTT的PUBACK或PUBCOMP数据包，数据包ID：{}", id))
+			.subscribeCompletionHandler(ack -> log.info("【Vertx-MQTT】 => 接收MQTT的SUBACK数据包，数据包ID：{}", ack.messageId()))
+			.unsubscribeCompletionHandler(id -> log.info("【Vertx-MQTT】 => 接收MQTT的UNSUBACK数据包，数据包ID：{}", id))
+			.pingResponseHandler(s -> log.info("【Vertx-MQTT】 => 接收MQTT的PINGRESP数据包"))
 			.connect(mqttClientProperties.getPort(), mqttClientProperties.getHost(), connectResult -> {
 				if (connectResult.succeeded()) {
-					connected.set(true);
+					isConnected.set(true);
 					log.info("【Vertx-MQTT】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}", mqttClientProperties.getHost(),
 							mqttClientProperties.getPort(), mqttClientProperties.getClientId());
 					resubscribe();
 				}
 				else {
-					connected.set(false);
+					isConnected.set(false);
 					Throwable ex = connectResult.cause();
 					log.error("【Vertx-MQTT】 => MQTT连接失败，原因：{}，客户端ID：{}", ex.getMessage(),
 							mqttClientProperties.getClientId(), ex);
@@ -99,10 +107,29 @@ public class VertxMqttClient {
 		disconnect();
 	}
 
+	/**
+	 * Sends the PUBLISH message to the remote MQTT server.
+	 *
+	 * @param topic    topic on which the message is published
+	 * @param payload  message payload
+	 * @param qos QoS level
+	 * @param isDup    if the message is a duplicate
+	 * @param isRetain if the message needs to be retained
+	 */
+	public void publish(String topic, int qos, String payload, boolean isDup, boolean isRetain) {
+		mqttClient.publish(topic,
+			Buffer.buffer(payload),
+			convertQos(qos),
+			isDup,
+			isRetain);
+	}
+
 	private void reconnect() {
-		log.info("【Vertx-MQTT】 => MQTT尝试重连");
-		vertx.setTimer(mqttClientProperties.getReconnectInterval(),
-			handler -> ThreadUtils.newVirtualTaskExecutor().execute(this::open));
+		if (isReconnected.get()) {
+			log.info("【Vertx-MQTT】 => MQTT尝试重连");
+			vertx.setTimer(mqttClientProperties.getReconnectInterval(),
+				handler -> ThreadUtils.newVirtualTaskExecutor().execute(this::open));
+		}
 	}
 
 	private void subscribe() {
@@ -121,10 +148,10 @@ public class VertxMqttClient {
 	}
 
 	private void resubscribe() {
-		if (connected.get() || mqttClient.isConnected()) {
+		if (isConnected.get() || mqttClient.isConnected()) {
 			ThreadUtils.newVirtualTaskExecutor().execute(this::subscribe);
 		}
-		if (loaded.compareAndSet(false, true)) {
+		if (isLoaded.compareAndSet(false, true)) {
 			ThreadUtils.newVirtualTaskExecutor().execute(this::consume);
 		}
 	}
@@ -143,19 +170,20 @@ public class VertxMqttClient {
 	}
 
 	private void disposable() {
-		disposables.forEach(disposable -> {
+		for (Disposable disposable : disposables) {
 			if (ObjectUtils.isNotNull(disposable) && !disposable.isDisposed()) {
 				disposable.dispose();
 			}
-		});
+		}
 	}
 
 	private void disconnect() {
+		isReconnected.set(false);
 		mqttClient.disconnect(disconnectResult -> {
 			if (disconnectResult.succeeded()) {
 				disposable();
-				disposables.clear();
 				log.info("【Vertx-MQTT】 => MQTT断开连接成功");
+				disposables.clear();
 			}
 			else {
 				Throwable ex = disconnectResult.cause();
@@ -212,6 +240,10 @@ public class VertxMqttClient {
 		if (CollectionUtils.isEmpty(topics)) {
 			throw new IllegalArgumentException("【Vertx-MQTT】 => Topics list cannot be empty");
 		}
+	}
+
+	private MqttQoS convertQos(int qos) {
+		return MqttQoS.valueOf(qos);
 	}
 
 }
