@@ -114,7 +114,7 @@
     <!--okio-jvm版本-->
     <okio-jvm.version>3.11.0</okio-jvm.version>
     <!--checker-qual版本-->
-    <checker-qual.version>3.49.2</checker-qual.version>
+    <checker-qual.version>3.49.3</checker-qual.version>
     <!--commons-io版本-->
     <commons-io.version>2.19.0</commons-io.version>
     <!--fastjson版本-->
