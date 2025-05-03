@@ -18,8 +18,11 @@
 package org.laokou.common.network.mqtt.client.config;
 
 import io.vertx.core.Vertx;
+import io.vertx.core.VertxOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
@@ -29,7 +32,13 @@ public class VertxConfig {
 
 	@Bean
 	public Vertx vertx() {
-		return Vertx.vertx();
+		VertxOptions vertxOptions = new VertxOptions();
+		vertxOptions.setMaxEventLoopExecuteTime(60);
+		vertxOptions.setMaxWorkerExecuteTime(60);
+		vertxOptions.setMaxEventLoopExecuteTimeUnit(TimeUnit.SECONDS);
+		vertxOptions.setMaxWorkerExecuteTimeUnit(TimeUnit.SECONDS);
+		vertxOptions.setPreferNativeTransport(true);
+		return Vertx.vertx(vertxOptions);
 	}
 
 }

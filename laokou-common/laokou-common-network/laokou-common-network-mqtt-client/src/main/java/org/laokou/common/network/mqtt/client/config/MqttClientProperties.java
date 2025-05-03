@@ -49,9 +49,7 @@ public class MqttClientProperties {
 	// @formatter:on
 	private boolean clearSession = false;
 
-	private int receiveMaximum = 10000;
-
-	private int receiveBufferSize = 10000;
+	private int receiveBufferSize = Integer.MAX_VALUE;
 
 	private int maxMessageSize = -1;
 

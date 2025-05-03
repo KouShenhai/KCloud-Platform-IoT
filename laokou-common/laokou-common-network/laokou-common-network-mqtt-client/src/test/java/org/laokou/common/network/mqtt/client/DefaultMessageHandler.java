@@ -25,6 +25,8 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * @author laokou
  */
@@ -42,7 +44,7 @@ class DefaultMessageHandler implements MessageHandler {
 	public void handle(MqttMessage mqttMessage) {
 		try {
 			log.info("【Vertx-MQTT】 => 接收到MQTT消息，topic: {}, message: {}", mqttMessage.getTopic(),
-					mqttMessage.getPayload().toString());
+					mqttMessage.getPayload().toString(StandardCharsets.UTF_8));
 		}
 		catch (DuplicateKeyException e) {
 			// 忽略重复键异常

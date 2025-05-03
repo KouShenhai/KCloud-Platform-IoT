@@ -76,16 +76,24 @@ public class VertxMqttClient {
 
 	public void open() {
 		mqttClient.closeHandler(v -> {
-				isConnected.set(false);
+			isConnected.set(false);
 			log.error("【Vertx-MQTT】 => MQTT连接断开，客户端ID：{}", mqttClientProperties.getClientId());
 			reconnect();
 		})
 			.publishHandler(messageSink::tryEmitNext)
 			// 仅接收QoS1和QoS2的消息
-			.publishCompletionHandler(id -> log.info("【Vertx-MQTT】 => 接收MQTT的PUBACK或PUBCOMP数据包，数据包ID：{}", id))
-			.subscribeCompletionHandler(ack -> log.info("【Vertx-MQTT】 => 接收MQTT的SUBACK数据包，数据包ID：{}", ack.messageId()))
-			.unsubscribeCompletionHandler(id -> log.info("【Vertx-MQTT】 => 接收MQTT的UNSUBACK数据包，数据包ID：{}", id))
-			.pingResponseHandler(s -> log.info("【Vertx-MQTT】 => 接收MQTT的PINGRESP数据包"))
+			.publishCompletionHandler(id -> {
+				// log.info("【Vertx-MQTT】 => 接收MQTT的PUBACK或PUBCOMP数据包，数据包ID：{}", id);
+			})
+			.subscribeCompletionHandler(ack -> {
+				// log.info("【Vertx-MQTT】 => 接收MQTT的SUBACK数据包，数据包ID：{}", ack.messageId());
+			})
+			.unsubscribeCompletionHandler(id -> {
+				// log.info("【Vertx-MQTT】 => 接收MQTT的UNSUBACK数据包，数据包ID：{}", id);
+			})
+			.pingResponseHandler(s -> {
+				// log.info("【Vertx-MQTT】 => 接收MQTT的PINGRESP数据包");
+			})
 			.connect(mqttClientProperties.getPort(), mqttClientProperties.getHost(), connectResult -> {
 				if (connectResult.succeeded()) {
 					isConnected.set(true);
@@ -109,26 +117,21 @@ public class VertxMqttClient {
 
 	/**
 	 * Sends the PUBLISH message to the remote MQTT server.
-	 *
-	 * @param topic    topic on which the message is published
-	 * @param payload  message payload
+	 * @param topic topic on which the message is published
+	 * @param payload message payload
 	 * @param qos QoS level
-	 * @param isDup    if the message is a duplicate
+	 * @param isDup if the message is a duplicate
 	 * @param isRetain if the message needs to be retained
 	 */
 	public void publish(String topic, int qos, String payload, boolean isDup, boolean isRetain) {
-		mqttClient.publish(topic,
-			Buffer.buffer(payload),
-			convertQos(qos),
-			isDup,
-			isRetain);
+		mqttClient.publish(topic, Buffer.buffer(payload), convertQos(qos), isDup, isRetain);
 	}
 
 	private void reconnect() {
 		if (isReconnected.get()) {
 			log.info("【Vertx-MQTT】 => MQTT尝试重连");
 			vertx.setTimer(mqttClientProperties.getReconnectInterval(),
-				handler -> ThreadUtils.newVirtualTaskExecutor().execute(this::open));
+					handler -> ThreadUtils.newVirtualTaskExecutor().execute(this::open));
 		}
 	}
 
