@@ -174,7 +174,7 @@
     <!--sentinel版本-->
     <sentinel.version>1.8.8</sentinel.version>
     <!--opencsv版本-->
-    <opencsv.version>5.10</opencsv.version>
+    <opencsv.version>5.11</opencsv.version>
     <!--curator版本-->
     <curator.version>5.8.0</curator.version>
     <!--wiremock版本-->
