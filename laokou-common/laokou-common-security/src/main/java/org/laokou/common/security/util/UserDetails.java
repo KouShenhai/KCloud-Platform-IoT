@@ -144,9 +144,10 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		this.sourcePrefix = EMPTY;
 	}
 
-	public UserDetails(Long id, String username, String password, String avatar, Boolean superAdmin, Integer status,
-			String mail, String mobile, Set<String> deptPaths, Set<String> permissions, Long tenantId,
-			String sourcePrefix) {
+	public UserDetails(final Long id, final String username, final String password, final String avatar,
+			final Boolean superAdmin, final Integer status, final String mail, final String mobile,
+			final Set<String> deptPaths, final Set<String> permissions, final Long tenantId,
+			final String sourcePrefix) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
