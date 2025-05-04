@@ -56,6 +56,8 @@ class VertxMqttClientTest {
 		VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx, properties, messageHandlers);
 		Assertions.assertDoesNotThrow(vertxMqttClient::open);
 		Thread.sleep(500);
+		Assertions.assertDoesNotThrow(() -> vertxMqttClient.publish("/test-topic-1/test", 1, "test", false, false));
+		Thread.sleep(500);
 		Assertions.assertDoesNotThrow(vertxMqttClient::close);
 		Thread.sleep(500);
 	}
