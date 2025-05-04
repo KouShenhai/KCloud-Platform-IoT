@@ -18,6 +18,7 @@
 package org.laokou.common.i18n.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,6 +60,7 @@ public final class JacksonUtils {
 			// 没有的属性不报错
 			.configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
 			.configure(FAIL_ON_EMPTY_BEANS, false)
+			.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
 			.registerModule(new JavaTimeModule());
 	}
 

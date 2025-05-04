@@ -77,7 +77,7 @@ public class MqttClientProperties {
 	/**
 	 * 服务下线主题.
 	 */
-	private String willTopic = "/vertx-mqtt/will";
+	private String willTopic = "/will";
 
 	/**
 	 * 服务下线数据.
