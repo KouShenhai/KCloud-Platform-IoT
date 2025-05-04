@@ -28,14 +28,14 @@ import org.laokou.common.xss.util.XssUtils;
 @Slf4j
 class XssTest {
 
-	private static final String[] XSS_ATTACK_VECTORS = { "<script>alert(1)</script>",
-			"<IMG SRC=\"javascript:alert('XSS');\">", "<svg/onload=alert(1)>",
+	private final String[] xssAttackVectors = { "<script>alert(1)</script>", "<IMG SRC=\"javascript:alert('XSS');\">",
+			"<svg/onload=alert(1)>",
 			"javascript:/*-/*`/*\\`/*'/*\"/**/(/* */onerror=alert(1) )//%0D%0A%0d%0a//</stYle/</titLe/</teXtarEa/</scRipt/--!>\\x3csVg/<sVg/oNloAd=alert(1)//>\\x3e",
 			"select 1 from test" };
 
 	@Test
 	void testHtmlScripTagJsonString() {
-		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[0] + "\"}";
+		String json = "{\"s\": \"" + xssAttackVectors[0] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
 		Assertions.assertEquals("{\"s\": \"alert(1)\"}", cleaned);
 		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
@@ -44,7 +44,7 @@ class XssTest {
 
 	@Test
 	void testHtmlTagJsonString() {
-		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[1] + "\"}";
+		String json = "{\"s\": \"" + xssAttackVectors[1] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
 		Assertions.assertEquals("{\"s\": \"<img>\"}", cleaned);
 		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
@@ -53,7 +53,7 @@ class XssTest {
 
 	@Test
 	void testSvgJsonString() {
-		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[2] + "\"}";
+		String json = "{\"s\": \"" + xssAttackVectors[2] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
 		Assertions.assertEquals("{\"s\": \"\"}", cleaned);
 		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
@@ -62,7 +62,7 @@ class XssTest {
 
 	@Test
 	void testHtmlScriptJsonString() {
-		String json = "{\"s\": \"" + XSS_ATTACK_VECTORS[3] + "\"}";
+		String json = "{\"s\": \"" + xssAttackVectors[3] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
 		Assertions.assertEquals(
 				"{\"s\": \"/*-/*`/*\\`/*'/*\"/**/(/* */onerror=alert(1) )//%0D%0A%0d%0a//\\x3csVg/\\x3e\"}", cleaned);
@@ -72,7 +72,7 @@ class XssTest {
 
 	@Test
 	void testSqlJsonString() {
-		String json = XSS_ATTACK_VECTORS[4];
+		String json = xssAttackVectors[4];
 		boolean sqlInjection = false;
 		try {
 			XssUtils.clearSql(json);

@@ -31,6 +31,8 @@
     <laokou.version>3.5.0</laokou.version>
     <!--spring-boot版本-->
     <spring-boot.version>3.5.0-RC1</spring-boot.version>
+    <!--spring-cloud-component版本-->
+    <spring-cloud-component.version>4.3.0-M3</spring-cloud-component.version>
     <!--lombok版本-->
     <lombok.version>1.18.38</lombok.version>
     <!--postgresql版本-->
@@ -183,11 +185,23 @@
     <commons-net.version>3.11.1</commons-net.version>
     <!--vertx-mqtt版本-->
     <vertx-mqtt.version>4.5.14</vertx-mqtt.version>
+    <!--springdoc-openapi版本-->
+    <springdoc-openapi.version>2.8.7</springdoc-openapi.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-gateway-server-webflux</artifactId>
+        <version>${spring-cloud-component.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        <version>${springdoc-openapi.version}</version>
+      </dependency>
       <dependency>
         <groupId>io.vertx</groupId>
         <artifactId>vertx-mqtt</artifactId>
