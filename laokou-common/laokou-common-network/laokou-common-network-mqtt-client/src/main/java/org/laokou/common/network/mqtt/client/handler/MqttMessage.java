@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.network.mqtt.client.config;
+package org.laokou.common.network.mqtt.client.handler;
 
 import io.vertx.core.buffer.Buffer;
 import lombok.AllArgsConstructor;

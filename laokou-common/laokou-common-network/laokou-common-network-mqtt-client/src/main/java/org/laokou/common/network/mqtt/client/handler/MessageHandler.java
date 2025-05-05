@@ -17,8 +17,6 @@
 
 package org.laokou.common.network.mqtt.client.handler;
 
-import org.laokou.common.network.mqtt.client.config.MqttMessage;
-
 /**
  * @author laokou
  */

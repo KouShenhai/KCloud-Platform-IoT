@@ -18,7 +18,7 @@
 package org.laokou.common.network.mqtt.client;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.network.mqtt.client.config.MqttMessage;
+import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.MessageHandler;
 import org.laokou.common.network.mqtt.client.util.TopicUtils;
 import org.springframework.dao.DuplicateKeyException;
