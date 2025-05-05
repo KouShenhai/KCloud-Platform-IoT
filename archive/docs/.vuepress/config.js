@@ -142,6 +142,11 @@ module.exports = {
 							{text: 'React快速开发Api', link: '/pages/3de3af/'},
 						]
 					},
+					{
+						text: '文章', link: '/pages/330c83/', items: [
+							{text: '物联网之对接MQTT最佳实践', link: '/pages/330c83/'},
+						]
+					},
 				]
 			},
 			{
