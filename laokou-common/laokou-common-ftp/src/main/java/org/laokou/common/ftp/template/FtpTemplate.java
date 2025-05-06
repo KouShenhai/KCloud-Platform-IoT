@@ -26,6 +26,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author laokou
@@ -44,7 +45,8 @@ public class FtpTemplate {
 					ftpClient.makeDirectory(directory);
 					ftpClient.changeWorkingDirectory(directory);
 				}
-				ftpClient.storeFile(fileName, in);
+				ftpClient.storeFile(new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1),
+						in);
 			}
 			catch (Exception e) {
 				log.error("【FTP】 => 上传文件失败，错误信息：{}", e.getMessage(), e);
@@ -56,7 +58,8 @@ public class FtpTemplate {
 		return execute((ftpClient) -> {
 			try {
 				ftpClient.changeWorkingDirectory(directory);
-				return ftpClient.retrieveFileStream(fileName);
+				return ftpClient.retrieveFileStream(
+						new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
 			}
 			catch (Exception e) {
 				log.error("【FTP】 => 下载文件失败，错误信息：{}", e.getMessage(), e);
@@ -69,7 +72,8 @@ public class FtpTemplate {
 		execute((ftpClient) -> {
 			try {
 				ftpClient.changeWorkingDirectory(directory);
-				ftpClient.deleteFile(fileName);
+				ftpClient
+					.deleteFile(new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
 			}
 			catch (Exception e) {
 				log.error("【FTP】 => 删除文件失败，错误信息：{}", e.getMessage(), e);

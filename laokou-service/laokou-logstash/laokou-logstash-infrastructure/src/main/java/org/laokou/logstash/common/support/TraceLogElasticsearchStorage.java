@@ -27,6 +27,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -50,15 +51,12 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 			if (MapUtils.isEmpty(dataMap)) {
 				return Mono.empty();
 			}
-			return Mono
-				.fromFuture(
-						elasticsearchTemplate
-							.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class,
-									ThreadUtils.newVirtualTaskExecutor())
-							.thenComposeAsync(
-									result -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap,
-											ThreadUtils.newVirtualTaskExecutor()),
-									ThreadUtils.newVirtualTaskExecutor()));
+			try (ExecutorService virtualThreadExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+				return Mono.fromFuture(elasticsearchTemplate
+					.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, virtualThreadExecutor)
+					.thenComposeAsync(result -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap,
+							virtualThreadExecutor), virtualThreadExecutor));
+			}
 		}).onErrorResume(e -> {
 			log.error("分布式链路写入失败，错误信息：{}", e.getMessage(), e);
 			return Mono.error(e);

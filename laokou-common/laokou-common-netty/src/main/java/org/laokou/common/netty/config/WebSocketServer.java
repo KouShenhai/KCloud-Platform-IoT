@@ -24,8 +24,10 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.Future;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
+
+import java.util.concurrent.ExecutorService;
+
 import static io.netty.channel.ChannelOption.SO_KEEPALIVE;
 
 /**
@@ -38,10 +40,14 @@ public final class WebSocketServer extends AbstractServer {
 
 	private final SpringWebSocketServerProperties properties;
 
-	public WebSocketServer(ChannelHandler channelHandler, SpringWebSocketServerProperties properties) {
+	private final ExecutorService virtualThreadExecutor;
+
+	public WebSocketServer(ChannelHandler channelHandler, SpringWebSocketServerProperties properties,
+			ExecutorService virtualThreadExecutor) {
 		super(properties.getIp(), properties.getPort(), channelHandler, properties.getBossCorePoolSize(),
 				properties.getWorkerCorePoolSize());
 		this.properties = properties;
+		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
 
 	/**
@@ -51,9 +57,9 @@ public final class WebSocketServer extends AbstractServer {
 	@Override
 	protected AbstractBootstrap<ServerBootstrap, ServerChannel> init() {
 		// boss负责监听端口
-		boss = new NioEventLoopGroup(bossCorePoolSize, ThreadUtils.newVirtualTaskExecutor());
+		boss = new NioEventLoopGroup(bossCorePoolSize, virtualThreadExecutor);
 		// work负责线程读写
-		worker = new NioEventLoopGroup(workerCorePoolSize, ThreadUtils.newVirtualTaskExecutor());
+		worker = new NioEventLoopGroup(workerCorePoolSize, virtualThreadExecutor);
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组

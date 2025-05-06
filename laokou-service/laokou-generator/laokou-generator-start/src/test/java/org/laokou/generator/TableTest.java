@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.util.JacksonUtils;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.generator.ability.GeneratorDomainService;
 import org.laokou.generator.gatewayimpl.database.TableColumnMapper;
 import org.laokou.generator.gatewayimpl.database.TableMapper;
@@ -36,6 +35,7 @@ import org.springframework.test.context.TestConstructor;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -51,6 +51,8 @@ class TableTest {
 	private final TableColumnMapper tableColumnMapper;
 
 	private final GeneratorDomainService generatorDomainService;
+
+	private final ExecutorService virtualThreadExecutor;
 
 	@Test
 	void testTable() {
@@ -170,7 +172,7 @@ class TableTest {
 			// 已注释代码生成【跑CI已注释】
 			// 已注释代码生成【跑CI已注释】
 			// generatorDomainService.generateCode(generatorA);
-		}, ThreadUtils.newVirtualTaskExecutor())).forEach(CompletableFuture::join);
+		}, virtualThreadExecutor)).forEach(CompletableFuture::join);
 	}
 
 }

@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
@@ -168,7 +169,8 @@ public final class FileUtils {
 			assert chunkSize > 0L;
 			chunkSize = Math.min(chunkSize, 2L * 1024 * 1024 * 1024);
 			long chunkCount = (size / chunkSize) + (size % chunkSize == 0 ? 0 : 1);
-			try (FileChannel inChannel = fis.getChannel()) {
+			try (FileChannel inChannel = fis.getChannel();
+					ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
 				List<Callable<Boolean>> futures = new ArrayList<>((int) chunkCount);
 				// start指针【position偏移量】
 				for (long index = 0, start = 0,
@@ -179,7 +181,7 @@ public final class FileUtils {
 						return true;
 					});
 				}
-				ThreadUtils.newVirtualTaskExecutor().invokeAll(futures);
+				virtualTaskExecutor.invokeAll(futures);
 			}
 			catch (InterruptedException e) {
 				Thread.currentThread().interrupt();

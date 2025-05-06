@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+
 import static org.laokou.common.i18n.common.constant.StringConstants.SLASH;
 
 /**
@@ -83,7 +85,7 @@ public class GeneratorDomainService {
 	}
 
 	private void generateCode(GeneratorA generatorA, TableV tableV, List<Template> templates) {
-		try {
+		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
 			// 更新表信息
 			generatorA.updateTable(tableV);
 			// 根据模板批量生成代码
@@ -95,7 +97,7 @@ public class GeneratorDomainService {
 				FileUtils.write(path, content.getBytes(StandardCharsets.UTF_8));
 				return true;
 			}).toList();
-			ThreadUtils.newVirtualTaskExecutor().invokeAll(list);
+			virtualTaskExecutor.invokeAll(list);
 		}
 		catch (InterruptedException e) {
 			Thread.currentThread().interrupt();

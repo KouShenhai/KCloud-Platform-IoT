@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 // @formatter:off
 /**
@@ -33,11 +34,11 @@ import java.util.List;
 public class WebSocketServerConfig {
 
     @Bean(name = "webSocketServer", initMethod = "start", destroyMethod = "stop")
-	public Server webSocketServer(List<ChannelHandler> channelHandlers, SpringWebSocketServerProperties springWebSocketServerProperties) {
+	public Server webSocketServer(List<ChannelHandler> channelHandlers, SpringWebSocketServerProperties springWebSocketServerProperties, ExecutorService virtualThreadExecutor) {
 		List<ChannelHandler> webSocketServerList = channelHandlers.stream().filter(item -> item.getClass().isAnnotationPresent(org.laokou.common.netty.annotation.WebSocketServer.class)).toList();
 		Assert.noNullElements(webSocketServerList, "WebSocket Server not found");
 		Assert.isTrue(webSocketServerList.size() == 1, "There must be only one WebSocket Server handler present");
-		return new WebSocketServer(webSocketServerList.getFirst(), springWebSocketServerProperties);
+		return new WebSocketServer(webSocketServerList.getFirst(), springWebSocketServerProperties, virtualThreadExecutor);
     }
 
     @Bean(name = "webSocketEventExecutorGroup")

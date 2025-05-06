@@ -52,6 +52,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.function.BiConsumer;
 
 import static org.laokou.common.i18n.common.constant.StringConstants.DROP;
@@ -121,7 +122,8 @@ public final class ExcelUtils {
 			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
 			ExcelConvertor<DO, EXCEL> convertor) {
 		if (crudMapper.selectObjectCount(pageQuery) > 0) {
-			try (ExcelWriter excelWriter = FastExcel.write(out, clazz).build()) {
+			try (ExcelWriter excelWriter = FastExcel.write(out, clazz).build();
+					ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
 				// https://idev.cn/fastexcel/zh-CN/docs/write/write_hard
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
 				// 设置sheet页
@@ -137,7 +139,7 @@ public final class ExcelUtils {
 								excelWriter.write(convertor.toExcels(list), writeSheet);
 								return true;
 							}).toList();
-							ThreadUtils.newVirtualTaskExecutor().invokeAll(futures);
+							virtualTaskExecutor.invokeAll(futures);
 						}
 						catch (InterruptedException e) {
 							Thread.currentThread().interrupt();

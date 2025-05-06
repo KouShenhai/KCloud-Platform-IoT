@@ -33,6 +33,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
@@ -87,14 +88,14 @@ public class MybatisUtils {
 			List<List<DO>> partition = Lists.partition(dataList, partitionSize);
 			AtomicBoolean rollback = new AtomicBoolean(false);
 			CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
-			try {
+			try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
 				// 虚拟线程
 				List<Callable<Boolean>> futures = partition.stream().map(item -> (Callable<Boolean>) () -> {
 					handleBatch(timeout, batchSize, item, clazz, consumer, rollback, ds, cyclicBarrier);
 					return true;
 				}).toList();
 				// 执行任务
-				ThreadUtils.newVirtualTaskExecutor().invokeAll(futures);
+				virtualTaskExecutor.invokeAll(futures);
 				if (rollback.get()) {
 					throw new SystemException("S_DS_TransactionRolledBack", "事务已回滚");
 				}

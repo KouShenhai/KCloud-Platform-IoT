@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -131,8 +132,11 @@ public class VertxMqttClient {
 	private void reconnect() {
 		if (isReconnected.get()) {
 			log.info("【Vertx-MQTT】 => MQTT尝试重连");
-			vertx.setTimer(mqttClientProperties.getReconnectInterval(),
-					handler -> ThreadUtils.newVirtualTaskExecutor().execute(this::open));
+			vertx.setTimer(mqttClientProperties.getReconnectInterval(), handler -> {
+				try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+					virtualTaskExecutor.execute(this::open);
+				}
+			});
 		}
 	}
 
@@ -152,11 +156,13 @@ public class VertxMqttClient {
 	}
 
 	private void resubscribe() {
-		if (isConnected.get() || mqttClient.isConnected()) {
-			ThreadUtils.newVirtualTaskExecutor().execute(this::subscribe);
-		}
-		if (isLoaded.compareAndSet(false, true)) {
-			ThreadUtils.newVirtualTaskExecutor().execute(this::consume);
+		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+			if (isConnected.get() || mqttClient.isConnected()) {
+				virtualTaskExecutor.execute(this::subscribe);
+			}
+			if (isLoaded.compareAndSet(false, true)) {
+				virtualTaskExecutor.execute(this::consume);
+			}
 		}
 	}
 

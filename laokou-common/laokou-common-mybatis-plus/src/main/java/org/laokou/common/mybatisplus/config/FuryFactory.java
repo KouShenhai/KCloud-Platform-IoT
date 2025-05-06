@@ -279,6 +279,7 @@ public final class FuryFactory {
 		FURY.register(net.sf.jsqlparser.statement.update.UpdateModifierPriority.class);
 		FURY.register(net.sf.jsqlparser.expression.operators.relational.LikeExpression.KeyWord.class);
 		FURY.register(net.sf.jsqlparser.statement.delete.DeleteModifierPriority.class);
+		FURY.register(net.sf.jsqlparser.schema.Partition.class);
 	}
 
 	public static FuryFactory getFuryFactory() {

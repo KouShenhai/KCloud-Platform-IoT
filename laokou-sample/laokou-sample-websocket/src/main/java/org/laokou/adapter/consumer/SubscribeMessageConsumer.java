@@ -34,6 +34,8 @@ import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
 import static org.laokou.infrastructure.common.constant.MqConstant.*;
@@ -55,12 +57,12 @@ public class SubscribeMessageConsumer implements RocketMQListener<MessageExt> {
 
 	@Override
 	public void onMessage(MessageExt message) {
-		try {
+		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
 			String msg = new String(message.getBody(), StandardCharsets.UTF_8);
 			PayloadCO co = JacksonUtils.toBean(msg, PayloadCO.class);
 			TextWebSocketFrame webSocketFrame = new TextWebSocketFrame(co.getContent());
 			List<Callable<Future<Void>>> callableList = co.getReceivers().stream().map(clientId -> (Callable<Future<Void>>) () -> webSocketServer.send(clientId, webSocketFrame)).toList();
-			ThreadUtils.newVirtualTaskExecutor().invokeAll(callableList);
+			virtualTaskExecutor.invokeAll(callableList);
 		} catch (InterruptedException | JsonProcessingException e) {
 			Thread.currentThread().interrupt();
 			log.error("错误信息：{}", e.getMessage());
