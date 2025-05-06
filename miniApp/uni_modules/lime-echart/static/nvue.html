@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title></title>
+		<style type="text/css">
+			html,
+			body,
+			.canvas {
+				padding: 0;
+				margin: 0;
+				overflow-y: hidden;
+				background-color: transparent;
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="canvas" id="limeChart"></div>
+		<script type="text/javascript" src="./uni.webview.1.5.3.js"></script>
+		<script type="text/javascript" src="./echarts.min.js"></script>
+		<script type="text/javascript" src="./ecStat.min.js"></script>
+		<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-liquidfill@latest/dist/echarts-liquidfill.min.js"></script> -->
+		<script>
+			let chart = null;
+			let cache = [];
+			console.log = function(...agrs) {
+				postMessage(agrs)
+			}
+
+			function emit(event, data) {
+				let dataStr = JSON.stringify(data, stringify)
+				postMessage({
+					event,
+					data: dataStr
+				})
+				cache = []
+			}
+
+			function postMessage(data) {
+				uni.postMessage({
+					data
+				});
+			}
+
+			function stringify(key, value) {
+				if (typeof value === 'object' && value !== null) {
+					if (cache.indexOf(value) !== -1) {
+						return;
+					}
+					cache.push(value);
+				}
+				return value;
+			}
+
+			function parse(name, callback, options) {
+				const optionNameReg = /[\w]+\.setOption\(([\w]+\.)?([\w]+)\)/
+				if (optionNameReg.test(callback)) {
+					const optionNames = callback.match(optionNameReg)
+					if (optionNames[1]) {
+						const _this = optionNames[1].split('.')[0]
+						window[_this] = {}
+						window[_this][optionNames[2]] = options
+						return optionNames[2]
+					} else {
+						return null
+					}
+				}
+				return null
+			}
+
+			function init(callback, options, opts = {}, theme = null) {
+				if (!chart) {
+					chart = echarts.init(document.getElementById('limeChart'), theme, opts)
+					if (options) {
+						chart.setOption(options)
+					}
+					// const name = parse('a', callback, options)
+					// console.log('options::', callback)
+					// if(name) this[name] = options
+					// eval(`a = ${callback};`)
+					// if(a) {a(chart)}
+				}
+			}
+
+			function setChart(callback, options) {
+				if (!callback) return
+				if (chart && callback && options) {
+					var r = null
+					const name = parse('r', callback, options)
+					if (name) this[name] = options
+					eval(`r = ${callback};`)
+					if (r) {
+						r(chart)
+					}
+				}
+			}
+
+			function setOption(data) {
+				if (chart) chart.setOption(data[0], data[1])
+			}
+
+			function showLoading(data) {
+				if (chart) chart.showLoading(data[0], data[1])
+			}
+
+			function hideLoading() {
+				if (chart) chart.hideLoading()
+			}
+
+			function clear() {
+				if (chart) chart.clear()
+
+			}
+
+			function dispose() {
+				if (chart) chart.dispose()
+			}
+
+			function resize(size) {
+				if (chart) chart.resize(size)
+			}
+
+			function canvasToTempFilePath(opt = {}) {
+				if (chart) {
+					const src = chart.getDataURL(opt)
+					postMessage({
+						file: true,
+						data: src
+					})
+				}
+			}
+
+			function on(data) {
+				if (chart && data.length > 0) {
+					const [type, query] = data
+					const useQuery = query && typeof query != 'function'
+					const key = `${type}${useQuery ? JSON.stringify(query): '' }`
+					if (query) {
+						chart.on(type, query, (options) => {
+							const obj = {}
+							Object.keys(options).forEach(key => {
+								if (key != 'event') {
+									obj[key] = options[key]
+								}
+							})
+							emit(`@${key}`, {
+								event: key,
+								options: obj
+							})
+						})
+					} else {
+						chart.on(type, (options) => {
+							
+							const obj = {}
+							Object.keys(options).forEach(key => {
+								if (key != 'event') {
+									obj[key] = options[key]
+								}
+
+							})
+							emit(`@${key}`, {
+								event: key,
+								options: obj
+							})
+						})
+					}
+				}
+
+			}
+		</script>
+	</body>
+</html>

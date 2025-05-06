@@ -26,9 +26,9 @@ import org.laokou.common.core.util.ArrayUtils;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
-import org.laokou.common.secret.util.SecretUtils;
+import org.laokou.common.i18n.util.ParamValidator;
+import org.laokou.common.secret.util.ApiSecretParamValidator;
 import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
@@ -85,7 +85,10 @@ public class ApiSecretAop {
 		String appKey = request.getHeader(APP_KEY);
 		String appSecret = request.getHeader(APP_SECRET);
 		Map<String, String> parameterMap = getParameterMap(request);
-		SecretUtils.verification(appKey, appSecret, sign, nonce, timestamp, parameterMap);
+		ParamValidator.validate(ApiSecretParamValidator.validateAppKey(appKey),
+				ApiSecretParamValidator.validateAppSecret(appSecret), ApiSecretParamValidator.validateNonce(nonce),
+				ApiSecretParamValidator.validateTimestamp(timestamp),
+				ApiSecretParamValidator.validateSign(appKey, appSecret, sign, nonce, timestamp, parameterMap));
 		return point.proceed();
 	}
 

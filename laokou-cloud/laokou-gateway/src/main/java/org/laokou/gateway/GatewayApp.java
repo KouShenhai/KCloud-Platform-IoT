@@ -21,6 +21,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.SpringEventBus;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
 import org.laokou.gateway.repository.NacosRouteDefinitionRepository;
@@ -45,6 +46,7 @@ import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
+import java.util.concurrent.ExecutorService;
 
 /**
  * 网关服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
@@ -87,6 +89,8 @@ public class GatewayApp implements CommandLineRunner {
 		// 开启reactor的上下文传递
 		// https://spring.io/blog/2023/03/30/context-propagation-with-project-reactor-3-unified-bridging-between-reactive
 		Hooks.enableAutomaticContextPropagation();
+		// 启用虚拟线程支持
+		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
@@ -95,7 +99,9 @@ public class GatewayApp implements CommandLineRunner {
 	@Override
     public void run(String... args)  {
 		// 同步路由
-		syncRouters();
+		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+			virtualTaskExecutor.execute(this::syncRouters);
+		}
     }
 
 	private void syncRouters() {

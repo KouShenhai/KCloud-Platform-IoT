@@ -10,5 +10,14 @@
   </parent>
 
   <artifactId>laokou-mqtt</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+    <module>laokou-mqtt-adapter</module>
+    <module>laokou-mqtt-app</module>
+    <module>laokou-mqtt-client</module>
+    <module>laokou-mqtt-domain</module>
+    <module>laokou-mqtt-infrastructure</module>
+    <module>laokou-mqtt-start</module>
+  </modules>
 
 </project>

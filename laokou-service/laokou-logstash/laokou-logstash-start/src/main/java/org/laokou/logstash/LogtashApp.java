@@ -20,6 +20,7 @@ package org.laokou.logstash;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.logstash.consumer.handler.TraceLogHandler;
 import org.springframework.boot.CommandLineRunner;
@@ -37,6 +38,7 @@ import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -75,7 +77,9 @@ public class LogtashApp implements CommandLineRunner {
 	@Override
     public void run(String... args)  {
 		// 监听消息
-		listenMessages();
+		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+			virtualTaskExecutor.execute(this::listenMessages);
+		}
     }
     // @formatter:on
 

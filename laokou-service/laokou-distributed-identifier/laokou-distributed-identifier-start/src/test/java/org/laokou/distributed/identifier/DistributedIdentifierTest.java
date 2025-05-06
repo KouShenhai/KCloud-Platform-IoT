@@ -67,7 +67,7 @@ class DistributedIdentifierTest {
 	void test() throws Exception {
 		String nonce = "test";
 		long timestamp = System.currentTimeMillis();
-		String sign = SecretUtils.sign(APP_KEY, APP_SECRET, nonce, timestamp, EMPTY);
+		String sign = SecretUtils.sign(APP_KEY, APP_SECRET, nonce, String.valueOf(timestamp), EMPTY);
 		String contentAsString = mockMvc
 			.perform(post("/v3/distributed-identifiers/snowflake").header(ApiSecretAop.APP_KEY, APP_KEY)
 				.header(ApiSecretAop.APP_SECRET, APP_SECRET)

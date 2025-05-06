@@ -47,7 +47,7 @@ public class DistributedIdentifierFeignClientWrapper {
 	public DistributedIdentifierCO getData() {
 		String nonce = "laokou";
 		long timestamp = System.currentTimeMillis();
-		String sign = SecretUtils.sign(APP_KEY, APP_SECRET, nonce, timestamp, EMPTY);
+		String sign = SecretUtils.sign(APP_KEY, APP_SECRET, nonce, String.valueOf(timestamp), EMPTY);
 		Result<DistributedIdentifierCO> result = distributedIdentifierFeignClient.generateSnowflakeV3(APP_KEY,
 				APP_SECRET, timestamp, nonce, sign);
 		if (result.success()) {
