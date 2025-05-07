@@ -132,7 +132,7 @@
     <!--feign版本-->
     <feign.version>13.6</feign.version>
     <!--archunit-junit5版本-->
-    <archunit-junit5.version>1.4.0</archunit-junit5.version>
+    <archunit-junit5.version>1.4.1</archunit-junit5.version>
     <!--nimbus-jose-jwt版本-->
     <nimbus-jose-jwt.version>10.2</nimbus-jose-jwt.version>
     <!--opentelemetry-api-incubator版本-->
