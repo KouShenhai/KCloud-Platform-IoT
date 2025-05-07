@@ -17,28 +17,26 @@
 
 package org.laokou.common.rabbitmq.config;
 
-import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Test;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.TestConstructor;
+import com.rabbitmq.client.Channel;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author laokou
  */
-@SpringBootTest
-@RequiredArgsConstructor
-@Import({ RabbitMqConsumer.class })
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-class RabbitMqTest {
+@Slf4j
+@Component
+class RabbitMqConsumer {
 
-	private final RabbitTemplate rabbitTemplate;
-
-	@Test
-	void test() {
-		String message = "Hello, RabbitMQ!";
-		rabbitTemplate.convertAndSend("laokou.fanout.exchange", "", message);
+	@RabbitListener(queues = "laokou.java.queue")
+	public void handleMessageA(Message message, Channel channel) throws IOException {
+		log.info("接收到消息：{}", new String(message.getBody(), StandardCharsets.UTF_8));
+		channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
 	}
 
 }

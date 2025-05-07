@@ -12,3 +12,12 @@ spring:
     username: root
     password: laokou123
     virtual-host: /
+    listener:
+      direct:
+        acknowledge-mode: manual
+        retry:
+          enabled: true
+      simple:
+        acknowledge-mode: manual
+        retry:
+          enabled: true

@@ -32,17 +32,27 @@ class RabbitMqConfig {
 
 	@Bean
 	public FanoutExchange fanoutExchange() {
-		return new FanoutExchange("laokou-fanout-exchange");
+		return new FanoutExchange("laokou.fanout.exchange");
 	}
 
 	@Bean
-	public Queue queue() {
-		return new Queue("laokou-queue");
+	public Queue javaQueue() {
+		return new Queue("laokou.java.queue");
 	}
 
 	@Bean
-	public Binding bindingQueue(Queue queue, FanoutExchange fanoutExchange) {
-		return BindingBuilder.bind(queue).to(fanoutExchange);
+	public Queue goQueue() {
+		return new Queue("laokou.go.queue");
+	}
+
+	@Bean
+	public Binding bindingJavaQueue(Queue javaQueue, FanoutExchange fanoutExchange) {
+		return BindingBuilder.bind(javaQueue).to(fanoutExchange);
+	}
+
+	@Bean
+	public Binding bindingGoQueue(Queue goQueue, FanoutExchange fanoutExchange) {
+		return BindingBuilder.bind(goQueue).to(fanoutExchange);
 	}
 
 }
