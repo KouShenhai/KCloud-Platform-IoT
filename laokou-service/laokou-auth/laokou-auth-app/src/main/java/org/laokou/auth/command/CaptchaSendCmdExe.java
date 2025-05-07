@@ -63,6 +63,8 @@ public class CaptchaSendCmdExe {
 		domainService.createCaptcha(distributedIdentifierFeignClientWrapper.getId(), auth, entity);
 		// 发布事件
 		auth.releaseEvents().forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageTypeEnum.ASYNC));
+		// 清除事件
+		auth.clearEvents();
 	}
 
 }

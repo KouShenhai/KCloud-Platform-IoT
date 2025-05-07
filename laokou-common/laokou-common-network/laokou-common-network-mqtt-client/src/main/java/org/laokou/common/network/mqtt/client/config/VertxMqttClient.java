@@ -45,7 +45,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author laokou
  */
 @Slf4j
-public class VertxMqttClient {
+public final class VertxMqttClient {
 
 	private final Sinks.Many<MqttPublishMessage> messageSink = Sinks.many()
 		.multicast()

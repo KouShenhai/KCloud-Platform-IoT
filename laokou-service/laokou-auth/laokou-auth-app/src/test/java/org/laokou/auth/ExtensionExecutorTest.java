@@ -106,9 +106,9 @@ class ExtensionExecutorTest {
 		// 注册【邮箱验证码】校验器
 		doRegistration(new MailCaptchaParamValidator());
 		// 执行参数校验【邮箱验证码】
-		captcha.setTag(MAIL_TAG);
-		captcha.setUuid("2413176044@qq.com");
-		captcha.setTenantCode("laokou");
+		Assertions.assertDoesNotThrow(() -> captcha.setTag(MAIL_TAG));
+		Assertions.assertDoesNotThrow(() -> captcha.setUuid("2413176044@qq.com"));
+		Assertions.assertDoesNotThrow(() -> captcha.setTenantCode("laokou"));
 		execute(captcha);
 	}
 
@@ -120,15 +120,15 @@ class ExtensionExecutorTest {
 		// 注册【手机号验证码】校验器
 		doRegistration(new MobileCaptchaParamValidator());
 		// 执行参数校验【手机号验证码】
-		captcha.setTag(MOBILE_TAG);
-		captcha.setUuid("18888888888");
-		captcha.setTenantCode("laokou");
+		Assertions.assertDoesNotThrow(() -> captcha.setTag(MOBILE_TAG));
+		Assertions.assertDoesNotThrow(() -> captcha.setUuid("18888888888"));
+		Assertions.assertDoesNotThrow(() -> captcha.setTenantCode("laokou"));
 		execute(captcha);
 	}
 
 	private void doRegistration(ExtensionPointI extensionPointI) {
 		Assertions.assertNotNull(extensionPointI);
-		extensionRegister.doRegistration(extensionPointI);
+		Assertions.assertDoesNotThrow(() -> extensionRegister.doRegistration(extensionPointI));
 	}
 
 	private void validate() {
@@ -137,15 +137,15 @@ class ExtensionExecutorTest {
 	}
 
 	private void execute(AuthA auth) {
-		extensionExecutor.executeVoid(AuthParamValidatorExtPt.class,
+		Assertions.assertDoesNotThrow(() -> extensionExecutor.executeVoid(AuthParamValidatorExtPt.class,
 				BizScenario.valueOf(auth.getGrantTypeEnum().getCode(), USE_CASE_AUTH, SCENARIO),
-				extension -> extension.validate(auth));
+				extension -> extension.validate(auth)));
 	}
 
 	private void execute(CaptchaE captcha) {
-		extensionExecutor.executeVoid(CaptchaParamValidatorExtPt.class,
+		Assertions.assertDoesNotThrow(() -> extensionExecutor.executeVoid(CaptchaParamValidatorExtPt.class,
 				BizScenario.valueOf(captcha.getTag(), USE_CASE_CAPTCHA, SCENARIO),
-				extension -> extension.validate(captcha));
+				extension -> extension.validate(captcha)));
 	}
 
 }

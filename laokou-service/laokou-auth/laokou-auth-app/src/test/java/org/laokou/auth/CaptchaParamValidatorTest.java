@@ -17,6 +17,7 @@
 
 package org.laokou.auth;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.CaptchaE;
@@ -36,9 +37,9 @@ class CaptchaParamValidatorTest {
 		CaptchaParamValidatorExtPt captchaParamValidator = new MailCaptchaParamValidator();
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		// 校验邮箱验证码
-		captcha.setUuid("2413176044@qq.com");
-		captcha.setTenantCode("laokou");
-		captchaParamValidator.validate(captcha);
+		Assertions.assertDoesNotThrow(() -> captcha.setUuid("2413176044@qq.com"));
+		Assertions.assertDoesNotThrow(() -> captcha.setTenantCode("laokou"));
+		Assertions.assertDoesNotThrow(() -> captchaParamValidator.validate(captcha));
 	}
 
 	@Test
@@ -46,9 +47,9 @@ class CaptchaParamValidatorTest {
 		CaptchaParamValidatorExtPt captchaParamValidator = new MobileCaptchaParamValidator();
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		// 校验手机号验证码
-		captcha.setUuid("18888888888");
-		captcha.setTenantCode("laokou");
-		captchaParamValidator.validate(captcha);
+		Assertions.assertDoesNotThrow(() -> captcha.setUuid("18888888888"));
+		Assertions.assertDoesNotThrow(() -> captcha.setTenantCode("laokou"));
+		Assertions.assertDoesNotThrow(() -> captchaParamValidator.validate(captcha));
 	}
 
 }

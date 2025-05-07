@@ -91,6 +91,8 @@ final class OAuth2AuthenticationProcessor {
 			DynamicDataSourceContextHolder.clear();
 			// 发布事件
 			auth.releaseEvents().forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageTypeEnum.ASYNC));
+			// 清除事件
+			auth.clearEvents();
 		}
 	}
 

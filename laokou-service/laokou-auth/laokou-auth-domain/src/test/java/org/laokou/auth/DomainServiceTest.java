@@ -95,10 +95,10 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testUsernamePasswordAuth() throws Exception {
+	void testUsernamePasswordAuth() {
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		// 创建用户【用户名密码】
-		auth.createUserByUsernamePassword();
+		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
 		// 构造租户
 		when(tenantGateway.getId("laokou")).thenReturn(0L);
 		// 构造数据源
@@ -107,7 +107,8 @@ class DomainServiceTest {
 		doReturn(true).when(captchaGateway).validate(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
 		// 构造用户信息
 		UserE user = auth.getUser();
-		user.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8)));
+		Assertions.assertDoesNotThrow(() -> user
+			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
 		when(userGateway.getProfile(user, "laokou")).thenReturn(user);
 		// 构造密码校验
 		doReturn(true).when(passwordValidator).validate("123", "202cb962ac59075b964b07152d234b70");
@@ -116,7 +117,7 @@ class DomainServiceTest {
 		// 构造部门
 		when(deptGateway.getPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 用户名密码登录
-		domainService.auth(auth, this.info);
+		Assertions.assertDoesNotThrow(() -> domainService.auth(auth, this.info));
 		// 校验调用次数
 		verify(deptGateway, times(1)).getPaths(user);
 		verify(menuGateway, times(1)).getPermissions(user);
@@ -131,7 +132,7 @@ class DomainServiceTest {
 	void testMailAuth() throws Exception {
 		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
 		// 创建用户【邮箱】
-		auth.createUserByMail();
+		Assertions.assertDoesNotThrow(auth::createUserByMail);
 		// 构造租户
 		when(tenantGateway.getId("laokou")).thenReturn(0L);
 		// 构造数据源
@@ -147,7 +148,7 @@ class DomainServiceTest {
 		// 构造部门
 		when(deptGateway.getPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 邮箱登录
-		domainService.auth(auth, this.info);
+		Assertions.assertDoesNotThrow(() -> domainService.auth(auth, this.info));
 		// 校验调用次数
 		verify(deptGateway, times(1)).getPaths(user);
 		verify(menuGateway, times(1)).getPermissions(user);
@@ -161,7 +162,7 @@ class DomainServiceTest {
 	void testMobileAuth() throws Exception {
 		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
 		// 创建用户【手机号】
-		auth.createUserByMobile();
+		Assertions.assertDoesNotThrow(auth::createUserByMobile);
 		// 构造租户
 		when(tenantGateway.getId("laokou")).thenReturn(0L);
 		// 构造数据源
@@ -176,7 +177,7 @@ class DomainServiceTest {
 		// 构造部门
 		when(deptGateway.getPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 手机号登录
-		domainService.auth(auth, this.info);
+		Assertions.assertDoesNotThrow(() -> domainService.auth(auth, this.info));
 		// 校验调用次数
 		verify(deptGateway, times(1)).getPaths(user);
 		verify(menuGateway, times(1)).getPermissions(user);
@@ -190,14 +191,15 @@ class DomainServiceTest {
 	void testAuthorizationCodeAuth() throws Exception {
 		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
 		// 创建用户【授权码】
-		auth.createUserByAuthorizationCode();
+		Assertions.assertDoesNotThrow(auth::createUserByAuthorizationCode);
 		// 构造租户
 		when(tenantGateway.getId("laokou")).thenReturn(0L);
 		// 构造数据源
 		when(sourceGateway.getPrefix("laokou")).thenReturn("master");
 		// 构造用户信息
 		UserE user = auth.getUser();
-		user.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8)));
+		Assertions.assertDoesNotThrow(() -> user
+			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
 		when(userGateway.getProfile(user, "laokou")).thenReturn(user);
 		// 构造密码校验
 		doReturn(true).when(passwordValidator).validate("123", "202cb962ac59075b964b07152d234b70");
@@ -206,7 +208,7 @@ class DomainServiceTest {
 		// 构造部门
 		when(deptGateway.getPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 授权码登录
-		domainService.auth(auth, this.info);
+		Assertions.assertDoesNotThrow(() -> domainService.auth(auth, this.info));
 		// 校验调用次数
 		verify(deptGateway, times(1)).getPaths(user);
 		verify(menuGateway, times(1)).getPermissions(user);
@@ -225,7 +227,7 @@ class DomainServiceTest {
 		// 构造数据源
 		when(sourceGateway.getPrefix("laokou")).thenReturn("master");
 		// 创建验证码
-		domainService.createCaptcha(1L, auth, captcha);
+		Assertions.assertDoesNotThrow(() -> domainService.createCaptcha(1L, auth, captcha));
 		// 校验调用次数
 		verify(sourceGateway, times(1)).getPrefix("laokou");
 		verify(tenantGateway, times(1)).getId("laokou");
@@ -235,25 +237,25 @@ class DomainServiceTest {
 	void testCreateLoginLog() {
 		LoginLogE loginLog = DomainFactory.getLoginLog();
 		// 创建登录日志
-		domainService.createLoginLog(loginLog);
+		Assertions.assertDoesNotThrow(() -> domainService.createLoginLog(loginLog));
 	}
 
 	@Test
 	void testCreateMailCaptchaNoticeLog() {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
-		noticeLog.setCode("sendMailCaptcha");
-		noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode());
-		domainService.createNoticeLog(noticeLog);
+		Assertions.assertDoesNotThrow(() -> noticeLog.setCode("sendMailCaptcha"));
+		Assertions.assertDoesNotThrow(() -> noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode()));
+		Assertions.assertDoesNotThrow(() -> domainService.createNoticeLog(noticeLog));
 	}
 
 	@Test
 	void testCreateMobileCaptchaNoticeLog() {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
-		noticeLog.setCode("sendMobileCaptcha");
-		noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode());
-		domainService.createNoticeLog(noticeLog);
+		Assertions.assertDoesNotThrow(() -> noticeLog.setCode("sendMobileCaptcha"));
+		Assertions.assertDoesNotThrow(() -> noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode()));
+		Assertions.assertDoesNotThrow(() -> domainService.createNoticeLog(noticeLog));
 	}
 
 }
