@@ -11,4 +11,11 @@
 
   <artifactId>laokou-mqtt-domain</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-mqtt-client</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

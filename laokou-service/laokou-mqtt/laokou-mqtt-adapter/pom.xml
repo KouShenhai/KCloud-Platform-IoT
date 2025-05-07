@@ -11,4 +11,11 @@
 
   <artifactId>laokou-mqtt-adapter</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-mqtt-app</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

@@ -43,14 +43,14 @@ class DefaultMessageHandler implements MessageHandler {
 	@Override
 	public void handle(MqttMessage mqttMessage) {
 		try {
-			log.info("【Vertx-MQTT】 => 接收到MQTT消息，topic: {}, message: {}", mqttMessage.getTopic(),
+			log.info("【Vertx-MQTT-Client】 => 接收到MQTT消息，topic: {}, message: {}", mqttMessage.getTopic(),
 					mqttMessage.getPayload().toString(StandardCharsets.UTF_8));
 		}
 		catch (DuplicateKeyException e) {
 			// 忽略重复键异常
 		}
 		catch (Exception e) {
-			log.error("【Vertx-MQTT】 => MQTT消息处理失败，Topic：{}，错误信息：{}", mqttMessage.getTopic(), e.getMessage(), e);
+			log.error("【Vertx-MQTT-Client】 => MQTT消息处理失败，Topic：{}，错误信息：{}", mqttMessage.getTopic(), e.getMessage(), e);
 		}
 	}
 
