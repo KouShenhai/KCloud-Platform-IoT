@@ -26,6 +26,7 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
+import javax.net.ssl.SSLServerSocketFactory;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -105,7 +106,7 @@ public final class VertxMqttServer {
 	}
 
 	private int detectAvailablePort(String host) {
-		try (ServerSocket socket = new ServerSocket()) {
+		try (ServerSocket socket = SSLServerSocketFactory.getDefault().createServerSocket()) {
 			socket.bind(new InetSocketAddress(host, properties.getPort()));
 			return socket.getLocalPort();
 		}
