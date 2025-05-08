@@ -30,8 +30,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class MqttServerApp {
 
 	public static void main(String[] args) {
-		// 启用虚拟线程支持
-		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
 		new SpringApplicationBuilder(MqttServerApp.class).web(WebApplicationType.REACTIVE).run(args);
 	}
 

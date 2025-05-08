@@ -20,11 +20,13 @@ package org.laokou.mqtt.server;
 import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.mqtt.server.config.MqttServerProperties;
 import org.laokou.mqtt.server.config.VertxMqttServer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
+import reactor.core.scheduler.Schedulers;
 
 /**
  * @author laokou
@@ -36,14 +38,24 @@ class MqttServerTest {
 
 	private final Vertx vertx;
 
+	@BeforeEach
+	void setUp() {
+		// 启用虚拟线程支持
+		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
+	}
+
 	@Test
 	void test() throws InterruptedException {
 		MqttServerProperties properties = new MqttServerProperties();
 		Assertions.assertDoesNotThrow(() -> properties.setPort(1884));
 		VertxMqttServer vertxMqttServer = new VertxMqttServer(vertx, properties);
-		Assertions.assertDoesNotThrow(vertxMqttServer::start);
+		Assertions.assertDoesNotThrow(() -> {
+			vertxMqttServer.start().subscribeOn(Schedulers.boundedElastic()).subscribe();
+		});
 		Thread.sleep(10000);
-		Assertions.assertDoesNotThrow(vertxMqttServer::stop);
+		Assertions.assertDoesNotThrow(() -> {
+			vertxMqttServer.stop().subscribeOn(Schedulers.boundedElastic()).subscribe();
+		});
 	}
 
 }
