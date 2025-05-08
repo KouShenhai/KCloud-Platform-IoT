@@ -16,23 +16,44 @@
  */
 
 package org.laokou.mqtt.server;
-
+import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
+import org.laokou.mqtt.server.config.MqttServerProperties;
+import org.laokou.mqtt.server.config.VertxMqttServer;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import reactor.core.scheduler.Schedulers;
 
 /**
  * @author laokou
  */
 @RequiredArgsConstructor
+@EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = "org.laokou")
-public class MqttServerApp {
+public class MqttServerApp implements CommandLineRunner {
+
+	private final Vertx vertx;
+
+	private final MqttServerProperties properties;
 
 	public static void main(String[] args) {
 		// 启用虚拟线程支持
 		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
 		new SpringApplicationBuilder(MqttServerApp.class).web(WebApplicationType.REACTIVE).run(args);
+	}
+
+	@Override
+	public void run(String... args) {
+		VertxMqttServer vertxMqttServer = new VertxMqttServer(vertx, properties);
+		vertxMqttServer.start()
+			.subscribeOn(Schedulers.boundedElastic()).subscribe();
+		vertxMqttServer.publish()
+			.subscribeOn(Schedulers.boundedElastic()).subscribe();
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> vertxMqttServer.stop()
+			.subscribeOn(Schedulers.boundedElastic()).subscribe()));
 	}
 
 }

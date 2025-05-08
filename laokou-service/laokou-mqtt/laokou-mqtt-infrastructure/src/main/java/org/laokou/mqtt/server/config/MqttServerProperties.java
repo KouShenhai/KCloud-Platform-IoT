@@ -18,12 +18,17 @@
 package org.laokou.mqtt.server.config;
 
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
  */
 @Data
+@Component
+@ConfigurationProperties(prefix = "spring.mqtt-server")
 public class MqttServerProperties {
 
 	private boolean auth = true;

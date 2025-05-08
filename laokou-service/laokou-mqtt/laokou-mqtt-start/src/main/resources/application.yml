@@ -1,0 +1,14 @@
+server:
+  port: 9995
+  shutdown: graceful
+
+spring:
+  application:
+    name: ${SERVICE_ID:laokou-mqtt}
+  profiles:
+    active: @PROFILE-ACTIVE@
+  threads:
+    virtual:
+      enabled: true
+  mqtt-server:
+    auth: true
