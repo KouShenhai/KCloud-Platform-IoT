@@ -47,12 +47,14 @@ class MqttServerTest {
 	@Test
 	void test() throws InterruptedException {
 		MqttServerProperties properties = new MqttServerProperties();
-		Assertions.assertDoesNotThrow(() -> properties.setPort(1884));
 		VertxMqttServer vertxMqttServer = new VertxMqttServer(vertx, properties);
 		Assertions.assertDoesNotThrow(() -> {
 			vertxMqttServer.start().subscribeOn(Schedulers.boundedElastic()).subscribe();
 		});
-		Thread.sleep(10000);
+		Assertions.assertDoesNotThrow(() -> {
+			vertxMqttServer.publish().subscribeOn(Schedulers.boundedElastic()).subscribe();
+		});
+		Thread.sleep(100000);
 		Assertions.assertDoesNotThrow(() -> {
 			vertxMqttServer.stop().subscribeOn(Schedulers.boundedElastic()).subscribe();
 		});

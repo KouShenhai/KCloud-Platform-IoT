@@ -1,8 +1,10 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
-			"style": {}
+		 	"path": "pages/index/index",
+		 	"style": {
+				"navigationBarTitleText": "首页"
+			}
 		},
 		{
 			"path": "pages/iot/device",
@@ -11,6 +13,23 @@
 			}
 		}
 	],
+	"tabBar": {
+		"position": "bottom",
+		"borderStyle": "black",
+		"color": "#99a5bb",
+		"selectedColor": "#2e8ce3",
+		"backgroundColor": "white",
+		"list": [
+			{
+				"pagePath": "pages/iot/device",
+				"text": "测试"
+			},
+			{
+				"pagePath": "pages/index/index",
+				"text": "首页"
+			}
+		]
+  },
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "老寇IoT云平台",
