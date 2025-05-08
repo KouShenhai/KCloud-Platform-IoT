@@ -26,9 +26,17 @@ import java.util.concurrent.TimeUnit;
 @Data
 public class MqttServerProperties {
 
+	private boolean auth = true;
+
+	private String username = "vertx";
+
+	private String password = "laokou123";
+
 	private String host = "0.0.0.0";
 
-	private int port = 1883;
+	private int port = 0;
+
+	private int threadSize = 16;
 
 	private int maxMessageSize = 8196;
 

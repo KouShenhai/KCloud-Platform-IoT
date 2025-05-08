@@ -17,14 +17,19 @@
 
 package org.laokou.mqtt.server.config;
 
+import io.netty.handler.codec.mqtt.MqttConnectReturnCode;
 import io.vertx.core.Vertx;
-import io.vertx.mqtt.MqttServer;
-import io.vertx.mqtt.MqttServerOptions;
-import io.vertx.mqtt.MqttTopicSubscription;
+import io.vertx.mqtt.*;
 import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.extern.slf4j.Slf4j;
-import reactor.core.publisher.Mono;
+import org.laokou.common.i18n.util.ObjectUtils;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.util.Optional;
 
 /**
  * @author laokou
@@ -36,77 +41,113 @@ public final class VertxMqttServer {
 		.multicast()
 		.onBackpressureBuffer(Integer.MAX_VALUE, false);
 
-	private final Mono<MqttServer> mqttServer;
+	private volatile Flux<MqttServer> mqttServer;
+
+	private final Vertx vertx;
 
 	private final MqttServerProperties properties;
 
+	private volatile boolean isClosed = false;
+
 	public VertxMqttServer(final Vertx vertx, final MqttServerProperties properties) {
 		this.properties = properties;
-		mqttServer = getMqttServerOptions().map(options -> MqttServer.create(vertx, options));
+		this.vertx = vertx;
 	}
 
-	public Mono<Void> start() {
-		return mqttServer.flatMap(server -> {
-			server
-				.exceptionHandler(
-						error -> log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，错误信息：{}", error.getMessage(), error))
-				.endpointHandler(endpoint -> {
-					endpoint.subscribeHandler(subscribe -> {
+	public Flux<MqttServer> start() {
+		return mqttServer = getMqttServerOptions().map(mqttServerOption -> MqttServer.create(vertx, mqttServerOption)
+			.exceptionHandler(
+					error -> log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，错误信息：{}", error.getMessage(), error))
+			.endpointHandler(endpoint -> Optional.ofNullable(authHandler(endpoint))
+				.ifPresent(e -> e.closeHandler(close -> log.info("【Vertx-MQTT-Server】 => MQTT客户端断开连接"))
+					.subscribeHandler(subscribe -> {
 						for (MqttTopicSubscription topicSubscription : subscribe.topicSubscriptions()) {
 							log.info("【Vertx-MQTT-Server】 => MQTT客户端订阅主题：{}", topicSubscription.topicName());
 						}
-					});
-					endpoint.publishHandler(messageSink::tryEmitNext);
+					})
+					.disconnectHandler(disconnect -> log.info("【Vertx-MQTT-Server】 => MQTT客户端主动断开连接"))
+					.pingHandler(ping -> log.info("【Vertx-MQTT-Server】 => MQTT客户端发送心跳"))
+					.publishHandler(messageSink::tryEmitNext)
 					// 不保留会话
-					endpoint.accept(false);
-				})
-				.listen(properties.getPort(), properties.getHost(), asyncResult -> {
-					if (asyncResult.succeeded()) {
-						log.info("【Vertx-MQTT-Server】 => MQTT服务启动成功，主机：{}，端口：{}", properties.getHost(),
-								properties.getPort());
-					}
-					else {
-						log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，错误信息：{}", asyncResult.cause().getMessage(),
-								asyncResult.cause());
-					}
-				});
-			return messageSink.asFlux().flatMap(mqttPublishMessage -> {
-				log.info("【Vertx-MQTT-Server】 => MQTT服务收到消息，主题：{}，内容：{}", mqttPublishMessage.topicName(),
-						mqttPublishMessage.payload());
-				return Mono.empty();
-			}).then();
-		});
-	}
-
-	public Mono<Void> stop() {
-		return mqttServer.flatMap(server -> {
-			server.close(completionHandler -> {
-				if (completionHandler.succeeded()) {
-					log.info("【Vertx-MQTT-Server】 => MQTT服务停止成功");
+					.accept(false)))
+			.listen(mqttServerOption.getPort(), mqttServerOption.getHost(), asyncResult -> {
+				if (isClosed) {
+					return;
+				}
+				if (asyncResult.succeeded()) {
+					log.info("【Vertx-MQTT-Server】 => MQTT服务启动成功，主机：{}，端口：{}", mqttServerOption.getHost(),
+							mqttServerOption.getPort());
 				}
 				else {
-					log.error("【Vertx-MQTT-Server】 => MQTT服务停止失败，错误信息：{}", completionHandler.cause().getMessage(),
-							completionHandler.cause());
+					log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，主机：{}，端口：{}，错误信息：{}", mqttServerOption.getHost(),
+							mqttServerOption.getPort(), asyncResult.cause().getMessage(), asyncResult.cause());
 				}
-			});
-			return Mono.empty();
-		});
+			}));
 	}
 
-	private Mono<MqttServerOptions> getMqttServerOptions() {
+	public Flux<MqttServer> stop() {
+		isClosed = true;
+		return mqttServer.doOnNext(server -> server.close(completionHandler -> {
+			if (completionHandler.succeeded()) {
+				log.info("【Vertx-MQTT-Server】 => MQTT服务停止成功");
+			}
+			else {
+				log.error("【Vertx-MQTT-Server】 => MQTT服务停止失败，错误信息：{}", completionHandler.cause().getMessage(),
+						completionHandler.cause());
+			}
+		}));
+	}
+
+	public Flux<MqttPublishMessage> publish() {
+		return messageSink.asFlux()
+			.doOnNext(message -> log.info("【Vertx-MQTT-Server】 => MQTT服务接收到消息，主题：{}，内容：{}", message.topicName(),
+					message.payload().toString()));
+	}
+
+	private int detectAvailablePort(String host) {
+		try (ServerSocket socket = new ServerSocket()) {
+			socket.bind(new InetSocketAddress(host, properties.getPort()));
+			return socket.getLocalPort();
+		}
+		catch (IOException e) {
+			throw new RuntimeException("Port auto-detection failed", e);
+		}
+	}
+
+	private Flux<MqttServerOptions> getMqttServerOptions() {
+		return Flux.range(1, Math.max(properties.getThreadSize(), Runtime.getRuntime().availableProcessors()))
+			.map(item -> getMqttServerOption());
+	}
+
+	private MqttEndpoint authHandler(MqttEndpoint endpoint) {
+		MqttAuth mqttAuth = endpoint.auth();
+		if (properties.isAuth()) {
+			if (ObjectUtils.isNull(mqttAuth)) {
+				endpoint.reject(MqttConnectReturnCode.CONNECTION_REFUSED_BAD_USERNAME_OR_PASSWORD);
+				return null;
+			}
+			if (!ObjectUtils.equals(mqttAuth.getUsername(), properties.getUsername())
+					|| !ObjectUtils.equals(mqttAuth.getPassword(), properties.getPassword())) {
+				endpoint.reject(MqttConnectReturnCode.CONNECTION_REFUSED_BAD_USERNAME_OR_PASSWORD);
+				return null;
+			}
+		}
+		return endpoint;
+	}
+
+	// @formatter:off
+	private MqttServerOptions getMqttServerOption() {
 		MqttServerOptions mqttServerOptions = new MqttServerOptions();
 		mqttServerOptions.setHost(properties.getHost());
-		mqttServerOptions.setPort(properties.getPort());
+		mqttServerOptions.setPort(detectAvailablePort(properties.getHost()));
 		mqttServerOptions.setMaxMessageSize(properties.getMaxMessageSize());
 		mqttServerOptions.setAutoClientId(properties.isAutoClientId());
 		mqttServerOptions.setMaxClientIdLength(properties.getMaxClientIdLength());
 		mqttServerOptions.setTimeoutOnConnect(properties.getTimeoutOnConnect());
 		mqttServerOptions.setUseWebSocket(properties.isUseWebSocket());
 		mqttServerOptions.setWebSocketMaxFrameSize(properties.getWebSocketMaxFrameSize());
-		mqttServerOptions
-			.setPerFrameWebSocketCompressionSupported(properties.isPerFrameWebSocketCompressionSupported());
-		mqttServerOptions
-			.setPerMessageWebSocketCompressionSupported(properties.isPerMessageWebSocketCompressionSupported());
+		mqttServerOptions.setPerFrameWebSocketCompressionSupported(properties.isPerFrameWebSocketCompressionSupported());
+		mqttServerOptions.setPerMessageWebSocketCompressionSupported(properties.isPerMessageWebSocketCompressionSupported());
 		mqttServerOptions.setWebSocketCompressionLevel(properties.getWebSocketCompressionLevel());
 		mqttServerOptions.setWebSocketAllowServerNoContext(properties.isWebSocketAllowServerNoContext());
 		mqttServerOptions.setWebSocketPreferredClientNoContext(properties.isWebSocketPreferredClientNoContext());
@@ -125,7 +166,8 @@ public final class VertxMqttServer {
 		mqttServerOptions.setTcpCork(properties.isTcpCork());
 		mqttServerOptions.setTcpQuickAck(properties.isTcpQuickAck());
 		mqttServerOptions.setTcpUserTimeout(properties.getTcpUserTimeout());
-		return Mono.just(mqttServerOptions);
+		return mqttServerOptions;
 	}
+	// @formatter:on
 
 }

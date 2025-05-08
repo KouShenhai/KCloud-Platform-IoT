@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class VertxConfig {
 
-	@Bean
+	@Bean(destroyMethod = "close")
 	public Vertx vertx() {
 		VertxOptions vertxOptions = new VertxOptions();
 		vertxOptions.setMaxEventLoopExecuteTime(60);
