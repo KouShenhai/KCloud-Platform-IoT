@@ -19,6 +19,7 @@ package org.laokou.mqtt.server;
 
 import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.network.mqtt.client.handler.ReactiveMessageHandler;
 import org.laokou.mqtt.server.config.MqttServerProperties;
 import org.laokou.mqtt.server.config.VertxMqttServer;
 import org.springframework.boot.CommandLineRunner;
@@ -27,6 +28,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import reactor.core.scheduler.Schedulers;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -40,6 +43,8 @@ public class MqttServerApp implements CommandLineRunner {
 
 	private final MqttServerProperties properties;
 
+	private final List<ReactiveMessageHandler> reactiveMessageHandlers;
+
 	public static void main(String[] args) {
 		// 启用虚拟线程支持
 		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
@@ -48,7 +53,7 @@ public class MqttServerApp implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		VertxMqttServer vertxMqttServer = new VertxMqttServer(vertx, properties);
+		VertxMqttServer vertxMqttServer = new VertxMqttServer(vertx, properties, reactiveMessageHandlers);
 		vertxMqttServer.start().subscribeOn(Schedulers.boundedElastic()).subscribe();
 		vertxMqttServer.publish().subscribeOn(Schedulers.boundedElastic()).subscribe();
 		Runtime.getRuntime()

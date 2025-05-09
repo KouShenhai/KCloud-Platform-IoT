@@ -56,7 +56,7 @@ spring:
   kafka:
     bootstrap-servers: kafka:9092
     consumer:
-      group-id: laokou_trace_consumer_group
+      group-id: ${spring.application.name}
       # 禁用自动提交（按周期）已消费offset
       enable-auto-commit: true
       # 单次poll()调用返回的记录数

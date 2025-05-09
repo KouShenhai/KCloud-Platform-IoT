@@ -52,7 +52,7 @@ class VertxMqttClientTest {
 		properties.setUsername("emqx");
 		properties.setPassword("laokou123");
 		properties.setClientId("test-client-1");
-		properties.setTopics(Map.of("/test-topic-1/#", 1));
+		properties.setTopics(Map.of("$share/test-topic-1/#", 1));
 		VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx, virtualThreadExecutor, properties,
 				messageHandlers);
 		Assertions.assertDoesNotThrow(vertxMqttClient::open);

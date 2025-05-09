@@ -23,6 +23,8 @@ import io.vertx.mqtt.*;
 import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.network.mqtt.client.handler.MqttMessage;
+import org.laokou.common.network.mqtt.client.handler.ReactiveMessageHandler;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
@@ -30,6 +32,7 @@ import javax.net.ssl.SSLServerSocketFactory;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -48,11 +51,15 @@ public final class VertxMqttServer {
 
 	private final MqttServerProperties properties;
 
+	private final List<ReactiveMessageHandler> reactiveMessageHandlers;
+
 	private volatile boolean isClosed = false;
 
-	public VertxMqttServer(final Vertx vertx, final MqttServerProperties properties) {
+	public VertxMqttServer(final Vertx vertx, final MqttServerProperties properties,
+			List<ReactiveMessageHandler> reactiveMessageHandlers) {
 		this.properties = properties;
 		this.vertx = vertx;
+		this.reactiveMessageHandlers = reactiveMessageHandlers;
 	}
 
 	public Flux<MqttServer> start() {
@@ -99,10 +106,17 @@ public final class VertxMqttServer {
 		}));
 	}
 
-	public Flux<MqttPublishMessage> publish() {
-		return messageSink.asFlux()
-			.doOnNext(message -> log.info("【Vertx-MQTT-Server】 => MQTT服务接收到消息，主题：{}，内容：{}", message.topicName(),
-					message.payload().toString()));
+	public Flux<Boolean> publish() {
+		return messageSink.asFlux().flatMap(message -> {
+			// @formatter:off
+				// log.info("【Vertx-MQTT-Server】 => MQTT服务接收到消息，主题：{}，内容：{}", message.topicName(), message.payload().toString());
+				// @formatter:on
+			return Flux
+				.fromStream(reactiveMessageHandlers.stream()
+					.filter(reactiveMessageHandler -> reactiveMessageHandler.isSubscribe(message.topicName())))
+				.flatMap(reactiveMessageHandler -> reactiveMessageHandler
+					.handle(new MqttMessage(message.payload(), message.topicName())));
+		});
 	}
 
 	private int detectAvailablePort(String host) {
