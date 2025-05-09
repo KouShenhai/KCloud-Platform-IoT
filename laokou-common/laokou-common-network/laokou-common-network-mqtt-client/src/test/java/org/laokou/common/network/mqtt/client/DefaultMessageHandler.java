@@ -47,7 +47,7 @@ class DefaultMessageHandler implements MessageHandler {
 		try {
 			log.info("【Vertx-MQTT-Client】 => 接收到MQTT消息，topic: {}, message: {}", mqttMessage.getTopic(),
 					mqttMessage.getPayload().toString(StandardCharsets.UTF_8));
-			defaultKafkaTemplate.send(mqttMessage.getTopic(),
+			defaultKafkaTemplate.send("laokou-test",
 					mqttMessage.getPayload().toString(StandardCharsets.UTF_8));
 		}
 		catch (DuplicateKeyException e) {
