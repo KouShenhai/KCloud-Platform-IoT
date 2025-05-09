@@ -21,6 +21,7 @@ import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.core.config.SpringTaskExecutorConfig;
 import org.laokou.common.network.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.network.mqtt.client.config.VertxConfig;
 import org.laokou.common.network.mqtt.client.config.VertxMqttClient;
@@ -30,19 +31,22 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
  */
 @SpringBootTest
 @RequiredArgsConstructor
-@ContextConfiguration(classes = { DefaultMessageHandler.class, VertxConfig.class })
+@ContextConfiguration(classes = { DefaultMessageHandler.class, VertxConfig.class, SpringTaskExecutorConfig.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class VertxMqttClientTest {
 
 	private final List<MessageHandler> messageHandlers;
 
 	private final Vertx vertx;
+
+	private final ExecutorService virtualThreadExecutor;
 
 	@Test
 	void testMqttClient() throws InterruptedException {
@@ -53,7 +57,8 @@ class VertxMqttClientTest {
 		properties.setPassword("laokou123");
 		properties.setClientId("test-client-1");
 		properties.setTopics(Map.of("/test-topic-1/#", 1));
-		VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx, properties, messageHandlers);
+		VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx, virtualThreadExecutor, properties,
+				messageHandlers);
 		Assertions.assertDoesNotThrow(vertxMqttClient::open);
 		Thread.sleep(500);
 		Assertions.assertDoesNotThrow(() -> vertxMqttClient.publish("/test-topic-1/test", 1, "test", false, false));

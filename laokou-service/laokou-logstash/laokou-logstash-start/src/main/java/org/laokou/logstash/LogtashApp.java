@@ -20,7 +20,6 @@ package org.laokou.logstash;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.logstash.consumer.handler.TraceLogHandler;
 import org.springframework.boot.CommandLineRunner;
@@ -53,6 +52,8 @@ public class LogtashApp implements CommandLineRunner {
 
 	private final TraceLogHandler tracingLogConsumer;
 
+	private final ExecutorService virtualThreadExecutor;
+
 	// @formatter:off
     /// ```properties
     /// -Dserver.port=10003
@@ -77,9 +78,7 @@ public class LogtashApp implements CommandLineRunner {
 	@Override
     public void run(String... args)  {
 		// 监听消息
-		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
-			virtualTaskExecutor.execute(this::listenMessages);
-		}
+		virtualThreadExecutor.execute(this::listenMessages);
     }
     // @formatter:on
 

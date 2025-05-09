@@ -16,6 +16,7 @@
  */
 
 package org.laokou.mqtt.server;
+
 import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
 import org.laokou.mqtt.server.config.MqttServerProperties;
@@ -48,12 +49,11 @@ public class MqttServerApp implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 		VertxMqttServer vertxMqttServer = new VertxMqttServer(vertx, properties);
-		vertxMqttServer.start()
-			.subscribeOn(Schedulers.boundedElastic()).subscribe();
-		vertxMqttServer.publish()
-			.subscribeOn(Schedulers.boundedElastic()).subscribe();
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> vertxMqttServer.stop()
-			.subscribeOn(Schedulers.boundedElastic()).subscribe()));
+		vertxMqttServer.start().subscribeOn(Schedulers.boundedElastic()).subscribe();
+		vertxMqttServer.publish().subscribeOn(Schedulers.boundedElastic()).subscribe();
+		Runtime.getRuntime()
+			.addShutdownHook(
+					new Thread(() -> vertxMqttServer.stop().subscribeOn(Schedulers.boundedElastic()).subscribe()));
 	}
 
 }

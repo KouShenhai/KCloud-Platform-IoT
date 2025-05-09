@@ -25,7 +25,6 @@ import io.vertx.mqtt.MqttClientOptions;
 import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.CollectionUtils;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.network.mqtt.client.handler.MessageHandler;
@@ -55,6 +54,8 @@ public final class VertxMqttClient {
 
 	private final Vertx vertx;
 
+	private final ExecutorService virtualThreadExecutor;
+
 	private final MqttClientProperties mqttClientProperties;
 
 	private final List<MessageHandler> messageHandlers;
@@ -67,9 +68,10 @@ public final class VertxMqttClient {
 
 	private final AtomicBoolean isReconnected = new AtomicBoolean(true);
 
-	public VertxMqttClient(final Vertx vertx, final MqttClientProperties mqttClientProperties,
-			final List<MessageHandler> messageHandlers) {
+	public VertxMqttClient(final Vertx vertx, ExecutorService virtualThreadExecutor,
+			final MqttClientProperties mqttClientProperties, final List<MessageHandler> messageHandlers) {
 		this.vertx = vertx;
+		this.virtualThreadExecutor = virtualThreadExecutor;
 		this.mqttClientProperties = mqttClientProperties;
 		this.mqttClient = MqttClient.create(vertx, getOptions());
 		this.messageHandlers = messageHandlers;
@@ -133,12 +135,15 @@ public final class VertxMqttClient {
 
 	private void reconnect() {
 		if (isReconnected.get()) {
-			log.info("【Vertx-MQTT-Client】 => MQTT尝试重连");
-			vertx.setTimer(mqttClientProperties.getReconnectInterval(), handler -> {
-				try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
-					virtualTaskExecutor.execute(this::open);
-				}
-			});
+			try {
+				log.info("【Vertx-MQTT-Client】 => MQTT尝试重连");
+				vertx.setTimer(mqttClientProperties.getReconnectInterval(),
+						handler -> virtualThreadExecutor.execute(this::open));
+			}
+			catch (Exception e) {
+				Thread.currentThread().interrupt();
+				reconnect();
+			}
 		}
 	}
 
@@ -158,13 +163,11 @@ public final class VertxMqttClient {
 	}
 
 	private void resubscribe() {
-		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
-			if (isConnected.get() || mqttClient.isConnected()) {
-				virtualTaskExecutor.execute(this::subscribe);
-			}
-			if (isLoaded.compareAndSet(false, true)) {
-				virtualTaskExecutor.execute(this::consume);
-			}
+		if (isConnected.get() || mqttClient.isConnected()) {
+			virtualThreadExecutor.execute(this::subscribe);
+		}
+		if (isLoaded.compareAndSet(false, true)) {
+			virtualThreadExecutor.execute(this::consume);
 		}
 	}
 

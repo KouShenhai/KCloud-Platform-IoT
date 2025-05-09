@@ -19,6 +19,7 @@ package org.laokou.mqtt.server.config;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
+import io.vertx.core.impl.cpu.CpuCoreSensor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -33,11 +34,14 @@ public class VertxConfig {
 	@Bean(destroyMethod = "close")
 	public Vertx vertx() {
 		VertxOptions vertxOptions = new VertxOptions();
-		vertxOptions.setMaxEventLoopExecuteTime(60);
-		vertxOptions.setMaxWorkerExecuteTime(60);
+		vertxOptions.setMaxEventLoopExecuteTime(30);
+		vertxOptions.setWorkerPoolSize(40);
+		vertxOptions.setMaxWorkerExecuteTime(30);
 		vertxOptions.setMaxEventLoopExecuteTimeUnit(TimeUnit.SECONDS);
 		vertxOptions.setMaxWorkerExecuteTimeUnit(TimeUnit.SECONDS);
 		vertxOptions.setPreferNativeTransport(true);
+		vertxOptions.setInternalBlockingPoolSize(40);
+		vertxOptions.setEventLoopPoolSize(Math.max(32, 2 * CpuCoreSensor.availableProcessors()));
 		return Vertx.vertx(vertxOptions);
 	}
 

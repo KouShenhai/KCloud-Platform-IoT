@@ -28,9 +28,9 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 class AppTest {
 
 	public static void main(String[] args) {
-		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
 		// 启用虚拟线程支持
 		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
+		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }
