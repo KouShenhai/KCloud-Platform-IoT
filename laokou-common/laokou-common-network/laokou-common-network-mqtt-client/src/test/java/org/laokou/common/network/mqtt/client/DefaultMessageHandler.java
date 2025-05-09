@@ -17,14 +17,14 @@
 
 package org.laokou.common.network.mqtt.client;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.kafka.template.DefaultKafkaTemplate;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.MessageHandler;
 import org.laokou.common.network.mqtt.client.util.TopicUtils;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -32,18 +32,22 @@ import java.nio.charset.StandardCharsets;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 class DefaultMessageHandler implements MessageHandler {
+
+	private final DefaultKafkaTemplate defaultKafkaTemplate;
 
 	@Override
 	public boolean isSubscribe(String topic) {
 		return TopicUtils.match("/test-topic-1/#", topic);
 	}
 
-	@Async
 	@Override
 	public void handle(MqttMessage mqttMessage) {
 		try {
 			log.info("【Vertx-MQTT-Client】 => 接收到MQTT消息，topic: {}, message: {}", mqttMessage.getTopic(),
+					mqttMessage.getPayload().toString(StandardCharsets.UTF_8));
+			defaultKafkaTemplate.send(mqttMessage.getTopic(),
 					mqttMessage.getPayload().toString(StandardCharsets.UTF_8));
 		}
 		catch (DuplicateKeyException e) {

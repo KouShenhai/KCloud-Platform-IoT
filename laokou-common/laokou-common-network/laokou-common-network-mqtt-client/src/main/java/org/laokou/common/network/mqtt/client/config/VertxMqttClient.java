@@ -32,9 +32,6 @@ import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import reactor.core.Disposable;
 import reactor.core.publisher.Sinks;
 import reactor.core.scheduler.Schedulers;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -60,13 +57,13 @@ public final class VertxMqttClient {
 
 	private final List<MessageHandler> messageHandlers;
 
-	private final List<Disposable> disposables;
-
 	private final AtomicBoolean isConnected = new AtomicBoolean(false);
 
 	private final AtomicBoolean isLoaded = new AtomicBoolean(false);
 
 	private final AtomicBoolean isReconnected = new AtomicBoolean(true);
+
+	private volatile Disposable consumeDisposable;
 
 	public VertxMqttClient(final Vertx vertx, ExecutorService virtualThreadExecutor,
 			final MqttClientProperties mqttClientProperties, final List<MessageHandler> messageHandlers) {
@@ -75,7 +72,6 @@ public final class VertxMqttClient {
 		this.mqttClientProperties = mqttClientProperties;
 		this.mqttClient = MqttClient.create(vertx, getOptions());
 		this.messageHandlers = messageHandlers;
-		this.disposables = Collections.synchronizedList(new ArrayList<>());
 	}
 
 	public void open() {
@@ -172,7 +168,7 @@ public final class VertxMqttClient {
 	}
 
 	private void consume() {
-		Disposable disposable = messageSink.asFlux().doOnNext(mqttPublishMessage -> {
+		consumeDisposable = messageSink.asFlux().doOnNext(mqttPublishMessage -> {
 			String topic = mqttPublishMessage.topicName();
 			log.info("【Vertx-MQTT-Client】 => MQTT接收到消息，Topic：{}", topic);
 			for (MessageHandler messageHandler : messageHandlers) {
@@ -181,24 +177,24 @@ public final class VertxMqttClient {
 				}
 			}
 		}).subscribeOn(Schedulers.boundedElastic()).subscribe();
-		disposables.add(disposable);
 	}
 
-	private void disposable() {
-		for (Disposable disposable : disposables) {
-			if (ObjectUtils.isNotNull(disposable) && !disposable.isDisposed()) {
-				disposable.dispose();
-			}
+	private void disposable(Disposable disposable) {
+		if (ObjectUtils.isNotNull(disposable) && !disposable.isDisposed()) {
+			disposable.dispose();
 		}
+	}
+
+	private void disposables() {
+		disposable(consumeDisposable);
 	}
 
 	private void disconnect() {
 		isReconnected.set(false);
 		mqttClient.disconnect(disconnectResult -> {
 			if (disconnectResult.succeeded()) {
-				disposable();
 				log.info("【Vertx-MQTT-Client】 => MQTT断开连接成功");
-				disposables.clear();
+				disposables();
 			}
 			else {
 				Throwable ex = disconnectResult.cause();

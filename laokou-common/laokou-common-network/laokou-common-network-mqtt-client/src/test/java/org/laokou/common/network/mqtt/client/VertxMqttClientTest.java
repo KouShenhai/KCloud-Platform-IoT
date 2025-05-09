@@ -21,13 +21,10 @@ import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.config.SpringTaskExecutorConfig;
 import org.laokou.common.network.mqtt.client.config.MqttClientProperties;
-import org.laokou.common.network.mqtt.client.config.VertxConfig;
 import org.laokou.common.network.mqtt.client.config.VertxMqttClient;
 import org.laokou.common.network.mqtt.client.handler.MessageHandler;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +35,6 @@ import java.util.concurrent.ExecutorService;
  */
 @SpringBootTest
 @RequiredArgsConstructor
-@ContextConfiguration(classes = { DefaultMessageHandler.class, VertxConfig.class, SpringTaskExecutorConfig.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class VertxMqttClientTest {
 

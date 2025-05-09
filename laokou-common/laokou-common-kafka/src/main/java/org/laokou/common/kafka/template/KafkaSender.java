@@ -17,13 +17,13 @@
 
 package org.laokou.common.kafka.template;
 
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
 /**
  * @author laokou
  */
 public interface KafkaSender {
 
-	Mono<Void> send(String topic, String payload);
+	Flux<Boolean> send(String topic, String payload);
 
 }

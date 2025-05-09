@@ -35,7 +35,7 @@
 		"navigationBarTitleText": "老寇IoT云平台",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
-        "enablePullDownRefresh": true,
+    "enablePullDownRefresh": true,
 		"backgroundTextStyle": "light",
 		"backgroundColorTop": "#d0d3da"
 	},

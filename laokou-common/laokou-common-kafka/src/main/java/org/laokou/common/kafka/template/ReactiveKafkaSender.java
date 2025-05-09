@@ -18,6 +18,9 @@
 package org.laokou.common.kafka.template;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.util.ObjectUtils;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.kafka.sender.SenderRecord;
 import reactor.kafka.sender.internals.DefaultKafkaSender;
@@ -25,14 +28,25 @@ import reactor.kafka.sender.internals.DefaultKafkaSender;
 /**
  * @author laokou
  */
+@Slf4j
 @RequiredArgsConstructor
 public class ReactiveKafkaSender implements KafkaSender {
 
 	private final DefaultKafkaSender<String, String> defaultKafkaSender;
 
 	@Override
-	public Mono<Void> send(String topic, String payload) {
-		return defaultKafkaSender.send(Mono.just(SenderRecord.create(topic, null, null, null, payload, null))).then();
+	public Flux<Boolean> send(String topic, String payload) {
+		return defaultKafkaSender.send(Mono.just(SenderRecord.create(topic, null, null, null, payload, null)))
+			.map(result -> {
+				Exception exception = result.exception();
+				if (ObjectUtils.isNotNull(exception)) {
+					log.error("【Kafka】 => 发送消息失败，错误信息：{}", exception.getMessage(), exception);
+					return false;
+				}
+				else {
+					return true;
+				}
+			});
 	}
 
 }

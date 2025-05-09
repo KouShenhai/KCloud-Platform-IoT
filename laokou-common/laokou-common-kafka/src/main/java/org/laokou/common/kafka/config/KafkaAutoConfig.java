@@ -24,10 +24,10 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.laokou.common.kafka.template.DefaultKafkaTemplate;
 import org.laokou.common.kafka.template.KafkaSender;
 import org.laokou.common.kafka.template.ReactiveKafkaSender;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaTemplate;
 import reactor.kafka.receiver.ReceiverOptions;
 import reactor.kafka.sender.SenderOptions;
@@ -39,7 +39,7 @@ import java.util.Map;
 /**
  * @author laokou
  */
-@AutoConfiguration
+@Configuration
 public class KafkaAutoConfig {
 
 	@Bean("defaultKafkaTemplate")
@@ -48,7 +48,7 @@ public class KafkaAutoConfig {
 		return new DefaultKafkaTemplate(kafkaTemplate);
 	}
 
-	@Bean("reactiveKafkaSender")
+	@Bean(value = "reactiveKafkaSender")
 	@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
 	public KafkaSender reactiveKafkaSender(SenderOptions<String, String> senderOptions) {
 		return new ReactiveKafkaSender(

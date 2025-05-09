@@ -54,7 +54,7 @@ public class TraceLogLokiStorage extends AbstractTraceLogStorage {
 				.toBodilessEntity()
 				.then())
 			.onErrorResume(e -> {
-				log.error("分布式链路写入失败，错误信息：{}", e.getMessage(), e);
+				log.error("【Loki-Trace-Log】 => 分布式链路写入失败，错误信息：{}", e.getMessage(), e);
 				return Mono.error(e);
 			});
 	}
