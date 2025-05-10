@@ -145,6 +145,7 @@ module.exports = {
 					{
 						text: '文章', link: '/pages/330c83/', items: [
 							{text: '物联网之对接MQTT最佳实践', link: '/pages/330c83/'},
+							{text: '物联网之使用Vertx实现MQTT-Server最佳实践【响应式】', link: '/pages/ca4ed7/'},
 						]
 					},
 				]
