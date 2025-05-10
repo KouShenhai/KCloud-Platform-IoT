@@ -29,6 +29,7 @@ import static org.laokou.common.network.mqtt.client.constant.MqConstants.LAOKOU_
 
 /**
  * 属性回复消息处理器.
+ *
  * @author laokou
  */
 @Component

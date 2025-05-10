@@ -21,9 +21,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.algorithm.template.Algorithm;
-import org.laokou.common.algorithm.template.select.HashSelectAlgorithm;
-import org.laokou.common.algorithm.template.select.PollSelectAlgorithm;
-import org.laokou.common.algorithm.template.select.RandomSelectAlgorithm;
+import org.laokou.common.algorithm.template.select.HashAlgorithm;
+import org.laokou.common.algorithm.template.select.RoundRobinAlgorithm;
+import org.laokou.common.algorithm.template.select.RandomAlgorithm;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
@@ -40,13 +40,13 @@ class AlgorithmTest {
 	void testApi() {
 		List<OssApi> ossApis = List.of(new TencentcloudOssApi(), new AliyunOssApi());
 		// 负载均衡【哈希算法】
-		Algorithm algorithm = new HashSelectAlgorithm();
+		Algorithm algorithm = new HashAlgorithm();
 		algorithm.select(ossApis, new Random().nextInt(10)).upload();
 		// 负载均衡【轮询算法】
-		algorithm = new PollSelectAlgorithm();
+		algorithm = new RoundRobinAlgorithm();
 		algorithm.select(ossApis, "").upload();
 		// 负载均衡【随机算法】
-		algorithm = new RandomSelectAlgorithm();
+		algorithm = new RandomAlgorithm();
 		algorithm.select(ossApis, "").upload();
 	}
 

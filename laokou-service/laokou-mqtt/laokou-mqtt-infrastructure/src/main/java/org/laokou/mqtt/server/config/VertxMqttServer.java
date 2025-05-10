@@ -17,22 +17,16 @@
 
 package org.laokou.mqtt.server.config;
 
-import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
-import com.alibaba.nacos.api.exception.NacosException;
-import com.alibaba.nacos.api.naming.pojo.Instance;
 import io.netty.handler.codec.mqtt.MqttConnectReturnCode;
 import io.vertx.core.Vertx;
 import io.vertx.core.impl.cpu.CpuCoreSensor;
 import io.vertx.mqtt.*;
 import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.util.SpringUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.nacos.util.NamingUtils;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.ReactiveMessageHandler;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 
 import javax.net.ssl.SSLServerSocketFactory;
@@ -40,10 +34,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-
-import static org.laokou.common.nacos.constant.Constants.VERSION;
 
 /**
  * @author laokou
@@ -57,31 +48,19 @@ public final class VertxMqttServer {
 
 	private volatile Flux<MqttServer> mqttServer;
 
-	private volatile Flux<MqttServerOptions> mqttServerOptions;
-
 	private final Vertx vertx;
 
 	private final MqttServerProperties properties;
 
 	private final List<ReactiveMessageHandler> reactiveMessageHandlers;
 
-	private final NamingUtils namingUtils;
-
-	private final SpringUtils springUtils;
-
-	private final NacosDiscoveryProperties nacosDiscoveryProperties;
-
 	private volatile boolean isClosed = false;
 
 	public VertxMqttServer(final Vertx vertx, final MqttServerProperties properties,
-			List<ReactiveMessageHandler> reactiveMessageHandlers, NamingUtils namingUtils, SpringUtils springUtils,
-			NacosDiscoveryProperties nacosDiscoveryProperties) {
+			List<ReactiveMessageHandler> reactiveMessageHandlers) {
 		this.properties = properties;
 		this.vertx = vertx;
 		this.reactiveMessageHandlers = reactiveMessageHandlers;
-		this.namingUtils = namingUtils;
-		this.springUtils = springUtils;
-		this.nacosDiscoveryProperties = nacosDiscoveryProperties;
 	}
 
 	public Flux<MqttServer> start() {
@@ -107,6 +86,8 @@ public final class VertxMqttServer {
 				if (asyncResult.succeeded()) {
 					log.info("【Vertx-MQTT-Server】 => MQTT服务启动成功，主机：{}，端口：{}", mqttServerOption.getHost(),
 							mqttServerOption.getPort());
+					// 写入缓存
+					PortCache.add(mqttServerOption.getPort());
 				}
 				else {
 					log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，主机：{}，端口：{}，错误信息：{}", mqttServerOption.getHost(),
@@ -141,48 +122,6 @@ public final class VertxMqttServer {
 		});
 	}
 
-	public Mono<Void> register() {
-		return mqttServerOptions.map(this::getInstance).collectList().flatMap(instances -> {
-			try {
-				namingUtils.batchRegisterInstance(springUtils.getServiceId(), nacosDiscoveryProperties.getGroup(),
-						instances);
-				return Mono.empty();
-			}
-			catch (NacosException e) {
-				log.error("【Vertx-MQTT-Server】 => 注册服务失败，错误信息：{}", e.getMessage(), e);
-				return Mono.error(e);
-			}
-		});
-	}
-
-	public Mono<Void> deregister() {
-		return mqttServerOptions.map(this::getInstance).collectList().flatMap(instances -> {
-			try {
-				namingUtils.batchDeregisterInstance(springUtils.getServiceId(), nacosDiscoveryProperties.getGroup(),
-						instances);
-				return Mono.empty();
-			}
-			catch (NacosException e) {
-				log.error("【Vertx-MQTT-Server】 => 注销服务失败，错误信息：{}", e.getMessage(), e);
-				return Mono.error(e);
-			}
-		});
-	}
-
-	private Instance getInstance(MqttServerOptions mqttServerOption) {
-		Instance instance = new Instance();
-		instance.setIp(mqttServerOption.getHost());
-		instance.setPort(mqttServerOption.getPort());
-		instance.setEnabled(true);
-		instance.setWeight(1.0);
-		instance.setHealthy(true);
-		instance.setEphemeral(true);
-		instance.setClusterName(nacosDiscoveryProperties.getClusterName());
-		instance.setServiceName(springUtils.getServiceId());
-		instance.setMetadata(Map.of(VERSION, springUtils.getServiceVersion()));
-		return instance;
-	}
-
 	private int detectAvailablePort(String host) {
 		try (ServerSocket socket = SSLServerSocketFactory.getDefault().createServerSocket()) {
 			socket.bind(new InetSocketAddress(host, properties.getPort()));
@@ -194,8 +133,7 @@ public final class VertxMqttServer {
 	}
 
 	private Flux<MqttServerOptions> getMqttServerOptions() {
-		return mqttServerOptions = Flux
-			.range(1, Math.max(properties.getThreadSize(), 2 * CpuCoreSensor.availableProcessors()))
+		return Flux.range(1, Math.max(properties.getThreadSize(), CpuCoreSensor.availableProcessors()))
 			.map(item -> getMqttServerOption());
 	}
 

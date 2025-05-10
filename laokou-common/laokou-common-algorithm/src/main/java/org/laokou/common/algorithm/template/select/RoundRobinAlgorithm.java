@@ -17,13 +17,34 @@
 
 package org.laokou.common.algorithm.template.select;
 
-import org.laokou.common.algorithm.template.Algorithm;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 负载均衡算法抽象.
+ * 负载均衡-轮询算法.
  *
  * @author laokou
  */
-public abstract class AbstractSelectAlgorithm implements Algorithm {
+public class RoundRobinAlgorithm extends AbstractAlgorithm {
+
+	/**
+	 * 自增序列.
+	 */
+	private final AtomicInteger atomic = new AtomicInteger(-1);
+
+	/**
+	 * 轮询算法.
+	 * @param list 集合
+	 * @param arg 参数
+	 * @param <T> 泛型
+	 * @return 实例
+	 */
+	@Override
+	public <T> T select(List<T> list, Object arg) {
+		if (atomic.incrementAndGet() == list.size()) {
+			atomic.set(0);
+		}
+		return list.get(atomic.get());
+	}
 
 }

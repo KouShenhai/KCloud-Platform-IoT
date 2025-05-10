@@ -15,15 +15,15 @@
  *
  */
 
-package org.laokou.common.trace.aop;
+package org.laokou.mqtt.server.command.query;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.trace.util.TraceUtils;
+import org.laokou.mqtt.server.config.PortCache;
+import org.laokou.mqtt.server.dto.MqttServerLoadbalancerGetQry;
+import org.laokou.mqtt.server.dto.clientobject.InstanceCO;
+import org.laokou.mqtt.server.model.LoadbalancerTypeEnum;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -31,29 +31,15 @@ import reactor.core.publisher.Mono;
  * @author laokou
  */
 @Slf4j
-@Aspect
 @Component
 @RequiredArgsConstructor
-public class TraceLogAop {
+public class MqttServerLoadbalancerGetQryExe {
 
-	private final TraceUtils traceUtils;
-
-	@Around("@annotation(org.laokou.common.trace.annotation.TraceLog)")
-	public Object doAround(ProceedingJoinPoint point) throws Throwable {
-		Object proceed = point.proceed();
-		if (proceed instanceof Mono<?> mono) {
-			return mono.map(this::rewrite);
-		}
-		return rewrite(proceed);
-	}
-
-	private Object rewrite(Object proceed) {
-		if (proceed instanceof Result<?> result) {
-			result.setTraceId(traceUtils.getTraceId());
-			result.setSpanId(traceUtils.getSpanId());
-			return result;
-		}
-		return proceed;
+	public Mono<Result<InstanceCO>> execute(MqttServerLoadbalancerGetQry qry) {
+		return qry.getType()
+			.map(LoadbalancerTypeEnum::getByCode)
+			.map(loadbalancerTypeEnum -> Result.ok(new InstanceCO(System.getProperty("host", "0.0.0.0"),
+					loadbalancerTypeEnum.getAlgorithm().select(PortCache.get(), qry))));
 	}
 
 }

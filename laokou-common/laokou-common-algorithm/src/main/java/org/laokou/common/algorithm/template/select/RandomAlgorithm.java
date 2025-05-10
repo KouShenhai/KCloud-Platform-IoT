@@ -18,16 +18,22 @@
 package org.laokou.common.algorithm.template.select;
 
 import java.util.List;
+import java.util.Random;
 
 /**
- * 负载均衡-哈希算法.
+ * 负载均衡-随机算法.
  *
  * @author laokou
  */
-public class HashSelectAlgorithm extends AbstractSelectAlgorithm {
+public class RandomAlgorithm extends AbstractAlgorithm {
 
 	/**
-	 * 哈希算法.
+	 * 数字随机生成器.
+	 */
+	private final Random RANDOM = new Random(System.currentTimeMillis());
+
+	/**
+	 * 随机算法.
 	 * @param list 集合
 	 * @param arg 参数
 	 * @param <T> 泛型
@@ -35,10 +41,7 @@ public class HashSelectAlgorithm extends AbstractSelectAlgorithm {
 	 */
 	@Override
 	public <T> T select(List<T> list, Object arg) {
-		int value = arg.hashCode() % list.size();
-		if (value < 0) {
-			value = Math.abs(value);
-		}
+		int value = this.RANDOM.nextInt(list.size());
 		return list.get(value);
 	}
 

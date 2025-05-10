@@ -15,34 +15,18 @@
  *
  */
 
-package org.laokou.common.algorithm.template.select;
+package org.laokou.mqtt.server.api;
 
-import java.util.List;
-import java.util.Random;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.mqtt.server.dto.MqttServerLoadbalancerGetQry;
+import org.laokou.mqtt.server.dto.clientobject.InstanceCO;
+import reactor.core.publisher.Mono;
 
 /**
- * 负载均衡-随机算法.
- *
  * @author laokou
  */
-public class RandomSelectAlgorithm extends AbstractSelectAlgorithm {
+public interface MqttServerServiceI {
 
-	/**
-	 * 数字随机生成器.
-	 */
-	private final Random RANDOM = new Random(System.currentTimeMillis());
-
-	/**
-	 * 随机算法.
-	 * @param list 集合
-	 * @param arg 参数
-	 * @param <T> 泛型
-	 * @return 实例
-	 */
-	@Override
-	public <T> T select(List<T> list, Object arg) {
-		int value = this.RANDOM.nextInt(list.size());
-		return list.get(value);
-	}
+	Mono<Result<InstanceCO>> loadbalancer(MqttServerLoadbalancerGetQry qry);
 
 }
