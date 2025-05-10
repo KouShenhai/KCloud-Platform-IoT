@@ -41,7 +41,7 @@ public class MqttServerProperties {
 
 	private int port = 0;
 
-	private int threadSize = 16;
+	private int threadSize = 32;
 
 	private int maxMessageSize = 8196;
 

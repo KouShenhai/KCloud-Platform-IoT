@@ -25,9 +25,10 @@ import org.laokou.common.network.mqtt.client.util.TopicUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
-import static org.laokou.common.network.mqtt.client.constant.MqConstants.LAOKOU_PROPERTY_REPLY;
+import static org.laokou.common.network.mqtt.client.constant.MqConstants.LAOKOU_MQTT_PROPERTY_REPLY;
 
 /**
+ * 属性回复消息处理器.
  * @author laokou
  */
 @Component
@@ -43,7 +44,7 @@ public class ReactivePropertyReplyMessageHandler implements ReactiveMessageHandl
 
 	@Override
 	public Flux<Boolean> handle(MqttMessage mqttMessage) {
-		return kafkaSender.send(LAOKOU_PROPERTY_REPLY, mqttMessage.getPayload().toString());
+		return kafkaSender.send(LAOKOU_MQTT_PROPERTY_REPLY, mqttMessage.getPayload().toString());
 	}
 
 }

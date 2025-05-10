@@ -44,11 +44,19 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-log4j2</artifactId>
+      <artifactId>laokou-common-network-mqtt-client</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-network-mqtt-client</artifactId>
+      <artifactId>laokou-common-nacos</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-trace</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-prometheus</artifactId>
     </dependency>
   </dependencies>
 

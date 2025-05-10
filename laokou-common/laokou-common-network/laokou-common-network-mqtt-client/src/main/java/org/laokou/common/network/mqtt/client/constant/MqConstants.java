@@ -25,8 +25,8 @@ public final class MqConstants {
 	private MqConstants() {
 	}
 
-	public static final String LAOKOU_PROPERTY_REPORT = "laokou_property_report";
+	public static final String LAOKOU_MQTT_PROPERTY_REPORT = "laokou_mqtt_property_report";
 
-	public static final String LAOKOU_PROPERTY_REPLY = "laokou_property_reply";
+	public static final String LAOKOU_MQTT_PROPERTY_REPLY = "laokou_mqtt_property_reply";
 
 }

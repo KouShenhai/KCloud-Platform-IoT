@@ -15,34 +15,16 @@
  *
  */
 
-package org.laokou.common.core.util;
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
-import static org.laokou.common.core.util.SpringContextUtils.APPLICATION_NAME;
-import static org.laokou.common.core.util.SpringContextUtils.DEFAULT_SERVICE_ID;
+package org.laokou.common.nacos.constant;
 
 /**
- * Spring工具类.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class SpringUtils {
+public final class Constants {
 
-	private final Environment environment;
-
-	/**
-	 * 获取服务ID.
-	 */
-	public String getServiceId() {
-		return environment.getProperty(APPLICATION_NAME, DEFAULT_SERVICE_ID);
+	private Constants() {
 	}
 
-	public String getServiceVersion() {
-		return "v3";
-	}
+	public static final String VERSION = "version";
 
 }

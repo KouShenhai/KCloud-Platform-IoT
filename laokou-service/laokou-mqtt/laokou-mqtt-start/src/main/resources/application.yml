@@ -1,5 +1,19 @@
 server:
-  port: 9995
+  port: ${SERVER_PORT:9995}
+  ssl:
+    # 开启证书
+    enabled: @SSL-ENABLED@
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: @SSL-ENABLED@
+  forward-headers-strategy: framework
   shutdown: graceful
 
 spring:
@@ -14,6 +28,7 @@ spring:
     auth: true
     username: vertx
     password: laokou123
+    thread-size: 8196
   kafka:
     bootstrap-servers: kafka:9092
     consumer:
@@ -50,3 +65,31 @@ spring:
       missing-topics-fatal: false
     admin:
       auto-create: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+    # 采样率 => 100%
+    sampling:
+      probability: 1
+  otlp:
+    tracing:
+      endpoint: http://otel-collector:4317/v1/traces
+      compression: gzip
+      timeout: 10s
+      transport: grpc
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    tags:
+      application: ${spring.application.name}
