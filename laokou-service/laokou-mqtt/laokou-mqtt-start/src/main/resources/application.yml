@@ -28,7 +28,7 @@ spring:
     auth: true
     username: vertx
     password: laokou123
-    thread-size: 8196
+    thread-size: 8192
   kafka:
     bootstrap-servers: kafka:9092
     consumer:

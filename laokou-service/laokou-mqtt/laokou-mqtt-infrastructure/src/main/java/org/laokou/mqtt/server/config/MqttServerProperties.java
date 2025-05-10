@@ -43,7 +43,7 @@ public class MqttServerProperties {
 
 	private int threadSize = 32;
 
-	private int maxMessageSize = 8196;
+	private int maxMessageSize = 8192;
 
 	private boolean isAutoClientId = true;
 
