@@ -15,29 +15,31 @@
  *
  */
 
-package org.laokou.mqtt.server.service;
+package org.laokou.iot;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.mqtt.server.api.MqttServerServiceI;
-import org.laokou.mqtt.server.command.query.MqttServerLoadbalancerGetQryExe;
-import org.laokou.mqtt.server.dto.MqttServerLoadbalancerGetQry;
-import org.laokou.mqtt.server.dto.clientobject.InstanceCO;
-import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.kafka.template.DefaultKafkaTemplate;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.TestConstructor;
 
 /**
  * @author laokou
  */
-@Service
+@SpringBootTest
+@Import({ TestConsumer.class })
 @RequiredArgsConstructor
-public class MqttServerServiceImpl implements MqttServerServiceI {
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+class IotTest {
 
-	private final MqttServerLoadbalancerGetQryExe mqttServerLoadbalancerGetQryExe;
+	private final DefaultKafkaTemplate defaultKafkaTemplate;
 
-	@Override
-	public Mono<Result<InstanceCO>> loadbalancer(MqttServerLoadbalancerGetQry qry) {
-		return mqttServerLoadbalancerGetQryExe.execute(qry);
+	@Test
+	void test() throws InterruptedException {
+		Assertions.assertNotNull(defaultKafkaTemplate);
+		Thread.sleep(30000);
 	}
 
 }
