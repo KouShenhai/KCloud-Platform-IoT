@@ -15,37 +15,42 @@
  *
  */
 
-package org.laokou.mqtt.server.handler;
+package org.laokou.common.network.mqtt.client;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.kafka.template.KafkaSender;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
-import org.laokou.common.network.mqtt.client.handler.ReactiveMessageHandler;
+import org.laokou.common.network.mqtt.client.handler.MqttMessageHandler;
 import org.laokou.common.network.mqtt.client.util.TopicUtils;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
-
-import static org.laokou.common.network.mqtt.client.constant.MqConstants.LAOKOU_MQTT_PROPERTY_UP;
+import java.nio.charset.StandardCharsets;
 
 /**
- * 属性上报消息处理.
- *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
-public class ReactivePropertyUpMessageHandler implements ReactiveMessageHandler {
-
-	private final KafkaSender kafkaSender;
+class DefaultMqttMessageHandler implements MqttMessageHandler {
 
 	@Override
 	public boolean isSubscribe(String topic) {
-		return TopicUtils.match("/+/+/property/up", topic);
+		return TopicUtils.match("/test-topic-1/#", topic);
 	}
 
 	@Override
-	public Flux<Boolean> handle(MqttMessage mqttMessage) {
-		return kafkaSender.send(LAOKOU_MQTT_PROPERTY_UP, mqttMessage.getPayload().toString());
+	public void handle(MqttMessage mqttMessage) {
+		try {
+			log.info("【Vertx-MQTT-Client】 => 接收到MQTT消息，topic: {}, message: {}", mqttMessage.getTopic(),
+					mqttMessage.getPayload().toString(StandardCharsets.UTF_8));
+		}
+		catch (DuplicateKeyException e) {
+			// 忽略重复键异常
+		}
+		catch (Exception e) {
+			log.error("【Vertx-MQTT-Client】 => MQTT消息处理失败，Topic：{}，错误信息：{}", mqttMessage.getTopic(), e.getMessage(), e);
+		}
 	}
 
 }

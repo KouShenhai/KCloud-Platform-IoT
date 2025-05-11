@@ -24,7 +24,7 @@ import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
-import org.laokou.common.network.mqtt.client.handler.ReactiveMessageHandler;
+import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 import java.util.List;
@@ -46,18 +46,18 @@ final class VertxMqttServer {
 
 	private final MqttServerProperties properties;
 
-	private final List<ReactiveMessageHandler> reactiveMessageHandlers;
+	private final List<ReactiveMqttMessageHandler> reactiveMqttMessageHandlers;
 
 	private volatile boolean isClosed = false;
 
-	public VertxMqttServer(final Vertx vertx, final MqttServerProperties properties,
-			List<ReactiveMessageHandler> reactiveMessageHandlers) {
+	VertxMqttServer(final Vertx vertx, final MqttServerProperties properties,
+			List<ReactiveMqttMessageHandler> reactiveMqttMessageHandlers) {
 		this.properties = properties;
 		this.vertx = vertx;
-		this.reactiveMessageHandlers = reactiveMessageHandlers;
+		this.reactiveMqttMessageHandlers = reactiveMqttMessageHandlers;
 	}
 
-	public Flux<MqttServer> start() {
+	Flux<MqttServer> start() {
 		return mqttServer = getMqttServerOptions().map(mqttServerOption -> MqttServer.create(vertx, mqttServerOption)
 			.exceptionHandler(
 					error -> log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，错误信息：{}", error.getMessage(), error))
@@ -68,6 +68,7 @@ final class VertxMqttServer {
 							log.info("【Vertx-MQTT-Server】 => MQTT客户端订阅主题：{}", topicSubscription.topicName());
 						}
 					})
+
 					.disconnectHandler(disconnect -> log.info("【Vertx-MQTT-Server】 => MQTT客户端主动断开连接"))
 					.pingHandler(ping -> log.info("【Vertx-MQTT-Server】 => MQTT客户端发送心跳"))
 					.publishHandler(messageSink::tryEmitNext)
@@ -88,7 +89,7 @@ final class VertxMqttServer {
 			}));
 	}
 
-	public Flux<MqttServer> stop() {
+	Flux<MqttServer> stop() {
 		isClosed = true;
 		return mqttServer.doOnNext(server -> server.close(completionHandler -> {
 			if (completionHandler.succeeded()) {
@@ -101,16 +102,16 @@ final class VertxMqttServer {
 		}));
 	}
 
-	public Flux<Boolean> publish() {
+	Flux<Boolean> publish() {
 		return messageSink.asFlux().flatMap(message -> {
 			// @formatter:off
 				// log.info("【Vertx-MQTT-Server】 => MQTT服务接收到消息，主题：{}，内容：{}", message.topicName(), message.payload().toString());
 				// @formatter:on
 			return Flux
-				.fromStream(reactiveMessageHandlers.stream()
+				.fromStream(reactiveMqttMessageHandlers.stream()
 					.filter(reactiveMessageHandler -> reactiveMessageHandler.isSubscribe(message.topicName())))
 				.flatMap(reactiveMessageHandler -> reactiveMessageHandler
-					.handle(new MqttMessage(message.payload(), message.topicName())));
+					.handle(new MqttMessage(message.payload(), message.topicName(), message.messageId())));
 		});
 	}
 

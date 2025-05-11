@@ -85,7 +85,6 @@
     <module>laokou-common-starrocks</module>
     <module>laokou-common-clickhouse</module>
     <module>laokou-common-shardingsphere</module>
-    <module>laokou-common-vertx-web</module>
     <module>laokou-common-cassandra</module>
     <module>laokou-common-hive</module>
     <module>laokou-common-hbase</module>
@@ -95,6 +94,7 @@
     <module>laokou-common-zookeeper</module>
     <module>laokou-common-ftp</module>
     <module>laokou-common-network</module>
+    <module>laokou-common-vertx</module>
   </modules>
 
 </project>

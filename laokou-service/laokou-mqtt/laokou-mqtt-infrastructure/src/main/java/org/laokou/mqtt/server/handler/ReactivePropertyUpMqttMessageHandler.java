@@ -15,42 +15,39 @@
  *
  */
 
-package org.laokou.common.network.mqtt.client;
+package org.laokou.mqtt.server.handler;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.kafka.template.KafkaSender;
+import org.laokou.common.network.mqtt.client.handler.Message;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
-import org.laokou.common.network.mqtt.client.handler.MessageHandler;
+import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
 import org.laokou.common.network.mqtt.client.util.TopicUtils;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
-import java.nio.charset.StandardCharsets;
+import reactor.core.publisher.Flux;
+
+import static org.laokou.common.network.mqtt.client.constant.MqConstants.LAOKOU_MQTT_PROPERTY_UP;
 
 /**
+ * 属性上报消息处理.
+ *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
-class DefaultMessageHandler implements MessageHandler {
+public class ReactivePropertyUpMqttMessageHandler implements ReactiveMqttMessageHandler {
+
+	private final KafkaSender kafkaSender;
 
 	@Override
 	public boolean isSubscribe(String topic) {
-		return TopicUtils.match("/test-topic-1/#", topic);
+		return TopicUtils.match("/+/+/property/up", topic);
 	}
 
 	@Override
-	public void handle(MqttMessage mqttMessage) {
-		try {
-			log.info("【Vertx-MQTT-Client】 => 接收到MQTT消息，topic: {}, message: {}", mqttMessage.getTopic(),
-					mqttMessage.getPayload().toString(StandardCharsets.UTF_8));
-		}
-		catch (DuplicateKeyException e) {
-			// 忽略重复键异常
-		}
-		catch (Exception e) {
-			log.error("【Vertx-MQTT-Client】 => MQTT消息处理失败，Topic：{}，错误信息：{}", mqttMessage.getTopic(), e.getMessage(), e);
-		}
+	public Flux<Boolean> handle(MqttMessage mqttMessage) {
+		return kafkaSender.send(LAOKOU_MQTT_PROPERTY_UP, JacksonUtils.toJsonStr(new Message(mqttMessage.getMessageId(), mqttMessage.getTopic(), mqttMessage.getPayload().toString())));
 	}
 
 }

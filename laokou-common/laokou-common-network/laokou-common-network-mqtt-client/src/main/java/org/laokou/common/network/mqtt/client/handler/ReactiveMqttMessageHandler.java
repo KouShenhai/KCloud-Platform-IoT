@@ -17,23 +17,15 @@
 
 package org.laokou.common.network.mqtt.client.handler;
 
-import io.vertx.core.buffer.Buffer;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import reactor.core.publisher.Flux;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class MqttMessage {
+public interface ReactiveMqttMessageHandler {
 
-	private Buffer payload;
+	boolean isSubscribe(String topic);
 
-	private String topic;
-
-	private int messageId;
+	Flux<Boolean> handle(MqttMessage mqttMessage);
 
 }

@@ -193,6 +193,16 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-autoconfigure</artifactId>
+        <version>${spring-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+        <version>${spring-boot.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-http-adapter</artifactId>
         <version>${laokou.version}</version>
@@ -273,6 +283,11 @@
         <version>${vertx.version}</version>
       </dependency>
       <dependency>
+        <groupId>io.vertx</groupId>
+        <artifactId>vertx-core</artifactId>
+        <version>${vertx.version}</version>
+      </dependency>
+      <dependency>
         <groupId>commons-net</groupId>
         <artifactId>commons-net</artifactId>
         <version>${commons-net.version}</version>
@@ -345,6 +360,11 @@
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-seata</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-vertx</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
@@ -970,11 +990,6 @@
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-common-hbase</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-vertx-web</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>

@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.network.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.network.mqtt.client.config.VertxMqttClient;
-import org.laokou.common.network.mqtt.client.handler.MessageHandler;
+import org.laokou.common.network.mqtt.client.handler.MqttMessageHandler;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 import java.util.List;
@@ -38,7 +38,7 @@ import java.util.concurrent.ExecutorService;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class VertxMqttClientTest {
 
-	private final List<MessageHandler> messageHandlers;
+	private final List<MqttMessageHandler> mqttMessageHandlers;
 
 	private final Vertx vertx;
 
@@ -54,7 +54,7 @@ class VertxMqttClientTest {
 		properties.setClientId("test-client-1");
 		properties.setTopics(Map.of("$share/test-topic-1/#", 1));
 		VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx, virtualThreadExecutor, properties,
-				messageHandlers);
+				mqttMessageHandlers);
 		Assertions.assertDoesNotThrow(vertxMqttClient::open);
 		Thread.sleep(500);
 		Assertions.assertDoesNotThrow(() -> vertxMqttClient.publish("/test-topic-1/test", 1, "test", false, false));

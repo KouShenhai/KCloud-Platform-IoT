@@ -15,14 +15,13 @@
  *
  */
 
-package org.laokou.mqtt.server;
+package org.laokou.http.server;
 
 import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
-import org.laokou.mqtt.server.config.MqttServerProperties;
-import org.laokou.mqtt.server.config.VertxMqttServerManager;
+import org.laokou.http.server.config.HttpServerProperties;
+import org.laokou.http.server.config.VertxHttpServerManager;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,7 +31,6 @@ import org.springframework.util.StopWatch;
 import reactor.core.publisher.Hooks;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -42,18 +40,16 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 @EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = "org.laokou")
-public class MqttServerApp implements CommandLineRunner {
+public class HttpServerApp implements CommandLineRunner {
 
 	private final Vertx vertx;
 
-	private final MqttServerProperties properties;
-
-	private final List<ReactiveMqttMessageHandler> reactiveMqttMessageHandlers;
+	private final HttpServerProperties properties;
 
 	private final ExecutorService virtualThreadExecutor;
 
 	public static void main(String[] args) throws UnknownHostException {
-		StopWatch stopWatch = new StopWatch("MqttServer应用程序");
+		StopWatch stopWatch = new StopWatch("HttpServer应用程序");
 		stopWatch.start();
 		String host = InetAddress.getLocalHost().getHostAddress();
 		System.setProperty("address", String.format("%s:%s", host, System.getProperty("server.port", "9995")));
@@ -63,7 +59,7 @@ public class MqttServerApp implements CommandLineRunner {
 		// 开启reactor的上下文传递
 		// https://spring.io/blog/2023/03/30/context-propagation-with-project-reactor-3-unified-bridging-between-reactive
 		Hooks.enableAutomaticContextPropagation();
-		new SpringApplicationBuilder(MqttServerApp.class).web(WebApplicationType.REACTIVE).run(args);
+		new SpringApplicationBuilder(HttpServerApp.class).web(WebApplicationType.REACTIVE).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
 	}
@@ -74,8 +70,7 @@ public class MqttServerApp implements CommandLineRunner {
 	}
 
 	private void listenMessage() {
-		VertxMqttServerManager.start(vertx, properties, reactiveMqttMessageHandlers);
-		Runtime.getRuntime().addShutdownHook(new Thread(VertxMqttServerManager::stop));
+		VertxHttpServerManager.start(vertx, properties);
 	}
 
 }

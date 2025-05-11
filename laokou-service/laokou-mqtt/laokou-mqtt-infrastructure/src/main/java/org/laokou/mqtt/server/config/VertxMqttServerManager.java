@@ -18,13 +18,9 @@
 package org.laokou.mqtt.server.config;
 
 import io.vertx.core.Vertx;
-import org.laokou.common.network.mqtt.client.handler.ReactiveMessageHandler;
-import reactor.core.Disposable;
+import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
 import reactor.core.scheduler.Schedulers;
-
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author laokou
@@ -33,39 +29,21 @@ public final class VertxMqttServerManager {
 
 	private volatile static VertxMqttServer vertxMqttServer;
 
-	private static final List<Disposable> DISPOSABLES = new CopyOnWriteArrayList<>();
-
 	private VertxMqttServerManager() {
 	}
 
 	public static void start(final Vertx vertx, final MqttServerProperties properties,
-			final List<ReactiveMessageHandler> reactiveMessageHandlers) {
-		vertxMqttServer = new VertxMqttServer(vertx, properties, reactiveMessageHandlers);
+			final List<ReactiveMqttMessageHandler> reactiveMqttMessageHandlers) {
+		vertxMqttServer = new VertxMqttServer(vertx, properties, reactiveMqttMessageHandlers);
 		// 启动服务
-		DISPOSABLES.add(vertxMqttServer.start().subscribeOn(Schedulers.boundedElastic()).subscribe());
+		vertxMqttServer.start().subscribeOn(Schedulers.boundedElastic()).subscribe();
 		// 推送数据
-		DISPOSABLES.add(vertxMqttServer.publish().subscribeOn(Schedulers.boundedElastic()).subscribe());
+		vertxMqttServer.publish().subscribeOn(Schedulers.boundedElastic()).subscribe();
 	}
 
 	public static void stop() {
 		// 停止服务
-		DISPOSABLES.add(vertxMqttServer.stop().subscribeOn(Schedulers.boundedElastic()).subscribe());
-		try {
-			Thread.sleep(3000);
-			// 取消订阅
-			disposes();
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-			throw new RuntimeException(e);
-		}
-	}
-
-	private static void disposes() {
-		for (Disposable disposable : DISPOSABLES) {
-			if (!Objects.isNull(disposable) && !disposable.isDisposed()) {
-				disposable.dispose();
-			}
-		}
+		vertxMqttServer.stop().subscribeOn(Schedulers.boundedElastic()).subscribe();
 	}
 
 }

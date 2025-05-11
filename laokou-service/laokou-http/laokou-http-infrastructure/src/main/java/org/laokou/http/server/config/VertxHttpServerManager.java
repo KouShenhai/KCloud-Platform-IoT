@@ -15,25 +15,20 @@
  *
  */
 
-package org.laokou.common.network.mqtt.client.handler;
+package org.laokou.http.server.config;
 
-import io.vertx.core.buffer.Buffer;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import io.vertx.core.Vertx;
 
 /**
  * @author laokou
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class MqttMessage {
+public final class VertxHttpServerManager {
 
-	private Buffer payload;
+	private VertxHttpServerManager() {
+	}
 
-	private String topic;
-
-	private int messageId;
+	public static void start(final Vertx vertx, final HttpServerProperties properties) {
+		VertxHttpServer vertxHttpServer = new VertxHttpServer(vertx, properties);
+	}
 
 }

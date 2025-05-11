@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.network.mqtt.client.handler.MessageHandler;
+import org.laokou.common.network.mqtt.client.handler.MqttMessageHandler;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import reactor.core.Disposable;
 import reactor.core.publisher.Sinks;
@@ -55,7 +55,7 @@ public final class VertxMqttClient {
 
 	private final MqttClientProperties mqttClientProperties;
 
-	private final List<MessageHandler> messageHandlers;
+	private final List<MqttMessageHandler> mqttMessageHandlers;
 
 	private final AtomicBoolean isConnected = new AtomicBoolean(false);
 
@@ -66,12 +66,12 @@ public final class VertxMqttClient {
 	private volatile Disposable consumeDisposable;
 
 	public VertxMqttClient(final Vertx vertx, ExecutorService virtualThreadExecutor,
-			final MqttClientProperties mqttClientProperties, final List<MessageHandler> messageHandlers) {
+			final MqttClientProperties mqttClientProperties, final List<MqttMessageHandler> mqttMessageHandlers) {
 		this.vertx = vertx;
 		this.virtualThreadExecutor = virtualThreadExecutor;
 		this.mqttClientProperties = mqttClientProperties;
 		this.mqttClient = MqttClient.create(vertx, getOptions());
-		this.messageHandlers = messageHandlers;
+		this.mqttMessageHandlers = mqttMessageHandlers;
 	}
 
 	public void open() {
@@ -171,9 +171,9 @@ public final class VertxMqttClient {
 		consumeDisposable = messageSink.asFlux().doOnNext(mqttPublishMessage -> {
 			String topic = mqttPublishMessage.topicName();
 			log.info("【Vertx-MQTT-Client】 => MQTT接收到消息，Topic：{}", topic);
-			for (MessageHandler messageHandler : messageHandlers) {
-				if (messageHandler.isSubscribe(topic)) {
-					messageHandler.handle(new MqttMessage(mqttPublishMessage.payload(), topic));
+			for (MqttMessageHandler mqttMessageHandler : mqttMessageHandlers) {
+				if (mqttMessageHandler.isSubscribe(topic)) {
+					mqttMessageHandler.handle(new MqttMessage(mqttPublishMessage.payload(), topic, mqttPublishMessage.messageId()));
 				}
 			}
 		}).subscribeOn(Schedulers.boundedElastic()).subscribe();

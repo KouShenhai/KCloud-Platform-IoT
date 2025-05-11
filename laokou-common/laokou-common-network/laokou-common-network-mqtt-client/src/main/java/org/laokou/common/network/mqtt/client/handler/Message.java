@@ -17,13 +17,34 @@
 
 package org.laokou.common.network.mqtt.client.handler;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.core.util.UUIDGenerator;
+
+import java.io.Serializable;
+
+import static org.laokou.common.i18n.common.constant.StringConstants.SLASH;
+
 /**
  * @author laokou
  */
-public interface MessageHandler {
+@Data
+@NoArgsConstructor
+public class Message implements Serializable {
 
-	boolean isSubscribe(String topic);
+	private int msgId;
+	private Long deviceId;
+	private Long productId;
+	private String messageId;
+	private String payload;
 
-	void handle(MqttMessage mqttMessage);
+	public Message(int msgId, String topic, String payload) {
+		String[] arr = topic.split(SLASH);
+		this.msgId = msgId;
+		this.messageId = UUIDGenerator.generateUUID();
+		this.deviceId = Long.valueOf(arr[1]);
+		this.productId = Long.valueOf(arr[0]);
+		this.payload = payload;
+	}
 
 }

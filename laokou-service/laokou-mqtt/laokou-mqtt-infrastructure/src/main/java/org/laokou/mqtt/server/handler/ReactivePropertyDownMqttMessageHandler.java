@@ -18,9 +18,11 @@
 package org.laokou.mqtt.server.handler;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.kafka.template.KafkaSender;
+import org.laokou.common.network.mqtt.client.handler.Message;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
-import org.laokou.common.network.mqtt.client.handler.ReactiveMessageHandler;
+import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
 import org.laokou.common.network.mqtt.client.util.TopicUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -34,7 +36,7 @@ import static org.laokou.common.network.mqtt.client.constant.MqConstants.LAOKOU_
  */
 @Component
 @RequiredArgsConstructor
-public class ReactivePropertyDownMessageHandler implements ReactiveMessageHandler {
+public class ReactivePropertyDownMqttMessageHandler implements ReactiveMqttMessageHandler {
 
 	private final KafkaSender kafkaSender;
 
@@ -45,7 +47,7 @@ public class ReactivePropertyDownMessageHandler implements ReactiveMessageHandle
 
 	@Override
 	public Flux<Boolean> handle(MqttMessage mqttMessage) {
-		return kafkaSender.send(LAOKOU_MQTT_PROPERTY_DOWN, mqttMessage.getPayload().toString());
+		return kafkaSender.send(LAOKOU_MQTT_PROPERTY_DOWN, JacksonUtils.toJsonStr(new Message(mqttMessage.getMessageId(), mqttMessage.getTopic(), mqttMessage.getPayload().toString())));
 	}
 
 }

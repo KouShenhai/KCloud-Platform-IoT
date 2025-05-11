@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.network.mqtt.client.config;
+package org.laokou.common.vertx.config;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;

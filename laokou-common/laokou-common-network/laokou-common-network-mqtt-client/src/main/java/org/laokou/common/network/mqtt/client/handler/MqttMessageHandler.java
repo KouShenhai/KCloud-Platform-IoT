@@ -17,15 +17,13 @@
 
 package org.laokou.common.network.mqtt.client.handler;
 
-import reactor.core.publisher.Flux;
-
 /**
  * @author laokou
  */
-public interface ReactiveMessageHandler {
+public interface MqttMessageHandler {
 
 	boolean isSubscribe(String topic);
 
-	Flux<Boolean> handle(MqttMessage mqttMessage);
+	void handle(MqttMessage mqttMessage);
 
 }
