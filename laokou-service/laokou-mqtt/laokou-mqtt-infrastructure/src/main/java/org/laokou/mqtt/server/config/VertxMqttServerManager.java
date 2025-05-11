@@ -50,8 +50,14 @@ public final class VertxMqttServerManager {
 	public static void stop() {
 		// 停止服务
 		DISPOSABLES.add(vertxMqttServer.stop().subscribeOn(Schedulers.boundedElastic()).subscribe());
-		// 取消订阅
-		disposes();
+		try {
+			Thread.sleep(3000);
+			// 取消订阅
+			disposes();
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw new RuntimeException(e);
+		}
 	}
 
 	private static void disposes() {

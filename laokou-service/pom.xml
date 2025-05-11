@@ -40,5 +40,6 @@
     <module>laokou-oss</module>
     <module>laokou-mqtt</module>
     <module>laokou-distributed-identifier</module>
+    <module>laokou-http</module>
   </modules>
 </project>

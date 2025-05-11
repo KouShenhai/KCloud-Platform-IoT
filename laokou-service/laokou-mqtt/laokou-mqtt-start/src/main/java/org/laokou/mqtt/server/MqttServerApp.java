@@ -61,6 +61,7 @@ public class MqttServerApp implements CommandLineRunner {
 		// 开启reactor的上下文传递
 		// https://spring.io/blog/2023/03/30/context-propagation-with-project-reactor-3-unified-bridging-between-reactive
 		Hooks.enableAutomaticContextPropagation();
+		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "9995")));
 		new SpringApplicationBuilder(MqttServerApp.class).web(WebApplicationType.REACTIVE).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
