@@ -33,9 +33,13 @@ import static org.laokou.common.i18n.common.constant.StringConstants.SLASH;
 public class Message implements Serializable {
 
 	private Integer msgId;
+
 	private Long deviceId;
+
 	private Long productId;
+
 	private String messageId;
+
 	private String payload;
 
 	public Message(int msgId, String topic, String payload) {

@@ -173,7 +173,8 @@ public final class VertxMqttClient {
 			log.info("【Vertx-MQTT-Client】 => MQTT接收到消息，Topic：{}", topic);
 			for (MqttMessageHandler mqttMessageHandler : mqttMessageHandlers) {
 				if (mqttMessageHandler.isSubscribe(topic)) {
-					mqttMessageHandler.handle(new MqttMessage(mqttPublishMessage.payload(), topic, mqttPublishMessage.messageId()));
+					mqttMessageHandler
+						.handle(new MqttMessage(mqttPublishMessage.payload(), topic, mqttPublishMessage.messageId()));
 				}
 			}
 		}).subscribeOn(Schedulers.boundedElastic()).subscribe();
