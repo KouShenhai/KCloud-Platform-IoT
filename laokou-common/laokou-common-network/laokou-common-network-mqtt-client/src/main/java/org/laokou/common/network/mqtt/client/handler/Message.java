@@ -32,7 +32,7 @@ import static org.laokou.common.i18n.common.constant.StringConstants.SLASH;
 @NoArgsConstructor
 public class Message implements Serializable {
 
-	private int msgId;
+	private Integer msgId;
 	private Long deviceId;
 	private Long productId;
 	private String messageId;
