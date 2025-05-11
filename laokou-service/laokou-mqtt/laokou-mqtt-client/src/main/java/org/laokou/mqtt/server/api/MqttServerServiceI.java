@@ -17,16 +17,9 @@
 
 package org.laokou.mqtt.server.api;
 
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.mqtt.server.dto.MqttServerLoadbalancerGetQry;
-import org.laokou.mqtt.server.dto.clientobject.InstanceCO;
-import reactor.core.publisher.Mono;
-
 /**
  * @author laokou
  */
 public interface MqttServerServiceI {
-
-	Mono<Result<InstanceCO>> loadbalancer(MqttServerLoadbalancerGetQry qry);
 
 }

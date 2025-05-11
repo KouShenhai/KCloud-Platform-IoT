@@ -25,27 +25,27 @@ import org.laokou.common.network.mqtt.client.util.TopicUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
-import static org.laokou.common.network.mqtt.client.constant.MqConstants.LAOKOU_MQTT_PROPERTY_REPLY;
+import static org.laokou.common.network.mqtt.client.constant.MqConstants.LAOKOU_MQTT_PROPERTY_UP;
 
 /**
- * 属性回复消息处理器.
+ * 属性上报消息处理.
  *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class ReactivePropertyReplyMessageHandler implements ReactiveMessageHandler {
+public class ReactivePropertyUpMessageHandler implements ReactiveMessageHandler {
 
 	private final KafkaSender kafkaSender;
 
 	@Override
 	public boolean isSubscribe(String topic) {
-		return TopicUtils.match("/+/+/property/reply", topic);
+		return TopicUtils.match("/+/+/property/up", topic);
 	}
 
 	@Override
 	public Flux<Boolean> handle(MqttMessage mqttMessage) {
-		return kafkaSender.send(LAOKOU_MQTT_PROPERTY_REPLY, mqttMessage.getPayload().toString());
+		return kafkaSender.send(LAOKOU_MQTT_PROPERTY_UP, mqttMessage.getPayload().toString());
 	}
 
 }

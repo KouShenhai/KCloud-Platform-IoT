@@ -19,7 +19,6 @@ package org.laokou.mqtt.server.config;
 
 import io.netty.handler.codec.mqtt.MqttConnectReturnCode;
 import io.vertx.core.Vertx;
-import io.vertx.core.impl.cpu.CpuCoreSensor;
 import io.vertx.mqtt.*;
 import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +27,6 @@ import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.ReactiveMessageHandler;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
-
-import javax.net.ssl.SSLServerSocketFactory;
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +34,7 @@ import java.util.Optional;
  * @author laokou
  */
 @Slf4j
-public final class VertxMqttServer {
+final class VertxMqttServer {
 
 	private final Sinks.Many<MqttPublishMessage> messageSink = Sinks.many()
 		.multicast()
@@ -86,8 +80,6 @@ public final class VertxMqttServer {
 				if (asyncResult.succeeded()) {
 					log.info("【Vertx-MQTT-Server】 => MQTT服务启动成功，主机：{}，端口：{}", mqttServerOption.getHost(),
 							mqttServerOption.getPort());
-					// 写入缓存
-					PortCache.add(mqttServerOption.getPort());
 				}
 				else {
 					log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，主机：{}，端口：{}，错误信息：{}", mqttServerOption.getHost(),
@@ -122,19 +114,8 @@ public final class VertxMqttServer {
 		});
 	}
 
-	private int detectAvailablePort(String host) {
-		try (ServerSocket socket = SSLServerSocketFactory.getDefault().createServerSocket()) {
-			socket.bind(new InetSocketAddress(host, properties.getPort()));
-			return socket.getLocalPort();
-		}
-		catch (IOException e) {
-			throw new RuntimeException("Port auto-detection failed", e);
-		}
-	}
-
 	private Flux<MqttServerOptions> getMqttServerOptions() {
-		return Flux.range(1, Math.max(properties.getThreadSize(), CpuCoreSensor.availableProcessors()))
-			.map(item -> getMqttServerOption());
+		return Flux.fromIterable(properties.getPorts()).map(this::getMqttServerOption);
 	}
 
 	private MqttEndpoint authHandler(MqttEndpoint endpoint) {
@@ -154,10 +135,10 @@ public final class VertxMqttServer {
 	}
 
 	// @formatter:off
-	private MqttServerOptions getMqttServerOption() {
+	private MqttServerOptions getMqttServerOption(int port) {
 		MqttServerOptions mqttServerOptions = new MqttServerOptions();
 		mqttServerOptions.setHost(properties.getHost());
-		mqttServerOptions.setPort(detectAvailablePort(properties.getHost()));
+		mqttServerOptions.setPort(port);
 		mqttServerOptions.setMaxMessageSize(properties.getMaxMessageSize());
 		mqttServerOptions.setAutoClientId(properties.isAutoClientId());
 		mqttServerOptions.setMaxClientIdLength(properties.getMaxClientIdLength());

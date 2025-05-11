@@ -22,7 +22,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.kafka.annotation.KafkaListener;
 import java.util.List;
 
-import static org.laokou.common.network.mqtt.client.constant.MqConstants.LAOKOU_MQTT_PROPERTY_REPORT;
+import static org.laokou.common.network.mqtt.client.constant.MqConstants.LAOKOU_MQTT_PROPERTY_UP;
 
 /**
  * @author laokou
@@ -31,7 +31,7 @@ import static org.laokou.common.network.mqtt.client.constant.MqConstants.LAOKOU_
 @TestConfiguration
 class TestConsumer {
 
-	@KafkaListener(topics = LAOKOU_MQTT_PROPERTY_REPORT, groupId = "${spring.application.name}")
+	@KafkaListener(topics = LAOKOU_MQTT_PROPERTY_UP, groupId = "${spring.application.name}")
 	public void onMessage(List<String> messages) {
 		log.info("Kafka Consumer: {}", messages);
 	}

@@ -21,6 +21,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -39,11 +41,9 @@ public class MqttServerProperties {
 
 	private String host = "0.0.0.0";
 
-	private int port = 0;
+	private Set<Integer> ports = new HashSet<>(0);
 
-	private int threadSize = 32;
-
-	private int maxMessageSize = 8192;
+	private int maxMessageSize = 10000;
 
 	private boolean isAutoClientId = true;
 

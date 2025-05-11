@@ -18,13 +18,8 @@
 package org.laokou.mqtt.server.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.mqtt.server.api.MqttServerServiceI;
-import org.laokou.mqtt.server.command.query.MqttServerLoadbalancerGetQryExe;
-import org.laokou.mqtt.server.dto.MqttServerLoadbalancerGetQry;
-import org.laokou.mqtt.server.dto.clientobject.InstanceCO;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 /**
  * @author laokou
@@ -32,12 +27,5 @@ import reactor.core.publisher.Mono;
 @Service
 @RequiredArgsConstructor
 public class MqttServerServiceImpl implements MqttServerServiceI {
-
-	private final MqttServerLoadbalancerGetQryExe mqttServerLoadbalancerGetQryExe;
-
-	@Override
-	public Mono<Result<InstanceCO>> loadbalancer(MqttServerLoadbalancerGetQry qry) {
-		return mqttServerLoadbalancerGetQryExe.execute(qry);
-	}
 
 }

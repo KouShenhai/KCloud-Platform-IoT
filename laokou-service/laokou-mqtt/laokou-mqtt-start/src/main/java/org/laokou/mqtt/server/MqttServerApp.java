@@ -22,18 +22,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.network.mqtt.client.handler.ReactiveMessageHandler;
 import org.laokou.mqtt.server.config.MqttServerProperties;
-import org.laokou.mqtt.server.config.PortCache;
-import org.laokou.mqtt.server.config.VertxMqttServer;
+import org.laokou.mqtt.server.config.VertxMqttServerManager;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.util.StopWatch;
 import reactor.core.publisher.Hooks;
-import reactor.core.scheduler.Schedulers;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
@@ -43,7 +39,6 @@ import java.util.concurrent.ExecutorService;
  * @author laokou
  */
 @Slf4j
-@EnableDiscoveryClient
 @RequiredArgsConstructor
 @EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = "org.laokou")
@@ -77,17 +72,8 @@ public class MqttServerApp implements CommandLineRunner {
 	}
 
 	private void listenMessage() {
-		VertxMqttServer vertxMqttServer = new VertxMqttServer(vertx, properties, reactiveMessageHandlers);
-		// 启动服务
-		vertxMqttServer.start().subscribeOn(Schedulers.boundedElastic()).subscribe();
-		// 推送数据
-		vertxMqttServer.publish().subscribeOn(Schedulers.boundedElastic()).subscribe();
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			// 清除缓存
-			PortCache.clear();
-			// 停止服务
-			vertxMqttServer.stop().subscribeOn(Schedulers.boundedElastic()).subscribe();
-		}));
+		VertxMqttServerManager.start(vertx, properties, reactiveMessageHandlers);
+		Runtime.getRuntime().addShutdownHook(new Thread(VertxMqttServerManager::stop));
 	}
 
 }
