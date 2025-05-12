@@ -50,6 +50,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 <a href="https://github.com/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://tokei.rs/b1/github/KouShenhai/KCloud-Platform-IoT?category=lines" alt="代码行数"/></a>
 <a href="https://wakatime.com/projects/KCloud-Platform-IoT" target="_blank"><img src="https://wakatime.com/badge/user/587a6632-ba42-422b-84b7-628dcb839b95/project/59654e89-b082-4cf3-8cf1-7542b343b448.svg" alt="Wakatime"/></a>
 <a href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR" target="_blank"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流群"/></a>
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/KouShenhai/KCloud-Platform-IoT)
 
 ### 😋 项目背景
 
