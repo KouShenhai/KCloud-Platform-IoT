@@ -27,7 +27,8 @@ import org.laokou.common.network.mqtt.client.util.TopicUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
-import static org.laokou.common.network.mqtt.client.constant.MqConstants.LAOKOU_MQTT_PROPERTY_UP;
+import static org.laokou.common.vertx.constant.MqConstants.LAOKOU_MQTT_PROPERTY_UP;
+import static org.laokou.common.vertx.constant.MqConstants.MQTT_TOPIC_RULE_UP;
 
 /**
  * 属性上报消息处理.
@@ -42,7 +43,7 @@ public class ReactivePropertyUpMqttMessageHandler implements ReactiveMqttMessage
 
 	@Override
 	public boolean isSubscribe(String topic) {
-		return TopicUtils.match("/+/+/property/up", topic);
+		return TopicUtils.match(MQTT_TOPIC_RULE_UP, topic);
 	}
 
 	@Override

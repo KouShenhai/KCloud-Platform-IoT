@@ -27,7 +27,8 @@ import org.laokou.common.network.mqtt.client.util.TopicUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
-import static org.laokou.common.network.mqtt.client.constant.MqConstants.LAOKOU_MQTT_PROPERTY_DOWN;
+import static org.laokou.common.vertx.constant.MqConstants.LAOKOU_MQTT_PROPERTY_DOWN;
+import static org.laokou.common.vertx.constant.MqConstants.MQTT_TOPIC_RULE_DOWN;
 
 /**
  * 属性下发消息处理器.
@@ -42,7 +43,7 @@ public class ReactivePropertyDownMqttMessageHandler implements ReactiveMqttMessa
 
 	@Override
 	public boolean isSubscribe(String topic) {
-		return TopicUtils.match("/+/+/property/down", topic);
+		return TopicUtils.match(MQTT_TOPIC_RULE_DOWN, topic);
 	}
 
 	@Override
