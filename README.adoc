@@ -38,7 +38,7 @@ image:https://gitcode.com/qq_39893313/KCloud-Platform-IoT/star/badge.svg?theme=d
 
 image:https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.5&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
 image:https://img.shields.io/static/v1?label=Spring%20Boot&message=3.5.0&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
-image:https://img.shields.io/static/v1?label=Spring%20Cloud&message=2024.0.1&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
+image:https://img.shields.io/static/v1?label=Spring%20Cloud&message=2025.0.5&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.3.2&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
 image:https://img.shields.io/static/v1?label=OAuth%202.1&message=1.5.0&color=blue[OAuth 2.1,link=https://spring.io/projects/spring-authorization-server]
 
@@ -139,7 +139,7 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
 |组件                         |版本
 
 |Spring Boot                 |3.5.0
-|Spring Cloud                |2024.0.1
+|Spring Cloud                |2025.0.0
 |Spring Cloud Alibaba        |2023.0.3.2
 |Spring Boot Admin           |3.4.5
 |Spring Authorization Server |1.5.0
