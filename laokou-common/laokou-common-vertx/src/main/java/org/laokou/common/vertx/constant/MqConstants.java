@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.network.mqtt.client.constant;
+package org.laokou.common.vertx.constant;
 
 /**
  * @author laokou
@@ -28,5 +28,9 @@ public final class MqConstants {
 	public static final String LAOKOU_MQTT_PROPERTY_UP = "laokou_mqtt_property_up";
 
 	public static final String LAOKOU_MQTT_PROPERTY_DOWN = "laokou_mqtt_property_down";
+
+	public static final String MQTT_TOPIC_RULE_UP = "/+/+/property/up";
+
+	public static final String MQTT_TOPIC_RULE_DOWN = "/+/+/property/down";
 
 }
