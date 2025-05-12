@@ -31,7 +31,7 @@ import static org.laokou.common.vertx.constant.MqConstants.LAOKOU_MQTT_PROPERTY_
 import static org.laokou.common.vertx.constant.MqConstants.MQTT_TOPIC_RULE_PROPERTY_REPORT;
 
 /**
- * 处理【属性上报】.
+ * 处理器【属性上报】.
  *
  * @author laokou
  */
