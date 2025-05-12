@@ -28,7 +28,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
-public class Message implements Serializable {
+public class PropertyReportMessage implements Serializable {
 
 	private Long deviceId;
 
@@ -38,7 +38,7 @@ public class Message implements Serializable {
 
 	private String type;
 
-	public Message(String topic, String payload) {
+	public PropertyReportMessage(String topic, String payload) {
 		String[] arr = topic.split(StringConstants.SLASH);
 		this.deviceId = Long.valueOf(arr[1]);
 		this.productId = Long.valueOf(arr[0]);
@@ -46,7 +46,7 @@ public class Message implements Serializable {
 		this.type = arr[3];
 	}
 
-	public Message(Long deviceId, Long productId, String payload, String type) {
+	public PropertyReportMessage(Long deviceId, Long productId, String payload, String type) {
 		this.deviceId = deviceId;
 		this.productId = productId;
 		this.payload = payload;

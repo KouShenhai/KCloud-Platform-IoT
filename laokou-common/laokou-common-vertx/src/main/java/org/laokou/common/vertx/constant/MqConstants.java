@@ -25,14 +25,22 @@ public final class MqConstants {
 	private MqConstants() {
 	}
 
-	public static final String LAOKOU_MQTT_PROPERTY_UP = "laokou_mqtt_property_up";
+	public static final String LAOKOU_MQTT_PROPERTY_REPORT = "laokou_mqtt_property_report";
 
-	public static final String LAOKOU_MQTT_PROPERTY_DOWN = "laokou_mqtt_property_down";
+	public static final String LAOKOU_MQTT_PROPERTY_READ_REPLY = "laokou_mqtt_property_read_reply";
 
-	public static final String MQTT_TOPIC_RULE_UP = "/+/+/property/up";
+	public static final String LAOKOU_MQTT_PROPERTY_READ = "laokou_mqtt_property_read";
 
-	public static final String MQTT_TOPIC_RULE_DOWN = "/+/+/property/down";
+	public static final String LAOKOU_MQTT_PROPERTY_WRITE_REPLY = "laokou_mqtt_property_write_reply";
 
-	public static final String HTTP_ROUTER_RULE_UP = "/:productId/:deviceId/property/up";
+	public static final String LAOKOU_MQTT_PROPERTY_WRITE = "laokou_mqtt_property_write";
+
+	public static final String MQTT_TOPIC_RULE_PROPERTY_REPORT = "/+/+/property/report";
+
+	public static final String MQTT_TOPIC_RULE_PROPERTY_READ_REPLY = "/+/+/property/read/reply";
+
+	public static final String MQTT_TOPIC_RULE_PROPERTY_WRITE_REPLY = "/+/+/property/write/reply";
+
+	public static final String HTTP_ROUTER_RULE_PROPERTY_REPORT = "/:productId/:deviceId/property/report";
 
 }

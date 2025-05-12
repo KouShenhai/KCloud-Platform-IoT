@@ -20,15 +20,15 @@ package org.laokou.mqtt.server.handler;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.kafka.template.KafkaSender;
-import org.laokou.common.vertx.model.Message;
+import org.laokou.common.vertx.model.PropertyReportMessage;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
 import org.laokou.common.network.mqtt.client.util.TopicUtils;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
-import static org.laokou.common.vertx.constant.MqConstants.LAOKOU_MQTT_PROPERTY_UP;
-import static org.laokou.common.vertx.constant.MqConstants.MQTT_TOPIC_RULE_UP;
+import static org.laokou.common.vertx.constant.MqConstants.LAOKOU_MQTT_PROPERTY_REPORT;
+import static org.laokou.common.vertx.constant.MqConstants.MQTT_TOPIC_RULE_PROPERTY_REPORT;
 
 /**
  * 属性上报消息处理.
@@ -37,19 +37,19 @@ import static org.laokou.common.vertx.constant.MqConstants.MQTT_TOPIC_RULE_UP;
  */
 @Component
 @RequiredArgsConstructor
-public class ReactivePropertyUpMqttMessageHandler implements ReactiveMqttMessageHandler {
+public class ReactivePropertyReportMqttMessageHandler implements ReactiveMqttMessageHandler {
 
 	private final KafkaSender kafkaSender;
 
 	@Override
 	public boolean isSubscribe(String topic) {
-		return TopicUtils.match(MQTT_TOPIC_RULE_UP, topic);
+		return TopicUtils.match(MQTT_TOPIC_RULE_PROPERTY_REPORT, topic);
 	}
 
 	@Override
 	public Flux<Boolean> handle(MqttMessage mqttMessage) {
-		return kafkaSender.send(LAOKOU_MQTT_PROPERTY_UP,
-				JacksonUtils.toJsonStr(new Message(mqttMessage.getTopic(), mqttMessage.getPayload().toString())));
+		return kafkaSender.send(LAOKOU_MQTT_PROPERTY_REPORT,
+				JacksonUtils.toJsonStr(new PropertyReportMessage(mqttMessage.getTopic(), mqttMessage.getPayload().toString())));
 	}
 
 }

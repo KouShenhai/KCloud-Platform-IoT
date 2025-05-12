@@ -23,7 +23,7 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.ext.web.Router;
 import reactor.core.publisher.Flux;
 
-import static org.laokou.common.vertx.constant.MqConstants.HTTP_ROUTER_RULE_UP;
+import static org.laokou.common.vertx.constant.MqConstants.HTTP_ROUTER_RULE_PROPERTY_REPORT;
 
 /**
  * @author laokou
@@ -49,7 +49,7 @@ final class VertxHttpServer {
 
 	private Router getRouter() {
 		Router router = Router.router(vertx);
-		router.post(HTTP_ROUTER_RULE_UP).order(10).handler(handler -> {
+		router.post(HTTP_ROUTER_RULE_PROPERTY_REPORT).order(10).handler(handler -> {
 
 		});
 		return router;
