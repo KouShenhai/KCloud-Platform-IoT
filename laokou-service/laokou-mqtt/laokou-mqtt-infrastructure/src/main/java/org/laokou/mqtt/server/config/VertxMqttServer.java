@@ -111,7 +111,7 @@ final class VertxMqttServer {
 				.fromStream(reactiveMqttMessageHandlers.stream()
 					.filter(reactiveMessageHandler -> reactiveMessageHandler.isSubscribe(message.topicName())))
 				.flatMap(reactiveMessageHandler -> reactiveMessageHandler
-					.handle(new MqttMessage(message.payload(), message.topicName(), message.messageId())));
+					.handle(new MqttMessage(message.payload(), message.topicName())));
 		});
 	}
 

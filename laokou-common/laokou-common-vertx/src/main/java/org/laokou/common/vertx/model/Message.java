@@ -15,15 +15,13 @@
  *
  */
 
-package org.laokou.common.network.mqtt.client.handler;
+package org.laokou.common.vertx.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.laokou.common.core.util.UUIDGenerator;
+import org.laokou.common.i18n.common.constant.StringConstants;
 
 import java.io.Serializable;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.SLASH;
 
 /**
  * @author laokou
@@ -32,23 +30,27 @@ import static org.laokou.common.i18n.common.constant.StringConstants.SLASH;
 @NoArgsConstructor
 public class Message implements Serializable {
 
-	private Integer msgId;
-
 	private Long deviceId;
 
 	private Long productId;
 
-	private String messageId;
-
 	private String payload;
 
-	public Message(int msgId, String topic, String payload) {
-		String[] arr = topic.split(SLASH);
-		this.msgId = msgId;
-		this.messageId = UUIDGenerator.generateUUID();
+	private String type;
+
+	public Message(String topic, String payload) {
+		String[] arr = topic.split(StringConstants.SLASH);
 		this.deviceId = Long.valueOf(arr[1]);
 		this.productId = Long.valueOf(arr[0]);
 		this.payload = payload;
+		this.type = arr[3];
+	}
+
+	public Message(Long deviceId, Long productId, String payload, String type) {
+		this.deviceId = deviceId;
+		this.productId = productId;
+		this.payload = payload;
+		this.type = type;
 	}
 
 }

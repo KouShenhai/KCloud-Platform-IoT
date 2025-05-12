@@ -52,7 +52,7 @@ public class HttpServerApp implements CommandLineRunner {
 		StopWatch stopWatch = new StopWatch("HttpServer应用程序");
 		stopWatch.start();
 		String host = InetAddress.getLocalHost().getHostAddress();
-		System.setProperty("address", String.format("%s:%s", host, System.getProperty("server.port", "9995")));
+		System.setProperty("address", String.format("%s:%s", host, System.getProperty("server.port", "9996")));
 		System.setProperty("host", host);
 		// 启用虚拟线程支持
 		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");

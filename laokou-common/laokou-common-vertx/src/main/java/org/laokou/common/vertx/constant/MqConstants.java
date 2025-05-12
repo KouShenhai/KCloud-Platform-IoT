@@ -33,4 +33,6 @@ public final class MqConstants {
 
 	public static final String MQTT_TOPIC_RULE_DOWN = "/+/+/property/down";
 
+	public static final String HTTP_ROUTER_RULE_UP = "/:productId/:deviceId/property/up";
+
 }

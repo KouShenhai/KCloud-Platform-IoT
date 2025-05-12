@@ -41,6 +41,8 @@ import static io.vertx.core.http.HttpServerOptions.DEFAULT_INITIAL_SETTINGS_MAX_
 @ConfigurationProperties(prefix = "spring.http-server")
 public class HttpServerProperties {
 
+	private boolean auth = true;
+
 	private String host = "0.0.0.0";
 
 	private Set<Integer> ports = new HashSet<>(0);

@@ -1,0 +1,215 @@
+server:
+  port: ${SERVER_PORT:9996}
+  ssl:
+    # 开启证书
+    enabled: @SSL-ENABLED@
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: @SSL-ENABLED@
+  shutdown: graceful
+  forward-headers-strategy: native
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+    # 采样率 => 100%
+    sampling:
+      probability: 1
+  otlp:
+    tracing:
+      endpoint: http://otel-collector:4317/v1/traces
+      compression: gzip
+      timeout: 10s
+      transport: grpc
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+spring:
+  application:
+    name: ${SERVICE_ID:laokou-http}
+  profiles:
+    active: @PROFILE-ACTIVE@
+  threads:
+    virtual:
+      enabled: true
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: ${spring.application.name}
+      # 禁用自动提交（按周期）已消费offset
+      enable-auto-commit: true
+      # 单次poll()调用返回的记录数
+      max-poll-records: 50
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      # 发生错误后，消息重发的次数。
+      retries: 5
+      # 当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
+      batch-size: 16384
+      # 设置生产者内存缓冲区的大小。
+      buffer-memory: 33554432
+      # 键的序列化方式
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 值的序列化方式
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      acks: 0
+    listener:
+      # 在侦听器容器中运行的线程数。
+      concurrency: 5
+      # 批量提交模式
+      ack-mode: batch
+      # 批量batch类型
+      type: batch
+      # topic不存在报错
+      missing-topics-fatal: false
+    admin:
+      auto-create: false
+  http-server:
+    auth: true
+    # 创建120个端口
+    ports:
+      - 2880
+      - 2881
+      - 2882
+      - 2883
+      - 2884
+      - 2885
+      - 2886
+      - 2887
+      - 2888
+      - 2889
+      - 2890
+      - 2891
+      - 2892
+      - 2893
+      - 2894
+      - 2895
+      - 2896
+      - 2897
+      - 2898
+      - 2899
+      - 2900
+      - 2901
+      - 2902
+      - 2903
+      - 2904
+      - 2905
+      - 2906
+      - 2907
+      - 2908
+      - 2909
+      - 2910
+      - 2911
+      - 2912
+      - 2913
+      - 2914
+      - 2915
+      - 2916
+      - 2917
+      - 2918
+      - 2919
+      - 2920
+      - 2921
+      - 2922
+      - 2923
+      - 2924
+      - 2925
+      - 2926
+      - 2927
+      - 2928
+      - 2929
+      - 2930
+      - 2931
+      - 2932
+      - 2933
+      - 2934
+      - 2935
+      - 2936
+      - 2937
+      - 2938
+      - 2939
+      - 2940
+      - 2941
+      - 2942
+      - 2943
+      - 2944
+      - 2945
+      - 2946
+      - 2947
+      - 2948
+      - 2949
+      - 2950
+      - 2951
+      - 2952
+      - 2953
+      - 2954
+      - 2955
+      - 2956
+      - 2957
+      - 2958
+      - 2959
+      - 2960
+      - 2961
+      - 2962
+      - 2963
+      - 2964
+      - 2965
+      - 2966
+      - 2967
+      - 2968
+      - 2969
+      - 2970
+      - 2971
+      - 2972
+      - 2973
+      - 2974
+      - 2975
+      - 2976
+      - 2977
+      - 2978
+      - 2979
+      - 2980
+      - 2981
+      - 2982
+      - 2983
+      - 2984
+      - 2985
+      - 2986
+      - 2987
+      - 2988
+      - 2989
+      - 2990
+      - 2991
+      - 2992
+      - 2993
+      - 2994
+      - 2995
+      - 2996
+      - 2997
+      - 2998
+      - 2999
+      - 3000

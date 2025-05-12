@@ -20,7 +20,10 @@ package org.laokou.http.server.config;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerOptions;
+import io.vertx.ext.web.Router;
 import reactor.core.publisher.Flux;
+
+import static org.laokou.common.vertx.constant.MqConstants.HTTP_ROUTER_RULE_UP;
 
 /**
  * @author laokou
@@ -31,16 +34,25 @@ final class VertxHttpServer {
 
 	private final Vertx vertx;
 
+	private final Router router;
+
 	VertxHttpServer(Vertx vertx, HttpServerProperties properties) {
 		this.vertx = vertx;
 		this.properties = properties;
+		this.router = getRouter();
 	}
 
 	Flux<HttpServer> start() {
 		return getHttpServerOptions()
-			.map(httpServerOption -> vertx.createHttpServer(httpServerOption).requestHandler(httpRequest -> {
+			.map(httpServerOption -> vertx.createHttpServer(httpServerOption).requestHandler(router));
+	}
 
-			}));
+	private Router getRouter() {
+		Router router = Router.router(vertx);
+		router.post(HTTP_ROUTER_RULE_UP).order(10).handler(handler -> {
+
+		});
+		return router;
 	}
 
 	private Flux<HttpServerOptions> getHttpServerOptions() {

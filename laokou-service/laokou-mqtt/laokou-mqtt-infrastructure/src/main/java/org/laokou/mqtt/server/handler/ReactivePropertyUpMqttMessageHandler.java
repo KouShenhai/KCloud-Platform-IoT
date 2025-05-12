@@ -20,7 +20,7 @@ package org.laokou.mqtt.server.handler;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.kafka.template.KafkaSender;
-import org.laokou.common.network.mqtt.client.handler.Message;
+import org.laokou.common.vertx.model.Message;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
 import org.laokou.common.network.mqtt.client.util.TopicUtils;
@@ -48,8 +48,8 @@ public class ReactivePropertyUpMqttMessageHandler implements ReactiveMqttMessage
 
 	@Override
 	public Flux<Boolean> handle(MqttMessage mqttMessage) {
-		return kafkaSender.send(LAOKOU_MQTT_PROPERTY_UP, JacksonUtils.toJsonStr(
-				new Message(mqttMessage.getMessageId(), mqttMessage.getTopic(), mqttMessage.getPayload().toString())));
+		return kafkaSender.send(LAOKOU_MQTT_PROPERTY_UP,
+				JacksonUtils.toJsonStr(new Message(mqttMessage.getTopic(), mqttMessage.getPayload().toString())));
 	}
 
 }

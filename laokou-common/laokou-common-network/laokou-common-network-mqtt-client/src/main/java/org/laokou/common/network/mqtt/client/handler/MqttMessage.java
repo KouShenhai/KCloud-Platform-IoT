@@ -34,6 +34,4 @@ public class MqttMessage {
 
 	private String topic;
 
-	private int messageId;
-
 }
