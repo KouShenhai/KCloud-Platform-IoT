@@ -48,8 +48,8 @@ public class ReactivePropertyReadReplyMqttMessageHandler implements ReactiveMqtt
 
 	@Override
 	public Flux<Boolean> handle(MqttMessage mqttMessage) {
-		return kafkaSender.send(LAOKOU_MQTT_PROPERTY_READ_REPLY,
-				JacksonUtils.toJsonStr(new PropertyReportMessage(mqttMessage.getTopic(), mqttMessage.getPayload().toString())));
+		return kafkaSender.send(LAOKOU_MQTT_PROPERTY_READ_REPLY, JacksonUtils
+			.toJsonStr(new PropertyReportMessage(mqttMessage.getTopic(), mqttMessage.getPayload().toString())));
 	}
 
 }

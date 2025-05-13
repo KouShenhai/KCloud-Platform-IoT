@@ -1,0 +1,9 @@
+POST http://localhost:3000/1/2/property/report
+Content-Type: application/json
+
+{
+    "id": "1",
+    "properties": {
+        "test": "123"
+    }
+}

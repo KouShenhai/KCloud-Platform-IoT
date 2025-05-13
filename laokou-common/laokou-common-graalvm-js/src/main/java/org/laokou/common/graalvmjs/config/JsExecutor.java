@@ -31,26 +31,18 @@ public class JsExecutor implements Executor {
 
 	private volatile Context context;
 
-	private final Object lock = new Object();
-
 	private final Map<String, Value> cacheMap = new ConcurrentHashMap<>(4096);
 
 	@Override
-	public void init() {
-		if (context == null) {
-			synchronized (lock) {
-				if (context == null) {
-					context = Context.newBuilder("js")
-						.allowHostAccess(HostAccess.ALL)
-						.allowHostClassLookup(className -> true)
-						.build();
-				}
-			}
-		}
+	public synchronized void init() {
+		context = Context.newBuilder("js")
+			.allowHostAccess(HostAccess.ALL)
+			.allowHostClassLookup(className -> true)
+			.build();
 	}
 
 	@Override
-	public void close() {
+	public synchronized void close() {
 		if (context != null) {
 			context.close();
 		}

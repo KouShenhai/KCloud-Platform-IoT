@@ -39,15 +39,44 @@ final class VertxHttpServer {
 
 	private final Router router;
 
+	private volatile Flux<HttpServer> httpServer;
+
+	private boolean isClosed = false;
+
 	VertxHttpServer(Vertx vertx, HttpServerProperties properties) {
 		this.vertx = vertx;
 		this.properties = properties;
 		this.router = getRouter();
 	}
 
-	Flux<HttpServer> start() {
-		return getHttpServerOptions()
-			.map(httpServerOption -> vertx.createHttpServer(httpServerOption).requestHandler(router));
+	synchronized Flux<HttpServer> start() {
+		return httpServer = getHttpServerOptions()
+			.map(httpServerOption -> vertx.createHttpServer(httpServerOption).requestHandler(router))
+			.map(server -> server.listen(completionHandler -> {
+				if (isClosed) {
+					return;
+				}
+				if (completionHandler.succeeded()) {
+					log.info("【Vertx-Http-Server】 => HTTP服务启动成功，端口：{}", server.actualPort());
+				}
+				else {
+					Throwable ex = completionHandler.cause();
+					log.error("【Vertx-Http-Server】 => HTTP服务启动失败，错误信息：{}", ex.getMessage(), ex);
+				}
+			}));
+	}
+
+	synchronized Flux<HttpServer> stop() {
+		isClosed = true;
+		return httpServer.doOnNext(server -> server.close(result -> {
+			if (result.succeeded()) {
+				log.info("【Vertx-Http-Server】 => HTTP服务停止成功，端口：{}", server.actualPort());
+			}
+			else {
+				Throwable ex = result.cause();
+				log.error("【Vertx-Http-Server】 => HTTP服务停止失败，错误信息：{}", ex.getMessage(), ex);
+			}
+		}));
 	}
 
 	private Router getRouter() {
@@ -58,6 +87,7 @@ final class VertxHttpServer {
 			Long deviceId = Long.valueOf(ctx.pathParam("deviceId"));
 			Long productId = Long.valueOf(ctx.pathParam("productId"));
 			log.info("productId:{}，deviceId:{}，body：{}", productId, deviceId, body);
+			ctx.response().end();
 		});
 		return router;
 	}

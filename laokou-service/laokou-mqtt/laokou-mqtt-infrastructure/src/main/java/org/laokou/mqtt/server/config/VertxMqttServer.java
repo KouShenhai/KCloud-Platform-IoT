@@ -48,7 +48,7 @@ final class VertxMqttServer {
 
 	private final List<ReactiveMqttMessageHandler> reactiveMqttMessageHandlers;
 
-	private volatile boolean isClosed = false;
+	private boolean isClosed = false;
 
 	VertxMqttServer(final Vertx vertx, final MqttServerProperties properties,
 			List<ReactiveMqttMessageHandler> reactiveMqttMessageHandlers) {
@@ -57,47 +57,46 @@ final class VertxMqttServer {
 		this.reactiveMqttMessageHandlers = reactiveMqttMessageHandlers;
 	}
 
-	Flux<MqttServer> start() {
-		return mqttServer = getMqttServerOptions().map(mqttServerOption -> MqttServer.create(vertx, mqttServerOption)
-			.exceptionHandler(
-					error -> log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，错误信息：{}", error.getMessage(), error))
-			.endpointHandler(endpoint -> Optional.ofNullable(authHandler(endpoint))
-				.ifPresent(e -> e.closeHandler(close -> log.info("【Vertx-MQTT-Server】 => MQTT客户端断开连接"))
-					.subscribeHandler(subscribe -> {
-						for (MqttTopicSubscription topicSubscription : subscribe.topicSubscriptions()) {
-							log.info("【Vertx-MQTT-Server】 => MQTT客户端订阅主题：{}", topicSubscription.topicName());
-						}
-					})
-
-					.disconnectHandler(disconnect -> log.info("【Vertx-MQTT-Server】 => MQTT客户端主动断开连接"))
-					.pingHandler(ping -> log.info("【Vertx-MQTT-Server】 => MQTT客户端发送心跳"))
-					.publishHandler(messageSink::tryEmitNext)
-					// 不保留会话
-					.accept(false)))
-			.listen(mqttServerOption.getPort(), mqttServerOption.getHost(), asyncResult -> {
-				if (isClosed) {
-					return;
-				}
-				if (asyncResult.succeeded()) {
-					log.info("【Vertx-MQTT-Server】 => MQTT服务启动成功，主机：{}，端口：{}", mqttServerOption.getHost(),
-							mqttServerOption.getPort());
-				}
-				else {
-					log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，主机：{}，端口：{}，错误信息：{}", mqttServerOption.getHost(),
-							mqttServerOption.getPort(), asyncResult.cause().getMessage(), asyncResult.cause());
-				}
-			}));
+	synchronized Flux<MqttServer> start() {
+		return mqttServer = getMqttServerOptions().map(options -> MqttServer.create(vertx, options))
+			.map(server -> server
+				.exceptionHandler(
+						error -> log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，错误信息：{}", error.getMessage(), error))
+				.endpointHandler(endpoint -> Optional.ofNullable(authHandler(endpoint))
+					.ifPresent(e -> e.closeHandler(close -> log.info("【Vertx-MQTT-Server】 => MQTT客户端断开连接"))
+						.subscribeHandler(subscribe -> {
+							for (MqttTopicSubscription topicSubscription : subscribe.topicSubscriptions()) {
+								log.info("【Vertx-MQTT-Server】 => MQTT客户端订阅主题：{}", topicSubscription.topicName());
+							}
+						})
+						.disconnectHandler(disconnect -> log.info("【Vertx-MQTT-Server】 => MQTT客户端主动断开连接"))
+						.pingHandler(ping -> log.info("【Vertx-MQTT-Server】 => MQTT客户端发送心跳"))
+						.publishHandler(messageSink::tryEmitNext)
+						// 不保留会话
+						.accept(false)))
+				.listen(asyncResult -> {
+					if (isClosed) {
+						return;
+					}
+					if (asyncResult.succeeded()) {
+						log.info("【Vertx-MQTT-Server】 => MQTT服务启动成功，端口：{}", server.actualPort());
+					}
+					else {
+						log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，端口：{}，错误信息：{}", server.actualPort(),
+								asyncResult.cause().getMessage(), asyncResult.cause());
+					}
+				}));
 	}
 
-	Flux<MqttServer> stop() {
+	synchronized Flux<MqttServer> stop() {
 		isClosed = true;
-		return mqttServer.doOnNext(server -> server.close(completionHandler -> {
-			if (completionHandler.succeeded()) {
-				log.info("【Vertx-MQTT-Server】 => MQTT服务停止成功");
+		return mqttServer.doOnNext(server -> server.close(result -> {
+			if (result.succeeded()) {
+				log.info("【Vertx-MQTT-Server】 => MQTT服务停止成功，端口：{}", server.actualPort());
 			}
 			else {
-				log.error("【Vertx-MQTT-Server】 => MQTT服务停止失败，错误信息：{}", completionHandler.cause().getMessage(),
-						completionHandler.cause());
+				Throwable ex = result.cause();
+				log.error("【Vertx-MQTT-Server】 => MQTT服务停止失败，错误信息：{}", ex.getMessage(), ex);
 			}
 		}));
 	}
