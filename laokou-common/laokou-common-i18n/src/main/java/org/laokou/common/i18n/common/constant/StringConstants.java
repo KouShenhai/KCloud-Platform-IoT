@@ -124,11 +124,6 @@ public final class StringConstants {
 	 */
 	public static final String WELL_NO = "#";
 
-	/**
-	 * 分割参数.
-	 */
-	public static final String START = "*";
-
 	private StringConstants() {
 	}
 

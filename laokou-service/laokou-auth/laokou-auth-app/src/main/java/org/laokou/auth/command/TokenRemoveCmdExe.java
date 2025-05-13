@@ -19,6 +19,7 @@ package org.laokou.auth.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.TokenRemoveCmd;
+import org.laokou.common.data.cache.model.MqEnum;
 import org.laokou.common.data.cache.handler.event.RemovedCacheEvent;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.domain.support.DomainEventPublisher;
@@ -34,7 +35,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.stereotype.Component;
 import java.security.Principal;
-import static org.laokou.common.data.cache.constant.MqConstants.LAOKOU_CACHE_TOPIC;
 import static org.laokou.common.data.cache.constant.NameConstants.USER_MENU;
 import static org.laokou.common.security.config.GlobalOpaqueTokenIntrospector.FULL;
 
@@ -74,7 +74,7 @@ public class TokenRemoveCmdExe {
 	}
 
 	private void publishEvent(Long userId) {
-		rocketMQDomainEventPublisher.publish(new DomainEvent(1L, 0L, 1L, 1L, LAOKOU_CACHE_TOPIC, null, 0,
+		rocketMQDomainEventPublisher.publish(new DomainEvent(1L, 0L, 1L, 1L, MqEnum.CACHE.getTopic(), null, 0,
 				JacksonUtils.toJsonStr(new RemovedCacheEvent(USER_MENU, String.valueOf(userId))),
 				EventTypeEnum.REMOVE_CACHE_EVENT, null), SendMessageTypeEnum.ASYNC);
 	}

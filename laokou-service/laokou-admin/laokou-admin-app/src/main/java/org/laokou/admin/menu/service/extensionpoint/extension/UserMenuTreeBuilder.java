@@ -27,7 +27,7 @@ import org.laokou.admin.menu.model.MenuTypeEnum;
 import org.laokou.admin.menu.service.extensionpoint.MenuTreeBuilderExtPt;
 import org.laokou.common.core.util.TreeUtils;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.constant.TypeEnum;
+import org.laokou.common.data.cache.model.TypeEnum;
 import org.laokou.common.extension.Extension;
 
 import java.util.List;

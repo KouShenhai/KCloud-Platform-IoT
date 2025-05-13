@@ -46,7 +46,7 @@ import reactor.util.retry.Retry;
 import java.time.Duration;
 
 import static org.laokou.common.data.cache.constant.NameConstants.USERS;
-import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
+import static org.laokou.common.data.cache.model.TypeEnum.DEL;
 
 /**
  * 用户管理控制器.

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.log.entity;
+package org.laokou.common.log.model;
 
 public final class DomainFactory {
 

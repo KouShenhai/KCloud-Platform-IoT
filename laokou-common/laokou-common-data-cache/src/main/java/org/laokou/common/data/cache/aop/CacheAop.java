@@ -24,7 +24,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.util.SpringExpressionUtils;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.constant.TypeEnum;
+import org.laokou.common.data.cache.model.TypeEnum;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;

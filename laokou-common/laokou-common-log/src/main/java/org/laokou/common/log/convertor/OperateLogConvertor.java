@@ -24,11 +24,10 @@ import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.laokou.common.log.handler.event.OperateEvent;
-import org.laokou.common.log.entity.OperateLogE;
+import org.laokou.common.log.model.MqEnum;
+import org.laokou.common.log.model.OperateLogE;
 
 import static org.laokou.common.i18n.common.constant.EventTypeEnum.OPERATE_EVENT;
-import static org.laokou.common.log.constant.MqConstants.LAOKOU_LOG_TOPIC;
-import static org.laokou.common.log.constant.MqConstants.OPERATE_TAG;
 
 public final class OperateLogConvertor {
 
@@ -74,8 +73,9 @@ public final class OperateLogConvertor {
 
 	public static DomainEvent toDomainEvent(Long id, OperateLogE operateLogE) {
 		UserContextHolder.User user = UserContextHolder.get();
-		return new DomainEvent(id, user.getTenantId(), user.getId(), null, LAOKOU_LOG_TOPIC, OPERATE_TAG, 0,
-				JacksonUtils.toJsonStr(toEvent(operateLogE)), OPERATE_EVENT, user.getSourcePrefix());
+		return new DomainEvent(id, user.getTenantId(), user.getId(), null, MqEnum.OPERATE_LOG.getTopic(),
+				MqEnum.OPERATE_LOG.getTag(), 0, JacksonUtils.toJsonStr(toEvent(operateLogE)), OPERATE_EVENT,
+				user.getSourcePrefix());
 	}
 
 	private static String truncate(String str) {

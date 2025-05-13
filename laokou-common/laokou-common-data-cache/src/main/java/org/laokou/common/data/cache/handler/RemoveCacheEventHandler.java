@@ -32,14 +32,12 @@ import java.util.List;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
-import static org.laokou.common.data.cache.constant.MqConstants.LAOKOU_CACHE_CONSUMER_GROUP;
-import static org.laokou.common.data.cache.constant.MqConstants.LAOKOU_CACHE_TOPIC;
 
 /**
  * @author laokou
  */
 @RequiredArgsConstructor
-@RocketMQMessageListener(consumerGroup = LAOKOU_CACHE_CONSUMER_GROUP, topic = LAOKOU_CACHE_TOPIC,
+@RocketMQMessageListener(consumerGroup = "laokou_cache_consumer_group", topic = "laokou_cache_topic",
 		messageModel = BROADCASTING, consumeMode = CONCURRENTLY, consumeThreadMax = 128, consumeThreadNumber = 64)
 public class RemoveCacheEventHandler extends AbstractDomainEventHandler {
 

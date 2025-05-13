@@ -34,7 +34,6 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
-import static org.laokou.auth.model.MqConstants.*;
 import static org.laokou.auth.model.GrantTypeEnum.*;
 import static org.laokou.auth.model.OAuth2Constants.*;
 import static org.laokou.common.i18n.common.constant.EventTypeEnum.LOGIN_EVENT;
@@ -151,7 +150,7 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void createCaptcha(Long eventId) {
-		addEvent(new DomainEvent(eventId, tenantId, null, super.id, LAOKOU_CAPTCHA_TOPIC, captchaE.getTag(),
+		addEvent(new DomainEvent(eventId, tenantId, null, super.id, MqEnum.MOBILE_CAPTCHA.getTopic(), captchaE.getTag(),
 				super.version, JacksonUtils.toJsonStr(new SendCaptchaEvent(captchaE.getUuid())),
 				EventTypeEnum.SEND_CAPTCHA_EVENT, sourcePrefix));
 		super.version++;
@@ -243,8 +242,9 @@ public class AuthA extends AggregateRoot {
 	public void recordLog(Long eventId, GlobalException e) {
 		LoginEvent event = getEvent(e);
 		if (ObjectUtils.isNotNull(event)) {
-			addEvent(new DomainEvent(eventId, super.tenantId, super.userId, super.id, LAOKOU_LOG_TOPIC, LOGIN_TAG,
-					super.version, JacksonUtils.toJsonStr(event), LOGIN_EVENT, sourcePrefix));
+			addEvent(new DomainEvent(eventId, super.tenantId, super.userId, super.id, MqEnum.LOGIN_LOG.getTopic(),
+					MqEnum.LOGIN_LOG.getTag(), super.version, JacksonUtils.toJsonStr(event), LOGIN_EVENT,
+					sourcePrefix));
 			super.version++;
 		}
 	}

@@ -29,9 +29,6 @@ import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.auth.model.MqConstants.LAOKOU_LOGIN_LOG_CONSUMER_GROUP;
-import static org.laokou.auth.model.MqConstants.LAOKOU_LOG_TOPIC;
-import static org.laokou.auth.model.MqConstants.LOGIN_TAG;
 
 /**
  * 登录日志处理器.
@@ -40,8 +37,8 @@ import static org.laokou.auth.model.MqConstants.LOGIN_TAG;
  */
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_LOGIN_LOG_CONSUMER_GROUP, topic = LAOKOU_LOG_TOPIC,
-		selectorExpression = LOGIN_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY, consumeThreadMax = 128,
+@RocketMQMessageListener(consumerGroup = "laokou_login_log_consumer_group", topic = "laokou_log_topic",
+		selectorExpression = "loginLog", messageModel = CLUSTERING, consumeMode = CONCURRENTLY, consumeThreadMax = 128,
 		consumeThreadNumber = 64)
 public class LoginEventHandler extends AbstractDomainEventHandler {
 

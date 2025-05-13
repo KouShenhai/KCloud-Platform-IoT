@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.log.entity;
+package org.laokou.common.log.model;
 
 import lombok.Getter;
 
@@ -23,22 +23,32 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum StatusEnum {
+public enum MqEnum {
 
-	// @formatter:off
-	OK(0, "成功"),
+	OPERATE_LOG("operateLog", "操作日志") {
+		@Override
+		public String getTopic() {
+			return "laokou_log_topic";
+		}
 
-	FAIL(1, "失败");
+		@Override
+		public String getTag() {
+			return "operateLog";
+		}
 
-	private final int code;
+	};
+
+	private final String code;
 
 	private final String desc;
 
-	StatusEnum(int code, String desc) {
+	MqEnum(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
-	// @formatter:on
+	public abstract String getTopic();
+
+	public abstract String getTag();
 
 }

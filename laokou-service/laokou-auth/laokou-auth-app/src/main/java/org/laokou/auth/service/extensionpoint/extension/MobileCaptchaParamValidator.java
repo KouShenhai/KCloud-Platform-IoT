@@ -22,14 +22,12 @@ import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.common.extension.Extension;
 
-import static org.laokou.auth.common.constant.BizConstants.SCENARIO;
-import static org.laokou.auth.common.constant.BizConstants.USE_CASE_CAPTCHA;
-import static org.laokou.auth.model.MqConstants.MOBILE_TAG;
+import static org.laokou.auth.common.constant.BizConstants.*;
 
 /**
  * @author laokou
  */
-@Extension(bizId = MOBILE_TAG, useCase = USE_CASE_CAPTCHA, scenario = SCENARIO)
+@Extension(bizId = MOBILE_CAPTCHA, useCase = USE_CASE_CAPTCHA, scenario = SCENARIO)
 public class MobileCaptchaParamValidator implements CaptchaParamValidatorExtPt {
 
 	@Override

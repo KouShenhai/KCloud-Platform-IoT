@@ -23,33 +23,31 @@ import org.laokou.common.kafka.template.KafkaSender;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
 import org.laokou.common.network.mqtt.client.util.TopicUtils;
-import org.laokou.common.vertx.model.PropertyReportMessage;
+import org.laokou.common.vertx.model.MqttMessageEnum;
+import org.laokou.common.vertx.model.PropertyMessage;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
-import static org.laokou.common.vertx.constant.MqConstants.LAOKOU_MQTT_PROPERTY_WRITE_REPLY;
-import static org.laokou.common.vertx.constant.MqConstants.MQTT_TOPIC_RULE_PROPERTY_WRITE_REPLY;
-
 /**
- * 处理器【写入属性】.
+ * 属性修改回复【上行】处理器.
  *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class ReactivePropertyWriteReplyMqttMessageHandler implements ReactiveMqttMessageHandler {
+public class ReactiveDownPropertyWriteReplyMqttMessageHandler implements ReactiveMqttMessageHandler {
 
 	private final KafkaSender kafkaSender;
 
 	@Override
 	public boolean isSubscribe(String topic) {
-		return TopicUtils.match(MQTT_TOPIC_RULE_PROPERTY_WRITE_REPLY, topic);
+		return TopicUtils.match(MqttMessageEnum.UP_PROPERTY_WRITE_REPLY.getTopic(), topic);
 	}
 
 	@Override
 	public Flux<Boolean> handle(MqttMessage mqttMessage) {
-		return kafkaSender.send(LAOKOU_MQTT_PROPERTY_WRITE_REPLY, JacksonUtils
-			.toJsonStr(new PropertyReportMessage(mqttMessage.getTopic(), mqttMessage.getPayload().toString())));
+		return kafkaSender.send(MqttMessageEnum.UP_PROPERTY_WRITE_REPLY.getMqTopic(), JacksonUtils
+			.toJsonStr(new PropertyMessage(mqttMessage.getTopic(), mqttMessage.getPayload().toString())));
 	}
 
 }

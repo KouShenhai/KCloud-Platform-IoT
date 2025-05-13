@@ -14,7 +14,7 @@
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-core</artifactId>
+      <artifactId>laokou-cola-client</artifactId>
     </dependency>
   </dependencies>
 

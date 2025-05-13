@@ -15,23 +15,32 @@
  *
  */
 
-package org.laokou.common.data.cache.constant;
+package org.laokou.common.data.cache.model;
+
+import lombok.Getter;
 
 /**
- * 操作类型枚举.
- *
  * @author laokou
  */
-public enum TypeEnum {
+@Getter
+public enum MqEnum {
 
-	/**
-	 * 查看.
-	 */
-	GET,
+	CACHE("cache", "缓存") {
+		@Override
+		public String getTopic() {
+			return "laokou_cache_topic";
+		}
+	};
 
-	/**
-	 * 删除.
-	 */
-	DEL
+	private final String code;
+
+	private final String desc;
+
+	MqEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+
+	public abstract String getTopic();
 
 }

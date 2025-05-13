@@ -18,10 +18,6 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-cola-client</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
       <artifactId>laokou-common-security</artifactId>
     </dependency>
     <dependency>
@@ -31,11 +27,6 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-nacos</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>

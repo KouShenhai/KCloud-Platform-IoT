@@ -23,9 +23,8 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.vertx.model.HttpMessageEnum;
 import reactor.core.publisher.Flux;
-
-import static org.laokou.common.vertx.constant.MqConstants.HTTP_ROUTER_RULE_PROPERTY_REPORT;
 
 /**
  * @author laokou
@@ -82,7 +81,7 @@ final class VertxHttpServer {
 	private Router getRouter() {
 		Router router = Router.router(vertx);
 		router.route().handler(BodyHandler.create());
-		router.post(HTTP_ROUTER_RULE_PROPERTY_REPORT).handler(ctx -> {
+		router.post(HttpMessageEnum.UP_PROPERTY_REPORT.getRouter()).handler(ctx -> {
 			String body = ctx.body().asString();
 			Long deviceId = Long.valueOf(ctx.pathParam("deviceId"));
 			Long productId = Long.valueOf(ctx.pathParam("productId"));

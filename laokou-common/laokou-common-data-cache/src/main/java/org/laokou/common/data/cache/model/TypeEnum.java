@@ -15,35 +15,23 @@
  *
  */
 
-package org.laokou.common.data.cache.annotation;
-
-import org.laokou.common.data.cache.model.TypeEnum;
-
-import java.lang.annotation.*;
+package org.laokou.common.data.cache.model;
 
 /**
- * 数据缓存.
+ * 操作类型枚举.
  *
  * @author laokou
  */
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface DataCache {
+public enum TypeEnum {
 
 	/**
-	 * 缓存名称.
+	 * 查看.
 	 */
-	String name();
+	GET,
 
 	/**
-	 * 缓存键.
+	 * 删除.
 	 */
-	String key();
-
-	/**
-	 * 操作类型.
-	 */
-	TypeEnum type() default TypeEnum.GET;
+	DEL
 
 }

@@ -39,7 +39,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import static org.laokou.common.data.cache.constant.NameConstants.DEPTS;
-import static org.laokou.common.data.cache.constant.TypeEnum.DEL;
+import static org.laokou.common.data.cache.model.TypeEnum.DEL;
 
 /**
  * 部门管理控制器.

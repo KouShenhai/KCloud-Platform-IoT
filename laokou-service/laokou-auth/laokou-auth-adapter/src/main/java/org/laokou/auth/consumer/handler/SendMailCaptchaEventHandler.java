@@ -33,7 +33,6 @@ import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.auth.model.MqConstants.*;
 
 /**
  * @author laokou
@@ -41,9 +40,9 @@ import static org.laokou.auth.model.MqConstants.*;
 @Slf4j
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = LAOKOU_MAIL_CAPTCHA_CONSUMER_GROUP, topic = LAOKOU_CAPTCHA_TOPIC,
-		selectorExpression = MAIL_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY, consumeThreadMax = 128,
-		consumeThreadNumber = 64)
+@RocketMQMessageListener(consumerGroup = "laokou_mail_captcha_consumer_group", topic = "laokou_captcha_topic",
+		selectorExpression = "mailCaptcha", messageModel = CLUSTERING, consumeMode = CONCURRENTLY,
+		consumeThreadMax = 128, consumeThreadNumber = 64)
 public class SendMailCaptchaEventHandler extends AbstractDomainEventHandler {
 
 	private final MailService mailService;

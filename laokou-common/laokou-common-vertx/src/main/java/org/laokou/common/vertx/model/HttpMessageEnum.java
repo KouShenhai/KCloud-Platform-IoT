@@ -15,18 +15,41 @@
  *
  */
 
-package org.laokou.common.data.cache.constant;
+package org.laokou.common.vertx.model;
+
+import lombok.Getter;
 
 /**
+ * http消息枚举.
+ *
  * @author laokou
  */
-public final class MqConstants {
+@Getter
+public enum HttpMessageEnum {
 
-	public static final String LAOKOU_CACHE_TOPIC = "laokou_cache_topic";
+	UP_PROPERTY_REPORT("up_property_report", "属性上报【上行】") {
+		@Override
+		public String getRouter() {
+			return "/:productId/:deviceId/up/property/report";
+		}
 
-	public static final String LAOKOU_CACHE_CONSUMER_GROUP = "laokou_cache_consumer_group";
+		@Override
+		public String getMqTopic() {
+			return "laokou_http_up_property_report";
+		}
+	};
 
-	private MqConstants() {
+	private final String code;
+
+	private final String desc;
+
+	HttpMessageEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
+
+	public abstract String getRouter();
+
+	public abstract String getMqTopic();
 
 }

@@ -24,11 +24,13 @@ import org.laokou.common.i18n.common.constant.StringConstants;
 import java.io.Serializable;
 
 /**
+ * 属性消息.
+ *
  * @author laokou
  */
 @Data
 @NoArgsConstructor
-public class PropertyReportMessage implements Serializable {
+public class PropertyMessage implements Serializable {
 
 	private Long deviceId;
 
@@ -38,7 +40,7 @@ public class PropertyReportMessage implements Serializable {
 
 	private String type;
 
-	public PropertyReportMessage(String topic, String payload) {
+	public PropertyMessage(String topic, String payload) {
 		String[] arr = topic.split(StringConstants.SLASH);
 		this.deviceId = Long.valueOf(arr[1]);
 		this.productId = Long.valueOf(arr[0]);
@@ -46,7 +48,7 @@ public class PropertyReportMessage implements Serializable {
 		this.type = arr[3];
 	}
 
-	public PropertyReportMessage(Long deviceId, Long productId, String payload, String type) {
+	public PropertyMessage(Long deviceId, Long productId, String payload, String type) {
 		this.deviceId = deviceId;
 		this.productId = productId;
 		this.payload = payload;

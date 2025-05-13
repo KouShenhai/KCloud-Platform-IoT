@@ -15,20 +15,30 @@
  *
  */
 
-package org.laokou.common.log.constant;
+package org.laokou.common.log.model;
+
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-public final class MqConstants {
+@Getter
+public enum StatusEnum {
 
-	private MqConstants() {
+	// @formatter:off
+	OK(0, "成功"),
+
+	FAIL(1, "失败");
+
+	private final int code;
+
+	private final String desc;
+
+	StatusEnum(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
-	public static final String OPERATE_TAG = "operateLog";
-
-	public static final String LAOKOU_LOG_TOPIC = "laokou_log_topic";
-
-	public static final String LAOKOU_OPERATE_LOG_CONSUMER_GROUP = "laokou_operate_log_consumer_group";
+	// @formatter:on
 
 }
