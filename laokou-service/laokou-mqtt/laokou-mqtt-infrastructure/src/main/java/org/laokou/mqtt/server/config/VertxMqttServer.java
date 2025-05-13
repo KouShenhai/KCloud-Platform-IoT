@@ -18,6 +18,7 @@
 package org.laokou.mqtt.server.config;
 
 import io.netty.handler.codec.mqtt.MqttConnectReturnCode;
+import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.mqtt.*;
 import io.vertx.mqtt.messages.MqttPublishMessage;
@@ -27,6 +28,8 @@ import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
+import reactor.core.scheduler.Schedulers;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +37,7 @@ import java.util.Optional;
  * @author laokou
  */
 @Slf4j
-final class VertxMqttServer {
+final class VertxMqttServer extends AbstractVerticle {
 
 	private final Sinks.Many<MqttPublishMessage> messageSink = Sinks.many()
 		.multicast()
@@ -57,8 +60,10 @@ final class VertxMqttServer {
 		this.reactiveMqttMessageHandlers = reactiveMqttMessageHandlers;
 	}
 
-	synchronized Flux<MqttServer> start() {
-		return mqttServer = getMqttServerOptions().map(options -> MqttServer.create(vertx, options))
+	@Override
+	public synchronized void start() {
+		mqttServer = getMqttServerOptions()
+			.map(options -> MqttServer.create(vertx, options))
 			.map(server -> server
 				.exceptionHandler(
 						error -> log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，错误信息：{}", error.getMessage(), error))
@@ -85,12 +90,15 @@ final class VertxMqttServer {
 						log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，端口：{}，错误信息：{}", server.actualPort(),
 								asyncResult.cause().getMessage(), asyncResult.cause());
 					}
-				}));
+				})
+			);
+		mqttServer.subscribeOn(Schedulers.boundedElastic()).subscribe();
 	}
 
-	synchronized Flux<MqttServer> stop() {
+	@Override
+	public synchronized void stop() {
 		isClosed = true;
-		return mqttServer.doOnNext(server -> server.close(result -> {
+		mqttServer.doOnNext(server -> server.close(result -> {
 			if (result.succeeded()) {
 				log.info("【Vertx-MQTT-Server】 => MQTT服务停止成功，端口：{}", server.actualPort());
 			}
@@ -98,10 +106,19 @@ final class VertxMqttServer {
 				Throwable ex = result.cause();
 				log.error("【Vertx-MQTT-Server】 => MQTT服务停止失败，错误信息：{}", ex.getMessage(), ex);
 			}
-		}));
+		})).subscribeOn(Schedulers.boundedElastic()).subscribe();
 	}
 
-	Flux<Boolean> publish() {
+	public void deploy() {
+		// 部署服务
+		vertx.deployVerticle(this);
+		// 推送数据
+		publish().subscribeOn(Schedulers.boundedElastic()).subscribe();
+		// 停止服务
+		Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
+	}
+
+	private Flux<Boolean> publish() {
 		return messageSink.asFlux().flatMap(message -> {
 			// @formatter:off
 				// log.info("【Vertx-MQTT-Server】 => MQTT服务接收到消息，主题：{}，内容：{}", message.topicName(), message.payload().toString());

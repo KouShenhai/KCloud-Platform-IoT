@@ -18,25 +18,17 @@
 package org.laokou.http.server.config;
 
 import io.vertx.core.Vertx;
-import reactor.core.scheduler.Schedulers;
 
 /**
  * @author laokou
  */
 public final class VertxHttpServerManager {
 
-	private volatile static VertxHttpServer vertxHttpServer;
-
 	private VertxHttpServerManager() {
 	}
 
-	public static void start(final Vertx vertx, final HttpServerProperties properties) {
-		vertxHttpServer = new VertxHttpServer(vertx, properties);
-		vertxHttpServer.start().subscribeOn(Schedulers.boundedElastic()).subscribe();
-	}
-
-	public static void stop() {
-		vertxHttpServer.stop().subscribeOn(Schedulers.boundedElastic()).subscribe();
+	public static void deploy(final Vertx vertx, final HttpServerProperties properties) {
+		new VertxHttpServer(vertx, properties).deploy();
 	}
 
 }

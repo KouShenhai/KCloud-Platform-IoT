@@ -19,7 +19,6 @@ package org.laokou.mqtt.server.config;
 
 import io.vertx.core.Vertx;
 import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
-import reactor.core.scheduler.Schedulers;
 import java.util.List;
 
 /**
@@ -27,23 +26,12 @@ import java.util.List;
  */
 public final class VertxMqttServerManager {
 
-	private volatile static VertxMqttServer vertxMqttServer;
-
 	private VertxMqttServerManager() {
 	}
 
-	public static void start(final Vertx vertx, final MqttServerProperties properties,
+	public static void deploy(final Vertx vertx, final MqttServerProperties properties,
 			final List<ReactiveMqttMessageHandler> reactiveMqttMessageHandlers) {
-		vertxMqttServer = new VertxMqttServer(vertx, properties, reactiveMqttMessageHandlers);
-		// 启动服务
-		vertxMqttServer.start().subscribeOn(Schedulers.boundedElastic()).subscribe();
-		// 推送数据
-		vertxMqttServer.publish().subscribeOn(Schedulers.boundedElastic()).subscribe();
-	}
-
-	public static void stop() {
-		// 停止服务
-		vertxMqttServer.stop().subscribeOn(Schedulers.boundedElastic()).subscribe();
+		new VertxMqttServer(vertx, properties, reactiveMqttMessageHandlers).deploy();
 	}
 
 }

@@ -38,21 +38,21 @@ public class PropertyMessage implements Serializable {
 
 	private String payload;
 
-	private String type;
+	private String code;
 
-	public PropertyMessage(String topic, String payload) {
+	public PropertyMessage(String topic, String payload, String code) {
 		String[] arr = topic.split(StringConstants.SLASH);
-		this.deviceId = Long.valueOf(arr[1]);
-		this.productId = Long.valueOf(arr[0]);
+		this.productId = Long.valueOf(arr[1]);
+		this.deviceId = Long.valueOf(arr[2]);
 		this.payload = payload;
-		this.type = arr[3];
+		this.code = code;
 	}
 
-	public PropertyMessage(Long deviceId, Long productId, String payload, String type) {
+	public PropertyMessage(Long deviceId, Long productId, String payload, String code) {
 		this.deviceId = deviceId;
 		this.productId = productId;
 		this.payload = payload;
-		this.type = type;
+		this.code = code;
 	}
 
 }

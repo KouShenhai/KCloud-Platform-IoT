@@ -74,8 +74,7 @@ public class MqttServerApp implements CommandLineRunner {
 	}
 
 	private void listenMessage() {
-		VertxMqttServerManager.start(vertx, properties, reactiveMqttMessageHandlers);
-		Runtime.getRuntime().addShutdownHook(new Thread(VertxMqttServerManager::stop));
+		VertxMqttServerManager.deploy(vertx, properties, reactiveMqttMessageHandlers);
 	}
 
 }

@@ -17,6 +17,7 @@
 
 package org.laokou.http.server.config;
 
+import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerOptions;
@@ -25,12 +26,13 @@ import io.vertx.ext.web.handler.BodyHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.vertx.model.HttpMessageEnum;
 import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Schedulers;
 
 /**
  * @author laokou
  */
 @Slf4j
-final class VertxHttpServer {
+final class VertxHttpServer extends AbstractVerticle {
 
 	private final HttpServerProperties properties;
 
@@ -48,8 +50,9 @@ final class VertxHttpServer {
 		this.router = getRouter();
 	}
 
-	synchronized Flux<HttpServer> start() {
-		return httpServer = getHttpServerOptions()
+	@Override
+	public synchronized void start() {
+		httpServer = getHttpServerOptions()
 			.map(httpServerOption -> vertx.createHttpServer(httpServerOption).requestHandler(router))
 			.map(server -> server.listen(completionHandler -> {
 				if (isClosed) {
@@ -63,11 +66,13 @@ final class VertxHttpServer {
 					log.error("【Vertx-Http-Server】 => HTTP服务启动失败，错误信息：{}", ex.getMessage(), ex);
 				}
 			}));
+		httpServer.subscribeOn(Schedulers.boundedElastic()).subscribe();
 	}
 
-	synchronized Flux<HttpServer> stop() {
+	@Override
+	public synchronized void stop() {
 		isClosed = true;
-		return httpServer.doOnNext(server -> server.close(result -> {
+		httpServer.doOnNext(server -> server.close(result -> {
 			if (result.succeeded()) {
 				log.info("【Vertx-Http-Server】 => HTTP服务停止成功，端口：{}", server.actualPort());
 			}
@@ -75,7 +80,14 @@ final class VertxHttpServer {
 				Throwable ex = result.cause();
 				log.error("【Vertx-Http-Server】 => HTTP服务停止失败，错误信息：{}", ex.getMessage(), ex);
 			}
-		}));
+		})).subscribeOn(Schedulers.boundedElastic()).subscribe();
+	}
+
+	public void deploy() {
+		// 部署服务
+		vertx.deployVerticle(this);
+		// 停止服务
+		Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
 	}
 
 	private Router getRouter() {

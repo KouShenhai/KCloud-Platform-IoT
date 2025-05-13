@@ -1,4 +1,4 @@
-POST http://localhost:3000/1/2/property/report
+POST http://127.0.0.1:3000/1/2/up/property/report
 Content-Type: application/json
 
 {

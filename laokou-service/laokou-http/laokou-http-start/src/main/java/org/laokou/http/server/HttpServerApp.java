@@ -70,8 +70,7 @@ public class HttpServerApp implements CommandLineRunner {
 	}
 
 	private void listenMessage() {
-		VertxHttpServerManager.start(vertx, properties);
-		Runtime.getRuntime().addShutdownHook(new Thread(VertxHttpServerManager::stop));
+		VertxHttpServerManager.deploy(vertx, properties);
 	}
 
 }
