@@ -204,6 +204,11 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-websocket</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-tcp-adapter</artifactId>
         <version>${laokou.version}</version>
       </dependency>

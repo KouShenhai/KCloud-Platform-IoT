@@ -94,6 +94,7 @@
     <module>laokou-common-ftp</module>
     <module>laokou-common-network</module>
     <module>laokou-common-vertx</module>
+    <module>laokou-common-websocket</module>
   </modules>
 
 </project>
