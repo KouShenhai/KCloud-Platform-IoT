@@ -221,7 +221,6 @@ image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
         └── laokou-common-lock                     --- 分布式锁组件
         └── laokou-common-trace                    --- 链路跟踪组件
         └── laokou-common-nacos                    --- 注册发现组件
-        └── laokou-common-netty                    --- 网络通讯组件
         └── laokou-common-domain                   --- 领域事件组件
         └── laokou-common-crypto                   --- 加密解密组件
         └── laokou-common-secret                   --- 接口验签组件

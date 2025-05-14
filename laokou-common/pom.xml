@@ -52,7 +52,6 @@
     <module>laokou-common-trace</module>
     <module>laokou-common-algorithm</module>
     <module>laokou-common-nacos</module>
-    <module>laokou-common-netty</module>
     <module>laokou-common-idempotent</module>
     <module>laokou-common-lock</module>
     <module>laokou-common-sensitive</module>

@@ -12,7 +12,7 @@
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-core</artifactId>
+      <artifactId>laokou-jtt808-client</artifactId>
     </dependency>
   </dependencies>
 
