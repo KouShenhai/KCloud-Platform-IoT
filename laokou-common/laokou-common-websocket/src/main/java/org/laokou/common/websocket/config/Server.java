@@ -17,8 +17,6 @@
 
 package org.laokou.common.websocket.config;
 
-import io.netty.util.concurrent.Future;
-
 /**
  * @author laokou
  */
@@ -26,10 +24,10 @@ public interface Server {
 
 	/**
 	 * 发送消息.
-	 * @param obj 对象
 	 * @param key 键
+	 * @param obj 对象
 	 */
-	Future<Void> send(String key, Object obj) throws InterruptedException;
+	void send(String key, Object obj) throws InterruptedException;
 
 	/**
 	 * 启动.

@@ -29,26 +29,18 @@ public final class WebSocketSessionHeartBeatManager {
 	private WebSocketSessionHeartBeatManager() {
 	}
 
-	private static final Map<String, AtomicInteger> HEART_BEAT_MAP = new ConcurrentHashMap<>(8192);
+	private static final Map<String, AtomicInteger> HEART_BEAT_CACHE = new ConcurrentHashMap<>(8192);
 
 	public static void incrementHeartBeat(String clientId) {
-		HEART_BEAT_MAP.get(clientId).incrementAndGet();
+		HEART_BEAT_CACHE.get(clientId).incrementAndGet();
 	}
 
 	public static void resetHeartbeat(String clientId) {
-		HEART_BEAT_MAP.get(clientId).set(0);
+		HEART_BEAT_CACHE.get(clientId).set(0);
 	}
 
 	public static int getHeartBeat(String clientId) {
-		return HEART_BEAT_MAP.get(clientId).get();
-	}
-
-	public static void removeHeartBeat(String clientId) {
-		HEART_BEAT_MAP.remove(clientId);
-	}
-
-	public static void initHeartbeat(String clientId) {
-		HEART_BEAT_MAP.putIfAbsent(clientId, new AtomicInteger(0));
+		return HEART_BEAT_CACHE.computeIfAbsent(clientId, k -> new AtomicInteger(0)).get();
 	}
 
 }

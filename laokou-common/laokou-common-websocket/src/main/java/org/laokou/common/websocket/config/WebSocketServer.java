@@ -22,10 +22,10 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.util.concurrent.Future;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.ObjectUtils;
 
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
 import static io.netty.channel.ChannelOption.SO_KEEPALIVE;
@@ -77,12 +77,13 @@ public final class WebSocketServer extends AbstractServer {
 	}
 
 	@Override
-	public Future<Void> send(String clientId, Object obj) throws InterruptedException {
-		Channel channel = WebSocketSessionManager.get(clientId);
-		if (ObjectUtils.isNotNull(channel) && channel.isActive() && channel.isWritable()) {
-			return channel.writeAndFlush(obj);
+	public void send(String clientId, Object obj) throws InterruptedException {
+		Set<Channel> channels = WebSocketSessionManager.get(clientId);
+		for (Channel channel : channels) {
+			if (ObjectUtils.isNotNull(channel) && channel.isActive() && channel.isWritable()) {
+				virtualThreadExecutor.execute(() -> channel.writeAndFlush(obj));
+			}
 		}
-		return null;
 	}
 
 }

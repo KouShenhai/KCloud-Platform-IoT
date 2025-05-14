@@ -18,10 +18,9 @@
 package org.laokou.common.websocket.config;
 
 import io.netty.channel.Channel;
-import org.laokou.common.i18n.util.StringUtils;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.laokou.common.i18n.util.ObjectUtils;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -34,9 +33,7 @@ public final class WebSocketSessionManager {
 	private WebSocketSessionManager() {
 	}
 
-	private static final Map<String, Channel> CLIENT_CACHE = new HashMap<>(8192);
-
-	private static final Map<String, String> CHANNEL_CACHE = new HashMap<>(8192);
+	private static final Map<String, Set<Channel>> CLIENT_CACHE = new ConcurrentHashMap<>(8192);
 
 	private static final ReentrantReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
 
@@ -46,16 +43,14 @@ public final class WebSocketSessionManager {
 
 	public static void add(String clientId, Channel channel) throws InterruptedException {
 		boolean isLocked = false;
-		int retry = 3;
+		int retry = 10;
 		try {
 			do {
 				isLocked = WRITE_LOCK.tryLock(50, TimeUnit.MILLISECONDS);
 			}
 			while (!isLocked && --retry > 0);
 			if (isLocked) {
-				// 替换channel
-				CLIENT_CACHE.put(clientId, channel);
-				CHANNEL_CACHE.put(channel.id().asLongText(), clientId);
+				CLIENT_CACHE.computeIfAbsent(clientId, k -> new HashSet<>(256)).add(channel);
 			}
 		}
 		finally {
@@ -65,9 +60,9 @@ public final class WebSocketSessionManager {
 		}
 	}
 
-	public static Channel get(String clientId) throws InterruptedException {
+	public static Set<Channel> get(String clientId) throws InterruptedException {
 		boolean isLocked = false;
-		int retry = 3;
+		int retry = 10;
 		try {
 			do {
 				// 防止读到中间状态数据，保证读取的完整性【数据强一致性】
@@ -76,9 +71,9 @@ public final class WebSocketSessionManager {
 			}
 			while (!isLocked && --retry > 0);
 			if (isLocked) {
-				return CLIENT_CACHE.get(clientId);
+				return CLIENT_CACHE.getOrDefault(clientId, Collections.emptySet());
 			}
-			return null;
+			return Collections.emptySet();
 		}
 		finally {
 			if (isLocked) {
@@ -87,20 +82,18 @@ public final class WebSocketSessionManager {
 		}
 	}
 
-	public static void remove(String channelId) throws InterruptedException {
+	public static void remove(Channel channel) throws InterruptedException {
 		boolean isLocked = false;
-		int retry = 3;
+		int retry = 10;
 		try {
 			do {
 				isLocked = WRITE_LOCK.tryLock(50, TimeUnit.MILLISECONDS);
 			}
 			while (!isLocked && --retry > 0);
 			if (isLocked) {
-				String clientId = CHANNEL_CACHE.get(channelId);
-				if (StringUtils.isNotEmpty(clientId)) {
-					CLIENT_CACHE.remove(clientId);
-					CHANNEL_CACHE.remove(channelId);
-				}
+				String channelId = channel.id().asLongText();
+				CLIENT_CACHE.values()
+					.forEach(set -> set.removeIf(c -> ObjectUtils.equals(c.id().asLongText(), channelId)));
 			}
 		}
 		finally {
