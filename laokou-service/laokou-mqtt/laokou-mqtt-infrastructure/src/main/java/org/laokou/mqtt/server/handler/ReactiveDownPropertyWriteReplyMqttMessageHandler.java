@@ -46,8 +46,9 @@ public class ReactiveDownPropertyWriteReplyMqttMessageHandler implements Reactiv
 
 	@Override
 	public Flux<Boolean> handle(MqttMessage mqttMessage) {
-		return kafkaSender.send(MqttMessageEnum.UP_PROPERTY_WRITE_REPLY.getMqTopic(), JacksonUtils
-			.toJsonStr(new PropertyMessage(mqttMessage.getTopic(), mqttMessage.getPayload().toString(), MqttMessageEnum.UP_PROPERTY_WRITE_REPLY.getCode())));
+		return kafkaSender.send(MqttMessageEnum.UP_PROPERTY_WRITE_REPLY.getMqTopic(),
+				JacksonUtils.toJsonStr(new PropertyMessage(mqttMessage.getTopic(), mqttMessage.getPayload().toString(),
+						MqttMessageEnum.UP_PROPERTY_WRITE_REPLY.getCode())));
 	}
 
 }

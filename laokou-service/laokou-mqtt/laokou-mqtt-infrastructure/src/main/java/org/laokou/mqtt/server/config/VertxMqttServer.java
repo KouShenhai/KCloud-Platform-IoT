@@ -62,8 +62,7 @@ final class VertxMqttServer extends AbstractVerticle {
 
 	@Override
 	public synchronized void start() {
-		mqttServer = getMqttServerOptions()
-			.map(options -> MqttServer.create(vertx, options))
+		mqttServer = getMqttServerOptions().map(options -> MqttServer.create(vertx, options))
 			.map(server -> server
 				.exceptionHandler(
 						error -> log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，错误信息：{}", error.getMessage(), error))
@@ -90,8 +89,7 @@ final class VertxMqttServer extends AbstractVerticle {
 						log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，端口：{}，错误信息：{}", server.actualPort(),
 								asyncResult.cause().getMessage(), asyncResult.cause());
 					}
-				})
-			);
+				}));
 		mqttServer.subscribeOn(Schedulers.boundedElastic()).subscribe();
 	}
 
@@ -112,7 +110,7 @@ final class VertxMqttServer extends AbstractVerticle {
 	public void deploy() {
 		// 部署服务
 		vertx.deployVerticle(this);
-		// 推送数据
+		// 发布数据
 		publish().subscribeOn(Schedulers.boundedElastic()).subscribe();
 		// 停止服务
 		Runtime.getRuntime().addShutdownHook(new Thread(this::stop));

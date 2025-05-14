@@ -24,7 +24,9 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.vertx.model.HttpMessageEnum;
+import org.laokou.common.vertx.model.WebsocketMessageEnum;
 import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
@@ -52,9 +54,17 @@ final class VertxHttpServer extends AbstractVerticle {
 
 	@Override
 	public synchronized void start() {
-		httpServer = getHttpServerOptions()
-			.map(httpServerOption -> vertx.createHttpServer(httpServerOption).requestHandler(router))
-			.map(server -> server.listen(completionHandler -> {
+		httpServer = getHttpServerOptions().map(vertx::createHttpServer)
+			.map(server -> server.webSocketHandler(serverWebSocket -> {
+				if (!RegexUtils.matches(WebsocketMessageEnum.UP_PROPERTY_REPORT.getPath(), serverWebSocket.path())) {
+					serverWebSocket.close();
+					return;
+				}
+				serverWebSocket.textMessageHandler(message -> log.info("【Vertx-Websocket-Server】 => 收到消息：{}", message))
+					.closeHandler(v -> log.error("【Vertx-Websocket-Server】 => 断开连接"))
+					.exceptionHandler(err -> log.error("【Vertx-Websocket-Server】 => 错误信息：{}", err.getMessage(), err))
+					.endHandler(v -> log.error("【Vertx-Websocket-Server】 => 结束"));
+			}).requestHandler(router).listen(completionHandler -> {
 				if (isClosed) {
 					return;
 				}

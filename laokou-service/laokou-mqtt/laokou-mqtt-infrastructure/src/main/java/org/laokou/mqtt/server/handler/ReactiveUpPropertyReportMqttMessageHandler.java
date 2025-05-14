@@ -46,8 +46,9 @@ public class ReactiveUpPropertyReportMqttMessageHandler implements ReactiveMqttM
 
 	@Override
 	public Flux<Boolean> handle(MqttMessage mqttMessage) {
-		return kafkaSender.send(MqttMessageEnum.UP_PROPERTY_UP.getMqTopic(), JacksonUtils
-			.toJsonStr(new PropertyMessage(mqttMessage.getTopic(), mqttMessage.getPayload().toString(), MqttMessageEnum.UP_PROPERTY_UP.getCode())));
+		return kafkaSender.send(MqttMessageEnum.UP_PROPERTY_UP.getMqTopic(),
+				JacksonUtils.toJsonStr(new PropertyMessage(mqttMessage.getTopic(), mqttMessage.getPayload().toString(),
+						MqttMessageEnum.UP_PROPERTY_UP.getCode())));
 	}
 
 }
