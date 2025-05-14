@@ -114,7 +114,7 @@ public class SpringWebSocketServerProperties {
 	/**
 	 * 最大心跳次数.
 	 */
-	private int maxHeartBeatCount = 5;
+	private int maxHeartBeatCount = 60;
 
 	/**
 	 * 私钥密码.
