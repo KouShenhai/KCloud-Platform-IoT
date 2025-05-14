@@ -3,28 +3,20 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.laokou</groupId>
-    <artifactId>laokou-http</artifactId>
+    <artifactId>laokou-tcp</artifactId>
     <version>3.5.0</version>
   </parent>
 
-  <artifactId>laokou-http-infrastructure</artifactId>
+  <artifactId>laokou-tcp-infrastructure</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-http-domain</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-web</artifactId>
+      <artifactId>laokou-tcp-domain</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-vertx</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
@@ -37,10 +29,6 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-prometheus</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-kafka</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

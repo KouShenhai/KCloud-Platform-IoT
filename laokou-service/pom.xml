@@ -41,5 +41,6 @@
     <module>laokou-mqtt</module>
     <module>laokou-distributed-identifier</module>
     <module>laokou-http</module>
+    <module>laokou-tcp</module>
   </modules>
 </project>
