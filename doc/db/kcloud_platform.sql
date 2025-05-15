@@ -81,15 +81,15 @@ COMMENT ON TABLE "public"."boot_sys_dept" IS '部门';
 
 ALTER TABLE "public"."boot_sys_dept" ADD CONSTRAINT "boot_sys_dept_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."boot_sys_dept" VALUES (1535858679453085698, 1341620898007281665, 1341620898007281665, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 4, 0, 1535887940687765505, '广州分公司', '0,1535887940687765505,1535858679453085698', 666);
-INSERT INTO "public"."boot_sys_dept" VALUES (1535881356595175426, 1341620898007281665, 1341620898007281665, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 18, 0, 1535887940687765505, '长沙分公司', '0,1535887940687765505,1535881356595175426', 111);
-INSERT INTO "public"."boot_sys_dept" VALUES (1535887129341599746, 1341620898007281665, 1341620898007281665, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 8, 0, 1535887940687765505, '深圳分公司', '0,1535887940687765505,1535887129341599746', 888);
-INSERT INTO "public"."boot_sys_dept" VALUES (1535887940687765505, 1341620898007281665, 1341620898007281665, '2022-11-16 12:12:55', '2023-09-22 11:31:42', 0, 38, 0, 0, '老寇云集团', '0,1535887940687765505', 1000);
-INSERT INTO "public"."boot_sys_dept" VALUES (1584488175088373761, 1341620898007281665, 1341620898007281665, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 43, 0, 1535881356595175426, '研发部', '0,1535887940687765505,1535881356595175426,1584488175088373761', 20);
-INSERT INTO "public"."boot_sys_dept" VALUES (1584488411756171265, 1341620898007281665, 1341620898007281665, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 9, 0, 1535881356595175426, '市场部', '0,1535887940687765505,1535881356595175426,1584488411756171265', 10);
-INSERT INTO "public"."boot_sys_dept" VALUES (1584488411756171266, 1341620898007281665, 1341620898007281665, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 19, 0, 1584488175088373761, '开发组', '0,1535887940687765505,1535881356595175426,1584488175088373761,1584488411756171266', 15);
-INSERT INTO "public"."boot_sys_dept" VALUES (1584488411756171268, 1341620898007281665, 1341620898007281665, '2023-02-10 22:01:36', '2023-09-22 11:31:42', 0, 9, 0, 1584488175088373761, '运维组', '0,1535887940687765505,1535881356595175426,1584488175088373761,1584488411756171268', 5);
-INSERT INTO "public"."boot_sys_dept" VALUES (1584488411756171269, 1341620898007281665, 1341620898007281665, '2023-02-10 22:06:44', '2023-09-22 11:31:42', 0, 8, 0, 1584488175088373761, '测试组', '0,1535887940687765505,1535881356595175426,1584488175088373761,1584488411756171269', 10);
+INSERT INTO "public"."boot_sys_dept" VALUES (1535858679453085698, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 4, 0, 1535887940687765505, '广州分公司', '0,1535887940687765505,1535858679453085698', 666);
+INSERT INTO "public"."boot_sys_dept" VALUES (1535881356595175426, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 18, 0, 1535887940687765505, '长沙分公司', '0,1535887940687765505,1535881356595175426', 111);
+INSERT INTO "public"."boot_sys_dept" VALUES (1535887129341599746, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 8, 0, 1535887940687765505, '深圳分公司', '0,1535887940687765505,1535887129341599746', 888);
+INSERT INTO "public"."boot_sys_dept" VALUES (1535887940687765505, 1, 1, '2022-11-16 12:12:55', '2023-09-22 11:31:42', 0, 38, 0, 0, '老寇云集团', '0,1535887940687765505', 1000);
+INSERT INTO "public"."boot_sys_dept" VALUES (1584488175088373761, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 43, 0, 1535881356595175426, '研发部', '0,1535887940687765505,1535881356595175426,1584488175088373761', 20);
+INSERT INTO "public"."boot_sys_dept" VALUES (1584488411756171265, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 9, 0, 1535881356595175426, '市场部', '0,1535887940687765505,1535881356595175426,1584488411756171265', 10);
+INSERT INTO "public"."boot_sys_dept" VALUES (1584488411756171266, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 19, 0, 1584488175088373761, '开发组', '0,1535887940687765505,1535881356595175426,1584488175088373761,1584488411756171266', 15);
+INSERT INTO "public"."boot_sys_dept" VALUES (1584488411756171268, 1, 1, '2023-02-10 22:01:36', '2023-09-22 11:31:42', 0, 9, 0, 1584488175088373761, '运维组', '0,1535887940687765505,1535881356595175426,1584488175088373761,1584488411756171268', 5);
+INSERT INTO "public"."boot_sys_dept" VALUES (1584488411756171269, 1, 1, '2023-02-10 22:06:44', '2023-09-22 11:31:42', 0, 8, 0, 1584488175088373761, '测试组', '0,1535887940687765505,1535881356595175426,1584488175088373761,1584488411756171269', 10);
 
 -- ----------------------------
 -- -------------字典------------
@@ -125,7 +125,7 @@ COMMENT ON TABLE "public"."boot_sys_dict" IS '字典';
 
 ALTER TABLE "public"."boot_sys_dict" ADD CONSTRAINT "boot_sys_dict_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."boot_sys_dict" VALUES (1, 1341620898007281665, 1341620898007281665, '2024-05-09 00:15:30', '2024-05-09 00:15:40', 0, 0, 0, 'dict-type.manage.name.menu.show-hide', 'sys_menu_show_hide', '菜单状态列表', 0);
+INSERT INTO "public"."boot_sys_dict" VALUES (1, 1, 1, '2024-05-09 00:15:30', '2024-05-09 00:15:40', 0, 0, 0, 'dict-type.manage.name.menu.show-hide', 'sys_menu_show_hide', '菜单状态列表', 0);
 
 -- ----------------------------
 -- -------------字典项------------
@@ -209,9 +209,9 @@ COMMENT ON INDEX "public"."boot_sys_i18n_message_code_tenantId_idx" IS '编码_�
 
 ALTER TABLE "public"."boot_sys_i18n_message" ADD CONSTRAINT "boot_sys_i18n_message_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."boot_sys_i18n_message" VALUES (1, 1341620898007281665, 1341620898007281665, '2024-05-07 10:45:30', '2024-05-07 10:45:37', 0, 0, 0, 'sys.manage', '系统管理', 'System Management');
-INSERT INTO "public"."boot_sys_i18n_message" VALUES (2, 1341620898007281665, 1341620898007281665, '2024-05-07 10:45:30', '2024-05-07 10:45:37', 0, 0, 0, 'menu.manage', '菜单管理', 'Menu Management');
-INSERT INTO "public"."boot_sys_i18n_message" VALUES (4, 1341620898007281665, 1341620898007281665, '2024-05-07 10:45:30', '2024-05-07 10:45:37', 0, 0, 0, 'dict.manage', '字典管理', 'Dictionary Management');
+INSERT INTO "public"."boot_sys_i18n_message" VALUES (1, 1, 1, '2024-05-07 10:45:30', '2024-05-07 10:45:37', 0, 0, 0, 'sys.manage', '系统管理', 'System Management');
+INSERT INTO "public"."boot_sys_i18n_message" VALUES (2, 1, 1, '2024-05-07 10:45:30', '2024-05-07 10:45:37', 0, 0, 0, 'menu.manage', '菜单管理', 'Menu Management');
+INSERT INTO "public"."boot_sys_i18n_message" VALUES (4, 1, 1, '2024-05-07 10:45:30', '2024-05-07 10:45:37', 0, 0, 0, 'dict.manage', '字典管理', 'Dictionary Management');
 
 -- ----------------------------
 -- -------------IP------------
@@ -445,3 +445,467 @@ COMMENT ON COLUMN "public"."boot_sys_message"."type" IS '消息类型 0通知 1�
 COMMENT ON TABLE "public"."boot_sys_message" IS '消息';
 
 ALTER TABLE "public"."boot_sys_message" ADD CONSTRAINT "boot_sys_message_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
+-- -------------OSS------------
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."boot_sys_oss";
+CREATE TABLE "public"."boot_sys_oss" (
+ "id" int8 NOT NULL,
+ "creator" int8 NOT NULL DEFAULT 0,
+ "editor" int8 NOT NULL DEFAULT 0,
+ "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ "del_flag" int2 NOT NULL DEFAULT 0,
+ "version" int4 NOT NULL DEFAULT 0,
+ "tenant_id" int8 NOT NULL DEFAULT 0,
+ "name" varchar(20) NOT NULL,
+ "endpoint" varchar(200) NOT NULL,
+ "region" varchar(10),
+ "access_key" varchar(50) NOT NULL,
+ "secret_key" varchar(100)  NOT NULL,
+ "bucket_name" varchar(20)  NOT NULL,
+ "path_style_access_enabled" int2 NOT NULL DEFAULT 0
+);
+COMMENT ON COLUMN "public"."boot_sys_oss"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_sys_oss"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_sys_oss"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_sys_oss"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_sys_oss"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_sys_oss"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_sys_oss"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_sys_oss"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_sys_oss"."name" IS 'OSS名称';
+COMMENT ON COLUMN "public"."boot_sys_oss"."endpoint" IS 'OSS的终端地址';
+COMMENT ON COLUMN "public"."boot_sys_oss"."region" IS 'OSS的区域';
+COMMENT ON COLUMN "public"."boot_sys_oss"."access_key" IS 'OSS的访问密钥';
+COMMENT ON COLUMN "public"."boot_sys_oss"."secret_key" IS 'OSS的用户密钥';
+COMMENT ON COLUMN "public"."boot_sys_oss"."bucket_name" IS 'OSS的桶名';
+COMMENT ON COLUMN "public"."boot_sys_oss"."path_style_access_enabled" IS '路径样式访问 1已开启 0未启用';
+COMMENT ON TABLE "public"."boot_sys_oss" IS 'OSS';
+
+ALTER TABLE "public"."boot_sys_oss" ADD CONSTRAINT "boot_sys_oss_pkey" PRIMARY KEY ("id");
+
+INSERT INTO "public"."boot_sys_oss" VALUES (1, 1, 1, '2023-01-05 16:36:37', '2023-09-18 15:15:05', 0, 32, 0, 'Minio OSS', 'http://127.0.0.1:9000', 'Shenzhen', 'minioadmin', 'minioadmin', 'laokou-minio-bucket', 1);
+INSERT INTO "public"."boot_sys_oss" VALUES (2, 1, 1, '2022-11-02 14:35:46', '2023-10-21 15:44:18', 0, 36, 0, 'Aliyun OSS', 'https://oss-cn-shenzhen.aliyuncs.com', NULL, 'LTAI5tNvAEkJJHb9Gu6uGRxf', 'zbRGqzdY1y1JFXkKzrYdIeqgC0qpcc', 'koushenhai', 0);
+
+-- ----------------------------
+-- -------------套餐------------
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."boot_sys_package";
+CREATE TABLE "public"."boot_sys_package" (
+ "id" int8 NOT NULL,
+ "creator" int8 NOT NULL DEFAULT 0,
+ "editor" int8 NOT NULL DEFAULT 0,
+ "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ "del_flag" int2 NOT NULL DEFAULT 0,
+ "version" int4 NOT NULL DEFAULT 0,
+ "tenant_id" int8 NOT NULL DEFAULT 0,
+ "name" varchar(100) NOT NULL
+);
+COMMENT ON COLUMN "public"."boot_sys_package"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_sys_package"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_sys_package"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_sys_package"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_sys_package"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_sys_package"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_sys_package"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_sys_package"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_sys_package"."name" IS '套餐名称';
+COMMENT ON TABLE "public"."boot_sys_package" IS '套餐';
+
+ALTER TABLE "public"."boot_sys_package" ADD CONSTRAINT "boot_sys_package_pkey" PRIMARY KEY ("id");
+
+INSERT INTO "public"."boot_sys_package" VALUES (1, 1, 1, '2023-02-09 13:38:42', '2023-09-25 17:27:57', 0, 10, 0, '普通套餐');
+INSERT INTO "public"."boot_sys_package" VALUES (2, 1, 1, '2023-02-09 16:44:04', '2023-10-27 22:07:09', 0, 18, 0, '豪华套餐');
+INSERT INTO "public"."boot_sys_package" VALUES (3, 1, 1, '2023-02-09 17:09:08', '2023-09-17 16:03:47', 0, 15, 0, '免费套餐');
+
+-- ----------------------------
+-- -------------套餐------------
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."boot_sys_role";
+CREATE TABLE "public"."boot_sys_role" (
+  "id" int8 NOT NULL,
+  "creator" int8 NOT NULL DEFAULT 0,
+  "editor" int8 NOT NULL DEFAULT 0,
+  "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "del_flag" int2 NOT NULL DEFAULT 0,
+  "version" int4 NOT NULL DEFAULT 0,
+  "tenant_id" int8 NOT NULL DEFAULT 0,
+  "name" varchar(50) NOT NULL,
+  "sort" int4 NOT NULL DEFAULT 1,
+  "data_scope" varchar(30) NOT NULL DEFAULT 'all'
+);
+COMMENT ON COLUMN "public"."boot_sys_role"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_sys_role"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_sys_role"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_sys_role"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_sys_role"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_sys_role"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_sys_role"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_sys_role"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_sys_role"."name" IS '角色名称';
+COMMENT ON COLUMN "public"."boot_sys_role"."sort" IS '角色排序';
+COMMENT ON COLUMN "public"."boot_sys_role"."data_scope" IS '数据范围 all全部 custom自定义 dept_self仅本部门 dept部门及以下 self仅本人';
+COMMENT ON TABLE "public"."boot_sys_role" IS '角色';
+
+ALTER TABLE "public"."boot_sys_role" ADD CONSTRAINT "boot_sys_role_pkey" PRIMARY KEY ("id");
+
+INSERT INTO "public"."boot_sys_role" VALUES (1, 1, 1, '2021-11-27 17:11:15', '2023-12-17 17:42:29', 0, 97, 0, '游客', 10, 'all');
+INSERT INTO "public"."boot_sys_role" VALUES (2, 1, 1, '2021-11-27 17:11:19', '2023-12-17 17:40:13', 0, 250, 0, '管理员', 100, 'all');
+INSERT INTO "public"."boot_sys_role" VALUES (3, 1, 1, '2022-06-12 19:38:32', '2023-12-17 17:41:35', 0, 42, 0, '测试', 50, 'all');
+
+-- ----------------------------
+-- -------------角色部门------------
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."boot_sys_role_dept";
+CREATE TABLE "public"."boot_sys_role_dept" (
+   "id" int8 NOT NULL,
+   "creator" int8 NOT NULL DEFAULT 0,
+   "editor" int8 NOT NULL DEFAULT 0,
+   "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   "del_flag" int2 NOT NULL DEFAULT 0,
+   "version" int4 NOT NULL DEFAULT 0,
+   "tenant_id" int8 NOT NULL DEFAULT 0,
+   "role_id" int8 NOT NULL,
+   "dept_id" int8 NOT NULL
+);
+COMMENT ON COLUMN "public"."boot_sys_role_dept"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_sys_role_dept"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_sys_role_dept"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_sys_role_dept"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_sys_role_dept"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_sys_role_dept"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_sys_role_dept"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_sys_role_dept"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_sys_role_dept"."role_id" IS '角色ID';
+COMMENT ON COLUMN "public"."boot_sys_role_dept"."dept_id" IS '部门ID';
+COMMENT ON TABLE "public"."boot_sys_role_dept" IS '角色部门';
+
+ALTER TABLE "public"."boot_sys_role_dept" ADD CONSTRAINT "boot_sys_role_dept_pkey" PRIMARY KEY ("id");
+
+CREATE UNIQUE INDEX "boot_sys_role_dept_roleId_deptId_idx" ON "public"."boot_sys_role_dept" USING btree (
+	"role_id",
+	"dept_id"
+);
+COMMENT ON INDEX "public"."boot_sys_role_dept_roleId_deptId_idx" IS '角色ID_部门ID_唯一索引';
+
+-- ----------------------------
+-- -------------角色菜单------------
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."boot_sys_role_menu";
+CREATE TABLE "public"."boot_sys_role_menu" (
+   "id" int8 NOT NULL,
+   "creator" int8 NOT NULL DEFAULT 0,
+   "editor" int8 NOT NULL DEFAULT 0,
+   "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   "del_flag" int4 NOT NULL DEFAULT 0,
+   "version" int4 NOT NULL DEFAULT 0,
+   "tenant_id" int8 NOT NULL DEFAULT 0,
+   "role_id" int8 NOT NULL,
+   "menu_id" int8 NOT NULL
+);
+COMMENT ON COLUMN "public"."boot_sys_role_menu"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_sys_role_menu"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_sys_role_menu"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_sys_role_menu"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_sys_role_menu"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_sys_role_menu"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_sys_role_menu"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_sys_role_menu"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_sys_role_menu"."role_id" IS '角色ID';
+COMMENT ON COLUMN "public"."boot_sys_role_menu"."menu_id" IS '菜单ID';
+COMMENT ON TABLE "public"."boot_sys_role_menu" IS '角色菜单';
+
+ALTER TABLE "public"."boot_sys_role_menu" ADD CONSTRAINT "boot_sys_role_menu_pkey" PRIMARY KEY ("id");
+
+CREATE UNIQUE INDEX "boot_sys_role_menu_roleId_menuId_idx" ON "public"."boot_sys_role_menu" USING btree (
+	"role_id",
+	"menu_id"
+);
+COMMENT ON INDEX "public"."boot_sys_role_menu_roleId_menuId_idx" IS '角色ID_菜单ID_唯一索引';
+
+-- ----------------------------
+-- -------------数据源------------
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."boot_sys_source";
+CREATE TABLE "public"."boot_sys_source" (
+	"id" int8 NOT NULL,
+	"creator" int8 NOT NULL DEFAULT 0,
+	"editor" int8 NOT NULL DEFAULT 0,
+	"create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	"del_flag" int2 NOT NULL DEFAULT 0,
+	"version" int4 NOT NULL DEFAULT 0,
+	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"name" varchar(50) NOT NULL,
+	"driver_class_name" varchar(100) NOT NULL,
+	"url" varchar(500) NOT NULL,
+	"username" varchar(100) NOT NULL,
+	"password" varchar(100) NOT NULL
+);
+COMMENT ON COLUMN "public"."boot_sys_source"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_sys_source"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_sys_source"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_sys_source"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_sys_source"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_sys_source"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_sys_source"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_sys_source"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_sys_source"."name" IS '数据源名称';
+COMMENT ON COLUMN "public"."boot_sys_source"."driver_class_name" IS '数据源的驱动名称';
+COMMENT ON COLUMN "public"."boot_sys_source"."url" IS '数据源的连接信息';
+COMMENT ON COLUMN "public"."boot_sys_source"."username" IS '数据源的用户名';
+COMMENT ON COLUMN "public"."boot_sys_source"."password" IS '数据源的密码';
+COMMENT ON TABLE "public"."boot_sys_source" IS '数据源';
+
+ALTER TABLE "public"."boot_sys_source" ADD CONSTRAINT "boot_sys_source_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
+-- -------------租户------------
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."boot_sys_tenant";
+CREATE TABLE "public"."boot_sys_tenant" (
+	"id" int8 NOT NULL,
+	"creator" int8 NOT NULL DEFAULT 0,
+	"editor" int8 NOT NULL DEFAULT 0,
+	"create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	"del_flag" int2 NOT NULL DEFAULT 0,
+	"version" int4 NOT NULL DEFAULT 0,
+	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"name" varchar(100) NOT NULL,
+	"code" varchar(30) NOT NULL,
+	"source_id" int8 NOT NULL,
+	"package_id" int8 NOT NULL
+);
+COMMENT ON COLUMN "public"."boot_sys_tenant"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_sys_tenant"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_sys_tenant"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_sys_tenant"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_sys_tenant"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_sys_tenant"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_sys_tenant"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_sys_tenant"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_sys_tenant"."name" IS '租户名称';
+COMMENT ON COLUMN "public"."boot_sys_tenant"."code" IS '租户编码';
+COMMENT ON COLUMN "public"."boot_sys_tenant"."source_id" IS '数据源ID';
+COMMENT ON COLUMN "public"."boot_sys_tenant"."package_id" IS '套餐ID';
+COMMENT ON TABLE "public"."boot_sys_tenant" IS '租户';
+
+ALTER TABLE "public"."boot_sys_tenant" ADD CONSTRAINT "boot_sys_tenant_pkey" PRIMARY KEY ("id");
+
+INSERT INTO "public"."boot_sys_tenant" VALUES (1, 1, 1, '2023-09-17 15:42:27', '2023-12-17 18:37:13', 0, 1, 0, '阿里集团', 'tenant1', 1, 2);
+
+-- ----------------------------
+-- -------------用户------------
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."boot_sys_user";
+CREATE TABLE "public"."boot_sys_user" (
+  "id" int8 NOT NULL,
+  "creator" int8 NOT NULL DEFAULT 0,
+  "editor" int8 NOT NULL DEFAULT 0,
+  "create_time" timestamptz(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "update_time" timestamptz(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "del_flag" int2 NOT NULL DEFAULT 0,
+  "version" int4 NOT NULL DEFAULT 0,
+  "tenant_id" int8 NOT NULL DEFAULT 0,
+  "password" varchar(100) NOT NULL,
+  "super_admin" int2 NOT NULL DEFAULT 0,
+  "mail" varchar(200),
+  "mobile" varchar(60),
+  "status" int2 NOT NULL DEFAULT 0,
+  "avatar" varchar(500) NOT NULL DEFAULT 'https://pic1.imgdb.cn/item/677a2d91d0e0a243d4ef1ee7.jpg',
+  "username_phrase" varchar(1600),
+  "mail_phrase" varchar(1600),
+  "mobile_phrase" varchar(150),
+  "username" varchar(200) NOT NULL
+)
+;
+COMMENT ON COLUMN "public"."boot_sys_user"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_sys_user"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_sys_user"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_sys_user"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_sys_user"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_sys_user"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_sys_user"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_sys_user"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_sys_user"."username" IS '用户名';
+COMMENT ON COLUMN "public"."boot_sys_user"."password" IS '用户密码';
+COMMENT ON COLUMN "public"."boot_sys_user"."super_admin" IS '超级管理员标识 0否 1是';
+COMMENT ON COLUMN "public"."boot_sys_user"."mail" IS '用户邮箱';
+COMMENT ON COLUMN "public"."boot_sys_user"."mobile" IS '用户手机号';
+COMMENT ON COLUMN "public"."boot_sys_user"."status" IS '用户状态 0启用 1禁用';
+COMMENT ON COLUMN "public"."boot_sys_user"."avatar" IS '用户头像';
+COMMENT ON COLUMN "public"."boot_sys_user"."username_phrase" IS '用户名短语';
+COMMENT ON COLUMN "public"."boot_sys_user"."mail_phrase" IS '用户邮箱短语';
+COMMENT ON COLUMN "public"."boot_sys_user"."mobile_phrase" IS '用户手机号短语';
+COMMENT ON TABLE "public"."boot_sys_user" IS '用户';
+
+ALTER TABLE "public"."boot_sys_user" ADD CONSTRAINT "boot_sys_user_pkey" PRIMARY KEY ("id");
+
+CREATE UNIQUE INDEX "boot_sys_user_mail_tenantId_idx" ON "public"."boot_sys_user" USING btree (
+	"mail",
+	"tenant_id"
+);
+COMMENT ON INDEX "public"."boot_sys_user_mail_tenantId_idx" IS '邮箱_租户ID_唯一索引';
+
+CREATE UNIQUE INDEX "boot_sys_user_mobile_tenantId_idx" ON "public"."boot_sys_user" USING btree (
+	"mobile",
+	"tenant_id"
+);
+COMMENT ON INDEX "public"."boot_sys_user_mobile_tenantId_idx" IS '手机号_租户ID_唯一索引';
+
+CREATE UNIQUE INDEX "boot_sys_user_username_tenantId_idx" ON "public"."boot_sys_user" USING btree (
+	"username",
+	"tenant_id"
+);
+COMMENT ON INDEX "public"."boot_sys_user_username_tenantId_idx" IS '用户名_租户ID_唯一索引';
+
+INSERT INTO "public"."boot_sys_user" VALUES (1, 1, 1, '2022-01-01 20:13:11+08', '2024-04-29 23:52:52+08', 0, 0, 0, '{bcrypt}$2a$10$bGXM7u58FPMDanMyqvZ7Reb9sqJiUTCdAcb1wN5IIkFa8nYOMOioK', 1, 'Ylh4QTF0YmdEWWJR2TEQZjlR4rzAz/73MsL8gxlNSv+/j3L7Sxne4hFAP+W9', 'Ylh4QTF0YmdEWWJR2j0YYjxS577BzIgIGdpZbU2I7EIUTVaxqvWu', 0, 'https://pic1.imgdb.cn/item/677a2d91d0e0a243d4ef1ee7.jpg', 'Ylh4QTF0YmdEWWJRimFMPAPt8S6U+J8eEhIZiErF69o=~Ylh4QTF0YmdEWWJRj2hIO/7mcHvbRltmR9cojv2C2jE=', 'Ylh4QTF0YmdEWWJR2TEQZt/I7tdiOALwVrZXFxK5boI=~Ylh4QTF0YmdEWWJR3zQSZDEzo/mQ2Kt2ooeStwwy1DM=~Ylh4QTF0YmdEWWJR2jYQYvkuHP0mNYNzkmUPAkpRnNs=~Ylh4QTF0YmdEWWJR2DQWY04zb3FkQTCmuPFi97WrI08=~Ylh4QTF0YmdEWWJR2jIXZToqPakPCzCwmjz4XLwksmM=~Ylh4QTF0YmdEWWJR3DMRYRY/bEOz79QYxdiB5xtGMoU=~Ylh4QTF0YmdEWWJR3TUVYYBJ7iU6aLpsTeXBwNhb1lk=~Ylh4QTF0YmdEWWJR2zEVFRAKn1yHzG9spDDE8afQ1Ls=~Ylh4QTF0YmdEWWJR3zFhJLv17Ndjz3ymZABhpoKJPCE=~Ylh4QTF0YmdEWWJR30VQJOy8KF8pYc2r4yJkfOWIWnw=~Ylh4QTF0YmdEWWJRq3RQe8Vs9XmHQG6AkHOCtSwt6cA=~Ylh4QTF0YmdEWWJRmnQPNipHlgS+8wcVPz+EC5gdeeM=~Ylh4QTF0YmdEWWJRmitCOoJ+zG0CpSympji+U7NWxUw=~Ylh4QTF0YmdEWWJRxWZOOE8J8sq9k7iJhdxbniMpw9I=', 'Ylh4QTF0YmdEWWJR2j0YOQJF4W0Ofxd/k/LFC4GzoQ==~Ylh4QTF0YmdEWWJR3DEVZk3r4C1hv2eOukkPSzTOffA=~Ylh4QTF0YmdEWWJR2TAWY8HwM9jwPxZFMFE0pFibp9k=', 'Ylh4QTF0YmdEWWJRimFMPGaJmldyuWIb9BNmUN1ULMI7');
+INSERT INTO "public"."boot_sys_user" VALUES (5, 1, 1, '2022-06-16 00:48:28+08', '2024-04-29 23:52:52+08', 0, 1, 0, '{bcrypt}$2a$10$RX9zW6rUMbGjybnlW77FWezhgbH0ZsFinGtKaoOsbovkEgij7kzNC', 0, NULL, NULL, 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', 'Ylh4QTF0YmdEWWJRh2ROPuSvWyrTvf2MaPrw8GpjTBM=~Ylh4QTF0YmdEWWJRimpKYMTCzQiEJvp5Ar80c6jh1Wg=', NULL, NULL, 'Ylh4QTF0YmdEWWJRh2ROPj1LULONpfXTh6mWUOIX9SFO');
+INSERT INTO "public"."boot_sys_user" VALUES (2, 1, 1, '2023-03-09 13:52:04+08', '2024-04-29 23:52:52+08', 0, 1, 0, '{bcrypt}$2a$10$J0DMR5098R33H6F.s5H/deeMLyo/j4yyzZgAn6gkyC0j537G7veKG', 0, NULL, NULL, 0, 'http://127.0.0.1:81/upload/node2/b4e5bb3944a046a6bb54f8bfd2c830c1.webp', 'Ylh4QTF0YmdEWWJRn2BSIeyAJZxxvGa9Rma06h4QOnQ=', NULL, NULL, 'Ylh4QTF0YmdEWWJRn2BSIeyAJZxxvGa9Rma06h4QOnQ=');
+INSERT INTO "public"."boot_sys_user" VALUES (3, 1, 1, '2022-01-31 11:29:35+08', '2024-04-29 23:52:52+08', 0, 0, 0, '{bcrypt}$2a$10$ysAmruc249SiAUpIqQzrpeM8wcdpgIJ6nEdtsXQnDrBgvLZkt7tJ6', 0, NULL, NULL, 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', 'Ylh4QTF0YmdEWWJRgGpUJiNPIjdI2XP1ZWEFUmonJDs=~Ylh4QTF0YmdEWWJRhHBSPSMrKeV2KZK27WU4BJGux6Q=~Ylh4QTF0YmdEWWJRnnZJYJsjtsAm+CPpK1W9SDWk46s=', NULL, NULL, 'Ylh4QTF0YmdEWWJRgGpUJmBT8fGpMah42bhHMZ9Aapk+jQ==');
+INSERT INTO "public"."boot_sys_user" VALUES (4, 1, 1, '2022-06-16 00:33:39+08', '2024-04-29 23:52:52+08', 0, 0, 0, '{bcrypt}$2a$10$Wac.3sTE4A4pi/Zy6B/HWOstwLFjOH9g8Qrf4gHiBLa/avKAVcwpG', 0, NULL, NULL, 0, 'https://img2.baidu.com/it/u=2432885784,4104422384&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400', 'Ylh4QTF0YmdEWWJRnHBMPWPaKJGlV652rAqtN8Q9MYg=~Ylh4QTF0YmdEWWJRnmhJYJS/YXrtS/sF9dNgHyAmxEI=', NULL, NULL, 'Ylh4QTF0YmdEWWJRnHBMPT3MJcA20x+AfW1mDSW5q1zV');
+
+-- ----------------------------
+-- -------------用户部门------------
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."boot_sys_user_dept";
+CREATE TABLE "public"."boot_sys_user_dept" (
+   "id" int8 NOT NULL,
+   "creator" int8 NOT NULL DEFAULT 0,
+   "editor" int8 NOT NULL DEFAULT 0,
+   "create_time" timestamptz(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   "update_time" timestamptz(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   "del_flag" int2 NOT NULL DEFAULT 0,
+   "version" int4 NOT NULL DEFAULT 0,
+   "tenant_id" int8 NOT NULL DEFAULT 0,
+   "user_id" int8 NOT NULL,
+   "dept_id" int8 NOT NULL
+);
+COMMENT ON COLUMN "public"."boot_sys_user_dept"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_sys_user_dept"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_sys_user_dept"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_sys_user_dept"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_sys_user_dept"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_sys_user_dept"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_sys_user_dept"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_sys_user_dept"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_sys_user_dept"."user_id" IS '用户ID';
+COMMENT ON COLUMN "public"."boot_sys_user_dept"."dept_id" IS '部门ID';
+COMMENT ON TABLE "public"."boot_sys_user_dept" IS '用户部门';
+
+ALTER TABLE "public"."boot_sys_user_dept" ADD CONSTRAINT "boot_sys_user_dept_pkey" PRIMARY KEY ("id");
+
+CREATE UNIQUE INDEX "boot_sys_user_dept_userId_deptId_idx" ON "public"."boot_sys_user_dept" USING btree (
+	"user_id",
+	"dept_id"
+);
+COMMENT ON INDEX "public"."boot_sys_user_dept_userId_deptId_idx" IS '用户ID_部门ID_唯一索引';
+
+-- ----------------------------
+-- -------------用户消息------------
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."boot_sys_user_message";
+CREATE TABLE "public"."boot_sys_user_message" (
+  "id" int8 NOT NULL,
+  "creator" int8 NOT NULL DEFAULT 0,
+  "editor" int8 NOT NULL DEFAULT 0,
+  "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "del_flag" int2 NOT NULL DEFAULT 0,
+  "version" int4 NOT NULL DEFAULT 0,
+  "tenant_id" int8 NOT NULL DEFAULT 0,
+  "user_id" int8 NOT NULL,
+  "message_id" int8 NOT NULL,
+  "read_flag" int2 NOT NULL DEFAULT 0
+);
+COMMENT ON COLUMN "public"."boot_sys_user_message"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."user_id" IS '用户ID';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."message_id" IS '消息ID';
+COMMENT ON COLUMN "public"."boot_sys_user_message"."read_flag" IS '消息已读标识 0未读 1已读';
+COMMENT ON TABLE "public"."boot_sys_user_message" IS '用户消息';
+
+ALTER TABLE "public"."boot_sys_user_message" ADD CONSTRAINT "boot_sys_user_message_pkey" PRIMARY KEY ("id");
+
+CREATE INDEX "boot_sys_user_message_readFlag_userId_idx" ON "public"."boot_sys_user_message" USING btree (
+	"read_flag",
+	"user_id"
+);
+COMMENT ON INDEX "public"."boot_sys_user_message_readFlag_userId_idx" IS '消息已读标识_用户ID_索引';
+
+-- ----------------------------
+-- -------------用户角色------------
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."boot_sys_user_role";
+CREATE TABLE "public"."boot_sys_user_role" (
+   "id" int8 NOT NULL,
+   "creator" int8 NOT NULL DEFAULT 0,
+   "editor" int8 NOT NULL DEFAULT 0,
+   "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   "del_flag" int2 NOT NULL DEFAULT 0,
+   "version" int4 NOT NULL DEFAULT 0,
+   "tenant_id" int8 NOT NULL DEFAULT 0,
+   "user_id" int8 NOT NULL,
+   "role_id" int8 NOT NULL
+);
+COMMENT ON COLUMN "public"."boot_sys_user_role"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_sys_user_role"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_sys_user_role"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_sys_user_role"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_sys_user_role"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_sys_user_role"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_sys_user_role"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_sys_user_role"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_sys_user_role"."user_id" IS '用户ID';
+COMMENT ON COLUMN "public"."boot_sys_user_role"."role_id" IS '角色ID';
+COMMENT ON TABLE "public"."boot_sys_user_role" IS '用户角色';
+
+ALTER TABLE "public"."boot_sys_user_role" ADD CONSTRAINT "boot_sys_user_role_pkey" PRIMARY KEY ("id");
+
+CREATE UNIQUE INDEX "boot_sys_user_role_userId_roleId_idx" ON "public"."boot_sys_user_role" USING btree (
+	"user_id",
+	"role_id"
+);
+COMMENT ON INDEX "public"."boot_sys_user_role_userId_roleId_idx" IS '用户ID_角色ID_唯一索引';
+
+DROP TABLE IF EXISTS "public"."oauth2_authorization_consent";
+CREATE TABLE "public"."oauth2_authorization_consent" (
+	 "registered_client_id" varchar(100) NOT NULL,
+	 "principal_name" varchar(200) NOT NULL,
+	 "authorities" varchar(1000) NOT NULL
+);
+
+ALTER TABLE "public"."oauth2_authorization_consent" ADD CONSTRAINT "oauth2_authorization_consent_pkey" PRIMARY KEY ("registered_client_id", "principal_name");
+
+DROP TABLE IF EXISTS "public"."oauth2_registered_client";
+CREATE TABLE "public"."oauth2_registered_client" (
+	"id" varchar(100) NOT NULL,
+	"client_id" varchar(100)  NOT NULL,
+	"client_id_issued_at" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	"client_secret" varchar(200) ,
+	"client_secret_expires_at" timestamp(6),
+	"client_name" varchar(200)  NOT NULL,
+	"client_authentication_methods" varchar(1000)  NOT NULL,
+	"authorization_grant_types" varchar(1000)  NOT NULL,
+	"redirect_uris" varchar(1000) ,
+	"post_logout_redirect_uris" varchar(1000) ,
+	"scopes" varchar(1000) NOT NULL,
+	"client_settings" varchar(2000) NOT NULL,
+	"token_settings" varchar(2000) NOT NULL
+);
+
+ALTER TABLE "public"."oauth2_registered_client" ADD CONSTRAINT "oauth2_registered_client_pkey" PRIMARY KEY ("id");

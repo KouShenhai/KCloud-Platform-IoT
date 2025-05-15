@@ -1,0 +1,276 @@
+/*
+ Navicat Premium Dump SQL
+
+ Source Server         : 127.0.0.1
+ Source Server Type    : PostgreSQL
+ Source Server Version : 170003 (170003)
+ Source Host           : 127.0.0.1:5432
+ Source Catalog        : kcloud_platform
+ Source Schema         : public
+
+ Target Server Type    : PostgreSQL
+ Target Server Version : 170003 (170003)
+ File Encoding         : 65001
+
+ Date: 15/05/2025 11:26:07
+*/
+
+DROP TABLE IF EXISTS "public"."boot_iot_communication_protocol";
+CREATE TABLE "public"."boot_iot_communication_protocol" (
+"id" int8 NOT NULL,
+"creator" int8 NOT NULL DEFAULT 0,
+"editor" int8 NOT NULL DEFAULT 0,
+"create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"del_flag" int2 NOT NULL DEFAULT 0,
+"version" int4 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 0,
+"name" varchar(50)  NOT NULL,
+"code" varchar(50)  NOT NULL,
+"sort" int4 NOT NULL DEFAULT 1,
+"remark" varchar(400)
+)
+;
+COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."name" IS '协议名称';
+COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."code" IS '协议编码';
+COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."sort" IS '排序';
+COMMENT ON COLUMN "public"."boot_iot_communication_protocol"."remark" IS '备注';
+COMMENT ON TABLE "public"."boot_iot_communication_protocol" IS '通信协议';
+
+ALTER TABLE "public"."boot_iot_communication_protocol" ADD CONSTRAINT "boot_iot_communication_protocol_pkey" PRIMARY KEY ("id");
+
+DROP TABLE IF EXISTS "public"."boot_iot_device";
+CREATE TABLE "public"."boot_iot_device" (
+"id" int8 NOT NULL,
+"creator" int8 NOT NULL DEFAULT 0,
+"editor" int8 NOT NULL DEFAULT 0,
+"create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"del_flag" int2 NOT NULL DEFAULT 0,
+"version" int4 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 0,
+"sn" varchar(64)  NOT NULL,
+"name" varchar(50)  NOT NULL,
+"status" int2 NOT NULL DEFAULT 1,
+"longitude" float8,
+"latitude" float8,
+"img_url" varchar(400),
+"address" varchar(200),
+"remark" varchar(400) ,
+"product_id" int8 NOT NULL
+)
+;
+COMMENT ON COLUMN "public"."boot_iot_device"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_iot_device"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_iot_device"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_iot_device"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_iot_device"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_iot_device"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_iot_device"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_iot_device"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_iot_device"."sn" IS '设备序列号';
+COMMENT ON COLUMN "public"."boot_iot_device"."name" IS '设备名称';
+COMMENT ON COLUMN "public"."boot_iot_device"."status" IS '设备状态 0在线 1离线';
+COMMENT ON COLUMN "public"."boot_iot_device"."longitude" IS '设备经度';
+COMMENT ON COLUMN "public"."boot_iot_device"."latitude" IS '设备纬度';
+COMMENT ON COLUMN "public"."boot_iot_device"."img_url" IS '设备图片URL';
+COMMENT ON COLUMN "public"."boot_iot_device"."address" IS '设备地址';
+COMMENT ON COLUMN "public"."boot_iot_device"."remark" IS '设备备注';
+COMMENT ON COLUMN "public"."boot_iot_device"."product_id" IS '产品ID';
+COMMENT ON TABLE "public"."boot_iot_device" IS '设备';
+ALTER TABLE "public"."boot_iot_device" ADD CONSTRAINT "boot_iot_device_pkey" PRIMARY KEY ("id");
+
+INSERT INTO "public"."boot_iot_device" VALUES (1, 1, 1, '2024-05-11 03:56:15.821857', '2024-05-11 03:56:15.821857', 0, 0, 0, '139c5556-8494-5753-ac97-de09f2a6a929', 'HFCL设备', 0, NULL, NULL, NULL, NULL, NULL, 1);
+
+DROP TABLE IF EXISTS "public"."boot_iot_thing_model";
+CREATE TABLE "public"."boot_iot_thing_model" (
+"id" int8 NOT NULL,
+"creator" int8 NOT NULL DEFAULT 0,
+"editor" int8 NOT NULL DEFAULT 0,
+"create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"del_flag" int2 NOT NULL DEFAULT 0,
+"version" int4 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 0,
+"name" varchar(50)  NOT NULL,
+"code" varchar(50)  NOT NULL,
+"data_type" varchar(20)  NOT NULL,
+"category" int2 NOT NULL,
+"type" varchar(30)  NOT NULL,
+"expression" text,
+"sort" int4 NOT NULL DEFAULT 1,
+"specs" json,
+"remark" varchar(400) ,
+"expression_flag" int2 NOT NULL DEFAULT 0
+)
+;
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."name" IS '物模型名称';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."code" IS '物模型编码';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."data_type" IS '数据类型 integer string decimal boolean';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."category" IS '物模型类别 1属性 2事件';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."type" IS '物模型类型 read读 write写 report上报';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."expression" IS '表达式';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."sort" IS '物模型排序';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."specs" IS '物模型规则说明';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."remark" IS '物模型备注';
+COMMENT ON COLUMN "public"."boot_iot_thing_model"."expression_flag" IS '表达式标识 0否 1是';
+COMMENT ON TABLE "public"."boot_iot_thing_model" IS '物模型';
+
+ALTER TABLE "public"."boot_iot_thing_model" ADD CONSTRAINT "boot_iot_thing_model_pkey" PRIMARY KEY ("id");
+
+CREATE UNIQUE INDEX "boot_iot_thing_model_code_name_tenantId_idx" ON "public"."boot_iot_thing_model" USING btree (
+"code" ,
+"name" ,
+"tenant_id"
+);
+COMMENT ON INDEX "public"."boot_iot_thing_model_code_name_tenantId_idx" IS '编码_名称_租户ID_唯一索引';
+
+DROP TABLE IF EXISTS "public"."boot_iot_product";
+CREATE TABLE "public"."boot_iot_product" (
+"id" int8 NOT NULL,
+"creator" int8 NOT NULL DEFAULT 0,
+"editor" int8 NOT NULL DEFAULT 0,
+"create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"del_flag" int2 NOT NULL DEFAULT 0,
+"version" int4 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 0,
+"name" varchar(50)  NOT NULL,
+"category_id" int8 NOT NULL,
+"device_type" int2 NOT NULL,
+"img_url" varchar(400) ,
+"cp_id" int8 NOT NULL,
+"tp_id" int8 NOT NULL,
+"remark" varchar(400)
+)
+;
+COMMENT ON COLUMN "public"."boot_iot_product"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_iot_product"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_iot_product"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_iot_product"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_iot_product"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_iot_product"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_iot_product"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_iot_product"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_iot_product"."name" IS '产品名称';
+COMMENT ON COLUMN "public"."boot_iot_product"."category_id" IS '产品类别';
+COMMENT ON COLUMN "public"."boot_iot_product"."device_type" IS '设备类型 1直连设备 2网关设备 3监控设备';
+COMMENT ON COLUMN "public"."boot_iot_product"."img_url" IS '产品图片URL';
+COMMENT ON COLUMN "public"."boot_iot_product"."cp_id" IS '通信协议ID';
+COMMENT ON COLUMN "public"."boot_iot_product"."tp_id" IS '传输协议ID';
+COMMENT ON COLUMN "public"."boot_iot_product"."remark" IS '备注';
+COMMENT ON TABLE "public"."boot_iot_product" IS '产品';
+ALTER TABLE "public"."boot_iot_product" ADD CONSTRAINT "boot_iot_product_pkey" PRIMARY KEY ("id");
+
+DROP TABLE IF EXISTS "public"."boot_iot_product_category";
+CREATE TABLE "public"."boot_iot_product_category" (
+"id" int8 NOT NULL,
+"creator" int8 NOT NULL DEFAULT 0,
+"editor" int8 NOT NULL DEFAULT 0,
+"create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"del_flag" int2 NOT NULL DEFAULT 0,
+"version" int4 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 0,
+"name" varchar(50) NOT NULL,
+"sort" int4 NOT NULL,
+"pid" int8 NOT NULL,
+"remark" varchar(400)
+)
+;
+COMMENT ON COLUMN "public"."boot_iot_product_category"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."name" IS '产品类别名称';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."sort" IS '产品类别排序';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."pid" IS '产品类别父节点ID';
+COMMENT ON COLUMN "public"."boot_iot_product_category"."remark" IS '产品类别备注';
+COMMENT ON TABLE "public"."boot_iot_product_category" IS '产品类别';
+ALTER TABLE "public"."boot_iot_product_category" ADD CONSTRAINT "boot_iot_product_type_pkey" PRIMARY KEY ("id");
+
+DROP TABLE IF EXISTS "public"."boot_iot_product_model";
+CREATE TABLE "public"."boot_iot_product_model" (
+"id" int8 NOT NULL,
+"creator" int8 NOT NULL DEFAULT 0,
+"editor" int8 NOT NULL DEFAULT 0,
+"create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"del_flag" int2 NOT NULL DEFAULT 0,
+"version" int4 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 0,
+"product_id" int8 NOT NULL,
+"model_id" int8 NOT NULL
+)
+;
+COMMENT ON COLUMN "public"."boot_iot_product_model"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_iot_product_model"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_iot_product_model"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_iot_product_model"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_iot_product_model"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_iot_product_model"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_iot_product_model"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_iot_product_model"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_iot_product_model"."product_id" IS '产品ID';
+COMMENT ON COLUMN "public"."boot_iot_product_model"."model_id" IS '模型ID';
+COMMENT ON TABLE "public"."boot_iot_product_model" IS '产品模型';
+ALTER TABLE "public"."boot_iot_product_model" ADD CONSTRAINT "boot_iot_product_model_pkey" PRIMARY KEY ("id");
+
+DROP TABLE IF EXISTS "public"."boot_iot_transport_protocol";
+CREATE TABLE "public"."boot_iot_transport_protocol" (
+"id" int8 NOT NULL,
+"creator" int8 NOT NULL DEFAULT 0,
+"editor" int8 NOT NULL DEFAULT 0,
+"create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+"del_flag" int2 NOT NULL DEFAULT 0,
+"version" int4 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 0,
+"name" varchar(50)  NOT NULL,
+"type" varchar(50)  NOT NULL,
+"host" varchar(20)  NOT NULL,
+"port" varchar(10)  NOT NULL,
+"client_id" varchar(100) ,
+"username" varchar(50) ,
+"password" varchar(50) ,
+"remark" varchar(400)
+)
+;
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."id" IS 'ID';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."version" IS '版本号';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."name" IS '协议名称';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."type" IS '协议类型';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."host" IS '主机';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."port" IS '端口';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."client_id" IS '客户端ID';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."username" IS '用户名';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."password" IS '密码';
+COMMENT ON COLUMN "public"."boot_iot_transport_protocol"."remark" IS '备注';
+COMMENT ON TABLE "public"."boot_iot_transport_protocol" IS '传输协议';
+ALTER TABLE "public"."boot_iot_transport_protocol" ADD CONSTRAINT "boot_iot_transport_protocol_pkey" PRIMARY KEY ("id");
