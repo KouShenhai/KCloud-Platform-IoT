@@ -63,7 +63,7 @@ final class VertxMqttServer extends AbstractVerticle {
 	@Override
 	public synchronized void start() {
 		mqttServer = getMqttServerOptions().map(options -> MqttServer.create(vertx, options))
-			.map(server -> server
+			.doOnNext(server -> server
 				.exceptionHandler(
 						error -> log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，错误信息：{}", error.getMessage(), error))
 				.endpointHandler(endpoint -> Optional.ofNullable(authHandler(endpoint))
@@ -78,7 +78,8 @@ final class VertxMqttServer extends AbstractVerticle {
 						.publishHandler(messageSink::tryEmitNext)
 						// 不保留会话
 						.accept(false)))
-				.listen(asyncResult -> {
+				.listen()
+				.onComplete(asyncResult -> {
 					if (isClosed) {
 						return;
 					}
@@ -96,7 +97,7 @@ final class VertxMqttServer extends AbstractVerticle {
 	@Override
 	public synchronized void stop() {
 		isClosed = true;
-		mqttServer.doOnNext(server -> server.close(result -> {
+		mqttServer.doOnNext(server -> server.close().onComplete(result -> {
 			if (result.succeeded()) {
 				log.info("【Vertx-MQTT-Server】 => MQTT服务停止成功，端口：{}", server.actualPort());
 			}
@@ -167,9 +168,6 @@ final class VertxMqttServer extends AbstractVerticle {
 		mqttServerOptions.setWebSocketPreferredClientNoContext(properties.isWebSocketPreferredClientNoContext());
 		mqttServerOptions.setTcpNoDelay(properties.isTcpNoDelay());
 		mqttServerOptions.setTcpKeepAlive(properties.isTcpKeepAlive());
-		mqttServerOptions.setTcpKeepAliveIdleSeconds(properties.getTcpKeepAliveIdleSeconds());
-		mqttServerOptions.setTcpKeepAliveIntervalSeconds(properties.getTcpKeepAliveIntervalSeconds());
-		mqttServerOptions.setTcpKeepAliveCount(properties.getTcpKeepAliveCount());
 		mqttServerOptions.setSoLinger(properties.getSoLinger());
 		mqttServerOptions.setIdleTimeout(properties.getIdleTimeout());
 		mqttServerOptions.setReadIdleTimeout(properties.getReadIdleTimeout());

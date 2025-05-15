@@ -40,7 +40,9 @@ public final class WebSocketSessionHeartBeatManager {
 	}
 
 	public static int getHeartBeat(String clientId) {
-		return HEART_BEAT_CACHE.getOrDefault(clientId, HEART_BEAT_CACHE.computeIfAbsent(clientId, k -> new AtomicInteger(0))).get();
+		return HEART_BEAT_CACHE
+			.getOrDefault(clientId, HEART_BEAT_CACHE.computeIfAbsent(clientId, k -> new AtomicInteger(0)))
+			.get();
 	}
 
 }

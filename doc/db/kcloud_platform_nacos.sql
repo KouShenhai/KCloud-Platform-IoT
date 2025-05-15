@@ -3319,9 +3319,9 @@ CREATE TABLE "public"."config_info_gray" (
 "encrypted_data_key" varchar(256)  NOT NULL,
 CONSTRAINT "config_info_gray_pkey" PRIMARY KEY ("id")
 );
-CREATE INDEX "idx_dataid_gmt_modified" ON "public"."config_info_gray" USING btree ("data_id"  ,"gmt_modified" "pg_catalog"."timestamp_ops" ASC NULLS LAST);
+CREATE INDEX "idx_dataid_gmt_modified" ON "public"."config_info_gray" USING btree ("data_id"  ,"gmt_modified" );
 
-CREATE INDEX "idx_gmt_modified" ON "public"."config_info_gray" USING btree ("gmt_modified" "pg_catalog"."timestamp_ops" ASC NULLS LAST);
+CREATE INDEX "idx_gmt_modified" ON "public"."config_info_gray" USING btree ("gmt_modified" );
 
 CREATE UNIQUE INDEX "uk_configinfogray_datagrouptenantgray" ON "public"."config_info_gray" USING btree ("data_id"  ,"group_id"  ,"tenant_id"  ,"gray_name"  );
 

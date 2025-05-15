@@ -55,7 +55,7 @@ final class VertxHttpServer extends AbstractVerticle {
 	@Override
 	public synchronized void start() {
 		httpServer = getHttpServerOptions().map(vertx::createHttpServer)
-			.map(server -> server.webSocketHandler(serverWebSocket -> {
+			.doOnNext(server -> server.webSocketHandler(serverWebSocket -> {
 				if (!RegexUtils.matches(WebsocketMessageEnum.UP_PROPERTY_REPORT.getPath(), serverWebSocket.path())) {
 					serverWebSocket.close();
 					return;
@@ -64,7 +64,7 @@ final class VertxHttpServer extends AbstractVerticle {
 					.closeHandler(v -> log.error("【Vertx-Websocket-Server】 => 断开连接"))
 					.exceptionHandler(err -> log.error("【Vertx-Websocket-Server】 => 错误信息：{}", err.getMessage(), err))
 					.endHandler(v -> log.error("【Vertx-Websocket-Server】 => 结束"));
-			}).requestHandler(router).listen(completionHandler -> {
+			}).requestHandler(router).listen().onComplete(completionHandler -> {
 				if (isClosed) {
 					return;
 				}
@@ -82,7 +82,7 @@ final class VertxHttpServer extends AbstractVerticle {
 	@Override
 	public synchronized void stop() {
 		isClosed = true;
-		httpServer.doOnNext(server -> server.close(result -> {
+		httpServer.doOnNext(server -> server.close().onComplete(result -> {
 			if (result.succeeded()) {
 				log.info("【Vertx-Http-Server】 => HTTP服务停止成功，端口：{}", server.actualPort());
 			}

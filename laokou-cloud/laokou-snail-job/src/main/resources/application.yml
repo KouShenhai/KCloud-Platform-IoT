@@ -31,9 +31,9 @@ spring:
     password: @DATASOURCE-PASSWORD-SNAIL-JOB@
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
-      connection-timeout: 30000
-      minimum-idle: 5
-      maximum-pool-size: 20
+      connection-timeout: 180000
+      minimum-idle: 10
+      maximum-pool-size: 60
       auto-commit: true
       idle-timeout: 180000
       pool-name: snail_job

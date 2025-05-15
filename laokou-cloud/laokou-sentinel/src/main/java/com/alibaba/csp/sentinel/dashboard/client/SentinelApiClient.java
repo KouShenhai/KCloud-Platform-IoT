@@ -385,8 +385,7 @@ public class SentinelApiClient {
 		httpClient.close();
 	}
 
-	@Nullable
-	private <T> CompletableFuture<List<T>> fetchItemsAsync(String ip, int port, String api, String type,
+	@Nullable private <T> CompletableFuture<List<T>> fetchItemsAsync(String ip, int port, String api, String type,
 			Class<T> ruleType) {
 		AssertUtil.notEmpty(ip, "Bad machine IP");
 		AssertUtil.isTrue(port > 0, "Bad machine port");
@@ -398,8 +397,7 @@ public class SentinelApiClient {
 		return executeCommand(ip, port, api, params, false).thenApply(json -> JSON.parseArray(json, ruleType));
 	}
 
-	@Nullable
-	private <T> List<T> fetchItems(String ip, int port, String api, String type, Class<T> ruleType) {
+	@Nullable private <T> List<T> fetchItems(String ip, int port, String api, String type, Class<T> ruleType) {
 		try {
 			AssertUtil.notEmpty(ip, "Bad machine IP");
 			AssertUtil.isTrue(port > 0, "Bad machine port");

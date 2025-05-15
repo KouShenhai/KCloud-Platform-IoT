@@ -67,8 +67,7 @@ public class SeataClusterContext {
 		CONTEXT_HOLDER.remove(KEY_GROUP);
 	}
 
-	@Nullable
-	public static String getGroup() {
+	@Nullable public static String getGroup() {
 		return (String) CONTEXT_HOLDER.get(KEY_GROUP);
 	}
 

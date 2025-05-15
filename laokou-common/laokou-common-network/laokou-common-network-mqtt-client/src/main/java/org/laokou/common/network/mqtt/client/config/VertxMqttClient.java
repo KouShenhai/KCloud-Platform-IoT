@@ -96,7 +96,8 @@ public final class VertxMqttClient {
 			.pingResponseHandler(s -> {
 				// log.info("【Vertx-MQTT-Client】 => 接收MQTT的PINGRESP数据包");
 			})
-			.connect(mqttClientProperties.getPort(), mqttClientProperties.getHost(), connectResult -> {
+			.connect(mqttClientProperties.getPort(), mqttClientProperties.getHost())
+			.onComplete(connectResult -> {
 				if (connectResult.succeeded()) {
 					isConnected.set(true);
 					log.info("【Vertx-MQTT-Client】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}", mqttClientProperties.getHost(),
@@ -146,7 +147,7 @@ public final class VertxMqttClient {
 	private void subscribe() {
 		Map<String, Integer> topics = mqttClientProperties.getTopics();
 		checkTopicAndQos(topics);
-		mqttClient.subscribe(topics, subscribeResult -> {
+		mqttClient.subscribe(topics).onComplete(subscribeResult -> {
 			if (subscribeResult.succeeded()) {
 				log.info("【Vertx-MQTT-Client】 => MQTT订阅成功，主题: {}", String.join("、", topics.keySet()));
 			}
@@ -191,7 +192,7 @@ public final class VertxMqttClient {
 
 	private void disconnect() {
 		isReconnected.set(false);
-		mqttClient.disconnect(disconnectResult -> {
+		mqttClient.disconnect().onComplete(disconnectResult -> {
 			if (disconnectResult.succeeded()) {
 				log.info("【Vertx-MQTT-Client】 => MQTT断开连接成功");
 				disposables();
@@ -205,7 +206,7 @@ public final class VertxMqttClient {
 
 	private void unsubscribe(List<String> topics) {
 		checkTopic(topics);
-		mqttClient.unsubscribe(topics, unsubscribeResult -> {
+		mqttClient.unsubscribe(topics).onComplete(unsubscribeResult -> {
 			if (unsubscribeResult.succeeded()) {
 				log.info("【Vertx-MQTT-Client】 => MQTT取消订阅成功，主题：{}", String.join("、", topics));
 			}

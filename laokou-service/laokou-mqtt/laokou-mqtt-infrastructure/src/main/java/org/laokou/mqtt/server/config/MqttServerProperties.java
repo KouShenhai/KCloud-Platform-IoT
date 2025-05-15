@@ -67,13 +67,7 @@ public class MqttServerProperties {
 
 	private boolean tcpNoDelay = true;
 
-	private boolean tcpKeepAlive = false;
-
-	private int tcpKeepAliveIdleSeconds = -1;
-
-	private int tcpKeepAliveCount = -1;
-
-	private int tcpKeepAliveIntervalSeconds = -1;
+	private boolean tcpKeepAlive = true;
 
 	private int soLinger = -1;
 
