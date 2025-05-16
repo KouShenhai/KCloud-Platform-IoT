@@ -42,6 +42,7 @@ public class WebSocketRegister implements ApplicationListener<ApplicationReadyEv
 	@Override
 	public void onApplicationEvent(@NotNull ApplicationReadyEvent event) {
 		try {
+			log.info("【WebSocket-Server】 => 注册Nacos成功");
 			namingUtils.registerInstance(springWebSocketServerProperties.getServiceId(),
 					nacosDiscoveryProperties.getGroup(), springWebSocketServerProperties.getIp(),
 					springWebSocketServerProperties.getPort(), nacosDiscoveryProperties.getClusterName());
