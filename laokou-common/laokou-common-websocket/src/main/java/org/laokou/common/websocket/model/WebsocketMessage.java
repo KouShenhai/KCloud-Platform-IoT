@@ -15,22 +15,20 @@
  *
  */
 
-package org.laokou.common.websocket.config;
+package org.laokou.common.websocket.model;
 
-import io.netty.channel.ChannelHandler;
-import org.springframework.context.annotation.Bean;
-import java.util.concurrent.ExecutorService;
+import lombok.Data;
 
-// @formatter:off
 /**
  * @author laokou
  */
-public class WebSocketServerConfig {
+@Data
+public class WebsocketMessage {
 
-    @Bean(name = "webSocketServer", initMethod = "start", destroyMethod = "stop")
-	public Server webSocketServer(ChannelHandler webSocketServerChannelInitializer, SpringWebSocketServerProperties springWebSocketServerProperties, ExecutorService virtualThreadExecutor) {
-		return new WebSocketServer(webSocketServerChannelInitializer, springWebSocketServerProperties, virtualThreadExecutor);
-    }
+	private String token;
+
+	private String type;
+
+	private String payload;
 
 }
-// @formatter:on
