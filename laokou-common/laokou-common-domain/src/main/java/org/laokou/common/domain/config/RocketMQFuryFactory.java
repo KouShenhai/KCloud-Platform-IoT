@@ -22,6 +22,8 @@ import org.apache.fury.ThreadSafeFury;
 import org.apache.fury.config.CompatibleMode;
 import org.apache.fury.config.Language;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * @author laokou
  */
@@ -58,6 +60,9 @@ public final class RocketMQFuryFactory {
 	public byte[] serialize(Object object) {
 		if (object == null) {
 			return new byte[0];
+		}
+		if (object instanceof String str) {
+			return str.getBytes(StandardCharsets.UTF_8);
 		}
 		return FURY.serialize(object);
 	}

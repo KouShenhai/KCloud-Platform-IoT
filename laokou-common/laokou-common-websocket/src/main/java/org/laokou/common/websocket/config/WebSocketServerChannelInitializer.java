@@ -24,7 +24,6 @@ import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
-import io.netty.util.concurrent.EventExecutorGroup;
 import org.laokou.common.i18n.util.ResourceUtils;
 import org.springframework.stereotype.Component;
 
@@ -40,15 +39,12 @@ public final class WebSocketServerChannelInitializer extends AbstractWebSocketSe
 
 	private final ChannelHandler webSocketServerHandler;
 
-	private final EventExecutorGroup webSocketEventExecutorGroup;
-
 	private final SslContext sslContext;
 
 	public WebSocketServerChannelInitializer(SpringWebSocketServerProperties springWebSocketServerProperties,
-			ChannelHandler webSocketServerHandler, EventExecutorGroup webSocketEventExecutorGroup) throws Exception {
+			ChannelHandler webSocketServerHandler) throws Exception {
 		super(springWebSocketServerProperties);
 		this.webSocketServerHandler = webSocketServerHandler;
-		this.webSocketEventExecutorGroup = webSocketEventExecutorGroup;
 		this.sslContext = getSslContext();
 	}
 
@@ -60,7 +56,7 @@ public final class WebSocketServerChannelInitializer extends AbstractWebSocketSe
 	@Override
 	protected void postHandler(SocketChannel channel, ChannelPipeline pipeline) {
 		// 业务处理
-		pipeline.addLast(webSocketEventExecutorGroup, webSocketServerHandler);
+		pipeline.addLast(webSocketServerHandler);
 	}
 
 	private SslContext getSslContext() throws Exception {
