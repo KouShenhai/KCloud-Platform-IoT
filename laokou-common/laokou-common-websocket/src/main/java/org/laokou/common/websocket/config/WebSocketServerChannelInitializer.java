@@ -25,8 +25,6 @@ import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import org.laokou.common.i18n.util.ResourceUtils;
-import org.springframework.stereotype.Component;
-
 import java.io.InputStream;
 
 /**
@@ -34,7 +32,6 @@ import java.io.InputStream;
  *
  * @author laokou
  */
-@Component("webSocketServerChannelInitializer")
 public final class WebSocketServerChannelInitializer extends AbstractWebSocketServerChannelInitializer {
 
 	private final ChannelHandler webSocketServerHandler;
@@ -50,13 +47,13 @@ public final class WebSocketServerChannelInitializer extends AbstractWebSocketSe
 
 	@Override
 	protected void preHandler(SocketChannel channel, ChannelPipeline pipeline) {
-		pipeline.addLast(new SslHandler(this.sslContext.newEngine(channel.alloc())));
+		pipeline.addLast("sslHandler", new SslHandler(this.sslContext.newEngine(channel.alloc())));
 	}
 
 	@Override
 	protected void postHandler(SocketChannel channel, ChannelPipeline pipeline) {
 		// 业务处理
-		pipeline.addLast(webSocketServerHandler);
+		pipeline.addLast("webSocketServerHandler", webSocketServerHandler);
 	}
 
 	private SslContext getSslContext() throws Exception {

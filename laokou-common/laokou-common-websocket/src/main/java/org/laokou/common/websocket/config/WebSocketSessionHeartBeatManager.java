@@ -31,15 +31,19 @@ public final class WebSocketSessionHeartBeatManager {
 
 	private static final Map<String, AtomicInteger> HEART_BEAT_CACHE = new ConcurrentHashMap<>(8192);
 
-	public static void incrementHeartBeat(String clientId) {
+	public static void increment(String clientId) {
 		HEART_BEAT_CACHE.get(clientId).incrementAndGet();
 	}
 
-	public static void resetHeartbeat(String clientId) {
+	public static void reset(String clientId) {
 		HEART_BEAT_CACHE.get(clientId).set(0);
 	}
 
-	public static int getHeartBeat(String clientId) {
+	public static void remove(String clientId) {
+		HEART_BEAT_CACHE.remove(clientId);
+	}
+
+	public static int get(String clientId) {
 		return HEART_BEAT_CACHE
 			.getOrDefault(clientId, HEART_BEAT_CACHE.computeIfAbsent(clientId, k -> new AtomicInteger(0)))
 			.get();

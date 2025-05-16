@@ -42,6 +42,12 @@ spring:
       enabled: true
   lifecycle:
     timeout-per-shutdown-phase: "2m"
+  websocket-server:
+    ip: 127.0.0.1
+    port: 1001
+    bind-ip: 0.0.0.0
+    service-id: ${spring.application.name}-websocket
+    key-cert-private-key-password: laokou
   # security
   security:
     oauth2:

@@ -24,6 +24,7 @@ import org.laokou.common.nacos.annotation.EnableServiceShutDown;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.security.annotation.EnableSecurity;
+import org.laokou.common.websocket.annotation.EnableWebSocketServer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -50,6 +51,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableRouter
 @EnableSecurity
 @EnableScheduling
+@EnableWebSocketServer
 @EnableFeignClients(basePackages = { "org.laokou.common.openfeign" })
 @EnableServiceShutDown
 @EnableRedisRepository

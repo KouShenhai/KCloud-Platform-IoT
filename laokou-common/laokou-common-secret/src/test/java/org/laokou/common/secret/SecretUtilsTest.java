@@ -15,20 +15,21 @@
  *
  */
 
-package org.laokou.common.websocket.model;
+package org.laokou.common.secret;
 
-import lombok.Data;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.secret.util.SecretUtils;
 
 /**
  * @author laokou
  */
-@Data
-public class WebsocketMessage {
+class SecretUtilsTest {
 
-	private String token;
-
-	private String type;
-
-	private String payload;
+	@Test
+	void test() {
+		String sign = SecretUtils.sign(SecretUtils.APP_KEY, SecretUtils.APP_SECRET, "1", String.valueOf(100000), "");
+		Assertions.assertEquals("e1506abd8395b0763f08d2a0e56f6738", sign);
+	}
 
 }

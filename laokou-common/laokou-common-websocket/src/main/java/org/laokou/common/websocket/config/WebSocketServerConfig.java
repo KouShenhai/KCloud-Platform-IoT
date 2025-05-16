@@ -17,7 +17,12 @@
 
 package org.laokou.common.websocket.config;
 
+import com.alibaba.cloud.nacos.ConditionalOnNacosDiscoveryEnabled;
+import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import io.netty.channel.ChannelHandler;
+import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.nacos.util.NamingUtils;
+import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
 import org.springframework.context.annotation.Bean;
 import java.util.concurrent.ExecutorService;
 
@@ -31,6 +36,22 @@ public class WebSocketServerConfig {
 	public Server webSocketServer(ChannelHandler webSocketServerChannelInitializer, SpringWebSocketServerProperties springWebSocketServerProperties, ExecutorService virtualThreadExecutor) {
 		return new WebSocketServer(webSocketServerChannelInitializer, springWebSocketServerProperties, virtualThreadExecutor);
     }
+
+	@Bean("webSocketServerChannelInitializer")
+	public ChannelHandler webSocketServerChannelInitializer(SpringWebSocketServerProperties springWebSocketServerProperties, ChannelHandler webSocketServerHandler) throws Exception {
+		return new WebSocketServerChannelInitializer(springWebSocketServerProperties, webSocketServerHandler);
+	}
+
+	@Bean("webSocketServerHandler")
+	public ChannelHandler webSocketServerHandler(SpringWebSocketServerProperties springWebSocketServerProperties, DomainEventPublisher rocketMQDomainEventPublisher, GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector) {
+		return new WebSocketServerHandler(springWebSocketServerProperties, rocketMQDomainEventPublisher, globalOpaqueTokenIntrospector);
+	}
+
+	@Bean
+	@ConditionalOnNacosDiscoveryEnabled
+	public WebSocketRegister webSocketRegister(NacosDiscoveryProperties nacosDiscoveryProperties, SpringWebSocketServerProperties springWebSocketServerProperties, NamingUtils namingUtils) {
+		return new WebSocketRegister(nacosDiscoveryProperties, springWebSocketServerProperties, namingUtils);
+	}
 
 }
 // @formatter:on
