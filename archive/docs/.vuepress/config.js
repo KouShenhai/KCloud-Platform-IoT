@@ -108,6 +108,7 @@ module.exports = {
 							{text: '项目启动【dev环境】', link: '/pages/10bfa7/'},
 							{text: '项目启动【test环境】', link: '/pages/9fade8/'},
 							{text: '项目启动【prod环境】', link: '/pages/7be29e/'},
+							{text: '更新日志', link: '/pages/b04951/'},
 						]
 					},
 					{
