@@ -153,7 +153,7 @@
   },
   {
     "id": "laokou-iot-websocket",
-    "uri": "lb:wss://laokou-iot-websocket",
+    "uri": "lb:ws://laokou-iot-websocket",
     "predicates": [
       {
         "name": "Path",

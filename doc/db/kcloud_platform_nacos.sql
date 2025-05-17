@@ -1585,7 +1585,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
   },
   {
     "id": "laokou-iot-websocket",
-    "uri": "lb:wss://laokou-iot-websocket",
+    "uri": "lb:ws://laokou-iot-websocket",
     "predicates": [
       {
         "name": "Path",
@@ -1777,7 +1777,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
     "order": 1
   }
 ]
-', '0e03959c7b36b5d0c13fc33b2463e0d3', '2023-01-13 15:44:25', '2024-11-06 22:47:10.779', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'text', '', '');
+', '0e03959c7b36b5d0c13fc33b2463e0d3', '2023-01-13 15:44:25', '2024-11-06 22:47:10.779', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-flow.json', 'LAOKOU_GROUP', '[
   {
     "resource": "/v3/captchas/{uuid}",

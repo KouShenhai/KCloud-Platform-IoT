@@ -17,6 +17,7 @@
 
 package org.laokou.common.websocket.config;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
@@ -138,6 +139,9 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 				WebSocketTypeEnum.getByCode(co.getType())
 					.handle(userDetails, co, channel, rocketMQDomainEventPublisher);
 			}
+		}
+		catch (JsonParseException e) {
+			log.error("【WebSocket-Server】 => JSON格式转换失败，错误信息：{}", e.getMessage(), e);
 		}
 		catch (OAuth2AuthenticationException ex) {
 			OAuth2Error error = ex.getError();

@@ -24,7 +24,10 @@ import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ResourceUtils;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+
 import java.io.InputStream;
 
 /**
@@ -38,16 +41,21 @@ public final class WebSocketServerChannelInitializer extends AbstractWebSocketSe
 
 	private final SslContext sslContext;
 
+	private final ServerProperties serverProperties;
+
 	public WebSocketServerChannelInitializer(SpringWebSocketServerProperties springWebSocketServerProperties,
-			ChannelHandler webSocketServerHandler) throws Exception {
+			ChannelHandler webSocketServerHandler, ServerProperties serverProperties) throws Exception {
 		super(springWebSocketServerProperties);
 		this.webSocketServerHandler = webSocketServerHandler;
+		this.serverProperties = serverProperties;
 		this.sslContext = getSslContext();
 	}
 
 	@Override
 	protected void preHandler(SocketChannel channel, ChannelPipeline pipeline) {
-		pipeline.addLast("sslHandler", new SslHandler(this.sslContext.newEngine(channel.alloc())));
+		if (ObjectUtils.isNotNull(sslContext)) {
+			pipeline.addLast("sslHandler", new SslHandler(this.sslContext.newEngine(channel.alloc())));
+		}
 	}
 
 	@Override
@@ -57,7 +65,8 @@ public final class WebSocketServerChannelInitializer extends AbstractWebSocketSe
 	}
 
 	private SslContext getSslContext() throws Exception {
-		// @formatter:off
+		if (serverProperties.getSsl().isEnabled()) {
+			// @formatter:off
 		// 生成证书 => openssl pkcs12 -in scg-keystore.p12 -clcerts -nokeys -out certificate.crt
 		InputStream keyCertChainIn = ResourceUtils.getResource(springWebSocketServerProperties.getKeyCertChainPath()).getInputStream();
 		// 生成私钥 => openssl pkcs12 -in scg-keystore.p12 -nocerts -out private.key
@@ -67,6 +76,8 @@ public final class WebSocketServerChannelInitializer extends AbstractWebSocketSe
 			.trustManager(InsecureTrustManagerFactory.INSTANCE)
 			.build();
 		// @formatter:on
+		}
+		return null;
 	}
 
 }

@@ -23,6 +23,7 @@ import io.netty.channel.ChannelHandler;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.nacos.util.NamingUtils;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
 import java.util.concurrent.ExecutorService;
 
@@ -38,8 +39,8 @@ public class WebSocketServerConfig {
     }
 
 	@Bean("webSocketServerChannelInitializer")
-	public ChannelHandler webSocketServerChannelInitializer(SpringWebSocketServerProperties springWebSocketServerProperties, ChannelHandler webSocketServerHandler) throws Exception {
-		return new WebSocketServerChannelInitializer(springWebSocketServerProperties, webSocketServerHandler);
+	public ChannelHandler webSocketServerChannelInitializer(SpringWebSocketServerProperties springWebSocketServerProperties, ServerProperties serverProperties, ChannelHandler webSocketServerHandler) throws Exception {
+		return new WebSocketServerChannelInitializer(springWebSocketServerProperties, webSocketServerHandler, serverProperties);
 	}
 
 	@Bean("webSocketServerHandler")

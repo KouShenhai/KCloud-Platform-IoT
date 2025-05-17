@@ -83,6 +83,7 @@ spring:
               - /v3/secrets=laokou-gateway
               - /doc.html=laokou-gateway
               - /webjars/**=laokou-gateway
+              - /ws=laokou-gateway
             POST:
               - /v3/captchas/send/mail=laokou-gateway
               - /v3/captchas/send/mobile=laokou-gateway

@@ -19,11 +19,13 @@ package org.laokou.common.websocket.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @Data
-public class WebSocketMessageCO {
+public class WebSocketMessageCO implements Serializable {
 
 	private String token;
 

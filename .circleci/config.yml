@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - checkout
-      - run: mvn clean install -P prod -DskipTests -B
+      - run: mvn clean install -P dev -DskipTests -B
 workflows:
   maven-build:
     jobs:
