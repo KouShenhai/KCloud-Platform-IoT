@@ -142,6 +142,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		}
 		catch (JsonParseException e) {
 			log.error("【WebSocket-Server】 => JSON格式转换失败，错误信息：{}", e.getMessage(), e);
+			ctx.close();
 		}
 		catch (OAuth2AuthenticationException ex) {
 			OAuth2Error error = ex.getError();
