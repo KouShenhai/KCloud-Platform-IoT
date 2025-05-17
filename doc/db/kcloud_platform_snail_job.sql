@@ -3,280 +3,38 @@
 
  Source Server         : 127.0.0.1
  Source Server Type    : PostgreSQL
- Source Server Version : 160003 (160003)
+ Source Server Version : 170003 (170003)
  Source Host           : 127.0.0.1:5432
- Source Catalog        : kcloud_platform_snail_job
+ Source Catalog        : kcloud_platform
  Source Schema         : public
 
  Target Server Type    : PostgreSQL
- Target Server Version : 160003 (160003)
+ Target Server Version : 170003 (170003)
  File Encoding         : 65001
 
- Date: 16/10/2024 23:07:15
+ Date: 15/05/2025 11:26:07
 */
 
-
--- ----------------------------
--- Sequence structure for sj_group_config_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_group_config_id_seq";
-CREATE SEQUENCE "public"."sj_group_config_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_job_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_job_id_seq";
-CREATE SEQUENCE "public"."sj_job_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_job_log_message_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_job_log_message_id_seq";
-CREATE SEQUENCE "public"."sj_job_log_message_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_job_summary_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_job_summary_id_seq";
-CREATE SEQUENCE "public"."sj_job_summary_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_job_task_batch_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_job_task_batch_id_seq";
-CREATE SEQUENCE "public"."sj_job_task_batch_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_job_task_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_job_task_id_seq";
-CREATE SEQUENCE "public"."sj_job_task_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_namespace_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_namespace_id_seq";
-CREATE SEQUENCE "public"."sj_namespace_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_notify_config_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_notify_config_id_seq";
-CREATE SEQUENCE "public"."sj_notify_config_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_notify_recipient_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_notify_recipient_id_seq";
-CREATE SEQUENCE "public"."sj_notify_recipient_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_retry_dead_letter_0_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_retry_dead_letter_0_id_seq";
-CREATE SEQUENCE "public"."sj_retry_dead_letter_0_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_retry_scene_config_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_retry_scene_config_id_seq";
-CREATE SEQUENCE "public"."sj_retry_scene_config_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_retry_summary_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_retry_summary_id_seq";
-CREATE SEQUENCE "public"."sj_retry_summary_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_retry_task_0_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_retry_task_0_id_seq";
-CREATE SEQUENCE "public"."sj_retry_task_0_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_retry_task_log_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_retry_task_log_id_seq";
-CREATE SEQUENCE "public"."sj_retry_task_log_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_retry_task_log_message_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_retry_task_log_message_id_seq";
-CREATE SEQUENCE "public"."sj_retry_task_log_message_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_sequence_alloc_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_sequence_alloc_id_seq";
-CREATE SEQUENCE "public"."sj_sequence_alloc_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_server_node_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_server_node_id_seq";
-CREATE SEQUENCE "public"."sj_server_node_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_system_user_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_system_user_id_seq";
-CREATE SEQUENCE "public"."sj_system_user_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_system_user_permission_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_system_user_permission_id_seq";
-CREATE SEQUENCE "public"."sj_system_user_permission_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_workflow_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_workflow_id_seq";
-CREATE SEQUENCE "public"."sj_workflow_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_workflow_node_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_workflow_node_id_seq";
-CREATE SEQUENCE "public"."sj_workflow_node_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for sj_workflow_task_batch_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."sj_workflow_task_batch_id_seq";
-CREATE SEQUENCE "public"."sj_workflow_task_batch_id_seq"
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 9223372036854775807
-START 1
-CACHE 1;
 
 -- ----------------------------
 -- Table structure for databasechangelog
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."databasechangelog";
 CREATE TABLE "public"."databasechangelog" (
-  "id" varchar(255)  NOT NULL,
-  "author" varchar(255)  NOT NULL,
-  "filename" varchar(255)  NOT NULL,
-  "dateexecuted" timestamp(6) NOT NULL,
-  "orderexecuted" int4 NOT NULL,
-  "exectype" varchar(10)  NOT NULL,
-  "md5sum" varchar(35) ,
-  "description" varchar(255) ,
-  "comments" varchar(255) ,
-  "tag" varchar(255) ,
-  "liquibase" varchar(20) ,
-  "contexts" varchar(255) ,
-  "labels" varchar(255) ,
-  "deployment_id" varchar(10)
+											  "id" varchar(255)  NOT NULL,
+											  "author" varchar(255)  NOT NULL,
+											  "filename" varchar(255)  NOT NULL,
+											  "dateexecuted" timestamp(6) NOT NULL,
+											  "orderexecuted" int4 NOT NULL,
+											  "exectype" varchar(10)  NOT NULL,
+											  "md5sum" varchar(35) ,
+											  "description" varchar(255) ,
+											  "comments" varchar(255) ,
+											  "tag" varchar(255) ,
+											  "liquibase" varchar(20) ,
+											  "contexts" varchar(255) ,
+											  "labels" varchar(255) ,
+											  "deployment_id" varchar(10)
 )
 ;
 
@@ -289,10 +47,10 @@ CREATE TABLE "public"."databasechangelog" (
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."databasechangeloglock";
 CREATE TABLE "public"."databasechangeloglock" (
-  "id" int4 NOT NULL,
-  "locked" bool NOT NULL,
-  "lockgranted" timestamp(6),
-  "lockedby" varchar(255)
+												  "id" int4 NOT NULL,
+												  "locked" bool NOT NULL,
+												  "lockgranted" timestamp(6),
+												  "lockedby" varchar(255)
 )
 ;
 
@@ -305,12 +63,12 @@ CREATE TABLE "public"."databasechangeloglock" (
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."sj_distributed_lock";
 CREATE TABLE "public"."sj_distributed_lock" (
-  "name" varchar(64)  NOT NULL,
-  "lock_until" timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-  "locked_at" timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-  "locked_by" varchar(255)  NOT NULL,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+												"name" varchar(64)  NOT NULL,
+												"lock_until" timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+												"locked_at" timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+												"locked_by" varchar(255)  NOT NULL,
+												"create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+												"update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_distributed_lock"."name" IS '锁名称';
@@ -341,19 +99,19 @@ INSERT INTO "public"."sj_distributed_lock" VALUES ('clearOfflineNode', '2024-10-
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."sj_group_config";
 CREATE TABLE "public"."sj_group_config" (
-  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "group_name" varchar(64)  NOT NULL DEFAULT '',
-  "description" varchar(256)  NOT NULL DEFAULT '',
-  "token" varchar(64)  NOT NULL DEFAULT 'SJ_cKqBTPzCsWA3VyuCfFoccmuIEGXjr5KT',
-  "group_status" int2 NOT NULL DEFAULT 0,
-  "version" int4 NOT NULL,
-  "group_partition" int4 NOT NULL,
-  "id_generator_mode" int2 NOT NULL DEFAULT 1,
-  "init_scene" int2 NOT NULL DEFAULT 0,
-  "bucket_index" int4 NOT NULL DEFAULT 0,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+											"id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+											"namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+											"group_name" varchar(64)  NOT NULL DEFAULT '',
+											"description" varchar(256)  NOT NULL DEFAULT '',
+											"token" varchar(64)  NOT NULL DEFAULT 'SJ_cKqBTPzCsWA3VyuCfFoccmuIEGXjr5KT',
+											"group_status" int2 NOT NULL DEFAULT 0,
+											"version" int4 NOT NULL,
+											"group_partition" int4 NOT NULL,
+											"id_generator_mode" int2 NOT NULL DEFAULT 1,
+											"init_scene" int2 NOT NULL DEFAULT 0,
+											"bucket_index" int4 NOT NULL DEFAULT 0,
+											"create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+											"update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_group_config"."id" IS '主键';
@@ -381,31 +139,31 @@ COMMENT ON TABLE "public"."sj_group_config" IS '组配置';
 DROP TABLE IF EXISTS "public"."sj_job";
 CREATE TABLE "public"."sj_job" (
 								   "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "group_name" varchar(64)  NOT NULL,
-  "job_name" varchar(64)  NOT NULL,
-  "args_str" text ,
-  "args_type" int2 NOT NULL DEFAULT 1,
-  "next_trigger_at" int8 NOT NULL,
-  "job_status" int2 NOT NULL DEFAULT 1,
-  "task_type" int2 NOT NULL DEFAULT 1,
-  "route_key" int2 NOT NULL DEFAULT 4,
-  "executor_type" int2 NOT NULL DEFAULT 1,
-  "executor_info" varchar(255)  DEFAULT NULL,
-  "trigger_type" int2 NOT NULL,
-  "trigger_interval" varchar(255)  NOT NULL,
-  "block_strategy" int2 NOT NULL DEFAULT 1,
-  "executor_timeout" int4 NOT NULL DEFAULT 0,
-  "max_retry_times" int4 NOT NULL DEFAULT 0,
-  "parallel_num" int4 NOT NULL DEFAULT 1,
-  "retry_interval" int4 NOT NULL DEFAULT 0,
-  "bucket_index" int4 NOT NULL DEFAULT 0,
-  "resident" int2 NOT NULL DEFAULT 0,
-  "description" varchar(256)  NOT NULL DEFAULT '',
-  "ext_attrs" varchar(256)  DEFAULT '',
-  "deleted" int2 NOT NULL DEFAULT 0,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+								   "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+								   "group_name" varchar(64)  NOT NULL,
+								   "job_name" varchar(64)  NOT NULL,
+								   "args_str" text ,
+								   "args_type" int2 NOT NULL DEFAULT 1,
+								   "next_trigger_at" int8 NOT NULL,
+								   "job_status" int2 NOT NULL DEFAULT 1,
+								   "task_type" int2 NOT NULL DEFAULT 1,
+								   "route_key" int2 NOT NULL DEFAULT 4,
+								   "executor_type" int2 NOT NULL DEFAULT 1,
+								   "executor_info" varchar(255)  DEFAULT NULL,
+								   "trigger_type" int2 NOT NULL,
+								   "trigger_interval" varchar(255)  NOT NULL,
+								   "block_strategy" int2 NOT NULL DEFAULT 1,
+								   "executor_timeout" int4 NOT NULL DEFAULT 0,
+								   "max_retry_times" int4 NOT NULL DEFAULT 0,
+								   "parallel_num" int4 NOT NULL DEFAULT 1,
+								   "retry_interval" int4 NOT NULL DEFAULT 0,
+								   "bucket_index" int4 NOT NULL DEFAULT 0,
+								   "resident" int2 NOT NULL DEFAULT 0,
+								   "description" varchar(256)  NOT NULL DEFAULT '',
+								   "ext_attrs" varchar(256)  DEFAULT '',
+								   "deleted" int2 NOT NULL DEFAULT 0,
+								   "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+								   "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_job"."id" IS '主键';
@@ -445,17 +203,17 @@ COMMENT ON TABLE "public"."sj_job" IS '任务信息';
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."sj_job_log_message";
 CREATE TABLE "public"."sj_job_log_message" (
-  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "group_name" varchar(64)  NOT NULL,
-  "job_id" int8 NOT NULL,
-  "task_batch_id" int8 NOT NULL,
-  "task_id" int8 NOT NULL,
-  "message" text  NOT NULL,
-  "log_num" int4 NOT NULL DEFAULT 1,
-  "real_time" int8 NOT NULL DEFAULT 0,
-  "ext_attrs" varchar(256)  DEFAULT '',
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+											   "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+											   "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+											   "group_name" varchar(64)  NOT NULL,
+											   "job_id" int8 NOT NULL,
+											   "task_batch_id" int8 NOT NULL,
+											   "task_id" int8 NOT NULL,
+											   "message" text  NOT NULL,
+											   "log_num" int4 NOT NULL DEFAULT 1,
+											   "real_time" int8 NOT NULL DEFAULT 0,
+											   "ext_attrs" varchar(256)  DEFAULT '',
+											   "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_job_log_message"."id" IS '主键';
@@ -480,21 +238,21 @@ COMMENT ON TABLE "public"."sj_job_log_message" IS '调度日志';
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."sj_job_summary";
 CREATE TABLE "public"."sj_job_summary" (
- "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "group_name" varchar(64)  NOT NULL DEFAULT '',
-  "business_id" int8 NOT NULL,
-  "system_task_type" int2 NOT NULL DEFAULT 3,
-  "trigger_at" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "success_num" int4 NOT NULL DEFAULT 0,
-  "fail_num" int4 NOT NULL DEFAULT 0,
-  "fail_reason" varchar(512)  NOT NULL DEFAULT '',
-  "stop_num" int4 NOT NULL DEFAULT 0,
-  "stop_reason" varchar(512)  NOT NULL DEFAULT '',
-  "cancel_num" int4 NOT NULL DEFAULT 0,
-  "cancel_reason" varchar(512)  NOT NULL DEFAULT '',
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+										   "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+										   "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+										   "group_name" varchar(64)  NOT NULL DEFAULT '',
+										   "business_id" int8 NOT NULL,
+										   "system_task_type" int2 NOT NULL DEFAULT 3,
+										   "trigger_at" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+										   "success_num" int4 NOT NULL DEFAULT 0,
+										   "fail_num" int4 NOT NULL DEFAULT 0,
+										   "fail_reason" varchar(512)  NOT NULL DEFAULT '',
+										   "stop_num" int4 NOT NULL DEFAULT 0,
+										   "stop_reason" varchar(512)  NOT NULL DEFAULT '',
+										   "cancel_num" int4 NOT NULL DEFAULT 0,
+										   "cancel_reason" varchar(512)  NOT NULL DEFAULT '',
+										   "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+										   "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_job_summary"."id" IS '主键';
@@ -524,24 +282,24 @@ COMMENT ON TABLE "public"."sj_job_summary" IS 'DashBoard_Job';
 DROP TABLE IF EXISTS "public"."sj_job_task";
 CREATE TABLE "public"."sj_job_task" (
 										"id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "group_name" varchar(64)  NOT NULL,
-  "job_id" int8 NOT NULL,
-  "task_batch_id" int8 NOT NULL,
-  "parent_id" int8 NOT NULL DEFAULT 0,
-  "task_status" int2 NOT NULL DEFAULT 0,
-  "retry_count" int4 NOT NULL DEFAULT 0,
-  "mr_stage" int2,
-  "leaf" int2 NOT NULL DEFAULT '1'::smallint,
-  "task_name" varchar(255)  NOT NULL DEFAULT '',
-  "client_info" varchar(128)  DEFAULT NULL,
-  "wf_context" text ,
-  "result_message" text  NOT NULL,
-  "args_str" text ,
-  "args_type" int2 NOT NULL DEFAULT 1,
-  "ext_attrs" varchar(256)  DEFAULT '',
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+										"namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+										"group_name" varchar(64)  NOT NULL,
+										"job_id" int8 NOT NULL,
+										"task_batch_id" int8 NOT NULL,
+										"parent_id" int8 NOT NULL DEFAULT 0,
+										"task_status" int2 NOT NULL DEFAULT 0,
+										"retry_count" int4 NOT NULL DEFAULT 0,
+										"mr_stage" int2,
+										"leaf" int2 NOT NULL DEFAULT '1'::smallint,
+										"task_name" varchar(255)  NOT NULL DEFAULT '',
+										"client_info" varchar(128)  DEFAULT NULL,
+										"wf_context" text ,
+										"result_message" text  NOT NULL,
+										"args_str" text ,
+										"args_type" int2 NOT NULL DEFAULT 1,
+										"ext_attrs" varchar(256)  DEFAULT '',
+										"create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+										"update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_job_task"."id" IS '主键';
@@ -575,21 +333,21 @@ COMMENT ON TABLE "public"."sj_job_task" IS '任务实例';
 DROP TABLE IF EXISTS "public"."sj_job_task_batch";
 CREATE TABLE "public"."sj_job_task_batch" (
 											  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "group_name" varchar(64)  NOT NULL,
-  "job_id" int8 NOT NULL,
-  "workflow_node_id" int8 NOT NULL DEFAULT 0,
-  "parent_workflow_node_id" int8 NOT NULL DEFAULT 0,
-  "workflow_task_batch_id" int8 NOT NULL DEFAULT 0,
-  "task_batch_status" int2 NOT NULL DEFAULT 0,
-  "operation_reason" int2 NOT NULL DEFAULT 0,
-  "execution_at" int8 NOT NULL DEFAULT 0,
-  "system_task_type" int2 NOT NULL DEFAULT 3,
-  "parent_id" varchar(64)  NOT NULL DEFAULT '',
-  "ext_attrs" varchar(256)  DEFAULT '',
-  "deleted" int2 NOT NULL DEFAULT 0,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+											  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+											  "group_name" varchar(64)  NOT NULL,
+											  "job_id" int8 NOT NULL,
+											  "workflow_node_id" int8 NOT NULL DEFAULT 0,
+											  "parent_workflow_node_id" int8 NOT NULL DEFAULT 0,
+											  "workflow_task_batch_id" int8 NOT NULL DEFAULT 0,
+											  "task_batch_status" int2 NOT NULL DEFAULT 0,
+											  "operation_reason" int2 NOT NULL DEFAULT 0,
+											  "execution_at" int8 NOT NULL DEFAULT 0,
+											  "system_task_type" int2 NOT NULL DEFAULT 3,
+											  "parent_id" varchar(64)  NOT NULL DEFAULT '',
+											  "ext_attrs" varchar(256)  DEFAULT '',
+											  "deleted" int2 NOT NULL DEFAULT 0,
+											  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+											  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_job_task_batch"."id" IS '主键';
@@ -620,12 +378,12 @@ COMMENT ON TABLE "public"."sj_job_task_batch" IS '任务批次';
 DROP TABLE IF EXISTS "public"."sj_namespace";
 CREATE TABLE "public"."sj_namespace" (
 										 "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "name" varchar(64)  NOT NULL,
-  "unique_id" varchar(64)  NOT NULL,
-  "description" varchar(256)  NOT NULL DEFAULT '',
-  "deleted" int2 NOT NULL DEFAULT 0,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+										 "name" varchar(64)  NOT NULL,
+										 "unique_id" varchar(64)  NOT NULL,
+										 "description" varchar(256)  NOT NULL DEFAULT '',
+										 "deleted" int2 NOT NULL DEFAULT 0,
+										 "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+										 "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_namespace"."id" IS '主键';
@@ -648,19 +406,19 @@ INSERT INTO "public"."sj_namespace" VALUES (1, 'laokou', '764d604ec6fc45f68cd925
 DROP TABLE IF EXISTS "public"."sj_notify_config";
 CREATE TABLE "public"."sj_notify_config" (
 											 "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "group_name" varchar(64)  NOT NULL,
-  "business_id" varchar(64)  NOT NULL,
-  "system_task_type" int2 NOT NULL DEFAULT 3,
-  "notify_status" int2 NOT NULL DEFAULT 0,
-  "recipient_ids" varchar(128)  NOT NULL,
-  "notify_threshold" int4 NOT NULL DEFAULT 0,
-  "notify_scene" int2 NOT NULL DEFAULT 0,
-  "rate_limiter_status" int2 NOT NULL DEFAULT 0,
-  "rate_limiter_threshold" int4 NOT NULL DEFAULT 0,
-  "description" varchar(256)  NOT NULL DEFAULT '',
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+											 "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+											 "group_name" varchar(64)  NOT NULL,
+											 "business_id" varchar(64)  NOT NULL,
+											 "system_task_type" int2 NOT NULL DEFAULT 3,
+											 "notify_status" int2 NOT NULL DEFAULT 0,
+											 "recipient_ids" varchar(128)  NOT NULL,
+											 "notify_threshold" int4 NOT NULL DEFAULT 0,
+											 "notify_scene" int2 NOT NULL DEFAULT 0,
+											 "rate_limiter_status" int2 NOT NULL DEFAULT 0,
+											 "rate_limiter_threshold" int4 NOT NULL DEFAULT 0,
+											 "description" varchar(256)  NOT NULL DEFAULT '',
+											 "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+											 "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_notify_config"."id" IS '主键';
@@ -689,13 +447,13 @@ COMMENT ON TABLE "public"."sj_notify_config" IS '通知配置';
 DROP TABLE IF EXISTS "public"."sj_notify_recipient";
 CREATE TABLE "public"."sj_notify_recipient" (
 												"id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "recipient_name" varchar(64)  NOT NULL,
-  "notify_type" int2 NOT NULL DEFAULT 0,
-  "notify_attribute" varchar(512)  NOT NULL,
-  "description" varchar(256)  NOT NULL DEFAULT '',
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+												"namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+												"recipient_name" varchar(64)  NOT NULL,
+												"notify_type" int2 NOT NULL DEFAULT 0,
+												"notify_attribute" varchar(512)  NOT NULL,
+												"description" varchar(256)  NOT NULL DEFAULT '',
+												"create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+												"update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_notify_recipient"."id" IS '主键';
@@ -718,17 +476,17 @@ COMMENT ON TABLE "public"."sj_notify_recipient" IS '告警通知接收人';
 DROP TABLE IF EXISTS "public"."sj_retry_dead_letter_0";
 CREATE TABLE "public"."sj_retry_dead_letter_0" (
 												   "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "unique_id" varchar(64)  NOT NULL,
-  "group_name" varchar(64)  NOT NULL,
-  "scene_name" varchar(64)  NOT NULL,
-  "idempotent_id" varchar(64)  NOT NULL,
-  "biz_no" varchar(64)  NOT NULL DEFAULT '',
-  "executor_name" varchar(512)  NOT NULL DEFAULT '',
-  "args_str" text  NOT NULL,
-  "ext_attrs" text  NOT NULL,
-  "task_type" int2 NOT NULL DEFAULT 1,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+												   "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+												   "unique_id" varchar(64)  NOT NULL,
+												   "group_name" varchar(64)  NOT NULL,
+												   "scene_name" varchar(64)  NOT NULL,
+												   "idempotent_id" varchar(64)  NOT NULL,
+												   "biz_no" varchar(64)  NOT NULL DEFAULT '',
+												   "executor_name" varchar(512)  NOT NULL DEFAULT '',
+												   "args_str" text  NOT NULL,
+												   "ext_attrs" text  NOT NULL,
+												   "task_type" int2 NOT NULL DEFAULT 1,
+												   "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_retry_dead_letter_0"."id" IS '主键';
@@ -755,19 +513,19 @@ COMMENT ON TABLE "public"."sj_retry_dead_letter_0" IS '死信队列表';
 DROP TABLE IF EXISTS "public"."sj_retry_scene_config";
 CREATE TABLE "public"."sj_retry_scene_config" (
 												  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "scene_name" varchar(64)  NOT NULL,
-  "group_name" varchar(64)  NOT NULL,
-  "scene_status" int2 NOT NULL DEFAULT 0,
-  "max_retry_count" int4 NOT NULL DEFAULT 5,
-  "back_off" int2 NOT NULL DEFAULT 1,
-  "trigger_interval" varchar(16)  NOT NULL DEFAULT '',
-  "deadline_request" int8 NOT NULL DEFAULT 60000,
-  "executor_timeout" int4 NOT NULL DEFAULT 5,
-  "route_key" int2 NOT NULL DEFAULT 4,
-  "description" varchar(256)  NOT NULL DEFAULT '',
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+												  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+												  "scene_name" varchar(64)  NOT NULL,
+												  "group_name" varchar(64)  NOT NULL,
+												  "scene_status" int2 NOT NULL DEFAULT 0,
+												  "max_retry_count" int4 NOT NULL DEFAULT 5,
+												  "back_off" int2 NOT NULL DEFAULT 1,
+												  "trigger_interval" varchar(16)  NOT NULL DEFAULT '',
+												  "deadline_request" int8 NOT NULL DEFAULT 60000,
+												  "executor_timeout" int4 NOT NULL DEFAULT 5,
+												  "route_key" int2 NOT NULL DEFAULT 4,
+												  "description" varchar(256)  NOT NULL DEFAULT '',
+												  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+												  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_retry_scene_config"."id" IS '主键';
@@ -796,16 +554,16 @@ COMMENT ON TABLE "public"."sj_retry_scene_config" IS '场景配置';
 DROP TABLE IF EXISTS "public"."sj_retry_summary";
 CREATE TABLE "public"."sj_retry_summary" (
 											 "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "group_name" varchar(64)  NOT NULL DEFAULT '',
-  "scene_name" varchar(50)  NOT NULL DEFAULT '',
-  "trigger_at" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "running_num" int4 NOT NULL DEFAULT 0,
-  "finish_num" int4 NOT NULL DEFAULT 0,
-  "max_count_num" int4 NOT NULL DEFAULT 0,
-  "suspend_num" int4 NOT NULL DEFAULT 0,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+											 "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+											 "group_name" varchar(64)  NOT NULL DEFAULT '',
+											 "scene_name" varchar(50)  NOT NULL DEFAULT '',
+											 "trigger_at" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+											 "running_num" int4 NOT NULL DEFAULT 0,
+											 "finish_num" int4 NOT NULL DEFAULT 0,
+											 "max_count_num" int4 NOT NULL DEFAULT 0,
+											 "suspend_num" int4 NOT NULL DEFAULT 0,
+											 "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+											 "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_retry_summary"."id" IS '主键';
@@ -831,21 +589,21 @@ COMMENT ON TABLE "public"."sj_retry_summary" IS 'DashBoard_Retry';
 DROP TABLE IF EXISTS "public"."sj_retry_task_0";
 CREATE TABLE "public"."sj_retry_task_0" (
 											"id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "unique_id" varchar(64)  NOT NULL,
-  "group_name" varchar(64)  NOT NULL,
-  "scene_name" varchar(64)  NOT NULL,
-  "idempotent_id" varchar(64)  NOT NULL,
-  "biz_no" varchar(64)  NOT NULL DEFAULT '',
-  "executor_name" varchar(512)  NOT NULL DEFAULT '',
-  "args_str" text  NOT NULL,
-  "ext_attrs" text  NOT NULL,
-  "next_trigger_at" timestamp(6) NOT NULL,
-  "retry_count" int4 NOT NULL DEFAULT 0,
-  "retry_status" int2 NOT NULL DEFAULT 0,
-  "task_type" int2 NOT NULL DEFAULT 1,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+											"namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+											"unique_id" varchar(64)  NOT NULL,
+											"group_name" varchar(64)  NOT NULL,
+											"scene_name" varchar(64)  NOT NULL,
+											"idempotent_id" varchar(64)  NOT NULL,
+											"biz_no" varchar(64)  NOT NULL DEFAULT '',
+											"executor_name" varchar(512)  NOT NULL DEFAULT '',
+											"args_str" text  NOT NULL,
+											"ext_attrs" text  NOT NULL,
+											"next_trigger_at" timestamp(6) NOT NULL,
+											"retry_count" int4 NOT NULL DEFAULT 0,
+											"retry_status" int2 NOT NULL DEFAULT 0,
+											"task_type" int2 NOT NULL DEFAULT 1,
+											"create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+											"update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_retry_task_0"."id" IS '主键';
@@ -876,19 +634,19 @@ COMMENT ON TABLE "public"."sj_retry_task_0" IS '任务表';
 DROP TABLE IF EXISTS "public"."sj_retry_task_log";
 CREATE TABLE "public"."sj_retry_task_log" (
 											  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "unique_id" varchar(64)  NOT NULL,
-  "group_name" varchar(64)  NOT NULL,
-  "scene_name" varchar(64)  NOT NULL,
-  "idempotent_id" varchar(64)  NOT NULL,
-  "biz_no" varchar(64)  NOT NULL DEFAULT '',
-  "executor_name" varchar(512)  NOT NULL DEFAULT '',
-  "args_str" text  NOT NULL,
-  "ext_attrs" text  NOT NULL,
-  "retry_status" int2 NOT NULL DEFAULT 0,
-  "task_type" int2 NOT NULL DEFAULT 1,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+											  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+											  "unique_id" varchar(64)  NOT NULL,
+											  "group_name" varchar(64)  NOT NULL,
+											  "scene_name" varchar(64)  NOT NULL,
+											  "idempotent_id" varchar(64)  NOT NULL,
+											  "biz_no" varchar(64)  NOT NULL DEFAULT '',
+											  "executor_name" varchar(512)  NOT NULL DEFAULT '',
+											  "args_str" text  NOT NULL,
+											  "ext_attrs" text  NOT NULL,
+											  "retry_status" int2 NOT NULL DEFAULT 0,
+											  "task_type" int2 NOT NULL DEFAULT 1,
+											  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+											  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_retry_task_log"."id" IS '主键';
@@ -917,13 +675,13 @@ COMMENT ON TABLE "public"."sj_retry_task_log" IS '任务日志基础信息表';
 DROP TABLE IF EXISTS "public"."sj_retry_task_log_message";
 CREATE TABLE "public"."sj_retry_task_log_message" (
 													  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "group_name" varchar(64)  NOT NULL,
-  "unique_id" varchar(64)  NOT NULL,
-  "message" text  NOT NULL,
-  "log_num" int4 NOT NULL DEFAULT 1,
-  "real_time" int8 NOT NULL DEFAULT 0,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+													  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+													  "group_name" varchar(64)  NOT NULL,
+													  "unique_id" varchar(64)  NOT NULL,
+													  "message" text  NOT NULL,
+													  "log_num" int4 NOT NULL DEFAULT 1,
+													  "real_time" int8 NOT NULL DEFAULT 0,
+													  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_retry_task_log_message"."id" IS '主键';
@@ -946,11 +704,11 @@ COMMENT ON TABLE "public"."sj_retry_task_log_message" IS '任务调度日志信�
 DROP TABLE IF EXISTS "public"."sj_sequence_alloc";
 CREATE TABLE "public"."sj_sequence_alloc" (
 											  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "group_name" varchar(64)  NOT NULL DEFAULT '',
-  "max_id" int8 NOT NULL DEFAULT 1,
-  "step" int4 NOT NULL DEFAULT 100,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+											  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+											  "group_name" varchar(64)  NOT NULL DEFAULT '',
+											  "max_id" int8 NOT NULL DEFAULT 1,
+											  "step" int4 NOT NULL DEFAULT 100,
+											  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_sequence_alloc"."id" IS '主键';
@@ -971,16 +729,16 @@ COMMENT ON TABLE "public"."sj_sequence_alloc" IS '号段模式序号ID分配表'
 DROP TABLE IF EXISTS "public"."sj_server_node";
 CREATE TABLE "public"."sj_server_node" (
 										   "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "group_name" varchar(64)  NOT NULL,
-  "host_id" varchar(64)  NOT NULL,
-  "host_ip" varchar(64)  NOT NULL,
-  "host_port" int4 NOT NULL,
-  "expire_at" timestamp(6) NOT NULL,
-  "node_type" int2 NOT NULL,
-  "ext_attrs" varchar(256)  DEFAULT '',
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+										   "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+										   "group_name" varchar(64)  NOT NULL,
+										   "host_id" varchar(64)  NOT NULL,
+										   "host_ip" varchar(64)  NOT NULL,
+										   "host_port" int4 NOT NULL,
+										   "expire_at" timestamp(6) NOT NULL,
+										   "node_type" int2 NOT NULL,
+										   "ext_attrs" varchar(256)  DEFAULT '',
+										   "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+										   "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_server_node"."id" IS '主键';
@@ -1007,11 +765,11 @@ INSERT INTO "public"."sj_server_node" VALUES (2, 'DEFAULT_SERVER_NAMESPACE_ID', 
 DROP TABLE IF EXISTS "public"."sj_system_user";
 CREATE TABLE "public"."sj_system_user" (
 										   "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "username" varchar(64)  NOT NULL,
-  "password" varchar(128)  NOT NULL,
-  "role" int2 NOT NULL DEFAULT 0,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+										   "username" varchar(64)  NOT NULL,
+										   "password" varchar(128)  NOT NULL,
+										   "role" int2 NOT NULL DEFAULT 0,
+										   "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+										   "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_system_user"."id" IS '主键';
@@ -1033,11 +791,11 @@ INSERT INTO "public"."sj_system_user" VALUES (1, 'admin', '95097e227f2acc2a6e979
 DROP TABLE IF EXISTS "public"."sj_system_user_permission";
 CREATE TABLE "public"."sj_system_user_permission" (
 													  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "group_name" varchar(64)  NOT NULL,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "system_user_id" int8 NOT NULL,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+													  "group_name" varchar(64)  NOT NULL,
+													  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+													  "system_user_id" int8 NOT NULL,
+													  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+													  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_system_user_permission"."id" IS '主键';
@@ -1058,24 +816,24 @@ COMMENT ON TABLE "public"."sj_system_user_permission" IS '系统用户权限表'
 DROP TABLE IF EXISTS "public"."sj_workflow";
 CREATE TABLE "public"."sj_workflow" (
 										"id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "workflow_name" varchar(64)  NOT NULL,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "group_name" varchar(64)  NOT NULL,
-  "workflow_status" int2 NOT NULL DEFAULT 1,
-  "trigger_type" int2 NOT NULL,
-  "trigger_interval" varchar(255)  NOT NULL,
-  "next_trigger_at" int8 NOT NULL,
-  "block_strategy" int2 NOT NULL DEFAULT 1,
-  "executor_timeout" int4 NOT NULL DEFAULT 0,
-  "description" varchar(256)  NOT NULL DEFAULT '',
-  "flow_info" text ,
-  "wf_context" text ,
-  "bucket_index" int4 NOT NULL DEFAULT 0,
-  "version" int4 NOT NULL,
-  "ext_attrs" varchar(256)  DEFAULT '',
-  "deleted" int2 NOT NULL DEFAULT 0,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+										"workflow_name" varchar(64)  NOT NULL,
+										"namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+										"group_name" varchar(64)  NOT NULL,
+										"workflow_status" int2 NOT NULL DEFAULT 1,
+										"trigger_type" int2 NOT NULL,
+										"trigger_interval" varchar(255)  NOT NULL,
+										"next_trigger_at" int8 NOT NULL,
+										"block_strategy" int2 NOT NULL DEFAULT 1,
+										"executor_timeout" int4 NOT NULL DEFAULT 0,
+										"description" varchar(256)  NOT NULL DEFAULT '',
+										"flow_info" text ,
+										"wf_context" text ,
+										"bucket_index" int4 NOT NULL DEFAULT 0,
+										"version" int4 NOT NULL,
+										"ext_attrs" varchar(256)  DEFAULT '',
+										"deleted" int2 NOT NULL DEFAULT 0,
+										"create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+										"update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_workflow"."id" IS '主键';
@@ -1109,22 +867,22 @@ COMMENT ON TABLE "public"."sj_workflow" IS '工作流';
 DROP TABLE IF EXISTS "public"."sj_workflow_node";
 CREATE TABLE "public"."sj_workflow_node" (
 											 "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "node_name" varchar(64)  NOT NULL,
-  "group_name" varchar(64)  NOT NULL,
-  "job_id" int8 NOT NULL,
-  "workflow_id" int8 NOT NULL,
-  "node_type" int2 NOT NULL DEFAULT 1,
-  "expression_type" int2 NOT NULL DEFAULT 0,
-  "fail_strategy" int2 NOT NULL DEFAULT 1,
-  "workflow_node_status" int2 NOT NULL DEFAULT 1,
-  "priority_level" int4 NOT NULL DEFAULT 1,
-  "node_info" text ,
-  "version" int4 NOT NULL,
-  "ext_attrs" varchar(256)  DEFAULT '',
-  "deleted" int2 NOT NULL DEFAULT 0,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+											 "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+											 "node_name" varchar(64)  NOT NULL,
+											 "group_name" varchar(64)  NOT NULL,
+											 "job_id" int8 NOT NULL,
+											 "workflow_id" int8 NOT NULL,
+											 "node_type" int2 NOT NULL DEFAULT 1,
+											 "expression_type" int2 NOT NULL DEFAULT 0,
+											 "fail_strategy" int2 NOT NULL DEFAULT 1,
+											 "workflow_node_status" int2 NOT NULL DEFAULT 1,
+											 "priority_level" int4 NOT NULL DEFAULT 1,
+											 "node_info" text ,
+											 "version" int4 NOT NULL,
+											 "ext_attrs" varchar(256)  DEFAULT '',
+											 "deleted" int2 NOT NULL DEFAULT 0,
+											 "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+											 "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_workflow_node"."id" IS '主键';
@@ -1155,20 +913,20 @@ COMMENT ON TABLE "public"."sj_workflow_node" IS '工作流节点';
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."sj_workflow_task_batch";
 CREATE TABLE "public"."sj_workflow_task_batch" (
-  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-  "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
-  "group_name" varchar(64)  NOT NULL,
-  "workflow_id" int8 NOT NULL,
-  "task_batch_status" int2 NOT NULL DEFAULT 0,
-  "operation_reason" int2 NOT NULL DEFAULT 0,
-  "flow_info" text ,
-  "wf_context" text ,
-  "execution_at" int8 NOT NULL DEFAULT 0,
-  "ext_attrs" varchar(256)  DEFAULT '',
-  "version" int4 NOT NULL DEFAULT 1,
-  "deleted" int2 NOT NULL DEFAULT 0,
-  "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+												   "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+												   "namespace_id" varchar(64)  NOT NULL DEFAULT '764d604ec6fc45f68cd92514c40e9e1a',
+												   "group_name" varchar(64)  NOT NULL,
+												   "workflow_id" int8 NOT NULL,
+												   "task_batch_status" int2 NOT NULL DEFAULT 0,
+												   "operation_reason" int2 NOT NULL DEFAULT 0,
+												   "flow_info" text ,
+												   "wf_context" text ,
+												   "execution_at" int8 NOT NULL DEFAULT 0,
+												   "ext_attrs" varchar(256)  DEFAULT '',
+												   "version" int4 NOT NULL DEFAULT 1,
+												   "deleted" int2 NOT NULL DEFAULT 0,
+												   "create_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+												   "update_dt" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 ;
 COMMENT ON COLUMN "public"."sj_workflow_task_batch"."id" IS '主键';
@@ -1188,164 +946,6 @@ COMMENT ON COLUMN "public"."sj_workflow_task_batch"."update_dt" IS '修改时间
 COMMENT ON TABLE "public"."sj_workflow_task_batch" IS '工作流批次';
 
 -- ----------------------------
--- Records of sj_workflow_task_batch
--- ----------------------------
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_group_config_id_seq"
-OWNED BY "public"."sj_group_config"."id";
-SELECT setval('"public"."sj_group_config_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_job_id_seq"
-OWNED BY "public"."sj_job"."id";
-SELECT setval('"public"."sj_job_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_job_log_message_id_seq"
-OWNED BY "public"."sj_job_log_message"."id";
-SELECT setval('"public"."sj_job_log_message_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_job_summary_id_seq"
-OWNED BY "public"."sj_job_summary"."id";
-SELECT setval('"public"."sj_job_summary_id_seq"', 2, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_job_task_batch_id_seq"
-OWNED BY "public"."sj_job_task_batch"."id";
-SELECT setval('"public"."sj_job_task_batch_id_seq"', 2, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_job_task_id_seq"
-OWNED BY "public"."sj_job_task"."id";
-SELECT setval('"public"."sj_job_task_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_namespace_id_seq"
-OWNED BY "public"."sj_namespace"."id";
-SELECT setval('"public"."sj_namespace_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_notify_config_id_seq"
-OWNED BY "public"."sj_notify_config"."id";
-SELECT setval('"public"."sj_notify_config_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_notify_recipient_id_seq"
-OWNED BY "public"."sj_notify_recipient"."id";
-SELECT setval('"public"."sj_notify_recipient_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_retry_dead_letter_0_id_seq"
-OWNED BY "public"."sj_retry_dead_letter_0"."id";
-SELECT setval('"public"."sj_retry_dead_letter_0_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_retry_scene_config_id_seq"
-OWNED BY "public"."sj_retry_scene_config"."id";
-SELECT setval('"public"."sj_retry_scene_config_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_retry_summary_id_seq"
-OWNED BY "public"."sj_retry_summary"."id";
-SELECT setval('"public"."sj_retry_summary_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_retry_task_0_id_seq"
-OWNED BY "public"."sj_retry_task_0"."id";
-SELECT setval('"public"."sj_retry_task_0_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_retry_task_log_id_seq"
-OWNED BY "public"."sj_retry_task_log"."id";
-SELECT setval('"public"."sj_retry_task_log_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_retry_task_log_message_id_seq"
-OWNED BY "public"."sj_retry_task_log_message"."id";
-SELECT setval('"public"."sj_retry_task_log_message_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_sequence_alloc_id_seq"
-OWNED BY "public"."sj_sequence_alloc"."id";
-SELECT setval('"public"."sj_sequence_alloc_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_server_node_id_seq"
-OWNED BY "public"."sj_server_node"."id";
-SELECT setval('"public"."sj_server_node_id_seq"', 2, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_system_user_id_seq"
-OWNED BY "public"."sj_system_user"."id";
-SELECT setval('"public"."sj_system_user_id_seq"', 1, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_system_user_permission_id_seq"
-OWNED BY "public"."sj_system_user_permission"."id";
-SELECT setval('"public"."sj_system_user_permission_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_workflow_id_seq"
-OWNED BY "public"."sj_workflow"."id";
-SELECT setval('"public"."sj_workflow_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_workflow_node_id_seq"
-OWNED BY "public"."sj_workflow_node"."id";
-SELECT setval('"public"."sj_workflow_node_id_seq"', 1, false);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."sj_workflow_task_batch_id_seq"
-OWNED BY "public"."sj_workflow_task_batch"."id";
-SELECT setval('"public"."sj_workflow_task_batch_id_seq"', 1, false);
-
--- ----------------------------
 -- Primary Key structure for table databasechangeloglock
 -- ----------------------------
 ALTER TABLE "public"."databasechangeloglock" ADD CONSTRAINT "databasechangeloglock_pkey" PRIMARY KEY ("id");
@@ -1359,9 +959,9 @@ ALTER TABLE "public"."sj_distributed_lock" ADD CONSTRAINT "sj_distributed_lock_p
 -- Indexes structure for table sj_group_config
 -- ----------------------------
 CREATE UNIQUE INDEX "uk_sj_group_config_01" ON "public"."sj_group_config" USING btree (
-  "namespace_id" ,
-  "group_name"
-);
+																					   "namespace_id" ,
+																					   "group_name"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_group_config
@@ -1372,16 +972,16 @@ ALTER TABLE "public"."sj_group_config" ADD CONSTRAINT "sj_group_config_pkey" PRI
 -- Indexes structure for table sj_job
 -- ----------------------------
 CREATE INDEX "idx_sj_job_01" ON "public"."sj_job" USING btree (
-  "namespace_id" ,
-  "group_name"
-);
+															   "namespace_id" ,
+															   "group_name"
+	);
 CREATE INDEX "idx_sj_job_02" ON "public"."sj_job" USING btree (
-  "job_status" ,
-  "bucket_index" "pg_catalog"."int4_ops" ASC NULLS LAST
-);
+															   "job_status" ,
+															   "bucket_index" "pg_catalog"."int4_ops" ASC NULLS LAST
+	);
 CREATE INDEX "idx_sj_job_03" ON "public"."sj_job" USING btree (
-  "create_dt"
-);
+															   "create_dt"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_job
@@ -1392,16 +992,16 @@ ALTER TABLE "public"."sj_job" ADD CONSTRAINT "sj_job_pkey" PRIMARY KEY ("id");
 -- Indexes structure for table sj_job_log_message
 -- ----------------------------
 CREATE INDEX "idx_sj_job_log_message_01" ON "public"."sj_job_log_message" USING btree (
-  "task_batch_id" ,
-  "task_id"
-);
+																					   "task_batch_id" ,
+																					   "task_id"
+	);
 CREATE INDEX "idx_sj_job_log_message_02" ON "public"."sj_job_log_message" USING btree (
-  "create_dt"
-);
+																					   "create_dt"
+	);
 CREATE INDEX "idx_sj_job_log_message_03" ON "public"."sj_job_log_message" USING btree (
-  "namespace_id" ,
-  "group_name"
-);
+																					   "namespace_id" ,
+																					   "group_name"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_job_log_message
@@ -1412,15 +1012,15 @@ ALTER TABLE "public"."sj_job_log_message" ADD CONSTRAINT "sj_job_log_message_pke
 -- Indexes structure for table sj_job_summary
 -- ----------------------------
 CREATE INDEX "idx_sj_job_summary_01" ON "public"."sj_job_summary" USING btree (
-  "namespace_id" ,
-  "group_name" ,
-  "business_id"
-);
+																			   "namespace_id" ,
+																			   "group_name" ,
+																			   "business_id"
+	);
 CREATE UNIQUE INDEX "uk_sj_job_summary_01" ON "public"."sj_job_summary" USING btree (
-  "trigger_at" ,
-  "system_task_type" ,
-  "business_id"
-);
+																					 "trigger_at" ,
+																					 "system_task_type" ,
+																					 "business_id"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_job_summary
@@ -1431,16 +1031,16 @@ ALTER TABLE "public"."sj_job_summary" ADD CONSTRAINT "sj_job_summary_pkey" PRIMA
 -- Indexes structure for table sj_job_task
 -- ----------------------------
 CREATE INDEX "idx_sj_job_task_01" ON "public"."sj_job_task" USING btree (
-  "task_batch_id" ,
-  "task_status"
-);
+																		 "task_batch_id" ,
+																		 "task_status"
+	);
 CREATE INDEX "idx_sj_job_task_02" ON "public"."sj_job_task" USING btree (
-  "create_dt"
-);
+																		 "create_dt"
+	);
 CREATE INDEX "idx_sj_job_task_03" ON "public"."sj_job_task" USING btree (
-  "namespace_id" ,
-  "group_name"
-);
+																		 "namespace_id" ,
+																		 "group_name"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_job_task
@@ -1451,20 +1051,20 @@ ALTER TABLE "public"."sj_job_task" ADD CONSTRAINT "sj_job_task_pkey" PRIMARY KEY
 -- Indexes structure for table sj_job_task_batch
 -- ----------------------------
 CREATE INDEX "idx_sj_job_task_batch_01" ON "public"."sj_job_task_batch" USING btree (
-  "job_id" ,
-  "task_batch_status"
-);
+																					 "job_id" ,
+																					 "task_batch_status"
+	);
 CREATE INDEX "idx_sj_job_task_batch_02" ON "public"."sj_job_task_batch" USING btree (
-  "create_dt"
-);
+																					 "create_dt"
+	);
 CREATE INDEX "idx_sj_job_task_batch_03" ON "public"."sj_job_task_batch" USING btree (
-  "namespace_id" ,
-  "group_name"
-);
+																					 "namespace_id" ,
+																					 "group_name"
+	);
 CREATE INDEX "idx_sj_job_task_batch_04" ON "public"."sj_job_task_batch" USING btree (
-  "workflow_task_batch_id" ,
-  "workflow_node_id"
-);
+																					 "workflow_task_batch_id" ,
+																					 "workflow_node_id"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_job_task_batch
@@ -1475,8 +1075,8 @@ ALTER TABLE "public"."sj_job_task_batch" ADD CONSTRAINT "sj_job_task_batch_pkey"
 -- Indexes structure for table sj_namespace
 -- ----------------------------
 CREATE INDEX "idx_sj_namespace_01" ON "public"."sj_namespace" USING btree (
-  "name"
-);
+																		   "name"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_namespace
@@ -1487,10 +1087,10 @@ ALTER TABLE "public"."sj_namespace" ADD CONSTRAINT "sj_namespace_pkey" PRIMARY K
 -- Indexes structure for table sj_notify_config
 -- ----------------------------
 CREATE INDEX "idx_sj_notify_config_01" ON "public"."sj_notify_config" USING btree (
-  "namespace_id" ,
-  "group_name" ,
-  "business_id"
-);
+																				   "namespace_id" ,
+																				   "group_name" ,
+																				   "business_id"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_notify_config
@@ -1501,8 +1101,8 @@ ALTER TABLE "public"."sj_notify_config" ADD CONSTRAINT "sj_notify_config_pkey" P
 -- Indexes structure for table sj_notify_recipient
 -- ----------------------------
 CREATE INDEX "idx_sj_notify_recipient_01" ON "public"."sj_notify_recipient" USING btree (
-  "namespace_id"
-);
+																						 "namespace_id"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_notify_recipient
@@ -1513,24 +1113,24 @@ ALTER TABLE "public"."sj_notify_recipient" ADD CONSTRAINT "sj_notify_recipient_p
 -- Indexes structure for table sj_retry_dead_letter_0
 -- ----------------------------
 CREATE INDEX "idx_sj_retry_dead_letter_0_01" ON "public"."sj_retry_dead_letter_0" USING btree (
-  "namespace_id" ,
-  "group_name" ,
-  "scene_name"
-);
+																							   "namespace_id" ,
+																							   "group_name" ,
+																							   "scene_name"
+	);
 CREATE INDEX "idx_sj_retry_dead_letter_0_02" ON "public"."sj_retry_dead_letter_0" USING btree (
-  "idempotent_id"
-);
+																							   "idempotent_id"
+	);
 CREATE INDEX "idx_sj_retry_dead_letter_0_03" ON "public"."sj_retry_dead_letter_0" USING btree (
-  "biz_no"
-);
+																							   "biz_no"
+	);
 CREATE INDEX "idx_sj_retry_dead_letter_0_04" ON "public"."sj_retry_dead_letter_0" USING btree (
-  "create_dt"
-);
+																							   "create_dt"
+	);
 CREATE UNIQUE INDEX "uk_sj_retry_dead_letter_0_01" ON "public"."sj_retry_dead_letter_0" USING btree (
-  "namespace_id" ,
-  "group_name" ,
-  "unique_id"
-);
+																									 "namespace_id" ,
+																									 "group_name" ,
+																									 "unique_id"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_retry_dead_letter_0
@@ -1541,10 +1141,10 @@ ALTER TABLE "public"."sj_retry_dead_letter_0" ADD CONSTRAINT "sj_retry_dead_lett
 -- Indexes structure for table sj_retry_scene_config
 -- ----------------------------
 CREATE UNIQUE INDEX "uk_sj_retry_scene_config_01" ON "public"."sj_retry_scene_config" USING btree (
-  "namespace_id" ,
-  "group_name" ,
-  "scene_name"
-);
+																								   "namespace_id" ,
+																								   "group_name" ,
+																								   "scene_name"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_retry_scene_config
@@ -1555,14 +1155,14 @@ ALTER TABLE "public"."sj_retry_scene_config" ADD CONSTRAINT "sj_retry_scene_conf
 -- Indexes structure for table sj_retry_summary
 -- ----------------------------
 CREATE INDEX "idx_sj_retry_summary_01" ON "public"."sj_retry_summary" USING btree (
-  "trigger_at"
-);
+																				   "trigger_at"
+	);
 CREATE UNIQUE INDEX "uk_sj_retry_summary_01" ON "public"."sj_retry_summary" USING btree (
-  "namespace_id" ,
-  "group_name" ,
-  "scene_name" ,
-  "trigger_at"
-);
+																						 "namespace_id" ,
+																						 "group_name" ,
+																						 "scene_name" ,
+																						 "trigger_at"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_retry_summary
@@ -1573,34 +1173,34 @@ ALTER TABLE "public"."sj_retry_summary" ADD CONSTRAINT "sj_retry_summary_pkey" P
 -- Indexes structure for table sj_retry_task_0
 -- ----------------------------
 CREATE INDEX "idx_sj_retry_task_0_01" ON "public"."sj_retry_task_0" USING btree (
-  "namespace_id" ,
-  "group_name" ,
-  "scene_name"
-);
+																				 "namespace_id" ,
+																				 "group_name" ,
+																				 "scene_name"
+	);
 CREATE INDEX "idx_sj_retry_task_0_02" ON "public"."sj_retry_task_0" USING btree (
-  "namespace_id" ,
-  "group_name" ,
-  "task_type"
-);
+																				 "namespace_id" ,
+																				 "group_name" ,
+																				 "task_type"
+	);
 CREATE INDEX "idx_sj_retry_task_0_03" ON "public"."sj_retry_task_0" USING btree (
-  "namespace_id" ,
-  "group_name" ,
-  "retry_status"
-);
+																				 "namespace_id" ,
+																				 "group_name" ,
+																				 "retry_status"
+	);
 CREATE INDEX "idx_sj_retry_task_0_04" ON "public"."sj_retry_task_0" USING btree (
-  "idempotent_id"
-);
+																				 "idempotent_id"
+	);
 CREATE INDEX "idx_sj_retry_task_0_05" ON "public"."sj_retry_task_0" USING btree (
-  "biz_no"
-);
+																				 "biz_no"
+	);
 CREATE INDEX "idx_sj_retry_task_0_06" ON "public"."sj_retry_task_0" USING btree (
-  "create_dt"
-);
+																				 "create_dt"
+	);
 CREATE UNIQUE INDEX "uk_sj_retry_task_0_01" ON "public"."sj_retry_task_0" USING btree (
-  "namespace_id" ,
-  "group_name" ,
-  "unique_id"
-);
+																					   "namespace_id" ,
+																					   "group_name" ,
+																					   "unique_id"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_retry_task_0
@@ -1611,25 +1211,25 @@ ALTER TABLE "public"."sj_retry_task_0" ADD CONSTRAINT "sj_retry_task_0_pkey" PRI
 -- Indexes structure for table sj_retry_task_log
 -- ----------------------------
 CREATE INDEX "idx_sj_retry_task_log_01" ON "public"."sj_retry_task_log" USING btree (
-  "namespace_id" ,
-  "group_name" ,
-  "scene_name"
-);
+																					 "namespace_id" ,
+																					 "group_name" ,
+																					 "scene_name"
+	);
 CREATE INDEX "idx_sj_retry_task_log_02" ON "public"."sj_retry_task_log" USING btree (
-  "retry_status"
-);
+																					 "retry_status"
+	);
 CREATE INDEX "idx_sj_retry_task_log_03" ON "public"."sj_retry_task_log" USING btree (
-  "idempotent_id"
-);
+																					 "idempotent_id"
+	);
 CREATE INDEX "idx_sj_retry_task_log_04" ON "public"."sj_retry_task_log" USING btree (
-  "unique_id"
-);
+																					 "unique_id"
+	);
 CREATE INDEX "idx_sj_retry_task_log_05" ON "public"."sj_retry_task_log" USING btree (
-  "biz_no"
-);
+																					 "biz_no"
+	);
 CREATE INDEX "idx_sj_retry_task_log_06" ON "public"."sj_retry_task_log" USING btree (
-  "create_dt"
-);
+																					 "create_dt"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_retry_task_log
@@ -1640,13 +1240,13 @@ ALTER TABLE "public"."sj_retry_task_log" ADD CONSTRAINT "sj_retry_task_log_pkey"
 -- Indexes structure for table sj_retry_task_log_message
 -- ----------------------------
 CREATE INDEX "idx_sj_retry_task_log_message_01" ON "public"."sj_retry_task_log_message" USING btree (
-  "namespace_id" ,
-  "group_name" ,
-  "unique_id"
-);
+																									 "namespace_id" ,
+																									 "group_name" ,
+																									 "unique_id"
+	);
 CREATE INDEX "idx_sj_retry_task_log_message_02" ON "public"."sj_retry_task_log_message" USING btree (
-  "create_dt"
-);
+																									 "create_dt"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_retry_task_log_message
@@ -1657,9 +1257,9 @@ ALTER TABLE "public"."sj_retry_task_log_message" ADD CONSTRAINT "sj_retry_task_l
 -- Indexes structure for table sj_sequence_alloc
 -- ----------------------------
 CREATE UNIQUE INDEX "uk_sj_sequence_alloc_01" ON "public"."sj_sequence_alloc" USING btree (
-  "namespace_id" ,
-  "group_name"
-);
+																						   "namespace_id" ,
+																						   "group_name"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_sequence_alloc
@@ -1670,17 +1270,17 @@ ALTER TABLE "public"."sj_sequence_alloc" ADD CONSTRAINT "sj_sequence_alloc_pkey"
 -- Indexes structure for table sj_server_node
 -- ----------------------------
 CREATE INDEX "idx_sj_server_node_01" ON "public"."sj_server_node" USING btree (
-  "namespace_id" ,
-  "group_name"
-);
+																			   "namespace_id" ,
+																			   "group_name"
+	);
 CREATE INDEX "idx_sj_server_node_02" ON "public"."sj_server_node" USING btree (
-  "expire_at" ,
-  "node_type"
-);
+																			   "expire_at" ,
+																			   "node_type"
+	);
 CREATE UNIQUE INDEX "uk_sj_server_node_01" ON "public"."sj_server_node" USING btree (
-  "host_id" ,
-  "host_ip"
-);
+																					 "host_id" ,
+																					 "host_ip"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_server_node
@@ -1696,10 +1296,10 @@ ALTER TABLE "public"."sj_system_user" ADD CONSTRAINT "sj_system_user_pkey" PRIMA
 -- Indexes structure for table sj_system_user_permission
 -- ----------------------------
 CREATE UNIQUE INDEX "uk_sj_system_user_permission_01" ON "public"."sj_system_user_permission" USING btree (
-  "namespace_id" ,
-  "group_name" ,
-  "system_user_id"
-);
+																										   "namespace_id" ,
+																										   "group_name" ,
+																										   "system_user_id"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_system_user_permission
@@ -1710,12 +1310,12 @@ ALTER TABLE "public"."sj_system_user_permission" ADD CONSTRAINT "sj_system_user_
 -- Indexes structure for table sj_workflow
 -- ----------------------------
 CREATE INDEX "idx_sj_workflow_01" ON "public"."sj_workflow" USING btree (
-  "create_dt"
-);
+																		 "create_dt"
+	);
 CREATE INDEX "idx_sj_workflow_02" ON "public"."sj_workflow" USING btree (
-  "namespace_id" ,
-  "group_name"
-);
+																		 "namespace_id" ,
+																		 "group_name"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_workflow
@@ -1726,12 +1326,12 @@ ALTER TABLE "public"."sj_workflow" ADD CONSTRAINT "sj_workflow_pkey" PRIMARY KEY
 -- Indexes structure for table sj_workflow_node
 -- ----------------------------
 CREATE INDEX "idx_sj_workflow_node_01" ON "public"."sj_workflow_node" USING btree (
-  "create_dt"
-);
+																				   "create_dt"
+	);
 CREATE INDEX "idx_sj_workflow_node_02" ON "public"."sj_workflow_node" USING btree (
-  "namespace_id" ,
-  "group_name"
-);
+																				   "namespace_id" ,
+																				   "group_name"
+	);
 
 -- ----------------------------
 -- Primary Key structure for table sj_workflow_node
@@ -1742,17 +1342,16 @@ ALTER TABLE "public"."sj_workflow_node" ADD CONSTRAINT "sj_workflow_node_pkey" P
 -- Indexes structure for table sj_workflow_task_batch
 -- ----------------------------
 CREATE INDEX "idx_sj_workflow_task_batch_01" ON "public"."sj_workflow_task_batch" USING btree (
-  "workflow_id" ,
-  "task_batch_status"
-);
+																							   "workflow_id" ,
+																							   "task_batch_status"
+	);
 CREATE INDEX "idx_sj_workflow_task_batch_02" ON "public"."sj_workflow_task_batch" USING btree (
-  "create_dt"
-);
+																							   "create_dt"
+	);
 CREATE INDEX "idx_sj_workflow_task_batch_03" ON "public"."sj_workflow_task_batch" USING btree (
-  "namespace_id" ,
-  "group_name"
-);
-
+																							   "namespace_id" ,
+																							   "group_name"
+	);
 -- ----------------------------
 -- Primary Key structure for table sj_workflow_task_batch
 -- ----------------------------

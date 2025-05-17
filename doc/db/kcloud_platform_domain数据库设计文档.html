@@ -1,0 +1,1504 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>kcloud_platform_domain 数据库设计文档</title>
+    <style type="text/css">
+        body {
+            padding-bottom: 50px
+        }
+
+        body, td {
+            font-family: verdana, fantasy;
+            font-size: 12px;
+            line-height: 150%
+        }
+
+        table {
+            width: 100%;
+            background-color: #ccc;
+            margin: 5px 0
+        }
+
+        td {
+            background-color: #fff;
+            padding: 3px 3px 3px 10px
+        }
+
+        thead td {
+            text-align: center;
+            font-weight: 700;
+            background-color: #eee;
+            padding: 3px;
+        }
+
+		.text-center{
+			text-align:center;
+            padding: 3px;
+		}
+
+        a:active, a:link, a:visited {
+            color: #015fb6;
+            text-decoration: none
+        }
+
+        a:hover {
+            color: #e33e06
+        }
+    </style>
+</head>
+<body style="text-align:center">
+    <div style="width: 850px; margin: 20px auto; text-align: left">
+        <a name="index"></a>
+        <h2 style="text-align: center; line-height: 50px">kcloud_platform_domain数据库设计文档</h2>
+        <div>
+            <b>数据库名：kcloud_platform_domain</b><br>
+            <b>文档版本：v3.5.0</b><br>
+            <b>文档描述：无</b><br>
+        </div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>表名</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td><a href="#boot_domain_event">boot_domain_event</a></td>
+                        <td>领域事件</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td><a href="#boot_iot_device_event_log">boot_iot_device_event_log</a></td>
+                        <td>设备事件日志</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td><a href="#boot_iot_device_property_log">boot_iot_device_property_log</a></td>
+                        <td>设备属性日志</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td><a href="#boot_sys_login_log">boot_sys_login_log</a></td>
+                        <td>登录日志</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td><a href="#boot_sys_notice_log">boot_sys_notice_log</a></td>
+                        <td>通知日志</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td><a href="#boot_sys_operate_log">boot_sys_operate_log</a></td>
+                        <td>操作日志</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td><a href="#boot_sys_oss_log">boot_sys_oss_log</a></td>
+                        <td>OSS日志</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td><a href="#boot_sys_sql_log">boot_sys_sql_log</a></td>
+                        <td>SQL日志</td>
+                    </tr>
+
+        </table>
+        <a name="boot_domain_event"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：boot_domain_event</b>
+        </div>
+        <div>说明：领域事件</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>creator</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">0</td>
+                        <td>创建人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>editor</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">0</td>
+                        <td>编辑人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>create_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>update_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>del_flag</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>删除标识 0未删除 1已删除</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>version</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>版本号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">0</td>
+                        <td>租户ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>aggregate_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>聚合根ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>type</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(100)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>事件类型</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>topic</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(100)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>MQ主题</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>source_prefix</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(20)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>数据源前缀</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>payload</td>
+                        <td class="text-center">json</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>内容</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>tag</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>MQ标签</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">15</td>
+                        <td>status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>事件状态 0已创建 1已消费</td>
+                    </tr>
+
+        </table>
+        <a name="boot_iot_device_event_log"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：boot_iot_device_event_log</b>
+        </div>
+        <div>说明：设备事件日志</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>creator</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>创建人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>editor</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>编辑人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>create_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>update_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>del_flag</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>删除标识 0未删除 1已删除</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>version</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>版本号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>租户ID</td>
+                    </tr>
+
+        </table>
+        <a name="boot_iot_device_property_log"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：boot_iot_device_property_log</b>
+        </div>
+        <div>说明：设备属性日志</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>creator</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>创建人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>editor</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>编辑人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>create_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>update_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>del_flag</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>删除标识 0未删除 1已删除</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>version</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>版本号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>租户ID</td>
+                    </tr>
+
+        </table>
+        <a name="boot_sys_login_log"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：boot_sys_login_log</b>
+        </div>
+        <div>说明：登录日志</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>creator</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">0</td>
+                        <td>创建人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>editor</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">0</td>
+                        <td>编辑人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>create_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>update_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>del_flag</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>删除标识 0未删除 1已删除</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>version</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>版本号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>租户ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>username</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(200)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>登录的用户名</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>ip</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>登录的IP地址</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>address</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(200)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>登录的归属地</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>browser</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>登录的浏览器</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>os</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>登录的操作系统</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>登录状态 0登录成功 1登录失败</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">15</td>
+                        <td>error_message</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(2000)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>错误信息</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">16</td>
+                        <td>type</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>登录类型</td>
+                    </tr>
+
+        </table>
+        <a name="boot_sys_notice_log"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：boot_sys_notice_log</b>
+        </div>
+        <div>说明：通知日志</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>creator</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">0</td>
+                        <td>创建人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>editor</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">0</td>
+                        <td>编辑人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>create_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>update_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>del_flag</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>删除标识 0未删除 1已删除</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>version</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>版本号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>租户ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>code</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(100)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>通知编码</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(200)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>通知名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>通知状态 0成功 1失败</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>error_message</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(2000)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>错误信息</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>param</td>
+                        <td class="text-center">json</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>通知参数</td>
+                    </tr>
+
+        </table>
+        <a name="boot_sys_operate_log"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：boot_sys_operate_log</b>
+        </div>
+        <div>说明：操作日志</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>creator</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>创建人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>editor</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>编辑人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>create_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>update_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>del_flag</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>删除标识 0未删除 1已删除</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>version</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>版本号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>租户ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>操作名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>module_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(32)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>操作的模块名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>uri</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(200)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>操作的请求路径</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>method_name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(1000)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>操作的方法名</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>request_type</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(20)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>操作的请求类型</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>request_params</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>操作的请求参数</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">15</td>
+                        <td>user_agent</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(500)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>操作的浏览器</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">16</td>
+                        <td>ip</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>操作的IP地址</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">17</td>
+                        <td>service_address</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(100)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>操作的服务地址</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">18</td>
+                        <td>service_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>操作的服务ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">19</td>
+                        <td>address</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(200)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>操作的归属地</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">20</td>
+                        <td>status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>操作状态 0成功 1失败</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">21</td>
+                        <td>operator</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>操作人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">22</td>
+                        <td>error_message</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(2000)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>错误信息</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">23</td>
+                        <td>profile</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>操作的服务环境</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">24</td>
+                        <td>stack_trace</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>操作的堆栈信息</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">25</td>
+                        <td>cost_time</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>操作的消耗时间(毫秒)</td>
+                    </tr>
+
+        </table>
+        <a name="boot_sys_oss_log"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：boot_sys_oss_log</b>
+        </div>
+        <div>说明：OSS日志</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>creator</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>创建人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>editor</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>编辑人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>create_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>update_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>del_flag</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>删除标识 0未删除 1已删除</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>version</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>版本号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>租户ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>name</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(100)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>文件名称</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>md5</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(100)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>文件的MD5标识</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>url</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(200)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>文件的URL</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">12</td>
+                        <td>size</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>文件大小</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">13</td>
+                        <td>status</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>上传状态 0成功 1失败</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">14</td>
+                        <td>error_message</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(2000)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center"></td>
+                        <td>错误信息</td>
+                    </tr>
+
+        </table>
+        <a name="boot_sys_sql_log"></a>
+        <div style="margin-top: 30px">
+            <a href="#index" style="float: right; margin-top: 6px">返回目录</a>
+            <b>表名：boot_sys_sql_log</b>
+        </div>
+        <div>说明：SQL日志</div>
+        <div>数据列：</div>
+        <table cellspacing="1">
+            <thead>
+                <tr>
+                    <td style="width: 40px">序号</td>
+                    <td>列名</td>
+                    <td>数据类型</td>
+                    <td>长度</td>
+                    <td>主键</td>
+                        <td>自增</td>
+                    <td>允许空值</td>
+                    <td>默认值</td>
+                    <td>说明</td>
+                </tr>
+            </thead>
+                    <tr>
+                        <td class="text-center">1</td>
+                        <td>id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">2</td>
+                        <td>creator</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">0</td>
+                        <td>创建人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">3</td>
+                        <td>editor</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">0</td>
+                        <td>编辑人</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">4</td>
+                        <td>create_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>创建时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">5</td>
+                        <td>update_time</td>
+                        <td class="text-center">timestamp</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">CURRENT_TIMESTAMP</td>
+                        <td>修改时间</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">6</td>
+                        <td>del_flag</td>
+                        <td class="text-center">int2</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>删除标识 0未删除 1已删除</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">7</td>
+                        <td>version</td>
+                        <td class="text-center">int4</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>版本号</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">8</td>
+                        <td>tenant_id</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center">√</td>
+                        <td class="text-center">0</td>
+                        <td>租户ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">9</td>
+                        <td>service_id</td>
+                        <td class="text-center">varchar</td>
+                        <td class="text-center">(50)</td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>服务ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">10</td>
+                        <td>sql</td>
+                        <td class="text-center">text</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td>SQL</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">11</td>
+                        <td>cost_time</td>
+                        <td class="text-center">int8</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                            <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">0</td>
+                        <td>消耗时间</td>
+                    </tr>
+
+        </table>
+    </div>
+</body>
+</html>
