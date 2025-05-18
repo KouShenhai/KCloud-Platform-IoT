@@ -226,10 +226,14 @@
     <profile>
       <id>dev</id>
       <properties>
-        <DATASOURCE-USERNAME-NACOS>root</DATASOURCE-USERNAME-NACOS>
-        <DATASOURCE-PASSWORD-NACOS>laokou123</DATASOURCE-PASSWORD-NACOS>
-        <DATASOURCE-USERNAME-SNAIL-JOB>root</DATASOURCE-USERNAME-SNAIL-JOB>
-        <DATASOURCE-PASSWORD-SNAIL-JOB>laokou123</DATASOURCE-PASSWORD-SNAIL-JOB>
+        <DATASOURCE-USERNAME-NACOS>ENC(uEzh7pmjUDzGKfBS/MeFug==)</DATASOURCE-USERNAME-NACOS>
+        <DATASOURCE-PASSWORD-NACOS>ENC(WYReZRwVdwDJENuOKW3Or6Z8PnRUgf3P)</DATASOURCE-PASSWORD-NACOS>
+        <DATASOURCE-USERNAME-SNAIL-JOB>
+          ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
+        </DATASOURCE-USERNAME-SNAIL-JOB>
+        <DATASOURCE-PASSWORD-SNAIL-JOB>
+          ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+        </DATASOURCE-PASSWORD-SNAIL-JOB>
         <DATASOURCE-HOST>postgresql</DATASOURCE-HOST>
         <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-nacos&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-NACOS>
         <DATASOURCE-PARAM-SNAIL-JOB>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-SNAIL-JOB>

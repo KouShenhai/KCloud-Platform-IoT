@@ -66,17 +66,13 @@ public class PortHelper {
 		}
 		else {
 			try {
-				File propertiesFile = ResourceUtils.getFile("classpath:application.properties");
-				configFile = propertiesFile;
+				configFile = ResourceUtils.getFile("classpath:application.properties");
 			}
 			catch (FileNotFoundException exx) {
-				File ymlFile = ResourceUtils.getFile("classpath:application.yml");
-				configFile = ymlFile;
+				configFile = ResourceUtils.getFile("classpath:application.yml");
 			}
 		}
-		InputStream inputStream = null;
-		try {
-			inputStream = new FileInputStream(configFile);
+		try (InputStream inputStream = new FileInputStream(configFile)) {
 			String fileName = configFile.getName();
 			String portNum = null;
 			if (fileName.endsWith("yml")) {
@@ -88,8 +84,7 @@ public class PortHelper {
 						portNum = serverPort.toString();
 					}
 				}
-			}
-			else {
+			} else {
 				Properties properties = new Properties();
 				properties.load(inputStream);
 				portNum = properties.getProperty("server.port");
@@ -97,15 +92,9 @@ public class PortHelper {
 			if (null != portNum) {
 				try {
 					port = Integer.parseInt(portNum);
-				}
-				catch (NumberFormatException exx) {
+				} catch (NumberFormatException exx) {
 					// ignore
 				}
-			}
-		}
-		finally {
-			if (null != inputStream) {
-				inputStream.close();
 			}
 		}
 		return port;
