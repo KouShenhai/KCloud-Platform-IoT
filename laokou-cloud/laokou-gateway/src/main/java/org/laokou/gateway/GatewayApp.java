@@ -70,7 +70,7 @@ public class GatewayApp implements CommandLineRunner {
     /// ```properties
     /// -Dserver.port=5555
 	/// -XX:+UseZGC
-	/// -XX:+ZGenerational
+	///
     /// ```
     /// ```properties
     /// client_id => 95TxSsTPFA3tF12TBSMmUVK0da

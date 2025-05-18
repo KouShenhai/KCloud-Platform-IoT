@@ -84,7 +84,8 @@ public class PortHelper {
 						portNum = serverPort.toString();
 					}
 				}
-			} else {
+			}
+			else {
 				Properties properties = new Properties();
 				properties.load(inputStream);
 				portNum = properties.getProperty("server.port");
@@ -92,7 +93,8 @@ public class PortHelper {
 			if (null != portNum) {
 				try {
 					port = Integer.parseInt(portNum);
-				} catch (NumberFormatException exx) {
+				}
+				catch (NumberFormatException exx) {
 					// ignore
 				}
 			}

@@ -29,126 +29,60 @@
 
   <properties>
     <!--nacos版本-->
-    <nacos.version>2.5.0</nacos.version>
+    <nacos.version>3.0.0</nacos.version>
     <!--spring-boot版本-->
-    <spring-boot.version>2.7.18</spring-boot.version>
+    <spring-boot.version>3.5.0-RC1</spring-boot.version>
     <!--postgresql版本-->
     <postgresql.version>42.7.5</postgresql.version>
-    <!--liquibase-core版本-->
-    <liquibase-core.version>4.31.1</liquibase-core.version>
-    <!--protobuf-java版本-->
-    <protobuf-java.version>3.25.5</protobuf-java.version>
-    <!--commons-io版本-->
-    <commons-io.version>2.19.0</commons-io.version>
     <!--grpc版本-->
     <grpc.version>1.72.0</grpc.version>
-    <!--error_prone_annotations版本-->
-    <error_prone_annotations.version>2.38.0</error_prone_annotations.version>
-    <!--hessian版本-->
-    <hessian.version>3.5.5</hessian.version>
-    <!--commons-lang3版本-->
-    <commons-lang3.version>3.17.0</commons-lang3.version>
-    <!--bcprov-jdk18on版本-->
-    <bcprov.version>1.80</bcprov.version>
-    <!--bcpkix-jdk18on版本-->
-    <bcpkix.version>1.80</bcpkix.version>
+    <!--client-java版本-->
+    <client-java.version>19.0.2</client-java.version>
+    <!--lombok版本-->
+    <lombok.version>1.18.38</lombok.version>
+    <!--jasypt版本-->
+    <jasypt.version>3.0.5</jasypt.version>
+    <!--liquibase版本-->
+    <liquibase.version>4.31.1</liquibase.version>
   </properties>
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>${commons-lang3.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.xuxiaowei.nacos</groupId>
-      <artifactId>nacos-config</artifactId>
+      <groupId>io.github.pig-mesh.nacos</groupId>
+      <artifactId>nacos-console</artifactId>
       <version>${nacos.version}</version>
       <exclusions>
         <exclusion>
-          <groupId>com.alipay.sofa</groupId>
-          <artifactId>hessian</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.tomcat.embed</groupId>
-          <artifactId>tomcat-embed-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.tomcat</groupId>
-          <artifactId>tomcat-annotations-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.google.protobuf</groupId>
-          <artifactId>protobuf-java</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-classic</artifactId>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-security</artifactId>
         </exclusion>
         <exclusion>
           <groupId>com.mysql</groupId>
           <artifactId>mysql-connector-j</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.tomcat.embed</groupId>
-          <artifactId>tomcat-embed-websocket</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.google.api.grpc</groupId>
-          <artifactId>proto-google-common-protos</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-io</groupId>
-          <artifactId>commons-io</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.grpc</groupId>
-          <artifactId>grpc-netty-shaded</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.grpc</groupId>
-          <artifactId>grpc-protobuf</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.grpc</groupId>
-          <artifactId>grpc-stub</artifactId>
         </exclusion>
         <exclusion>
           <groupId>io.grpc</groupId>
           <artifactId>grpc-util</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>animal-sniffer-annotations</artifactId>
+          <groupId>io.kubernetes</groupId>
+          <artifactId>client-java-api</artifactId>
         </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>com.google.protobuf</groupId>
-      <artifactId>protobuf-java</artifactId>
-      <version>${protobuf-java.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.xuxiaowei.nacos</groupId>
-      <artifactId>nacos-naming</artifactId>
-      <version>${nacos.version}</version>
-      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
         <exclusion>
           <groupId>org.apache.tomcat.embed</groupId>
           <artifactId>tomcat-embed-core</artifactId>
         </exclusion>
-        <exclusion>
-          <groupId>org.apache.tomcat</groupId>
-          <artifactId>tomcat-annotations-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-classic</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-core</artifactId>
-        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>io.github.pig-mesh.nacos</groupId>
+      <artifactId>nacos-server</artifactId>
+      <version>${nacos.version}</version>
+      <exclusions>
         <exclusion>
           <groupId>com.mysql</groupId>
           <artifactId>mysql-connector-j</artifactId>
@@ -156,59 +90,14 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>io.xuxiaowei.nacos</groupId>
-      <artifactId>nacos-default-plugin-all</artifactId>
-      <version>${nacos.version}</version>
+      <groupId>io.kubernetes</groupId>
+      <artifactId>client-java-api</artifactId>
+      <version>${client-java.version}</version>
     </dependency>
     <dependency>
-      <groupId>io.xuxiaowei.nacos</groupId>
-      <artifactId>nacos-istio</artifactId>
-      <version>${nacos.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.tomcat.embed</groupId>
-          <artifactId>tomcat-embed-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.tomcat</groupId>
-          <artifactId>tomcat-annotations-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.google.protobuf</groupId>
-          <artifactId>protobuf-java</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.google.api.grpc</groupId>
-          <artifactId>proto-google-common-protos</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.google.errorprone</groupId>
-          <artifactId>error_prone_annotations</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.grpc</groupId>
-          <artifactId>grpc-protobuf</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.grpc</groupId>
-          <artifactId>grpc-stub</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>io.xuxiaowei.nacos</groupId>
-      <artifactId>nacos-prometheus</artifactId>
-      <version>${nacos.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.tomcat.embed</groupId>
-          <artifactId>tomcat-embed-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.tomcat</groupId>
-          <artifactId>tomcat-annotations-api</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-util</artifactId>
+      <version>${grpc.version}</version>
     </dependency>
     <dependency>
       <groupId>org.postgresql</groupId>
@@ -217,100 +106,31 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-tx</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.github.ulisesbocchio</groupId>
-      <artifactId>jasypt-spring-boot-starter</artifactId>
+      <version>${lombok.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-undertow</artifactId>
-      <scope>provided</scope>
+      <version>${spring-boot.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.ulisesbocchio</groupId>
+      <artifactId>jasypt-spring-boot-starter</artifactId>
+      <version>${jasypt.version}</version>
     </dependency>
     <dependency>
       <groupId>org.liquibase</groupId>
       <artifactId>liquibase-core</artifactId>
-      <version>${liquibase-core.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-io</groupId>
-          <artifactId>commons-io</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.commons</groupId>
-          <artifactId>commons-text</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.commons</groupId>
-          <artifactId>commons-lang3</artifactId>
-        </exclusion>
-      </exclusions>
+      <version>${liquibase.version}</version>
     </dependency>
     <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>${commons-io.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.grpc</groupId>
-      <artifactId>grpc-protobuf</artifactId>
-      <version>${grpc.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>com.google.errorprone</groupId>
-          <artifactId>error_prone_annotations</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>io.grpc</groupId>
-      <artifactId>grpc-stub</artifactId>
-      <version>${grpc.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.errorprone</groupId>
-      <artifactId>error_prone_annotations</artifactId>
-      <version>${error_prone_annotations.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.alipay.sofa</groupId>
-      <artifactId>hessian</artifactId>
-      <version>${hessian.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcprov-jdk18on</artifactId>
-      <version>${bcprov.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcpkix-jdk18on</artifactId>
-      <version>${bcpkix.version}</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+      <version>${spring-boot.version}</version>
     </dependency>
   </dependencies>
-
-  <dependencyManagement>
-    <dependencies>
-      <!-- 定义 spring boot 版本 -->
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>${spring-boot.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 
   <build>
     <finalName>${project.artifactId}</finalName>
@@ -340,7 +160,7 @@
         <configuration>
           <finalName>${project.artifactId}</finalName>
           <!-- main方法的地址 只需要修改这个地址-->
-          <mainClass>com.alibaba.nacos.NacosApp</mainClass>
+          <mainClass>org.laokou.nacos.NacosApp</mainClass>
         </configuration>
         <executions>
           <execution>
