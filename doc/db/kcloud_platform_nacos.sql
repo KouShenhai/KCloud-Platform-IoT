@@ -55,9 +55,10 @@ CREATE INDEX "tenant_info_tenant_id_idx" ON "public"."tenant_info" USING btree (
 "tenant_id"
 	);
 ALTER TABLE "public"."tenant_info" ADD CONSTRAINT "tenant_info_pkey" PRIMARY KEY ("id");
-INSERT INTO "public"."tenant_info" VALUES (2, '1', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'test', 'test', 'nacos', 1673556960289, 1716628319164);
-INSERT INTO "public"."tenant_info" VALUES (1, '1', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'dev', 'dev', 'nacos', 1716631648356, 1716631648356);
-INSERT INTO "public"."tenant_info" VALUES (3, '1', '8140e92b-fb43-48f5-b63b-7506185206a5', 'prod', 'prod', 'nacos', 1716631657328, 1716631657328);
+INSERT INTO "public"."tenant_info" VALUES (1, '2', 'nacos-default-mcp', 'nacos-default-mcp', 'Nacos default AI MCP module.', 'nacos', 1747555499268, 1747555499268);
+INSERT INTO "public"."tenant_info" VALUES (2, '1', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'dev', 'dev', 'nacos', 1716631648356, 1716631648356);
+INSERT INTO "public"."tenant_info" VALUES (3, '1', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'test', 'test', 'nacos', 1673556960289, 1716628319164);
+INSERT INTO "public"."tenant_info" VALUES (4, '1', '8140e92b-fb43-48f5-b63b-7506185206a5', 'prod', 'prod', 'nacos', 1716631657328, 1716631657328);
 
 DROP TABLE IF EXISTS "public"."tenant_capacity";
 CREATE TABLE "public"."tenant_capacity" (

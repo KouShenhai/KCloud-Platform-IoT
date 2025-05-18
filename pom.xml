@@ -226,8 +226,8 @@
     <profile>
       <id>dev</id>
       <properties>
-        <DATASOURCE-USERNAME-NACOS>ENC(uEzh7pmjUDzGKfBS/MeFug==)</DATASOURCE-USERNAME-NACOS>
-        <DATASOURCE-PASSWORD-NACOS>ENC(WYReZRwVdwDJENuOKW3Or6Z8PnRUgf3P)</DATASOURCE-PASSWORD-NACOS>
+        <DATASOURCE-USERNAME-NACOS>ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)</DATASOURCE-USERNAME-NACOS>
+        <DATASOURCE-PASSWORD-NACOS>ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)</DATASOURCE-PASSWORD-NACOS>
         <DATASOURCE-USERNAME-SNAIL-JOB>
           ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
         </DATASOURCE-USERNAME-SNAIL-JOB>
@@ -267,8 +267,8 @@
     <profile>
       <id>test</id>
       <properties>
-        <DATASOURCE-USERNAME-NACOS>ENC(uEzh7pmjUDzGKfBS/MeFug==)</DATASOURCE-USERNAME-NACOS>
-        <DATASOURCE-PASSWORD-NACOS>ENC(WYReZRwVdwDJENuOKW3Or6Z8PnRUgf3P)</DATASOURCE-PASSWORD-NACOS>
+        <DATASOURCE-USERNAME-NACOS>ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)</DATASOURCE-USERNAME-NACOS>
+        <DATASOURCE-PASSWORD-NACOS>ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)</DATASOURCE-PASSWORD-NACOS>
         <DATASOURCE-USERNAME-SNAIL-JOB>
           ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
         </DATASOURCE-USERNAME-SNAIL-JOB>
@@ -310,11 +310,11 @@
       <properties>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-USERNAME-NACOS>
-          ${DATASOURCE_USERNAME_NACOS:ENC(uEzh7pmjUDzGKfBS/MeFug==)}
+          ${DATASOURCE_USERNAME_NACOS:ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)}
         </DATASOURCE-USERNAME-NACOS>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PASSWORD-NACOS>
-          ${DATASOURCE_PASSWORD_NACOS:ENC(WYReZRwVdwDJENuOKW3Or6Z8PnRUgf3P)}
+          ${DATASOURCE_PASSWORD_NACOS:ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)}
         </DATASOURCE-PASSWORD-NACOS>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-USERNAME-SNAIL-JOB>
@@ -576,6 +576,8 @@
         <includes>
           <include>application.yml</include>
           <include>application-${PROFILE-ACTIVE}.yml</include>
+          <include>application.properties</include>
+          <include>application-${PROFILE-ACTIVE}.properties</include>
           <include>bootstrap.yml</include>
           <include>bootstrap-${PROFILE-ACTIVE}.yml</include>
           <include>log4j2.xml</include>
