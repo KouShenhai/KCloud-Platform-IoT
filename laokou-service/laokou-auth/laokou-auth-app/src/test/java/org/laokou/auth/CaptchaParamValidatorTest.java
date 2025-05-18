@@ -25,6 +25,8 @@ import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
 import org.laokou.auth.service.extensionpoint.extension.MailCaptchaParamValidator;
 import org.laokou.auth.service.extensionpoint.extension.MobileCaptchaParamValidator;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * 验证码参数校验器测试.
  *
@@ -33,7 +35,8 @@ import org.laokou.auth.service.extensionpoint.extension.MobileCaptchaParamValida
 class CaptchaParamValidatorTest {
 
 	@Test
-	void testMailCaptchaParamValidator() {
+	void testMailCaptchaParamValidator()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		CaptchaParamValidatorExtPt captchaParamValidator = new MailCaptchaParamValidator();
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		// 校验邮箱验证码
@@ -43,7 +46,8 @@ class CaptchaParamValidatorTest {
 	}
 
 	@Test
-	void testMobileCaptchaParamValidator() {
+	void testMobileCaptchaParamValidator()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		CaptchaParamValidatorExtPt captchaParamValidator = new MobileCaptchaParamValidator();
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		// 校验手机号验证码

@@ -31,6 +31,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 /**
@@ -152,6 +153,16 @@ public final class SpringContextUtils implements ApplicationContextAware, Dispos
 		DefaultListableBeanFactory beanFactory = getFactory();
 		if (beanFactory.containsBeanDefinition(name)) {
 			beanFactory.removeBeanDefinition(name);
+		}
+	}
+
+	public static <T> T getBeanAndNotExistToCreate(Class<T> type)
+			throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+		try {
+			return getBean(type);
+		}
+		catch (Exception e) {
+			return ReflectionUtils.accessibleConstructor(type).newInstance();
 		}
 	}
 

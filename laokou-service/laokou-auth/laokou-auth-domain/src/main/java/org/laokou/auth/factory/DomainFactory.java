@@ -19,6 +19,9 @@ package org.laokou.auth.factory;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.*;
+import org.laokou.common.core.util.SpringContextUtils;
+
+import java.lang.reflect.InvocationTargetException;
 
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
@@ -86,46 +89,66 @@ public final class DomainFactory {
 	private DomainFactory() {
 	}
 
-	public static AuthA getAuth(Long aggregateId, String tenantCode) {
-		return new AuthA(aggregateId, tenantCode);
+	public static AuthA getAuth(Long aggregateId, String tenantCode)
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+		return getAuth().fillValue(aggregateId, tenantCode);
 	}
 
-	public static AuthA getMailAuth(Long aggregateId, String mail, String code, String tenantCode) {
-		return new AuthA(aggregateId, EMPTY, EMPTY, tenantCode, GrantTypeEnum.MAIL, mail, code);
+	public static AuthA getMailAuth(Long aggregateId, String mail, String code, String tenantCode)
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+		return getAuth().fillValue(aggregateId, EMPTY, EMPTY, tenantCode, GrantTypeEnum.MAIL, mail, code);
 	}
 
-	public static AuthA getMobileAuth(Long aggregateId, String mobile, String code, String tenantCode) {
-		return new AuthA(aggregateId, EMPTY, EMPTY, tenantCode, GrantTypeEnum.MOBILE, mobile, code);
+	public static AuthA getMobileAuth(Long aggregateId, String mobile, String code, String tenantCode)
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+		return getAuth().fillValue(aggregateId, EMPTY, EMPTY, tenantCode, GrantTypeEnum.MOBILE, mobile, code);
 	}
 
 	public static AuthA getUsernamePasswordAuth(Long aggregateId, String username, String password, String tenantCode,
-			String uuid, String captcha) {
-		return new AuthA(aggregateId, username, password, tenantCode, GrantTypeEnum.USERNAME_PASSWORD, uuid, captcha);
+			String uuid, String captcha)
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+		return getAuth().fillValue(aggregateId, username, password, tenantCode, GrantTypeEnum.USERNAME_PASSWORD, uuid,
+				captcha);
 	}
 
-	public static AuthA getAuthorizationCodeAuth(Long aggregateId, String username, String password,
-			String tenantCode) {
-		return new AuthA(aggregateId, username, password, tenantCode, GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
+	public static AuthA getAuthorizationCodeAuth(Long aggregateId, String username, String password, String tenantCode)
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+		return getAuth().fillValue(aggregateId, username, password, tenantCode, GrantTypeEnum.AUTHORIZATION_CODE, EMPTY,
+				EMPTY);
 	}
 
-	public static AuthA getTestAuth(Long aggregateId, String username, String password, String tenantCode) {
-		return new AuthA(aggregateId, username, password, tenantCode, GrantTypeEnum.TEST, EMPTY, EMPTY);
+	public static AuthA getTestAuth(Long aggregateId, String username, String password, String tenantCode)
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+		return getAuth().fillValue(aggregateId, username, password, tenantCode, GrantTypeEnum.TEST, EMPTY, EMPTY);
 	}
 
-	public static UserE getUser() {
-		return new UserE();
+	private static AuthA getAuth()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+		return SpringContextUtils.getBeanAndNotExistToCreate(AuthA.class);
 	}
 
-	public static LoginLogE getLoginLog() {
-		return new LoginLogE();
+	public static UserE getUser()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+		return SpringContextUtils.getBeanAndNotExistToCreate(UserE.class);
 	}
 
-	public static CaptchaE getCaptcha() {
-		return new CaptchaE();
+	public static UserE getUser(String username, String mail, String mobile) throws Exception {
+		return getUser().fillValue(username, mail, mobile);
 	}
 
-	public static NoticeLogE getNoticeLog() {
-		return new NoticeLogE();
+	public static LoginLogE getLoginLog()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+		return SpringContextUtils.getBeanAndNotExistToCreate(LoginLogE.class);
+	}
+
+	public static CaptchaE getCaptcha()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+		return SpringContextUtils.getBeanAndNotExistToCreate(CaptchaE.class);
+	}
+
+	public static NoticeLogE getNoticeLog()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+		return SpringContextUtils.getBeanAndNotExistToCreate(NoticeLogE.class);
 	}
 
 }

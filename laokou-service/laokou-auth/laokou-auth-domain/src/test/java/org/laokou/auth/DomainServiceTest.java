@@ -32,6 +32,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.util.DigestUtils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +96,8 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testUsernamePasswordAuth() {
+	void testUsernamePasswordAuth()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		// 创建用户【用户名密码】
 		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
@@ -219,7 +221,8 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testCreateCaptcha() {
+	void testCreateCaptcha()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		AuthA auth = DomainFactory.getAuth(1L, "laokou");
 		// 构造租户
@@ -234,14 +237,16 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testCreateLoginLog() {
+	void testCreateLoginLog()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		LoginLogE loginLog = DomainFactory.getLoginLog();
 		// 创建登录日志
 		Assertions.assertDoesNotThrow(() -> domainService.createLoginLog(loginLog));
 	}
 
 	@Test
-	void testCreateMailCaptchaNoticeLog() {
+	void testCreateMailCaptchaNoticeLog()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
 		Assertions.assertDoesNotThrow(() -> noticeLog.setCode("sendMailCaptcha"));
@@ -250,7 +255,8 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testCreateMobileCaptchaNoticeLog() {
+	void testCreateMobileCaptchaNoticeLog()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
 		Assertions.assertDoesNotThrow(() -> noticeLog.setCode("sendMobileCaptcha"));

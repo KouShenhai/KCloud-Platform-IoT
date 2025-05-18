@@ -33,6 +33,8 @@ import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.laokou.common.rocketmq.template.SendMessageTypeEnum;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.InvocationTargetException;
+
 import static org.laokou.auth.common.constant.BizConstants.SCENARIO;
 import static org.laokou.auth.common.constant.BizConstants.USE_CASE_CAPTCHA;
 
@@ -52,7 +54,8 @@ public class CaptchaSendCmdExe {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@CommandLog
-	public void executeVoid(CaptchaSendCmd cmd) {
+	public void executeVoid(CaptchaSendCmd cmd)
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		// 校验参数
 		CaptchaE entity = CaptchaConvertor.toEntity(cmd.getCo());
 		extensionExecutor.executeVoid(CaptchaParamValidatorExtPt.class,

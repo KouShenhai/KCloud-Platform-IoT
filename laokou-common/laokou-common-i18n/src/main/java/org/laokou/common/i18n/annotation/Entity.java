@@ -15,33 +15,24 @@
  *
  */
 
-package org.laokou.auth.api;
+package org.laokou.common.i18n.annotation;
 
-import org.laokou.auth.dto.CaptchaGetQry;
-import org.laokou.auth.dto.CaptchaSendCmd;
-import org.laokou.common.i18n.dto.Result;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.annotation.*;
 
 /**
- * 验证码.
+ * Entity, Entity Object is prototype and is not thread-safe.
  *
- * @author laokou
+ * @author Frank Zhang
  */
-public interface CaptchasServiceI {
-
-	/**
-	 * 获取验证码.
-	 * @param qry 获取验证码参数
-	 * @return 验证码
-	 */
-	Result<String> getByUuid(CaptchaGetQry qry);
-
-	/**
-	 * 发送验证码.
-	 * @param cmd 发送验证码命令
-	 */
-	void sendByUuid(CaptchaSendCmd cmd)
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException;
+@Inherited
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.TYPE })
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+public @interface Entity {
 
 }

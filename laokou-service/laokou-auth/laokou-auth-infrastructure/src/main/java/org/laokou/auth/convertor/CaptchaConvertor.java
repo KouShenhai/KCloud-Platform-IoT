@@ -21,6 +21,8 @@ import org.laokou.auth.dto.clientobject.CaptchaCO;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.CaptchaE;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * @author laokou
  */
@@ -29,7 +31,8 @@ public final class CaptchaConvertor {
 	private CaptchaConvertor() {
 	}
 
-	public static CaptchaE toEntity(CaptchaCO co) {
+	public static CaptchaE toEntity(CaptchaCO co)
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		CaptchaE entity = DomainFactory.getCaptcha();
 		entity.setUuid(co.getUuid());
 		entity.setTag(co.getTag());

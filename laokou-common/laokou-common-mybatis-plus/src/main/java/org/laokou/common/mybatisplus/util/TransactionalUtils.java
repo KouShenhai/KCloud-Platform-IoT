@@ -29,6 +29,7 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.Assert;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.function.Consumer;
 
 /**
@@ -121,7 +122,7 @@ public class TransactionalUtils {
 	@FunctionalInterface
 	public interface DatabaseExecutorVoid {
 
-		void execute()throws JsonProcessingException;
+		void execute()throws JsonProcessingException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException;
 
 	}
 

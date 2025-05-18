@@ -36,6 +36,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 
+import java.lang.reflect.InvocationTargetException;
+
 import static org.laokou.auth.common.constant.BizConstants.*;
 
 /**
@@ -54,7 +56,8 @@ class ExtensionExecutorTest {
 	private final ExtensionRegister extensionRegister;
 
 	@Test
-	void testUsernamePasswordAuthParamValidateExecutor() {
+	void testUsernamePasswordAuthParamValidateExecutor()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		// 校验参数
 		validate();
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
@@ -65,7 +68,8 @@ class ExtensionExecutorTest {
 	}
 
 	@Test
-	void testMailAuthParamValidateExecutor() {
+	void testMailAuthParamValidateExecutor()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		// 校验参数
 		validate();
 		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
@@ -76,7 +80,8 @@ class ExtensionExecutorTest {
 	}
 
 	@Test
-	void testMobileAuthParamValidateExecutor() {
+	void testMobileAuthParamValidateExecutor()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		// 校验参数
 		validate();
 		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
@@ -87,7 +92,8 @@ class ExtensionExecutorTest {
 	}
 
 	@Test
-	void testAuthorizationCodeAuthParamValidateExecutor() {
+	void testAuthorizationCodeAuthParamValidateExecutor()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		// 校验参数
 		validate();
 		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
@@ -98,7 +104,8 @@ class ExtensionExecutorTest {
 	}
 
 	@Test
-	void testMailCaptchaParamValidateExecutor() {
+	void testMailCaptchaParamValidateExecutor()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		// 校验参数
 		validate();
 		CaptchaE captcha = DomainFactory.getCaptcha();
@@ -112,7 +119,8 @@ class ExtensionExecutorTest {
 	}
 
 	@Test
-	void testCaptchaParamValidateExecutor() {
+	void testCaptchaParamValidateExecutor()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		// 校验参数
 		validate();
 		CaptchaE captcha = DomainFactory.getCaptcha();

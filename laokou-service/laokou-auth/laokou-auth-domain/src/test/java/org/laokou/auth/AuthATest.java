@@ -30,6 +30,7 @@ import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.mockito.Mockito;
 import org.springframework.util.DigestUtils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,8 @@ import static org.mockito.Mockito.*;
 class AuthATest {
 
 	@Test
-	void testCreateUserByUsernamePassword() {
+	void testCreateUserByUsernamePassword()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		AuthA authA = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		// 创建用户【用户名密码】
 		Assertions.assertDoesNotThrow(authA::createUserByUsernamePassword);
@@ -54,7 +56,8 @@ class AuthATest {
 	}
 
 	@Test
-	void testCreateUserByMobile() {
+	void testCreateUserByMobile()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		AuthA authA = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
 		// 创建用户【手机号】
 		Assertions.assertDoesNotThrow(authA::createUserByMobile);
@@ -62,7 +65,8 @@ class AuthATest {
 	}
 
 	@Test
-	void testCreateUserByMail() {
+	void testCreateUserByMail()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		AuthA authA = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
 		// 创建用户【邮箱】
 		Assertions.assertDoesNotThrow(authA::createUserByMail);
@@ -70,7 +74,8 @@ class AuthATest {
 	}
 
 	@Test
-	void testCreateUserByAuthorizationCode() {
+	void testCreateUserByAuthorizationCode()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		AuthA authA = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
 		// 创建用户【授权码】
 		Assertions.assertDoesNotThrow(authA::createUserByAuthorizationCode);
@@ -78,7 +83,8 @@ class AuthATest {
 	}
 
 	@Test
-	void testCreateCaptcha() {
+	void testCreateCaptcha()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		AuthA auth = DomainFactory.getAuth(1L, "laokou");
 		// 创建验证码
 		Assertions.assertDoesNotThrow(() -> auth.getCaptcha(DomainFactory.getCaptcha()));
@@ -91,7 +97,8 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckTenantId() {
+	void testCheckTenantId()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		TenantGateway tenantGateway = Mockito.mock(TenantGateway.class);
 		// 构造租户
 		when(tenantGateway.getId("laokou")).thenReturn(0L);
@@ -105,7 +112,8 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckCaptcha() {
+	void testCheckCaptcha()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		CaptchaGateway captchaGateway = mock(CaptchaGateway.class);
 		// 构造验证码校验
 		doReturn(true).when(captchaGateway).validate(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
@@ -128,7 +136,8 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckSourcePrefix() {
+	void testCheckSourcePrefix()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		SourceGateway sourceGateway = mock(SourceGateway.class);
 		// 构造数据源
 		when(sourceGateway.getPrefix("laokou")).thenReturn("master");
@@ -139,7 +148,8 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckUsername() {
+	void testCheckUsername()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		UserGateway userGateway = mock(UserGateway.class);
 		// 构造用户信息
 		UserE user = DomainFactory.getUser();
@@ -151,7 +161,8 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckPassword() {
+	void testCheckPassword()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		// 构造密码校验
 		PasswordValidator passwordValidator = mock(PasswordValidator.class);
 		doReturn(true).when(passwordValidator).validate("123", "202cb962ac59075b964b07152d234b70");
@@ -168,7 +179,8 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckUserStatus() {
+	void testCheckUserStatus()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		// 创建用户【用户名密码】
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
@@ -178,7 +190,8 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckMenuPermissions() {
+	void testCheckMenuPermissions()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		MenuGateway menuGateway = mock(MenuGateway.class);
 		// 创建用户【用户名密码】
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
@@ -193,7 +206,8 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckDeptPaths() {
+	void testCheckDeptPaths()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		DeptGateway deptGateway = mock(DeptGateway.class);
 		// 创建用户【用户名密码】
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
@@ -208,10 +222,11 @@ class AuthATest {
 	}
 
 	@Test
-	void testRecordLog() {
+	void testRecordLog()
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		InfoV info = new InfoV("Windows", "127.0.0.1", "中国 广东 深圳", "Chrome");
 		// 记录日志【登录成功】
-		AuthA auth = DomainFactory.getAuth(1L, "laokou");
+		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		Assertions.assertDoesNotThrow(() -> auth.getExtInfo(info));
 		Assertions.assertDoesNotThrow(() -> auth.recordLog(1L, null));
 		Assertions.assertFalse(auth.releaseEvents().isEmpty());

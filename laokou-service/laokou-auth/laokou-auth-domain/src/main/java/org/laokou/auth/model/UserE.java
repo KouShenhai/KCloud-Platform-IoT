@@ -18,8 +18,10 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.laokou.common.crypto.util.AESUtils;
+import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.ObjectUtils;
 
@@ -32,6 +34,8 @@ import static org.laokou.auth.model.SuperAdminEnum.YES;
  */
 @Setter
 @Getter
+@Entity
+@NoArgsConstructor
 public class UserE extends Identifier {
 
 	/**
@@ -74,13 +78,11 @@ public class UserE extends Identifier {
 	 */
 	private Long tenantId;
 
-	public UserE() {
-	}
-
-	public UserE(String username, String mail, String mobile) throws Exception {
+	public UserE fillValue(String username, String mail, String mobile) throws Exception {
 		this.username = AESUtils.encrypt(username);
 		this.mail = AESUtils.encrypt(mail);
 		this.mobile = AESUtils.encrypt(mobile);
+		return this;
 	}
 
 	public boolean isSuperAdministrator() {

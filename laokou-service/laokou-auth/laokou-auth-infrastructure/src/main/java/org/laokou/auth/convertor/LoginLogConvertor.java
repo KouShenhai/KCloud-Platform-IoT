@@ -26,6 +26,8 @@ import org.laokou.auth.model.LoginLogE;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.util.JacksonUtils;
 
+import java.lang.reflect.InvocationTargetException;
+
 import static org.laokou.common.i18n.util.StringUtils.truncate;
 
 /**
@@ -36,7 +38,8 @@ public final class LoginLogConvertor {
 	private LoginLogConvertor() {
 	}
 
-	public static LoginLogE toEntity(LoginLogCO co) {
+	public static LoginLogE toEntity(LoginLogCO co)
+			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
 		LoginLogE loginLogE = DomainFactory.getLoginLog();
 		loginLogE.setId(co.getId());
 		loginLogE.setUsername(co.getUsername());

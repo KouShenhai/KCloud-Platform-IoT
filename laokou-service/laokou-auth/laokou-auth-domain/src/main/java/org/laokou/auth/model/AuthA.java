@@ -18,10 +18,13 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.laokou.auth.ability.validator.CaptchaValidator;
 import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
+import org.laokou.auth.factory.DomainFactory;
+import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.constant.EventTypeEnum;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.BizException;
@@ -46,22 +49,24 @@ import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
  * @author laokou
  */
 @Getter
+@Entity
+@NoArgsConstructor
 public class AuthA extends AggregateRoot {
 
 	/**
 	 * 用户名.
 	 */
-	private final String username;
+	private String username;
 
 	/**
 	 * 用户密码.
 	 */
-	private final String password;
+	private String password;
 
 	/**
 	 * 租户编码.
 	 */
-	private final String tenantCode;
+	private String tenantCode;
 
 	// @formatter:off
 	/**
@@ -73,12 +78,12 @@ public class AuthA extends AggregateRoot {
 	 * test测试
 	 */
 	// @formatter:on
-	private final GrantTypeEnum grantTypeEnum;
+	private GrantTypeEnum grantTypeEnum;
 
 	/**
 	 * 验证码值对象.
 	 */
-	private final CaptchaV captcha;
+	private CaptchaV captcha;
 
 	/**
 	 * 用户实体.
@@ -110,43 +115,41 @@ public class AuthA extends AggregateRoot {
 	 */
 	private CaptchaE captchaE;
 
-	public AuthA(Long id, String tenantCode) {
+	public AuthA fillValue(Long id, String tenantCode) {
 		super.id = id;
-		this.username = EMPTY;
-		this.password = EMPTY;
 		this.tenantCode = tenantCode;
-		this.grantTypeEnum = USERNAME_PASSWORD;
-		this.captcha = new CaptchaV(EMPTY, EMPTY);
+		return this;
 	}
 
-	public AuthA(Long id, String username, String password, String tenantCode, GrantTypeEnum grantTypeEnum, String uuid,
-			String captcha) {
+	public AuthA fillValue(Long id, String username, String password, String tenantCode, GrantTypeEnum grantTypeEnum,
+			String uuid, String captcha) {
 		super.id = id;
 		this.username = username;
 		this.password = password;
 		this.tenantCode = tenantCode;
 		this.grantTypeEnum = grantTypeEnum;
 		this.captcha = new CaptchaV(uuid, captcha);
+		return this;
 	}
 
 	public void createUserByUsernamePassword() throws Exception {
-		this.user = new UserE(this.username, EMPTY, EMPTY);
+		this.user = DomainFactory.getUser(this.username, EMPTY, EMPTY);
 	}
 
 	public void createUserByMobile() throws Exception {
-		this.user = new UserE(EMPTY, EMPTY, this.captcha.uuid());
+		this.user = DomainFactory.getUser(EMPTY, EMPTY, this.captcha.uuid());
 	}
 
 	public void createUserByMail() throws Exception {
-		this.user = new UserE(EMPTY, this.captcha.uuid(), EMPTY);
+		this.user = DomainFactory.getUser(EMPTY, this.captcha.uuid(), EMPTY);
 	}
 
 	public void createUserByAuthorizationCode() throws Exception {
-		this.user = new UserE(this.username, EMPTY, EMPTY);
+		this.user = DomainFactory.getUser(this.username, EMPTY, EMPTY);
 	}
 
 	public void createUserByTest() throws Exception {
-		this.user = new UserE(this.username, EMPTY, EMPTY);
+		this.user = DomainFactory.getUser(this.username, EMPTY, EMPTY);
 	}
 
 	public void createCaptcha(Long eventId) {
