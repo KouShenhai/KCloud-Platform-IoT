@@ -33,8 +33,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.StopWatch;
-
 import static com.alibaba.nacos.sys.env.Constants.STANDALONE_MODE_PROPERTY_NAME;
 
 /**
@@ -52,8 +50,6 @@ import static com.alibaba.nacos.sys.env.Constants.STANDALONE_MODE_PROPERTY_NAME;
 public class NacosApp {
 
 	public static void main(String[] args) {
-		StopWatch stopWatch = new StopWatch("Nacos应用程序");
-		stopWatch.start();
 		// @formatter:off
 		// -Dnacos.home => Nacos的根目录
 		// Nacos控制台 => http://【ip:8848】/nacos
@@ -90,8 +86,6 @@ public class NacosApp {
 		new SpringApplicationBuilder(NacosConsole.class).parent(coreContext)
 			.banner(new ResourceBanner(new ClassPathResource("banner.txt")))
 			.run(args);
-		stopWatch.stop();
-		log.info("{}", stopWatch.prettyPrint());
 	}
 
 }
