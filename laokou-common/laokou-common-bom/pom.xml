@@ -144,7 +144,7 @@
     <!--caffeine版本-->
     <caffeine.version>3.2.0</caffeine.version>
     <!--jsqlparser版本-->
-    <jsqlparser.version>5.2</jsqlparser.version>
+    <jsqlparser.version>5.3</jsqlparser.version>
     <!--arthas版本-->
     <arthas.version>4.0.2</arthas.version>
     <!--objenesis版本-->
