@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.laokou</groupId>
+    <artifactId>laokou-network</artifactId>
+    <version>3.5.0</version>
+  </parent>
+
+  <artifactId>laokou-mqtt</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+    <module>laokou-mqtt-adapter</module>
+    <module>laokou-mqtt-app</module>
+    <module>laokou-mqtt-client</module>
+    <module>laokou-mqtt-domain</module>
+    <module>laokou-mqtt-infrastructure</module>
+    <module>laokou-mqtt-start</module>
+  </modules>
+
+</project>

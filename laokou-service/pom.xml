@@ -38,9 +38,7 @@
     <module>laokou-iot</module>
     <module>laokou-module</module>
     <module>laokou-oss</module>
-    <module>laokou-mqtt</module>
     <module>laokou-distributed-identifier</module>
-    <module>laokou-http</module>
-    <module>laokou-tcp</module>
+    <module>laokou-network</module>
   </modules>
 </project>

@@ -5,19 +5,20 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.laokou</groupId>
-    <artifactId>laokou-service</artifactId>
+    <artifactId>laokou-network</artifactId>
     <version>3.5.0</version>
   </parent>
 
-  <artifactId>laokou-mqtt</artifactId>
+  <artifactId>laokou-http</artifactId>
   <packaging>pom</packaging>
+
   <modules>
-    <module>laokou-mqtt-adapter</module>
-    <module>laokou-mqtt-app</module>
-    <module>laokou-mqtt-client</module>
-    <module>laokou-mqtt-domain</module>
-    <module>laokou-mqtt-infrastructure</module>
-    <module>laokou-mqtt-start</module>
+    <module>laokou-http-adapter</module>
+    <module>laokou-http-client</module>
+    <module>laokou-http-app</module>
+    <module>laokou-http-domain</module>
+    <module>laokou-http-infrastructure</module>
+    <module>laokou-http-start</module>
   </modules>
 
 </project>

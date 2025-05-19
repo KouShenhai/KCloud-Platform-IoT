@@ -9,15 +9,15 @@
     <version>3.5.0</version>
   </parent>
 
-  <artifactId>laokou-tcp</artifactId>
+  <artifactId>laokou-network</artifactId>
+  <version>3.5.0</version>
   <packaging>pom</packaging>
+
   <modules>
-    <module>laokou-tcp-start</module>
-    <module>laokou-tcp-infrastructure</module>
-    <module>laokou-tcp-adapter</module>
-    <module>laokou-tcp-app</module>
-    <module>laokou-tcp-client</module>
-    <module>laokou-tcp-domain</module>
+    <module>laokou-http</module>
+    <module>laokou-tcp</module>
+    <module>laokou-udp</module>
+    <module>laokou-mqtt</module>
   </modules>
 
 </project>

@@ -205,6 +205,36 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
+        <artifactId>laokou-udp-adapter</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-udp-app</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-udp-client</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-udp-domain</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-udp-infrastructure</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-udp-start</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-tcp-adapter</artifactId>
         <version>${laokou.version}</version>
       </dependency>
