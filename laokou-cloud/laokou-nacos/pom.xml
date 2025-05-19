@@ -37,7 +37,7 @@
     <!--grpc版本-->
     <grpc.version>1.72.0</grpc.version>
     <!--client-java版本-->
-    <client-java.version>19.0.2</client-java.version>
+    <client-java.version>23.0.0-legacy</client-java.version>
     <!--lombok版本-->
     <lombok.version>1.18.38</lombok.version>
     <!--jasypt版本-->
