@@ -148,7 +148,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Mybatis Plus                |3.5.12
 |Nacos                       |3.0.0
 |Sentinel                    |1.8.8
-|Redis                       |7.4.2
+|Redis                       |8.0.1
 |Elasticsearch               |8.18.1
 |RocketMQ                    |5.3.3
 |Netty                       |4.2.1.Final
