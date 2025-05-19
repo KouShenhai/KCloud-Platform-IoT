@@ -31,8 +31,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.util.DigestUtils;
-
-import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,8 +94,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testUsernamePasswordAuth()
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	void testUsernamePasswordAuth() {
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		// 创建用户【用户名密码】
 		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
@@ -131,7 +128,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testMailAuth() throws Exception {
+	void testMailAuth() {
 		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
 		// 创建用户【邮箱】
 		Assertions.assertDoesNotThrow(auth::createUserByMail);
@@ -161,7 +158,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testMobileAuth() throws Exception {
+	void testMobileAuth() {
 		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
 		// 创建用户【手机号】
 		Assertions.assertDoesNotThrow(auth::createUserByMobile);
@@ -190,7 +187,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testAuthorizationCodeAuth() throws Exception {
+	void testAuthorizationCodeAuth() {
 		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
 		// 创建用户【授权码】
 		Assertions.assertDoesNotThrow(auth::createUserByAuthorizationCode);
@@ -221,8 +218,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testCreateCaptcha()
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	void testCreateCaptcha() {
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		AuthA auth = DomainFactory.getAuth(1L, "laokou");
 		// 构造租户
@@ -237,16 +233,14 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testCreateLoginLog()
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	void testCreateLoginLog() {
 		LoginLogE loginLog = DomainFactory.getLoginLog();
 		// 创建登录日志
 		Assertions.assertDoesNotThrow(() -> domainService.createLoginLog(loginLog));
 	}
 
 	@Test
-	void testCreateMailCaptchaNoticeLog()
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	void testCreateMailCaptchaNoticeLog() {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
 		Assertions.assertDoesNotThrow(() -> noticeLog.setCode("sendMailCaptcha"));
@@ -255,8 +249,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testCreateMobileCaptchaNoticeLog()
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	void testCreateMobileCaptchaNoticeLog() {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
 		Assertions.assertDoesNotThrow(() -> noticeLog.setCode("sendMobileCaptcha"));

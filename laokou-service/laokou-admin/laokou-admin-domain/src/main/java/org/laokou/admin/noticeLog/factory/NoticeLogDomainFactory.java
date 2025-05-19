@@ -18,6 +18,7 @@
 package org.laokou.admin.noticeLog.factory;
 
 import org.laokou.admin.noticeLog.model.NoticeLogE;
+import org.laokou.common.core.util.SpringContextUtils;
 
 public final class NoticeLogDomainFactory {
 
@@ -25,7 +26,7 @@ public final class NoticeLogDomainFactory {
 	}
 
 	public static NoticeLogE getNoticeLog() {
-		return new NoticeLogE();
+		return SpringContextUtils.getBeanAndNotExistToCreate(NoticeLogE.class);
 	}
 
 }

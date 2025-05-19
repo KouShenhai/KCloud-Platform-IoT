@@ -21,8 +21,6 @@ import org.laokou.auth.dto.CaptchaGetQry;
 import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.common.i18n.dto.Result;
 
-import java.lang.reflect.InvocationTargetException;
-
 /**
  * 验证码.
  *
@@ -41,7 +39,6 @@ public interface CaptchasServiceI {
 	 * 发送验证码.
 	 * @param cmd 发送验证码命令
 	 */
-	void sendByUuid(CaptchaSendCmd cmd)
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException;
+	void sendByUuid(CaptchaSendCmd cmd);
 
 }

@@ -36,11 +36,12 @@ public class RocketMQDomainEventPublisher implements DomainEventPublisher {
 
 	@Override
 	public void publish(DomainEvent payload, SendMessageTypeEnum type) {
+		RocketMQFuryFactory furyFactory = RocketMQFuryFactory.getFuryFactory();
 		switch (type) {
-			case SYNC -> rocketMqTemplate.sendSyncMessage(payload.getTopic(), payload.getTag(), RocketMQFuryFactory.getFuryFactory().serialize(payload), traceUtils.getTraceId(), traceUtils.getSpanId());
-			case ASYNC -> rocketMqTemplate.sendAsyncMessage(payload.getTopic(), payload.getTag(), RocketMQFuryFactory.getFuryFactory().serialize(payload), traceUtils.getTraceId(), traceUtils.getSpanId());
-			case ONE_WAY -> rocketMqTemplate.sendOneWayMessage(payload.getTopic(), payload.getTag(), RocketMQFuryFactory.getFuryFactory().serialize(payload), traceUtils.getTraceId(), traceUtils.getSpanId());
-			case TRANSACTION -> rocketMqTemplate.sendTransactionMessage(payload.getTopic(), payload.getTag(), RocketMQFuryFactory.getFuryFactory().serialize(payload), payload.getId(), traceUtils.getTraceId(), traceUtils.getSpanId());
+			case SYNC -> rocketMqTemplate.sendSyncMessage(payload.getTopic(), payload.getTag(), furyFactory.serialize(payload), traceUtils.getTraceId(), traceUtils.getSpanId());
+			case ASYNC -> rocketMqTemplate.sendAsyncMessage(payload.getTopic(), payload.getTag(), furyFactory.serialize(payload), traceUtils.getTraceId(), traceUtils.getSpanId());
+			case ONE_WAY -> rocketMqTemplate.sendOneWayMessage(payload.getTopic(), payload.getTag(), furyFactory.serialize(payload), traceUtils.getTraceId(), traceUtils.getSpanId());
+			case TRANSACTION -> rocketMqTemplate.sendTransactionMessage(payload.getTopic(), payload.getTag(), furyFactory.serialize(payload), payload.getId(), traceUtils.getTraceId(), traceUtils.getSpanId());
 			default -> {}
 		}
 	}

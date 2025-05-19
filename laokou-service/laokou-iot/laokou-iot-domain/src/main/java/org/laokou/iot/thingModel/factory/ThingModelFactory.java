@@ -17,6 +17,7 @@
 
 package org.laokou.iot.thingModel.factory;
 
+import org.laokou.common.core.util.SpringContextUtils;
 import org.laokou.iot.thingModel.model.ThingModelE;
 
 public final class ThingModelFactory {
@@ -25,7 +26,7 @@ public final class ThingModelFactory {
 	}
 
 	public static ThingModelE getThingModel() {
-		return new ThingModelE();
+		return SpringContextUtils.getBeanAndNotExistToCreate(ThingModelE.class);
 	}
 
 }

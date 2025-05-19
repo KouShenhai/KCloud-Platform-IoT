@@ -17,8 +17,10 @@
 
 package org.laokou.admin.user.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.laokou.common.crypto.util.AESUtils;
+import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.util.StringUtils;
 
 import java.util.ArrayList;
@@ -31,7 +33,9 @@ import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
  *
  * @author laokou
  */
-@Data
+@Getter
+@Setter
+@Entity
 public class UserE {
 
 	/**

@@ -27,8 +27,6 @@ import org.laokou.auth.service.extensionpoint.extension.MailAuthParamValidator;
 import org.laokou.auth.service.extensionpoint.extension.MobileAuthParamValidator;
 import org.laokou.auth.service.extensionpoint.extension.UsernamePasswordAuthParamValidator;
 
-import java.lang.reflect.InvocationTargetException;
-
 /**
  * 认证参数校验器测试.
  *
@@ -37,8 +35,7 @@ import java.lang.reflect.InvocationTargetException;
 class AuthParamValidatorTest {
 
 	@Test
-	void testUsernamePasswordAuthParamValidator()
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	void testUsernamePasswordAuthParamValidator() {
 		AuthParamValidatorExtPt authParamValidator = new UsernamePasswordAuthParamValidator();
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		// 校验用户名密码登录
@@ -46,8 +43,7 @@ class AuthParamValidatorTest {
 	}
 
 	@Test
-	void testAuthorizationCodeAuthParamValidator()
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	void testAuthorizationCodeAuthParamValidator() {
 		AuthParamValidatorExtPt authParamValidator = new AuthorizationCodeAuthParamValidator();
 		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
 		// 校验授权码登录
@@ -55,8 +51,7 @@ class AuthParamValidatorTest {
 	}
 
 	@Test
-	void testMailAuthParamValidator()
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	void testMailAuthParamValidator() {
 		AuthParamValidatorExtPt authParamValidator = new MailAuthParamValidator();
 		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
 		// 校验邮箱登录
@@ -64,8 +59,7 @@ class AuthParamValidatorTest {
 	}
 
 	@Test
-	void testMobileAuthParamValidator()
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	void testMobileAuthParamValidator() {
 		AuthParamValidatorExtPt authParamValidator = new MobileAuthParamValidator();
 		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
 		Assertions.assertNotNull(auth);

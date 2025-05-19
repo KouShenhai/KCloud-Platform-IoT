@@ -18,6 +18,7 @@
 package org.laokou.admin.loginLog.factory;
 
 import org.laokou.admin.loginLog.model.LoginLogE;
+import org.laokou.common.core.util.SpringContextUtils;
 
 public final class LoginLogDomainFactory {
 
@@ -25,7 +26,7 @@ public final class LoginLogDomainFactory {
 	}
 
 	public static LoginLogE getLoginLog() {
-		return new LoginLogE();
+		return SpringContextUtils.getBeanAndNotExistToCreate(LoginLogE.class);
 	}
 
 }

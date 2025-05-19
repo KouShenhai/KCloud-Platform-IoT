@@ -17,14 +17,18 @@
 
 package org.laokou.admin.menu.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.laokou.common.i18n.annotation.Entity;
 
 /**
  * 菜单领域对象【实体】.
  *
  * @author laokou
  */
-@Data
+@Setter
+@Getter
+@Entity
 public class MenuE {
 
 	/**

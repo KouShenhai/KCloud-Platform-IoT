@@ -156,13 +156,18 @@ public final class SpringContextUtils implements ApplicationContextAware, Dispos
 		}
 	}
 
-	public static <T> T getBeanAndNotExistToCreate(Class<T> type)
-			throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+	public static <T> T getBeanAndNotExistToCreate(Class<T> type) {
 		try {
 			return getBean(type);
 		}
 		catch (Exception e) {
-			return ReflectionUtils.accessibleConstructor(type).newInstance();
+			try {
+				return ReflectionUtils.accessibleConstructor(type).newInstance();
+			}
+			catch (InstantiationException | IllegalAccessException | InvocationTargetException
+					| NoSuchMethodException ex) {
+				throw new RuntimeException(ex);
+			}
 		}
 	}
 

@@ -15,18 +15,21 @@
  *
  */
 
-package org.laokou.admin.menu.factory;
+package org.laokou.iot.productCategory.factory;
 
-import org.laokou.admin.menu.model.MenuE;
 import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.iot.productCategory.model.ProductCategoryE;
 
-public final class MenuDomainFactory {
+/**
+ * @author laokou
+ */
+public final class ProductCategoryFactory {
 
-	private MenuDomainFactory() {
+	private ProductCategoryFactory() {
 	}
 
-	public static MenuE getMenu() {
-		return SpringContextUtils.getBeanAndNotExistToCreate(MenuE.class);
+	public static ProductCategoryE getProductCategory() {
+		return SpringContextUtils.getBeanAndNotExistToCreate(ProductCategoryE.class);
 	}
 
 }

@@ -18,6 +18,7 @@
 package org.laokou.admin.role.factory;
 
 import org.laokou.admin.role.model.RoleE;
+import org.laokou.common.core.util.SpringContextUtils;
 
 /**
  * @author laokou
@@ -28,7 +29,7 @@ public final class RoleDomainFactory {
 	}
 
 	public static RoleE getRole() {
-		return new RoleE();
+		return SpringContextUtils.getBeanAndNotExistToCreate(RoleE.class);
 	}
 
 }

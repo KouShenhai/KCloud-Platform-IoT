@@ -18,6 +18,7 @@
 package org.laokou.admin.dept.factory;
 
 import org.laokou.admin.dept.model.DeptE;
+import org.laokou.common.core.util.SpringContextUtils;
 
 /**
  * @author laokou
@@ -28,7 +29,7 @@ public final class DeptDomainFactory {
 	}
 
 	public static DeptE getDept() {
-		return new DeptE();
+		return SpringContextUtils.getBeanAndNotExistToCreate(DeptE.class);
 	}
 
 }

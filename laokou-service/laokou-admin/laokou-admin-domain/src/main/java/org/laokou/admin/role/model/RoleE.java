@@ -17,7 +17,9 @@
 
 package org.laokou.admin.role.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.laokou.common.i18n.annotation.Entity;
 
 import java.util.List;
 
@@ -26,7 +28,9 @@ import java.util.List;
  *
  * @author laokou
  */
-@Data
+@Setter
+@Getter
+@Entity
 public class RoleE {
 
 	/**

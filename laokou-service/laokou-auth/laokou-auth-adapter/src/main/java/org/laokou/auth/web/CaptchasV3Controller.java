@@ -30,8 +30,6 @@ import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.InvocationTargetException;
-
 import static org.laokou.common.ratelimiter.aop.Type.IP;
 
 /**
@@ -57,8 +55,7 @@ public class CaptchasV3Controller {
 	@PostMapping("send/mobile")
 	@RateLimiter(key = "SEND_MOBILE_CAPTCHA", type = IP)
 	@Operation(summary = "根据UUID发送手机验证码", description = "根据UUID发送手机验证码")
-	public void sendMobileByUuidV3(@RequestBody CaptchaSendCmd cmd)
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public void sendMobileByUuidV3(@RequestBody CaptchaSendCmd cmd) {
 		cmd.getCo().setTag(MqEnum.MOBILE_CAPTCHA.getTag());
 		captchasServiceI.sendByUuid(cmd);
 	}
@@ -67,8 +64,7 @@ public class CaptchasV3Controller {
 	@PostMapping("send/mail")
 	@RateLimiter(key = "SEND_MAIL_CAPTCHA", type = IP)
 	@Operation(summary = "根据UUID发送邮箱验证码", description = "根据UUID发送邮箱验证码")
-	public void sendMailByUuidV3(@RequestBody CaptchaSendCmd cmd)
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public void sendMailByUuidV3(@RequestBody CaptchaSendCmd cmd) {
 		cmd.getCo().setTag(MqEnum.MAIL_CAPTCHA.getTag());
 		captchasServiceI.sendByUuid(cmd);
 	}

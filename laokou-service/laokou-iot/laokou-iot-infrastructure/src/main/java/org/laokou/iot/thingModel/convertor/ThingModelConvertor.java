@@ -18,6 +18,7 @@
 package org.laokou.iot.thingModel.convertor;
 
 import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
+import org.laokou.iot.thingModel.factory.ThingModelFactory;
 import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
 import org.laokou.iot.thingModel.model.ThingModelE;
 
@@ -74,7 +75,7 @@ public class ThingModelConvertor {
 	}
 
 	public static ThingModelE toEntity(ThingModelCO thingModelCO) {
-		ThingModelE thingModelE = new ThingModelE();
+		ThingModelE thingModelE = ThingModelFactory.getThingModel();
 		thingModelE.setId(thingModelCO.getId());
 		thingModelE.setName(thingModelCO.getName());
 		thingModelE.setCode(thingModelCO.getCode());

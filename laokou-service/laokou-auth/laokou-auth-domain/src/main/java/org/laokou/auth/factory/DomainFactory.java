@@ -20,9 +20,6 @@ package org.laokou.auth.factory;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.*;
 import org.laokou.common.core.util.SpringContextUtils;
-
-import java.lang.reflect.InvocationTargetException;
-
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
@@ -89,46 +86,39 @@ public final class DomainFactory {
 	private DomainFactory() {
 	}
 
-	public static AuthA getAuth(Long aggregateId, String tenantCode)
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public static AuthA getAuth(Long aggregateId, String tenantCode) {
 		return getAuth().fillValue(aggregateId, tenantCode);
 	}
 
-	public static AuthA getMailAuth(Long aggregateId, String mail, String code, String tenantCode)
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public static AuthA getMailAuth(Long aggregateId, String mail, String code, String tenantCode) {
 		return getAuth().fillValue(aggregateId, EMPTY, EMPTY, tenantCode, GrantTypeEnum.MAIL, mail, code);
 	}
 
-	public static AuthA getMobileAuth(Long aggregateId, String mobile, String code, String tenantCode)
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public static AuthA getMobileAuth(Long aggregateId, String mobile, String code, String tenantCode) {
 		return getAuth().fillValue(aggregateId, EMPTY, EMPTY, tenantCode, GrantTypeEnum.MOBILE, mobile, code);
 	}
 
 	public static AuthA getUsernamePasswordAuth(Long aggregateId, String username, String password, String tenantCode,
-			String uuid, String captcha)
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+			String uuid, String captcha) {
 		return getAuth().fillValue(aggregateId, username, password, tenantCode, GrantTypeEnum.USERNAME_PASSWORD, uuid,
 				captcha);
 	}
 
-	public static AuthA getAuthorizationCodeAuth(Long aggregateId, String username, String password, String tenantCode)
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public static AuthA getAuthorizationCodeAuth(Long aggregateId, String username, String password,
+			String tenantCode) {
 		return getAuth().fillValue(aggregateId, username, password, tenantCode, GrantTypeEnum.AUTHORIZATION_CODE, EMPTY,
 				EMPTY);
 	}
 
-	public static AuthA getTestAuth(Long aggregateId, String username, String password, String tenantCode)
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public static AuthA getTestAuth(Long aggregateId, String username, String password, String tenantCode) {
 		return getAuth().fillValue(aggregateId, username, password, tenantCode, GrantTypeEnum.TEST, EMPTY, EMPTY);
 	}
 
-	private static AuthA getAuth()
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	private static AuthA getAuth() {
 		return SpringContextUtils.getBeanAndNotExistToCreate(AuthA.class);
 	}
 
-	public static UserE getUser()
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public static UserE getUser() {
 		return SpringContextUtils.getBeanAndNotExistToCreate(UserE.class);
 	}
 
@@ -136,18 +126,15 @@ public final class DomainFactory {
 		return getUser().fillValue(username, mail, mobile);
 	}
 
-	public static LoginLogE getLoginLog()
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public static LoginLogE getLoginLog() {
 		return SpringContextUtils.getBeanAndNotExistToCreate(LoginLogE.class);
 	}
 
-	public static CaptchaE getCaptcha()
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public static CaptchaE getCaptcha() {
 		return SpringContextUtils.getBeanAndNotExistToCreate(CaptchaE.class);
 	}
 
-	public static NoticeLogE getNoticeLog()
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public static NoticeLogE getNoticeLog() {
 		return SpringContextUtils.getBeanAndNotExistToCreate(NoticeLogE.class);
 	}
 

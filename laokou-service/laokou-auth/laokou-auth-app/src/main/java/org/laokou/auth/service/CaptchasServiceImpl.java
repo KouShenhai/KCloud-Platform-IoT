@@ -26,8 +26,6 @@ import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.InvocationTargetException;
-
 /**
  * 验证码.
  *
@@ -52,8 +50,7 @@ public class CaptchasServiceImpl implements CaptchasServiceI {
 	}
 
 	@Override
-	public void sendByUuid(CaptchaSendCmd cmd)
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public void sendByUuid(CaptchaSendCmd cmd) {
 		captchaSendCmdExe.executeVoid(cmd);
 	}
 

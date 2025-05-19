@@ -44,6 +44,9 @@ management:
     tags:
       application: ${spring.application.name}
 
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml
+
 spring:
   application:
     name: ${SERVICE_ID:laokou-tcp}

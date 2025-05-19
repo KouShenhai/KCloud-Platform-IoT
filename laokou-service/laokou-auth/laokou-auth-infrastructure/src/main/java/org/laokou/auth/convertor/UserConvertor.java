@@ -23,8 +23,6 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.UserE;
 import org.laokou.common.security.util.UserDetails;
 
-import java.lang.reflect.InvocationTargetException;
-
 /**
  * @author laokou
  */
@@ -40,8 +38,7 @@ public final class UserConvertor {
 				authA.getDeptPaths(), authA.getPermissions(), userE.getTenantId(), authA.getSourcePrefix());
 	}
 
-	public static UserE toEntity(UserDO userDO)
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public static UserE toEntity(UserDO userDO) {
 		UserE userE = DomainFactory.getUser();
 		userE.setId(userDO.getId());
 		userE.setUsername(userDO.getUsername());

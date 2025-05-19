@@ -25,8 +25,6 @@ import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.mail.dto.MailResult;
 import org.laokou.common.sms.entity.SmsResult;
 
-import java.lang.reflect.InvocationTargetException;
-
 import static org.laokou.common.i18n.util.StringUtils.truncate;
 
 /**
@@ -67,8 +65,7 @@ public final class NoticeLogConvertor {
 		return noticeLogCO;
 	}
 
-	public static NoticeLogE toEntity(NoticeLogCO noticeLogCO)
-			throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+	public static NoticeLogE toEntity(NoticeLogCO noticeLogCO) {
 		NoticeLogE noticeLogE = DomainFactory.getNoticeLog();
 		noticeLogE.setId(noticeLogCO.getId());
 		noticeLogE.setCode(noticeLogCO.getCode());

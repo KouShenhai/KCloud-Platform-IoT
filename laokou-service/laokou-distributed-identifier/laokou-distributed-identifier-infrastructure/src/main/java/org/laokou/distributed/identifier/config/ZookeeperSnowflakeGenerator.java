@@ -212,7 +212,7 @@ public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 	}
 
 	private long getTimestamp(long snowflakeId) {
-		// 第一段 时间戳部分 (反推 -> 右移 + 开始时间戳)
+		// 反推 -> 右移 + 开始时间戳
 		return (snowflakeId >> (sequenceBit + machineBit + datacenterBit)) + startTimestamp;
 	}
 

@@ -17,7 +17,9 @@
 
 package org.laokou.admin.dept.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.ObjectUtils;
 
@@ -26,7 +28,9 @@ import org.laokou.common.i18n.util.ObjectUtils;
  *
  * @author laokou
  */
-@Data
+@Setter
+@Getter
+@Entity
 public class DeptE {
 
 	/**

@@ -18,6 +18,7 @@
 package org.laokou.iot.productCategory.convertor;
 
 import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
+import org.laokou.iot.productCategory.factory.ProductCategoryFactory;
 import org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO;
 import org.laokou.iot.productCategory.model.ProductCategoryE;
 
@@ -58,7 +59,7 @@ public class ProductCategoryConvertor {
 	}
 
 	public static ProductCategoryE toEntity(ProductCategoryCO productCategoryCO) {
-		ProductCategoryE productCategoryE = new ProductCategoryE();
+		ProductCategoryE productCategoryE = ProductCategoryFactory.getProductCategory();
 		productCategoryE.setName(productCategoryCO.getName());
 		productCategoryE.setSort(productCategoryCO.getSort());
 		productCategoryE.setPid(productCategoryCO.getPid());

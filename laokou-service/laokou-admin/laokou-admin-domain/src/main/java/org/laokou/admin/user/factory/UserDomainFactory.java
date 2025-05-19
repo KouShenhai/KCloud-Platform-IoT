@@ -18,6 +18,7 @@
 package org.laokou.admin.user.factory;
 
 import org.laokou.admin.user.model.UserE;
+import org.laokou.common.core.util.SpringContextUtils;
 
 /**
  * @author laokou
@@ -28,7 +29,7 @@ public final class UserDomainFactory {
 	}
 
 	public static UserE getUser() {
-		return new UserE();
+		return SpringContextUtils.getBeanAndNotExistToCreate(UserE.class);
 	}
 
 }

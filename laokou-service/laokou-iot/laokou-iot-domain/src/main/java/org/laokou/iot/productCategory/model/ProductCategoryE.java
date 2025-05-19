@@ -17,7 +17,9 @@
 
 package org.laokou.iot.productCategory.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.laokou.common.i18n.annotation.Entity;
 
 /**
  *
@@ -25,7 +27,9 @@ import lombok.Data;
  *
  * @author laokou
  */
-@Data
+@Getter
+@Setter
+@Entity
 public class ProductCategoryE {
 
 	/**
