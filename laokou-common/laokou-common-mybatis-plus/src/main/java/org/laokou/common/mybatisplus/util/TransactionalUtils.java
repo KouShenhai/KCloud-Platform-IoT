@@ -17,7 +17,6 @@
 
 package org.laokou.common.mybatisplus.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -29,7 +28,6 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.Assert;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.function.Consumer;
 
 /**
@@ -122,7 +120,7 @@ public class TransactionalUtils {
 	@FunctionalInterface
 	public interface DatabaseExecutorVoid {
 
-		void execute()throws JsonProcessingException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException;
+		void execute();
 
 	}
 
