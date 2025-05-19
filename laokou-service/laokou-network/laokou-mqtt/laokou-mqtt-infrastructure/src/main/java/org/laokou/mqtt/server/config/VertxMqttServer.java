@@ -45,8 +45,6 @@ final class VertxMqttServer extends AbstractVerticle {
 
 	private volatile Flux<MqttServer> mqttServer;
 
-	private final Vertx vertx;
-
 	private final MqttServerProperties properties;
 
 	private final List<ReactiveMqttMessageHandler> reactiveMqttMessageHandlers;

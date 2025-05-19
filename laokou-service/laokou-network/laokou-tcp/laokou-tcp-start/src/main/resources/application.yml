@@ -92,7 +92,6 @@ spring:
     admin:
       auto-create: false
   tcp-server:
-    auth: true
     # 创建120个端口
     ports:
       - 3880

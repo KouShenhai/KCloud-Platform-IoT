@@ -38,8 +38,6 @@ final class VertxHttpServer extends AbstractVerticle {
 
 	private final HttpServerProperties properties;
 
-	private final Vertx vertx;
-
 	private final Router router;
 
 	private volatile Flux<HttpServer> httpServer;

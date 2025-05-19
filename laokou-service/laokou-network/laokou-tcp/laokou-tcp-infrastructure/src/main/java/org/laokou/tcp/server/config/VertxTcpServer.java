@@ -33,8 +33,6 @@ final class VertxTcpServer extends AbstractVerticle {
 
 	private final TcpServerProperties properties;
 
-	private final Vertx vertx;
-
 	private volatile Flux<NetServer> netServer;
 
 	private boolean isClosed = false;
