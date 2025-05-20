@@ -21,7 +21,6 @@ import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.NacosServiceManager;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
 import com.alibaba.nacos.api.exception.NacosException;
-import com.alibaba.nacos.api.naming.NamingMaintainService;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.alibaba.nacos.api.naming.selector.NamingSelector;
@@ -87,12 +86,6 @@ class NamingUtilsTest {
 		Assertions.assertNotNull(namingService);
 		namingService = NamingUtils.createNamingService(nacosDiscoveryProperties.getNacosProperties());
 		Assertions.assertNotNull(namingService);
-	}
-
-	@Test
-	void testGetNamingMaintainService() {
-		NamingMaintainService namingMaintainService = namingUtils.getNamingMaintainService(nacosDiscoveryProperties.getNacosProperties());
-		Assertions.assertNotNull(namingMaintainService);
 	}
 
 	@Test

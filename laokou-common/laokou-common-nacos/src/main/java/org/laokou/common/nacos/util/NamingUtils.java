@@ -21,7 +21,6 @@ import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.NacosServiceManager;
 import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.exception.NacosException;
-import com.alibaba.nacos.api.naming.NamingMaintainService;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.listener.EventListener;
 import com.alibaba.nacos.api.naming.pojo.Instance;
@@ -66,14 +65,6 @@ public final class NamingUtils {
 	 */
 	public void nacosServiceShutDown() throws NacosException {
 		nacosServiceManager.nacosServiceShutDown();
-	}
-
-	/**
-	 * 获取命名维护服务.
-	 * @param properties 配置
-	 */
-	public NamingMaintainService getNamingMaintainService(Properties properties) {
-		return nacosServiceManager.getNamingMaintainService(properties);
 	}
 
 	/**
