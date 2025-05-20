@@ -58,20 +58,20 @@ final class VertxHttpServer extends AbstractVerticle {
 					serverWebSocket.close();
 					return;
 				}
-				serverWebSocket.textMessageHandler(message -> log.info("【Vertx-Websocket-Server】 => 收到消息：{}", message))
-					.closeHandler(v -> log.error("【Vertx-Websocket-Server】 => 断开连接"))
-					.exceptionHandler(err -> log.error("【Vertx-Websocket-Server】 => 错误信息：{}", err.getMessage(), err))
-					.endHandler(v -> log.error("【Vertx-Websocket-Server】 => 结束"));
+				serverWebSocket.textMessageHandler(message -> log.info("【Vertx-WebSocket-Server】 => 收到消息：{}", message))
+					.closeHandler(v -> log.error("【Vertx-WebSocket-Server】 => 断开连接"))
+					.exceptionHandler(err -> log.error("【Vertx-WebSocket-Server】 => 错误信息：{}", err.getMessage(), err))
+					.endHandler(v -> log.error("【Vertx-WebSocket-Server】 => 结束"));
 			}).requestHandler(router).listen().onComplete(completionHandler -> {
 				if (isClosed) {
 					return;
 				}
 				if (completionHandler.succeeded()) {
-					log.info("【Vertx-Http-Server】 => HTTP服务启动成功，端口：{}", server.actualPort());
+					log.info("【Vertx-HTTP-Server】 => HTTP服务启动成功，端口：{}", server.actualPort());
 				}
 				else {
 					Throwable ex = completionHandler.cause();
-					log.error("【Vertx-Http-Server】 => HTTP服务启动失败，错误信息：{}", ex.getMessage(), ex);
+					log.error("【Vertx-HTTP-Server】 => HTTP服务启动失败，错误信息：{}", ex.getMessage(), ex);
 				}
 			}));
 		httpServer.subscribeOn(Schedulers.boundedElastic()).subscribe();
@@ -82,11 +82,11 @@ final class VertxHttpServer extends AbstractVerticle {
 		isClosed = true;
 		httpServer.doOnNext(server -> server.close().onComplete(result -> {
 			if (result.succeeded()) {
-				log.info("【Vertx-Http-Server】 => HTTP服务停止成功，端口：{}", server.actualPort());
+				log.info("【Vertx-HTTP-Server】 => HTTP服务停止成功，端口：{}", server.actualPort());
 			}
 			else {
 				Throwable ex = result.cause();
-				log.error("【Vertx-Http-Server】 => HTTP服务停止失败，错误信息：{}", ex.getMessage(), ex);
+				log.error("【Vertx-HTTP-Server】 => HTTP服务停止失败，错误信息：{}", ex.getMessage(), ex);
 			}
 		})).subscribeOn(Schedulers.boundedElastic()).subscribe();
 	}

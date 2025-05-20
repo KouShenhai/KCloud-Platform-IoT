@@ -31,6 +31,10 @@ public class MqttClientProperties {
 
 	private boolean auth = true;
 
+	private boolean mqtt5 = false;
+
+	private boolean subscribe = true;
+
 	private String username = "emqx";
 
 	private String password = "laokou123";

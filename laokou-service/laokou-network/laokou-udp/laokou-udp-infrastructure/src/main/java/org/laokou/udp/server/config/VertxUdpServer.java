@@ -46,17 +46,17 @@ public final class VertxUdpServer extends AbstractVerticle {
 	public synchronized void start() {
 		datagramSocket = Flux.fromIterable(udpServerProperties.getPorts()).map(port -> {
 			DatagramSocket datagramSocket = vertx.createDatagramSocket(getDatagramSocketOption())
-				.handler(packet -> log.info("【Vertx-Udp-Server】 => 收到数据包：{}", packet.data()));
+				.handler(packet -> log.info("【Vertx-UDP-Server】 => 收到数据包：{}", packet.data()));
 			datagramSocket.listen(port, udpServerProperties.getHost()).onComplete(result -> {
 				if (isClosed) {
 					return;
 				}
 				if (result.succeeded()) {
-					log.info("【Vertx-Udp-Server】 => UDP服务启动成功，端口：{}", port);
+					log.info("【Vertx-UDP-Server】 => UDP服务启动成功，端口：{}", port);
 				}
 				else {
 					Throwable ex = result.cause();
-					log.error("【Vertx-Udp-Server】 => UDP服务启动失败，错误信息：{}", ex.getMessage(), ex);
+					log.error("【Vertx-UDP-Server】 => UDP服务启动失败，错误信息：{}", ex.getMessage(), ex);
 				}
 			});
 			return datagramSocket;
@@ -69,11 +69,11 @@ public final class VertxUdpServer extends AbstractVerticle {
 		isClosed = true;
 		datagramSocket.doOnNext(socket -> socket.close().onComplete(result -> {
 			if (result.succeeded()) {
-				log.info("【Vertx-Udp-Server】 => UDP服务停止成功");
+				log.info("【Vertx-UDP-Server】 => UDP服务停止成功");
 			}
 			else {
 				Throwable ex = result.cause();
-				log.error("【Vertx-Udp-Server】 => UDP服务停止失败，错误信息：{}", ex.getMessage(), ex);
+				log.error("【Vertx-UDP-Server】 => UDP服务停止失败，错误信息：{}", ex.getMessage(), ex);
 			}
 		})).subscribeOn(Schedulers.boundedElastic()).subscribe();
 	}

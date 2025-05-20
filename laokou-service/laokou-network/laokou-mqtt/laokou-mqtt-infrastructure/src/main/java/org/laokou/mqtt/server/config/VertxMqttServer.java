@@ -18,11 +18,14 @@
 package org.laokou.mqtt.server.config;
 
 import io.netty.handler.codec.mqtt.MqttConnectReturnCode;
+import io.netty.handler.codec.mqtt.MqttProperties;
 import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.mqtt.*;
+import io.vertx.mqtt.messages.MqttAuthenticationExchangeMessage;
 import io.vertx.mqtt.messages.MqttPublishMessage;
+import io.vertx.mqtt.messages.codes.MqttAuthenticateReasonCode;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
@@ -66,39 +69,47 @@ final class VertxMqttServer extends AbstractVerticle {
 				.exceptionHandler(
 						error -> log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，错误信息：{}", error.getMessage(), error))
 				.endpointHandler(endpoint -> Optional.ofNullable(authHandler(endpoint))
-					.ifPresent(e -> e.closeHandler(close -> log.info("【Vertx-MQTT-Server】 => MQTT客户端断开连接"))
+					.ifPresent(mqttEndpoint -> mqttEndpoint
+						.closeHandler(close -> log.info("【Vertx-MQTT-Server】 => MQTT客户端断开连接"))
 						.subscribeHandler(subscribe -> {
 							for (MqttTopicSubscription topicSubscription : subscribe.topicSubscriptions()) {
 								log.info("【Vertx-MQTT-Server】 => MQTT客户端订阅主题：{}", topicSubscription.topicName());
 							}
 						})
 						.disconnectHandler(disconnect -> log.info("【Vertx-MQTT-Server】 => MQTT客户端主动断开连接"))
-						.pingHandler(ping -> log.info("【Vertx-MQTT-Server】 => MQTT客户端发送心跳"))
+						.pingHandler(ping -> log.info("【Vertx-MQTT-Server】 => 接收MQTT客户端心跳"))
 						// @formatter:off
 						.publishHandler(mqttPublishMessage -> {
 							messageSink.tryEmitNext(mqttPublishMessage);
 							int messageId = mqttPublishMessage.messageId();
 							MqttQoS mqttQoS = mqttPublishMessage.qosLevel();
-							if (ObjectUtils.equals(mqttQoS ,MqttQoS.EXACTLY_ONCE)) {
-								// 如果 QoS 等级是 2（EXACTLY_ONCE），endpoint 需要使用publishReceived方法回复一个PUBREC消息给客户端
-								endpoint.publishReceived(messageId);
-								log.info("【Vertx-MQTT-Server】 => 发送 PUBREL 消息给客户端【Qos=2】，消息ID：{}", messageId);
-							} else if (ObjectUtils.equals(mqttQoS, MqttQoS.AT_LEAST_ONCE)) {
+							if (ObjectUtils.equals(mqttQoS, MqttQoS.AT_LEAST_ONCE)) {
+								// 【接收客户端发布消息】
 								// 如果 QoS 等级是 1（AT_LEAST_ONCE），endpoint 需要使用 publishAcknowledge 方法回复一个PUBACK消息给客户端
 								endpoint.publishAcknowledge(messageId);
-								log.info("【Vertx-MQTT-Server】 => 发送 PUBACK 消息给客户端【Qos=1】，消息ID：{}", messageId);
+								log.info("【Vertx-MQTT-Server】 => 发送PUBACK数据包给客户端【Qos=1】，消息ID：{}【客户端发布】", messageId);
+							} else if (ObjectUtils.equals(mqttQoS ,MqttQoS.EXACTLY_ONCE)) {
+								// 【接收客户端发布消息】
+								// 如果 QoS 等级是 2（EXACTLY_ONCE），endpoint 需要使用publishReceived方法回复一个PUBREC消息给客户端
+								endpoint.publishReceived(messageId);
+								log.info("【Vertx-MQTT-Server】 => 发送PUBREL数据包给客户端【Qos=2】，消息ID：{}【客户端发布】", messageId);
 							}
 						})
-						.publishReceivedHandler(messageId -> log.info("【Vertx-MQTT-Server】 => 获取 PUBREC 响应，消息ID：{}", messageId))
-						.publishAcknowledgeHandler(messageId -> log.info("【Vertx-MQTT-Server】 => 获取 PUBACK 响应，消息ID：{}", messageId))
+						.publishReceivedHandler(messageId -> {
+							mqttEndpoint.publishRelease(messageId);
+							log.info("【Vertx-MQTT-Server】 => 接收 PUBREC 响应并回复客户端，消息ID：{}【服务端发布】", messageId);
+						})
+						.publishAcknowledgeHandler(messageId -> log.info("【Vertx-MQTT-Server】 => 接收 PUBACK 响应，消息ID：{}【服务端发布】", messageId))
 						/*
+						   【接收客户端发布消息】
 						  在这种情况下，这个 endpoint 同时也要通过publishReleaseHandler指定一个 handler 来处理来自客户端的PUBREL（远程客户端接收到 endpoint 发送的 PUBREC 后发送的）消息 为了结束 QoS 等级为2的消息的传递，
 						  endpoint 可以使用publishComplete方法发送一个 PUBCOMP 消息给客户端
 						 */
 						.publishReleaseHandler(messageId -> {
 							endpoint.publishComplete(messageId);
-							log.info("【Vertx-MQTT-Server】 => 发送 PUBCOMP 消息给客户端【Qos=2】，消息ID：{}", messageId);
+							log.info("【Vertx-MQTT-Server】 => 发送PUBCOMP数据包给客户端【Qos=2】，消息ID：{}【客户端发布】", messageId);
 						})
+						.publishCompletionHandler(messageId -> log.info("【Vertx-MQTT-Server】 => 接收 PUBCOMP 响应，消息ID：{}【服务端发布】", messageId))
 						// @formatter:on
 						// 不保留会话
 						.accept(false)))
@@ -142,16 +153,12 @@ final class VertxMqttServer extends AbstractVerticle {
 	}
 
 	private Flux<Boolean> publish() {
-		return messageSink.asFlux().flatMap(message -> {
-			// @formatter:off
-				// log.info("【Vertx-MQTT-Server】 => MQTT服务接收到消息，主题：{}，内容：{}", message.topicName(), message.payload().toString());
-				// @formatter:on
-			return Flux
+		return messageSink.asFlux()
+			.flatMap(message -> Flux
 				.fromStream(reactiveMqttMessageHandlers.stream()
 					.filter(reactiveMessageHandler -> reactiveMessageHandler.isSubscribe(message.topicName())))
 				.flatMap(reactiveMessageHandler -> reactiveMessageHandler
-					.handle(new MqttMessage(message.payload(), message.topicName())));
-		});
+					.handle(new MqttMessage(message.payload(), message.topicName()))));
 	}
 
 	private Flux<MqttServerOptions> getMqttServerOptions() {
@@ -159,6 +166,20 @@ final class VertxMqttServer extends AbstractVerticle {
 	}
 
 	private MqttEndpoint authHandler(MqttEndpoint endpoint) {
+		// MQTT5
+		if (properties.isMqtt5()) {
+			endpoint
+				.authenticationExchange(MqttAuthenticationExchangeMessage.create(MqttAuthenticateReasonCode.SUCCESS,
+						MqttProperties.NO_PROPERTIES))
+				.authenticationExchangeHandler(auth -> {
+					if (ObjectUtils.equals(MqttAuthenticateReasonCode.SUCCESS, auth.reasonCode())) {
+						log.info("【Vertx-MQTT-Server】 => MQTT5认证成功");
+					}
+					else {
+						log.info("【Vertx-MQTT-Server】 => MQTT5认证失败，原因：{}", auth.reasonCode());
+					}
+				});
+		}
 		MqttAuth mqttAuth = endpoint.auth();
 		if (properties.isAuth()) {
 			if (ObjectUtils.isNull(mqttAuth)) {

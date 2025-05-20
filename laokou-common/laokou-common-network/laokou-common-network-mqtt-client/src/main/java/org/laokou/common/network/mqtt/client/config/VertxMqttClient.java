@@ -17,12 +17,15 @@
 
 package org.laokou.common.network.mqtt.client.config;
 
+import io.netty.handler.codec.mqtt.MqttProperties;
 import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.mqtt.MqttClient;
 import io.vertx.mqtt.MqttClientOptions;
+import io.vertx.mqtt.messages.MqttAuthenticationExchangeMessage;
 import io.vertx.mqtt.messages.MqttPublishMessage;
+import io.vertx.mqtt.messages.codes.MqttAuthenticateReasonCode;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -75,20 +78,28 @@ public final class VertxMqttClient {
 	}
 
 	public void open() {
+		if (mqttClientProperties.isMqtt5()) {
+			mqttClient.authenticationExchange(MqttAuthenticationExchangeMessage
+				.create(MqttAuthenticateReasonCode.SUCCESS, MqttProperties.NO_PROPERTIES));
+			mqttClient.authenticationExchangeHandler(auth -> {
+				if (ObjectUtils.equals(MqttAuthenticateReasonCode.SUCCESS, auth.reasonCode())) {
+					log.info("【Vertx-MQTT-Client】 => MQTT5认证成功");
+				}
+				else {
+					log.info("【Vertx-MQTT-Client】 => MQTT5认证失败，原因：{}", auth.reasonCode());
+				}
+			});
+		}
 		mqttClient.closeHandler(v -> {
 			isConnected.set(false);
 			log.error("【Vertx-MQTT-Client】 => MQTT连接断开，客户端ID：{}", mqttClientProperties.getClientId());
 			reconnect();
-		})
-			.publishHandler(messageSink::tryEmitNext)
-			// 仅接收QoS1和QoS2的消息
-			.publishCompletionHandler(id -> {
-				// log.info("【Vertx-MQTT-Client】 => 接收MQTT的PUBACK或PUBCOMP数据包，数据包ID：{}",
-				// id);
-			})
+		}).publishHandler(messageSink::tryEmitNext)
+		// @formatter:off
+			 // 仅接收QoS1和QoS2的数据包
+			.publishCompletionHandler(messageId -> log.info("【Vertx-MQTT-Client】 => 接收MQTT的PUBACK或PUBCOMP数据包，数据包ID：{}", messageId))
 			.subscribeCompletionHandler(ack -> {
-				// log.info("【Vertx-MQTT-Client】 => 接收MQTT的SUBACK数据包，数据包ID：{}",
-				// ack.messageId());
+				// log.info("【Vertx-MQTT-Client】 => 接收MQTT的SUBACK数据包，数据包ID：{}", ack.messageId());
 			})
 			.unsubscribeCompletionHandler(id -> {
 				// log.info("【Vertx-MQTT-Client】 => 接收MQTT的UNSUBACK数据包，数据包ID：{}", id);
@@ -96,6 +107,7 @@ public final class VertxMqttClient {
 			.pingResponseHandler(s -> {
 				// log.info("【Vertx-MQTT-Client】 => 接收MQTT的PINGRESP数据包");
 			})
+			// @formatter:on
 			.connect(mqttClientProperties.getPort(), mqttClientProperties.getHost())
 			.onComplete(connectResult -> {
 				if (connectResult.succeeded()) {
@@ -160,7 +172,7 @@ public final class VertxMqttClient {
 	}
 
 	private void resubscribe() {
-		if (isConnected.get() || mqttClient.isConnected()) {
+		if ((isConnected.get() || mqttClient.isConnected()) && mqttClientProperties.isSubscribe()) {
 			virtualThreadExecutor.execute(this::subscribe);
 		}
 		if (isLoaded.compareAndSet(false, true)) {
