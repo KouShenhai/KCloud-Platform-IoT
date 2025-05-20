@@ -18,6 +18,7 @@
 package org.laokou.mqtt.server.config;
 
 import io.netty.handler.codec.mqtt.MqttConnectReturnCode;
+import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.mqtt.*;
@@ -73,7 +74,32 @@ final class VertxMqttServer extends AbstractVerticle {
 						})
 						.disconnectHandler(disconnect -> log.info("【Vertx-MQTT-Server】 => MQTT客户端主动断开连接"))
 						.pingHandler(ping -> log.info("【Vertx-MQTT-Server】 => MQTT客户端发送心跳"))
-						.publishHandler(messageSink::tryEmitNext)
+						// @formatter:off
+						.publishHandler(mqttPublishMessage -> {
+							messageSink.tryEmitNext(mqttPublishMessage);
+							int messageId = mqttPublishMessage.messageId();
+							MqttQoS mqttQoS = mqttPublishMessage.qosLevel();
+							if (ObjectUtils.equals(mqttQoS ,MqttQoS.EXACTLY_ONCE)) {
+								// 如果 QoS 等级是 2（EXACTLY_ONCE），endpoint 需要使用publishReceived方法回复一个PUBREC消息给客户端
+								endpoint.publishReceived(messageId);
+								log.info("【Vertx-MQTT-Server】 => 发送 PUBREL 消息给客户端【Qos=2】，消息ID：{}", messageId);
+							} else if (ObjectUtils.equals(mqttQoS, MqttQoS.AT_LEAST_ONCE)) {
+								// 如果 QoS 等级是 1（AT_LEAST_ONCE），endpoint 需要使用 publishAcknowledge 方法回复一个PUBACK消息给客户端
+								endpoint.publishAcknowledge(messageId);
+								log.info("【Vertx-MQTT-Server】 => 发送 PUBACK 消息给客户端【Qos=1】，消息ID：{}", messageId);
+							}
+						})
+						.publishReceivedHandler(messageId -> log.info("【Vertx-MQTT-Server】 => 获取 PUBREC 响应，消息ID：{}", messageId))
+						.publishAcknowledgeHandler(messageId -> log.info("【Vertx-MQTT-Server】 => 获取 PUBACK 响应，消息ID：{}", messageId))
+						/*
+						  在这种情况下，这个 endpoint 同时也要通过publishReleaseHandler指定一个 handler 来处理来自客户端的PUBREL（远程客户端接收到 endpoint 发送的 PUBREC 后发送的）消息 为了结束 QoS 等级为2的消息的传递，
+						  endpoint 可以使用publishComplete方法发送一个 PUBCOMP 消息给客户端
+						 */
+						.publishReleaseHandler(messageId -> {
+							endpoint.publishComplete(messageId);
+							log.info("【Vertx-MQTT-Server】 => 发送 PUBCOMP 消息给客户端【Qos=2】，消息ID：{}", messageId);
+						})
+						// @formatter:on
 						// 不保留会话
 						.accept(false)))
 				.listen()
