@@ -150,6 +150,7 @@ module.exports = {
 							{text: 'vue3+lime-echart各种图表使用【懒人专用，建议收藏】', link: '/pages/0aa18d/'},
 							{text: '物联网之使用Vertx实现TCP最佳实践【响应式】', link: '/pages/6da49d/'},
 							{text: '物联网之使用Vertx实现HTTPWebSocket最佳实践【响应式】', link: '/pages/04e661/'},
+							{text: '物联网之使用Vertx实现UDP最佳实践【响应式】', link: '/pages/3e4283/'},
 						]
 					},
 				]
