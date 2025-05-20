@@ -64,7 +64,7 @@
     <!--fastexcel-->
     <fastexcel.version>1.2.0</fastexcel.version>
     <!--spring-security-oauth2-authorization-server版本-->
-    <spring-security-oauth2-authorization-server.version>1.5.0-RC1</spring-security-oauth2-authorization-server.version>
+    <spring-security-oauth2-authorization-server.version>1.5.0</spring-security-oauth2-authorization-server.version>
     <!--aws-java-sdk-s3版本-->
     <aws-java-sdk-s3.version>1.12.783</aws-java-sdk-s3.version>
     <!--dynamic-datasource版本-->
