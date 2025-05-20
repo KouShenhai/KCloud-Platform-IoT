@@ -75,7 +75,6 @@ class VertxMqttClient2Test {
 					"{\"id\":\"1\",\"name\":\"test\",\"value\":\"test\"}", false, false));
 			Thread.sleep(1000);
 			Assertions.assertDoesNotThrow(vertxMqttClient::close);
-			Thread.sleep(1000);
 		}
 	}
 

@@ -61,7 +61,7 @@ final class VertxHttpServer extends AbstractVerticle {
 				serverWebSocket.textMessageHandler(message -> log.info("【Vertx-WebSocket-Server】 => 收到消息：{}", message))
 					.closeHandler(v -> log.error("【Vertx-WebSocket-Server】 => 断开连接"))
 					.exceptionHandler(err -> log.error("【Vertx-WebSocket-Server】 => 错误信息：{}", err.getMessage(), err))
-					.endHandler(v -> log.error("【Vertx-WebSocket-Server】 => 结束"));
+					.endHandler(v -> log.error("【Vertx-WebSocket-Server】 => 结束连接"));
 			}).requestHandler(router).listen().onComplete(completionHandler -> {
 				if (isClosed) {
 					return;

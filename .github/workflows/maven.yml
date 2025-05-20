@@ -47,6 +47,7 @@ jobs:
             ./laokou-common/laokou-common-rabbitmq/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-elasticsearch/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-openfeign/target/site/jacoco/jacoco.xml,
+            ./laokou-common/laokou-common-vertx/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-dubbo/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-graalvm-js/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-mybatis-plus/target/site/jacoco/jacoco.xml,
@@ -57,7 +58,6 @@ jobs:
             ./laokou-service/laokou-logstash/laokou-logstash-start/target/site/jacoco/jacoco.xml,
             ./laokou-service/laokou-auth/laokou-auth-domain/target/site/jacoco/jacoco.xml,
             ./laokou-service/laokou-auth/laokou-auth-app/target/site/jacoco/jacoco.xml,
-            ./laokou-service/laokou-iot/laokou-iot-start/target/site/jacoco/jacoco.xml,
             ./laokou-service/laokou-distributed-identifier/laokou-distributed-identifier-start/target/site/jacoco/jacoco.xml
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Build with Maven

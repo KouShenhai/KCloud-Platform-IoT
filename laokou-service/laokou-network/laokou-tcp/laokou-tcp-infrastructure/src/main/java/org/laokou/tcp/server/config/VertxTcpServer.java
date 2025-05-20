@@ -45,21 +45,23 @@ final class VertxTcpServer extends AbstractVerticle {
 	@Override
 	public synchronized void start() {
 		netServer = getTcpServerOptions().map(vertx::createNetServer)
-			.doOnNext(server -> server.connectHandler(socket -> {
-				socket.handler(buffer -> log.info("【Vertx-TCP-Server】 => 接收数据：{}", buffer.toString()))
-					.closeHandler(close -> log.info("【Vertx-TCP-Server】 => 连接关闭"));
-			}).listen().onComplete(result -> {
-				if (isClosed) {
-					return;
-				}
-				if (result.succeeded()) {
-					log.info("【Vertx-TCP-Server】 => TCP服务启动成功，端口：{}", result.result().actualPort());
-				}
-				else {
-					Throwable ex = result.cause();
-					log.error("【Vertx-TCP-Server】 => TCP服务启动失败，错误信息：{}", ex.getMessage(), ex);
-				}
-			}));
+			.doOnNext(server -> server
+				.connectHandler(socket -> socket
+					.handler(buffer -> log.info("【Vertx-TCP-Server】 => 服务端接收数据：{}", buffer.toString()))
+					.closeHandler(close -> log.info("【Vertx-TCP-Server】 => 客户端连接关闭")))
+				.listen()
+				.onComplete(result -> {
+					if (isClosed) {
+						return;
+					}
+					if (result.succeeded()) {
+						log.info("【Vertx-TCP-Server】 => TCP服务启动成功，端口：{}", result.result().actualPort());
+					}
+					else {
+						Throwable ex = result.cause();
+						log.error("【Vertx-TCP-Server】 => TCP服务启动失败，错误信息：{}", ex.getMessage(), ex);
+					}
+				}));
 		netServer.subscribeOn(Schedulers.boundedElastic()).subscribe();
 	}
 

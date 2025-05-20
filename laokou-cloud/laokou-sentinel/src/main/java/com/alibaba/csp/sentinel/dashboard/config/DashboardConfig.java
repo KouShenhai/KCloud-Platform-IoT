@@ -73,7 +73,8 @@ public class DashboardConfig {
 
 	private static final ConcurrentMap<String, Object> cacheMap = new ConcurrentHashMap<>();
 
-	@NonNull private static String getConfig(String name) {
+	@NonNull
+	private static String getConfig(String name) {
 		// env
 		String val = System.getenv(name);
 		if (StringUtils.isNotEmpty(val)) {

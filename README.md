@@ -49,7 +49,6 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 <a href="https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://cla-assistant.io/readme/badge/KouShenhai/KCloud-Platform-IoT" alt="CLA assistant"/></a>
 <a href="https://github.com/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://tokei.rs/b1/github/KouShenhai/KCloud-Platform-IoT?category=lines" alt="代码行数"/></a>
 <a href="https://wakatime.com/projects/KCloud-Platform-IoT" target="_blank"><img src="https://wakatime.com/badge/user/587a6632-ba42-422b-84b7-628dcb839b95/project/59654e89-b082-4cf3-8cf1-7542b343b448.svg" alt="Wakatime"/></a>
-<a href="https://jq.qq.com/?_wv=1027&k=Ec8T76dR" target="_blank"><img src="https://img.shields.io/badge/Q群-465450496-blue.svg" alt="KCloud-Platform开源交流群"/></a>
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/KouShenhai/KCloud-Platform-IoT)
 
 ### 😋 项目背景
@@ -277,39 +276,9 @@ KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.or
 
 [Gitee 地址](https://gitee.com/laokouyun/KCloud-Platform-IoT)
 
-### 🔪 技术分享
+### 🙋 技术分享【请关注公众号加技术群】
 
 <img src="doc/image/gzh.jpg" alt="微信公众号" width=201 height=300 />
-<img src="doc/image/zsxq.jpg" alt="知识星球" width=201 height=300 />
-
-### 🙋 技术交流
-
-<img src="doc/image/wx.png" alt="微信" width=250 height=300 />
-<img src="doc/image/wxq.png" alt="微信交流群" width=250 height=300 />
-<img src="doc/image/qqq.png" alt="QQ交流群" width=250 height=300 />
-
-### 💧 技术培训\广告赞助\项目合作【加微信私聊】
-
-| 序号 |    名称    |   金额    |                备注                 |
-|:--:|:--------:|:-------:|:---------------------------------:|
-| 1  | 技术指导【永久】 | ￥399.00 | 一对一项目指导技术指导远程指导,VIP微信交流群,全心全意为您服务 |
-| 2  | 项目指导【永久】 | ￥199.00 |   一对一项目指导远程指导,VIP微信交流群,全心全意为您服务   |
-
-
-| 序号 |     名称      |   金额    |         备注          |
-|:--:|:-----------:|:-------:|:-------------------:|
-| 1  | 广告赞助1【永久置顶】 | ￥199.00 | ReadMe和网站二选一【加微信私聊】 |
-| 1  | 广告赞助2【永久置顶】 | ￥299.00 |  ReadMe+网站【加微信私聊】   |
-
-
-| 序号 |  名称   | 备注 |
-|:--:|:-----:|:--:|
-| 1  | IoT项目 | ✅  |
-| 2  | MES项目 | ✅  |
-| 3  | CMS项目 | ✅  |
-| 4  | ERP项目 | ✅  |
-| 5  | OA项目  | ✅  |
-| 6  | 电商项目  | ✅  |
 
 ### 🐭 鸣谢组织
 
@@ -386,7 +355,5 @@ KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.or
 [邮箱：2413176044@qq.com](https://mail.qq.com)
 
 [QQ：2413176044](http://wpa.qq.com/msgrd?v=3&uin=2413176044&Site=gitee&Menu=yes)
-
-[![QQ群](https://img.shields.io/badge/Q群-465450496-blue.svg)](https://jq.qq.com/?_wv=1027&k=Ec8T76dR)
 
 ![GitHub Star 趋势](https://starchart.cc/KouShenhai/KCloud-Platform-IoT.svg)

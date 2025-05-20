@@ -40,14 +40,13 @@ postList: none
 在使用过程中有任何问题和想法，请给我提 [Issue](https://github.com/KouShenhai/KCloud-Platform-IoT/issues)。
 你也可以在Issue查看别人提的问题和给出解决方案。
 
-我们的交流群：
+我们的公众号：
 
 <table>
   <tbody>
     <tr>
       <td align="center" valign="middle">
-        <img :src="$withBase('/img/二维码/qqq.png')" alt="群号: 465450496" class="no-zoom" style="width:120px;margin: 10px;">
-        <p>KCloud-Platform开源交流 QQ群: 465450496</p>
+        <img :src="$withBase('/img/二维码/gzh.jpg')" alt="群号: 465450496" class="no-zoom" style="width:200px;margin: 10px;">
       </td>
     </tr>
   </tbody>

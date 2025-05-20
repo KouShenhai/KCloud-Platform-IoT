@@ -46,6 +46,23 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-i18n</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web</artifactId>
+      <scope>test</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-log4j2</artifactId>
+      <scope>test</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-test</artifactId>
+      <scope>test</scope>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
-
 </project>

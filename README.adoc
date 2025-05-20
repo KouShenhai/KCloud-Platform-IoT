@@ -49,7 +49,6 @@ image:https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT/branch/master/graph/b
 image:https://cla-assistant.io/readme/badge/KouShenhai/KCloud-Platform-IoT[CLA assistant,link=https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT]
 image:https://tokei.rs/b1/github/KouShenhai/KCloud-Platform-IoT?category=lines[代码行数,link=https://github.com/KouShenhai/KCloud-Platform-IoT]
 image:https://wakatime.com/badge/user/587a6632-ba42-422b-84b7-628dcb839b95/project/59654e89-b082-4cf3-8cf1-7542b343b448.svg[Wakatime, link=https://wakatime.com/projects/KCloud-Platform-IoT]
-image:https://img.shields.io/badge/Q群-465450496-blue.svg[KCloud-Platform开源交流群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
 image:https://deepwiki.com/badge.svg[Ask DeepWiki,link=https://deepwiki.com/KouShenhai/KCloud-Platform-IoT]
 
 === 😋 项目背景
@@ -287,43 +286,9 @@ https://github.com/KouShenhai/KCloud-Platform-IoT[Github 地址]
 
 https://gitee.com/laokouyun/KCloud-Platform-IoT[Gitee 地址]
 
-=== 🔪 技术分享
+=== 🙋 技术分享【请关注公众号加技术群】
 
 image:doc/image/gzh.jpg[微信公众号,201,300]
-image:doc/image/zsxq.jpg[知识星球,201,300]
-
-=== 🙋 技术交流
-
-image:doc/image/wx.png[微信,250,300]
-image:doc/image/wxq.png[微信交流群,250,300]
-image:doc/image/qqq.png[QQ交流群,250,300]
-
-=== 💧 技术培训\广告赞助\项目合作【加微信私聊】
-
-[width=100%]
-|===
-|序号 |名称 | 金额 |备注
-|1   |技术指导【永久】 | ￥399.00      | 一对一项目指导技术指导远程指导,VIP微信交流群,全心全意为您服务
-|2   |项目指导【永久】 | ￥199.00      | 一对一项目指导远程指导,VIP微信交流群,全心全意为您服务
-|===
-
-[width=100%]
-|===
-|序号 |名称 | 金额 |备注
-|1   |广告赞助1【永久置顶】 | ￥199.00      | ReadMe和网站二选一【加微信私聊】
-|1   |广告赞助2【永久置顶】 | ￥299.00      | ReadMe+网站【加微信私聊】
-|===
-
-[width=100%]
-|===
-|序号 |名称| 备注
-|1 | IoT项目 | ✅
-|2 | MES项目 | ✅
-|3 | CMS项目 | ✅
-|4 | ERP项目 | ✅
-|5 | OA项目  | ✅
-|6 | 电商项目 | ✅
-|===
 
 === 🐭 鸣谢组织
 
@@ -406,7 +371,5 @@ https://kcloud.blog.csdn.net[博客：https://kcloud.blog.csdn.net]
 https://mail.qq.com[邮箱：2413176044@qq.com]
 
 http://wpa.qq.com/msgrd?v=3&uin=2413176044&Site=gitee&Menu=yes[QQ：2413176044]
-
-image::https://img.shields.io/badge/Q群-465450496-blue.svg[QQ群,link=https://jq.qq.com/?_wv=1027&k=Ec8T76dR]
 
 image::https://starchart.cc/KouShenhai/KCloud-Platform-IoT.svg[GitHub Star 趋势]
