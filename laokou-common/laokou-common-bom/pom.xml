@@ -90,7 +90,7 @@
     <!--transmittable-thread-local版本-->
     <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
     <!--mockito版本-->
-    <mockito.version>5.17.0</mockito.version>
+    <mockito.version>5.18.0</mockito.version>
     <!--retry版本-->
     <retry.version>2.0.12</retry.version>
     <!--nacos版本-->
