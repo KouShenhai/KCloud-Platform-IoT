@@ -24,11 +24,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.mybatisplus.config.GlobalTenantLineHandler;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author laokou
@@ -42,6 +44,14 @@ class MybatisUtilsTest {
 	private final TestUserMapper testUserMapper;
 
 	private final MybatisUtils mybatisUtils;
+
+	@Test
+	void testIgnoreTable() {
+		GlobalTenantLineHandler globalTenantLineHandler = new GlobalTenantLineHandler(Set.of("test", "t_user"));
+		Assertions.assertTrue(globalTenantLineHandler.ignoreTable("t_user"));
+		Assertions.assertTrue(globalTenantLineHandler.ignoreTable("t_test"));
+		Assertions.assertFalse(globalTenantLineHandler.ignoreTable("t_tes1"));
+	}
 
 	@Test
 	void test() {
