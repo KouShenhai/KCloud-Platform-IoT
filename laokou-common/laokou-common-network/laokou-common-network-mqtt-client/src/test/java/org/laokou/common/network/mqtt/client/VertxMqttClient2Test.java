@@ -25,15 +25,16 @@ import org.laokou.common.network.mqtt.client.config.MqttClientProperties;
 import org.laokou.common.network.mqtt.client.config.VertxMqttClient;
 import org.laokou.common.network.mqtt.client.handler.MqttMessageHandler;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestConstructor;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
  */
 @SpringBootTest
+@Import({ TestConsumer.class })
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class VertxMqttClient2Test {
@@ -45,18 +46,33 @@ class VertxMqttClient2Test {
 	private final List<MqttMessageHandler> mqttMessageHandlers;
 
 	@Test
-	void testMqttClient() throws InterruptedException {
+	void testMqttClientByQos1() throws InterruptedException {
+		connectMqttServer(1);
+	}
+
+	@Test
+	void testMqttClientByQos2() throws InterruptedException {
+		connectMqttServer(2);
+	}
+
+	private void connectMqttServer(int qos) throws InterruptedException {
 		for (int i = 1880; i <= 2000; i++) {
+			if (i == 1883) {
+				continue;
+			}
 			MqttClientProperties properties = new MqttClientProperties();
 			properties.setHost("127.0.0.1");
+			properties.setSubscribe(false);
 			properties.setPort(i);
 			properties.setUsername("vertx");
 			properties.setPassword("laokou123");
 			properties.setClientId("test-client-" + i);
-			properties.setTopics(Map.of("$share/test-topic-1/#", 1));
 			VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx, virtualThreadExecutor, properties,
 					mqttMessageHandlers);
 			Assertions.assertDoesNotThrow(vertxMqttClient::open);
+			Thread.sleep(1000);
+			Assertions.assertDoesNotThrow(() -> vertxMqttClient.publish("/1/2/up/property/report", qos,
+					"{\"id\":\"1\",\"name\":\"test\",\"value\":\"test\"}", false, false));
 			Thread.sleep(1000);
 			Assertions.assertDoesNotThrow(vertxMqttClient::close);
 			Thread.sleep(1000);

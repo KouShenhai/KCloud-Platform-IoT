@@ -35,6 +35,8 @@ public class MqttServerProperties {
 
 	private boolean auth = true;
 
+	private boolean mqtt5 = false;
+
 	private String username = "vertx";
 
 	private String password = "laokou123";

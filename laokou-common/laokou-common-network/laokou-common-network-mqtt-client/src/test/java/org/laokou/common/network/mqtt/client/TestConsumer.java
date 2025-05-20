@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot;
+package org.laokou.common.network.mqtt.client;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.context.TestConfiguration;
