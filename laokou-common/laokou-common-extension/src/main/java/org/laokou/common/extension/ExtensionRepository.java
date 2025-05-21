@@ -27,9 +27,8 @@ package org.laokou.common.extension;
 
 import lombok.Getter;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * ExtensionRepository.
@@ -40,7 +39,7 @@ import java.util.Map;
 @Component
 public class ExtensionRepository {
 
-	private final Map<ExtensionCoordinate, ExtensionPointI> EXTENSION_REPO = new HashMap<>();
+	private final Map<ExtensionCoordinate, ExtensionPointI> EXTENSION_REPO = new ConcurrentHashMap<>();
 
 	public Map<ExtensionCoordinate, ExtensionPointI> getExtensionRepo() {
 		return EXTENSION_REPO;

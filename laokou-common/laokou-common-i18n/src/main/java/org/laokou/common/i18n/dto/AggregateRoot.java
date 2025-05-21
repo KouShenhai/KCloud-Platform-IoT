@@ -22,6 +22,7 @@ import org.laokou.common.i18n.util.DateUtils;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public abstract class AggregateRoot extends Identifier {
 	/**
 	 * 事件集合.
 	 */
-	private final List<DomainEvent> EVENTS = new ArrayList<>(16);
+	private final List<DomainEvent> events = Collections.synchronizedList(new ArrayList<>(16));
 
 	/**
 	 * 租户ID.
@@ -58,15 +59,15 @@ public abstract class AggregateRoot extends Identifier {
 	protected int version = 0;
 
 	protected void addEvent(DomainEvent event) {
-		EVENTS.add(event);
+		events.add(event);
 	}
 
 	public List<DomainEvent> releaseEvents() {
-		return EVENTS;
+		return events;
 	}
 
 	public void clearEvents() {
-		EVENTS.clear();
+		events.clear();
 	}
 
 }
