@@ -29,7 +29,7 @@
 
   <properties>
     <!--nacos版本-->
-    <nacos.version>3.0.0</nacos.version>
+    <nacos.version>3.0.0.1</nacos.version>
     <!--spring-boot版本-->
     <spring-boot.version>3.5.0-RC1</spring-boot.version>
     <!--postgresql版本-->
