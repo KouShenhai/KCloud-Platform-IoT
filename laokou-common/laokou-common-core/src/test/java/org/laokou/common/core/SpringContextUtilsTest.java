@@ -68,7 +68,7 @@ class SpringContextUtilsTest {
 		Assertions.assertEquals(TestEventListener.class, SpringContextUtils.getType("testEventListener"));
 		Assertions.assertEquals(SpringContextUtils.getBean("testEventListener", TestEventListener.class),
 				SpringContextUtils.getBean(TestEventListener.class));
-		Assertions.assertEquals(SpringContextUtils.getType(TestEventListener.class).get("testEventListener"),
+		Assertions.assertEquals(SpringContextUtils.getBeansOfType(TestEventListener.class).get("testEventListener"),
 				SpringContextUtils.getBean("testEventListener"));
 	}
 

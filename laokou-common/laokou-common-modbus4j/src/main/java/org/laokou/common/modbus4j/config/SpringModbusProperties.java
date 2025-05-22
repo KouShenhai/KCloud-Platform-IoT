@@ -31,9 +31,9 @@ public class SpringModbusProperties {
 
 	private ModbusTypeEnum type = ModbusTypeEnum.TCP_MASTER;
 
-	private int timeout = 1000;
+	private int timeout = 5000;
 
-	private int retries = 3;
+	private int retries = 5;
 
 	private ModbusTcp tcp = new ModbusTcp();
 
@@ -42,7 +42,7 @@ public class SpringModbusProperties {
 	@Data
 	public static class ModbusTcp {
 
-		private String host = "0.0.0.0";
+		private String host = "127.0.0.1";
 
 		private int port = 502;
 
@@ -53,7 +53,7 @@ public class SpringModbusProperties {
 	@Data
 	public static class ModbusUdp {
 
-		private String host = "0.0.0.0";
+		private String host = "127.0.0.1";
 
 		private int port = 502;
 

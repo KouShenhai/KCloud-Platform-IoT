@@ -54,7 +54,7 @@ public class LoginLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:login-log:save')")
 	@OperateLog(module = "登录日志管理", operation = "保存登录日志")
 	@Operation(summary = "保存登录日志", description = "保存登录日志")
-	public void saveV3(@RequestBody LoginLogSaveCmd cmd) {
+	public void saveLoginLog(@RequestBody LoginLogSaveCmd cmd) {
 		loginLogsServiceI.save(cmd);
 	}
 
@@ -63,7 +63,7 @@ public class LoginLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:login-log:modify')")
 	@OperateLog(module = "登录日志管理", operation = "修改登录日志")
 	@Operation(summary = "修改登录日志", description = "修改登录日志")
-	public void modifyV3(@RequestBody LoginLogModifyCmd cmd) {
+	public void modifyLoginLog(@RequestBody LoginLogModifyCmd cmd) {
 		loginLogsServiceI.modify(cmd);
 	}
 
@@ -71,7 +71,7 @@ public class LoginLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:login-log:remove')")
 	@OperateLog(module = "登录日志管理", operation = "删除登录日志")
 	@Operation(summary = "删除登录日志", description = "删除登录日志")
-	public void removeV3(@RequestBody Long[] ids) {
+	public void removeLoginLog(@RequestBody Long[] ids) {
 		loginLogsServiceI.remove(new LoginLogRemoveCmd(ids));
 	}
 
@@ -80,7 +80,7 @@ public class LoginLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:login-log:import')")
 	@OperateLog(module = "登录日志管理", operation = "导入登录日志")
 	@Operation(summary = "导入登录日志", description = "导入登录日志")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
+	public void importLoginLog(@RequestPart("files") MultipartFile[] files) {
 		loginLogsServiceI.importI(new LoginLogImportCmd(files));
 	}
 
@@ -88,7 +88,7 @@ public class LoginLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:login-log:export')")
 	@OperateLog(module = "登录日志管理", operation = "导出登录日志")
 	@Operation(summary = "导出登录日志", description = "导出登录日志")
-	public void exportV3(@RequestBody LoginLogExportCmd cmd) {
+	public void exportLoginLog(@RequestBody LoginLogExportCmd cmd) {
 		loginLogsServiceI.export(cmd);
 	}
 
@@ -96,7 +96,7 @@ public class LoginLogsControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:login-log:page')")
 	@Operation(summary = "分页查询登录日志列表", description = "分页查询登录日志列表")
-	public Result<Page<LoginLogCO>> pageV3(@Validated @RequestBody LoginLogPageQry qry) {
+	public Result<Page<LoginLogCO>> pageLoginLog(@Validated @RequestBody LoginLogPageQry qry) {
 		return loginLogsServiceI.page(qry);
 	}
 
@@ -105,7 +105,7 @@ public class LoginLogsControllerV3 {
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('sys:login-log:detail')")
 	@Operation(summary = "查看登录日志详情", description = "查看登录日志详情")
-	public Result<LoginLogCO> getByIdV3(@PathVariable("id") Long id) {
+	public Result<LoginLogCO> getByIdLoginLog(@PathVariable("id") Long id) {
 		return loginLogsServiceI.getById(new LoginLogGetQry(id));
 	}
 

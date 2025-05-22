@@ -100,6 +100,11 @@ https://www.laokou.org.cn[老寇IoT云平台在线体验（请点击我，境外
 
 https://koushenhai.github.io[老寇IoT云平台在线文档（请点击我）]
 
+https://deepwiki.com/KouShenhai/KCloud-Platform-IoT[DeepWiki文档]
+
+https://opendeep.wiki/KouShenhai/KCloud-Platform-IoT[OpenDeepWiki文档]
+
+
 === 😎 开发计划
 
 https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2[开发计划（需要登录）]

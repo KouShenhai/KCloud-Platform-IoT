@@ -62,7 +62,7 @@ public class RolesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:role:save')")
 	@OperateLog(module = "角色管理", operation = "保存角色")
 	@Operation(summary = "保存角色", description = "保存角色")
-	public void saveV3(@RequestBody RoleSaveCmd cmd) {
+	public void saveRole(@RequestBody RoleSaveCmd cmd) {
 		rolesServiceI.save(cmd);
 	}
 
@@ -70,7 +70,7 @@ public class RolesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:role:modify')")
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@Operation(summary = "修改角色", description = "修改角色")
-	public void modifyV3(@RequestBody RoleModifyCmd cmd) {
+	public void modifyRole(@RequestBody RoleModifyCmd cmd) {
 		rolesServiceI.modify(cmd).doOnError(e -> log.error("修改角色失败：{}", e.getMessage(), e)).onErrorResume(e -> {
 			throw new BizException("B_Role_ModifyFailed", e.getMessage(), e);
 		}).block();
@@ -80,7 +80,7 @@ public class RolesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:role:remove')")
 	@OperateLog(module = "角色管理", operation = "删除角色")
 	@Operation(summary = "删除角色", description = "删除角色")
-	public void removeV3(@RequestBody Long[] ids) {
+	public void removeRole(@RequestBody Long[] ids) {
 		Disposable disposable = rolesServiceI.remove(new RoleRemoveCmd(ids))
 			.doOnError(e -> log.error("删除角色失败：{}", e.getMessage(), e))
 			.subscribeOn(Schedulers.boundedElastic())
@@ -99,7 +99,7 @@ public class RolesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:role:import')")
 	@OperateLog(module = "角色管理", operation = "导入角色")
 	@Operation(summary = "导入角色", description = "导入角色")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
+	public void importRole(@RequestPart("files") MultipartFile[] files) {
 		rolesServiceI.importI(new RoleImportCmd(files));
 	}
 
@@ -107,7 +107,7 @@ public class RolesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:role:export')")
 	@OperateLog(module = "角色管理", operation = "导出角色")
 	@Operation(summary = "导出角色", description = "导出角色")
-	public void exportV3(@RequestBody RoleExportCmd cmd) {
+	public void exportRole(@RequestBody RoleExportCmd cmd) {
 		rolesServiceI.export(cmd);
 	}
 
@@ -115,7 +115,7 @@ public class RolesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:role:modify')")
 	@OperateLog(module = "用户管理", operation = "修改角色权限")
 	@Operation(summary = "修改角色权限", description = "修改角色权限")
-	public void modifyAuthorityV3(@RequestBody RoleModifyAuthorityCmd cmd) throws Exception {
+	public void modifyAuthorityRole(@RequestBody RoleModifyAuthorityCmd cmd) throws Exception {
 		Disposable disposable = rolesServiceI.modifyAuthority(cmd)
 			.doOnError(e -> log.error("修改角色权限失败：{}", e.getMessage(), e))
 			.subscribeOn(Schedulers.boundedElastic())
@@ -134,7 +134,7 @@ public class RolesControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:role:page')")
 	@Operation(summary = "分页查询角色列表", description = "分页查询角色列表")
-	public Result<Page<RoleCO>> pageV3(@Validated @RequestBody RolePageQry qry) {
+	public Result<Page<RoleCO>> pageRole(@Validated @RequestBody RolePageQry qry) {
 		return rolesServiceI.page(qry);
 	}
 
@@ -142,7 +142,7 @@ public class RolesControllerV3 {
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('sys:role:detail')")
 	@Operation(summary = "查看角色详情", description = "查看角色详情")
-	public Result<RoleCO> getByIdV3(@PathVariable("id") Long id) {
+	public Result<RoleCO> getByIdRole(@PathVariable("id") Long id) {
 		return rolesServiceI.getById(new RoleGetQry(id));
 	}
 

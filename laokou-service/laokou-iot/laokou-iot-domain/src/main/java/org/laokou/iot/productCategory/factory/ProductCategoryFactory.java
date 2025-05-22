@@ -29,7 +29,7 @@ public final class ProductCategoryFactory {
 	}
 
 	public static ProductCategoryE getProductCategory() {
-		return SpringContextUtils.getBeanAndNotExistToCreate(ProductCategoryE.class);
+		return SpringContextUtils.getBeanProviderAndNotExistToCreate(ProductCategoryE.class);
 	}
 
 }

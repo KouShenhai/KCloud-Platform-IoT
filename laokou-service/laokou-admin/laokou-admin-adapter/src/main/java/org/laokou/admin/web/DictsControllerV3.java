@@ -52,7 +52,7 @@ public class DictsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dict:save')")
 	@OperateLog(module = "字典管理", operation = "保存字典")
 	@Operation(summary = "保存字典", description = "保存字典")
-	public void saveV3(@RequestBody DictSaveCmd cmd) {
+	public void saveDict(@RequestBody DictSaveCmd cmd) {
 		dictsServiceI.save(cmd);
 	}
 
@@ -60,7 +60,7 @@ public class DictsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dict:modify')")
 	@OperateLog(module = "字典管理", operation = "修改字典")
 	@Operation(summary = "修改字典", description = "修改字典")
-	public void modifyV3(@RequestBody DictModifyCmd cmd) {
+	public void modifyDict(@RequestBody DictModifyCmd cmd) {
 		dictsServiceI.modify(cmd);
 	}
 
@@ -68,7 +68,7 @@ public class DictsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dict:remove')")
 	@OperateLog(module = "字典管理", operation = "删除字典")
 	@Operation(summary = "删除字典", description = "删除字典")
-	public void removeV3(@RequestBody Long[] ids) {
+	public void removeDict(@RequestBody Long[] ids) {
 		dictsServiceI.remove(new DictRemoveCmd(ids));
 	}
 
@@ -76,7 +76,7 @@ public class DictsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dict:import')")
 	@OperateLog(module = "字典管理", operation = "导入字典")
 	@Operation(summary = "导入字典", description = "导入字典")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
+	public void importDict(@RequestPart("files") MultipartFile[] files) {
 		dictsServiceI.importI(new DictImportCmd(files));
 	}
 
@@ -84,7 +84,7 @@ public class DictsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dict:export')")
 	@OperateLog(module = "字典管理", operation = "导出字典")
 	@Operation(summary = "导出字典", description = "导出字典")
-	public void exportV3(@RequestBody DictExportCmd cmd) {
+	public void exportDict(@RequestBody DictExportCmd cmd) {
 		dictsServiceI.export(cmd);
 	}
 
@@ -92,7 +92,7 @@ public class DictsControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:dict:page')")
 	@Operation(summary = "分页查询字典列表", description = "分页查询字典列表")
-	public Result<Page<DictCO>> pageV3(@Validated @RequestBody DictPageQry qry) {
+	public Result<Page<DictCO>> pageDict(@Validated @RequestBody DictPageQry qry) {
 		return dictsServiceI.page(qry);
 	}
 
@@ -100,7 +100,7 @@ public class DictsControllerV3 {
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('sys:dict:detail')")
 	@Operation(summary = "查看字典详情", description = "查看字典详情")
-	public Result<DictCO> getByIdV3(@PathVariable("id") Long id) {
+	public Result<DictCO> getByIdDict(@PathVariable("id") Long id) {
 		return dictsServiceI.getById(new DictGetQry(id));
 	}
 

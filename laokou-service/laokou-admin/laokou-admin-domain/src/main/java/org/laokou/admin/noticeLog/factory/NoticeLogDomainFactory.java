@@ -26,7 +26,7 @@ public final class NoticeLogDomainFactory {
 	}
 
 	public static NoticeLogE getNoticeLog() {
-		return SpringContextUtils.getBeanAndNotExistToCreate(NoticeLogE.class);
+		return SpringContextUtils.getBeanProviderAndNotExistToCreate(NoticeLogE.class);
 	}
 
 }

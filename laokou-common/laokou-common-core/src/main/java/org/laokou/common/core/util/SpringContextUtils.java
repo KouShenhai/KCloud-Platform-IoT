@@ -21,6 +21,7 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.Getter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -91,23 +92,23 @@ public final class SpringContextUtils implements ApplicationContextAware, Dispos
 
 	/**
 	 * 根据类型获取Bean.
-	 * @param type 类型
+	 * @param clazz 类
 	 * @param <T> 泛型
 	 * @return Bean
 	 */
-	public static <T> T getBean(Class<T> type) {
-		return applicationContext.getBean(type);
+	public static <T> T getBean(Class<T> clazz) {
+		return applicationContext.getBean(clazz);
 	}
 
 	/**
 	 * 根据名称和类型获取Bean.
 	 * @param name 名称
-	 * @param type 类型
+	 * @param clazz 类
 	 * @param <T> 泛型
 	 * @return Bean
 	 */
-	public static <T> T getBean(String name, Class<T> type) {
-		return applicationContext.getBean(name, type);
+	public static <T> T getBean(String name, Class<T> clazz) {
+		return applicationContext.getBean(name, clazz);
 	}
 
 	/**
@@ -122,13 +123,13 @@ public final class SpringContextUtils implements ApplicationContextAware, Dispos
 	}
 
 	/**
-	 * 根据类型获取类【哈希表】.
-	 * @param type 类型
+	 * 获取类信息【哈希表】.
+	 * @param clazz 类
 	 * @param <T> 泛型
 	 * @return 类
 	 */
-	public static <T> Map<String, T> getType(Class<T> type) {
-		return applicationContext.getBeansOfType(type);
+	public static <T> Map<String, T> getBeansOfType(Class<T> clazz) {
+		return applicationContext.getBeansOfType(clazz);
 	}
 
 	/**
@@ -156,13 +157,17 @@ public final class SpringContextUtils implements ApplicationContextAware, Dispos
 		}
 	}
 
-	public static <T> T getBeanAndNotExistToCreate(Class<T> type) {
+	public static <T> ObjectProvider<T> getBeanProvider(Class<T> clazz) {
+		return applicationContext.getBeanProvider(clazz);
+	}
+
+	public static <T> T getBeanProviderAndNotExistToCreate(Class<T> clazz) {
 		try {
-			return getBean(type);
+			return getBeanProvider(clazz).getObject();
 		}
 		catch (Exception e) {
 			try {
-				return ReflectionUtils.accessibleConstructor(type).newInstance();
+				return ReflectionUtils.accessibleConstructor(clazz).newInstance();
 			}
 			catch (InstantiationException | IllegalAccessException | InvocationTargetException
 					| NoSuchMethodException ex) {

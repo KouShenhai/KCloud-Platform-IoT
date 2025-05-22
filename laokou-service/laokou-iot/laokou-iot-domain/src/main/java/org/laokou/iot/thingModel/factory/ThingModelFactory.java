@@ -26,7 +26,7 @@ public final class ThingModelFactory {
 	}
 
 	public static ThingModelE getThingModel() {
-		return SpringContextUtils.getBeanAndNotExistToCreate(ThingModelE.class);
+		return SpringContextUtils.getBeanProviderAndNotExistToCreate(ThingModelE.class);
 	}
 
 }

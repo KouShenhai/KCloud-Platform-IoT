@@ -54,7 +54,7 @@ public class OperateLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:operate-log:save')")
 	@OperateLog(module = "操作日志管理", operation = "保存操作日志")
 	@Operation(summary = "保存操作日志", description = "保存操作日志")
-	public void saveV3(@RequestBody OperateLogSaveCmd cmd) {
+	public void saveOperateLog(@RequestBody OperateLogSaveCmd cmd) {
 		operateLogsServiceI.save(cmd);
 	}
 
@@ -63,7 +63,7 @@ public class OperateLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:operate-log:modify')")
 	@OperateLog(module = "操作日志管理", operation = "修改操作日志")
 	@Operation(summary = "修改操作日志", description = "修改操作日志")
-	public void modifyV3(@RequestBody OperateLogModifyCmd cmd) {
+	public void modifyOperateLog(@RequestBody OperateLogModifyCmd cmd) {
 		operateLogsServiceI.modify(cmd);
 	}
 
@@ -72,7 +72,7 @@ public class OperateLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:operate-log:remove')")
 	@OperateLog(module = "操作日志管理", operation = "删除操作日志")
 	@Operation(summary = "删除操作日志", description = "删除操作日志")
-	public void removeV3(@RequestBody Long[] ids) {
+	public void removeOperateLog(@RequestBody Long[] ids) {
 		operateLogsServiceI.remove(new OperateLogRemoveCmd(ids));
 	}
 
@@ -81,7 +81,7 @@ public class OperateLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:operate-log:import')")
 	@OperateLog(module = "操作日志管理", operation = "导入操作日志")
 	@Operation(summary = "导入操作日志", description = "导入操作日志")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
+	public void importOperateLog(@RequestPart("files") MultipartFile[] files) {
 		operateLogsServiceI.importI(new OperateLogImportCmd(files));
 	}
 
@@ -89,7 +89,7 @@ public class OperateLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:operate-log:export')")
 	@OperateLog(module = "操作日志管理", operation = "导出操作日志")
 	@Operation(summary = "导出操作日志", description = "导出操作日志")
-	public void exportV3(@RequestBody OperateLogExportCmd cmd) {
+	public void exportOperateLog(@RequestBody OperateLogExportCmd cmd) {
 		operateLogsServiceI.export(cmd);
 	}
 
@@ -97,7 +97,7 @@ public class OperateLogsControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:operate-log:page')")
 	@Operation(summary = "分页查询操作日志列表", description = "分页查询操作日志列表")
-	public Result<Page<OperateLogCO>> pageV3(@Validated @RequestBody OperateLogPageQry qry) {
+	public Result<Page<OperateLogCO>> pageOperateLog(@Validated @RequestBody OperateLogPageQry qry) {
 		return operateLogsServiceI.page(qry);
 	}
 
@@ -105,7 +105,7 @@ public class OperateLogsControllerV3 {
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('sys:operate-log:detail')")
 	@Operation(summary = "查看操作日志详情", description = "查看操作日志详情")
-	public Result<OperateLogCO> getByIdV3(@PathVariable("id") Long id) {
+	public Result<OperateLogCO> getByIdOperateLog(@PathVariable("id") Long id) {
 		return operateLogsServiceI.getById(new OperateLogGetQry(id));
 	}
 

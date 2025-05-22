@@ -67,7 +67,7 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:save')")
 	@OperateLog(module = "用户管理", operation = "保存用户")
 	@Operation(summary = "保存用户", description = "保存用户")
-	public void saveV3(@RequestBody UserSaveCmd cmd) throws Exception {
+	public void saveUser(@RequestBody UserSaveCmd cmd) throws Exception {
 		usersServiceI.save(cmd);
 	}
 
@@ -76,7 +76,7 @@ public class UsersControllerV3 {
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@Operation(summary = "修改用户", description = "修改用户")
 	@DataCache(name = USERS, key = "#cmd.co.id", operateType = DEL)
-	public void modifyV3(@RequestBody UserModifyCmd cmd) throws Exception {
+	public void modifyUser(@RequestBody UserModifyCmd cmd) throws Exception {
 		usersServiceI.modify(cmd);
 	}
 
@@ -84,7 +84,7 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:remove')")
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@Operation(summary = "删除用户", description = "删除用户")
-	public void removeV3(@RequestBody Long[] ids) {
+	public void removeUser(@RequestBody Long[] ids) {
 		Disposable disposable = usersServiceI.remove(new UserRemoveCmd(ids))
 			.doOnError(e -> log.error("删除用户失败：{}", e.getMessage(), e))
 			.subscribeOn(Schedulers.boundedElastic())
@@ -103,7 +103,7 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:import')")
 	@OperateLog(module = "用户管理", operation = "导入用户")
 	@Operation(summary = "导入用户", description = "导入用户")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
+	public void importUser(@RequestPart("files") MultipartFile[] files) {
 		usersServiceI.importI(new UserImportCmd(files));
 	}
 
@@ -111,7 +111,7 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:export')")
 	@OperateLog(module = "用户管理", operation = "导出用户")
 	@Operation(summary = "导出用户", description = "导出用户")
-	public void exportV3(@RequestBody UserExportCmd cmd) {
+	public void exportUser(@RequestBody UserExportCmd cmd) {
 		usersServiceI.export(cmd);
 	}
 
@@ -119,7 +119,7 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:modify')")
 	@OperateLog(module = "用户管理", operation = "重置密码")
 	@Operation(summary = "重置密码", description = "重置密码")
-	public void resetPwdV3(@RequestBody UserResetPwdCmd cmd) throws Exception {
+	public void resetPwdUser(@RequestBody UserResetPwdCmd cmd) throws Exception {
 		usersServiceI.resetPwd(cmd);
 	}
 
@@ -128,7 +128,7 @@ public class UsersControllerV3 {
 	@DataCache(name = USERS, key = "#cmd.co.id", operateType = DEL)
 	@OperateLog(module = "用户管理", operation = "修改用户权限")
 	@Operation(summary = "修改用户权限", description = "修改用户权限")
-	public void modifyAuthorityV3(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {
+	public void modifyAuthorityUser(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {
 		Disposable disposable = usersServiceI.modifyAuthority(cmd)
 			.doOnError(e -> log.error("修改用户权限失败：{}", e.getMessage(), e))
 			.subscribeOn(Schedulers.boundedElastic())
@@ -147,7 +147,7 @@ public class UsersControllerV3 {
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:user:page')")
 	@Operation(summary = "分页查询用户列表", description = "分页查询用户列表")
-	public Result<Page<UserCO>> pageV3(@Validated @RequestBody UserPageQry qry) {
+	public Result<Page<UserCO>> pageUser(@Validated @RequestBody UserPageQry qry) {
 		return usersServiceI.page(qry);
 	}
 
@@ -156,14 +156,14 @@ public class UsersControllerV3 {
 	@DataCache(name = USERS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:user:detail')")
 	@Operation(summary = "查看用户详情", description = "查看用户详情")
-	public Result<UserCO> getByIdV3(@PathVariable("id") Long id) throws Exception {
+	public Result<UserCO> getByIdUser(@PathVariable("id") Long id) throws Exception {
 		return usersServiceI.getById(new UserGetQry(id));
 	}
 
 	@TraceLog
 	@GetMapping("profile")
 	@Operation(summary = "查看个人信息", description = "查看个人信息")
-	public Result<UserProfileCO> getProfileV3() {
+	public Result<UserProfileCO> getProfileUser() {
 		return usersServiceI.getProfile();
 	}
 

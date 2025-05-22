@@ -31,7 +31,7 @@ public final class ModbusTcpMaster extends AbstractModbus {
 	public ModbusTcpMaster(ModbusFactory modbusFactory, SpringModbusProperties properties) {
 		super(properties);
 		SpringModbusProperties.ModbusTcp tcp = properties.getTcp();
-		modbusFactory.createTcpMaster(getIpParameters(tcp), tcp.isKeepAlive());
+		super.modbusMaster = modbusFactory.createTcpMaster(getIpParameters(tcp), tcp.isKeepAlive());
 	}
 
 	@Override

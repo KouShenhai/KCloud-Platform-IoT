@@ -24,7 +24,6 @@ import org.laokou.admin.user.dto.UserResetPwdCmd;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -54,15 +53,7 @@ public class UserResetPwdCmdExe {
 	public void executeVoid(UserResetPwdCmd cmd) throws Exception {
 		UserE userE = UserConvertor.toEntity(cmd.getId(), cmd.getPassword());
 		resetPwdUserParamValidator.validate(userE);
-		transactionalUtils.executeInTransaction(() -> {
-			try {
-				userDomainService.update(userE);
-			}
-			catch (Exception e) {
-				log.error("重置用户密码失败，错误信息：{}", e.getMessage(), e);
-				throw new BizException("B_User_RestPwdError", e.getMessage(), e);
-			}
-		});
+		transactionalUtils.executeInTransaction(() -> userDomainService.update(userE));
 	}
 
 }

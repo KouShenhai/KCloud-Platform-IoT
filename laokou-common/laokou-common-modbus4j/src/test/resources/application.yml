@@ -1,0 +1,17 @@
+server:
+  port: 8100
+
+spring:
+  application:
+    name: laokou-common-modbus4j
+  profiles:
+    active: test
+  modbus:
+    tcp:
+      host: 127.0.0.1
+      port: 502
+    udp:
+      host: 127.0.0.1
+      port: 502
+    timeout: 5000
+    retries: 5

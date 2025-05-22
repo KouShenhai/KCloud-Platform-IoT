@@ -24,7 +24,6 @@ import org.laokou.admin.user.dto.UserModifyCmd;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -57,15 +56,7 @@ public class UserModifyCmdExe {
 		// 校验参数
 		UserE userE = UserConvertor.toEntity(cmd.getCo());
 		modifyUserParamValidator.validate(userE);
-		transactionalUtils.executeInTransaction(() -> {
-			try {
-				userDomainService.update(userE);
-			}
-			catch (Exception e) {
-				log.error("修改用户信息失败，错误信息：{}", e.getMessage(), e);
-				throw new BizException("B_User_UpdateError", e.getMessage(), e);
-			}
-		});
+		transactionalUtils.executeInTransaction(() -> userDomainService.update(userE));
 	}
 
 }

@@ -24,6 +24,7 @@ import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -37,12 +38,15 @@ public class UserModifyAuthorityCmdExe {
 
 	private final UserDomainService userDomainService;
 
+	private final TransactionalUtils transactionalUtils;
+
 	@Autowired
 	@Qualifier("modifyAuthorityUserParamValidator")
 	private UserParamValidatorExtPt modifyAuthorityUserParamValidator;
 
-	public UserModifyAuthorityCmdExe(UserDomainService userDomainService) {
+	public UserModifyAuthorityCmdExe(UserDomainService userDomainService, TransactionalUtils transactionalUtils) {
 		this.userDomainService = userDomainService;
+		this.transactionalUtils = transactionalUtils;
 	}
 
 	@CommandLog
@@ -51,7 +55,7 @@ public class UserModifyAuthorityCmdExe {
 		UserCO co = cmd.getCo();
 		UserE userE = UserConvertor.toEntity(co, co.getId());
 		modifyAuthorityUserParamValidator.validate(userE);
-		return userDomainService.updateAuthority(userE);
+		return transactionalUtils.executeResultInTransaction(() -> userDomainService.updateAuthority(userE));
 	}
 
 }

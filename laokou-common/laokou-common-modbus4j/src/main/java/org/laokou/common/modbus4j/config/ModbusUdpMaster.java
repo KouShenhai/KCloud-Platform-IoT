@@ -18,8 +18,10 @@
 package org.laokou.common.modbus4j.config;
 
 import com.serotonin.modbus4j.ModbusFactory;
+import com.serotonin.modbus4j.exception.ModbusTransportException;
 import com.serotonin.modbus4j.ip.IpParameters;
 import com.serotonin.modbus4j.msg.ModbusResponse;
+import com.serotonin.modbus4j.msg.ReadInputRegistersRequest;
 
 /**
  * @author laokou
@@ -28,12 +30,13 @@ public final class ModbusUdpMaster extends AbstractModbus {
 
 	public ModbusUdpMaster(ModbusFactory modbusFactory, SpringModbusProperties properties) {
 		super(properties);
-		modbusMaster = modbusFactory.createUdpMaster(getIpParameters(properties.getUdp()));
+		super.modbusMaster = modbusFactory.createUdpMaster(getIpParameters(properties.getUdp()));
 	}
 
 	@Override
-	public ModbusResponse sendRequest(int slaveId, int startOffset, int numberOfRegisters) {
-		throw new UnsupportedOperationException();
+	public ModbusResponse sendRequest(int slaveId, int startOffset, int numberOfRegisters)
+			throws ModbusTransportException {
+		return modbusMaster.send(new ReadInputRegistersRequest(slaveId, startOffset, numberOfRegisters));
 	}
 
 	private IpParameters getIpParameters(SpringModbusProperties.ModbusUdp udp) {
