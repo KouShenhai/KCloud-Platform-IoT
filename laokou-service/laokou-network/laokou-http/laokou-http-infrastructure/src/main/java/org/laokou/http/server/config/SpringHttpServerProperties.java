@@ -39,7 +39,7 @@ import static io.vertx.core.http.HttpServerOptions.DEFAULT_INITIAL_SETTINGS_MAX_
 @Data
 @Component
 @ConfigurationProperties(prefix = "spring.http-server")
-public class HttpServerProperties {
+public class SpringHttpServerProperties {
 
 	private boolean auth = true;
 

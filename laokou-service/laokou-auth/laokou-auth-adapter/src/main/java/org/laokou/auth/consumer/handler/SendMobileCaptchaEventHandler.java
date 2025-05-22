@@ -41,7 +41,7 @@ import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
 @Component
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = "laokou_mobile_captcha_consumer_group", topic = "laokou_captcha_topic",
-		selectorExpression = "mobileCaptcha", messageModel = CLUSTERING, consumeMode = CONCURRENTLY,
+		selectorExpression = "mobile_captcha", messageModel = CLUSTERING, consumeMode = CONCURRENTLY,
 		consumeThreadMax = 128, consumeThreadNumber = 64)
 public class SendMobileCaptchaEventHandler extends AbstractDomainEventHandler {
 

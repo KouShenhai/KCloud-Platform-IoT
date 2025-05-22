@@ -15,16 +15,18 @@
  *
  */
 
-package org.laokou.common.openfeign.constant;
+package org.laokou.common.modbus4j.config;
 
-/**
- * @author laokou
- */
-public final class FeignConstants {
+import com.serotonin.modbus4j.exception.ModbusInitException;
+import com.serotonin.modbus4j.exception.ModbusTransportException;
+import com.serotonin.modbus4j.msg.ModbusResponse;
 
-	private FeignConstants() {
-	}
+public interface Modbus {
 
-	public static final String DISTRIBUTED_IDENTIFIER = "laokou-distributed-identifier";
+	void open() throws ModbusInitException;
+
+	void close();
+
+	ModbusResponse sendRequest(int slaveId, int startOffset, int numberOfRegisters) throws ModbusTransportException;
 
 }

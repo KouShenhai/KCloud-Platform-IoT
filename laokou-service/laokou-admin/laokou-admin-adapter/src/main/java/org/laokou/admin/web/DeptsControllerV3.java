@@ -39,7 +39,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import static org.laokou.common.data.cache.constant.NameConstants.DEPTS;
-import static org.laokou.common.data.cache.model.TypeEnum.DEL;
+import static org.laokou.common.data.cache.model.OperateTypeEnum.DEL;
 
 /**
  * 部门管理控制器.
@@ -67,7 +67,7 @@ public class DeptsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dept:modify')")
 	@OperateLog(module = "部门管理", operation = "修改部门")
 	@Operation(summary = "修改部门", description = "修改部门")
-	@DataCache(name = DEPTS, key = "#cmd.co.id", type = DEL)
+	@DataCache(name = DEPTS, key = "#cmd.co.id", operateType = DEL)
 	public void modifyV3(@RequestBody DeptModifyCmd cmd) {
 		deptsServiceI.modify(cmd);
 	}

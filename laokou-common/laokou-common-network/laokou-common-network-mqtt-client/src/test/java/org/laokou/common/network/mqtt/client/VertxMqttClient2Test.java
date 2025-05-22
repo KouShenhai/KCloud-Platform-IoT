@@ -21,7 +21,7 @@ import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.network.mqtt.client.config.MqttClientProperties;
+import org.laokou.common.network.mqtt.client.config.SpringMqttClientProperties;
 import org.laokou.common.network.mqtt.client.config.VertxMqttClient;
 import org.laokou.common.network.mqtt.client.handler.MqttMessageHandler;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -60,7 +60,7 @@ class VertxMqttClient2Test {
 			if (i == 1883) {
 				continue;
 			}
-			MqttClientProperties properties = new MqttClientProperties();
+			SpringMqttClientProperties properties = new SpringMqttClientProperties();
 			properties.setHost("127.0.0.1");
 			properties.setSubscribe(false);
 			properties.setPort(i);

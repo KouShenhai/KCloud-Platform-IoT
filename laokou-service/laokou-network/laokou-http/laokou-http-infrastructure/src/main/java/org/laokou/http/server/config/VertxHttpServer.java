@@ -36,7 +36,7 @@ import reactor.core.scheduler.Schedulers;
 @Slf4j
 final class VertxHttpServer extends AbstractVerticle {
 
-	private final HttpServerProperties properties;
+	private final SpringHttpServerProperties properties;
 
 	private final Router router;
 
@@ -44,7 +44,7 @@ final class VertxHttpServer extends AbstractVerticle {
 
 	private boolean isClosed = false;
 
-	VertxHttpServer(Vertx vertx, HttpServerProperties properties) {
+	VertxHttpServer(Vertx vertx, SpringHttpServerProperties properties) {
 		this.vertx = vertx;
 		this.properties = properties;
 		this.router = getRouter();

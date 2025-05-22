@@ -38,7 +38,7 @@ import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 @Component
 @RequiredArgsConstructor
 @RocketMQMessageListener(consumerGroup = "laokou_operate_log_consumer_group", topic = "laokou_log_topic",
-		selectorExpression = "operateLog", messageModel = CLUSTERING, consumeMode = CONCURRENTLY,
+		selectorExpression = "operate_log", messageModel = CLUSTERING, consumeMode = CONCURRENTLY,
 		consumeThreadMax = 128, consumeThreadNumber = 64)
 public class OperateEventHandler extends AbstractDomainEventHandler {
 

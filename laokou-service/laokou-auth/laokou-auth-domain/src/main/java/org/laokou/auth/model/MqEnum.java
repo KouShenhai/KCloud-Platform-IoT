@@ -27,7 +27,7 @@ import lombok.Getter;
 @Getter
 public enum MqEnum {
 
-	LOGIN_LOG("loginLog", "登录日志") {
+	LOGIN_LOG("login_log", "登录日志") {
 		@Override
 		public String getTopic() {
 			return "laokou_log_topic";
@@ -35,11 +35,11 @@ public enum MqEnum {
 
 		@Override
 		public String getTag() {
-			return "loginLog";
+			return "login_log";
 		}
 
 	},
-	MAIL_CAPTCHA("mailCaptcha", "邮箱验证码") {
+	MAIL_CAPTCHA("mail_captcha", "邮箱验证码") {
 		@Override
 		public String getTopic() {
 			return "laokou_captcha_topic";
@@ -47,11 +47,11 @@ public enum MqEnum {
 
 		@Override
 		public String getTag() {
-			return "mailCaptcha";
+			return "mail_captcha";
 		}
 
 	},
-	MOBILE_CAPTCHA("mobileCaptcha", "手机验证码") {
+	MOBILE_CAPTCHA("mobile_captcha", "手机验证码") {
 		@Override
 		public String getTopic() {
 			return "laokou_captcha_topic";
@@ -59,7 +59,7 @@ public enum MqEnum {
 
 		@Override
 		public String getTag() {
-			return "mobileCaptcha";
+			return "mobile_captcha";
 		}
 	};
 

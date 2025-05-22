@@ -15,33 +15,40 @@
  *
  */
 
-package org.laokou.udp.server.config;
+package org.laokou.tcp.server.config;
 
+import io.vertx.core.http.ClientAuth;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "spring.udp-server")
-public class UdpServerProperties {
+@ConfigurationProperties(prefix = "spring.tcp-server")
+public class SpringTcpServerProperties {
 
 	private String host = "0.0.0.0";
 
 	private Set<Integer> ports = new HashSet<>(0);
 
-	private boolean broadcast = false;
+	private int acceptBacklog = -1;
 
-	private boolean loopbackModeDisabled = true;
+	private ClientAuth clientAuth = ClientAuth.NONE;
 
-	private String multicastNetworkInterface = null;
+	private boolean sni = false;
 
-	private boolean ipV6 = false;
+	private boolean useProxyProtocol = false;
+
+	private long proxyProtocolTimeout = 30L;
+
+	private TimeUnit proxyProtocolTimeoutUnit = TimeUnit.SECONDS;
+
+	private boolean registerWriteHandler = false;
 
 }

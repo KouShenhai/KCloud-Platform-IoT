@@ -31,13 +31,13 @@ import reactor.core.scheduler.Schedulers;
 @Slf4j
 final class VertxTcpServer extends AbstractVerticle {
 
-	private final TcpServerProperties properties;
+	private final SpringTcpServerProperties properties;
 
 	private volatile Flux<NetServer> netServer;
 
 	private boolean isClosed = false;
 
-	VertxTcpServer(Vertx vertx, TcpServerProperties properties) {
+	VertxTcpServer(Vertx vertx, SpringTcpServerProperties properties) {
 		this.vertx = vertx;
 		this.properties = properties;
 	}

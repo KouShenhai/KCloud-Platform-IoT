@@ -15,23 +15,36 @@
  *
  */
 
-package org.laokou.common.data.cache.model;
+package org.laokou.common.modbus4j.config;
+
+import lombok.Getter;
+import org.laokou.common.i18n.util.EnumParser;
 
 /**
- * 操作类型枚举.
- *
  * @author laokou
  */
-public enum TypeEnum {
+@Getter
+public enum ModbusTypeEnum {
 
-	/**
-	 * 查看.
-	 */
-	GET,
+	RTU_MASTER("rtu_master", "RTU MASTER"),
 
-	/**
-	 * 删除.
-	 */
-	DEL
+	TCP_MASTER("tcp_master", "TCP MASTER"),
+
+	ASCII_MASTER("ascii_master", "ASCII MASTER"),
+
+	UDP_MASTER("udp_master", "UDP MASTER");
+
+	private final String code;
+
+	private final String desc;
+
+	ModbusTypeEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+
+	public static ModbusTypeEnum getByCode(String code) {
+		return EnumParser.parse(ModbusTypeEnum.class, ModbusTypeEnum::getCode, code);
+	}
 
 }

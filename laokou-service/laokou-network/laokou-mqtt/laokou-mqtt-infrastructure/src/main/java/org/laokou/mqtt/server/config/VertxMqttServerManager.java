@@ -29,7 +29,7 @@ public final class VertxMqttServerManager {
 	private VertxMqttServerManager() {
 	}
 
-	public static void deploy(final Vertx vertx, final MqttServerProperties properties,
+	public static void deploy(final Vertx vertx, final SpringMqttServerProperties properties,
 			final List<ReactiveMqttMessageHandler> reactiveMqttMessageHandlers) {
 		new VertxMqttServer(vertx, properties, reactiveMqttMessageHandlers).deploy();
 	}

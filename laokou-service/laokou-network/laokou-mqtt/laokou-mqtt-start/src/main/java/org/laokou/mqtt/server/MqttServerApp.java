@@ -21,7 +21,7 @@ import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
-import org.laokou.mqtt.server.config.MqttServerProperties;
+import org.laokou.mqtt.server.config.SpringMqttServerProperties;
 import org.laokou.mqtt.server.config.VertxMqttServerManager;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
@@ -46,7 +46,7 @@ public class MqttServerApp implements CommandLineRunner {
 
 	private final Vertx vertx;
 
-	private final MqttServerProperties properties;
+	private final SpringMqttServerProperties properties;
 
 	private final List<ReactiveMqttMessageHandler> reactiveMqttMessageHandlers;
 

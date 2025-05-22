@@ -27,7 +27,7 @@ import java.util.Map;
  * @author laokou
  */
 @Data
-public class MqttClientProperties {
+public class SpringMqttClientProperties {
 
 	private boolean auth = true;
 

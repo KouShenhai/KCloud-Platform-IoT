@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import static org.laokou.common.data.cache.constant.NameConstants.TENANTS;
-import static org.laokou.common.data.cache.model.TypeEnum.DEL;
+import static org.laokou.common.data.cache.model.OperateTypeEnum.DEL;
 
 /**
  * 租户管理控制器.
@@ -64,7 +64,7 @@ public class TenantsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:tenant:modify')")
 	@OperateLog(module = "租户管理", operation = "修改租户")
 	@Operation(summary = "修改租户", description = "修改租户")
-	@DataCache(name = TENANTS, key = "#cmd.co.id", type = DEL)
+	@DataCache(name = TENANTS, key = "#cmd.co.id", operateType = DEL)
 	public void modifyV3(@RequestBody TenantModifyCmd cmd) {
 		tenantsServiceI.modify(cmd);
 	}

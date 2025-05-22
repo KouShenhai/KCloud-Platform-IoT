@@ -56,7 +56,7 @@ public final class VertxMqttClient {
 
 	private final ExecutorService virtualThreadExecutor;
 
-	private final MqttClientProperties mqttClientProperties;
+	private final SpringMqttClientProperties springMqttClientProperties;
 
 	private final List<MqttMessageHandler> mqttMessageHandlers;
 
@@ -69,16 +69,17 @@ public final class VertxMqttClient {
 	private volatile Disposable consumeDisposable;
 
 	public VertxMqttClient(final Vertx vertx, ExecutorService virtualThreadExecutor,
-			final MqttClientProperties mqttClientProperties, final List<MqttMessageHandler> mqttMessageHandlers) {
+			final SpringMqttClientProperties springMqttClientProperties,
+			final List<MqttMessageHandler> mqttMessageHandlers) {
 		this.vertx = vertx;
 		this.virtualThreadExecutor = virtualThreadExecutor;
-		this.mqttClientProperties = mqttClientProperties;
+		this.springMqttClientProperties = springMqttClientProperties;
 		this.mqttClient = MqttClient.create(vertx, getOptions());
 		this.mqttMessageHandlers = mqttMessageHandlers;
 	}
 
 	public void open() {
-		if (mqttClientProperties.isMqtt5()) {
+		if (springMqttClientProperties.isMqtt5()) {
 			mqttClient.authenticationExchange(MqttAuthenticationExchangeMessage
 				.create(MqttAuthenticateReasonCode.SUCCESS, MqttProperties.NO_PROPERTIES));
 			mqttClient.authenticationExchangeHandler(auth -> {
@@ -92,7 +93,7 @@ public final class VertxMqttClient {
 		}
 		mqttClient.closeHandler(v -> {
 			isConnected.set(false);
-			log.error("【Vertx-MQTT-Client】 => MQTT连接断开，客户端ID：{}", mqttClientProperties.getClientId());
+			log.error("【Vertx-MQTT-Client】 => MQTT连接断开，客户端ID：{}", springMqttClientProperties.getClientId());
 			reconnect();
 		}).publishHandler(messageSink::tryEmitNext)
 		// @formatter:off
@@ -108,19 +109,20 @@ public final class VertxMqttClient {
 				// log.info("【Vertx-MQTT-Client】 => 接收MQTT的PINGRESP数据包");
 			})
 			// @formatter:on
-			.connect(mqttClientProperties.getPort(), mqttClientProperties.getHost())
+			.connect(springMqttClientProperties.getPort(), springMqttClientProperties.getHost())
 			.onComplete(connectResult -> {
 				if (connectResult.succeeded()) {
 					isConnected.set(true);
-					log.info("【Vertx-MQTT-Client】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}", mqttClientProperties.getHost(),
-							mqttClientProperties.getPort(), mqttClientProperties.getClientId());
+					log.info("【Vertx-MQTT-Client】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}",
+							springMqttClientProperties.getHost(), springMqttClientProperties.getPort(),
+							springMqttClientProperties.getClientId());
 					resubscribe();
 				}
 				else {
 					isConnected.set(false);
 					Throwable ex = connectResult.cause();
 					log.error("【Vertx-MQTT-Client】 => MQTT连接失败，原因：{}，客户端ID：{}", ex.getMessage(),
-							mqttClientProperties.getClientId(), ex);
+							springMqttClientProperties.getClientId(), ex);
 					reconnect();
 				}
 			});
@@ -146,7 +148,7 @@ public final class VertxMqttClient {
 		if (isReconnected.get()) {
 			try {
 				log.info("【Vertx-MQTT-Client】 => MQTT尝试重连");
-				vertx.setTimer(mqttClientProperties.getReconnectInterval(),
+				vertx.setTimer(springMqttClientProperties.getReconnectInterval(),
 						handler -> virtualThreadExecutor.execute(this::open));
 			}
 			catch (Exception e) {
@@ -157,7 +159,7 @@ public final class VertxMqttClient {
 	}
 
 	private void subscribe() {
-		Map<String, Integer> topics = mqttClientProperties.getTopics();
+		Map<String, Integer> topics = springMqttClientProperties.getTopics();
 		checkTopicAndQos(topics);
 		mqttClient.subscribe(topics).onComplete(subscribeResult -> {
 			if (subscribeResult.succeeded()) {
@@ -172,7 +174,7 @@ public final class VertxMqttClient {
 	}
 
 	private void resubscribe() {
-		if ((isConnected.get() || mqttClient.isConnected()) && mqttClientProperties.isSubscribe()) {
+		if ((isConnected.get() || mqttClient.isConnected()) && springMqttClientProperties.isSubscribe()) {
 			virtualThreadExecutor.execute(this::subscribe);
 		}
 		if (isLoaded.compareAndSet(false, true)) {
@@ -232,23 +234,23 @@ public final class VertxMqttClient {
 
 	private MqttClientOptions getOptions() {
 		MqttClientOptions options = new MqttClientOptions();
-		options.setClientId(mqttClientProperties.getClientId());
-		options.setCleanSession(mqttClientProperties.isClearSession());
-		options.setAutoKeepAlive(mqttClientProperties.isAutoKeepAlive());
-		options.setKeepAliveInterval(mqttClientProperties.getKeepAliveInterval());
-		options.setReconnectAttempts(mqttClientProperties.getReconnectAttempts());
-		options.setReconnectInterval(mqttClientProperties.getReconnectInterval());
-		options.setWillQoS(mqttClientProperties.getWillQos());
-		options.setWillTopic(mqttClientProperties.getWillTopic());
-		options.setAutoAck(mqttClientProperties.isAutoAck());
-		options.setAckTimeout(mqttClientProperties.getAckTimeout());
-		options.setWillRetain(mqttClientProperties.isWillRetain());
-		options.setWillMessageBytes(Buffer.buffer(mqttClientProperties.getWillPayload()));
-		options.setReceiveBufferSize(mqttClientProperties.getReceiveBufferSize());
-		options.setMaxMessageSize(mqttClientProperties.getMaxMessageSize());
-		if (mqttClientProperties.isAuth()) {
-			options.setPassword(mqttClientProperties.getPassword());
-			options.setUsername(mqttClientProperties.getUsername());
+		options.setClientId(springMqttClientProperties.getClientId());
+		options.setCleanSession(springMqttClientProperties.isClearSession());
+		options.setAutoKeepAlive(springMqttClientProperties.isAutoKeepAlive());
+		options.setKeepAliveInterval(springMqttClientProperties.getKeepAliveInterval());
+		options.setReconnectAttempts(springMqttClientProperties.getReconnectAttempts());
+		options.setReconnectInterval(springMqttClientProperties.getReconnectInterval());
+		options.setWillQoS(springMqttClientProperties.getWillQos());
+		options.setWillTopic(springMqttClientProperties.getWillTopic());
+		options.setAutoAck(springMqttClientProperties.isAutoAck());
+		options.setAckTimeout(springMqttClientProperties.getAckTimeout());
+		options.setWillRetain(springMqttClientProperties.isWillRetain());
+		options.setWillMessageBytes(Buffer.buffer(springMqttClientProperties.getWillPayload()));
+		options.setReceiveBufferSize(springMqttClientProperties.getReceiveBufferSize());
+		options.setMaxMessageSize(springMqttClientProperties.getMaxMessageSize());
+		if (springMqttClientProperties.isAuth()) {
+			options.setPassword(springMqttClientProperties.getPassword());
+			options.setUsername(springMqttClientProperties.getUsername());
 		}
 		return options;
 	}

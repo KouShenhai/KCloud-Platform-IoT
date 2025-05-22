@@ -36,7 +36,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.multipart.MultipartFile;
 
 import static org.laokou.common.data.cache.constant.NameConstant.${(className)?upper_case}S;
-import static org.laokou.common.data.cache.constant.Type.DEL;
+import static org.laokou.common.data.cache.constant.OperateTypeEnum.DEL;
 
 /**
  *
@@ -65,7 +65,7 @@ public class ${className}sController${(version)?upper_case} {
 	@PreAuthorize("hasAuthority('${app?lower_case}:${instanceName}:modify')")
 	@OperateLog(module = "${comment}管理", operation = "修改${comment}")
 	@Operation(summary = "修改${comment}", description = "修改${comment}")
-	@DataCache(name = ${(className)?upper_case}S, key = "#cmd.co.id", type = DEL)
+	@DataCache(name = ${(className)?upper_case}S, key = "#cmd.co.id", operateType = DEL)
 	public void modify${(version)?upper_case}(@RequestBody ${className}ModifyCmd cmd) {
 		${instanceName}sServiceI.modify(cmd);
 	}

@@ -33,21 +33,21 @@ public final class VertxUdpServer extends AbstractVerticle {
 
 	private volatile Flux<DatagramSocket> datagramSocket;
 
-	private final UdpServerProperties udpServerProperties;
+	private final SpringUdpServerProperties springUdpServerProperties;
 
 	private boolean isClosed = false;
 
-	VertxUdpServer(Vertx vertx, UdpServerProperties udpServerProperties) {
-		this.udpServerProperties = udpServerProperties;
+	VertxUdpServer(Vertx vertx, SpringUdpServerProperties springUdpServerProperties) {
+		this.springUdpServerProperties = springUdpServerProperties;
 		this.vertx = vertx;
 	}
 
 	@Override
 	public synchronized void start() {
-		datagramSocket = Flux.fromIterable(udpServerProperties.getPorts()).map(port -> {
+		datagramSocket = Flux.fromIterable(springUdpServerProperties.getPorts()).map(port -> {
 			DatagramSocket datagramSocket = vertx.createDatagramSocket(getDatagramSocketOption())
 				.handler(packet -> log.info("【Vertx-UDP-Server】 => 收到数据包：{}", packet.data()));
-			datagramSocket.listen(port, udpServerProperties.getHost()).onComplete(result -> {
+			datagramSocket.listen(port, springUdpServerProperties.getHost()).onComplete(result -> {
 				if (isClosed) {
 					return;
 				}
@@ -87,10 +87,10 @@ public final class VertxUdpServer extends AbstractVerticle {
 
 	private DatagramSocketOptions getDatagramSocketOption() {
 		DatagramSocketOptions datagramSocketOptions = new DatagramSocketOptions();
-		datagramSocketOptions.setBroadcast(udpServerProperties.isBroadcast());
-		datagramSocketOptions.setLoopbackModeDisabled(udpServerProperties.isLoopbackModeDisabled());
-		datagramSocketOptions.setMulticastNetworkInterface(udpServerProperties.getMulticastNetworkInterface());
-		datagramSocketOptions.setIpV6(udpServerProperties.isIpV6());
+		datagramSocketOptions.setBroadcast(springUdpServerProperties.isBroadcast());
+		datagramSocketOptions.setLoopbackModeDisabled(springUdpServerProperties.isLoopbackModeDisabled());
+		datagramSocketOptions.setMulticastNetworkInterface(springUdpServerProperties.getMulticastNetworkInterface());
+		datagramSocketOptions.setIpV6(springUdpServerProperties.isIpV6());
 		return datagramSocketOptions;
 	}
 

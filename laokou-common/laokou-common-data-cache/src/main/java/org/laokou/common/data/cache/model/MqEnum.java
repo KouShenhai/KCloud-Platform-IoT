@@ -28,7 +28,7 @@ public enum MqEnum {
 	CACHE("cache", "缓存") {
 		@Override
 		public String getTopic() {
-			return "laokou_cache_topic";
+			return CACHE_TOPIC;
 		}
 	};
 
@@ -42,5 +42,9 @@ public enum MqEnum {
 	}
 
 	public abstract String getTopic();
+
+	public static final String CACHE_CONSUMER_GROUP = "laokou_cache_consumer_group";
+
+	public static final String CACHE_TOPIC = "laokou_cache_topic";
 
 }

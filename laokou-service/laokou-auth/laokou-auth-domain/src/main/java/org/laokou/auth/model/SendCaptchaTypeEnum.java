@@ -28,14 +28,14 @@ import org.laokou.common.i18n.util.RedisKeyUtils;
 public enum SendCaptchaTypeEnum {
 
 	// @formatter:off
-	SEND_MAIL_CAPTCHA("sendMailCaptcha", "发送邮箱验证码") {
+	SEND_MAIL_CAPTCHA("send_mail_captcha", "发送邮箱验证码") {
 		@Override
 		public String getCaptchaCacheKey(String uuid) {
 			return RedisKeyUtils.getMailAuthCaptchaKey(uuid);
 		}
 	},
 
-	SEND_MOBILE_CAPTCHA("sendMobileCaptcha", "发送手机号验证码") {
+	SEND_MOBILE_CAPTCHA("send_mobile_captcha", "发送手机号验证码") {
 		@Override
 		public String getCaptchaCacheKey(String uuid) {
 			return RedisKeyUtils.getMobileAuthCaptchaKey(uuid);

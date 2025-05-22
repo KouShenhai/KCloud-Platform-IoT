@@ -243,7 +243,7 @@ class DomainServiceTest {
 	void testCreateMailCaptchaNoticeLog() {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
-		Assertions.assertDoesNotThrow(() -> noticeLog.setCode("sendMailCaptcha"));
+		Assertions.assertDoesNotThrow(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));
 		Assertions.assertDoesNotThrow(() -> noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode()));
 		Assertions.assertDoesNotThrow(() -> domainService.createNoticeLog(noticeLog));
 	}
@@ -252,7 +252,7 @@ class DomainServiceTest {
 	void testCreateMobileCaptchaNoticeLog() {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
-		Assertions.assertDoesNotThrow(() -> noticeLog.setCode("sendMobileCaptcha"));
+		Assertions.assertDoesNotThrow(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));
 		Assertions.assertDoesNotThrow(() -> noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode()));
 		Assertions.assertDoesNotThrow(() -> domainService.createNoticeLog(noticeLog));
 	}

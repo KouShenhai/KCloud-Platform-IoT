@@ -46,7 +46,7 @@ import reactor.util.retry.Retry;
 import java.time.Duration;
 
 import static org.laokou.common.data.cache.constant.NameConstants.USERS;
-import static org.laokou.common.data.cache.model.TypeEnum.DEL;
+import static org.laokou.common.data.cache.model.OperateTypeEnum.DEL;
 
 /**
  * 用户管理控制器.
@@ -75,7 +75,7 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:modify')")
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@Operation(summary = "修改用户", description = "修改用户")
-	@DataCache(name = USERS, key = "#cmd.co.id", type = DEL)
+	@DataCache(name = USERS, key = "#cmd.co.id", operateType = DEL)
 	public void modifyV3(@RequestBody UserModifyCmd cmd) throws Exception {
 		usersServiceI.modify(cmd);
 	}
@@ -125,7 +125,7 @@ public class UsersControllerV3 {
 
 	@PutMapping("authority")
 	@PreAuthorize("hasAuthority('sys:user:modify')")
-	@DataCache(name = USERS, key = "#cmd.co.id", type = DEL)
+	@DataCache(name = USERS, key = "#cmd.co.id", operateType = DEL)
 	@OperateLog(module = "用户管理", operation = "修改用户权限")
 	@Operation(summary = "修改用户权限", description = "修改用户权限")
 	public void modifyAuthorityV3(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {

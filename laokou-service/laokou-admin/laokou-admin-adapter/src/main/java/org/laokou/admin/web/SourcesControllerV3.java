@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import static org.laokou.common.data.cache.constant.NameConstants.SOURCES;
-import static org.laokou.common.data.cache.model.TypeEnum.DEL;
+import static org.laokou.common.data.cache.model.OperateTypeEnum.DEL;
 
 /**
  * 数据源管理控制器.
@@ -64,7 +64,7 @@ public class SourcesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:source:modify')")
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@Operation(summary = "修改数据源", description = "修改数据源")
-	@DataCache(name = SOURCES, key = "#cmd.co.id", type = DEL)
+	@DataCache(name = SOURCES, key = "#cmd.co.id", operateType = DEL)
 	public void modifyV3(@RequestBody SourceModifyCmd cmd) {
 		sourcesServiceI.modify(cmd);
 	}

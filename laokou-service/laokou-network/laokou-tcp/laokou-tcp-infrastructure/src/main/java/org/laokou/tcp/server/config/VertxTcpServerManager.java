@@ -27,7 +27,7 @@ public final class VertxTcpServerManager {
 	private VertxTcpServerManager() {
 	}
 
-	public static void deploy(final Vertx vertx, final TcpServerProperties properties) {
+	public static void deploy(final Vertx vertx, final SpringTcpServerProperties properties) {
 		new VertxTcpServer(vertx, properties).deploy();
 	}
 

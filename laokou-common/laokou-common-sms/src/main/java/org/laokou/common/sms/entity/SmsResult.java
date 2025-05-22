@@ -30,7 +30,7 @@ public class SmsResult implements Serializable {
 	/**
 	 * 编码.
 	 */
-	private final String code = "sendMobileCaptcha";
+	private final String code = "send_mobile_captcha";
 
 	/**
 	 * 名称.

@@ -27,13 +27,13 @@ import lombok.Getter;
 @Getter
 public enum EventTypeEnum {
 
-	SEND_CAPTCHA_EVENT("sendCaptchaEvent", "发送验证码事件"),
+	SEND_CAPTCHA_EVENT("send_captcha_event", "发送验证码事件"),
 
-	LOGIN_EVENT("loginEvent", "登录事件"),
+	LOGIN_EVENT("login_event", "登录事件"),
 
-	OPERATE_EVENT("operateEvent", "操作事件"),
+	OPERATE_EVENT("operate_event", "操作事件"),
 
-	REMOVE_CACHE_EVENT("removeCacheEvent", "移除缓存事件");
+	REMOVE_CACHE_EVENT("remove_cache_event", "移除缓存事件");
 
 	private final String code;
 

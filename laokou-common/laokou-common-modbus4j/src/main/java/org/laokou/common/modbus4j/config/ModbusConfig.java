@@ -15,40 +15,21 @@
  *
  */
 
-package org.laokou.common.log.model;
+package org.laokou.common.modbus4j.config;
 
-import lombok.Getter;
+import com.serotonin.modbus4j.ModbusFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author laokou
  */
-@Getter
-public enum MqEnum {
+@Configuration
+public class ModbusConfig {
 
-	OPERATE_LOG("operate_log", "操作日志") {
-		@Override
-		public String getTopic() {
-			return "laokou_log_topic";
-		}
-
-		@Override
-		public String getTag() {
-			return "operate_log";
-		}
-
-	};
-
-	private final String code;
-
-	private final String desc;
-
-	MqEnum(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
+	@Bean
+	public ModbusFactory modbusFactory() {
+		return new ModbusFactory();
 	}
-
-	public abstract String getTopic();
-
-	public abstract String getTag();
 
 }

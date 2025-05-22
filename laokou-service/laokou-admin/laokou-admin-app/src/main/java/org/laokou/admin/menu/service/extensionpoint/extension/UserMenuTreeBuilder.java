@@ -27,13 +27,13 @@ import org.laokou.admin.menu.model.MenuTypeEnum;
 import org.laokou.admin.menu.service.extensionpoint.MenuTreeBuilderExtPt;
 import org.laokou.common.core.util.TreeUtils;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.model.TypeEnum;
 import org.laokou.common.extension.Extension;
 
 import java.util.List;
 
 import static org.laokou.admin.common.constant.BizConstants.*;
 import static org.laokou.common.data.cache.constant.NameConstants.USER_MENU;
+import static org.laokou.common.data.cache.model.OperateTypeEnum.GET;
 
 /**
  * @author laokou
@@ -41,7 +41,7 @@ import static org.laokou.common.data.cache.constant.NameConstants.USER_MENU;
 @Extension(bizId = BIZ_ID_USER, useCase = USE_CASE_MENU, scenario = SCENARIO)
 public class UserMenuTreeBuilder implements MenuTreeBuilderExtPt {
 
-	@DataCache(name = USER_MENU, key = "#userId", type = TypeEnum.GET)
+	@DataCache(name = USER_MENU, key = "#userId", operateType = GET)
 	@Override
 	public MenuTreeCO build(MenuTreeListQry qry, Long userId, MenuMapper menuMapper) {
 		qry.setStatus(MenuStatusEnum.ENABLE.getCode());

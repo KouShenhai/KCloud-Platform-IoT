@@ -39,7 +39,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 import static org.laokou.common.data.cache.constant.NameConstants.MENUS;
-import static org.laokou.common.data.cache.model.TypeEnum.DEL;
+import static org.laokou.common.data.cache.model.OperateTypeEnum.DEL;
 
 /**
  * 菜单管理控制器.
@@ -67,7 +67,7 @@ public class MenusControllerV3 {
 	@PreAuthorize("hasAuthority('sys:menu:modify')")
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
 	@Operation(summary = "修改菜单", description = "修改菜单")
-	@DataCache(name = MENUS, key = "#cmd.co.id", type = DEL)
+	@DataCache(name = MENUS, key = "#cmd.co.id", operateType = DEL)
 	public void modifyV3(@RequestBody MenuModifyCmd cmd) {
 		menusServiceI.modify(cmd);
 	}

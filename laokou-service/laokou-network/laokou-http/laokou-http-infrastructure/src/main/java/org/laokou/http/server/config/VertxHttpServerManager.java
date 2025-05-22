@@ -27,7 +27,7 @@ public final class VertxHttpServerManager {
 	private VertxHttpServerManager() {
 	}
 
-	public static void deploy(final Vertx vertx, final HttpServerProperties properties) {
+	public static void deploy(final Vertx vertx, final SpringHttpServerProperties properties) {
 		new VertxHttpServer(vertx, properties).deploy();
 	}
 

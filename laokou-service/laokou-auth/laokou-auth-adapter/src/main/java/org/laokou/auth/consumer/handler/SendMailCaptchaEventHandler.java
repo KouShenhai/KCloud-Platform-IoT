@@ -41,7 +41,7 @@ import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
 @Component
 @NonNullApi
 @RocketMQMessageListener(consumerGroup = "laokou_mail_captcha_consumer_group", topic = "laokou_captcha_topic",
-		selectorExpression = "mailCaptcha", messageModel = CLUSTERING, consumeMode = CONCURRENTLY,
+		selectorExpression = "mail_captcha", messageModel = CLUSTERING, consumeMode = CONCURRENTLY,
 		consumeThreadMax = 128, consumeThreadNumber = 64)
 public class SendMailCaptchaEventHandler extends AbstractDomainEventHandler {
 

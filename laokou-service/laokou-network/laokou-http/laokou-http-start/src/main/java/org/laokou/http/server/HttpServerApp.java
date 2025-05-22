@@ -20,7 +20,7 @@ package org.laokou.http.server;
 import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.http.server.config.HttpServerProperties;
+import org.laokou.http.server.config.SpringHttpServerProperties;
 import org.laokou.http.server.config.VertxHttpServerManager;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
@@ -44,7 +44,7 @@ public class HttpServerApp implements CommandLineRunner {
 
 	private final Vertx vertx;
 
-	private final HttpServerProperties properties;
+	private final SpringHttpServerProperties properties;
 
 	private final ExecutorService virtualThreadExecutor;
 

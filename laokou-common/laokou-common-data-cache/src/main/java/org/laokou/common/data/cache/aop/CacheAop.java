@@ -24,19 +24,10 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.util.SpringExpressionUtils;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.model.TypeEnum;
-import org.laokou.common.i18n.common.exception.GlobalException;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 数据缓存切面.
@@ -47,12 +38,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 @Aspect
 @Component
 public class CacheAop {
-
-	private static final ReentrantReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
-
-	private static final Lock READ_LOCK = READ_WRITE_LOCK.readLock();
-
-	private static final Lock WRITE_LOCK = READ_WRITE_LOCK.writeLock();
 
 	@Autowired
 	@Qualifier("redissonCacheManager")
@@ -66,102 +51,9 @@ public class CacheAop {
 	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		String[] parameterNames = signature.getParameterNames();
-		TypeEnum typeEnum = dataCache.type();
 		String name = dataCache.name();
 		String key = SpringExpressionUtils.parse(dataCache.key(), parameterNames, point.getArgs(), String.class);
-		return switch (typeEnum) {
-			case GET -> get(name, key, point);
-			case DEL -> del(name, key, point);
-		};
-	}
-
-	private Object get(String name, String key, ProceedingJoinPoint point) {
-		boolean isLocked = false;
-		int retry = 3;
-		try {
-			do {
-				isLocked = READ_LOCK.tryLock(50, TimeUnit.MILLISECONDS);
-			}
-			while (!isLocked && --retry > 0);
-			if (isLocked) {
-				Cache caffineCache = getCaffineCache(name);
-				Cache.ValueWrapper caffineValueWrapper = caffineCache.get(key);
-				if (ObjectUtils.isNotNull(caffineValueWrapper)) {
-					return caffineValueWrapper.get();
-				}
-				Cache redissonCache = getRedissonCache(name);
-				Cache.ValueWrapper redissonValueWrapper = redissonCache.get(key);
-				if (ObjectUtils.isNotNull(redissonValueWrapper)) {
-					Object value = redissonValueWrapper.get();
-					caffineCache.putIfAbsent(key, value);
-					return value;
-				}
-				Object value = point.proceed();
-				redissonCache.putIfAbsent(key, value);
-				return value;
-			}
-			return point.proceed();
-		}
-		catch (GlobalException e) {
-			// 系统异常/业务异常/参数异常直接捕获并抛出
-			throw e;
-		}
-		catch (Throwable e) {
-			log.error("获取缓存失败", e);
-			throw new SystemException("S_Cache_GetError", "获取缓存失败", e);
-		}
-		finally {
-			if (isLocked) {
-				READ_LOCK.unlock();
-			}
-		}
-	}
-
-	private Object del(String name, String key, ProceedingJoinPoint point) {
-		boolean isLocked = false;
-		int retry = 3;
-		try {
-			do {
-				isLocked = WRITE_LOCK.tryLock(50, TimeUnit.MILLISECONDS);
-			}
-			while (!isLocked && --retry > 0);
-			if (isLocked) {
-				Cache redissonCache = getRedissonCache(name);
-				Cache caffineCache = getCaffineCache(name);
-				redissonCache.evictIfPresent(key);
-				caffineCache.evictIfPresent(key);
-			}
-			return point.proceed();
-		}
-		catch (GlobalException e) {
-			// 系统异常/业务异常/参数异常直接捕获并抛出
-			throw e;
-		}
-		catch (Throwable e) {
-			log.error("获取缓存失败，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_Cache_DelError", String.format("删除缓存失败，%s", e.getMessage()), e);
-		}
-		finally {
-			if (isLocked) {
-				WRITE_LOCK.unlock();
-			}
-		}
-	}
-
-	private Cache getRedissonCache(String name) {
-		Cache cache = redissonCacheManager.getCache(name);
-		if (ObjectUtils.isNull(cache)) {
-			throw new SystemException("S_Cache_NameNotExist", "缓存名称不存在");
-		}
-		return cache;
-	}
-
-	private Cache getCaffineCache(String name) {
-		Cache cache = caffineCacheManager.getCache(name);
-		if (ObjectUtils.isNull(cache)) {
-			throw new SystemException("S_Cache_NameNotExist", "缓存名称不存在");
-		}
-		return cache;
+		return dataCache.operateType().execute(name, key, point, caffineCacheManager, redissonCacheManager);
 	}
 
 }

@@ -15,40 +15,16 @@
  *
  */
 
-package org.laokou.common.log.model;
-
-import lombok.Getter;
+package org.laokou.common.openfeign.constant;
 
 /**
  * @author laokou
  */
-@Getter
-public enum MqEnum {
+public final class ServiceConstants {
 
-	OPERATE_LOG("operate_log", "操作日志") {
-		@Override
-		public String getTopic() {
-			return "laokou_log_topic";
-		}
-
-		@Override
-		public String getTag() {
-			return "operate_log";
-		}
-
-	};
-
-	private final String code;
-
-	private final String desc;
-
-	MqEnum(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
+	private ServiceConstants() {
 	}
 
-	public abstract String getTopic();
-
-	public abstract String getTag();
+	public static final String DISTRIBUTED_IDENTIFIER = "laokou-distributed-identifier";
 
 }

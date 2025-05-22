@@ -49,13 +49,13 @@ final class VertxMqttServer extends AbstractVerticle {
 
 	private volatile Flux<MqttServer> mqttServer;
 
-	private final MqttServerProperties properties;
+	private final SpringMqttServerProperties properties;
 
 	private final List<ReactiveMqttMessageHandler> reactiveMqttMessageHandlers;
 
 	private boolean isClosed = false;
 
-	VertxMqttServer(final Vertx vertx, final MqttServerProperties properties,
+	VertxMqttServer(final Vertx vertx, final SpringMqttServerProperties properties,
 			List<ReactiveMqttMessageHandler> reactiveMqttMessageHandlers) {
 		this.properties = properties;
 		this.vertx = vertx;

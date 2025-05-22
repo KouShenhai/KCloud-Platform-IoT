@@ -30,7 +30,7 @@ public class MailResult implements Serializable {
 	/**
 	 * 编码.
 	 */
-	private final String code = "sendMailCaptcha";
+	private final String code = "send_mail_captcha";
 
 	/**
 	 * 名称.

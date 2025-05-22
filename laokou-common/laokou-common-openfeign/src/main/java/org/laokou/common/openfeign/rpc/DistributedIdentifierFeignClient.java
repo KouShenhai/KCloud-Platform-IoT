@@ -23,7 +23,7 @@ import org.laokou.distributed.identifier.dto.clientobject.DistributedIdentifierC
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-import static org.laokou.common.openfeign.constant.FeignConstants.DISTRIBUTED_IDENTIFIER;
+import static org.laokou.common.openfeign.constant.ServiceConstants.DISTRIBUTED_IDENTIFIER;
 import static org.laokou.common.secret.aop.ApiSecretAop.*;
 
 /**

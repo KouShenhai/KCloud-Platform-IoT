@@ -20,7 +20,7 @@ package org.laokou.tcp.server;
 import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.tcp.server.config.TcpServerProperties;
+import org.laokou.tcp.server.config.SpringTcpServerProperties;
 import org.laokou.tcp.server.config.VertxTcpServerManager;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
@@ -45,7 +45,7 @@ public class TcpServerApp implements CommandLineRunner {
 
 	private final Vertx vertx;
 
-	private final TcpServerProperties properties;
+	private final SpringTcpServerProperties properties;
 
 	private final ExecutorService virtualThreadExecutor;
 

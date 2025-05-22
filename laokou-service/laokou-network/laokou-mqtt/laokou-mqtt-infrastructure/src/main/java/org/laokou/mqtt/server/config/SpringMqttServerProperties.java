@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 @Data
 @Component
 @ConfigurationProperties(prefix = "spring.mqtt-server")
-public class MqttServerProperties {
+public class SpringMqttServerProperties {
 
 	private boolean auth = true;
 

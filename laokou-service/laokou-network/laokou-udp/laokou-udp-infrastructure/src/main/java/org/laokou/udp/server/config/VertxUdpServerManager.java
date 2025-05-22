@@ -27,7 +27,7 @@ public final class VertxUdpServerManager {
 	private VertxUdpServerManager() {
 	}
 
-	public static void deploy(final Vertx vertx, final UdpServerProperties properties) {
+	public static void deploy(final Vertx vertx, final SpringUdpServerProperties properties) {
 		new VertxUdpServer(vertx, properties).deploy();
 	}
 

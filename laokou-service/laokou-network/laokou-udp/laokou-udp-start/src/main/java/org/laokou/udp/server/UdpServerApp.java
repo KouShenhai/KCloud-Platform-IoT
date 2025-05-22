@@ -20,7 +20,7 @@ package org.laokou.udp.server;
 import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.udp.server.config.UdpServerProperties;
+import org.laokou.udp.server.config.SpringUdpServerProperties;
 import org.laokou.udp.server.config.VertxUdpServerManager;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
@@ -45,7 +45,7 @@ public class UdpServerApp implements CommandLineRunner {
 
 	private final Vertx vertx;
 
-	private final UdpServerProperties properties;
+	private final SpringUdpServerProperties properties;
 
 	private final ExecutorService virtualThreadExecutor;
 
