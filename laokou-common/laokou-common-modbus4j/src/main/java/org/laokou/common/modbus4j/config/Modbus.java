@@ -27,6 +27,16 @@ public interface Modbus {
 
 	void close();
 
-	ModbusResponse sendRequest(int slaveId, int startOffset, int numberOfRegisters) throws ModbusTransportException;
+	ModbusResponse sendReadHoldingRegistersRequest(int slaveId, int startOffset, int numberOfRegisters)
+			throws ModbusTransportException;
+
+	ModbusResponse sendReadInputRegistersRequest(int slaveId, int startOffset, int numberOfRegisters)
+			throws ModbusTransportException;
+
+	ModbusResponse sendReadCoilsRequest(int slaveId, int startOffset, int numberOfRegisters)
+			throws ModbusTransportException;
+
+	ModbusResponse sendReadDiscreteInputsRequest(int slaveId, int startOffset, int numberOfRegisters)
+			throws ModbusTransportException;
 
 }

@@ -20,8 +20,7 @@ package org.laokou.common.modbus4j;
 import com.serotonin.modbus4j.ModbusFactory;
 import com.serotonin.modbus4j.exception.ModbusInitException;
 import com.serotonin.modbus4j.exception.ModbusTransportException;
-import com.serotonin.modbus4j.msg.ModbusResponse;
-import com.serotonin.modbus4j.msg.ReadHoldingRegistersResponse;
+import com.serotonin.modbus4j.msg.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -46,54 +45,48 @@ class ModbusTest {
 
 	@Test
 	void testAscii() throws ModbusInitException, ModbusTransportException {
-		Modbus rtuMaster = getModbus(ModbusTypeEnum.ASCII_MASTER);
-		rtuMaster.open();
-		ModbusResponse modbusResponse = rtuMaster.sendRequest(1, 0, 1);
-		if (modbusResponse instanceof ReadHoldingRegistersResponse readRegistersResponse) {
-			Assertions.assertEquals(1, readRegistersResponse.getShortData()[0]);
-		}
-		rtuMaster.close();
+		test(ModbusTypeEnum.ASCII_MASTER);
 	}
 
 	@Test
 	void testRtu() throws ModbusInitException, ModbusTransportException {
-		Modbus rtuMaster = getModbus(ModbusTypeEnum.RTU_MASTER);
-		rtuMaster.open();
-		ModbusResponse modbusResponse = rtuMaster.sendRequest(1, 0, 1);
-		if (modbusResponse instanceof ReadHoldingRegistersResponse readRegistersResponse) {
-			Assertions.assertEquals(1, readRegistersResponse.getShortData()[0]);
-		}
-		rtuMaster.close();
+		test(ModbusTypeEnum.RTU_MASTER);
 	}
 
 	@Test
 	void testUdp() throws ModbusInitException, ModbusTransportException {
-		Modbus udpMaster = getModbus(ModbusTypeEnum.UDP_MASTER);
-		udpMaster.open();
-		ModbusResponse modbusResponse = udpMaster.sendRequest(1, 0, 1);
-		if (modbusResponse instanceof ReadHoldingRegistersResponse readRegistersResponse) {
-			Assertions.assertEquals(1, readRegistersResponse.getShortData()[0]);
-		}
-		udpMaster.close();
+		test(ModbusTypeEnum.UDP_MASTER);
 	}
 
 	@Test
 	void testTcp() throws ModbusInitException, ModbusTransportException {
-		Modbus tcpMaster = getModbus(ModbusTypeEnum.TCP_MASTER);
-		tcpMaster.open();
-		ModbusResponse modbusResponse = tcpMaster.sendRequest(1, 0, 1);
-		if (modbusResponse instanceof ReadHoldingRegistersResponse readRegistersResponse) {
-			Assertions.assertEquals(1, readRegistersResponse.getShortData()[0]);
-		}
-		tcpMaster.close();
+		test(ModbusTypeEnum.TCP_MASTER);
 	}
 
-	private Modbus getModbus(ModbusTypeEnum typeEnum) {
+	private void test(ModbusTypeEnum typeEnum) throws ModbusInitException, ModbusTransportException {
 		SpringModbusProperties properties = ConvertUtils.sourceToTarget(springModbusProperties,
 				SpringModbusProperties.class);
 		Assertions.assertNotNull(properties);
 		properties.setType(typeEnum);
-		return properties.getType().getModbus(modbusFactory, properties);
+		Modbus modbus = properties.getType().getModbus(modbusFactory, properties);
+		modbus.open();
+		ModbusResponse modbusResponse = modbus.sendReadHoldingRegistersRequest(1, 0, 1);
+		if (modbusResponse instanceof ReadHoldingRegistersResponse readRegistersResponse) {
+			Assertions.assertEquals(1, readRegistersResponse.getShortData()[0]);
+		}
+		modbusResponse = modbus.sendReadCoilsRequest(1, 0, 1);
+		if (modbusResponse instanceof ReadCoilsResponse readCoilsResponse) {
+			Assertions.assertTrue(readCoilsResponse.getBooleanData()[0]);
+		}
+		modbusResponse = modbus.sendReadInputRegistersRequest(1, 0, 1);
+		if (modbusResponse instanceof ReadInputRegistersResponse readInputRegistersResponse) {
+			Assertions.assertEquals(1, readInputRegistersResponse.getShortData()[0]);
+		}
+		modbusResponse = modbus.sendReadDiscreteInputsRequest(1, 0, 1);
+		if (modbusResponse instanceof ReadDiscreteInputsResponse readDiscreteInputsResponse) {
+			Assertions.assertTrue(readDiscreteInputsResponse.getBooleanData()[0]);
+		}
+		modbus.close();
 	}
 
 }

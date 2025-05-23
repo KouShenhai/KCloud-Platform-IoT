@@ -19,6 +19,8 @@ package org.laokou.common.modbus4j.config;
 
 import com.serotonin.modbus4j.ModbusMaster;
 import com.serotonin.modbus4j.exception.ModbusInitException;
+import com.serotonin.modbus4j.exception.ModbusTransportException;
+import com.serotonin.modbus4j.msg.*;
 
 public abstract class AbstractModbus implements Modbus {
 
@@ -40,6 +42,30 @@ public abstract class AbstractModbus implements Modbus {
 	@Override
 	public synchronized void close() {
 		modbusMaster.destroy();
+	}
+
+	@Override
+	public ModbusResponse sendReadHoldingRegistersRequest(int slaveId, int startOffset, int numberOfRegisters)
+			throws ModbusTransportException {
+		return modbusMaster.send(new ReadHoldingRegistersRequest(slaveId, startOffset, numberOfRegisters));
+	}
+
+	@Override
+	public ModbusResponse sendReadInputRegistersRequest(int slaveId, int startOffset, int numberOfRegisters)
+			throws ModbusTransportException {
+		return modbusMaster.send(new ReadInputRegistersRequest(slaveId, startOffset, numberOfRegisters));
+	}
+
+	@Override
+	public ModbusResponse sendReadCoilsRequest(int slaveId, int startOffset, int numberOfRegisters)
+			throws ModbusTransportException {
+		return modbusMaster.send(new ReadCoilsRequest(slaveId, startOffset, numberOfRegisters));
+	}
+
+	@Override
+	public ModbusResponse sendReadDiscreteInputsRequest(int slaveId, int startOffset, int numberOfRegisters)
+			throws ModbusTransportException {
+		return modbusMaster.send(new ReadDiscreteInputsRequest(slaveId, startOffset, numberOfRegisters));
 	}
 
 }
