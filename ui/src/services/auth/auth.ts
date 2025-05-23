@@ -39,7 +39,7 @@ export async function refresh(
 }
 
 /** 清除令牌 清除令牌 DELETE /v3/logouts */
-export async function logoutV3(
+export async function logout(
 	body: API.LogoutParam,
 	options?: { [key: string]: any },
 ) {

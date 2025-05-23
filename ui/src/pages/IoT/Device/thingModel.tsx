@@ -1,6 +1,6 @@
 import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {pageV3, getByIdV3, removeV3} from "@/services/iot/thingModel";
+import {pageThingModel, getByIdThingModel, removeThingModel} from "@/services/iot/thingModel";
 import {Button, message, Modal, Space, Tag} from "antd";
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
@@ -251,7 +251,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canThingModelGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdV3({id: record?.id}).then(res => {
+					   getByIdThingModel({id: record?.id}).then(res => {
 						   setTitle('查看物模型')
 						   const data = getData(res?.data)
 						   setDataSource(data)
@@ -265,7 +265,7 @@ export default () => {
 				</a>),
 				( access.canThingModelModify && <a key="modify"
 				 onClick={() => {
-					 getByIdV3({id: record?.id}).then(res => {
+					 getByIdThingModel({id: record?.id}).then(res => {
 						 setTitle('修改物模型')
 						 const data = getData(res?.data)
 						 setDataSource(data)
@@ -284,7 +284,7 @@ export default () => {
 						okText: '确认',
 						cancelText: '取消',
 						onOk: () => {
-							removeV3([record?.id]).then(res => {
+							removeThingModel([record?.id]).then(res => {
 								if (res.code === 'OK') {
 									message.success("删除成功").then()
 									// @ts-ignore
@@ -328,7 +328,7 @@ export default () => {
 				columns={columns}
 				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return pageV3(getPageQueryParam(params)).then(res => {
+					return pageThingModel(getPageQueryParam(params)).then(res => {
 						return Promise.resolve({
 							data: res?.data?.records,
 							total: parseInt(res?.data?.total || 0),
@@ -376,7 +376,7 @@ export default () => {
 										message.warning("请至少选择一条数据").then()
 										return;
 									}
-									removeV3(ids).then(res => {
+									removeThingModel(ids).then(res => {
 										if (res.code === 'OK') {
 											message.success("删除成功").then()
 											// @ts-ignore

@@ -1,6 +1,6 @@
 import {DrawerForm, ProFormDigit, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
 import { message } from 'antd';
-import {modifyV3, saveV3} from "@/services/iot/productCategory";
+import {modifyProductCategory, saveProductCategory} from "@/services/iot/productCategory";
 import {v7 as uuidV7} from "uuid";
 import React, {useState} from "react";
 import {ProFormTextArea} from "@ant-design/pro-form";
@@ -55,7 +55,7 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ mo
 				setLoading(true)
 				if (value.id === undefined) {
 					// @ts-ignore
-					saveV3({co: value}, requestId).then(res => {
+					saveProductCategory({co: value}, requestId).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
 							setModalVisit(false)
@@ -66,7 +66,7 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ mo
 						setLoading(false)
 					})
 				} else {
-					modifyV3({co: value}).then(res => {
+					modifyProductCategory({co: value}).then(res => {
 						if (res.code === 'OK') {
 							message.success("修改成功").then()
 							setModalVisit(false)

@@ -39,6 +39,32 @@ public class SpringModbusProperties {
 
 	private ModbusUdp udp = new ModbusUdp();
 
+	private ModbusRtu rtu = new ModbusRtu();
+
+	private ModbusAscii ascii = new ModbusAscii();
+
+	@Data
+	public static class ModbusAscii extends ModbusRtu {
+
+	}
+
+	@Data
+	public static class ModbusRtu {
+
+		private String commPortId = "COM1";
+
+		private int baudRate = 9600;
+
+		private int dataBits = 8;
+
+		private int stopBits = 1;
+
+		private int parity = 0;
+
+		private int timeout = 5000;
+
+	}
+
 	@Data
 	public static class ModbusTcp {
 

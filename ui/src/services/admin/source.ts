@@ -2,7 +2,7 @@
 import {request} from '@umijs/max';
 
 /** 修改数据源 修改数据源 PUT /v3/sources */
-export async function modifyV3(body: API.SourceModifyCmd, options?: { [key: string]: any }) {
+export async function modifySource(body: API.SourceModifyCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/sources', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +14,7 @@ export async function modifyV3(body: API.SourceModifyCmd, options?: { [key: stri
 }
 
 /** 保存数据源 保存数据源 POST /v3/sources */
-export async function saveV3(body: API.SourceSaveCmd, options?: { [key: string]: any }) {
+export async function saveSource(body: API.SourceSaveCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/sources', {
 		method: 'POST',
 		headers: {
@@ -26,7 +26,7 @@ export async function saveV3(body: API.SourceSaveCmd, options?: { [key: string]:
 }
 
 /** 删除数据源 删除数据源 DELETE /v3/sources */
-export async function removeV3(body: number[], options?: { [key: string]: any }) {
+export async function removeSource(body: number[], options?: { [key: string]: any }) {
 	return request<any>('/v3/sources', {
 		method: 'DELETE',
 		headers: {
@@ -38,9 +38,9 @@ export async function removeV3(body: number[], options?: { [key: string]: any })
 }
 
 /** 查看数据源详情 查看数据源详情 GET /v3/sources/${param0} */
-export async function getByIdV3(
+export async function getByIdSource(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-	params: API.getByIdV3Params,
+	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
@@ -52,7 +52,7 @@ export async function getByIdV3(
 }
 
 /** 导出数据源 导出数据源 POST /v3/sources/export */
-export async function exportV3(body: API.SourceExportCmd, options?: { [key: string]: any }) {
+export async function exportSource(body: API.SourceExportCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/sources/export', {
 		method: 'POST',
 		headers: {
@@ -64,7 +64,7 @@ export async function exportV3(body: API.SourceExportCmd, options?: { [key: stri
 }
 
 /** 导入数据源 导入数据源 POST /v3/sources/import */
-export async function importV3(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importSource(body: {}, file?: File[], options?: { [key: string]: any }) {
 	const formData = new FormData();
 
 	if (file) {
@@ -96,7 +96,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 }
 
 /** 分页查询数据源列表 分页查询数据源列表 POST /v3/sources/page */
-export async function pageV3(body: API.SourcePageQry, options?: { [key: string]: any }) {
+export async function pageSource(body: API.SourcePageQry, options?: { [key: string]: any }) {
 	return request<API.Result>('/v3/sources/page', {
 		method: 'POST',
 		headers: {

@@ -2,7 +2,7 @@
 import {request} from '@umijs/max';
 
 /** 修改租户 修改租户 PUT /v3/tenants */
-export async function modifyV3(body: API.TenantModifyCmd, options?: { [key: string]: any }) {
+export async function modifyTenant(body: API.TenantModifyCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/tenants', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +14,7 @@ export async function modifyV3(body: API.TenantModifyCmd, options?: { [key: stri
 }
 
 /** 保存租户 保存租户 POST /v3/tenants */
-export async function saveV3(body: API.TenantSaveCmd, options?: { [key: string]: any }) {
+export async function saveTenant(body: API.TenantSaveCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/tenants', {
 		method: 'POST',
 		headers: {
@@ -26,7 +26,7 @@ export async function saveV3(body: API.TenantSaveCmd, options?: { [key: string]:
 }
 
 /** 删除租户 删除租户 DELETE /v3/tenants */
-export async function removeV3(body: number[], options?: { [key: string]: any }) {
+export async function removeTenant(body: number[], options?: { [key: string]: any }) {
 	return request<any>('/v3/tenants', {
 		method: 'DELETE',
 		headers: {
@@ -38,9 +38,9 @@ export async function removeV3(body: number[], options?: { [key: string]: any })
 }
 
 /** 查看租户详情 查看租户详情 GET /v3/tenants/${param0} */
-export async function getByIdV3(
+export async function getByIdTenant(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-	params: API.getByIdV3Params,
+	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
@@ -52,7 +52,7 @@ export async function getByIdV3(
 }
 
 /** 导出租户 导出租户 POST /v3/tenants/export */
-export async function exportV3(body: API.TenantExportCmd, options?: { [key: string]: any }) {
+export async function exportTenant(body: API.TenantExportCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/tenants/export', {
 		method: 'POST',
 		headers: {
@@ -64,7 +64,7 @@ export async function exportV3(body: API.TenantExportCmd, options?: { [key: stri
 }
 
 /** 导入租户 导入租户 POST /v3/tenants/import */
-export async function importV3(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importTenant(body: {}, file?: File[], options?: { [key: string]: any }) {
 	const formData = new FormData();
 
 	if (file) {
@@ -96,7 +96,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 }
 
 /** 分页查询租户列表 分页查询租户列表 POST /v3/tenants/page */
-export async function pageV3(body: API.TenantPageQry, options?: { [key: string]: any }) {
+export async function pageTenant(body: API.TenantPageQry, options?: { [key: string]: any }) {
 	return request<API.Result>('/v3/tenants/page', {
 		method: 'POST',
 		headers: {

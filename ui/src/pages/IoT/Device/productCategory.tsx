@@ -1,6 +1,6 @@
 import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {getByIdV3, removeV3, listTreeV3} from "@/services/iot/productCategory";
+import {getByIdProductCategory, removeProductCategory, listTreeProductCategory} from "@/services/iot/productCategory";
 import {Button, message, Modal} from "antd";
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 import React, {useRef, useState} from "react";
@@ -97,7 +97,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canProductCategoryGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdV3({id: record?.id}).then(res => {
+					   getByIdProductCategory({id: record?.id}).then(res => {
 						   setTitle('查看产品类别')
 						   setDataSource(res?.data)
 						   setModalVisit(true)
@@ -120,7 +120,7 @@ export default () => {
 				</a>),
 				( access.canProductCategoryModify && <a key="modify"
 				   onClick={() => {
-					   getByIdV3({id: record?.id}).then(res => {
+					   getByIdProductCategory({id: record?.id}).then(res => {
 						   setTitle('修改产品类别')
 						   setDataSource(res?.data)
 						   setModalVisit(true)
@@ -137,7 +137,7 @@ export default () => {
 						okText: '确认',
 						cancelText: '取消',
 						onOk: () => {
-							removeV3([record?.id]).then(res => {
+							removeProductCategory([record?.id]).then(res => {
 								if (res.code === 'OK') {
 									message.success("删除成功").then()
 									// @ts-ignore
@@ -176,7 +176,7 @@ export default () => {
 				columns={columns}
 				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return listTreeV3(getListTreeQueryParam(params)).then(res => {
+					return listTreeProductCategory(getListTreeQueryParam(params)).then(res => {
 						setTreeList([{
 							id: '0',
 							name: '根目录',
@@ -216,7 +216,7 @@ export default () => {
 										message.warning("请至少选择一条数据").then()
 										return;
 									}
-									removeV3(ids).then(res => {
+									removeProductCategory(ids).then(res => {
 										if (res.code === 'OK') {
 											message.success("删除成功").then()
 											// @ts-ignore

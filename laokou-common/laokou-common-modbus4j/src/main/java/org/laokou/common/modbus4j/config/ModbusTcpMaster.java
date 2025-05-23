@@ -19,7 +19,6 @@ package org.laokou.common.modbus4j.config;
 
 import com.serotonin.modbus4j.ModbusFactory;
 import com.serotonin.modbus4j.exception.ModbusTransportException;
-import com.serotonin.modbus4j.ip.IpParameters;
 import com.serotonin.modbus4j.msg.ModbusResponse;
 import com.serotonin.modbus4j.msg.ReadHoldingRegistersRequest;
 
@@ -31,20 +30,14 @@ public final class ModbusTcpMaster extends AbstractModbus {
 	public ModbusTcpMaster(ModbusFactory modbusFactory, SpringModbusProperties properties) {
 		super(properties);
 		SpringModbusProperties.ModbusTcp tcp = properties.getTcp();
-		super.modbusMaster = modbusFactory.createTcpMaster(getIpParameters(tcp), tcp.isKeepAlive());
+		super.modbusMaster = modbusFactory.createTcpMaster(new CustomIpParameters(tcp.getHost(), tcp.getPort()),
+				tcp.isKeepAlive());
 	}
 
 	@Override
 	public ModbusResponse sendRequest(int slaveId, int startOffset, int numberOfRegisters)
 			throws ModbusTransportException {
 		return modbusMaster.send(new ReadHoldingRegistersRequest(slaveId, startOffset, numberOfRegisters));
-	}
-
-	private IpParameters getIpParameters(SpringModbusProperties.ModbusTcp tcp) {
-		IpParameters ipParameters = new IpParameters();
-		ipParameters.setHost(tcp.getHost());
-		ipParameters.setPort(tcp.getPort());
-		return ipParameters;
 	}
 
 }

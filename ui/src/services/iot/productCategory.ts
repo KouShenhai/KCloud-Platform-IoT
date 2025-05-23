@@ -2,7 +2,7 @@
 import { request } from '@umijs/max';
 
 /** 修改产品类别 修改产品类别 PUT /v3/product-categorys */
-export async function modifyV3(
+export async function modifyProductCategory(
   body: API.ProductCategoryModifyCmd,
   options?: { [key: string]: any },
 ) {
@@ -17,7 +17,7 @@ export async function modifyV3(
 }
 
 /** 保存产品类别 保存产品类别 POST /v3/product-categorys */
-export async function saveV3(body: API.ProductCategorySaveCmd, requestId: string, options?: { [key: string]: any }) {
+export async function saveProductCategory(body: API.ProductCategorySaveCmd, requestId: string, options?: { [key: string]: any }) {
   return request<any>('/api/iot/v3/product-categorys', {
     method: 'POST',
     headers: {
@@ -30,7 +30,7 @@ export async function saveV3(body: API.ProductCategorySaveCmd, requestId: string
 }
 
 /** 删除产品类别 删除产品类别 DELETE /v3/product-categorys */
-export async function removeV3(body: number[], options?: { [key: string]: any }) {
+export async function removeProductCategory(body: number[], options?: { [key: string]: any }) {
   return request<any>('/api/iot/v3/product-categorys', {
     method: 'DELETE',
     headers: {
@@ -42,9 +42,9 @@ export async function removeV3(body: number[], options?: { [key: string]: any })
 }
 
 /** 查看产品类别详情 查看产品类别详情 GET /v3/product-categorys/${param0} */
-export async function getByIdV3(
+export async function getByIdProductCategory(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getByIdV3Params,
+  params: API.getByIdParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
@@ -56,7 +56,7 @@ export async function getByIdV3(
 }
 
 /** 导出产品类别 导出产品类别 POST /v3/product-categorys/export */
-export async function exportV3(
+export async function exportProductCategory(
   body: API.ProductCategoryExportCmd,
   options?: { [key: string]: any },
 ) {
@@ -71,7 +71,7 @@ export async function exportV3(
 }
 
 /** 导入产品类别 导入产品类别 POST /v3/product-categorys/import */
-export async function importV3(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importProductCategory(body: {}, file?: File[], options?: { [key: string]: any }) {
   const formData = new FormData();
 
   if (file) {
@@ -103,7 +103,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 }
 
 /** 分页查询产品类别列表 分页查询产品类别列表 POST /v3/product-categorys/page */
-export async function pageV3(body: API.ProductCategoryPageQry, options?: { [key: string]: any }) {
+export async function pageProductCategory(body: API.ProductCategoryPageQry, options?: { [key: string]: any }) {
   return request<API.Result>('/api/iot/v3/product-categorys/page', {
     method: 'POST',
     headers: {
@@ -114,7 +114,7 @@ export async function pageV3(body: API.ProductCategoryPageQry, options?: { [key:
   });
 }
 
-export async function listTreeV3(body: any,options?: { [key: string]: any }) {
+export async function listTreeProductCategory(body: any,options?: { [key: string]: any }) {
 	return request<API.Result>('/api/iot/v3/product-categorys/list-tree', {
 		method: 'POST',
 		headers: {

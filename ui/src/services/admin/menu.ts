@@ -2,7 +2,7 @@
 import {request} from '@umijs/max';
 
 /** 修改菜单 修改菜单 PUT /v3/menus */
-export async function modifyV3(body: API.MenuModifyCmd, options?: { [key: string]: any }) {
+export async function modifyMenu(body: API.MenuModifyCmd, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/menus', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +14,7 @@ export async function modifyV3(body: API.MenuModifyCmd, options?: { [key: string
 }
 
 /** 保存菜单 保存菜单 POST /v3/menus */
-export async function saveV3(body: API.MenuSaveCmd, requestId: string, options?: { [key: string]: any }) {
+export async function saveMenu(body: API.MenuSaveCmd, requestId: string, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/menus', {
 		method: 'POST',
 		headers: {
@@ -27,7 +27,7 @@ export async function saveV3(body: API.MenuSaveCmd, requestId: string, options?:
 }
 
 /** 删除菜单 删除菜单 DELETE /v3/menus */
-export async function removeV3(body: number[], options?: { [key: string]: any }) {
+export async function removeMenu(body: number[], options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/menus', {
 		method: 'DELETE',
 		headers: {
@@ -39,9 +39,9 @@ export async function removeV3(body: number[], options?: { [key: string]: any })
 }
 
 /** 查看菜单详情 查看菜单详情 GET /v3/menus/${param0} */
-export async function getByIdV3(
+export async function getByIdMenu(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-	params: API.getByIdV3Params,
+	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
@@ -53,7 +53,7 @@ export async function getByIdV3(
 }
 
 /** 导出菜单 导出菜单 POST /v3/menus/export */
-export async function exportV3(body: API.MenuExportCmd, options?: { [key: string]: any }) {
+export async function exportMenu(body: API.MenuExportCmd, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/menus/export', {
 		method: 'POST',
 		headers: {
@@ -65,7 +65,7 @@ export async function exportV3(body: API.MenuExportCmd, options?: { [key: string
 }
 
 /** 导入菜单 导入菜单 POST /v3/menus/import */
-export async function importV3(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importMenu(body: {}, file?: File[], options?: { [key: string]: any }) {
 	const formData = new FormData();
 
 	if (file) {
@@ -97,7 +97,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 }
 
 /** 分页查询菜单列表 分页查询菜单列表 POST /v3/menus/page */
-export async function pageV3(body: API.MenuPageQry, options?: { [key: string]: any }) {
+export async function pageMenu(body: API.MenuPageQry, options?: { [key: string]: any }) {
 	return request<API.Result>('/api/admin/v3/menus/page', {
 		method: 'POST',
 		headers: {
@@ -108,7 +108,7 @@ export async function pageV3(body: API.MenuPageQry, options?: { [key: string]: a
 	});
 }
 
-export async function listTreeV3(body: any,options?: { [key: string]: any }) {
+export async function listTreeMenu(body: any,options?: { [key: string]: any }) {
 	return request<API.Result>('/api/admin/v3/menus/list-tree', {
 		method: 'POST',
 		headers: {
@@ -119,7 +119,7 @@ export async function listTreeV3(body: any,options?: { [key: string]: any }) {
 	});
 }
 
-export async function listUserTreeV3(body: any,options?: { [key: string]: any }) {
+export async function listUserTreeMenu(body: any,options?: { [key: string]: any }) {
 	return request<API.Result>('/api/admin/v3/menus/list-user-tree', {
 		method: 'POST',
 		headers: {

@@ -2,7 +2,7 @@ import {
 	ProColumns,
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {listTreeV3, removeV3, getByIdV3} from "@/services/admin/dept";
+import {listTreeDept, removeDept, getByIdDept} from "@/services/admin/dept";
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
@@ -43,7 +43,7 @@ export default () => {
 	}
 
 	const getTreeList = async () => {
-		listTreeV3({}).then(res => {
+		listTreeDept({}).then(res => {
 			setTreeList([{
 				id: '0',
 				name: '根目录',
@@ -121,7 +121,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canDeptGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdV3({id: record?.id}).then(res => {
+					   getByIdDept({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('查看部门')
 							   setModalVisit(true)
@@ -150,7 +150,7 @@ export default () => {
 				</a>),
 				( access.canDeptModify && <a key="modify"
 				   onClick={() => {
-					   getByIdV3({id: record?.id}).then(res => {
+					   getByIdDept({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('修改部门')
 							   setModalVisit(true)
@@ -169,7 +169,7 @@ export default () => {
 						okText: '确认',
 						cancelText: '取消',
 						onOk: () => {
-							removeV3([record?.id]).then(res => {
+							removeDept([record?.id]).then(res => {
 								if (res.code === 'OK') {
 									message.success("删除成功").then()
 									// @ts-ignore
@@ -209,7 +209,7 @@ export default () => {
 				columns={columns}
 				request={ async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return listTreeV3(getListTreeQueryParam(params)).then(res => {
+					return listTreeDept(getListTreeQueryParam(params)).then(res => {
 						return Promise.resolve({
 							data: res.data,
 							success: true,
@@ -249,7 +249,7 @@ export default () => {
 										message.warning("请至少选择一条数据").then()
 										return;
 									}
-									removeV3(ids).then(res => {
+									removeDept(ids).then(res => {
 										if (res.code === 'OK') {
 											message.success("删除成功").then()
 											// @ts-ignore

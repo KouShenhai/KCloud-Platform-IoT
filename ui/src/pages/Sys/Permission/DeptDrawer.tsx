@@ -1,6 +1,6 @@
 import {DrawerForm, ProFormDigit, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
 import { message } from 'antd';
-import {modifyV3, saveV3} from "@/services/admin/dept";
+import {modifyDept, saveDept} from "@/services/admin/dept";
 import {v7 as uuidV7} from "uuid";
 import React, {useState} from "react";
 
@@ -53,7 +53,7 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 			onFinish={ async (value) => {
 				setLoading(true)
 				if (value.id === undefined) {
-					saveV3({co: value}, requestId).then(res => {
+					saveDept({co: value}, requestId).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
 							setModalVisit(false)
@@ -64,7 +64,7 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 						setLoading(false)
 					})
 				} else {
-					modifyV3({co: value}).then(res => {
+					modifyDept({co: value}).then(res => {
 						if (res.code === 'OK') {
 							message.success("修改成功").then()
 							setModalVisit(false)

@@ -110,40 +110,6 @@ declare namespace API {
 		co?: DictCO;
 	};
 
-	type DomainEventCO = {
-		extValues?: Record<string, any>;
-		id?: number;
-		aggregateId?: number;
-		eventType?: string;
-		topic?: string;
-		sourceName?: string;
-		attribute?: string;
-		serviceId?: string;
-		tag?: string;
-	};
-
-	type DomainEventExportCmd = true;
-
-	type DomainEventModifyCmd = {
-		co?: DomainEventCO;
-	};
-
-	type DomainEventPageQry = {
-		pageNum?: number;
-		pageSize?: number;
-		pageIndex?: number;
-		sqlFilter?: string;
-		params?: Record<string, any>;
-	};
-
-	type DomainEventSaveCmd = {
-		co?: DomainEventCO;
-	};
-
-	type getByIdV3Params = {
-		id: number;
-	};
-
 	type I18nMessageCO = {
 		extValues?: Record<string, any>;
 		id?: number;

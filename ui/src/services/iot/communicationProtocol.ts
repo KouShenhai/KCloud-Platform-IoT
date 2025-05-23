@@ -2,7 +2,7 @@
 import { request } from '@umijs/max';
 
 /** 修改通讯协议 修改通讯协议 PUT /v3/communication-protocols */
-export async function modifyV3(
+export async function modifyCommunicationProtocol(
   body: API.CommunicationProtocolModifyCmd,
   options?: { [key: string]: any },
 ) {
@@ -17,7 +17,7 @@ export async function modifyV3(
 }
 
 /** 保存通讯协议 保存通讯协议 POST /v3/communication-protocols */
-export async function saveV3(
+export async function saveCommunicationProtocol(
   body: API.CommunicationProtocolSaveCmd,
   options?: { [key: string]: any },
 ) {
@@ -32,7 +32,7 @@ export async function saveV3(
 }
 
 /** 删除通讯协议 删除通讯协议 DELETE /v3/communication-protocols */
-export async function removeV3(body: number[], options?: { [key: string]: any }) {
+export async function removeCommunicationProtocol(body: number[], options?: { [key: string]: any }) {
   return request<any>('/api/iot/v3/communication-protocols', {
     method: 'DELETE',
     headers: {
@@ -44,9 +44,9 @@ export async function removeV3(body: number[], options?: { [key: string]: any })
 }
 
 /** 查看通讯协议详情 查看通讯协议详情 GET /v3/communication-protocols/${param0} */
-export async function getByIdV3(
+export async function getByIdCommunicationProtocol(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getByIdV3Params,
+  params: API.getByIdParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
@@ -58,7 +58,7 @@ export async function getByIdV3(
 }
 
 /** 导出通讯协议 导出通讯协议 POST /v3/communication-protocols/export */
-export async function exportV3(
+export async function exportCommunicationProtocol(
   body: API.CommunicationProtocolExportCmd,
   options?: { [key: string]: any },
 ) {
@@ -73,7 +73,7 @@ export async function exportV3(
 }
 
 /** 导入通讯协议 导入通讯协议 POST /v3/communication-protocols/import */
-export async function importV3(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importCommunicationProtocol(body: {}, file?: File[], options?: { [key: string]: any }) {
   const formData = new FormData();
 
   if (file) {
@@ -105,7 +105,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 }
 
 /** 分页查询通讯协议列表 分页查询通讯协议列表 POST /v3/communication-protocols/page */
-export async function pageV3(
+export async function pageCommunicationProtocol(
   body: API.CommunicationProtocolPageQry,
   options?: { [key: string]: any },
 ) {

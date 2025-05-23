@@ -6,12 +6,12 @@ import {Dropdown, message, theme} from "antd";
 import {history} from "@umijs/max";
 import {HomeOutlined, LogoutOutlined, RobotOutlined, SettingOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
-import { logoutV3, refresh } from '@/services/auth/auth';
+import { logout, refresh } from '@/services/auth/auth';
 import { clearToken, getAccessToken, getRefreshToken, setToken } from '@/access';
 import React from "react";
 import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
-import {getProfileV3} from "@/services/admin/user";
-import {listUserTreeV3} from "@/services/admin/menu";
+import {getProfileUser} from "@/services/admin/user";
+import {listUserTreeMenu} from "@/services/admin/menu";
 import {ProBreadcrumb} from "@ant-design/pro-layout";
 import axios from 'axios';
 
@@ -44,7 +44,7 @@ export async function getInitialState(): Promise<{
 	avatar: string;
 	permissions: string[]
 }> {
-	const result = await getProfileV3().catch(console.log);
+	const result = await getProfileUser().catch(console.log);
 	return {
 		id: result?.data?.id,
 		username: result?.data?.username,
@@ -62,7 +62,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 			locale: false,
 			params: initialState?.username,
 			request: async () => {
-				const result = await listUserTreeV3({code: 0}).catch(console.log);
+				const result = await listUserTreeMenu({code: 0}).catch(console.log);
 				return getRouters(result?.data)
 			}
 		},
@@ -89,7 +89,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 									label: '注销',
 									onClick: async () => {
 										// @ts-ignore
-										logoutV3({token: getAccessToken()}).then(() => {
+										logout({token: getAccessToken()}).then(() => {
 											clearToken()
 										})
 										history.push('/login')

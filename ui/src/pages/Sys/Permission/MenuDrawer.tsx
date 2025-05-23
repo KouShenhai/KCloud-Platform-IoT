@@ -7,7 +7,7 @@ import {
 	ProFormTreeSelect
 } from '@ant-design/pro-components';
 import { message } from 'antd';
-import {modifyV3, saveV3} from "@/services/admin/menu";
+import {modifyMenu, saveMenu} from "@/services/admin/menu";
 import {v7 as uuidV7} from "uuid";
 import React, {useState} from "react";
 
@@ -64,7 +64,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 			onFinish={ async (value) => {
 				setLoading(true)
 				if (value.id === undefined) {
-					saveV3({co: value}, requestId).then(res => {
+					saveMenu({co: value}, requestId).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
 							setModalVisit(false)
@@ -75,7 +75,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 						setLoading(false)
 					})
 				} else {
-					modifyV3({co: value}).then(res => {
+					modifyMenu({co: value}).then(res => {
 						if (res.code === 'OK') {
 							message.success("修改成功").then()
 							setModalVisit(false)

@@ -6,7 +6,7 @@ import {
 	ProFormTreeSelect
 } from '@ant-design/pro-components';
 import { message } from 'antd';
-import {modifyV3, saveV3} from '@/services/admin/role';
+import {modifyRole, saveRole} from '@/services/admin/role';
 import {v7 as uuidV7} from "uuid";
 import React, {useState} from "react";
 
@@ -68,7 +68,7 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 					deptIds: []
 				}
 				if (value.id === undefined) {
-					saveV3({co: co}, requestId).then(res => {
+					saveRole({co: co}, requestId).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
 							setModalVisit(false)
@@ -79,7 +79,7 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 						setLoading(false)
 					})
 				} else {
-					modifyV3({co: co}).then(res => {
+					modifyRole({co: co}).then(res => {
 						if (res.code === 'OK') {
 							message.success("修改成功").then()
 							setModalVisit(false)

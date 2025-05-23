@@ -1,6 +1,6 @@
 import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {exportV3, pageV3, getByIdV3} from "@/services/admin/operateLog";
+import {exportOperateLog, pageOperateLog, getByIdOperateLog} from "@/services/admin/operateLog";
 import {Button} from "antd";
 import {ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
@@ -195,7 +195,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canOperateLogGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdV3({id: record?.id}).then(res => {
+					   getByIdOperateLog({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setDataSource(res?.data)
 							   setModalVisit(true)
@@ -225,7 +225,7 @@ export default () => {
 				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
 					const list: TableColumns[] = []
-					return pageV3(getPageQueryParam(params)).then(res => {
+					return pageOperateLog(getPageQueryParam(params)).then(res => {
 						res?.data?.records?.forEach((item: TableColumns) => {
 							item.status = item.status as string;
 							list.push(item);
@@ -269,7 +269,7 @@ export default () => {
 						</Button>,
 						( access.canOperateLogExport && <Button loading={loading} key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={() => {
 							setLoading(true)
-							exportV3(param).finally(() => {
+							exportOperateLog(param).finally(() => {
 								setLoading(false)
 							})
 						}}>

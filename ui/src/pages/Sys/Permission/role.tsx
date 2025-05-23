@@ -2,14 +2,14 @@ import {
 	ProColumns
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {pageV3, removeV3, getByIdV3} from "@/services/admin/role";
+import {pageRole, removeRole, getByIdRole} from "@/services/admin/role";
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {trim} from "@/utils/format";
-import {listTreeV3 as listMenuTreeV3} from "@/services/admin/menu";
-import {listTreeV3 as listDeptTreeV3} from "@/services/admin/dept";
+import {listTreeMenu} from "@/services/admin/menu";
+import {listTreeDept} from "@/services/admin/dept";
 import {RoleDrawer} from "@/pages/Sys/Permission/RoleDrawer";
 import {RoleModifyAuthorityDrawer} from "@/pages/Sys/Permission/RoleModifyAuthorityDrawer";
 import {useAccess} from "@@/exports";
@@ -53,13 +53,13 @@ export default () => {
 	}
 
 	const getMenuTreeList = async () => {
-		listMenuTreeV3({code: 1, status: 0}).then(res => {
+		listTreeMenu({code: 1, status: 0}).then(res => {
 			setMenuTreeList(res?.data)
 		})
 	}
 
 	const getDeptTreeList = async () => {
-		listDeptTreeV3({}).then(res => {
+		listTreeDept({}).then(res => {
 			setDeptTreeList(res?.data)
 		})
 	}
@@ -160,7 +160,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canRoleGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdV3({id: record?.id}).then(res => {
+					   getByIdRole({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('查看角色')
 							   setModalVisit(true)
@@ -174,7 +174,7 @@ export default () => {
 				</a>),
 				( access.canRoleModify && <a key="modify"
 				   onClick={() => {
-					   getByIdV3({id: record?.id}).then(res => {
+					   getByIdRole({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('修改角色')
 							   setModalVisit(true)
@@ -187,7 +187,7 @@ export default () => {
 					修改
 				</a>),
 				( access.canRoleModify && <a key={'modifyAuthority'} onClick={() => {
-					getByIdV3({id: record?.id}).then(res => {
+					getByIdRole({id: record?.id}).then(res => {
 						setTitle('分配权限')
 						setModalModifyAuthorityVisit(true)
 						setDataSource(res?.data)
@@ -203,7 +203,7 @@ export default () => {
 						okText: '确认',
 						cancelText: '取消',
 						onOk: () => {
-							removeV3([record?.id]).then(res => {
+							removeRole([record?.id]).then(res => {
 								if (res.code === 'OK') {
 									message.success("删除成功").then()
 									// @ts-ignore
@@ -257,7 +257,7 @@ export default () => {
 				columns={columns}
 				request={ async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return pageV3(getPageQueryParam(params)).then(res => {
+					return pageRole(getPageQueryParam(params)).then(res => {
 						return Promise.resolve({
 							data: res?.data?.records,
 							total: parseInt(res?.data?.total || 0),
@@ -299,7 +299,7 @@ export default () => {
 										message.warning("请至少选择一条数据").then()
 										return;
 									}
-									removeV3(ids).then(res => {
+									removeRole(ids).then(res => {
 										if (res.code === 'OK') {
 											message.success("删除成功").then()
 											// @ts-ignore

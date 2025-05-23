@@ -21,6 +21,10 @@
       <artifactId>modbus4j</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.fazecast</groupId>
+      <artifactId>jSerialComm</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-log4j2</artifactId>
       <scope>test</scope>

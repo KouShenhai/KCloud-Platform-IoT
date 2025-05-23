@@ -2,7 +2,7 @@
 import {request} from '@umijs/max';
 
 /** 修改IP 修改IP PUT /v3/ips */
-export async function modifyV3(body: API.IpModifyCmd, options?: { [key: string]: any }) {
+export async function modifyIp(body: API.IpModifyCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/ips', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +14,7 @@ export async function modifyV3(body: API.IpModifyCmd, options?: { [key: string]:
 }
 
 /** 保存IP 保存IP POST /v3/ips */
-export async function saveV3(body: API.IpSaveCmd, options?: { [key: string]: any }) {
+export async function saveIp(body: API.IpSaveCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/ips', {
 		method: 'POST',
 		headers: {
@@ -26,7 +26,7 @@ export async function saveV3(body: API.IpSaveCmd, options?: { [key: string]: any
 }
 
 /** 删除IP 删除IP DELETE /v3/ips */
-export async function removeV3(body: number[], options?: { [key: string]: any }) {
+export async function removeIp(body: number[], options?: { [key: string]: any }) {
 	return request<any>('/v3/ips', {
 		method: 'DELETE',
 		headers: {
@@ -38,9 +38,9 @@ export async function removeV3(body: number[], options?: { [key: string]: any })
 }
 
 /** 查看IP详情 查看IP详情 GET /v3/ips/${param0} */
-export async function getByIdV3(
+export async function getByIdIp(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-	params: API.getByIdV3Params,
+	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
@@ -52,7 +52,7 @@ export async function getByIdV3(
 }
 
 /** 导出IP 导出IP POST /v3/ips/export */
-export async function exportV3(body: API.IpExportCmd, options?: { [key: string]: any }) {
+export async function exportIp(body: API.IpExportCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/ips/export', {
 		method: 'POST',
 		headers: {
@@ -64,7 +64,7 @@ export async function exportV3(body: API.IpExportCmd, options?: { [key: string]:
 }
 
 /** 导入IP 导入IP POST /v3/ips/import */
-export async function importV3(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importIp(body: {}, file?: File[], options?: { [key: string]: any }) {
 	const formData = new FormData();
 
 	if (file) {
@@ -96,7 +96,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 }
 
 /** 分页查询IP列表 分页查询IP列表 POST /v3/ips/page */
-export async function pageV3(body: API.IpPageQry, options?: { [key: string]: any }) {
+export async function pageIp(body: API.IpPageQry, options?: { [key: string]: any }) {
 	return request<API.Result>('/v3/ips/page', {
 		method: 'POST',
 		headers: {

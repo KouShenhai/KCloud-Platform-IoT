@@ -1,6 +1,6 @@
 import {DrawerForm, ProFormRadio, ProFormSelect, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
 import {Image, message, UploadFile} from 'antd';
-import {modifyV3, saveV3} from '@/services/admin/user';
+import {modifyUser, saveUser} from '@/services/admin/user';
 import React, {useState} from "react";
 import {UploadAvatarDrawer} from "@/pages/Sys/Permission/UploadAvatarDrawer";
 import {ProFormItem} from "@ant-design/pro-form";
@@ -71,7 +71,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 					avatar: fileList.length > 0 ? (fileList[0]?.url ? fileList[0]?.url : fileList[0]?.response?.data) : "",
 				}
 				if (value.id === undefined) {
-					saveV3({co: co}, requestId).then(res => {
+					saveUser({co: co}, requestId).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
 							setModalVisit(false)
@@ -82,7 +82,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 						setLoading(false)
 					})
 				} else {
-					modifyV3({co: co}).then(res => {
+					modifyUser({co: co}).then(res => {
 						if (res.code === 'OK') {
 							message.success("修改成功").then()
 							setModalVisit(false)

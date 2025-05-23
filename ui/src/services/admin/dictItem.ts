@@ -2,7 +2,7 @@
 import {request} from '@umijs/max';
 
 /** 修改字典项 修改字典项 PUT /v3/dict-items */
-export async function modifyV3(body: API.DictItemModifyCmd, options?: { [key: string]: any }) {
+export async function modifyDictItem(body: API.DictItemModifyCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/dict-items', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +14,7 @@ export async function modifyV3(body: API.DictItemModifyCmd, options?: { [key: st
 }
 
 /** 保存字典项 保存字典项 POST /v3/dict-items */
-export async function saveV3(body: API.DictItemSaveCmd, options?: { [key: string]: any }) {
+export async function saveDictItem(body: API.DictItemSaveCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/dict-items', {
 		method: 'POST',
 		headers: {
@@ -26,7 +26,7 @@ export async function saveV3(body: API.DictItemSaveCmd, options?: { [key: string
 }
 
 /** 删除字典项 删除字典项 DELETE /v3/dict-items */
-export async function removeV3(body: number[], options?: { [key: string]: any }) {
+export async function removeDictItem(body: number[], options?: { [key: string]: any }) {
 	return request<any>('/v3/dict-items', {
 		method: 'DELETE',
 		headers: {
@@ -38,9 +38,9 @@ export async function removeV3(body: number[], options?: { [key: string]: any })
 }
 
 /** 查看字典项详情 查看字典项详情 GET /v3/dict-items/${param0} */
-export async function getByIdV3(
+export async function getByIdDictItem(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-	params: API.getByIdV3Params,
+	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
@@ -52,7 +52,7 @@ export async function getByIdV3(
 }
 
 /** 导出字典项 导出字典项 POST /v3/dict-items/export */
-export async function exportV3(body: API.DictItemExportCmd, options?: { [key: string]: any }) {
+export async function exportDictItem(body: API.DictItemExportCmd, options?: { [key: string]: any }) {
 	return request<any>('/v3/dict-items/export', {
 		method: 'POST',
 		headers: {
@@ -64,7 +64,7 @@ export async function exportV3(body: API.DictItemExportCmd, options?: { [key: st
 }
 
 /** 导入字典项 导入字典项 POST /v3/dict-items/import */
-export async function importV3(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importDictItem(body: {}, file?: File[], options?: { [key: string]: any }) {
 	const formData = new FormData();
 
 	if (file) {
@@ -96,7 +96,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 }
 
 /** 分页查询字典项列表 分页查询字典项列表 POST /v3/dict-items/page */
-export async function pageV3(body: API.DictItemPageQry, options?: { [key: string]: any }) {
+export async function pageDictItem(body: API.DictItemPageQry, options?: { [key: string]: any }) {
 	return request<API.Result>('/v3/dict-items/page', {
 		method: 'POST',
 		headers: {

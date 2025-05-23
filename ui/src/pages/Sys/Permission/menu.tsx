@@ -2,7 +2,7 @@ import {
 	ProColumns
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {listTreeV3, removeV3, getByIdV3} from "@/services/admin/menu";
+import {listTreeMenu, removeMenu, getByIdMenu} from "@/services/admin/menu";
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal, Space, Switch, Tag} from 'antd';
@@ -48,7 +48,7 @@ export default () => {
 	}
 
 	const getTreeList = async () => {
-		listTreeV3({code: 1, type: 0, status: 0}).then(res => {
+		listTreeMenu({code: 1, type: 0, status: 0}).then(res => {
 			setTreeList([{
 				id: '0',
 				name: '根目录',
@@ -210,7 +210,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canMenuGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdV3({id: record?.id}).then(res => {
+					   getByIdMenu({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('查看菜单')
 							   setModalVisit(true)
@@ -246,7 +246,7 @@ export default () => {
 				</a>),
 				( access.canMenuModify && <a key="modify"
 				   onClick={() => {
-					   getByIdV3({id: record?.id}).then(res => {
+					   getByIdMenu({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('修改菜单')
 							   setModalVisit(true)
@@ -267,7 +267,7 @@ export default () => {
 						okText: '确认',
 						cancelText: '取消',
 						onOk: () => {
-							removeV3([record?.id]).then(res => {
+							removeMenu([record?.id]).then(res => {
 								if (res.code === 'OK') {
 									message.success("删除成功").then()
 									// @ts-ignore
@@ -310,7 +310,7 @@ export default () => {
 				columns={columns}
 				request={ async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return listTreeV3(getListTreeQueryParam(params)).then(res => {
+					return listTreeMenu(getListTreeQueryParam(params)).then(res => {
 						return Promise.resolve({
 							data: res?.data,
 							success: true,
@@ -355,7 +355,7 @@ export default () => {
 										message.warning("请至少选择一条数据").then()
 										return;
 									}
-									removeV3(ids).then(res => {
+									removeMenu(ids).then(res => {
 										if (res.code === 'OK') {
 											message.success("删除成功").then()
 											// @ts-ignore

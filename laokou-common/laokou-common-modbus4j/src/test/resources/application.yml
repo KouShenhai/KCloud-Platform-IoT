@@ -13,5 +13,18 @@ spring:
     udp:
       host: 127.0.0.1
       port: 502
+    rtu:
+      comm-port-id: COM2
+      baud-rate: 9600
+      data-bits: 8
+      stop-bits: 1
+      parity: 0
+      timeout: 5000
+    ascii:
+      comm-port-id: COM2
+      baud-rate: 19200
+      data-bits: 7
+      stop-bits: 1
+      parity: 0
     timeout: 5000
     retries: 5

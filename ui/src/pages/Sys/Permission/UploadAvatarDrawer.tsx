@@ -1,6 +1,6 @@
 import ImgCrop from "antd-img-crop";
 import {GetProp, Upload, UploadFile, UploadProps} from "antd";
-import {uploadV3} from "@/services/admin/oss";
+import {uploadOss} from "@/services/admin/oss";
 import React from "react";
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
@@ -50,7 +50,7 @@ export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({ setPrevi
 					const { file, onProgress, onError, onSuccess } = options;
 					const formData = new FormData();
 					formData.append('file', file);
-					uploadV3(formData).then(res => {
+					uploadOss(formData).then(res => {
 						// @ts-ignore
 						onProgress({ percent: 100 }, file)
 						if (res.code === 'OK') {

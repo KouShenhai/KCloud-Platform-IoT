@@ -2,7 +2,7 @@ import {
 	ProColumns
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import { pageV3, removeV3, getByIdV3 } from '@/services/admin/user';
+import { pageUser, removeUser, getByIdUser } from '@/services/admin/user';
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal, Space, Switch, Tag, UploadFile} from 'antd';
@@ -10,8 +10,8 @@ import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {trim} from "@/utils/format";
 import { UserResetPwdDrawer } from '@/pages/Sys/Permission/UserResetPwdDrawer';
 import {UserDrawer} from "@/pages/Sys/Permission/UserDrawer";
-import {listTreeV3} from "@/services/admin/dept";
-import {pageV3 as rolePageV3} from "@/services/admin/role";
+import {listTreeDept} from "@/services/admin/dept";
+import {pageRole} from "@/services/admin/role";
 import {UserModifyAuthorityDrawer} from "@/pages/Sys/Permission/UserModifyAuthorityDrawer";
 import {useAccess} from "@@/exports";
 import {v7 as uuidV7} from "uuid";
@@ -44,13 +44,13 @@ export default () => {
 	const [requestId, setRequestId] = useState('')
 
 	const getDeptTreeList = async () => {
-		listTreeV3({}).then(res => {
+		listTreeDept({}).then(res => {
 			setDeptTreeList(res?.data)
 		})
 	}
 
 	const getRoleList = async () => {
-		rolePageV3({pageSize: 10000, pageNum: 1, pageIndex: 0}).then(res => {
+		pageRole({pageSize: 10000, pageNum: 1, pageIndex: 0}).then(res => {
 			setRoleList(res?.data?.records)
 		})
 	}
@@ -227,7 +227,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canUserGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdV3({id: record?.id}).then(res => {
+					   getByIdUser({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('查看用户')
 							   setModalVisit(true)
@@ -247,7 +247,7 @@ export default () => {
 				</a>),
 				( access.canUserModify && <a key="modify"
 				   onClick={() => {
-					   getByIdV3({id: record?.id}).then(res => {
+					   getByIdUser({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('修改用户')
 							   setModalVisit(true)
@@ -267,7 +267,7 @@ export default () => {
 					修改
 				</a>),
 				( access.canUserModify && <a key={'modifyAuthority'} onClick={() => {
-					getByIdV3({id: record?.id}).then(res => {
+					getByIdUser({id: record?.id}).then(res => {
 						setTitle('分配权限')
 						setModalModifyAuthorityVisit(true)
 						setDataSource(res?.data)
@@ -276,7 +276,7 @@ export default () => {
 					分配权限
 				</a>),
 				( access.canUserModify && <a key={'resetPwd'} onClick={() => {
-					getByIdV3({id: record?.id}).then(res => {
+					getByIdUser({id: record?.id}).then(res => {
 						setModalRestPwdVisit(true)
 						setDataSource(res?.data)
 					})
@@ -290,7 +290,7 @@ export default () => {
 						okText: '确认',
 						cancelText: '取消',
 						onOk: () => {
-							removeV3([record?.id]).then(res => {
+							removeUser([record?.id]).then(res => {
 								if (res.code === 'OK') {
 									message.success("删除成功").then()
 									// @ts-ignore
@@ -351,7 +351,7 @@ export default () => {
 				columns={columns}
 				request={ async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return pageV3(getPageQueryParam(params)).then(res => {
+					return pageUser(getPageQueryParam(params)).then(res => {
 						return Promise.resolve({
 							data: res?.data?.records,
 							total: parseInt(res?.data?.total || 0),
@@ -394,7 +394,7 @@ export default () => {
 										message.warning("请至少选择一条数据").then()
 										return;
 									}
-									removeV3(ids).then(res => {
+									removeUser(ids).then(res => {
 										if (res.code === 'OK') {
 											message.success("删除成功").then()
 											// @ts-ignore

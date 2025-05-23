@@ -4,7 +4,7 @@ import {ExportAllToExcel} from "@/utils/export";
 import moment from "moment/moment";
 
 /** 修改登录日志 修改登录日志 PUT /v3/login-logs */
-export async function modifyV3(body: API.LoginLogModifyCmd, options?: { [key: string]: any }) {
+export async function modifyLoginLog(body: API.LoginLogModifyCmd, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/login-logs', {
 		method: 'PUT',
 		headers: {
@@ -16,7 +16,7 @@ export async function modifyV3(body: API.LoginLogModifyCmd, options?: { [key: st
 }
 
 /** 保存登录日志 保存登录日志 POST /v3/login-logs */
-export async function saveV3(body: API.LoginLogSaveCmd, options?: { [key: string]: any }) {
+export async function saveLoginLog(body: API.LoginLogSaveCmd, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/login-logs', {
 		method: 'POST',
 		headers: {
@@ -28,7 +28,7 @@ export async function saveV3(body: API.LoginLogSaveCmd, options?: { [key: string
 }
 
 /** 删除登录日志 删除登录日志 DELETE /v3/login-logs */
-export async function removeV3(body: number[], options?: { [key: string]: any }) {
+export async function removeLoginLog(body: number[], options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/login-logs', {
 		method: 'DELETE',
 		headers: {
@@ -40,9 +40,9 @@ export async function removeV3(body: number[], options?: { [key: string]: any })
 }
 
 /** 查看登录日志详情 查看登录日志详情 GET /v3/login-logs/${param0} */
-export async function getByIdV3(
+export async function getByIdLoginLog(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-	params: API.getByIdV3Params,
+	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
@@ -54,12 +54,12 @@ export async function getByIdV3(
 }
 
 /** 导出登录日志 导出登录日志 POST /v3/login-logs/export */
-export async function exportV3(body: API.LoginLogExportCmd, options?: { [key: string]: any }) {
+export async function exportLoginLog(body: API.LoginLogExportCmd, options?: { [key: string]: any }) {
 	return ExportAllToExcel("登录日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/api/admin/v3/login-logs/export', 'POST', body, options)
 }
 
 /** 导入登录日志 导入登录日志 POST /v3/login-logs/import */
-export async function importV3(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importLoginLog(body: {}, file?: File[], options?: { [key: string]: any }) {
 	const formData = new FormData();
 
 	if (file) {
@@ -91,7 +91,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 }
 
 /** 分页查询登录日志列表 分页查询登录日志列表 POST /v3/login-logs/page */
-export async function pageV3(body: API.LoginLogPageQry, options?: { [key: string]: any }) {
+export async function pageLoginLog(body: API.LoginLogPageQry, options?: { [key: string]: any }) {
 	return request<API.Result>('/api/admin/v3/login-logs/page', {
 		method: 'POST',
 		headers: {

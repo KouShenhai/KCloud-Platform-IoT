@@ -1,6 +1,6 @@
 import {DrawerForm, ProFormSelect, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
 import { message } from 'antd';
-import {modifyAuthorityV3} from '@/services/admin/role';
+import {modifyAuthorityRole} from '@/services/admin/role';
 import React, {useState} from "react";
 
 interface RoleAuthorityProps {
@@ -64,7 +64,7 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 					deptIds: deptIds,
 					menuIds: menuIds
 				}
-				modifyAuthorityV3({co: co}).then(res => {
+				modifyAuthorityRole({co: co}).then(res => {
 					if (res.code === 'OK') {
 						message.success("分配权限成功").then()
 						setModalModifyAuthorityVisit(false)

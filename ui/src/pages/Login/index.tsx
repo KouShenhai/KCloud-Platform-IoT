@@ -14,8 +14,8 @@ import {CaptFieldRef, LoginFormPage, ProFormCaptcha, ProFormInstance, ProFormTex
 import {Col, Divider, Image, message, Row, Space, Tabs} from 'antd';
 import {CSSProperties, useEffect, useRef, useState} from 'react';
 import {login} from '@/services/auth/auth';
-import {getCaptchaImageByUuidV3, sendCaptchaV3 } from '@/services/auth/captcha';
-import {getSecretInfoV3} from '@/services/auth/secret';
+import {getByUuidCaptcha, sendCaptcha } from '@/services/auth/captcha';
+import {getInfoSecret} from '@/services/auth/secret';
 import {JSEncrypt} from 'jsencrypt';
 import {v7 as uuidV7} from 'uuid';
 import {clearToken, setToken} from "@/access"
@@ -93,7 +93,7 @@ export default () => {
 		// 调用验证码API
 		const uuid = uuidV7();
 		// @ts-ignore
-		getCaptchaImageByUuidV3({uuid: uuid}).then((res: { code: string; data: React.SetStateAction<string>; }) => {
+		getByUuidCaptcha({uuid: uuid}).then((res: { code: string; data: React.SetStateAction<string>; }) => {
 			if (res.code === 'OK') {
 				setCaptchaImage(res.data);
 			}
@@ -103,7 +103,7 @@ export default () => {
 
 	const getPublicKey = async () => {
 		// @ts-ignore
-		getSecretInfoV3().then((res: { code: string; data: { publicKey: React.SetStateAction<string>; }; }) => {
+		getInfoSecret().then((res: { code: string; data: { publicKey: React.SetStateAction<string>; }; }) => {
 			if (res.code === 'OK') {
 				setPublicKey(res.data.publicKey);
 			}
@@ -116,7 +116,7 @@ export default () => {
 			uuid: formRef?.current?.getFieldValue(MAIL.key)
 		}
 		const co = { co : param }
-		sendCaptchaV3('mail', co as API.SendCaptchaCO, uuidV7()).then(res => {
+		sendCaptcha('mail', co as API.SendCaptchaCO, uuidV7()).then(res => {
 			if (res.code !== "OK") {
 				mailCaptchaRef.current?.endTiming()
 			}
@@ -129,7 +129,7 @@ export default () => {
 			uuid: formRef?.current?.getFieldValue(MOBILE.key)
 		}
 		const co = { co : param }
-		sendCaptchaV3('mobile', co as API.SendCaptchaCO, uuidV7()).then(res => {
+		sendCaptcha('mobile', co as API.SendCaptchaCO, uuidV7()).then(res => {
 			if (res.code !== "OK") {
 				mobileCaptchaRef.current?.endTiming()
 			}

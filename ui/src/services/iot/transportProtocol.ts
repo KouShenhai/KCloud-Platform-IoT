@@ -2,7 +2,7 @@
 import { request } from '@umijs/max';
 
 /** 修改传输协议 修改传输协议 PUT /v3/transport-protocols */
-export async function modifyV3(
+export async function modifyTransportProtocol(
   body: API.TransportProtocolModifyCmd,
   options?: { [key: string]: any },
 ) {
@@ -17,7 +17,7 @@ export async function modifyV3(
 }
 
 /** 保存传输协议 保存传输协议 POST /v3/transport-protocols */
-export async function saveV3(body: API.TransportProtocolSaveCmd, options?: { [key: string]: any }) {
+export async function saveTransportProtocol(body: API.TransportProtocolSaveCmd, options?: { [key: string]: any }) {
   return request<any>('/api/iot/v3/transport-protocols', {
     method: 'POST',
     headers: {
@@ -29,7 +29,7 @@ export async function saveV3(body: API.TransportProtocolSaveCmd, options?: { [ke
 }
 
 /** 删除传输协议 删除传输协议 DELETE /v3/transport-protocols */
-export async function removeV3(body: number[], options?: { [key: string]: any }) {
+export async function removeTransportProtocol(body: number[], options?: { [key: string]: any }) {
   return request<any>('/api/iot/v3/transport-protocols', {
     method: 'DELETE',
     headers: {
@@ -41,9 +41,9 @@ export async function removeV3(body: number[], options?: { [key: string]: any })
 }
 
 /** 查看传输协议详情 查看传输协议详情 GET /v3/transport-protocols/${param0} */
-export async function getByIdV3(
+export async function getByIdTransportProtocol(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getByIdV3Params,
+  params: API.getByIdParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
@@ -55,7 +55,7 @@ export async function getByIdV3(
 }
 
 /** 导出传输协议 导出传输协议 POST /v3/transport-protocols/export */
-export async function exportV3(
+export async function exportTransportProtocol(
   body: API.TransportProtocolExportCmd,
   options?: { [key: string]: any },
 ) {
@@ -70,7 +70,7 @@ export async function exportV3(
 }
 
 /** 导入传输协议 导入传输协议 POST /v3/transport-protocols/import */
-export async function importV3(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importTransportProtocol(body: {}, file?: File[], options?: { [key: string]: any }) {
   const formData = new FormData();
 
   if (file) {
@@ -102,7 +102,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 }
 
 /** 分页查询传输协议列表 分页查询传输协议列表 POST /v3/transport-protocols/page */
-export async function pageV3(body: API.TransportProtocolPageQry, options?: { [key: string]: any }) {
+export async function pageTransportProtocol(body: API.TransportProtocolPageQry, options?: { [key: string]: any }) {
   return request<API.Result>('/api/iot/v3/transport-protocols/page', {
     method: 'POST',
     headers: {

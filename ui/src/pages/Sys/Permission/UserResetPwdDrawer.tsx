@@ -1,6 +1,6 @@
 import { DrawerForm, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
-import { resetPwdV3 } from '@/services/admin/user';
+import { resetPwdUser } from '@/services/admin/user';
 import React, {useState} from "react";
 
 interface UserResetPwdDrawerProps {
@@ -39,7 +39,7 @@ export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({ visible,
 					message.error("两次密码不一致");
 					return;
 				}
-				resetPwdV3({ id: value?.id, password }).then(res => {
+				resetPwdUser({ id: value?.id, password }).then(res => {
 					if (res.code === 'OK') {
 						message.success("密码重置成功");
 						setVisible(false);

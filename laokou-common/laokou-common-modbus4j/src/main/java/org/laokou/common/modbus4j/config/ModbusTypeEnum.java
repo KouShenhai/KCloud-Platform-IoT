@@ -17,6 +17,7 @@
 
 package org.laokou.common.modbus4j.config;
 
+import com.serotonin.modbus4j.ModbusFactory;
 import lombok.Getter;
 import org.laokou.common.i18n.util.EnumParser;
 
@@ -26,13 +27,33 @@ import org.laokou.common.i18n.util.EnumParser;
 @Getter
 public enum ModbusTypeEnum {
 
-	RTU_MASTER("rtu_master", "RTU MASTER"),
+	RTU_MASTER("rtu_master", "RTU MASTER") {
+		@Override
+		public Modbus getModbus(ModbusFactory modbusFactory, SpringModbusProperties properties) {
+			return new ModbusRtuMaster(modbusFactory, properties);
+		}
+	},
 
-	TCP_MASTER("tcp_master", "TCP MASTER"),
+	TCP_MASTER("tcp_master", "TCP MASTER") {
+		@Override
+		public Modbus getModbus(ModbusFactory modbusFactory, SpringModbusProperties properties) {
+			return new ModbusTcpMaster(modbusFactory, properties);
+		}
+	},
 
-	ASCII_MASTER("ascii_master", "ASCII MASTER"),
+	ASCII_MASTER("ascii_master", "ASCII MASTER") {
+		@Override
+		public Modbus getModbus(ModbusFactory modbusFactory, SpringModbusProperties properties) {
+			return new ModbusAsciiMaster(modbusFactory, properties);
+		}
+	},
 
-	UDP_MASTER("udp_master", "UDP MASTER");
+	UDP_MASTER("udp_master", "UDP MASTER") {
+		@Override
+		public Modbus getModbus(ModbusFactory modbusFactory, SpringModbusProperties properties) {
+			return new ModbusUdpMaster(modbusFactory, properties);
+		}
+	};
 
 	private final String code;
 
@@ -46,5 +67,7 @@ public enum ModbusTypeEnum {
 	public static ModbusTypeEnum getByCode(String code) {
 		return EnumParser.parse(ModbusTypeEnum.class, ModbusTypeEnum::getCode, code);
 	}
+
+	public abstract Modbus getModbus(ModbusFactory modbusFactory, SpringModbusProperties properties);
 
 }

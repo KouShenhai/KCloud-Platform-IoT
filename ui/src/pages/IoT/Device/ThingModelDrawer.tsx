@@ -5,7 +5,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import {ProFormItem, ProFormTextArea} from "@ant-design/pro-form";
 import {v7 as uuidV7} from "uuid";
-import {modifyV3, saveV3} from "@/services/iot/thingModel";
+import {modifyThingModel, saveThingModel} from "@/services/iot/thingModel";
 
 interface ThingModelDrawerProps {
 	modalVisit: boolean;
@@ -96,7 +96,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				// @ts-ignore
 				value.type = value.type.join(',')
 				if (value.id === undefined) {
-					saveV3({co: value}, requestId).then(res => {
+					saveThingModel({co: value}, requestId).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
 							setModalVisit(false)
@@ -107,7 +107,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 						setLoading(false)
 					})
 				} else {
-					modifyV3({co: value}).then(res => {
+					modifyThingModel({co: value}).then(res => {
 						if (res.code === 'OK') {
 							message.success("修改成功").then()
 							setModalVisit(false)

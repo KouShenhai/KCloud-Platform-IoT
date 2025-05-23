@@ -2,7 +2,7 @@
 import {request} from '@umijs/max';
 
 /** 修改部门 修改部门 PUT /v3/depts */
-export async function modifyV3(body: API.DeptModifyCmd, options?: { [key: string]: any }) {
+export async function modifyDept(body: API.DeptModifyCmd, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/depts', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +14,7 @@ export async function modifyV3(body: API.DeptModifyCmd, options?: { [key: string
 }
 
 /** 保存部门 保存部门 POST /v3/depts */
-export async function saveV3(body: API.DeptSaveCmd, requestId: string, options?: { [key: string]: any }) {
+export async function saveDept(body: API.DeptSaveCmd, requestId: string, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/depts', {
 		method: 'POST',
 		headers: {
@@ -27,7 +27,7 @@ export async function saveV3(body: API.DeptSaveCmd, requestId: string, options?:
 }
 
 /** 删除部门 删除部门 DELETE /v3/depts */
-export async function removeV3(body: number[], options?: { [key: string]: any }) {
+export async function removeDept(body: number[], options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/depts', {
 		method: 'DELETE',
 		headers: {
@@ -39,9 +39,9 @@ export async function removeV3(body: number[], options?: { [key: string]: any })
 }
 
 /** 查看部门详情 查看部门详情 GET /v3/depts/${param0} */
-export async function getByIdV3(
+export async function getByIdDept(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-	params: API.getByIdV3Params,
+	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
@@ -53,7 +53,7 @@ export async function getByIdV3(
 }
 
 /** 导出部门 导出部门 POST /v3/depts/export */
-export async function exportV3(body: API.DeptExportCmd, options?: { [key: string]: any }) {
+export async function exportDept(body: API.DeptExportCmd, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/depts/export', {
 		method: 'POST',
 		headers: {
@@ -65,7 +65,7 @@ export async function exportV3(body: API.DeptExportCmd, options?: { [key: string
 }
 
 /** 导入部门 导入部门 POST /v3/depts/import */
-export async function importV3(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importDept(body: {}, file?: File[], options?: { [key: string]: any }) {
 	const formData = new FormData();
 
 	if (file) {
@@ -97,7 +97,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 }
 
 /** 分页查询部门列表 分页查询部门列表 POST /v3/depts/page */
-export async function pageV3(body: API.DeptPageQry, options?: { [key: string]: any }) {
+export async function pageDept(body: API.DeptPageQry, options?: { [key: string]: any }) {
 	return request<API.Result>('/api/admin/v3/depts/page', {
 		method: 'POST',
 		headers: {
@@ -108,7 +108,7 @@ export async function pageV3(body: API.DeptPageQry, options?: { [key: string]: a
 	});
 }
 
-export async function listTreeV3(body: any,options?: { [key: string]: any }) {
+export async function listTreeDept(body: any,options?: { [key: string]: any }) {
 	return request<API.Result>('/api/admin/v3/depts/list-tree', {
 		method: 'POST',
 		headers: {

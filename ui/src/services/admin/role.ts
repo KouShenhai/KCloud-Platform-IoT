@@ -2,7 +2,7 @@
 import {request} from '@umijs/max';
 
 /** 修改角色 修改角色 PUT /v3/roles */
-export async function modifyV3(body: API.RoleModifyCmd, options?: { [key: string]: any }) {
+export async function modifyRole(body: API.RoleModifyCmd, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/roles', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +14,7 @@ export async function modifyV3(body: API.RoleModifyCmd, options?: { [key: string
 }
 
 /** 保存角色 保存角色 POST /v3/roles */
-export async function saveV3(body: API.RoleSaveCmd,requestId: string, options?: { [key: string]: any }) {
+export async function saveRole(body: API.RoleSaveCmd,requestId: string, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/roles', {
 		method: 'POST',
 		headers: {
@@ -27,7 +27,7 @@ export async function saveV3(body: API.RoleSaveCmd,requestId: string, options?: 
 }
 
 /** 删除角色 删除角色 DELETE /v3/roles */
-export async function removeV3(body: number[], options?: { [key: string]: any }) {
+export async function removeRole(body: number[], options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/roles', {
 		method: 'DELETE',
 		headers: {
@@ -39,9 +39,9 @@ export async function removeV3(body: number[], options?: { [key: string]: any })
 }
 
 /** 查看角色详情 查看角色详情 GET /v3/roles/${param0} */
-export async function getByIdV3(
+export async function getByIdRole(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-	params: API.getByIdV3Params,
+	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
@@ -53,7 +53,7 @@ export async function getByIdV3(
 }
 
 /** 导出角色 导出角色 POST /v3/roles/export */
-export async function exportV3(body: API.RoleExportCmd, options?: { [key: string]: any }) {
+export async function exportRole(body: API.RoleExportCmd, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/roles/export', {
 		method: 'POST',
 		headers: {
@@ -65,7 +65,7 @@ export async function exportV3(body: API.RoleExportCmd, options?: { [key: string
 }
 
 /** 导入角色 导入角色 POST /v3/roles/import */
-export async function importV3(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importRole(body: {}, file?: File[], options?: { [key: string]: any }) {
 	const formData = new FormData();
 
 	if (file) {
@@ -97,7 +97,7 @@ export async function importV3(body: {}, file?: File[], options?: { [key: string
 }
 
 /** 分页查询角色列表 分页查询角色列表 POST /v3/roles/page */
-export async function pageV3(body: API.RolePageQry, options?: { [key: string]: any }) {
+export async function pageRole(body: API.RolePageQry, options?: { [key: string]: any }) {
 	return request<API.Result>('/api/admin/v3/roles/page', {
 		method: 'POST',
 		headers: {
@@ -109,7 +109,7 @@ export async function pageV3(body: API.RolePageQry, options?: { [key: string]: a
 }
 
 /** 修改角色权限 修改角色权限 PUT /v3/roles/authority */
-export async function modifyAuthorityV3(body: API.RoleModifyAuthorityCmd, options?: { [key: string]: any }) {
+export async function modifyAuthorityRole(body: API.RoleModifyAuthorityCmd, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/roles/authority', {
 		method: 'PUT',
 		headers: {

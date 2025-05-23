@@ -137,31 +137,7 @@ declare namespace API {
     co?: DeviceCO;
   };
 
-  type getByIdV3Params = {
-    id: number;
-  };
-
-  type getByIdV3Params = {
-    id: number;
-  };
-
-  type getByIdV3Params = {
-    id: number;
-  };
-
-  type getByIdV3Params = {
-    id: number;
-  };
-
-  type getByIdV3Params = {
-    id: number;
-  };
-
-  type getByIdV3Params = {
-    id: number;
-  };
-
-  type getByIdV3Params = {
+  type getByIdParams = {
     id: number;
   };
 
