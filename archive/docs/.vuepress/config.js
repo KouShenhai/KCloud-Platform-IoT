@@ -153,6 +153,11 @@ module.exports = {
 							{text: '物联网之使用Vertx实现UDP最佳实践【响应式】', link: '/pages/3e4283/'},
 						]
 					},
+					{
+						text: '文章', link: '/pages/a438ae/', items: [
+							{text: 'IntelliJ IDEA插件推荐', link: '/pages/a438ae/'},
+						]
+					},
 				]
 			},
 			{

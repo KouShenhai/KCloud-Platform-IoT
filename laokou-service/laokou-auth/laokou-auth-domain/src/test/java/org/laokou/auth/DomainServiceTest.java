@@ -110,7 +110,7 @@ class DomainServiceTest {
 			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
 		when(userGateway.getProfileUser(user, "laokou")).thenReturn(user);
 		// 构造密码校验
-		doReturn(true).when(passwordValidator).validate("123", "202cb962ac59075b964b07152d234b70");
+		doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		// 构造菜单
 		when(menuGateway.getPermissionsMenu(user)).thenReturn(Set.of("sys:user:page"));
 		// 构造部门
@@ -120,7 +120,7 @@ class DomainServiceTest {
 		// 校验调用次数
 		verify(deptGateway, times(1)).getPathsDept(user);
 		verify(menuGateway, times(1)).getPermissionsMenu(user);
-		verify(passwordValidator, times(1)).validate("123", "202cb962ac59075b964b07152d234b70");
+		verify(passwordValidator, times(1)).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		verify(userGateway, times(1)).getProfileUser(user, "laokou");
 		verify(captchaGateway, times(1)).validate(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
 		verify(sourceGateway, times(1)).getPrefixSource("laokou");
@@ -201,7 +201,7 @@ class DomainServiceTest {
 			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
 		when(userGateway.getProfileUser(user, "laokou")).thenReturn(user);
 		// 构造密码校验
-		doReturn(true).when(passwordValidator).validate("123", "202cb962ac59075b964b07152d234b70");
+		doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		// 构造菜单
 		when(menuGateway.getPermissionsMenu(user)).thenReturn(Set.of("sys:user:page"));
 		// 构造部门
@@ -211,7 +211,7 @@ class DomainServiceTest {
 		// 校验调用次数
 		verify(deptGateway, times(1)).getPathsDept(user);
 		verify(menuGateway, times(1)).getPermissionsMenu(user);
-		verify(passwordValidator, times(1)).validate("123", "202cb962ac59075b964b07152d234b70");
+		verify(passwordValidator, times(1)).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		verify(userGateway, times(1)).getProfileUser(user, "laokou");
 		verify(sourceGateway, times(1)).getPrefixSource("laokou");
 		verify(tenantGateway, times(1)).getIdTenant("laokou");
