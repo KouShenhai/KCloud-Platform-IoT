@@ -43,7 +43,7 @@ public class DeviceSaveCmdExe {
 	public void executeVoid(DeviceSaveCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> deviceDomainService.create(DeviceConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> deviceDomainService.createDevice(DeviceConvertor.toEntity(cmd.getCo())));
 	}
 
 }

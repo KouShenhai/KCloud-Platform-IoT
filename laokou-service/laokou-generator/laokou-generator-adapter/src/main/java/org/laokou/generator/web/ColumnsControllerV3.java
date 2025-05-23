@@ -53,55 +53,55 @@ public class ColumnsControllerV3 {
 	@PreAuthorize("hasAuthority('generator:column:save')")
 	@OperateLog(module = "代码生成器字段管理", operation = "保存代码生成器字段")
 	@Operation(summary = "保存代码生成器字段", description = "保存代码生成器字段")
-	public void saveV3(@RequestBody ColumnSaveCmd cmd) {
-		columnsServiceI.save(cmd);
+	public void saveColumn(@RequestBody ColumnSaveCmd cmd) {
+		columnsServiceI.saveColumn(cmd);
 	}
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('generator:column:modify')")
 	@OperateLog(module = "代码生成器字段管理", operation = "修改代码生成器字段")
 	@Operation(summary = "修改代码生成器字段", description = "修改代码生成器字段")
-	public void modifyV3(@RequestBody ColumnModifyCmd cmd) {
-		columnsServiceI.modify(cmd);
+	public void modifyColumn(@RequestBody ColumnModifyCmd cmd) {
+		columnsServiceI.modifyColumn(cmd);
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('generator:column:remove')")
 	@OperateLog(module = "代码生成器字段管理", operation = "删除代码生成器字段")
 	@Operation(summary = "删除代码生成器字段", description = "删除代码生成器字段")
-	public void removeV3(@RequestBody Long[] ids) {
-		columnsServiceI.remove(new ColumnRemoveCmd(ids));
+	public void removeColumn(@RequestBody Long[] ids) {
+		columnsServiceI.removeColumn(new ColumnRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('generator:column:import')")
 	@OperateLog(module = "代码生成器字段管理", operation = "导入代码生成器字段")
 	@Operation(summary = "导入代码生成器字段", description = "导入代码生成器字段")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
-		columnsServiceI.importI(new ColumnImportCmd(files));
+	public void importColumn(@RequestPart("files") MultipartFile[] files) {
+		columnsServiceI.importColumn(new ColumnImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('generator:column:export')")
 	@OperateLog(module = "代码生成器字段管理", operation = "导出代码生成器字段")
 	@Operation(summary = "导出代码生成器字段", description = "导出代码生成器字段")
-	public void exportV3(@RequestBody ColumnExportCmd cmd) {
-		columnsServiceI.export(cmd);
+	public void exportColumn(@RequestBody ColumnExportCmd cmd) {
+		columnsServiceI.exportColumn(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('generator:column:page')")
 	@Operation(summary = "分页查询代码生成器字段列表", description = "分页查询代码生成器字段列表")
-	public Result<Page<ColumnCO>> pageV3(@Validated @RequestBody ColumnPageQry qry) {
-		return columnsServiceI.page(qry);
+	public Result<Page<ColumnCO>> pageColumn(@Validated @RequestBody ColumnPageQry qry) {
+		return columnsServiceI.pageColumn(qry);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "查看代码生成器字段详情", description = "查看代码生成器字段详情")
-	public Result<ColumnCO> getByIdV3(@PathVariable("id") Long id) {
-		return columnsServiceI.getById(new ColumnGetQry(id));
+	public Result<ColumnCO> getByIdColumn(@PathVariable("id") Long id) {
+		return columnsServiceI.getByIdColumn(new ColumnGetQry(id));
 	}
 
 }

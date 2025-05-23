@@ -42,20 +42,20 @@ public class OperateLogGatewayImpl implements OperateLogGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(OperateLogE operateLogE) {
+	public void createOperateLog(OperateLogE operateLogE) {
 		operateLogMapper.insert(
 				OperateLogConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), operateLogE, true));
 	}
 
 	@Override
-	public void update(OperateLogE operateLogE) {
+	public void updateOperateLog(OperateLogE operateLogE) {
 		OperateLogDO operateLogDO = OperateLogConvertor.toDataObject(null, operateLogE, false);
 		operateLogDO.setVersion(operateLogMapper.selectVersion(operateLogE.getId()));
 		operateLogMapper.updateById(operateLogDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteOperateLog(Long[] ids) {
 		operateLogMapper.deleteByIds(Arrays.asList(ids));
 	}
 

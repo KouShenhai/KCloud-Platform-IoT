@@ -40,7 +40,7 @@ public class DeptRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(DeptRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> deptDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> deptDomainService.deleteDept(cmd.getIds()));
 	}
 
 }

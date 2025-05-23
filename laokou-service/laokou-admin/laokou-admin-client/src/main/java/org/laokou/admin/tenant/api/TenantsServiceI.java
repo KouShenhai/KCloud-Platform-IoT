@@ -33,42 +33,42 @@ public interface TenantsServiceI {
 	 * 保存租户.
 	 * @param cmd 保存命令
 	 */
-	void save(TenantSaveCmd cmd);
+	void saveTenant(TenantSaveCmd cmd);
 
 	/**
 	 * 修改租户.
 	 * @param cmd 修改命令
 	 */
-	void modify(TenantModifyCmd cmd);
+	void modifyTenant(TenantModifyCmd cmd);
 
 	/**
 	 * 删除租户.
 	 * @param cmd 删除命令
 	 */
-	void remove(TenantRemoveCmd cmd);
+	void removeTenant(TenantRemoveCmd cmd);
 
 	/**
 	 * 导入租户.
 	 * @param cmd 导入命令
 	 */
-	void importI(TenantImportCmd cmd);
+	void importTenant(TenantImportCmd cmd);
 
 	/**
 	 * 导出租户.
 	 * @param cmd 导出命令
 	 */
-	void export(TenantExportCmd cmd);
+	void exportTenant(TenantExportCmd cmd);
 
 	/**
 	 * 分页查询租户.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<TenantCO>> page(TenantPageQry qry);
+	Result<Page<TenantCO>> pageTenant(TenantPageQry qry);
 
 	/**
 	 * 查看租户.
 	 * @param qry 查看请求
 	 */
-	Result<TenantCO> getById(TenantGetQry qry);
+	Result<TenantCO> getByIdTenant(TenantGetQry qry);
 
 }

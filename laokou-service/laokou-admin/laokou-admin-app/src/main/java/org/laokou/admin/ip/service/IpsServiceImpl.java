@@ -52,37 +52,37 @@ public class IpsServiceImpl implements IpsServiceI {
 	private final IpGetQryExe ipGetQryExe;
 
 	@Override
-	public void save(IpSaveCmd cmd) {
+	public void saveIp(IpSaveCmd cmd) {
 		ipSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(IpModifyCmd cmd) {
+	public void modifyIp(IpModifyCmd cmd) {
 		ipModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(IpRemoveCmd cmd) {
+	public void removeIp(IpRemoveCmd cmd) {
 		ipRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(IpImportCmd cmd) {
+	public void importIp(IpImportCmd cmd) {
 		ipImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(IpExportCmd cmd) {
+	public void exportIp(IpExportCmd cmd) {
 		ipExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<IpCO>> page(IpPageQry qry) {
+	public Result<Page<IpCO>> pageIp(IpPageQry qry) {
 		return ipPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<IpCO> getById(IpGetQry qry) {
+	public Result<IpCO> getByIdIp(IpGetQry qry) {
 		return ipGetQryExe.execute(qry);
 	}
 

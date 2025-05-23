@@ -42,13 +42,13 @@ public class CommunicationProtocolGatewayImpl implements CommunicationProtocolGa
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(CommunicationProtocolE communicationProtocolE) {
+	public void createCommunicationProtocol(CommunicationProtocolE communicationProtocolE) {
 		communicationProtocolMapper.insert(CommunicationProtocolConvertor
 			.toDataObject(distributedIdentifierFeignClientWrapper.getId(), communicationProtocolE, true));
 	}
 
 	@Override
-	public void update(CommunicationProtocolE communicationProtocolE) {
+	public void updateCommunicationProtocol(CommunicationProtocolE communicationProtocolE) {
 		CommunicationProtocolDO communicationProtocolDO = CommunicationProtocolConvertor.toDataObject(null,
 				communicationProtocolE, false);
 		communicationProtocolDO.setVersion(communicationProtocolMapper.selectVersion(communicationProtocolE.getId()));
@@ -56,7 +56,7 @@ public class CommunicationProtocolGatewayImpl implements CommunicationProtocolGa
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteCommunicationProtocol(Long[] ids) {
 		communicationProtocolMapper.deleteByIds(Arrays.asList(ids));
 	}
 

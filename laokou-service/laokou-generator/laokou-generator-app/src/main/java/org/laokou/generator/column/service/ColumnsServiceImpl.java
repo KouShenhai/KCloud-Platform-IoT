@@ -53,37 +53,37 @@ public class ColumnsServiceImpl implements ColumnsServiceI {
 	private final ColumnGetQryExe columnGetQryExe;
 
 	@Override
-	public void save(ColumnSaveCmd cmd) {
+	public void saveColumn(ColumnSaveCmd cmd) {
 		columnSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(ColumnModifyCmd cmd) {
+	public void modifyColumn(ColumnModifyCmd cmd) {
 		columnModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(ColumnRemoveCmd cmd) {
+	public void removeColumn(ColumnRemoveCmd cmd) {
 		columnRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(ColumnImportCmd cmd) {
+	public void importColumn(ColumnImportCmd cmd) {
 		columnImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(ColumnExportCmd cmd) {
+	public void exportColumn(ColumnExportCmd cmd) {
 		columnExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<ColumnCO>> page(ColumnPageQry qry) {
+	public Result<Page<ColumnCO>> pageColumn(ColumnPageQry qry) {
 		return columnPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<ColumnCO> getById(ColumnGetQry qry) {
+	public Result<ColumnCO> getByIdColumn(ColumnGetQry qry) {
 		return columnGetQryExe.execute(qry);
 	}
 

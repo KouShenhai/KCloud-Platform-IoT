@@ -41,7 +41,7 @@ public class UserRemoveCmdExe {
 	@CommandLog
 	public Flux<Void> executeVoid(UserRemoveCmd cmd) {
 		// 校验参数
-		return transactionalUtils.executeResultInTransaction(() -> userDomainService.delete(cmd.getIds()));
+		return transactionalUtils.executeResultInTransaction(() -> userDomainService.deleteUser(cmd.getIds()));
 	}
 
 }

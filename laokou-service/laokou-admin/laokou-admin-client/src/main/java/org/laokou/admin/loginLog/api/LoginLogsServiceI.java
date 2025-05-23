@@ -33,42 +33,42 @@ public interface LoginLogsServiceI {
 	 * 保存登录日志.
 	 * @param cmd 保存命令
 	 */
-	void save(LoginLogSaveCmd cmd);
+	void saveLoginLog(LoginLogSaveCmd cmd);
 
 	/**
 	 * 修改登录日志.
 	 * @param cmd 修改命令
 	 */
-	void modify(LoginLogModifyCmd cmd);
+	void modifyLoginLog(LoginLogModifyCmd cmd);
 
 	/**
 	 * 删除登录日志.
 	 * @param cmd 删除命令
 	 */
-	void remove(LoginLogRemoveCmd cmd);
+	void removeLoginLog(LoginLogRemoveCmd cmd);
 
 	/**
 	 * 导入登录日志.
 	 * @param cmd 导入命令
 	 */
-	void importI(LoginLogImportCmd cmd);
+	void importLoginLog(LoginLogImportCmd cmd);
 
 	/**
 	 * 导出登录日志.
 	 * @param cmd 导出命令
 	 */
-	void export(LoginLogExportCmd cmd);
+	void exportLoginLog(LoginLogExportCmd cmd);
 
 	/**
 	 * 分页查询登录日志.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<LoginLogCO>> page(LoginLogPageQry qry);
+	Result<Page<LoginLogCO>> pageLoginLog(LoginLogPageQry qry);
 
 	/**
 	 * 查看登录日志.
 	 * @param qry 查看请求
 	 */
-	Result<LoginLogCO> getById(LoginLogGetQry qry);
+	Result<LoginLogCO> getByIdLoginLog(LoginLogGetQry qry);
 
 }

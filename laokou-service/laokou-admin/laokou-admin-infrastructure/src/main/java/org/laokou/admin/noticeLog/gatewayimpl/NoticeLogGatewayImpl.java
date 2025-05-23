@@ -42,20 +42,20 @@ public class NoticeLogGatewayImpl implements NoticeLogGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(NoticeLogE noticeLogE) {
+	public void createNoticeLog(NoticeLogE noticeLogE) {
 		noticeLogMapper
 			.insert(NoticeLogConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), noticeLogE, true));
 	}
 
 	@Override
-	public void update(NoticeLogE noticeLogE) {
+	public void updateNoticeLog(NoticeLogE noticeLogE) {
 		NoticeLogDO noticeLogDO = NoticeLogConvertor.toDataObject(null, noticeLogE, false);
 		noticeLogDO.setVersion(noticeLogMapper.selectVersion(noticeLogE.getId()));
 		noticeLogMapper.updateById(noticeLogDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteNoticeLog(Long[] ids) {
 		noticeLogMapper.deleteByIds(Arrays.asList(ids));
 	}
 

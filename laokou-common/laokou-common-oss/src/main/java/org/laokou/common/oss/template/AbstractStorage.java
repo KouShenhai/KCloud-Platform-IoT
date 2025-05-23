@@ -38,7 +38,7 @@ public abstract class AbstractStorage<O> implements Storage {
 	}
 
 	@Override
-	public String upload() throws IOException, NoSuchAlgorithmException {
+	public String uploadOss() throws IOException, NoSuchAlgorithmException {
 		O obj = getObj();
 		createBucket(obj);
 		upload(obj);

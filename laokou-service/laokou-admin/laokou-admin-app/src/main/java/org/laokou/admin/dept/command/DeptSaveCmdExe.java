@@ -53,8 +53,8 @@ public class DeptSaveCmdExe {
 	public void executeVoid(DeptSaveCmd cmd) {
 		// 校验参数
 		DeptE deptE = DeptConvertor.toEntity(cmd.getCo());
-		saveDeptParamValidator.validate(deptE);
-		transactionalUtils.executeInTransaction(() -> deptDomainService.create(deptE));
+		saveDeptParamValidator.validateDept(deptE);
+		transactionalUtils.executeInTransaction(() -> deptDomainService.createDept(deptE));
 	}
 
 }

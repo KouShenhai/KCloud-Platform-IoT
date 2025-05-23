@@ -46,7 +46,8 @@ public class ProductCategoryRemoveCmdExe {
 		try {
 			DynamicDataSourceContextHolder.push(IOT);
 			// 校验参数
-			transactionalUtils.executeInTransaction(() -> productCategoryDomainService.delete(cmd.getIds()));
+			transactionalUtils
+				.executeInTransaction(() -> productCategoryDomainService.deleteProductCategory(cmd.getIds()));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

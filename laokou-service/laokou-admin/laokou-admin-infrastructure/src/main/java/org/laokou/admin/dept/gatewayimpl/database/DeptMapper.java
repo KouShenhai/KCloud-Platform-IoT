@@ -32,9 +32,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
 
-	String selectParentPathById(@Param("id") Long id);
+	String selectDeptParentPathById(@Param("id") Long id);
 
-	void updateChildrenPath(@Param("oldPath") String oldPath, @Param("oldPrefix") String oldPrefix,
+	void updateDeptChildrenPath(@Param("oldPath") String oldPath, @Param("oldPrefix") String oldPrefix,
 			@Param("newPrefix") String newPrefix);
 
 }

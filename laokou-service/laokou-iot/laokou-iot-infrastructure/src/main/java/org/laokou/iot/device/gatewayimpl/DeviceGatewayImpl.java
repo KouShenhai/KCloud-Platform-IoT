@@ -42,20 +42,20 @@ public class DeviceGatewayImpl implements DeviceGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(DeviceE deviceE) {
+	public void createDevice(DeviceE deviceE) {
 		deviceMapper
 			.insert(DeviceConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), deviceE, true));
 	}
 
 	@Override
-	public void update(DeviceE deviceE) {
+	public void updateDevice(DeviceE deviceE) {
 		DeviceDO deviceDO = DeviceConvertor.toDataObject(null, deviceE, false);
 		deviceDO.setVersion(deviceMapper.selectVersion(deviceE.getId()));
 		deviceMapper.updateById(deviceDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteDevice(Long[] ids) {
 		deviceMapper.deleteByIds(Arrays.asList(ids));
 	}
 

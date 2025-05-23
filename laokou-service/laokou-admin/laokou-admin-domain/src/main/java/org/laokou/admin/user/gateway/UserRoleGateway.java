@@ -25,8 +25,8 @@ import reactor.core.publisher.Mono;
  */
 public interface UserRoleGateway {
 
-	Mono<Void> update(UserE userE);
+	Mono<Void> updateUserRole(UserE userE);
 
-	Mono<Void> delete(Long[] userIds);
+	Mono<Void> deleteUserRole(Long[] userIds);
 
 }

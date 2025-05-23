@@ -41,7 +41,8 @@ public class DictModifyCmdExe {
 	@CommandLog
 	public void executeVoid(DictModifyCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> dictDomainService.update(DictConvertor.toEntity(cmd.getCo())));
+		transactionalUtils
+			.executeInTransaction(() -> dictDomainService.updateDict(DictConvertor.toEntity(cmd.getCo())));
 	}
 
 }

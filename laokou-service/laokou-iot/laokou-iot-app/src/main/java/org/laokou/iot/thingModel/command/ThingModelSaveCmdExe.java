@@ -56,8 +56,8 @@ public class ThingModelSaveCmdExe {
 			DynamicDataSourceContextHolder.push(IOT);
 			// 校验参数
 			ThingModelE thingModelE = ThingModelConvertor.toEntity(cmd.getCo());
-			saveThingModelParamValidator.validate(thingModelE);
-			transactionalUtils.executeInTransaction(() -> thingModelDomainService.create(thingModelE));
+			saveThingModelParamValidator.validateThingModel(thingModelE);
+			transactionalUtils.executeInTransaction(() -> thingModelDomainService.createThingModel(thingModelE));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

@@ -34,7 +34,7 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 	private final LoginLogMapper loginLogMapper;
 
 	@Override
-	public void create(LoginLogE loginLog) {
+	public void createLoginLog(LoginLogE loginLog) {
 		loginLogMapper.insert(LoginLogConvertor.toDataObject(loginLog));
 	}
 

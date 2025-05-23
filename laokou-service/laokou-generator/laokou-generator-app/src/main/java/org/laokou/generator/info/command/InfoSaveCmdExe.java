@@ -40,7 +40,8 @@ public class InfoSaveCmdExe {
 
 	public void executeVoid(InfoSaveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> infoDomainService.create(InfoConvertor.toEntity(cmd.getCo())));
+		transactionalUtils
+			.executeInTransaction(() -> infoDomainService.createInfo(InfoConvertor.toEntity(cmd.getCo())));
 	}
 
 }

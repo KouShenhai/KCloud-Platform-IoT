@@ -35,7 +35,7 @@ public class ModifyThingModelParamValidator implements ThingModelParamValidatorE
 	private final ThingModelMapper thingModelMapper;
 
 	@Override
-	public void validate(ThingModelE thingModelE) throws JsonProcessingException {
+	public void validateThingModel(ThingModelE thingModelE) throws JsonProcessingException {
 		ParamValidator.validate(ThingModelParamValidator.validateId(thingModelE),
 				ThingModelParamValidator.validateCodeAndName(thingModelE, false, thingModelMapper),
 				ThingModelParamValidator.validateCategory(thingModelE),

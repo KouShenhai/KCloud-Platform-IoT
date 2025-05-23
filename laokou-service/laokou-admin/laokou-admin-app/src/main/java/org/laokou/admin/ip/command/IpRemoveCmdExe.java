@@ -40,7 +40,7 @@ public class IpRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(IpRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> ipDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> ipDomainService.deleteIp(cmd.getIds()));
 	}
 
 }

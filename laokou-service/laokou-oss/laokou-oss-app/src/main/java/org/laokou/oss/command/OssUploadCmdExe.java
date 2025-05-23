@@ -44,7 +44,7 @@ public class OssUploadCmdExe {
 		ossE.checkSize();
 		// 校验扩展名
 		ossE.checkExt();
-		return storageTemplate.upload(ossE, getInfo());
+		return storageTemplate.uploadOss(ossE, getInfo());
 	}
 
 	// TODO 从数据库获取配置，根据系统设置进行负载均衡

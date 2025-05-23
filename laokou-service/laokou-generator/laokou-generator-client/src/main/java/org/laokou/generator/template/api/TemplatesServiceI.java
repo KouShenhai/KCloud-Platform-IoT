@@ -34,42 +34,42 @@ public interface TemplatesServiceI {
 	 * 保存代码生成器模板.
 	 * @param cmd 保存命令
 	 */
-	void save(TemplateSaveCmd cmd);
+	void saveTemplate(TemplateSaveCmd cmd);
 
 	/**
 	 * 修改代码生成器模板.
 	 * @param cmd 修改命令
 	 */
-	void modify(TemplateModifyCmd cmd);
+	void modifyTemplate(TemplateModifyCmd cmd);
 
 	/**
 	 * 删除代码生成器模板.
 	 * @param cmd 删除命令
 	 */
-	void remove(TemplateRemoveCmd cmd);
+	void removeTemplate(TemplateRemoveCmd cmd);
 
 	/**
 	 * 导入代码生成器模板.
 	 * @param cmd 导入命令
 	 */
-	void importI(TemplateImportCmd cmd);
+	void importTemplate(TemplateImportCmd cmd);
 
 	/**
 	 * 导出代码生成器模板.
 	 * @param cmd 导出命令
 	 */
-	void export(TemplateExportCmd cmd);
+	void exportTemplate(TemplateExportCmd cmd);
 
 	/**
 	 * 分页查询代码生成器模板.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<TemplateCO>> page(TemplatePageQry qry);
+	Result<Page<TemplateCO>> pageTemplate(TemplatePageQry qry);
 
 	/**
 	 * 查看代码生成器模板.
 	 * @param qry 查看请求
 	 */
-	Result<TemplateCO> getById(TemplateGetQry qry);
+	Result<TemplateCO> getByIdTemplate(TemplateGetQry qry);
 
 }

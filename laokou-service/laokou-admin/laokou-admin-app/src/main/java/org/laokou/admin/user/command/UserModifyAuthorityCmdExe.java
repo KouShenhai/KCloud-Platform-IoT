@@ -54,8 +54,8 @@ public class UserModifyAuthorityCmdExe {
 		// 校验参数
 		UserCO co = cmd.getCo();
 		UserE userE = UserConvertor.toEntity(co, co.getId());
-		modifyAuthorityUserParamValidator.validate(userE);
-		return transactionalUtils.executeResultInTransaction(() -> userDomainService.updateAuthority(userE));
+		modifyAuthorityUserParamValidator.validateUser(userE);
+		return transactionalUtils.executeResultInTransaction(() -> userDomainService.updateAuthorityUser(userE));
 	}
 
 }

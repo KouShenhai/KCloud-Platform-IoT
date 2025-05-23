@@ -43,7 +43,7 @@ public class DeviceModifyCmdExe {
 	public void executeVoid(DeviceModifyCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> deviceDomainService.update(DeviceConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> deviceDomainService.updateDevice(DeviceConvertor.toEntity(cmd.getCo())));
 	}
 
 }

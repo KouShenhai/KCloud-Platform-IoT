@@ -53,56 +53,57 @@ public class TransportProtocolsControllerV3 {
 	@PreAuthorize("hasAuthority('iot:transport-protocol:save')")
 	@OperateLog(module = "传输协议管理", operation = "保存传输协议")
 	@Operation(summary = "保存传输协议", description = "保存传输协议")
-	public void saveV3(@RequestBody TransportProtocolSaveCmd cmd) {
-		transportProtocolsServiceI.save(cmd);
+	public void saveTransportProtocol(@RequestBody TransportProtocolSaveCmd cmd) {
+		transportProtocolsServiceI.saveTransportProtocol(cmd);
 	}
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('iot:transport-protocol:modify')")
 	@OperateLog(module = "传输协议管理", operation = "修改传输协议")
 	@Operation(summary = "修改传输协议", description = "修改传输协议")
-	public void modifyV3(@RequestBody TransportProtocolModifyCmd cmd) {
-		transportProtocolsServiceI.modify(cmd);
+	public void modifyTransportProtocol(@RequestBody TransportProtocolModifyCmd cmd) {
+		transportProtocolsServiceI.modifyTransportProtocol(cmd);
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('iot:transport-protocol:remove')")
 	@OperateLog(module = "传输协议管理", operation = "删除传输协议")
 	@Operation(summary = "删除传输协议", description = "删除传输协议")
-	public void removeV3(@RequestBody Long[] ids) {
-		transportProtocolsServiceI.remove(new TransportProtocolRemoveCmd(ids));
+	public void removeTransportProtocol(@RequestBody Long[] ids) {
+		transportProtocolsServiceI.removeTransportProtocol(new TransportProtocolRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('iot:transport-protocol:import')")
 	@OperateLog(module = "传输协议管理", operation = "导入传输协议")
 	@Operation(summary = "导入传输协议", description = "导入传输协议")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
-		transportProtocolsServiceI.importI(new TransportProtocolImportCmd(files));
+	public void importTransportProtocol(@RequestPart("files") MultipartFile[] files) {
+		transportProtocolsServiceI.importTransportProtocol(new TransportProtocolImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('iot:transport-protocol:export')")
 	@OperateLog(module = "传输协议管理", operation = "导出传输协议")
 	@Operation(summary = "导出传输协议", description = "导出传输协议")
-	public void exportV3(@RequestBody TransportProtocolExportCmd cmd) {
-		transportProtocolsServiceI.export(cmd);
+	public void exportTransportProtocol(@RequestBody TransportProtocolExportCmd cmd) {
+		transportProtocolsServiceI.exportTransportProtocol(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('iot:transport-protocol:page')")
 	@Operation(summary = "分页查询传输协议列表", description = "分页查询传输协议列表")
-	public Result<Page<TransportProtocolCO>> pageV3(@Validated @RequestBody TransportProtocolPageQry qry) {
-		return transportProtocolsServiceI.page(qry);
+	public Result<Page<TransportProtocolCO>> pageTransportProtocol(
+			@Validated @RequestBody TransportProtocolPageQry qry) {
+		return transportProtocolsServiceI.pageTransportProtocol(qry);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('iot:transport-protocol:detail')")
 	@Operation(summary = "查看传输协议详情", description = "查看传输协议详情")
-	public Result<TransportProtocolCO> getByIdV3(@PathVariable("id") Long id) {
-		return transportProtocolsServiceI.getById(new TransportProtocolGetQry(id));
+	public Result<TransportProtocolCO> getByIdTransportProtocol(@PathVariable("id") Long id) {
+		return transportProtocolsServiceI.getByIdTransportProtocol(new TransportProtocolGetQry(id));
 	}
 
 }

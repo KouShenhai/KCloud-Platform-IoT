@@ -33,42 +33,42 @@ public interface IpsServiceI {
 	 * 保存IP.
 	 * @param cmd 保存命令
 	 */
-	void save(IpSaveCmd cmd);
+	void saveIp(IpSaveCmd cmd);
 
 	/**
 	 * 修改IP.
 	 * @param cmd 修改命令
 	 */
-	void modify(IpModifyCmd cmd);
+	void modifyIp(IpModifyCmd cmd);
 
 	/**
 	 * 删除IP.
 	 * @param cmd 删除命令
 	 */
-	void remove(IpRemoveCmd cmd);
+	void removeIp(IpRemoveCmd cmd);
 
 	/**
 	 * 导入IP.
 	 * @param cmd 导入命令
 	 */
-	void importI(IpImportCmd cmd);
+	void importIp(IpImportCmd cmd);
 
 	/**
 	 * 导出IP.
 	 * @param cmd 导出命令
 	 */
-	void export(IpExportCmd cmd);
+	void exportIp(IpExportCmd cmd);
 
 	/**
 	 * 分页查询IP.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<IpCO>> page(IpPageQry qry);
+	Result<Page<IpCO>> pageIp(IpPageQry qry);
 
 	/**
 	 * 查看IP.
 	 * @param qry 查看请求
 	 */
-	Result<IpCO> getById(IpGetQry qry);
+	Result<IpCO> getByIdIp(IpGetQry qry);
 
 }

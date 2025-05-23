@@ -34,42 +34,42 @@ public interface ThingModelsServiceI {
 	 * 保存物模型.
 	 * @param cmd 保存命令
 	 */
-	void save(ThingModelSaveCmd cmd) throws Exception;
+	void saveThingModel(ThingModelSaveCmd cmd) throws Exception;
 
 	/**
 	 * 修改物模型.
 	 * @param cmd 修改命令
 	 */
-	void modify(ThingModelModifyCmd cmd);
+	void modifyThingModel(ThingModelModifyCmd cmd);
 
 	/**
 	 * 删除物模型.
 	 * @param cmd 删除命令
 	 */
-	void remove(ThingModelRemoveCmd cmd);
+	void removeThingModel(ThingModelRemoveCmd cmd);
 
 	/**
 	 * 导入物模型.
 	 * @param cmd 导入命令
 	 */
-	void importI(ThingModelImportCmd cmd);
+	void importThingModel(ThingModelImportCmd cmd);
 
 	/**
 	 * 导出物模型.
 	 * @param cmd 导出命令
 	 */
-	void export(ThingThingModelExportCmd cmd);
+	void exportThingModel(ThingThingModelExportCmd cmd);
 
 	/**
 	 * 分页查询物模型.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<ThingModelCO>> page(ThingModelPageQry qry);
+	Result<Page<ThingModelCO>> pageThingModel(ThingModelPageQry qry);
 
 	/**
 	 * 查看物模型.
 	 * @param qry 查看请求
 	 */
-	Result<ThingModelCO> getById(ThingModelGetQry qry);
+	Result<ThingModelCO> getByIdThingModel(ThingModelGetQry qry);
 
 }

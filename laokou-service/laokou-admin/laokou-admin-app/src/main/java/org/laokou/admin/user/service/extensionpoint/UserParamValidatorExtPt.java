@@ -24,6 +24,6 @@ import org.laokou.admin.user.model.UserE;
  */
 public interface UserParamValidatorExtPt {
 
-	void validate(UserE userE) throws Exception;
+	void validateUser(UserE userE) throws Exception;
 
 }

@@ -34,42 +34,42 @@ public interface ProductsServiceI {
 	 * 保存产品.
 	 * @param cmd 保存命令
 	 */
-	void save(ProductSaveCmd cmd);
+	void saveProduct(ProductSaveCmd cmd);
 
 	/**
 	 * 修改产品.
 	 * @param cmd 修改命令
 	 */
-	void modify(ProductModifyCmd cmd);
+	void modifyProduct(ProductModifyCmd cmd);
 
 	/**
 	 * 删除产品.
 	 * @param cmd 删除命令
 	 */
-	void remove(ProductRemoveCmd cmd);
+	void removeProduct(ProductRemoveCmd cmd);
 
 	/**
 	 * 导入产品.
 	 * @param cmd 导入命令
 	 */
-	void importI(ProductImportCmd cmd);
+	void importProduct(ProductImportCmd cmd);
 
 	/**
 	 * 导出产品.
 	 * @param cmd 导出命令
 	 */
-	void export(ProductExportCmd cmd);
+	void exportProduct(ProductExportCmd cmd);
 
 	/**
 	 * 分页查询产品.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<ProductCO>> page(ProductPageQry qry);
+	Result<Page<ProductCO>> pageProduct(ProductPageQry qry);
 
 	/**
 	 * 查看产品.
 	 * @param qry 查看请求
 	 */
-	Result<ProductCO> getById(ProductGetQry qry);
+	Result<ProductCO> getByIdProduct(ProductGetQry qry);
 
 }

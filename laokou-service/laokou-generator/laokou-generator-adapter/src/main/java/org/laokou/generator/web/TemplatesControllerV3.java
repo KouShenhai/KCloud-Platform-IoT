@@ -53,55 +53,55 @@ public class TemplatesControllerV3 {
 	@PreAuthorize("hasAuthority('generator:template:save')")
 	@OperateLog(module = "代码生成器模板管理", operation = "保存代码生成器模板")
 	@Operation(summary = "保存代码生成器模板", description = "保存代码生成器模板")
-	public void saveV3(@RequestBody TemplateSaveCmd cmd) {
-		templatesServiceI.save(cmd);
+	public void saveTemplate(@RequestBody TemplateSaveCmd cmd) {
+		templatesServiceI.saveTemplate(cmd);
 	}
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('generator:template:modify')")
 	@OperateLog(module = "代码生成器模板管理", operation = "修改代码生成器模板")
 	@Operation(summary = "修改代码生成器模板", description = "修改代码生成器模板")
-	public void modifyV3(@RequestBody TemplateModifyCmd cmd) {
-		templatesServiceI.modify(cmd);
+	public void modifyTemplate(@RequestBody TemplateModifyCmd cmd) {
+		templatesServiceI.modifyTemplate(cmd);
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('generator:template:remove')")
 	@OperateLog(module = "代码生成器模板管理", operation = "删除代码生成器模板")
 	@Operation(summary = "删除代码生成器模板", description = "删除代码生成器模板")
-	public void removeV3(@RequestBody Long[] ids) {
-		templatesServiceI.remove(new TemplateRemoveCmd(ids));
+	public void removeTemplate(@RequestBody Long[] ids) {
+		templatesServiceI.removeTemplate(new TemplateRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('generator:template:import')")
 	@OperateLog(module = "代码生成器模板管理", operation = "导入代码生成器模板")
 	@Operation(summary = "导入代码生成器模板", description = "导入代码生成器模板")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
-		templatesServiceI.importI(new TemplateImportCmd(files));
+	public void importTemplate(@RequestPart("files") MultipartFile[] files) {
+		templatesServiceI.importTemplate(new TemplateImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('generator:template:export')")
 	@OperateLog(module = "代码生成器模板管理", operation = "导出代码生成器模板")
 	@Operation(summary = "导出代码生成器模板", description = "导出代码生成器模板")
-	public void exportV3(@RequestBody TemplateExportCmd cmd) {
-		templatesServiceI.export(cmd);
+	public void exportTemplate(@RequestBody TemplateExportCmd cmd) {
+		templatesServiceI.exportTemplate(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('generator:template:page')")
 	@Operation(summary = "分页查询代码生成器模板列表", description = "分页查询代码生成器模板列表")
-	public Result<Page<TemplateCO>> pageV3(@Validated @RequestBody TemplatePageQry qry) {
-		return templatesServiceI.page(qry);
+	public Result<Page<TemplateCO>> pageTemplate(@Validated @RequestBody TemplatePageQry qry) {
+		return templatesServiceI.pageTemplate(qry);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "查看代码生成器模板详情", description = "查看代码生成器模板详情")
-	public Result<TemplateCO> getByIdV3(@PathVariable("id") Long id) {
-		return templatesServiceI.getById(new TemplateGetQry(id));
+	public Result<TemplateCO> getByIdTemplate(@PathVariable("id") Long id) {
+		return templatesServiceI.getByIdTemplate(new TemplateGetQry(id));
 	}
 
 }

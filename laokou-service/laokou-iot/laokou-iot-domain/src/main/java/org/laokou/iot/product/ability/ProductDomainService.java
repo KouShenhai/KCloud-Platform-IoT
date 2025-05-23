@@ -34,16 +34,16 @@ public class ProductDomainService {
 
 	private final ProductGateway productGateway;
 
-	public void create(ProductE productE) {
-		productGateway.create(productE);
+	public void createProduct(ProductE productE) {
+		productGateway.createProduct(productE);
 	}
 
-	public void update(ProductE productE) {
-		productGateway.update(productE);
+	public void updateProduct(ProductE productE) {
+		productGateway.updateProduct(productE);
 	}
 
-	public void delete(Long[] ids) {
-		productGateway.delete(ids);
+	public void deleteProduct(Long[] ids) {
+		productGateway.deleteProduct(ids);
 	}
 
 }

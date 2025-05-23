@@ -51,7 +51,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	 * @return 部门路径集合
 	 */
 	@Override
-	public List<String> getPaths(UserE user) {
+	public List<String> getPathsDept(UserE user) {
 		try {
 			if (user.isSuperAdministrator()) {
 				return deptMapper.selectDeptPaths();

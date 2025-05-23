@@ -42,19 +42,19 @@ public class MenuGatewayImpl implements MenuGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(MenuE menuE) {
+	public void createMenu(MenuE menuE) {
 		menuMapper.insert(MenuConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), menuE, true));
 	}
 
 	@Override
-	public void update(MenuE menuE) {
+	public void updateMenu(MenuE menuE) {
 		MenuDO menuDO = MenuConvertor.toDataObject(null, menuE, false);
 		menuDO.setVersion(menuMapper.selectVersion(menuE.getId()));
 		menuMapper.updateById(menuDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteMenu(Long[] ids) {
 		menuMapper.deleteByIds(Arrays.asList(ids));
 	}
 

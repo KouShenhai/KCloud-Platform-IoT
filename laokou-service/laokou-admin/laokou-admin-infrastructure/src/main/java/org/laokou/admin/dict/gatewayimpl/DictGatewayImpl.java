@@ -42,19 +42,19 @@ public class DictGatewayImpl implements DictGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(DictE dictE) {
+	public void createDict(DictE dictE) {
 		dictMapper.insert(DictConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), dictE));
 	}
 
 	@Override
-	public void update(DictE dictE) {
+	public void updateDict(DictE dictE) {
 		DictDO dictDO = DictConvertor.toDataObject(null, dictE);
 		dictDO.setVersion(dictMapper.selectVersion(dictE.getId()));
 		dictMapper.updateById(dictDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteDict(Long[] ids) {
 		dictMapper.deleteByIds(Arrays.asList(ids));
 	}
 

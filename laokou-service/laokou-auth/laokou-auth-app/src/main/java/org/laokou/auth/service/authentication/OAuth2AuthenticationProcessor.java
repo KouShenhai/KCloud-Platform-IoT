@@ -69,7 +69,7 @@ final class OAuth2AuthenticationProcessor {
 			// 认证授权
 			domainService.auth(auth, getInfo(request));
 			// 记录日志
-			auth.recordLog(eventId, null);
+			auth.recordLoginLog(eventId, null);
 			// 登录成功，转换成用户对象【业务】
 			UserDetails userDetails = UserConvertor.to(auth);
 			// 认证成功，转换成认证对象【系统】
@@ -78,7 +78,7 @@ final class OAuth2AuthenticationProcessor {
 		}
 		catch (GlobalException e) {
 			// 记录日志
-			auth.recordLog(eventId, e);
+			auth.recordLoginLog(eventId, e);
 			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
 			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
 		}

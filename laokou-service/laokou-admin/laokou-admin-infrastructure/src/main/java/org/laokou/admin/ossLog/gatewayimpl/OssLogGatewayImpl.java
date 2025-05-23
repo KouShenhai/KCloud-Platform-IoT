@@ -42,19 +42,19 @@ public class OssLogGatewayImpl implements OssLogGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(OssLogE ossLogE) {
+	public void createOssLog(OssLogE ossLogE) {
 		ossLogMapper.insert(OssLogConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), ossLogE));
 	}
 
 	@Override
-	public void update(OssLogE ossLogE) {
+	public void updateOssLog(OssLogE ossLogE) {
 		OssLogDO ossLogDO = OssLogConvertor.toDataObject(null, ossLogE);
 		ossLogDO.setVersion(ossLogMapper.selectVersion(ossLogE.getId()));
 		ossLogMapper.updateById(ossLogDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteOssLog(Long[] ids) {
 		ossLogMapper.deleteByIds(Arrays.asList(ids));
 	}
 

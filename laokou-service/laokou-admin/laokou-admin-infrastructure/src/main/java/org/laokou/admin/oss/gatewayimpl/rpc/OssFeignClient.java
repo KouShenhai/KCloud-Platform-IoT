@@ -34,6 +34,6 @@ import static org.laokou.admin.common.constant.ServiceConstants.OSS;
 public interface OssFeignClient {
 
 	@PostMapping(value = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	Result<String> uploadV3(@RequestPart("file") MultipartFile file);
+	Result<String> uploadOss(@RequestPart("file") MultipartFile file);
 
 }

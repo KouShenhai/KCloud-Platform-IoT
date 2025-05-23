@@ -29,6 +29,6 @@ public interface SourceGateway {
 	 * @param tenantCode 租户编码
 	 * @return 数据源名称
 	 */
-	String getPrefix(String tenantCode);
+	String getPrefixSource(String tenantCode);
 
 }

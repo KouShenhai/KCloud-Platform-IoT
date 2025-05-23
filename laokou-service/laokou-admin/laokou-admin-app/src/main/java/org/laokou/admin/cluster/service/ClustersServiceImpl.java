@@ -53,37 +53,37 @@ public class ClustersServiceImpl implements ClustersServiceI {
 	private final ClusterGetQryExe clusterGetQryExe;
 
 	@Override
-	public void save(ClusterSaveCmd cmd) {
+	public void saveCluster(ClusterSaveCmd cmd) {
 		clusterSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(ClusterModifyCmd cmd) {
+	public void modifyCluster(ClusterModifyCmd cmd) {
 		clusterModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(ClusterRemoveCmd cmd) {
+	public void removeCluster(ClusterRemoveCmd cmd) {
 		clusterRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(ClusterImportCmd cmd) {
+	public void importCluster(ClusterImportCmd cmd) {
 		clusterImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(ClusterExportCmd cmd) {
+	public void exportCluster(ClusterExportCmd cmd) {
 		clusterExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<ClusterCO>> page(ClusterPageQry qry) {
+	public Result<Page<ClusterCO>> pageCluster(ClusterPageQry qry) {
 		return clusterPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<ClusterCO> getById(ClusterGetQry qry) {
+	public Result<ClusterCO> getByIdCluster(ClusterGetQry qry) {
 		return clusterGetQryExe.execute(qry);
 	}
 

@@ -30,16 +30,16 @@ public interface ClusterGateway {
 	/**
 	 * 新增集群.
 	 */
-	void create(ClusterE clusterE);
+	void createCluster(ClusterE clusterE);
 
 	/**
 	 * 修改集群.
 	 */
-	void update(ClusterE clusterE);
+	void updateCluster(ClusterE clusterE);
 
 	/**
 	 * 删除集群.
 	 */
-	void delete(Long[] ids);
+	void deleteCluster(Long[] ids);
 
 }

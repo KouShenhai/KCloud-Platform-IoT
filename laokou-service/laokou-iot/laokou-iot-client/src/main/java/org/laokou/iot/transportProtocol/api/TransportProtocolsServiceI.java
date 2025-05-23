@@ -34,42 +34,42 @@ public interface TransportProtocolsServiceI {
 	 * 保存传输协议.
 	 * @param cmd 保存命令
 	 */
-	void save(TransportProtocolSaveCmd cmd);
+	void saveTransportProtocol(TransportProtocolSaveCmd cmd);
 
 	/**
 	 * 修改传输协议.
 	 * @param cmd 修改命令
 	 */
-	void modify(TransportProtocolModifyCmd cmd);
+	void modifyTransportProtocol(TransportProtocolModifyCmd cmd);
 
 	/**
 	 * 删除传输协议.
 	 * @param cmd 删除命令
 	 */
-	void remove(TransportProtocolRemoveCmd cmd);
+	void removeTransportProtocol(TransportProtocolRemoveCmd cmd);
 
 	/**
 	 * 导入传输协议.
 	 * @param cmd 导入命令
 	 */
-	void importI(TransportProtocolImportCmd cmd);
+	void importTransportProtocol(TransportProtocolImportCmd cmd);
 
 	/**
 	 * 导出传输协议.
 	 * @param cmd 导出命令
 	 */
-	void export(TransportProtocolExportCmd cmd);
+	void exportTransportProtocol(TransportProtocolExportCmd cmd);
 
 	/**
 	 * 分页查询传输协议.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<TransportProtocolCO>> page(TransportProtocolPageQry qry);
+	Result<Page<TransportProtocolCO>> pageTransportProtocol(TransportProtocolPageQry qry);
 
 	/**
 	 * 查看传输协议.
 	 * @param qry 查看请求
 	 */
-	Result<TransportProtocolCO> getById(TransportProtocolGetQry qry);
+	Result<TransportProtocolCO> getByIdTransportProtocol(TransportProtocolGetQry qry);
 
 }

@@ -46,7 +46,7 @@ public class ThingModelRemoveCmdExe {
 		try {
 			DynamicDataSourceContextHolder.push(IOT);
 			// 校验参数
-			transactionalUtils.executeInTransaction(() -> thingModelDomainService.delete(cmd.getIds()));
+			transactionalUtils.executeInTransaction(() -> thingModelDomainService.deleteThingModel(cmd.getIds()));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

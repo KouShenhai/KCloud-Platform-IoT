@@ -53,8 +53,8 @@ public class RoleSaveCmdExe {
 	public void executeVoid(RoleSaveCmd cmd) {
 		// 校验参数
 		RoleE roleE = RoleConvertor.toEntity(cmd.getCo());
-		saveRoleParamValidator.validate(roleE);
-		transactionalUtils.executeInTransaction(() -> roleDomainService.create(roleE));
+		saveRoleParamValidator.validateRole(roleE);
+		transactionalUtils.executeInTransaction(() -> roleDomainService.createRole(roleE));
 	}
 
 }

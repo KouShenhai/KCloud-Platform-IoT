@@ -33,42 +33,42 @@ public interface OssLogsServiceI {
 	 * 保存OSS日志.
 	 * @param cmd 保存命令
 	 */
-	void save(OssLogSaveCmd cmd);
+	void saveOssLog(OssLogSaveCmd cmd);
 
 	/**
 	 * 修改OSS日志.
 	 * @param cmd 修改命令
 	 */
-	void modify(OssLogModifyCmd cmd);
+	void modifyOssLog(OssLogModifyCmd cmd);
 
 	/**
 	 * 删除OSS日志.
 	 * @param cmd 删除命令
 	 */
-	void remove(OssLogRemoveCmd cmd);
+	void removeOssLog(OssLogRemoveCmd cmd);
 
 	/**
 	 * 导入OSS日志.
 	 * @param cmd 导入命令
 	 */
-	void importI(OssLogImportCmd cmd);
+	void importOssLog(OssLogImportCmd cmd);
 
 	/**
 	 * 导出OSS日志.
 	 * @param cmd 导出命令
 	 */
-	void export(OssLogExportCmd cmd);
+	void exportOssLog(OssLogExportCmd cmd);
 
 	/**
 	 * 分页查询OSS日志.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<OssLogCO>> page(OssLogPageQry qry);
+	Result<Page<OssLogCO>> pageOssLog(OssLogPageQry qry);
 
 	/**
 	 * 查看OSS日志.
 	 * @param qry 查看请求
 	 */
-	Result<OssLogCO> getById(OssLogGetQry qry);
+	Result<OssLogCO> getByIdOssLog(OssLogGetQry qry);
 
 }

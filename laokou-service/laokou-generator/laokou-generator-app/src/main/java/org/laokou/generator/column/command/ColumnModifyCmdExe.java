@@ -41,7 +41,7 @@ public class ColumnModifyCmdExe {
 	public void executeVoid(ColumnModifyCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> columnDomainService.update(ColumnConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> columnDomainService.updateColumn(ColumnConvertor.toEntity(cmd.getCo())));
 	}
 
 }

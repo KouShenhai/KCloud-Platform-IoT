@@ -32,10 +32,10 @@ import java.util.List;
 @Repository
 public interface UserDeptMapper extends CrudMapper<Long, Integer, UserDeptDO> {
 
-	List<Long> selectIdsByUserIds(@Param("userIds") List<Long> userIds);
+	List<Long> selectUserDeptIdsByUserIds(@Param("userIds") List<Long> userIds);
 
 	List<String> selectDeptIdsByUserId(@Param("userId") Long userId);
 
-	void deleteObjById(@Param("userDeptDO") UserDeptDO userDeptDO);
+	void deleteUserDeptById(@Param("userDeptDO") UserDeptDO userDeptDO);
 
 }

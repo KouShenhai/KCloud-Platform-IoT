@@ -42,19 +42,19 @@ public class IpGatewayImpl implements IpGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(IpE ipE) {
+	public void createIp(IpE ipE) {
 		ipMapper.insert(IpConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), ipE));
 	}
 
 	@Override
-	public void update(IpE ipE) {
+	public void updateIp(IpE ipE) {
 		IpDO ipDO = IpConvertor.toDataObject(null, ipE);
 		ipDO.setVersion(ipMapper.selectVersion(ipE.getId()));
 		ipMapper.updateById(ipDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteIp(Long[] ids) {
 		ipMapper.deleteByIds(Arrays.asList(ids));
 	}
 

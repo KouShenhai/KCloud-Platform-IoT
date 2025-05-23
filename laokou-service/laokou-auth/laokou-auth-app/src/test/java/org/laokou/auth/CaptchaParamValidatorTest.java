@@ -39,7 +39,7 @@ class CaptchaParamValidatorTest {
 		// 校验邮箱验证码
 		Assertions.assertDoesNotThrow(() -> captcha.setUuid("2413176044@qq.com"));
 		Assertions.assertDoesNotThrow(() -> captcha.setTenantCode("laokou"));
-		Assertions.assertDoesNotThrow(() -> captchaParamValidator.validate(captcha));
+		Assertions.assertDoesNotThrow(() -> captchaParamValidator.validateCaptcha(captcha));
 	}
 
 	@Test
@@ -49,7 +49,7 @@ class CaptchaParamValidatorTest {
 		// 校验手机号验证码
 		Assertions.assertDoesNotThrow(() -> captcha.setUuid("18888888888"));
 		Assertions.assertDoesNotThrow(() -> captcha.setTenantCode("laokou"));
-		Assertions.assertDoesNotThrow(() -> captchaParamValidator.validate(captcha));
+		Assertions.assertDoesNotThrow(() -> captchaParamValidator.validateCaptcha(captcha));
 	}
 
 }

@@ -39,20 +39,22 @@ public class RoleDomainService {
 
 	private final RoleDeptGateway roleDeptGateway;
 
-	public void create(RoleE roleE) {
-		roleGateway.create(roleE);
+	public void createRole(RoleE roleE) {
+		roleGateway.createRole(roleE);
 	}
 
-	public Mono<Void> update(RoleE roleE) {
-		return roleGateway.update(roleE);
+	public Mono<Void> updateRole(RoleE roleE) {
+		return roleGateway.updateRole(roleE);
 	}
 
-	public Flux<Void> updateAuthority(RoleE roleE) {
-		return Flux.merge(roleGateway.update(roleE), roleMenuGateway.update(roleE), roleDeptGateway.update(roleE));
+	public Flux<Void> updateAuthorityRole(RoleE roleE) {
+		return Flux.merge(roleGateway.updateRole(roleE), roleMenuGateway.updateRoleMenu(roleE),
+				roleDeptGateway.updateRoleDept(roleE));
 	}
 
-	public Flux<Void> delete(Long[] ids) {
-		return Flux.merge(roleGateway.delete(ids), roleMenuGateway.delete(ids), roleDeptGateway.delete(ids));
+	public Flux<Void> deleteRole(Long[] ids) {
+		return Flux.merge(roleGateway.deleteRole(ids), roleMenuGateway.deleteRoleMenu(ids),
+				roleDeptGateway.deleteRoleDept(ids));
 	}
 
 }

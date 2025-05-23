@@ -42,8 +42,8 @@ public class CommunicationProtocolSaveCmdExe {
 	@CommandLog
 	public void executeVoid(CommunicationProtocolSaveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(
-				() -> communicationProtocolDomainService.create(CommunicationProtocolConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(() -> communicationProtocolDomainService
+			.createCommunicationProtocol(CommunicationProtocolConvertor.toEntity(cmd.getCo())));
 	}
 
 }

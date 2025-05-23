@@ -43,20 +43,20 @@ public class ThingModelGatewayImpl implements ThingModelGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(ThingModelE thingModelE) {
+	public void createThingModel(ThingModelE thingModelE) {
 		thingModelMapper.insert(
 				ThingModelConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), thingModelE, true));
 	}
 
 	@Override
-	public void update(ThingModelE thingModelE) {
+	public void updateThingModel(ThingModelE thingModelE) {
 		ThingModelDO thingModelDO = ThingModelConvertor.toDataObject(null, thingModelE, false);
 		thingModelDO.setVersion(thingModelMapper.selectVersion(thingModelE.getId()));
 		thingModelMapper.updateById(thingModelDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteThingModel(Long[] ids) {
 		thingModelMapper.deleteByIds(Arrays.asList(ids));
 	}
 

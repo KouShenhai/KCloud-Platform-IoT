@@ -29,16 +29,16 @@ public interface SourceGateway {
 	/**
 	 * 新增数据源.
 	 */
-	void create(SourceE sourceE);
+	void createSource(SourceE sourceE);
 
 	/**
 	 * 修改数据源.
 	 */
-	void update(SourceE sourceE);
+	void updateSource(SourceE sourceE);
 
 	/**
 	 * 删除数据源.
 	 */
-	void delete(Long[] ids);
+	void deleteSource(Long[] ids);
 
 }

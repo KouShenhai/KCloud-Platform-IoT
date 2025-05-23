@@ -52,7 +52,7 @@ public class MenuGatewayImpl implements MenuGateway {
 	 * @return 菜单权限标识集合
 	 */
 	@Override
-	public Set<String> getPermissions(UserE user) {
+	public Set<String> getPermissionsMenu(UserE user) {
 		try {
 			if (user.isSuperAdministrator()) {
 				return new HashSet<>(menuMapper.selectPermissions());

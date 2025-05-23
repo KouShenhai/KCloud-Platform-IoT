@@ -93,14 +93,14 @@ class AuthATest {
 	void testCheckTenantId() {
 		TenantGateway tenantGateway = Mockito.mock(TenantGateway.class);
 		// 构造租户
-		when(tenantGateway.getId("laokou")).thenReturn(0L);
+		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
 		// 校验租户ID
 		AuthA auth = DomainFactory.getAuth(1L, "laokou");
 		// 获取租户ID
-		Assertions.assertDoesNotThrow(() -> auth.getTenantId(tenantGateway.getId(auth.getTenantCode())));
+		Assertions.assertDoesNotThrow(() -> auth.getTenantId(tenantGateway.getIdTenant(auth.getTenantCode())));
 		Assertions.assertDoesNotThrow(auth::checkTenantId);
 		// 校验调用次数
-		verify(tenantGateway, times(1)).getId("laokou");
+		verify(tenantGateway, times(1)).getIdTenant("laokou");
 	}
 
 	@Test
@@ -130,7 +130,7 @@ class AuthATest {
 	void testCheckSourcePrefix() {
 		SourceGateway sourceGateway = mock(SourceGateway.class);
 		// 构造数据源
-		when(sourceGateway.getPrefix("laokou")).thenReturn("master");
+		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
 		// 校验数据源前缀
 		AuthA auth = DomainFactory.getAuth(1L, "laokou");
 		Assertions.assertDoesNotThrow(() -> auth.getSourcePrefix(auth.getTenantCode()));
@@ -142,10 +142,10 @@ class AuthATest {
 		UserGateway userGateway = mock(UserGateway.class);
 		// 构造用户信息
 		UserE user = DomainFactory.getUser();
-		when(userGateway.getProfile(user, "laokou")).thenReturn(user);
+		when(userGateway.getProfileUser(user, "laokou")).thenReturn(user);
 		// 校验用户名
 		AuthA auth = DomainFactory.getAuth(1L, "laokou");
-		Assertions.assertDoesNotThrow(() -> auth.getUserInfo(userGateway.getProfile(user, auth.getTenantCode())));
+		Assertions.assertDoesNotThrow(() -> auth.getUserInfo(userGateway.getProfileUser(user, auth.getTenantCode())));
 		Assertions.assertDoesNotThrow(auth::checkUsername);
 	}
 
@@ -153,7 +153,7 @@ class AuthATest {
 	void testCheckPassword() {
 		// 构造密码校验
 		PasswordValidator passwordValidator = mock(PasswordValidator.class);
-		doReturn(true).when(passwordValidator).validate("123", "202cb962ac59075b964b07152d234b70");
+		doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		// 创建用户【用户名密码】
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
@@ -185,9 +185,9 @@ class AuthATest {
 		UserE user = auth.getUser();
 		Assertions.assertNotNull(user);
 		// 构造菜单
-		when(menuGateway.getPermissions(user)).thenReturn(Set.of("sys:user:page"));
+		when(menuGateway.getPermissionsMenu(user)).thenReturn(Set.of("sys:user:page"));
 		// 校验菜单权限集合
-		Assertions.assertDoesNotThrow(() -> auth.getMenuPermissions(menuGateway.getPermissions(user)));
+		Assertions.assertDoesNotThrow(() -> auth.getMenuPermissions(menuGateway.getPermissionsMenu(user)));
 		Assertions.assertDoesNotThrow(auth::checkMenuPermissions);
 	}
 
@@ -200,9 +200,9 @@ class AuthATest {
 		UserE user = auth.getUser();
 		Assertions.assertNotNull(user);
 		// 构造部门
-		when(deptGateway.getPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
+		when(deptGateway.getPathsDept(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 校验部门路径集合
-		Assertions.assertDoesNotThrow(() -> auth.getDeptPaths(deptGateway.getPaths(user)));
+		Assertions.assertDoesNotThrow(() -> auth.getDeptPaths(deptGateway.getPathsDept(user)));
 		Assertions.assertDoesNotThrow(auth::checkDeptPaths);
 	}
 
@@ -212,13 +212,13 @@ class AuthATest {
 		// 记录日志【登录成功】
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		Assertions.assertDoesNotThrow(() -> auth.getExtInfo(info));
-		Assertions.assertDoesNotThrow(() -> auth.recordLog(1L, null));
+		Assertions.assertDoesNotThrow(() -> auth.recordLoginLog(1L, null));
 		Assertions.assertFalse(auth.releaseEvents().isEmpty());
 		// 清除事件
 		Assertions.assertDoesNotThrow(auth::clearEvents);
 		Assertions.assertTrue(auth.releaseEvents().isEmpty());
 		// 记录日志【登录失败】
-		Assertions.assertDoesNotThrow(() -> auth.recordLog(1L, new BizException(USERNAME_PASSWORD_ERROR)));
+		Assertions.assertDoesNotThrow(() -> auth.recordLoginLog(1L, new BizException(USERNAME_PASSWORD_ERROR)));
 		Assertions.assertFalse(auth.releaseEvents().isEmpty());
 		// 清除事件
 		Assertions.assertDoesNotThrow(auth::clearEvents);

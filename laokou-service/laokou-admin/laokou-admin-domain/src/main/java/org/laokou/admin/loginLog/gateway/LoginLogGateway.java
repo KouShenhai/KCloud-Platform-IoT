@@ -29,16 +29,16 @@ public interface LoginLogGateway {
 	/**
 	 * 新增登录日志.
 	 */
-	void create(LoginLogE loginLogE);
+	void createLoginLog(LoginLogE loginLogE);
 
 	/**
 	 * 修改登录日志.
 	 */
-	void update(LoginLogE loginLogE);
+	void updateLoginLog(LoginLogE loginLogE);
 
 	/**
 	 * 删除登录日志.
 	 */
-	void delete(Long[] ids);
+	void deleteLoginLog(Long[] ids);
 
 }

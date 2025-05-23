@@ -53,8 +53,8 @@ public class RoleModifyAuthorityCmdExe {
 	public Flux<Void> executeVoid(RoleModifyAuthorityCmd cmd) throws Exception {
 		RoleCO co = cmd.getCo();
 		RoleE roleE = RoleConvertor.toEntity(co, co.getId());
-		modifyAuthorityRoleParamValidator.validate(roleE);
-		return transactionalUtils.executeResultInTransaction(() -> roleDomainService.updateAuthority(roleE));
+		modifyAuthorityRoleParamValidator.validateRole(roleE);
+		return transactionalUtils.executeResultInTransaction(() -> roleDomainService.updateAuthorityRole(roleE));
 	}
 
 }

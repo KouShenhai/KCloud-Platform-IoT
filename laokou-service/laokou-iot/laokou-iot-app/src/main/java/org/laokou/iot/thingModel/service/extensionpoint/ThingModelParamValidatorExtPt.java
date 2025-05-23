@@ -24,6 +24,6 @@ import org.laokou.iot.thingModel.model.ThingModelE;
  */
 public interface ThingModelParamValidatorExtPt {
 
-	void validate(ThingModelE thingModelE) throws Exception;
+	void validateThingModel(ThingModelE thingModelE) throws Exception;
 
 }

@@ -29,16 +29,16 @@ public interface IpGateway {
 	/**
 	 * 新增IP.
 	 */
-	void create(IpE ipE);
+	void createIp(IpE ipE);
 
 	/**
 	 * 修改IP.
 	 */
-	void update(IpE ipE);
+	void updateIp(IpE ipE);
 
 	/**
 	 * 删除IP.
 	 */
-	void delete(Long[] ids);
+	void deleteIp(Long[] ids);
 
 }

@@ -42,20 +42,20 @@ public class ClusterGatewayImpl implements ClusterGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(ClusterE clusterE) {
+	public void createCluster(ClusterE clusterE) {
 		clusterMapper
 			.insert(ClusterConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), clusterE, true));
 	}
 
 	@Override
-	public void update(ClusterE clusterE) {
+	public void updateCluster(ClusterE clusterE) {
 		ClusterDO clusterDO = ClusterConvertor.toDataObject(null, clusterE, false);
 		clusterDO.setVersion(clusterMapper.selectVersion(clusterE.getId()));
 		clusterMapper.updateById(clusterDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteCluster(Long[] ids) {
 		clusterMapper.deleteByIds(Arrays.asList(ids));
 	}
 

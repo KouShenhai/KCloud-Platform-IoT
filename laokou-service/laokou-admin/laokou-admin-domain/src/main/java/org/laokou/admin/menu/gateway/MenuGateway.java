@@ -29,16 +29,16 @@ public interface MenuGateway {
 	/**
 	 * 新增菜单.
 	 */
-	void create(MenuE menuE);
+	void createMenu(MenuE menuE);
 
 	/**
 	 * 修改菜单.
 	 */
-	void update(MenuE menuE);
+	void updateMenu(MenuE menuE);
 
 	/**
 	 * 删除菜单.
 	 */
-	void delete(Long[] ids);
+	void deleteMenu(Long[] ids);
 
 }

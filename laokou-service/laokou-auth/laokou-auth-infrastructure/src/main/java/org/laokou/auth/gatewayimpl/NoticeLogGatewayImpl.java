@@ -34,7 +34,7 @@ public class NoticeLogGatewayImpl implements NoticeLogGateway {
 	private final NoticeLogMapper noticeLogMapper;
 
 	@Override
-	public void create(NoticeLogE noticeLog) {
+	public void createNoticeLog(NoticeLogE noticeLog) {
 		noticeLogMapper.insert(NoticeLogConvertor.toDataObject(noticeLog));
 	}
 

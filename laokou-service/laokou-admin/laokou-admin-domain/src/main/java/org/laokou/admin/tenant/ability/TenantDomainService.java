@@ -33,16 +33,16 @@ public class TenantDomainService {
 
 	private final TenantGateway tenantGateway;
 
-	public void create(TenantE tenantE) {
-		tenantGateway.create(tenantE);
+	public void createTenant(TenantE tenantE) {
+		tenantGateway.createTenant(tenantE);
 	}
 
-	public void update(TenantE tenantE) {
-		tenantGateway.update(tenantE);
+	public void updateTenant(TenantE tenantE) {
+		tenantGateway.updateTenant(tenantE);
 	}
 
-	public void delete(Long[] ids) {
-		tenantGateway.delete(ids);
+	public void deleteTenant(Long[] ids) {
+		tenantGateway.deleteTenant(ids);
 	}
 
 }

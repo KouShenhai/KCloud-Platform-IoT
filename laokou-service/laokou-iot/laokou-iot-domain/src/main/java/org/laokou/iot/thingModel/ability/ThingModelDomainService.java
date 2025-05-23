@@ -34,16 +34,16 @@ public class ThingModelDomainService {
 
 	private final ThingModelGateway thingModelGateway;
 
-	public void create(ThingModelE thingModelE) {
-		thingModelGateway.create(thingModelE);
+	public void createThingModel(ThingModelE thingModelE) {
+		thingModelGateway.createThingModel(thingModelE);
 	}
 
-	public void update(ThingModelE thingModelE) {
-		thingModelGateway.update(thingModelE);
+	public void updateThingModel(ThingModelE thingModelE) {
+		thingModelGateway.updateThingModel(thingModelE);
 	}
 
-	public void delete(Long[] ids) {
-		thingModelGateway.delete(ids);
+	public void deleteThingModel(Long[] ids) {
+		thingModelGateway.deleteThingModel(ids);
 	}
 
 }

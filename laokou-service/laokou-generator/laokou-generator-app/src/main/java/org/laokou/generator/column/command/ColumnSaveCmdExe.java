@@ -41,7 +41,7 @@ public class ColumnSaveCmdExe {
 	public void executeVoid(ColumnSaveCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> columnDomainService.create(ColumnConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> columnDomainService.createColumn(ColumnConvertor.toEntity(cmd.getCo())));
 	}
 
 }

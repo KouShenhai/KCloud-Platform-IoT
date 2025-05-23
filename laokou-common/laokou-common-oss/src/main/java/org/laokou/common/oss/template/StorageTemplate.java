@@ -30,8 +30,8 @@ import java.security.NoSuchAlgorithmException;
 @RequiredArgsConstructor
 public class StorageTemplate {
 
-	public Result<String> upload(FileInfo fileInfo, OssInfo ossInfo) throws IOException, NoSuchAlgorithmException {
-		return Result.ok(ossInfo.getType().getStorage(fileInfo, ossInfo).upload());
+	public Result<String> uploadOss(FileInfo fileInfo, OssInfo ossInfo) throws IOException, NoSuchAlgorithmException {
+		return Result.ok(ossInfo.getType().getStorage(fileInfo, ossInfo).uploadOss());
 	}
 
 }

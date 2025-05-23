@@ -41,7 +41,8 @@ public class DictSaveCmdExe {
 	@CommandLog
 	public void executeVoid(DictSaveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> dictDomainService.create(DictConvertor.toEntity(cmd.getCo())));
+		transactionalUtils
+			.executeInTransaction(() -> dictDomainService.createDict(DictConvertor.toEntity(cmd.getCo())));
 	}
 
 }

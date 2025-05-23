@@ -30,6 +30,6 @@ public interface TokensServiceI {
 	 * 移除Token.
 	 * @param cmd 退出登录参数
 	 */
-	void remove(TokenRemoveCmd cmd);
+	void removeToken(TokenRemoveCmd cmd);
 
 }

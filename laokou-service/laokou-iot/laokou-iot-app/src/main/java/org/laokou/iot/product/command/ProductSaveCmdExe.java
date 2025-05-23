@@ -43,7 +43,7 @@ public class ProductSaveCmdExe {
 	public void executeVoid(ProductSaveCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> productDomainService.create(ProductConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> productDomainService.createProduct(ProductConvertor.toEntity(cmd.getCo())));
 	}
 
 }

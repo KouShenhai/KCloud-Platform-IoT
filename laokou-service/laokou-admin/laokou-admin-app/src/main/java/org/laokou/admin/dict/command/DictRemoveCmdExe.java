@@ -40,7 +40,7 @@ public class DictRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(DictRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> dictDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> dictDomainService.deleteDict(cmd.getIds()));
 	}
 
 }

@@ -41,8 +41,8 @@ public class I18nMessageModifyCmdExe {
 	@CommandLog
 	public void executeVoid(I18nMessageModifyCmd cmd) {
 		// 校验参数
-		transactionalUtils
-			.executeInTransaction(() -> i18nMessageDomainService.update(I18nMessageConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(
+				() -> i18nMessageDomainService.updateI18nMessage(I18nMessageConvertor.toEntity(cmd.getCo())));
 	}
 
 }

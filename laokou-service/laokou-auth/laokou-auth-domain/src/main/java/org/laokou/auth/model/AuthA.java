@@ -196,7 +196,7 @@ public class AuthA extends AggregateRoot {
 
 	public void checkCaptcha(CaptchaValidator captchaValidator) {
 		if (isUseCaptcha()) {
-			Boolean validate = captchaValidator.validate(getCaptchaCacheKey(), captcha.captcha());
+			Boolean validate = captchaValidator.validateCaptcha(getCaptchaCacheKey(), captcha.captcha());
 			if (ObjectUtils.isNull(validate)) {
 				throw new BizException(CAPTCHA_EXPIRED);
 			}
@@ -219,7 +219,7 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void checkPassword(PasswordValidator passwordValidator) {
-		if (isUsePassword() && !passwordValidator.validate(this.password, user.getPassword())) {
+		if (isUsePassword() && !passwordValidator.validatePassword(this.password, user.getPassword())) {
 			throw new BizException(USERNAME_PASSWORD_ERROR);
 		}
 	}
@@ -242,7 +242,7 @@ public class AuthA extends AggregateRoot {
 		}
 	}
 
-	public void recordLog(Long eventId, GlobalException e) {
+	public void recordLoginLog(Long eventId, GlobalException e) {
 		LoginEvent event = getEvent(e);
 		if (ObjectUtils.isNotNull(event)) {
 			addEvent(new DomainEvent(eventId, super.tenantId, super.userId, super.id, MqEnum.LOGIN_LOG.getTopic(),

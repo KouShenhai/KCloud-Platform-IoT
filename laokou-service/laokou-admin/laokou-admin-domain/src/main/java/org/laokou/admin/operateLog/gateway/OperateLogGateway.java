@@ -29,16 +29,16 @@ public interface OperateLogGateway {
 	/**
 	 * 新增操作日志.
 	 */
-	void create(OperateLogE operateLogE);
+	void createOperateLog(OperateLogE operateLogE);
 
 	/**
 	 * 修改操作日志.
 	 */
-	void update(OperateLogE operateLogE);
+	void updateOperateLog(OperateLogE operateLogE);
 
 	/**
 	 * 删除操作日志.
 	 */
-	void delete(Long[] ids);
+	void deleteOperateLog(Long[] ids);
 
 }

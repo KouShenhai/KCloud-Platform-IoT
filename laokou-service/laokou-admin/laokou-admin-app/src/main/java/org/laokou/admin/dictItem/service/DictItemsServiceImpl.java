@@ -52,37 +52,37 @@ public class DictItemsServiceImpl implements DictItemsServiceI {
 	private final DictItemGetQryExe dictItemGetQryExe;
 
 	@Override
-	public void save(DictItemSaveCmd cmd) {
+	public void saveDictItem(DictItemSaveCmd cmd) {
 		dictItemSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(DictItemModifyCmd cmd) {
+	public void modifyDictItem(DictItemModifyCmd cmd) {
 		dictItemModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(DictItemRemoveCmd cmd) {
+	public void removeDictItem(DictItemRemoveCmd cmd) {
 		dictItemRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(DictItemImportCmd cmd) {
+	public void importDictItem(DictItemImportCmd cmd) {
 		dictItemImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(DictItemExportCmd cmd) {
+	public void exportDictItem(DictItemExportCmd cmd) {
 		dictItemExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<DictItemCO>> page(DictItemPageQry qry) {
+	public Result<Page<DictItemCO>> pageDictItem(DictItemPageQry qry) {
 		return dictItemPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<DictItemCO> getById(DictItemGetQry qry) {
+	public Result<DictItemCO> getByIdDictItem(DictItemGetQry qry) {
 		return dictItemGetQryExe.execute(qry);
 	}
 

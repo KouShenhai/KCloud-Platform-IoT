@@ -24,7 +24,7 @@
     SELECT count(1) from t_user
   </select>
 
-  <delete id="deleteUser">
+  <delete id="deleteTestUser">
     delete
     from t_user
     where id in

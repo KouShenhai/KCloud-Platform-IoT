@@ -30,16 +30,16 @@ public interface RoleGateway {
 	/**
 	 * 新增角色.
 	 */
-	void create(RoleE roleE);
+	void createRole(RoleE roleE);
 
 	/**
 	 * 修改角色.
 	 */
-	Mono<Void> update(RoleE roleE);
+	Mono<Void> updateRole(RoleE roleE);
 
 	/**
 	 * 删除角色.
 	 */
-	Mono<Void> delete(Long[] ids);
+	Mono<Void> deleteRole(Long[] ids);
 
 }

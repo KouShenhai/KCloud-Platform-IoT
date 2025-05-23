@@ -53,56 +53,57 @@ public class CommunicationProtocolsControllerV3 {
 	@PreAuthorize("hasAuthority('iot:communication-protocol:save')")
 	@OperateLog(module = "通讯协议管理", operation = "保存通讯协议")
 	@Operation(summary = "保存通讯协议", description = "保存通讯协议")
-	public void saveV3(@RequestBody CommunicationProtocolSaveCmd cmd) {
-		communicationProtocolsServiceI.save(cmd);
+	public void saveCommunicationProtocol(@RequestBody CommunicationProtocolSaveCmd cmd) {
+		communicationProtocolsServiceI.saveCommunicationProtocol(cmd);
 	}
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('iot:communication-protocol:modify')")
 	@OperateLog(module = "通讯协议管理", operation = "修改通讯协议")
 	@Operation(summary = "修改通讯协议", description = "修改通讯协议")
-	public void modifyV3(@RequestBody CommunicationProtocolModifyCmd cmd) {
-		communicationProtocolsServiceI.modify(cmd);
+	public void modifyCommunicationProtocol(@RequestBody CommunicationProtocolModifyCmd cmd) {
+		communicationProtocolsServiceI.modifyCommunicationProtocol(cmd);
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('iot:communication-protocol:remove')")
 	@OperateLog(module = "通讯协议管理", operation = "删除通讯协议")
 	@Operation(summary = "删除通讯协议", description = "删除通讯协议")
-	public void removeV3(@RequestBody Long[] ids) {
-		communicationProtocolsServiceI.remove(new CommunicationProtocolRemoveCmd(ids));
+	public void removeCommunicationProtocol(@RequestBody Long[] ids) {
+		communicationProtocolsServiceI.removeCommunicationProtocol(new CommunicationProtocolRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('iot:communication-protocol:import')")
 	@OperateLog(module = "通讯协议管理", operation = "导入通讯协议")
 	@Operation(summary = "导入通讯协议", description = "导入通讯协议")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
-		communicationProtocolsServiceI.importI(new CommunicationProtocolImportCmd(files));
+	public void importCommunicationProtocol(@RequestPart("files") MultipartFile[] files) {
+		communicationProtocolsServiceI.importCommunicationProtocol(new CommunicationProtocolImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('iot:communication-protocol:export')")
 	@OperateLog(module = "通讯协议管理", operation = "导出通讯协议")
 	@Operation(summary = "导出通讯协议", description = "导出通讯协议")
-	public void exportV3(@RequestBody CommunicationProtocolExportCmd cmd) {
-		communicationProtocolsServiceI.export(cmd);
+	public void exportCommunicationProtocol(@RequestBody CommunicationProtocolExportCmd cmd) {
+		communicationProtocolsServiceI.exportCommunicationProtocol(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('iot:communication-protocol:page')")
 	@Operation(summary = "分页查询通讯协议列表", description = "分页查询通讯协议列表")
-	public Result<Page<CommunicationProtocolCO>> pageV3(@Validated @RequestBody CommunicationProtocolPageQry qry) {
-		return communicationProtocolsServiceI.page(qry);
+	public Result<Page<CommunicationProtocolCO>> pageCommunicationProtocol(
+			@Validated @RequestBody CommunicationProtocolPageQry qry) {
+		return communicationProtocolsServiceI.pageCommunicationProtocol(qry);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('iot:communication-protocol:detail')")
 	@Operation(summary = "查看通讯协议详情", description = "查看通讯协议详情")
-	public Result<CommunicationProtocolCO> getByIdV3(@PathVariable("id") Long id) {
-		return communicationProtocolsServiceI.getById(new CommunicationProtocolGetQry(id));
+	public Result<CommunicationProtocolCO> getByIdCommunicationProtocol(@PathVariable("id") Long id) {
+		return communicationProtocolsServiceI.getByIdCommunicationProtocol(new CommunicationProtocolGetQry(id));
 	}
 
 }

@@ -42,19 +42,19 @@ public class InfoGatewayImpl implements InfoGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(InfoE infoE) {
+	public void createInfo(InfoE infoE) {
 		infoMapper.insert(InfoConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), infoE, true));
 	}
 
 	@Override
-	public void update(InfoE infoE) {
+	public void updateInfo(InfoE infoE) {
 		InfoDO infoDO = InfoConvertor.toDataObject(null, infoE, false);
 		infoDO.setVersion(infoMapper.selectVersion(infoE.getId()));
 		infoMapper.updateById(infoDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteInfo(Long[] ids) {
 		infoMapper.deleteByIds(Arrays.asList(ids));
 	}
 

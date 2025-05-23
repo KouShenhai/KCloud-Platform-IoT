@@ -53,37 +53,37 @@ public class TemplatesServiceImpl implements TemplatesServiceI {
 	private final TemplateGetQryExe templateGetQryExe;
 
 	@Override
-	public void save(TemplateSaveCmd cmd) {
+	public void saveTemplate(TemplateSaveCmd cmd) {
 		templateSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(TemplateModifyCmd cmd) {
+	public void modifyTemplate(TemplateModifyCmd cmd) {
 		templateModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(TemplateRemoveCmd cmd) {
+	public void removeTemplate(TemplateRemoveCmd cmd) {
 		templateRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(TemplateImportCmd cmd) {
+	public void importTemplate(TemplateImportCmd cmd) {
 		templateImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(TemplateExportCmd cmd) {
+	public void exportTemplate(TemplateExportCmd cmd) {
 		templateExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<TemplateCO>> page(TemplatePageQry qry) {
+	public Result<Page<TemplateCO>> pageTemplate(TemplatePageQry qry) {
 		return templatePageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<TemplateCO> getById(TemplateGetQry qry) {
+	public Result<TemplateCO> getByIdTemplate(TemplateGetQry qry) {
 		return templateGetQryExe.execute(qry);
 	}
 

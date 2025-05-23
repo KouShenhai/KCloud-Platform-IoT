@@ -24,6 +24,6 @@ import org.laokou.auth.model.NoticeLogE;
  */
 public interface NoticeLogGateway {
 
-	void create(NoticeLogE noticeLog);
+	void createNoticeLog(NoticeLogE noticeLog);
 
 }

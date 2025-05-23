@@ -36,48 +36,48 @@ public interface ProductCategorysServiceI {
 	 * 保存产品类别.
 	 * @param cmd 保存命令
 	 */
-	void save(ProductCategorySaveCmd cmd);
+	void saveProductCategory(ProductCategorySaveCmd cmd);
 
 	/**
 	 * 修改产品类别.
 	 * @param cmd 修改命令
 	 */
-	void modify(ProductCategoryModifyCmd cmd);
+	void modifyProductCategory(ProductCategoryModifyCmd cmd);
 
 	/**
 	 * 删除产品类别.
 	 * @param cmd 删除命令
 	 */
-	void remove(ProductCategoryRemoveCmd cmd);
+	void removeProductCategory(ProductCategoryRemoveCmd cmd);
 
 	/**
 	 * 导入产品类别.
 	 * @param cmd 导入命令
 	 */
-	void importI(ProductCategoryImportCmd cmd);
+	void importProductCategory(ProductCategoryImportCmd cmd);
 
 	/**
 	 * 导出产品类别.
 	 * @param cmd 导出命令
 	 */
-	void export(ProductCategoryExportCmd cmd);
+	void exportProductCategory(ProductCategoryExportCmd cmd);
 
 	/**
 	 * 分页查询产品类别.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<ProductCategoryCO>> page(ProductCategoryPageQry qry);
+	Result<Page<ProductCategoryCO>> pageProductCategory(ProductCategoryPageQry qry);
 
 	/**
 	 * 查询产品类别树列表.
 	 * @param qry 查询请求
 	 */
-	Result<List<ProductCategoryCO>> listTree(ProductCategoryTreeListQry qry);
+	Result<List<ProductCategoryCO>> listTreeProductCategory(ProductCategoryTreeListQry qry);
 
 	/**
 	 * 查看产品类别.
 	 * @param qry 查看请求
 	 */
-	Result<ProductCategoryCO> getById(ProductCategoryGetQry qry);
+	Result<ProductCategoryCO> getByIdProductCategory(ProductCategoryGetQry qry);
 
 }

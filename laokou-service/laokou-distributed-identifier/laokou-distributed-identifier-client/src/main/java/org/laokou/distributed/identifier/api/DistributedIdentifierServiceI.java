@@ -25,6 +25,6 @@ import org.laokou.distributed.identifier.dto.clientobject.DistributedIdentifierC
  */
 public interface DistributedIdentifierServiceI {
 
-	Result<DistributedIdentifierCO> generateSnowflake();
+	Result<DistributedIdentifierCO> generateSnowflakeDistributedIdentifier();
 
 }

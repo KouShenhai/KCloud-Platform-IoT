@@ -53,56 +53,56 @@ public class ClustersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:cluster:save')")
 	@OperateLog(module = "集群管理", operation = "保存集群")
 	@Operation(summary = "保存集群", description = "保存集群")
-	public void saveV3(@RequestBody ClusterSaveCmd cmd) {
-		clustersServiceI.save(cmd);
+	public void saveCluster(@RequestBody ClusterSaveCmd cmd) {
+		clustersServiceI.saveCluster(cmd);
 	}
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:cluster:modify')")
 	@OperateLog(module = "集群管理", operation = "修改集群")
 	@Operation(summary = "修改集群", description = "修改集群")
-	public void modifyV3(@RequestBody ClusterModifyCmd cmd) {
-		clustersServiceI.modify(cmd);
+	public void modifyCluster(@RequestBody ClusterModifyCmd cmd) {
+		clustersServiceI.modifyCluster(cmd);
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:cluster:remove')")
 	@OperateLog(module = "集群管理", operation = "删除集群")
 	@Operation(summary = "删除集群", description = "删除集群")
-	public void removeV3(@RequestBody Long[] ids) {
-		clustersServiceI.remove(new ClusterRemoveCmd(ids));
+	public void removeCluster(@RequestBody Long[] ids) {
+		clustersServiceI.removeCluster(new ClusterRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:cluster:import')")
 	@OperateLog(module = "集群管理", operation = "导入集群")
 	@Operation(summary = "导入集群", description = "导入集群")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
-		clustersServiceI.importI(new ClusterImportCmd(files));
+	public void importCluster(@RequestPart("files") MultipartFile[] files) {
+		clustersServiceI.importCluster(new ClusterImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:cluster:export')")
 	@OperateLog(module = "集群管理", operation = "导出集群")
 	@Operation(summary = "导出集群", description = "导出集群")
-	public void exportV3(@RequestBody ClusterExportCmd cmd) {
-		clustersServiceI.export(cmd);
+	public void exportCluster(@RequestBody ClusterExportCmd cmd) {
+		clustersServiceI.exportCluster(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:cluster:page')")
 	@Operation(summary = "分页查询集群列表", description = "分页查询集群列表")
-	public Result<Page<ClusterCO>> pageV3(@Validated @RequestBody ClusterPageQry qry) {
-		return clustersServiceI.page(qry);
+	public Result<Page<ClusterCO>> pageCluster(@Validated @RequestBody ClusterPageQry qry) {
+		return clustersServiceI.pageCluster(qry);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('sys:cluster:detail')")
 	@Operation(summary = "查看集群详情", description = "查看集群详情")
-	public Result<ClusterCO> getByIdV3(@PathVariable("id") Long id) {
-		return clustersServiceI.getById(new ClusterGetQry(id));
+	public Result<ClusterCO> getByIdCluster(@PathVariable("id") Long id) {
+		return clustersServiceI.getByIdCluster(new ClusterGetQry(id));
 	}
 
 }

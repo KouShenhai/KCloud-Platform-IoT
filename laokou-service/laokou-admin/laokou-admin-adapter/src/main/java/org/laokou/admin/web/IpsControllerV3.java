@@ -52,56 +52,56 @@ public class IpsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:ip:save')")
 	@OperateLog(module = "IP管理", operation = "保存IP")
 	@Operation(summary = "保存IP", description = "保存IP")
-	public void saveV3(@RequestBody IpSaveCmd cmd) {
-		ipsServiceI.save(cmd);
+	public void saveIp(@RequestBody IpSaveCmd cmd) {
+		ipsServiceI.saveIp(cmd);
 	}
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:ip:modify')")
 	@OperateLog(module = "IP管理", operation = "修改IP")
 	@Operation(summary = "修改IP", description = "修改IP")
-	public void modifyV3(@RequestBody IpModifyCmd cmd) {
-		ipsServiceI.modify(cmd);
+	public void modifyIp(@RequestBody IpModifyCmd cmd) {
+		ipsServiceI.modifyIp(cmd);
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:ip:remove')")
 	@OperateLog(module = "IP管理", operation = "删除IP")
 	@Operation(summary = "删除IP", description = "删除IP")
-	public void removeV3(@RequestBody Long[] ids) {
-		ipsServiceI.remove(new IpRemoveCmd(ids));
+	public void removeIp(@RequestBody Long[] ids) {
+		ipsServiceI.removeIp(new IpRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:ip:import')")
 	@OperateLog(module = "IP管理", operation = "导入IP")
 	@Operation(summary = "导入IP", description = "导入IP")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
-		ipsServiceI.importI(new IpImportCmd(files));
+	public void importIp(@RequestPart("files") MultipartFile[] files) {
+		ipsServiceI.importIp(new IpImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:ip:export')")
 	@OperateLog(module = "IP管理", operation = "导出IP")
 	@Operation(summary = "导出IP", description = "导出IP")
-	public void exportV3(@RequestBody IpExportCmd cmd) {
-		ipsServiceI.export(cmd);
+	public void exportIp(@RequestBody IpExportCmd cmd) {
+		ipsServiceI.exportIp(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:ip:page')")
 	@Operation(summary = "分页查询IP列表", description = "分页查询IP列表")
-	public Result<Page<IpCO>> pageV3(@Validated @RequestBody IpPageQry qry) {
-		return ipsServiceI.page(qry);
+	public Result<Page<IpCO>> pageIp(@Validated @RequestBody IpPageQry qry) {
+		return ipsServiceI.pageIp(qry);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('sys:ip:detail')")
 	@Operation(summary = "查看IP详情", description = "查看IP详情")
-	public Result<IpCO> getByIdV3(@PathVariable("id") Long id) {
-		return ipsServiceI.getById(new IpGetQry(id));
+	public Result<IpCO> getByIdIp(@PathVariable("id") Long id) {
+		return ipsServiceI.getByIdIp(new IpGetQry(id));
 	}
 
 }

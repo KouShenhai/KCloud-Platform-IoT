@@ -42,20 +42,20 @@ public class ColumnGatewayImpl implements ColumnGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(ColumnE columnE) {
+	public void createColumn(ColumnE columnE) {
 		columnMapper
 			.insert(ColumnConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), columnE, true));
 	}
 
 	@Override
-	public void update(ColumnE columnE) {
+	public void updateColumn(ColumnE columnE) {
 		ColumnDO columnDO = ColumnConvertor.toDataObject(null, columnE, false);
 		columnDO.setVersion(columnMapper.selectVersion(columnE.getId()));
 		columnMapper.updateById(columnDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteColumn(Long[] ids) {
 		columnMapper.deleteByIds(Arrays.asList(ids));
 	}
 

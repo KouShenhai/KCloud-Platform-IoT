@@ -33,16 +33,16 @@ public class SourceDomainService {
 
 	private final SourceGateway sourceGateway;
 
-	public void create(SourceE sourceE) {
-		sourceGateway.create(sourceE);
+	public void createSource(SourceE sourceE) {
+		sourceGateway.createSource(sourceE);
 	}
 
-	public void update(SourceE sourceE) {
-		sourceGateway.update(sourceE);
+	public void updateSource(SourceE sourceE) {
+		sourceGateway.updateSource(sourceE);
 	}
 
-	public void delete(Long[] ids) {
-		sourceGateway.delete(ids);
+	public void deleteSource(Long[] ids) {
+		sourceGateway.deleteSource(ids);
 	}
 
 }

@@ -42,16 +42,16 @@ public class DeptGatewayImpl implements DeptGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(DeptE deptE) {
+	public void createDept(DeptE deptE) {
 		DeptDO deptDO = DeptConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), deptE);
 		// 校验父级路径
-		checkParentPath(deptE, deptDO.getId());
+		checkDeptParentPath(deptE, deptDO.getId());
 		deptDO.setPath(deptE.getPath());
 		deptMapper.insert(deptDO);
 	}
 
 	@Override
-	public void update(DeptE deptE) {
+	public void updateDept(DeptE deptE) {
 		Long id = deptE.getId();
 		DeptDO deptDO = getDeptDO(deptE, id);
 		// 获取旧路径
@@ -59,14 +59,14 @@ public class DeptGatewayImpl implements DeptGateway {
 		// 校验旧路径
 		deptE.checkOldPath();
 		// 校验父级路径
-		checkParentPath(deptE, id);
+		checkDeptParentPath(deptE, id);
 		deptDO.setPath(deptE.getPath());
 		deptMapper.updateById(deptDO);
-		deptMapper.updateChildrenPath(deptE.getOldPath(), deptE.getOldPrefix(), deptE.getNewPrefix());
+		deptMapper.updateDeptChildrenPath(deptE.getOldPath(), deptE.getOldPrefix(), deptE.getNewPrefix());
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteDept(Long[] ids) {
 		deptMapper.deleteByIds(Arrays.asList(ids));
 	}
 
@@ -81,9 +81,9 @@ public class DeptGatewayImpl implements DeptGateway {
 	/**
 	 * 校验父级路径.
 	 */
-	private void checkParentPath(DeptE deptE, Long id) {
+	private void checkDeptParentPath(DeptE deptE, Long id) {
 		// 获取父级路径
-		deptE.getParentPath(deptMapper.selectParentPathById(deptE.getPid()));
+		deptE.getParentPath(deptMapper.selectDeptParentPathById(deptE.getPid()));
 		// 校验父级路径
 		deptE.checkParentPath(id);
 	}

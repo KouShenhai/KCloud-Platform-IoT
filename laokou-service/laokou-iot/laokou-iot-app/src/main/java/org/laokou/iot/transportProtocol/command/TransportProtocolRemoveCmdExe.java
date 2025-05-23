@@ -41,7 +41,8 @@ public class TransportProtocolRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(TransportProtocolRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> transportProtocolDomainService.delete(cmd.getIds()));
+		transactionalUtils
+			.executeInTransaction(() -> transportProtocolDomainService.deleteTransportProtocol(cmd.getIds()));
 	}
 
 }

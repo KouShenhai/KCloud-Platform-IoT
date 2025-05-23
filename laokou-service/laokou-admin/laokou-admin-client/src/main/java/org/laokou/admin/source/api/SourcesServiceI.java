@@ -33,42 +33,42 @@ public interface SourcesServiceI {
 	 * 保存数据源.
 	 * @param cmd 保存命令
 	 */
-	void save(SourceSaveCmd cmd);
+	void saveSource(SourceSaveCmd cmd);
 
 	/**
 	 * 修改数据源.
 	 * @param cmd 修改命令
 	 */
-	void modify(SourceModifyCmd cmd);
+	void modifySource(SourceModifyCmd cmd);
 
 	/**
 	 * 删除数据源.
 	 * @param cmd 删除命令
 	 */
-	void remove(SourceRemoveCmd cmd);
+	void removeSource(SourceRemoveCmd cmd);
 
 	/**
 	 * 导入数据源.
 	 * @param cmd 导入命令
 	 */
-	void importI(SourceImportCmd cmd);
+	void importSource(SourceImportCmd cmd);
 
 	/**
 	 * 导出数据源.
 	 * @param cmd 导出命令
 	 */
-	void export(SourceExportCmd cmd);
+	void exportSource(SourceExportCmd cmd);
 
 	/**
 	 * 分页查询数据源.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<SourceCO>> page(SourcePageQry qry);
+	Result<Page<SourceCO>> pageSource(SourcePageQry qry);
 
 	/**
 	 * 查看数据源.
 	 * @param qry 查看请求
 	 */
-	Result<SourceCO> getById(SourceGetQry qry);
+	Result<SourceCO> getByIdSource(SourceGetQry qry);
 
 }

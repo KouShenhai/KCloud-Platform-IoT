@@ -34,16 +34,16 @@ public class CommunicationProtocolDomainService {
 
 	private final CommunicationProtocolGateway communicationProtocolGateway;
 
-	public void create(CommunicationProtocolE communicationProtocolE) {
-		communicationProtocolGateway.create(communicationProtocolE);
+	public void createCommunicationProtocol(CommunicationProtocolE communicationProtocolE) {
+		communicationProtocolGateway.createCommunicationProtocol(communicationProtocolE);
 	}
 
-	public void update(CommunicationProtocolE communicationProtocolE) {
-		communicationProtocolGateway.update(communicationProtocolE);
+	public void updateCommunicationProtocol(CommunicationProtocolE communicationProtocolE) {
+		communicationProtocolGateway.updateCommunicationProtocol(communicationProtocolE);
 	}
 
-	public void delete(Long[] ids) {
-		communicationProtocolGateway.delete(ids);
+	public void deleteCommunicationProtocol(Long[] ids) {
+		communicationProtocolGateway.deleteCommunicationProtocol(ids);
 	}
 
 }

@@ -42,7 +42,7 @@ public class SourceSaveCmdExe {
 	public void executeVoid(SourceSaveCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> sourceDomainService.create(SourceConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> sourceDomainService.createSource(SourceConvertor.toEntity(cmd.getCo())));
 	}
 
 }

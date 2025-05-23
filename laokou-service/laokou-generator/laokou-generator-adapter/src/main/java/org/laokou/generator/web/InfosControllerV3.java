@@ -53,55 +53,55 @@ public class InfosControllerV3 {
 	@PreAuthorize("hasAuthority('generator:info:save')")
 	@OperateLog(module = "代码生成器信息管理", operation = "保存代码生成器信息")
 	@Operation(summary = "保存代码生成器信息", description = "保存代码生成器信息")
-	public void saveV3(@RequestBody InfoSaveCmd cmd) {
-		infosServiceI.save(cmd);
+	public void saveInfo(@RequestBody InfoSaveCmd cmd) {
+		infosServiceI.saveInfo(cmd);
 	}
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('generator:info:modify')")
 	@OperateLog(module = "代码生成器信息管理", operation = "修改代码生成器信息")
 	@Operation(summary = "修改代码生成器信息", description = "修改代码生成器信息")
-	public void modifyV3(@RequestBody InfoModifyCmd cmd) {
-		infosServiceI.modify(cmd);
+	public void modifyInfo(@RequestBody InfoModifyCmd cmd) {
+		infosServiceI.modifyInfo(cmd);
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('generator:info:remove')")
 	@OperateLog(module = "代码生成器信息管理", operation = "删除代码生成器信息")
 	@Operation(summary = "删除代码生成器信息", description = "删除代码生成器信息")
-	public void removeV3(@RequestBody Long[] ids) {
-		infosServiceI.remove(new InfoRemoveCmd(ids));
+	public void removeInfo(@RequestBody Long[] ids) {
+		infosServiceI.removeInfo(new InfoRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('generator:info:import')")
 	@OperateLog(module = "代码生成器信息管理", operation = "导入代码生成器信息")
 	@Operation(summary = "导入代码生成器信息", description = "导入代码生成器信息")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
-		infosServiceI.importI(new InfoImportCmd(files));
+	public void importInfo(@RequestPart("files") MultipartFile[] files) {
+		infosServiceI.importInfo(new InfoImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('generator:info:export')")
 	@OperateLog(module = "代码生成器信息管理", operation = "导出代码生成器信息")
 	@Operation(summary = "导出代码生成器信息", description = "导出代码生成器信息")
-	public void exportV3(@RequestBody InfoExportCmd cmd) {
-		infosServiceI.export(cmd);
+	public void exportInfo(@RequestBody InfoExportCmd cmd) {
+		infosServiceI.exportInfo(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('generator:info:page')")
 	@Operation(summary = "分页查询代码生成器信息列表", description = "分页查询代码生成器信息列表")
-	public Result<Page<InfoCO>> pageV3(@Validated @RequestBody InfoPageQry qry) {
-		return infosServiceI.page(qry);
+	public Result<Page<InfoCO>> pageInfo(@Validated @RequestBody InfoPageQry qry) {
+		return infosServiceI.pageInfo(qry);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "查看代码生成器信息详情", description = "查看代码生成器信息详情")
-	public Result<InfoCO> getByIdV3(@PathVariable("id") Long id) {
-		return infosServiceI.getById(new InfoGetQry(id));
+	public Result<InfoCO> getByIdInfo(@PathVariable("id") Long id) {
+		return infosServiceI.getByIdInfo(new InfoGetQry(id));
 	}
 
 }

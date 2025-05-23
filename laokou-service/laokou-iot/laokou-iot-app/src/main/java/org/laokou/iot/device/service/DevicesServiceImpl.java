@@ -53,37 +53,37 @@ public class DevicesServiceImpl implements DevicesServiceI {
 	private final DeviceGetQryExe deviceGetQryExe;
 
 	@Override
-	public void save(DeviceSaveCmd cmd) {
+	public void saveDevice(DeviceSaveCmd cmd) {
 		deviceSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(DeviceModifyCmd cmd) {
+	public void modifyDevice(DeviceModifyCmd cmd) {
 		deviceModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(DeviceRemoveCmd cmd) {
+	public void removeDevice(DeviceRemoveCmd cmd) {
 		deviceRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(DeviceImportCmd cmd) {
+	public void importDevice(DeviceImportCmd cmd) {
 		deviceImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(DeviceExportCmd cmd) {
+	public void exportDevice(DeviceExportCmd cmd) {
 		deviceExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<DeviceCO>> page(DevicePageQry qry) {
+	public Result<Page<DeviceCO>> pageDevice(DevicePageQry qry) {
 		return devicePageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<DeviceCO> getById(DeviceGetQry qry) {
+	public Result<DeviceCO> getByIdDevice(DeviceGetQry qry) {
 		return deviceGetQryExe.execute(qry);
 	}
 

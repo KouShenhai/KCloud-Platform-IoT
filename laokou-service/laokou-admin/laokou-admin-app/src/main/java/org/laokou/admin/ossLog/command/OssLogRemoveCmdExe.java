@@ -40,7 +40,7 @@ public class OssLogRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(OssLogRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> ossLogDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> ossLogDomainService.deleteOssLog(cmd.getIds()));
 	}
 
 }

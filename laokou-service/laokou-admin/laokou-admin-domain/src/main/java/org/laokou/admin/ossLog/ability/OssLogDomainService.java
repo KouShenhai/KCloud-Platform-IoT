@@ -33,16 +33,16 @@ public class OssLogDomainService {
 
 	private final OssLogGateway ossLogGateway;
 
-	public void create(OssLogE ossLogE) {
-		ossLogGateway.create(ossLogE);
+	public void createOssLog(OssLogE ossLogE) {
+		ossLogGateway.createOssLog(ossLogE);
 	}
 
-	public void update(OssLogE ossLogE) {
-		ossLogGateway.update(ossLogE);
+	public void updateOssLog(OssLogE ossLogE) {
+		ossLogGateway.updateOssLog(ossLogE);
 	}
 
-	public void delete(Long[] ids) {
-		ossLogGateway.delete(ids);
+	public void deleteOssLog(Long[] ids) {
+		ossLogGateway.deleteOssLog(ids);
 	}
 
 }

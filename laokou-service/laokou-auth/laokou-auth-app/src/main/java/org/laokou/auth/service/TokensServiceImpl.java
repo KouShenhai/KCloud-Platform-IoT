@@ -39,7 +39,7 @@ public class TokensServiceImpl implements TokensServiceI {
 	 * @param cmd 退出登录参数
 	 */
 	@Override
-	public void remove(TokenRemoveCmd cmd) {
+	public void removeToken(TokenRemoveCmd cmd) {
 		tokenRemoveCmdExe.executeVoid(cmd);
 	}
 

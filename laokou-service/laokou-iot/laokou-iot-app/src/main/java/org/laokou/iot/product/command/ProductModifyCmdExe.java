@@ -43,7 +43,7 @@ public class ProductModifyCmdExe {
 	public void executeVoid(ProductModifyCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> productDomainService.update(ProductConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> productDomainService.updateProduct(ProductConvertor.toEntity(cmd.getCo())));
 	}
 
 }

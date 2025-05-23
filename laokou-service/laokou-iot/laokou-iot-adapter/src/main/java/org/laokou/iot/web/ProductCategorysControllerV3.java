@@ -55,64 +55,65 @@ public class ProductCategorysControllerV3 {
 	@PreAuthorize("hasAuthority('iot:product-category:save')")
 	@OperateLog(module = "产品类别管理", operation = "保存产品类别")
 	@Operation(summary = "保存产品类别", description = "保存产品类别")
-	public void saveV3(@RequestBody ProductCategorySaveCmd cmd) {
-		productCategorysServiceI.save(cmd);
+	public void saveProductCategory(@RequestBody ProductCategorySaveCmd cmd) {
+		productCategorysServiceI.saveProductCategory(cmd);
 	}
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('iot:product-category:modify')")
 	@OperateLog(module = "产品类别管理", operation = "修改产品类别")
 	@Operation(summary = "修改产品类别", description = "修改产品类别")
-	public void modifyV3(@RequestBody ProductCategoryModifyCmd cmd) {
-		productCategorysServiceI.modify(cmd);
+	public void modifyProductCategory(@RequestBody ProductCategoryModifyCmd cmd) {
+		productCategorysServiceI.modifyProductCategory(cmd);
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('iot:product-category:remove')")
 	@OperateLog(module = "产品类别管理", operation = "删除产品类别")
 	@Operation(summary = "删除产品类别", description = "删除产品类别")
-	public void removeV3(@RequestBody Long[] ids) {
-		productCategorysServiceI.remove(new ProductCategoryRemoveCmd(ids));
+	public void removeProductCategory(@RequestBody Long[] ids) {
+		productCategorysServiceI.removeProductCategory(new ProductCategoryRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('iot:product-category:import')")
 	@OperateLog(module = "产品类别管理", operation = "导入产品类别")
 	@Operation(summary = "导入产品类别", description = "导入产品类别")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
-		productCategorysServiceI.importI(new ProductCategoryImportCmd(files));
+	public void importProductCategory(@RequestPart("files") MultipartFile[] files) {
+		productCategorysServiceI.importProductCategory(new ProductCategoryImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('iot:product-category:export')")
 	@OperateLog(module = "产品类别管理", operation = "导出产品类别")
 	@Operation(summary = "导出产品类别", description = "导出产品类别")
-	public void exportV3(@RequestBody ProductCategoryExportCmd cmd) {
-		productCategorysServiceI.export(cmd);
+	public void exportProductCategory(@RequestBody ProductCategoryExportCmd cmd) {
+		productCategorysServiceI.exportProductCategory(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:dept:page')")
 	@Operation(summary = "分页查询产品类别列表", description = "分页查询产品类别列表")
-	public Result<Page<ProductCategoryCO>> pageV3(@Validated @RequestBody ProductCategoryPageQry qry) {
-		return productCategorysServiceI.page(qry);
+	public Result<Page<ProductCategoryCO>> pageProductCategory(@Validated @RequestBody ProductCategoryPageQry qry) {
+		return productCategorysServiceI.pageProductCategory(qry);
 	}
 
 	@TraceLog
 	@PostMapping("list-tree")
 	@PreAuthorize("hasAuthority('iot:product-category:list-tree')")
 	@Operation(summary = "查询产品类别树列表", description = "查询产品类别树列表")
-	public Result<List<ProductCategoryCO>> listTreeV3(@Validated @RequestBody ProductCategoryTreeListQry qry) {
-		return productCategorysServiceI.listTree(qry);
+	public Result<List<ProductCategoryCO>> listTreeProductCategory(
+			@Validated @RequestBody ProductCategoryTreeListQry qry) {
+		return productCategorysServiceI.listTreeProductCategory(qry);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('iot:product-category:detail')")
 	@Operation(summary = "查看产品类别详情", description = "查看产品类别详情")
-	public Result<ProductCategoryCO> getByIdV3(@PathVariable("id") Long id) {
-		return productCategorysServiceI.getById(new ProductCategoryGetQry(id));
+	public Result<ProductCategoryCO> getByIdProductCategory(@PathVariable("id") Long id) {
+		return productCategorysServiceI.getByIdProductCategory(new ProductCategoryGetQry(id));
 	}
 
 }

@@ -20,11 +20,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.user.gatewayimpl.database.UserDeptMapper">
 
-  <delete id="deleteObjById">
+  <delete id="deleteUserDeptById">
     delete from boot_sys_user_dept where id = #{userDeptDO.id}
   </delete>
 
-  <select id="selectIdsByUserIds" resultType="java.lang.Long">
+  <select id="selectUserDeptIdsByUserIds" resultType="java.lang.Long">
     select id
     from boot_sys_user_dept
     where user_id in

@@ -42,20 +42,20 @@ public class ProductCategoryGatewayImpl implements ProductCategoryGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(ProductCategoryE productCategoryE) {
+	public void createProductCategory(ProductCategoryE productCategoryE) {
 		productCategoryMapper.insert(ProductCategoryConvertor
 			.toDataObject(distributedIdentifierFeignClientWrapper.getId(), productCategoryE, true));
 	}
 
 	@Override
-	public void update(ProductCategoryE productCategoryE) {
+	public void updateProductCategory(ProductCategoryE productCategoryE) {
 		ProductCategoryDO productCategoryDO = ProductCategoryConvertor.toDataObject(null, productCategoryE, false);
 		productCategoryDO.setVersion(productCategoryMapper.selectVersion(productCategoryE.getId()));
 		productCategoryMapper.updateById(productCategoryDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteProductCategory(Long[] ids) {
 		productCategoryMapper.deleteByIds(Arrays.asList(ids));
 	}
 

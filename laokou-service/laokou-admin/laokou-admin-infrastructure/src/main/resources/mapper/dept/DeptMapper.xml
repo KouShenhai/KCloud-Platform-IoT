@@ -49,11 +49,6 @@
     order by "sort" desc
   </sql>
 
-  <update id="updateChildrenPath">
-    update boot_sys_dept set "path" = regexp_replace("path", #{oldPrefix}, #{newPrefix})
-    where "path" LIKE CAST(#{oldPath} AS TEXT) || '%'
-  </update>
-
   <select id="selectObjectPage"
           resultType="org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO">
     <include refid="selectObjectList"/>
@@ -76,7 +71,7 @@
     <include refid="selectObjectList"/>
   </select>
 
-  <select id="selectParentPathById" resultType="java.lang.String">
+  <select id="selectDeptParentPathById" resultType="java.lang.String">
     <choose>
       <when test="id == 0">
         select '0'
@@ -86,5 +81,10 @@
       </otherwise>
     </choose>
   </select>
+
+  <update id="updateDeptChildrenPath">
+    update boot_sys_dept set "path" = regexp_replace("path", #{oldPrefix}, #{newPrefix})
+    where "path" LIKE CAST(#{oldPath} AS TEXT) || '%'
+  </update>
 
 </mapper>

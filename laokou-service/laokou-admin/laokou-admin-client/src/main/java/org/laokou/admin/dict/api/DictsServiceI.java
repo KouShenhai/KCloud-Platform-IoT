@@ -33,42 +33,42 @@ public interface DictsServiceI {
 	 * 保存字典.
 	 * @param cmd 保存命令
 	 */
-	void save(DictSaveCmd cmd);
+	void saveDict(DictSaveCmd cmd);
 
 	/**
 	 * 修改字典.
 	 * @param cmd 修改命令
 	 */
-	void modify(DictModifyCmd cmd);
+	void modifyDict(DictModifyCmd cmd);
 
 	/**
 	 * 删除字典.
 	 * @param cmd 删除命令
 	 */
-	void remove(DictRemoveCmd cmd);
+	void removeDict(DictRemoveCmd cmd);
 
 	/**
 	 * 导入字典.
 	 * @param cmd 导入命令
 	 */
-	void importI(DictImportCmd cmd);
+	void importDict(DictImportCmd cmd);
 
 	/**
 	 * 导出字典.
 	 * @param cmd 导出命令
 	 */
-	void export(DictExportCmd cmd);
+	void exportDict(DictExportCmd cmd);
 
 	/**
 	 * 分页查询字典.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<DictCO>> page(DictPageQry qry);
+	Result<Page<DictCO>> pageDict(DictPageQry qry);
 
 	/**
 	 * 查看字典.
 	 * @param qry 查看请求
 	 */
-	Result<DictCO> getById(DictGetQry qry);
+	Result<DictCO> getByIdDict(DictGetQry qry);
 
 }

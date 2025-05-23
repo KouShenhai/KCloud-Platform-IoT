@@ -33,16 +33,16 @@ public class IpDomainService {
 
 	private final IpGateway ipGateway;
 
-	public void create(IpE ipE) {
-		ipGateway.create(ipE);
+	public void createIp(IpE ipE) {
+		ipGateway.createIp(ipE);
 	}
 
-	public void update(IpE ipE) {
-		ipGateway.update(ipE);
+	public void updateIp(IpE ipE) {
+		ipGateway.updateIp(ipE);
 	}
 
-	public void delete(Long[] ids) {
-		ipGateway.delete(ids);
+	public void deleteIp(Long[] ids) {
+		ipGateway.deleteIp(ids);
 	}
 
 }

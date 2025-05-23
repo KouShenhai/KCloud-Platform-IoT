@@ -32,10 +32,10 @@ import java.util.List;
 @Repository
 public interface UserRoleMapper extends CrudMapper<Long, Integer, UserRoleDO> {
 
-	List<Long> selectIdsByUserIds(@Param("userIds") List<Long> userIds);
+	List<Long> selectUserRoleIdsByUserIds(@Param("userIds") List<Long> userIds);
 
 	List<String> selectRoleIdsByUserId(@Param("userId") Long userId);
 
-	void deleteObjById(@Param("userRoleDO") UserRoleDO userRoleDO);
+	void deleteUserRoleById(@Param("userRoleDO") UserRoleDO userRoleDO);
 
 }

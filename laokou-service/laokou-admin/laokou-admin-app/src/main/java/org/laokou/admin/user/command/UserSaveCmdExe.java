@@ -55,8 +55,8 @@ public class UserSaveCmdExe {
 	public void executeVoid(UserSaveCmd cmd) throws Exception {
 		// 校验参数
 		UserE userE = UserConvertor.toEntity(cmd.getCo());
-		saveUserParamValidator.validate(userE);
-		transactionalUtils.executeInTransaction(() -> userDomainService.create(userE));
+		saveUserParamValidator.validateUser(userE);
+		transactionalUtils.executeInTransaction(() -> userDomainService.createUser(userE));
 	}
 
 }

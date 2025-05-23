@@ -49,16 +49,18 @@ class TransactionalUtilsTest {
 				() -> transactionalUtils.executeInTransaction(() -> testUserMapper.insert(getTestUserDO())));
 		Assertions.assertEquals(1,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)));
-		Assertions.assertDoesNotThrow(() -> transactionalUtils.executeInTransaction(
-				() -> testUserMapper.deleteUser(List.of(9L)), TransactionDefinition.ISOLATION_READ_COMMITTED, false));
+		Assertions.assertDoesNotThrow(
+				() -> transactionalUtils.executeInTransaction(() -> testUserMapper.deleteTestUser(List.of(9L)),
+						TransactionDefinition.ISOLATION_READ_COMMITTED, false));
 		Assertions.assertEquals(0,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)));
 		Assertions.assertDoesNotThrow(
 				() -> transactionalUtils.executeInNewTransaction(() -> testUserMapper.insert(getTestUserDO())));
 		Assertions.assertEquals(1,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)));
-		Assertions.assertDoesNotThrow(() -> transactionalUtils.executeInNewTransaction(
-				() -> testUserMapper.deleteUser(List.of(9L)), TransactionDefinition.ISOLATION_READ_COMMITTED, false));
+		Assertions.assertDoesNotThrow(
+				() -> transactionalUtils.executeInNewTransaction(() -> testUserMapper.deleteTestUser(List.of(9L)),
+						TransactionDefinition.ISOLATION_READ_COMMITTED, false));
 		Assertions.assertEquals(0,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)));
 		Assertions.assertDoesNotThrow(() -> transactionalUtils.executeInTransaction(
@@ -67,7 +69,7 @@ class TransactionalUtilsTest {
 		Assertions.assertEquals(1,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)));
 		Assertions.assertDoesNotThrow(() -> transactionalUtils.executeInTransaction(
-				() -> testUserMapper.deleteUser(List.of(9L)), TransactionDefinition.PROPAGATION_REQUIRES_NEW,
+				() -> testUserMapper.deleteTestUser(List.of(9L)), TransactionDefinition.PROPAGATION_REQUIRES_NEW,
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false));
 		Assertions.assertEquals(0,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)));
@@ -79,7 +81,7 @@ class TransactionalUtilsTest {
 		Assertions.assertTrue(count > 0);
 		Assertions.assertEquals(1,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L)));
-		count = transactionalUtils.executeResultInTransaction(() -> testUserMapper.deleteUser(List.of(10L)));
+		count = transactionalUtils.executeResultInTransaction(() -> testUserMapper.deleteTestUser(List.of(10L)));
 		Assertions.assertTrue(count > 0);
 		Assertions.assertEquals(0,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L)));
@@ -88,7 +90,7 @@ class TransactionalUtilsTest {
 		Assertions.assertTrue(count > 0);
 		Assertions.assertEquals(1,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L)));
-		count = transactionalUtils.executeResultInTransaction(() -> testUserMapper.deleteUser(List.of(10L)),
+		count = transactionalUtils.executeResultInTransaction(() -> testUserMapper.deleteTestUser(List.of(10L)),
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		Assertions.assertTrue(count > 0);
 		Assertions.assertEquals(0,
@@ -98,7 +100,7 @@ class TransactionalUtilsTest {
 		Assertions.assertTrue(count > 0);
 		Assertions.assertEquals(1,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L)));
-		count = transactionalUtils.executeResultInTransaction(() -> testUserMapper.deleteUser(List.of(10L)),
+		count = transactionalUtils.executeResultInTransaction(() -> testUserMapper.deleteTestUser(List.of(10L)),
 				TransactionDefinition.PROPAGATION_REQUIRED, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		Assertions.assertTrue(count > 0);
 		Assertions.assertEquals(0,

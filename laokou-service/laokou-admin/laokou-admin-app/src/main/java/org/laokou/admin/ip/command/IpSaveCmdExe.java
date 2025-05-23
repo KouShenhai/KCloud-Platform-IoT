@@ -41,7 +41,7 @@ public class IpSaveCmdExe {
 	@CommandLog
 	public void executeVoid(IpSaveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> ipDomainService.create(IpConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(() -> ipDomainService.createIp(IpConvertor.toEntity(cmd.getCo())));
 	}
 
 }

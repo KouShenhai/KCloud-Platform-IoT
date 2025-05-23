@@ -34,16 +34,16 @@ public class ProductCategoryDomainService {
 
 	private final ProductCategoryGateway productCategoryGateway;
 
-	public void create(ProductCategoryE productCategoryE) {
-		productCategoryGateway.create(productCategoryE);
+	public void createProductCategory(ProductCategoryE productCategoryE) {
+		productCategoryGateway.createProductCategory(productCategoryE);
 	}
 
-	public void update(ProductCategoryE productCategoryE) {
-		productCategoryGateway.update(productCategoryE);
+	public void updateProductCategory(ProductCategoryE productCategoryE) {
+		productCategoryGateway.updateProductCategory(productCategoryE);
 	}
 
-	public void delete(Long[] ids) {
-		productCategoryGateway.delete(ids);
+	public void deleteProductCategory(Long[] ids) {
+		productCategoryGateway.deleteProductCategory(ids);
 	}
 
 }

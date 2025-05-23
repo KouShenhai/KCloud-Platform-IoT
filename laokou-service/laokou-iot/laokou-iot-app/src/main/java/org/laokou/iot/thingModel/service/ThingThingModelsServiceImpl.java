@@ -53,37 +53,37 @@ public class ThingThingModelsServiceImpl implements ThingModelsServiceI {
 	private final ThingModelGetQryExe thingModelGetQryExe;
 
 	@Override
-	public void save(ThingModelSaveCmd cmd) throws Exception {
+	public void saveThingModel(ThingModelSaveCmd cmd) throws Exception {
 		thingModelSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(ThingModelModifyCmd cmd) {
+	public void modifyThingModel(ThingModelModifyCmd cmd) {
 		thingModelModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(ThingModelRemoveCmd cmd) {
+	public void removeThingModel(ThingModelRemoveCmd cmd) {
 		thingModelRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(ThingModelImportCmd cmd) {
+	public void importThingModel(ThingModelImportCmd cmd) {
 		thingModelImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(ThingThingModelExportCmd cmd) {
+	public void exportThingModel(ThingThingModelExportCmd cmd) {
 		thingModelExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<ThingModelCO>> page(ThingModelPageQry qry) {
+	public Result<Page<ThingModelCO>> pageThingModel(ThingModelPageQry qry) {
 		return thingModelPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<ThingModelCO> getById(ThingModelGetQry qry) {
+	public Result<ThingModelCO> getByIdThingModel(ThingModelGetQry qry) {
 		return thingModelGetQryExe.execute(qry);
 	}
 

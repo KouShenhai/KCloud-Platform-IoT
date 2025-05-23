@@ -48,13 +48,13 @@ public class RoleGatewayImpl implements RoleGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(RoleE roleE) {
+	public void createRole(RoleE roleE) {
 		RoleDO roleDO = RoleConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), roleE, true);
 		roleMapper.insert(roleDO);
 	}
 
 	@Override
-	public Mono<Void> update(RoleE roleE) {
+	public Mono<Void> updateRole(RoleE roleE) {
 		return getVersion(roleE).map(version -> {
 			RoleDO roleDO = RoleConvertor.toDataObject(null, roleE, false);
 			roleDO.setVersion(version);
@@ -63,7 +63,7 @@ public class RoleGatewayImpl implements RoleGateway {
 	}
 
 	@Override
-	public Mono<Void> delete(Long[] ids) {
+	public Mono<Void> deleteRole(Long[] ids) {
 		return Mono.fromCallable(() -> roleMapper.deleteByIds(Arrays.asList(ids)))
 			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))

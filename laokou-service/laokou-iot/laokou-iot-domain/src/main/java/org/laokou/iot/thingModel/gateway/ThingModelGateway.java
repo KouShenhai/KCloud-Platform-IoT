@@ -30,16 +30,16 @@ public interface ThingModelGateway {
 	/**
 	 * 新增物模型.
 	 */
-	void create(ThingModelE thingModelE);
+	void createThingModel(ThingModelE thingModelE);
 
 	/**
 	 * 修改物模型.
 	 */
-	void update(ThingModelE thingModelE);
+	void updateThingModel(ThingModelE thingModelE);
 
 	/**
 	 * 删除物模型.
 	 */
-	void delete(Long[] ids);
+	void deleteThingModel(Long[] ids);
 
 }

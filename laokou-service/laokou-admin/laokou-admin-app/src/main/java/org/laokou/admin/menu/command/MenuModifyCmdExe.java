@@ -55,8 +55,8 @@ public class MenuModifyCmdExe {
 	public void executeVoid(MenuModifyCmd cmd) {
 		// 校验参数
 		MenuE menuE = MenuConvertor.toEntity(cmd.getCo());
-		modifyMenuParamValidator.validate(menuE);
-		transactionalUtils.executeInTransaction(() -> menuDomainService.update(menuE));
+		modifyMenuParamValidator.validateMenu(menuE);
+		transactionalUtils.executeInTransaction(() -> menuDomainService.updateMenu(menuE));
 	}
 
 }

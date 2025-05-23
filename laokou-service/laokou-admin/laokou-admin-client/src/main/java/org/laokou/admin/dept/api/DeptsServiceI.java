@@ -36,48 +36,48 @@ public interface DeptsServiceI {
 	 * 保存部门.
 	 * @param cmd 保存命令
 	 */
-	void save(DeptSaveCmd cmd);
+	void saveDept(DeptSaveCmd cmd);
 
 	/**
 	 * 修改部门.
 	 * @param cmd 修改命令
 	 */
-	void modify(DeptModifyCmd cmd);
+	void modifyDept(DeptModifyCmd cmd);
 
 	/**
 	 * 删除部门.
 	 * @param cmd 删除命令
 	 */
-	void remove(DeptRemoveCmd cmd);
+	void removeDept(DeptRemoveCmd cmd);
 
 	/**
 	 * 导入部门.
 	 * @param cmd 导入命令
 	 */
-	void importI(DeptImportCmd cmd);
+	void importDept(DeptImportCmd cmd);
 
 	/**
 	 * 导出部门.
 	 * @param cmd 导出命令
 	 */
-	void export(DeptExportCmd cmd);
+	void exportDept(DeptExportCmd cmd);
 
 	/**
 	 * 分页查询部门列表.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<DeptCO>> page(DeptPageQry qry);
+	Result<Page<DeptCO>> pageDept(DeptPageQry qry);
 
 	/**
 	 * 查询部门树列表.
 	 * @param qry 查询请求
 	 */
-	Result<List<DeptTreeCO>> listTree(DeptTreeListQry qry);
+	Result<List<DeptTreeCO>> listTreeDept(DeptTreeListQry qry);
 
 	/**
 	 * 查看部门.
 	 * @param qry 查看请求
 	 */
-	Result<DeptCO> getById(DeptGetQry qry);
+	Result<DeptCO> getByIdDept(DeptGetQry qry);
 
 }

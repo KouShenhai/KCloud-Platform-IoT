@@ -35,59 +35,59 @@ public interface UsersServiceI {
 	 * 保存用户.
 	 * @param cmd 保存命令
 	 */
-	void save(UserSaveCmd cmd) throws Exception;
+	void saveUser(UserSaveCmd cmd) throws Exception;
 
 	/**
 	 * 修改用户.
 	 * @param cmd 修改命令
 	 */
-	void modify(UserModifyCmd cmd) throws Exception;
+	void modifyUser(UserModifyCmd cmd) throws Exception;
 
 	/**
 	 * 删除用户.
 	 * @param cmd 删除命令
 	 */
-	Flux<Void> remove(UserRemoveCmd cmd);
+	Flux<Void> removeUser(UserRemoveCmd cmd);
 
 	/**
 	 * 导入用户.
 	 * @param cmd 导入命令
 	 */
-	void importI(UserImportCmd cmd);
+	void importUser(UserImportCmd cmd);
 
 	/**
 	 * 导出用户.
 	 * @param cmd 导出命令
 	 */
-	void export(UserExportCmd cmd);
+	void exportUser(UserExportCmd cmd);
 
 	/**
 	 * 重置密码.
 	 * @param cmd 重置密码命令
 	 */
-	void resetPwd(UserResetPwdCmd cmd) throws Exception;
+	void resetPwdUser(UserResetPwdCmd cmd) throws Exception;
 
 	/**
 	 * 修改权限.
 	 * @param cmd 修改权限命令
 	 */
-	Flux<Void> modifyAuthority(UserModifyAuthorityCmd cmd) throws Exception;
+	Flux<Void> modifyAuthorityUser(UserModifyAuthorityCmd cmd) throws Exception;
 
 	/**
 	 * 分页查询用户.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<UserCO>> page(UserPageQry qry);
+	Result<Page<UserCO>> pageUser(UserPageQry qry);
 
 	/**
 	 * 查看用户.
 	 * @param qry 查看请求
 	 */
-	Result<UserCO> getById(UserGetQry qry) throws Exception;
+	Result<UserCO> getByIdUser(UserGetQry qry) throws Exception;
 
 	/**
 	 * 查看个人信息.
 	 */
-	Result<UserProfileCO> getProfile();
+	Result<UserProfileCO> getProfileUser();
 
 }

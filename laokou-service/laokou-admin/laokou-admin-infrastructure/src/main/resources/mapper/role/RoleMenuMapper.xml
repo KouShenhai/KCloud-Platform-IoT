@@ -20,11 +20,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.role.gatewayimpl.database.RoleMenuMapper">
 
-  <delete id="deleteObjById">
+  <delete id="deleteRoleMenuById">
     delete from boot_sys_role_menu where id = #{roleMenuDO.id}
   </delete>
 
-  <select id="selectIdsByRoleIds" resultType="java.lang.Long">
+  <select id="selectRoleMenuIdsByRoleIds" resultType="java.lang.Long">
     select id
     from boot_sys_role_menu
     where role_id in

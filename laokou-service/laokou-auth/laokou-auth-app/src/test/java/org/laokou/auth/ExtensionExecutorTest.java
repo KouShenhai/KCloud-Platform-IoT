@@ -144,7 +144,7 @@ class ExtensionExecutorTest {
 	private void execute(CaptchaE captcha) {
 		Assertions.assertDoesNotThrow(() -> extensionExecutor.executeVoid(CaptchaParamValidatorExtPt.class,
 				BizScenario.valueOf(captcha.getTag(), USE_CASE_CAPTCHA, SCENARIO),
-				extension -> extension.validate(captcha)));
+				extension -> extension.validateCaptcha(captcha)));
 	}
 
 }

@@ -42,20 +42,20 @@ public class TemplateGatewayImpl implements TemplateGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(TemplateE templateE) {
+	public void createTemplate(TemplateE templateE) {
 		templateMapper
 			.insert(TemplateConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), templateE, true));
 	}
 
 	@Override
-	public void update(TemplateE templateE) {
+	public void updateTemplate(TemplateE templateE) {
 		TemplateDO templateDO = TemplateConvertor.toDataObject(null, templateE, false);
 		templateDO.setVersion(templateMapper.selectVersion(templateE.getId()));
 		templateMapper.updateById(templateDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteTemplate(Long[] ids) {
 		templateMapper.deleteByIds(Arrays.asList(ids));
 	}
 

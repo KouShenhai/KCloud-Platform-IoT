@@ -25,8 +25,8 @@ import reactor.core.publisher.Mono;
  */
 public interface RoleMenuGateway {
 
-	Mono<Void> update(RoleE roleE);
+	Mono<Void> updateRoleMenu(RoleE roleE);
 
-	Mono<Void> delete(Long[] roleIds);
+	Mono<Void> deleteRoleMenu(Long[] roleIds);
 
 }

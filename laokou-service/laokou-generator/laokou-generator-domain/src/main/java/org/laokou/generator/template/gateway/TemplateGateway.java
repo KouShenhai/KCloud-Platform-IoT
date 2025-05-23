@@ -30,16 +30,16 @@ public interface TemplateGateway {
 	/**
 	 * 新增代码生成器模板.
 	 */
-	void create(TemplateE templateE);
+	void createTemplate(TemplateE templateE);
 
 	/**
 	 * 修改代码生成器模板.
 	 */
-	void update(TemplateE templateE);
+	void updateTemplate(TemplateE templateE);
 
 	/**
 	 * 删除代码生成器模板.
 	 */
-	void delete(Long[] ids);
+	void deleteTemplate(Long[] ids);
 
 }

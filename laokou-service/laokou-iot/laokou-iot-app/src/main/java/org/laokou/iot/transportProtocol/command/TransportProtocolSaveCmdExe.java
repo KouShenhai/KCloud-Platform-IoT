@@ -42,8 +42,8 @@ public class TransportProtocolSaveCmdExe {
 	@CommandLog
 	public void executeVoid(TransportProtocolSaveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(
-				() -> transportProtocolDomainService.create(TransportProtocolConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(() -> transportProtocolDomainService
+			.createTransportProtocol(TransportProtocolConvertor.toEntity(cmd.getCo())));
 	}
 
 }

@@ -33,16 +33,16 @@ public class MenuDomainService {
 
 	private final MenuGateway menuGateway;
 
-	public void create(MenuE menuE) {
-		menuGateway.create(menuE);
+	public void createMenu(MenuE menuE) {
+		menuGateway.createMenu(menuE);
 	}
 
-	public void update(MenuE menuE) {
-		menuGateway.update(menuE);
+	public void updateMenu(MenuE menuE) {
+		menuGateway.updateMenu(menuE);
 	}
 
-	public void delete(Long[] ids) {
-		menuGateway.delete(ids);
+	public void deleteMenu(Long[] ids) {
+		menuGateway.deleteMenu(ids);
 	}
 
 }

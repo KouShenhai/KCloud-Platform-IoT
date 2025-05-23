@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 public class ModifyAuthorityRoleParamValidator implements RoleParamValidatorExtPt {
 
 	@Override
-	public void validate(RoleE roleE) {
+	public void validateRole(RoleE roleE) {
 		ParamValidator.validate(
 				// 校验ID
 				RoleParamValidator.validateId(roleE),

@@ -34,7 +34,7 @@ public class SaveRoleParamValidator implements RoleParamValidatorExtPt {
 	private final RoleMapper roleMapper;
 
 	@Override
-	public void validate(RoleE roleE) {
+	public void validateRole(RoleE roleE) {
 		ParamValidator.validate(
 				// 校验名称
 				RoleParamValidator.validateName(roleE, roleMapper, true),

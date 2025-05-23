@@ -39,7 +39,7 @@ public class ColumnRemoveCmdExe {
 
 	public void executeVoid(ColumnRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> columnDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> columnDomainService.deleteColumn(cmd.getIds()));
 	}
 
 }

@@ -42,8 +42,8 @@ public class TransportProtocolModifyCmdExe {
 	@CommandLog
 	public void executeVoid(TransportProtocolModifyCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(
-				() -> transportProtocolDomainService.update(TransportProtocolConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(() -> transportProtocolDomainService
+			.updateTransportProtocol(TransportProtocolConvertor.toEntity(cmd.getCo())));
 	}
 
 }

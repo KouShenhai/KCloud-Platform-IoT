@@ -42,20 +42,20 @@ public class ProductGatewayImpl implements ProductGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(ProductE productE) {
+	public void createProduct(ProductE productE) {
 		productMapper
 			.insert(ProductConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), productE, true));
 	}
 
 	@Override
-	public void update(ProductE productE) {
+	public void updateProduct(ProductE productE) {
 		ProductDO productDO = ProductConvertor.toDataObject(null, productE, false);
 		productDO.setVersion(productMapper.selectVersion(productE.getId()));
 		productMapper.updateById(productDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteProduct(Long[] ids) {
 		productMapper.deleteByIds(Arrays.asList(ids));
 	}
 

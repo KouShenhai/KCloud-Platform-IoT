@@ -53,7 +53,7 @@ public class DictsControllerV3 {
 	@OperateLog(module = "字典管理", operation = "保存字典")
 	@Operation(summary = "保存字典", description = "保存字典")
 	public void saveDict(@RequestBody DictSaveCmd cmd) {
-		dictsServiceI.save(cmd);
+		dictsServiceI.saveDict(cmd);
 	}
 
 	@PutMapping
@@ -61,7 +61,7 @@ public class DictsControllerV3 {
 	@OperateLog(module = "字典管理", operation = "修改字典")
 	@Operation(summary = "修改字典", description = "修改字典")
 	public void modifyDict(@RequestBody DictModifyCmd cmd) {
-		dictsServiceI.modify(cmd);
+		dictsServiceI.modifyDict(cmd);
 	}
 
 	@DeleteMapping
@@ -69,7 +69,7 @@ public class DictsControllerV3 {
 	@OperateLog(module = "字典管理", operation = "删除字典")
 	@Operation(summary = "删除字典", description = "删除字典")
 	public void removeDict(@RequestBody Long[] ids) {
-		dictsServiceI.remove(new DictRemoveCmd(ids));
+		dictsServiceI.removeDict(new DictRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -77,7 +77,7 @@ public class DictsControllerV3 {
 	@OperateLog(module = "字典管理", operation = "导入字典")
 	@Operation(summary = "导入字典", description = "导入字典")
 	public void importDict(@RequestPart("files") MultipartFile[] files) {
-		dictsServiceI.importI(new DictImportCmd(files));
+		dictsServiceI.importDict(new DictImportCmd(files));
 	}
 
 	@PostMapping("export")
@@ -85,7 +85,7 @@ public class DictsControllerV3 {
 	@OperateLog(module = "字典管理", operation = "导出字典")
 	@Operation(summary = "导出字典", description = "导出字典")
 	public void exportDict(@RequestBody DictExportCmd cmd) {
-		dictsServiceI.export(cmd);
+		dictsServiceI.exportDict(cmd);
 	}
 
 	@TraceLog
@@ -93,7 +93,7 @@ public class DictsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dict:page')")
 	@Operation(summary = "分页查询字典列表", description = "分页查询字典列表")
 	public Result<Page<DictCO>> pageDict(@Validated @RequestBody DictPageQry qry) {
-		return dictsServiceI.page(qry);
+		return dictsServiceI.pageDict(qry);
 	}
 
 	@TraceLog
@@ -101,7 +101,7 @@ public class DictsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dict:detail')")
 	@Operation(summary = "查看字典详情", description = "查看字典详情")
 	public Result<DictCO> getByIdDict(@PathVariable("id") Long id) {
-		return dictsServiceI.getById(new DictGetQry(id));
+		return dictsServiceI.getByIdDict(new DictGetQry(id));
 	}
 
 }

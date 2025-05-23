@@ -41,7 +41,7 @@ public class OssModifyCmdExe {
 	@CommandLog
 	public void executeVoid(OssModifyCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> ossDomainService.update(OssConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(() -> ossDomainService.updateOss(OssConvertor.toEntity(cmd.getCo())));
 	}
 
 }

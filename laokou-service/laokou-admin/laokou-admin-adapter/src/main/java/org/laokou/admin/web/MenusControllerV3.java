@@ -60,7 +60,7 @@ public class MenusControllerV3 {
 	@OperateLog(module = "菜单管理", operation = "保存菜单")
 	@Operation(summary = "保存菜单", description = "保存菜单")
 	public void saveMenu(@RequestBody MenuSaveCmd cmd) {
-		menusServiceI.save(cmd);
+		menusServiceI.saveMenu(cmd);
 	}
 
 	@PutMapping
@@ -69,7 +69,7 @@ public class MenusControllerV3 {
 	@Operation(summary = "修改菜单", description = "修改菜单")
 	@DataCache(name = MENUS, key = "#cmd.co.id", operateType = DEL)
 	public void modifyMenu(@RequestBody MenuModifyCmd cmd) {
-		menusServiceI.modify(cmd);
+		menusServiceI.modifyMenu(cmd);
 	}
 
 	@DeleteMapping
@@ -77,7 +77,7 @@ public class MenusControllerV3 {
 	@OperateLog(module = "菜单管理", operation = "删除菜单")
 	@Operation(summary = "删除菜单", description = "删除菜单")
 	public void removeMenu(@RequestBody Long[] ids) {
-		menusServiceI.remove(new MenuRemoveCmd(ids));
+		menusServiceI.removeMenu(new MenuRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -85,7 +85,7 @@ public class MenusControllerV3 {
 	@OperateLog(module = "菜单管理", operation = "导入菜单")
 	@Operation(summary = "导入菜单", description = "导入菜单")
 	public void importMenu(@RequestPart("files") MultipartFile[] files) {
-		menusServiceI.importI(new MenuImportCmd(files));
+		menusServiceI.importMenu(new MenuImportCmd(files));
 	}
 
 	@PostMapping("export")
@@ -93,7 +93,7 @@ public class MenusControllerV3 {
 	@OperateLog(module = "菜单管理", operation = "导出菜单")
 	@Operation(summary = "导出菜单", description = "导出菜单")
 	public void exportMenu(@RequestBody MenuExportCmd cmd) {
-		menusServiceI.export(cmd);
+		menusServiceI.exportMenu(cmd);
 	}
 
 	@TraceLog
@@ -101,7 +101,7 @@ public class MenusControllerV3 {
 	@PreAuthorize("hasAuthority('sys:menu:page')")
 	@Operation(summary = "分页查询菜单列表", description = "分页查询菜单列表")
 	public Result<Page<MenuCO>> pageMenu(@Validated @RequestBody MenuPageQry qry) {
-		return menusServiceI.page(qry);
+		return menusServiceI.pageMenu(qry);
 	}
 
 	@TraceLog
@@ -109,14 +109,14 @@ public class MenusControllerV3 {
 	@PreAuthorize("hasAuthority('sys:menu:list-tree')")
 	@Operation(summary = "查询菜单树列表", description = "查询菜单树列表")
 	public Result<List<MenuTreeCO>> listTreeMenu(@RequestBody MenuTreeListQry qry) {
-		return menusServiceI.listTree(qry);
+		return menusServiceI.listTreeMenu(qry);
 	}
 
 	@TraceLog
 	@PostMapping("list-user-tree")
 	@Operation(summary = "查询用户菜单树列表", description = "查询用户菜单树列表")
 	public Result<List<MenuTreeCO>> listUserTreeMenu(@RequestBody MenuTreeListQry qry) {
-		return menusServiceI.listTree(qry);
+		return menusServiceI.listTreeMenu(qry);
 	}
 
 	@TraceLog
@@ -125,7 +125,7 @@ public class MenusControllerV3 {
 	@PreAuthorize("hasAuthority('sys:menu:detail')")
 	@Operation(summary = "查看菜单详情", description = "查看菜单详情")
 	public Result<MenuCO> getByIdMenu(@PathVariable("id") Long id) {
-		return menusServiceI.getById(new MenuGetQry(id));
+		return menusServiceI.getByIdMenu(new MenuGetQry(id));
 	}
 
 }

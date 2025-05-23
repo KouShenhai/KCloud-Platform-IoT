@@ -52,37 +52,37 @@ public class I18nMessagesServiceImpl implements I18nMessagesServiceI {
 	private final I18nMessageGetQryExe i18nMessageGetQryExe;
 
 	@Override
-	public void save(I18nMessageSaveCmd cmd) {
+	public void saveI18nMessage(I18nMessageSaveCmd cmd) {
 		i18nMessageSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(I18nMessageModifyCmd cmd) {
+	public void modifyI18nMessage(I18nMessageModifyCmd cmd) {
 		i18nMessageModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(I18nMessageRemoveCmd cmd) {
+	public void removeI18nMessage(I18nMessageRemoveCmd cmd) {
 		i18nMessageRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(I18nMessageImportCmd cmd) {
+	public void importI18nMessage(I18nMessageImportCmd cmd) {
 		i18nMessageImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(I18nMessageExportCmd cmd) {
+	public void exportI18nMessage(I18nMessageExportCmd cmd) {
 		i18nMessageExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<I18nMessageCO>> page(I18nMessagePageQry qry) {
+	public Result<Page<I18nMessageCO>> pageI18nMessage(I18nMessagePageQry qry) {
 		return i18nMessagePageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<I18nMessageCO> getById(I18nMessageGetQry qry) {
+	public Result<I18nMessageCO> getByIdI18nMessage(I18nMessageGetQry qry) {
 		return i18nMessageGetQryExe.execute(qry);
 	}
 

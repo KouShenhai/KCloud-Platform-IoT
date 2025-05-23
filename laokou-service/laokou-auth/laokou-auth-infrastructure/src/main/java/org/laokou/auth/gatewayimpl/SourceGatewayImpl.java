@@ -43,7 +43,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	 * @return 数据源
 	 */
 	@Override
-	public String getPrefix(String tenantCode) {
+	public String getPrefixSource(String tenantCode) {
 		SourceDO sourceDO = sourceMapper.selectOneByTenantCode(tenantCode);
 		return ObjectUtils.isNull(sourceDO) ? null : sourceDO.getName();
 	}

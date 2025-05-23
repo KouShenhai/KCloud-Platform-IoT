@@ -42,7 +42,7 @@ public class LoginLogSaveCmdExe {
 	public void executeVoid(LoginLogSaveCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> loginLogDomainService.create(LoginLogConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> loginLogDomainService.createLoginLog(LoginLogConvertor.toEntity(cmd.getCo())));
 	}
 
 }

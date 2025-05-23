@@ -31,7 +31,7 @@ import static org.laokou.auth.common.constant.BizConstants.*;
 public class MobileCaptchaParamValidator implements CaptchaParamValidatorExtPt {
 
 	@Override
-	public void validate(CaptchaE captcha) {
+	public void validateCaptcha(CaptchaE captcha) {
 		ParamValidator.validate(
 				// 校验租户编码
 				OAuth2ParamValidator.validateTenantCode(captcha.getTenantCode()),

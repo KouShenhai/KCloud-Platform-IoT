@@ -41,7 +41,7 @@ public class ProductRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(ProductRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> productDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> productDomainService.deleteProduct(cmd.getIds()));
 	}
 
 }

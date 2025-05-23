@@ -34,42 +34,42 @@ public interface InfosServiceI {
 	 * 保存代码生成器信息.
 	 * @param cmd 保存命令
 	 */
-	void save(InfoSaveCmd cmd);
+	void saveInfo(InfoSaveCmd cmd);
 
 	/**
 	 * 修改代码生成器信息.
 	 * @param cmd 修改命令
 	 */
-	void modify(InfoModifyCmd cmd);
+	void modifyInfo(InfoModifyCmd cmd);
 
 	/**
 	 * 删除代码生成器信息.
 	 * @param cmd 删除命令
 	 */
-	void remove(InfoRemoveCmd cmd);
+	void removeInfo(InfoRemoveCmd cmd);
 
 	/**
 	 * 导入代码生成器信息.
 	 * @param cmd 导入命令
 	 */
-	void importI(InfoImportCmd cmd);
+	void importInfo(InfoImportCmd cmd);
 
 	/**
 	 * 导出代码生成器信息.
 	 * @param cmd 导出命令
 	 */
-	void export(InfoExportCmd cmd);
+	void exportInfo(InfoExportCmd cmd);
 
 	/**
 	 * 分页查询代码生成器信息.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<InfoCO>> page(InfoPageQry qry);
+	Result<Page<InfoCO>> pageInfo(InfoPageQry qry);
 
 	/**
 	 * 查看代码生成器信息.
 	 * @param qry 查看请求
 	 */
-	Result<InfoCO> getById(InfoGetQry qry);
+	Result<InfoCO> getByIdInfo(InfoGetQry qry);
 
 }

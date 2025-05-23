@@ -24,6 +24,6 @@ import org.laokou.admin.menu.model.MenuE;
  */
 public interface MenuParamValidatorExtPt {
 
-	void validate(MenuE menuE);
+	void validateMenu(MenuE menuE);
 
 }

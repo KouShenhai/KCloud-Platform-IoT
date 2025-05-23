@@ -53,37 +53,37 @@ public class ProductsServiceImpl implements ProductsServiceI {
 	private final ProductGetQryExe productGetQryExe;
 
 	@Override
-	public void save(ProductSaveCmd cmd) {
+	public void saveProduct(ProductSaveCmd cmd) {
 		productSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(ProductModifyCmd cmd) {
+	public void modifyProduct(ProductModifyCmd cmd) {
 		productModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(ProductRemoveCmd cmd) {
+	public void removeProduct(ProductRemoveCmd cmd) {
 		productRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(ProductImportCmd cmd) {
+	public void importProduct(ProductImportCmd cmd) {
 		productImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(ProductExportCmd cmd) {
+	public void exportProduct(ProductExportCmd cmd) {
 		productExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<ProductCO>> page(ProductPageQry qry) {
+	public Result<Page<ProductCO>> pageProduct(ProductPageQry qry) {
 		return productPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<ProductCO> getById(ProductGetQry qry) {
+	public Result<ProductCO> getByIdProduct(ProductGetQry qry) {
 		return productGetQryExe.execute(qry);
 	}
 

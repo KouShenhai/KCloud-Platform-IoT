@@ -40,7 +40,7 @@ public class I18nMessageRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(I18nMessageRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> i18nMessageDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> i18nMessageDomainService.deleteI18nMessage(cmd.getIds()));
 	}
 
 }

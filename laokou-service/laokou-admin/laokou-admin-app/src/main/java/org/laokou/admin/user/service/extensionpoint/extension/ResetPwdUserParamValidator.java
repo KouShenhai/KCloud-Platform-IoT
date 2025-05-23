@@ -37,7 +37,7 @@ public class ResetPwdUserParamValidator implements UserParamValidatorExtPt {
 	private final UserMapper userMapper;
 
 	@Override
-	public void validate(UserE userE) throws Exception {
+	public void validateUser(UserE userE) throws Exception {
 		ParamValidator.validate(
 				// 校验ID
 				UserParamValidator.validateId(userE),

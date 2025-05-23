@@ -30,16 +30,16 @@ public interface InfoGateway {
 	/**
 	 * 新增代码生成器信息.
 	 */
-	void create(InfoE infoE);
+	void createInfo(InfoE infoE);
 
 	/**
 	 * 修改代码生成器信息.
 	 */
-	void update(InfoE infoE);
+	void updateInfo(InfoE infoE);
 
 	/**
 	 * 删除代码生成器信息.
 	 */
-	void delete(Long[] ids);
+	void deleteInfo(Long[] ids);
 
 }

@@ -43,8 +43,8 @@ public class DistributedIdentifiersControllerV3 {
 	@ApiSecret
 	@PostMapping("snowflake")
 	@Operation(summary = "生成雪花ID", description = "生成雪花ID")
-	public Result<DistributedIdentifierCO> generateSnowflakeV3() {
-		return distributedIdentifierServiceI.generateSnowflake();
+	public Result<DistributedIdentifierCO> generateSnowflakeDistributedIdentifier() {
+		return distributedIdentifierServiceI.generateSnowflakeDistributedIdentifier();
 	}
 
 }

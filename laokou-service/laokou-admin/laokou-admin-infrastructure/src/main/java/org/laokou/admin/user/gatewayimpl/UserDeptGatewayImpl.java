@@ -51,7 +51,7 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public Mono<Void> update(UserE userE) {
+	public Mono<Void> updateUserDept(UserE userE) {
 		return getUserDeptIds(userE.getUserIds()).map(ids -> {
 			userE.setUserDeptIds(ids);
 			return userE;
@@ -59,7 +59,7 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 	}
 
 	@Override
-	public Mono<Void> delete(Long[] userIds) {
+	public Mono<Void> deleteUserDept(Long[] userIds) {
 		return getUserDeptIds(Arrays.asList(userIds)).map(ids -> {
 			UserE userE = new UserE();
 			userE.setUserDeptIds(ids);
@@ -80,12 +80,12 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 		// 删除用户部门关联表
 		List<UserDeptDO> list = UserConvertor.toDataObjs(userE);
 		if (CollectionUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, UserDeptMapper.class, UserDeptMapper::deleteObjById);
+			mybatisUtils.batch(list, UserDeptMapper.class, UserDeptMapper::deleteUserDeptById);
 		}
 	}
 
 	private Mono<List<Long>> getUserDeptIds(List<Long> userIds) {
-		return Mono.fromCallable(() -> userDeptMapper.selectIdsByUserIds(userIds))
+		return Mono.fromCallable(() -> userDeptMapper.selectUserDeptIdsByUserIds(userIds))
 			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))

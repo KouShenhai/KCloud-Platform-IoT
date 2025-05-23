@@ -33,42 +33,42 @@ public interface NoticeLogsServiceI {
 	 * 保存通知日志.
 	 * @param cmd 保存命令
 	 */
-	void save(NoticeLogSaveCmd cmd);
+	void saveNoticeLog(NoticeLogSaveCmd cmd);
 
 	/**
 	 * 修改通知日志.
 	 * @param cmd 修改命令
 	 */
-	void modify(NoticeLogModifyCmd cmd);
+	void modifyNoticeLog(NoticeLogModifyCmd cmd);
 
 	/**
 	 * 删除通知日志.
 	 * @param cmd 删除命令
 	 */
-	void remove(NoticeLogRemoveCmd cmd);
+	void removeNoticeLog(NoticeLogRemoveCmd cmd);
 
 	/**
 	 * 导入通知日志.
 	 * @param cmd 导入命令
 	 */
-	void importI(NoticeLogImportCmd cmd);
+	void importNoticeLog(NoticeLogImportCmd cmd);
 
 	/**
 	 * 导出通知日志.
 	 * @param cmd 导出命令
 	 */
-	void export(NoticeLogExportCmd cmd);
+	void exportNoticeLog(NoticeLogExportCmd cmd);
 
 	/**
 	 * 分页查询通知日志.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<NoticeLogCO>> page(NoticeLogPageQry qry);
+	Result<Page<NoticeLogCO>> pageNoticeLog(NoticeLogPageQry qry);
 
 	/**
 	 * 查看通知日志.
 	 * @param qry 查看请求
 	 */
-	Result<NoticeLogCO> getById(NoticeLogGetQry qry);
+	Result<NoticeLogCO> getByIdNoticeLog(NoticeLogGetQry qry);
 
 }

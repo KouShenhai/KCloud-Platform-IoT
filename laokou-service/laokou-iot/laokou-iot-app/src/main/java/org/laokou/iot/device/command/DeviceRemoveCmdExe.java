@@ -41,7 +41,7 @@ public class DeviceRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(DeviceRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> deviceDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> deviceDomainService.deleteDevice(cmd.getIds()));
 	}
 
 }

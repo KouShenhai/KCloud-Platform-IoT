@@ -50,12 +50,12 @@ public class DomainService {
 
 	public void createLoginLog(LoginLogE loginLog) {
 		// 保存登录日志
-		loginLogGateway.create(loginLog);
+		loginLogGateway.createLoginLog(loginLog);
 	}
 
 	public void createNoticeLog(NoticeLogE noticeLog) {
 		// 保存通知日志
-		noticeLogGateway.create(noticeLog);
+		noticeLogGateway.createNoticeLog(noticeLog);
 		// 缓存验证码
 		createCaptchaCache(noticeLog);
 	}
@@ -77,7 +77,7 @@ public class DomainService {
 		// 校验验证码
 		auth.checkCaptcha(captchaGateway::validate);
 		// 获取用户信息
-		auth.getUserInfo(userGateway.getProfile(auth.getUser(), auth.getTenantCode()));
+		auth.getUserInfo(userGateway.getProfileUser(auth.getUser(), auth.getTenantCode()));
 		// 校验用户名
 		auth.checkUsername();
 		// 校验密码
@@ -85,22 +85,22 @@ public class DomainService {
 		// 校验用户状态
 		auth.checkUserStatus();
 		// 获取菜单标识集合
-		auth.getMenuPermissions(menuGateway.getPermissions(auth.getUser()));
+		auth.getMenuPermissions(menuGateway.getPermissionsMenu(auth.getUser()));
 		// 校验菜单权限集合
 		auth.checkMenuPermissions();
 		// 获取部门路径集合
-		auth.getDeptPaths(deptGateway.getPaths(auth.getUser()));
+		auth.getDeptPaths(deptGateway.getPathsDept(auth.getUser()));
 		// 校验部门路径集合
 		auth.checkDeptPaths();
 	}
 
 	private void checkTenant(AuthA auth) {
 		// 获取租户ID
-		auth.getTenantId(tenantGateway.getId(auth.getTenantCode()));
+		auth.getTenantId(tenantGateway.getIdTenant(auth.getTenantCode()));
 		// 校验租户ID
 		auth.checkTenantId();
 		// 获取数据源前缀
-		auth.getSourcePrefix(sourceGateway.getPrefix(auth.getTenantCode()));
+		auth.getSourcePrefix(sourceGateway.getPrefixSource(auth.getTenantCode()));
 		// 校验数据源前缀
 		auth.checkSourcePrefix();
 	}

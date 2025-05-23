@@ -44,9 +44,9 @@ public class OssControllerV3 {
 	@PostMapping(value = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:oss:upload')")
 	@Operation(summary = "OSS上传文件", description = "OSS上传文件")
-	public Result<String> uploadV3(@RequestPart("file") MultipartFile file)
+	public Result<String> uploadOss(@RequestPart("file") MultipartFile file)
 			throws IOException, NoSuchAlgorithmException {
-		return ossServiceI.upload(new OssUploadCmd(file));
+		return ossServiceI.uploadOss(new OssUploadCmd(file));
 	}
 
 }

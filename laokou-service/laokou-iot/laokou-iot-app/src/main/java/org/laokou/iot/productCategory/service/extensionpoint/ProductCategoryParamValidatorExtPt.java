@@ -24,6 +24,6 @@ import org.laokou.iot.productCategory.model.ProductCategoryE;
  */
 public interface ProductCategoryParamValidatorExtPt {
 
-	void validate(ProductCategoryE productCategoryE) throws Exception;
+	void validateProductCategory(ProductCategoryE productCategoryE) throws Exception;
 
 }

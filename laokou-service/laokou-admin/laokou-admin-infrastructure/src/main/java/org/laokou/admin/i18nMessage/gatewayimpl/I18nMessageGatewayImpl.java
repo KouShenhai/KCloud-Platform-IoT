@@ -42,20 +42,20 @@ public class I18nMessageGatewayImpl implements I18nMessageGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(I18nMessageE i18nMessageE) {
+	public void createI18nMessage(I18nMessageE i18nMessageE) {
 		i18nMessageMapper
 			.insert(I18nMessageConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), i18nMessageE));
 	}
 
 	@Override
-	public void update(I18nMessageE i18nMessageE) {
+	public void updateI18nMessage(I18nMessageE i18nMessageE) {
 		I18nMessageDO i18nMessageDO = I18nMessageConvertor.toDataObject(null, i18nMessageE);
 		i18nMessageDO.setVersion(i18nMessageMapper.selectVersion(i18nMessageE.getId()));
 		i18nMessageMapper.updateById(i18nMessageDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteI18nMessage(Long[] ids) {
 		i18nMessageMapper.deleteByIds(Arrays.asList(ids));
 	}
 

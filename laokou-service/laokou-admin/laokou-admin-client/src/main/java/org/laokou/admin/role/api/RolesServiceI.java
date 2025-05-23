@@ -35,48 +35,48 @@ public interface RolesServiceI {
 	 * 保存角色.
 	 * @param cmd 保存命令
 	 */
-	void save(RoleSaveCmd cmd);
+	void saveRole(RoleSaveCmd cmd);
 
 	/**
 	 * 修改角色.
 	 * @param cmd 修改命令
 	 */
-	Mono<Void> modify(RoleModifyCmd cmd);
+	Mono<Void> modifyRole(RoleModifyCmd cmd);
 
 	/**
 	 * 删除角色.
 	 * @param cmd 删除命令
 	 */
-	Flux<Void> remove(RoleRemoveCmd cmd);
+	Flux<Void> removeRole(RoleRemoveCmd cmd);
 
 	/**
 	 * 导入角色.
 	 * @param cmd 导入命令
 	 */
-	void importI(RoleImportCmd cmd);
+	void importRole(RoleImportCmd cmd);
 
 	/**
 	 * 导出角色.
 	 * @param cmd 导出命令
 	 */
-	void export(RoleExportCmd cmd);
+	void exportRole(RoleExportCmd cmd);
 
 	/**
 	 * 修改权限.
 	 * @param cmd 修改权限命令
 	 */
-	Flux<Void> modifyAuthority(RoleModifyAuthorityCmd cmd) throws Exception;
+	Flux<Void> modifyAuthorityRole(RoleModifyAuthorityCmd cmd) throws Exception;
 
 	/**
 	 * 分页查询角色.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<RoleCO>> page(RolePageQry qry);
+	Result<Page<RoleCO>> pageRole(RolePageQry qry);
 
 	/**
 	 * 查看角色.
 	 * @param qry 查看请求
 	 */
-	Result<RoleCO> getById(RoleGetQry qry);
+	Result<RoleCO> getByIdRole(RoleGetQry qry);
 
 }

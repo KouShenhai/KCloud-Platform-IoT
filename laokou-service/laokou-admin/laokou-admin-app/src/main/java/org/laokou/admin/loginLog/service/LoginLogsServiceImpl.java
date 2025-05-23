@@ -52,37 +52,37 @@ public class LoginLogsServiceImpl implements LoginLogsServiceI {
 	private final LoginLogGetQryExe loginLogGetQryExe;
 
 	@Override
-	public void save(LoginLogSaveCmd cmd) {
+	public void saveLoginLog(LoginLogSaveCmd cmd) {
 		loginLogSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(LoginLogModifyCmd cmd) {
+	public void modifyLoginLog(LoginLogModifyCmd cmd) {
 		loginLogModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(LoginLogRemoveCmd cmd) {
+	public void removeLoginLog(LoginLogRemoveCmd cmd) {
 		loginLogRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(LoginLogImportCmd cmd) {
+	public void importLoginLog(LoginLogImportCmd cmd) {
 		loginLogImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(LoginLogExportCmd cmd) {
+	public void exportLoginLog(LoginLogExportCmd cmd) {
 		loginLogExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<LoginLogCO>> page(LoginLogPageQry qry) {
+	public Result<Page<LoginLogCO>> pageLoginLog(LoginLogPageQry qry) {
 		return loginLogPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<LoginLogCO> getById(LoginLogGetQry qry) {
+	public Result<LoginLogCO> getByIdLoginLog(LoginLogGetQry qry) {
 		return loginLogGetQryExe.execute(qry);
 	}
 

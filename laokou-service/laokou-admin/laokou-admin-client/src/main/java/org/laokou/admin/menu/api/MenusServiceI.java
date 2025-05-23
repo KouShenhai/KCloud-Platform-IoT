@@ -36,48 +36,48 @@ public interface MenusServiceI {
 	 * 保存菜单.
 	 * @param cmd 保存命令
 	 */
-	void save(MenuSaveCmd cmd);
+	void saveMenu(MenuSaveCmd cmd);
 
 	/**
 	 * 修改菜单.
 	 * @param cmd 修改命令
 	 */
-	void modify(MenuModifyCmd cmd);
+	void modifyMenu(MenuModifyCmd cmd);
 
 	/**
 	 * 删除菜单.
 	 * @param cmd 删除命令
 	 */
-	void remove(MenuRemoveCmd cmd);
+	void removeMenu(MenuRemoveCmd cmd);
 
 	/**
 	 * 导入菜单.
 	 * @param cmd 导入命令
 	 */
-	void importI(MenuImportCmd cmd);
+	void importMenu(MenuImportCmd cmd);
 
 	/**
 	 * 导出菜单.
 	 * @param cmd 导出命令
 	 */
-	void export(MenuExportCmd cmd);
+	void exportMenu(MenuExportCmd cmd);
 
 	/**
 	 * 分页查询菜单列表.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<MenuCO>> page(MenuPageQry qry);
+	Result<Page<MenuCO>> pageMenu(MenuPageQry qry);
 
 	/**
 	 * 查询菜单树列表.
 	 * @param qry 查询请求
 	 */
-	Result<List<MenuTreeCO>> listTree(MenuTreeListQry qry);
+	Result<List<MenuTreeCO>> listTreeMenu(MenuTreeListQry qry);
 
 	/**
 	 * 查看菜单.
 	 * @param qry 查看请求
 	 */
-	Result<MenuCO> getById(MenuGetQry qry);
+	Result<MenuCO> getByIdMenu(MenuGetQry qry);
 
 }

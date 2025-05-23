@@ -34,16 +34,16 @@ public class ClusterDomainService {
 
 	private final ClusterGateway clusterGateway;
 
-	public void create(ClusterE clusterE) {
-		clusterGateway.create(clusterE);
+	public void createCluster(ClusterE clusterE) {
+		clusterGateway.createCluster(clusterE);
 	}
 
-	public void update(ClusterE clusterE) {
-		clusterGateway.update(clusterE);
+	public void updateCluster(ClusterE clusterE) {
+		clusterGateway.updateCluster(clusterE);
 	}
 
-	public void delete(Long[] ids) {
-		clusterGateway.delete(ids);
+	public void deleteCluster(Long[] ids) {
+		clusterGateway.deleteCluster(ids);
 	}
 
 }

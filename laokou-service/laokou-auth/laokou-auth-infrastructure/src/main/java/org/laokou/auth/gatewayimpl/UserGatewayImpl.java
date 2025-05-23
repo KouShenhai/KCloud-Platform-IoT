@@ -52,7 +52,7 @@ public class UserGatewayImpl implements UserGateway {
 	 * @return 用户信息
 	 */
 	@Override
-	public UserE getProfile(UserE user, String tenantCode) {
+	public UserE getProfileUser(UserE user, String tenantCode) {
 		try {
 			UserDO userDO = userMapper.selectObj(UserConvertor.toDataObject(user), tenantCode);
 			return ObjectUtils.isNotNull(userDO) ? UserConvertor.toEntity(userDO) : null;

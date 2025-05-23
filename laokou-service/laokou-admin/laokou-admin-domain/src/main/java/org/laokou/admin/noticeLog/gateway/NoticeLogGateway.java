@@ -29,16 +29,16 @@ public interface NoticeLogGateway {
 	/**
 	 * 新增通知日志.
 	 */
-	void create(NoticeLogE noticeLogE);
+	void createNoticeLog(NoticeLogE noticeLogE);
 
 	/**
 	 * 修改通知日志.
 	 */
-	void update(NoticeLogE noticeLogE);
+	void updateNoticeLog(NoticeLogE noticeLogE);
 
 	/**
 	 * 删除通知日志.
 	 */
-	void delete(Long[] ids);
+	void deleteNoticeLog(Long[] ids);
 
 }

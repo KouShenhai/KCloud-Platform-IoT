@@ -34,16 +34,16 @@ public class ColumnDomainService {
 
 	private final ColumnGateway columnGateway;
 
-	public void create(ColumnE columnE) {
-		columnGateway.create(columnE);
+	public void createColumn(ColumnE columnE) {
+		columnGateway.createColumn(columnE);
 	}
 
-	public void update(ColumnE columnE) {
-		columnGateway.update(columnE);
+	public void updateColumn(ColumnE columnE) {
+		columnGateway.updateColumn(columnE);
 	}
 
-	public void delete(Long[] ids) {
-		columnGateway.delete(ids);
+	public void deleteColumn(Long[] ids) {
+		columnGateway.deleteColumn(ids);
 	}
 
 }

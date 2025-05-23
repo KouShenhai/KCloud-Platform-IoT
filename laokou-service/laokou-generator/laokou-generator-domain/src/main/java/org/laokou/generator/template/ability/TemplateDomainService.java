@@ -34,16 +34,16 @@ public class TemplateDomainService {
 
 	private final TemplateGateway templateGateway;
 
-	public void create(TemplateE templateE) {
-		templateGateway.create(templateE);
+	public void createTemplate(TemplateE templateE) {
+		templateGateway.createTemplate(templateE);
 	}
 
-	public void update(TemplateE templateE) {
-		templateGateway.update(templateE);
+	public void updateTemplate(TemplateE templateE) {
+		templateGateway.updateTemplate(templateE);
 	}
 
-	public void delete(Long[] ids) {
-		templateGateway.delete(ids);
+	public void deleteTemplate(Long[] ids) {
+		templateGateway.deleteTemplate(ids);
 	}
 
 }

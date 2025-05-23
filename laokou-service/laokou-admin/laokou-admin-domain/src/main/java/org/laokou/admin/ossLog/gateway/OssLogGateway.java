@@ -29,16 +29,16 @@ public interface OssLogGateway {
 	/**
 	 * 新增OSS日志.
 	 */
-	void create(OssLogE ossLogE);
+	void createOssLog(OssLogE ossLogE);
 
 	/**
 	 * 修改OSS日志.
 	 */
-	void update(OssLogE ossLogE);
+	void updateOssLog(OssLogE ossLogE);
 
 	/**
 	 * 删除OSS日志.
 	 */
-	void delete(Long[] ids);
+	void deleteOssLog(Long[] ids);
 
 }

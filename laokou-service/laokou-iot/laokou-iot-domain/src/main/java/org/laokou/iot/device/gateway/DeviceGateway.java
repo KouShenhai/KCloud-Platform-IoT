@@ -30,16 +30,16 @@ public interface DeviceGateway {
 	/**
 	 * 新增设备.
 	 */
-	void create(DeviceE deviceE);
+	void createDevice(DeviceE deviceE);
 
 	/**
 	 * 修改设备.
 	 */
-	void update(DeviceE deviceE);
+	void updateDevice(DeviceE deviceE);
 
 	/**
 	 * 删除设备.
 	 */
-	void delete(Long[] ids);
+	void deleteDevice(Long[] ids);
 
 }

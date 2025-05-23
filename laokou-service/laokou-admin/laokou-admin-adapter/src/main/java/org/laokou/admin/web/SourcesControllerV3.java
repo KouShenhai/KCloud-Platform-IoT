@@ -56,8 +56,8 @@ public class SourcesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:source:save')")
 	@OperateLog(module = "数据源管理", operation = "保存数据源")
 	@Operation(summary = "保存数据源", description = "保存数据源")
-	public void saveV3(@RequestBody SourceSaveCmd cmd) {
-		sourcesServiceI.save(cmd);
+	public void saveSource(@RequestBody SourceSaveCmd cmd) {
+		sourcesServiceI.saveSource(cmd);
 	}
 
 	@PutMapping
@@ -65,40 +65,40 @@ public class SourcesControllerV3 {
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@Operation(summary = "修改数据源", description = "修改数据源")
 	@DataCache(name = SOURCES, key = "#cmd.co.id", operateType = DEL)
-	public void modifyV3(@RequestBody SourceModifyCmd cmd) {
-		sourcesServiceI.modify(cmd);
+	public void modifySource(@RequestBody SourceModifyCmd cmd) {
+		sourcesServiceI.modifySource(cmd);
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:source:remove')")
 	@OperateLog(module = "数据源管理", operation = "删除数据源")
 	@Operation(summary = "删除数据源", description = "删除数据源")
-	public void removeV3(@RequestBody Long[] ids) {
-		sourcesServiceI.remove(new SourceRemoveCmd(ids));
+	public void removeSource(@RequestBody Long[] ids) {
+		sourcesServiceI.removeSource(new SourceRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:source:import')")
 	@OperateLog(module = "数据源管理", operation = "导入数据源")
 	@Operation(summary = "导入数据源", description = "导入数据源")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
-		sourcesServiceI.importI(new SourceImportCmd(files));
+	public void importSource(@RequestPart("files") MultipartFile[] files) {
+		sourcesServiceI.importSource(new SourceImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:source:export')")
 	@OperateLog(module = "数据源管理", operation = "导出数据源")
 	@Operation(summary = "导出数据源", description = "导出数据源")
-	public void exportV3(@RequestBody SourceExportCmd cmd) {
-		sourcesServiceI.export(cmd);
+	public void exportSource(@RequestBody SourceExportCmd cmd) {
+		sourcesServiceI.exportSource(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:source:page')")
 	@Operation(summary = "分页查询数据源列表", description = "分页查询数据源列表")
-	public Result<Page<SourceCO>> pageV3(@Validated @RequestBody SourcePageQry qry) {
-		return sourcesServiceI.page(qry);
+	public Result<Page<SourceCO>> pageSource(@Validated @RequestBody SourcePageQry qry) {
+		return sourcesServiceI.pageSource(qry);
 	}
 
 	@TraceLog
@@ -106,8 +106,8 @@ public class SourcesControllerV3 {
 	@DataCache(name = SOURCES, key = "#id")
 	@PreAuthorize("hasAuthority('sys:source:detail')")
 	@Operation(summary = "查看数据源详情", description = "查看数据源详情")
-	public Result<SourceCO> getByIdV3(@PathVariable("id") Long id) {
-		return sourcesServiceI.getById(new SourceGetQry(id));
+	public Result<SourceCO> getByIdSource(@PathVariable("id") Long id) {
+		return sourcesServiceI.getByIdSource(new SourceGetQry(id));
 	}
 
 }

@@ -25,6 +25,6 @@ import java.security.NoSuchAlgorithmException;
  */
 public interface Storage {
 
-	String upload() throws IOException, NoSuchAlgorithmException;
+	String uploadOss() throws IOException, NoSuchAlgorithmException;
 
 }

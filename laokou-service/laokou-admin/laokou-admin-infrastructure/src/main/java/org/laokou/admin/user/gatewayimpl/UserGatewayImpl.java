@@ -51,21 +51,21 @@ public class UserGatewayImpl implements UserGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(UserE userE) {
+	public void createUser(UserE userE) {
 		UserDO userDO = UserConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), passwordEncoder,
 				userE, true);
 		userMapper.insert(userDO);
 	}
 
 	@Override
-	public void update(UserE userE) {
+	public void updateUser(UserE userE) {
 		UserDO userDO = UserConvertor.toDataObject(null, passwordEncoder, userE, false);
 		userDO.setVersion(userMapper.selectVersion(userE.getId()));
 		userMapper.updateById(userDO);
 	}
 
 	@Override
-	public Mono<Void> delete(Long[] ids) {
+	public Mono<Void> deleteUser(Long[] ids) {
 		return Mono.fromCallable(() -> userMapper.deleteByIds(Arrays.asList(ids)))
 			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))

@@ -29,16 +29,16 @@ public interface OssGateway {
 	/**
 	 * 新增OSS.
 	 */
-	void create(OssE ossE);
+	void createOss(OssE ossE);
 
 	/**
 	 * 修改OSS.
 	 */
-	void update(OssE ossE);
+	void updateOss(OssE ossE);
 
 	/**
 	 * 删除OSS.
 	 */
-	void delete(Long[] ids);
+	void deleteOss(Long[] ids);
 
 }

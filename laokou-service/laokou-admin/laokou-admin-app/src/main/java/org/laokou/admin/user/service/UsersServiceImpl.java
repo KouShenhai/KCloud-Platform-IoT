@@ -61,52 +61,52 @@ public class UsersServiceImpl implements UsersServiceI {
 	private final UserProfileGetQryExe userProfileGetQryExe;
 
 	@Override
-	public void save(UserSaveCmd cmd) throws Exception {
+	public void saveUser(UserSaveCmd cmd) throws Exception {
 		userSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(UserModifyCmd cmd) throws Exception {
+	public void modifyUser(UserModifyCmd cmd) throws Exception {
 		userModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Flux<Void> remove(UserRemoveCmd cmd) {
+	public Flux<Void> removeUser(UserRemoveCmd cmd) {
 		return userRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(UserImportCmd cmd) {
+	public void importUser(UserImportCmd cmd) {
 		userImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(UserExportCmd cmd) {
+	public void exportUser(UserExportCmd cmd) {
 		userExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void resetPwd(UserResetPwdCmd cmd) throws Exception {
+	public void resetPwdUser(UserResetPwdCmd cmd) throws Exception {
 		userResetPwdCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Flux<Void> modifyAuthority(UserModifyAuthorityCmd cmd) throws Exception {
+	public Flux<Void> modifyAuthorityUser(UserModifyAuthorityCmd cmd) throws Exception {
 		return userModifyAuthorityCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<UserCO>> page(UserPageQry qry) {
+	public Result<Page<UserCO>> pageUser(UserPageQry qry) {
 		return userPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<UserCO> getById(UserGetQry qry) throws Exception {
+	public Result<UserCO> getByIdUser(UserGetQry qry) throws Exception {
 		return userGetQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<UserProfileCO> getProfile() {
+	public Result<UserProfileCO> getProfileUser() {
 		return userProfileGetQryExe.execute();
 	}
 

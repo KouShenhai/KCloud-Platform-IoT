@@ -33,42 +33,42 @@ public interface I18nMessagesServiceI {
 	 * 保存国际化消息.
 	 * @param cmd 保存命令
 	 */
-	void save(I18nMessageSaveCmd cmd);
+	void saveI18nMessage(I18nMessageSaveCmd cmd);
 
 	/**
 	 * 修改国际化消息.
 	 * @param cmd 修改命令
 	 */
-	void modify(I18nMessageModifyCmd cmd);
+	void modifyI18nMessage(I18nMessageModifyCmd cmd);
 
 	/**
 	 * 删除国际化消息.
 	 * @param cmd 删除命令
 	 */
-	void remove(I18nMessageRemoveCmd cmd);
+	void removeI18nMessage(I18nMessageRemoveCmd cmd);
 
 	/**
 	 * 导入国际化消息.
 	 * @param cmd 导入命令
 	 */
-	void importI(I18nMessageImportCmd cmd);
+	void importI18nMessage(I18nMessageImportCmd cmd);
 
 	/**
 	 * 导出国际化消息.
 	 * @param cmd 导出命令
 	 */
-	void export(I18nMessageExportCmd cmd);
+	void exportI18nMessage(I18nMessageExportCmd cmd);
 
 	/**
 	 * 分页查询国际化消息.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<I18nMessageCO>> page(I18nMessagePageQry qry);
+	Result<Page<I18nMessageCO>> pageI18nMessage(I18nMessagePageQry qry);
 
 	/**
 	 * 查看国际化消息.
 	 * @param qry 查看请求
 	 */
-	Result<I18nMessageCO> getById(I18nMessageGetQry qry);
+	Result<I18nMessageCO> getByIdI18nMessage(I18nMessageGetQry qry);
 
 }

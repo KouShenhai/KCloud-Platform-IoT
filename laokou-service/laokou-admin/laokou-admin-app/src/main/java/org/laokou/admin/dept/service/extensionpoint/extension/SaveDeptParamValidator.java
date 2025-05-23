@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 public class SaveDeptParamValidator implements DeptParamValidatorExtPt {
 
 	@Override
-	public void validate(DeptE deptE) {
+	public void validateDept(DeptE deptE) {
 		ParamValidator.validate(
 				// 校验父级ID
 				DeptParamValidator.validateParentId(deptE),

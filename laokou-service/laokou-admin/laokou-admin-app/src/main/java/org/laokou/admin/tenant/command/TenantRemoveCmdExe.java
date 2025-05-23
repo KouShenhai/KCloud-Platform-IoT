@@ -40,7 +40,7 @@ public class TenantRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(TenantRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> tenantDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> tenantDomainService.deleteTenant(cmd.getIds()));
 	}
 
 }

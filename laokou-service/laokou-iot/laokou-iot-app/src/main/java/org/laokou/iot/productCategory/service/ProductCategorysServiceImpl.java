@@ -58,42 +58,42 @@ public class ProductCategorysServiceImpl implements ProductCategorysServiceI {
 	private final ProductCategoryTreeListQryExe productCategoryTreeListQryExe;
 
 	@Override
-	public void save(ProductCategorySaveCmd cmd) {
+	public void saveProductCategory(ProductCategorySaveCmd cmd) {
 		productCategorySaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(ProductCategoryModifyCmd cmd) {
+	public void modifyProductCategory(ProductCategoryModifyCmd cmd) {
 		productCategoryModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(ProductCategoryRemoveCmd cmd) {
+	public void removeProductCategory(ProductCategoryRemoveCmd cmd) {
 		productCategoryRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(ProductCategoryImportCmd cmd) {
+	public void importProductCategory(ProductCategoryImportCmd cmd) {
 		productCategoryImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(ProductCategoryExportCmd cmd) {
+	public void exportProductCategory(ProductCategoryExportCmd cmd) {
 		productCategoryExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<ProductCategoryCO>> page(ProductCategoryPageQry qry) {
+	public Result<Page<ProductCategoryCO>> pageProductCategory(ProductCategoryPageQry qry) {
 		return productCategoryPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<List<ProductCategoryCO>> listTree(ProductCategoryTreeListQry qry) {
+	public Result<List<ProductCategoryCO>> listTreeProductCategory(ProductCategoryTreeListQry qry) {
 		return productCategoryTreeListQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<ProductCategoryCO> getById(ProductCategoryGetQry qry) {
+	public Result<ProductCategoryCO> getByIdProductCategory(ProductCategoryGetQry qry) {
 		return productCategoryGetQryExe.execute(qry);
 	}
 

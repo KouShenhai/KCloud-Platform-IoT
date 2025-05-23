@@ -52,37 +52,37 @@ public class OssLogsServiceImpl implements OssLogsServiceI {
 	private final OssLogGetQryExe ossLogGetQryExe;
 
 	@Override
-	public void save(OssLogSaveCmd cmd) {
+	public void saveOssLog(OssLogSaveCmd cmd) {
 		ossLogSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(OssLogModifyCmd cmd) {
+	public void modifyOssLog(OssLogModifyCmd cmd) {
 		ossLogModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(OssLogRemoveCmd cmd) {
+	public void removeOssLog(OssLogRemoveCmd cmd) {
 		ossLogRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(OssLogImportCmd cmd) {
+	public void importOssLog(OssLogImportCmd cmd) {
 		ossLogImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(OssLogExportCmd cmd) {
+	public void exportOssLog(OssLogExportCmd cmd) {
 		ossLogExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<OssLogCO>> page(OssLogPageQry qry) {
+	public Result<Page<OssLogCO>> pageOssLog(OssLogPageQry qry) {
 		return ossLogPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<OssLogCO> getById(OssLogGetQry qry) {
+	public Result<OssLogCO> getByIdOssLog(OssLogGetQry qry) {
 		return ossLogGetQryExe.execute(qry);
 	}
 

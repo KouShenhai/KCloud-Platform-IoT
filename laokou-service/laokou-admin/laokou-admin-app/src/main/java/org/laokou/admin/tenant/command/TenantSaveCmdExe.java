@@ -42,7 +42,7 @@ public class TenantSaveCmdExe {
 	public void executeVoid(TenantSaveCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> tenantDomainService.create(TenantConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> tenantDomainService.createTenant(TenantConvertor.toEntity(cmd.getCo())));
 	}
 
 }

@@ -41,7 +41,7 @@ public class TemplateModifyCmdExe {
 	public void executeVoid(TemplateModifyCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> templateDomainService.update(TemplateConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> templateDomainService.updateTemplate(TemplateConvertor.toEntity(cmd.getCo())));
 	}
 
 }

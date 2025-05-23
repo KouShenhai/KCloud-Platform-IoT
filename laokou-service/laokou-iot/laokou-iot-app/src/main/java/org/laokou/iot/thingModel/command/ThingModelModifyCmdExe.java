@@ -56,8 +56,8 @@ public class ThingModelModifyCmdExe {
 			DynamicDataSourceContextHolder.push(IOT);
 			// 校验参数
 			ThingModelE thingModelE = ThingModelConvertor.toEntity(cmd.getCo());
-			modifyThingModelParamValidator.validate(thingModelE);
-			transactionalUtils.executeInTransaction(() -> thingModelDomainService.update(thingModelE));
+			modifyThingModelParamValidator.validateThingModel(thingModelE);
+			transactionalUtils.executeInTransaction(() -> thingModelDomainService.updateThingModel(thingModelE));
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

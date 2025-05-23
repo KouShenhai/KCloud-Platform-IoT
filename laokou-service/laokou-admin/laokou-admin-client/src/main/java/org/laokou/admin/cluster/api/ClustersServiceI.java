@@ -34,42 +34,42 @@ public interface ClustersServiceI {
 	 * 保存集群.
 	 * @param cmd 保存命令
 	 */
-	void save(ClusterSaveCmd cmd);
+	void saveCluster(ClusterSaveCmd cmd);
 
 	/**
 	 * 修改集群.
 	 * @param cmd 修改命令
 	 */
-	void modify(ClusterModifyCmd cmd);
+	void modifyCluster(ClusterModifyCmd cmd);
 
 	/**
 	 * 删除集群.
 	 * @param cmd 删除命令
 	 */
-	void remove(ClusterRemoveCmd cmd);
+	void removeCluster(ClusterRemoveCmd cmd);
 
 	/**
 	 * 导入集群.
 	 * @param cmd 导入命令
 	 */
-	void importI(ClusterImportCmd cmd);
+	void importCluster(ClusterImportCmd cmd);
 
 	/**
 	 * 导出集群.
 	 * @param cmd 导出命令
 	 */
-	void export(ClusterExportCmd cmd);
+	void exportCluster(ClusterExportCmd cmd);
 
 	/**
 	 * 分页查询集群.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<ClusterCO>> page(ClusterPageQry qry);
+	Result<Page<ClusterCO>> pageCluster(ClusterPageQry qry);
 
 	/**
 	 * 查看集群.
 	 * @param qry 查看请求
 	 */
-	Result<ClusterCO> getById(ClusterGetQry qry);
+	Result<ClusterCO> getByIdCluster(ClusterGetQry qry);
 
 }

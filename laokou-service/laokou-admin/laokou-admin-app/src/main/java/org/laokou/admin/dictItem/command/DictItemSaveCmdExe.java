@@ -42,7 +42,7 @@ public class DictItemSaveCmdExe {
 	public void executeVoid(DictItemSaveCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> dictItemDomainService.create(DictItemConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> dictItemDomainService.createDictItem(DictItemConvertor.toEntity(cmd.getCo())));
 	}
 
 }

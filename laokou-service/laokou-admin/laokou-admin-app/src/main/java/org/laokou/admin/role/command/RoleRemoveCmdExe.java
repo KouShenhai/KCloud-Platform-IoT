@@ -41,7 +41,7 @@ public class RoleRemoveCmdExe {
 	@CommandLog
 	public Flux<Void> executeVoid(RoleRemoveCmd cmd) {
 		// 校验参数
-		return transactionalUtils.executeResultInTransaction(() -> roleDomainService.delete(cmd.getIds()));
+		return transactionalUtils.executeResultInTransaction(() -> roleDomainService.deleteRole(cmd.getIds()));
 	}
 
 }

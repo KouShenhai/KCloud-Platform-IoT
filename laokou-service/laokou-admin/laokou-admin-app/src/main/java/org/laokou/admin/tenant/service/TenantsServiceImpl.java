@@ -52,37 +52,37 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	private final TenantGetQryExe tenantGetQryExe;
 
 	@Override
-	public void save(TenantSaveCmd cmd) {
+	public void saveTenant(TenantSaveCmd cmd) {
 		tenantSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(TenantModifyCmd cmd) {
+	public void modifyTenant(TenantModifyCmd cmd) {
 		tenantModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(TenantRemoveCmd cmd) {
+	public void removeTenant(TenantRemoveCmd cmd) {
 		tenantRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(TenantImportCmd cmd) {
+	public void importTenant(TenantImportCmd cmd) {
 		tenantImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(TenantExportCmd cmd) {
+	public void exportTenant(TenantExportCmd cmd) {
 		tenantExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<TenantCO>> page(TenantPageQry qry) {
+	public Result<Page<TenantCO>> pageTenant(TenantPageQry qry) {
 		return tenantPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<TenantCO> getById(TenantGetQry qry) {
+	public Result<TenantCO> getByIdTenant(TenantGetQry qry) {
 		return tenantGetQryExe.execute(qry);
 	}
 

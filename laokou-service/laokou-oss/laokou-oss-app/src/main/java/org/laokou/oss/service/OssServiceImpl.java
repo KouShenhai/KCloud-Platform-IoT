@@ -37,7 +37,7 @@ public class OssServiceImpl implements OssServiceI {
 	private final OssUploadCmdExe ossUploadCmdExe;
 
 	@Override
-	public Result<String> upload(OssUploadCmd cmd) throws IOException, NoSuchAlgorithmException {
+	public Result<String> uploadOss(OssUploadCmd cmd) throws IOException, NoSuchAlgorithmException {
 		return ossUploadCmdExe.execute(cmd);
 	}
 

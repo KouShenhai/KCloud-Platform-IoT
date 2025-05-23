@@ -42,7 +42,7 @@ public class SourceModifyCmdExe {
 	public void executeVoid(SourceModifyCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> sourceDomainService.update(SourceConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> sourceDomainService.updateSource(SourceConvertor.toEntity(cmd.getCo())));
 	}
 
 }

@@ -34,42 +34,42 @@ public interface ColumnsServiceI {
 	 * 保存代码生成器字段.
 	 * @param cmd 保存命令
 	 */
-	void save(ColumnSaveCmd cmd);
+	void saveColumn(ColumnSaveCmd cmd);
 
 	/**
 	 * 修改代码生成器字段.
 	 * @param cmd 修改命令
 	 */
-	void modify(ColumnModifyCmd cmd);
+	void modifyColumn(ColumnModifyCmd cmd);
 
 	/**
 	 * 删除代码生成器字段.
 	 * @param cmd 删除命令
 	 */
-	void remove(ColumnRemoveCmd cmd);
+	void removeColumn(ColumnRemoveCmd cmd);
 
 	/**
 	 * 导入代码生成器字段.
 	 * @param cmd 导入命令
 	 */
-	void importI(ColumnImportCmd cmd);
+	void importColumn(ColumnImportCmd cmd);
 
 	/**
 	 * 导出代码生成器字段.
 	 * @param cmd 导出命令
 	 */
-	void export(ColumnExportCmd cmd);
+	void exportColumn(ColumnExportCmd cmd);
 
 	/**
 	 * 分页查询代码生成器字段.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<ColumnCO>> page(ColumnPageQry qry);
+	Result<Page<ColumnCO>> pageColumn(ColumnPageQry qry);
 
 	/**
 	 * 查看代码生成器字段.
 	 * @param qry 查看请求
 	 */
-	Result<ColumnCO> getById(ColumnGetQry qry);
+	Result<ColumnCO> getByIdColumn(ColumnGetQry qry);
 
 }

@@ -33,16 +33,16 @@ public class NoticeLogDomainService {
 
 	private final NoticeLogGateway noticeLogGateway;
 
-	public void create(NoticeLogE noticeLogE) {
-		noticeLogGateway.create(noticeLogE);
+	public void createNoticeLog(NoticeLogE noticeLogE) {
+		noticeLogGateway.createNoticeLog(noticeLogE);
 	}
 
-	public void update(NoticeLogE noticeLogE) {
-		noticeLogGateway.update(noticeLogE);
+	public void updateNoticeLog(NoticeLogE noticeLogE) {
+		noticeLogGateway.updateNoticeLog(noticeLogE);
 	}
 
-	public void delete(Long[] ids) {
-		noticeLogGateway.delete(ids);
+	public void deleteNoticeLog(Long[] ids) {
+		noticeLogGateway.deleteNoticeLog(ids);
 	}
 
 }

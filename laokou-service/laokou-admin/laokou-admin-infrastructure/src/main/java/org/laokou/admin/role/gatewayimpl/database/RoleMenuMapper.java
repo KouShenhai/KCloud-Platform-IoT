@@ -34,10 +34,10 @@ import java.util.List;
 @Repository
 public interface RoleMenuMapper extends CrudMapper<Long, Integer, RoleMenuDO> {
 
-	List<Long> selectIdsByRoleIds(@Param("roleIds") List<Long> roleIds);
+	List<Long> selectRoleMenuIdsByRoleIds(@Param("roleIds") List<Long> roleIds);
 
 	List<String> selectMenuIdsByRoleId(@Param("roleId") Long roleId);
 
-	void deleteObjById(@Param("roleMenuDO") RoleMenuDO roleMenuDO);
+	void deleteRoleMenuById(@Param("roleMenuDO") RoleMenuDO roleMenuDO);
 
 }

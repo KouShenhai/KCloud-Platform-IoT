@@ -40,7 +40,7 @@ public class NoticeLogRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(NoticeLogRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> noticeLogDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> noticeLogDomainService.deleteNoticeLog(cmd.getIds()));
 	}
 
 }

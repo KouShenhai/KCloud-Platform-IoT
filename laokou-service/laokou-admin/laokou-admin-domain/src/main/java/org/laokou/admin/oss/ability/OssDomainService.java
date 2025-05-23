@@ -33,16 +33,16 @@ public class OssDomainService {
 
 	private final OssGateway ossGateway;
 
-	public void create(OssE ossE) {
-		ossGateway.create(ossE);
+	public void createOss(OssE ossE) {
+		ossGateway.createOss(ossE);
 	}
 
-	public void update(OssE ossE) {
-		ossGateway.update(ossE);
+	public void updateOss(OssE ossE) {
+		ossGateway.updateOss(ossE);
 	}
 
-	public void delete(Long[] ids) {
-		ossGateway.delete(ids);
+	public void deleteOss(Long[] ids) {
+		ossGateway.deleteOss(ids);
 	}
 
 }

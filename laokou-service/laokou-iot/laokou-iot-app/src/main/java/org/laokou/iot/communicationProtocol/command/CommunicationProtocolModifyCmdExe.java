@@ -42,8 +42,8 @@ public class CommunicationProtocolModifyCmdExe {
 	@CommandLog
 	public void executeVoid(CommunicationProtocolModifyCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(
-				() -> communicationProtocolDomainService.update(CommunicationProtocolConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(() -> communicationProtocolDomainService
+			.updateCommunicationProtocol(CommunicationProtocolConvertor.toEntity(cmd.getCo())));
 	}
 
 }

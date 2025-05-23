@@ -35,7 +35,7 @@ public class OssUploadCmdExe {
 
 	@CommandLog
 	public Result<String> execute(OssUploadCmd cmd) {
-		return ossFeignClient.uploadV3(cmd.getFile());
+		return ossFeignClient.uploadOss(cmd.getFile());
 	}
 
 }

@@ -41,19 +41,19 @@ public class TenantGatewayImpl implements TenantGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(TenantE tenantE) {
+	public void createTenant(TenantE tenantE) {
 		tenantMapper.insert(TenantConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), tenantE));
 	}
 
 	@Override
-	public void update(TenantE tenantE) {
+	public void updateTenant(TenantE tenantE) {
 		TenantDO tenantDO = TenantConvertor.toDataObject(null, tenantE);
 		tenantDO.setVersion(tenantMapper.selectVersion(tenantE.getId()));
 		tenantMapper.updateById(tenantDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteTenant(Long[] ids) {
 		tenantMapper.deleteByIds(Arrays.asList(ids));
 	}
 

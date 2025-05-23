@@ -33,16 +33,16 @@ public class I18nMessageDomainService {
 
 	private final I18nMessageGateway i18nMessageGateway;
 
-	public void create(I18nMessageE i18nMessageE) {
-		i18nMessageGateway.create(i18nMessageE);
+	public void createI18nMessage(I18nMessageE i18nMessageE) {
+		i18nMessageGateway.createI18nMessage(i18nMessageE);
 	}
 
-	public void update(I18nMessageE i18nMessageE) {
-		i18nMessageGateway.update(i18nMessageE);
+	public void updateI18nMessage(I18nMessageE i18nMessageE) {
+		i18nMessageGateway.updateI18nMessage(i18nMessageE);
 	}
 
-	public void delete(Long[] ids) {
-		i18nMessageGateway.delete(ids);
+	public void deleteI18nMessage(Long[] ids) {
+		i18nMessageGateway.deleteI18nMessage(ids);
 	}
 
 }

@@ -37,8 +37,8 @@ public class TokensV3Controller {
 
 	@DeleteMapping
 	@Operation(summary = "删除令牌", description = "删除令牌")
-	public void removeV3(@RequestBody TokenRemoveCmd cmd) {
-		tokensServiceI.remove(cmd);
+	public void removeToken(@RequestBody TokenRemoveCmd cmd) {
+		tokensServiceI.removeToken(cmd);
 	}
 
 }

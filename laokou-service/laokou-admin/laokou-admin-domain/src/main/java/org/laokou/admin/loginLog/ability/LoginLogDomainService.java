@@ -33,16 +33,16 @@ public class LoginLogDomainService {
 
 	private final LoginLogGateway loginLogGateway;
 
-	public void create(LoginLogE loginLogE) {
-		loginLogGateway.create(loginLogE);
+	public void createLoginLog(LoginLogE loginLogE) {
+		loginLogGateway.createLoginLog(loginLogE);
 	}
 
-	public void update(LoginLogE loginLogE) {
-		loginLogGateway.update(loginLogE);
+	public void updateLoginLog(LoginLogE loginLogE) {
+		loginLogGateway.updateLoginLog(loginLogE);
 	}
 
-	public void delete(Long[] ids) {
-		loginLogGateway.delete(ids);
+	public void deleteLoginLog(Long[] ids) {
+		loginLogGateway.deleteLoginLog(ids);
 	}
 
 }

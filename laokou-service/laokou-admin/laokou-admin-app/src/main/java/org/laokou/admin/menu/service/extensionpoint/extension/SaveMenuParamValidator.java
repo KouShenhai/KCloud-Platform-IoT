@@ -34,7 +34,7 @@ public class SaveMenuParamValidator implements MenuParamValidatorExtPt {
 	private final MenuMapper menuMapper;
 
 	@Override
-	public void validate(MenuE menuE) {
+	public void validateMenu(MenuE menuE) {
 		ParamValidator.validate(
 				// 校验父级ID
 				MenuParamValidator.validateParentId(menuE),

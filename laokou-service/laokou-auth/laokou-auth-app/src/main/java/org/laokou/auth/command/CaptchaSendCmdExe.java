@@ -57,7 +57,7 @@ public class CaptchaSendCmdExe {
 		CaptchaE entity = CaptchaConvertor.toEntity(cmd.getCo());
 		extensionExecutor.executeVoid(CaptchaParamValidatorExtPt.class,
 				BizScenario.valueOf(entity.getTag(), USE_CASE_CAPTCHA, SCENARIO),
-				extension -> extension.validate(entity));
+				extension -> extension.validateCaptcha(entity));
 		AuthA auth = DomainFactory.getAuth(distributedIdentifierFeignClientWrapper.getId(), entity.getTenantCode());
 		// 创建验证码
 		domainService.createCaptcha(distributedIdentifierFeignClientWrapper.getId(), auth, entity);

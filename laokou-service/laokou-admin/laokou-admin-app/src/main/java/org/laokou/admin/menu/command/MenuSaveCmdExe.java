@@ -54,8 +54,8 @@ public class MenuSaveCmdExe {
 	@CommandLog
 	public void executeVoid(MenuSaveCmd cmd) {
 		MenuE menuE = MenuConvertor.toEntity(cmd.getCo());
-		saveMenuParamValidator.validate(menuE);
-		transactionalUtils.executeInTransaction(() -> menuDomainService.create(menuE));
+		saveMenuParamValidator.validateMenu(menuE);
+		transactionalUtils.executeInTransaction(() -> menuDomainService.createMenu(menuE));
 	}
 
 }

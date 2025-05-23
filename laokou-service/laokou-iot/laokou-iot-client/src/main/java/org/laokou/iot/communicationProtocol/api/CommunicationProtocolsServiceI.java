@@ -34,42 +34,42 @@ public interface CommunicationProtocolsServiceI {
 	 * 保存通讯协议.
 	 * @param cmd 保存命令
 	 */
-	void save(CommunicationProtocolSaveCmd cmd);
+	void saveCommunicationProtocol(CommunicationProtocolSaveCmd cmd);
 
 	/**
 	 * 修改通讯协议.
 	 * @param cmd 修改命令
 	 */
-	void modify(CommunicationProtocolModifyCmd cmd);
+	void modifyCommunicationProtocol(CommunicationProtocolModifyCmd cmd);
 
 	/**
 	 * 删除通讯协议.
 	 * @param cmd 删除命令
 	 */
-	void remove(CommunicationProtocolRemoveCmd cmd);
+	void removeCommunicationProtocol(CommunicationProtocolRemoveCmd cmd);
 
 	/**
 	 * 导入通讯协议.
 	 * @param cmd 导入命令
 	 */
-	void importI(CommunicationProtocolImportCmd cmd);
+	void importCommunicationProtocol(CommunicationProtocolImportCmd cmd);
 
 	/**
 	 * 导出通讯协议.
 	 * @param cmd 导出命令
 	 */
-	void export(CommunicationProtocolExportCmd cmd);
+	void exportCommunicationProtocol(CommunicationProtocolExportCmd cmd);
 
 	/**
 	 * 分页查询通讯协议.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<CommunicationProtocolCO>> page(CommunicationProtocolPageQry qry);
+	Result<Page<CommunicationProtocolCO>> pageCommunicationProtocol(CommunicationProtocolPageQry qry);
 
 	/**
 	 * 查看通讯协议.
 	 * @param qry 查看请求
 	 */
-	Result<CommunicationProtocolCO> getById(CommunicationProtocolGetQry qry);
+	Result<CommunicationProtocolCO> getByIdCommunicationProtocol(CommunicationProtocolGetQry qry);
 
 }

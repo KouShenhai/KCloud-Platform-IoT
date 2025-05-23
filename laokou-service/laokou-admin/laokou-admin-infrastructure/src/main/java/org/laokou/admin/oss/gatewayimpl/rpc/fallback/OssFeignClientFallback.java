@@ -36,7 +36,7 @@ public class OssFeignClientFallback implements OssFeignClient {
 	}
 
 	@Override
-	public Result<String> uploadV3(MultipartFile file) {
+	public Result<String> uploadOss(MultipartFile file) {
 		log.error("文件上传失败，错误信息：{}", cause.getMessage(), cause);
 		throw new BizException("B_Oss_UploadFailed", "文件上传失败，服务正在维护，请联系管理员", cause);
 	}

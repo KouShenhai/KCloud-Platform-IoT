@@ -31,6 +31,6 @@ import java.util.List;
 @Repository
 interface TestUserMapper extends CrudMapper<Long, Integer, TestUserDO> {
 
-	int deleteUser(@Param("ids") List<Long> ids);
+	int deleteTestUser(@Param("ids") List<Long> ids);
 
 }

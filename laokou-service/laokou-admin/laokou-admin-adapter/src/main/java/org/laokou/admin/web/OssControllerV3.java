@@ -52,56 +52,56 @@ public class OssControllerV3 {
 	@PreAuthorize("hasAuthority('sys:oss:save')")
 	@OperateLog(module = "OSS管理", operation = "保存OSS")
 	@Operation(summary = "保存OSS", description = "保存OSS")
-	public void saveV3(@RequestBody OssSaveCmd cmd) {
-		ossServiceI.save(cmd);
+	public void saveOss(@RequestBody OssSaveCmd cmd) {
+		ossServiceI.saveOss(cmd);
 	}
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:oss:modify')")
 	@OperateLog(module = "OSS管理", operation = "修改OSS")
 	@Operation(summary = "修改OSS", description = "修改OSS")
-	public void modifyV3(@RequestBody OssModifyCmd cmd) {
-		ossServiceI.modify(cmd);
+	public void modifyOss(@RequestBody OssModifyCmd cmd) {
+		ossServiceI.modifyOss(cmd);
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:oss:remove')")
 	@OperateLog(module = "OSS管理", operation = "删除OSS")
 	@Operation(summary = "删除OSS", description = "删除OSS")
-	public void removeV3(@RequestBody Long[] ids) {
-		ossServiceI.remove(new OssRemoveCmd(ids));
+	public void removeOss(@RequestBody Long[] ids) {
+		ossServiceI.removeOss(new OssRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:oss:import')")
 	@OperateLog(module = "OSS管理", operation = "导入OSS")
 	@Operation(summary = "导入OSS", description = "导入OSS")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
-		ossServiceI.importI(new OssImportCmd(files));
+	public void importOss(@RequestPart("files") MultipartFile[] files) {
+		ossServiceI.importOss(new OssImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:oss:export')")
 	@OperateLog(module = "OSS管理", operation = "导出OSS")
 	@Operation(summary = "导出OSS", description = "导出OSS")
-	public void exportV3(@RequestBody OssExportCmd cmd) {
-		ossServiceI.export(cmd);
+	public void exportOss(@RequestBody OssExportCmd cmd) {
+		ossServiceI.exportOss(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:oss:page')")
 	@Operation(summary = "分页查询OSS列表", description = "分页查询OSS列表")
-	public Result<Page<OssCO>> pageV3(@Validated @RequestBody OssPageQry qry) {
-		return ossServiceI.page(qry);
+	public Result<Page<OssCO>> pageOss(@Validated @RequestBody OssPageQry qry) {
+		return ossServiceI.pageOss(qry);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('sys:oss:detail')")
 	@Operation(summary = "查看OSS详情", description = "查看OSS详情")
-	public Result<OssCO> getByIdV3(@PathVariable("id") Long id) {
-		return ossServiceI.getById(new OssGetQry(id));
+	public Result<OssCO> getByIdOss(@PathVariable("id") Long id) {
+		return ossServiceI.getByIdOss(new OssGetQry(id));
 	}
 
 	@TraceLog
@@ -109,8 +109,8 @@ public class OssControllerV3 {
 	@PreAuthorize("hasAuthority('sys:oss:upload')")
 	@Operation(summary = "上传文件", description = "上传文件")
 	@OperateLog(module = "OSS管理", operation = "上传文件")
-	public Result<String> uploadV3(@RequestPart("file") MultipartFile file) {
-		return ossServiceI.upload(new OssUploadCmd(file));
+	public Result<String> uploadOss(@RequestPart("file") MultipartFile file) {
+		return ossServiceI.uploadOss(new OssUploadCmd(file));
 	}
 
 }

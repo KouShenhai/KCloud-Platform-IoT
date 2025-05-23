@@ -41,8 +41,8 @@ public class NoticeLogSaveCmdExe {
 	@CommandLog
 	public void executeVoid(NoticeLogSaveCmd cmd) {
 		// 校验参数
-		transactionalUtils
-			.executeInTransaction(() -> noticeLogDomainService.create(NoticeLogConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(
+				() -> noticeLogDomainService.createNoticeLog(NoticeLogConvertor.toEntity(cmd.getCo())));
 	}
 
 }

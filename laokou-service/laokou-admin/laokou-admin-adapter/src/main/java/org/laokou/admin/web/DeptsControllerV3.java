@@ -60,7 +60,7 @@ public class DeptsControllerV3 {
 	@OperateLog(module = "部门管理", operation = "保存部门")
 	@Operation(summary = "保存部门", description = "保存部门")
 	public void saveDept(@RequestBody DeptSaveCmd cmd) {
-		deptsServiceI.save(cmd);
+		deptsServiceI.saveDept(cmd);
 	}
 
 	@PutMapping
@@ -69,7 +69,7 @@ public class DeptsControllerV3 {
 	@Operation(summary = "修改部门", description = "修改部门")
 	@DataCache(name = DEPTS, key = "#cmd.co.id", operateType = DEL)
 	public void modifyDept(@RequestBody DeptModifyCmd cmd) {
-		deptsServiceI.modify(cmd);
+		deptsServiceI.modifyDept(cmd);
 	}
 
 	@DeleteMapping
@@ -77,7 +77,7 @@ public class DeptsControllerV3 {
 	@OperateLog(module = "部门管理", operation = "删除部门")
 	@Operation(summary = "删除部门", description = "删除部门")
 	public void removeDept(@RequestBody Long[] ids) {
-		deptsServiceI.remove(new DeptRemoveCmd(ids));
+		deptsServiceI.removeDept(new DeptRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -85,7 +85,7 @@ public class DeptsControllerV3 {
 	@OperateLog(module = "部门管理", operation = "导入部门")
 	@Operation(summary = "导入部门", description = "导入部门")
 	public void importDept(@RequestPart("files") MultipartFile[] files) {
-		deptsServiceI.importI(new DeptImportCmd(files));
+		deptsServiceI.importDept(new DeptImportCmd(files));
 	}
 
 	@PostMapping("export")
@@ -93,7 +93,7 @@ public class DeptsControllerV3 {
 	@OperateLog(module = "部门管理", operation = "导出部门")
 	@Operation(summary = "导出部门", description = "导出部门")
 	public void exportDept(@RequestBody DeptExportCmd cmd) {
-		deptsServiceI.export(cmd);
+		deptsServiceI.exportDept(cmd);
 	}
 
 	@TraceLog
@@ -101,7 +101,7 @@ public class DeptsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dept:page')")
 	@Operation(summary = "分页查询部门列表", description = "分页查询部门列表")
 	public Result<Page<DeptCO>> pageDept(@Validated @RequestBody DeptPageQry qry) {
-		return deptsServiceI.page(qry);
+		return deptsServiceI.pageDept(qry);
 	}
 
 	@TraceLog
@@ -109,7 +109,7 @@ public class DeptsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dept:list-tree')")
 	@Operation(summary = "查询部门树列表", description = "查询部门树列表")
 	public Result<List<DeptTreeCO>> listTreeDept(@RequestBody DeptTreeListQry qry) {
-		return deptsServiceI.listTree(qry);
+		return deptsServiceI.listTreeDept(qry);
 	}
 
 	@TraceLog
@@ -118,7 +118,7 @@ public class DeptsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dept:detail')")
 	@Operation(summary = "查看部门详情", description = "查看部门详情")
 	public Result<DeptCO> getByIdDept(@PathVariable("id") Long id) {
-		return deptsServiceI.getById(new DeptGetQry(id));
+		return deptsServiceI.getByIdDept(new DeptGetQry(id));
 	}
 
 }

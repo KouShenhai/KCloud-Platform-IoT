@@ -68,7 +68,7 @@ public class UsersControllerV3 {
 	@OperateLog(module = "用户管理", operation = "保存用户")
 	@Operation(summary = "保存用户", description = "保存用户")
 	public void saveUser(@RequestBody UserSaveCmd cmd) throws Exception {
-		usersServiceI.save(cmd);
+		usersServiceI.saveUser(cmd);
 	}
 
 	@PutMapping
@@ -77,7 +77,7 @@ public class UsersControllerV3 {
 	@Operation(summary = "修改用户", description = "修改用户")
 	@DataCache(name = USERS, key = "#cmd.co.id", operateType = DEL)
 	public void modifyUser(@RequestBody UserModifyCmd cmd) throws Exception {
-		usersServiceI.modify(cmd);
+		usersServiceI.modifyUser(cmd);
 	}
 
 	@DeleteMapping
@@ -85,7 +85,7 @@ public class UsersControllerV3 {
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@Operation(summary = "删除用户", description = "删除用户")
 	public void removeUser(@RequestBody Long[] ids) {
-		Disposable disposable = usersServiceI.remove(new UserRemoveCmd(ids))
+		Disposable disposable = usersServiceI.removeUser(new UserRemoveCmd(ids))
 			.doOnError(e -> log.error("删除用户失败：{}", e.getMessage(), e))
 			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
@@ -104,7 +104,7 @@ public class UsersControllerV3 {
 	@OperateLog(module = "用户管理", operation = "导入用户")
 	@Operation(summary = "导入用户", description = "导入用户")
 	public void importUser(@RequestPart("files") MultipartFile[] files) {
-		usersServiceI.importI(new UserImportCmd(files));
+		usersServiceI.importUser(new UserImportCmd(files));
 	}
 
 	@PostMapping("export")
@@ -112,7 +112,7 @@ public class UsersControllerV3 {
 	@OperateLog(module = "用户管理", operation = "导出用户")
 	@Operation(summary = "导出用户", description = "导出用户")
 	public void exportUser(@RequestBody UserExportCmd cmd) {
-		usersServiceI.export(cmd);
+		usersServiceI.exportUser(cmd);
 	}
 
 	@PutMapping("reset-pwd")
@@ -120,7 +120,7 @@ public class UsersControllerV3 {
 	@OperateLog(module = "用户管理", operation = "重置密码")
 	@Operation(summary = "重置密码", description = "重置密码")
 	public void resetPwdUser(@RequestBody UserResetPwdCmd cmd) throws Exception {
-		usersServiceI.resetPwd(cmd);
+		usersServiceI.resetPwdUser(cmd);
 	}
 
 	@PutMapping("authority")
@@ -129,7 +129,7 @@ public class UsersControllerV3 {
 	@OperateLog(module = "用户管理", operation = "修改用户权限")
 	@Operation(summary = "修改用户权限", description = "修改用户权限")
 	public void modifyAuthorityUser(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {
-		Disposable disposable = usersServiceI.modifyAuthority(cmd)
+		Disposable disposable = usersServiceI.modifyAuthorityUser(cmd)
 			.doOnError(e -> log.error("修改用户权限失败：{}", e.getMessage(), e))
 			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
@@ -148,7 +148,7 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:page')")
 	@Operation(summary = "分页查询用户列表", description = "分页查询用户列表")
 	public Result<Page<UserCO>> pageUser(@Validated @RequestBody UserPageQry qry) {
-		return usersServiceI.page(qry);
+		return usersServiceI.pageUser(qry);
 	}
 
 	@TraceLog
@@ -157,14 +157,14 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:detail')")
 	@Operation(summary = "查看用户详情", description = "查看用户详情")
 	public Result<UserCO> getByIdUser(@PathVariable("id") Long id) throws Exception {
-		return usersServiceI.getById(new UserGetQry(id));
+		return usersServiceI.getByIdUser(new UserGetQry(id));
 	}
 
 	@TraceLog
 	@GetMapping("profile")
 	@Operation(summary = "查看个人信息", description = "查看个人信息")
 	public Result<UserProfileCO> getProfileUser() {
-		return usersServiceI.getProfile();
+		return usersServiceI.getProfileUser();
 	}
 
 }

@@ -34,16 +34,16 @@ public class DeviceDomainService {
 
 	private final DeviceGateway deviceGateway;
 
-	public void create(DeviceE deviceE) {
-		deviceGateway.create(deviceE);
+	public void createDevice(DeviceE deviceE) {
+		deviceGateway.createDevice(deviceE);
 	}
 
-	public void update(DeviceE deviceE) {
-		deviceGateway.update(deviceE);
+	public void updateDevice(DeviceE deviceE) {
+		deviceGateway.updateDevice(deviceE);
 	}
 
-	public void delete(Long[] ids) {
-		deviceGateway.delete(ids);
+	public void deleteDevice(Long[] ids) {
+		deviceGateway.deleteDevice(ids);
 	}
 
 }

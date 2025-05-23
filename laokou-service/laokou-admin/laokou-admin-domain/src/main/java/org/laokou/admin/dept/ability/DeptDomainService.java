@@ -33,16 +33,16 @@ public class DeptDomainService {
 
 	private final DeptGateway deptGateway;
 
-	public void create(DeptE deptE) {
-		deptGateway.create(deptE);
+	public void createDept(DeptE deptE) {
+		deptGateway.createDept(deptE);
 	}
 
-	public void update(DeptE deptE) {
-		deptGateway.update(deptE);
+	public void updateDept(DeptE deptE) {
+		deptGateway.updateDept(deptE);
 	}
 
-	public void delete(Long[] ids) {
-		deptGateway.delete(ids);
+	public void deleteDept(Long[] ids) {
+		deptGateway.deleteDept(ids);
 	}
 
 }

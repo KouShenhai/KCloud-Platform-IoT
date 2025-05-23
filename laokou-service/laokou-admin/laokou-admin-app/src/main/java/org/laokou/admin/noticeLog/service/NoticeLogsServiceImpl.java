@@ -52,37 +52,37 @@ public class NoticeLogsServiceImpl implements NoticeLogsServiceI {
 	private final NoticeLogGetQryExe noticeLogGetQryExe;
 
 	@Override
-	public void save(NoticeLogSaveCmd cmd) {
+	public void saveNoticeLog(NoticeLogSaveCmd cmd) {
 		noticeLogSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(NoticeLogModifyCmd cmd) {
+	public void modifyNoticeLog(NoticeLogModifyCmd cmd) {
 		noticeLogModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(NoticeLogRemoveCmd cmd) {
+	public void removeNoticeLog(NoticeLogRemoveCmd cmd) {
 		noticeLogRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(NoticeLogImportCmd cmd) {
+	public void importNoticeLog(NoticeLogImportCmd cmd) {
 		noticeLogImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(NoticeLogExportCmd cmd) {
+	public void exportNoticeLog(NoticeLogExportCmd cmd) {
 		noticeLogExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<NoticeLogCO>> page(NoticeLogPageQry qry) {
+	public Result<Page<NoticeLogCO>> pageNoticeLog(NoticeLogPageQry qry) {
 		return noticeLogPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<NoticeLogCO> getById(NoticeLogGetQry qry) {
+	public Result<NoticeLogCO> getByIdNoticeLog(NoticeLogGetQry qry) {
 		return noticeLogGetQryExe.execute(qry);
 	}
 

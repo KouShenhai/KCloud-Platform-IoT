@@ -51,7 +51,7 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public Mono<Void> update(UserE userE) {
+	public Mono<Void> updateUserRole(UserE userE) {
 		return getUserRoleIds(userE.getUserIds()).map(ids -> {
 			userE.setUserRoleIds(ids);
 			return userE;
@@ -59,7 +59,7 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 	}
 
 	@Override
-	public Mono<Void> delete(Long[] userIds) {
+	public Mono<Void> deleteUserRole(Long[] userIds) {
 		return getUserRoleIds(Arrays.asList(userIds)).map(ids -> {
 			UserE userE = new UserE();
 			userE.setUserRoleIds(ids);
@@ -80,12 +80,12 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 		// 删除用户角色关联表
 		List<UserRoleDO> list = UserConvertor.toDataObjects(userE);
 		if (CollectionUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::deleteObjById);
+			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::deleteUserRoleById);
 		}
 	}
 
 	private Mono<List<Long>> getUserRoleIds(List<Long> userIds) {
-		return Mono.fromCallable(() -> userRoleMapper.selectIdsByUserIds(userIds))
+		return Mono.fromCallable(() -> userRoleMapper.selectUserRoleIdsByUserIds(userIds))
 			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))

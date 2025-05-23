@@ -54,8 +54,8 @@ public class OssLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:oss-log:save')")
 	@OperateLog(module = "OSS日志管理", operation = "保存OSS日志")
 	@Operation(summary = "保存OSS日志", description = "保存OSS日志")
-	public void saveV3(@RequestBody OssLogSaveCmd cmd) {
-		ossLogsServiceI.save(cmd);
+	public void saveOssLog(@RequestBody OssLogSaveCmd cmd) {
+		ossLogsServiceI.saveOssLog(cmd);
 	}
 
 	@ApiSecret
@@ -63,8 +63,8 @@ public class OssLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:oss-log:modify')")
 	@OperateLog(module = "OSS日志管理", operation = "修改OSS日志")
 	@Operation(summary = "修改OSS日志", description = "修改OSS日志")
-	public void modifyV3(@RequestBody OssLogModifyCmd cmd) {
-		ossLogsServiceI.modify(cmd);
+	public void modifyOssLog(@RequestBody OssLogModifyCmd cmd) {
+		ossLogsServiceI.modifyOssLog(cmd);
 	}
 
 	@ApiSecret
@@ -72,8 +72,8 @@ public class OssLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:oss-log:remove')")
 	@OperateLog(module = "OSS日志管理", operation = "删除OSS日志")
 	@Operation(summary = "删除OSS日志", description = "删除OSS日志")
-	public void removeV3(@RequestBody Long[] ids) {
-		ossLogsServiceI.remove(new OssLogRemoveCmd(ids));
+	public void removeOssLog(@RequestBody Long[] ids) {
+		ossLogsServiceI.removeOssLog(new OssLogRemoveCmd(ids));
 	}
 
 	@ApiSecret
@@ -81,32 +81,32 @@ public class OssLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:oss-log:import')")
 	@OperateLog(module = "OSS日志管理", operation = "导入OSS日志")
 	@Operation(summary = "导入OSS日志", description = "导入OSS日志")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
-		ossLogsServiceI.importI(new OssLogImportCmd(files));
+	public void importOssLog(@RequestPart("files") MultipartFile[] files) {
+		ossLogsServiceI.importOssLog(new OssLogImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:oss-log:export')")
 	@OperateLog(module = "OSS日志管理", operation = "导出OSS日志")
 	@Operation(summary = "导出OSS日志", description = "导出OSS日志")
-	public void exportV3(@RequestBody OssLogExportCmd cmd) {
-		ossLogsServiceI.export(cmd);
+	public void exportOssLog(@RequestBody OssLogExportCmd cmd) {
+		ossLogsServiceI.exportOssLog(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:oss-log:page')")
 	@Operation(summary = "分页查询OSS日志列表", description = "分页查询OSS日志列表")
-	public Result<Page<OssLogCO>> pageV3(@Validated @RequestBody OssLogPageQry qry) {
-		return ossLogsServiceI.page(qry);
+	public Result<Page<OssLogCO>> pageOssLog(@Validated @RequestBody OssLogPageQry qry) {
+		return ossLogsServiceI.pageOssLog(qry);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('sys:oss-log:detail')")
 	@Operation(summary = "查看OSS日志详情", description = "查看OSS日志详情")
-	public Result<OssLogCO> getByIdV3(@PathVariable("id") Long id) {
-		return ossLogsServiceI.getById(new OssLogGetQry(id));
+	public Result<OssLogCO> getByIdOssLog(@PathVariable("id") Long id) {
+		return ossLogsServiceI.getByIdOssLog(new OssLogGetQry(id));
 	}
 
 }

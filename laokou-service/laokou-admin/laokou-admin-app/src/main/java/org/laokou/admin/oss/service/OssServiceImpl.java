@@ -54,42 +54,42 @@ public class OssServiceImpl implements OssServiceI {
 	private final OssUploadCmdExe ossUploadCmdExe;
 
 	@Override
-	public void save(OssSaveCmd cmd) {
+	public void saveOss(OssSaveCmd cmd) {
 		ossSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(OssModifyCmd cmd) {
+	public void modifyOss(OssModifyCmd cmd) {
 		ossModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(OssRemoveCmd cmd) {
+	public void removeOss(OssRemoveCmd cmd) {
 		ossRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(OssImportCmd cmd) {
+	public void importOss(OssImportCmd cmd) {
 		ossImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(OssExportCmd cmd) {
+	public void exportOss(OssExportCmd cmd) {
 		ossExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<OssCO>> page(OssPageQry qry) {
+	public Result<Page<OssCO>> pageOss(OssPageQry qry) {
 		return ossPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<OssCO> getById(OssGetQry qry) {
+	public Result<OssCO> getByIdOss(OssGetQry qry) {
 		return ossGetQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<String> upload(OssUploadCmd cmd) {
+	public Result<String> uploadOss(OssUploadCmd cmd) {
 		return ossUploadCmdExe.execute(cmd);
 	}
 

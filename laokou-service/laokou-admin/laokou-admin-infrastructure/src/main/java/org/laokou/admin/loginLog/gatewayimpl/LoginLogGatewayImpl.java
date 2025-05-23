@@ -42,20 +42,20 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(LoginLogE loginLogE) {
+	public void createLoginLog(LoginLogE loginLogE) {
 		loginLogMapper
 			.insert(LoginLogConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), loginLogE, true));
 	}
 
 	@Override
-	public void update(LoginLogE loginLogE) {
+	public void updateLoginLog(LoginLogE loginLogE) {
 		LoginLogDO loginLogDO = LoginLogConvertor.toDataObject(null, loginLogE, false);
 		loginLogDO.setVersion(loginLogMapper.selectVersion(loginLogE.getId()));
 		loginLogMapper.updateById(loginLogDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteLoginLog(Long[] ids) {
 		loginLogMapper.deleteByIds(Arrays.asList(ids));
 	}
 

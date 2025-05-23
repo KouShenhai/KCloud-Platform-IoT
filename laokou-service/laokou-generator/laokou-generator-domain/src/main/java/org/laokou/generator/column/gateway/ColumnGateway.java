@@ -30,16 +30,16 @@ public interface ColumnGateway {
 	/**
 	 * 新增代码生成器字段.
 	 */
-	void create(ColumnE columnE);
+	void createColumn(ColumnE columnE);
 
 	/**
 	 * 修改代码生成器字段.
 	 */
-	void update(ColumnE columnE);
+	void updateColumn(ColumnE columnE);
 
 	/**
 	 * 删除代码生成器字段.
 	 */
-	void delete(Long[] ids);
+	void deleteColumn(Long[] ids);
 
 }

@@ -33,16 +33,16 @@ public class OperateLogDomainService {
 
 	private final OperateLogGateway operateLogGateway;
 
-	public void create(OperateLogE operateLogE) {
-		operateLogGateway.create(operateLogE);
+	public void createOperateLog(OperateLogE operateLogE) {
+		operateLogGateway.createOperateLog(operateLogE);
 	}
 
-	public void update(OperateLogE operateLogE) {
-		operateLogGateway.update(operateLogE);
+	public void updateOperateLog(OperateLogE operateLogE) {
+		operateLogGateway.updateOperateLog(operateLogE);
 	}
 
-	public void delete(Long[] ids) {
-		operateLogGateway.delete(ids);
+	public void deleteOperateLog(Long[] ids) {
+		operateLogGateway.deleteOperateLog(ids);
 	}
 
 }

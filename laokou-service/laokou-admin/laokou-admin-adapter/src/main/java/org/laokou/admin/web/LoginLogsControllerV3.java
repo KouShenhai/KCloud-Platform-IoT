@@ -55,7 +55,7 @@ public class LoginLogsControllerV3 {
 	@OperateLog(module = "登录日志管理", operation = "保存登录日志")
 	@Operation(summary = "保存登录日志", description = "保存登录日志")
 	public void saveLoginLog(@RequestBody LoginLogSaveCmd cmd) {
-		loginLogsServiceI.save(cmd);
+		loginLogsServiceI.saveLoginLog(cmd);
 	}
 
 	@ApiSecret
@@ -64,7 +64,7 @@ public class LoginLogsControllerV3 {
 	@OperateLog(module = "登录日志管理", operation = "修改登录日志")
 	@Operation(summary = "修改登录日志", description = "修改登录日志")
 	public void modifyLoginLog(@RequestBody LoginLogModifyCmd cmd) {
-		loginLogsServiceI.modify(cmd);
+		loginLogsServiceI.modifyLoginLog(cmd);
 	}
 
 	@DeleteMapping
@@ -72,7 +72,7 @@ public class LoginLogsControllerV3 {
 	@OperateLog(module = "登录日志管理", operation = "删除登录日志")
 	@Operation(summary = "删除登录日志", description = "删除登录日志")
 	public void removeLoginLog(@RequestBody Long[] ids) {
-		loginLogsServiceI.remove(new LoginLogRemoveCmd(ids));
+		loginLogsServiceI.removeLoginLog(new LoginLogRemoveCmd(ids));
 	}
 
 	@ApiSecret
@@ -81,7 +81,7 @@ public class LoginLogsControllerV3 {
 	@OperateLog(module = "登录日志管理", operation = "导入登录日志")
 	@Operation(summary = "导入登录日志", description = "导入登录日志")
 	public void importLoginLog(@RequestPart("files") MultipartFile[] files) {
-		loginLogsServiceI.importI(new LoginLogImportCmd(files));
+		loginLogsServiceI.importLoginLog(new LoginLogImportCmd(files));
 	}
 
 	@PostMapping("export")
@@ -89,7 +89,7 @@ public class LoginLogsControllerV3 {
 	@OperateLog(module = "登录日志管理", operation = "导出登录日志")
 	@Operation(summary = "导出登录日志", description = "导出登录日志")
 	public void exportLoginLog(@RequestBody LoginLogExportCmd cmd) {
-		loginLogsServiceI.export(cmd);
+		loginLogsServiceI.exportLoginLog(cmd);
 	}
 
 	@TraceLog
@@ -97,7 +97,7 @@ public class LoginLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:login-log:page')")
 	@Operation(summary = "分页查询登录日志列表", description = "分页查询登录日志列表")
 	public Result<Page<LoginLogCO>> pageLoginLog(@Validated @RequestBody LoginLogPageQry qry) {
-		return loginLogsServiceI.page(qry);
+		return loginLogsServiceI.pageLoginLog(qry);
 	}
 
 	@TraceLog
@@ -106,7 +106,7 @@ public class LoginLogsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:login-log:detail')")
 	@Operation(summary = "查看登录日志详情", description = "查看登录日志详情")
 	public Result<LoginLogCO> getByIdLoginLog(@PathVariable("id") Long id) {
-		return loginLogsServiceI.getById(new LoginLogGetQry(id));
+		return loginLogsServiceI.getByIdLoginLog(new LoginLogGetQry(id));
 	}
 
 }

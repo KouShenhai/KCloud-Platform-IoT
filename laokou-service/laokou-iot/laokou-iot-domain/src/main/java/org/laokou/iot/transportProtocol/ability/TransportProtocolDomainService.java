@@ -34,16 +34,16 @@ public class TransportProtocolDomainService {
 
 	private final TransportProtocolGateway transportProtocolGateway;
 
-	public void create(TransportProtocolE transportProtocolE) {
-		transportProtocolGateway.create(transportProtocolE);
+	public void createTransportProtocol(TransportProtocolE transportProtocolE) {
+		transportProtocolGateway.createTransportProtocol(transportProtocolE);
 	}
 
-	public void update(TransportProtocolE transportProtocolE) {
-		transportProtocolGateway.update(transportProtocolE);
+	public void updateTransportProtocol(TransportProtocolE transportProtocolE) {
+		transportProtocolGateway.updateTransportProtocol(transportProtocolE);
 	}
 
-	public void delete(Long[] ids) {
-		transportProtocolGateway.delete(ids);
+	public void deleteTransportProtocol(Long[] ids) {
+		transportProtocolGateway.deleteTransportProtocol(ids);
 	}
 
 }

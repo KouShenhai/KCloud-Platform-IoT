@@ -52,37 +52,37 @@ public class SourcesServiceImpl implements SourcesServiceI {
 	private final SourceGetQryExe sourceGetQryExe;
 
 	@Override
-	public void save(SourceSaveCmd cmd) {
+	public void saveSource(SourceSaveCmd cmd) {
 		sourceSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(SourceModifyCmd cmd) {
+	public void modifySource(SourceModifyCmd cmd) {
 		sourceModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(SourceRemoveCmd cmd) {
+	public void removeSource(SourceRemoveCmd cmd) {
 		sourceRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(SourceImportCmd cmd) {
+	public void importSource(SourceImportCmd cmd) {
 		sourceImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(SourceExportCmd cmd) {
+	public void exportSource(SourceExportCmd cmd) {
 		sourceExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<SourceCO>> page(SourcePageQry qry) {
+	public Result<Page<SourceCO>> pageSource(SourcePageQry qry) {
 		return sourcePageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<SourceCO> getById(SourceGetQry qry) {
+	public Result<SourceCO> getByIdSource(SourceGetQry qry) {
 		return sourceGetQryExe.execute(qry);
 	}
 

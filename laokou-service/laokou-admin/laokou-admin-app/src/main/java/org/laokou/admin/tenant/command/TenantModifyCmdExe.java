@@ -42,7 +42,7 @@ public class TenantModifyCmdExe {
 	public void executeVoid(TenantModifyCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> tenantDomainService.update(TenantConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> tenantDomainService.updateTenant(TenantConvertor.toEntity(cmd.getCo())));
 	}
 
 }

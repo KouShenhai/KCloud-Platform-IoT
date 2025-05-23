@@ -28,6 +28,6 @@ import java.security.NoSuchAlgorithmException;
  */
 public interface OssServiceI {
 
-	Result<String> upload(OssUploadCmd cmd) throws IOException, NoSuchAlgorithmException;
+	Result<String> uploadOss(OssUploadCmd cmd) throws IOException, NoSuchAlgorithmException;
 
 }

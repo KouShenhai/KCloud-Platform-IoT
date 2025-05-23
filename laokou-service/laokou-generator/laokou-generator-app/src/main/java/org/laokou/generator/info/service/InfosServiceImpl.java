@@ -53,37 +53,37 @@ public class InfosServiceImpl implements InfosServiceI {
 	private final InfoGetQryExe infoGetQryExe;
 
 	@Override
-	public void save(InfoSaveCmd cmd) {
+	public void saveInfo(InfoSaveCmd cmd) {
 		infoSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(InfoModifyCmd cmd) {
+	public void modifyInfo(InfoModifyCmd cmd) {
 		infoModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(InfoRemoveCmd cmd) {
+	public void removeInfo(InfoRemoveCmd cmd) {
 		infoRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(InfoImportCmd cmd) {
+	public void importInfo(InfoImportCmd cmd) {
 		infoImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(InfoExportCmd cmd) {
+	public void exportInfo(InfoExportCmd cmd) {
 		infoExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<InfoCO>> page(InfoPageQry qry) {
+	public Result<Page<InfoCO>> pageInfo(InfoPageQry qry) {
 		return infoPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<InfoCO> getById(InfoGetQry qry) {
+	public Result<InfoCO> getByIdInfo(InfoGetQry qry) {
 		return infoGetQryExe.execute(qry);
 	}
 

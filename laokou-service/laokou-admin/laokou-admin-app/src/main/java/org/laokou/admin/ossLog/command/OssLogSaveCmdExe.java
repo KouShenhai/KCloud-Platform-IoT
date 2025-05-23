@@ -42,7 +42,7 @@ public class OssLogSaveCmdExe {
 	public void executeVoid(OssLogSaveCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> ossLogDomainService.create(OssLogConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> ossLogDomainService.createOssLog(OssLogConvertor.toEntity(cmd.getCo())));
 	}
 
 }

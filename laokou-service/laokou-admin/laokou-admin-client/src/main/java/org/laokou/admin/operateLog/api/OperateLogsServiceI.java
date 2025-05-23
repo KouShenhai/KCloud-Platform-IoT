@@ -33,42 +33,42 @@ public interface OperateLogsServiceI {
 	 * 保存操作日志.
 	 * @param cmd 保存命令
 	 */
-	void save(OperateLogSaveCmd cmd);
+	void saveOperateLog(OperateLogSaveCmd cmd);
 
 	/**
 	 * 修改操作日志.
 	 * @param cmd 修改命令
 	 */
-	void modify(OperateLogModifyCmd cmd);
+	void modifyOperateLog(OperateLogModifyCmd cmd);
 
 	/**
 	 * 删除操作日志.
 	 * @param cmd 删除命令
 	 */
-	void remove(OperateLogRemoveCmd cmd);
+	void removeOperateLog(OperateLogRemoveCmd cmd);
 
 	/**
 	 * 导入操作日志.
 	 * @param cmd 导入命令
 	 */
-	void importI(OperateLogImportCmd cmd);
+	void importOperateLog(OperateLogImportCmd cmd);
 
 	/**
 	 * 导出操作日志.
 	 * @param cmd 导出命令
 	 */
-	void export(OperateLogExportCmd cmd);
+	void exportOperateLog(OperateLogExportCmd cmd);
 
 	/**
 	 * 分页查询操作日志.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<OperateLogCO>> page(OperateLogPageQry qry);
+	Result<Page<OperateLogCO>> pageOperateLog(OperateLogPageQry qry);
 
 	/**
 	 * 查看操作日志.
 	 * @param qry 查看请求
 	 */
-	Result<OperateLogCO> getById(OperateLogGetQry qry);
+	Result<OperateLogCO> getByIdOperateLog(OperateLogGetQry qry);
 
 }

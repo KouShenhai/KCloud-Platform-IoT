@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 public class ModifyAuthorityUserParamValidator implements UserParamValidatorExtPt {
 
 	@Override
-	public void validate(UserE userE) throws Exception {
+	public void validateUser(UserE userE) {
 		ParamValidator.validate(
 				// 校验ID
 				UserParamValidator.validateId(userE),

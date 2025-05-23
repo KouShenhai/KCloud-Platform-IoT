@@ -41,8 +41,8 @@ public class OperateLogModifyCmdExe {
 	@CommandLog
 	public void executeVoid(OperateLogModifyCmd cmd) {
 		// 校验参数
-		transactionalUtils
-			.executeInTransaction(() -> operateLogDomainService.update(OperateLogConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(
+				() -> operateLogDomainService.updateOperateLog(OperateLogConvertor.toEntity(cmd.getCo())));
 	}
 
 }

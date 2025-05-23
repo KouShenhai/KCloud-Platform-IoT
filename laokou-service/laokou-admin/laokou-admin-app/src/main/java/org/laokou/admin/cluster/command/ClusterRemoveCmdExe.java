@@ -41,7 +41,7 @@ public class ClusterRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(ClusterRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> clusterDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> clusterDomainService.deleteCluster(cmd.getIds()));
 	}
 
 }

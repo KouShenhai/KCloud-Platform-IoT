@@ -53,56 +53,56 @@ public class ThingModelsControllerV3 {
 	@PreAuthorize("hasAuthority('iot:thing-model:save')")
 	@OperateLog(module = "物模型管理", operation = "保存物模型")
 	@Operation(summary = "保存物模型", description = "保存物模型")
-	public void saveV3(@RequestBody ThingModelSaveCmd cmd) throws Exception {
-		thingModelsServiceI.save(cmd);
+	public void saveThingModel(@RequestBody ThingModelSaveCmd cmd) throws Exception {
+		thingModelsServiceI.saveThingModel(cmd);
 	}
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('iot:thing-model:modify')")
 	@OperateLog(module = "物模型管理", operation = "修改物模型")
 	@Operation(summary = "修改物模型", description = "修改物模型")
-	public void modifyV3(@RequestBody ThingModelModifyCmd cmd) {
-		thingModelsServiceI.modify(cmd);
+	public void modifyThingModel(@RequestBody ThingModelModifyCmd cmd) {
+		thingModelsServiceI.modifyThingModel(cmd);
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('iot:thing-model:remove')")
 	@OperateLog(module = "物模型管理", operation = "删除物模型")
 	@Operation(summary = "删除物模型", description = "删除物模型")
-	public void removeV3(@RequestBody Long[] ids) {
-		thingModelsServiceI.remove(new ThingModelRemoveCmd(ids));
+	public void removeThingModel(@RequestBody Long[] ids) {
+		thingModelsServiceI.removeThingModel(new ThingModelRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('iot:thing-model:import')")
 	@OperateLog(module = "物模型管理", operation = "导入物模型")
 	@Operation(summary = "导入物模型", description = "导入物模型")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
-		thingModelsServiceI.importI(new ThingModelImportCmd(files));
+	public void importThingModel(@RequestPart("files") MultipartFile[] files) {
+		thingModelsServiceI.importThingModel(new ThingModelImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('iot:thing-model:export')")
 	@OperateLog(module = "物模型管理", operation = "导出物模型")
 	@Operation(summary = "导出物模型", description = "导出物模型")
-	public void exportV3(@RequestBody ThingThingModelExportCmd cmd) {
-		thingModelsServiceI.export(cmd);
+	public void exportThingModel(@RequestBody ThingThingModelExportCmd cmd) {
+		thingModelsServiceI.exportThingModel(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('iot:thing-model:page')")
 	@Operation(summary = "分页查询物模型列表", description = "分页查询物模型列表")
-	public Result<Page<ThingModelCO>> pageV3(@Validated @RequestBody ThingModelPageQry qry) {
-		return thingModelsServiceI.page(qry);
+	public Result<Page<ThingModelCO>> pageThingModel(@Validated @RequestBody ThingModelPageQry qry) {
+		return thingModelsServiceI.pageThingModel(qry);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('iot:thing-model:detail')")
 	@Operation(summary = "查看物模型详情", description = "查看物模型详情")
-	public Result<ThingModelCO> getByIdV3(@PathVariable("id") Long id) {
-		return thingModelsServiceI.getById(new ThingModelGetQry(id));
+	public Result<ThingModelCO> getByIdThingModel(@PathVariable("id") Long id) {
+		return thingModelsServiceI.getByIdThingModel(new ThingModelGetQry(id));
 	}
 
 }

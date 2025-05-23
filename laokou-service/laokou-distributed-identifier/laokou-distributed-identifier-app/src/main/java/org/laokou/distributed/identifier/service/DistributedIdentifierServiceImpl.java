@@ -34,7 +34,7 @@ public class DistributedIdentifierServiceImpl implements DistributedIdentifierSe
 	private final DistributedIdentifierGenerateCmdExe distributedIdentifierGenerateCmdExe;
 
 	@Override
-	public Result<DistributedIdentifierCO> generateSnowflake() {
+	public Result<DistributedIdentifierCO> generateSnowflakeDistributedIdentifier() {
 		return distributedIdentifierGenerateCmdExe.execute();
 	}
 

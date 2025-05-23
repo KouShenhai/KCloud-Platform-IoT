@@ -58,42 +58,42 @@ public class MenusServiceImpl implements MenusServiceI {
 	private final MenuGetQryExe menuGetQryExe;
 
 	@Override
-	public void save(MenuSaveCmd cmd) {
+	public void saveMenu(MenuSaveCmd cmd) {
 		menuSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(MenuModifyCmd cmd) {
+	public void modifyMenu(MenuModifyCmd cmd) {
 		menuModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(MenuRemoveCmd cmd) {
+	public void removeMenu(MenuRemoveCmd cmd) {
 		menuRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(MenuImportCmd cmd) {
+	public void importMenu(MenuImportCmd cmd) {
 		menuImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(MenuExportCmd cmd) {
+	public void exportMenu(MenuExportCmd cmd) {
 		menuExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<MenuCO>> page(MenuPageQry qry) {
+	public Result<Page<MenuCO>> pageMenu(MenuPageQry qry) {
 		return menuPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<List<MenuTreeCO>> listTree(MenuTreeListQry qry) {
+	public Result<List<MenuTreeCO>> listTreeMenu(MenuTreeListQry qry) {
 		return menuTreeListQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<MenuCO> getById(MenuGetQry qry) {
+	public Result<MenuCO> getByIdMenu(MenuGetQry qry) {
 		return menuGetQryExe.execute(qry);
 	}
 

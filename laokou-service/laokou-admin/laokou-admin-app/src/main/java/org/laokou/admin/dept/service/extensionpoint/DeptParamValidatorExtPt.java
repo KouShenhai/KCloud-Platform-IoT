@@ -24,6 +24,6 @@ import org.laokou.admin.dept.model.DeptE;
  */
 public interface DeptParamValidatorExtPt {
 
-	void validate(DeptE deptE);
+	void validateDept(DeptE deptE);
 
 }

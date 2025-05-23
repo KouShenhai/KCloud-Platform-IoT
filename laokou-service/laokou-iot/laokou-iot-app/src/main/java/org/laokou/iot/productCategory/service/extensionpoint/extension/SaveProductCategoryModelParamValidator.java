@@ -34,7 +34,7 @@ public class SaveProductCategoryModelParamValidator implements ProductCategoryPa
 	private final ProductCategoryMapper productCategoryMapper;
 
 	@Override
-	public void validate(ProductCategoryE productCategoryE) {
+	public void validateProductCategory(ProductCategoryE productCategoryE) {
 		ParamValidator.validate(
 				ProductCategoryParamValidator.validateName(productCategoryE, true, productCategoryMapper),
 				ProductCategoryParamValidator.validateSort(productCategoryE),

@@ -30,16 +30,16 @@ public interface CommunicationProtocolGateway {
 	/**
 	 * 新增通讯协议.
 	 */
-	void create(CommunicationProtocolE communicationProtocolE);
+	void createCommunicationProtocol(CommunicationProtocolE communicationProtocolE);
 
 	/**
 	 * 修改通讯协议.
 	 */
-	void update(CommunicationProtocolE communicationProtocolE);
+	void updateCommunicationProtocol(CommunicationProtocolE communicationProtocolE);
 
 	/**
 	 * 删除通讯协议.
 	 */
-	void delete(Long[] ids);
+	void deleteCommunicationProtocol(Long[] ids);
 
 }

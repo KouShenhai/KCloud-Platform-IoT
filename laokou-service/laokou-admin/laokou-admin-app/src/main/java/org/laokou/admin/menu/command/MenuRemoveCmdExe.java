@@ -40,7 +40,7 @@ public class MenuRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(MenuRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> menuDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> menuDomainService.deleteMenu(cmd.getIds()));
 	}
 
 }

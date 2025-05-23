@@ -34,16 +34,16 @@ public class InfoDomainService {
 
 	private final InfoGateway infoGateway;
 
-	public void create(InfoE infoE) {
-		infoGateway.create(infoE);
+	public void createInfo(InfoE infoE) {
+		infoGateway.createInfo(infoE);
 	}
 
-	public void update(InfoE infoE) {
-		infoGateway.update(infoE);
+	public void updateInfo(InfoE infoE) {
+		infoGateway.updateInfo(infoE);
 	}
 
-	public void delete(Long[] ids) {
-		infoGateway.delete(ids);
+	public void deleteInfo(Long[] ids) {
+		infoGateway.deleteInfo(ids);
 	}
 
 }

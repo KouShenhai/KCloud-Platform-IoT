@@ -43,11 +43,15 @@ public class ProductCategoryModifyCmdExe {
 	@Qualifier("modifyProductCategoryParamValidator")
 	private ModifyProductCategoryParamValidator modifyProductCategoryParamValidator;
 
-	@Autowired
-	private ProductCategoryDomainService productCategoryDomainService;
+	private final ProductCategoryDomainService productCategoryDomainService;
 
-	@Autowired
-	private TransactionalUtils transactionalUtils;
+	private final TransactionalUtils transactionalUtils;
+
+	public ProductCategoryModifyCmdExe(ProductCategoryDomainService productCategoryDomainService,
+			TransactionalUtils transactionalUtils) {
+		this.productCategoryDomainService = productCategoryDomainService;
+		this.transactionalUtils = transactionalUtils;
+	}
 
 	@CommandLog
 	public void executeVoid(ProductCategoryModifyCmd cmd) {
@@ -55,8 +59,9 @@ public class ProductCategoryModifyCmdExe {
 			DynamicDataSourceContextHolder.push(IOT);
 			ProductCategoryE productCategoryE = ProductCategoryConvertor.toEntity(cmd.getCo());
 			// 校验参数
-			modifyProductCategoryParamValidator.validate(productCategoryE);
-			transactionalUtils.executeInTransaction(() -> productCategoryDomainService.update(productCategoryE));
+			modifyProductCategoryParamValidator.validateProductCategory(productCategoryE);
+			transactionalUtils
+				.executeInTransaction(() -> productCategoryDomainService.updateProductCategory(productCategoryE));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

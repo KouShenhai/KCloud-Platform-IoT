@@ -24,6 +24,6 @@ import org.laokou.admin.role.model.RoleE;
  */
 public interface RoleParamValidatorExtPt {
 
-	void validate(RoleE roleE);
+	void validateRole(RoleE roleE);
 
 }

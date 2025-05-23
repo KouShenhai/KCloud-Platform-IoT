@@ -42,19 +42,19 @@ public class SourceGatewayImpl implements SourceGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(SourceE sourceE) {
+	public void createSource(SourceE sourceE) {
 		sourceMapper.insert(SourceConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), sourceE));
 	}
 
 	@Override
-	public void update(SourceE sourceE) {
+	public void updateSource(SourceE sourceE) {
 		SourceDO sourceDO = SourceConvertor.toDataObject(null, sourceE);
 		sourceDO.setVersion(sourceMapper.selectVersion(sourceE.getId()));
 		sourceMapper.updateById(sourceDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteSource(Long[] ids) {
 		sourceMapper.deleteByIds(Arrays.asList(ids));
 	}
 

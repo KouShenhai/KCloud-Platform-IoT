@@ -34,7 +34,7 @@ public class ModifyRoleParamValidator implements RoleParamValidatorExtPt {
 	private final RoleMapper roleMapper;
 
 	@Override
-	public void validate(RoleE roleE) {
+	public void validateRole(RoleE roleE) {
 		ParamValidator.validate(
 				// 校验ID
 				RoleParamValidator.validateId(roleE),

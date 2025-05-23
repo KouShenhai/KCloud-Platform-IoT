@@ -41,19 +41,19 @@ public class OssGatewayImpl implements OssGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(OssE ossE) {
+	public void createOss(OssE ossE) {
 		ossMapper.insert(OssConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), ossE));
 	}
 
 	@Override
-	public void update(OssE ossE) {
+	public void updateOss(OssE ossE) {
 		OssDO ossDO = OssConvertor.toDataObject(null, ossE);
 		ossDO.setVersion(ossMapper.selectVersion(ossE.getId()));
 		ossMapper.updateById(ossDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteOss(Long[] ids) {
 		ossMapper.deleteByIds(Arrays.asList(ids));
 	}
 

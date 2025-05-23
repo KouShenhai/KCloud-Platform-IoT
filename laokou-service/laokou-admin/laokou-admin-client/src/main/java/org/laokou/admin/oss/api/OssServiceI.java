@@ -33,48 +33,48 @@ public interface OssServiceI {
 	 * 保存OSS.
 	 * @param cmd 保存命令
 	 */
-	void save(OssSaveCmd cmd);
+	void saveOss(OssSaveCmd cmd);
 
 	/**
 	 * 修改OSS.
 	 * @param cmd 修改命令
 	 */
-	void modify(OssModifyCmd cmd);
+	void modifyOss(OssModifyCmd cmd);
 
 	/**
 	 * 删除OSS.
 	 * @param cmd 删除命令
 	 */
-	void remove(OssRemoveCmd cmd);
+	void removeOss(OssRemoveCmd cmd);
 
 	/**
 	 * 导入OSS.
 	 * @param cmd 导入命令
 	 */
-	void importI(OssImportCmd cmd);
+	void importOss(OssImportCmd cmd);
 
 	/**
 	 * 导出OSS.
 	 * @param cmd 导出命令
 	 */
-	void export(OssExportCmd cmd);
+	void exportOss(OssExportCmd cmd);
 
 	/**
 	 * 分页查询OSS.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<OssCO>> page(OssPageQry qry);
+	Result<Page<OssCO>> pageOss(OssPageQry qry);
 
 	/**
 	 * 查看OSS.
 	 * @param qry 查看请求
 	 */
-	Result<OssCO> getById(OssGetQry qry);
+	Result<OssCO> getByIdOss(OssGetQry qry);
 
 	/**
 	 * 上传文件.
 	 * @param cmd 上传命令
 	 */
-	Result<String> upload(OssUploadCmd cmd);
+	Result<String> uploadOss(OssUploadCmd cmd);
 
 }

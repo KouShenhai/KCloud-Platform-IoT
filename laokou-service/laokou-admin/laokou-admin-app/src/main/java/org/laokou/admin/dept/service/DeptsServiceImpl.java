@@ -58,42 +58,42 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	private final DeptTreeListQryExe deptTreeListQryExe;
 
 	@Override
-	public void save(DeptSaveCmd cmd) {
+	public void saveDept(DeptSaveCmd cmd) {
 		deptSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(DeptModifyCmd cmd) {
+	public void modifyDept(DeptModifyCmd cmd) {
 		deptModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(DeptRemoveCmd cmd) {
+	public void removeDept(DeptRemoveCmd cmd) {
 		deptRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(DeptImportCmd cmd) {
+	public void importDept(DeptImportCmd cmd) {
 		deptImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(DeptExportCmd cmd) {
+	public void exportDept(DeptExportCmd cmd) {
 		deptExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<DeptCO>> page(DeptPageQry qry) {
+	public Result<Page<DeptCO>> pageDept(DeptPageQry qry) {
 		return deptPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<List<DeptTreeCO>> listTree(DeptTreeListQry qry) {
+	public Result<List<DeptTreeCO>> listTreeDept(DeptTreeListQry qry) {
 		return deptTreeListQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<DeptCO> getById(DeptGetQry qry) {
+	public Result<DeptCO> getByIdDept(DeptGetQry qry) {
 		return deptGetQryExe.execute(qry);
 	}
 

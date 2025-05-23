@@ -41,7 +41,8 @@ public class CommunicationProtocolRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(CommunicationProtocolRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> communicationProtocolDomainService.delete(cmd.getIds()));
+		transactionalUtils
+			.executeInTransaction(() -> communicationProtocolDomainService.deleteCommunicationProtocol(cmd.getIds()));
 	}
 
 }

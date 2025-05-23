@@ -45,12 +45,12 @@ public class CaptchasServiceImpl implements CaptchasServiceI {
 	 * @return 验证码
 	 */
 	@Override
-	public Result<String> getByUuid(CaptchaGetQry qry) {
+	public Result<String> getByUuidCaptcha(CaptchaGetQry qry) {
 		return captchaGetQryExe.execute(qry);
 	}
 
 	@Override
-	public void sendByUuid(CaptchaSendCmd cmd) {
+	public void sendByUuidCaptcha(CaptchaSendCmd cmd) {
 		captchaSendCmdExe.executeVoid(cmd);
 	}
 

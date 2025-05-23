@@ -52,37 +52,37 @@ public class OperateLogsServiceImpl implements OperateLogsServiceI {
 	private final OperateLogGetQryExe operateLogGetQryExe;
 
 	@Override
-	public void save(OperateLogSaveCmd cmd) {
+	public void saveOperateLog(OperateLogSaveCmd cmd) {
 		operateLogSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(OperateLogModifyCmd cmd) {
+	public void modifyOperateLog(OperateLogModifyCmd cmd) {
 		operateLogModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(OperateLogRemoveCmd cmd) {
+	public void removeOperateLog(OperateLogRemoveCmd cmd) {
 		operateLogRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(OperateLogImportCmd cmd) {
+	public void importOperateLog(OperateLogImportCmd cmd) {
 		operateLogImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(OperateLogExportCmd cmd) {
+	public void exportOperateLog(OperateLogExportCmd cmd) {
 		operateLogExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<OperateLogCO>> page(OperateLogPageQry qry) {
+	public Result<Page<OperateLogCO>> pageOperateLog(OperateLogPageQry qry) {
 		return operateLogPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<OperateLogCO> getById(OperateLogGetQry qry) {
+	public Result<OperateLogCO> getByIdOperateLog(OperateLogGetQry qry) {
 		return operateLogGetQryExe.execute(qry);
 	}
 

@@ -23,6 +23,6 @@ package org.laokou.auth.ability.validator;
 @FunctionalInterface
 public interface CaptchaValidator {
 
-	Boolean validate(String uuid, String code);
+	Boolean validateCaptcha(String uuid, String code);
 
 }

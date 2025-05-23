@@ -41,7 +41,7 @@ public class TemplateSaveCmdExe {
 	public void executeVoid(TemplateSaveCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> templateDomainService.create(TemplateConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> templateDomainService.createTemplate(TemplateConvertor.toEntity(cmd.getCo())));
 	}
 
 }

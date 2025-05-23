@@ -20,11 +20,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.user.gatewayimpl.database.UserRoleMapper">
 
-  <delete id="deleteObjById">
+  <delete id="deleteUserRoleById">
     delete from boot_sys_user_role where id = #{userRoleDO.id}
   </delete>
 
-  <select id="selectIdsByUserIds" resultType="java.lang.Long">
+  <select id="selectUserRoleIdsByUserIds" resultType="java.lang.Long">
     select id
     from boot_sys_user_role
     where user_id in

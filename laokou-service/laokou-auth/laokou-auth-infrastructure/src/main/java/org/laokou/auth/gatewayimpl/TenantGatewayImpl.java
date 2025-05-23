@@ -32,7 +32,7 @@ public class TenantGatewayImpl implements TenantGateway {
 	private final TenantMapper tenantMapper;
 
 	@Override
-	public Long getId(String tenantCode) {
+	public Long getIdTenant(String tenantCode) {
 		return tenantMapper.selectIdByCode(tenantCode);
 	}
 

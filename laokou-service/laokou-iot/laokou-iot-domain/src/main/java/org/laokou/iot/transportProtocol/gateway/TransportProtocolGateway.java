@@ -30,16 +30,16 @@ public interface TransportProtocolGateway {
 	/**
 	 * 新增传输协议.
 	 */
-	void create(TransportProtocolE transportProtocolE);
+	void createTransportProtocol(TransportProtocolE transportProtocolE);
 
 	/**
 	 * 修改传输协议.
 	 */
-	void update(TransportProtocolE transportProtocolE);
+	void updateTransportProtocol(TransportProtocolE transportProtocolE);
 
 	/**
 	 * 删除传输协议.
 	 */
-	void delete(Long[] ids);
+	void deleteTransportProtocol(Long[] ids);
 
 }

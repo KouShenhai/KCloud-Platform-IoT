@@ -56,42 +56,42 @@ public class RolesServiceImpl implements RolesServiceI {
 	private final RoleGetQryExe roleGetQryExe;
 
 	@Override
-	public void save(RoleSaveCmd cmd) {
+	public void saveRole(RoleSaveCmd cmd) {
 		roleSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Mono<Void> modify(RoleModifyCmd cmd) {
+	public Mono<Void> modifyRole(RoleModifyCmd cmd) {
 		return roleModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Flux<Void> remove(RoleRemoveCmd cmd) {
+	public Flux<Void> removeRole(RoleRemoveCmd cmd) {
 		return roleRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(RoleImportCmd cmd) {
+	public void importRole(RoleImportCmd cmd) {
 		roleImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(RoleExportCmd cmd) {
+	public void exportRole(RoleExportCmd cmd) {
 		roleExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Flux<Void> modifyAuthority(RoleModifyAuthorityCmd cmd) throws Exception {
+	public Flux<Void> modifyAuthorityRole(RoleModifyAuthorityCmd cmd) throws Exception {
 		return roleModifyAuthorityCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<RoleCO>> page(RolePageQry qry) {
+	public Result<Page<RoleCO>> pageRole(RolePageQry qry) {
 		return rolePageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<RoleCO> getById(RoleGetQry qry) {
+	public Result<RoleCO> getByIdRole(RoleGetQry qry) {
 		return roleGetQryExe.execute(qry);
 	}
 

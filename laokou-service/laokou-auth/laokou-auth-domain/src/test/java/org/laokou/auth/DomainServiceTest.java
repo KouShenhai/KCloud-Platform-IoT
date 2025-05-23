@@ -99,32 +99,32 @@ class DomainServiceTest {
 		// 创建用户【用户名密码】
 		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
 		// 构造租户
-		when(tenantGateway.getId("laokou")).thenReturn(0L);
+		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
 		// 构造数据源
-		when(sourceGateway.getPrefix("laokou")).thenReturn("master");
+		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
 		// 构造验证码校验
 		doReturn(true).when(captchaGateway).validate(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
 		// 构造用户信息
 		UserE user = auth.getUser();
 		Assertions.assertDoesNotThrow(() -> user
 			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
-		when(userGateway.getProfile(user, "laokou")).thenReturn(user);
+		when(userGateway.getProfileUser(user, "laokou")).thenReturn(user);
 		// 构造密码校验
 		doReturn(true).when(passwordValidator).validate("123", "202cb962ac59075b964b07152d234b70");
 		// 构造菜单
-		when(menuGateway.getPermissions(user)).thenReturn(Set.of("sys:user:page"));
+		when(menuGateway.getPermissionsMenu(user)).thenReturn(Set.of("sys:user:page"));
 		// 构造部门
-		when(deptGateway.getPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
+		when(deptGateway.getPathsDept(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 用户名密码登录
 		Assertions.assertDoesNotThrow(() -> domainService.auth(auth, this.info));
 		// 校验调用次数
-		verify(deptGateway, times(1)).getPaths(user);
-		verify(menuGateway, times(1)).getPermissions(user);
+		verify(deptGateway, times(1)).getPathsDept(user);
+		verify(menuGateway, times(1)).getPermissionsMenu(user);
 		verify(passwordValidator, times(1)).validate("123", "202cb962ac59075b964b07152d234b70");
-		verify(userGateway, times(1)).getProfile(user, "laokou");
+		verify(userGateway, times(1)).getProfileUser(user, "laokou");
 		verify(captchaGateway, times(1)).validate(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
-		verify(sourceGateway, times(1)).getPrefix("laokou");
-		verify(tenantGateway, times(1)).getId("laokou");
+		verify(sourceGateway, times(1)).getPrefixSource("laokou");
+		verify(tenantGateway, times(1)).getIdTenant("laokou");
 	}
 
 	@Test
@@ -133,28 +133,28 @@ class DomainServiceTest {
 		// 创建用户【邮箱】
 		Assertions.assertDoesNotThrow(auth::createUserByMail);
 		// 构造租户
-		when(tenantGateway.getId("laokou")).thenReturn(0L);
+		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
 		// 构造数据源
-		when(sourceGateway.getPrefix("laokou")).thenReturn("master");
+		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
 		// 构造验证码校验
 		doReturn(true).when(captchaGateway)
 			.validate(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
 		// 构造用户信息
 		UserE user = auth.getUser();
-		when(userGateway.getProfile(user, "laokou")).thenReturn(user);
+		when(userGateway.getProfileUser(user, "laokou")).thenReturn(user);
 		// 构造菜单
-		when(menuGateway.getPermissions(user)).thenReturn(Set.of("sys:user:page"));
+		when(menuGateway.getPermissionsMenu(user)).thenReturn(Set.of("sys:user:page"));
 		// 构造部门
-		when(deptGateway.getPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
+		when(deptGateway.getPathsDept(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 邮箱登录
 		Assertions.assertDoesNotThrow(() -> domainService.auth(auth, this.info));
 		// 校验调用次数
-		verify(deptGateway, times(1)).getPaths(user);
-		verify(menuGateway, times(1)).getPermissions(user);
-		verify(userGateway, times(1)).getProfile(user, "laokou");
+		verify(deptGateway, times(1)).getPathsDept(user);
+		verify(menuGateway, times(1)).getPermissionsMenu(user);
+		verify(userGateway, times(1)).getProfileUser(user, "laokou");
 		verify(captchaGateway, times(1)).validate(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
-		verify(sourceGateway, times(1)).getPrefix("laokou");
-		verify(tenantGateway, times(1)).getId("laokou");
+		verify(sourceGateway, times(1)).getPrefixSource("laokou");
+		verify(tenantGateway, times(1)).getIdTenant("laokou");
 	}
 
 	@Test
@@ -163,27 +163,27 @@ class DomainServiceTest {
 		// 创建用户【手机号】
 		Assertions.assertDoesNotThrow(auth::createUserByMobile);
 		// 构造租户
-		when(tenantGateway.getId("laokou")).thenReturn(0L);
+		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
 		// 构造数据源
-		when(sourceGateway.getPrefix("laokou")).thenReturn("master");
+		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
 		// 构造验证码校验
 		doReturn(true).when(captchaGateway).validate(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
 		// 构造用户信息
 		UserE user = auth.getUser();
-		when(userGateway.getProfile(user, "laokou")).thenReturn(user);
+		when(userGateway.getProfileUser(user, "laokou")).thenReturn(user);
 		// 构造菜单
-		when(menuGateway.getPermissions(user)).thenReturn(Set.of("sys:user:page"));
+		when(menuGateway.getPermissionsMenu(user)).thenReturn(Set.of("sys:user:page"));
 		// 构造部门
-		when(deptGateway.getPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
+		when(deptGateway.getPathsDept(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 手机号登录
 		Assertions.assertDoesNotThrow(() -> domainService.auth(auth, this.info));
 		// 校验调用次数
-		verify(deptGateway, times(1)).getPaths(user);
-		verify(menuGateway, times(1)).getPermissions(user);
-		verify(userGateway, times(1)).getProfile(user, "laokou");
+		verify(deptGateway, times(1)).getPathsDept(user);
+		verify(menuGateway, times(1)).getPermissionsMenu(user);
+		verify(userGateway, times(1)).getProfileUser(user, "laokou");
 		verify(captchaGateway, times(1)).validate(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
-		verify(sourceGateway, times(1)).getPrefix("laokou");
-		verify(tenantGateway, times(1)).getId("laokou");
+		verify(sourceGateway, times(1)).getPrefixSource("laokou");
+		verify(tenantGateway, times(1)).getIdTenant("laokou");
 	}
 
 	@Test
@@ -192,29 +192,29 @@ class DomainServiceTest {
 		// 创建用户【授权码】
 		Assertions.assertDoesNotThrow(auth::createUserByAuthorizationCode);
 		// 构造租户
-		when(tenantGateway.getId("laokou")).thenReturn(0L);
+		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
 		// 构造数据源
-		when(sourceGateway.getPrefix("laokou")).thenReturn("master");
+		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
 		// 构造用户信息
 		UserE user = auth.getUser();
 		Assertions.assertDoesNotThrow(() -> user
 			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
-		when(userGateway.getProfile(user, "laokou")).thenReturn(user);
+		when(userGateway.getProfileUser(user, "laokou")).thenReturn(user);
 		// 构造密码校验
 		doReturn(true).when(passwordValidator).validate("123", "202cb962ac59075b964b07152d234b70");
 		// 构造菜单
-		when(menuGateway.getPermissions(user)).thenReturn(Set.of("sys:user:page"));
+		when(menuGateway.getPermissionsMenu(user)).thenReturn(Set.of("sys:user:page"));
 		// 构造部门
-		when(deptGateway.getPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
+		when(deptGateway.getPathsDept(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 授权码登录
 		Assertions.assertDoesNotThrow(() -> domainService.auth(auth, this.info));
 		// 校验调用次数
-		verify(deptGateway, times(1)).getPaths(user);
-		verify(menuGateway, times(1)).getPermissions(user);
+		verify(deptGateway, times(1)).getPathsDept(user);
+		verify(menuGateway, times(1)).getPermissionsMenu(user);
 		verify(passwordValidator, times(1)).validate("123", "202cb962ac59075b964b07152d234b70");
-		verify(userGateway, times(1)).getProfile(user, "laokou");
-		verify(sourceGateway, times(1)).getPrefix("laokou");
-		verify(tenantGateway, times(1)).getId("laokou");
+		verify(userGateway, times(1)).getProfileUser(user, "laokou");
+		verify(sourceGateway, times(1)).getPrefixSource("laokou");
+		verify(tenantGateway, times(1)).getIdTenant("laokou");
 	}
 
 	@Test
@@ -222,14 +222,14 @@ class DomainServiceTest {
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		AuthA auth = DomainFactory.getAuth(1L, "laokou");
 		// 构造租户
-		when(tenantGateway.getId("laokou")).thenReturn(0L);
+		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
 		// 构造数据源
-		when(sourceGateway.getPrefix("laokou")).thenReturn("master");
+		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
 		// 创建验证码
 		Assertions.assertDoesNotThrow(() -> domainService.createCaptcha(1L, auth, captcha));
 		// 校验调用次数
-		verify(sourceGateway, times(1)).getPrefix("laokou");
-		verify(tenantGateway, times(1)).getId("laokou");
+		verify(sourceGateway, times(1)).getPrefixSource("laokou");
+		verify(tenantGateway, times(1)).getIdTenant("laokou");
 	}
 
 	@Test

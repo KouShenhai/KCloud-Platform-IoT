@@ -41,8 +41,8 @@ public class NoticeLogModifyCmdExe {
 	@CommandLog
 	public void executeVoid(NoticeLogModifyCmd cmd) {
 		// 校验参数
-		transactionalUtils
-			.executeInTransaction(() -> noticeLogDomainService.update(NoticeLogConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(
+				() -> noticeLogDomainService.updateNoticeLog(NoticeLogConvertor.toEntity(cmd.getCo())));
 	}
 
 }

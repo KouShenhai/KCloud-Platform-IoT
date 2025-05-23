@@ -29,16 +29,16 @@ public interface TenantGateway {
 	/**
 	 * 新增租户.
 	 */
-	void create(TenantE tenantE);
+	void createTenant(TenantE tenantE);
 
 	/**
 	 * 修改租户.
 	 */
-	void update(TenantE tenantE);
+	void updateTenant(TenantE tenantE);
 
 	/**
 	 * 删除租户.
 	 */
-	void delete(Long[] ids);
+	void deleteTenant(Long[] ids);
 
 }

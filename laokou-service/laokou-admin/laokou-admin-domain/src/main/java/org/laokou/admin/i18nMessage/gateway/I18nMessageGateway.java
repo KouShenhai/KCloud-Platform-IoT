@@ -29,16 +29,16 @@ public interface I18nMessageGateway {
 	/**
 	 * 新增国际化消息.
 	 */
-	void create(I18nMessageE i18nMessageE);
+	void createI18nMessage(I18nMessageE i18nMessageE);
 
 	/**
 	 * 修改国际化消息.
 	 */
-	void update(I18nMessageE i18nMessageE);
+	void updateI18nMessage(I18nMessageE i18nMessageE);
 
 	/**
 	 * 删除国际化消息.
 	 */
-	void delete(Long[] ids);
+	void deleteI18nMessage(Long[] ids);
 
 }

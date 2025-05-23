@@ -54,8 +54,8 @@ public class RoleModifyCmdExe {
 	public Mono<Void> executeVoid(RoleModifyCmd cmd) {
 		// 校验参数
 		RoleE roleE = RoleConvertor.toEntity(cmd.getCo());
-		modifyRoleParamValidator.validate(roleE);
-		return transactionalUtils.executeResultInTransaction(() -> roleDomainService.update(roleE));
+		modifyRoleParamValidator.validateRole(roleE);
+		return transactionalUtils.executeResultInTransaction(() -> roleDomainService.updateRole(roleE));
 	}
 
 }

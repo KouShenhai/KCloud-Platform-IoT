@@ -41,7 +41,7 @@ public class IpModifyCmdExe {
 	@CommandLog
 	public void executeVoid(IpModifyCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> ipDomainService.update(IpConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(() -> ipDomainService.updateIp(IpConvertor.toEntity(cmd.getCo())));
 	}
 
 }

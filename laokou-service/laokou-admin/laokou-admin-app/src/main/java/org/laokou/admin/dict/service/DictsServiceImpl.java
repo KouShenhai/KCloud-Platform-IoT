@@ -52,37 +52,37 @@ public class DictsServiceImpl implements DictsServiceI {
 	private final DictGetQryExe dictGetQryExe;
 
 	@Override
-	public void save(DictSaveCmd cmd) {
+	public void saveDict(DictSaveCmd cmd) {
 		dictSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(DictModifyCmd cmd) {
+	public void modifyDict(DictModifyCmd cmd) {
 		dictModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(DictRemoveCmd cmd) {
+	public void removeDict(DictRemoveCmd cmd) {
 		dictRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(DictImportCmd cmd) {
+	public void importDict(DictImportCmd cmd) {
 		dictImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(DictExportCmd cmd) {
+	public void exportDict(DictExportCmd cmd) {
 		dictExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<DictCO>> page(DictPageQry qry) {
+	public Result<Page<DictCO>> pageDict(DictPageQry qry) {
 		return dictPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<DictCO> getById(DictGetQry qry) {
+	public Result<DictCO> getByIdDict(DictGetQry qry) {
 		return dictGetQryExe.execute(qry);
 	}
 

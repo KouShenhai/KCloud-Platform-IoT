@@ -53,37 +53,37 @@ public class TransportProtocolsServiceImpl implements TransportProtocolsServiceI
 	private final TransportProtocolGetQryExe transportProtocolGetQryExe;
 
 	@Override
-	public void save(TransportProtocolSaveCmd cmd) {
+	public void saveTransportProtocol(TransportProtocolSaveCmd cmd) {
 		transportProtocolSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(TransportProtocolModifyCmd cmd) {
+	public void modifyTransportProtocol(TransportProtocolModifyCmd cmd) {
 		transportProtocolModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(TransportProtocolRemoveCmd cmd) {
+	public void removeTransportProtocol(TransportProtocolRemoveCmd cmd) {
 		transportProtocolRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(TransportProtocolImportCmd cmd) {
+	public void importTransportProtocol(TransportProtocolImportCmd cmd) {
 		transportProtocolImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(TransportProtocolExportCmd cmd) {
+	public void exportTransportProtocol(TransportProtocolExportCmd cmd) {
 		transportProtocolExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<TransportProtocolCO>> page(TransportProtocolPageQry qry) {
+	public Result<Page<TransportProtocolCO>> pageTransportProtocol(TransportProtocolPageQry qry) {
 		return transportProtocolPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<TransportProtocolCO> getById(TransportProtocolGetQry qry) {
+	public Result<TransportProtocolCO> getByIdTransportProtocol(TransportProtocolGetQry qry) {
 		return transportProtocolGetQryExe.execute(qry);
 	}
 

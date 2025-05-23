@@ -43,7 +43,7 @@ public class ClusterModifyCmdExe {
 	public void executeVoid(ClusterModifyCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> clusterDomainService.update(ClusterConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> clusterDomainService.updateCluster(ClusterConvertor.toEntity(cmd.getCo())));
 	}
 
 }

@@ -33,16 +33,16 @@ public class DictDomainService {
 
 	private final DictGateway dictGateway;
 
-	public void create(DictE dictE) {
-		dictGateway.create(dictE);
+	public void createDict(DictE dictE) {
+		dictGateway.createDict(dictE);
 	}
 
-	public void update(DictE dictE) {
-		dictGateway.update(dictE);
+	public void updateDict(DictE dictE) {
+		dictGateway.updateDict(dictE);
 	}
 
-	public void delete(Long[] ids) {
-		dictGateway.delete(ids);
+	public void deleteDict(Long[] ids) {
+		dictGateway.deleteDict(ids);
 	}
 
 }

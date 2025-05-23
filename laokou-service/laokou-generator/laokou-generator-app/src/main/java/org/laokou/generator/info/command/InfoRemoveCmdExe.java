@@ -39,7 +39,7 @@ public class InfoRemoveCmdExe {
 
 	public void executeVoid(InfoRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> infoDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> infoDomainService.deleteInfo(cmd.getIds()));
 	}
 
 }

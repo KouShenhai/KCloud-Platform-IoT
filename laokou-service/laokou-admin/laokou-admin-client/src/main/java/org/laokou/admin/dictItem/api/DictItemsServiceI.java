@@ -33,42 +33,42 @@ public interface DictItemsServiceI {
 	 * 保存字典项.
 	 * @param cmd 保存命令
 	 */
-	void save(DictItemSaveCmd cmd);
+	void saveDictItem(DictItemSaveCmd cmd);
 
 	/**
 	 * 修改字典项.
 	 * @param cmd 修改命令
 	 */
-	void modify(DictItemModifyCmd cmd);
+	void modifyDictItem(DictItemModifyCmd cmd);
 
 	/**
 	 * 删除字典项.
 	 * @param cmd 删除命令
 	 */
-	void remove(DictItemRemoveCmd cmd);
+	void removeDictItem(DictItemRemoveCmd cmd);
 
 	/**
 	 * 导入字典项.
 	 * @param cmd 导入命令
 	 */
-	void importI(DictItemImportCmd cmd);
+	void importDictItem(DictItemImportCmd cmd);
 
 	/**
 	 * 导出字典项.
 	 * @param cmd 导出命令
 	 */
-	void export(DictItemExportCmd cmd);
+	void exportDictItem(DictItemExportCmd cmd);
 
 	/**
 	 * 分页查询字典项.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<DictItemCO>> page(DictItemPageQry qry);
+	Result<Page<DictItemCO>> pageDictItem(DictItemPageQry qry);
 
 	/**
 	 * 查看字典项.
 	 * @param qry 查看请求
 	 */
-	Result<DictItemCO> getById(DictItemGetQry qry);
+	Result<DictItemCO> getByIdDictItem(DictItemGetQry qry);
 
 }

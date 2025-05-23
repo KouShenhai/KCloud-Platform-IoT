@@ -29,16 +29,16 @@ public interface DictGateway {
 	/**
 	 * 新增字典.
 	 */
-	void create(DictE dictE);
+	void createDict(DictE dictE);
 
 	/**
 	 * 修改字典.
 	 */
-	void update(DictE dictE);
+	void updateDict(DictE dictE);
 
 	/**
 	 * 删除字典.
 	 */
-	void delete(Long[] ids);
+	void deleteDict(Long[] ids);
 
 }

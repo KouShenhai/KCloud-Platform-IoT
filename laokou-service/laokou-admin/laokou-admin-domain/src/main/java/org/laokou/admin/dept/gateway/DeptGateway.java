@@ -29,16 +29,16 @@ public interface DeptGateway {
 	/**
 	 * 新增部门.
 	 */
-	void create(DeptE deptE);
+	void createDept(DeptE deptE);
 
 	/**
 	 * 修改部门.
 	 */
-	void update(DeptE deptE);
+	void updateDept(DeptE deptE);
 
 	/**
 	 * 删除部门.
 	 */
-	void delete(Long[] ids);
+	void deleteDept(Long[] ids);
 
 }

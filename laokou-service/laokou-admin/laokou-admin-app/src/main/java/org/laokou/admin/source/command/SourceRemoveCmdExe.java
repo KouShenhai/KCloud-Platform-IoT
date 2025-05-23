@@ -40,7 +40,7 @@ public class SourceRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(SourceRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> sourceDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> sourceDomainService.deleteSource(cmd.getIds()));
 	}
 
 }

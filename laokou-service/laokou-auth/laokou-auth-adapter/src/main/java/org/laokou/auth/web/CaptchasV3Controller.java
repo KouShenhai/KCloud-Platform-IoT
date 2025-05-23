@@ -47,26 +47,26 @@ public class CaptchasV3Controller {
 	@GetMapping("{uuid}")
 	@RateLimiter(key = "GET_CAPTCHA", type = IP)
 	@Operation(summary = "根据UUID获取验证码", description = "根据UUID获取验证码")
-	public Result<String> getByUuidV3(@PathVariable("uuid") String uuid) {
-		return captchasServiceI.getByUuid(new CaptchaGetQry(uuid));
+	public Result<String> getByUuidCaptcha(@PathVariable("uuid") String uuid) {
+		return captchasServiceI.getByUuidCaptcha(new CaptchaGetQry(uuid));
 	}
 
 	@Idempotent
 	@PostMapping("send/mobile")
 	@RateLimiter(key = "SEND_MOBILE_CAPTCHA", type = IP)
 	@Operation(summary = "根据UUID发送手机验证码", description = "根据UUID发送手机验证码")
-	public void sendMobileByUuidV3(@RequestBody CaptchaSendCmd cmd) {
+	public void sendMobileByUuidCaptcha(@RequestBody CaptchaSendCmd cmd) {
 		cmd.getCo().setTag(MqEnum.MOBILE_CAPTCHA.getTag());
-		captchasServiceI.sendByUuid(cmd);
+		captchasServiceI.sendByUuidCaptcha(cmd);
 	}
 
 	@Idempotent
 	@PostMapping("send/mail")
 	@RateLimiter(key = "SEND_MAIL_CAPTCHA", type = IP)
 	@Operation(summary = "根据UUID发送邮箱验证码", description = "根据UUID发送邮箱验证码")
-	public void sendMailByUuidV3(@RequestBody CaptchaSendCmd cmd) {
+	public void sendMailByUuidCaptcha(@RequestBody CaptchaSendCmd cmd) {
 		cmd.getCo().setTag(MqEnum.MAIL_CAPTCHA.getTag());
-		captchasServiceI.sendByUuid(cmd);
+		captchasServiceI.sendByUuidCaptcha(cmd);
 	}
 
 }

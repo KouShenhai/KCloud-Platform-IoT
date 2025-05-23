@@ -39,7 +39,7 @@ public class TemplateRemoveCmdExe {
 
 	public void executeVoid(TemplateRemoveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> templateDomainService.delete(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> templateDomainService.deleteTemplate(cmd.getIds()));
 	}
 
 }

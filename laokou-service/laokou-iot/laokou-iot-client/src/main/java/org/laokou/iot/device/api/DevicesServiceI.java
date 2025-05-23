@@ -34,42 +34,42 @@ public interface DevicesServiceI {
 	 * 保存设备.
 	 * @param cmd 保存命令
 	 */
-	void save(DeviceSaveCmd cmd);
+	void saveDevice(DeviceSaveCmd cmd);
 
 	/**
 	 * 修改设备.
 	 * @param cmd 修改命令
 	 */
-	void modify(DeviceModifyCmd cmd);
+	void modifyDevice(DeviceModifyCmd cmd);
 
 	/**
 	 * 删除设备.
 	 * @param cmd 删除命令
 	 */
-	void remove(DeviceRemoveCmd cmd);
+	void removeDevice(DeviceRemoveCmd cmd);
 
 	/**
 	 * 导入设备.
 	 * @param cmd 导入命令
 	 */
-	void importI(DeviceImportCmd cmd);
+	void importDevice(DeviceImportCmd cmd);
 
 	/**
 	 * 导出设备.
 	 * @param cmd 导出命令
 	 */
-	void export(DeviceExportCmd cmd);
+	void exportDevice(DeviceExportCmd cmd);
 
 	/**
 	 * 分页查询设备.
 	 * @param qry 分页查询请求
 	 */
-	Result<Page<DeviceCO>> page(DevicePageQry qry);
+	Result<Page<DeviceCO>> pageDevice(DevicePageQry qry);
 
 	/**
 	 * 查看设备.
 	 * @param qry 查看请求
 	 */
-	Result<DeviceCO> getById(DeviceGetQry qry);
+	Result<DeviceCO> getByIdDevice(DeviceGetQry qry);
 
 }

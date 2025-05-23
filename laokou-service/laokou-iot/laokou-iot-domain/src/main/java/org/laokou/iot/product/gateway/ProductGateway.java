@@ -30,16 +30,16 @@ public interface ProductGateway {
 	/**
 	 * 新增产品.
 	 */
-	void create(ProductE productE);
+	void createProduct(ProductE productE);
 
 	/**
 	 * 修改产品.
 	 */
-	void update(ProductE productE);
+	void updateProduct(ProductE productE);
 
 	/**
 	 * 删除产品.
 	 */
-	void delete(Long[] ids);
+	void deleteProduct(Long[] ids);
 
 }

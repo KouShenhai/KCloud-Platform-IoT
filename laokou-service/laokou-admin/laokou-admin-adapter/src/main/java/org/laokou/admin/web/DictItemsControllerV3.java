@@ -52,56 +52,56 @@ public class DictItemsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dict-item:save')")
 	@OperateLog(module = "字典项管理", operation = "保存字典项")
 	@Operation(summary = "保存字典项", description = "保存字典项")
-	public void saveV3(@RequestBody DictItemSaveCmd cmd) {
-		dictItemsServiceI.save(cmd);
+	public void saveDictItem(@RequestBody DictItemSaveCmd cmd) {
+		dictItemsServiceI.saveDictItem(cmd);
 	}
 
 	@PutMapping
 	@PreAuthorize("hasAuthority('sys:dict-item:modify')")
 	@OperateLog(module = "字典项管理", operation = "修改字典项")
 	@Operation(summary = "修改字典项", description = "修改字典项")
-	public void modifyV3(@RequestBody DictItemModifyCmd cmd) {
-		dictItemsServiceI.modify(cmd);
+	public void modifyDictItem(@RequestBody DictItemModifyCmd cmd) {
+		dictItemsServiceI.modifyDictItem(cmd);
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:dict-item:remove')")
 	@OperateLog(module = "字典项管理", operation = "删除字典项")
 	@Operation(summary = "删除字典项", description = "删除字典项")
-	public void removeV3(@RequestBody Long[] ids) {
-		dictItemsServiceI.remove(new DictItemRemoveCmd(ids));
+	public void removeDictItem(@RequestBody Long[] ids) {
+		dictItemsServiceI.removeDictItem(new DictItemRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:dict-item:import')")
 	@OperateLog(module = "字典项管理", operation = "导入字典项")
 	@Operation(summary = "导入字典项", description = "导入字典项")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
-		dictItemsServiceI.importI(new DictItemImportCmd(files));
+	public void importDictItem(@RequestPart("files") MultipartFile[] files) {
+		dictItemsServiceI.importDictItem(new DictItemImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:dict-item:export')")
 	@OperateLog(module = "字典项管理", operation = "导出字典项")
 	@Operation(summary = "导出字典项", description = "导出字典项")
-	public void exportV3(@RequestBody DictItemExportCmd cmd) {
-		dictItemsServiceI.export(cmd);
+	public void exportDictItem(@RequestBody DictItemExportCmd cmd) {
+		dictItemsServiceI.exportDictItem(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:dict-item:page')")
 	@Operation(summary = "分页查询字典项列表", description = "分页查询字典项列表")
-	public Result<Page<DictItemCO>> pageV3(@Validated @RequestBody DictItemPageQry qry) {
-		return dictItemsServiceI.page(qry);
+	public Result<Page<DictItemCO>> pageDictItem(@Validated @RequestBody DictItemPageQry qry) {
+		return dictItemsServiceI.pageDictItem(qry);
 	}
 
 	@TraceLog
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('sys:dict-item:detail')")
 	@Operation(summary = "查看字典项详情", description = "查看字典项详情")
-	public Result<DictItemCO> getByIdV3(@PathVariable("id") Long id) {
-		return dictItemsServiceI.getById(new DictItemGetQry(id));
+	public Result<DictItemCO> getByIdDictItem(@PathVariable("id") Long id) {
+		return dictItemsServiceI.getByIdDictItem(new DictItemGetQry(id));
 	}
 
 }

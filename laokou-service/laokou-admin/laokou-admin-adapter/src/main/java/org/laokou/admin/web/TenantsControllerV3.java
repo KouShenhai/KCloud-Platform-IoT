@@ -56,8 +56,8 @@ public class TenantsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:tenant:save')")
 	@OperateLog(module = "租户管理", operation = "保存租户")
 	@Operation(summary = "保存租户", description = "保存租户")
-	public void saveV3(@RequestBody TenantSaveCmd cmd) {
-		tenantsServiceI.save(cmd);
+	public void saveTenant(@RequestBody TenantSaveCmd cmd) {
+		tenantsServiceI.saveTenant(cmd);
 	}
 
 	@PutMapping
@@ -65,40 +65,40 @@ public class TenantsControllerV3 {
 	@OperateLog(module = "租户管理", operation = "修改租户")
 	@Operation(summary = "修改租户", description = "修改租户")
 	@DataCache(name = TENANTS, key = "#cmd.co.id", operateType = DEL)
-	public void modifyV3(@RequestBody TenantModifyCmd cmd) {
-		tenantsServiceI.modify(cmd);
+	public void modifyTenant(@RequestBody TenantModifyCmd cmd) {
+		tenantsServiceI.modifyTenant(cmd);
 	}
 
 	@DeleteMapping
 	@PreAuthorize("hasAuthority('sys:tenant:remove')")
 	@OperateLog(module = "租户管理", operation = "删除租户")
 	@Operation(summary = "删除租户", description = "删除租户")
-	public void removeV3(@RequestBody Long[] ids) {
-		tenantsServiceI.remove(new TenantRemoveCmd(ids));
+	public void removeTenant(@RequestBody Long[] ids) {
+		tenantsServiceI.removeTenant(new TenantRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:tenant:import')")
 	@OperateLog(module = "租户管理", operation = "导入租户")
 	@Operation(summary = "导入租户", description = "导入租户")
-	public void importV3(@RequestPart("files") MultipartFile[] files) {
-		tenantsServiceI.importI(new TenantImportCmd(files));
+	public void importTenant(@RequestPart("files") MultipartFile[] files) {
+		tenantsServiceI.importTenant(new TenantImportCmd(files));
 	}
 
 	@PostMapping("export")
 	@PreAuthorize("hasAuthority('sys:tenant:export')")
 	@OperateLog(module = "租户管理", operation = "导出租户")
 	@Operation(summary = "导出租户", description = "导出租户")
-	public void exportV3(@RequestBody TenantExportCmd cmd) {
-		tenantsServiceI.export(cmd);
+	public void exportTenant(@RequestBody TenantExportCmd cmd) {
+		tenantsServiceI.exportTenant(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("page")
 	@PreAuthorize("hasAuthority('sys:tenant:page')")
 	@Operation(summary = "分页查询租户列表", description = "分页查询租户列表")
-	public Result<Page<TenantCO>> pageV3(@Validated @RequestBody TenantPageQry qry) {
-		return tenantsServiceI.page(qry);
+	public Result<Page<TenantCO>> pageTenant(@Validated @RequestBody TenantPageQry qry) {
+		return tenantsServiceI.pageTenant(qry);
 	}
 
 	@TraceLog
@@ -106,8 +106,8 @@ public class TenantsControllerV3 {
 	@DataCache(name = TENANTS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:tenant:detail')")
 	@Operation(summary = "查看租户详情", description = "查看租户详情")
-	public Result<TenantCO> getByIdV3(@PathVariable("id") Long id) {
-		return tenantsServiceI.getById(new TenantGetQry(id));
+	public Result<TenantCO> getByIdTenant(@PathVariable("id") Long id) {
+		return tenantsServiceI.getByIdTenant(new TenantGetQry(id));
 	}
 
 }

@@ -40,7 +40,8 @@ public class InfoModifyCmdExe {
 
 	public void executeVoid(InfoModifyCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> infoDomainService.update(InfoConvertor.toEntity(cmd.getCo())));
+		transactionalUtils
+			.executeInTransaction(() -> infoDomainService.updateInfo(InfoConvertor.toEntity(cmd.getCo())));
 	}
 
 }

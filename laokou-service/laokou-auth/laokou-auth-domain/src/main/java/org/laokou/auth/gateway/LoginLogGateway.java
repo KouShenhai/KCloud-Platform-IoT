@@ -24,6 +24,6 @@ import org.laokou.auth.model.LoginLogE;
  */
 public interface LoginLogGateway {
 
-	void create(LoginLogE loginLog);
+	void createLoginLog(LoginLogE loginLog);
 
 }

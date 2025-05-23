@@ -42,20 +42,20 @@ public class DictItemGatewayImpl implements DictItemGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(DictItemE dictItemE) {
+	public void createDictItem(DictItemE dictItemE) {
 		dictItemMapper
 			.insert(DictItemConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), dictItemE));
 	}
 
 	@Override
-	public void update(DictItemE dictItemE) {
+	public void updateDictItem(DictItemE dictItemE) {
 		DictItemDO dictItemDO = DictItemConvertor.toDataObject(null, dictItemE);
 		dictItemDO.setVersion(dictItemMapper.selectVersion(dictItemE.getId()));
 		dictItemMapper.updateById(dictItemDO);
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteDictItem(Long[] ids) {
 		dictItemMapper.deleteByIds(Arrays.asList(ids));
 	}
 

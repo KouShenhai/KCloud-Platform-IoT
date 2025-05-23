@@ -34,7 +34,7 @@ public class ModifyProductCategoryParamValidator implements ProductCategoryParam
 	private final ProductCategoryMapper productCategoryMapper;
 
 	@Override
-	public void validate(ProductCategoryE productCategoryE) {
+	public void validateProductCategory(ProductCategoryE productCategoryE) {
 		ParamValidator.validate(ProductCategoryParamValidator.validateId(productCategoryE),
 				ProductCategoryParamValidator.validateName(productCategoryE, false, productCategoryMapper),
 				ProductCategoryParamValidator.validateSort(productCategoryE),

@@ -33,6 +33,6 @@ public interface DeptGateway {
 	 * @param user 用户对象
 	 * @return 部门路径集合
 	 */
-	List<String> getPaths(UserE user);
+	List<String> getPathsDept(UserE user);
 
 }

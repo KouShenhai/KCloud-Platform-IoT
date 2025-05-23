@@ -40,7 +40,7 @@ public class SecretsServiceImpl implements SecretsServiceI {
 	 * @return 密钥
 	 */
 	@Override
-	public Result<SecretCO> getInfo() {
+	public Result<SecretCO> getInfoSecret() {
 		return secretGetQryExe.execute();
 	}
 

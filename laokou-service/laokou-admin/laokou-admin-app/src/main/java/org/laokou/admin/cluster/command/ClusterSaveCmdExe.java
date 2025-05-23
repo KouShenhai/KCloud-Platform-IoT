@@ -43,7 +43,7 @@ public class ClusterSaveCmdExe {
 	public void executeVoid(ClusterSaveCmd cmd) {
 		// 校验参数
 		transactionalUtils
-			.executeInTransaction(() -> clusterDomainService.create(ClusterConvertor.toEntity(cmd.getCo())));
+			.executeInTransaction(() -> clusterDomainService.createCluster(ClusterConvertor.toEntity(cmd.getCo())));
 	}
 
 }

@@ -51,7 +51,7 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public Mono<Void> update(RoleE roleE) {
+	public Mono<Void> updateRoleDept(RoleE roleE) {
 		return getRoleDeptIds(roleE.getRoleIds()).map(ids -> {
 			roleE.setRoleDeptIds(ids);
 			return roleE;
@@ -59,7 +59,7 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 	}
 
 	@Override
-	public Mono<Void> delete(Long[] roleIds) {
+	public Mono<Void> deleteRoleDept(Long[] roleIds) {
 		return getRoleDeptIds(Arrays.asList(roleIds)).map(ids -> {
 			RoleE roleE = new RoleE();
 			roleE.setRoleDeptIds(ids);
@@ -80,12 +80,12 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 		// 删除角色菜单关联表
 		List<RoleDeptDO> list = RoleConvertor.toDataObjs(roleE);
 		if (CollectionUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, RoleDeptMapper.class, RoleDeptMapper::deleteObjById);
+			mybatisUtils.batch(list, RoleDeptMapper.class, RoleDeptMapper::deleteRoleDeptById);
 		}
 	}
 
 	private Mono<List<Long>> getRoleDeptIds(List<Long> roleIds) {
-		return Mono.fromCallable(() -> roleDeptMapper.selectIdsByRoleIds(roleIds))
+		return Mono.fromCallable(() -> roleDeptMapper.selectRoleDeptIdsByRoleIds(roleIds))
 			.subscribeOn(Schedulers.boundedElastic())
 			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
 				.maxBackoff(Duration.ofSeconds(1))

@@ -42,13 +42,13 @@ public class TransportProtocolGatewayImpl implements TransportProtocolGateway {
 	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
 
 	@Override
-	public void create(TransportProtocolE transportProtocolE) {
+	public void createTransportProtocol(TransportProtocolE transportProtocolE) {
 		transportProtocolMapper.insert(TransportProtocolConvertor
 			.toDataObject(distributedIdentifierFeignClientWrapper.getId(), transportProtocolE, true));
 	}
 
 	@Override
-	public void update(TransportProtocolE transportProtocolE) {
+	public void updateTransportProtocol(TransportProtocolE transportProtocolE) {
 		TransportProtocolDO transportProtocolDO = TransportProtocolConvertor.toDataObject(null, transportProtocolE,
 				false);
 		transportProtocolDO.setVersion(transportProtocolMapper.selectVersion(transportProtocolE.getId()));
@@ -56,7 +56,7 @@ public class TransportProtocolGatewayImpl implements TransportProtocolGateway {
 	}
 
 	@Override
-	public void delete(Long[] ids) {
+	public void deleteTransportProtocol(Long[] ids) {
 		transportProtocolMapper.deleteByIds(Arrays.asList(ids));
 	}
 

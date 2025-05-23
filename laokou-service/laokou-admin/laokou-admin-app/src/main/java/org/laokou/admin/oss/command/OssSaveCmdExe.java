@@ -41,7 +41,7 @@ public class OssSaveCmdExe {
 	@CommandLog
 	public void executeVoid(OssSaveCmd cmd) {
 		// 校验参数
-		transactionalUtils.executeInTransaction(() -> ossDomainService.create(OssConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(() -> ossDomainService.createOss(OssConvertor.toEntity(cmd.getCo())));
 	}
 
 }

@@ -53,37 +53,37 @@ public class CommunicationProtocolsServiceImpl implements CommunicationProtocols
 	private final CommunicationProtocolGetQryExe communicationProtocolGetQryExe;
 
 	@Override
-	public void save(CommunicationProtocolSaveCmd cmd) {
+	public void saveCommunicationProtocol(CommunicationProtocolSaveCmd cmd) {
 		communicationProtocolSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modify(CommunicationProtocolModifyCmd cmd) {
+	public void modifyCommunicationProtocol(CommunicationProtocolModifyCmd cmd) {
 		communicationProtocolModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void remove(CommunicationProtocolRemoveCmd cmd) {
+	public void removeCommunicationProtocol(CommunicationProtocolRemoveCmd cmd) {
 		communicationProtocolRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void importI(CommunicationProtocolImportCmd cmd) {
+	public void importCommunicationProtocol(CommunicationProtocolImportCmd cmd) {
 		communicationProtocolImportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void export(CommunicationProtocolExportCmd cmd) {
+	public void exportCommunicationProtocol(CommunicationProtocolExportCmd cmd) {
 		communicationProtocolExportCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Result<Page<CommunicationProtocolCO>> page(CommunicationProtocolPageQry qry) {
+	public Result<Page<CommunicationProtocolCO>> pageCommunicationProtocol(CommunicationProtocolPageQry qry) {
 		return communicationProtocolPageQryExe.execute(qry);
 	}
 
 	@Override
-	public Result<CommunicationProtocolCO> getById(CommunicationProtocolGetQry qry) {
+	public Result<CommunicationProtocolCO> getByIdCommunicationProtocol(CommunicationProtocolGetQry qry) {
 		return communicationProtocolGetQryExe.execute(qry);
 	}
 
