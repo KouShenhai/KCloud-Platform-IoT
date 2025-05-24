@@ -22,6 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.laokou.auth.ability.DomainService;
+import org.laokou.auth.ability.validator.CaptchaValidator;
 import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gateway.*;
@@ -30,6 +31,8 @@ import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.util.DigestUtils;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -44,6 +47,7 @@ import static org.mockito.Mockito.*;
  * @author laokou
  */
 @ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class DomainServiceTest {
 
 	@Mock
@@ -62,9 +66,6 @@ class DomainServiceTest {
 	private SourceGateway sourceGateway;
 
 	@Mock
-	private CaptchaGateway captchaGateway;
-
-	@Mock
 	private LoginLogGateway loginLogGateway;
 
 	@Mock
@@ -72,6 +73,9 @@ class DomainServiceTest {
 
 	@Mock
 	private PasswordValidator passwordValidator;
+
+	@Mock
+	private CaptchaValidator captchaValidator;
 
 	@InjectMocks
 	private DomainService domainService;
@@ -85,10 +89,10 @@ class DomainServiceTest {
 		Assertions.assertNotNull(deptGateway);
 		Assertions.assertNotNull(tenantGateway);
 		Assertions.assertNotNull(sourceGateway);
-		Assertions.assertNotNull(captchaGateway);
 		Assertions.assertNotNull(loginLogGateway);
 		Assertions.assertNotNull(noticeLogGateway);
 		Assertions.assertNotNull(passwordValidator);
+		Assertions.assertNotNull(captchaValidator);
 		Assertions.assertNotNull(domainService);
 		this.info = new InfoV("Windows", "127.0.0.1", "中国 广东 深圳", "Chrome");
 	}
@@ -96,6 +100,8 @@ class DomainServiceTest {
 	@Test
 	void testUsernamePasswordAuth() {
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
+		Assertions.assertDoesNotThrow(() -> auth.setPasswordValidator(passwordValidator));
+		Assertions.assertDoesNotThrow(() -> auth.setCaptchaValidator(captchaValidator));
 		// 创建用户【用户名密码】
 		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
 		// 构造租户
@@ -103,7 +109,8 @@ class DomainServiceTest {
 		// 构造数据源
 		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
 		// 构造验证码校验
-		doReturn(true).when(captchaGateway).validate(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
+		doReturn(true).when(captchaValidator)
+			.validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
 		// 构造用户信息
 		UserE user = auth.getUser();
 		Assertions.assertDoesNotThrow(() -> user
@@ -121,8 +128,9 @@ class DomainServiceTest {
 		verify(deptGateway, times(1)).getPathsDept(user);
 		verify(menuGateway, times(1)).getPermissionsMenu(user);
 		verify(passwordValidator, times(1)).validatePassword("123", "202cb962ac59075b964b07152d234b70");
+		verify(captchaValidator, times(1)).validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"),
+				"1234");
 		verify(userGateway, times(1)).getProfileUser(user, "laokou");
-		verify(captchaGateway, times(1)).validate(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
 		verify(sourceGateway, times(1)).getPrefixSource("laokou");
 		verify(tenantGateway, times(1)).getIdTenant("laokou");
 	}
@@ -130,6 +138,7 @@ class DomainServiceTest {
 	@Test
 	void testMailAuth() {
 		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
+		Assertions.assertDoesNotThrow(() -> auth.setCaptchaValidator(captchaValidator));
 		// 创建用户【邮箱】
 		Assertions.assertDoesNotThrow(auth::createUserByMail);
 		// 构造租户
@@ -137,8 +146,8 @@ class DomainServiceTest {
 		// 构造数据源
 		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
 		// 构造验证码校验
-		doReturn(true).when(captchaGateway)
-			.validate(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
+		doReturn(true).when(captchaValidator)
+			.validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
 		// 构造用户信息
 		UserE user = auth.getUser();
 		when(userGateway.getProfileUser(user, "laokou")).thenReturn(user);
@@ -152,7 +161,8 @@ class DomainServiceTest {
 		verify(deptGateway, times(1)).getPathsDept(user);
 		verify(menuGateway, times(1)).getPermissionsMenu(user);
 		verify(userGateway, times(1)).getProfileUser(user, "laokou");
-		verify(captchaGateway, times(1)).validate(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
+		verify(captchaValidator, times(1)).validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"),
+				"123456");
 		verify(sourceGateway, times(1)).getPrefixSource("laokou");
 		verify(tenantGateway, times(1)).getIdTenant("laokou");
 	}
@@ -160,6 +170,7 @@ class DomainServiceTest {
 	@Test
 	void testMobileAuth() {
 		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
+		Assertions.assertDoesNotThrow(() -> auth.setCaptchaValidator(captchaValidator));
 		// 创建用户【手机号】
 		Assertions.assertDoesNotThrow(auth::createUserByMobile);
 		// 构造租户
@@ -167,7 +178,8 @@ class DomainServiceTest {
 		// 构造数据源
 		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
 		// 构造验证码校验
-		doReturn(true).when(captchaGateway).validate(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
+		doReturn(true).when(captchaValidator)
+			.validateCaptcha(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
 		// 构造用户信息
 		UserE user = auth.getUser();
 		when(userGateway.getProfileUser(user, "laokou")).thenReturn(user);
@@ -181,7 +193,6 @@ class DomainServiceTest {
 		verify(deptGateway, times(1)).getPathsDept(user);
 		verify(menuGateway, times(1)).getPermissionsMenu(user);
 		verify(userGateway, times(1)).getProfileUser(user, "laokou");
-		verify(captchaGateway, times(1)).validate(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
 		verify(sourceGateway, times(1)).getPrefixSource("laokou");
 		verify(tenantGateway, times(1)).getIdTenant("laokou");
 	}
@@ -189,6 +200,7 @@ class DomainServiceTest {
 	@Test
 	void testAuthorizationCodeAuth() {
 		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
+		Assertions.assertDoesNotThrow(() -> auth.setPasswordValidator(passwordValidator));
 		// 创建用户【授权码】
 		Assertions.assertDoesNotThrow(auth::createUserByAuthorizationCode);
 		// 构造租户

@@ -19,6 +19,7 @@ package org.laokou.auth.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.laokou.auth.ability.validator.CaptchaValidator;
 import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.dto.domainevent.LoginEvent;
@@ -33,6 +34,7 @@ import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -115,6 +117,20 @@ public class AuthA extends AggregateRoot {
 	 */
 	private CaptchaE captchaE;
 
+	/**
+	 * 密码校验器.
+	 */
+	@Setter
+	@Autowired
+	private PasswordValidator passwordValidator;
+
+	/**
+	 * 验证码校验器.
+	 */
+	@Setter
+	@Autowired
+	private CaptchaValidator captchaValidator;
+
 	public AuthA fillValue(Long id, String tenantCode) {
 		super.id = id;
 		this.tenantCode = tenantCode;
@@ -194,9 +210,9 @@ public class AuthA extends AggregateRoot {
 		}
 	}
 
-	public void checkCaptcha(CaptchaValidator captchaValidator) {
+	public void checkCaptcha() {
 		if (isUseCaptcha()) {
-			Boolean validate = captchaValidator.validateCaptcha(getCaptchaCacheKey(), captcha.captcha());
+			Boolean validate = this.captchaValidator.validateCaptcha(getCaptchaCacheKey(), captcha.captcha());
 			if (ObjectUtils.isNull(validate)) {
 				throw new BizException(CAPTCHA_EXPIRED);
 			}
@@ -218,8 +234,8 @@ public class AuthA extends AggregateRoot {
 		}
 	}
 
-	public void checkPassword(PasswordValidator passwordValidator) {
-		if (isUsePassword() && !passwordValidator.validatePassword(this.password, user.getPassword())) {
+	public void checkPassword() {
+		if (isUsePassword() && !this.passwordValidator.validatePassword(this.password, user.getPassword())) {
 			throw new BizException(USERNAME_PASSWORD_ERROR);
 		}
 	}

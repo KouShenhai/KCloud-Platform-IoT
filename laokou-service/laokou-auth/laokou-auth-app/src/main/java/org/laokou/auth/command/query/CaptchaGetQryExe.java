@@ -21,12 +21,14 @@ import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.base.Captcha;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.CaptchaGetQry;
-import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.RedisKeyUtils;
+import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
+
+import static org.laokou.common.redis.util.RedisUtils.FIVE_MINUTE_EXPIRE;
 
 /**
  * 获取验证码执行器.
@@ -37,7 +39,7 @@ import java.awt.*;
 @RequiredArgsConstructor
 public class CaptchaGetQryExe {
 
-	private final CaptchaGateway captchaGateway;
+	private final RedisUtils redisUtils;
 
 	/**
 	 * 执行获取验证码.
@@ -48,7 +50,9 @@ public class CaptchaGetQryExe {
 		Captcha ca = generate();
 		String captcha = ca.text();
 		String base64 = ca.toBase64();
-		captchaGateway.set(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(qry.getUuid()), captcha);
+		String usernamePasswordAuthCaptchaKey = RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(qry.getUuid());
+		redisUtils.del(usernamePasswordAuthCaptchaKey);
+		redisUtils.set(usernamePasswordAuthCaptchaKey, captcha, FIVE_MINUTE_EXPIRE);
 		return Result.ok(base64);
 	}
 

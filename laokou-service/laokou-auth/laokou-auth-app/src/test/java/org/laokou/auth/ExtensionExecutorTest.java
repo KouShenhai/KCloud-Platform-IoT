@@ -19,6 +19,7 @@ package org.laokou.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
@@ -53,10 +54,14 @@ class ExtensionExecutorTest {
 
 	private final ExtensionRegister extensionRegister;
 
+	@BeforeEach
+	void beforeEach() {
+		Assertions.assertNotNull(extensionExecutor);
+		Assertions.assertNotNull(extensionRegister);
+	}
+
 	@Test
 	void testUsernamePasswordAuthParamValidateExecutor() {
-		// 校验参数
-		validate();
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		// 注册【用户名密码登录】校验器
 		doRegistration(new UsernamePasswordAuthParamValidator());
@@ -66,8 +71,6 @@ class ExtensionExecutorTest {
 
 	@Test
 	void testMailAuthParamValidateExecutor() {
-		// 校验参数
-		validate();
 		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
 		// 注册【邮箱登录】校验器
 		doRegistration(new MailAuthParamValidator());
@@ -77,8 +80,6 @@ class ExtensionExecutorTest {
 
 	@Test
 	void testMobileAuthParamValidateExecutor() {
-		// 校验参数
-		validate();
 		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
 		// 注册【手机号登录】校验器
 		doRegistration(new MobileAuthParamValidator());
@@ -88,8 +89,6 @@ class ExtensionExecutorTest {
 
 	@Test
 	void testAuthorizationCodeAuthParamValidateExecutor() {
-		// 校验参数
-		validate();
 		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
 		// 注册【授权码登录】校验器
 		doRegistration(new AuthorizationCodeAuthParamValidator());
@@ -99,8 +98,6 @@ class ExtensionExecutorTest {
 
 	@Test
 	void testMailCaptchaParamValidateExecutor() {
-		// 校验参数
-		validate();
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		// 注册【邮箱验证码】校验器
 		doRegistration(new MailCaptchaParamValidator());
@@ -112,9 +109,7 @@ class ExtensionExecutorTest {
 	}
 
 	@Test
-	void testCaptchaParamValidateExecutor() {
-		// 校验参数
-		validate();
+	void testMobileCaptchaParamValidateExecutor() {
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		// 注册【手机号验证码】校验器
 		doRegistration(new MobileCaptchaParamValidator());
@@ -128,11 +123,6 @@ class ExtensionExecutorTest {
 	private void doRegistration(ExtensionPointI extensionPointI) {
 		Assertions.assertNotNull(extensionPointI);
 		Assertions.assertDoesNotThrow(() -> extensionRegister.doRegistration(extensionPointI));
-	}
-
-	private void validate() {
-		Assertions.assertNotNull(extensionExecutor);
-		Assertions.assertNotNull(extensionRegister);
 	}
 
 	private void execute(AuthA auth) {

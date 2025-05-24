@@ -23,11 +23,12 @@ import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.common.extension.Extension;
 
 import static org.laokou.auth.common.constant.BizConstants.*;
+import static org.laokou.auth.model.MqEnum.MOBILE_CAPTCHA_TAG;
 
 /**
  * @author laokou
  */
-@Extension(bizId = MOBILE_CAPTCHA, useCase = USE_CASE_CAPTCHA, scenario = SCENARIO)
+@Extension(bizId = MOBILE_CAPTCHA_TAG, useCase = USE_CASE_CAPTCHA, scenario = SCENARIO)
 public class MobileCaptchaParamValidator implements CaptchaParamValidatorExtPt {
 
 	@Override

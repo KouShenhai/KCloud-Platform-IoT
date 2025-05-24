@@ -21,7 +21,11 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import lombok.RequiredArgsConstructor;
+import org.laokou.auth.ability.validator.CaptchaValidator;
 import org.laokou.auth.ability.validator.PasswordValidator;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -73,11 +77,14 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
  *
  * @author laokou
  */
+@RequiredArgsConstructor
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({OAuth2Authorization.class, OAuth2AuthorizationServerPropertiesMapper.class})
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.security.oauth2.authorization-server", name = "enabled")
 class OAuth2AuthorizationServerConfig {
+
+	private final RedisUtils redisUtils;
 
 	private static void applyDefaultSecurity(HttpSecurity http) throws Exception {
 		// @formatter:off
@@ -247,6 +254,11 @@ class OAuth2AuthorizationServerConfig {
 		return passwordEncoder::matches;
 	}
 
+	@Bean
+	CaptchaValidator captchaValidator() {
+		return this::validateCaptcha;
+	}
+
 	/**
 	 * 获取RSA加密Key.
 	 * @return RSA加密Key
@@ -271,6 +283,18 @@ class OAuth2AuthorizationServerConfig {
 		catch (Exception var2) {
 			throw new IllegalStateException(var2);
 		}
+	}
+
+	private Boolean validateCaptcha(String key, String code) {
+		// 获取验证码
+		Object captcha = redisUtils.get(key);
+		if (ObjectUtils.isNotNull(captcha)) {
+			redisUtils.del(key);
+		}
+		else {
+			return null;
+		}
+		return code.equalsIgnoreCase(captcha.toString());
 	}
 
 }

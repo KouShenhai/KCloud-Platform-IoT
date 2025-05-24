@@ -30,36 +30,36 @@ public enum MqEnum {
 	LOGIN_LOG("login_log", "登录日志") {
 		@Override
 		public String getTopic() {
-			return "laokou_log_topic";
+			return LOG_TOPIC;
 		}
 
 		@Override
 		public String getTag() {
-			return "login_log";
+			return LOGIN_LOGIN_TAG;
 		}
 
 	},
 	MAIL_CAPTCHA("mail_captcha", "邮箱验证码") {
 		@Override
 		public String getTopic() {
-			return "laokou_captcha_topic";
+			return CAPTCHA_TOPIC;
 		}
 
 		@Override
 		public String getTag() {
-			return "mail_captcha";
+			return MAIL_CAPTCHA_TAG;
 		}
 
 	},
 	MOBILE_CAPTCHA("mobile_captcha", "手机验证码") {
 		@Override
 		public String getTopic() {
-			return "laokou_captcha_topic";
+			return CAPTCHA_TOPIC;
 		}
 
 		@Override
 		public String getTag() {
-			return "mobile_captcha";
+			return MOBILE_CAPTCHA_TAG;
 		}
 	};
 
@@ -75,5 +75,21 @@ public enum MqEnum {
 	public abstract String getTopic();
 
 	public abstract String getTag();
+
+	public static final String MAIL_CAPTCHA_TAG = "mail_captcha";
+
+	public static final String MOBILE_CAPTCHA_TAG = "mobile_captcha";
+
+	public static final String CAPTCHA_TOPIC = "laokou_captcha_topic";
+
+	public static final String LOGIN_LOGIN_TAG = "login_log";
+
+	public static final String LOG_TOPIC = "laokou_log_topic";
+
+	public static final String MAIL_CAPTCHA_CONSUMER_GROUP = "laokou_mail_captcha_consumer_group";
+
+	public static final String MOBILE_CAPTCHA_CONSUMER_GROUP = "laokou_mobile_captcha_consumer_group";
+
+	public static final String LOGIN_LOG_CONSUMER_GROUP = "laokou_login_log_consumer_group";
 
 }

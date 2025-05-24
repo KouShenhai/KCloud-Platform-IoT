@@ -18,7 +18,6 @@
 package org.laokou.auth.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.ability.validator.PasswordValidator;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.*;
 import org.springframework.stereotype.Component;
@@ -40,13 +39,9 @@ public class DomainService {
 
 	private final SourceGateway sourceGateway;
 
-	private final CaptchaGateway captchaGateway;
-
 	private final LoginLogGateway loginLogGateway;
 
 	private final NoticeLogGateway noticeLogGateway;
-
-	private final PasswordValidator passwordValidator;
 
 	public void createLoginLog(LoginLogE loginLog) {
 		// 保存登录日志
@@ -56,8 +51,6 @@ public class DomainService {
 	public void createNoticeLog(NoticeLogE noticeLog) {
 		// 保存通知日志
 		noticeLogGateway.createNoticeLog(noticeLog);
-		// 缓存验证码
-		createCaptchaCache(noticeLog);
 	}
 
 	public void createCaptcha(Long eventId, AuthA auth, CaptchaE captcha) {
@@ -75,13 +68,13 @@ public class DomainService {
 		// 校验租户
 		checkTenant(auth);
 		// 校验验证码
-		auth.checkCaptcha(captchaGateway::validate);
+		auth.checkCaptcha();
 		// 获取用户信息
 		auth.getUserInfo(userGateway.getProfileUser(auth.getUser(), auth.getTenantCode()));
 		// 校验用户名
 		auth.checkUsername();
 		// 校验密码
-		auth.checkPassword(passwordValidator);
+		auth.checkPassword();
 		// 校验用户状态
 		auth.checkUserStatus();
 		// 获取菜单标识集合
@@ -103,15 +96,6 @@ public class DomainService {
 		auth.getSourcePrefix(sourceGateway.getPrefixSource(auth.getTenantCode()));
 		// 校验数据源前缀
 		auth.checkSourcePrefix();
-	}
-
-	private void createCaptchaCache(NoticeLogE noticeLog) {
-		if (noticeLog.getStatus() == SendCaptchaStatusEnum.OK.getCode()) {
-			String captchaCacheKey = SendCaptchaTypeEnum.getByCode(noticeLog.getCode())
-				.getCaptchaCacheKey(noticeLog.getUuid());
-			// 5分钟有效
-			captchaGateway.set(captchaCacheKey, noticeLog.getCaptcha());
-		}
 	}
 
 }

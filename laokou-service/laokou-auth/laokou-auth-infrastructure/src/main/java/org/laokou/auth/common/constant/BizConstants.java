@@ -41,16 +41,6 @@ public final class BizConstants {
 	public static final String USE_CASE_CAPTCHA = "captcha";
 
 	/**
-	 * 邮箱验证码.
-	 */
-	public static final String MAIL_CAPTCHA = "mailCaptcha";
-
-	/**
-	 * 手机验证码.
-	 */
-	public static final String MOBILE_CAPTCHA = "mobileCaptcha";
-
-	/**
 	 * 查询用户失败.
 	 */
 	public static final String DEPT_QUERY_FAILED = "B_Dept_QueryFailed";

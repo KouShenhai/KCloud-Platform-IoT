@@ -22,8 +22,12 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.NoticeLogConvertor;
 import org.laokou.auth.dto.NoticeLogSaveCmd;
+import org.laokou.auth.dto.clientobject.NoticeLogCO;
+import org.laokou.auth.model.SendCaptchaStatusEnum;
+import org.laokou.auth.model.SendCaptchaTypeEnum;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
+import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -38,18 +42,31 @@ public class NoticeLogSaveCmdExe {
 
 	private final DomainService domainService;
 
+	private final RedisUtils redisUtils;
+
 	private final TransactionalUtils transactionalUtils;
 
 	@Async
 	@CommandLog
 	public void executeVoid(NoticeLogSaveCmd cmd) {
 		try {
+			// 保存验证码【发送成功】
+			NoticeLogCO co = cmd.getCo();
+			saveCaptcha(co);
 			DynamicDataSourceContextHolder.push(DOMAIN);
 			transactionalUtils
-				.executeInTransaction(() -> domainService.createNoticeLog(NoticeLogConvertor.toEntity(cmd.getCo())));
+				.executeInTransaction(() -> domainService.createNoticeLog(NoticeLogConvertor.toEntity(co)));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
+		}
+	}
+
+	private void saveCaptcha(NoticeLogCO co) {
+		if (co.getStatus() == SendCaptchaStatusEnum.OK.getCode()) {
+			String captchaCacheKey = SendCaptchaTypeEnum.getByCode(co.getCode()).getCaptchaCacheKey(co.getUuid());
+			// 5分钟有效
+			redisUtils.set(captchaCacheKey, co.getCaptcha(), RedisUtils.FIVE_MINUTE_EXPIRE);
 		}
 	}
 
