@@ -165,7 +165,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - 服务熔断&降级&限流：Sentinel
 - 分库分表：Mybatis Plus & ShardingSphere
 - 分布式事务：RocketMQ & Seata
-- 消息队列：RocketMQ & Kafka & MQTT & RabbitMQ
+- 消息队列：RocketMQ & Kafka & MQTT & RabbitMQ & Pulsar
 - 服务监控：Spring Boot Admin & Prometheus
 - 高亮搜索：Elasticsearch
 - 链路跟踪：Jaeger
@@ -196,7 +196,6 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
         └── laokou-common-log                      --- 日志组件
         └── laokou-common-core                     --- 核心组件
         └── laokou-common-cors                     --- 跨域组件
-        └── laokou-common-mqtt                     --- 消息组件
         └── laokou-common-redis                    --- 缓存组件
         └── laokou-common-kafka                    --- 消息组件
         └── laokou-common-log4j2                   --- 日志组件
@@ -320,7 +319,7 @@ KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.or
 | 2  |   ![liang99的头像](https://avatars.githubusercontent.com/u/58894276?v=4&s=64)   |     [liang99](https://github.com/liang99)     |
 | 3  | ![livk-cloud的头像](https://avatars.githubusercontent.com/u/50291874?s=64&v=4)  |  [livk-cloud](https://github.com/livk-cloud)  |
 | 4  | ![liukefu2050的头像](https://avatars.githubusercontent.com/u/21030225?s=64&v=4) | [liukefu2050](https://github.com/liukefu2050) |
-| 5  | ![HalfPomelo的头像](https://avatars.githubusercontent.com/u/58894276?v=4&s=64) |  [HalfPomelo](https://github.com/HalfPomelo)  |
+| 5  | ![HalfPomelo的头像](https://avatars.githubusercontent.com/u/58894276?v=4&s=64)  |  [HalfPomelo](https://github.com/HalfPomelo)  |
 | 6  |    ![lixin的头像](https://avatars.githubusercontent.com/u/69209385?s=64&v=4)    |       [lixin](https://github.com/lixin)       |
 | 7  |    ![simman的头像](https://avatars.githubusercontent.com/u/2041471?s=64&v=4)    |      [simman](https://github.com/simman)      |
 | 8  |  ![suhengli的头像](https://avatars.githubusercontent.com/u/43296325?s=64&v=4)   |    [suhengli](https://github.com/suhengli)    |

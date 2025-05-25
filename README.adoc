@@ -175,7 +175,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 - 服务熔断&降级&限流：Sentinel
 - 分库分表：Mybatis Plus & ShardingSphere
 - 分布式事务：RocketMQ & Seata
-- 消息队列：RocketMQ & Kafka & MQTT & RabbitMQ
+- 消息队列：RocketMQ & Kafka & MQTT & RabbitMQ & Pulsar
 - 服务监控：Spring Boot Admin & Prometheus
 - 高亮搜索：Elasticsearch
 - 链路跟踪：Jaeger
