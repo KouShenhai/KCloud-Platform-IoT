@@ -27,7 +27,7 @@ import org.laokou.common.core.util.SpringUtils;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.convertor.OperateLogConvertor;
-import org.laokou.common.log.model.DomainFactory;
+import org.laokou.common.log.factory.DomainFactory;
 import org.laokou.common.log.model.OperateLogE;
 import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.laokou.common.rocketmq.template.SendMessageTypeEnum;

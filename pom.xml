@@ -187,34 +187,25 @@
       </releases>
     </repository>
     <repository>
-      <id>spring-release</id>
-      <name>Spring Release</name>
-      <url>https://repo.spring.io/release</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-    </repository>
-    <repository>
-      <id>spring-milestone</id>
-      <name>Spring Milestone</name>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
       <url>https://repo.spring.io/milestone</url>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
     </repository>
     <repository>
       <id>spring-snapshots</id>
       <name>Spring Snapshots</name>
       <url>https://repo.spring.io/snapshot</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </repository>
+    <repository>
+      <id>apache-snapshots</id>
+      <name>Apache Snapshots</name>
+      <url>https://repository.apache.org/content/repositories/snapshots</url>
       <releases>
         <enabled>false</enabled>
       </releases>
@@ -597,12 +588,16 @@
         <!-- 在打包的时候，根据-P参数，加上需要的yml配置文件 -->
         <includes>
           <include>application.yml</include>
+          <!--suppress UnresolvedMavenProperty -->
           <include>application-${PROFILE-ACTIVE}.yml</include>
           <include>application.properties</include>
+          <!--suppress UnresolvedMavenProperty -->
           <include>application-${PROFILE-ACTIVE}.properties</include>
           <include>bootstrap.yml</include>
+          <!--suppress UnresolvedMavenProperty -->
           <include>bootstrap-${PROFILE-ACTIVE}.yml</include>
           <include>log4j2.xml</include>
+          <!--suppress UnresolvedMavenProperty -->
           <include>log4j2-${PROFILE-ACTIVE}.xml</include>
           <include>init_router.json</include>
           <include>log4j2.component.properties</include>

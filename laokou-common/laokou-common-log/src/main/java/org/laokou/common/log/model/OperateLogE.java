@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.util.*;
+import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
@@ -44,9 +45,10 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
  * @author laokou
  */
 @Getter
+@Entity
 public class OperateLogE {
 
-	private static final Set<String> REMOVE_PARAMS = Set.of("username", "password", "mail", "mobile");
+	private final Set<String> removeParams = Set.of("username", "password", "mail", "mobile");
 
 	/**
 	 * 操作名称.
@@ -81,7 +83,7 @@ public class OperateLogE {
 	/**
 	 * 操作人.
 	 */
-	private final String operator;
+	private String operator;
 
 	/**
 	 * 服务ID.
@@ -91,7 +93,7 @@ public class OperateLogE {
 	/**
 	 * 创建时间.
 	 */
-	private final Instant createTime;
+	private Instant createTime;
 
 	/**
 	 * 操作的方法名.
@@ -138,9 +140,10 @@ public class OperateLogE {
 	 */
 	private String stackTrace;
 
-	public OperateLogE() {
+	public OperateLogE fillValue() {
 		this.createTime = DateUtils.nowInstant();
 		this.operator = UserContextHolder.get().getUsername();
+		return this;
 	}
 
 	public void getProfile(String profile) {
@@ -202,7 +205,7 @@ public class OperateLogE {
 			Object obj = params.getFirst();
 			try {
 				Map<String, String> map = JacksonUtils.toMap(obj, String.class, String.class);
-				deleteAny(map, REMOVE_PARAMS.toArray(String[]::new));
+				deleteAny(map, removeParams.toArray(String[]::new));
 				this.requestParams = JacksonUtils.toJsonStr(map, true);
 			}
 			catch (Exception e) {

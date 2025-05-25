@@ -96,6 +96,7 @@
     <module>laokou-common-vertx</module>
     <module>laokou-common-websocket</module>
     <module>laokou-common-modbus4j</module>
+    <module>laokou-common-pulsar</module>
   </modules>
 
 </project>

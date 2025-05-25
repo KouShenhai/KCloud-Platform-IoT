@@ -18,6 +18,7 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
@@ -30,6 +31,7 @@ import java.time.Instant;
 @Setter
 @Getter
 @Entity
+@NoArgsConstructor
 public class NoticeLogE extends Identifier {
 
 	/**

@@ -19,6 +19,7 @@ package org.laokou.common.core.util;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.Getter;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.ObjectProvider;
@@ -171,7 +172,7 @@ public final class SpringContextUtils implements ApplicationContextAware, Dispos
 			}
 			catch (InstantiationException | IllegalAccessException | InvocationTargetException
 					| NoSuchMethodException ex) {
-				throw new RuntimeException(ex);
+				throw new SystemException("S_Spring_GetBeanFailed", "获取Spring Bean失败", ex);
 			}
 		}
 	}

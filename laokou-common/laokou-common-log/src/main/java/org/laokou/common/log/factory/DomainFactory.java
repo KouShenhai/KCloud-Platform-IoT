@@ -15,7 +15,10 @@
  *
  */
 
-package org.laokou.common.log.model;
+package org.laokou.common.log.factory;
+
+import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.log.model.OperateLogE;
 
 public final class DomainFactory {
 
@@ -23,7 +26,7 @@ public final class DomainFactory {
 	}
 
 	public static OperateLogE getOperateLog() {
-		return new OperateLogE();
+		return SpringContextUtils.getBeanProviderAndNotExistToCreate(OperateLogE.class).fillValue();
 	}
 
 }
