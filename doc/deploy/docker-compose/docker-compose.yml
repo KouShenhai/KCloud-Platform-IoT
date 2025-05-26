@@ -715,6 +715,23 @@ services:
       - ./ftp/data:/home/vsftpd   # 挂载本地目录保存 FTP 文件
     networks:
       - laokou_network
+  pulsar:
+    image: apachepulsar/pulsar:4.0.5
+    container_name: pulsar
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    command: bin/pulsar standalone
+    environment:
+      - PULSAR_MEM=-Xms512m -Xmx512m
+    ports:
+      - "6650:6650"
+      - "8080:8080"
+    volumes:
+      - ./pulsar/data:/pulsar/data
+    networks:
+      - laokou_network
 networks:
   laokou_network:
     driver: bridge
