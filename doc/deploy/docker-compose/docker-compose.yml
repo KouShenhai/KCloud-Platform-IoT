@@ -715,6 +715,13 @@ services:
       - ./ftp/data:/home/vsftpd   # 挂载本地目录保存 FTP 文件
     networks:
       - laokou_network
+  # bin/pulsar-admin tenants create laokou
+  # bin/pulsar-admin namespaces create laokou/mqtt
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-up-property-report -p 4
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-down-property-read -p 4
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-up-property-read-reply -p 4
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-down-property-write -p 4
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-up-property-write-reply -p 4
   pulsar:
     image: apachepulsar/pulsar:4.0.5
     container_name: pulsar

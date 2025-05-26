@@ -18,15 +18,19 @@
 package org.laokou.common.log.factory;
 
 import org.laokou.common.core.util.SpringContextUtils;
-import org.laokou.common.log.model.OperateLogE;
+import org.laokou.common.log.model.OperateLogA;
 
 public final class DomainFactory {
 
 	private DomainFactory() {
 	}
 
-	public static OperateLogE getOperateLog() {
-		return SpringContextUtils.getBeanProviderAndNotExistToCreate(OperateLogE.class).fillValue();
+	public static OperateLogA getOperateLog(Long aggregateId) {
+		return getOperateLog().fillValue(aggregateId);
+	}
+
+	public static OperateLogA getOperateLog() {
+		return SpringContextUtils.getBeanProviderAndNotExistToCreate(OperateLogA.class);
 	}
 
 }

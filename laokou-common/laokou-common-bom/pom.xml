@@ -187,11 +187,18 @@
     <modbus4j.version>3.1.0</modbus4j.version>
     <!--jSerialComm版本-->
     <jSerialComm.version>2.11.0</jSerialComm.version>
+    <!--californium版本-->
+    <californium.version>4.0.0-M3</californium.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.eclipse.californium</groupId>
+        <artifactId>californium-core</artifactId>
+        <version>${californium.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-pulsar-reactive</artifactId>
@@ -201,6 +208,11 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-pulsar</artifactId>
         <version>${spring-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-pulsar</artifactId>
+        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>com.fazecast</groupId>

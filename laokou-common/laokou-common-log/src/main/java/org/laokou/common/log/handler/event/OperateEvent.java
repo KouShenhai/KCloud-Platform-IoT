@@ -19,6 +19,7 @@ package org.laokou.common.log.handler.event;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
 
 /**
  * 操作事件.
@@ -40,12 +41,13 @@ import java.io.Serializable;
  * @param serviceAddress
  * @param profile
  * @param stackTrace
+ * @param createTime
  * @author laokou
  */
 public record OperateEvent(String name, String moduleName, String uri, String methodName, String requestType,
 		String requestParams, String userAgent, String ip, String address, Integer status, String operator,
-		String errorMessage, Long costTime, String serviceId, String serviceAddress, String profile,
-		String stackTrace) implements Serializable {
+		String errorMessage, Long costTime, String serviceId, String serviceAddress, String profile, String stackTrace,
+		Instant createTime) implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -6523521638764501311L;

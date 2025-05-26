@@ -15,18 +15,18 @@
  *
  */
 
-package org.laokou.common.network.mqtt.client.handler;
-
-import org.apache.pulsar.client.api.MessageId;
-import reactor.core.publisher.Mono;
+package org.laokou.common.pulsar.util;
 
 /**
  * @author laokou
  */
-public interface ReactiveMqttMessageHandler {
+public final class TopicUtils {
 
-	boolean isSubscribe(String topic);
+	private TopicUtils() {
+	}
 
-	Mono<MessageId> handle(MqttMessage mqttMessage);
+	public static String getTopic(String tenantCode, String namespace, String topic) {
+		return String.format("persistent://%s/%s/%s", tenantCode, namespace, topic);
+	}
 
 }

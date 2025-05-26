@@ -28,12 +28,12 @@ public enum MqEnum {
 	OPERATE_LOG("operate_log", "操作日志") {
 		@Override
 		public String getTopic() {
-			return "laokou_log_topic";
+			return LOG_TOPIC;
 		}
 
 		@Override
 		public String getTag() {
-			return "operate_log";
+			return OPERATE_LOG_TAG;
 		}
 
 	};
@@ -50,5 +50,11 @@ public enum MqEnum {
 	public abstract String getTopic();
 
 	public abstract String getTag();
+
+	public static final String OPERATE_LOG_TAG = "operate_log";
+
+	public static final String LOG_TOPIC = "laokou_log_topic";
+
+	public static final String OPERATE_LOG_CONSUMER_GROUP = "laokou_operate_log_consumer_group";
 
 }

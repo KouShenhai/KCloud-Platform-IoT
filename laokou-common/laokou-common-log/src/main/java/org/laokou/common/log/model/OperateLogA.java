@@ -19,14 +19,16 @@ package org.laokou.common.log.model;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.Getter;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.util.*;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.log.handler.event.OperateEvent;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,19 +36,18 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.Instant;
 import java.util.*;
-
+import static org.laokou.common.i18n.common.constant.EventTypeEnum.OPERATE_EVENT;
 import static org.laokou.common.i18n.util.JacksonUtils.EMPTY_JSON;
 import static org.laokou.common.i18n.common.constant.StringConstants.*;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 /**
- * 操作日志.
+ * 操作日志聚合.
  *
  * @author laokou
  */
-@Getter
 @Entity
-public class OperateLogE {
+public class OperateLogA extends AggregateRoot {
 
 	private final Set<String> removeParams = Set.of("username", "password", "mail", "mobile");
 
@@ -140,9 +141,13 @@ public class OperateLogE {
 	 */
 	private String stackTrace;
 
-	public OperateLogE fillValue() {
+	public OperateLogA fillValue(Long id) {
+		UserContextHolder.User user = UserContextHolder.get();
+		this.id = id;
 		this.createTime = DateUtils.nowInstant();
-		this.operator = UserContextHolder.get().getUsername();
+		this.operator = user.getUsername();
+		this.tenantId = user.getTenantId();
+		this.userId = user.getId();
 		return this;
 	}
 
@@ -214,6 +219,14 @@ public class OperateLogE {
 		}
 	}
 
+	public void recordOperateLog(Long eventId) {
+		OperateEvent event = getEvent();
+		addEvent(new DomainEvent(eventId, tenantId, userId, id, MqEnum.OPERATE_LOG.getTopic(),
+				MqEnum.OPERATE_LOG.getTag(), super.version, JacksonUtils.toJsonStr(event), OPERATE_EVENT,
+				UserContextHolder.get().getSourcePrefix()));
+		super.version++;
+	}
+
 	private void deleteAny(Map<String, String> map, String... keys) {
 		for (String key : keys) {
 			map.remove(key);
@@ -234,6 +247,13 @@ public class OperateLogE {
 			throwable.printStackTrace(printWriter);
 		}
 		return stringWriter.toString();
+	}
+
+	private OperateEvent getEvent() {
+		return new OperateEvent(this.name, this.moduleName, this.uri, this.methodName, this.requestType,
+				this.requestParams, this.userAgent, this.ip, this.address, this.status, this.operator,
+				this.errorMessage, this.costTime, this.serviceId, this.serviceAddress, this.profile, this.stackTrace,
+				this.createTime);
 	}
 
 }

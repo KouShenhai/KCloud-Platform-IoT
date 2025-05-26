@@ -18,16 +18,11 @@
 package org.laokou.common.log.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.laokou.common.log.handler.event.OperateEvent;
-import org.laokou.common.log.model.MqEnum;
-import org.laokou.common.log.model.OperateLogE;
-
-import static org.laokou.common.i18n.common.constant.EventTypeEnum.OPERATE_EVENT;
 
 public final class OperateLogConvertor {
 
@@ -59,23 +54,9 @@ public final class OperateLogConvertor {
 		operateLogDO.setCreator(event.getUserId());
 		operateLogDO.setEditor(event.getUserId());
 		operateLogDO.setVersion(event.getVersion());
+		operateLogDO.setCreateTime(operateEvent.createTime());
+		operateLogDO.setUpdateTime(operateEvent.createTime());
 		return operateLogDO;
-	}
-
-	public static OperateEvent toEvent(OperateLogE operateLogE) {
-		return new OperateEvent(operateLogE.getName(), operateLogE.getModuleName(), operateLogE.getUri(),
-				operateLogE.getMethodName(), operateLogE.getRequestType(), operateLogE.getRequestParams(),
-				operateLogE.getUserAgent(), operateLogE.getIp(), operateLogE.getAddress(), operateLogE.getStatus(),
-				operateLogE.getOperator(), operateLogE.getErrorMessage(), operateLogE.getCostTime(),
-				operateLogE.getServiceId(), operateLogE.getServiceAddress(), operateLogE.getProfile(),
-				operateLogE.getStackTrace());
-	}
-
-	public static DomainEvent toDomainEvent(Long id, OperateLogE operateLogE) {
-		UserContextHolder.User user = UserContextHolder.get();
-		return new DomainEvent(id, user.getTenantId(), user.getId(), null, MqEnum.OPERATE_LOG.getTopic(),
-				MqEnum.OPERATE_LOG.getTag(), 0, JacksonUtils.toJsonStr(toEvent(operateLogE)), OPERATE_EVENT,
-				user.getSourcePrefix());
 	}
 
 	private static String truncate(String str) {

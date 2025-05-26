@@ -26,9 +26,8 @@ import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.core.util.SpringUtils;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.log.annotation.OperateLog;
-import org.laokou.common.log.convertor.OperateLogConvertor;
 import org.laokou.common.log.factory.DomainFactory;
-import org.laokou.common.log.model.OperateLogE;
+import org.laokou.common.log.model.OperateLogA;
 import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.laokou.common.rocketmq.template.SendMessageTypeEnum;
 import org.mybatis.spring.annotation.MapperScan;
@@ -62,37 +61,38 @@ public class OperateLogAop {
 	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) throws Throwable {
 		StopWatch stopWatch = new StopWatch("操作日志");
 		stopWatch.start();
-		OperateLogE operateLogE = DomainFactory.getOperateLog();
-		operateLogE.getModuleName(operateLog.module());
-		operateLogE.getName(operateLog.operation());
-		operateLogE.getServiceId(springUtils.getServiceId());
-		operateLogE.getRequest(RequestUtils.getHttpServletRequest());
-		operateLogE.getProfile(environment.getActiveProfiles()[0]);
+		OperateLogA operateLogA = DomainFactory.getOperateLog(distributedIdentifierFeignClientWrapper.getId());
+		operateLogA.getModuleName(operateLog.module());
+		operateLogA.getName(operateLog.operation());
+		operateLogA.getServiceId(springUtils.getServiceId());
+		operateLogA.getRequest(RequestUtils.getHttpServletRequest());
+		operateLogA.getProfile(environment.getActiveProfiles()[0]);
 		String className = point.getTarget().getClass().getName();
 		String methodName = point.getSignature().getName();
 		// 组装类名
-		operateLogE.decorateMethodName(className, methodName);
+		operateLogA.decorateMethodName(className, methodName);
 		// 组装请求参数
-		operateLogE.decorateRequestParams(point.getArgs());
-		Object proceed;
+		operateLogA.decorateRequestParams(point.getArgs());
 		Throwable throwable = null;
 		try {
-			proceed = point.proceed();
+			return point.proceed();
 		}
 		catch (Throwable e) {
 			throw throwable = e;
 		}
 		finally {
 			// 计算消耗时间
-			operateLogE.calculateTaskTime(stopWatch);
+			operateLogA.calculateTaskTime(stopWatch);
 			// 获取错误
-			operateLogE.getThrowable(throwable);
+			operateLogA.getThrowable(throwable);
+			// 记录事件
+			operateLogA.recordOperateLog(distributedIdentifierFeignClientWrapper.getId());
 			// 发布事件
-			rocketMQDomainEventPublisher.publish(
-					OperateLogConvertor.toDomainEvent(distributedIdentifierFeignClientWrapper.getId(), operateLogE),
-					SendMessageTypeEnum.ASYNC);
+			operateLogA.releaseEvents()
+				.forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageTypeEnum.ASYNC));
+			// 清除事件
+			operateLogA.clearEvents();
 		}
-		return proceed;
 	}
 
 }

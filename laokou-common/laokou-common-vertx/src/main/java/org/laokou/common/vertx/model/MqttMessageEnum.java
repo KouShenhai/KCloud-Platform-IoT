@@ -25,7 +25,7 @@ import lombok.Getter;
 @Getter
 public enum MqttMessageEnum {
 
-	UP_PROPERTY_UP("up_property_report", "属性上报【上行】") {
+	UP_PROPERTY_REPORT("up_property_report", "属性上报【上行】") {
 		@Override
 		public String getTopic() {
 			return "/+/+/up/property/report";
@@ -33,7 +33,7 @@ public enum MqttMessageEnum {
 
 		@Override
 		public String getMqTopic() {
-			return "laokou_mqtt_up_property_report";
+			return "laokou-mqtt-up-property-report";
 		}
 	},
 
@@ -45,7 +45,7 @@ public enum MqttMessageEnum {
 
 		@Override
 		public String getMqTopic() {
-			return "laokou_mqtt_down_property_read";
+			return "laokou-mqtt-down-property-read";
 		}
 	},
 
@@ -57,7 +57,7 @@ public enum MqttMessageEnum {
 
 		@Override
 		public String getMqTopic() {
-			return "laokou_mqtt_up_property_read_reply";
+			return "laokou-mqtt-up-property-read-reply";
 		}
 	},
 
@@ -69,7 +69,7 @@ public enum MqttMessageEnum {
 
 		@Override
 		public String getMqTopic() {
-			return "laokou_mqtt_down_property_write";
+			return "laokou-mqtt-down-property-write";
 		}
 	},
 
@@ -81,7 +81,7 @@ public enum MqttMessageEnum {
 
 		@Override
 		public String getMqTopic() {
-			return "laokou_mqtt_up_property_write_reply";
+			return "laokou-mqtt-up-property-write-reply";
 		}
 	};
 

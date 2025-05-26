@@ -27,6 +27,7 @@ import io.vertx.mqtt.messages.MqttAuthenticationExchangeMessage;
 import io.vertx.mqtt.messages.MqttPublishMessage;
 import io.vertx.mqtt.messages.codes.MqttAuthenticateReasonCode;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.pulsar.client.api.MessageId;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
@@ -68,17 +69,16 @@ final class VertxMqttServer extends AbstractVerticle {
 			.doOnNext(server -> server
 				.exceptionHandler(
 						error -> log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，错误信息：{}", error.getMessage(), error))
-				.endpointHandler(endpoint -> Optional.ofNullable(authHandler(endpoint))
-					.ifPresent(mqttEndpoint -> mqttEndpoint
-						.closeHandler(close -> log.info("【Vertx-MQTT-Server】 => MQTT客户端断开连接"))
-						.subscribeHandler(subscribe -> {
-							for (MqttTopicSubscription topicSubscription : subscribe.topicSubscriptions()) {
-								log.info("【Vertx-MQTT-Server】 => MQTT客户端订阅主题：{}", topicSubscription.topicName());
-							}
-						})
-						.disconnectHandler(disconnect -> log.info("【Vertx-MQTT-Server】 => MQTT客户端主动断开连接"))
-						.pingHandler(ping -> log.info("【Vertx-MQTT-Server】 => 接收MQTT客户端心跳"))
-						// @formatter:off
+				.endpointHandler(endpoint -> Optional.ofNullable(authHandler(endpoint)).ifPresent(mqttEndpoint -> // 【服务端发布】
+				// log.info("【Vertx-MQTT-Server】 => 接收 PUBREC 响应并回复客户端，消息ID：{}【服务端发布】",
+				// messageId);
+				mqttEndpoint.closeHandler(close -> log.info("【Vertx-MQTT-Server】 => MQTT客户端断开连接"))
+					// 【Vertx-MQTT-Server】 => MQTT客户端订阅主题
+					// .subscribeHandler(MqttSubscribeMessage::topicSubscriptions)
+					.disconnectHandler(disconnect -> log.info("【Vertx-MQTT-Server】 => MQTT客户端主动断开连接"))
+					// .pingHandler(ping -> log.info("【Vertx-MQTT-Server】 =>
+					// 接收MQTT客户端心跳"))
+					// @formatter:off
 						.publishHandler(mqttPublishMessage -> {
 							messageSink.tryEmitNext(mqttPublishMessage);
 							int messageId = mqttPublishMessage.messageId();
@@ -87,19 +87,19 @@ final class VertxMqttServer extends AbstractVerticle {
 								// 【接收客户端发布消息】
 								// 如果 QoS 等级是 1（AT_LEAST_ONCE），endpoint 需要使用 publishAcknowledge 方法回复一个PUBACK消息给客户端
 								endpoint.publishAcknowledge(messageId);
-								log.info("【Vertx-MQTT-Server】 => 发送PUBACK数据包给客户端【Qos=1】，消息ID：{}【客户端发布】", messageId);
+								// log.info("【Vertx-MQTT-Server】 => 发送PUBACK数据包给客户端【Qos=1】，消息ID：{}【客户端发布】", messageId);
 							} else if (ObjectUtils.equals(mqttQoS ,MqttQoS.EXACTLY_ONCE)) {
 								// 【接收客户端发布消息】
 								// 如果 QoS 等级是 2（EXACTLY_ONCE），endpoint 需要使用publishReceived方法回复一个PUBREC消息给客户端
 								endpoint.publishReceived(messageId);
-								log.info("【Vertx-MQTT-Server】 => 发送PUBREL数据包给客户端【Qos=2】，消息ID：{}【客户端发布】", messageId);
+								// log.info("【Vertx-MQTT-Server】 => 发送PUBREL数据包给客户端【Qos=2】，消息ID：{}【客户端发布】", messageId);
 							}
 						})
-						.publishReceivedHandler(messageId -> {
-							mqttEndpoint.publishRelease(messageId);
-							log.info("【Vertx-MQTT-Server】 => 接收 PUBREC 响应并回复客户端，消息ID：{}【服务端发布】", messageId);
+						// 【Vertx-MQTT-Server】 => 接收 PUBREC 响应并回复客户端，【服务端发布】"
+						.publishReceivedHandler(mqttEndpoint::publishRelease)
+						.publishAcknowledgeHandler(messageId -> {
+							// log.info("【Vertx-MQTT-Server】 => 接收 PUBACK 响应，消息ID：{}【服务端发布】", messageId);
 						})
-						.publishAcknowledgeHandler(messageId -> log.info("【Vertx-MQTT-Server】 => 接收 PUBACK 响应，消息ID：{}【服务端发布】", messageId))
 						/*
 						   【接收客户端发布消息】
 						  在这种情况下，这个 endpoint 同时也要通过publishReleaseHandler指定一个 handler 来处理来自客户端的PUBREL（远程客户端接收到 endpoint 发送的 PUBREC 后发送的）消息 为了结束 QoS 等级为2的消息的传递，
@@ -111,8 +111,8 @@ final class VertxMqttServer extends AbstractVerticle {
 						})
 						.publishCompletionHandler(messageId -> log.info("【Vertx-MQTT-Server】 => 接收 PUBCOMP 响应，消息ID：{}【服务端发布】", messageId))
 						// @formatter:on
-						// 不保留会话
-						.accept(false)))
+					// 不保留会话
+					.accept(false)))
 				.listen()
 				.onComplete(asyncResult -> {
 					if (isClosed) {
@@ -152,7 +152,7 @@ final class VertxMqttServer extends AbstractVerticle {
 		Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
 	}
 
-	private Flux<Boolean> publish() {
+	private Flux<MessageId> publish() {
 		return messageSink.asFlux()
 			.flatMap(message -> Flux
 				.fromStream(reactiveMqttMessageHandlers.stream()

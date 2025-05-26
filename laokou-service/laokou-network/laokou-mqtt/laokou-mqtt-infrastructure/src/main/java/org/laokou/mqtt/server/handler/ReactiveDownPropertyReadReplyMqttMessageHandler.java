@@ -18,15 +18,16 @@
 package org.laokou.mqtt.server.handler;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.pulsar.client.api.MessageId;
 import org.laokou.common.i18n.util.JacksonUtils;
-import org.laokou.common.kafka.template.KafkaSender;
 import org.laokou.common.vertx.model.MqttMessageEnum;
 import org.laokou.common.vertx.model.PropertyMessage;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
 import org.laokou.common.network.mqtt.client.util.TopicUtils;
+import org.springframework.pulsar.reactive.core.ReactivePulsarTemplate;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * 属性读取回复【上行】处理器.
@@ -37,7 +38,7 @@ import reactor.core.publisher.Flux;
 @RequiredArgsConstructor
 public class ReactiveDownPropertyReadReplyMqttMessageHandler implements ReactiveMqttMessageHandler {
 
-	private final KafkaSender kafkaSender;
+	private final ReactivePulsarTemplate<String> reactivePulsarTemplate;
 
 	@Override
 	public boolean isSubscribe(String topic) {
@@ -45,10 +46,12 @@ public class ReactiveDownPropertyReadReplyMqttMessageHandler implements Reactive
 	}
 
 	@Override
-	public Flux<Boolean> handle(MqttMessage mqttMessage) {
-		return kafkaSender.send(MqttMessageEnum.UP_PROPERTY_READ_REPLY.getMqTopic(),
-				JacksonUtils.toJsonStr(new PropertyMessage(mqttMessage.getTopic(), mqttMessage.getPayload().toString(),
-						MqttMessageEnum.UP_PROPERTY_READ_REPLY.getCode())));
+	public Mono<MessageId> handle(MqttMessage mqttMessage) {
+		MqttMessageEnum upPropertyReadReply = MqttMessageEnum.UP_PROPERTY_READ_REPLY;
+		String topic = org.laokou.common.pulsar.util.TopicUtils.getTopic("laokou", "mqtt",
+				upPropertyReadReply.getMqTopic());
+		return reactivePulsarTemplate.send(topic, JacksonUtils.toJsonStr(new PropertyMessage(mqttMessage.getTopic(),
+				mqttMessage.getPayload().toString(), upPropertyReadReply.getCode())));
 	}
 
 }

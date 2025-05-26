@@ -15,18 +15,17 @@
  *
  */
 
-package org.laokou.common.network.mqtt.client.handler;
+package org.laokou.common.coap.config;
 
-import org.apache.pulsar.client.api.MessageId;
-import reactor.core.publisher.Mono;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
-/**
- * @author laokou
- */
-public interface ReactiveMqttMessageHandler {
+@Data
+@Component
+@ConfigurationProperties(prefix = "spring.coap-server")
+public class SpringCoapServerProperties {
 
-	boolean isSubscribe(String topic);
-
-	Mono<MessageId> handle(MqttMessage mqttMessage);
+	private int[] port;
 
 }

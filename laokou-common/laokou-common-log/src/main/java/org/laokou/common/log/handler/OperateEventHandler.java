@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 
 import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
 import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
+import static org.laokou.common.log.model.MqEnum.*;
 import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
@@ -37,8 +38,8 @@ import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 @Component
 @RequiredArgsConstructor
-@RocketMQMessageListener(consumerGroup = "laokou_operate_log_consumer_group", topic = "laokou_log_topic",
-		selectorExpression = "operate_log", messageModel = CLUSTERING, consumeMode = CONCURRENTLY,
+@RocketMQMessageListener(consumerGroup = OPERATE_LOG_CONSUMER_GROUP, topic = LOG_TOPIC,
+		selectorExpression = OPERATE_LOG_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY,
 		consumeThreadMax = 128, consumeThreadNumber = 64)
 public class OperateEventHandler extends AbstractDomainEventHandler {
 
