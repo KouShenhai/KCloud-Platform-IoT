@@ -46,7 +46,7 @@ public class TraceLogHandler {
 			// 控制消费速率（背压）
 			.delayElements(Duration.ofMillis(10))
 			.onBackpressureBuffer(8192)
-			.flatMap(records -> traceLogServiceI.save(new TraceLogSaveCmd(records.map(ConsumerRecord::value))))
+			.flatMap(records -> traceLogServiceI.saveTraceLog(new TraceLogSaveCmd(records.map(ConsumerRecord::value))))
 			.onErrorResume(e -> {
 				log.error("Kafka消费失败，错误信息：{}", e.getMessage(), e);
 				return Mono.error(e);

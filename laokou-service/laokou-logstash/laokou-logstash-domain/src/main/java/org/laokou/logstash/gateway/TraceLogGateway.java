@@ -25,6 +25,6 @@ import reactor.core.publisher.Mono;
  */
 public interface TraceLogGateway {
 
-	Mono<Void> create(Flux<String> messages);
+	Mono<Void> createTraceLog(Flux<String> messages);
 
 }

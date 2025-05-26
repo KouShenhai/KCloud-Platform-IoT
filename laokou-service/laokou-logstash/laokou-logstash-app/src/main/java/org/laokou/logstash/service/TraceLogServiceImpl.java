@@ -34,7 +34,7 @@ public class TraceLogServiceImpl implements TraceLogServiceI {
 	private final TraceLogSaveCmdExe traceLogSaveCmdExe;
 
 	@Override
-	public Mono<Void> save(TraceLogSaveCmd cmd) {
+	public Mono<Void> saveTraceLog(TraceLogSaveCmd cmd) {
 		return traceLogSaveCmdExe.executeVoid(cmd);
 	}
 

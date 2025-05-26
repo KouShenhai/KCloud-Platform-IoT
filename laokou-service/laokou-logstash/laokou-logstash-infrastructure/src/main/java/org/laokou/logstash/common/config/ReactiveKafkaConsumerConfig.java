@@ -22,8 +22,7 @@ import org.springframework.context.annotation.Configuration;
 import reactor.kafka.receiver.ReceiverOptions;
 import reactor.kafka.receiver.internals.ConsumerFactory;
 import reactor.kafka.receiver.internals.DefaultKafkaReceiver;
-
-import java.util.Collections;
+import java.util.List;
 
 /**
  * @author laokou
@@ -34,7 +33,11 @@ public class ReactiveKafkaConsumerConfig {
 	@Bean("reactiveKafkaReceiver")
 	public DefaultKafkaReceiver<String, String> reactiveKafkaReceiver(ReceiverOptions<String, String> receiverOptions) {
 		return new DefaultKafkaReceiver<>(ConsumerFactory.INSTANCE,
-				receiverOptions.subscription(Collections.singleton("laokou_trace_topic")));
+				receiverOptions
+					.subscription(List.of("laokou_gateway_trace_log", "laokou_auth_trace_log", "laokou_admin_trace_log",
+							"laokou_iot_trace_log", "laokou_oss_trace_log", "laokou_distributed_identifier_trace_log",
+							"laokou_generator_trace_log", "laokou_mqtt_trace_log", "laokou_udp_trace_log",
+							"laokou_http_trace_log", "laokou_tcp_trace_log", "laokou_report_trace_log")));
 	}
 
 }

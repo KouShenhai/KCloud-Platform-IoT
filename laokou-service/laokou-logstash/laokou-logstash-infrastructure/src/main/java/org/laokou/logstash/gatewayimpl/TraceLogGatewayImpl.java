@@ -34,7 +34,7 @@ public class TraceLogGatewayImpl implements TraceLogGateway {
 	private final TraceLogStorage traceLogStorage;
 
 	@Override
-	public Mono<Void> create(Flux<String> messages) {
+	public Mono<Void> createTraceLog(Flux<String> messages) {
 		return traceLogStorage.batchSave(messages);
 	}
 

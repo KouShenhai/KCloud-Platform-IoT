@@ -25,6 +25,6 @@ import reactor.core.publisher.Mono;
  */
 public interface TraceLogServiceI {
 
-	Mono<Void> save(TraceLogSaveCmd cmd);
+	Mono<Void> saveTraceLog(TraceLogSaveCmd cmd);
 
 }

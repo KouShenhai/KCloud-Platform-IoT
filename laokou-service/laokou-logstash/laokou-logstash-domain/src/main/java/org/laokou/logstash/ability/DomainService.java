@@ -32,8 +32,8 @@ public class DomainService {
 
 	private final TraceLogGateway traceLogGateway;
 
-	public Mono<Void> create(Flux<String> messages) {
-		return traceLogGateway.create(messages);
+	public Mono<Void> createTraceLog(Flux<String> messages) {
+		return traceLogGateway.createTraceLog(messages);
 	}
 
 }
