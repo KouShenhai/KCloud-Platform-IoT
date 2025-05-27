@@ -25,12 +25,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import static org.laokou.common.redis.config.FuryRedisSerializer.furyRedisSerializer;
 import static org.laokou.common.redis.config.FuryRedisSerializer.getStringRedisSerializer;
-import static org.laokou.common.redis.config.GlobalJsonJacksonCodec.getJsonRedisSerializer;
 
 /**
  * Redis配置.

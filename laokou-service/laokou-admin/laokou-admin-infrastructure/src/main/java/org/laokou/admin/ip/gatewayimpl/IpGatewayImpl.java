@@ -23,7 +23,6 @@ import org.laokou.admin.ip.gateway.IpGateway;
 import org.laokou.admin.ip.gatewayimpl.database.IpMapper;
 import org.laokou.admin.ip.gatewayimpl.database.dataobject.IpDO;
 import org.laokou.admin.ip.model.IpE;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,11 +38,9 @@ public class IpGatewayImpl implements IpGateway {
 
 	private final IpMapper ipMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
 	public void createIp(IpE ipE) {
-		ipMapper.insert(IpConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), ipE));
+		ipMapper.insert(IpConvertor.toDataObject(1L, ipE));
 	}
 
 	@Override

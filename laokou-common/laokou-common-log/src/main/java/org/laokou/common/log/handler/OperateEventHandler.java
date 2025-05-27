@@ -19,6 +19,7 @@ package org.laokou.common.log.handler;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.log.convertor.OperateLogConvertor;
 import org.laokou.common.log.mapper.OperateLogMapper;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;

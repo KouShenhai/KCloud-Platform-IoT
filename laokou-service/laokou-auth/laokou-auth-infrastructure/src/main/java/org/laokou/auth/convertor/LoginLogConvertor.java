@@ -19,14 +19,10 @@ package org.laokou.auth.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.laokou.auth.dto.clientobject.LoginLogCO;
-import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.auth.model.LoginLogE;
-import org.laokou.common.i18n.util.JacksonUtils;
-
-import static org.laokou.common.i18n.util.StringUtils.truncate;
-
+import org.laokou.common.i18n.dto.DomainEvent;
 /**
  * @author laokou
  */
@@ -69,16 +65,16 @@ public final class LoginLogConvertor {
 	}
 
 	public static LoginLogCO toClientObject(DomainEvent domainEvent) throws JsonProcessingException {
-		LoginEvent loginEvent = JacksonUtils.toBean(domainEvent.getPayload(), LoginEvent.class);
+		//LoginEvent loginEvent = JacksonUtils.toBean(domainEvent.getPayload(), LoginEvent.class);
 		LoginLogCO loginLogCO = new LoginLogCO();
-		loginLogCO.setUsername(loginEvent.username());
-		loginLogCO.setIp(loginEvent.ip());
-		loginLogCO.setAddress(loginEvent.address());
-		loginLogCO.setBrowser(loginEvent.browser());
-		loginLogCO.setOs(loginEvent.os());
-		loginLogCO.setStatus(loginEvent.status());
-		loginLogCO.setErrorMessage(truncate(loginEvent.errorMessage(), 2000));
-		loginLogCO.setType(loginEvent.type());
+//		loginLogCO.setUsername(loginEvent.username());
+//		loginLogCO.setIp(loginEvent.ip());
+//		loginLogCO.setAddress(loginEvent.address());
+//		loginLogCO.setBrowser(loginEvent.browser());
+//		loginLogCO.setOs(loginEvent.os());
+//		loginLogCO.setStatus(loginEvent.status());
+//		loginLogCO.setErrorMessage(truncate(loginEvent.errorMessage(), 2000));
+//		loginLogCO.setType(loginEvent.type());
 		return loginLogCO;
 	}
 

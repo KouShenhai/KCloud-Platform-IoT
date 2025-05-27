@@ -18,7 +18,6 @@
 package org.laokou.generator.column.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.laokou.generator.column.model.ColumnE;
 import org.springframework.stereotype.Component;
 import org.laokou.generator.column.gateway.ColumnGateway;
@@ -39,12 +38,10 @@ public class ColumnGatewayImpl implements ColumnGateway {
 
 	private final ColumnMapper columnMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
 	public void createColumn(ColumnE columnE) {
 		columnMapper
-			.insert(ColumnConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), columnE, true));
+			.insert(ColumnConvertor.toDataObject(1L, columnE, true));
 	}
 
 	@Override

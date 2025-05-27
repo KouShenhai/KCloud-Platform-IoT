@@ -18,7 +18,6 @@
 package org.laokou.generator.template.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.laokou.generator.template.model.TemplateE;
 import org.springframework.stereotype.Component;
 import org.laokou.generator.template.gateway.TemplateGateway;
@@ -39,12 +38,10 @@ public class TemplateGatewayImpl implements TemplateGateway {
 
 	private final TemplateMapper templateMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
 	public void createTemplate(TemplateE templateE) {
 		templateMapper
-			.insert(TemplateConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), templateE, true));
+			.insert(TemplateConvertor.toDataObject(1L, templateE, true));
 	}
 
 	@Override

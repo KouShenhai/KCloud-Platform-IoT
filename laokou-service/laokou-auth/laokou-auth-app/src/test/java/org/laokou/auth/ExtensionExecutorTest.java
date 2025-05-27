@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.CaptchaE;
-import org.laokou.auth.model.MqEnum;
 import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
 import org.laokou.auth.service.extensionpoint.extension.*;
@@ -102,7 +101,7 @@ class ExtensionExecutorTest {
 		// 注册【邮箱验证码】校验器
 		doRegistration(new MailCaptchaParamValidator());
 		// 执行参数校验【邮箱验证码】
-		Assertions.assertDoesNotThrow(() -> captcha.setTag(MqEnum.MAIL_CAPTCHA.getTag()));
+		//Assertions.assertDoesNotThrow(() -> captcha.setTag(MqEnum.MAIL_CAPTCHA.getTag()));
 		Assertions.assertDoesNotThrow(() -> captcha.setUuid("2413176044@qq.com"));
 		Assertions.assertDoesNotThrow(() -> captcha.setTenantCode("laokou"));
 		execute(captcha);
@@ -114,7 +113,7 @@ class ExtensionExecutorTest {
 		// 注册【手机号验证码】校验器
 		doRegistration(new MobileCaptchaParamValidator());
 		// 执行参数校验【手机号验证码】
-		Assertions.assertDoesNotThrow(() -> captcha.setTag(MqEnum.MOBILE_CAPTCHA.getTag()));
+		//Assertions.assertDoesNotThrow(() -> captcha.setTag(MqEnum.MOBILE_CAPTCHA.getTag()));
 		Assertions.assertDoesNotThrow(() -> captcha.setUuid("18888888888"));
 		Assertions.assertDoesNotThrow(() -> captcha.setTenantCode("laokou"));
 		execute(captcha);

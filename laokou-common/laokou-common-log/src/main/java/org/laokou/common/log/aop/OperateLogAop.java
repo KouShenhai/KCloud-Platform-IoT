@@ -24,14 +24,10 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.core.util.SpringUtils;
-import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.factory.DomainFactory;
 import org.laokou.common.log.model.OperateLogA;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
-import org.laokou.common.rocketmq.template.SendMessageTypeEnum;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
@@ -44,7 +40,6 @@ import org.springframework.util.StopWatch;
 @Slf4j
 @Aspect
 @Component
-@ConditionalOnBean(DistributedIdentifierFeignClientWrapper.class)
 @MapperScan(basePackages = "org.laokou.common.log.mapper")
 @RequiredArgsConstructor
 public class OperateLogAop {
@@ -53,15 +48,11 @@ public class OperateLogAop {
 
 	private final Environment environment;
 
-	private final DomainEventPublisher rocketMQDomainEventPublisher;
-
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Around("@annotation(operateLog)")
 	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) throws Throwable {
 		StopWatch stopWatch = new StopWatch("操作日志");
 		stopWatch.start();
-		OperateLogA operateLogA = DomainFactory.getOperateLog(distributedIdentifierFeignClientWrapper.getId());
+		OperateLogA operateLogA = DomainFactory.getOperateLog(1L);
 		operateLogA.getModuleName(operateLog.module());
 		operateLogA.getName(operateLog.operation());
 		operateLogA.getServiceId(springUtils.getServiceId());
@@ -86,12 +77,12 @@ public class OperateLogAop {
 			// 获取错误
 			operateLogA.getThrowable(throwable);
 			// 记录事件
-			operateLogA.recordOperateLog(distributedIdentifierFeignClientWrapper.getId());
+			//operateLogA.recordOperateLog(distributedIdentifierFeignClientWrapper.getId());
 			// 发布事件
-			operateLogA.releaseEvents()
-				.forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageTypeEnum.ASYNC));
-			// 清除事件
-			operateLogA.clearEvents();
+//			operateLogA.releaseEvents()
+//				.forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageTypeEnum.ASYNC));
+//			// 清除事件
+//			operateLogA.clearEvents();
 		}
 	}
 

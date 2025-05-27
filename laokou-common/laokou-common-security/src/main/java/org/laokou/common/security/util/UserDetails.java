@@ -16,6 +16,7 @@
  */
 
 package org.laokou.common.security.util;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.crypto.util.AESUtils;

@@ -30,15 +30,15 @@ import java.nio.charset.StandardCharsets;
  */
 public class Md5DigestStringRedisSerializer extends StringRedisSerializer {
 
-		public Md5DigestStringRedisSerializer(Charset charset) {
-			super(charset);
-		}
-
-		@Nullable
-		@Override
-		public byte[] serialize(@Nullable String value) {
-			Assert.notNull(value, "Cannot serialize null");
-			return super.serialize(DigestUtils.md5DigestAsHex(value.getBytes(StandardCharsets.UTF_8)));
-		}
-
+	public Md5DigestStringRedisSerializer(Charset charset) {
+		super(charset);
 	}
+
+	@Nullable
+	@Override
+	public byte[] serialize(@Nullable String value) {
+		Assert.notNull(value, "Cannot serialize null");
+		return super.serialize(DigestUtils.md5DigestAsHex(value.getBytes(StandardCharsets.UTF_8)));
+	}
+
+}

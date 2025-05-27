@@ -21,7 +21,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -41,9 +40,8 @@ import static org.laokou.auth.factory.DomainFactory.*;
 final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2MobileAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor,
-			DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper) {
-		super(authorizationService, tokenGenerator, authProcessor, distributedIdentifierFeignClientWrapper);
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor) {
+		super(authorizationService, tokenGenerator, authProcessor);
 	}
 
 	@Override
@@ -56,7 +54,7 @@ final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authenticat
 		String code = request.getParameter(CODE);
 		String mobile = request.getParameter(MOBILE);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		AuthA auth = DomainFactory.getMobileAuth(distributedIdentifierFeignClientWrapper.getId(), mobile, code,
+		AuthA auth = DomainFactory.getMobileAuth(1L, mobile, code,
 				tenantCode);
 		auth.createUserByMobile();
 		return authenticationToken(auth, request);

@@ -17,6 +17,8 @@
 
 package org.laokou.common.domain.support;
 
+import org.laokou.common.i18n.dto.DomainEvent;
+
 /**
  * 领域事件发布器.
  *

@@ -21,10 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.api.NoticeLogServiceI;
-import org.laokou.auth.convertor.NoticeLogConvertor;
-import org.laokou.auth.dto.NoticeLogSaveCmd;
-import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
-import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.mail.service.MailService;
 import org.springframework.stereotype.Component;
 
@@ -46,9 +43,9 @@ public class SendMailCaptchaEventHandler {
 	}
 
 	protected void handleDomainEvent(DomainEvent domainEvent) throws JsonProcessingException {
-		SendCaptchaEvent evt = JacksonUtils.toBean(domainEvent.getPayload(), SendCaptchaEvent.class);
-		noticeLogServiceI.save(new NoticeLogSaveCmd(
-				NoticeLogConvertor.toClientObject(domainEvent, mailService.send(evt.uuid()), evt.uuid())));
+//		SendCaptchaEvent evt = JacksonUtils.toBean(domainEvent.getPayload(), SendCaptchaEvent.class);
+//		noticeLogServiceI.save(new NoticeLogSaveCmd(
+//				NoticeLogConvertor.toClientObject(domainEvent, mailService.send(evt.uuid()), evt.uuid())));
 	}
 
 }

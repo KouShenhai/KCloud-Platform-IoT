@@ -17,7 +17,6 @@
 
 package org.laokou.common.redis.config;
 
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -28,6 +27,7 @@ import java.nio.charset.StandardCharsets;
  * @author laokou
  */
 public final class FuryRedisSerializer implements RedisSerializer<Object> {
+
 	@Override
 	public byte[] serialize(Object obj) throws SerializationException {
 		return RedisFuryFactory.getFuryFactory().serialize(obj);

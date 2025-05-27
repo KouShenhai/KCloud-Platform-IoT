@@ -16,11 +16,8 @@
  */
 
 package org.laokou.common.data.cache.handler;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.data.cache.handler.event.RemovedCacheEvent;
-import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.cache.Cache;
@@ -35,7 +32,7 @@ public class RemoveCacheEventHandler {
 
 	private final List<CacheManager> cacheManagers;
 
-	protected void handleDomainEvent() throws JsonProcessingException {
+	protected void handleDomainEvent() {
 		RemovedCacheEvent evt = null;
 		cacheManagers.forEach(item -> {
 			Cache cache = item.getCache(evt.name());

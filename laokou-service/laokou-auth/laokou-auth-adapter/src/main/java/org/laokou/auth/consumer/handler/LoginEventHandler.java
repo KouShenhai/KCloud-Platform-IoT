@@ -22,7 +22,9 @@ import io.micrometer.common.lang.NonNullApi;
 import org.laokou.auth.api.LoginLogServiceI;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.dto.LoginLogSaveCmd;
+import org.laokou.common.i18n.dto.DomainEvent;
 import org.springframework.stereotype.Component;
+
 /**
  * 登录日志处理器.
  *

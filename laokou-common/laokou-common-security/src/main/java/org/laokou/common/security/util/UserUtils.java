@@ -69,14 +69,6 @@ public class UserUtils {
 		return user().getTenantId();
 	}
 
-	/**
-	 * 数据源前缀.
-	 * @return String
-	 */
-	public static String getSourcePrefix() {
-		return user().getSourcePrefix();
-	}
-
 	private static Authentication getAuthentication() {
 		return SecurityContextHolder.getContext().getAuthentication();
 	}
