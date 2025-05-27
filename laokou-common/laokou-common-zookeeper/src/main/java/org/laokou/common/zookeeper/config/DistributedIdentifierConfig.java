@@ -15,28 +15,21 @@
  *
  */
 
-package org.laokou.storage.support;
+package org.laokou.common.zookeeper.config;
 
-import lombok.Getter;
+import org.apache.curator.framework.CuratorFramework;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@Getter
-public enum TypeEnum {
+/**
+ * @author laokou
+ */
+@Configuration
+public class DistributedIdentifierConfig {
 
-	TIMESCALEDB("timescaledb", "TimescaleDB"),
-
-	ELASTICSEARCH("elasticsearch", "ElasticSearch"),
-
-	INFLUXDB("influxdb", "InfluxDB"),
-
-	TDENGINE("tdengine", "TDengine");
-
-	private final String code;
-
-	private final String desc;
-
-	TypeEnum(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
+	@Bean(initMethod = "init", destroyMethod = "close")
+	public SnowflakeGenerator snowflakeGenerator(CuratorFramework curatorFramework) {
+		return new ZookeeperSnowflakeGenerator(1600166465631L, 1, curatorFramework);
 	}
 
 }

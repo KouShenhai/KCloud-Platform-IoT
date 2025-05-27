@@ -35,6 +35,5 @@
     <module>laokou-nacos</module>
     <module>laokou-sentinel</module>
     <module>laokou-snail-job</module>
-    <module>laokou-seata</module>
   </modules>
 </project>

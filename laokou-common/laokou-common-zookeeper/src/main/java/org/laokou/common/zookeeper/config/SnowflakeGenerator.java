@@ -15,28 +15,21 @@
  *
  */
 
-package org.laokou.storage.support;
+package org.laokou.common.zookeeper.config;
 
-import lombok.Getter;
+import java.time.Instant;
 
-@Getter
-public enum TypeEnum {
+/**
+ * @author laokou
+ */
+public interface SnowflakeGenerator {
 
-	TIMESCALEDB("timescaledb", "TimescaleDB"),
+	long nextId();
 
-	ELASTICSEARCH("elasticsearch", "ElasticSearch"),
+	Instant getInstant(long id);
 
-	INFLUXDB("influxdb", "InfluxDB"),
+	void init() throws Exception;
 
-	TDENGINE("tdengine", "TDengine");
-
-	private final String code;
-
-	private final String desc;
-
-	TypeEnum(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
+	void close() throws Exception;
 
 }

@@ -30,7 +30,6 @@
     <module>laokou-service</module>
     <module>laokou-tool</module>
     <module>laokou-cola</module>
-    <module>laokou-sample</module>
   </modules>
   <name>KCloud-Platform-IoT</name>
   <description>一个企业级微服务架构的云服务多租户IoT平台</description>
@@ -75,8 +74,6 @@
     <spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
     <!--springdoc-openapi版本-->
     <springdoc-openapi.version>2.8.8</springdoc-openapi.version>
-    <!--dubbo版本-->
-    <dubbo.version>3.3.4</dubbo.version>
     <docker.host>tcp://127.0.0.1:2375</docker.host>
     <docker.registry>registry.cn-shenzhen.aliyuncs.com</docker.registry>
     <docker.namespace>koushenhai</docker.namespace>
@@ -139,14 +136,6 @@
         <groupId>org.springdoc</groupId>
         <artifactId>springdoc-openapi</artifactId>
         <version>${springdoc-openapi.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!-- 定义 dubbo 版本 -->
-      <dependency>
-        <groupId>org.apache.dubbo</groupId>
-        <artifactId>dubbo-bom</artifactId>
-        <version>${dubbo.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
