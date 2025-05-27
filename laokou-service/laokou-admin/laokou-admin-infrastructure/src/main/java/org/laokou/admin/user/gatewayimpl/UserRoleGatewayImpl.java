@@ -26,13 +26,7 @@ import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
-import reactor.util.retry.Retry;
-
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,49 +42,35 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 
 	private final UserRoleMapper userRoleMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
-	public Mono<Void> updateUserRole(UserE userE) {
-		return getUserRoleIds(userE.getUserIds()).map(ids -> {
-			userE.setUserRoleIds(ids);
-			return userE;
-		}).doOnNext(this::deleteUserRole).doOnNext(this::insertUserRole).then();
+	public void updateUserRole(UserE userE) {
+		deleteUserRole(getUserRoleIds(userE.getUserIds()));
+		insertUserRole(userE.getRoleIds(), userE.getId());
 	}
 
 	@Override
-	public Mono<Void> deleteUserRole(Long[] userIds) {
-		return getUserRoleIds(Arrays.asList(userIds)).map(ids -> {
-			UserE userE = new UserE();
-			userE.setUserRoleIds(ids);
-			return userE;
-		}).doOnNext(this::deleteUserRole).then();
+	public void deleteUserRole(Long[] userIds) {
+		deleteUserRole(getUserRoleIds(Arrays.asList(userIds)));
 	}
 
-	private void insertUserRole(UserE userE) {
+	private void insertUserRole(List<String> roleIds, Long userId) {
 		// 新增用户角色关联表
-		List<UserRoleDO> list = UserConvertor.toDataObjects(distributedIdentifierFeignClientWrapper.getId(), userE,
-				userE.getId());
+		List<UserRoleDO> list = UserConvertor.toDataObjects(roleIds, userId);
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::insert);
 		}
 	}
 
-	private void deleteUserRole(UserE userE) {
+	private void deleteUserRole(List<Long> userRoleIds) {
 		// 删除用户角色关联表
-		List<UserRoleDO> list = UserConvertor.toDataObjects(userE);
+		List<UserRoleDO> list = UserConvertor.toDataObjects(userRoleIds);
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::deleteUserRoleById);
 		}
 	}
 
-	private Mono<List<Long>> getUserRoleIds(List<Long> userIds) {
-		return Mono.fromCallable(() -> userRoleMapper.selectUserRoleIdsByUserIds(userIds))
-			.subscribeOn(Schedulers.boundedElastic())
-			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
-				.maxBackoff(Duration.ofSeconds(1))
-				.jitter(0.5)
-				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))); // 增强型指数退避策略
+	private List<Long> getUserRoleIds(List<Long> userIds) {
+		return userRoleMapper.selectUserRoleIdsByUserIds(userIds);
 	}
 
 }

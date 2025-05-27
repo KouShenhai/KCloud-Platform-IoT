@@ -48,67 +48,77 @@ services:
       - TZ=Asia/Shanghai
     networks:
       - laokou_network
-  rocketmq-namesrv:
-    image: apache/rocketmq:5.3.3
-    container_name: rocketmq-namesrv
-    # 保持容器在没有守护程序的情况下运行
+  kafka:
+    image: bitnami/kafka:4.0.0
+    container_name: kafka
     tty: true
+    ports:
+      - '9092:9092'
+      - '9093:9093'
+    environment:
+      # 节点ID
+      - KAFKA_BROKER_ID=1
+      # 允许使用kraft，即Kafka替代Zookeeper
+      - KAFKA_ENABLE_KRAFT=yes
+      # kafka角色，做broker，也要做controller
+      - KAFKA_CFG_PROCESS_ROLES=broker,controller
+      # 指定供外部使用的控制类请求信息
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      # 定义安全协议
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      # 定义kafka服务端socket监听端口
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      # 外网访问地址
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      # 允许使用PLAINTEXT监听器，默认false，不建议在生产环境使用
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      # 设置broker最大内存，和初始内存
+      - KAFKA_HEAP_OPTS=-Xmx512M -Xms512M
+      # 集群地址
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:9093
+      # 节点ID
+      - KAFKA_CFG_NODE_ID=1
     restart: always
     privileged: true
-    ports:
-      - "9876:9876"
-    command: sh mqnamesrv
-    environment:
-      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
-      - TZ=Asia/Shanghai
-      - NAMESRV_ADDR=rocketmq-namesrv:9876
     networks:
       - laokou_network
-  rocketmq-broker:
-    image: apache/rocketmq:5.3.3
-    container_name: rocketmq-broker
+  # bin/pulsar-admin tenants create laokou
+  # bin/pulsar-admin namespaces create laokou/mqtt
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-up-property-report -p 4
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-down-property-read -p 4
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-up-property-read-reply -p 4
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-down-property-write -p 4
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-up-property-write-reply -p 4
+  pulsar:
+    image: apachepulsar/pulsar:4.0.5
+    container_name: pulsar
     # 保持容器在没有守护程序的情况下运行
     tty: true
     restart: always
     privileged: true
-    ports:
-      - "10909:10909"
-      - "10911:10911"
-      - "10912:10912"
-    # 自动创建主题
-    command: sh mqbroker -n rocketmq-namesrv:9876 -c /home/rocketmq/conf/broker.conf autoCreateTopicEnable=true
+    command: bin/pulsar standalone
     environment:
-      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
-      - TZ=Asia/Shanghai
+      - PULSAR_MEM=-Xms512m -Xmx512m
+    ports:
+      - "6650:6650"
+      - "8080:8080"
     volumes:
-      - ./rocketmq5/broker/conf/broker.conf:/home/rocketmq/conf/broker.conf
-      # 挂载数据
-      - ./rocketmq5/broker/store:/home/rocketmq/store
-      # 挂载日志
-      - ./rocketmq5/broker/logs:/home/rocketmq/logs
+      - ./pulsar/data:/pulsar/data
     networks:
       - laokou_network
-    depends_on:
-      - rocketmq-namesrv
-  # 账号密码 admin/admin
-  rocketmq-dashboard:
-    image: apacherocketmq/rocketmq-dashboard:2.0.1
-    container_name: rocketmq-dashboard
-    # 保持容器在没有守护程序的情况下运行
+  zookeeper:
+    image: bitnami/zookeeper:3.9.3
+    container_name: zookeeper
     tty: true
+    ports:
+      - '2181:2181'
+    environment:
+      # 允许匿名登录
+      - ALLOW_ANONYMOUS_LOGIN=yes
     restart: always
     privileged: true
-    ports:
-      - "8089:8080"
-    environment:
-      - JAVA_OPTS=-Xmx256M -Xms256M -Xmn128M -Drocketmq.namesrv.addr=rocketmq-namesrv:9876
-      - TZ=Asia/Shanghai
-      # 开启登录认证
-      - ROCKETMQ_CONFIG_LOGIN_REQUIRED=true
     networks:
       - laokou_network
-    depends_on:
-      - rocketmq-namesrv
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer

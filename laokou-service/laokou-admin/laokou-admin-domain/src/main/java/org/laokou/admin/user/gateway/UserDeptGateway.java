@@ -18,15 +18,14 @@
 package org.laokou.admin.user.gateway;
 
 import org.laokou.admin.user.model.UserE;
-import reactor.core.publisher.Mono;
 
 /**
  * @author laokou
  */
 public interface UserDeptGateway {
 
-	Mono<Void> updateUserDept(UserE userE);
+	void updateUserDept(UserE userE);
 
-	Mono<Void> deleteUserDept(Long[] userIds);
+	void deleteUserDept(Long[] userIds);
 
 }

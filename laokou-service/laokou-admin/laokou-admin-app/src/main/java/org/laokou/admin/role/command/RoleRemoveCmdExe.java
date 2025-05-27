@@ -23,7 +23,6 @@ import org.laokou.admin.role.dto.RoleRemoveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 
 /**
  * 删除角色命令执行器.
@@ -39,9 +38,9 @@ public class RoleRemoveCmdExe {
 	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
-	public Flux<Void> executeVoid(RoleRemoveCmd cmd) {
+	public void executeVoid(RoleRemoveCmd cmd) {
 		// 校验参数
-		return transactionalUtils.executeResultInTransaction(() -> roleDomainService.deleteRole(cmd.getIds()));
+		transactionalUtils.executeInTransaction(() -> roleDomainService.deleteRole(cmd.getIds()));
 	}
 
 }

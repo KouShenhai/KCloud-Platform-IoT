@@ -34,10 +34,10 @@ import java.util.List;
  */
 public class RoleConvertor {
 
-	public static RoleDO toDataObject(Long id, RoleE roleE, boolean isInsert) {
+	public static RoleDO toDataObject(RoleE roleE, boolean isInsert) {
 		RoleDO roleDO = new RoleDO();
 		if (isInsert) {
-			roleDO.setId(id);
+			roleDO.setId(null);
 		}
 		else {
 			roleDO.setId(roleE.getId());
@@ -48,36 +48,36 @@ public class RoleConvertor {
 		return roleDO;
 	}
 
-	public static List<RoleMenuDO> toDataObjects(Long id, RoleE roleE, Long roleId) {
-		return roleE.getMenuIds().stream().map(menuId -> {
+	public static List<RoleMenuDO> toDataObjects(List<String> menuIds, Long roleId) {
+		return menuIds.stream().map(menuId -> {
 			RoleMenuDO roleMenuDO = new RoleMenuDO();
-			roleMenuDO.setId(id);
+			roleMenuDO.setId(null);
 			roleMenuDO.setRoleId(roleId);
 			roleMenuDO.setMenuId(Long.valueOf(menuId));
 			return roleMenuDO;
 		}).toList();
 	}
 
-	public static List<RoleMenuDO> toDataObjects(RoleE roleE) {
-		return roleE.getRoleMenuIds().stream().map(id -> {
+	public static List<RoleMenuDO> toDataObjects(List<Long> roleMenuIds) {
+		return roleMenuIds.stream().map(id -> {
 			RoleMenuDO roleMenuDO = new RoleMenuDO();
 			roleMenuDO.setId(id);
 			return roleMenuDO;
 		}).toList();
 	}
 
-	public static List<RoleDeptDO> toDataObjs(Long id, RoleE roleE, Long roleId) {
-		return roleE.getDeptIds().stream().map(deptId -> {
+	public static List<RoleDeptDO> toDataObjs(List<String> deptIds, Long roleId) {
+		return deptIds.stream().map(deptId -> {
 			RoleDeptDO roleDeptDO = new RoleDeptDO();
-			roleDeptDO.setId(id);
+			roleDeptDO.setId(null);
 			roleDeptDO.setRoleId(roleId);
 			roleDeptDO.setDeptId(Long.valueOf(deptId));
 			return roleDeptDO;
 		}).toList();
 	}
 
-	public static List<RoleDeptDO> toDataObjs(RoleE roleE) {
-		return roleE.getRoleDeptIds().stream().map(id -> {
+	public static List<RoleDeptDO> toDataObjs(List<Long> roleDeptIds) {
+		return roleDeptIds.stream().map(id -> {
 			RoleDeptDO roleDeptDO = new RoleDeptDO();
 			roleDeptDO.setId(id);
 			return roleDeptDO;

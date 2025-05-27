@@ -28,7 +28,6 @@ import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 
 /**
  * @author laokou
@@ -50,12 +49,12 @@ public class UserModifyAuthorityCmdExe {
 	}
 
 	@CommandLog
-	public Flux<Void> executeVoid(UserModifyAuthorityCmd cmd) throws Exception {
+	public void executeVoid(UserModifyAuthorityCmd cmd) throws Exception {
 		// 校验参数
 		UserCO co = cmd.getCo();
 		UserE userE = UserConvertor.toEntity(co, co.getId());
 		modifyAuthorityUserParamValidator.validateUser(userE);
-		return transactionalUtils.executeResultInTransaction(() -> userDomainService.updateAuthorityUser(userE));
+		transactionalUtils.executeInTransaction(() -> userDomainService.updateAuthorityUser(userE));
 	}
 
 }

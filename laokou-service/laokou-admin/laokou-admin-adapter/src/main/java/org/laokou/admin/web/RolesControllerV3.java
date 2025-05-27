@@ -24,24 +24,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.role.api.RolesServiceI;
 import org.laokou.admin.role.dto.*;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
-import org.laokou.common.core.util.SpringEventBus;
-import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
-import org.laokou.reactor.handler.event.UnsubscribeEvent;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import reactor.core.Disposable;
-import reactor.core.scheduler.Schedulers;
-import reactor.util.retry.Retry;
-
-import java.time.Duration;
 
 /**
  * 角色管理控制器.
@@ -71,9 +63,7 @@ public class RolesControllerV3 {
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@Operation(summary = "修改角色", description = "修改角色")
 	public void modifyRole(@RequestBody RoleModifyCmd cmd) {
-		rolesServiceI.modifyRole(cmd).doOnError(e -> log.error("修改角色失败：{}", e.getMessage(), e)).onErrorResume(e -> {
-			throw new BizException("B_Role_ModifyFailed", e.getMessage(), e);
-		}).block();
+		rolesServiceI.modifyRole(cmd);
 	}
 
 	@DeleteMapping
@@ -81,18 +71,7 @@ public class RolesControllerV3 {
 	@OperateLog(module = "角色管理", operation = "删除角色")
 	@Operation(summary = "删除角色", description = "删除角色")
 	public void removeRole(@RequestBody Long[] ids) {
-		Disposable disposable = rolesServiceI.removeRole(new RoleRemoveCmd(ids))
-			.doOnError(e -> log.error("删除角色失败：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.boundedElastic())
-			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
-				.maxBackoff(Duration.ofSeconds(1))
-				.jitter(0.5)
-				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
-			.subscribe(v -> {
-			}, e -> {
-				throw new BizException("B_Role_RemoveFailed", e.getMessage(), e);
-			});
-		SpringEventBus.publish(new UnsubscribeEvent(this, disposable, 5000));
+		rolesServiceI.removeRole(new RoleRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -116,18 +95,7 @@ public class RolesControllerV3 {
 	@OperateLog(module = "用户管理", operation = "修改角色权限")
 	@Operation(summary = "修改角色权限", description = "修改角色权限")
 	public void modifyAuthorityRole(@RequestBody RoleModifyAuthorityCmd cmd) throws Exception {
-		Disposable disposable = rolesServiceI.modifyAuthorityRole(cmd)
-			.doOnError(e -> log.error("修改角色权限失败：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.boundedElastic())
-			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
-				.maxBackoff(Duration.ofSeconds(30))
-				.jitter(0.5)
-				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
-			.subscribe(v -> {
-			}, e -> {
-				throw new BizException("B_Role_ModifyAuthorityFailed", e.getMessage(), e);
-			});
-		SpringEventBus.publish(new UnsubscribeEvent(this, disposable, 5000));
+		rolesServiceI.modifyAuthorityRole(cmd);
 	}
 
 	@TraceLog

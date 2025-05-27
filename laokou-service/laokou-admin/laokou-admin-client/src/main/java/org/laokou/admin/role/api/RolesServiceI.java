@@ -21,8 +21,6 @@ import org.laokou.admin.role.dto.*;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 /**
  * 角色接口.
@@ -41,13 +39,13 @@ public interface RolesServiceI {
 	 * 修改角色.
 	 * @param cmd 修改命令
 	 */
-	Mono<Void> modifyRole(RoleModifyCmd cmd);
+	void modifyRole(RoleModifyCmd cmd);
 
 	/**
 	 * 删除角色.
 	 * @param cmd 删除命令
 	 */
-	Flux<Void> removeRole(RoleRemoveCmd cmd);
+	void removeRole(RoleRemoveCmd cmd);
 
 	/**
 	 * 导入角色.
@@ -65,7 +63,7 @@ public interface RolesServiceI {
 	 * 修改权限.
 	 * @param cmd 修改权限命令
 	 */
-	Flux<Void> modifyAuthorityRole(RoleModifyAuthorityCmd cmd) throws Exception;
+	void modifyAuthorityRole(RoleModifyAuthorityCmd cmd) throws Exception;
 
 	/**
 	 * 分页查询角色.

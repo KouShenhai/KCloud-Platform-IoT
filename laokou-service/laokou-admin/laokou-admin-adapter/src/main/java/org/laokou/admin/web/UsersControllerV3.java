@@ -25,25 +25,17 @@ import org.laokou.admin.user.api.UsersServiceI;
 import org.laokou.admin.user.dto.*;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
-import org.laokou.common.core.util.SpringEventBus;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
-import org.laokou.reactor.handler.event.UnsubscribeEvent;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import reactor.core.Disposable;
-import reactor.core.scheduler.Schedulers;
-import reactor.util.retry.Retry;
-
-import java.time.Duration;
 
 import static org.laokou.common.data.cache.constant.NameConstants.USERS;
 import static org.laokou.common.data.cache.model.OperateTypeEnum.DEL;
@@ -85,18 +77,7 @@ public class UsersControllerV3 {
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@Operation(summary = "删除用户", description = "删除用户")
 	public void removeUser(@RequestBody Long[] ids) {
-		Disposable disposable = usersServiceI.removeUser(new UserRemoveCmd(ids))
-			.doOnError(e -> log.error("删除用户失败：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.boundedElastic())
-			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
-				.maxBackoff(Duration.ofSeconds(1))
-				.jitter(0.5)
-				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
-			.subscribe(v -> {
-			}, e -> {
-				throw new BizException("B_User_RemoveFailed", e.getMessage(), e);
-			});
-		SpringEventBus.publish(new UnsubscribeEvent(this, disposable, 5000));
+		usersServiceI.removeUser(new UserRemoveCmd(ids));
 	}
 
 	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -129,18 +110,7 @@ public class UsersControllerV3 {
 	@OperateLog(module = "用户管理", operation = "修改用户权限")
 	@Operation(summary = "修改用户权限", description = "修改用户权限")
 	public void modifyAuthorityUser(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {
-		Disposable disposable = usersServiceI.modifyAuthorityUser(cmd)
-			.doOnError(e -> log.error("修改用户权限失败：{}", e.getMessage(), e))
-			.subscribeOn(Schedulers.boundedElastic())
-			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
-				.maxBackoff(Duration.ofSeconds(1))
-				.jitter(0.5)
-				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
-			.subscribe(v -> {
-			}, e -> {
-				throw new BizException("B_User_ModifyAuthorityFailed", e.getMessage(), e);
-			});
-		SpringEventBus.publish(new UnsubscribeEvent(this, disposable, 5000));
+		usersServiceI.modifyAuthorityUser(cmd);
 	}
 
 	@TraceLog

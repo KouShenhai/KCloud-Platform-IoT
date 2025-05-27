@@ -27,8 +27,6 @@ import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 /**
  * 角色接口实现类.
@@ -61,13 +59,13 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	@Override
-	public Mono<Void> modifyRole(RoleModifyCmd cmd) {
-		return roleModifyCmdExe.executeVoid(cmd);
+	public void modifyRole(RoleModifyCmd cmd) {
+		roleModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public Flux<Void> removeRole(RoleRemoveCmd cmd) {
-		return roleRemoveCmdExe.executeVoid(cmd);
+	public void removeRole(RoleRemoveCmd cmd) {
+		roleRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
@@ -81,8 +79,8 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	@Override
-	public Flux<Void> modifyAuthorityRole(RoleModifyAuthorityCmd cmd) throws Exception {
-		return roleModifyAuthorityCmdExe.executeVoid(cmd);
+	public void modifyAuthorityRole(RoleModifyAuthorityCmd cmd) throws Exception {
+		roleModifyAuthorityCmdExe.executeVoid(cmd);
 	}
 
 	@Override

@@ -42,46 +42,46 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static List<UserRoleDO> toDataObjects(Long id, UserE userE, Long userId) {
-		return userE.getRoleIds().stream().map(roleId -> {
+	public static List<UserRoleDO> toDataObjects(List<String> roleIds, Long userId) {
+		return roleIds.stream().map(roleId -> {
 			UserRoleDO userRoleDO = new UserRoleDO();
-			userRoleDO.setId(id);
+			userRoleDO.setId(null);
 			userRoleDO.setRoleId(Long.valueOf(roleId));
 			userRoleDO.setUserId(userId);
 			return userRoleDO;
 		}).toList();
 	}
 
-	public static List<UserDeptDO> toDataObjs(Long id, UserE userE, Long userId) {
-		return userE.getDeptIds().stream().map(deptId -> {
+	public static List<UserDeptDO> toDataObjs(List<String> deptIds, Long userId) {
+		return deptIds.stream().map(deptId -> {
 			UserDeptDO userDeptDO = new UserDeptDO();
-			userDeptDO.setId(id);
+			userDeptDO.setId(null);
 			userDeptDO.setDeptId(Long.valueOf(deptId));
 			userDeptDO.setUserId(userId);
 			return userDeptDO;
 		}).toList();
 	}
 
-	public static List<UserRoleDO> toDataObjects(UserE userE) {
-		return userE.getUserRoleIds().stream().map(id -> {
+	public static List<UserRoleDO> toDataObjects(List<Long> userRoleIds) {
+		return userRoleIds.stream().map(id -> {
 			UserRoleDO userRoleDO = new UserRoleDO();
 			userRoleDO.setId(id);
 			return userRoleDO;
 		}).toList();
 	}
 
-	public static List<UserDeptDO> toDataObjs(UserE userE) {
-		return userE.getUserDeptIds().stream().map(id -> {
+	public static List<UserDeptDO> toDataObjs(List<Long> userDeptIds) {
+		return userDeptIds.stream().map(id -> {
 			UserDeptDO userDeptDO = new UserDeptDO();
 			userDeptDO.setId(id);
 			return userDeptDO;
 		}).toList();
 	}
 
-	public static UserDO toDataObject(Long id, PasswordEncoder passwordEncoder, UserE userE, boolean isInsert) {
+	public static UserDO toDataObject(PasswordEncoder passwordEncoder, UserE userE, boolean isInsert) {
 		UserDO userDO = new UserDO();
 		if (isInsert) {
-			userDO.setId(id);
+			userDO.setId(null);
 			userDO.setPassword(passwordEncoder.encode("laokou123"));
 			userDO.setUsername(userE.getUsername());
 			userDO.setUsernamePhrase(userE.getUsernamePhrase());

@@ -24,13 +24,7 @@ import org.laokou.admin.role.gateway.RoleGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.model.RoleE;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
-import reactor.util.retry.Retry;
-
-import java.time.Duration;
 import java.util.Arrays;
 
 /**
@@ -45,41 +39,26 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	private final RoleMapper roleMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
 	public void createRole(RoleE roleE) {
-		RoleDO roleDO = RoleConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), roleE, true);
+		RoleDO roleDO = RoleConvertor.toDataObject(roleE, true);
 		roleMapper.insert(roleDO);
 	}
 
 	@Override
-	public Mono<Void> updateRole(RoleE roleE) {
-		return getVersion(roleE).map(version -> {
-			RoleDO roleDO = RoleConvertor.toDataObject(null, roleE, false);
-			roleDO.setVersion(version);
-			return roleDO;
-		}).doOnNext(roleMapper::updateById).then();
+	public void updateRole(RoleE roleE) {
+		RoleDO roleDO = RoleConvertor.toDataObject(roleE, false);
+		roleDO.setVersion(getVersion(roleE.getId()));
+		roleMapper.updateById(roleDO);
 	}
 
 	@Override
-	public Mono<Void> deleteRole(Long[] ids) {
-		return Mono.fromCallable(() -> roleMapper.deleteByIds(Arrays.asList(ids)))
-			.subscribeOn(Schedulers.boundedElastic())
-			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
-				.maxBackoff(Duration.ofSeconds(1))
-				.jitter(0.5)
-				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
-			.then();
+	public void deleteRole(Long[] ids) {
+		roleMapper.deleteByIds(Arrays.asList(ids));
 	}
 
-	private Mono<Integer> getVersion(RoleE roleE) {
-		return Mono.fromCallable(() -> roleMapper.selectVersion(roleE.getId()))
-			.subscribeOn(Schedulers.boundedElastic())
-			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
-				.maxBackoff(Duration.ofSeconds(1))
-				.jitter(0.5)
-				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))); // 增强型指数退避策略
+	private Integer getVersion(Long id) {
+		return roleMapper.selectVersion(id);
 	}
 
 }

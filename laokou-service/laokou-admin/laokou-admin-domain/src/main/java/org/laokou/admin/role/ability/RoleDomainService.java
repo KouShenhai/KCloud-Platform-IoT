@@ -21,8 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.gateway.*;
 import org.laokou.admin.role.model.RoleE;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 /**
  * 角色领域服务.
@@ -43,18 +41,20 @@ public class RoleDomainService {
 		roleGateway.createRole(roleE);
 	}
 
-	public Mono<Void> updateRole(RoleE roleE) {
-		return roleGateway.updateRole(roleE);
+	public void updateRole(RoleE roleE) {
+		roleGateway.updateRole(roleE);
 	}
 
-	public Flux<Void> updateAuthorityRole(RoleE roleE) {
-		return Flux.merge(roleGateway.updateRole(roleE), roleMenuGateway.updateRoleMenu(roleE),
-				roleDeptGateway.updateRoleDept(roleE));
+	public void updateAuthorityRole(RoleE roleE) {
+		roleGateway.updateRole(roleE);
+		roleMenuGateway.updateRoleMenu(roleE);
+		roleDeptGateway.updateRoleDept(roleE);
 	}
 
-	public Flux<Void> deleteRole(Long[] ids) {
-		return Flux.merge(roleGateway.deleteRole(ids), roleMenuGateway.deleteRoleMenu(ids),
-				roleDeptGateway.deleteRoleDept(ids));
+	public void deleteRole(Long[] ids) {
+		roleGateway.deleteRole(ids);
+		roleMenuGateway.deleteRoleMenu(ids);
+		roleDeptGateway.deleteRoleDept(ids);
 	}
 
 }

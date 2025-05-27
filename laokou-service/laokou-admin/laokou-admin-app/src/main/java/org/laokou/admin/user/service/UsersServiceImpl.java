@@ -29,7 +29,6 @@ import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 
 /**
  * 用户接口实现类.
@@ -71,8 +70,8 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public Flux<Void> removeUser(UserRemoveCmd cmd) {
-		return userRemoveCmdExe.executeVoid(cmd);
+	public void removeUser(UserRemoveCmd cmd) {
+		userRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
@@ -91,8 +90,8 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public Flux<Void> modifyAuthorityUser(UserModifyAuthorityCmd cmd) throws Exception {
-		return userModifyAuthorityCmdExe.executeVoid(cmd);
+	public void modifyAuthorityUser(UserModifyAuthorityCmd cmd) throws Exception {
+		userModifyAuthorityCmdExe.executeVoid(cmd);
 	}
 
 	@Override

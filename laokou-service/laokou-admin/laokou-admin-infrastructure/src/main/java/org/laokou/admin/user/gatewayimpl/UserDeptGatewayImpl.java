@@ -26,13 +26,7 @@ import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
-import reactor.util.retry.Retry;
-
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,50 +42,35 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 
 	private final UserDeptMapper userDeptMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
-	public Mono<Void> updateUserDept(UserE userE) {
-		return getUserDeptIds(userE.getUserIds()).map(ids -> {
-			userE.setUserDeptIds(ids);
-			return userE;
-		}).doOnNext(this::deleteUserDept).doOnNext(this::insertUserDept).then();
+	public void updateUserDept(UserE userE) {
+		deleteUserDept(getUserDeptIds(userE.getUserIds()));
+		insertUserDept(userE.getDeptIds(), userE.getId());
 	}
 
 	@Override
-	public Mono<Void> deleteUserDept(Long[] userIds) {
-		return getUserDeptIds(Arrays.asList(userIds)).map(ids -> {
-			UserE userE = new UserE();
-			userE.setUserDeptIds(ids);
-			return userE;
-		}).doOnNext(this::deleteUserDept).then();
+	public void deleteUserDept(Long[] userIds) {
+		deleteUserDept(getUserDeptIds(Arrays.asList(userIds)));
 	}
 
-	private void insertUserDept(UserE userE) {
+	private void insertUserDept(List<String> deptIds, Long userId) {
 		// 新增用户部门关联表
-		List<UserDeptDO> list = UserConvertor.toDataObjs(distributedIdentifierFeignClientWrapper.getId(), userE,
-				userE.getId());
+		List<UserDeptDO> list = UserConvertor.toDataObjs(deptIds, userId);
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, UserDeptMapper.class, UserDeptMapper::insert);
 		}
 	}
 
-	private void deleteUserDept(UserE userE) {
+	private void deleteUserDept(List<Long> userDeptIds) {
 		// 删除用户部门关联表
-		List<UserDeptDO> list = UserConvertor.toDataObjs(userE);
+		List<UserDeptDO> list = UserConvertor.toDataObjs(userDeptIds);
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, UserDeptMapper.class, UserDeptMapper::deleteUserDeptById);
 		}
 	}
 
-	private Mono<List<Long>> getUserDeptIds(List<Long> userIds) {
-		return Mono.fromCallable(() -> userDeptMapper.selectUserDeptIdsByUserIds(userIds))
-			.subscribeOn(Schedulers.boundedElastic())
-			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
-				.maxBackoff(Duration.ofSeconds(1))
-				.jitter(0.5)
-				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))); // 增强型指数退避策略
-
+	private List<Long> getUserDeptIds(List<Long> userIds) {
+		return userDeptMapper.selectUserDeptIdsByUserIds(userIds);
 	}
 
 }

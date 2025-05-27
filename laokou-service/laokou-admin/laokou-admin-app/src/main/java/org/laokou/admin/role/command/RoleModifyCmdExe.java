@@ -27,7 +27,6 @@ import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 /**
  * 修改角色命令执行器.
@@ -51,11 +50,11 @@ public class RoleModifyCmdExe {
 	}
 
 	@CommandLog
-	public Mono<Void> executeVoid(RoleModifyCmd cmd) {
+	public void executeVoid(RoleModifyCmd cmd) {
 		// 校验参数
 		RoleE roleE = RoleConvertor.toEntity(cmd.getCo());
 		modifyRoleParamValidator.validateRole(roleE);
-		return transactionalUtils.executeResultInTransaction(() -> roleDomainService.updateRole(roleE));
+		transactionalUtils.executeInTransaction(() -> roleDomainService.updateRole(roleE));
 	}
 
 }

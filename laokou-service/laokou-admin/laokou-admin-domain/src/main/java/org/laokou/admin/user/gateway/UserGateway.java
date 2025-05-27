@@ -18,7 +18,6 @@
 package org.laokou.admin.user.gateway;
 
 import org.laokou.admin.user.model.UserE;
-import reactor.core.publisher.Mono;
 
 /**
  * 用户网关【防腐】.
@@ -40,6 +39,6 @@ public interface UserGateway {
 	/**
 	 * 删除用户.
 	 */
-	Mono<Void> deleteUser(Long[] ids);
+	void deleteUser(Long[] ids);
 
 }

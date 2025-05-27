@@ -20,12 +20,9 @@ package org.laokou.gateway;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.util.SpringEventBus;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
 import org.laokou.gateway.repository.NacosRouteDefinitionRepository;
-import org.laokou.reactor.handler.event.UnsubscribeEvent;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -36,16 +33,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.util.StopWatch;
-import reactor.core.Disposable;
 import reactor.core.publisher.Hooks;
 import reactor.core.scheduler.Schedulers;
-import reactor.util.retry.Retry;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -65,6 +58,8 @@ import java.util.concurrent.ExecutorService;
 public class GatewayApp implements CommandLineRunner {
 
 	private final NacosRouteDefinitionRepository nacosRouteDefinitionRepository;
+
+	private final ExecutorService virtualThreadExecutor;
 
 	// @formatter:off
     /// ```properties
@@ -99,20 +94,13 @@ public class GatewayApp implements CommandLineRunner {
 	@Override
     public void run(String... args)  {
 		// 同步路由
-		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
-			virtualTaskExecutor.execute(this::syncRouters);
-		}
+		virtualThreadExecutor.execute(this::syncRouters);
     }
 
 	private void syncRouters() {
 		// 删除路由
-		Disposable disposable1 = nacosRouteDefinitionRepository.removeRouters()
+		nacosRouteDefinitionRepository.removeRouters()
 			.subscribeOn(Schedulers.boundedElastic())
-			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
-				.maxBackoff(Duration.ofSeconds(1))
-				.jitter(0.5)
-				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))
-			)  // 增强型指数退避策略
 			.subscribe(delFlag -> {
 			if (delFlag) {
 				log.info("删除路由成功");
@@ -121,13 +109,8 @@ public class GatewayApp implements CommandLineRunner {
 			}
 		});
 		// 保存路由
-		Disposable disposable2 = nacosRouteDefinitionRepository.saveRouters()
+		nacosRouteDefinitionRepository.saveRouters()
 			.subscribeOn(Schedulers.boundedElastic())
-			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
-				.maxBackoff(Duration.ofSeconds(1))
-				.jitter(0.5)
-				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))
-			)  // 增强型指数退避策略
 			.subscribe(saveFlag -> {
 			if (saveFlag) {
 				log.info("保存路由成功");
@@ -135,12 +118,7 @@ public class GatewayApp implements CommandLineRunner {
 				log.error("保存路由失败");
 			}
 		});
-		// 取消订阅
-		SpringEventBus.publish(new UnsubscribeEvent(this, disposable1, 5000));
-		// 取消订阅
-		SpringEventBus.publish(new UnsubscribeEvent(this, disposable2, 5000));
 	}
-
     // @formatter:on
 
 }

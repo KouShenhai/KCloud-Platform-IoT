@@ -18,7 +18,6 @@
 package org.laokou.admin.role.gateway;
 
 import org.laokou.admin.role.model.RoleE;
-import reactor.core.publisher.Mono;
 
 /**
  * 角色网关【防腐】.
@@ -35,11 +34,11 @@ public interface RoleGateway {
 	/**
 	 * 修改角色.
 	 */
-	Mono<Void> updateRole(RoleE roleE);
+	void updateRole(RoleE roleE);
 
 	/**
 	 * 删除角色.
 	 */
-	Mono<Void> deleteRole(Long[] ids);
+	void deleteRole(Long[] ids);
 
 }

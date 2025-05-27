@@ -18,15 +18,14 @@
 package org.laokou.admin.role.gateway;
 
 import org.laokou.admin.role.model.RoleE;
-import reactor.core.publisher.Mono;
 
 /**
  * @author laokou
  */
 public interface RoleMenuGateway {
 
-	Mono<Void> updateRoleMenu(RoleE roleE);
+	void updateRoleMenu(RoleE roleE);
 
-	Mono<Void> deleteRoleMenu(Long[] roleIds);
+	void deleteRoleMenu(Long[] roleIds);
 
 }

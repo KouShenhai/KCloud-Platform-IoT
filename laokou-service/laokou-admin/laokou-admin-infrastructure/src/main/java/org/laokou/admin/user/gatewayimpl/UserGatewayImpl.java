@@ -24,14 +24,8 @@ import org.laokou.admin.user.gateway.UserGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
-import reactor.util.retry.Retry;
-
-import java.time.Duration;
 import java.util.Arrays;
 
 /**
@@ -48,31 +42,22 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final UserMapper userMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
 	public void createUser(UserE userE) {
-		UserDO userDO = UserConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), passwordEncoder,
-				userE, true);
+		UserDO userDO = UserConvertor.toDataObject(passwordEncoder, userE, true);
 		userMapper.insert(userDO);
 	}
 
 	@Override
 	public void updateUser(UserE userE) {
-		UserDO userDO = UserConvertor.toDataObject(null, passwordEncoder, userE, false);
+		UserDO userDO = UserConvertor.toDataObject(passwordEncoder, userE, false);
 		userDO.setVersion(userMapper.selectVersion(userE.getId()));
 		userMapper.updateById(userDO);
 	}
 
 	@Override
-	public Mono<Void> deleteUser(Long[] ids) {
-		return Mono.fromCallable(() -> userMapper.deleteByIds(Arrays.asList(ids)))
-			.subscribeOn(Schedulers.boundedElastic())
-			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
-				.maxBackoff(Duration.ofSeconds(1))
-				.jitter(0.5)
-				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
-			.then();
+	public void deleteUser(Long[] ids) {
+		userMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

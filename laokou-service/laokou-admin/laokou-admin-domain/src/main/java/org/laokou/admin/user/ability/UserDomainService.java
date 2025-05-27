@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.gateway.*;
 import org.laokou.admin.user.model.UserE;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 
 /**
  * 用户领域服务.
@@ -56,13 +55,15 @@ public class UserDomainService {
 		userGateway.updateUser(userE);
 	}
 
-	public Flux<Void> updateAuthorityUser(UserE userE) {
-		return Flux.merge(userRoleGateway.updateUserRole(userE), userDeptGateway.updateUserDept(userE));
+	public void updateAuthorityUser(UserE userE) {
+		userRoleGateway.updateUserRole(userE);
+		userDeptGateway.updateUserDept(userE);
 	}
 
-	public Flux<Void> deleteUser(Long[] ids) {
-		return Flux.merge(userGateway.deleteUser(ids), userRoleGateway.deleteUserRole(ids),
-				userDeptGateway.deleteUserDept(ids));
+	public void deleteUser(Long[] ids) {
+		userGateway.deleteUser(ids);
+		userRoleGateway.deleteUserRole(ids);
+		userDeptGateway.deleteUserDept(ids);
 	}
 
 }

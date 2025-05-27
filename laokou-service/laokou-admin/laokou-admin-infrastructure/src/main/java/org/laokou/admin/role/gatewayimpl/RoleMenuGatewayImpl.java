@@ -26,13 +26,7 @@ import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
-import reactor.util.retry.Retry;
-
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,49 +42,35 @@ public class RoleMenuGatewayImpl implements RoleMenuGateway {
 
 	private final RoleMenuMapper roleMenuMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
-	public Mono<Void> updateRoleMenu(RoleE roleE) {
-		return getRoleMenuIds(roleE.getRoleIds()).map(ids -> {
-			roleE.setRoleMenuIds(ids);
-			return roleE;
-		}).doOnNext(this::deleteRoleMenu).doOnNext(this::insertRoleMenu).then();
+	public void updateRoleMenu(RoleE roleE) {
+		deleteRoleMenu(getRoleMenuIds(roleE.getRoleIds()));
+		insertRoleMenu(roleE.getMenuIds(), roleE.getId());
 	}
 
 	@Override
-	public Mono<Void> deleteRoleMenu(Long[] roleIds) {
-		return getRoleMenuIds(Arrays.asList(roleIds)).map(ids -> {
-			RoleE roleE = new RoleE();
-			roleE.setRoleMenuIds(ids);
-			return roleE;
-		}).doOnNext(this::deleteRoleMenu).then();
+	public void deleteRoleMenu(Long[] roleIds) {
+		deleteRoleMenu(Arrays.asList(roleIds));
 	}
 
-	private void insertRoleMenu(RoleE roleE) {
+	private void insertRoleMenu(List<String> menuIds, Long roleId) {
 		// 新增角色菜单关联表
-		List<RoleMenuDO> list = RoleConvertor.toDataObjects(distributedIdentifierFeignClientWrapper.getId(), roleE,
-				roleE.getId());
+		List<RoleMenuDO> list = RoleConvertor.toDataObjects(menuIds, roleId);
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, RoleMenuMapper.class, RoleMenuMapper::insert);
 		}
 	}
 
-	private void deleteRoleMenu(RoleE roleE) {
+	private void deleteRoleMenu(List<Long> roleMenuIds) {
 		// 删除角色菜单关联表
-		List<RoleMenuDO> list = RoleConvertor.toDataObjects(roleE);
+		List<RoleMenuDO> list = RoleConvertor.toDataObjects(roleMenuIds);
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, RoleMenuMapper.class, RoleMenuMapper::deleteRoleMenuById);
 		}
 	}
 
-	private Mono<List<Long>> getRoleMenuIds(List<Long> roleIds) {
-		return Mono.fromCallable(() -> roleMenuMapper.selectRoleMenuIdsByRoleIds(roleIds))
-			.subscribeOn(Schedulers.boundedElastic())
-			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
-				.maxBackoff(Duration.ofSeconds(1))
-				.jitter(0.5)
-				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))); // 增强型指数退避策略
+	private List<Long> getRoleMenuIds(List<Long> roleIds) {
+		return roleMenuMapper.selectRoleMenuIdsByRoleIds(roleIds); // 增强型指数退避策略
 	}
 
 }
