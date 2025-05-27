@@ -165,6 +165,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-fury</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.jsoup</groupId>
         <artifactId>jsoup</artifactId>
         <version>${jsoup.version}</version>

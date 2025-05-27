@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.domain.config;
+package org.laokou.common.fury.config;
 
 import org.apache.fury.Fury;
 import org.apache.fury.ThreadSafeFury;
@@ -27,11 +27,11 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author laokou
  */
-public final class KafkaFuryFactory {
+public final class FuryFactory {
 
-	private static final KafkaFuryFactory FACTORY = new KafkaFuryFactory();
+	private static final FuryFactory FACTORY = new FuryFactory();
 
-	private final ThreadSafeFury FURY = Fury.builder()
+	private final ThreadSafeFury fury = Fury.builder()
 		.withLanguage(Language.JAVA)
 		// enable reference tracking for shared/circular reference.
 		// Disable it will have better performance if no duplicate reference.
@@ -46,14 +46,10 @@ public final class KafkaFuryFactory {
 		// .withCompatibleMode(CompatibleMode.COMPATIBLE)
 		// enable async multi-threaded compilation.
 		.withAsyncCompilation(true)
-		.requireClassRegistration(true)
+		.requireClassRegistration(false)
 		.buildThreadSafeFury();
 
-	private KafkaFuryFactory() {
-		FURY.register(org.laokou.common.i18n.dto.DomainEvent.class);
-	}
-
-	public static KafkaFuryFactory getFuryFactory() {
+	public static FuryFactory getFuryFactory() {
 		return FACTORY;
 	}
 
@@ -64,14 +60,14 @@ public final class KafkaFuryFactory {
 		if (object instanceof String str) {
 			return str.getBytes(StandardCharsets.UTF_8);
 		}
-		return FURY.serialize(object);
+		return fury.serialize(object);
 	}
 
 	public Object deserialize(byte[] bytes) {
 		if (bytes == null) {
 			return null;
 		}
-		return FURY.deserialize(bytes);
+		return fury.deserialize(bytes);
 	}
 
 }

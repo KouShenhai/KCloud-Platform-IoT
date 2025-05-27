@@ -81,6 +81,7 @@
     <module>laokou-common-modbus4j</module>
     <module>laokou-common-pulsar</module>
     <module>laokou-common-coap</module>
+    <module>laokou-common-fury</module>
   </modules>
 
 </project>

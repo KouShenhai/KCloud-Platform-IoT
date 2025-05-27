@@ -17,6 +17,7 @@
 
 package org.laokou.common.redis.config;
 
+import org.laokou.common.fury.config.FuryFactory;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -30,12 +31,12 @@ public final class FuryRedisSerializer implements RedisSerializer<Object> {
 
 	@Override
 	public byte[] serialize(Object obj) throws SerializationException {
-		return RedisFuryFactory.getFuryFactory().serialize(obj);
+		return FuryFactory.getFuryFactory().serialize(obj);
 	}
 
 	@Override
 	public Object deserialize(byte[] bytes) throws SerializationException {
-		return RedisFuryFactory.getFuryFactory().deserialize(bytes);
+		return FuryFactory.getFuryFactory().deserialize(bytes);
 	}
 
 	public static StringRedisSerializer getStringRedisSerializer() {
