@@ -40,8 +40,7 @@ public class DeviceGatewayImpl implements DeviceGateway {
 
 	@Override
 	public void createDevice(DeviceE deviceE) {
-		deviceMapper
-			.insert(DeviceConvertor.toDataObject(1L, deviceE, true));
+		deviceMapper.insert(DeviceConvertor.toDataObject(1L, deviceE, true));
 	}
 
 	@Override

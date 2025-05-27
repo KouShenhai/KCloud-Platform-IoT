@@ -29,7 +29,6 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
@@ -54,8 +53,6 @@ import static org.laokou.common.websocket.model.WebSocketTypeEnum.PONG;
 public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 
 	private final SpringWebSocketServerProperties springWebSocketServerProperties;
-
-	private final DomainEventPublisher rocketMQDomainEventPublisher;
 
 	private final GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector;
 
@@ -136,8 +133,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 			OAuth2AuthenticatedPrincipal principal = globalOpaqueTokenIntrospector.introspect(co.getToken());
 			if (principal instanceof UserDetails userDetails) {
 				log.info("【WebSocket-Server】 => 令牌校验成功，用户名：{}", principal.getName());
-				WebSocketTypeEnum.getByCode(co.getType())
-					.handle(userDetails, co, channel, rocketMQDomainEventPublisher);
+				WebSocketTypeEnum.getByCode(co.getType()).handle(userDetails, co, channel);
 			}
 		}
 		catch (JsonParseException e) {

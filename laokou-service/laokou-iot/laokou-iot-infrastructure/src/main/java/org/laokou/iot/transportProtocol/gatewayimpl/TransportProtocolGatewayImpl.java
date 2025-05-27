@@ -40,8 +40,7 @@ public class TransportProtocolGatewayImpl implements TransportProtocolGateway {
 
 	@Override
 	public void createTransportProtocol(TransportProtocolE transportProtocolE) {
-		transportProtocolMapper.insert(TransportProtocolConvertor
-			.toDataObject(1L, transportProtocolE, true));
+		transportProtocolMapper.insert(TransportProtocolConvertor.toDataObject(1L, transportProtocolE, true));
 	}
 
 	@Override

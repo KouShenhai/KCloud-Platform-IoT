@@ -38,11 +38,9 @@ public class ProductModelGatewayImpl implements ProductModelGateway {
 
 	private final ProductModelMapper productModelMapper;
 
-
 	@Override
 	public void create(ProductModelE productModelE) {
-		productModelMapper.insert(ProductModelConvertor.toDataObject(1L,
-				productModelE, true));
+		productModelMapper.insert(ProductModelConvertor.toDataObject(1L, productModelE, true));
 	}
 
 	@Override

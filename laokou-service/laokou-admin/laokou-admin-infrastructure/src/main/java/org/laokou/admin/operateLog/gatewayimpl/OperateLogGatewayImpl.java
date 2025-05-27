@@ -40,8 +40,7 @@ public class OperateLogGatewayImpl implements OperateLogGateway {
 
 	@Override
 	public void createOperateLog(OperateLogE operateLogE) {
-		operateLogMapper.insert(
-				OperateLogConvertor.toDataObject(1L, operateLogE, true));
+		operateLogMapper.insert(OperateLogConvertor.toDataObject(1L, operateLogE, true));
 	}
 
 	@Override

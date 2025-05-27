@@ -40,8 +40,7 @@ public class ProductGatewayImpl implements ProductGateway {
 
 	@Override
 	public void createProduct(ProductE productE) {
-		productMapper
-			.insert(ProductConvertor.toDataObject(1L, productE, true));
+		productMapper.insert(ProductConvertor.toDataObject(1L, productE, true));
 	}
 
 	@Override

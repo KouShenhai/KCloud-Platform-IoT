@@ -54,8 +54,7 @@ final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authenticat
 		String code = request.getParameter(CODE);
 		String mobile = request.getParameter(MOBILE);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		AuthA auth = DomainFactory.getMobileAuth(1L, mobile, code,
-				tenantCode);
+		AuthA auth = DomainFactory.getMobileAuth(1L, mobile, code, tenantCode);
 		auth.createUserByMobile();
 		return authenticationToken(auth, request);
 	}

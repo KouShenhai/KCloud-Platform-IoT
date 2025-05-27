@@ -40,8 +40,7 @@ public class ColumnGatewayImpl implements ColumnGateway {
 
 	@Override
 	public void createColumn(ColumnE columnE) {
-		columnMapper
-			.insert(ColumnConvertor.toDataObject(1L, columnE, true));
+		columnMapper.insert(ColumnConvertor.toDataObject(1L, columnE, true));
 	}
 
 	@Override

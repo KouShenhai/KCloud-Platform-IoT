@@ -40,8 +40,7 @@ public class ClusterGatewayImpl implements ClusterGateway {
 
 	@Override
 	public void createCluster(ClusterE clusterE) {
-		clusterMapper
-			.insert(ClusterConvertor.toDataObject(1L, clusterE, true));
+		clusterMapper.insert(ClusterConvertor.toDataObject(1L, clusterE, true));
 	}
 
 	@Override

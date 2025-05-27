@@ -40,8 +40,7 @@ public class TemplateGatewayImpl implements TemplateGateway {
 
 	@Override
 	public void createTemplate(TemplateE templateE) {
-		templateMapper
-			.insert(TemplateConvertor.toDataObject(1L, templateE, true));
+		templateMapper.insert(TemplateConvertor.toDataObject(1L, templateE, true));
 	}
 
 	@Override

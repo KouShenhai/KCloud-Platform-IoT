@@ -40,8 +40,7 @@ public class ProductCategoryGatewayImpl implements ProductCategoryGateway {
 
 	@Override
 	public void createProductCategory(ProductCategoryE productCategoryE) {
-		productCategoryMapper.insert(ProductCategoryConvertor
-			.toDataObject(1L, productCategoryE, true));
+		productCategoryMapper.insert(ProductCategoryConvertor.toDataObject(1L, productCategoryE, true));
 	}
 
 	@Override

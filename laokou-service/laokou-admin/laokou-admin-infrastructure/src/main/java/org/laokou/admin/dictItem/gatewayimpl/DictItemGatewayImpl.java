@@ -40,8 +40,7 @@ public class DictItemGatewayImpl implements DictItemGateway {
 
 	@Override
 	public void createDictItem(DictItemE dictItemE) {
-		dictItemMapper
-			.insert(DictItemConvertor.toDataObject(1L, dictItemE));
+		dictItemMapper.insert(DictItemConvertor.toDataObject(1L, dictItemE));
 	}
 
 	@Override

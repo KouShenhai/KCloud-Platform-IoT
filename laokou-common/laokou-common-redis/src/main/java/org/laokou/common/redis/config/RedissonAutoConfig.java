@@ -97,8 +97,6 @@ public class RedissonAutoConfig {
 				.setConnectTimeout(connectTimeout)
 				.setTimeout(timeout);
 		}
-		// 使用json序列化方式
-		config.setCodec(GlobalJsonJacksonCodec.INSTANCE);
 		return Redisson.create(config);
 	}
 

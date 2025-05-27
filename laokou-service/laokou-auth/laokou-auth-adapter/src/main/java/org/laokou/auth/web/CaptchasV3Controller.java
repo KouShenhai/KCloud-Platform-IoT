@@ -55,7 +55,7 @@ public class CaptchasV3Controller {
 	@RateLimiter(key = "SEND_MOBILE_CAPTCHA", type = IP)
 	@Operation(summary = "根据UUID发送手机验证码", description = "根据UUID发送手机验证码")
 	public void sendMobileByUuidCaptcha(@RequestBody CaptchaSendCmd cmd) {
-		//cmd.getCo().setTag(MqEnum.MOBILE_CAPTCHA.getTag());
+		// cmd.getCo().setTag(MqEnum.MOBILE_CAPTCHA.getTag());
 		captchasServiceI.sendByUuidCaptcha(cmd);
 	}
 
@@ -64,7 +64,7 @@ public class CaptchasV3Controller {
 	@RateLimiter(key = "SEND_MAIL_CAPTCHA", type = IP)
 	@Operation(summary = "根据UUID发送邮箱验证码", description = "根据UUID发送邮箱验证码")
 	public void sendMailByUuidCaptcha(@RequestBody CaptchaSendCmd cmd) {
-		//cmd.getCo().setTag(MqEnum.MAIL_CAPTCHA.getTag());
+		// cmd.getCo().setTag(MqEnum.MAIL_CAPTCHA.getTag());
 		captchasServiceI.sendByUuidCaptcha(cmd);
 	}
 

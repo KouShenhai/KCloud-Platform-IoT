@@ -219,10 +219,12 @@ public class OperateLogA extends AggregateRoot {
 
 	public void recordOperateLog(Long eventId) {
 		OperateEvent event = getEvent();
-//		addEvent(new DomainEvent(eventId, tenantId, userId, id, MqEnum.OPERATE_LOG.getTopic(),
-//				MqEnum.OPERATE_LOG.getTag(), super.version, JacksonUtils.toJsonStr(event), OPERATE_EVENT,
-//				UserContextHolder.get().getSourcePrefix()));
-//		super.version++;
+		// addEvent(new DomainEvent(eventId, tenantId, userId, id,
+		// MqEnum.OPERATE_LOG.getTopic(),
+		// MqEnum.OPERATE_LOG.getTag(), super.version, JacksonUtils.toJsonStr(event),
+		// OPERATE_EVENT,
+		// UserContextHolder.get().getSourcePrefix()));
+		// super.version++;
 	}
 
 	private void deleteAny(Map<String, String> map, String... keys) {

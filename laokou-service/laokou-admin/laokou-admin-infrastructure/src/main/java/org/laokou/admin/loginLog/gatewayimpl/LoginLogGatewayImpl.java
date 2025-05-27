@@ -40,8 +40,7 @@ public class LoginLogGatewayImpl implements LoginLogGateway {
 
 	@Override
 	public void createLoginLog(LoginLogE loginLogE) {
-		loginLogMapper
-			.insert(LoginLogConvertor.toDataObject(1L, loginLogE, true));
+		loginLogMapper.insert(LoginLogConvertor.toDataObject(1L, loginLogE, true));
 	}
 
 	@Override

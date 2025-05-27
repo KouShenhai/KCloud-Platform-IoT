@@ -54,8 +54,7 @@ final class OAuth2TestAuthenticationProvider extends AbstractOAuth2Authenticatio
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		AuthA auth = DomainFactory.getTestAuth(1L, username, password,
-				tenantCode);
+		AuthA auth = DomainFactory.getTestAuth(1L, username, password, tenantCode);
 		auth.createUserByTest();
 		return authenticationToken(auth, request);
 	}

@@ -28,7 +28,6 @@ import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.common.core.util.AddressUtils;
 import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.core.util.RequestUtils;
-import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.i18n.common.exception.GlobalException;
@@ -53,8 +52,6 @@ final class OAuth2AuthenticationProcessor {
 	private final DomainService domainService;
 
 	private final ExtensionExecutor extensionExecutor;
-
-	private final DomainEventPublisher rocketMQDomainEventPublisher;
 
 	public UsernamePasswordAuthenticationToken authenticationToken(Long eventId, AuthA auth, HttpServletRequest request)
 			throws Exception {

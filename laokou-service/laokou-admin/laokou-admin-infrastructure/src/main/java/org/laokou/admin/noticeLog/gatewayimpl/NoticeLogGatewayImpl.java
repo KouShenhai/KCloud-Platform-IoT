@@ -40,8 +40,7 @@ public class NoticeLogGatewayImpl implements NoticeLogGateway {
 
 	@Override
 	public void createNoticeLog(NoticeLogE noticeLogE) {
-		noticeLogMapper
-			.insert(NoticeLogConvertor.toDataObject(1L, noticeLogE, true));
+		noticeLogMapper.insert(NoticeLogConvertor.toDataObject(1L, noticeLogE, true));
 	}
 
 	@Override

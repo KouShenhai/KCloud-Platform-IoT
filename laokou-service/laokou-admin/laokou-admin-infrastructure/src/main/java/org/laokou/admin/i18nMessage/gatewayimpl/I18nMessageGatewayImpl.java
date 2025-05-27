@@ -40,8 +40,7 @@ public class I18nMessageGatewayImpl implements I18nMessageGateway {
 
 	@Override
 	public void createI18nMessage(I18nMessageE i18nMessageE) {
-		i18nMessageMapper
-			.insert(I18nMessageConvertor.toDataObject(1L, i18nMessageE));
+		i18nMessageMapper.insert(I18nMessageConvertor.toDataObject(1L, i18nMessageE));
 	}
 
 	@Override

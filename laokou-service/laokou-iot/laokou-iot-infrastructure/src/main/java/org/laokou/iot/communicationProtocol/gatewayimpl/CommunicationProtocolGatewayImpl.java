@@ -40,8 +40,8 @@ public class CommunicationProtocolGatewayImpl implements CommunicationProtocolGa
 
 	@Override
 	public void createCommunicationProtocol(CommunicationProtocolE communicationProtocolE) {
-		communicationProtocolMapper.insert(CommunicationProtocolConvertor
-			.toDataObject(1L, communicationProtocolE, true));
+		communicationProtocolMapper
+			.insert(CommunicationProtocolConvertor.toDataObject(1L, communicationProtocolE, true));
 	}
 
 	@Override

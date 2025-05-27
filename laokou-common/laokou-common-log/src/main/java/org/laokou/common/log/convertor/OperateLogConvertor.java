@@ -49,9 +49,9 @@ public final class OperateLogConvertor {
 		operateLogDO.setCostTime(operateEvent.costTime());
 		operateLogDO.setErrorMessage(truncate(operateEvent.errorMessage()));
 		operateLogDO.setId(event.getId());
-//		operateLogDO.setTenantId(event.getTenantId());
-//		operateLogDO.setCreator(event.getUserId());
-//		operateLogDO.setEditor(event.getUserId());
+		// operateLogDO.setTenantId(event.getTenantId());
+		// operateLogDO.setCreator(event.getUserId());
+		// operateLogDO.setEditor(event.getUserId());
 		operateLogDO.setCreateTime(operateEvent.createTime());
 		operateLogDO.setUpdateTime(operateEvent.createTime());
 		return operateLogDO;

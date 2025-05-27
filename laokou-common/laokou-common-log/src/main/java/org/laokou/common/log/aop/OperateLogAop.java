@@ -77,12 +77,13 @@ public class OperateLogAop {
 			// 获取错误
 			operateLogA.getThrowable(throwable);
 			// 记录事件
-			//operateLogA.recordOperateLog(distributedIdentifierFeignClientWrapper.getId());
+			// operateLogA.recordOperateLog(distributedIdentifierFeignClientWrapper.getId());
 			// 发布事件
-//			operateLogA.releaseEvents()
-//				.forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageTypeEnum.ASYNC));
-//			// 清除事件
-//			operateLogA.clearEvents();
+			// operateLogA.releaseEvents()
+			// .forEach(item -> rocketMQDomainEventPublisher.publish(item,
+			// SendMessageTypeEnum.ASYNC));
+			// // 清除事件
+			// operateLogA.clearEvents();
 		}
 	}
 

@@ -43,9 +43,11 @@ public class SendMailCaptchaEventHandler {
 	}
 
 	protected void handleDomainEvent(DomainEvent domainEvent) throws JsonProcessingException {
-//		SendCaptchaEvent evt = JacksonUtils.toBean(domainEvent.getPayload(), SendCaptchaEvent.class);
-//		noticeLogServiceI.save(new NoticeLogSaveCmd(
-//				NoticeLogConvertor.toClientObject(domainEvent, mailService.send(evt.uuid()), evt.uuid())));
+		// SendCaptchaEvent evt = JacksonUtils.toBean(domainEvent.getPayload(),
+		// SendCaptchaEvent.class);
+		// noticeLogServiceI.save(new NoticeLogSaveCmd(
+		// NoticeLogConvertor.toClientObject(domainEvent, mailService.send(evt.uuid()),
+		// evt.uuid())));
 	}
 
 }

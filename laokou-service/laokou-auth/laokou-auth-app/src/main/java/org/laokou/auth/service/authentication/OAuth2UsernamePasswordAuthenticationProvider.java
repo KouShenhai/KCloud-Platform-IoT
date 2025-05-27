@@ -56,8 +56,7 @@ final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2A
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, username,
-				password, tenantCode, uuid, captcha);
+		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, username, password, tenantCode, uuid, captcha);
 		auth.createUserByUsernamePassword();
 		return authenticationToken(auth, request);
 	}
