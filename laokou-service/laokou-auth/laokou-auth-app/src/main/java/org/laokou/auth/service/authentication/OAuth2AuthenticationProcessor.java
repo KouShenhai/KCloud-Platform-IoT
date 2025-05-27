@@ -17,7 +17,6 @@
 
 package org.laokou.auth.service.authentication;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.blueconic.browscap.Capabilities;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.InfoV;
 import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
 import org.laokou.common.core.util.AddressUtils;
 import org.laokou.common.core.util.IpUtils;
@@ -35,7 +33,6 @@ import org.laokou.common.extension.BizScenario;
 import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.rocketmq.template.SendMessageTypeEnum;
 import org.laokou.common.security.util.UserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
@@ -59,15 +56,20 @@ final class OAuth2AuthenticationProcessor {
 
 	private final DomainEventPublisher rocketMQDomainEventPublisher;
 
-	public UsernamePasswordAuthenticationToken authenticationToken(Long eventId, AuthA auth,
-			HttpServletRequest request) {
+	public UsernamePasswordAuthenticationToken authenticationToken(Long eventId, AuthA auth, HttpServletRequest request)
+			throws Exception {
+		Capabilities capabilities = RequestUtils.getCapabilities(request);
+		String ip = IpUtils.getIpAddr(request);
+		String address = AddressUtils.getRealAddress(ip);
+		String os = capabilities.getPlatform();
+		String browser = capabilities.getBrowser();
 		try {
 			// 校验参数
 			extensionExecutor.executeVoid(AuthParamValidatorExtPt.class,
 					BizScenario.valueOf(auth.getGrantTypeEnum().getCode(), USE_CASE_AUTH, SCENARIO),
 					extension -> extension.validate(auth));
 			// 认证授权
-			domainService.auth(auth, getInfo(request));
+			domainService.auth(auth);
 			// 记录日志
 			auth.recordLoginLog(eventId, null);
 			// 登录成功，转换成用户对象【业务】
@@ -87,22 +89,8 @@ final class OAuth2AuthenticationProcessor {
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 		finally {
-			// 清除数据源上下文
-			DynamicDataSourceContextHolder.clear();
-			// 发布事件
-			auth.releaseEvents().forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageTypeEnum.ASYNC));
-			// 清除事件
-			auth.clearEvents();
-		}
-	}
 
-	private InfoV getInfo(HttpServletRequest request) throws Exception {
-		Capabilities capabilities = RequestUtils.getCapabilities(request);
-		String ip = IpUtils.getIpAddr(request);
-		String address = AddressUtils.getRealAddress(ip);
-		String os = capabilities.getPlatform();
-		String browser = capabilities.getBrowser();
-		return new InfoV(os, ip, address, browser);
+		}
 	}
 
 }

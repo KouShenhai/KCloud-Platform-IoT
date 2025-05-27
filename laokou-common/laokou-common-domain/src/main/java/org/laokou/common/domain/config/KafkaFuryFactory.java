@@ -27,9 +27,9 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author laokou
  */
-public final class RocketMQFuryFactory {
+public final class KafkaFuryFactory {
 
-	private static final RocketMQFuryFactory FACTORY = new RocketMQFuryFactory();
+	private static final KafkaFuryFactory FACTORY = new KafkaFuryFactory();
 
 	private final ThreadSafeFury FURY = Fury.builder()
 		.withLanguage(Language.JAVA)
@@ -49,11 +49,11 @@ public final class RocketMQFuryFactory {
 		.requireClassRegistration(true)
 		.buildThreadSafeFury();
 
-	private RocketMQFuryFactory() {
+	private KafkaFuryFactory() {
 		FURY.register(org.laokou.common.i18n.dto.DomainEvent.class);
 	}
 
-	public static RocketMQFuryFactory getFuryFactory() {
+	public static KafkaFuryFactory getFuryFactory() {
 		return FACTORY;
 	}
 

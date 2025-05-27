@@ -157,11 +157,18 @@
     <jSerialComm.version>2.11.0</jSerialComm.version>
     <!--californium版本-->
     <californium.version>4.0.0-M3</californium.version>
+    <!--jsoup版本-->
+    <jsoup.version>1.20.1</jsoup.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.jsoup</groupId>
+        <artifactId>jsoup</artifactId>
+        <version>${jsoup.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.eclipse.californium</groupId>
         <artifactId>californium-core</artifactId>

@@ -19,17 +19,10 @@ package org.laokou.common.log.handler;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.laokou.common.domain.handler.AbstractDomainEventHandler;
-import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.log.convertor.OperateLogConvertor;
 import org.laokou.common.log.mapper.OperateLogMapper;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
-
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.common.log.model.MqEnum.*;
 import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
@@ -38,16 +31,12 @@ import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 @Component
 @RequiredArgsConstructor
-@RocketMQMessageListener(consumerGroup = OPERATE_LOG_CONSUMER_GROUP, topic = LOG_TOPIC,
-		selectorExpression = OPERATE_LOG_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY,
-		consumeThreadMax = 128, consumeThreadNumber = 64)
-public class OperateEventHandler extends AbstractDomainEventHandler {
+public class OperateEventHandler {
 
 	private final OperateLogMapper operateLogMapper;
 
 	private final TransactionalUtils transactionalUtils;
 
-	@Override
 	protected void handleDomainEvent(DomainEvent domainEvent) {
 		try {
 			DynamicDataSourceContextHolder.push(DOMAIN);

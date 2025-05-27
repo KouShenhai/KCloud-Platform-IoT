@@ -24,7 +24,6 @@ import org.laokou.common.core.util.*;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;

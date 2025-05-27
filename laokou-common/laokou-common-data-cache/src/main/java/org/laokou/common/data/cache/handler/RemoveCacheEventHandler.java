@@ -19,10 +19,7 @@ package org.laokou.common.data.cache.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.common.data.cache.handler.event.RemovedCacheEvent;
-import org.laokou.common.domain.handler.AbstractDomainEventHandler;
-import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
@@ -30,24 +27,16 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import java.util.List;
 
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.BROADCASTING;
-import static org.laokou.common.data.cache.model.MqEnum.CACHE_CONSUMER_GROUP;
-import static org.laokou.common.data.cache.model.MqEnum.CACHE_TOPIC;
-
 /**
  * @author laokou
  */
 @RequiredArgsConstructor
-@RocketMQMessageListener(consumerGroup = CACHE_CONSUMER_GROUP, topic = CACHE_TOPIC, messageModel = BROADCASTING,
-		consumeMode = CONCURRENTLY, consumeThreadMax = 128, consumeThreadNumber = 64)
-public class RemoveCacheEventHandler extends AbstractDomainEventHandler {
+public class RemoveCacheEventHandler {
 
 	private final List<CacheManager> cacheManagers;
 
-	@Override
-	protected void handleDomainEvent(DomainEvent domainEvent) throws JsonProcessingException {
-		RemovedCacheEvent evt = JacksonUtils.toBean(domainEvent.getPayload(), RemovedCacheEvent.class);
+	protected void handleDomainEvent() throws JsonProcessingException {
+		RemovedCacheEvent evt = null;
 		cacheManagers.forEach(item -> {
 			Cache cache = item.getCache(evt.name());
 			if (ObjectUtils.isNotNull(cache)) {

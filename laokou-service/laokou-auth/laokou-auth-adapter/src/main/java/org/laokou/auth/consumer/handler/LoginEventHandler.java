@@ -19,18 +19,10 @@ package org.laokou.auth.consumer.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.micrometer.common.lang.NonNullApi;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.api.LoginLogServiceI;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.dto.LoginLogSaveCmd;
-import org.laokou.common.domain.handler.AbstractDomainEventHandler;
-import org.laokou.common.i18n.dto.DomainEvent;
 import org.springframework.stereotype.Component;
-
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.auth.model.MqEnum.*;
-
 /**
  * 登录日志处理器.
  *
@@ -38,10 +30,7 @@ import static org.laokou.auth.model.MqEnum.*;
  */
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = LOGIN_LOG_CONSUMER_GROUP, topic = LOG_TOPIC,
-		selectorExpression = LOGIN_LOGIN_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY,
-		consumeThreadMax = 128, consumeThreadNumber = 64)
-public class LoginEventHandler extends AbstractDomainEventHandler {
+public class LoginEventHandler {
 
 	private final LoginLogServiceI loginLogServiceI;
 
@@ -49,7 +38,6 @@ public class LoginEventHandler extends AbstractDomainEventHandler {
 		this.loginLogServiceI = loginLogServiceI;
 	}
 
-	@Override
 	protected void handleDomainEvent(DomainEvent domainEvent) throws JsonProcessingException {
 		loginLogServiceI.save(new LoginLogSaveCmd(LoginLogConvertor.toClientObject(domainEvent)));
 	}

@@ -15,33 +15,14 @@
  *
  */
 
-package org.laokou.common.i18n.common.constant;
-
-import lombok.Getter;
+package org.laokou.auth.model;
 
 /**
- * 事件类型枚举.
- *
  * @author laokou
  */
-@Getter
-public enum EventTypeEnum {
+@FunctionalInterface
+public interface PasswordValidator {
 
-	SEND_CAPTCHA_EVENT("send_captcha_event", "发送验证码事件"),
-
-	LOGIN_EVENT("login_event", "登录事件"),
-
-	OPERATE_EVENT("operate_event", "操作事件"),
-
-	REMOVE_CACHE_EVENT("remove_cache_event", "移除缓存事件");
-
-	private final String code;
-
-	private final String desc;
-
-	EventTypeEnum(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
+	boolean validatePassword(CharSequence rawPassword, String encodedPassword);
 
 }

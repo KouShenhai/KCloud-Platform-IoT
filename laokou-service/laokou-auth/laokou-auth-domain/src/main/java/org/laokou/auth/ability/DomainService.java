@@ -62,15 +62,13 @@ public class DomainService {
 		auth.createCaptcha(eventId);
 	}
 
-	public void auth(AuthA auth, InfoV info) {
-		// 获取扩展信息
-		auth.getExtInfo(info);
+	public void auth(AuthA auth) {
 		// 校验租户
 		checkTenant(auth);
 		// 校验验证码
 		auth.checkCaptcha();
 		// 获取用户信息
-		auth.getUserInfo(userGateway.getProfileUser(auth.getUser(), auth.getTenantCode()));
+		auth.getUserInfo(userGateway.getProfileUser(auth.getUser()));
 		// 校验用户名
 		auth.checkUsername();
 		// 校验密码

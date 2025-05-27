@@ -20,6 +20,9 @@ package org.laokou.auth.model;
 /**
  * @author laokou
  */
-public record InfoV(String os, String ip, String address, String browser) {
+@FunctionalInterface
+public interface CaptchaValidator {
+
+	Boolean validateCaptcha(String uuid, String code);
 
 }

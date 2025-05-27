@@ -19,13 +19,7 @@ package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.common.i18n.common.constant.EventTypeEnum;
-import org.laokou.common.i18n.util.DateUtils;
-
 import java.io.Serial;
-import java.time.Instant;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 领域事件.
@@ -34,85 +28,9 @@ import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
  */
 @Setter
 @Getter
-public final class DomainEvent extends Identifier {
+public class DomainEvent extends Identifier {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
-
-	/**
-	 * 租户ID.
-	 */
-	private final Long tenantId;
-
-	/**
-	 * 用户ID.
-	 */
-	private final Long userId;
-
-	/**
-	 * 聚合根ID.
-	 */
-	private final Long aggregateId;
-
-	/**
-	 * MQ主题.
-	 */
-	private final String topic;
-
-	/**
-	 * MQ标签.
-	 */
-	private final String tag;
-
-	/**
-	 * 时间.
-	 */
-	private final Instant instant = DateUtils.nowInstant();
-
-	/**
-	 * 版本号【乐观锁】.
-	 */
-	private final int version;
-
-	/**
-	 * 内容.
-	 */
-	private final String payload;
-
-	/**
-	 * 类型.
-	 */
-	private final String type;
-
-	/**
-	 * 数据源前缀.
-	 */
-	private final String sourcePrefix;
-
-	public DomainEvent() {
-		this.payload = EMPTY;
-		this.type = EMPTY;
-		this.sourcePrefix = EMPTY;
-		this.tenantId = 0L;
-		this.userId = 0L;
-		this.aggregateId = 0L;
-		this.topic = EMPTY;
-		this.tag = EMPTY;
-		this.version = 0;
-	}
-
-	public DomainEvent(Long id, Long tenantId, Long userId, Long aggregateId, String topic, String tag, int version,
-			String payload, EventTypeEnum type, String sourcePrefix) {
-		super.id = id;
-		this.payload = payload;
-		this.type = type.getCode();
-		this.sourcePrefix = sourcePrefix;
-		this.tenantId = tenantId;
-		this.userId = userId;
-		this.aggregateId = aggregateId;
-		this.topic = topic;
-		this.tag = tag;
-		this.version = version;
-	}
 
 }

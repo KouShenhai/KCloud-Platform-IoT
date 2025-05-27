@@ -44,7 +44,7 @@ public class SourceGatewayImpl implements SourceGateway {
 	 */
 	@Override
 	public String getPrefixSource(String tenantCode) {
-		SourceDO sourceDO = sourceMapper.selectOneByTenantCode(tenantCode);
+		SourceDO sourceDO = sourceMapper.selectSourceByTenantCode(tenantCode);
 		return ObjectUtils.isNull(sourceDO) ? null : sourceDO.getName();
 	}
 

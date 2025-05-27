@@ -20,20 +20,9 @@ package org.laokou.auth.consumer.handler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.laokou.auth.api.NoticeLogServiceI;
-import org.laokou.auth.convertor.NoticeLogConvertor;
-import org.laokou.auth.dto.NoticeLogSaveCmd;
-import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
-import org.laokou.common.domain.handler.AbstractDomainEventHandler;
-import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.sms.service.SmsService;
 import org.springframework.stereotype.Component;
-
-import static org.apache.rocketmq.spring.annotation.ConsumeMode.CONCURRENTLY;
-import static org.apache.rocketmq.spring.annotation.MessageModel.CLUSTERING;
-import static org.laokou.auth.model.MqEnum.*;
 
 /**
  * @author laokou
@@ -41,10 +30,7 @@ import static org.laokou.auth.model.MqEnum.*;
 @Slf4j
 @Component
 @NonNullApi
-@RocketMQMessageListener(consumerGroup = MOBILE_CAPTCHA_CONSUMER_GROUP, topic = CAPTCHA_TOPIC,
-		selectorExpression = MOBILE_CAPTCHA_TAG, messageModel = CLUSTERING, consumeMode = CONCURRENTLY,
-		consumeThreadMax = 128, consumeThreadNumber = 64)
-public class SendMobileCaptchaEventHandler extends AbstractDomainEventHandler {
+public class SendMobileCaptchaEventHandler {
 
 	private final SmsService smsService;
 
@@ -55,11 +41,10 @@ public class SendMobileCaptchaEventHandler extends AbstractDomainEventHandler {
 		this.noticeLogServiceI = noticeLogServiceI;
 	}
 
-	@Override
 	protected void handleDomainEvent(DomainEvent domainEvent) throws JsonProcessingException {
-		SendCaptchaEvent evt = JacksonUtils.toBean(domainEvent.getPayload(), SendCaptchaEvent.class);
-		noticeLogServiceI.save(new NoticeLogSaveCmd(
-				NoticeLogConvertor.toClientObject(domainEvent, smsService.send(evt.uuid()), evt.uuid())));
+//		SendCaptchaEvent evt = JacksonUtils.toBean(domainEvent.getPayload(), SendCaptchaEvent.class);
+//		noticeLogServiceI.save(new NoticeLogSaveCmd(
+//				NoticeLogConvertor.toClientObject(domainEvent, smsService.send(evt.uuid()), evt.uuid())));
 	}
 
 }

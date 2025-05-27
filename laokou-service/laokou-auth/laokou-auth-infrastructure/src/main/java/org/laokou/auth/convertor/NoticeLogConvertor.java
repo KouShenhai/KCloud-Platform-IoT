@@ -21,7 +21,6 @@ import org.laokou.auth.dto.clientobject.NoticeLogCO;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.auth.model.NoticeLogE;
-import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.mail.dto.MailResult;
 import org.laokou.common.sms.entity.SmsResult;
 

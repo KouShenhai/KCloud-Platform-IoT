@@ -63,6 +63,7 @@ public final class UserConvertor {
 		userDO.setMail(userE.getMail());
 		userDO.setStatus(userE.getStatus());
 		userDO.setMobile(userE.getMobile());
+		userDO.setTenantId(userE.getTenantId());
 		return userDO;
 	}
 

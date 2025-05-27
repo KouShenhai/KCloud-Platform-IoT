@@ -31,6 +31,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SourceMapper extends CrudMapper<Long, Integer, SourceDO> {
 
-	SourceDO selectOneByTenantCode(@Param("tenantCode") String tenantCode);
+	SourceDO selectSourceByTenantCode(@Param("tenantCode") String tenantCode);
 
 }

@@ -16,9 +16,6 @@
  */
 
 package org.laokou.common.security.util;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.crypto.util.AESUtils;
@@ -28,7 +25,6 @@ import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
@@ -36,17 +32,13 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
- * 用户详细信息. JsonTypeInfo.Id.NAME => 多态子类与抽象类绑定.
- *
  * @author laokou
  */
 @Getter
 @Setter
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails,
 		OAuth2AuthenticatedPrincipal, Serializable {
 
@@ -106,7 +98,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	/**
 	 * 密码.
 	 */
-	@JsonIgnore
 	private final transient String password;
 
 	/**
@@ -124,11 +115,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	 */
 	private final Set<String> permissions;
 
-	/**
-	 * 数据源前缀.
-	 */
-	private final String sourcePrefix;
-
 	public UserDetails() {
 		this.id = 1L;
 		this.username = EMPTY;
@@ -141,13 +127,11 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		this.tenantId = 0L;
 		this.deptPaths = Collections.emptySet();
 		this.permissions = Collections.emptySet();
-		this.sourcePrefix = EMPTY;
 	}
 
 	public UserDetails(final Long id, final String username, final String password, final String avatar,
 			final Boolean superAdmin, final Integer status, final String mail, final String mobile,
-			final Set<String> deptPaths, final Set<String> permissions, final Long tenantId,
-			final String sourcePrefix) {
+			final Set<String> deptPaths, final Set<String> permissions, final Long tenantId) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
@@ -159,7 +143,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		this.tenantId = tenantId;
 		this.deptPaths = deptPaths;
 		this.permissions = permissions;
-		this.sourcePrefix = sourcePrefix;
 	}
 
 	@Override
@@ -195,9 +178,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		if (!tenantId.equals(that.tenantId)) {
 			return false;
 		}
-		if (!sourcePrefix.equals(that.sourcePrefix)) {
-			return false;
-		}
 		if (!mobile.equals(that.mobile)) {
 			return false;
 		}
@@ -214,38 +194,32 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		result = 31 * result + deptPaths.hashCode();
 		result = 31 * result + permissions.hashCode();
 		result = 31 * result + tenantId.hashCode();
-		result = 31 * result + sourcePrefix.hashCode();
 		result = 31 * result + mail.hashCode();
 		result = 31 * result + mobile.hashCode();
 		return result;
 	}
 
 	@Override
-	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
 	}
 
 	@Override
-	@JsonIgnore
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
 	@Override
-	@JsonIgnore
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 
 	@Override
-	@JsonIgnore
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
 	@Override
-	@JsonIgnore
 	public boolean isEnabled() {
 		return true;
 	}
@@ -255,25 +229,21 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	 * @return the OAuth 2.0 token attributes
 	 */
 	@Override
-	@JsonIgnore
 	public Map<String, Object> getAttributes() {
 		return Collections.emptyMap();
 	}
 
 	@Override
-	@JsonIgnore
 	public String getName() {
 		return this.username;
 	}
 
-	@JsonIgnore
 	public UserDetails getDecryptInfo() {
 		return new UserDetails(this.id, this.getDecryptUsername(), this.password, this.avatar, this.superAdmin,
 				this.status, this.getDecryptMail(), this.getDecryptMobile(), this.deptPaths, this.permissions,
-				this.tenantId, this.sourcePrefix);
+				this.tenantId);
 	}
 
-	@JsonIgnore
 	private String getDecryptUsername() {
 		if (StringUtils.isNotEmpty(this.username)) {
 			try {
@@ -286,7 +256,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		return this.username;
 	}
 
-	@JsonIgnore
 	private String getDecryptMail() {
 		if (StringUtils.isNotEmpty(this.mail)) {
 			try {
@@ -299,7 +268,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		return this.mail;
 	}
 
-	@JsonIgnore
 	private String getDecryptMobile() {
 		if (StringUtils.isNotEmpty(this.mobile)) {
 			try {

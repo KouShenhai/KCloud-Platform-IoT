@@ -18,7 +18,6 @@
 package org.laokou.common.log.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.log.mapper.OperateLogDO;

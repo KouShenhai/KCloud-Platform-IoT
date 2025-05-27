@@ -17,9 +17,6 @@
 
 package org.laokou.common.domain.support;
 
-import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.rocketmq.template.SendMessageTypeEnum;
-
 /**
  * 领域事件发布器.
  *
@@ -30,8 +27,7 @@ public interface DomainEventPublisher {
 	/**
 	 * 发布领域事件.
 	 * @param payload 内容
-	 * @param type 发送消息类型
 	 */
-	void publish(DomainEvent payload, SendMessageTypeEnum type);
+	void publish(DomainEvent payload);
 
 }

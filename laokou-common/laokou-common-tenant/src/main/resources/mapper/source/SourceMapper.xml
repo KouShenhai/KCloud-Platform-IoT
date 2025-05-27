@@ -41,7 +41,7 @@
 		where id = #{id}
 	</select>
 
-  <select id="selectOneByTenantCode" resultType="org.laokou.common.tenant.mapper.SourceDO">
+  <select id="selectSourceByTenantCode" resultType="org.laokou.common.tenant.mapper.SourceDO">
     <choose>
       <when test="tenantCode == 'laokou'">
         select 'master' as name

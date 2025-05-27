@@ -21,9 +21,6 @@ import lombok.Getter;
 import org.laokou.common.i18n.util.DateUtils;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * 聚合根.
@@ -39,11 +36,6 @@ public abstract class AggregateRoot extends Identifier {
 	protected final Instant instant = DateUtils.nowInstant();
 
 	/**
-	 * 事件集合.
-	 */
-	private final List<DomainEvent> events = Collections.synchronizedList(new ArrayList<>(16));
-
-	/**
 	 * 租户ID.
 	 */
 	protected Long tenantId;
@@ -52,22 +44,5 @@ public abstract class AggregateRoot extends Identifier {
 	 * 用户ID.
 	 */
 	protected Long userId;
-
-	/**
-	 * 版本号.
-	 */
-	protected int version = 0;
-
-	protected void addEvent(DomainEvent event) {
-		events.add(event);
-	}
-
-	public List<DomainEvent> releaseEvents() {
-		return events;
-	}
-
-	public void clearEvents() {
-		events.clear();
-	}
 
 }

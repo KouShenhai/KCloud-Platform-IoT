@@ -25,9 +25,9 @@ import org.apache.fury.config.Language;
 /**
  * @author laokou
  */
-public final class FuryFactory {
+public final class JSqlParserFuryFactory {
 
-	private static final FuryFactory FACTORY = new FuryFactory();
+	private static final JSqlParserFuryFactory FACTORY = new JSqlParserFuryFactory();
 
 	private final ThreadSafeFury FURY = Fury.builder()
 		.withLanguage(Language.JAVA)
@@ -47,7 +47,7 @@ public final class FuryFactory {
 		.requireClassRegistration(true)
 		.buildThreadSafeFury();
 
-	private FuryFactory() {
+	private JSqlParserFuryFactory() {
 		FURY.register(net.sf.jsqlparser.expression.Alias.class);
 		FURY.register(net.sf.jsqlparser.expression.Alias.AliasColumn.class);
 		FURY.register(net.sf.jsqlparser.expression.AllValue.class);
@@ -282,7 +282,7 @@ public final class FuryFactory {
 		FURY.register(net.sf.jsqlparser.schema.Partition.class);
 	}
 
-	public static FuryFactory getFuryFactory() {
+	public static JSqlParserFuryFactory getFuryFactory() {
 		return FACTORY;
 	}
 

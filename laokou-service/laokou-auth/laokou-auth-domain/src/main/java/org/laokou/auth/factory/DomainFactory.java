@@ -122,8 +122,8 @@ public final class DomainFactory {
 		return SpringContextUtils.getBeanProviderAndNotExistToCreate(UserE.class);
 	}
 
-	public static UserE getUser(String username, String mail, String mobile) throws Exception {
-		return getUser().fillValue(username, mail, mobile);
+	public static UserE getUser(String username, String mail, String mobile, Long tenantId) throws Exception {
+		return getUser().fillValue(username, mail, mobile, tenantId);
 	}
 
 	public static LoginLogE getLoginLog() {

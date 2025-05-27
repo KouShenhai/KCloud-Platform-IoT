@@ -96,7 +96,7 @@
     <Async name="async_kafka" bufferSize="2000" blocking="false">
       <AppenderRef ref="failover"/>
     </Async>
-    <Kafka name="kafka" topic="laokou_admin_trace_log" ignoreExceptions="false">
+    <Kafka name="kafka" topic="admin-trace-log" ignoreExceptions="false">
       <JsonLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="false" includeStacktrace="true" stacktraceAsString="true" objectMessageAsJsonObject="true">
         <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
         <KeyValuePair key="profile" value="${PROFILE}" />

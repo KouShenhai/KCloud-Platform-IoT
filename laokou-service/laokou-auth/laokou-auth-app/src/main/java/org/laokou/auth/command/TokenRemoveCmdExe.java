@@ -23,8 +23,6 @@ import org.laokou.common.data.cache.model.MqEnum;
 import org.laokou.common.data.cache.handler.event.RemovedCacheEvent;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.i18n.common.constant.EventTypeEnum;
-import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
