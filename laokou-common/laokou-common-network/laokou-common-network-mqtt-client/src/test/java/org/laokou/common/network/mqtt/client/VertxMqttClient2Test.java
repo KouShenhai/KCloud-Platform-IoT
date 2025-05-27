@@ -25,7 +25,6 @@ import org.laokou.common.network.mqtt.client.config.SpringMqttClientProperties;
 import org.laokou.common.network.mqtt.client.config.VertxMqttClient;
 import org.laokou.common.network.mqtt.client.handler.MqttMessageHandler;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestConstructor;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -34,7 +33,6 @@ import java.util.concurrent.ExecutorService;
  * @author laokou
  */
 @SpringBootTest
-@Import({ TestConsumer.class })
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class VertxMqttClient2Test {
