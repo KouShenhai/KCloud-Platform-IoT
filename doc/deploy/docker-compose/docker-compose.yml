@@ -318,67 +318,6 @@ services:
     privileged: true
     networks:
       - laokou_network
-  rocketmq-namesrv:
-    image: apache/rocketmq:5.3.3
-    container_name: rocketmq-namesrv
-    # 保持容器在没有守护程序的情况下运行
-    tty: true
-    restart: always
-    privileged: true
-    ports:
-      - "9876:9876"
-    command: sh mqnamesrv
-    environment:
-      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
-      - TZ=Asia/Shanghai
-    networks:
-      - laokou_network
-  rocketmq-broker:
-    image: apache/rocketmq:5.3.3
-    container_name: rocketmq-broker
-    # 保持容器在没有守护程序的情况下运行
-    tty: true
-    restart: always
-    privileged: true
-    ports:
-      - "10909:10909"
-      - "10911:10911"
-      - "10912:10912"
-    # 自动创建主题
-    command: sh mqbroker -n rocketmq-namesrv:9876 -c /home/rocketmq/conf/broker.conf autoCreateTopicEnable=true
-    environment:
-      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
-      - TZ=Asia/Shanghai
-      - NAMESRV_ADDR=rocketmq-namesrv:9876
-    volumes:
-      - ./rocketmq5/broker/conf/broker.conf:/home/rocketmq/conf/broker.conf
-      # 挂载数据
-      - ./rocketmq5/broker/store:/home/rocketmq/store
-      # 挂载日志
-      - ./rocketmq5/broker/logs:/home/rocketmq/logs
-    networks:
-      - laokou_network
-    depends_on:
-      - rocketmq-namesrv
-  # 账号密码 admin/admin
-  rocketmq-dashboard:
-    image: apacherocketmq/rocketmq-dashboard:2.0.1
-    container_name: rocketmq-dashboard
-    # 保持容器在没有守护程序的情况下运行
-    tty: true
-    restart: always
-    privileged: true
-    ports:
-      - "8089:8080"
-    environment:
-      - JAVA_OPTS=-Xmx256M -Xms256M -Xmn128M -Drocketmq.namesrv.addr=rocketmq-namesrv:9876
-      - TZ=Asia/Shanghai
-      # 开启登录认证
-      - ROCKETMQ_CONFIG_LOGIN_REQUIRED=true
-    networks:
-      - laokou_network
-    depends_on:
-      - rocketmq-namesrv
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.18.1
     container_name: elasticsearch
@@ -520,8 +459,6 @@ services:
     depends_on:
       - nacos
       - admin
-      - rocketmq-namesrv
-      - rocketmq-broker
       - kafka
       - redis
   iot:
@@ -541,8 +478,6 @@ services:
       - laokou_network
     depends_on:
       - nacos
-      - rocketmq-namesrv
-      - rocketmq-broker
       - kafka
       - redis
   admin:
@@ -563,8 +498,6 @@ services:
     depends_on:
       - nacos
       - elasticsearch
-      - rocketmq-namesrv
-      - rocketmq-broker
       - kafka
       - redis
   logstash:
