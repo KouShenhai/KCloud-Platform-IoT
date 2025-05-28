@@ -31,21 +31,21 @@ public final class WebSocketSessionHeartBeatManager {
 
 	private static final Map<String, AtomicInteger> HEART_BEAT_CACHE = new ConcurrentHashMap<>(8192);
 
-	public static void increment(String clientId) {
-		HEART_BEAT_CACHE.get(clientId).incrementAndGet();
+	public static void increment(String channelId) {
+		HEART_BEAT_CACHE.get(channelId).incrementAndGet();
 	}
 
-	public static void reset(String clientId) {
-		HEART_BEAT_CACHE.get(clientId).set(0);
+	public static void reset(String channelId) {
+		HEART_BEAT_CACHE.get(channelId).set(0);
 	}
 
-	public static void remove(String clientId) {
-		HEART_BEAT_CACHE.remove(clientId);
+	public static void remove(String channelId) {
+		HEART_BEAT_CACHE.remove(channelId);
 	}
 
-	public static int get(String clientId) {
+	public static int get(String channelId) {
 		return HEART_BEAT_CACHE
-			.getOrDefault(clientId, HEART_BEAT_CACHE.computeIfAbsent(clientId, k -> new AtomicInteger(0)))
+			.getOrDefault(channelId, HEART_BEAT_CACHE.computeIfAbsent(clientId, k -> new AtomicInteger(0)))
 			.get();
 	}
 

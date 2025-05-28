@@ -28,7 +28,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("boot_iot_thing_model")
+@TableName("iot_thing_model")
 public class ThingModelDO extends BaseDO {
 
 	/**

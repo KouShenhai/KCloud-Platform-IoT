@@ -30,7 +30,7 @@ public enum MqEnum {
 	LOGIN_LOG("login_log", "登录日志") {
 		@Override
 		public String getTopic() {
-			return LOG_TOPIC;
+			return LOGIN_LOG_TOPIC;
 		}
 
 	},
@@ -67,7 +67,7 @@ public enum MqEnum {
 
 	public static final String MOBILE_CAPTCHA_TOPIC = "mobile-captcha";
 
-	public static final String LOG_TOPIC = "login-log";
+	public static final String LOGIN_LOG_TOPIC = "login-log";
 
 	public static final String MAIL_CAPTCHA_CONSUMER_GROUP = "mail-captcha-consumer-group";
 

@@ -342,18 +342,11 @@ mybatis-plus:
   tenant:
     enabled: true
     ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
+      - sys_source
+      - sys_tenant
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-rocketmq:
-  producer:
-    group: laokou_producer_group
-  name-server: rocketmq-namesrv:9876
-  consumer:
-    pull-batch-size: 32
 
 # Feign配置
 feign:

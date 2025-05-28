@@ -146,13 +146,6 @@ mybatis-plus:
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
 
-rocketmq:
-  producer:
-    group: laokou_producer_group
-  name-server: rocketmq-namesrv:9876
-  consumer:
-    pull-batch-size: 32
-
 # Feign配置
 feign:
   sentinel:

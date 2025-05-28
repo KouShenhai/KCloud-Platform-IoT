@@ -27,7 +27,7 @@
                  code,
                  remark,
              create_time
-		from boot_sys_cluster
+		from sys_cluster
 		where del_flag = 0
         <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
             and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> ${pageQuery.params.startDate}
@@ -41,7 +41,7 @@
 
 	<select id="selectObjectCount" resultType="long">
 		SELECT count(1)
-		from boot_sys_cluster
+		from sys_cluster
 		where del_flag = 0
         <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
             and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> ${pageQuery.params.startDate}
@@ -53,7 +53,7 @@
 
 	<select id="selectVersion" resultType="integer">
 		select version
-		from boot_sys_cluster
+		from sys_cluster
 		where id = #{id}
 	</select>
 

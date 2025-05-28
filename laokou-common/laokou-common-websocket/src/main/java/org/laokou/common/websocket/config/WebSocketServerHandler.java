@@ -104,17 +104,17 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		if (evt instanceof IdleStateEvent idleStateEvent
 				&& ObjectUtils.equals(idleStateEvent.state(), IdleStateEvent.READER_IDLE_STATE_EVENT.state())) {
 			Channel channel = ctx.channel();
-			String clientId = channel.id().asLongText();
+			String channelId = channel.id().asLongText();
 			int maxHeartBeatCount = springWebSocketServerProperties.getMaxHeartBeatCount();
-			if (WebSocketSessionHeartBeatManager.get(clientId) >= maxHeartBeatCount) {
-				log.info("【WebSocket-Server】 => 关闭连接，超过{}次未接收{}心跳{}", maxHeartBeatCount, clientId, PONG.getCode());
+			if (WebSocketSessionHeartBeatManager.get(channelId) >= maxHeartBeatCount) {
+				log.info("【WebSocket-Server】 => 关闭连接，超过{}次未接收{}心跳{}", maxHeartBeatCount, channelId, PONG.getCode());
 				ctx.close();
 				return;
 			}
 			String ping = PING.getCode();
-			log.info("【WebSocket-Server】 => 发送{}心跳{}", clientId, ping);
+			log.info("【WebSocket-Server】 => 发送{}心跳{}", channelId, ping);
 			ctx.writeAndFlush(new TextWebSocketFrame(ping));
-			WebSocketSessionHeartBeatManager.increment(clientId);
+			WebSocketSessionHeartBeatManager.increment(channelId);
 		}
 		else {
 			super.userEventTriggered(ctx, evt);

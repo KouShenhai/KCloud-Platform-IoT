@@ -44,7 +44,7 @@ public enum WebSocketTypeEnum {
 		@Override
 		public void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel)
 				throws InterruptedException {
-			String clientId = String.valueOf(userDetails.getId());
+			Long clientId = userDetails.getId();
 			log.info("【WebSocket-Server】 => 已建立连接，通道ID：{}，用户ID：{}", channel.id().asLongText(), clientId);
 			WebSocketSessionManager.add(clientId, channel);
 		}
@@ -59,10 +59,10 @@ public enum WebSocketTypeEnum {
 	PONG("pong", "心跳应答") {
 		@Override
 		public void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel) {
-			String clientId = String.valueOf(userDetails.getId());
-			log.info("【WebSocket-Server】 => 接收{}心跳{}", clientId, co.getPayload());
-			if (WebSocketSessionHeartBeatManager.get(clientId) > 0) {
-				WebSocketSessionHeartBeatManager.reset(clientId);
+			String channelId = channel.id().asLongText();
+			log.info("【WebSocket-Server】 => 接收{}心跳{}", channelId, co.getPayload());
+			if (WebSocketSessionHeartBeatManager.get(channelId) > 0) {
+				WebSocketSessionHeartBeatManager.reset(channelId);
 			}
 		}
 	};

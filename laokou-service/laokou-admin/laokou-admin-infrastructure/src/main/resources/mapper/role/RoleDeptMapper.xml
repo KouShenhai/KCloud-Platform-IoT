@@ -21,12 +21,12 @@
 <mapper namespace="org.laokou.admin.role.gatewayimpl.database.RoleDeptMapper">
 
   <delete id="deleteRoleDeptById">
-    delete from boot_sys_role_dept where id = #{roleDeptDO.id}
+    delete from sys_role_dept where id = #{roleDeptDO.id}
   </delete>
 
   <select id="selectRoleDeptIdsByRoleIds" resultType="java.lang.Long">
     select id
-    from boot_sys_role_dept
+    from sys_role_dept
     where role_id in
     <foreach collection="roleIds" item="item" open="(" close=")">
       #{item}
@@ -35,7 +35,7 @@
 
   <select id="selectDeptIdsByRoleId" resultType="java.lang.String">
     select dept_id
-    from boot_sys_role_dept
+    from sys_role_dept
     where role_id = #{roleId}
   </select>
 </mapper>

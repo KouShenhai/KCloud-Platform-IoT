@@ -22,6 +22,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.laokou.auth.model.CaptchaValidator;
 import org.laokou.auth.model.PasswordValidator;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -35,6 +36,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -68,6 +70,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.List;
 import java.util.UUID;
 
+import static org.laokou.auth.model.MqEnum.*;
 import static org.laokou.common.crypto.util.RSAUtils.RSA;
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
@@ -257,6 +260,12 @@ class OAuth2AuthorizationServerConfig {
 	@Bean
 	CaptchaValidator captchaValidator() {
 		return this::validateCaptcha;
+	}
+
+	@Bean
+	KafkaAdmin.NewTopics newTopics() {
+		return new KafkaAdmin.NewTopics(new NewTopic(LOGIN_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(MAIL_CAPTCHA_TOPIC, 3, (short) 1), new NewTopic(MOBILE_CAPTCHA_TOPIC, 3, (short) 1));
 	}
 
 	/**

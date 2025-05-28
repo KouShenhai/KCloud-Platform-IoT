@@ -399,7 +399,7 @@ CREATE UNIQUE INDEX "config_info_data_id_group_id_tenant_id_idx" ON "public"."co
 "tenant_id"
 	);
 
-INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-flow.json', 'LAOKOU_GROUP', '[
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-flow.json', 'IOT_GROUP', '[
   {
     "resource": "/v3/users",
     "limitApp": "default",
@@ -1098,7 +1098,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
   }
 ]
 ', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-12 11:21:13.251', '2024-11-12 11:22:10.475', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (11, 'gateway-flow.json', 'LAOKOU_GROUP', '[
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (11, 'gateway-flow.json', 'IOT_GROUP', '[
   {
     "resource": "laokou-auth",
     "grade": 1,
@@ -1280,7 +1280,7 @@ metrics.enabled=false
 metrics.registryType=compact
 metrics.exporterList=prometheus
 metrics.exporterPrometheusPort=9898', 'a7c7188f1828b0521c7ce82a105bc070', '2024-12-15 20:30:03.552', '2024-12-15 20:30:03.552', 'nacos', '127.0.0.1', 'laokou-seata', '', 'seata server配置', NULL, NULL, 'properties', NULL, '');
-INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (13, 'gateway-flow.json', 'LAOKOU_GROUP', '[
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (13, 'gateway-flow.json', 'IOT_GROUP', '[
   {
     "resource": "laokou-auth",
     "grade": 1,
@@ -1314,7 +1314,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (13, 'gatewa
     "controlBehavior": 0
   }
 ]', '5e013d830e3af21e5e321c0f4910fda0', '2024-05-25 18:13:10.6', '2024-11-11 20:52:03.56', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router.json', 'LAOKOU_GROUP', '[
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router.json', 'IOT_GROUP', '[
   {
     "id": "laokou-auth",
     "uri": "lb://laokou-auth",
@@ -1469,7 +1469,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
   }
 ]
 ', '0e03959c7b36b5d0c13fc33b2463e0d3', '2024-05-25 18:13:10.616', '2024-11-06 22:47:22.13', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', '动态路由配置', '', '', 'json', '', '');
-INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router.json', 'LAOKOU_GROUP', '[
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router.json', 'IOT_GROUP', '[
   {
     "id": "laokou-auth",
     "uri": "lb://laokou-auth",
@@ -1624,7 +1624,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
   }
 ]
 ', '0e03959c7b36b5d0c13fc33b2463e0d3', '2024-05-25 18:13:33.387', '2024-11-06 22:46:53.026', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '动态路由配置', '', '', 'json', '', '');
-INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router.json', 'LAOKOU_GROUP', '[
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router.json', 'IOT_GROUP', '[
   {
     "id": "laokou-auth",
     "uri": "lb://laokou-auth",
@@ -1779,7 +1779,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
   }
 ]
 ', '0e03959c7b36b5d0c13fc33b2463e0d3', '2023-01-13 15:44:25', '2024-11-06 22:47:10.779', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'json', '', '');
-INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-flow.json', 'LAOKOU_GROUP', '[
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-flow.json', 'IOT_GROUP', '[
   {
     "resource": "/v3/captchas/{uuid}",
     "limitApp": "default",
@@ -1822,7 +1822,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-f
   }
 ]
 ', '2bb6ed92c98b4a1693426dadf1c96a30', '2024-11-11 21:17:37.578', '2024-11-11 21:18:17.553', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', 'auth sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES (39, 'auth-flow.json', 'LAOKOU_GROUP', '[
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES (39, 'auth-flow.json', 'IOT_GROUP', '[
   {
     "resource": "/v3/captchas/{uuid}",
     "limitApp": "default",
@@ -1865,7 +1865,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES (39, 'auth-fl
   }
 ]
 ', '2bb6ed92c98b4a1693426dadf1c96a30', '2024-11-11 21:16:13.23', '2024-11-11 21:17:25.382', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'auth sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-flow.json', 'LAOKOU_GROUP', '[
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-flow.json', 'IOT_GROUP', '[
   {
     "resource": "/v3/users",
     "limitApp": "default",
@@ -2548,7 +2548,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
   }
 ]
 ', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-11 21:19:54.557', '2024-11-12 11:13:47.766', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-flow.json', 'LAOKOU_GROUP', '[
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-flow.json', 'IOT_GROUP', '[
   {
     "resource": "/v3/users",
     "limitApp": "default",
@@ -3247,7 +3247,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
   }
 ]
 ', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-11 21:20:18.495', '2024-11-12 11:14:01.899', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (43, 'auth-flow.json', 'LAOKOU_GROUP', '[
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (43, 'auth-flow.json', 'IOT_GROUP', '[
   {
     "resource": "/v3/captchas/{uuid}",
     "limitApp": "default",
@@ -3290,7 +3290,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (43, 'auth-f
   }
 ]
 ', '2bb6ed92c98b4a1693426dadf1c96a30', '2024-11-11 21:17:33.583', '2024-11-11 21:18:04.394', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'auth sentinel flow rule', '', '', 'json', '', '');
-INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (51, 'gateway-flow.json', 'LAOKOU_GROUP', '[
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (51, 'gateway-flow.json', 'IOT_GROUP', '[
   {
     "resource": "laokou-auth",
     "grade": 1,
@@ -3345,9 +3345,9 @@ rules:
 - !SHARDING
   tables:
     # 分表的表名
-    boot_sys_user:
+    sys_user:
       # 分表规则，按月份分表
-      actualDataNodes: master.boot_sys_user_20240$->{1..9},master.boot_sys_user_2024$->{10..12}
+      actualDataNodes: master.sys_user_20240$->{1..9},master.sys_user_2024$->{10..12}
       # 分表策略
       tableStrategy:
         # 规格
@@ -3355,7 +3355,7 @@ rules:
           # 按创建时间字段分表
           shardingColumn: create_date
           # 自定义分表算法名称
-          shardingAlgorithmName: laokou_table_inline
+          shardingAlgorithmName: iot_table_inline
       # 主键生成策略
       keyGenerateStrategy:
         # 主键字段名称
@@ -3365,7 +3365,7 @@ rules:
   # 自定义分表算法
   shardingAlgorithms:
     # 自定义分表算法名称
-    laokou_table_inline:
+    iot_table_inline:
       # 时间范围分片算法
       type: INTERVAL
       props:
@@ -3395,18 +3395,18 @@ rules:
   # 数据源分组
   dataSourceGroups:
     # 读写分离配置
-    laokou_readwrite_data_sources:
+    iot_readwrite_data_sources:
       # 主节点写入
       writeDataSourceName: master
       # 从节点读取
       readDataSourceNames:
         - slave
       # 自定义负载均衡算法名称
-      loadBalancerName: laokou_load_balance_algorithm
+      loadBalancerName: iot_load_balance_algorithm
   # 自定义负载均衡算法
   loadBalancers:
     # 自定义负载均衡算法名称
-    laokou_load_balance_algorithm:
+    iot_load_balance_algorithm:
       # 轮询调度算法
       type: ROUND_ROBIN
 # 属性配置

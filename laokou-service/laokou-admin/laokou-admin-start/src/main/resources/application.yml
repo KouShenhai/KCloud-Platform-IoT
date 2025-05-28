@@ -215,10 +215,10 @@ mybatis-plus:
       column-format: "\"%s\""
   tenant:
     ignore-tables:
-      - boot_sys_tenant
-      - boot_sys_source
-      - boot_sys_package_menu
-      - boot_sys_package
+      - sys_tenant
+      - sys_source
+      - sys_package_menu
+      - sys_package
     enabled: true
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
@@ -259,13 +259,6 @@ knife4j:
   enable: true
   setting:
     language: zh_cn
-
-rocketmq:
-  producer:
-    group: laokou_producer_group
-  name-server: rocketmq-namesrv:9876
-  consumer:
-    pull-batch-size: 32
 
 # Feign配置
 feign:
