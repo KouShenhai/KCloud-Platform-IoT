@@ -15,39 +15,33 @@
  *
  */
 
-package org.laokou.auth.consumer.handler;
+package org.laokou.auth.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.micrometer.common.lang.NonNullApi;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.api.NoticeLogServiceI;
+import org.laokou.auth.api.LoginLogServiceI;
+import org.laokou.auth.convertor.LoginLogConvertor;
+import org.laokou.auth.dto.LoginLogSaveCmd;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.sms.service.SmsService;
 import org.springframework.stereotype.Component;
 
 /**
+ * 登录日志处理器.
+ *
  * @author laokou
  */
-@Slf4j
 @Component
 @NonNullApi
-public class SendMobileCaptchaEventHandler {
+public class LoginEventHandler {
 
-	private final SmsService smsService;
+	private final LoginLogServiceI loginLogServiceI;
 
-	private final NoticeLogServiceI noticeLogServiceI;
-
-	public SendMobileCaptchaEventHandler(SmsService smsService, NoticeLogServiceI noticeLogServiceI) {
-		this.smsService = smsService;
-		this.noticeLogServiceI = noticeLogServiceI;
+	public LoginEventHandler(LoginLogServiceI loginLogServiceI) {
+		this.loginLogServiceI = loginLogServiceI;
 	}
 
 	protected void handleDomainEvent(DomainEvent domainEvent) throws JsonProcessingException {
-		// SendCaptchaEvent evt = JacksonUtils.toBean(domainEvent.getPayload(),
-		// SendCaptchaEvent.class);
-		// noticeLogServiceI.save(new NoticeLogSaveCmd(
-		// NoticeLogConvertor.toClientObject(domainEvent, smsService.send(evt.uuid()),
-		// evt.uuid())));
+		loginLogServiceI.save(new LoginLogSaveCmd(LoginLogConvertor.toClientObject(domainEvent)));
 	}
 
 }

@@ -33,11 +33,6 @@ public final class OAuth2Constants {
 	public static final String TENANT_NOT_EXIST = "B_OAuth2_TenantNotExist";
 
 	/**
-	 * 表不存在.
-	 */
-	public static final String DATA_TABLE_NOT_EXIST = "B_OAuth2_DataTableNotExist";
-
-	/**
 	 * 令牌生成器无法生成标识令牌.
 	 */
 	public static final String GENERATE_ID_TOKEN_FAIL = "B_OAuth2_GenerateIdTokenFail";

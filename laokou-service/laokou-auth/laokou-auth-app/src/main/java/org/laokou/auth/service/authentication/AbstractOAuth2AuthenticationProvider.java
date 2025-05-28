@@ -201,7 +201,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	 * @param auth 认证聚合根
 	 * @return 用户信息
 	 */
-	protected UsernamePasswordAuthenticationToken authenticationToken(AuthA auth, HttpServletRequest request) {
+	protected UsernamePasswordAuthenticationToken authenticationToken(AuthA auth, HttpServletRequest request)
+			throws Exception {
 		return authProcessor.authenticationToken(auth, request);
 	}
 

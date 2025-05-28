@@ -165,6 +165,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-undertow</artifactId>
+        <version>${spring-boot.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-common-fury</artifactId>
         <version>${laokou.version}</version>

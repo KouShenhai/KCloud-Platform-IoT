@@ -30,6 +30,6 @@ public interface DomainEventPublisher {
 	 * 发布领域事件.
 	 * @param payload 内容
 	 */
-	void publish(DomainEvent payload);
+	void publish(String topic, DomainEvent payload);
 
 }

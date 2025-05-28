@@ -15,25 +15,29 @@
  *
  */
 
-package org.laokou.common.domain.support;
+package org.laokou.auth.handler;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.dto.DomainEvent;
-import org.springframework.kafka.core.KafkaTemplate;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+import static org.laokou.auth.model.MqEnum.LOGIN_LOG_TOPIC;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component
-@RequiredArgsConstructor
-public class KafkaDomainEventPublisher implements DomainEventPublisher {
+public class DomainEventHandler {
 
-	private final KafkaTemplate<String, Object> kafkaTemplate;
-
-	@Override
-	public void publish(String topic, DomainEvent payload) {
-		kafkaTemplate.send(topic, payload);
+	@KafkaListener(topics = LOGIN_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
+	public void loginLogHandler(List<ConsumerRecords<String, Object>> messages, Acknowledgment acknowledgment) {
+		log.info("Received login log messages: {}", messages.getFirst());
+		acknowledgment.acknowledge();
 	}
 
 }

@@ -15,14 +15,14 @@
  *
  */
 
-package org.laokou.auth.consumer.handler;
+package org.laokou.auth.handler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.api.NoticeLogServiceI;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.mail.service.MailService;
+import org.laokou.common.sms.service.SmsService;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,14 +31,14 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @NonNullApi
-public class SendMailCaptchaEventHandler {
+public class SendMobileCaptchaEventHandler {
 
-	private final MailService mailService;
+	private final SmsService smsService;
 
 	private final NoticeLogServiceI noticeLogServiceI;
 
-	public SendMailCaptchaEventHandler(MailService mailService, NoticeLogServiceI noticeLogServiceI) {
-		this.mailService = mailService;
+	public SendMobileCaptchaEventHandler(SmsService smsService, NoticeLogServiceI noticeLogServiceI) {
+		this.smsService = smsService;
 		this.noticeLogServiceI = noticeLogServiceI;
 	}
 
@@ -46,7 +46,7 @@ public class SendMailCaptchaEventHandler {
 		// SendCaptchaEvent evt = JacksonUtils.toBean(domainEvent.getPayload(),
 		// SendCaptchaEvent.class);
 		// noticeLogServiceI.save(new NoticeLogSaveCmd(
-		// NoticeLogConvertor.toClientObject(domainEvent, mailService.send(evt.uuid()),
+		// NoticeLogConvertor.toClientObject(domainEvent, smsService.send(evt.uuid()),
 		// evt.uuid())));
 	}
 

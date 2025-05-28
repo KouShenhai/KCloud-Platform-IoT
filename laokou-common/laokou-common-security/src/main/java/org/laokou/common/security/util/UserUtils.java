@@ -26,7 +26,10 @@ import java.util.Set;
 /**
  * @author laokou
  */
-public class UserUtils {
+public final class UserUtils {
+
+	private UserUtils() {
+	}
 
 	public static UserDetails user() {
 		return Optional.ofNullable(getAuthentication()).map(authentication -> {

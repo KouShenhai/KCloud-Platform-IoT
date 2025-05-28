@@ -17,6 +17,8 @@
 
 package org.laokou.common.security.util;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.crypto.util.AESUtils;
@@ -33,13 +35,15 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
+ * 用户详细信息. JsonTypeInfo.Id.NAME => 多态子类与抽象类绑定.
+ *
  * @author laokou
  */
 @Getter
 @Setter
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails,
 		OAuth2AuthenticatedPrincipal, Serializable {
 
@@ -64,87 +68,58 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	/**
 	 * 用户ID.
 	 */
-	private final Long id;
+	private Long id;
 
 	/**
 	 * 用户名.
 	 */
-	private final String username;
+	private String username;
 
 	/**
 	 * 头像.
 	 */
-	private final String avatar;
+	private String avatar;
 
 	/**
 	 * 超级管理员标识.
 	 */
-	private final Boolean superAdmin;
+	private Boolean superAdmin;
 
 	/**
 	 * 用户状态 0启用 1禁用.
 	 */
-	private final Integer status;
+	private Integer status;
 
 	/**
 	 * 邮箱.
 	 */
-	private final String mail;
+	private String mail;
 
 	/**
 	 * 手机号.
 	 */
-	private final String mobile;
+	private String mobile;
 
 	/**
 	 * 密码.
 	 */
-	private final transient String password;
+	@JsonIgnore
+	private transient String password;
 
 	/**
 	 * 租户ID.
 	 */
-	private final Long tenantId;
+	private Long tenantId;
 
 	/**
 	 * 部门PATHS.
 	 */
-	private final Set<String> deptPaths;
+	private Set<String> deptPaths;
 
 	/**
 	 * 菜单权限标识集合.
 	 */
-	private final Set<String> permissions;
-
-	public UserDetails() {
-		this.id = 1L;
-		this.username = EMPTY;
-		this.avatar = EMPTY;
-		this.superAdmin = false;
-		this.status = 0;
-		this.mail = EMPTY;
-		this.mobile = EMPTY;
-		this.password = EMPTY;
-		this.tenantId = 0L;
-		this.deptPaths = Collections.emptySet();
-		this.permissions = Collections.emptySet();
-	}
-
-	public UserDetails(final Long id, final String username, final String password, final String avatar,
-			final Boolean superAdmin, final Integer status, final String mail, final String mobile,
-			final Set<String> deptPaths, final Set<String> permissions, final Long tenantId) {
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.avatar = avatar;
-		this.superAdmin = superAdmin;
-		this.status = status;
-		this.mail = mail;
-		this.mobile = mobile;
-		this.tenantId = tenantId;
-		this.deptPaths = deptPaths;
-		this.permissions = permissions;
-	}
+	private Set<String> permissions;
 
 	@Override
 	public boolean equals(Object o) {
@@ -201,26 +176,31 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	}
 
 	@Override
+	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
 	@Override
+	@JsonIgnore
 	public boolean isEnabled() {
 		return true;
 	}
@@ -230,19 +210,23 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	 * @return the OAuth 2.0 token attributes
 	 */
 	@Override
+	@JsonIgnore
 	public Map<String, Object> getAttributes() {
 		return Collections.emptyMap();
 	}
 
 	@Override
+	@JsonIgnore
 	public String getName() {
 		return this.username;
 	}
 
+	@JsonIgnore
 	public UserDetails getDecryptInfo() {
-		return new UserDetails(this.id, this.getDecryptUsername(), this.password, this.avatar, this.superAdmin,
-				this.status, this.getDecryptMail(), this.getDecryptMobile(), this.deptPaths, this.permissions,
-				this.tenantId);
+		this.mail = this.getDecryptMail();
+		this.mobile = this.getDecryptMobile();
+		this.username = this.getDecryptUsername();
+		return this;
 	}
 
 	private String getDecryptUsername() {

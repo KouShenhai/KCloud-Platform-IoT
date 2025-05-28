@@ -15,25 +15,19 @@
  *
  */
 
-package org.laokou.common.domain.support;
+package org.laokou.common.kafka.config;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.dto.DomainEvent;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Component;
+import org.apache.kafka.common.serialization.Serializer;
+import org.laokou.common.fury.config.FuryFactory;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class KafkaDomainEventPublisher implements DomainEventPublisher {
-
-	private final KafkaTemplate<String, Object> kafkaTemplate;
+public class FuryKafkaSerializer implements Serializer<Object> {
 
 	@Override
-	public void publish(String topic, DomainEvent payload) {
-		kafkaTemplate.send(topic, payload);
+	public byte[] serialize(String s, Object o) {
+		return FuryFactory.getFuryFactory().serialize(o);
 	}
 
 }

@@ -31,11 +31,21 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static UserDetails to(AuthA authA) {
-		UserE userE = authA.getUser();
-		return new UserDetails(userE.getId(), userE.getUsername(), userE.getPassword(), userE.getAvatar(),
-				userE.isSuperAdministrator(), userE.getStatus(), userE.getMail(), userE.getMobile(),
-				authA.getDeptPaths(), authA.getPermissions(), authA.getTenantId());
+	public static UserDetails to(AuthA auth) {
+		UserDetails userDetails = new UserDetails();
+		UserE user = auth.getUser();
+		userDetails.setId(user.getId());
+		userDetails.setUsername(user.getUsername());
+		userDetails.setAvatar(user.getAvatar());
+		userDetails.setSuperAdmin(user.isSuperAdministrator());
+		userDetails.setStatus(user.getStatus());
+		userDetails.setMail(user.getMail());
+		userDetails.setMobile(user.getMobile());
+		userDetails.setDeptPaths(auth.getDeptPaths());
+		userDetails.setPermissions(auth.getPermissions());
+		userDetails.setTenantId(auth.getTenantId());
+		userDetails.setPassword(user.getPassword());
+		return userDetails;
 	}
 
 	public static UserE toEntity(UserDO userDO) {
