@@ -15,22 +15,16 @@
  *
  */
 
-package org.laokou.gateway.config;
+package org.laokou.admin.menu.model;
 
-import org.laokou.gateway.filter.ip.DefaultIp;
-import org.laokou.gateway.filter.ip.Ip;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.laokou.admin.menu.dto.MenuTreeListQry;
+import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 
 /**
  * @author laokou
  */
-@Configuration
-public class GatewayConfig {
+public interface MenuTreeBuilder {
 
-	@Bean
-	public Ip defaultIp() {
-		return new DefaultIp();
-	}
+	MenuTreeCO buildMenuTree(MenuTreeListQry qry, Long userId);
 
 }

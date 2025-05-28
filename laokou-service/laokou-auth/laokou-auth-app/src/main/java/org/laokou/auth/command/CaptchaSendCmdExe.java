@@ -21,17 +21,9 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.CaptchaConvertor;
 import org.laokou.auth.dto.CaptchaSendCmd;
-import org.laokou.auth.factory.DomainFactory;
-import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.CaptchaE;
-import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.extension.BizScenario;
-import org.laokou.common.extension.ExtensionExecutor;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.auth.common.constant.BizConstants.SCENARIO;
-import static org.laokou.auth.common.constant.BizConstants.USE_CASE_CAPTCHA;
 
 /**
  * @author laokou
@@ -40,18 +32,12 @@ import static org.laokou.auth.common.constant.BizConstants.USE_CASE_CAPTCHA;
 @RequiredArgsConstructor
 public class CaptchaSendCmdExe {
 
-	private final ExtensionExecutor extensionExecutor;
-
 	private final DomainService domainService;
 
 	@CommandLog
 	public void executeVoid(CaptchaSendCmd cmd) {
 		// 校验参数
 		CaptchaE entity = CaptchaConvertor.toEntity(cmd.getCo());
-		extensionExecutor.executeVoid(CaptchaParamValidatorExtPt.class,
-				BizScenario.valueOf(entity.getTag(), USE_CASE_CAPTCHA, SCENARIO),
-				extension -> extension.validateCaptcha(entity));
-		AuthA auth = DomainFactory.getAuth(1L, entity.getTenantCode());
 		// 创建验证码
 	}
 

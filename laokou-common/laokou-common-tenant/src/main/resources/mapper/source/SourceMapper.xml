@@ -41,23 +41,4 @@
 		where id = #{id}
 	</select>
 
-  <select id="selectSourceByTenantCode" resultType="org.laokou.common.tenant.mapper.SourceDO">
-    <choose>
-      <when test="tenantCode == 'laokou'">
-        select 'master' as name
-      </when>
-      <otherwise>
-        select name
-        , driver_class_name
-        , url
-        , username
-        , password
-        from sys_source
-        where id in
-        (select source_id from sys_tenant where code = #{tenantCode})
-        and del_flag = 0
-      </otherwise>
-    </choose>
-  </select>
-
 </mapper>

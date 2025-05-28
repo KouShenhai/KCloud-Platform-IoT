@@ -21,9 +21,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.CaptchaE;
-import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
-import org.laokou.auth.service.extensionpoint.extension.MailCaptchaParamValidator;
-import org.laokou.auth.service.extensionpoint.extension.MobileCaptchaParamValidator;
+import org.laokou.auth.model.CaptchaParamValidator;
+import org.laokou.auth.service.validator.MailCaptchaParamValidator;
+import org.laokou.auth.service.validator.MobileCaptchaParamValidator;
 
 /**
  * 验证码参数校验器测试.
@@ -34,7 +34,7 @@ class CaptchaParamValidatorTest {
 
 	@Test
 	void testMailCaptchaParamValidator() {
-		CaptchaParamValidatorExtPt captchaParamValidator = new MailCaptchaParamValidator();
+		CaptchaParamValidator captchaParamValidator = new MailCaptchaParamValidator();
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		// 校验邮箱验证码
 		Assertions.assertDoesNotThrow(() -> captcha.setUuid("2413176044@qq.com"));
@@ -44,7 +44,7 @@ class CaptchaParamValidatorTest {
 
 	@Test
 	void testMobileCaptchaParamValidator() {
-		CaptchaParamValidatorExtPt captchaParamValidator = new MobileCaptchaParamValidator();
+		CaptchaParamValidator captchaParamValidator = new MobileCaptchaParamValidator();
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		// 校验手机号验证码
 		Assertions.assertDoesNotThrow(() -> captcha.setUuid("18888888888"));

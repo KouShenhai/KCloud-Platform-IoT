@@ -15,36 +15,29 @@
  *
  */
 
-package org.laokou.auth.service.extensionpoint.extension;
+package org.laokou.auth.service.validator;
 
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
+import org.laokou.auth.model.AuthParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
-import org.laokou.common.extension.Extension;
-
-import static org.laokou.auth.common.constant.BizConstants.SCENARIO;
-import static org.laokou.auth.common.constant.BizConstants.USE_CASE_AUTH;
-import static org.laokou.auth.factory.DomainFactory.USERNAME_PASSWORD;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Extension(bizId = USERNAME_PASSWORD, useCase = USE_CASE_AUTH, scenario = SCENARIO)
-public class UsernamePasswordAuthParamValidator implements AuthParamValidatorExtPt {
+@Component("mailAuthParamValidator")
+public class MailAuthParamValidator implements AuthParamValidator {
 
 	@Override
-	public void validate(AuthA auth) {
+	public void validateAuth(AuthA auth) {
+
 		ParamValidator.validate(
 				// 校验租户编码
 				OAuth2ParamValidator.validateTenantCode(auth.getTenantCode()),
-				// 校验UUID
-				OAuth2ParamValidator.validateUuid(auth.getCaptcha().uuid()),
 				// 校验验证码
 				OAuth2ParamValidator.validateCaptcha(auth.getCaptcha().captcha()),
-				// 校验用户名
-				OAuth2ParamValidator.validateUsername(auth.getUsername()),
-				// 校验密码
-				OAuth2ParamValidator.validatePassword(auth.getPassword()));
+				// 校验邮箱
+				OAuth2ParamValidator.validateMail(auth.getCaptcha().uuid()));
 	}
 
 }

@@ -21,11 +21,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
-import org.laokou.auth.service.extensionpoint.extension.AuthorizationCodeAuthParamValidator;
-import org.laokou.auth.service.extensionpoint.extension.MailAuthParamValidator;
-import org.laokou.auth.service.extensionpoint.extension.MobileAuthParamValidator;
-import org.laokou.auth.service.extensionpoint.extension.UsernamePasswordAuthParamValidator;
+import org.laokou.auth.model.AuthParamValidator;
+import org.laokou.auth.service.validator.AuthorizationCodeAuthParamValidator;
+import org.laokou.auth.service.validator.MailAuthParamValidator;
+import org.laokou.auth.service.validator.MobileAuthParamValidator;
+import org.laokou.auth.service.validator.UsernamePasswordAuthParamValidator;
 
 /**
  * 认证参数校验器测试.
@@ -36,35 +36,35 @@ class AuthParamValidatorTest {
 
 	@Test
 	void testUsernamePasswordAuthParamValidator() {
-		AuthParamValidatorExtPt authParamValidator = new UsernamePasswordAuthParamValidator();
+		AuthParamValidator authParamValidator = new UsernamePasswordAuthParamValidator();
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		// 校验用户名密码登录
-		Assertions.assertDoesNotThrow(() -> authParamValidator.validate(auth));
+		Assertions.assertDoesNotThrow(() -> authParamValidator.validateAuth(auth));
 	}
 
 	@Test
 	void testAuthorizationCodeAuthParamValidator() {
-		AuthParamValidatorExtPt authParamValidator = new AuthorizationCodeAuthParamValidator();
+		AuthParamValidator authParamValidator = new AuthorizationCodeAuthParamValidator();
 		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
 		// 校验授权码登录
-		Assertions.assertDoesNotThrow(() -> authParamValidator.validate(auth));
+		Assertions.assertDoesNotThrow(() -> authParamValidator.validateAuth(auth));
 	}
 
 	@Test
 	void testMailAuthParamValidator() {
-		AuthParamValidatorExtPt authParamValidator = new MailAuthParamValidator();
+		AuthParamValidator authParamValidator = new MailAuthParamValidator();
 		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
 		// 校验邮箱登录
-		Assertions.assertDoesNotThrow(() -> authParamValidator.validate(auth));
+		Assertions.assertDoesNotThrow(() -> authParamValidator.validateAuth(auth));
 	}
 
 	@Test
 	void testMobileAuthParamValidator() {
-		AuthParamValidatorExtPt authParamValidator = new MobileAuthParamValidator();
+		AuthParamValidator authParamValidator = new MobileAuthParamValidator();
 		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
 		Assertions.assertNotNull(auth);
 		// 校验手机号登录
-		Assertions.assertDoesNotThrow(() -> authParamValidator.validate(auth));
+		Assertions.assertDoesNotThrow(() -> authParamValidator.validateAuth(auth));
 	}
 
 }

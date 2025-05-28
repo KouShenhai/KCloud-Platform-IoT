@@ -15,15 +15,13 @@
  *
  */
 
-package org.laokou.admin.menu.service.extensionpoint;
-
-import org.laokou.admin.menu.model.MenuE;
+package org.laokou.auth.model;
 
 /**
  * @author laokou
  */
-public interface MenuParamValidatorExtPt {
+public interface AuthParamValidator {
 
-	void validateMenu(MenuE menuE);
+	void validateAuth(AuthA auth);
 
 }

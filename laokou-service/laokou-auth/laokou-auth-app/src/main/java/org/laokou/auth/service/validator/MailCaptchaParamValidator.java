@@ -15,21 +15,18 @@
  *
  */
 
-package org.laokou.auth.service.extensionpoint.extension;
+package org.laokou.auth.service.validator;
 
 import org.laokou.auth.model.CaptchaE;
-import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
+import org.laokou.auth.model.CaptchaParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
-import org.laokou.common.extension.Extension;
-
-import static org.laokou.auth.common.constant.BizConstants.*;
-import static org.laokou.auth.model.MqEnum.MAIL_CAPTCHA_TAG;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Extension(bizId = MAIL_CAPTCHA_TAG, useCase = USE_CASE_CAPTCHA, scenario = SCENARIO)
-public class MailCaptchaParamValidator implements CaptchaParamValidatorExtPt {
+@Component("mailCaptchaParamValidator")
+public class MailCaptchaParamValidator implements CaptchaParamValidator {
 
 	@Override
 	public void validateCaptcha(CaptchaE captcha) {

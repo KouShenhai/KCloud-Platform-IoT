@@ -45,7 +45,7 @@ public final class WebSocketSessionHeartBeatManager {
 
 	public static int get(String channelId) {
 		return HEART_BEAT_CACHE
-			.getOrDefault(channelId, HEART_BEAT_CACHE.computeIfAbsent(clientId, k -> new AtomicInteger(0)))
+			.getOrDefault(channelId, HEART_BEAT_CACHE.computeIfAbsent(channelId, k -> new AtomicInteger(0)))
 			.get();
 	}
 

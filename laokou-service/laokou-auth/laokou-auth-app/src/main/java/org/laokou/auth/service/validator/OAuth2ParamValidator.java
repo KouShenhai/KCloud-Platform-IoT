@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.service.extensionpoint.extension;
+package org.laokou.auth.service.validator;
 
 import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.i18n.util.ParamValidator;

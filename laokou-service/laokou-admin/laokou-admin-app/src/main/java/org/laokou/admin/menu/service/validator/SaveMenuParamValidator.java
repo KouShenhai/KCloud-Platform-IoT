@@ -15,12 +15,12 @@
  *
  */
 
-package org.laokou.admin.menu.service.extensionpoint.extension;
+package org.laokou.admin.menu.service.validator;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.model.MenuE;
-import org.laokou.admin.menu.service.extensionpoint.MenuParamValidatorExtPt;
+import org.laokou.admin.menu.model.MenuParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
  */
 @Component("saveMenuParamValidator")
 @RequiredArgsConstructor
-public class SaveMenuParamValidator implements MenuParamValidatorExtPt {
+public class SaveMenuParamValidator implements MenuParamValidator {
 
 	private final MenuMapper menuMapper;
 
@@ -37,19 +37,19 @@ public class SaveMenuParamValidator implements MenuParamValidatorExtPt {
 	public void validateMenu(MenuE menuE) {
 		ParamValidator.validate(
 				// 校验父级ID
-				MenuParamValidator.validateParentId(menuE),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validateParentId(menuE),
 				// 校验类型
-				MenuParamValidator.validateType(menuE),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validateType(menuE),
 				// 校验名称
-				MenuParamValidator.validateName(menuE, menuMapper, true),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validateName(menuE, menuMapper, true),
 				// 校验路径
-				MenuParamValidator.validatePath(menuE, menuMapper, true),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validatePath(menuE, menuMapper, true),
 				// 校验权限标识
-				MenuParamValidator.validatePermission(menuE, menuMapper, true),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validatePermission(menuE, menuMapper, true),
 				// 校验状态
-				MenuParamValidator.validateStatus(menuE),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validateStatus(menuE),
 				// 校验排序
-				MenuParamValidator.validateSort(menuE));
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validateSort(menuE));
 	}
 
 }

@@ -86,10 +86,6 @@ public final class DomainFactory {
 	private DomainFactory() {
 	}
 
-	public static AuthA getAuth(Long aggregateId, String tenantCode) {
-		return getAuth().fillValue(aggregateId, tenantCode);
-	}
-
 	public static AuthA getMailAuth(Long aggregateId, String mail, String code, String tenantCode) {
 		return getAuth().fillValue(aggregateId, EMPTY, EMPTY, tenantCode, GrantTypeEnum.MAIL, mail, code);
 	}

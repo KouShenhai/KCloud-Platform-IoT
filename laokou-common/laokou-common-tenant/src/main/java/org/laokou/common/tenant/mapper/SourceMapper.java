@@ -18,7 +18,6 @@
 package org.laokou.common.tenant.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
 
@@ -30,7 +29,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface SourceMapper extends CrudMapper<Long, Integer, SourceDO> {
-
-	SourceDO selectSourceByTenantCode(@Param("tenantCode") String tenantCode);
 
 }

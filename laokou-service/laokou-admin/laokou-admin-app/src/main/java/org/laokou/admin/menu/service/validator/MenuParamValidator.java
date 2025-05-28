@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.menu.service.extensionpoint.extension;
+package org.laokou.admin.menu.service.validator;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;

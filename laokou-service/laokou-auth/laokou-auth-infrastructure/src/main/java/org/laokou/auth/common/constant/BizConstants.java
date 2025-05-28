@@ -33,11 +33,6 @@ public final class BizConstants {
 	/**
 	 * 业务用例.
 	 */
-	public static final String USE_CASE_AUTH = "auth";
-
-	/**
-	 * 业务用例.
-	 */
 	public static final String USE_CASE_CAPTCHA = "captcha";
 
 	/**

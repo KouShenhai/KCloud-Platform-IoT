@@ -15,16 +15,28 @@
  *
  */
 
-package org.laokou.auth.service.extensionpoint;
+package org.laokou.auth.service.validator;
 
-import org.laokou.auth.model.CaptchaE;
-import org.laokou.common.extension.ExtensionPointI;
+import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.AuthParamValidator;
+import org.laokou.common.i18n.util.ParamValidator;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface CaptchaParamValidatorExtPt extends ExtensionPointI {
+@Component("testAuthParamValidator")
+public class TestAuthParamValidator implements AuthParamValidator {
 
-	void validateCaptcha(CaptchaE captcha);
+	@Override
+	public void validateAuth(AuthA auth) {
+		ParamValidator.validate(
+				// 校验租户编码
+				OAuth2ParamValidator.validateTenantCode(auth.getTenantCode()),
+				// 校验用户名
+				OAuth2ParamValidator.validateUsername(auth.getUsername()),
+				// 校验密码
+				OAuth2ParamValidator.validatePassword(auth.getPassword()));
+	}
 
 }

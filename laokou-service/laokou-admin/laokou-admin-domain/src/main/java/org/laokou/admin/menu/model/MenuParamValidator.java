@@ -15,20 +15,13 @@
  *
  */
 
-package org.laokou.auth.gateway;
+package org.laokou.admin.menu.model;
 
 /**
- * 数据源.
- *
  * @author laokou
  */
-public interface SourceGateway {
+public interface MenuParamValidator {
 
-	/**
-	 * 查看数据源名称.
-	 * @param tenantCode 租户编码
-	 * @return 数据源名称
-	 */
-	String getPrefixSource(String tenantCode);
+	void validateMenu(MenuE menuE);
 
 }

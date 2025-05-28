@@ -15,18 +15,32 @@
  *
  */
 
-package org.laokou.admin.menu.service.extensionpoint;
-
+package org.laokou.admin.menu.service.builder;
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuTreeListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
-import org.laokou.common.extension.ExtensionPointI;
+import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.admin.menu.model.MenuTreeBuilder;
+import org.laokou.common.core.util.TreeUtils;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
-public interface MenuTreeBuilderExtPt extends ExtensionPointI {
+@Component("systemMenuTreeBuilder")
+@RequiredArgsConstructor
+public class SystemMenuTreeBuilder implements MenuTreeBuilder {
 
-	MenuTreeCO build(MenuTreeListQry qry, Long userId, MenuMapper menuMapper);
+	private final MenuMapper menuMapper;
+
+	@Override
+	public MenuTreeCO buildMenuTree(MenuTreeListQry qry, Long userId) {
+		List<MenuDO> list = menuMapper.selectObjectList(qry);
+		return TreeUtils.buildTreeNode(MenuConvertor.toClientObjs(list), MenuTreeCO.class);
+	}
 
 }

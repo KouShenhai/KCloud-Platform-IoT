@@ -15,37 +15,28 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl;
+package org.laokou.auth.service.validator;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.gateway.SourceGateway;
-import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.tenant.mapper.SourceDO;
-import org.laokou.common.tenant.mapper.SourceMapper;
+import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.AuthParamValidator;
+import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
 /**
- * 数据源.
- *
  * @author laokou
  */
-@Slf4j
-@Component
-@RequiredArgsConstructor
-public class SourceGatewayImpl implements SourceGateway {
+@Component("authorizationCodeAuthParamValidator")
+public class AuthorizationCodeAuthParamValidator implements AuthParamValidator {
 
-	private final SourceMapper sourceMapper;
-
-	/**
-	 * 查看数据源.
-	 * @param tenantCode 租户编码
-	 * @return 数据源
-	 */
 	@Override
-	public String getPrefixSource(String tenantCode) {
-		SourceDO sourceDO = sourceMapper.selectSourceByTenantCode(tenantCode);
-		return ObjectUtils.isNull(sourceDO) ? null : sourceDO.getName();
+	public void validateAuth(AuthA auth) {
+		ParamValidator.validate(
+				// 校验租户编码
+				OAuth2ParamValidator.validateTenantCode(auth.getTenantCode()),
+				// 校验用户名
+				OAuth2ParamValidator.validateUsername(auth.getUsername()),
+				// 校验密码
+				OAuth2ParamValidator.validatePassword(auth.getPassword()));
 	}
 
 }

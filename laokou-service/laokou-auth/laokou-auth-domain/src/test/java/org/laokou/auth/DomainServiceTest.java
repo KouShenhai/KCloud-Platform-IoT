@@ -63,9 +63,6 @@ class DomainServiceTest {
 	private TenantGateway tenantGateway;
 
 	@Mock
-	private SourceGateway sourceGateway;
-
-	@Mock
 	private LoginLogGateway loginLogGateway;
 
 	@Mock
@@ -86,7 +83,6 @@ class DomainServiceTest {
 		Assertions.assertNotNull(menuGateway);
 		Assertions.assertNotNull(deptGateway);
 		Assertions.assertNotNull(tenantGateway);
-		Assertions.assertNotNull(sourceGateway);
 		Assertions.assertNotNull(loginLogGateway);
 		Assertions.assertNotNull(noticeLogGateway);
 		Assertions.assertNotNull(passwordValidator);
@@ -103,8 +99,6 @@ class DomainServiceTest {
 		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
 		// 构造租户
 		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
-		// 构造数据源
-		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
 		// 构造验证码校验
 		doReturn(true).when(captchaValidator)
 			.validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
@@ -128,7 +122,6 @@ class DomainServiceTest {
 		verify(captchaValidator, times(1)).validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"),
 				"1234");
 		verify(userGateway, times(1)).getProfileUser(user);
-		verify(sourceGateway, times(1)).getPrefixSource("laokou");
 		verify(tenantGateway, times(1)).getIdTenant("laokou");
 	}
 
@@ -140,8 +133,6 @@ class DomainServiceTest {
 		Assertions.assertDoesNotThrow(auth::createUserByMail);
 		// 构造租户
 		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
-		// 构造数据源
-		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
 		// 构造验证码校验
 		doReturn(true).when(captchaValidator)
 			.validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
@@ -160,7 +151,6 @@ class DomainServiceTest {
 		verify(userGateway, times(1)).getProfileUser(user);
 		verify(captchaValidator, times(1)).validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"),
 				"123456");
-		verify(sourceGateway, times(1)).getPrefixSource("laokou");
 		verify(tenantGateway, times(1)).getIdTenant("laokou");
 	}
 
@@ -172,8 +162,6 @@ class DomainServiceTest {
 		Assertions.assertDoesNotThrow(auth::createUserByMobile);
 		// 构造租户
 		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
-		// 构造数据源
-		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
 		// 构造验证码校验
 		doReturn(true).when(captchaValidator)
 			.validateCaptcha(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
@@ -190,7 +178,6 @@ class DomainServiceTest {
 		verify(deptGateway, times(1)).getPathsDept(user);
 		verify(menuGateway, times(1)).getPermissionsMenu(user);
 		verify(userGateway, times(1)).getProfileUser(user);
-		verify(sourceGateway, times(1)).getPrefixSource("laokou");
 		verify(tenantGateway, times(1)).getIdTenant("laokou");
 	}
 
@@ -202,8 +189,6 @@ class DomainServiceTest {
 		Assertions.assertDoesNotThrow(auth::createUserByAuthorizationCode);
 		// 构造租户
 		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
-		// 构造数据源
-		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
 		// 构造用户信息
 		UserE user = auth.getUser();
 		Assertions.assertDoesNotThrow(() -> user
@@ -222,22 +207,17 @@ class DomainServiceTest {
 		verify(menuGateway, times(1)).getPermissionsMenu(user);
 		verify(passwordValidator, times(1)).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		verify(userGateway, times(1)).getProfileUser(user);
-		verify(sourceGateway, times(1)).getPrefixSource("laokou");
 		verify(tenantGateway, times(1)).getIdTenant("laokou");
 	}
 
 	@Test
 	void testCreateCaptcha() {
 		CaptchaE captcha = DomainFactory.getCaptcha();
-		AuthA auth = DomainFactory.getAuth(1L, "laokou");
+		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
 		// 构造租户
 		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
-		// 构造数据源
-		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
 		// 创建验证码
 		Assertions.assertDoesNotThrow(() -> domainService.createCaptcha(1L, auth, captcha));
-		// 校验调用次数
-		verify(sourceGateway, times(1)).getPrefixSource("laokou");
 		verify(tenantGateway, times(1)).getIdTenant("laokou");
 	}
 

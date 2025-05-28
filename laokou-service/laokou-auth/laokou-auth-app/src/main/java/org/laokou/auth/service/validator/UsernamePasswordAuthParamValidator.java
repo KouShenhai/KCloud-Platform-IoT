@@ -15,29 +15,32 @@
  *
  */
 
-package org.laokou.auth.service.extensionpoint.extension;
+package org.laokou.auth.service.validator;
 
-import org.laokou.auth.model.CaptchaE;
-import org.laokou.auth.service.extensionpoint.CaptchaParamValidatorExtPt;
+import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.AuthParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
-import org.laokou.common.extension.Extension;
-
-import static org.laokou.auth.common.constant.BizConstants.*;
-import static org.laokou.auth.model.MqEnum.MOBILE_CAPTCHA_TAG;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Extension(bizId = MOBILE_CAPTCHA_TAG, useCase = USE_CASE_CAPTCHA, scenario = SCENARIO)
-public class MobileCaptchaParamValidator implements CaptchaParamValidatorExtPt {
+@Component("usernamePasswordAuthParamValidator")
+public class UsernamePasswordAuthParamValidator implements AuthParamValidator {
 
 	@Override
-	public void validateCaptcha(CaptchaE captcha) {
+	public void validateAuth(AuthA auth) {
 		ParamValidator.validate(
 				// 校验租户编码
-				OAuth2ParamValidator.validateTenantCode(captcha.getTenantCode()),
-				// 校验手机号
-				OAuth2ParamValidator.validateMobile(captcha.getUuid()));
+				OAuth2ParamValidator.validateTenantCode(auth.getTenantCode()),
+				// 校验UUID
+				OAuth2ParamValidator.validateUuid(auth.getCaptcha().uuid()),
+				// 校验验证码
+				OAuth2ParamValidator.validateCaptcha(auth.getCaptcha().captcha()),
+				// 校验用户名
+				OAuth2ParamValidator.validateUsername(auth.getUsername()),
+				// 校验密码
+				OAuth2ParamValidator.validatePassword(auth.getPassword()));
 	}
 
 }

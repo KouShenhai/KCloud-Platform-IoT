@@ -15,34 +15,13 @@
  *
  */
 
-package org.laokou.admin.common.constant;
+package org.laokou.auth.model;
 
 /**
  * @author laokou
  */
-public final class BizConstants {
+public interface CaptchaParamValidator {
 
-	private BizConstants() {
-	}
-
-	/**
-	 * 场景标识.
-	 */
-	public static final String SCENARIO = "iot";
-
-	/**
-	 * 业务用例.
-	 */
-	public static final String USE_CASE_MENU = "menu";
-
-	/**
-	 * 业务ID.
-	 */
-	public static final String BIZ_ID_USER = "0";
-
-	/**
-	 * 业务ID.
-	 */
-	public static final String BIZ_ID_SYSTEM = "1";
+	void validateCaptcha(CaptchaE captcha);
 
 }

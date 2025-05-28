@@ -15,29 +15,39 @@
  *
  */
 
-package org.laokou.admin.menu.service.extensionpoint.extension;
+package org.laokou.admin.menu.service.builder;
 
+import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuTreeListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.admin.menu.service.extensionpoint.MenuTreeBuilderExtPt;
+import org.laokou.admin.menu.model.MenuStatusEnum;
+import org.laokou.admin.menu.model.MenuTypeEnum;
+import org.laokou.admin.menu.model.MenuTreeBuilder;
 import org.laokou.common.core.util.TreeUtils;
-import org.laokou.common.extension.Extension;
+import org.laokou.common.data.cache.annotation.DataCache;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static org.laokou.admin.common.constant.BizConstants.*;
+import static org.laokou.common.data.cache.constant.NameConstants.USER_MENU;
+import static org.laokou.common.data.cache.model.OperateTypeEnum.GET;
 
 /**
  * @author laokou
  */
-@Extension(bizId = BIZ_ID_SYSTEM, useCase = USE_CASE_MENU, scenario = SCENARIO)
-public class SystemMenuTreeBuilder implements MenuTreeBuilderExtPt {
+@Component("userMenuTreeBuilder")
+@RequiredArgsConstructor
+public class UserMenuTreeBuilder implements MenuTreeBuilder {
+
+	private final MenuMapper menuMapper;
 
 	@Override
-	public MenuTreeCO build(MenuTreeListQry qry, Long userId, MenuMapper menuMapper) {
+	@DataCache(name = USER_MENU, key = "#userId", operateType = GET)
+	public MenuTreeCO buildMenuTree(MenuTreeListQry qry, Long userId) {
+		qry.setStatus(MenuStatusEnum.ENABLE.getCode());
+		qry.setType(MenuTypeEnum.MENU.getCode());
 		List<MenuDO> list = menuMapper.selectObjectList(qry);
 		return TreeUtils.buildTreeNode(MenuConvertor.toClientObjs(list), MenuTreeCO.class);
 	}

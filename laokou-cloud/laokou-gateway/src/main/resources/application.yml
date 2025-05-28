@@ -149,11 +149,6 @@ spring:
       httpserver:
         # 关闭netty日志
         wiretap: false
-      ip:
-        white:
-          enabled: false
-        black:
-          enabled: false
     # sentinel配置
     sentinel:
       datasource:

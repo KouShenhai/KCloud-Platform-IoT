@@ -61,9 +61,6 @@ class AuthATest {
 	private TenantGateway tenantGateway;
 
 	@Mock
-	private SourceGateway sourceGateway;
-
-	@Mock
 	private PasswordValidator passwordValidator;
 
 	@Mock
@@ -75,7 +72,6 @@ class AuthATest {
 		Assertions.assertNotNull(menuGateway);
 		Assertions.assertNotNull(deptGateway);
 		Assertions.assertNotNull(tenantGateway);
-		Assertions.assertNotNull(sourceGateway);
 		Assertions.assertNotNull(passwordValidator);
 		Assertions.assertNotNull(captchaValidator);
 	}
@@ -117,7 +113,7 @@ class AuthATest {
 		// 构造租户
 		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
 		// 校验租户ID
-		AuthA auth = DomainFactory.getAuth(1L, "laokou");
+		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		// 获取租户ID
 		Assertions.assertDoesNotThrow(() -> auth.getTenantId(tenantGateway.getIdTenant(auth.getTenantCode())));
 		Assertions.assertDoesNotThrow(auth::checkTenantId);
@@ -156,22 +152,12 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckSourcePrefix() {
-		// 构造数据源
-		when(sourceGateway.getPrefixSource("laokou")).thenReturn("master");
-		// 校验数据源前缀
-		AuthA auth = DomainFactory.getAuth(1L, "laokou");
-		Assertions.assertDoesNotThrow(() -> auth.getSourcePrefix(auth.getTenantCode()));
-		Assertions.assertDoesNotThrow(auth::checkSourcePrefix);
-	}
-
-	@Test
 	void testCheckUsername() {
 		// 构造用户信息
 		UserE user = DomainFactory.getUser();
 		when(userGateway.getProfileUser(user)).thenReturn(user);
 		// 校验用户名
-		AuthA auth = DomainFactory.getAuth(1L, "laokou");
+		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		Assertions.assertDoesNotThrow(() -> auth.getUserInfo(userGateway.getProfileUser(user)));
 		Assertions.assertDoesNotThrow(auth::checkUsername);
 	}
