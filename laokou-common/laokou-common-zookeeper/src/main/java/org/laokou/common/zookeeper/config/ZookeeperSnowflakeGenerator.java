@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 
-	private static final String MACHINE_PATH = "/snowflake/machines";
+	private final String machinePath = "/snowflake/machines";
 
 	private final CuratorFramework curatorFramework;
 
@@ -110,7 +110,7 @@ public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 		// 机器标识最大值
 		long maxMachine = ~(-1L << machineBit);
 		// 定义分布式锁路径
-		String lockPath = ZKPaths.makePath(MACHINE_PATH, "lock");
+		String lockPath = ZKPaths.makePath(machinePath, "lock");
 		InterProcessMutex lock = new InterProcessMutex(curatorFramework, lockPath);
 		try {
 			// 获取分布式锁
@@ -118,15 +118,15 @@ public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 				throw new RuntimeException("Failed to acquire distributed lock");
 			}
 			// 检查并创建父路径
-			if (curatorFramework.checkExists().forPath(MACHINE_PATH) == null) {
-				curatorFramework.create().creatingParentsIfNeeded().forPath(MACHINE_PATH);
+			if (curatorFramework.checkExists().forPath(machinePath) == null) {
+				curatorFramework.create().creatingParentsIfNeeded().forPath(machinePath);
 			}
 			// 检查子节点数量是否超过限制
-			List<String> children = curatorFramework.getChildren().forPath(MACHINE_PATH);
+			List<String> children = curatorFramework.getChildren().forPath(machinePath);
 			long machineId = children.size();
 			Assert.isTrue(machineId < maxMachine, String.format("MachineId exceeds the maximum limit: %s", maxMachine));
 			// 创建新的子节点
-			String newNodePath = ZKPaths.makePath(MACHINE_PATH, String.valueOf(machineId));
+			String newNodePath = ZKPaths.makePath(machinePath, String.valueOf(machineId));
 			curatorFramework.create().forPath(newNodePath, new byte[0]);
 			this.machineId = machineId;
 		}
@@ -149,7 +149,7 @@ public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 
 	@Override
 	public synchronized void close() throws Exception {
-		curatorFramework.delete().forPath(ZKPaths.makePath(MACHINE_PATH, String.valueOf(machineId)));
+		curatorFramework.delete().forPath(ZKPaths.makePath(machinePath, String.valueOf(machineId)));
 	}
 
 	/**

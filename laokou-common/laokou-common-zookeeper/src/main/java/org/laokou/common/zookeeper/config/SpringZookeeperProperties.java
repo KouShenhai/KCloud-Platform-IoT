@@ -17,21 +17,24 @@
 
 package org.laokou.common.zookeeper.config;
 
-import org.apache.curator.framework.CuratorFramework;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Configuration
-public class DistributedIdentifierConfig {
+@Data
+@Component
+@ConfigurationProperties(prefix = "spring.zookeeper")
+public class SpringZookeeperProperties {
 
-	@Bean(initMethod = "init", destroyMethod = "close")
-	public SnowflakeGenerator snowflakeGenerator(CuratorFramework curatorFramework,
-			SpringZookeeperProperties springZookeeperProperties) {
-		return new ZookeeperSnowflakeGenerator(1600166465631L, springZookeeperProperties.getDataCenterId(),
-				curatorFramework);
-	}
+	private String address = "zookeeper:2181";
+
+	private int sessionTimeoutMs = 60000;
+
+	private int connectionTimeoutMs = 15000;
+
+	private int dataCenterId = 1;
 
 }

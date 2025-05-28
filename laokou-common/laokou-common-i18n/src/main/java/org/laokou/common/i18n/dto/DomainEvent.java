@@ -33,4 +33,8 @@ public class DomainEvent extends Identifier {
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
 
+	protected Long userId;
+
+	protected Long tenantId;
+
 }

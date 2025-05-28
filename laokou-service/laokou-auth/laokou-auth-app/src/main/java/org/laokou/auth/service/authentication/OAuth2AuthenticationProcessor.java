@@ -17,18 +17,19 @@
 
 package org.laokou.auth.service.authentication;
 
-import com.blueconic.browscap.Capabilities;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.ability.DomainService;
+import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.convertor.UserConvertor;
+import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.model.AuthA;
-import org.laokou.common.core.util.AddressUtils;
-import org.laokou.common.core.util.IpUtils;
-import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.util.UserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
@@ -45,18 +46,16 @@ final class OAuth2AuthenticationProcessor {
 
 	private final DomainService domainService;
 
-	public UsernamePasswordAuthenticationToken authenticationToken(Long eventId, AuthA auth, HttpServletRequest request)
+	private final DomainEventPublisher KafkaDomainEventPublisher;
+
+	public UsernamePasswordAuthenticationToken authenticationToken(AuthA auth, HttpServletRequest request)
 			throws Exception {
-		Capabilities capabilities = RequestUtils.getCapabilities(request);
-		String ip = IpUtils.getIpAddr(request);
-		String address = AddressUtils.getRealAddress(ip);
-		String os = capabilities.getPlatform();
-		String browser = capabilities.getBrowser();
+		LoginEvent evt = null;
 		try {
 			// 认证授权
 			domainService.auth(auth);
-			// 记录日志
-			// auth.recordLoginLog(eventId, null);
+			// 记录日志【登录成功】
+			evt = LoginLogConvertor.toDomainEvent(request, auth, null);
 			// 登录成功，转换成用户对象【业务】
 			UserDetails userDetails = UserConvertor.to(auth);
 			// 认证成功，转换成认证对象【系统】
@@ -64,8 +63,10 @@ final class OAuth2AuthenticationProcessor {
 					userDetails.getAuthorities());
 		}
 		catch (GlobalException e) {
-			// 记录日志
-			// auth.recordLoginLog(eventId, e);
+			// 记录日志【业务异常】
+			if (e instanceof BizException ex) {
+				evt = LoginLogConvertor.toDomainEvent(request, auth, ex);
+			}
 			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
 			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
@@ -74,7 +75,10 @@ final class OAuth2AuthenticationProcessor {
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 		finally {
-
+			// 发布事件
+			if (ObjectUtils.isNotNull(evt)) {
+				KafkaDomainEventPublisher.publish(evt);
+			}
 		}
 	}
 

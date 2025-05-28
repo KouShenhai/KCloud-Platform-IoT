@@ -211,17 +211,6 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testCreateCaptcha() {
-		CaptchaE captcha = DomainFactory.getCaptcha();
-		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
-		// 构造租户
-		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
-		// 创建验证码
-		Assertions.assertDoesNotThrow(() -> domainService.createCaptcha(1L, auth, captcha));
-		verify(tenantGateway, times(1)).getIdTenant("laokou");
-	}
-
-	@Test
 	void testCreateLoginLog() {
 		LoginLogE loginLog = DomainFactory.getLoginLog();
 		// 创建登录日志

@@ -15,24 +15,25 @@
  *
  */
 
-package org.laokou.common.zookeeper.config;
+package org.laokou.common.domain.support;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.dto.DomainEvent;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Data
 @Component
-@ConfigurationProperties(prefix = "spring.zookeeper")
-public class ZookeeperProperties {
+@RequiredArgsConstructor
+public class KafkaDomainEventPublisher implements DomainEventPublisher {
 
-	private String address = "zookeeper:2181";
+	private final KafkaTemplate<String, Object> kafkaTemplate;
 
-	private int sessionTimeoutMs = 60000;
+	@Override
+	public void publish(DomainEvent payload) {
 
-	private int connectionTimeoutMs = 15000;
+	}
 
 }

@@ -17,12 +17,22 @@
 
 package org.laokou.auth.convertor;
 
+import com.blueconic.browscap.Capabilities;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.auth.dto.clientobject.LoginLogCO;
+import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
+import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.LoginLogE;
+import org.laokou.auth.model.LoginStatusEnum;
+import org.laokou.common.core.util.AddressUtils;
+import org.laokou.common.core.util.IpUtils;
+import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.i18n.util.ObjectUtils;
 
 /**
  * @author laokou
@@ -78,6 +88,22 @@ public final class LoginLogConvertor {
 		// loginLogCO.setErrorMessage(truncate(loginEvent.errorMessage(), 2000));
 		// loginLogCO.setType(loginEvent.type());
 		return loginLogCO;
+	}
+
+	public static LoginEvent toDomainEvent(HttpServletRequest request, AuthA authA, BizException ex) throws Exception {
+		Capabilities capabilities = RequestUtils.getCapabilities(request);
+		String ip = IpUtils.getIpAddr(request);
+		String address = AddressUtils.getRealAddress(ip);
+		String os = capabilities.getPlatform();
+		String browser = capabilities.getBrowser();
+		int status = LoginStatusEnum.OK.getCode();
+		String errorMessage = "";
+		if (ObjectUtils.isNotNull(ex)) {
+			status = LoginStatusEnum.FAIL.getCode();
+			errorMessage = ex.getMsg();
+		}
+		return new LoginEvent(authA.getId(), authA.getUsername(), ip, address, browser, os, status, errorMessage,
+				authA.getGrantTypeEnum().getCode(), authA.getInstant(), authA.getTenantId(), authA.getUserId());
 	}
 
 }

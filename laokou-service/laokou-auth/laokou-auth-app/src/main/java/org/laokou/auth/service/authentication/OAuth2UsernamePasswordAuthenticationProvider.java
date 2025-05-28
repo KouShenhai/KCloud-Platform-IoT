@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
+import org.laokou.common.zookeeper.config.SnowflakeGenerator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -40,8 +41,9 @@ import static org.laokou.auth.factory.DomainFactory.*;
 final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2UsernamePasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor) {
-		super(authorizationService, tokenGenerator, authProcessor);
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor,
+			SnowflakeGenerator zookeeperSnowflakeGenerator) {
+		super(authorizationService, tokenGenerator, authProcessor, zookeeperSnowflakeGenerator);
 	}
 
 	@Override
@@ -56,7 +58,8 @@ final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2A
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, username, password, tenantCode, uuid, captcha);
+		AuthA auth = DomainFactory.getUsernamePasswordAuth(zookeeperSnowflakeGenerator.nextId(), username, password,
+				tenantCode, uuid, captcha);
 		auth.createUserByUsernamePassword();
 		return authenticationToken(auth, request);
 	}

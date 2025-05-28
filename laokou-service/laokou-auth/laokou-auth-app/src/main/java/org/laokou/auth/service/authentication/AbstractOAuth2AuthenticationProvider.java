@@ -25,6 +25,7 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.zookeeper.config.SnowflakeGenerator;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -69,6 +70,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	private final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
 
 	private final OAuth2AuthenticationProcessor authProcessor;
+
+	protected final SnowflakeGenerator zookeeperSnowflakeGenerator;
 
 	/**
 	 * 认证授权.
@@ -198,9 +201,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	 * @param auth 认证聚合根
 	 * @return 用户信息
 	 */
-	protected UsernamePasswordAuthenticationToken authenticationToken(AuthA auth, HttpServletRequest request)
-			throws Exception {
-		return authProcessor.authenticationToken(1L, auth, request);
+	protected UsernamePasswordAuthenticationToken authenticationToken(AuthA auth, HttpServletRequest request) {
+		return authProcessor.authenticationToken(auth, request);
 	}
 
 	private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(

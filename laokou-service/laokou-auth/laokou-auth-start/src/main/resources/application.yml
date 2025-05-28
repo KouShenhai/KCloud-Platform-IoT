@@ -63,6 +63,11 @@ spring:
       repository-type: indexed
       namespace: spring:session:auth
     timeout: 3600
+  zookeeper:
+    address: zookeeper:2181
+    data-center-id: 1
+    session-timeout-ms: 60000
+    connection-timeout-ms: 15000
   # mail
   mail:
     host: smtp.163.com

@@ -51,10 +51,6 @@ public class DomainService {
 		noticeLogGateway.createNoticeLog(noticeLog);
 	}
 
-	public void createCaptcha(Long eventId, AuthA auth, CaptchaE captcha) {
-
-	}
-
 	public void auth(AuthA auth) {
 		// 校验认证参数
 		auth.checkAuthParam();
