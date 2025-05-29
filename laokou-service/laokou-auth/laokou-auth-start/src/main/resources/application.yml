@@ -254,10 +254,10 @@ spring:
       # 批量batch类型
       type: batch
       # topic不存在报错
-      missing-topics-fatal: false
+      missing-topics-fatal: true
       observation-enabled: true
     admin:
-      auto-create: false
+      auto-create: true
     template:
       observation-enabled: true
   cloud:
