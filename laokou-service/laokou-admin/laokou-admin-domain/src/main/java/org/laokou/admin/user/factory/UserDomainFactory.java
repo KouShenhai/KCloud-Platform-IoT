@@ -29,7 +29,7 @@ public final class UserDomainFactory {
 	}
 
 	public static UserE getUser() {
-		return SpringContextUtils.getBeanProviderAndNotExistToCreate(UserE.class);
+		return SpringContextUtils.getBeanProvider(UserE.class);
 	}
 
 }

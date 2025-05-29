@@ -111,11 +111,11 @@ public final class DomainFactory {
 	}
 
 	private static AuthA getAuth() {
-		return SpringContextUtils.getBeanProviderAndNotExistToCreate(AuthA.class);
+		return SpringContextUtils.getBeanProvider(AuthA.class);
 	}
 
 	public static UserE getUser() {
-		return SpringContextUtils.getBeanProviderAndNotExistToCreate(UserE.class);
+		return SpringContextUtils.getBeanProvider(UserE.class);
 	}
 
 	public static UserE getUser(String username, String mail, String mobile, Long tenantId) throws Exception {
@@ -123,15 +123,15 @@ public final class DomainFactory {
 	}
 
 	public static LoginLogE getLoginLog() {
-		return SpringContextUtils.getBeanProviderAndNotExistToCreate(LoginLogE.class);
+		return SpringContextUtils.getBeanProvider(LoginLogE.class);
 	}
 
 	public static CaptchaE getCaptcha() {
-		return SpringContextUtils.getBeanProviderAndNotExistToCreate(CaptchaE.class);
+		return SpringContextUtils.getBeanProvider(CaptchaE.class);
 	}
 
 	public static NoticeLogE getNoticeLog() {
-		return SpringContextUtils.getBeanProviderAndNotExistToCreate(NoticeLogE.class);
+		return SpringContextUtils.getBeanProvider(NoticeLogE.class);
 	}
 
 }

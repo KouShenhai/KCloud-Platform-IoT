@@ -39,7 +39,11 @@ public class CaptchaE extends Identifier {
 	private String tenantCode;
 
 	@Autowired
-	@Qualifier("")
-	private CaptchaParamValidator captchaParamValidator;
+	@Qualifier("mailCaptchaParamValidator")
+	private CaptchaParamValidator mailCaptchaParamValidator;
+
+	@Autowired
+	@Qualifier("mobileCaptchaParamValidator")
+	private CaptchaParamValidator mobileCaptchaParamValidator;
 
 }

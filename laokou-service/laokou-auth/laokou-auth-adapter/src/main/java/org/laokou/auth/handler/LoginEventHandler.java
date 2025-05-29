@@ -20,8 +20,6 @@ package org.laokou.auth.handler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.micrometer.common.lang.NonNullApi;
 import org.laokou.auth.api.LoginLogServiceI;
-import org.laokou.auth.convertor.LoginLogConvertor;
-import org.laokou.auth.dto.LoginLogSaveCmd;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +39,8 @@ public class LoginEventHandler {
 	}
 
 	protected void handleDomainEvent(DomainEvent domainEvent) throws JsonProcessingException {
-		loginLogServiceI.save(new LoginLogSaveCmd(LoginLogConvertor.toClientObject(domainEvent)));
+		// loginLogServiceI.save(new
+		// LoginLogSaveCmd(LoginLogConvertor.toClientObject(domainEvent)));
 	}
 
 }

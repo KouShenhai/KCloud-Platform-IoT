@@ -18,9 +18,7 @@
 package org.laokou.auth;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.model.CaptchaValidator;
 import org.laokou.auth.model.PasswordValidator;
@@ -28,11 +26,9 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.*;
 import org.laokou.common.i18n.util.RedisKeyUtils;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.util.DigestUtils;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -46,55 +42,54 @@ import static org.mockito.Mockito.*;
  *
  * @author laokou
  */
-@ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
+@SpringBootTest
 class DomainServiceTest {
 
-	@Mock
+	@MockitoBean
 	private UserGateway userGateway;
 
-	@Mock
+	@MockitoBean
 	private MenuGateway menuGateway;
 
-	@Mock
+	@MockitoBean
 	private DeptGateway deptGateway;
 
-	@Mock
+	@MockitoBean
 	private TenantGateway tenantGateway;
 
-	@Mock
+	@MockitoBean
 	private LoginLogGateway loginLogGateway;
 
-	@Mock
+	@MockitoBean
 	private NoticeLogGateway noticeLogGateway;
 
-	@Mock
+	@MockitoBean
 	private PasswordValidator passwordValidator;
 
-	@Mock
+	@MockitoBean
 	private CaptchaValidator captchaValidator;
 
-	@InjectMocks
+	@MockitoSpyBean
 	private DomainService domainService;
 
-	@BeforeEach
-	void testDomainService() {
-		Assertions.assertNotNull(userGateway);
-		Assertions.assertNotNull(menuGateway);
-		Assertions.assertNotNull(deptGateway);
-		Assertions.assertNotNull(tenantGateway);
-		Assertions.assertNotNull(loginLogGateway);
-		Assertions.assertNotNull(noticeLogGateway);
-		Assertions.assertNotNull(passwordValidator);
-		Assertions.assertNotNull(captchaValidator);
-		Assertions.assertNotNull(domainService);
-	}
+	@MockitoBean("authorizationCodeAuthParamValidator")
+	private AuthParamValidator authorizationCodeAuthParamValidator;
+
+	@MockitoBean("mailAuthParamValidator")
+	private AuthParamValidator mailAuthParamValidator;
+
+	@MockitoBean("mobileAuthParamValidator")
+	private AuthParamValidator mobileAuthParamValidator;
+
+	@MockitoBean("testAuthParamValidator")
+	private AuthParamValidator testAuthParamValidator;
+
+	@MockitoBean("usernamePasswordAuthParamValidator")
+	private AuthParamValidator usernamePasswordAuthParamValidator;
 
 	@Test
 	void testUsernamePasswordAuth() {
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
-		Assertions.assertDoesNotThrow(() -> auth.setPasswordValidator(passwordValidator));
-		Assertions.assertDoesNotThrow(() -> auth.setCaptchaValidator(captchaValidator));
 		// 创建用户【用户名密码】
 		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
 		// 构造租户
@@ -128,7 +123,6 @@ class DomainServiceTest {
 	@Test
 	void testMailAuth() {
 		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
-		Assertions.assertDoesNotThrow(() -> auth.setCaptchaValidator(captchaValidator));
 		// 创建用户【邮箱】
 		Assertions.assertDoesNotThrow(auth::createUserByMail);
 		// 构造租户
@@ -157,7 +151,6 @@ class DomainServiceTest {
 	@Test
 	void testMobileAuth() {
 		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
-		Assertions.assertDoesNotThrow(() -> auth.setCaptchaValidator(captchaValidator));
 		// 创建用户【手机号】
 		Assertions.assertDoesNotThrow(auth::createUserByMobile);
 		// 构造租户
@@ -184,7 +177,6 @@ class DomainServiceTest {
 	@Test
 	void testAuthorizationCodeAuth() {
 		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
-		Assertions.assertDoesNotThrow(() -> auth.setPasswordValidator(passwordValidator));
 		// 创建用户【授权码】
 		Assertions.assertDoesNotThrow(auth::createUserByAuthorizationCode);
 		// 构造租户

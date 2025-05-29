@@ -18,7 +18,6 @@
 package org.laokou.auth.convertor;
 
 import com.blueconic.browscap.Capabilities;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.auth.dto.clientobject.LoginLogCO;
 import org.laokou.auth.dto.domainevent.LoginEvent;
@@ -31,8 +30,9 @@ import org.laokou.common.core.util.AddressUtils;
 import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.util.ObjectUtils;
+
+import static org.laokou.common.i18n.util.StringUtils.truncate;
 
 /**
  * @author laokou
@@ -53,8 +53,9 @@ public final class LoginLogConvertor {
 		loginLogE.setStatus(co.getStatus());
 		loginLogE.setErrorMessage(co.getErrorMessage());
 		loginLogE.setType(co.getType());
-		loginLogE.setInstant(co.getInstant());
+		loginLogE.setLoginTime(co.getLoginTime());
 		loginLogE.setTenantId(co.getTenantId());
+		loginLogE.setUserId(co.getUserId());
 		return loginLogE;
 	}
 
@@ -69,24 +70,28 @@ public final class LoginLogConvertor {
 		loginLogDO.setStatus(loginLogE.getStatus());
 		loginLogDO.setErrorMessage(loginLogE.getErrorMessage());
 		loginLogDO.setType(loginLogE.getType());
-		loginLogDO.setCreateTime(loginLogE.getInstant());
-		loginLogDO.setUpdateTime(loginLogE.getInstant());
+		loginLogDO.setCreateTime(loginLogE.getLoginTime());
+		loginLogDO.setUpdateTime(loginLogE.getLoginTime());
 		loginLogDO.setTenantId(loginLogE.getTenantId());
+		loginLogDO.setCreator(loginLogE.getUserId());
+		loginLogDO.setEditor(loginLogE.getUserId());
 		return loginLogDO;
 	}
 
-	public static LoginLogCO toClientObject(DomainEvent domainEvent) throws JsonProcessingException {
-		// LoginEvent loginEvent = JacksonUtils.toBean(domainEvent.getPayload(),
-		// LoginEvent.class);
+	public static LoginLogCO toClientObject(LoginEvent loginEvent) {
 		LoginLogCO loginLogCO = new LoginLogCO();
-		// loginLogCO.setUsername(loginEvent.username());
-		// loginLogCO.setIp(loginEvent.ip());
-		// loginLogCO.setAddress(loginEvent.address());
-		// loginLogCO.setBrowser(loginEvent.browser());
-		// loginLogCO.setOs(loginEvent.os());
-		// loginLogCO.setStatus(loginEvent.status());
-		// loginLogCO.setErrorMessage(truncate(loginEvent.errorMessage(), 2000));
-		// loginLogCO.setType(loginEvent.type());
+		loginLogCO.setId(loginEvent.getId());
+		loginLogCO.setUsername(loginEvent.getUsername());
+		loginLogCO.setIp(loginEvent.getIp());
+		loginLogCO.setAddress(loginEvent.getAddress());
+		loginLogCO.setBrowser(loginEvent.getBrowser());
+		loginLogCO.setOs(loginEvent.getOs());
+		loginLogCO.setStatus(loginEvent.getStatus());
+		loginLogCO.setErrorMessage(truncate(loginEvent.getErrorMessage(), 2000));
+		loginLogCO.setType(loginEvent.getType());
+		loginLogCO.setLoginTime(loginEvent.getLoginTime());
+		loginLogCO.setTenantId(loginEvent.getTenantId());
+		loginLogCO.setUserId(loginEvent.getUserId());
 		return loginLogCO;
 	}
 
@@ -102,7 +107,7 @@ public final class LoginLogConvertor {
 			status = LoginStatusEnum.FAIL.getCode();
 			errorMessage = ex.getMsg();
 		}
-		return new LoginEvent(authA.getId(), authA.getUsername(), ip, address, browser, os, status, errorMessage,
+		return new LoginEvent(authA.getId(), authA.getLoginName(), ip, address, browser, os, status, errorMessage,
 				authA.getGrantTypeEnum().getCode(), authA.getInstant(), authA.getTenantId(), authA.getUserId());
 	}
 

@@ -24,7 +24,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 /**
  * @author laokou
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "org.laokou")
 class AppTest {
 
 	public static void main(String[] args) {

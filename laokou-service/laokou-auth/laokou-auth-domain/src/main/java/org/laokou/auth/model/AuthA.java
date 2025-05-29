@@ -18,7 +18,6 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
@@ -95,38 +94,31 @@ public class AuthA extends AggregateRoot {
 	/**
 	 * 密码校验器.
 	 */
-	@Setter
 	@Autowired
 	private PasswordValidator passwordValidator;
 
 	/**
 	 * 验证码校验器.
 	 */
-	@Setter
 	@Autowired
 	private CaptchaValidator captchaValidator;
 
-	@Setter
 	@Autowired
 	@Qualifier("authorizationCodeAuthParamValidator")
 	private AuthParamValidator authorizationCodeAuthParamValidator;
 
-	@Setter
 	@Autowired
 	@Qualifier("mailAuthParamValidator")
 	private AuthParamValidator mailAuthParamValidator;
 
-	@Setter
 	@Autowired
 	@Qualifier("mobileAuthParamValidator")
 	private AuthParamValidator mobileAuthParamValidator;
 
-	@Setter
 	@Autowired
 	@Qualifier("testAuthParamValidator")
 	private AuthParamValidator testAuthParamValidator;
 
-	@Setter
 	@Autowired
 	@Qualifier("usernamePasswordAuthParamValidator")
 	private AuthParamValidator usernamePasswordAuthParamValidator;

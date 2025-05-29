@@ -22,34 +22,51 @@ import org.junit.jupiter.api.Test;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.CaptchaE;
 import org.laokou.auth.model.CaptchaParamValidator;
-import org.laokou.auth.service.validator.MailCaptchaParamValidator;
-import org.laokou.auth.service.validator.MobileCaptchaParamValidator;
+import org.laokou.auth.model.CaptchaValidator;
+import org.laokou.auth.model.PasswordValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /**
  * 验证码参数校验器测试.
  *
  * @author laokou
  */
+@SpringBootTest
 class CaptchaParamValidatorTest {
+
+	@Autowired
+	@Qualifier("mailCaptchaParamValidator")
+	private CaptchaParamValidator mailCaptchaParamValidator;
+
+	@Autowired
+	@Qualifier("mobileCaptchaParamValidator")
+	private CaptchaParamValidator mobileCaptchaParamValidator;
+
+	@MockitoBean
+	private PasswordValidator passwordValidator;
+
+	@MockitoBean
+	private CaptchaValidator captchaValidator;
 
 	@Test
 	void testMailCaptchaParamValidator() {
-		CaptchaParamValidator captchaParamValidator = new MailCaptchaParamValidator();
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		// 校验邮箱验证码
 		Assertions.assertDoesNotThrow(() -> captcha.setUuid("2413176044@qq.com"));
 		Assertions.assertDoesNotThrow(() -> captcha.setTenantCode("laokou"));
-		Assertions.assertDoesNotThrow(() -> captchaParamValidator.validateCaptcha(captcha));
+		Assertions.assertDoesNotThrow(() -> mailCaptchaParamValidator.validateCaptcha(captcha));
 	}
 
 	@Test
 	void testMobileCaptchaParamValidator() {
-		CaptchaParamValidator captchaParamValidator = new MobileCaptchaParamValidator();
 		CaptchaE captcha = DomainFactory.getCaptcha();
 		// 校验手机号验证码
 		Assertions.assertDoesNotThrow(() -> captcha.setUuid("18888888888"));
 		Assertions.assertDoesNotThrow(() -> captcha.setTenantCode("laokou"));
-		Assertions.assertDoesNotThrow(() -> captchaParamValidator.validateCaptcha(captcha));
+		Assertions.assertDoesNotThrow(() -> mobileCaptchaParamValidator.validateCaptcha(captcha));
 	}
 
 }

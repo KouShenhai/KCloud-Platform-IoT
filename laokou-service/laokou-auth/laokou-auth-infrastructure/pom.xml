@@ -109,10 +109,6 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-openfeign</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
       <artifactId>laokou-auth-client</artifactId>
     </dependency>
     <dependency>

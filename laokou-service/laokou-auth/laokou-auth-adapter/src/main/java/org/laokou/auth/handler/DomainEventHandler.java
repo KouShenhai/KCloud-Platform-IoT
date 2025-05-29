@@ -17,8 +17,13 @@
 
 package org.laokou.auth.handler;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.laokou.auth.api.LoginLogServiceI;
+import org.laokou.auth.convertor.LoginLogConvertor;
+import org.laokou.auth.dto.LoginLogSaveCmd;
+import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
@@ -32,12 +37,22 @@ import static org.laokou.auth.model.MqEnum.LOGIN_LOG_TOPIC;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class DomainEventHandler {
 
+	private final LoginLogServiceI loginLogServiceI;
+
 	@KafkaListener(topics = LOGIN_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
-	public void loginLogHandler(List<ConsumerRecords<String, Object>> messages, Acknowledgment acknowledgment) {
-		log.info("Received login log messages: {}", messages.getFirst());
-		acknowledgment.acknowledge();
+	public void loginLogHandler(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
+		try {
+			for (ConsumerRecord<String, Object> record : messages) {
+				loginLogServiceI
+					.save(new LoginLogSaveCmd(LoginLogConvertor.toClientObject((LoginEvent) record.value())));
+			}
+		}
+		finally {
+			acknowledgment.acknowledge();
+		}
 	}
 
 }
