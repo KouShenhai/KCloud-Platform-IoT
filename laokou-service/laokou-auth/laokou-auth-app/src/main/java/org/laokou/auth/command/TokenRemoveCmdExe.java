@@ -22,12 +22,9 @@ import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.security.util.UserDetails;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.stereotype.Component;
-import java.security.Principal;
 import static org.laokou.common.security.config.GlobalOpaqueTokenIntrospector.FULL;
 
 /**
@@ -53,22 +50,9 @@ public class TokenRemoveCmdExe {
 		}
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, FULL);
 		if (ObjectUtils.isNotNull(authorization)) {
-			Object obj = authorization.getAttribute(Principal.class.getName());
-			if (ObjectUtils.isNotNull(obj)) {
-				UserDetails userDetails = (UserDetails) ((UsernamePasswordAuthenticationToken) obj).getPrincipal();
-				publishEvent(userDetails.getId());
-			}
 			// 删除token
 			oAuth2AuthorizationService.remove(authorization);
 		}
-	}
-
-	private void publishEvent(Long userId) {
-		// rocketMQDomainEventPublisher.publish(new DomainEvent(1L, 0L, 1L, 1L,
-		// MqEnum.CACHE.getTopic(), null, 0,
-		// JacksonUtils.toJsonStr(new RemovedCacheEvent(USER_MENU,
-		// String.valueOf(userId))),
-		// EventTypeEnum.REMOVE_CACHE_EVENT, null), SendMessageTypeEnum.ASYNC);
 	}
 
 }
