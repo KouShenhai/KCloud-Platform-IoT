@@ -36,9 +36,9 @@ public class Md5DigestStringRedisSerializer extends StringRedisSerializer {
 
 	@Nullable
 	@Override
-	public byte[] serialize(@Nullable String value) {
-		Assert.notNull(value, "Cannot serialize null");
-		return super.serialize(DigestUtils.md5DigestAsHex(value.getBytes(StandardCharsets.UTF_8)));
+	public byte[] serialize(@Nullable String key) {
+		Assert.notNull(key, "Cannot serialize null");
+		return super.serialize(DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8)));
 	}
 
 }
