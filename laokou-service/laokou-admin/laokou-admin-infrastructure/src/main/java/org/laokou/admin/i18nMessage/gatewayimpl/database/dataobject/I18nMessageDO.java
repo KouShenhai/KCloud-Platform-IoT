@@ -27,7 +27,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("boot_sys_i18n_message")
+@TableName("sys_i18n_message")
 public class I18nMessageDO extends BaseDO {
 
 	/**

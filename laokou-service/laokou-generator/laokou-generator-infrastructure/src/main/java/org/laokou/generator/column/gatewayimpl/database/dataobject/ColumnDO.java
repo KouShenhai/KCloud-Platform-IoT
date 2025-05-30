@@ -28,7 +28,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("boot_generator_column")
+@TableName("generator_column")
 public class ColumnDO extends BaseDO {
 
 	/**

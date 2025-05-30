@@ -75,7 +75,7 @@ class NamingUtilsTest {
 		Assertions.assertEquals("", nacosDiscoveryProperties.getEndpoint());
 		Assertions.assertEquals("", nacosDiscoveryProperties.getAccessKey());
 		Assertions.assertEquals("", nacosDiscoveryProperties.getSecretKey());
-		Assertions.assertEquals("laokou-cluster", nacosDiscoveryProperties.getClusterName());
+		Assertions.assertEquals("nacos-cluster", nacosDiscoveryProperties.getClusterName());
 		Assertions.assertNotNull(nacosDiscoveryProperties.getNacosProperties());
 		Assertions.assertNotNull(namingUtils);
 	}

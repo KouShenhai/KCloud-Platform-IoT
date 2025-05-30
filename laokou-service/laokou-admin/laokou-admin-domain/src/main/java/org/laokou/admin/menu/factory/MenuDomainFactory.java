@@ -26,7 +26,7 @@ public final class MenuDomainFactory {
 	}
 
 	public static MenuE getMenu() {
-		return SpringContextUtils.getBeanProviderAndNotExistToCreate(MenuE.class);
+		return SpringContextUtils.getBeanProvider(MenuE.class);
 	}
 
 }

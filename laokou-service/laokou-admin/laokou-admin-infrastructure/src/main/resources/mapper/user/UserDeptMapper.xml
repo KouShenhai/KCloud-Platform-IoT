@@ -21,12 +21,12 @@
 <mapper namespace="org.laokou.admin.user.gatewayimpl.database.UserDeptMapper">
 
   <delete id="deleteUserDeptById">
-    delete from boot_sys_user_dept where id = #{userDeptDO.id}
+    delete from sys_user_dept where id = #{userDeptDO.id}
   </delete>
 
   <select id="selectUserDeptIdsByUserIds" resultType="java.lang.Long">
     select id
-    from boot_sys_user_dept
+    from sys_user_dept
     where user_id in
     <foreach collection="userIds" item="item" open="(" close=")">
       #{item}
@@ -35,7 +35,7 @@
 
   <select id="selectDeptIdsByUserId" resultType="java.lang.String">
     select dept_id
-    from boot_sys_user_dept
+    from sys_user_dept
     where user_id = #{userId}
   </select>
 </mapper>

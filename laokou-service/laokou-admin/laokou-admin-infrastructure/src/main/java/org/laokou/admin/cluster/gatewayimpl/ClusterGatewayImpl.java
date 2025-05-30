@@ -19,7 +19,6 @@ package org.laokou.admin.cluster.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.cluster.model.ClusterE;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.cluster.gateway.ClusterGateway;
 import org.laokou.admin.cluster.gatewayimpl.database.ClusterMapper;
@@ -39,12 +38,9 @@ public class ClusterGatewayImpl implements ClusterGateway {
 
 	private final ClusterMapper clusterMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
 	public void createCluster(ClusterE clusterE) {
-		clusterMapper
-			.insert(ClusterConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), clusterE, true));
+		clusterMapper.insert(ClusterConvertor.toDataObject(1L, clusterE, true));
 	}
 
 	@Override

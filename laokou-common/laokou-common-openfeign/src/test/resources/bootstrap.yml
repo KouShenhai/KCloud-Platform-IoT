@@ -20,16 +20,16 @@ spring:
       discovery:
         server-addr: nacos:8848
         namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-        cluster-name: laokou-cluster
-        group: LAOKOU_GROUP
+        cluster-name: nacos-cluster
+        group: IOT_GROUP
       config:
         server-addr: nacos:8848
         # https://github.com/alibaba/spring-cloud-alibaba/blob/2021.x/spring-cloud-alibaba-docs/src/main/asciidoc-zh/nacos-config.adoc
         namespace: a61abd4c-ef96-42a5-99a1-616adee531f3
-        cluster-name: laokou-cluster
+        cluster-name: nacos-cluster
         # 指定读取的文件格式
         file-extension: yaml
-        group: LAOKOU_GROUP
+        group: IOT_GROUP
         refresh-enabled: true
       username: nacos
       password: nacos

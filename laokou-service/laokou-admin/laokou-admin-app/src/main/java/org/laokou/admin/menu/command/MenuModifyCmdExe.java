@@ -22,7 +22,7 @@ import org.laokou.admin.menu.ability.MenuDomainService;
 import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuModifyCmd;
 import org.laokou.admin.menu.model.MenuE;
-import org.laokou.admin.menu.service.extensionpoint.MenuParamValidatorExtPt;
+import org.laokou.admin.menu.model.MenuParamValidator;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class MenuModifyCmdExe {
 
 	@Autowired
 	@Qualifier("modifyMenuParamValidator")
-	private MenuParamValidatorExtPt modifyMenuParamValidator;
+	private MenuParamValidator modifyMenuParamValidator;
 
 	public MenuModifyCmdExe(MenuDomainService menuDomainService, TransactionalUtils transactionalUtils) {
 		this.menuDomainService = menuDomainService;
