@@ -41,6 +41,6 @@ spring:
       # 批量batch类型
       type: batch
       # topic不存在报错
-      missing-topics-fatal: false
+      missing-topics-fatal: true
     admin:
-      auto-create: false
+      auto-create: true

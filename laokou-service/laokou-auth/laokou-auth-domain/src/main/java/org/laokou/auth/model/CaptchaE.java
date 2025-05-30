@@ -21,6 +21,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * @author laokou
@@ -35,5 +37,13 @@ public class CaptchaE extends Identifier {
 	private String tag;
 
 	private String tenantCode;
+
+	@Autowired
+	@Qualifier("mailCaptchaParamValidator")
+	private CaptchaParamValidator mailCaptchaParamValidator;
+
+	@Autowired
+	@Qualifier("mobileCaptchaParamValidator")
+	private CaptchaParamValidator mobileCaptchaParamValidator;
 
 }

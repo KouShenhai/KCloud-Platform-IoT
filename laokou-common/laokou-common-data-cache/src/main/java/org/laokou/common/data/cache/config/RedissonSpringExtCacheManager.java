@@ -99,6 +99,10 @@ public class RedissonSpringExtCacheManager implements CacheManager, ResourceLoad
 
 	private String configLocation;
 
+	public RedissonSpringExtCacheManager(RedissonClient redisson) {
+		this.redisson = redisson;
+	}
+
 	/**
 	 * Creates CacheManager supplied by Redisson instance, Codec instance and Cache config
 	 * mapped by Cache name.

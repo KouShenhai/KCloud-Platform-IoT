@@ -19,10 +19,8 @@ package org.laokou.common.core.util;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.Getter;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -32,8 +30,6 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
-import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 /**
@@ -51,7 +47,7 @@ public final class SpringContextUtils implements ApplicationContextAware, Dispos
 	public static final String DEFAULT_SERVICE_ID = "application";
 
 	@Getter
-	private static volatile ApplicationContext applicationContext = null;
+	private static ApplicationContext applicationContext;
 
 	private SpringContextUtils() {
 	}
@@ -158,23 +154,8 @@ public final class SpringContextUtils implements ApplicationContextAware, Dispos
 		}
 	}
 
-	public static <T> ObjectProvider<T> getBeanProvider(Class<T> clazz) {
-		return applicationContext.getBeanProvider(clazz);
-	}
-
-	public static <T> T getBeanProviderAndNotExistToCreate(Class<T> clazz) {
-		try {
-			return getBeanProvider(clazz).getObject();
-		}
-		catch (Exception e) {
-			try {
-				return ReflectionUtils.accessibleConstructor(clazz).newInstance();
-			}
-			catch (InstantiationException | IllegalAccessException | InvocationTargetException
-					| NoSuchMethodException ex) {
-				throw new SystemException("S_Spring_GetBeanFailed", "获取Spring Bean失败", ex);
-			}
-		}
+	public static <T> T getBeanProvider(Class<T> clazz) {
+		return applicationContext.getBeanProvider(clazz).getObject();
 	}
 
 	/**
@@ -190,8 +171,8 @@ public final class SpringContextUtils implements ApplicationContextAware, Dispos
 	}
 
 	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		SpringContextUtils.applicationContext = applicationContext;
+	public void setApplicationContext(ApplicationContext context) throws BeansException {
+		applicationContext = context;
 	}
 
 	/**

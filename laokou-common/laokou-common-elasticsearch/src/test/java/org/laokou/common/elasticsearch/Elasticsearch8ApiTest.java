@@ -61,34 +61,33 @@ class Elasticsearch8ApiTest {
 
 	@Test
 	void test() throws IOException {
-		Assertions.assertDoesNotThrow(
-				() -> elasticsearchTemplate.createIndex("laokou_res_1", "laokou_res", TestResource.class));
-		Assertions.assertDoesNotThrow(
-				() -> elasticsearchTemplate.createIndex("laokou_pro_1", "laokou_pro", TestProject.class));
-		Assertions.assertDoesNotThrow(() -> elasticsearchTemplate.asyncCreateIndex("laokou_resp_1", "laokou_resp",
+		Assertions
+			.assertDoesNotThrow(() -> elasticsearchTemplate.createIndex("iot_res_1", "iot_res", TestResource.class));
+		Assertions
+			.assertDoesNotThrow(() -> elasticsearchTemplate.createIndex("iot_pro_1", "iot_pro", TestProject.class));
+		Assertions.assertDoesNotThrow(() -> elasticsearchTemplate.asyncCreateIndex("iot_resp_1", "iot_resp",
 				TestResp.class, Executors.newSingleThreadExecutor()));
 		Assertions.assertDoesNotThrow(
-				() -> elasticsearchTemplate.asyncCreateDocument("laokou_res_1", "222", new TestResource("8888"))
-					.join());
+				() -> elasticsearchTemplate.asyncCreateDocument("iot_res_1", "222", new TestResource("8888")).join());
 		Assertions.assertDoesNotThrow(
 				() -> elasticsearchTemplate
-					.asyncBulkCreateDocument("laokou_res_1", Map.of("555", new TestResource("6666")),
+					.asyncBulkCreateDocument("iot_res_1", Map.of("555", new TestResource("6666")),
 							Executors.newSingleThreadExecutor())
 					.join());
 		Assertions.assertDoesNotThrow(
-				() -> elasticsearchTemplate.createDocument("laokou_res_1", "444", new TestResource("3333")));
-		Assertions.assertDoesNotThrow(() -> elasticsearchTemplate.bulkCreateDocument("laokou_res_1",
-				Map.of("333", new TestResource("5555"))));
+				() -> elasticsearchTemplate.createDocument("iot_res_1", "444", new TestResource("3333")));
+		Assertions.assertDoesNotThrow(
+				() -> elasticsearchTemplate.bulkCreateDocument("iot_res_1", Map.of("333", new TestResource("5555"))));
 		Search.Highlight highlight = new Search.Highlight();
 		highlight.setFields(List.of(new Search.HighlightField("name", 0, 0)));
 		Search search = new Search(highlight, 1, 10, null);
-		Page<TestResult> results = elasticsearchTemplate.search(List.of("laokou_res", "laokou_res_1"), search,
+		Page<TestResult> results = elasticsearchTemplate.search(List.of("iot_res", "iot_res_1"), search,
 				TestResult.class);
 		log.info("{}", results);
 		Assertions.assertNotNull(results);
 		Assertions.assertTrue(results.getTotal() > 0);
 		Map<String, IndexState> result = elasticsearchTemplate
-			.getIndex(List.of("laokou_res_1", "laokou_pro_1", "laokou_resp_1"));
+			.getIndex(List.of("iot_res_1", "iot_pro_1", "iot_resp_1"));
 		log.info("索引信息：{}", JacksonUtils.toJsonStr(result));
 		Assertions.assertNotNull(result);
 		Assertions.assertFalse(result.isEmpty());

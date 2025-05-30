@@ -35,7 +35,7 @@ public enum HttpMessageEnum {
 
 		@Override
 		public String getMqTopic() {
-			return "laokou_http_up_property_report";
+			return "up-property-report";
 		}
 	};
 

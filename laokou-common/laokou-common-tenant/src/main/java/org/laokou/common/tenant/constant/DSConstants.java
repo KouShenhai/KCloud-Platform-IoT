@@ -45,42 +45,42 @@ public final class DSConstants {
 		/**
 		 * 菜单表.
 		 */
-		public static final String MENU_TABLE = "boot_sys_menu";
+		public static final String MENU_TABLE = "sys_menu";
 
 		/**
 		 * 用户表.
 		 */
-		public static final String USER_TABLE = "boot_sys_user";
+		public static final String USER_TABLE = "sys_user";
 
 		/**
 		 * 部门表.
 		 */
-		public static final String DEPT_TABLE = "boot_sys_dept";
+		public static final String DEPT_TABLE = "sys_dept";
 
 		/**
 		 * 角色表.
 		 */
-		public static final String ROLE_TABLE = "boot_sys_role";
+		public static final String ROLE_TABLE = "sys_role";
 
 		/**
 		 * 用户角色表.
 		 */
-		public static final String USER_ROLE_TABLE = "boot_sys_user_role";
+		public static final String USER_ROLE_TABLE = "sys_user_role";
 
 		/**
 		 * 用户部门表.
 		 */
-		public static final String USER_DEPT_TABLE = "boot_sys_user_dept";
+		public static final String USER_DEPT_TABLE = "sys_user_dept";
 
 		/**
 		 * 角色菜单表.
 		 */
-		public static final String ROLE_MENU_TABLE = "boot_sys_role_menu";
+		public static final String ROLE_MENU_TABLE = "sys_role_menu";
 
 		/**
 		 * 角色部门表.
 		 */
-		public static final String ROLE_DEPT_TABLE = "boot_sys_role_dept";
+		public static final String ROLE_DEPT_TABLE = "sys_role_dept";
 
 	}
 
@@ -92,17 +92,17 @@ public final class DSConstants {
 		/**
 		 * 通知日志表.
 		 */
-		public static final String NOTICE_LOG_TABLE = "boot_sys_notice_log";
+		public static final String NOTICE_LOG_TABLE = "sys_notice_log";
 
 		/**
 		 * 登录日志表.
 		 */
-		public static final String LOGIN_LOG_TABLE = "boot_sys_login_log";
+		public static final String LOGIN_LOG_TABLE = "sys_login_log";
 
 		/**
 		 * 操作日志表.
 		 */
-		public static final String OPERATE_LOG_TABLE = "boot_sys_operate_log";
+		public static final String OPERATE_LOG_TABLE = "sys_operate_log";
 
 	}
 

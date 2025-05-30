@@ -26,16 +26,6 @@ public final class GatewayConstants {
 	}
 
 	/**
-	 * IP已列入黑名单.
-	 */
-	public static final String IP_BLACKED = "S_Gateway_IpBlacked";
-
-	/**
-	 * IP被限制.
-	 */
-	public static final String IP_RESTRICTED = "S_Gateway_IpRestricted";
-
-	/**
 	 * 路由不存在.
 	 */
 	public static final String ROUTER_NOT_EXIST = "S_Gateway_RouterNotExist";

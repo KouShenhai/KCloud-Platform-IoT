@@ -1,0 +1,8 @@
+server:
+  port: 8098
+
+spring:
+  application:
+    name: laokou-auth-domain
+  profiles:
+    active: test

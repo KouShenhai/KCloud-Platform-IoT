@@ -63,6 +63,11 @@ spring:
       repository-type: indexed
       namespace: spring:session:auth
     timeout: 3600
+  zookeeper:
+    address: zookeeper:2181
+    data-center-id: 1
+    session-timeout-ms: 60000
+    connection-timeout-ms: 15000
   # mail
   mail:
     host: smtp.163.com
@@ -213,63 +218,53 @@ spring:
           max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
           max-idle: 500 #连接池最大空闲连接
           min-idle: 200 #连接池最小空间连接
-
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      # 消费者组ID
+      group-id: ${spring.application.name}
+      # 禁用自动提交（按周期）已消费offset
+      enable-auto-commit: false
+      # 单次poll()调用返回的记录数
+      max-poll-records: 50
+      # 键的序列化方式
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # 值的序列化方式
+      value-deserializer: org.laokou.common.kafka.config.FuryKafkaDeserializer
+    producer:
+      # 发生错误后，消息重发的次数。
+      retries: 5
+      # 当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
+      batch-size: 16384
+      # 设置生产者内存缓冲区的大小。
+      buffer-memory: 33554432
+      # 键的序列化方式
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 值的序列化方式
+      value-serializer: org.laokou.common.kafka.config.FuryKafkaSerializer
+      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
+      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
+      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
+      acks: 1
+    listener:
+      # 在侦听器容器中运行的线程数。
+      concurrency: 5
+      # 批量提交模式
+      ack-mode: manual
+      # 批量batch类型
+      type: batch
+      # topic不存在报错
+      missing-topics-fatal: true
+      observation-enabled: true
+    admin:
+      auto-create: true
+    template:
+      observation-enabled: true
   cloud:
-    # sentinel
-    sentinel:
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: @NACOS-CONFIG-ADDRESS@
-            namespace: @NACOS-NAMESPACE@
-            data-id: auth-flow.json
-            data-type: json
-            group-id: @NACOS-GROUP@
-            username: @NACOS-USERNAME@
-            password: @NACOS-PASSWORD@
-            rule-type: flow
-      web-context-unify: false
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        dashboard: sentinel:8972
-      filter:
-        enabled: true
     # Loadbalancer配置
     loadbalancer:
       nacos:
         enabled: true
-    # OpenFeign配置
-    openfeign:
-      http2client:
-        enabled: false
-      compression:
-        response:
-          enabled: false
-        request:
-          enabled: false
-      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，而是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
-      okhttp:
-        enabled: true
-      circuitbreaker:
-        enabled: true
-      httpclient:
-        hc5:
-          enabled: false
-        disable-ssl-validation: true
-        max-connections: 500
-        time-to-live: 10
-        time-to-live-unit: minutes
-        ok-http:
-          read-timeout: 120s
-      client:
-        config:
-          default:
-            connectTimeout: 120000 #连接超时
-            readTimeout: 120000 #读取超时
-            logger-level: none
-      lazy-attributes-resolution: true
     # network
     inetutils:
       ignored-interfaces:
@@ -342,29 +337,8 @@ mybatis-plus:
   tenant:
     enabled: true
     ignore-tables:
-      - boot_sys_source
-      - boot_sys_tenant
+      - sys_source
+      - sys_tenant
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-
-rocketmq:
-  producer:
-    group: laokou_producer_group
-  name-server: rocketmq-namesrv:9876
-  consumer:
-    pull-batch-size: 32
-
-# Feign配置
-feign:
-  sentinel:
-    enabled: true
-    default-rule: default
-    rules:
-      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
-      default:
-        - grade: 2 # 异常数策略
-          count: 1 # 异常数模式下为对应的阈值
-          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
-          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
-          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
