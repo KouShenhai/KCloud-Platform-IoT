@@ -78,6 +78,6 @@ public interface ProductCategorysServiceI {
 	 * 查看产品类别.
 	 * @param qry 查看请求
 	 */
-	Result<ProductCategoryCO> getByIdProductCategory(ProductCategoryGetQry qry);
+	Result<ProductCategoryCO> getProductCategoryById(ProductCategoryGetQry qry);
 
 }

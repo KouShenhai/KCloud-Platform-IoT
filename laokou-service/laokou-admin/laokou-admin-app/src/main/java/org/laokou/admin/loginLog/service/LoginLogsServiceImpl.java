@@ -82,7 +82,7 @@ public class LoginLogsServiceImpl implements LoginLogsServiceI {
 	}
 
 	@Override
-	public Result<LoginLogCO> getByIdLoginLog(LoginLogGetQry qry) {
+	public Result<LoginLogCO> getLoginLogById(LoginLogGetQry qry) {
 		return loginLogGetQryExe.execute(qry);
 	}
 

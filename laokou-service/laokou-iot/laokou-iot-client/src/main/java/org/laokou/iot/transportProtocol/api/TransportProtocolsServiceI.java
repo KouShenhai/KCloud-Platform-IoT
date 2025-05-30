@@ -70,6 +70,6 @@ public interface TransportProtocolsServiceI {
 	 * 查看传输协议.
 	 * @param qry 查看请求
 	 */
-	Result<TransportProtocolCO> getByIdTransportProtocol(TransportProtocolGetQry qry);
+	Result<TransportProtocolCO> getTransportProtocolById(TransportProtocolGetQry qry);
 
 }

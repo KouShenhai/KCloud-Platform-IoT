@@ -77,7 +77,7 @@ public class OperateLogAop {
 			// 获取错误
 			operateLogA.getThrowable(throwable);
 			// 记录事件
-			// operateLogA.recordOperateLog(distributedIdentifierFeignClientWrapper.getId());
+			// operateLogA.recordOperateLog(1L);
 			// 发布事件
 			// operateLogA.releaseEvents()
 			// .forEach(item -> rocketMQDomainEventPublisher.publish(item,

@@ -38,7 +38,7 @@ export async function removeI18nMessage(body: number[], options?: { [key: string
 }
 
 /** 查看国际化消息详情 查看国际化消息详情 GET /v3/i18n-messages/${param0} */
-export async function getByIdI18nMessage(
+export async function getI18nMessageById(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
 	params: API.getByIdParams,
 	options?: { [key: string]: any },

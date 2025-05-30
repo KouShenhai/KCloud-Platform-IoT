@@ -82,7 +82,7 @@ public class OssLogsServiceImpl implements OssLogsServiceI {
 	}
 
 	@Override
-	public Result<OssLogCO> getByIdOssLog(OssLogGetQry qry) {
+	public Result<OssLogCO> getOssLogById(OssLogGetQry qry) {
 		return ossLogGetQryExe.execute(qry);
 	}
 

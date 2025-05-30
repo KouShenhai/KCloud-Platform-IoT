@@ -82,7 +82,7 @@ public class OperateLogsServiceImpl implements OperateLogsServiceI {
 	}
 
 	@Override
-	public Result<OperateLogCO> getByIdOperateLog(OperateLogGetQry qry) {
+	public Result<OperateLogCO> getOperateLogById(OperateLogGetQry qry) {
 		return operateLogGetQryExe.execute(qry);
 	}
 

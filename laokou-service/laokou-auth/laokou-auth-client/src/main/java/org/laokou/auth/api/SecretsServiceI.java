@@ -31,6 +31,6 @@ public interface SecretsServiceI {
 	 * 获取密钥.
 	 * @return 密钥
 	 */
-	Result<SecretCO> getInfoSecret();
+	Result<SecretCO> getSecretInfo();
 
 }

@@ -14,8 +14,8 @@ import {CaptFieldRef, LoginFormPage, ProFormCaptcha, ProFormInstance, ProFormTex
 import {Col, Divider, Image, message, Row, Space, Tabs} from 'antd';
 import {CSSProperties, useEffect, useRef, useState} from 'react';
 import {login} from '@/services/auth/auth';
-import {getByUuidCaptcha, sendCaptcha } from '@/services/auth/captcha';
-import {getInfoSecret} from '@/services/auth/secret';
+import {getCaptchaByUuid, sendCaptcha } from '@/services/auth/captcha';
+import {getSecretInfo} from '@/services/auth/secret';
 import {JSEncrypt} from 'jsencrypt';
 import {v7 as uuidV7} from 'uuid';
 import {clearToken, setToken} from "@/access"
@@ -93,7 +93,7 @@ export default () => {
 		// 调用验证码API
 		const uuid = uuidV7();
 		// @ts-ignore
-		getByUuidCaptcha({uuid: uuid}).then((res: { code: string; data: React.SetStateAction<string>; }) => {
+		getCaptchaByUuid({uuid: uuid}).then((res: { code: string; data: React.SetStateAction<string>; }) => {
 			if (res.code === 'OK') {
 				setCaptchaImage(res.data);
 			}
@@ -103,7 +103,7 @@ export default () => {
 
 	const getPublicKey = async () => {
 		// @ts-ignore
-		getInfoSecret().then((res: { code: string; data: { publicKey: React.SetStateAction<string>; }; }) => {
+		getSecretInfo().then((res: { code: string; data: { publicKey: React.SetStateAction<string>; }; }) => {
 			if (res.code === 'OK') {
 				setPublicKey(res.data.publicKey);
 			}

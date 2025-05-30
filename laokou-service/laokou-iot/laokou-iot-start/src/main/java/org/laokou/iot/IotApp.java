@@ -32,7 +32,6 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAut
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,7 +51,6 @@ import java.security.NoSuchAlgorithmException;
 @EnableSecurity
 @EnableScheduling
 @EnableWebSocketServer
-@EnableFeignClients(basePackages = { "org.laokou.common.openfeign" })
 @EnableServiceShutDown
 @EnableRedisRepository
 @EnableDiscoveryClient

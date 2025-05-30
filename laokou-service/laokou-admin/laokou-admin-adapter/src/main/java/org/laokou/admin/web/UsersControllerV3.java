@@ -126,8 +126,8 @@ public class UsersControllerV3 {
 	@DataCache(name = USERS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:user:detail')")
 	@Operation(summary = "查看用户详情", description = "查看用户详情")
-	public Result<UserCO> getByIdUser(@PathVariable("id") Long id) throws Exception {
-		return usersServiceI.getByIdUser(new UserGetQry(id));
+	public Result<UserCO> getUserById(@PathVariable("id") Long id) throws Exception {
+		return usersServiceI.getUserById(new UserGetQry(id));
 	}
 
 	@TraceLog

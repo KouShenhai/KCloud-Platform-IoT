@@ -70,6 +70,6 @@ public interface ClustersServiceI {
 	 * 查看集群.
 	 * @param qry 查看请求
 	 */
-	Result<ClusterCO> getByIdCluster(ClusterGetQry qry);
+	Result<ClusterCO> getClusterById(ClusterGetQry qry);
 
 }

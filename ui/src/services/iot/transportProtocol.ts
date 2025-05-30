@@ -41,7 +41,7 @@ export async function removeTransportProtocol(body: number[], options?: { [key: 
 }
 
 /** 查看传输协议详情 查看传输协议详情 GET /v3/transport-protocols/${param0} */
-export async function getByIdTransportProtocol(
+export async function getTransportProtocolById(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getByIdParams,
   options?: { [key: string]: any },

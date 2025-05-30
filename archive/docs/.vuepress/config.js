@@ -50,7 +50,6 @@ module.exports = {
 							{ text: '组件【nacos】', link: '/pages/zj27/'},
 							{ text: '组件【netty】', link: '/pages/zj28/'},
 							{ text: '组件【openapi-doc】', link: '/pages/zj29/'},
-							{ text: '组件【openfeign】', link: '/pages/zj30/'},
 							{ text: '组件【oss】', link: '/pages/zj31/'},
 							{ text: '组件【prometheus】', link: '/pages/zj32/'},
 							{ text: '组件【rate-limiter】', link: '/pages/zj34/'},

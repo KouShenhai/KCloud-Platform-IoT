@@ -1,6 +1,6 @@
 import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {exportOperateLog, pageOperateLog, getByIdOperateLog} from "@/services/admin/operateLog";
+import {exportOperateLog, pageOperateLog, getOperateLogById} from "@/services/admin/operateLog";
 import {Button} from "antd";
 import {ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
@@ -195,7 +195,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canOperateLogGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdOperateLog({id: record?.id}).then(res => {
+					   getOperateLogById({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setDataSource(res?.data)
 							   setModalVisit(true)

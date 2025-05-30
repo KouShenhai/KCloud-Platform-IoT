@@ -100,8 +100,8 @@ public class ColumnsControllerV3 {
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "查看代码生成器字段详情", description = "查看代码生成器字段详情")
-	public Result<ColumnCO> getByIdColumn(@PathVariable("id") Long id) {
-		return columnsServiceI.getByIdColumn(new ColumnGetQry(id));
+	public Result<ColumnCO> getColumnById(@PathVariable("id") Long id) {
+		return columnsServiceI.getColumnById(new ColumnGetQry(id));
 	}
 
 }

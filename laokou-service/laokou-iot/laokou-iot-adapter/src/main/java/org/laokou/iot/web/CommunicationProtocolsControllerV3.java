@@ -102,8 +102,8 @@ public class CommunicationProtocolsControllerV3 {
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('iot:communication-protocol:detail')")
 	@Operation(summary = "查看通讯协议详情", description = "查看通讯协议详情")
-	public Result<CommunicationProtocolCO> getByIdCommunicationProtocol(@PathVariable("id") Long id) {
-		return communicationProtocolsServiceI.getByIdCommunicationProtocol(new CommunicationProtocolGetQry(id));
+	public Result<CommunicationProtocolCO> getCommunicationProtocolById(@PathVariable("id") Long id) {
+		return communicationProtocolsServiceI.getCommunicationProtocolById(new CommunicationProtocolGetQry(id));
 	}
 
 }

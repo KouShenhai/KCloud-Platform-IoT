@@ -89,7 +89,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	@Override
-	public Result<RoleCO> getByIdRole(RoleGetQry qry) {
+	public Result<RoleCO> getRoleById(RoleGetQry qry) {
 		return roleGetQryExe.execute(qry);
 	}
 

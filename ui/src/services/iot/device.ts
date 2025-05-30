@@ -38,7 +38,7 @@ export async function removeDevice(body: number[], options?: { [key: string]: an
 }
 
 /** 查看设备详情 查看设备详情 GET /v3/devices/${param0} */
-export async function getByIdDevice(
+export async function getDeviceById(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getByIdParams,
   options?: { [key: string]: any },

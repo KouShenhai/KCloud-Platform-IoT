@@ -83,7 +83,7 @@ public class ThingThingModelsServiceImpl implements ThingModelsServiceI {
 	}
 
 	@Override
-	public Result<ThingModelCO> getByIdThingModel(ThingModelGetQry qry) {
+	public Result<ThingModelCO> getThingModelById(ThingModelGetQry qry) {
 		return thingModelGetQryExe.execute(qry);
 	}
 

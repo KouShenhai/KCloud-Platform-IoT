@@ -78,6 +78,6 @@ public interface DeptsServiceI {
 	 * 查看部门.
 	 * @param qry 查看请求
 	 */
-	Result<DeptCO> getByIdDept(DeptGetQry qry);
+	Result<DeptCO> getDeptById(DeptGetQry qry);
 
 }

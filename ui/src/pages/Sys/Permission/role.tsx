@@ -2,7 +2,7 @@ import {
 	ProColumns
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {pageRole, removeRole, getByIdRole} from "@/services/admin/role";
+import {pageRole, removeRole, getRoleById} from "@/services/admin/role";
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
@@ -160,7 +160,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canRoleGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdRole({id: record?.id}).then(res => {
+					   getRoleById({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('查看角色')
 							   setModalVisit(true)
@@ -174,7 +174,7 @@ export default () => {
 				</a>),
 				( access.canRoleModify && <a key="modify"
 				   onClick={() => {
-					   getByIdRole({id: record?.id}).then(res => {
+					   getRoleById({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('修改角色')
 							   setModalVisit(true)
@@ -187,7 +187,7 @@ export default () => {
 					修改
 				</a>),
 				( access.canRoleModify && <a key={'modifyAuthority'} onClick={() => {
-					getByIdRole({id: record?.id}).then(res => {
+					getRoleById({id: record?.id}).then(res => {
 						setTitle('分配权限')
 						setModalModifyAuthorityVisit(true)
 						setDataSource(res?.data)

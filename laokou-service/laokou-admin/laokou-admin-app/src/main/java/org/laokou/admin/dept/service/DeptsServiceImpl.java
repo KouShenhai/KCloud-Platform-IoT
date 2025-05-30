@@ -93,7 +93,7 @@ public class DeptsServiceImpl implements DeptsServiceI {
 	}
 
 	@Override
-	public Result<DeptCO> getByIdDept(DeptGetQry qry) {
+	public Result<DeptCO> getDeptById(DeptGetQry qry) {
 		return deptGetQryExe.execute(qry);
 	}
 

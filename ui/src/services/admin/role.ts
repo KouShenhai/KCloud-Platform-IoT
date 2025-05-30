@@ -39,7 +39,7 @@ export async function removeRole(body: number[], options?: { [key: string]: any 
 }
 
 /** 查看角色详情 查看角色详情 GET /v3/roles/${param0} */
-export async function getByIdRole(
+export async function getRoleById(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
 	params: API.getByIdParams,
 	options?: { [key: string]: any },

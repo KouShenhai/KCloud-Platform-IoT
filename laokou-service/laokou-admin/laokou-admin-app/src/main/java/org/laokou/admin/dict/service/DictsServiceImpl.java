@@ -82,7 +82,7 @@ public class DictsServiceImpl implements DictsServiceI {
 	}
 
 	@Override
-	public Result<DictCO> getByIdDict(DictGetQry qry) {
+	public Result<DictCO> getDictById(DictGetQry qry) {
 		return dictGetQryExe.execute(qry);
 	}
 

@@ -42,7 +42,6 @@
     <module>laokou-common-crypto</module>
     <module>laokou-common-elasticsearch</module>
     <module>laokou-common-redis</module>
-    <module>laokou-common-openfeign</module>
     <module>laokou-common-kafka</module>
     <module>laokou-common-cors</module>
     <module>laokou-common-log4j2</module>
@@ -81,6 +80,7 @@
     <module>laokou-common-pulsar</module>
     <module>laokou-common-coap</module>
     <module>laokou-common-fury</module>
+    <module>laokou-common-grpc</module>
   </modules>
 
 </project>

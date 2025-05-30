@@ -59,10 +59,6 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-openfeign</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
       <artifactId>laokou-common-rate-limiter</artifactId>
     </dependency>
     <dependency>

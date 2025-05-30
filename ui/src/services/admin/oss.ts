@@ -38,7 +38,7 @@ export async function removeOss(body: number[], options?: { [key: string]: any }
 }
 
 /** 查看OSS详情 查看OSS详情 GET /v3/oss/${param0} */
-export async function getByIdOss(
+export async function getOssById(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
 	params: API.getByIdParams,
 	options?: { [key: string]: any },

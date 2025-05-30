@@ -29,6 +29,8 @@ import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.*;
 
+import static org.laokou.auth.model.MqEnum.MAIL_CAPTCHA_TAG;
+import static org.laokou.auth.model.MqEnum.MOBILE_CAPTCHA_TAG;
 import static org.laokou.common.ratelimiter.aop.Type.IP;
 
 /**
@@ -46,26 +48,26 @@ public class CaptchasV3Controller {
 	@GetMapping("{uuid}")
 	@RateLimiter(key = "GET_CAPTCHA", type = IP)
 	@Operation(summary = "根据UUID获取验证码", description = "根据UUID获取验证码")
-	public Result<String> getByUuidCaptcha(@PathVariable("uuid") String uuid) {
-		return captchasServiceI.getByUuidCaptcha(new CaptchaGetQry(uuid));
+	public Result<String> getCaptchaByUuid(@PathVariable("uuid") String uuid) {
+		return captchasServiceI.getCaptchaByUuid(new CaptchaGetQry(uuid));
 	}
 
 	@Idempotent
 	@PostMapping("send/mobile")
 	@RateLimiter(key = "SEND_MOBILE_CAPTCHA", type = IP)
 	@Operation(summary = "根据UUID发送手机验证码", description = "根据UUID发送手机验证码")
-	public void sendMobileByUuidCaptcha(@RequestBody CaptchaSendCmd cmd) {
-		// cmd.getCo().setTag(MqEnum.MOBILE_CAPTCHA.getTag());
-		captchasServiceI.sendByUuidCaptcha(cmd);
+	public void sendMobileCaptchaByUuid(@RequestBody CaptchaSendCmd cmd) {
+		cmd.getCo().setTag(MOBILE_CAPTCHA_TAG);
+		captchasServiceI.sendCaptchaByUuid(cmd);
 	}
 
 	@Idempotent
 	@PostMapping("send/mail")
 	@RateLimiter(key = "SEND_MAIL_CAPTCHA", type = IP)
 	@Operation(summary = "根据UUID发送邮箱验证码", description = "根据UUID发送邮箱验证码")
-	public void sendMailByUuidCaptcha(@RequestBody CaptchaSendCmd cmd) {
-		// cmd.getCo().setTag(MqEnum.MAIL_CAPTCHA.getTag());
-		captchasServiceI.sendByUuidCaptcha(cmd);
+	public void sendMailCaptchaByUuid(@RequestBody CaptchaSendCmd cmd) {
+		cmd.getCo().setTag(MAIL_CAPTCHA_TAG);
+		captchasServiceI.sendCaptchaByUuid(cmd);
 	}
 
 }

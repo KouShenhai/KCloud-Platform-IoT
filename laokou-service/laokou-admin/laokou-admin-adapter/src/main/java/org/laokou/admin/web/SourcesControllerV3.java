@@ -106,8 +106,8 @@ public class SourcesControllerV3 {
 	@DataCache(name = SOURCES, key = "#id")
 	@PreAuthorize("hasAuthority('sys:source:detail')")
 	@Operation(summary = "查看数据源详情", description = "查看数据源详情")
-	public Result<SourceCO> getByIdSource(@PathVariable("id") Long id) {
-		return sourcesServiceI.getByIdSource(new SourceGetQry(id));
+	public Result<SourceCO> getSourceById(@PathVariable("id") Long id) {
+		return sourcesServiceI.getSourceById(new SourceGetQry(id));
 	}
 
 }

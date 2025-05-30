@@ -42,7 +42,7 @@ export async function removeProductCategory(body: number[], options?: { [key: st
 }
 
 /** 查看产品类别详情 查看产品类别详情 GET /v3/product-categorys/${param0} */
-export async function getByIdProductCategory(
+export async function getProductCategoryById(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getByIdParams,
   options?: { [key: string]: any },

@@ -83,7 +83,7 @@ public class CommunicationProtocolsServiceImpl implements CommunicationProtocols
 	}
 
 	@Override
-	public Result<CommunicationProtocolCO> getByIdCommunicationProtocol(CommunicationProtocolGetQry qry) {
+	public Result<CommunicationProtocolCO> getCommunicationProtocolById(CommunicationProtocolGetQry qry) {
 		return communicationProtocolGetQryExe.execute(qry);
 	}
 

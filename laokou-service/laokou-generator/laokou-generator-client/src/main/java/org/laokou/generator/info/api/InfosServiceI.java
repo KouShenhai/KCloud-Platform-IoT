@@ -70,6 +70,6 @@ public interface InfosServiceI {
 	 * 查看代码生成器信息.
 	 * @param qry 查看请求
 	 */
-	Result<InfoCO> getByIdInfo(InfoGetQry qry);
+	Result<InfoCO> getInfoById(InfoGetQry qry);
 
 }

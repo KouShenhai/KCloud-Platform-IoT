@@ -40,7 +40,7 @@ export async function removeOperateLog(body: number[], options?: { [key: string]
 }
 
 /** 查看操作日志详情 查看操作日志详情 GET /v3/operate-logs/${param0} */
-export async function getByIdOperateLog(
+export async function getOperateLogById(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
 	params: API.getByIdParams,
 	options?: { [key: string]: any },

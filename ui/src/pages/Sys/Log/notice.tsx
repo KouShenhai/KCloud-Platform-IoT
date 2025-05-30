@@ -1,6 +1,6 @@
 import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {exportNoticeLog, pageNoticeLog, getByIdNoticeLog} from "@/services/admin/noticeLog";
+import {exportNoticeLog, pageNoticeLog, getNoticeLogById} from "@/services/admin/noticeLog";
 import {Button} from "antd";
 import {ExportOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
@@ -149,7 +149,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canNoticeLogGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdNoticeLog({id: record?.id}).then(res => {
+					   getNoticeLogById({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setDataSource(res?.data)
 							   setModalVisit(true)

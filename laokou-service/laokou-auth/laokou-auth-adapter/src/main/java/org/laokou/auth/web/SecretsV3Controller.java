@@ -46,8 +46,8 @@ public class SecretsV3Controller {
 	@GetMapping
 	@Operation(summary = "获取密钥", description = "获取密钥")
 	@RateLimiter(key = "AUTH_SECRET", type = IP)
-	public Result<SecretCO> getInfoSecret() {
-		return secretsServiceI.getInfoSecret();
+	public Result<SecretCO> getSecretInfo() {
+		return secretsServiceI.getSecretInfo();
 	}
 
 }

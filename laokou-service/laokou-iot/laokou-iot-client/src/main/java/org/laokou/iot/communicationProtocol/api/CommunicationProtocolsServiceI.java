@@ -70,6 +70,6 @@ public interface CommunicationProtocolsServiceI {
 	 * 查看通讯协议.
 	 * @param qry 查看请求
 	 */
-	Result<CommunicationProtocolCO> getByIdCommunicationProtocol(CommunicationProtocolGetQry qry);
+	Result<CommunicationProtocolCO> getCommunicationProtocolById(CommunicationProtocolGetQry qry);
 
 }

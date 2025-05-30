@@ -1,6 +1,6 @@
 import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {pageThingModel, getByIdThingModel, removeThingModel} from "@/services/iot/thingModel";
+import {pageThingModel, getThingModelById, removeThingModel} from "@/services/iot/thingModel";
 import {Button, message, Modal, Space, Tag} from "antd";
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 import {trim} from "@/utils/format";
@@ -251,7 +251,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canThingModelGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdThingModel({id: record?.id}).then(res => {
+					   getThingModelById({id: record?.id}).then(res => {
 						   setTitle('查看物模型')
 						   const data = getData(res?.data)
 						   setDataSource(data)
@@ -265,7 +265,7 @@ export default () => {
 				</a>),
 				( access.canThingModelModify && <a key="modify"
 				 onClick={() => {
-					 getByIdThingModel({id: record?.id}).then(res => {
+					 getThingModelById({id: record?.id}).then(res => {
 						 setTitle('修改物模型')
 						 const data = getData(res?.data)
 						 setDataSource(data)

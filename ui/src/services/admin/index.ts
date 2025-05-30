@@ -10,7 +10,6 @@ import * as ossLog from './ossLog';
 import * as operateLog from './operateLog';
 import * as menu from './menu';
 import * as loginLog from './loginLog';
-import * as ip from './ip';
 import * as i18nMessage from './i18nMessage';
 import * as dictType from './dict';
 import * as dictItem from './dictItem';
@@ -27,7 +26,6 @@ export default {
 	operateLog,
 	menu,
 	loginLog,
-	ip,
 	i18nMessage,
 	dictType,
 	dictItem,

@@ -69,6 +69,6 @@ public interface SourcesServiceI {
 	 * 查看数据源.
 	 * @param qry 查看请求
 	 */
-	Result<SourceCO> getByIdSource(SourceGetQry qry);
+	Result<SourceCO> getSourceById(SourceGetQry qry);
 
 }

@@ -82,7 +82,7 @@ public interface UsersServiceI {
 	 * 查看用户.
 	 * @param qry 查看请求
 	 */
-	Result<UserCO> getByIdUser(UserGetQry qry) throws Exception;
+	Result<UserCO> getUserById(UserGetQry qry) throws Exception;
 
 	/**
 	 * 查看个人信息.

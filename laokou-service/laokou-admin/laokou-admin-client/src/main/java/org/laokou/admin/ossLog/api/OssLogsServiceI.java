@@ -69,6 +69,6 @@ public interface OssLogsServiceI {
 	 * 查看OSS日志.
 	 * @param qry 查看请求
 	 */
-	Result<OssLogCO> getByIdOssLog(OssLogGetQry qry);
+	Result<OssLogCO> getOssLogById(OssLogGetQry qry);
 
 }

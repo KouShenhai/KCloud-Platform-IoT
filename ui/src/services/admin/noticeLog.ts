@@ -40,7 +40,7 @@ export async function removeNoticeLog(body: number[], options?: { [key: string]:
 }
 
 /** 查看通知日志详情 查看通知日志详情 GET /v3/notice-logs/${param0} */
-export async function getByIdNoticeLog(
+export async function getNoticeLogById(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
 	params: API.getByIdParams,
 	options?: { [key: string]: any },

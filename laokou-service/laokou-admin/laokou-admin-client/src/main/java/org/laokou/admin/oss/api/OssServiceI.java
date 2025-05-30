@@ -69,7 +69,7 @@ public interface OssServiceI {
 	 * 查看OSS.
 	 * @param qry 查看请求
 	 */
-	Result<OssCO> getByIdOss(OssGetQry qry);
+	Result<OssCO> getOssById(OssGetQry qry);
 
 	/**
 	 * 上传文件.

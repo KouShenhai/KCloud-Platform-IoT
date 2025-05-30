@@ -2,7 +2,7 @@ import {
 	ProColumns,
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {listTreeDept, removeDept, getByIdDept} from "@/services/admin/dept";
+import {listTreeDept, removeDept, getDeptById} from "@/services/admin/dept";
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
@@ -121,7 +121,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canDeptGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdDept({id: record?.id}).then(res => {
+					   getDeptById({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('查看部门')
 							   setModalVisit(true)
@@ -150,7 +150,7 @@ export default () => {
 				</a>),
 				( access.canDeptModify && <a key="modify"
 				   onClick={() => {
-					   getByIdDept({id: record?.id}).then(res => {
+					   getDeptById({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('修改部门')
 							   setModalVisit(true)

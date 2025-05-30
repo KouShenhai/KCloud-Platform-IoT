@@ -84,7 +84,7 @@ public class OssServiceImpl implements OssServiceI {
 	}
 
 	@Override
-	public Result<OssCO> getByIdOss(OssGetQry qry) {
+	public Result<OssCO> getOssById(OssGetQry qry) {
 		return ossGetQryExe.execute(qry);
 	}
 

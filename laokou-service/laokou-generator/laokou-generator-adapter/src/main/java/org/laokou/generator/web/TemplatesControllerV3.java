@@ -100,8 +100,8 @@ public class TemplatesControllerV3 {
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "查看代码生成器模板详情", description = "查看代码生成器模板详情")
-	public Result<TemplateCO> getByIdTemplate(@PathVariable("id") Long id) {
-		return templatesServiceI.getByIdTemplate(new TemplateGetQry(id));
+	public Result<TemplateCO> getTemplateById(@PathVariable("id") Long id) {
+		return templatesServiceI.getTemplateById(new TemplateGetQry(id));
 	}
 
 }

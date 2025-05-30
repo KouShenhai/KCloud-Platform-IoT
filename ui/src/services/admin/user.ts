@@ -39,7 +39,7 @@ export async function removeUser(body: number[], options?: { [key: string]: any 
 }
 
 /** 查看用户详情 查看用户详情 GET /v3/users/${param0} */
-export async function getByIdUser(
+export async function getUserById(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
 	params: API.getByIdParams,
 	options?: { [key: string]: any },

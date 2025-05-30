@@ -343,12 +343,13 @@ public final class JsonLayout extends AbstractJacksonLayout {
 	// @formatter:off
 	private Map<String, String> getFieldsMap(LogEvent event) {
 		LogEvent evt = convertMutableToLog4jEvent(event);
+		long timeMillis = evt.getTimeMillis();
 		Map<String, String> additionalFieldsMap = resolveAdditionalFields(evt);
 		additionalFieldsMap.putAll(evt.getContextData().toMap());
 		additionalFieldsMap.putAll(Map.of(
-			 "id", String.valueOf(evt.getTimeMillis()),
+			 "id", String.valueOf(timeMillis),
 			"address", System.getProperty("address", ""),
-			"dateTime", FORMATTER.format(getLocalDateTimeOfTimestamp(evt.getTimeMillis())),
+			"dateTime", FORMATTER.format(getLocalDateTimeOfTimestamp(timeMillis)),
 			"level", evt.getLevel().name(),
 			"threadName", evt.getThreadName(),
 			"packageName", evt.getLoggerName(),

@@ -83,7 +83,7 @@ public class ProductsServiceImpl implements ProductsServiceI {
 	}
 
 	@Override
-	public Result<ProductCO> getByIdProduct(ProductGetQry qry) {
+	public Result<ProductCO> getProductById(ProductGetQry qry) {
 		return productGetQryExe.execute(qry);
 	}
 

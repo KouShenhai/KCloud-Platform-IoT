@@ -69,6 +69,6 @@ public interface DictsServiceI {
 	 * 查看字典.
 	 * @param qry 查看请求
 	 */
-	Result<DictCO> getByIdDict(DictGetQry qry);
+	Result<DictCO> getDictById(DictGetQry qry);
 
 }

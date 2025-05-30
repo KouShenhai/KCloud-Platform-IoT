@@ -69,6 +69,6 @@ public interface NoticeLogsServiceI {
 	 * 查看通知日志.
 	 * @param qry 查看请求
 	 */
-	Result<NoticeLogCO> getByIdNoticeLog(NoticeLogGetQry qry);
+	Result<NoticeLogCO> getNoticeLogById(NoticeLogGetQry qry);
 
 }

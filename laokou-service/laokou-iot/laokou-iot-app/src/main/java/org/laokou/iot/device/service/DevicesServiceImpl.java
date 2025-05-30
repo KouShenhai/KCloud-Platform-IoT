@@ -83,7 +83,7 @@ public class DevicesServiceImpl implements DevicesServiceI {
 	}
 
 	@Override
-	public Result<DeviceCO> getByIdDevice(DeviceGetQry qry) {
+	public Result<DeviceCO> getDeviceById(DeviceGetQry qry) {
 		return deviceGetQryExe.execute(qry);
 	}
 

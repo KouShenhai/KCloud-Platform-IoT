@@ -82,7 +82,7 @@ public class NoticeLogsServiceImpl implements NoticeLogsServiceI {
 	}
 
 	@Override
-	public Result<NoticeLogCO> getByIdNoticeLog(NoticeLogGetQry qry) {
+	public Result<NoticeLogCO> getNoticeLogById(NoticeLogGetQry qry) {
 		return noticeLogGetQryExe.execute(qry);
 	}
 

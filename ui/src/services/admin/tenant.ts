@@ -38,7 +38,7 @@ export async function removeTenant(body: number[], options?: { [key: string]: an
 }
 
 /** 查看租户详情 查看租户详情 GET /v3/tenants/${param0} */
-export async function getByIdTenant(
+export async function getTenantById(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
 	params: API.getByIdParams,
 	options?: { [key: string]: any },

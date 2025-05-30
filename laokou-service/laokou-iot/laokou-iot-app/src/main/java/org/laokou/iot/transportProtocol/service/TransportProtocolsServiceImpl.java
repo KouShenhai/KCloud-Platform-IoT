@@ -83,7 +83,7 @@ public class TransportProtocolsServiceImpl implements TransportProtocolsServiceI
 	}
 
 	@Override
-	public Result<TransportProtocolCO> getByIdTransportProtocol(TransportProtocolGetQry qry) {
+	public Result<TransportProtocolCO> getTransportProtocolById(TransportProtocolGetQry qry) {
 		return transportProtocolGetQryExe.execute(qry);
 	}
 

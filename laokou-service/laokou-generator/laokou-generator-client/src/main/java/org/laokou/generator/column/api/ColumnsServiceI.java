@@ -70,6 +70,6 @@ public interface ColumnsServiceI {
 	 * 查看代码生成器字段.
 	 * @param qry 查看请求
 	 */
-	Result<ColumnCO> getByIdColumn(ColumnGetQry qry);
+	Result<ColumnCO> getColumnById(ColumnGetQry qry);
 
 }

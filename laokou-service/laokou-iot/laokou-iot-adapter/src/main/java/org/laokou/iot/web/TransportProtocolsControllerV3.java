@@ -102,8 +102,8 @@ public class TransportProtocolsControllerV3 {
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('iot:transport-protocol:detail')")
 	@Operation(summary = "查看传输协议详情", description = "查看传输协议详情")
-	public Result<TransportProtocolCO> getByIdTransportProtocol(@PathVariable("id") Long id) {
-		return transportProtocolsServiceI.getByIdTransportProtocol(new TransportProtocolGetQry(id));
+	public Result<TransportProtocolCO> getTransportProtocolById(@PathVariable("id") Long id) {
+		return transportProtocolsServiceI.getTransportProtocolById(new TransportProtocolGetQry(id));
 	}
 
 }

@@ -33,12 +33,12 @@ public interface CaptchasServiceI {
 	 * @param qry 获取验证码参数
 	 * @return 验证码
 	 */
-	Result<String> getByUuidCaptcha(CaptchaGetQry qry);
+	Result<String> getCaptchaByUuid(CaptchaGetQry qry);
 
 	/**
 	 * 发送验证码.
 	 * @param cmd 发送验证码命令
 	 */
-	void sendByUuidCaptcha(CaptchaSendCmd cmd);
+	void sendCaptchaByUuid(CaptchaSendCmd cmd);
 
 }

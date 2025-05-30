@@ -106,8 +106,8 @@ public class TenantsControllerV3 {
 	@DataCache(name = TENANTS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:tenant:detail')")
 	@Operation(summary = "查看租户详情", description = "查看租户详情")
-	public Result<TenantCO> getByIdTenant(@PathVariable("id") Long id) {
-		return tenantsServiceI.getByIdTenant(new TenantGetQry(id));
+	public Result<TenantCO> getTenantById(@PathVariable("id") Long id) {
+		return tenantsServiceI.getTenantById(new TenantGetQry(id));
 	}
 
 }

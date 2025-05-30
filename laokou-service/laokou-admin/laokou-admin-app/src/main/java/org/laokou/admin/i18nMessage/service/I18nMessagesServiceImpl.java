@@ -82,7 +82,7 @@ public class I18nMessagesServiceImpl implements I18nMessagesServiceI {
 	}
 
 	@Override
-	public Result<I18nMessageCO> getByIdI18nMessage(I18nMessageGetQry qry) {
+	public Result<I18nMessageCO> getI18nMessageById(I18nMessageGetQry qry) {
 		return i18nMessageGetQryExe.execute(qry);
 	}
 

@@ -2,7 +2,7 @@ import {
 	ProColumns
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import { pageUser, removeUser, getByIdUser } from '@/services/admin/user';
+import { pageUser, removeUser, getUserById } from '@/services/admin/user';
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal, Space, Switch, Tag, UploadFile} from 'antd';
@@ -227,7 +227,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canUserGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdUser({id: record?.id}).then(res => {
+					   getUserById({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('查看用户')
 							   setModalVisit(true)
@@ -247,7 +247,7 @@ export default () => {
 				</a>),
 				( access.canUserModify && <a key="modify"
 				   onClick={() => {
-					   getByIdUser({id: record?.id}).then(res => {
+					   getUserById({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('修改用户')
 							   setModalVisit(true)
@@ -267,7 +267,7 @@ export default () => {
 					修改
 				</a>),
 				( access.canUserModify && <a key={'modifyAuthority'} onClick={() => {
-					getByIdUser({id: record?.id}).then(res => {
+					getUserById({id: record?.id}).then(res => {
 						setTitle('分配权限')
 						setModalModifyAuthorityVisit(true)
 						setDataSource(res?.data)
@@ -276,7 +276,7 @@ export default () => {
 					分配权限
 				</a>),
 				( access.canUserModify && <a key={'resetPwd'} onClick={() => {
-					getByIdUser({id: record?.id}).then(res => {
+					getUserById({id: record?.id}).then(res => {
 						setModalRestPwdVisit(true)
 						setDataSource(res?.data)
 					})

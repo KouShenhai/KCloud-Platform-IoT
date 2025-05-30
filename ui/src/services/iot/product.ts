@@ -38,7 +38,7 @@ export async function removeProduct(body: number[], options?: { [key: string]: a
 }
 
 /** 查看产品详情 查看产品详情 GET /v3/products/${param0} */
-export async function getByIdProduct(
+export async function getProductById(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getByIdParams,
   options?: { [key: string]: any },

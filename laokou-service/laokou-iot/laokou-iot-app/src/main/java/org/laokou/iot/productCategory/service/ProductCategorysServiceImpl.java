@@ -93,7 +93,7 @@ public class ProductCategorysServiceImpl implements ProductCategorysServiceI {
 	}
 
 	@Override
-	public Result<ProductCategoryCO> getByIdProductCategory(ProductCategoryGetQry qry) {
+	public Result<ProductCategoryCO> getProductCategoryById(ProductCategoryGetQry qry) {
 		return productCategoryGetQryExe.execute(qry);
 	}
 

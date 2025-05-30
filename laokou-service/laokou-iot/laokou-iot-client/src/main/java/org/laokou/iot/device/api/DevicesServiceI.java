@@ -70,6 +70,6 @@ public interface DevicesServiceI {
 	 * 查看设备.
 	 * @param qry 查看请求
 	 */
-	Result<DeviceCO> getByIdDevice(DeviceGetQry qry);
+	Result<DeviceCO> getDeviceById(DeviceGetQry qry);
 
 }

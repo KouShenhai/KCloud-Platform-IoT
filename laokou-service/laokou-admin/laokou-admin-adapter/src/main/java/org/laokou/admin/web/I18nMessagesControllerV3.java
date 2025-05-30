@@ -100,8 +100,8 @@ public class I18nMessagesControllerV3 {
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('sys:i18n-message:detail')")
 	@Operation(summary = "查看国际化消息详情", description = "查看国际化消息详情")
-	public Result<I18nMessageCO> getByIdI18nMessage(@PathVariable("id") Long id) {
-		return i18nMessagesServiceI.getByIdI18nMessage(new I18nMessageGetQry(id));
+	public Result<I18nMessageCO> getI18nMessageById(@PathVariable("id") Long id) {
+		return i18nMessagesServiceI.getI18nMessageById(new I18nMessageGetQry(id));
 	}
 
 }

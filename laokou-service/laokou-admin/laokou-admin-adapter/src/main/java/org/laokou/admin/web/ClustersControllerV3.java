@@ -101,8 +101,8 @@ public class ClustersControllerV3 {
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('sys:cluster:detail')")
 	@Operation(summary = "查看集群详情", description = "查看集群详情")
-	public Result<ClusterCO> getByIdCluster(@PathVariable("id") Long id) {
-		return clustersServiceI.getByIdCluster(new ClusterGetQry(id));
+	public Result<ClusterCO> getClusterById(@PathVariable("id") Long id) {
+		return clustersServiceI.getClusterById(new ClusterGetQry(id));
 	}
 
 }

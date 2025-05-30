@@ -69,6 +69,6 @@ public interface OperateLogsServiceI {
 	 * 查看操作日志.
 	 * @param qry 查看请求
 	 */
-	Result<OperateLogCO> getByIdOperateLog(OperateLogGetQry qry);
+	Result<OperateLogCO> getOperateLogById(OperateLogGetQry qry);
 
 }

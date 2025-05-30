@@ -69,6 +69,6 @@ public interface DictItemsServiceI {
 	 * 查看字典项.
 	 * @param qry 查看请求
 	 */
-	Result<DictItemCO> getByIdDictItem(DictItemGetQry qry);
+	Result<DictItemCO> getDictItemById(DictItemGetQry qry);
 
 }

@@ -82,7 +82,7 @@ public class TenantsServiceImpl implements TenantsServiceI {
 	}
 
 	@Override
-	public Result<TenantCO> getByIdTenant(TenantGetQry qry) {
+	public Result<TenantCO> getTenantById(TenantGetQry qry) {
 		return tenantGetQryExe.execute(qry);
 	}
 

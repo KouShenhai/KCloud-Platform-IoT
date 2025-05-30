@@ -101,8 +101,8 @@ public class ThingModelsControllerV3 {
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('iot:thing-model:detail')")
 	@Operation(summary = "查看物模型详情", description = "查看物模型详情")
-	public Result<ThingModelCO> getByIdThingModel(@PathVariable("id") Long id) {
-		return thingModelsServiceI.getByIdThingModel(new ThingModelGetQry(id));
+	public Result<ThingModelCO> getThingModelById(@PathVariable("id") Long id) {
+		return thingModelsServiceI.getThingModelById(new ThingModelGetQry(id));
 	}
 
 }

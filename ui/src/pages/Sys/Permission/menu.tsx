@@ -2,7 +2,7 @@ import {
 	ProColumns
 } from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {listTreeMenu, removeMenu, getByIdMenu} from "@/services/admin/menu";
+import {listTreeMenu, removeMenu, getMenuById} from "@/services/admin/menu";
 import {useEffect, useRef, useState} from "react";
 import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal, Space, Switch, Tag} from 'antd';
@@ -210,7 +210,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canMenuGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdMenu({id: record?.id}).then(res => {
+					   getMenuById({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('查看菜单')
 							   setModalVisit(true)
@@ -246,7 +246,7 @@ export default () => {
 				</a>),
 				( access.canMenuModify && <a key="modify"
 				   onClick={() => {
-					   getByIdMenu({id: record?.id}).then(res => {
+					   getMenuById({id: record?.id}).then(res => {
 						   if (res.code === 'OK') {
 							   setTitle('修改菜单')
 							   setModalVisit(true)

@@ -100,8 +100,8 @@ public class InfosControllerV3 {
 	@TraceLog
 	@GetMapping("{id}")
 	@Operation(summary = "查看代码生成器信息详情", description = "查看代码生成器信息详情")
-	public Result<InfoCO> getByIdInfo(@PathVariable("id") Long id) {
-		return infosServiceI.getByIdInfo(new InfoGetQry(id));
+	public Result<InfoCO> getInfoById(@PathVariable("id") Long id) {
+		return infosServiceI.getInfoById(new InfoGetQry(id));
 	}
 
 }

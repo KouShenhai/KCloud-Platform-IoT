@@ -83,7 +83,7 @@ public class ColumnsServiceImpl implements ColumnsServiceI {
 	}
 
 	@Override
-	public Result<ColumnCO> getByIdColumn(ColumnGetQry qry) {
+	public Result<ColumnCO> getColumnById(ColumnGetQry qry) {
 		return columnGetQryExe.execute(qry);
 	}
 

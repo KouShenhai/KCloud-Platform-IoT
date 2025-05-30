@@ -178,37 +178,6 @@ spring:
     loadbalancer:
       nacos:
         enabled: true
-    # OpenFeign配置
-    openfeign:
-      http2client:
-        enabled: false
-      compression:
-        response:
-          enabled: false
-        request:
-          enabled: false
-      # FeignAutoConfiguration、OkHttpFeignLoadBalancerConfiguration、OkHttpClient#getClient、FeignClientProperties、OptionsFactoryBean#getObject
-      # 在BeanFactory调用getBean()时，不是调用getBean，而是调用getObject(),因此，getObject()相当于代理了getBean(),而且getObject()对Options初始化，是直接从openfeign.default获取配置值的
-      okhttp:
-        enabled: true
-      circuitbreaker:
-        enabled: true
-      httpclient:
-        hc5:
-          enabled: false
-        disable-ssl-validation: true
-        max-connections: 500
-        time-to-live: 10
-        time-to-live-unit: minutes
-        ok-http:
-          read-timeout: 120s
-      client:
-        config:
-          default:
-            connectTimeout: 120000 #连接超时
-            readTimeout: 120000 #读取超时
-            logger-level: none
-      lazy-attributes-resolution: true
     inetutils:
       ignored-interfaces:
         - docker0

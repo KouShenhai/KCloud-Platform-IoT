@@ -38,7 +38,7 @@ export async function removeDict(body: number[], options?: { [key: string]: any 
 }
 
 /** 查看字典详情 查看字典详情 GET /v3/dicts/${param0} */
-export async function getByIdDict(
+export async function getDictById(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
 	params: API.getByIdParams,
 	options?: { [key: string]: any },

@@ -1,6 +1,6 @@
 import {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
-import {getByIdProductCategory, removeProductCategory, listTreeProductCategory} from "@/services/iot/productCategory";
+import {getProductCategoryById, removeProductCategory, listTreeProductCategory} from "@/services/iot/productCategory";
 import {Button, message, Modal} from "antd";
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 import React, {useRef, useState} from "react";
@@ -97,7 +97,7 @@ export default () => {
 			render: (_, record) => [
 				( access.canProductCategoryGetDetail && <a key="get"
 				   onClick={() => {
-					   getByIdProductCategory({id: record?.id}).then(res => {
+					   getProductCategoryById({id: record?.id}).then(res => {
 						   setTitle('查看产品类别')
 						   setDataSource(res?.data)
 						   setModalVisit(true)
@@ -120,7 +120,7 @@ export default () => {
 				</a>),
 				( access.canProductCategoryModify && <a key="modify"
 				   onClick={() => {
-					   getByIdProductCategory({id: record?.id}).then(res => {
+					   getProductCategoryById({id: record?.id}).then(res => {
 						   setTitle('修改产品类别')
 						   setDataSource(res?.data)
 						   setModalVisit(true)

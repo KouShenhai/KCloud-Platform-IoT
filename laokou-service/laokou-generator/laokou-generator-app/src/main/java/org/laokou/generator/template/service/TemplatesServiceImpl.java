@@ -83,7 +83,7 @@ public class TemplatesServiceImpl implements TemplatesServiceI {
 	}
 
 	@Override
-	public Result<TemplateCO> getByIdTemplate(TemplateGetQry qry) {
+	public Result<TemplateCO> getTemplateById(TemplateGetQry qry) {
 		return templateGetQryExe.execute(qry);
 	}
 

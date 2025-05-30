@@ -82,7 +82,7 @@ public class SourcesServiceImpl implements SourcesServiceI {
 	}
 
 	@Override
-	public Result<SourceCO> getByIdSource(SourceGetQry qry) {
+	public Result<SourceCO> getSourceById(SourceGetQry qry) {
 		return sourceGetQryExe.execute(qry);
 	}
 

@@ -78,6 +78,6 @@ public interface MenusServiceI {
 	 * 查看菜单.
 	 * @param qry 查看请求
 	 */
-	Result<MenuCO> getByIdMenu(MenuGetQry qry);
+	Result<MenuCO> getMenuById(MenuGetQry qry);
 
 }

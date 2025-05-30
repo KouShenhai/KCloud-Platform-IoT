@@ -70,6 +70,6 @@ public interface ProductsServiceI {
 	 * 查看产品.
 	 * @param qry 查看请求
 	 */
-	Result<ProductCO> getByIdProduct(ProductGetQry qry);
+	Result<ProductCO> getProductById(ProductGetQry qry);
 
 }

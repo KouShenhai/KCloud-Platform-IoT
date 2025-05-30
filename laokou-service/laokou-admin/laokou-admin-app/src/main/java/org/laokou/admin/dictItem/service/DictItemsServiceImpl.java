@@ -82,7 +82,7 @@ public class DictItemsServiceImpl implements DictItemsServiceI {
 	}
 
 	@Override
-	public Result<DictItemCO> getByIdDictItem(DictItemGetQry qry) {
+	public Result<DictItemCO> getDictItemById(DictItemGetQry qry) {
 		return dictItemGetQryExe.execute(qry);
 	}
 

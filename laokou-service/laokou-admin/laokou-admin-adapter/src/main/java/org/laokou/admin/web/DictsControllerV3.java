@@ -100,8 +100,8 @@ public class DictsControllerV3 {
 	@GetMapping("{id}")
 	@PreAuthorize("hasAuthority('sys:dict:detail')")
 	@Operation(summary = "查看字典详情", description = "查看字典详情")
-	public Result<DictCO> getByIdDict(@PathVariable("id") Long id) {
-		return dictsServiceI.getByIdDict(new DictGetQry(id));
+	public Result<DictCO> getDictById(@PathVariable("id") Long id) {
+		return dictsServiceI.getDictById(new DictGetQry(id));
 	}
 
 }

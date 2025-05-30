@@ -69,6 +69,6 @@ public interface TenantsServiceI {
 	 * 查看租户.
 	 * @param qry 查看请求
 	 */
-	Result<TenantCO> getByIdTenant(TenantGetQry qry);
+	Result<TenantCO> getTenantById(TenantGetQry qry);
 
 }

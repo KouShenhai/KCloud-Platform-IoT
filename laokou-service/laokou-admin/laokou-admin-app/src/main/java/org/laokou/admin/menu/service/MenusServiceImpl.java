@@ -93,7 +93,7 @@ public class MenusServiceImpl implements MenusServiceI {
 	}
 
 	@Override
-	public Result<MenuCO> getByIdMenu(MenuGetQry qry) {
+	public Result<MenuCO> getMenuById(MenuGetQry qry) {
 		return menuGetQryExe.execute(qry);
 	}
 

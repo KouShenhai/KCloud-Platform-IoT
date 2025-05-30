@@ -38,7 +38,7 @@ export async function removeOssLog(body: number[], options?: { [key: string]: an
 }
 
 /** 查看OSS日志详情 查看OSS日志详情 GET /v3/oss-logs/${param0} */
-export async function getByIdOssLog(
+export async function getOssLogById(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
 	params: API.getByIdParams,
 	options?: { [key: string]: any },

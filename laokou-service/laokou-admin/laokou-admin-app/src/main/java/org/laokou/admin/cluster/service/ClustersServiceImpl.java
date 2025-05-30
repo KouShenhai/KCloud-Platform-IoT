@@ -83,7 +83,7 @@ public class ClustersServiceImpl implements ClustersServiceI {
 	}
 
 	@Override
-	public Result<ClusterCO> getByIdCluster(ClusterGetQry qry) {
+	public Result<ClusterCO> getClusterById(ClusterGetQry qry) {
 		return clusterGetQryExe.execute(qry);
 	}
 

@@ -70,6 +70,6 @@ public interface TemplatesServiceI {
 	 * 查看代码生成器模板.
 	 * @param qry 查看请求
 	 */
-	Result<TemplateCO> getByIdTemplate(TemplateGetQry qry);
+	Result<TemplateCO> getTemplateById(TemplateGetQry qry);
 
 }

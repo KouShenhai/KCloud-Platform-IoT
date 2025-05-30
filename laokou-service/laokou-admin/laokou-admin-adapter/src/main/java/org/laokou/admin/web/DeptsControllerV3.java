@@ -117,8 +117,8 @@ public class DeptsControllerV3 {
 	@DataCache(name = DEPTS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:dept:detail')")
 	@Operation(summary = "查看部门详情", description = "查看部门详情")
-	public Result<DeptCO> getByIdDept(@PathVariable("id") Long id) {
-		return deptsServiceI.getByIdDept(new DeptGetQry(id));
+	public Result<DeptCO> getDeptById(@PathVariable("id") Long id) {
+		return deptsServiceI.getDeptById(new DeptGetQry(id));
 	}
 
 }

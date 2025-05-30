@@ -70,6 +70,6 @@ public interface ThingModelsServiceI {
 	 * 查看物模型.
 	 * @param qry 查看请求
 	 */
-	Result<ThingModelCO> getByIdThingModel(ThingModelGetQry qry);
+	Result<ThingModelCO> getThingModelById(ThingModelGetQry qry);
 
 }

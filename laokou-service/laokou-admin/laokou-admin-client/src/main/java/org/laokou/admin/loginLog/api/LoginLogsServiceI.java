@@ -69,6 +69,6 @@ public interface LoginLogsServiceI {
 	 * 查看登录日志.
 	 * @param qry 查看请求
 	 */
-	Result<LoginLogCO> getByIdLoginLog(LoginLogGetQry qry);
+	Result<LoginLogCO> getLoginLogById(LoginLogGetQry qry);
 
 }

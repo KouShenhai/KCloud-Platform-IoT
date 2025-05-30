@@ -75,6 +75,6 @@ public interface RolesServiceI {
 	 * 查看角色.
 	 * @param qry 查看请求
 	 */
-	Result<RoleCO> getByIdRole(RoleGetQry qry);
+	Result<RoleCO> getRoleById(RoleGetQry qry);
 
 }

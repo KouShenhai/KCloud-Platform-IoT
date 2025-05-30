@@ -158,7 +158,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
 - 认证授权：Spring Security OAuth2 Authorization Server
-- 远程调用：Spring Cloud OpenFeign
+- 远程调用：GRPC
 - 客户端请求：OkHttp & HttpClient & WebClient & RestClient
 - 负载均衡：Spring Cloud Loadbalancer
 - 服务熔断&降级&限流：Resilience4j
@@ -212,7 +212,6 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
         └── laokou-common-crypto                   --- 加密解密组件
         └── laokou-common-secret                   --- 接口验签组件
         └── laokou-common-security                 --- 认证授权组件
-        └── laokou-common-openfeign                --- 远程调用组件
         └── laokou-common-snail-job                --- 任务调度组件
         └── laokou-common-data-cache               --- 数据缓存组件
         └── laokou-common-mybatis-plus             --- 对象映射组件

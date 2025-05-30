@@ -69,6 +69,6 @@ public interface I18nMessagesServiceI {
 	 * 查看国际化消息.
 	 * @param qry 查看请求
 	 */
-	Result<I18nMessageCO> getByIdI18nMessage(I18nMessageGetQry qry);
+	Result<I18nMessageCO> getI18nMessageById(I18nMessageGetQry qry);
 
 }

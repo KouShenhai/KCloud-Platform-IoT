@@ -83,7 +83,7 @@ public class InfosServiceImpl implements InfosServiceI {
 	}
 
 	@Override
-	public Result<InfoCO> getByIdInfo(InfoGetQry qry) {
+	public Result<InfoCO> getInfoById(InfoGetQry qry) {
 		return infoGetQryExe.execute(qry);
 	}
 
