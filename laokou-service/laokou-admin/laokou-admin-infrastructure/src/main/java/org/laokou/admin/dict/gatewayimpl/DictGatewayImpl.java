@@ -23,7 +23,6 @@ import org.laokou.admin.dict.gateway.DictGateway;
 import org.laokou.admin.dict.gatewayimpl.database.DictMapper;
 import org.laokou.admin.dict.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.admin.dict.model.DictE;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,11 +38,9 @@ public class DictGatewayImpl implements DictGateway {
 
 	private final DictMapper dictMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
 	public void createDict(DictE dictE) {
-		dictMapper.insert(DictConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), dictE));
+		dictMapper.insert(DictConvertor.toDataObject(1L, dictE));
 	}
 
 	@Override

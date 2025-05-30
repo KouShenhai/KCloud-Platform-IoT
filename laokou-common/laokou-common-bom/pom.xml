@@ -36,13 +36,13 @@
     <!--lombok版本-->
     <lombok.version>1.18.38</lombok.version>
     <!--postgresql版本-->
-    <postgresql.version>42.7.5</postgresql.version>
+    <postgresql.version>42.7.6</postgresql.version>
     <!--admin版本-->
     <spring-boot-admin.version>3.4.7</spring-boot-admin.version>
     <!--mybatis-plus版本 -->
     <mybatis-plus.version>3.5.12</mybatis-plus.version>
     <!--redisson版本-->
-    <redisson.version>3.47.0</redisson.version>
+    <redisson.version>3.48.0</redisson.version>
     <!--jsoup版本-->
     <jsoup.version>1.20.1</jsoup.version>
     <!--jasypt版本-->
@@ -55,10 +55,6 @@
     <oshi.version>6.8.1</oshi.version>
     <!--elasticsearch版本-->
     <elasticsearch.version>8.18.1</elasticsearch.version>
-    <!--rocketmq-spring版本-->
-    <rocketmq-spring.version>2.3.3</rocketmq-spring.version>
-    <!--rocketmq版本-->
-    <rocketmq.version>5.3.2</rocketmq.version>
     <!--jakarta.servlet-api版本-->
     <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
     <!--fastexcel-->
@@ -91,8 +87,6 @@
     <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
     <!--mockito版本-->
     <mockito.version>5.18.0</mockito.version>
-    <!--retry版本-->
-    <retry.version>2.0.12</retry.version>
     <!--nacos版本-->
     <nacos.version>3.0.0</nacos.version>
     <!--knife4j版本-->
@@ -106,15 +100,13 @@
     <!--liquibase-core版本-->
     <liquibase-core.version>4.32.0</liquibase-core.version>
     <!--protobuf-java版本-->
-    <protobuf-java.version>3.25.7</protobuf-java.version>
+    <protobuf-java.version>3.25.8</protobuf-java.version>
     <!--grpc版本-->
     <grpc.version>1.72.0</grpc.version>
     <!--proto-google-common-protos版本-->
     <proto-google-common-protos.version>2.57.0</proto-google-common-protos.version>
     <!--error_prone_annotations版本-->
     <error_prone_annotations.version>2.38.0</error_prone_annotations.version>
-    <!--okio-jvm版本-->
-    <okio-jvm.version>3.11.0</okio-jvm.version>
     <!--checker-qual版本-->
     <checker-qual.version>3.49.3</checker-qual.version>
     <!--commons-io版本-->
@@ -123,34 +115,22 @@
     <fastjson.version>2.0.57</fastjson.version>
     <!--commons-text版本-->
     <commons-text.version>1.13.1</commons-text.version>
-    <!--commons-lang3版本-->
-    <commons-lang3.version>3.17.0</commons-lang3.version>
-    <!--zstd-jni版本-->
-    <zstd-jni.version>1.5.7-3</zstd-jni.version>
     <!--snail-job版本-->
     <snail-job.version>1.4.0</snail-job.version>
     <!--feign版本-->
     <feign.version>13.6</feign.version>
     <!--archunit-junit5版本-->
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
-    <!--nimbus-jose-jwt版本-->
-    <nimbus-jose-jwt.version>10.3</nimbus-jose-jwt.version>
     <!--opentelemetry-api-incubator版本-->
     <opentelemetry-api-incubator.version>1.50.0-alpha</opentelemetry-api-incubator.version>
     <!--opentelemetry-exporter-jaeger版本-->
     <opentelemetry-exporter-jaeger.version>1.34.1</opentelemetry-exporter-jaeger.version>
-    <!--shardingsphere版本-->
-    <shardingsphere.version>5.5.2</shardingsphere.version>
     <!--caffeine版本-->
     <caffeine.version>3.2.0</caffeine.version>
     <!--jsqlparser版本-->
     <jsqlparser.version>5.3</jsqlparser.version>
-    <!--arthas版本-->
-    <arthas.version>4.0.2</arthas.version>
     <!--objenesis版本-->
     <objenesis.version>3.4</objenesis.version>
-    <!--annotations-api版本-->
-    <annotations-api.version>6.0.53</annotations-api.version>
     <!--influxdb-client-java版本-->
     <influxdb-client-java.version>7.3.0</influxdb-client-java.version>
     <!--reactor-kafka版本-->
@@ -159,18 +139,8 @@
     <okhttp3.version>4.12.0</okhttp3.version>
     <!--spring-ai-openai-spring-boot-starter版本-->
     <spring-ai-openai-spring-boot-starter.version>1.0.0-M6</spring-ai-openai-spring-boot-starter.version>
-    <!--flink-connector-kafka版本-->
-    <flink-connector-kafka.version>4.0.0-2.0</flink-connector-kafka.version>
-    <!--spark版本-->
-    <spark.version>3.5.5</spark.version>
-    <!--mysql-connector-j版本-->
-    <mysql-connector-j.version>9.3.0</mysql-connector-j.version>
-    <!--clickhouse-jdbc版本-->
-    <clickhouse-jdbc.version>0.8.6</clickhouse-jdbc.version>
     <!--reactor-core版本-->
     <reactor-core.version>3.7.6</reactor-core.version>
-    <!--sentinel版本-->
-    <sentinel.version>1.8.8</sentinel.version>
     <!--opencsv版本-->
     <opencsv.version>5.11</opencsv.version>
     <!--curator版本-->
@@ -189,11 +159,28 @@
     <jSerialComm.version>2.11.0</jSerialComm.version>
     <!--californium版本-->
     <californium.version>4.0.0-M3</californium.version>
+    <!--jsoup版本-->
+    <jsoup.version>1.20.1</jsoup.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-undertow</artifactId>
+        <version>${spring-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-fury</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jsoup</groupId>
+        <artifactId>jsoup</artifactId>
+        <version>${jsoup.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.eclipse.californium</groupId>
         <artifactId>californium-core</artifactId>
@@ -391,36 +378,6 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-distributed-identifier-start</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-distributed-identifier-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-distributed-identifier-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-distributed-identifier-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-distributed-identifier-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-distributed-identifier-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
         <artifactId>laokou-report-infrastructure</artifactId>
         <version>${laokou.version}</version>
       </dependency>
@@ -466,11 +423,6 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-shardingsphere</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
         <artifactId>laokou-oss-adapter</artifactId>
         <version>${laokou.version}</version>
       </dependency>
@@ -500,74 +452,14 @@
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.alibaba.csp</groupId>
-        <artifactId>sentinel-apache-dubbo3-adapter</artifactId>
-        <version>${sentinel.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.alibaba.csp</groupId>
-        <artifactId>sentinel-transport-simple-http</artifactId>
-        <version>${sentinel.version}</version>
-      </dependency>
-      <dependency>
         <groupId>io.projectreactor</groupId>
         <artifactId>reactor-core</artifactId>
         <version>${reactor-core.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.clickhouse</groupId>
-        <artifactId>clickhouse-jdbc</artifactId>
-        <version>${clickhouse-jdbc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.mysql</groupId>
-        <artifactId>mysql-connector-j</artifactId>
-        <version>${mysql-connector-j.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-common-ai</artifactId>
         <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-flink</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-spark</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-dubbo</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-starrocks</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.spark</groupId>
-        <artifactId>spark-core_2.13</artifactId>
-        <version>${spark.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.spark</groupId>
-        <artifactId>spark-streaming_2.13</artifactId>
-        <version>${spark.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.spark</groupId>
-        <artifactId>spark-sql_2.13</artifactId>
-        <version>${spark.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.flink</groupId>
-        <artifactId>flink-connector-kafka</artifactId>
-        <version>${flink-connector-kafka.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.ai</groupId>
@@ -615,11 +507,6 @@
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.tomcat</groupId>
-        <artifactId>annotations-api</artifactId>
-        <version>${annotations-api.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-common-banner</artifactId>
         <version>${laokou.version}</version>
@@ -635,19 +522,9 @@
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-grpc</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.objenesis</groupId>
         <artifactId>objenesis</artifactId>
         <version>${objenesis.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-lang3</artifactId>
-        <version>${commons-lang3.version}</version>
       </dependency>
       <dependency>
         <groupId>com.github.jsqlparser</groupId>
@@ -675,11 +552,6 @@
         <version>${mybatis-plus.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.shardingsphere</groupId>
-        <artifactId>shardingsphere-jdbc</artifactId>
-        <version>${shardingsphere.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-thymeleaf</artifactId>
         <version>${spring-boot.version}</version>
@@ -693,11 +565,6 @@
         <groupId>io.opentelemetry</groupId>
         <artifactId>opentelemetry-api-incubator</artifactId>
         <version>${opentelemetry-api-incubator.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.nimbusds</groupId>
-        <artifactId>nimbus-jose-jwt</artifactId>
-        <version>${nimbus-jose-jwt.version}</version>
       </dependency>
       <dependency>
         <groupId>com.tngtech.archunit</groupId>
@@ -820,11 +687,6 @@
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.github.luben</groupId>
-        <artifactId>zstd-jni</artifactId>
-        <version>${zstd-jni.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-text</artifactId>
         <version>${commons-text.version}</version>
@@ -850,11 +712,6 @@
         <version>${checker-qual.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.squareup.okio</groupId>
-        <artifactId>okio-jvm</artifactId>
-        <version>${okio-jvm.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.google.errorprone</groupId>
         <artifactId>error_prone_annotations</artifactId>
         <version>${error_prone_annotations.version}</version>
@@ -876,33 +733,8 @@
       </dependency>
       <dependency>
         <groupId>io.grpc</groupId>
-        <artifactId>grpc-stub</artifactId>
-        <version>${grpc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
-        <artifactId>grpc-netty-shaded</artifactId>
-        <version>${grpc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
         <artifactId>grpc-core</artifactId>
         <version>${grpc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
-        <artifactId>grpc-context</artifactId>
-        <version>${grpc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
-        <artifactId>grpc-protobuf</artifactId>
-        <version>${grpc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.google.protobuf</groupId>
-        <artifactId>protobuf-java</artifactId>
-        <version>${protobuf-java.version}</version>
       </dependency>
       <dependency>
         <groupId>org.liquibase</groupId>
@@ -983,11 +815,6 @@
         <groupId>com.alibaba.nacos</groupId>
         <artifactId>nacos-common</artifactId>
         <version>${nacos.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.retry</groupId>
-        <artifactId>spring-retry</artifactId>
-        <version>${retry.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -1077,21 +904,6 @@
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-common-network-mqtt-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-hive</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-hbase</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-cassandra</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
@@ -1355,11 +1167,6 @@
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-sentinel</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.amazonaws</groupId>
         <artifactId>aws-java-sdk-s3</artifactId>
         <version>${aws-java-sdk-s3.version}</version>
@@ -1377,19 +1184,9 @@
         <version>${spring-boot-admin.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.jsoup</groupId>
-        <artifactId>jsoup</artifactId>
-        <version>${jsoup.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.baomidou</groupId>
         <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
         <version>${mybatis-plus.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-sentinel</artifactId>
-        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
@@ -1458,11 +1255,6 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-rocketmq</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
         <artifactId>laokou-common-openapi-doc</artifactId>
         <version>${laokou.version}</version>
       </dependency>
@@ -1470,36 +1262,6 @@
         <groupId>org.laokou</groupId>
         <artifactId>laokou-auth-client</artifactId>
         <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.rocketmq</groupId>
-        <artifactId>rocketmq-spring-boot-starter</artifactId>
-        <version>${rocketmq-spring.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.rocketmq</groupId>
-        <artifactId>rocketmq-acl</artifactId>
-        <version>${rocketmq.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.rocketmq</groupId>
-        <artifactId>rocketmq-client</artifactId>
-        <version>${rocketmq.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.rocketmq</groupId>
-        <artifactId>rocketmq-common</artifactId>
-        <version>${rocketmq.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.rocketmq</groupId>
-        <artifactId>rocketmq-remoting</artifactId>
-        <version>${rocketmq.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.rocketmq</groupId>
-        <artifactId>rocketmq-srvutil</artifactId>
-        <version>${rocketmq.version}</version>
       </dependency>
       <dependency>
         <groupId>jakarta.servlet</groupId>

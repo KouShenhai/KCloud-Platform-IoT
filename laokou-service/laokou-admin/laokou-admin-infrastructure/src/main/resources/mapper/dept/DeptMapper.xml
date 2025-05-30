@@ -44,7 +44,7 @@
 
   <sql id="selectObjectList">
     SELECT <include refid="selectColumns"/>
-    from boot_sys_dept
+    from sys_dept
     <include refid="selectConditions"/>
     order by "sort" desc
   </sql>
@@ -57,13 +57,13 @@
 
   <select id="selectObjectCount" resultType="long">
     SELECT count(1)
-    from boot_sys_dept
+    from sys_dept
     <include refid="selectConditions"/>
   </select>
 
 	<select id="selectVersion" resultType="integer">
 		select version
-		from boot_sys_dept
+		from sys_dept
 		where id = #{id}
 	</select>
 
@@ -77,13 +77,13 @@
         select '0'
       </when>
       <otherwise>
-        select "path" from boot_sys_dept where id = #{id}
+        select "path" from sys_dept where id = #{id}
       </otherwise>
     </choose>
   </select>
 
   <update id="updateDeptChildrenPath">
-    update boot_sys_dept set "path" = regexp_replace("path", #{oldPrefix}, #{newPrefix})
+    update sys_dept set "path" = regexp_replace("path", #{oldPrefix}, #{newPrefix})
     where "path" LIKE CAST(#{oldPath} AS TEXT) || '%'
   </update>
 

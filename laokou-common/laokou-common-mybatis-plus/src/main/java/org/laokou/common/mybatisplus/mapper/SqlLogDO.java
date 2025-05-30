@@ -25,7 +25,7 @@ import lombok.Data;
  * @author laokou
  */
 @Data
-// @TableName(BOOT_SYS_SQL_LOG)
+// @TableName(sys_sql_log)
 public class SqlLogDO extends BaseDO {
 
 	/**

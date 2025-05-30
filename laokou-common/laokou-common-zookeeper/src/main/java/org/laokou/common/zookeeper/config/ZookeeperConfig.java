@@ -30,11 +30,11 @@ import org.springframework.context.annotation.Configuration;
 public class ZookeeperConfig {
 
 	@Bean(initMethod = "start", destroyMethod = "close")
-	public CuratorFramework curatorFramework(ZookeeperProperties zookeeperProperties) {
+	public CuratorFramework curatorFramework(SpringZookeeperProperties springZookeeperProperties) {
 		return CuratorFrameworkFactory.builder()
-			.connectString(zookeeperProperties.getAddress())
-			.sessionTimeoutMs(zookeeperProperties.getSessionTimeoutMs())
-			.connectionTimeoutMs(zookeeperProperties.getConnectionTimeoutMs())
+			.connectString(springZookeeperProperties.getAddress())
+			.sessionTimeoutMs(springZookeeperProperties.getSessionTimeoutMs())
+			.connectionTimeoutMs(springZookeeperProperties.getConnectionTimeoutMs())
 			.retryPolicy(new ExponentialBackoffRetry(1000, 3))
 			.build();
 	}

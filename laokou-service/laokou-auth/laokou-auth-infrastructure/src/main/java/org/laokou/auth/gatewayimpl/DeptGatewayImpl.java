@@ -22,16 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.DeptGateway;
 import org.laokou.auth.gatewayimpl.database.DeptMapper;
 import org.laokou.auth.model.UserE;
-import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.util.MessageUtils;
-import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static org.laokou.auth.common.constant.BizConstants.DEPT_QUERY_FAILED;
-import static org.laokou.auth.model.OAuth2Constants.DATA_TABLE_NOT_EXIST;
-import static org.laokou.common.tenant.constant.DSConstants.Master.DEPT_TABLE;
 
 /**
  * 部门.
@@ -52,21 +45,10 @@ public class DeptGatewayImpl implements DeptGateway {
 	 */
 	@Override
 	public List<String> getPathsDept(UserE user) {
-		try {
-			if (user.isSuperAdministrator()) {
-				return deptMapper.selectDeptPaths();
-			}
-			return deptMapper.selectDeptPathsByUserId(user.getId());
+		if (user.isSuperAdministrator()) {
+			return deptMapper.selectDeptPaths();
 		}
-		catch (BadSqlGrammarException e) {
-			log.error("表 {} 不存在，错误信息：{}", DEPT_TABLE, e.getMessage());
-			throw new BizException(DATA_TABLE_NOT_EXIST,
-					MessageUtils.getMessage(DATA_TABLE_NOT_EXIST, new String[] { DEPT_TABLE }));
-		}
-		catch (Exception e) {
-			log.error("查询部门失败，错误信息：{}", e.getMessage());
-			throw new BizException(DEPT_QUERY_FAILED);
-		}
+		return deptMapper.selectDeptPathsByUserId(user.getId());
 	}
 
 }

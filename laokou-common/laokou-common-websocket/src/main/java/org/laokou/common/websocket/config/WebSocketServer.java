@@ -77,11 +77,11 @@ public final class WebSocketServer extends AbstractServer {
 	}
 
 	@Override
-	public void send(String clientId, Object obj) throws InterruptedException {
+	public void send(Long clientId, Object payload) throws InterruptedException {
 		Set<Channel> channels = WebSocketSessionManager.get(clientId);
 		for (Channel channel : channels) {
 			if (ObjectUtils.isNotNull(channel) && channel.isActive() && channel.isWritable()) {
-				virtualThreadExecutor.execute(() -> channel.writeAndFlush(obj));
+				virtualThreadExecutor.execute(() -> channel.writeAndFlush(payload));
 			}
 		}
 	}

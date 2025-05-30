@@ -25,7 +25,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.trace.util.TraceUtils;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 /**
  * @author laokou
@@ -41,13 +40,6 @@ public class TraceLogAop {
 	@Around("@annotation(org.laokou.common.trace.annotation.TraceLog)")
 	public Object doAround(ProceedingJoinPoint point) throws Throwable {
 		Object proceed = point.proceed();
-		if (proceed instanceof Mono<?> mono) {
-			return mono.map(this::rewrite);
-		}
-		return rewrite(proceed);
-	}
-
-	private Object rewrite(Object proceed) {
 		if (proceed instanceof Result<?> result) {
 			result.setTraceId(traceUtils.getTraceId());
 			result.setSpanId(traceUtils.getSpanId());

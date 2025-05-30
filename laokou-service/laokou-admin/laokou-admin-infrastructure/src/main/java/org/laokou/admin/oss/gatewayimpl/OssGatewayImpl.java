@@ -19,7 +19,6 @@ package org.laokou.admin.oss.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.oss.model.OssE;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.oss.gateway.OssGateway;
 import org.laokou.admin.oss.gatewayimpl.database.OssMapper;
@@ -38,11 +37,9 @@ public class OssGatewayImpl implements OssGateway {
 
 	private final OssMapper ossMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
 	public void createOss(OssE ossE) {
-		ossMapper.insert(OssConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), ossE));
+		ossMapper.insert(OssConvertor.toDataObject(1L, ossE));
 	}
 
 	@Override
