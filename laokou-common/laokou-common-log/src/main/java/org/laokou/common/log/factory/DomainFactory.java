@@ -30,7 +30,7 @@ public final class DomainFactory {
 	}
 
 	public static OperateLogA getOperateLog() {
-		return SpringContextUtils.getBeanProviderAndNotExistToCreate(OperateLogA.class);
+		return SpringContextUtils.getBeanProvider(OperateLogA.class);
 	}
 
 }

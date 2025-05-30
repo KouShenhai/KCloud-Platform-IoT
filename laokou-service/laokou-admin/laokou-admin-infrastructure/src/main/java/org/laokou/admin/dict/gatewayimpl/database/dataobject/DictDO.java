@@ -27,7 +27,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("boot_sys_dict")
+@TableName("sys_dict")
 public class DictDO extends BaseDO {
 
 	/**

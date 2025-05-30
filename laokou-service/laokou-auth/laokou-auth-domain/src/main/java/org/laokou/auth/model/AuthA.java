@@ -18,30 +18,20 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.laokou.auth.ability.validator.CaptchaValidator;
-import org.laokou.auth.ability.validator.PasswordValidator;
-import org.laokou.auth.dto.domainevent.LoginEvent;
-import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.common.constant.EventTypeEnum;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
 import static org.laokou.auth.model.GrantTypeEnum.*;
 import static org.laokou.auth.model.OAuth2Constants.*;
-import static org.laokou.common.i18n.common.constant.EventTypeEnum.LOGIN_EVENT;
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
 
@@ -52,7 +42,6 @@ import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
  */
 @Getter
 @Entity
-@NoArgsConstructor
 public class AuthA extends AggregateRoot {
 
 	/**
@@ -93,11 +82,6 @@ public class AuthA extends AggregateRoot {
 	private UserE user;
 
 	/**
-	 * 数据源前缀.
-	 */
-	private String sourcePrefix;
-
-	/**
 	 * 菜单权限标识.
 	 */
 	private Set<String> permissions;
@@ -108,34 +92,36 @@ public class AuthA extends AggregateRoot {
 	private Set<String> deptPaths;
 
 	/**
-	 * 扩展信息.
-	 */
-	private InfoV info;
-
-	/**
-	 * 验证码实体.
-	 */
-	private CaptchaE captchaE;
-
-	/**
 	 * 密码校验器.
 	 */
-	@Setter
 	@Autowired
 	private PasswordValidator passwordValidator;
 
 	/**
 	 * 验证码校验器.
 	 */
-	@Setter
 	@Autowired
 	private CaptchaValidator captchaValidator;
 
-	public AuthA fillValue(Long id, String tenantCode) {
-		super.id = id;
-		this.tenantCode = tenantCode;
-		return this;
-	}
+	@Autowired
+	@Qualifier("authorizationCodeAuthParamValidator")
+	private AuthParamValidator authorizationCodeAuthParamValidator;
+
+	@Autowired
+	@Qualifier("mailAuthParamValidator")
+	private AuthParamValidator mailAuthParamValidator;
+
+	@Autowired
+	@Qualifier("mobileAuthParamValidator")
+	private AuthParamValidator mobileAuthParamValidator;
+
+	@Autowired
+	@Qualifier("testAuthParamValidator")
+	private AuthParamValidator testAuthParamValidator;
+
+	@Autowired
+	@Qualifier("usernamePasswordAuthParamValidator")
+	private AuthParamValidator usernamePasswordAuthParamValidator;
 
 	public AuthA fillValue(Long id, String username, String password, String tenantCode, GrantTypeEnum grantTypeEnum,
 			String uuid, String captcha) {
@@ -149,47 +135,32 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void createUserByUsernamePassword() throws Exception {
-		this.user = DomainFactory.getUser(this.username, EMPTY, EMPTY);
+		this.user = DomainFactory.getUser(this.username, EMPTY, EMPTY, super.tenantId);
 	}
 
 	public void createUserByMobile() throws Exception {
-		this.user = DomainFactory.getUser(EMPTY, EMPTY, this.captcha.uuid());
+		this.user = DomainFactory.getUser(EMPTY, EMPTY, this.captcha.uuid(), super.tenantId);
 	}
 
 	public void createUserByMail() throws Exception {
-		this.user = DomainFactory.getUser(EMPTY, this.captcha.uuid(), EMPTY);
+		this.user = DomainFactory.getUser(EMPTY, this.captcha.uuid(), EMPTY, super.tenantId);
 	}
 
 	public void createUserByAuthorizationCode() throws Exception {
-		this.user = DomainFactory.getUser(this.username, EMPTY, EMPTY);
+		this.user = DomainFactory.getUser(this.username, EMPTY, EMPTY, super.tenantId);
 	}
 
 	public void createUserByTest() throws Exception {
-		this.user = DomainFactory.getUser(this.username, EMPTY, EMPTY);
-	}
-
-	public void createCaptcha(Long eventId) {
-		addEvent(new DomainEvent(eventId, tenantId, null, super.id, MqEnum.MOBILE_CAPTCHA.getTopic(), captchaE.getTag(),
-				super.version, JacksonUtils.toJsonStr(new SendCaptchaEvent(captchaE.getUuid())),
-				EventTypeEnum.SEND_CAPTCHA_EVENT, sourcePrefix));
-		super.version++;
-	}
-
-	public void getExtInfo(InfoV info) {
-		this.info = info;
+		this.user = DomainFactory.getUser(this.username, EMPTY, EMPTY, super.tenantId);
 	}
 
 	public void getTenantId(Long tenantId) {
 		super.tenantId = tenantId;
 	}
 
-	public void getSourcePrefix(String sourcePrefix) {
-		this.sourcePrefix = sourcePrefix;
-	}
-
 	public void getUserInfo(UserE user) {
 		this.user = user;
-		super.userId = ObjectUtils.isNotNull(this.user) ? this.user.getId() : null;
+		super.userId = ObjectUtils.isNotNull(user) ? user.getId() : null;
 	}
 
 	public void getMenuPermissions(Set<String> permissions) {
@@ -200,8 +171,16 @@ public class AuthA extends AggregateRoot {
 		this.deptPaths = getPaths(deptPaths);
 	}
 
-	public void getCaptcha(CaptchaE captcha) {
-		this.captchaE = captcha;
+	public void checkAuthParam() {
+		switch (grantTypeEnum) {
+			case MOBILE -> this.mobileAuthParamValidator.validateAuth(this);
+			case MAIL -> this.mailAuthParamValidator.validateAuth(this);
+			case USERNAME_PASSWORD -> this.usernamePasswordAuthParamValidator.validateAuth(this);
+			case AUTHORIZATION_CODE -> this.authorizationCodeAuthParamValidator.validateAuth(this);
+			case TEST -> this.testAuthParamValidator.validateAuth(this);
+			default -> {
+			}
+		}
 	}
 
 	public void checkTenantId() {
@@ -219,12 +198,6 @@ public class AuthA extends AggregateRoot {
 			if (!validate) {
 				throw new BizException(CAPTCHA_ERROR);
 			}
-		}
-	}
-
-	public void checkSourcePrefix() {
-		if (ObjectUtils.isNull(sourcePrefix)) {
-			throw new BizException(DATA_SOURCE_NOT_EXIST);
 		}
 	}
 
@@ -258,14 +231,11 @@ public class AuthA extends AggregateRoot {
 		}
 	}
 
-	public void recordLoginLog(Long eventId, GlobalException e) {
-		LoginEvent event = getEvent(e);
-		if (ObjectUtils.isNotNull(event)) {
-			addEvent(new DomainEvent(eventId, super.tenantId, super.userId, super.id, MqEnum.LOGIN_LOG.getTopic(),
-					MqEnum.LOGIN_LOG.getTag(), super.version, JacksonUtils.toJsonStr(event), LOGIN_EVENT,
-					sourcePrefix));
-			super.version++;
+	public String getLoginName() {
+		if (List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE, TEST).contains(grantTypeEnum)) {
+			return this.username;
 		}
+		return this.captcha.uuid();
 	}
 
 	private boolean isUseCaptcha() {
@@ -297,25 +267,6 @@ public class AuthA extends AggregateRoot {
 			}
 		}
 		return paths;
-	}
-
-	private String getLoginName() {
-		if (List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE, TEST).contains(grantTypeEnum)) {
-			return this.username;
-		}
-		return this.captcha.uuid();
-	}
-
-	private LoginEvent getEvent(GlobalException e) {
-		if (ObjectUtils.isNull(e)) {
-			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
-					LoginStatusEnum.OK.getCode(), EMPTY, grantTypeEnum.getCode(), super.instant);
-		}
-		else if (e instanceof BizException ex) {
-			return new LoginEvent(getLoginName(), info.ip(), info.address(), info.browser(), info.os(),
-					LoginStatusEnum.FAIL.getCode(), ex.getMsg(), grantTypeEnum.getCode(), super.instant);
-		}
-		return null;
 	}
 
 	private String getCaptchaCacheKey() {

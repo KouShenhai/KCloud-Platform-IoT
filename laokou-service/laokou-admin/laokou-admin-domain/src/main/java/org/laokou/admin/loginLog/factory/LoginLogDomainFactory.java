@@ -26,7 +26,7 @@ public final class LoginLogDomainFactory {
 	}
 
 	public static LoginLogE getLoginLog() {
-		return SpringContextUtils.getBeanProviderAndNotExistToCreate(LoginLogE.class);
+		return SpringContextUtils.getBeanProvider(LoginLogE.class);
 	}
 
 }

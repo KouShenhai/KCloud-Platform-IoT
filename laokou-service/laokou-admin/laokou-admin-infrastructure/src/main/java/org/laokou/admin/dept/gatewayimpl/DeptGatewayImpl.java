@@ -23,7 +23,6 @@ import org.laokou.admin.dept.gateway.DeptGateway;
 import org.laokou.admin.dept.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.dept.model.DeptE;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,11 +38,9 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	private final DeptMapper deptMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
 	public void createDept(DeptE deptE) {
-		DeptDO deptDO = DeptConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), deptE);
+		DeptDO deptDO = DeptConvertor.toDataObject(1L, deptE);
 		// 校验父级路径
 		checkDeptParentPath(deptE, deptDO.getId());
 		deptDO.setPath(deptE.getPath());

@@ -29,7 +29,7 @@ public final class RoleDomainFactory {
 	}
 
 	public static RoleE getRole() {
-		return SpringContextUtils.getBeanProviderAndNotExistToCreate(RoleE.class);
+		return SpringContextUtils.getBeanProvider(RoleE.class);
 	}
 
 }

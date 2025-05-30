@@ -56,13 +56,13 @@ class TableTest {
 
 	@Test
 	void testTable() {
-		List<TableDO> tables = tableMapper.selectObjects("boot_sys_user");
+		List<TableDO> tables = tableMapper.selectObjects("sys_user");
 		log.info("获取表：{}", JacksonUtils.toJsonStr(tables));
 	}
 
 	@Test
 	void testTableColumn() {
-		List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects("boot_sys_user");
+		List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects("sys_user");
 		log.info("获取字段：{}", JacksonUtils.toJsonStr(tableColumns));
 	}
 
@@ -86,7 +86,7 @@ class TableTest {
 		// 应用
 		App app = App.SYS;
 		// 表名
-		Set<String> tableNames = Set.of("boot_sys_user", "boot_sys_menu", "boot_sys_tenant");
+		Set<String> tableNames = Set.of("sys_user", "sys_menu", "sys_tenant");
 		generateCode(sourceName, version, author, tablePrefix, moduleName, packageName, tableNames, app);
 	}
 
@@ -134,8 +134,8 @@ class TableTest {
 		// 应用
 		App app = App.IOT;
 		// 表名
-		Set<String> tableNames = Set.of("boot_iot_device", "boot_iot_thing_model", "boot_iot_network",
-				"boot_iot_product", "boot_iot_product_type", "boot_iot_protocol");
+		Set<String> tableNames = Set.of("iot_device", "iot_thing_model", "boot_iot_network", "iot_product",
+				"iot_product_type", "boot_iot_protocol");
 		generateCode(sourceName, version, author, tablePrefix, moduleName, packageName, tableNames, app);
 	}
 
@@ -159,7 +159,7 @@ class TableTest {
 		// 应用
 		App app = App.GENERATOR;
 		// 表名
-		Set<String> tableNames = Set.of("boot_generator_template", "boot_generator_info");
+		Set<String> tableNames = Set.of("generator_template", "generator_info");
 		generateCode(sourceName, version, author, tablePrefix, moduleName, packageName, tableNames, app);
 	}
 

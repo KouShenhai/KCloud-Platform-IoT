@@ -22,15 +22,13 @@ import lombok.Getter;
 @Getter
 public enum TypeEnum {
 
-	POSTGRESQL("postgresql", "PostgreSQL"),
+	TIMESCALEDB("timescaledb", "TimescaleDB"),
 
 	ELASTICSEARCH("elasticsearch", "ElasticSearch"),
 
 	INFLUXDB("influxdb", "InfluxDB"),
 
-	TDENGINE("tdengine", "TDengine"),
-
-	MONGODB("mongodb", "MongoDB");
+	TDENGINE("tdengine", "TDengine");
 
 	private final String code;
 
