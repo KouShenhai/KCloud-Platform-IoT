@@ -261,26 +261,6 @@ spring:
     template:
       observation-enabled: true
   cloud:
-    # sentinel
-    sentinel:
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: @NACOS-CONFIG-ADDRESS@
-            namespace: @NACOS-NAMESPACE@
-            data-id: auth-flow.json
-            data-type: json
-            group-id: @NACOS-GROUP@
-            username: @NACOS-USERNAME@
-            password: @NACOS-PASSWORD@
-            rule-type: flow
-      web-context-unify: false
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        dashboard: sentinel:8972
-      filter:
-        enabled: true
     # Loadbalancer配置
     loadbalancer:
       nacos:

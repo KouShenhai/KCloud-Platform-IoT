@@ -42,7 +42,6 @@
     <module>laokou-common-crypto</module>
     <module>laokou-common-elasticsearch</module>
     <module>laokou-common-redis</module>
-    <module>laokou-common-sentinel</module>
     <module>laokou-common-openfeign</module>
     <module>laokou-common-kafka</module>
     <module>laokou-common-cors</module>

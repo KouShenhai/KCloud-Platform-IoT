@@ -151,7 +151,6 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Spring Authorization Server |1.5.0
 |Mybatis Plus                |3.5.12
 |Nacos                       |3.0.0
-|Sentinel                    |1.8.8
 |Redis                       |8.0.1
 |Elasticsearch               |8.18.1
 |Netty                       |4.2.1.Final
@@ -172,7 +171,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 - 远程调用：Spring Cloud OpenFeign
 - 客户端请求：OkHttp & HttpClient & WebClient & RestClient
 - 负载均衡：Spring Cloud Loadbalancer
-- 服务熔断&降级&限流：Sentinel
+- 服务熔断&降级&限流：Resilience4j
 - 分库分表：Mybatis Plus
 - 消息队列：Kafka & MQTT & Pulsar
 - 服务监控：Spring Boot Admin & Prometheus
@@ -230,12 +229,10 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
         └── laokou-common-data-cache               --- 数据缓存组件
         └── laokou-common-mybatis-plus             --- 对象映射组件
         └── laokou-common-tdengine                 --- 时序数据库组件
-        └── laokou-common-sentinel                 --- 服务限流&熔断降级组件
 ├── laokou-cloud
         └── laokou-nacos                           --- 服务治理
         └── laokou-gateway                         --- API网关
         └── laokou-monitor                         --- 服务监控
-        └── laokou-sentinel                        --- 流量治理
         └── laokou-snail-job                       --- 分布式任务调度
 ├── laokou-service
         └── laokou-iot                             --- 物联网模块

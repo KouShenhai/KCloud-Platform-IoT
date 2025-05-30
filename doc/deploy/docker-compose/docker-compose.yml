@@ -359,21 +359,6 @@ services:
       - iot_network
     depends_on:
       - postgresql
-  sentinel:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sentinel:3.5.0
-    container_name: sentinel
-    # 保持容器在没有守护程序的情况下运行
-    tty: true
-    restart: always
-    privileged: true
-    ports:
-      - "8972:8972"
-    volumes:
-      - ./sentinel/logs:/opt
-    env_file:
-      - env/sentinel.env
-    networks:
-      - iot_network
   monitor:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.5.0
     container_name: monitor

@@ -137,8 +137,6 @@
     <spring-ai-openai-spring-boot-starter.version>1.0.0-M6</spring-ai-openai-spring-boot-starter.version>
     <!--reactor-core版本-->
     <reactor-core.version>3.7.6</reactor-core.version>
-    <!--sentinel版本-->
-    <sentinel.version>1.8.8</sentinel.version>
     <!--opencsv版本-->
     <opencsv.version>5.11</opencsv.version>
     <!--curator版本-->
@@ -448,11 +446,6 @@
         <groupId>org.laokou</groupId>
         <artifactId>laokou-oss-start</artifactId>
         <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.alibaba.csp</groupId>
-        <artifactId>sentinel-transport-simple-http</artifactId>
-        <version>${sentinel.version}</version>
       </dependency>
       <dependency>
         <groupId>io.projectreactor</groupId>
@@ -1170,11 +1163,6 @@
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-sentinel</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.amazonaws</groupId>
         <artifactId>aws-java-sdk-s3</artifactId>
         <version>${aws-java-sdk-s3.version}</version>
@@ -1195,11 +1183,6 @@
         <groupId>com.baomidou</groupId>
         <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
         <version>${mybatis-plus.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-sentinel</artifactId>
-        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>

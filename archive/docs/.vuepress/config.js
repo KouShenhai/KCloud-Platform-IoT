@@ -59,7 +59,6 @@ module.exports = {
 							{ text: '组件【secret】', link: '/pages/zj39/'},
 							{ text: '组件【security】', link: '/pages/zj40/'},
 							{ text: '组件【sensitive】', link: '/pages/zj41/'},
-							{ text: '组件【sentinel】', link: '/pages/zj42/'},
 							{ text: '组件【sms】', link: '/pages/zj43/'},
 							{ text: '组件【snail-job】', link: '/pages/zj44/'},
 							{ text: '组件【storage】', link: '/pages/zj48/'},

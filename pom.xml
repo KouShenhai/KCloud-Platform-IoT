@@ -251,8 +251,6 @@
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
         <NACOS-CLUSTER-NAME>nacos-cluster</NACOS-CLUSTER-NAME>
-        <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
-        <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
         <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
         <SSL-ENABLED>false</SSL-ENABLED>
         <JASYPT-ENCRYPTOR-PASSWORD>laokou</JASYPT-ENCRYPTOR-PASSWORD>
@@ -292,8 +290,6 @@
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
         <NACOS-CLUSTER-NAME>nacos-cluster</NACOS-CLUSTER-NAME>
-        <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
-        <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
         <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
         <SSL-ENABLED>true</SSL-ENABLED>
         <JASYPT-ENCRYPTOR-PASSWORD>laokou</JASYPT-ENCRYPTOR-PASSWORD>
@@ -362,10 +358,6 @@
         <NACOS-PASSWORD>${NACOS_PASSWORD:nacos}</NACOS-PASSWORD>
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-CLUSTER-NAME>${NACOS_CLUSTER_NAME:nacos-cluster}</NACOS-CLUSTER-NAME>
-        <!--suppress UnresolvedMavenProperty -->
-        <SENTINEL-USERNAME>${SENTINEL_USERNAME:sentinel}</SENTINEL-USERNAME>
-        <!--suppress UnresolvedMavenProperty -->
-        <SENTINEL-PASSWORD>${SENTINEL_PASSWORD:sentinel}</SENTINEL-PASSWORD>
         <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
         <SSL-ENABLED>true</SSL-ENABLED>
         <!--suppress UnresolvedMavenProperty -->

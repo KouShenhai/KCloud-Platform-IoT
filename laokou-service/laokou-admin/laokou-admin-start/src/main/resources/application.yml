@@ -129,25 +129,6 @@ spring:
           max-idle: 500 #连接池最大空闲连接
           min-idle: 200 #连接池最小空间连接
   cloud:
-    # Sentinel配置
-    sentinel:
-      datasource:
-        db0:
-          nacos:
-            server-addr: @NACOS-CONFIG-ADDRESS@
-            namespace: @NACOS-NAMESPACE@
-            group-id: @NACOS-GROUP@
-            data-id: admin-flow.json
-            data-type: json
-            username: @NACOS-USERNAME@
-            password: @NACOS-PASSWORD@
-            rule-type: flow
-      filter:
-        enabled: true
-      web-context-unify: false
-      eager: true #开启饥饿加载，直接初始化
-      transport:
-        dashboard: sentinel:8972
     loadbalancer:
       nacos:
         enabled: true
@@ -259,17 +240,3 @@ knife4j:
   enable: true
   setting:
     language: zh_cn
-
-# Feign配置
-feign:
-  sentinel:
-    enabled: true
-    default-rule: default
-    rules:
-      # https://sentinelguard.io/zh-cn/docs/circuit-breaking.html
-      default:
-        - grade: 2 # 异常数策略
-          count: 1 # 异常数模式下为对应的阈值
-          timeWindow: 30 # 熔断时长，单位为 s（经过熔断时长后熔断器会进入探测恢复状态（HALF-OPEN 状态），若接下来的一个请求成功完成（没有错误）则结束熔断，否则会再次被熔断。ERROR_COUNT）
-          statIntervalMs: 1000 # 统计时长（单位为 ms），如 60*1000 代表分钟级（1.8.0 引入）
-          minRequestAmount: 5 # 熔断触发的最小请求数，请求数小于该值时即使异常比率超出阈值也不会熔断
