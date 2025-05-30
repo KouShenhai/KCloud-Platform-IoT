@@ -27,7 +27,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("boot_sys_tenant")
+@TableName("sys_tenant")
 public class TenantDO extends BaseDO {
 
 	/**

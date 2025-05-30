@@ -34,28 +34,6 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=laokou123
       - TZ=Asia/Shanghai
-  seata:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-seata:3.5.0
-    container_name: seata
-    # 保持容器在没有守护程序的情况下运行
-    tty: true
-    restart: always
-    privileged: true
-    env_file:
-      - env/common.env
-      - env/seata.env
-    ports:
-      - "7091:7091"
-      - "8091:8091"
-    environment:
-      - TZ=Asia/Shanghai
-    volumes:
-      - ./seata/logs:/opt
-    depends_on:
-      - redis
-      - nacos
-    networks:
-      - laokou_network
   loki:
     image: grafana/loki:3.5.1
     container_name: loki
@@ -73,7 +51,7 @@ services:
       - ./loki/index:/opt/loki/index
       - ./loki/chunks:/opt/loki/chunks
     networks:
-      - laokou_network
+      - iot_network
   promtail:
     image: grafana/promtail:3.5.1
     container_name: promtail
@@ -90,7 +68,7 @@ services:
       - ./promtail/config:/etc/promtail/config
       - ./promtail/data/log:/logs
     networks:
-      - laokou_network
+      - iot_network
     depends_on:
       - loki
   # 默认账号/密码 admin/admin
@@ -110,7 +88,7 @@ services:
     volumes:
       - ./grafana:/var/lib/grafana
     networks:
-      - laokou_network
+      - iot_network
   # admin/laokou123
   influxdb:
     image: influxdb:2.7.12
@@ -126,7 +104,7 @@ services:
     volumes:
       - ./influxdb:/var/lib/influxdb2
     networks:
-      - laokou_network
+      - iot_network
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -139,7 +117,7 @@ services:
     ports:
       - "9090:9090"
     networks:
-      - laokou_network
+      - iot_network
   # ui => http://ip:16686
   jaeger-query:
     image: jaegertracing/jaeger-query:1.60
@@ -161,7 +139,7 @@ services:
       - ES_TLS_ENABLED=true
       - ES_TLS_SKIP_HOST_VERIFY=true
     networks:
-      - laokou_network
+      - iot_network
     depends_on:
       - elasticsearch
   jaeger-collector:
@@ -188,7 +166,7 @@ services:
       - ES_TLS_ENABLED=true
       - ES_TLS_SKIP_HOST_VERIFY=true
     networks:
-      - laokou_network
+      - iot_network
     depends_on:
       - elasticsearch
   # web控制台地址：http://127.0.0.1:6060
@@ -209,7 +187,7 @@ services:
       - ./tdengine/data:/var/lib/taos
       - ./tdengine/logs:/var/log/taos
     networks:
-      - laokou_network
+      - iot_network
   # docker部署 => sudo docker run -d --name emqx  --restart always --network bridge -v /home/ubuntu/emqx/data:/opt/emqx/data:rw -v /home/ubuntu/emqx/log:/opt/emqx/log:rw -p 1883:1883 -p 8083:8083 -p 8084:8084 -p 8883:8883 -p 18083:18083 emqx/emqx:5.8.6
   emqx:
     image: emqx/emqx:5.4.1
@@ -231,7 +209,7 @@ services:
       # 挂载日志文件
       - ./emqx/log:/opt/emqx/log
     networks:
-      - laokou_network
+      - iot_network
   postgresql:
     image: timescale/timescaledb:latest-pg17
     container_name: postgresql
@@ -248,7 +226,7 @@ services:
       - POSTGRES_PASSWORD=laokou123
       - TZ=Asia/Shanghai
     networks:
-      - laokou_network
+      - iot_network
   redis:
     image: redis:8.0.1
     container_name: redis
@@ -265,7 +243,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
     networks:
-      - laokou_network
+      - iot_network
   zookeeper:
     image: bitnami/zookeeper:3.9.3
     container_name: zookeeper
@@ -278,12 +256,7 @@ services:
     restart: always
     privileged: true
     networks:
-      - laokou_network
-  # kafka-topics.sh --bootstrap-server 127.0.0.1:9092 --create --topic laokou_mqtt_property_report --partitions 3 --replication-factor 1
-  # kafka-topics.sh --bootstrap-server 127.0.0.1:9092 --create --topic laokou_mqtt_property_read_reply --partitions 3 --replication-factor 1
-  # kafka-topics.sh --bootstrap-server 127.0.0.1:9092 --create --topic laokou_mqtt_property_read --partitions 3 --replication-factor 1
-  # kafka-topics.sh --bootstrap-server 127.0.0.1:9092 --create --topic laokou_mqtt_property_write_reply --partitions 3 --replication-factor 1
-  # kafka-topics.sh --bootstrap-server 127.0.0.1:9092 --create --topic laokou_mqtt_property_write --partitions 3 --replication-factor 1
+      - iot_network
   kafka:
     image: bitnami/kafka:4.0.0
     container_name: kafka
@@ -317,68 +290,7 @@ services:
     restart: always
     privileged: true
     networks:
-      - laokou_network
-  rocketmq-namesrv:
-    image: apache/rocketmq:5.3.3
-    container_name: rocketmq-namesrv
-    # 保持容器在没有守护程序的情况下运行
-    tty: true
-    restart: always
-    privileged: true
-    ports:
-      - "9876:9876"
-    command: sh mqnamesrv
-    environment:
-      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
-      - TZ=Asia/Shanghai
-    networks:
-      - laokou_network
-  rocketmq-broker:
-    image: apache/rocketmq:5.3.3
-    container_name: rocketmq-broker
-    # 保持容器在没有守护程序的情况下运行
-    tty: true
-    restart: always
-    privileged: true
-    ports:
-      - "10909:10909"
-      - "10911:10911"
-      - "10912:10912"
-    # 自动创建主题
-    command: sh mqbroker -n rocketmq-namesrv:9876 -c /home/rocketmq/conf/broker.conf autoCreateTopicEnable=true
-    environment:
-      - JAVA_OPT_EXT=-server -Xmx512m -Xms512m -Xmn256m
-      - TZ=Asia/Shanghai
-      - NAMESRV_ADDR=rocketmq-namesrv:9876
-    volumes:
-      - ./rocketmq5/broker/conf/broker.conf:/home/rocketmq/conf/broker.conf
-      # 挂载数据
-      - ./rocketmq5/broker/store:/home/rocketmq/store
-      # 挂载日志
-      - ./rocketmq5/broker/logs:/home/rocketmq/logs
-    networks:
-      - laokou_network
-    depends_on:
-      - rocketmq-namesrv
-  # 账号密码 admin/admin
-  rocketmq-dashboard:
-    image: apacherocketmq/rocketmq-dashboard:2.0.1
-    container_name: rocketmq-dashboard
-    # 保持容器在没有守护程序的情况下运行
-    tty: true
-    restart: always
-    privileged: true
-    ports:
-      - "8089:8080"
-    environment:
-      - JAVA_OPTS=-Xmx256M -Xms256M -Xmn128M -Drocketmq.namesrv.addr=rocketmq-namesrv:9876
-      - TZ=Asia/Shanghai
-      # 开启登录认证
-      - ROCKETMQ_CONFIG_LOGIN_REQUIRED=true
-    networks:
-      - laokou_network
-    depends_on:
-      - rocketmq-namesrv
+      - iot_network
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.18.1
     container_name: elasticsearch
@@ -400,7 +312,7 @@ services:
       - ES_JAVA_OPTS=-Xmx1g -Xms1g
       - ELASTIC_PASSWORD=laokou123
     networks:
-      - laokou_network
+      - iot_network
     ulimits:
       memlock:
         soft: -1
@@ -420,7 +332,7 @@ services:
     volumes:
       - ./kibana8/config/kibana.yml:/usr/share/kibana/config/kibana.yml
     networks:
-      - laokou_network
+      - iot_network
     depends_on:
       - elasticsearch
     deploy:
@@ -444,24 +356,9 @@ services:
     env_file:
       - env/nacos.env
     networks:
-      - laokou_network
+      - iot_network
     depends_on:
       - postgresql
-  sentinel:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-sentinel:3.5.0
-    container_name: sentinel
-    # 保持容器在没有守护程序的情况下运行
-    tty: true
-    restart: always
-    privileged: true
-    ports:
-      - "8972:8972"
-    volumes:
-      - ./sentinel/logs:/opt
-    env_file:
-      - env/sentinel.env
-    networks:
-      - laokou_network
   monitor:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.5.0
     container_name: monitor
@@ -482,7 +379,7 @@ services:
       - gateway
       - iot
     networks:
-      - laokou_network
+      - iot_network
   gateway:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.5.0
     container_name: gateway
@@ -497,7 +394,7 @@ services:
     restart: always
     privileged: true
     networks:
-      - laokou_network
+      - iot_network
     depends_on:
       - nacos
       - kafka
@@ -516,12 +413,10 @@ services:
     restart: always
     privileged: true
     networks:
-      - laokou_network
+      - iot_network
     depends_on:
       - nacos
       - admin
-      - rocketmq-namesrv
-      - rocketmq-broker
       - kafka
       - redis
   iot:
@@ -538,11 +433,9 @@ services:
     restart: always
     privileged: true
     networks:
-      - laokou_network
+      - iot_network
     depends_on:
       - nacos
-      - rocketmq-namesrv
-      - rocketmq-broker
       - kafka
       - redis
   admin:
@@ -559,12 +452,10 @@ services:
     restart: always
     privileged: true
     networks:
-      - laokou_network
+      - iot_network
     depends_on:
       - nacos
       - elasticsearch
-      - rocketmq-namesrv
-      - rocketmq-broker
       - kafka
       - redis
   logstash:
@@ -581,7 +472,7 @@ services:
     restart: always
     privileged: true
     networks:
-      - laokou_network
+      - iot_network
     depends_on:
       - nacos
       - elasticsearch
@@ -599,7 +490,7 @@ services:
     restart: always
     privileged: true
     networks:
-      - laokou_network
+      - iot_network
     depends_on:
       - postgresql
   ui:
@@ -614,7 +505,7 @@ services:
     volumes:
       - ./nginx/logs:/var/log/nginx
     networks:
-      - laokou_network
+      - iot_network
     depends_on:
       - gateway
       - auth
@@ -633,7 +524,7 @@ services:
      - /var/run/docker.sock:/var/run/docker.sock
      - ./portainer/data:/data
    networks:
-     - laokou_network
+     - iot_network
   clickhouse:
     image: clickhouse/clickhouse-server:25.5
     container_name: clickhouse
@@ -657,7 +548,7 @@ services:
         soft: 262144
         hard: 262144
     networks:
-      - laokou_network
+      - iot_network
   # rabbitmq-plugins enable rabbitmq_management
   rabbitmq:
     image: rabbitmq:4.1.0-management
@@ -681,7 +572,7 @@ services:
     volumes:
       - ./rabbitmq/data:/var/lib/rabbitmq
     networks:
-      - laokou_network
+      - iot_network
   nexus:
     image: sonatype/nexus3
     container_name: nexus
@@ -694,7 +585,7 @@ services:
     volumes:
       - ./nexus/data:/nexus-data
     networks:
-      - laokou_network
+      - iot_network
   ftp:
     image: fauria/vsftpd
     container_name: ftp
@@ -714,7 +605,7 @@ services:
     volumes:
       - ./ftp/data:/home/vsftpd   # 挂载本地目录保存 FTP 文件
     networks:
-      - laokou_network
+      - iot_network
   # bin/pulsar-admin tenants create laokou
   # bin/pulsar-admin namespaces create laokou/mqtt
   # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-up-property-report -p 4
@@ -738,7 +629,7 @@ services:
     volumes:
       - ./pulsar/data:/pulsar/data
     networks:
-      - laokou_network
+      - iot_network
 networks:
-  laokou_network:
+  iot_network:
     driver: bridge

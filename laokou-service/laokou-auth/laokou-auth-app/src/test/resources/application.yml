@@ -1,8 +1,0 @@
-server:
-  port: 8897
-
-spring:
-  application:
-    name: laokou-auth-app
-  profiles:
-    active: test

@@ -43,17 +43,13 @@ public class CacheAop {
 	@Qualifier("redissonCacheManager")
 	private CacheManager redissonCacheManager;
 
-	@Autowired
-	@Qualifier("caffeineCacheManager")
-	private CacheManager caffineCacheManager;
-
 	@Around("@annotation(dataCache)")
 	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		String[] parameterNames = signature.getParameterNames();
 		String name = dataCache.name();
 		String key = SpringExpressionUtils.parse(dataCache.key(), parameterNames, point.getArgs(), String.class);
-		return dataCache.operateType().execute(name, key, point, caffineCacheManager, redissonCacheManager);
+		return dataCache.operateType().execute(name, key, point, redissonCacheManager);
 	}
 
 }

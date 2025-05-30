@@ -42,9 +42,9 @@ public final class NoticeLogConvertor {
 		noticeLogCO.setStatus(result.getStatus());
 		noticeLogCO.setErrorMessage(truncate(result.getErrorMessage(), 2000));
 		noticeLogCO.setParam(result.getParam());
-		noticeLogCO.setTenantId(domainEvent.getTenantId());
-		noticeLogCO.setId(domainEvent.getAggregateId());
-		noticeLogCO.setInstant(domainEvent.getInstant());
+		// noticeLogCO.setTenantId(domainEvent.getTenantId());
+		// noticeLogCO.setId(domainEvent.getAggregateId());
+		// noticeLogCO.setInstant(domainEvent.getInstant());
 		noticeLogCO.setUuid(uuid);
 		noticeLogCO.setCaptcha(result.getCaptcha());
 		return noticeLogCO;
@@ -57,9 +57,9 @@ public final class NoticeLogConvertor {
 		noticeLogCO.setStatus(result.getStatus());
 		noticeLogCO.setErrorMessage(truncate(result.getErrorMessage(), 2000));
 		noticeLogCO.setParam(result.getParam());
-		noticeLogCO.setTenantId(domainEvent.getTenantId());
-		noticeLogCO.setId(domainEvent.getAggregateId());
-		noticeLogCO.setInstant(domainEvent.getInstant());
+		// noticeLogCO.setTenantId(domainEvent.getTenantId());
+		// noticeLogCO.setId(domainEvent.getAggregateId());
+		// noticeLogCO.setInstant(domainEvent.getInstant());
 		noticeLogCO.setUuid(uuid);
 		noticeLogCO.setCaptcha(result.getCaptcha());
 		return noticeLogCO;

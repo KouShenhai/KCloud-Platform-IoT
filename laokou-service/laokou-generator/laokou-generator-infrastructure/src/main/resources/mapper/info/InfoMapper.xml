@@ -35,7 +35,7 @@
                  app_id,
                  source_id,
              create_time
-		from boot_generator_info
+		from generator_info
 		where del_flag = 0
         <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
             and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> ${pageQuery.params.startDate}
@@ -49,7 +49,7 @@
 
 	<select id="selectObjectCount" resultType="long">
 		SELECT count(1)
-		from boot_generator_info
+		from generator_info
 		where del_flag = 0
         <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
             and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> ${pageQuery.params.startDate}
@@ -61,7 +61,7 @@
 
 	<select id="selectVersion" resultType="integer">
 		select version
-		from boot_generator_info
+		from generator_info
 		where id = #{id}
 	</select>
 

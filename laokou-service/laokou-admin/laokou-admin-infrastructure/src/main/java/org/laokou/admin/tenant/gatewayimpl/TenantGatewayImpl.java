@@ -19,7 +19,6 @@ package org.laokou.admin.tenant.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.tenant.model.TenantE;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 import org.laokou.admin.tenant.gateway.TenantGateway;
 import org.laokou.common.tenant.mapper.TenantMapper;
@@ -38,11 +37,9 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private final TenantMapper tenantMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
 	public void createTenant(TenantE tenantE) {
-		tenantMapper.insert(TenantConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), tenantE));
+		tenantMapper.insert(TenantConvertor.toDataObject(1L, tenantE));
 	}
 
 	@Override

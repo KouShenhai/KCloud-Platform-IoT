@@ -57,5 +57,9 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-fury</artifactId>
+    </dependency>
   </dependencies>
 </project>

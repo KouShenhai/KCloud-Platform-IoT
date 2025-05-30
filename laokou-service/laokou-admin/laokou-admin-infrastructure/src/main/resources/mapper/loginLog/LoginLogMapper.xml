@@ -69,7 +69,7 @@
 
   <sql id="selectObjectList">
     SELECT <include refid="selectColumns"/>
-    from boot_sys_login_log
+    from sys_login_log
     <include refid="selectConditions"/>
     order by id desc
   </sql>
@@ -82,13 +82,13 @@
 
   <select id="selectObjectCount" resultType="long">
     SELECT count(1)
-    from boot_sys_login_log
+    from sys_login_log
     <include refid="selectConditions"/>
   </select>
 
   <select id="selectVersion" resultType="integer">
     select version
-    from boot_sys_login_log
+    from sys_login_log
     where id = #{id}
   </select>
 

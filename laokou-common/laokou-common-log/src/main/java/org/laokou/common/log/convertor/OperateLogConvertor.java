@@ -19,7 +19,6 @@ package org.laokou.common.log.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.laokou.common.log.handler.event.OperateEvent;
@@ -30,7 +29,7 @@ public final class OperateLogConvertor {
 	}
 
 	public static OperateLogDO toDataObject(DomainEvent event) throws JsonProcessingException {
-		OperateEvent operateEvent = JacksonUtils.toBean(event.getPayload(), OperateEvent.class);
+		OperateEvent operateEvent = null;
 		OperateLogDO operateLogDO = new OperateLogDO();
 		operateLogDO.setName(operateEvent.name());
 		operateLogDO.setModuleName(operateEvent.moduleName());
@@ -50,10 +49,9 @@ public final class OperateLogConvertor {
 		operateLogDO.setCostTime(operateEvent.costTime());
 		operateLogDO.setErrorMessage(truncate(operateEvent.errorMessage()));
 		operateLogDO.setId(event.getId());
-		operateLogDO.setTenantId(event.getTenantId());
-		operateLogDO.setCreator(event.getUserId());
-		operateLogDO.setEditor(event.getUserId());
-		operateLogDO.setVersion(event.getVersion());
+		// operateLogDO.setTenantId(event.getTenantId());
+		// operateLogDO.setCreator(event.getUserId());
+		// operateLogDO.setEditor(event.getUserId());
 		operateLogDO.setCreateTime(operateEvent.createTime());
 		operateLogDO.setUpdateTime(operateEvent.createTime());
 		return operateLogDO;

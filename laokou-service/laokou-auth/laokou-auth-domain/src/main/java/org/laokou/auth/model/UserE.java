@@ -78,10 +78,11 @@ public class UserE extends Identifier {
 	 */
 	private Long tenantId;
 
-	public UserE fillValue(String username, String mail, String mobile) throws Exception {
+	public UserE fillValue(String username, String mail, String mobile, Long tenantId) throws Exception {
 		this.username = AESUtils.encrypt(username);
 		this.mail = AESUtils.encrypt(mail);
 		this.mobile = AESUtils.encrypt(mobile);
+		this.tenantId = tenantId;
 		return this;
 	}
 

@@ -23,7 +23,7 @@
 	<select id="selectObjectPage"
 			resultType="org.laokou.common.tenant.mapper.SourceDO">
 		SELECT *
-		from boot_sys_source
+		from sys_source
 		where del_flag = 0
 		order by id desc
 		limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
@@ -31,33 +31,14 @@
 
 	<select id="selectObjectCount" resultType="long">
 		SELECT count(1)
-		from boot_sys_source
+		from sys_source
 		where del_flag = 0
 	</select>
 
 	<select id="selectVersion" resultType="integer">
 		select version
-		from boot_sys_source
+		from sys_source
 		where id = #{id}
 	</select>
-
-  <select id="selectOneByTenantCode" resultType="org.laokou.common.tenant.mapper.SourceDO">
-    <choose>
-      <when test="tenantCode == 'laokou'">
-        select 'master' as name
-      </when>
-      <otherwise>
-        select name
-        , driver_class_name
-        , url
-        , username
-        , password
-        from boot_sys_source
-        where id in
-        (select source_id from boot_sys_tenant where code = #{tenantCode})
-        and del_flag = 0
-      </otherwise>
-    </choose>
-  </select>
 
 </mapper>
