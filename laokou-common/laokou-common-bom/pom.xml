@@ -99,6 +99,8 @@
     <browscap-java.version>1.5.1</browscap-java.version>
     <!--liquibase-core版本-->
     <liquibase-core.version>4.32.0</liquibase-core.version>
+    <!--protobuf-java版本-->
+    <protobuf-java.version>3.25.8</protobuf-java.version>
     <!--grpc版本-->
     <grpc.version>1.72.0</grpc.version>
     <!--proto-google-common-protos版本-->
