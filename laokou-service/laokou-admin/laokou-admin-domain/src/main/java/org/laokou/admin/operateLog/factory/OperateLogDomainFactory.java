@@ -26,7 +26,7 @@ public final class OperateLogDomainFactory {
 	}
 
 	public static OperateLogE getOperateLog() {
-		return SpringContextUtils.getBeanProviderAndNotExistToCreate(OperateLogE.class);
+		return SpringContextUtils.getBeanProvider(OperateLogE.class);
 	}
 
 }

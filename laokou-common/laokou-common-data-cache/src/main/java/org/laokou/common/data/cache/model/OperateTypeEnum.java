@@ -40,8 +40,7 @@ public enum OperateTypeEnum {
 
 	GET("get", "查看") {
 		@Override
-		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager caffineCacheManager,
-				CacheManager redissonCacheManager) {
+		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager redissonCacheManager) {
 			boolean isLocked = false;
 			int retry = 3;
 			try {
@@ -50,17 +49,10 @@ public enum OperateTypeEnum {
 				}
 				while (!isLocked && --retry > 0);
 				if (isLocked) {
-					Cache caffineCache = getCache(caffineCacheManager, name);
-					Cache.ValueWrapper caffineValueWrapper = caffineCache.get(key);
-					if (ObjectUtils.isNotNull(caffineValueWrapper)) {
-						return caffineValueWrapper.get();
-					}
 					Cache redissonCache = getCache(redissonCacheManager, name);
 					Cache.ValueWrapper redissonValueWrapper = redissonCache.get(key);
 					if (ObjectUtils.isNotNull(redissonValueWrapper)) {
-						Object value = redissonValueWrapper.get();
-						caffineCache.putIfAbsent(key, value);
-						return value;
+						return redissonValueWrapper.get();
 					}
 					Object value = point.proceed();
 					redissonCache.putIfAbsent(key, value);
@@ -86,8 +78,7 @@ public enum OperateTypeEnum {
 
 	DEL("del", "删除") {
 		@Override
-		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager caffineCacheManager,
-				CacheManager redissonCacheManager) {
+		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager redissonCacheManager) {
 			boolean isLocked = false;
 			int retry = 3;
 			try {
@@ -96,10 +87,7 @@ public enum OperateTypeEnum {
 				}
 				while (!isLocked && --retry > 0);
 				if (isLocked) {
-					Cache redissonCache = getCache(redissonCacheManager, name);
-					Cache caffineCache = getCache(caffineCacheManager, name);
-					redissonCache.evictIfPresent(key);
-					caffineCache.evictIfPresent(key);
+					getCache(redissonCacheManager, name).evictIfPresent(key);
 				}
 				return point.proceed();
 			}
@@ -128,7 +116,7 @@ public enum OperateTypeEnum {
 		this.desc = desc;
 	}
 
-	public abstract Object execute(String name, String key, ProceedingJoinPoint point, CacheManager caffineCacheManager,
+	public abstract Object execute(String name, String key, ProceedingJoinPoint point,
 			CacheManager redissonCacheManager);
 
 	private static final ReentrantReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();

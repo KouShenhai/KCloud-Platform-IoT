@@ -28,7 +28,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("boot_generator_template")
+@TableName("generator_template")
 public class TemplateDO extends BaseDO {
 
 	/**

@@ -28,7 +28,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("boot_iot_product")
+@TableName("iot_product")
 public class ProductDO extends BaseDO {
 
 	/**

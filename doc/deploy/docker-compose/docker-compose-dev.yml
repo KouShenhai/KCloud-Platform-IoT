@@ -30,7 +30,7 @@ services:
       - POSTGRES_PASSWORD=laokou123
       - TZ=Asia/Shanghai
     networks:
-      - laokou_network
+      - iot_network
   redis:
     image: redis:8.0.1
     container_name: redis
@@ -47,7 +47,7 @@ services:
     environment:
       - TZ=Asia/Shanghai
     networks:
-      - laokou_network
+      - iot_network
   kafka:
     image: bitnami/kafka:4.0.0
     container_name: kafka
@@ -81,14 +81,14 @@ services:
     restart: always
     privileged: true
     networks:
-      - laokou_network
+      - iot_network
   # bin/pulsar-admin tenants create laokou
   # bin/pulsar-admin namespaces create laokou/mqtt
-  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-up-property-report -p 4
-  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-down-property-read -p 4
-  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-up-property-read-reply -p 4
-  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-down-property-write -p 4
-  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/laokou-mqtt-up-property-write-reply -p 4
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/up-property-report -p 4
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/down-property-read -p 4
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/up-property-read-reply -p 4
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/down-property-write -p 4
+  # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/up-property-write-reply -p 4
   pulsar:
     image: apachepulsar/pulsar:4.0.5
     container_name: pulsar
@@ -105,7 +105,7 @@ services:
     volumes:
       - ./pulsar/data:/pulsar/data
     networks:
-      - laokou_network
+      - iot_network
   zookeeper:
     image: bitnami/zookeeper:3.9.3
     container_name: zookeeper
@@ -118,7 +118,7 @@ services:
     restart: always
     privileged: true
     networks:
-      - laokou_network
+      - iot_network
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
@@ -132,5 +132,5 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./portainer/data:/data
 networks:
-  laokou_network:
+  iot_network:
     driver: bridge

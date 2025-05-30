@@ -105,10 +105,6 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-websocket</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-distributed-identifier-infrastructure</artifactId>
-    </dependency>
   </dependencies>
 
 </project>

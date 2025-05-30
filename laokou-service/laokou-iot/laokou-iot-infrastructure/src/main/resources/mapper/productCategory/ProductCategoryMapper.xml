@@ -41,7 +41,7 @@
 
   <sql id="selectObjectList">
     SELECT <include refid="selectColumns"/>
-    from boot_iot_product_category
+    from iot_product_category
     <include refid="selectConditions"/>
     order by "sort" desc
   </sql>
@@ -54,13 +54,13 @@
 
 	<select id="selectObjectCount" resultType="long">
     SELECT count(1)
-    from boot_iot_product_category
+    from iot_product_category
     <include refid="selectConditions"/>
 	</select>
 
 	<select id="selectVersion" resultType="integer">
 		select version
-		from boot_iot_product_category
+		from iot_product_category
 		where id = #{id}
 	</select>
 

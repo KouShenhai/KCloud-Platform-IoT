@@ -33,9 +33,9 @@
 
 package org.mybatis.spring;
 
-import io.micrometer.common.lang.NonNullApi;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.jetbrains.annotations.NotNull;
 import org.laokou.common.core.util.SpringContextUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.support.PersistenceExceptionTranslator;
@@ -58,7 +58,6 @@ import java.util.function.Supplier;
  * @author Eduardo Macarron
  * @author laokou
  */
-@NonNullApi
 public class MyBatisExceptionTranslator implements PersistenceExceptionTranslator {
 
 	private volatile SQLExceptionTranslator exceptionTranslator;
@@ -95,7 +94,7 @@ public class MyBatisExceptionTranslator implements PersistenceExceptionTranslato
 	}
 
 	@Override
-	public DataAccessException translateExceptionIfPossible(RuntimeException e) {
+	public DataAccessException translateExceptionIfPossible(@NotNull RuntimeException e) {
 		if (e instanceof PersistenceException) {
 			// Batch exceptions come inside another PersistenceException
 			// recursion has a risk of infinite loop so better make another if

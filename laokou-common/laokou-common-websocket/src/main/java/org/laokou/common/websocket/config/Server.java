@@ -24,10 +24,10 @@ public interface Server {
 
 	/**
 	 * 发送消息.
-	 * @param key 键
-	 * @param obj 对象
+	 * @param clientId 客户端ID
+	 * @param payload 消息内容
 	 */
-	void send(String key, Object obj) throws InterruptedException;
+	void send(Long clientId, Object payload) throws InterruptedException;
 
 	/**
 	 * 启动.

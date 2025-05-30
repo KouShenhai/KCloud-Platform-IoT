@@ -20,7 +20,6 @@ package org.laokou.common.websocket.config;
 import com.alibaba.cloud.nacos.ConditionalOnNacosDiscoveryEnabled;
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import io.netty.channel.ChannelHandler;
-import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.nacos.util.NamingUtils;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -44,8 +43,8 @@ public class WebSocketServerConfig {
 	}
 
 	@Bean("webSocketServerHandler")
-	public ChannelHandler webSocketServerHandler(SpringWebSocketServerProperties springWebSocketServerProperties, DomainEventPublisher rocketMQDomainEventPublisher, GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector) {
-		return new WebSocketServerHandler(springWebSocketServerProperties, rocketMQDomainEventPublisher, globalOpaqueTokenIntrospector);
+	public ChannelHandler webSocketServerHandler(SpringWebSocketServerProperties springWebSocketServerProperties, GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector) {
+		return new WebSocketServerHandler(springWebSocketServerProperties, globalOpaqueTokenIntrospector);
 	}
 
 	@Bean

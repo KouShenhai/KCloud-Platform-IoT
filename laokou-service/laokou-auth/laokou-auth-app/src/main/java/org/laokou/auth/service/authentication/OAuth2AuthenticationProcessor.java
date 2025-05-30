@@ -17,31 +17,23 @@
 
 package org.laokou.auth.service.authentication;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
-import com.blueconic.browscap.Capabilities;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.ability.DomainService;
+import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.convertor.UserConvertor;
+import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.InfoV;
-import org.laokou.auth.service.extensionpoint.AuthParamValidatorExtPt;
-import org.laokou.common.core.util.AddressUtils;
-import org.laokou.common.core.util.IpUtils;
-import org.laokou.common.core.util.RequestUtils;
+import org.laokou.auth.model.MqEnum;
 import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.extension.BizScenario;
-import org.laokou.common.extension.ExtensionExecutor;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.rocketmq.template.SendMessageTypeEnum;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.util.UserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.auth.common.constant.BizConstants.SCENARIO;
-import static org.laokou.auth.common.constant.BizConstants.USE_CASE_AUTH;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getOAuth2AuthenticationException;
 
@@ -55,21 +47,16 @@ final class OAuth2AuthenticationProcessor {
 
 	private final DomainService domainService;
 
-	private final ExtensionExecutor extensionExecutor;
+	private final DomainEventPublisher KafkaDomainEventPublisher;
 
-	private final DomainEventPublisher rocketMQDomainEventPublisher;
-
-	public UsernamePasswordAuthenticationToken authenticationToken(Long eventId, AuthA auth,
-			HttpServletRequest request) {
+	public UsernamePasswordAuthenticationToken authenticationToken(AuthA auth, HttpServletRequest request)
+			throws Exception {
+		LoginEvent evt = null;
 		try {
-			// 校验参数
-			extensionExecutor.executeVoid(AuthParamValidatorExtPt.class,
-					BizScenario.valueOf(auth.getGrantTypeEnum().getCode(), USE_CASE_AUTH, SCENARIO),
-					extension -> extension.validate(auth));
 			// 认证授权
-			domainService.auth(auth, getInfo(request));
-			// 记录日志
-			auth.recordLoginLog(eventId, null);
+			domainService.auth(auth);
+			// 记录日志【登录成功】
+			evt = LoginLogConvertor.toDomainEvent(request, auth, null);
 			// 登录成功，转换成用户对象【业务】
 			UserDetails userDetails = UserConvertor.to(auth);
 			// 认证成功，转换成认证对象【系统】
@@ -77,8 +64,10 @@ final class OAuth2AuthenticationProcessor {
 					userDetails.getAuthorities());
 		}
 		catch (GlobalException e) {
-			// 记录日志
-			auth.recordLoginLog(eventId, e);
+			// 记录日志【业务异常】
+			if (e instanceof BizException ex) {
+				evt = LoginLogConvertor.toDomainEvent(request, auth, ex);
+			}
 			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
 			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
@@ -87,22 +76,11 @@ final class OAuth2AuthenticationProcessor {
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 		finally {
-			// 清除数据源上下文
-			DynamicDataSourceContextHolder.clear();
 			// 发布事件
-			auth.releaseEvents().forEach(item -> rocketMQDomainEventPublisher.publish(item, SendMessageTypeEnum.ASYNC));
-			// 清除事件
-			auth.clearEvents();
+			if (ObjectUtils.isNotNull(evt)) {
+				KafkaDomainEventPublisher.publish(MqEnum.LOGIN_LOG.getTopic(), evt);
+			}
 		}
-	}
-
-	private InfoV getInfo(HttpServletRequest request) throws Exception {
-		Capabilities capabilities = RequestUtils.getCapabilities(request);
-		String ip = IpUtils.getIpAddr(request);
-		String address = AddressUtils.getRealAddress(ip);
-		String os = capabilities.getPlatform();
-		String browser = capabilities.getBrowser();
-		return new InfoV(os, ip, address, browser);
 	}
 
 }

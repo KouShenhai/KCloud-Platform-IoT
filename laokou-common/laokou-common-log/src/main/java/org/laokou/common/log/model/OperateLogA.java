@@ -24,7 +24,6 @@ import org.laokou.common.core.util.*;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.dto.DomainEvent;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -36,7 +35,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.Instant;
 import java.util.*;
-import static org.laokou.common.i18n.common.constant.EventTypeEnum.OPERATE_EVENT;
 import static org.laokou.common.i18n.util.JacksonUtils.EMPTY_JSON;
 import static org.laokou.common.i18n.common.constant.StringConstants.*;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
@@ -221,10 +219,12 @@ public class OperateLogA extends AggregateRoot {
 
 	public void recordOperateLog(Long eventId) {
 		OperateEvent event = getEvent();
-		addEvent(new DomainEvent(eventId, tenantId, userId, id, MqEnum.OPERATE_LOG.getTopic(),
-				MqEnum.OPERATE_LOG.getTag(), super.version, JacksonUtils.toJsonStr(event), OPERATE_EVENT,
-				UserContextHolder.get().getSourcePrefix()));
-		super.version++;
+		// addEvent(new DomainEvent(eventId, tenantId, userId, id,
+		// MqEnum.OPERATE_LOG.getTopic(),
+		// MqEnum.OPERATE_LOG.getTag(), super.version, JacksonUtils.toJsonStr(event),
+		// OPERATE_EVENT,
+		// UserContextHolder.get().getSourcePrefix()));
+		// super.version++;
 	}
 
 	private void deleteAny(Map<String, String> map, String... keys) {

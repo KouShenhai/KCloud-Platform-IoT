@@ -28,7 +28,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("boot_iot_communication_protocol")
+@TableName("iot_communication_protocol")
 public class CommunicationProtocolDO extends BaseDO {
 
 	/**

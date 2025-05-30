@@ -22,7 +22,7 @@ import org.laokou.admin.menu.ability.MenuDomainService;
 import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuSaveCmd;
 import org.laokou.admin.menu.model.MenuE;
-import org.laokou.admin.menu.service.extensionpoint.MenuParamValidatorExtPt;
+import org.laokou.admin.menu.model.MenuParamValidator;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class MenuSaveCmdExe {
 
 	@Autowired
 	@Qualifier("saveMenuParamValidator")
-	private MenuParamValidatorExtPt saveMenuParamValidator;
+	private MenuParamValidator saveMenuParamValidator;
 
 	private final MenuDomainService menuDomainService;
 

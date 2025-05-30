@@ -85,11 +85,6 @@ public final class UserContextHolder {
 		 */
 		private Long tenantId;
 
-		/**
-		 * 数据源前缀.
-		 */
-		private String sourcePrefix;
-
 	}
 
 }

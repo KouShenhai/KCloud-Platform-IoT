@@ -18,7 +18,6 @@
 package org.laokou.iot.device.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.laokou.iot.device.model.DeviceE;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.device.gateway.DeviceGateway;
@@ -39,12 +38,9 @@ public class DeviceGatewayImpl implements DeviceGateway {
 
 	private final DeviceMapper deviceMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
 	public void createDevice(DeviceE deviceE) {
-		deviceMapper
-			.insert(DeviceConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), deviceE, true));
+		deviceMapper.insert(DeviceConvertor.toDataObject(1L, deviceE, true));
 	}
 
 	@Override

@@ -21,16 +21,9 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.dto.MenuTreeListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
-import org.laokou.admin.menu.service.extensionpoint.MenuTreeBuilderExtPt;
-import org.laokou.common.core.context.UserContextHolder;
-import org.laokou.common.extension.BizScenario;
-import org.laokou.common.extension.ExtensionExecutor;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 import java.util.List;
-
-import static org.laokou.admin.common.constant.BizConstants.SCENARIO;
-import static org.laokou.admin.common.constant.BizConstants.USE_CASE_MENU;
 
 /**
  * 查询菜单请求执行器.
@@ -43,12 +36,9 @@ public class MenuTreeListQryExe {
 
 	private final MenuMapper menuMapper;
 
-	private final ExtensionExecutor extensionExecutor;
-
 	public Result<List<MenuTreeCO>> execute(MenuTreeListQry qry) {
-		MenuTreeCO co = extensionExecutor.execute(MenuTreeBuilderExtPt.class,
-				BizScenario.valueOf(String.valueOf(qry.getCode()), USE_CASE_MENU, SCENARIO),
-				extension -> extension.build(qry, UserContextHolder.get().getId(), menuMapper));
+		MenuTreeCO co = null;
+		// extension.build(qry, UserContextHolder.get().getId(), menuMapper)
 		return Result.ok(co.getChildren());
 	}
 

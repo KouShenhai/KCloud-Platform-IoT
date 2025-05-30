@@ -33,11 +33,9 @@ public class ReactiveKafkaConsumerConfig {
 	@Bean("reactiveKafkaReceiver")
 	public DefaultKafkaReceiver<String, String> reactiveKafkaReceiver(ReceiverOptions<String, String> receiverOptions) {
 		return new DefaultKafkaReceiver<>(ConsumerFactory.INSTANCE,
-				receiverOptions
-					.subscription(List.of("laokou_gateway_trace_log", "laokou_auth_trace_log", "laokou_admin_trace_log",
-							"laokou_iot_trace_log", "laokou_oss_trace_log", "laokou_distributed_identifier_trace_log",
-							"laokou_generator_trace_log", "laokou_mqtt_trace_log", "laokou_udp_trace_log",
-							"laokou_http_trace_log", "laokou_tcp_trace_log", "laokou_report_trace_log")));
+				receiverOptions.subscription(List.of("gateway-trace-log", "auth-trace-log", "admin-trace-log",
+						"iot-trace-log", "oss-trace-log", "generator-trace-log", "matt-trace-log", "udp-trace-log",
+						"http-trace-log", "tcp-trace-log", "report-trace-log")));
 	}
 
 }
