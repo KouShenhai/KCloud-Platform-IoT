@@ -28,7 +28,6 @@ import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
@@ -36,8 +35,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 用户详细信息. JsonTypeInfo.Id.NAME => 多态子类与抽象类绑定.
@@ -71,96 +68,58 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	/**
 	 * 用户ID.
 	 */
-	private final Long id;
+	private Long id;
 
 	/**
 	 * 用户名.
 	 */
-	private final String username;
+	private String username;
 
 	/**
 	 * 头像.
 	 */
-	private final String avatar;
+	private String avatar;
 
 	/**
 	 * 超级管理员标识.
 	 */
-	private final Boolean superAdmin;
+	private Boolean superAdmin;
 
 	/**
 	 * 用户状态 0启用 1禁用.
 	 */
-	private final Integer status;
+	private Integer status;
 
 	/**
 	 * 邮箱.
 	 */
-	private final String mail;
+	private String mail;
 
 	/**
 	 * 手机号.
 	 */
-	private final String mobile;
+	private String mobile;
 
 	/**
 	 * 密码.
 	 */
 	@JsonIgnore
-	private final transient String password;
+	private transient String password;
 
 	/**
 	 * 租户ID.
 	 */
-	private final Long tenantId;
+	private Long tenantId;
 
 	/**
 	 * 部门PATHS.
 	 */
-	private final Set<String> deptPaths;
+	private Set<String> deptPaths;
 
 	/**
 	 * 菜单权限标识集合.
 	 */
-	private final Set<String> permissions;
-
-	/**
-	 * 数据源前缀.
-	 */
-	private final String sourcePrefix;
-
-	public UserDetails() {
-		this.id = 1L;
-		this.username = EMPTY;
-		this.avatar = EMPTY;
-		this.superAdmin = false;
-		this.status = 0;
-		this.mail = EMPTY;
-		this.mobile = EMPTY;
-		this.password = EMPTY;
-		this.tenantId = 0L;
-		this.deptPaths = Collections.emptySet();
-		this.permissions = Collections.emptySet();
-		this.sourcePrefix = EMPTY;
-	}
-
-	public UserDetails(final Long id, final String username, final String password, final String avatar,
-			final Boolean superAdmin, final Integer status, final String mail, final String mobile,
-			final Set<String> deptPaths, final Set<String> permissions, final Long tenantId,
-			final String sourcePrefix) {
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.avatar = avatar;
-		this.superAdmin = superAdmin;
-		this.status = status;
-		this.mail = mail;
-		this.mobile = mobile;
-		this.tenantId = tenantId;
-		this.deptPaths = deptPaths;
-		this.permissions = permissions;
-		this.sourcePrefix = sourcePrefix;
-	}
+	private Set<String> permissions;
 
 	@Override
 	public boolean equals(Object o) {
@@ -195,9 +154,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		if (!tenantId.equals(that.tenantId)) {
 			return false;
 		}
-		if (!sourcePrefix.equals(that.sourcePrefix)) {
-			return false;
-		}
 		if (!mobile.equals(that.mobile)) {
 			return false;
 		}
@@ -214,7 +170,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		result = 31 * result + deptPaths.hashCode();
 		result = 31 * result + permissions.hashCode();
 		result = 31 * result + tenantId.hashCode();
-		result = 31 * result + sourcePrefix.hashCode();
 		result = 31 * result + mail.hashCode();
 		result = 31 * result + mobile.hashCode();
 		return result;
@@ -268,12 +223,12 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
 	@JsonIgnore
 	public UserDetails getDecryptInfo() {
-		return new UserDetails(this.id, this.getDecryptUsername(), this.password, this.avatar, this.superAdmin,
-				this.status, this.getDecryptMail(), this.getDecryptMobile(), this.deptPaths, this.permissions,
-				this.tenantId, this.sourcePrefix);
+		this.mail = this.getDecryptMail();
+		this.mobile = this.getDecryptMobile();
+		this.username = this.getDecryptUsername();
+		return this;
 	}
 
-	@JsonIgnore
 	private String getDecryptUsername() {
 		if (StringUtils.isNotEmpty(this.username)) {
 			try {
@@ -286,7 +241,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		return this.username;
 	}
 
-	@JsonIgnore
 	private String getDecryptMail() {
 		if (StringUtils.isNotEmpty(this.mail)) {
 			try {
@@ -299,7 +253,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		return this.mail;
 	}
 
-	@JsonIgnore
 	private String getDecryptMobile() {
 		if (StringUtils.isNotEmpty(this.mobile)) {
 			try {

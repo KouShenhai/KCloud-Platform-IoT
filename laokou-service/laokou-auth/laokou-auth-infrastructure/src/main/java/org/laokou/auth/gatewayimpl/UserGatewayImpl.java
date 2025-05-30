@@ -24,15 +24,8 @@ import org.laokou.auth.gateway.UserGateway;
 import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.UserE;
-import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.util.MessageUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.auth.common.constant.BizConstants.USER_QUERY_FAILED;
-import static org.laokou.auth.model.OAuth2Constants.DATA_TABLE_NOT_EXIST;
-import static org.laokou.common.tenant.constant.DSConstants.Master.USER_TABLE;
 
 /**
  * 用户.
@@ -52,20 +45,9 @@ public class UserGatewayImpl implements UserGateway {
 	 * @return 用户信息
 	 */
 	@Override
-	public UserE getProfileUser(UserE user, String tenantCode) {
-		try {
-			UserDO userDO = userMapper.selectObj(UserConvertor.toDataObject(user), tenantCode);
-			return ObjectUtils.isNotNull(userDO) ? UserConvertor.toEntity(userDO) : null;
-		}
-		catch (BadSqlGrammarException e) {
-			log.error("表 {} 不存在，错误信息：{}", USER_TABLE, e.getMessage());
-			throw new BizException(DATA_TABLE_NOT_EXIST,
-					MessageUtils.getMessage(DATA_TABLE_NOT_EXIST, new String[] { USER_TABLE }));
-		}
-		catch (Exception e) {
-			log.error("查询用户失败，错误信息：{}", e.getMessage());
-			throw new BizException(USER_QUERY_FAILED);
-		}
+	public UserE getProfileUser(UserE user) {
+		UserDO userDO = userMapper.selectUser(UserConvertor.toDataObject(user));
+		return ObjectUtils.isNotNull(userDO) ? UserConvertor.toEntity(userDO) : null;
 	}
 
 }

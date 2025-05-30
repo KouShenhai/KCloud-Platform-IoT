@@ -18,7 +18,6 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
@@ -31,7 +30,6 @@ import java.time.Instant;
 @Setter
 @Getter
 @Entity
-@NoArgsConstructor
 public class LoginLogE extends Identifier {
 
 	/**
@@ -77,11 +75,16 @@ public class LoginLogE extends Identifier {
 	/**
 	 * 登录时间.
 	 */
-	private Instant instant;
+	private Instant loginTime;
 
 	/**
 	 * 租户ID.
 	 */
 	private Long tenantId;
+
+	/**
+	 * 用户ID.
+	 */
+	private Long userId;
 
 }

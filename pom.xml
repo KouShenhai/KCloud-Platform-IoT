@@ -30,7 +30,6 @@
     <module>laokou-service</module>
     <module>laokou-tool</module>
     <module>laokou-cola</module>
-    <module>laokou-sample</module>
   </modules>
   <name>KCloud-Platform-IoT</name>
   <description>一个企业级微服务架构的云服务多租户IoT平台</description>
@@ -68,15 +67,13 @@
     <!--spring-boot版本-->
     <spring-boot.version>3.5.0</spring-boot.version>
     <!--spring-cloud版本-->
-    <spring-cloud.version>2025.0.0-RC1</spring-cloud.version>
+    <spring-cloud.version>2025.0.0</spring-cloud.version>
     <!--spring-framework版本-->
     <spring-framework.version>6.2.7</spring-framework.version>
     <!--cloud-alibaba版本-->
     <spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
     <!--springdoc-openapi版本-->
     <springdoc-openapi.version>2.8.8</springdoc-openapi.version>
-    <!--dubbo版本-->
-    <dubbo.version>3.3.4</dubbo.version>
     <docker.host>tcp://127.0.0.1:2375</docker.host>
     <docker.registry>registry.cn-shenzhen.aliyuncs.com</docker.registry>
     <docker.namespace>koushenhai</docker.namespace>
@@ -139,14 +136,6 @@
         <groupId>org.springdoc</groupId>
         <artifactId>springdoc-openapi</artifactId>
         <version>${springdoc-openapi.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!-- 定义 dubbo 版本 -->
-      <dependency>
-        <groupId>org.apache.dubbo</groupId>
-        <artifactId>dubbo-bom</artifactId>
-        <version>${dubbo.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -258,12 +247,10 @@
         <NACOS-NAMESPACE>0dac1a68-2f01-40df-bd26-bf0cb199057a</NACOS-NAMESPACE>
         <NACOS-DISCOVERY-ADDRESS>nacos:8848</NACOS-DISCOVERY-ADDRESS>
         <NACOS-CONFIG-ADDRESS>nacos:8848</NACOS-CONFIG-ADDRESS>
-        <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
+        <NACOS-GROUP>IOT_GROUP</NACOS-GROUP>
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-        <NACOS-CLUSTER-NAME>laokou-cluster</NACOS-CLUSTER-NAME>
-        <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
-        <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
+        <NACOS-CLUSTER-NAME>nacos-cluster</NACOS-CLUSTER-NAME>
         <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
         <SSL-ENABLED>false</SSL-ENABLED>
         <JASYPT-ENCRYPTOR-PASSWORD>laokou</JASYPT-ENCRYPTOR-PASSWORD>
@@ -299,12 +286,10 @@
         <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
         <NACOS-DISCOVERY-ADDRESS>nacos:8848</NACOS-DISCOVERY-ADDRESS>
         <NACOS-CONFIG-ADDRESS>nacos:8848</NACOS-CONFIG-ADDRESS>
-        <NACOS-GROUP>LAOKOU_GROUP</NACOS-GROUP>
+        <NACOS-GROUP>IOT_GROUP</NACOS-GROUP>
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-        <NACOS-CLUSTER-NAME>laokou-cluster</NACOS-CLUSTER-NAME>
-        <SENTINEL-USERNAME>sentinel</SENTINEL-USERNAME>
-        <SENTINEL-PASSWORD>sentinel</SENTINEL-PASSWORD>
+        <NACOS-CLUSTER-NAME>nacos-cluster</NACOS-CLUSTER-NAME>
         <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
         <SSL-ENABLED>true</SSL-ENABLED>
         <JASYPT-ENCRYPTOR-PASSWORD>laokou</JASYPT-ENCRYPTOR-PASSWORD>
@@ -366,17 +351,13 @@
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-CONFIG-ADDRESS>${NACOS_CONFIG_ADDRESS:nacos:8848}</NACOS-CONFIG-ADDRESS>
         <!--suppress UnresolvedMavenProperty -->
-        <NACOS-GROUP>${NACOS_GROUP:LAOKOU_GROUP}</NACOS-GROUP>
+        <NACOS-GROUP>${NACOS_GROUP:IOT_GROUP}</NACOS-GROUP>
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-USERNAME>${NACOS_USERNAME:nacos}</NACOS-USERNAME>
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-PASSWORD>${NACOS_PASSWORD:nacos}</NACOS-PASSWORD>
         <!--suppress UnresolvedMavenProperty -->
-        <NACOS-CLUSTER-NAME>${NACOS_CLUSTER_NAME:laokou-cluster}</NACOS-CLUSTER-NAME>
-        <!--suppress UnresolvedMavenProperty -->
-        <SENTINEL-USERNAME>${SENTINEL_USERNAME:sentinel}</SENTINEL-USERNAME>
-        <!--suppress UnresolvedMavenProperty -->
-        <SENTINEL-PASSWORD>${SENTINEL_PASSWORD:sentinel}</SENTINEL-PASSWORD>
+        <NACOS-CLUSTER-NAME>${NACOS_CLUSTER_NAME:nacos-cluster}</NACOS-CLUSTER-NAME>
         <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
         <SSL-ENABLED>true</SSL-ENABLED>
         <!--suppress UnresolvedMavenProperty -->

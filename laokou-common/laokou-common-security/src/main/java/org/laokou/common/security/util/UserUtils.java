@@ -26,7 +26,10 @@ import java.util.Set;
 /**
  * @author laokou
  */
-public class UserUtils {
+public final class UserUtils {
+
+	private UserUtils() {
+	}
 
 	public static UserDetails user() {
 		return Optional.ofNullable(getAuthentication()).map(authentication -> {
@@ -67,14 +70,6 @@ public class UserUtils {
 	 */
 	public static Long getTenantId() {
 		return user().getTenantId();
-	}
-
-	/**
-	 * 数据源前缀.
-	 * @return String
-	 */
-	public static String getSourcePrefix() {
-		return user().getSourcePrefix();
 	}
 
 	private static Authentication getAuthentication() {

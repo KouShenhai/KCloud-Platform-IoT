@@ -20,7 +20,6 @@ package org.laokou.admin;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableWarmUp;
-import org.laokou.common.data.cache.annotation.EnableRemoveCache;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnableServiceShutDown;
 import org.laokou.common.nacos.annotation.EnableRouter;
@@ -56,7 +55,6 @@ import java.security.NoSuchAlgorithmException;
 @EnableSecurity
 @EnableApiSecret
 @EnableScheduling
-@EnableRemoveCache
 @EnableServiceShutDown
 @EnableRedisRepository
 @EnableDiscoveryClient
@@ -70,7 +68,6 @@ public class AdminApp {
 
 	// @formatter:off
     /// ```properties
-    /// -Dcsp.sentinel.api.port=8723
     /// -Dserver.port=9990
     /// ```
     /// ```properties
@@ -86,8 +83,6 @@ public class AdminApp {
 		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.TTL_MODE_INHERITABLETHREADLOCAL);
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
-		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494
-		System.setProperty("management.health.sentinel.enabled", "false");
 		// 忽略SSL认证
 		SslUtils.ignoreSSLTrust();
 		// 启用虚拟线程支持

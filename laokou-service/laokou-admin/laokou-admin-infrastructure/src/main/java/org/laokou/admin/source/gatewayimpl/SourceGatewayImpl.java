@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.source.convertor.SourceConvertor;
 import org.laokou.admin.source.gateway.SourceGateway;
 import org.laokou.admin.source.model.SourceE;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.laokou.common.tenant.mapper.SourceDO;
 import org.laokou.common.tenant.mapper.SourceMapper;
 import org.springframework.stereotype.Component;
@@ -39,11 +38,9 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	private final SourceMapper sourceMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
 	public void createSource(SourceE sourceE) {
-		sourceMapper.insert(SourceConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), sourceE));
+		sourceMapper.insert(SourceConvertor.toDataObject(1L, sourceE));
 	}
 
 	@Override

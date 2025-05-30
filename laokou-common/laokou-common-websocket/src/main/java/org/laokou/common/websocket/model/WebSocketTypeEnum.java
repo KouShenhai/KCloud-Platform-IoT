@@ -20,7 +20,6 @@ package org.laokou.common.websocket.model;
 import io.netty.channel.Channel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.util.EnumParser;
 import org.laokou.common.security.util.UserDetails;
 import org.laokou.common.websocket.config.WebSocketSessionHeartBeatManager;
@@ -35,8 +34,7 @@ public enum WebSocketTypeEnum {
 
 	MESSAGE("message", "消息") {
 		@Override
-		public void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel,
-				DomainEventPublisher domainEventPublisher) {
+		public void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel) {
 			log.info("【WebSocket-Server】 => 接收到消息，通道ID：{}，用户ID：{}，消息：{}", channel.id().asLongText(),
 					userDetails.getId(), co.getPayload());
 		}
@@ -44,9 +42,9 @@ public enum WebSocketTypeEnum {
 
 	CONNECT("connect", "建立连接") {
 		@Override
-		public void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel,
-				DomainEventPublisher domainEventPublisher) throws InterruptedException {
-			String clientId = String.valueOf(userDetails.getId());
+		public void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel)
+				throws InterruptedException {
+			Long clientId = userDetails.getId();
 			log.info("【WebSocket-Server】 => 已建立连接，通道ID：{}，用户ID：{}", channel.id().asLongText(), clientId);
 			WebSocketSessionManager.add(clientId, channel);
 		}
@@ -54,19 +52,17 @@ public enum WebSocketTypeEnum {
 
 	PING("ping", "发送心跳") {
 		@Override
-		public void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel,
-				DomainEventPublisher domainEventPublisher) {
+		public void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel) {
 		}
 	},
 
 	PONG("pong", "心跳应答") {
 		@Override
-		public void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel,
-				DomainEventPublisher domainEventPublisher) {
-			String clientId = String.valueOf(userDetails.getId());
-			log.info("【WebSocket-Server】 => 接收{}心跳{}", clientId, co.getPayload());
-			if (WebSocketSessionHeartBeatManager.get(clientId) > 0) {
-				WebSocketSessionHeartBeatManager.reset(clientId);
+		public void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel) {
+			String channelId = channel.id().asLongText();
+			log.info("【WebSocket-Server】 => 接收{}心跳{}", channelId, co.getPayload());
+			if (WebSocketSessionHeartBeatManager.get(channelId) > 0) {
+				WebSocketSessionHeartBeatManager.reset(channelId);
 			}
 		}
 	};
@@ -84,7 +80,7 @@ public enum WebSocketTypeEnum {
 		return EnumParser.parse(WebSocketTypeEnum.class, WebSocketTypeEnum::getCode, code);
 	}
 
-	public abstract void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel,
-			DomainEventPublisher domainEventPublisher) throws InterruptedException;
+	public abstract void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel)
+			throws InterruptedException;
 
 }

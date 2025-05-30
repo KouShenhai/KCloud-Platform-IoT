@@ -27,7 +27,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("boot_sys_login_log")
+@TableName("sys_login_log")
 public class LoginLogDO extends BaseDO {
 
 	/**

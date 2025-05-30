@@ -11,11 +11,4 @@
 
   <artifactId>laokou-cola-domain</artifactId>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-cola-client</artifactId>
-    </dependency>
-  </dependencies>
-
 </project>

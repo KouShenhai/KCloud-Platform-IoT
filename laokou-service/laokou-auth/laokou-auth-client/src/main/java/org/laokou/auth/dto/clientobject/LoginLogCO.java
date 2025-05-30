@@ -80,11 +80,16 @@ public class LoginLogCO extends ClientObject {
 	/**
 	 * 登录时间.
 	 */
-	private Instant instant;
+	private Instant loginTime;
 
 	/**
 	 * 租户ID.
 	 */
 	private Long tenantId;
+
+	/**
+	 * 用户ID.
+	 */
+	private Long userId;
 
 }

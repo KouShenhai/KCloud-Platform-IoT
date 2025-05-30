@@ -29,7 +29,7 @@ public final class DeptDomainFactory {
 	}
 
 	public static DeptE getDept() {
-		return SpringContextUtils.getBeanProviderAndNotExistToCreate(DeptE.class);
+		return SpringContextUtils.getBeanProvider(DeptE.class);
 	}
 
 }

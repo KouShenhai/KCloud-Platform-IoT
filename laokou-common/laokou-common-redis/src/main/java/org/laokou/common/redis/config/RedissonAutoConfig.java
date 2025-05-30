@@ -45,7 +45,7 @@ import static org.laokou.common.i18n.common.constant.StringConstants.RISK;
 public class RedissonAutoConfig {
 
 	/**
-	 * Redis未加密连接.
+	 * Redis普通连接.
 	 */
 	private static final String REDIS_PROTOCOL_PREFIX = "redis://";
 
@@ -97,8 +97,6 @@ public class RedissonAutoConfig {
 				.setConnectTimeout(connectTimeout)
 				.setTimeout(timeout);
 		}
-		// 使用json序列化方式
-		config.setCodec(GlobalJsonJacksonCodec.INSTANCE);
 		return Redisson.create(config);
 	}
 

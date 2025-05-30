@@ -23,7 +23,6 @@ import org.laokou.admin.i18nMessage.gateway.I18nMessageGateway;
 import org.laokou.admin.i18nMessage.gatewayimpl.database.I18nMessageMapper;
 import org.laokou.admin.i18nMessage.gatewayimpl.database.dataobject.I18nMessageDO;
 import org.laokou.admin.i18nMessage.model.I18nMessageE;
-import org.laokou.common.openfeign.rpc.DistributedIdentifierFeignClientWrapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,12 +38,9 @@ public class I18nMessageGatewayImpl implements I18nMessageGateway {
 
 	private final I18nMessageMapper i18nMessageMapper;
 
-	private final DistributedIdentifierFeignClientWrapper distributedIdentifierFeignClientWrapper;
-
 	@Override
 	public void createI18nMessage(I18nMessageE i18nMessageE) {
-		i18nMessageMapper
-			.insert(I18nMessageConvertor.toDataObject(distributedIdentifierFeignClientWrapper.getId(), i18nMessageE));
+		i18nMessageMapper.insert(I18nMessageConvertor.toDataObject(1L, i18nMessageE));
 	}
 
 	@Override
