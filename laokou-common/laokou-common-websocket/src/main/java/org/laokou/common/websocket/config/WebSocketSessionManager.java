@@ -33,7 +33,7 @@ public final class WebSocketSessionManager {
 	private WebSocketSessionManager() {
 	}
 
-	private static final Map<String, Set<Channel>> CLIENT_CACHE = new ConcurrentHashMap<>(8192);
+	private static final Map<Long, Set<Channel>> CLIENT_CACHE = new ConcurrentHashMap<>(8192);
 
 	private static final ReentrantReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
 
@@ -41,7 +41,7 @@ public final class WebSocketSessionManager {
 
 	private static final Lock READ_LOCK = READ_WRITE_LOCK.readLock();
 
-	public static void add(String clientId, Channel channel) throws InterruptedException {
+	public static void add(Long clientId, Channel channel) throws InterruptedException {
 		boolean isLocked = false;
 		int retry = 10;
 		try {
@@ -60,7 +60,7 @@ public final class WebSocketSessionManager {
 		}
 	}
 
-	public static Set<Channel> get(String clientId) throws InterruptedException {
+	public static Set<Channel> get(Long clientId) throws InterruptedException {
 		boolean isLocked = false;
 		int retry = 10;
 		try {

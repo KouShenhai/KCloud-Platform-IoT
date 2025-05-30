@@ -22,16 +22,16 @@
 
   <select id="selectDeptPaths" resultType="string">
     select path
-    from boot_sys_dept
+    from sys_dept
     where pid = 0
       and del_flag = 0
   </select>
 
   <select id="selectDeptPathsByUserId" resultType="string">
     SELECT DISTINCT d.path
-    FROM boot_sys_dept d
-    INNER JOIN boot_sys_role_dept rd ON d.id = rd.dept_id
-    INNER JOIN boot_sys_user_role ur ON rd.role_id = ur.role_id
+    FROM sys_dept d
+    INNER JOIN sys_role_dept rd ON d.id = rd.dept_id
+    INNER JOIN sys_user_role ur ON rd.role_id = ur.role_id
     WHERE ur.user_id = #{userId}
         AND d.del_flag = 0
   </select>

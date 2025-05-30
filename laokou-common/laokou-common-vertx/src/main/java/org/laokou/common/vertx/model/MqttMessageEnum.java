@@ -33,7 +33,7 @@ public enum MqttMessageEnum {
 
 		@Override
 		public String getMqTopic() {
-			return "laokou-mqtt-up-property-report";
+			return "up-property-report";
 		}
 	},
 
@@ -45,7 +45,7 @@ public enum MqttMessageEnum {
 
 		@Override
 		public String getMqTopic() {
-			return "laokou-mqtt-down-property-read";
+			return "down-property-read";
 		}
 	},
 
@@ -57,7 +57,7 @@ public enum MqttMessageEnum {
 
 		@Override
 		public String getMqTopic() {
-			return "laokou-mqtt-up-property-read-reply";
+			return "up-property-read-reply";
 		}
 	},
 
@@ -69,7 +69,7 @@ public enum MqttMessageEnum {
 
 		@Override
 		public String getMqTopic() {
-			return "laokou-mqtt-down-property-write";
+			return "down-property-write";
 		}
 	},
 
@@ -81,7 +81,7 @@ public enum MqttMessageEnum {
 
 		@Override
 		public String getMqTopic() {
-			return "laokou-mqtt-up-property-write-reply";
+			return "up-property-write-reply";
 		}
 	};
 

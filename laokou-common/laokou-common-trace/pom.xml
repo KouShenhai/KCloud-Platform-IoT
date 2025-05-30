@@ -68,11 +68,6 @@
             <groupId>io.prometheus</groupId>
             <artifactId>prometheus-metrics-tracer-common</artifactId>
         </dependency>
-      <dependency>
-        <groupId>io.projectreactor</groupId>
-        <artifactId>reactor-core</artifactId>
-        <optional>true</optional>
-      </dependency>
     </dependencies>
 
 </project>

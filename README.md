@@ -138,14 +138,12 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |         Spring Boot         |    3.5.0    |
 |        Spring Cloud         |  2025.0.0   |
 |    Spring Cloud Alibaba     | 2023.0.3.2  |
-|      Spring Boot Admin      |    3.4.5    |
+|      Spring Boot Admin      |    3.4.7    |
 | Spring Authorization Server |    1.5.0    |
 |        Mybatis Plus         |   3.5.12    |
 |            Nacos            |    3.0.0    |
-|          Sentinel           |    1.8.8    |
 |            Redis            |    8.0.1    |
 |        Elasticsearch        |   8.18.1    |
-|          RocketMQ           |    5.3.3    |
 |            Netty            | 4.2.1.Final |
 |            Kafka            |    4.0.0    |
 |            EMQX             |    5.4.1    |
@@ -160,13 +158,12 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
 - 认证授权：Spring Security OAuth2 Authorization Server
-- 远程调用：Spring Cloud OpenFeign & Apache Dubbo
+- 远程调用：Spring Cloud OpenFeign
 - 客户端请求：OkHttp & HttpClient & WebClient & RestClient
 - 负载均衡：Spring Cloud Loadbalancer
-- 服务熔断&降级&限流：Sentinel
-- 分库分表：Mybatis Plus & ShardingSphere
-- 分布式事务：RocketMQ & Seata
-- 消息队列：RocketMQ & Kafka & MQTT & RabbitMQ & Pulsar
+- 服务熔断&降级&限流：Resilience4j
+- 分库分表：Mybatis Plus
+- 消息队列：Kafka & MQTT & Pulsar
 - 服务监控：Spring Boot Admin & Prometheus
 - 高亮搜索：Elasticsearch
 - 链路跟踪：Jaeger
@@ -179,13 +176,10 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - 网络通讯：Netty
 - 持续集成&交付：Jenkins
 - 持久层框架：Mybatis Plus
-- JSON序列化：Jackson
+- JSON序列化：Jackson & Fury
 - 数据库：Postgresql
 - 时序数据库：TimescaleDB & TDengine & InfluxDB
 - 数据库迁移：Liquibase
-- 实时流批处理：Flink
-- 离线批处理：Spark
-- 列式数据库：ClickHouse
 - 链路&指标采集：Micrometer
 - 分布式ID：Zookeeper
 
@@ -202,7 +196,6 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
         └── laokou-common-log4j2                   --- 日志组件
         └── laokou-common-tenant                   --- 租户组件
         └── laokou-common-mongodb                  --- 报表组件
-        └── laokou-common-rocketmq                 --- 消息组件
         └── laokou-common-algorithm                --- 算法组件
         └── laokou-common-prometheus               --- 监控组件
         └── laokou-common-openapi-doc              --- 文档组件
@@ -211,7 +204,6 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
         └── laokou-common-bom                      --- 依赖版本库
         └── laokou-common-i18n                     --- 国际化组件
         └── laokou-common-sensitive                --- 敏感词组件
-        └── laokou-common-extension                --- 扩展点组件
         └── laokou-common-lock                     --- 分布式锁组件
         └── laokou-common-trace                    --- 链路跟踪组件
         └── laokou-common-nacos                    --- 注册发现组件
@@ -225,12 +217,10 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
         └── laokou-common-data-cache               --- 数据缓存组件
         └── laokou-common-mybatis-plus             --- 对象映射组件
         └── laokou-common-tdengine                 --- 时序数据库组件
-        └── laokou-common-sentinel                 --- 服务限流&熔断降级组件
 ├── laokou-cloud
         └── laokou-nacos                           --- 服务治理
         └── laokou-gateway                         --- API网关
         └── laokou-monitor                         --- 服务监控
-        └── laokou-sentinel                        --- 流量治理
         └── laokou-snail-job                       --- 分布式任务调度
 ├── laokou-service
         └── laokou-iot                             --- 物联网模块

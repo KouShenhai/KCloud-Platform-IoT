@@ -21,12 +21,12 @@
 <mapper namespace="org.laokou.admin.user.gatewayimpl.database.UserRoleMapper">
 
   <delete id="deleteUserRoleById">
-    delete from boot_sys_user_role where id = #{userRoleDO.id}
+    delete from sys_user_role where id = #{userRoleDO.id}
   </delete>
 
   <select id="selectUserRoleIdsByUserIds" resultType="java.lang.Long">
     select id
-    from boot_sys_user_role
+    from sys_user_role
     where user_id in
     <foreach collection="userIds" item="item" open="(" close=")">
       #{item}
@@ -35,7 +35,7 @@
 
   <select id="selectRoleIdsByUserId" resultType="java.lang.String">
     select role_id
-    from boot_sys_user_role
+    from sys_user_role
     where user_id = #{userId}
   </select>
 </mapper>
