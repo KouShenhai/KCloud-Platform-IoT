@@ -74,10 +74,11 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 					return ReactiveResponseUtils.responseOk(exchange, Result.fail(INTERNAL_SERVER_ERROR));
 				}
 			}
-//			if (BlockException.isBlockException(e)) {
-//				log.error("请求太频繁，错误信息：{}", e.getMessage());
-//				return ReactiveResponseUtils.responseOk(exchange, Result.fail(TOO_MANY_REQUESTS));
-//			}
+			// if (BlockException.isBlockException(e)) {
+			// log.error("请求太频繁，错误信息：{}", e.getMessage());
+			// return ReactiveResponseUtils.responseOk(exchange,
+			// Result.fail(TOO_MANY_REQUESTS));
+			// }
 			log.error("错误网关，错误信息：{}", e.getMessage());
 			return ReactiveResponseUtils.responseOk(exchange, Result.fail(BAD_GATEWAY));
 		}
