@@ -147,7 +147,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Spring Boot                 |3.5.0
 |Spring Cloud                |2025.0.0
 |Spring Cloud Alibaba        |2023.0.3.2
-|Spring Boot Admin           |3.4.7
+|Spring Boot Admin           |3.5.0
 |Spring Authorization Server |1.5.0
 |Mybatis Plus                |3.5.12
 |Nacos                       |3.0.0
