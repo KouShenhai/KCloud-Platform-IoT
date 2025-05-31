@@ -177,7 +177,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - 网络通讯：Netty
 - 持续集成&交付：Jenkins
 - 持久层框架：Mybatis Plus
-- JSON序列化：Jackson & Fury
+- 序列化&反序列化：Jackson & Fury
 - 数据库：Postgresql
 - 时序数据库：TimescaleDB & TDengine & InfluxDB
 - 数据库迁移：Liquibase
