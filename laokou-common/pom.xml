@@ -80,7 +80,6 @@
     <module>laokou-common-pulsar</module>
     <module>laokou-common-coap</module>
     <module>laokou-common-fury</module>
-    <module>laokou-common-grpc</module>
   </modules>
 
 </project>

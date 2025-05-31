@@ -22,11 +22,8 @@ import org.laokou.admin.menu.ability.MenuDomainService;
 import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuSaveCmd;
 import org.laokou.admin.menu.model.MenuE;
-import org.laokou.admin.menu.model.MenuParamValidator;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,9 +35,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class MenuSaveCmdExe {
 
-	@Autowired
-	@Qualifier("saveMenuParamValidator")
-	private MenuParamValidator saveMenuParamValidator;
+	// @Autowired
+	// @Qualifier("saveMenuParamValidator")
+	// private MenuParamValidator saveMenuParamValidator;
 
 	private final MenuDomainService menuDomainService;
 
@@ -54,7 +51,7 @@ public class MenuSaveCmdExe {
 	@CommandLog
 	public void executeVoid(MenuSaveCmd cmd) {
 		MenuE menuE = MenuConvertor.toEntity(cmd.getCo());
-		saveMenuParamValidator.validateMenu(menuE);
+		// saveMenuParamValidator.validateMenu(menuE);
 		transactionalUtils.executeInTransaction(() -> menuDomainService.createMenu(menuE));
 	}
 

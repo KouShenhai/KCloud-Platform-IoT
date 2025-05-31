@@ -1,0 +1,2 @@
+authProvider=org.laokou.common.dubbo.config.OAuth2ProviderFilter
+authConsumer=org.laokou.common.dubbo.config.OAuth2ConsumerFilter

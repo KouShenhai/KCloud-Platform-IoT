@@ -19,6 +19,7 @@ package org.laokou.auth;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnableServiceShutDown;
@@ -47,6 +48,7 @@ import java.security.NoSuchAlgorithmException;
  * @author laokou
  */
 @Slf4j
+@EnableDubbo
 @EnableRouter
 @EnableWarmUp
 @EnableScheduling

@@ -157,44 +157,32 @@
     <californium.version>4.0.0-M3</californium.version>
     <!--jsoup版本-->
     <jsoup.version>1.20.1</jsoup.version>
-    <!--grpc-spring版本-->
-    <grpc-spring.version>3.1.0.RELEASE</grpc-spring.version>
-    <!--j2objc-annotations版本-->
-    <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
+    <!--dubbo版本-->
+    <dubbo.version>3.3.4</dubbo.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.google.j2objc</groupId>
-        <artifactId>j2objc-annotations</artifactId>
-        <version>${j2objc-annotations.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.google.protobuf</groupId>
         <artifactId>protobuf-java</artifactId>
         <version>${protobuf-java.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.google.protobuf</groupId>
-        <artifactId>protobuf-java-util</artifactId>
-        <version>${protobuf-java.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.google.protobuf</groupId>
-        <artifactId>protobuf-javalite</artifactId>
-        <version>${protobuf-java.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>net.devh</groupId>
-        <artifactId>grpc-spring-boot-starter</artifactId>
-        <version>${grpc-spring.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-grpc</artifactId>
+        <artifactId>laokou-common-dubbo</artifactId>
         <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.dubbo</groupId>
+        <artifactId>dubbo-spring-boot-starter</artifactId>
+        <version>${dubbo.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.dubbo</groupId>
+        <artifactId>dubbo-nacos-spring-boot-starter</artifactId>
+        <version>${dubbo.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -764,11 +752,6 @@
       <dependency>
         <groupId>io.grpc</groupId>
         <artifactId>grpc-protobuf</artifactId>
-        <version>${grpc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
-        <artifactId>grpc-protobuf-lite</artifactId>
         <version>${grpc.version}</version>
       </dependency>
       <dependency>
