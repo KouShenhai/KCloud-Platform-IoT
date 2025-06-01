@@ -15,23 +15,15 @@
  *
  */
 
-package org.laokou.common.zookeeper.config;
+package org.laokou.distributed.identifier.api;
 
-import org.apache.curator.framework.CuratorFramework;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.laokou.common.i18n.dto.Result;
 
 /**
  * @author laokou
  */
-@Configuration
-public class DistributedIdentifierConfig {
+public interface DistributedIdentifierServiceI {
 
-	@Bean(initMethod = "init", destroyMethod = "close")
-	public SnowflakeGenerator snowflakeGenerator(CuratorFramework curatorFramework,
-			SpringZookeeperProperties springZookeeperProperties) {
-		return new ZookeeperSnowflakeGenerator(1600166465631L, springZookeeperProperties.getDataCenterId(),
-				curatorFramework);
-	}
+	Result<Long> generateSnowflake();
 
 }

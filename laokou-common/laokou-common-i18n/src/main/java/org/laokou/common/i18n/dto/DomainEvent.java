@@ -28,7 +28,7 @@ import java.io.Serial;
  */
 @Setter
 @Getter
-public class DomainEvent extends Identifier {
+public abstract class DomainEvent extends Identifier {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;

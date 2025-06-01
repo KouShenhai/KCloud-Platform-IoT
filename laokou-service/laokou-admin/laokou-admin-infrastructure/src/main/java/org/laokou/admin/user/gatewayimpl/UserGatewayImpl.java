@@ -24,6 +24,7 @@ import org.laokou.admin.user.gateway.UserGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
@@ -42,15 +43,18 @@ public class UserGatewayImpl implements UserGateway {
 
 	private final UserMapper userMapper;
 
+	private final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
+
 	@Override
 	public void createUser(UserE userE) {
-		UserDO userDO = UserConvertor.toDataObject(passwordEncoder, userE, true);
+		UserDO userDO = UserConvertor.toDataObject(distributedIdentifierWrapperRpc.getId(), passwordEncoder, userE,
+				true);
 		userMapper.insert(userDO);
 	}
 
 	@Override
 	public void updateUser(UserE userE) {
-		UserDO userDO = UserConvertor.toDataObject(passwordEncoder, userE, false);
+		UserDO userDO = UserConvertor.toDataObject(null, passwordEncoder, userE, false);
 		userDO.setVersion(userMapper.selectVersion(userE.getId()));
 		userMapper.updateById(userDO);
 	}

@@ -15,21 +15,24 @@
  *
  */
 
-package org.laokou.common.zookeeper.config;
+package org.laokou.distributed.identifier.command;
 
-import java.time.Instant;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.distributed.identifier.config.SnowflakeGenerator;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface SnowflakeGenerator {
+@Component
+@RequiredArgsConstructor
+public class DistributedIdentifierGenerateCmdExe {
 
-	long nextId();
+	private final SnowflakeGenerator snowflakeGenerator;
 
-	Instant getInstant(long id);
-
-	void init() throws Exception;
-
-	void close() throws Exception;
+	public Result<Long> execute() {
+		return Result.ok(snowflakeGenerator.nextId());
+	}
 
 }

@@ -23,9 +23,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.zookeeper.config.SnowflakeGenerator;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -71,7 +71,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 
 	private final OAuth2AuthenticationProcessor authProcessor;
 
-	protected final SnowflakeGenerator zookeeperSnowflakeGenerator;
+	protected final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
 
 	/**
 	 * 认证授权.

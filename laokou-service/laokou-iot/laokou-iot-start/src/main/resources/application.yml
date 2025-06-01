@@ -40,10 +40,6 @@ spring:
   threads:
     virtual:
       enabled: true
-  zookeeper:
-    address: zookeeper:2181
-    connection-timeout-ms: 15000
-    session-timeout-ms: 60000
   lifecycle:
     timeout-per-shutdown-phase: "2m"
   websocket-server:

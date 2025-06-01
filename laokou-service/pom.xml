@@ -34,6 +34,7 @@
     <module>laokou-logstash</module>
     <module>laokou-auth</module>
     <module>laokou-generator</module>
+    <module>laokou-distributed-identifier</module>
     <module>laokou-report</module>
     <module>laokou-iot</module>
     <module>laokou-module</module>

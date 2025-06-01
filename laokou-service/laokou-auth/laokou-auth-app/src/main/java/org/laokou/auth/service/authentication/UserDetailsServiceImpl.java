@@ -23,9 +23,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
-import org.laokou.common.zookeeper.config.SnowflakeGenerator;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -46,7 +46,7 @@ final class UserDetailsServiceImpl implements UserDetailsService {
 
 	private final OAuth2AuthenticationProcessor authProcessor;
 
-	private final SnowflakeGenerator zookeeperSnowflakeGenerator;
+	private final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
 
 	/**
 	 * 获取用户信息.
@@ -60,7 +60,7 @@ final class UserDetailsServiceImpl implements UserDetailsService {
 			HttpServletRequest request = RequestUtils.getHttpServletRequest();
 			String password = request.getParameter(PASSWORD);
 			String tenantCode = request.getParameter(TENANT_CODE);
-			AuthA auth = DomainFactory.getAuthorizationCodeAuth(zookeeperSnowflakeGenerator.nextId(), username,
+			AuthA auth = DomainFactory.getAuthorizationCodeAuth(distributedIdentifierWrapperRpc.getId(), username,
 					password, tenantCode);
 			auth.createUserByAuthorizationCode();
 			return (UserDetails) authProcessor.authenticationToken(auth, request).getPrincipal();

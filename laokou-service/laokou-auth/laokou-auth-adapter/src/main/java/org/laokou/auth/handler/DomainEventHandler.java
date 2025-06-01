@@ -30,8 +30,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.auth.model.MqEnum.LOGIN_LOG_CONSUMER_GROUP;
-import static org.laokou.auth.model.MqEnum.LOGIN_LOG_TOPIC;
+import static org.laokou.auth.model.MqEnum.*;
 
 /**
  * @author laokou
@@ -44,11 +43,37 @@ public class DomainEventHandler {
 	private final LoginLogServiceI loginLogServiceI;
 
 	@KafkaListener(topics = LOGIN_LOG_TOPIC, groupId = LOGIN_LOG_CONSUMER_GROUP + "-${spring.kafka.consumer.group-id}")
-	public void loginLogHandler(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
+	public void handleLoginLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
 				loginLogServiceI
 					.save(new LoginLogSaveCmd(LoginLogConvertor.toClientObject((LoginEvent) record.value())));
+			}
+		}
+		finally {
+			acknowledgment.acknowledge();
+		}
+	}
+
+	@KafkaListener(topics = MAIL_CAPTCHA_TOPIC,
+			groupId = MAIL_CAPTCHA_CONSUMER_GROUP + "-${spring.kafka.consumer.group-id}")
+	public void handleMailCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
+		try {
+			for (ConsumerRecord<String, Object> record : messages) {
+
+			}
+		}
+		finally {
+			acknowledgment.acknowledge();
+		}
+	}
+
+	@KafkaListener(topics = MOBILE_CAPTCHA_TOPIC,
+			groupId = MOBILE_CAPTCHA_CONSUMER_GROUP + "-${spring.kafka.consumer.group-id}")
+	public void handleMobileCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
+		try {
+			for (ConsumerRecord<String, Object> record : messages) {
+
 			}
 		}
 		finally {

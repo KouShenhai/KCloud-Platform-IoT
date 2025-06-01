@@ -25,6 +25,7 @@ import org.laokou.admin.role.gatewayimpl.database.RoleMenuMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
@@ -42,6 +43,8 @@ public class RoleMenuGatewayImpl implements RoleMenuGateway {
 
 	private final RoleMenuMapper roleMenuMapper;
 
+	private final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
+
 	@Override
 	public void updateRoleMenu(RoleE roleE) {
 		deleteRoleMenu(getRoleMenuIds(roleE.getRoleIds()));
@@ -55,7 +58,7 @@ public class RoleMenuGatewayImpl implements RoleMenuGateway {
 
 	private void insertRoleMenu(List<String> menuIds, Long roleId) {
 		// 新增角色菜单关联表
-		List<RoleMenuDO> list = RoleConvertor.toDataObjects(menuIds, roleId);
+		List<RoleMenuDO> list = RoleConvertor.toDataObjects(distributedIdentifierWrapperRpc.getId(), menuIds, roleId);
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, RoleMenuMapper.class, RoleMenuMapper::insert);
 		}

@@ -1,0 +1,14 @@
+dubbo:
+  registry:
+    address: nacos://${NACOS-DISCOVERY-ADDRESS}?username=${NACOS-USERNAME}&password=${NACOS-PASSWORD}
+    register-mode: instance
+    parameters:
+      register-consumer-url: true
+      namespace: ${NACOS-NAMESPACE}
+    group: DUBBO_${NACOS-GROUP}
+  protocol:
+    name: dubbo
+    port: -1
+  application:
+    name: dubbo-${spring.application.name}
+    logger: slf4j

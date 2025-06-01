@@ -34,7 +34,7 @@ server:
     key-store-password: laokou
   http2:
     enabled: @SSL-ENABLED@
-  forward-headers-strategy: framework
+  forward-headers-strategy: native
   shutdown: graceful
 
 spring:

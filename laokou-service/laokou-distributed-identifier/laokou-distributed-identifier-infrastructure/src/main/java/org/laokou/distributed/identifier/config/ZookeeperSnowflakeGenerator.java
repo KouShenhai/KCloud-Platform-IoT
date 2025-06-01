@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.zookeeper.config;
+package org.laokou.distributed.identifier.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;

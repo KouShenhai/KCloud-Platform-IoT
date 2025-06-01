@@ -24,6 +24,7 @@ import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.admin.role.model.RoleE;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,10 +35,10 @@ import java.util.List;
  */
 public class RoleConvertor {
 
-	public static RoleDO toDataObject(RoleE roleE, boolean isInsert) {
+	public static RoleDO toDataObject(Long id, RoleE roleE, boolean isInsert) {
 		RoleDO roleDO = new RoleDO();
 		if (isInsert) {
-			roleDO.setId(null);
+			roleDO.setId(id);
 		}
 		else {
 			roleDO.setId(roleE.getId());
@@ -48,14 +49,16 @@ public class RoleConvertor {
 		return roleDO;
 	}
 
-	public static List<RoleMenuDO> toDataObjects(List<String> menuIds, Long roleId) {
-		return menuIds.stream().map(menuId -> {
+	public static List<RoleMenuDO> toDataObjects(Long id, List<String> menuIds, Long roleId) {
+		List<RoleMenuDO> list = new ArrayList<>(menuIds.size());
+		for (String menuId : menuIds) {
 			RoleMenuDO roleMenuDO = new RoleMenuDO();
-			roleMenuDO.setId(null);
+			roleMenuDO.setId(id++);
 			roleMenuDO.setRoleId(roleId);
 			roleMenuDO.setMenuId(Long.valueOf(menuId));
-			return roleMenuDO;
-		}).toList();
+			list.add(roleMenuDO);
+		}
+		return list;
 	}
 
 	public static List<RoleMenuDO> toDataObjects(List<Long> roleMenuIds) {
@@ -66,14 +69,16 @@ public class RoleConvertor {
 		}).toList();
 	}
 
-	public static List<RoleDeptDO> toDataObjs(List<String> deptIds, Long roleId) {
-		return deptIds.stream().map(deptId -> {
+	public static List<RoleDeptDO> toDataObjs(Long id, List<String> deptIds, Long roleId) {
+		List<RoleDeptDO> list = new ArrayList<>(deptIds.size());
+		for (String deptId : deptIds) {
 			RoleDeptDO roleDeptDO = new RoleDeptDO();
-			roleDeptDO.setId(null);
+			roleDeptDO.setId(id++);
 			roleDeptDO.setRoleId(roleId);
 			roleDeptDO.setDeptId(Long.valueOf(deptId));
-			return roleDeptDO;
-		}).toList();
+			list.add(roleDeptDO);
+		}
+		return list;
 	}
 
 	public static List<RoleDeptDO> toDataObjs(List<Long> roleDeptIds) {

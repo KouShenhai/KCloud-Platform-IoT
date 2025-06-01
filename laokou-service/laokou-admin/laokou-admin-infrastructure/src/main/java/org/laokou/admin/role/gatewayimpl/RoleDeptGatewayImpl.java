@@ -25,6 +25,7 @@ import org.laokou.admin.role.gatewayimpl.database.RoleDeptMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
@@ -42,6 +43,8 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 
 	private final MybatisUtils mybatisUtils;
 
+	private final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
+
 	@Override
 	public void updateRoleDept(RoleE roleE) {
 		deleteRoleDept(getRoleDeptIds(roleE.getRoleIds()));
@@ -55,7 +58,7 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 
 	private void insertRoleDept(List<String> deptIds, Long roleId) {
 		// 新增角色菜单关联表
-		List<RoleDeptDO> list = RoleConvertor.toDataObjs(deptIds, roleId);
+		List<RoleDeptDO> list = RoleConvertor.toDataObjs(distributedIdentifierWrapperRpc.getId(), deptIds, roleId);
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, RoleDeptMapper.class, RoleDeptMapper::insert);
 		}

@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
-import org.laokou.common.zookeeper.config.SnowflakeGenerator;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -42,8 +42,8 @@ final class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticatio
 
 	public OAuth2MailAuthenticationProvider(OAuth2AuthorizationService authorizationService,
 			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor,
-			SnowflakeGenerator zookeeperSnowflakeGenerator) {
-		super(authorizationService, tokenGenerator, authProcessor, zookeeperSnowflakeGenerator);
+			DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc) {
+		super(authorizationService, tokenGenerator, authProcessor, distributedIdentifierWrapperRpc);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ final class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticatio
 		String code = request.getParameter(CODE);
 		String mail = request.getParameter(MAIL);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		AuthA auth = DomainFactory.getMailAuth(zookeeperSnowflakeGenerator.nextId(), mail, code, tenantCode);
+		AuthA auth = DomainFactory.getMailAuth(distributedIdentifierWrapperRpc.getId(), mail, code, tenantCode);
 		auth.createUserByMail();
 		return authenticationToken(auth, request);
 	}

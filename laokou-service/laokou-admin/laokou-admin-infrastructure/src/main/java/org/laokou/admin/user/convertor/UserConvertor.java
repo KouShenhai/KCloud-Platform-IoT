@@ -29,6 +29,8 @@ import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.security.util.UserDetails;
 import org.laokou.common.sensitive.util.SensitiveUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,24 +44,28 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static List<UserRoleDO> toDataObjects(List<String> roleIds, Long userId) {
-		return roleIds.stream().map(roleId -> {
+	public static List<UserRoleDO> toDataObjects(Long id, List<String> roleIds, Long userId) {
+		List<UserRoleDO> list = new ArrayList<>(roleIds.size());
+		for (String roleId : roleIds) {
 			UserRoleDO userRoleDO = new UserRoleDO();
-			userRoleDO.setId(null);
+			userRoleDO.setId(id++);
 			userRoleDO.setRoleId(Long.valueOf(roleId));
 			userRoleDO.setUserId(userId);
-			return userRoleDO;
-		}).toList();
+			list.add(userRoleDO);
+		}
+		return list;
 	}
 
-	public static List<UserDeptDO> toDataObjs(List<String> deptIds, Long userId) {
-		return deptIds.stream().map(deptId -> {
+	public static List<UserDeptDO> toDataObjs(Long id, List<String> deptIds, Long userId) {
+		List<UserDeptDO> list = new ArrayList<>(deptIds.size());
+		for (String deptId : deptIds) {
 			UserDeptDO userDeptDO = new UserDeptDO();
-			userDeptDO.setId(null);
+			userDeptDO.setId(id++);
 			userDeptDO.setDeptId(Long.valueOf(deptId));
 			userDeptDO.setUserId(userId);
-			return userDeptDO;
-		}).toList();
+			list.add(userDeptDO);
+		}
+		return list;
 	}
 
 	public static List<UserRoleDO> toDataObjects(List<Long> userRoleIds) {
@@ -78,10 +84,10 @@ public final class UserConvertor {
 		}).toList();
 	}
 
-	public static UserDO toDataObject(PasswordEncoder passwordEncoder, UserE userE, boolean isInsert) {
+	public static UserDO toDataObject(Long id, PasswordEncoder passwordEncoder, UserE userE, boolean isInsert) {
 		UserDO userDO = new UserDO();
 		if (isInsert) {
-			userDO.setId(null);
+			userDO.setId(id);
 			userDO.setPassword(passwordEncoder.encode("laokou123"));
 			userDO.setUsername(userE.getUsername());
 			userDO.setUsernamePhrase(userE.getUsernamePhrase());

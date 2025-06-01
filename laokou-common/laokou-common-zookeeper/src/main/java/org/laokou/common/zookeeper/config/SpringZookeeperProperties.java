@@ -35,6 +35,4 @@ public class SpringZookeeperProperties {
 
 	private int connectionTimeoutMs = 15000;
 
-	private int dataCenterId = 1;
-
 }

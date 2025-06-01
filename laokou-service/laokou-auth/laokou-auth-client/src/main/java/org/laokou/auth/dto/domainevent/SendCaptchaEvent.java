@@ -17,11 +17,34 @@
 
 package org.laokou.auth.dto.domainevent;
 
-import java.io.Serializable;
+import lombok.Getter;
+import org.laokou.common.i18n.dto.DomainEvent;
 
 /**
  * @author laokou
  */
-public record SendCaptchaEvent(String uuid) implements Serializable {
+@Getter
+public class SendCaptchaEvent extends DomainEvent {
+
+	private String uuid;
+
+	// public LoginEvent(final Long id, final String username, final String ip, final
+	// String address, final String browser,
+	// final String os, final Integer status, final String errorMessage, final String
+	// type,
+	// final Instant loginTime, final Long tenantId, final Long userId) {
+	// super.id = id;
+	// super.userId = userId;
+	// super.tenantId = tenantId;
+	// this.username = username;
+	// this.ip = ip;
+	// this.address = address;
+	// this.browser = browser;
+	// this.os = os;
+	// this.status = status;
+	// this.errorMessage = errorMessage;
+	// this.type = type;
+	// this.loginTime = loginTime;
+	// }
 
 }
