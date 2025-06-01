@@ -17,12 +17,17 @@
 
 package org.laokou.admin.menu.command.query;
 
-import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.dto.MenuTreeListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
-import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
+import org.laokou.admin.menu.model.MenuTreeBuilder;
+import org.laokou.admin.menu.model.MenuTypeTreeEnum;
+import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.dto.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+
 import java.util.List;
 
 /**
@@ -31,15 +36,22 @@ import java.util.List;
  * @author laokou
  */
 @Component
-@RequiredArgsConstructor
 public class MenuTreeListQryExe {
 
-	private final MenuMapper menuMapper;
+	@Autowired
+	@Qualifier("userMenuTreeBuilder")
+	private MenuTreeBuilder userMenuTreeBuilder;
+
+	@Autowired
+	@Qualifier("systemMenuTreeBuilder")
+	private MenuTreeBuilder systemMenuTreeBuilder;
 
 	public Result<List<MenuTreeCO>> execute(MenuTreeListQry qry) {
-		MenuTreeCO co = null;
-		// extension.build(qry, UserContextHolder.get().getId(), menuMapper)
-		return Result.ok(co.getChildren());
+		MenuTypeTreeEnum menuTypeTreeEnum = MenuTypeTreeEnum.getByCode(qry.getCode());
+		Assert.notNull(menuTypeTreeEnum, "菜单类型不存在");
+		return Result.ok(menuTypeTreeEnum
+			.buildMenuTree(qry, UserContextHolder.get().getId(), userMenuTreeBuilder, systemMenuTreeBuilder)
+			.getChildren());
 	}
 
 }
