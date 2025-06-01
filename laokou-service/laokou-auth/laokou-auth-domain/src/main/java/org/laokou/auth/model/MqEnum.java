@@ -59,10 +59,6 @@ public enum MqEnum {
 
 	public abstract String getTopic();
 
-	public static final String MAIL_CAPTCHA_TAG = "mail_captcha";
-
-	public static final String MOBILE_CAPTCHA_TAG = "mobile_captcha";
-
 	public static final String MAIL_CAPTCHA_TOPIC = "mail-captcha";
 
 	public static final String MOBILE_CAPTCHA_TOPIC = "mobile-captcha";

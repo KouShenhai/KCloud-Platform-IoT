@@ -28,9 +28,8 @@ import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.*;
-
-import static org.laokou.auth.model.MqEnum.MAIL_CAPTCHA_TAG;
-import static org.laokou.auth.model.MqEnum.MOBILE_CAPTCHA_TAG;
+import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA;
+import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MOBILE_CAPTCHA;
 import static org.laokou.common.ratelimiter.aop.Type.IP;
 
 /**
@@ -57,7 +56,7 @@ public class CaptchasV3Controller {
 	@RateLimiter(key = "SEND_MOBILE_CAPTCHA", type = IP)
 	@Operation(summary = "根据UUID发送手机验证码", description = "根据UUID发送手机验证码")
 	public void sendMobileCaptchaByUuid(@RequestBody CaptchaSendCmd cmd) {
-		cmd.getCo().setTag(MOBILE_CAPTCHA_TAG);
+		cmd.getCo().setTag(SEND_MOBILE_CAPTCHA.getCode());
 		captchasServiceI.sendCaptchaByUuid(cmd);
 	}
 
@@ -66,7 +65,7 @@ public class CaptchasV3Controller {
 	@RateLimiter(key = "SEND_MAIL_CAPTCHA", type = IP)
 	@Operation(summary = "根据UUID发送邮箱验证码", description = "根据UUID发送邮箱验证码")
 	public void sendMailCaptchaByUuid(@RequestBody CaptchaSendCmd cmd) {
-		cmd.getCo().setTag(MAIL_CAPTCHA_TAG);
+		cmd.getCo().setTag(SEND_MAIL_CAPTCHA.getCode());
 		captchasServiceI.sendCaptchaByUuid(cmd);
 	}
 
