@@ -126,6 +126,11 @@ public final class DomainFactory {
 		return SpringContextUtils.getBeanProvider(LoginLogE.class);
 	}
 
+	public static CaptchaE getCaptcha(Long id, String uuid, String tag, String tenantCode) {
+		return getCaptcha().fillValue(id, uuid, tag, tenantCode);
+
+	}
+
 	public static CaptchaE getCaptcha() {
 		return SpringContextUtils.getBeanProvider(CaptchaE.class);
 	}

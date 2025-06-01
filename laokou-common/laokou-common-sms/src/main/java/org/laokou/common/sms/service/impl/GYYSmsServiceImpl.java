@@ -72,7 +72,7 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 
 	// @formatter:off
 	@Override
-	public SmsResult send(String mobile) throws JsonProcessingException {
+	public SmsResult send(String mobile)throws JsonProcessingException {
 		String name = "手机号验证码【国阳云】";
 		String captcha = RandomStringUtils.randomNumeric();
 		String templateId = smsProperties.getGyy().getTemplateId();

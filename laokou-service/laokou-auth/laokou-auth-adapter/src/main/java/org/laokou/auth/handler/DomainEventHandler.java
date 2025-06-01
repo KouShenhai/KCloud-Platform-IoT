@@ -17,13 +17,20 @@
 
 package org.laokou.auth.handler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.laokou.auth.api.LoginLogServiceI;
+import org.laokou.auth.api.NoticeLogServiceI;
 import org.laokou.auth.convertor.LoginLogConvertor;
+import org.laokou.auth.convertor.NoticeLogConvertor;
 import org.laokou.auth.dto.LoginLogSaveCmd;
+import org.laokou.auth.dto.NoticeLogSaveCmd;
 import org.laokou.auth.dto.domainevent.LoginEvent;
+import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
+import org.laokou.common.mail.service.MailService;
+import org.laokou.common.sms.service.SmsService;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
@@ -41,6 +48,12 @@ import static org.laokou.auth.model.MqEnum.*;
 public class DomainEventHandler {
 
 	private final LoginLogServiceI loginLogServiceI;
+
+	private final MailService mailService;
+
+	private final SmsService smsService;
+
+	private final NoticeLogServiceI noticeLogServiceI;
 
 	@KafkaListener(topics = LOGIN_LOG_TOPIC, groupId = LOGIN_LOG_CONSUMER_GROUP + "-${spring.kafka.consumer.group-id}")
 	public void handleLoginLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
@@ -60,7 +73,9 @@ public class DomainEventHandler {
 	public void handleMailCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
-
+				SendCaptchaEvent evt = (SendCaptchaEvent) record.value();
+				noticeLogServiceI.save(
+						new NoticeLogSaveCmd(NoticeLogConvertor.toClientObject(evt, mailService.send(evt.getUuid()))));
 			}
 		}
 		finally {
@@ -70,10 +85,13 @@ public class DomainEventHandler {
 
 	@KafkaListener(topics = MOBILE_CAPTCHA_TOPIC,
 			groupId = MOBILE_CAPTCHA_CONSUMER_GROUP + "-${spring.kafka.consumer.group-id}")
-	public void handleMobileCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
+	public void handleMobileCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment)
+			throws JsonProcessingException {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
-
+				SendCaptchaEvent evt = (SendCaptchaEvent) record.value();
+				noticeLogServiceI
+					.save(new NoticeLogSaveCmd(NoticeLogConvertor.toClientObject(evt, smsService.send(evt.getUuid()))));
 			}
 		}
 		finally {

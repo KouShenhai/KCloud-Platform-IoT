@@ -18,6 +18,7 @@
 package org.laokou.auth.convertor;
 
 import org.laokou.auth.dto.clientobject.CaptchaCO;
+import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.CaptchaE;
 
@@ -27,14 +28,15 @@ import org.laokou.auth.model.CaptchaE;
 public final class CaptchaConvertor {
 
 	private CaptchaConvertor() {
+
 	}
 
-	public static CaptchaE toEntity(CaptchaCO co) {
-		CaptchaE entity = DomainFactory.getCaptcha();
-		entity.setUuid(co.getUuid());
-		entity.setTag(co.getTag());
-		entity.setTenantCode(co.getTenantCode());
-		return entity;
+	public static CaptchaE toEntity(Long id, CaptchaCO co) {
+		return DomainFactory.getCaptcha(id, co.getUuid(), co.getTag(), co.getTenantCode());
+	}
+
+	public static SendCaptchaEvent toDomainEvent(CaptchaE captchaE) {
+		return new SendCaptchaEvent(captchaE.getId(), captchaE.getUuid(), captchaE.getTenantId());
 	}
 
 }

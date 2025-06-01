@@ -273,8 +273,8 @@ public class AuthA extends AggregateRoot {
 		return switch (grantTypeEnum) {
 			case MOBILE -> RedisKeyUtils.getMobileAuthCaptchaKey(captcha.uuid());
 			case MAIL -> RedisKeyUtils.getMailAuthCaptchaKey(captcha.uuid());
-			case USERNAME_PASSWORD, AUTHORIZATION_CODE, TEST ->
-				RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(captcha.uuid());
+			case USERNAME_PASSWORD -> RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(captcha.uuid());
+			case AUTHORIZATION_CODE, TEST -> EMPTY;
 		};
 	}
 

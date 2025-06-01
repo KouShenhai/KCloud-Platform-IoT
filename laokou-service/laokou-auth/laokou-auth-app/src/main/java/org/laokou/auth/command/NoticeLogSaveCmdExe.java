@@ -49,20 +49,20 @@ public class NoticeLogSaveCmdExe {
 	@Async
 	@CommandLog
 	public void executeVoid(NoticeLogSaveCmd cmd) {
+		NoticeLogCO co = cmd.getCo();
 		try {
-			// 保存验证码【发送成功】
-			NoticeLogCO co = cmd.getCo();
-			saveCaptcha(co);
 			DynamicDataSourceContextHolder.push(DOMAIN);
 			transactionalUtils
 				.executeInTransaction(() -> domainService.createNoticeLog(NoticeLogConvertor.toEntity(co)));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
+			// 保存验证码【发送成功】
+			saveCaptchaCache(co);
 		}
 	}
 
-	private void saveCaptcha(NoticeLogCO co) {
+	private void saveCaptchaCache(NoticeLogCO co) {
 		if (co.getStatus() == SendCaptchaStatusEnum.OK.getCode()) {
 			String captchaCacheKey = SendCaptchaTypeEnum.getByCode(co.getCode()).getCaptchaCacheKey(co.getUuid());
 			// 5分钟有效

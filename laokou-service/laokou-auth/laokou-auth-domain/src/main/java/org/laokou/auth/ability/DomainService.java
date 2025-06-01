@@ -46,6 +46,15 @@ public class DomainService {
 		loginLogGateway.createLoginLog(loginLog);
 	}
 
+	public void createSendCaptchaInfo(CaptchaE captchaE) {
+		// 校验验证码参数
+		captchaE.checkCaptchaParam();
+		// 获取租户ID
+		captchaE.getTenantId(tenantGateway.getIdTenant(captchaE.getTenantCode()));
+		// 校验租户ID
+		captchaE.checkTenantId();
+	}
+
 	public void createNoticeLog(NoticeLogE noticeLog) {
 		// 保存通知日志
 		noticeLogGateway.createNoticeLog(noticeLog);

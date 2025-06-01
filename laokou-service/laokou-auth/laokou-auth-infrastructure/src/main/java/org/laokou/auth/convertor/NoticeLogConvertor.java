@@ -18,10 +18,11 @@
 package org.laokou.auth.convertor;
 
 import org.laokou.auth.dto.clientobject.NoticeLogCO;
+import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.auth.model.NoticeLogE;
-import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.mail.dto.MailResult;
 import org.laokou.common.sms.entity.SmsResult;
 
@@ -35,32 +36,30 @@ public final class NoticeLogConvertor {
 	private NoticeLogConvertor() {
 	}
 
-	public static NoticeLogCO toClientObject(DomainEvent domainEvent, MailResult result, String uuid) {
+	public static NoticeLogCO toClientObject(SendCaptchaEvent evt, MailResult result) {
 		NoticeLogCO noticeLogCO = new NoticeLogCO();
 		noticeLogCO.setCode(result.getCode());
 		noticeLogCO.setName(result.getName());
 		noticeLogCO.setStatus(result.getStatus());
 		noticeLogCO.setErrorMessage(truncate(result.getErrorMessage(), 2000));
 		noticeLogCO.setParam(result.getParam());
-		// noticeLogCO.setTenantId(domainEvent.getTenantId());
-		// noticeLogCO.setId(domainEvent.getAggregateId());
-		// noticeLogCO.setInstant(domainEvent.getInstant());
-		noticeLogCO.setUuid(uuid);
+		noticeLogCO.setId(evt.getId());
+		noticeLogCO.setInstant(DateUtils.nowInstant());
+		noticeLogCO.setUuid(evt.getUuid());
 		noticeLogCO.setCaptcha(result.getCaptcha());
 		return noticeLogCO;
 	}
 
-	public static NoticeLogCO toClientObject(DomainEvent domainEvent, SmsResult result, String uuid) {
+	public static NoticeLogCO toClientObject(SendCaptchaEvent evt, SmsResult result) {
 		NoticeLogCO noticeLogCO = new NoticeLogCO();
 		noticeLogCO.setCode(result.getCode());
 		noticeLogCO.setName(result.getName());
 		noticeLogCO.setStatus(result.getStatus());
 		noticeLogCO.setErrorMessage(truncate(result.getErrorMessage(), 2000));
 		noticeLogCO.setParam(result.getParam());
-		// noticeLogCO.setTenantId(domainEvent.getTenantId());
-		// noticeLogCO.setId(domainEvent.getAggregateId());
-		// noticeLogCO.setInstant(domainEvent.getInstant());
-		noticeLogCO.setUuid(uuid);
+		noticeLogCO.setId(evt.getId());
+		noticeLogCO.setInstant(DateUtils.nowInstant());
+		noticeLogCO.setUuid(evt.getUuid());
 		noticeLogCO.setCaptcha(result.getCaptcha());
 		return noticeLogCO;
 	}
@@ -73,7 +72,6 @@ public final class NoticeLogConvertor {
 		noticeLogE.setStatus(noticeLogCO.getStatus());
 		noticeLogE.setErrorMessage(noticeLogCO.getErrorMessage());
 		noticeLogE.setParam(noticeLogCO.getParam());
-		noticeLogE.setTenantId(noticeLogCO.getTenantId());
 		noticeLogE.setInstant(noticeLogCO.getInstant());
 		noticeLogE.setUuid(noticeLogCO.getUuid());
 		noticeLogE.setCaptcha(noticeLogCO.getCaptcha());
@@ -88,7 +86,6 @@ public final class NoticeLogConvertor {
 		noticeLogDO.setStatus(noticeLogE.getStatus());
 		noticeLogDO.setErrorMessage(noticeLogE.getErrorMessage());
 		noticeLogDO.setParam(noticeLogE.getParam());
-		noticeLogDO.setTenantId(noticeLogE.getTenantId());
 		noticeLogDO.setCreateTime(noticeLogE.getInstant());
 		noticeLogDO.setUpdateTime(noticeLogE.getInstant());
 		return noticeLogDO;

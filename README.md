@@ -147,6 +147,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |        Elasticsearch        |   8.18.1    |
 |            Netty            | 4.2.1.Final |
 |            Kafka            |    4.0.0    |
+|           Pulsar            |    4.0.5    |
 |            EMQX             |    5.4.1    |
 |           Pulsar            |    4.0.5    |
 |         TimescaleDB         |     17      |

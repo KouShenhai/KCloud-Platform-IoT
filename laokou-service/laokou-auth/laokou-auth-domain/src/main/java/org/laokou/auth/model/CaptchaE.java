@@ -18,25 +18,29 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Identifier;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
+import static org.laokou.auth.model.OAuth2Constants.TENANT_NOT_EXIST;
 
 /**
  * @author laokou
  */
-@Setter
 @Getter
 @Entity
 public class CaptchaE extends Identifier {
 
 	private String uuid;
 
-	private String tag;
+	private SendCaptchaTypeEnum sendCaptchaTypeEnum;
 
 	private String tenantCode;
+
+	private Long tenantId;
 
 	@Autowired
 	@Qualifier("mailCaptchaParamValidator")
@@ -45,5 +49,32 @@ public class CaptchaE extends Identifier {
 	@Autowired
 	@Qualifier("mobileCaptchaParamValidator")
 	private CaptchaParamValidator mobileCaptchaParamValidator;
+
+	public CaptchaE fillValue(Long id, String uuid, String tag, String tenantCode) {
+		super.id = id;
+		this.uuid = uuid;
+		this.sendCaptchaTypeEnum = SendCaptchaTypeEnum.getByCode(tag);
+		this.tenantCode = tenantCode;
+		return this;
+	}
+
+	public void getTenantId(Long tenantId) {
+		this.tenantId = tenantId;
+	}
+
+	public void checkTenantId() {
+		if (ObjectUtils.isNull(this.tenantId)) {
+			throw new BizException(TENANT_NOT_EXIST);
+		}
+	}
+
+	public void checkCaptchaParam() {
+		switch (sendCaptchaTypeEnum) {
+			case SEND_MAIL_CAPTCHA -> this.mailCaptchaParamValidator.validateCaptcha(this);
+			case SEND_MOBILE_CAPTCHA -> this.mobileCaptchaParamValidator.validateCaptcha(this);
+			default -> {
+			}
+		}
+	}
 
 }

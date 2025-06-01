@@ -26,25 +26,12 @@ import org.laokou.common.i18n.dto.DomainEvent;
 @Getter
 public class SendCaptchaEvent extends DomainEvent {
 
-	private String uuid;
+	private final String uuid;
 
-	// public LoginEvent(final Long id, final String username, final String ip, final
-	// String address, final String browser,
-	// final String os, final Integer status, final String errorMessage, final String
-	// type,
-	// final Instant loginTime, final Long tenantId, final Long userId) {
-	// super.id = id;
-	// super.userId = userId;
-	// super.tenantId = tenantId;
-	// this.username = username;
-	// this.ip = ip;
-	// this.address = address;
-	// this.browser = browser;
-	// this.os = os;
-	// this.status = status;
-	// this.errorMessage = errorMessage;
-	// this.type = type;
-	// this.loginTime = loginTime;
-	// }
+	public SendCaptchaEvent(final Long id, final String uuid, final Long tenantId) {
+		super.id = id;
+		super.tenantId = tenantId;
+		this.uuid = uuid;
+	}
 
 }

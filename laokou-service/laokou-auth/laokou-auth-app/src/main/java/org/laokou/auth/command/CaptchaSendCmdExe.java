@@ -23,6 +23,8 @@ import org.laokou.auth.convertor.CaptchaConvertor;
 import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.model.CaptchaE;
 import org.laokou.common.domain.annotation.CommandLog;
+import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,11 +36,16 @@ public class CaptchaSendCmdExe {
 
 	private final DomainService domainService;
 
+	private final DomainEventPublisher KafkaDomainEventPublisher;
+
+	private final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
+
 	@CommandLog
 	public void executeVoid(CaptchaSendCmd cmd) {
-		// 校验参数
-		CaptchaE entity = CaptchaConvertor.toEntity(cmd.getCo());
-		// 创建验证码
+		CaptchaE captchaE = CaptchaConvertor.toEntity(distributedIdentifierWrapperRpc.getId(), cmd.getCo());
+		domainService.createSendCaptchaInfo(captchaE);
+		KafkaDomainEventPublisher.publish(captchaE.getSendCaptchaTypeEnum().getMqTopic(),
+				CaptchaConvertor.toDomainEvent(captchaE));
 	}
 
 }
