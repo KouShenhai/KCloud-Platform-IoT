@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA;
+import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MOBILE_CAPTCHA;
 import static org.mockito.Mockito.*;
 
 /**
@@ -86,6 +88,12 @@ class DomainServiceTest {
 
 	@MockitoBean("usernamePasswordAuthParamValidator")
 	private AuthParamValidator usernamePasswordAuthParamValidator;
+
+	@MockitoBean("mailCaptchaParamValidator")
+	private CaptchaParamValidator mailCaptchaParamValidator;
+
+	@MockitoBean("mobileCaptchaParamValidator")
+	private CaptchaParamValidator mobileCaptchaParamValidator;
 
 	@Test
 	void testUsernamePasswordAuth() {
@@ -210,7 +218,21 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testCreateMailCaptchaNoticeLog() {
+	void testCreateSendCaptchaInfoByMail() {
+		// 创建发送验证码信息
+		CaptchaE captcha = DomainFactory.getCaptcha(1L, "2413176044@qq.com", SEND_MAIL_CAPTCHA.getCode(), "laokou");
+		Assertions.assertDoesNotThrow(() -> domainService.createSendCaptchaInfo(captcha));
+	}
+
+	@Test
+	void testCreateSendCaptchaInfoByMobile() {
+		// 创建发送验证码信息
+		CaptchaE captcha = DomainFactory.getCaptcha(1L, "18888888888", SEND_MOBILE_CAPTCHA.getCode(), "laokou");
+		Assertions.assertDoesNotThrow(() -> domainService.createSendCaptchaInfo(captcha));
+	}
+
+	@Test
+	void testCreateNoticeLogByMailCaptcha() {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
 		Assertions.assertDoesNotThrow(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));
@@ -219,7 +241,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testCreateMobileCaptchaNoticeLog() {
+	void testCreateNoticeLogByMobileCaptcha() {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
 		Assertions.assertDoesNotThrow(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));

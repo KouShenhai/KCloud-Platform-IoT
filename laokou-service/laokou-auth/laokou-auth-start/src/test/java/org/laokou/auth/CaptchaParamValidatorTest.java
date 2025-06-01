@@ -29,6 +29,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA;
+import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MOBILE_CAPTCHA;
+
 /**
  * 验证码参数校验器测试.
  *
@@ -53,19 +56,15 @@ class CaptchaParamValidatorTest {
 
 	@Test
 	void testMailCaptchaParamValidator() {
-		CaptchaE captcha = DomainFactory.getCaptcha();
+		CaptchaE captcha = DomainFactory.getCaptcha(1L, "2413176044@qq.com", SEND_MAIL_CAPTCHA.getCode(), "laokou");
 		// 校验邮箱验证码
-		Assertions.assertDoesNotThrow(() -> captcha.setUuid("2413176044@qq.com"));
-		Assertions.assertDoesNotThrow(() -> captcha.setTenantCode("laokou"));
 		Assertions.assertDoesNotThrow(() -> mailCaptchaParamValidator.validateCaptcha(captcha));
 	}
 
 	@Test
 	void testMobileCaptchaParamValidator() {
-		CaptchaE captcha = DomainFactory.getCaptcha();
+		CaptchaE captcha = DomainFactory.getCaptcha(1L, "18888888888", SEND_MOBILE_CAPTCHA.getCode(), "laokou");
 		// 校验手机号验证码
-		Assertions.assertDoesNotThrow(() -> captcha.setUuid("18888888888"));
-		Assertions.assertDoesNotThrow(() -> captcha.setTenantCode("laokou"));
 		Assertions.assertDoesNotThrow(() -> mobileCaptchaParamValidator.validateCaptcha(captcha));
 	}
 

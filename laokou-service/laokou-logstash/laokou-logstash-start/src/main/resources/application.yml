@@ -62,7 +62,7 @@ spring:
       # 单次poll()调用返回的记录数
       max-poll-records: 50
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.laokou.common.kafka.config.FuryKafkaDeserializer
     producer:
       # 发生错误后，消息重发的次数。
       retries: 5
@@ -73,7 +73,7 @@ spring:
       # 键的序列化方式
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       # 值的序列化方式
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.laokou.common.kafka.config.FuryKafkaDeserializer
       # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
       # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
       # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
