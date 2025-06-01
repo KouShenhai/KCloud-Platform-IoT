@@ -222,6 +222,16 @@
       <name>Infinite Automation Release Repository</name>
       <url>https://maven.mangoautomation.net/repository/ias-release/</url>
     </repository>
+    <repository>
+      <id>apache</id>
+      <url>https://repository.apache.org/snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
   </repositories>
 
   <profiles>

@@ -282,6 +282,12 @@ public final class JSqlParserFuryFactory {
 		fury.register(net.sf.jsqlparser.expression.operators.relational.LikeExpression.KeyWord.class);
 		fury.register(net.sf.jsqlparser.statement.delete.DeleteModifierPriority.class);
 		fury.register(net.sf.jsqlparser.schema.Partition.class);
+		fury.register(net.sf.jsqlparser.statement.insert.ConflictActionType.class);
+		fury.register(net.sf.jsqlparser.statement.select.ForClause.ForOption.class);
+		fury.register(net.sf.jsqlparser.statement.select.KSQLWindow.TimeUnit.class);
+		fury.register(net.sf.jsqlparser.statement.select.First.Keyword.class);
+		fury.register(net.sf.jsqlparser.expression.WindowElement.Type.class);
+		fury.register(net.sf.jsqlparser.expression.WindowOffset.Type.class);
 	}
 
 	public static JSqlParserFuryFactory getFuryFactory() {

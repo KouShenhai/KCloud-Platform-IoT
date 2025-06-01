@@ -94,7 +94,7 @@
     <!--taos-jdbcdriver版本-->
     <taos-jdbcdriver.version>3.6.3</taos-jdbcdriver.version>
     <!--fury-core版本-->
-    <fury-core.version>0.10.3</fury-core.version>
+    <fury-core.version>0.11.0-SNAPSHOT</fury-core.version>
     <!--browscap-java版本-->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!--liquibase-core版本-->
@@ -812,6 +812,11 @@
       <dependency>
         <groupId>org.apache.fury</groupId>
         <artifactId>fury-core</artifactId>
+        <version>${fury-core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.fury</groupId>
+        <artifactId>fury-extensions</artifactId>
         <version>${fury-core.version}</version>
       </dependency>
       <dependency>
