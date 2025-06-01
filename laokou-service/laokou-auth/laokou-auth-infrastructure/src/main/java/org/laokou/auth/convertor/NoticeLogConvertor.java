@@ -43,6 +43,7 @@ public final class NoticeLogConvertor {
 		noticeLogCO.setStatus(result.getStatus());
 		noticeLogCO.setErrorMessage(truncate(result.getErrorMessage(), 2000));
 		noticeLogCO.setParam(result.getParam());
+		noticeLogCO.setTenantId(evt.getTenantId());
 		noticeLogCO.setId(evt.getId());
 		noticeLogCO.setInstant(DateUtils.nowInstant());
 		noticeLogCO.setUuid(evt.getUuid());
@@ -57,6 +58,7 @@ public final class NoticeLogConvertor {
 		noticeLogCO.setStatus(result.getStatus());
 		noticeLogCO.setErrorMessage(truncate(result.getErrorMessage(), 2000));
 		noticeLogCO.setParam(result.getParam());
+		noticeLogCO.setTenantId(evt.getTenantId());
 		noticeLogCO.setId(evt.getId());
 		noticeLogCO.setInstant(DateUtils.nowInstant());
 		noticeLogCO.setUuid(evt.getUuid());
@@ -72,6 +74,7 @@ public final class NoticeLogConvertor {
 		noticeLogE.setStatus(noticeLogCO.getStatus());
 		noticeLogE.setErrorMessage(noticeLogCO.getErrorMessage());
 		noticeLogE.setParam(noticeLogCO.getParam());
+		noticeLogE.setTenantId(noticeLogCO.getTenantId());
 		noticeLogE.setInstant(noticeLogCO.getInstant());
 		noticeLogE.setUuid(noticeLogCO.getUuid());
 		noticeLogE.setCaptcha(noticeLogCO.getCaptcha());
@@ -86,6 +89,7 @@ public final class NoticeLogConvertor {
 		noticeLogDO.setStatus(noticeLogE.getStatus());
 		noticeLogDO.setErrorMessage(noticeLogE.getErrorMessage());
 		noticeLogDO.setParam(noticeLogE.getParam());
+		noticeLogDO.setTenantId(noticeLogE.getTenantId());
 		noticeLogDO.setCreateTime(noticeLogE.getInstant());
 		noticeLogDO.setUpdateTime(noticeLogE.getInstant());
 		return noticeLogDO;
