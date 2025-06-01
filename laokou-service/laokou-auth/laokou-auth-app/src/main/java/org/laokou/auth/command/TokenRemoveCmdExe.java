@@ -17,14 +17,23 @@
 
 package org.laokou.auth.command;
 
-import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.security.util.UserDetails;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.CacheManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.stereotype.Component;
+
+import java.security.Principal;
+
+import static org.laokou.common.data.cache.constant.NameConstants.USER_MENU;
+import static org.laokou.common.data.cache.model.OperateTypeEnum.getCache;
 import static org.laokou.common.security.config.GlobalOpaqueTokenIntrospector.FULL;
 
 /**
@@ -33,10 +42,17 @@ import static org.laokou.common.security.config.GlobalOpaqueTokenIntrospector.FU
  * @author laokou
  */
 @Component
-@RequiredArgsConstructor
 public class TokenRemoveCmdExe {
 
+	@Autowired
+	@Qualifier("redissonCacheManager")
+	private CacheManager redissonCacheManager;
+
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
+
+	public TokenRemoveCmdExe(OAuth2AuthorizationService oAuth2AuthorizationService) {
+		this.oAuth2AuthorizationService = oAuth2AuthorizationService;
+	}
 
 	/**
 	 * 执行退出登录.
@@ -50,8 +66,18 @@ public class TokenRemoveCmdExe {
 		}
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, FULL);
 		if (ObjectUtils.isNotNull(authorization)) {
+			// 移除缓存
+			evictCache(authorization);
 			// 删除token
 			oAuth2AuthorizationService.remove(authorization);
+		}
+	}
+
+	private void evictCache(OAuth2Authorization authorization) {
+		Object obj = authorization.getAttribute(Principal.class.getName());
+		if (ObjectUtils.isNotNull(obj)) {
+			UserDetails userDetails = (UserDetails) ((UsernamePasswordAuthenticationToken) obj).getPrincipal();
+			getCache(redissonCacheManager, USER_MENU).evict(userDetails.getId());
 		}
 	}
 

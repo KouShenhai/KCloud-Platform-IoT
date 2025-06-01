@@ -57,7 +57,8 @@ dubbo:
     group: DUBBO_${NACOS-GROUP}
   protocol:
     name: dubbo
-    port: -1
+    port: 0
   application:
     name: dubbo-${spring.application.name}
     logger: slf4j
+    qos-port: 0

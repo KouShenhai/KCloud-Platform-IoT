@@ -125,7 +125,7 @@ public enum OperateTypeEnum {
 
 	private static final Lock WRITE_LOCK = READ_WRITE_LOCK.writeLock();
 
-	private static Cache getCache(CacheManager cacheManager, String name) {
+	public static Cache getCache(CacheManager cacheManager, String name) {
 		Cache cache = cacheManager.getCache(name);
 		if (ObjectUtils.isNull(cache)) {
 			throw new SystemException("S_Cache_NameNotExist", "缓存名称不存在");
