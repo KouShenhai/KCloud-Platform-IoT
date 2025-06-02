@@ -94,8 +94,8 @@ public class RolesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:role:modify')")
 	@OperateLog(module = "用户管理", operation = "修改角色权限")
 	@Operation(summary = "修改角色权限", description = "修改角色权限")
-	public void modifyAuthorityRole(@RequestBody RoleModifyAuthorityCmd cmd) throws Exception {
-		rolesServiceI.modifyAuthorityRole(cmd);
+	public void modifyRoleAuthority(@RequestBody RoleModifyAuthorityCmd cmd) throws Exception {
+		rolesServiceI.modifyRoleAuthority(cmd);
 	}
 
 	@TraceLog

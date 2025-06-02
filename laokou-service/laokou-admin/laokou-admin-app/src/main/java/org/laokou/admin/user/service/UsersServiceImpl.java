@@ -85,12 +85,12 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public void resetPwdUser(UserResetPwdCmd cmd) throws Exception {
+	public void resetUserPwd(UserResetPwdCmd cmd) throws Exception {
 		userResetPwdCmdExe.executeVoid(cmd);
 	}
 
 	@Override
-	public void modifyAuthorityUser(UserModifyAuthorityCmd cmd) throws Exception {
+	public void modifyUserAuthority(UserModifyAuthorityCmd cmd) throws Exception {
 		userModifyAuthorityCmdExe.executeVoid(cmd);
 	}
 
@@ -105,7 +105,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public Result<UserProfileCO> getProfileUser() {
+	public Result<UserProfileCO> getUserProfile() {
 		return userProfileGetQryExe.execute();
 	}
 

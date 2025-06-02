@@ -109,7 +109,7 @@ export async function pageUser(body: API.UserPageQry, options?: { [key: string]:
 }
 
 /** 查看个人信息 查看个人信息 GET /v3/users/profile */
-export async function getProfileUser(options?: { [key: string]: any }) {
+export async function getUserProfile(options?: { [key: string]: any }) {
 	return request<API.Result>('/api/admin/v3/users/profile', {
 		method: 'GET',
 		...(options || {}),
@@ -117,7 +117,7 @@ export async function getProfileUser(options?: { [key: string]: any }) {
 }
 
 /** 重置密码 重置密码 PUT /v3/users/reset-pwd */
-export async function resetPwdUser(body: API.ResetPwdCmd, options?: { [key: string]: any }) {
+export async function resetUserPwd(body: API.ResetPwdCmd, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/users/reset-pwd', {
 		method: 'PUT',
 		headers: {
@@ -129,7 +129,7 @@ export async function resetPwdUser(body: API.ResetPwdCmd, options?: { [key: stri
 }
 
 /** 修改用户权限 修改用户权限 PUT /v3/users/authority */
-export async function modifyAuthorityUser(body: API.UserModifyAuthorityCmd, options?: { [key: string]: any }) {
+export async function modifyUserAuthority(body: API.UserModifyAuthorityCmd, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/users/authority', {
 		method: 'PUT',
 		headers: {

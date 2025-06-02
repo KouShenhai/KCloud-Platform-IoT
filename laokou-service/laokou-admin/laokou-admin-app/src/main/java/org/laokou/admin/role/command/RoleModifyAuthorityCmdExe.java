@@ -36,8 +36,8 @@ import org.springframework.stereotype.Component;
 public class RoleModifyAuthorityCmdExe {
 
 	@Autowired
-	@Qualifier("modifyAuthorityRoleParamValidator")
-	private RoleParamValidatorExtPt modifyAuthorityRoleParamValidator;
+	@Qualifier("modifyRoleAuthorityParamValidator")
+	private RoleParamValidatorExtPt modifyRoleAuthorityParamValidator;
 
 	private final RoleDomainService roleDomainService;
 
@@ -52,7 +52,7 @@ public class RoleModifyAuthorityCmdExe {
 	public void executeVoid(RoleModifyAuthorityCmd cmd) throws Exception {
 		RoleCO co = cmd.getCo();
 		RoleE roleE = RoleConvertor.toEntity(co, co.getId());
-		modifyAuthorityRoleParamValidator.validateRole(roleE);
+		modifyRoleAuthorityParamValidator.validateRole(roleE);
 		transactionalUtils.executeInTransaction(() -> roleDomainService.updateAuthorityRole(roleE));
 	}
 

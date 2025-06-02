@@ -40,8 +40,8 @@ public class UserModifyAuthorityCmdExe {
 	private final TransactionalUtils transactionalUtils;
 
 	@Autowired
-	@Qualifier("modifyAuthorityUserParamValidator")
-	private UserParamValidatorExtPt modifyAuthorityUserParamValidator;
+	@Qualifier("modifyUserAuthorityParamValidator")
+	private UserParamValidatorExtPt modifyUserAuthorityParamValidator;
 
 	public UserModifyAuthorityCmdExe(UserDomainService userDomainService, TransactionalUtils transactionalUtils) {
 		this.userDomainService = userDomainService;
@@ -53,7 +53,7 @@ public class UserModifyAuthorityCmdExe {
 		// 校验参数
 		UserCO co = cmd.getCo();
 		UserE userE = UserConvertor.toEntity(co, co.getId());
-		modifyAuthorityUserParamValidator.validateUser(userE);
+		modifyUserAuthorityParamValidator.validateUser(userE);
 		transactionalUtils.executeInTransaction(() -> userDomainService.updateAuthorityUser(userE));
 	}
 

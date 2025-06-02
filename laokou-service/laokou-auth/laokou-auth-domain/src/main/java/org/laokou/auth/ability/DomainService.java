@@ -50,7 +50,7 @@ public class DomainService {
 		// 校验验证码参数
 		captchaE.checkCaptchaParam();
 		// 获取租户ID
-		captchaE.getTenantId(tenantGateway.getIdTenant(captchaE.getTenantCode()));
+		captchaE.getTenantId(tenantGateway.getTenantId(captchaE.getTenantCode()));
 		// 校验租户ID
 		captchaE.checkTenantId();
 	}
@@ -64,13 +64,13 @@ public class DomainService {
 		// 校验认证参数
 		auth.checkAuthParam();
 		// 获取租户ID
-		auth.getTenantId(tenantGateway.getIdTenant(auth.getTenantCode()));
+		auth.getTenantId(tenantGateway.getTenantId(auth.getTenantCode()));
 		// 校验租户ID
 		auth.checkTenantId();
 		// 校验验证码
 		auth.checkCaptcha();
 		// 获取用户信息
-		auth.getUserInfo(userGateway.getProfileUser(auth.getUser()));
+		auth.getUserInfo(userGateway.getUserProfile(auth.getUser()));
 		// 校验用户名
 		auth.checkUsername();
 		// 校验密码
@@ -78,11 +78,11 @@ public class DomainService {
 		// 校验用户状态
 		auth.checkUserStatus();
 		// 获取菜单权限标识集合
-		auth.getMenuPermissions(menuGateway.getPermissionsMenu(auth.getUser()));
+		auth.getMenuPermissions(menuGateway.getMenuPermissions(auth.getUser()));
 		// 校验菜单权限标识集合
 		auth.checkMenuPermissions();
 		// 获取部门路径集合
-		auth.getDeptPaths(deptGateway.getPathsDept(auth.getUser()));
+		auth.getDeptPaths(deptGateway.getDeptPaths(auth.getUser()));
 		// 校验部门路径集合
 		auth.checkDeptPaths();
 	}

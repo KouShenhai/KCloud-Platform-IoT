@@ -10,7 +10,7 @@ import { logout, refresh } from '@/services/auth/auth';
 import { clearToken, getAccessToken, getRefreshToken, setToken } from '@/access';
 import React from "react";
 import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
-import {getProfileUser} from "@/services/admin/user";
+import {getUserProfile} from "@/services/admin/user";
 import {listUserTreeMenu} from "@/services/admin/menu";
 import {ProBreadcrumb} from "@ant-design/pro-layout";
 import axios from 'axios';
@@ -44,7 +44,7 @@ export async function getInitialState(): Promise<{
 	avatar: string;
 	permissions: string[]
 }> {
-	const result = await getProfileUser().catch(console.log);
+	const result = await getUserProfile().catch(console.log);
 	return {
 		id: result?.data?.id,
 		username: result?.data?.username,

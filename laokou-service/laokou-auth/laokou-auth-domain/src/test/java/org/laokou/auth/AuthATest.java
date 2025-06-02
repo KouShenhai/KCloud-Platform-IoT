@@ -133,14 +133,14 @@ class AuthATest {
 	@Test
 	void testCheckTenantId() {
 		// 构造租户
-		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
+		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 校验租户ID
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
 		// 获取租户ID
-		Assertions.assertDoesNotThrow(() -> auth.getTenantId(tenantGateway.getIdTenant(auth.getTenantCode())));
+		Assertions.assertDoesNotThrow(() -> auth.getTenantId(tenantGateway.getTenantId(auth.getTenantCode())));
 		Assertions.assertDoesNotThrow(auth::checkTenantId);
 		// 校验调用次数
-		verify(tenantGateway, times(1)).getIdTenant("laokou");
+		verify(tenantGateway, times(1)).getTenantId("laokou");
 	}
 
 	@Test
@@ -174,10 +174,10 @@ class AuthATest {
 	void testCheckUsername() {
 		// 构造用户信息
 		UserE user = DomainFactory.getUser();
-		when(userGateway.getProfileUser(user)).thenReturn(user);
+		when(userGateway.getUserProfile(user)).thenReturn(user);
 		// 校验用户名
 		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
-		Assertions.assertDoesNotThrow(() -> auth.getUserInfo(userGateway.getProfileUser(user)));
+		Assertions.assertDoesNotThrow(() -> auth.getUserInfo(userGateway.getUserProfile(user)));
 		Assertions.assertDoesNotThrow(auth::checkUsername);
 	}
 
@@ -215,9 +215,9 @@ class AuthATest {
 		UserE user = auth.getUser();
 		Assertions.assertNotNull(user);
 		// 构造菜单
-		when(menuGateway.getPermissionsMenu(user)).thenReturn(Set.of("sys:user:page"));
+		when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
 		// 校验菜单权限集合
-		Assertions.assertDoesNotThrow(() -> auth.getMenuPermissions(menuGateway.getPermissionsMenu(user)));
+		Assertions.assertDoesNotThrow(() -> auth.getMenuPermissions(menuGateway.getMenuPermissions(user)));
 		Assertions.assertDoesNotThrow(auth::checkMenuPermissions);
 	}
 
@@ -229,9 +229,9 @@ class AuthATest {
 		UserE user = auth.getUser();
 		Assertions.assertNotNull(user);
 		// 构造部门
-		when(deptGateway.getPathsDept(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
+		when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 校验部门路径集合
-		Assertions.assertDoesNotThrow(() -> auth.getDeptPaths(deptGateway.getPathsDept(user)));
+		Assertions.assertDoesNotThrow(() -> auth.getDeptPaths(deptGateway.getDeptPaths(user)));
 		Assertions.assertDoesNotThrow(auth::checkDeptPaths);
 	}
 

@@ -100,8 +100,8 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:modify')")
 	@OperateLog(module = "用户管理", operation = "重置密码")
 	@Operation(summary = "重置密码", description = "重置密码")
-	public void resetPwdUser(@RequestBody UserResetPwdCmd cmd) throws Exception {
-		usersServiceI.resetPwdUser(cmd);
+	public void resetUserPwd(@RequestBody UserResetPwdCmd cmd) throws Exception {
+		usersServiceI.resetUserPwd(cmd);
 	}
 
 	@PutMapping("authority")
@@ -109,8 +109,8 @@ public class UsersControllerV3 {
 	@DataCache(name = USERS, key = "#cmd.co.id", operateType = DEL)
 	@OperateLog(module = "用户管理", operation = "修改用户权限")
 	@Operation(summary = "修改用户权限", description = "修改用户权限")
-	public void modifyAuthorityUser(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {
-		usersServiceI.modifyAuthorityUser(cmd);
+	public void modifyUserAuthority(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {
+		usersServiceI.modifyUserAuthority(cmd);
 	}
 
 	@TraceLog
@@ -133,8 +133,8 @@ public class UsersControllerV3 {
 	@TraceLog
 	@GetMapping("profile")
 	@Operation(summary = "查看个人信息", description = "查看个人信息")
-	public Result<UserProfileCO> getProfileUser() {
-		return usersServiceI.getProfileUser();
+	public Result<UserProfileCO> getUserProfile() {
+		return usersServiceI.getUserProfile();
 	}
 
 }

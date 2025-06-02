@@ -109,7 +109,7 @@ export async function pageRole(body: API.RolePageQry, options?: { [key: string]:
 }
 
 /** 修改角色权限 修改角色权限 PUT /v3/roles/authority */
-export async function modifyAuthorityRole(body: API.RoleModifyAuthorityCmd, options?: { [key: string]: any }) {
+export async function modifyRoleAuthority(body: API.RoleModifyAuthorityCmd, options?: { [key: string]: any }) {
 	return request<any>('/api/admin/v3/roles/authority', {
 		method: 'PUT',
 		headers: {

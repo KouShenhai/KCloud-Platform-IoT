@@ -64,13 +64,13 @@ public interface UsersServiceI {
 	 * 重置密码.
 	 * @param cmd 重置密码命令
 	 */
-	void resetPwdUser(UserResetPwdCmd cmd) throws Exception;
+	void resetUserPwd(UserResetPwdCmd cmd) throws Exception;
 
 	/**
 	 * 修改权限.
 	 * @param cmd 修改权限命令
 	 */
-	void modifyAuthorityUser(UserModifyAuthorityCmd cmd) throws Exception;
+	void modifyUserAuthority(UserModifyAuthorityCmd cmd) throws Exception;
 
 	/**
 	 * 分页查询用户.
@@ -87,6 +87,6 @@ public interface UsersServiceI {
 	/**
 	 * 查看个人信息.
 	 */
-	Result<UserProfileCO> getProfileUser();
+	Result<UserProfileCO> getUserProfile();
 
 }

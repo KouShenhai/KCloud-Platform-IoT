@@ -79,7 +79,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	@Override
-	public void modifyAuthorityRole(RoleModifyAuthorityCmd cmd) throws Exception {
+	public void modifyRoleAuthority(RoleModifyAuthorityCmd cmd) throws Exception {
 		roleModifyAuthorityCmdExe.executeVoid(cmd);
 	}
 

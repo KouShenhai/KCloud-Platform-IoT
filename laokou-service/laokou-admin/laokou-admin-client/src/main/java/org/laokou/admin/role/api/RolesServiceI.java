@@ -63,7 +63,7 @@ public interface RolesServiceI {
 	 * 修改权限.
 	 * @param cmd 修改权限命令
 	 */
-	void modifyAuthorityRole(RoleModifyAuthorityCmd cmd) throws Exception;
+	void modifyRoleAuthority(RoleModifyAuthorityCmd cmd) throws Exception;
 
 	/**
 	 * 分页查询角色.

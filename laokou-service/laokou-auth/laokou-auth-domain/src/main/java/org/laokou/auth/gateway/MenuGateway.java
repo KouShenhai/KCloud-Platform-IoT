@@ -33,6 +33,6 @@ public interface MenuGateway {
 	 * @param user 用户对象
 	 * @return 菜单权限标识集合
 	 */
-	Set<String> getPermissionsMenu(UserE user);
+	Set<String> getMenuPermissions(UserE user);
 
 }

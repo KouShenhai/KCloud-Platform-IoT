@@ -62,14 +62,14 @@ class CaptchaETest {
 	@Test
 	void testCheckTenantId() {
 		// 构造租户
-		when(tenantGateway.getIdTenant("laokou")).thenReturn(0L);
+		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 校验租户ID
 		CaptchaE captchaE = DomainFactory.getCaptcha(1L, "2413176044@qq.com", SEND_MAIL_CAPTCHA.getCode(), "laokou");
 		// 获取租户ID
-		Assertions.assertDoesNotThrow(() -> captchaE.getTenantId(tenantGateway.getIdTenant(captchaE.getTenantCode())));
+		Assertions.assertDoesNotThrow(() -> captchaE.getTenantId(tenantGateway.getTenantId(captchaE.getTenantCode())));
 		Assertions.assertDoesNotThrow(captchaE::checkTenantId);
 		// 校验调用次数
-		verify(tenantGateway, times(1)).getIdTenant("laokou");
+		verify(tenantGateway, times(1)).getTenantId("laokou");
 	}
 
 }
