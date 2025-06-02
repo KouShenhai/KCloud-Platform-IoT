@@ -19,8 +19,9 @@ package org.laokou.auth.service.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.factory.DomainFactory;
+import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.GrantTypeEnum;
 import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -30,6 +31,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.stereotype.Component;
 
 import static org.laokou.auth.factory.DomainFactory.*;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 手机号处理器.
@@ -56,9 +58,10 @@ final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authenticat
 		String code = request.getParameter(CODE);
 		String mobile = request.getParameter(MOBILE);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		AuthA auth = DomainFactory.getMobileAuth(distributedIdentifierWrapperRpc.getId(), mobile, code, tenantCode);
-		auth.createUserByMobile();
-		return authenticationToken(auth, request);
+		AuthA authA = AuthConvertor.toEntity(distributedIdentifierWrapperRpc.getId(), EMPTY, EMPTY, tenantCode,
+				GrantTypeEnum.MOBILE, code, mobile);
+		authA.createUserByMobile();
+		return authenticationToken(authA, request);
 	}
 
 	@Override

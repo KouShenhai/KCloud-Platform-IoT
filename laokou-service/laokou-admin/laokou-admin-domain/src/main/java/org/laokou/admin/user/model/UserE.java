@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.StringUtils;
 
 import java.util.ArrayList;
@@ -36,12 +37,7 @@ import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 @Getter
 @Setter
 @Entity
-public class UserE {
-
-	/**
-	 * ID.
-	 */
-	private Long id;
+public class UserE extends Identifier {
 
 	/**
 	 * 用户密码.
@@ -117,6 +113,23 @@ public class UserE {
 	 * 用户IDS.
 	 */
 	private List<Long> userIds;
+
+	/**
+	 * 用户操作类型.
+	 */
+	private UserOperateTypeEnum userOperateTypeEnum;
+
+	public UserE fillValue(Long id, String username, Integer superAdmin, String mail, String mobile, Integer status,
+			String avatar) {
+		super.id = id;
+		this.username = username;
+		this.superAdmin = superAdmin;
+		this.mail = mail;
+		this.mobile = mobile;
+		this.status = status;
+		this.avatar = avatar;
+		return this;
+	}
 
 	public void encryptUsername() throws Exception {
 		this.usernamePhrase = StringUtils.isEmpty(username) ? EMPTY : encryptStr(username);

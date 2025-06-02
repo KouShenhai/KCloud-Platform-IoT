@@ -37,6 +37,7 @@ import java.util.Set;
 
 import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA;
 import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MOBILE_CAPTCHA;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.mockito.Mockito.*;
 
 /**
@@ -97,7 +98,7 @@ class DomainServiceTest {
 
 	@Test
 	void testUsernamePasswordAuth() {
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 创建用户【用户名密码】
 		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
 		// 构造租户
@@ -130,7 +131,7 @@ class DomainServiceTest {
 
 	@Test
 	void testMailAuth() {
-		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
+		AuthA auth = getAuth(EMPTY, EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
 		// 创建用户【邮箱】
 		Assertions.assertDoesNotThrow(auth::createUserByMail);
 		// 构造租户
@@ -158,7 +159,7 @@ class DomainServiceTest {
 
 	@Test
 	void testMobileAuth() {
-		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
+		AuthA auth = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
 		// 创建用户【手机号】
 		Assertions.assertDoesNotThrow(auth::createUserByMobile);
 		// 构造租户
@@ -184,7 +185,7 @@ class DomainServiceTest {
 
 	@Test
 	void testAuthorizationCodeAuth() {
-		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
 		// 创建用户【授权码】
 		Assertions.assertDoesNotThrow(auth::createUserByAuthorizationCode);
 		// 构造租户
@@ -211,6 +212,34 @@ class DomainServiceTest {
 	}
 
 	@Test
+	void testTestAuth() {
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.TEST, EMPTY, EMPTY);
+		// 创建用户【测试】
+		Assertions.assertDoesNotThrow(auth::createUserByTest);
+		// 构造租户
+		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
+		// 构造用户信息
+		UserE user = auth.getUser();
+		Assertions.assertDoesNotThrow(() -> user
+			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
+		when(userGateway.getUserProfile(user)).thenReturn(user);
+		// 构造密码校验
+		doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
+		// 构造菜单
+		when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
+		// 构造部门
+		when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
+		// 测试登录
+		Assertions.assertDoesNotThrow(() -> domainService.auth(auth));
+		// 校验调用次数
+		verify(deptGateway, times(1)).getDeptPaths(user);
+		verify(menuGateway, times(1)).getMenuPermissions(user);
+		verify(passwordValidator, times(1)).validatePassword("123", "202cb962ac59075b964b07152d234b70");
+		verify(userGateway, times(1)).getUserProfile(user);
+		verify(tenantGateway, times(1)).getTenantId("laokou");
+	}
+
+	@Test
 	void testCreateLoginLog() {
 		LoginLogE loginLog = DomainFactory.getLoginLog();
 		// 创建登录日志
@@ -220,14 +249,14 @@ class DomainServiceTest {
 	@Test
 	void testCreateSendCaptchaInfoByMail() {
 		// 创建发送验证码信息
-		CaptchaE captcha = DomainFactory.getCaptcha(1L, "2413176044@qq.com", SEND_MAIL_CAPTCHA.getCode(), "laokou");
+		CaptchaE captcha = getCaptcha("2413176044@qq.com", SEND_MAIL_CAPTCHA.getCode());
 		Assertions.assertDoesNotThrow(() -> domainService.createSendCaptchaInfo(captcha));
 	}
 
 	@Test
 	void testCreateSendCaptchaInfoByMobile() {
 		// 创建发送验证码信息
-		CaptchaE captcha = DomainFactory.getCaptcha(1L, "18888888888", SEND_MOBILE_CAPTCHA.getCode(), "laokou");
+		CaptchaE captcha = getCaptcha("18888888888", SEND_MOBILE_CAPTCHA.getCode());
 		Assertions.assertDoesNotThrow(() -> domainService.createSendCaptchaInfo(captcha));
 	}
 
@@ -247,6 +276,26 @@ class DomainServiceTest {
 		Assertions.assertDoesNotThrow(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));
 		Assertions.assertDoesNotThrow(() -> noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode()));
 		Assertions.assertDoesNotThrow(() -> domainService.createNoticeLog(noticeLog));
+	}
+
+	private CaptchaE getCaptcha(String uuid, String tag) {
+		CaptchaE captchaE = DomainFactory.getCaptcha();
+		captchaE.setId(1L);
+		captchaE.setUuid(uuid);
+		captchaE.setSendCaptchaTypeEnum(SendCaptchaTypeEnum.getByCode(tag));
+		captchaE.setTenantCode("laokou");
+		return captchaE;
+	}
+
+	private AuthA getAuth(String username, String password, GrantTypeEnum grantTypeEnum, String uuid, String captcha) {
+		AuthA authA = DomainFactory.getAuth();
+		authA.setId(1L);
+		authA.setUsername(username);
+		authA.setPassword(password);
+		authA.setTenantCode("laokou");
+		authA.setGrantTypeEnum(grantTypeEnum);
+		authA.setCaptcha(new CaptchaV(uuid, captcha));
+		return authA;
 	}
 
 }

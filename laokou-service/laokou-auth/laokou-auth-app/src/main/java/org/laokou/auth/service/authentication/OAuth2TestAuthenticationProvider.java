@@ -19,8 +19,9 @@ package org.laokou.auth.service.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.factory.DomainFactory;
+import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.GrantTypeEnum;
 import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -30,6 +31,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.stereotype.Component;
 
 import static org.laokou.auth.factory.DomainFactory.*;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 测试处理器.
@@ -56,9 +58,10 @@ final class OAuth2TestAuthenticationProvider extends AbstractOAuth2Authenticatio
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		AuthA auth = DomainFactory.getTestAuth(distributedIdentifierWrapperRpc.getId(), username, password, tenantCode);
-		auth.createUserByTest();
-		return authenticationToken(auth, request);
+		AuthA authA = AuthConvertor.toEntity(distributedIdentifierWrapperRpc.getId(), username, password, tenantCode,
+				GrantTypeEnum.TEST, EMPTY, EMPTY);
+		authA.createUserByTest();
+		return authenticationToken(authA, request);
 	}
 
 	@Override

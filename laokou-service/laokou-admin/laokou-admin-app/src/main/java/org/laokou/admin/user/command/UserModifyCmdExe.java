@@ -19,8 +19,8 @@ package org.laokou.admin.user.command;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.user.ability.UserDomainService;
-import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserModifyCmd;
+import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
@@ -54,7 +54,10 @@ public class UserModifyCmdExe {
 	@CommandLog
 	public void executeVoid(UserModifyCmd cmd) throws Exception {
 		// 校验参数
-		UserE userE = UserConvertor.toEntity(cmd.getCo());
+		UserCO co = cmd.getCo();
+		UserE userE = null;
+		// UserDomainFactory.getUser(co.getId(), co.getUsername(), co.getSuperAdmin(),
+		// co.getMail(), co.getMobile(), co.getStatus(), co.getAvatar());
 		modifyUserParamValidator.validateUser(userE);
 		transactionalUtils.executeInTransaction(() -> userDomainService.updateUser(userE));
 	}

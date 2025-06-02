@@ -20,7 +20,6 @@ package org.laokou.auth.factory;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.*;
 import org.laokou.common.core.util.SpringContextUtils;
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -86,31 +85,7 @@ public final class DomainFactory {
 	private DomainFactory() {
 	}
 
-	public static AuthA getMailAuth(Long aggregateId, String mail, String code, String tenantCode) {
-		return getAuth().fillValue(aggregateId, EMPTY, EMPTY, tenantCode, GrantTypeEnum.MAIL, mail, code);
-	}
-
-	public static AuthA getMobileAuth(Long aggregateId, String mobile, String code, String tenantCode) {
-		return getAuth().fillValue(aggregateId, EMPTY, EMPTY, tenantCode, GrantTypeEnum.MOBILE, mobile, code);
-	}
-
-	public static AuthA getUsernamePasswordAuth(Long aggregateId, String username, String password, String tenantCode,
-			String uuid, String captcha) {
-		return getAuth().fillValue(aggregateId, username, password, tenantCode, GrantTypeEnum.USERNAME_PASSWORD, uuid,
-				captcha);
-	}
-
-	public static AuthA getAuthorizationCodeAuth(Long aggregateId, String username, String password,
-			String tenantCode) {
-		return getAuth().fillValue(aggregateId, username, password, tenantCode, GrantTypeEnum.AUTHORIZATION_CODE, EMPTY,
-				EMPTY);
-	}
-
-	public static AuthA getTestAuth(Long aggregateId, String username, String password, String tenantCode) {
-		return getAuth().fillValue(aggregateId, username, password, tenantCode, GrantTypeEnum.TEST, EMPTY, EMPTY);
-	}
-
-	private static AuthA getAuth() {
+	public static AuthA getAuth() {
 		return SpringContextUtils.getBeanProvider(AuthA.class);
 	}
 
@@ -118,17 +93,8 @@ public final class DomainFactory {
 		return SpringContextUtils.getBeanProvider(UserE.class);
 	}
 
-	public static UserE getUser(String username, String mail, String mobile, Long tenantId) throws Exception {
-		return getUser().fillValue(username, mail, mobile, tenantId);
-	}
-
 	public static LoginLogE getLoginLog() {
 		return SpringContextUtils.getBeanProvider(LoginLogE.class);
-	}
-
-	public static CaptchaE getCaptcha(Long id, String uuid, String tag, String tenantCode) {
-		return getCaptcha().fillValue(id, uuid, tag, tenantCode);
-
 	}
 
 	public static CaptchaE getCaptcha() {

@@ -31,6 +31,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.mockito.Mockito.*;
 
 /**
@@ -82,7 +84,7 @@ class AuthATest {
 
 	@Test
 	void testCreateUserByTest() throws Exception {
-		AuthA authA = DomainFactory.getTestAuth(1L, "admin", "123", "laokou");
+		AuthA authA = getAuth("admin", "123", GrantTypeEnum.TEST, EMPTY, EMPTY);
 		// 创建用户【测试】
 		Assertions.assertDoesNotThrow(authA::createUserByTest);
 		UserE user = authA.getUser();
@@ -92,7 +94,7 @@ class AuthATest {
 
 	@Test
 	void testCreateUserByUsernamePassword() throws Exception {
-		AuthA authA = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
+		AuthA authA = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 创建用户【用户名密码】
 		Assertions.assertDoesNotThrow(authA::createUserByUsernamePassword);
 		UserE user = authA.getUser();
@@ -102,7 +104,8 @@ class AuthATest {
 
 	@Test
 	void testCreateUserByMobile() throws Exception {
-		AuthA authA = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
+		AuthA authA = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
+		;
 		// 创建用户【手机号】
 		Assertions.assertDoesNotThrow(authA::createUserByMobile);
 		UserE user = authA.getUser();
@@ -112,7 +115,7 @@ class AuthATest {
 
 	@Test
 	void testCreateUserByMail() throws Exception {
-		AuthA authA = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
+		AuthA authA = getAuth(EMPTY, EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
 		// 创建用户【邮箱】
 		Assertions.assertDoesNotThrow(authA::createUserByMail);
 		UserE user = authA.getUser();
@@ -122,7 +125,7 @@ class AuthATest {
 
 	@Test
 	void testCreateUserByAuthorizationCode() throws Exception {
-		AuthA authA = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
+		AuthA authA = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
 		// 创建用户【授权码】
 		Assertions.assertDoesNotThrow(authA::createUserByAuthorizationCode);
 		UserE user = authA.getUser();
@@ -135,7 +138,7 @@ class AuthATest {
 		// 构造租户
 		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 校验租户ID
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 获取租户ID
 		Assertions.assertDoesNotThrow(() -> auth.getTenantId(tenantGateway.getTenantId(auth.getTenantCode())));
 		Assertions.assertDoesNotThrow(auth::checkTenantId);
@@ -153,13 +156,13 @@ class AuthATest {
 		doReturn(true).when(captchaValidator)
 			.validateCaptcha(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
 		// 校验验证码【用户名密码登录】
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		Assertions.assertDoesNotThrow(auth::checkCaptcha);
 		// 校验验证码【邮箱登录】
-		AuthA auth1 = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
+		AuthA auth1 = getAuth(EMPTY, EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
 		Assertions.assertDoesNotThrow(auth1::checkCaptcha);
 		// 校验验证码【手机号登录】
-		AuthA auth2 = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
+		AuthA auth2 = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
 		Assertions.assertDoesNotThrow(auth2::checkCaptcha);
 		// 校验调用次数
 		verify(captchaValidator, times(1)).validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"),
@@ -176,7 +179,7 @@ class AuthATest {
 		UserE user = DomainFactory.getUser();
 		when(userGateway.getUserProfile(user)).thenReturn(user);
 		// 校验用户名
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		Assertions.assertDoesNotThrow(() -> auth.getUserInfo(userGateway.getUserProfile(user)));
 		Assertions.assertDoesNotThrow(auth::checkUsername);
 	}
@@ -186,7 +189,7 @@ class AuthATest {
 		// 构造密码校验
 		doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		// 创建用户【用户名密码】
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
 		Assertions.assertNotNull(auth.getUser());
 		// 构建密码
@@ -200,7 +203,7 @@ class AuthATest {
 	@Test
 	void testCheckUserStatus() {
 		// 创建用户【用户名密码】
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
 		Assertions.assertNotNull(auth.getUser());
 		// 校验用户状态
@@ -210,7 +213,7 @@ class AuthATest {
 	@Test
 	void testCheckMenuPermissions() {
 		// 创建用户【用户名密码】
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
 		UserE user = auth.getUser();
 		Assertions.assertNotNull(user);
@@ -224,7 +227,7 @@ class AuthATest {
 	@Test
 	void testCheckDeptPaths() {
 		// 创建用户【用户名密码】
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
 		UserE user = auth.getUser();
 		Assertions.assertNotNull(user);
@@ -233,6 +236,17 @@ class AuthATest {
 		// 校验部门路径集合
 		Assertions.assertDoesNotThrow(() -> auth.getDeptPaths(deptGateway.getDeptPaths(user)));
 		Assertions.assertDoesNotThrow(auth::checkDeptPaths);
+	}
+
+	private AuthA getAuth(String username, String password, GrantTypeEnum grantTypeEnum, String uuid, String captcha) {
+		AuthA authA = DomainFactory.getAuth();
+		authA.setId(1L);
+		authA.setUsername(username);
+		authA.setPassword(password);
+		authA.setTenantCode("laokou");
+		authA.setGrantTypeEnum(grantTypeEnum);
+		authA.setCaptcha(new CaptchaV(uuid, captcha));
+		return authA;
 	}
 
 }

@@ -18,7 +18,6 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
@@ -32,50 +31,63 @@ import static org.laokou.auth.model.SuperAdminEnum.YES;
  *
  * @author laokou
  */
-@Setter
-@Getter
 @Entity
-@NoArgsConstructor
 public class UserE extends Identifier {
 
 	/**
 	 * 用户名.
 	 */
+	@Setter
+	@Getter
 	private String username;
 
 	/**
 	 * 用户密码.
 	 */
+	@Setter
+	@Getter
 	private String password;
 
 	/**
 	 * 超级管理员标识 0否 1是.
 	 */
+	@Setter
+	@Getter
 	private Integer superAdmin;
 
 	/**
 	 * 用户头像.
 	 */
+	@Setter
+	@Getter
 	private String avatar;
 
 	/**
 	 * 用户邮箱.
 	 */
+	@Setter
+	@Getter
 	private String mail;
 
 	/**
 	 * 用户状态 0启用 1禁用.
 	 */
+	@Setter
+	@Getter
 	private Integer status;
 
 	/**
 	 * 用户手机号.
 	 */
+	@Setter
+	@Getter
 	private String mobile;
 
 	/**
 	 * 租户ID.
 	 */
+	@Setter
+	@Getter
 	private Long tenantId;
 
 	public UserE fillValue(String username, String mail, String mobile, Long tenantId) throws Exception {

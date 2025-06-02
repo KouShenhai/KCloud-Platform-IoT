@@ -17,32 +17,29 @@
 
 package org.laokou.auth.convertor;
 
-import org.laokou.auth.dto.clientobject.CaptchaCO;
-import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.auth.factory.DomainFactory;
-import org.laokou.auth.model.CaptchaE;
-import org.laokou.auth.model.SendCaptchaTypeEnum;
+import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.CaptchaV;
+import org.laokou.auth.model.GrantTypeEnum;
 
 /**
  * @author laokou
  */
-public final class CaptchaConvertor {
+public final class AuthConvertor {
 
-	private CaptchaConvertor() {
-
+	private AuthConvertor() {
 	}
 
-	public static CaptchaE toEntity(Long id, CaptchaCO co) {
-		CaptchaE captchaE = DomainFactory.getCaptcha();
-		captchaE.setId(id);
-		captchaE.setUuid(co.getUuid());
-		captchaE.setSendCaptchaTypeEnum(SendCaptchaTypeEnum.getByCode(co.getTag()));
-		captchaE.setTenantCode(co.getTenantCode());
-		return captchaE;
-	}
-
-	public static SendCaptchaEvent toDomainEvent(CaptchaE captchaE) {
-		return new SendCaptchaEvent(captchaE.getId(), captchaE.getUuid(), captchaE.getTenantId());
+	public static AuthA toEntity(Long id, String username, String password, String tenantCode,
+			GrantTypeEnum grantTypeEnum, String uuid, String captcha) {
+		AuthA authA = DomainFactory.getAuth();
+		authA.setId(id);
+		authA.setUsername(username);
+		authA.setPassword(password);
+		authA.setTenantCode(tenantCode);
+		authA.setGrantTypeEnum(grantTypeEnum);
+		authA.setCaptcha(new CaptchaV(uuid, captcha));
+		return authA;
 	}
 
 }

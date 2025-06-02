@@ -19,8 +19,9 @@ package org.laokou.auth.service.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.factory.DomainFactory;
+import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.GrantTypeEnum;
 import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -58,10 +59,10 @@ final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2A
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(distributedIdentifierWrapperRpc.getId(), username, password,
-				tenantCode, uuid, captcha);
-		auth.createUserByUsernamePassword();
-		return authenticationToken(auth, request);
+		AuthA authA = AuthConvertor.toEntity(distributedIdentifierWrapperRpc.getId(), username, password, tenantCode,
+				GrantTypeEnum.USERNAME_PASSWORD, uuid, captcha);
+		authA.createUserByUsernamePassword();
+		return authenticationToken(authA, request);
 	}
 
 	@Override

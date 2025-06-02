@@ -18,7 +18,9 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.laokou.auth.factory.DomainFactory;
+import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.AggregateRoot;
@@ -40,23 +42,28 @@ import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
  *
  * @author laokou
  */
-@Getter
 @Entity
 public class AuthA extends AggregateRoot {
 
 	/**
 	 * 用户名.
 	 */
+	@Setter
+	@Getter
 	private String username;
 
 	/**
 	 * 用户密码.
 	 */
+	@Setter
+	@Getter
 	private String password;
 
 	/**
 	 * 租户编码.
 	 */
+	@Setter
+	@Getter
 	private String tenantCode;
 
 	// @formatter:off
@@ -69,26 +76,33 @@ public class AuthA extends AggregateRoot {
 	 * test测试
 	 */
 	// @formatter:on
+	@Setter
+	@Getter
 	private GrantTypeEnum grantTypeEnum;
 
 	/**
 	 * 验证码值对象.
 	 */
+	@Setter
+	@Getter
 	private CaptchaV captcha;
 
 	/**
 	 * 用户实体.
 	 */
+	@Getter
 	private UserE user;
 
 	/**
 	 * 菜单权限标识.
 	 */
+	@Getter
 	private Set<String> permissions;
 
 	/**
 	 * 部门路径.
 	 */
+	@Getter
 	private Set<String> deptPaths;
 
 	/**
@@ -123,35 +137,24 @@ public class AuthA extends AggregateRoot {
 	@Qualifier("usernamePasswordAuthParamValidator")
 	private AuthParamValidator usernamePasswordAuthParamValidator;
 
-	public AuthA fillValue(Long id, String username, String password, String tenantCode, GrantTypeEnum grantTypeEnum,
-			String uuid, String captcha) {
-		super.id = id;
-		this.username = username;
-		this.password = password;
-		this.tenantCode = tenantCode;
-		this.grantTypeEnum = grantTypeEnum;
-		this.captcha = new CaptchaV(uuid, captcha);
-		return this;
-	}
-
 	public void createUserByUsernamePassword() throws Exception {
-		this.user = DomainFactory.getUser(this.username, EMPTY, EMPTY, super.tenantId);
+		this.user = getUser(this.username, EMPTY, EMPTY, super.tenantId);
 	}
 
 	public void createUserByMobile() throws Exception {
-		this.user = DomainFactory.getUser(EMPTY, EMPTY, this.captcha.uuid(), super.tenantId);
+		this.user = getUser(EMPTY, EMPTY, this.captcha.uuid(), super.tenantId);
 	}
 
 	public void createUserByMail() throws Exception {
-		this.user = DomainFactory.getUser(EMPTY, this.captcha.uuid(), EMPTY, super.tenantId);
+		this.user = getUser(EMPTY, this.captcha.uuid(), EMPTY, super.tenantId);
 	}
 
 	public void createUserByAuthorizationCode() throws Exception {
-		this.user = DomainFactory.getUser(this.username, EMPTY, EMPTY, super.tenantId);
+		this.user = getUser(this.username, EMPTY, EMPTY, super.tenantId);
 	}
 
 	public void createUserByTest() throws Exception {
-		this.user = DomainFactory.getUser(this.username, EMPTY, EMPTY, super.tenantId);
+		this.user = getUser(this.username, EMPTY, EMPTY, super.tenantId);
 	}
 
 	public void getTenantId(Long tenantId) {
@@ -276,6 +279,15 @@ public class AuthA extends AggregateRoot {
 			case USERNAME_PASSWORD -> RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(captcha.uuid());
 			case AUTHORIZATION_CODE, TEST -> EMPTY;
 		};
+	}
+
+	private UserE getUser(String username, String mail, String mobile, Long tenantId) throws Exception {
+		UserE userE = DomainFactory.getUser();
+		userE.setUsername(AESUtils.encrypt(username));
+		userE.setMail(AESUtils.encrypt(mail));
+		userE.setMobile(AESUtils.encrypt(mobile));
+		userE.setTenantId(tenantId);
+		return userE;
 	}
 
 }

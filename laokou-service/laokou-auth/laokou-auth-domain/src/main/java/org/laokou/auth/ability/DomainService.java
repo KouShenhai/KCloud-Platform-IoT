@@ -41,9 +41,9 @@ public class DomainService {
 
 	private final NoticeLogGateway noticeLogGateway;
 
-	public void createLoginLog(LoginLogE loginLog) {
+	public void createLoginLog(LoginLogE loginLogE) {
 		// 保存登录日志
-		loginLogGateway.createLoginLog(loginLog);
+		loginLogGateway.createLoginLog(loginLogE);
 	}
 
 	public void createSendCaptchaInfo(CaptchaE captchaE) {
@@ -60,31 +60,31 @@ public class DomainService {
 		noticeLogGateway.createNoticeLog(noticeLog);
 	}
 
-	public void auth(AuthA auth) {
+	public void auth(AuthA authA) {
 		// 校验认证参数
-		auth.checkAuthParam();
+		authA.checkAuthParam();
 		// 获取租户ID
-		auth.getTenantId(tenantGateway.getTenantId(auth.getTenantCode()));
+		authA.getTenantId(tenantGateway.getTenantId(authA.getTenantCode()));
 		// 校验租户ID
-		auth.checkTenantId();
+		authA.checkTenantId();
 		// 校验验证码
-		auth.checkCaptcha();
+		authA.checkCaptcha();
 		// 获取用户信息
-		auth.getUserInfo(userGateway.getUserProfile(auth.getUser()));
+		authA.getUserInfo(userGateway.getUserProfile(authA.getUser()));
 		// 校验用户名
-		auth.checkUsername();
+		authA.checkUsername();
 		// 校验密码
-		auth.checkPassword();
+		authA.checkPassword();
 		// 校验用户状态
-		auth.checkUserStatus();
+		authA.checkUserStatus();
 		// 获取菜单权限标识集合
-		auth.getMenuPermissions(menuGateway.getMenuPermissions(auth.getUser()));
+		authA.getMenuPermissions(menuGateway.getMenuPermissions(authA.getUser()));
 		// 校验菜单权限标识集合
-		auth.checkMenuPermissions();
+		authA.checkMenuPermissions();
 		// 获取部门路径集合
-		auth.getDeptPaths(deptGateway.getDeptPaths(auth.getUser()));
+		authA.getDeptPaths(deptGateway.getDeptPaths(authA.getUser()));
 		// 校验部门路径集合
-		auth.checkDeptPaths();
+		authA.checkDeptPaths();
 	}
 
 }

@@ -49,16 +49,16 @@ final class OAuth2AuthenticationProcessor {
 
 	private final DomainEventPublisher KafkaDomainEventPublisher;
 
-	public UsernamePasswordAuthenticationToken authenticationToken(AuthA auth, HttpServletRequest request)
+	public UsernamePasswordAuthenticationToken authenticationToken(AuthA authA, HttpServletRequest request)
 			throws Exception {
 		LoginEvent evt = null;
 		try {
 			// 认证授权
-			domainService.auth(auth);
+			domainService.auth(authA);
 			// 记录日志【登录成功】
-			evt = LoginLogConvertor.toDomainEvent(request, auth, null);
+			evt = LoginLogConvertor.toDomainEvent(request, authA, null);
 			// 登录成功，转换成用户对象【业务】
-			UserDetails userDetails = UserConvertor.to(auth);
+			UserDetails userDetails = UserConvertor.to(authA);
 			// 认证成功，转换成认证对象【系统】
 			return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getUsername(),
 					userDetails.getAuthorities());
@@ -66,7 +66,7 @@ final class OAuth2AuthenticationProcessor {
 		catch (GlobalException e) {
 			// 记录日志【业务异常】
 			if (e instanceof BizException ex) {
-				evt = LoginLogConvertor.toDomainEvent(request, auth, ex);
+				evt = LoginLogConvertor.toDomainEvent(request, authA, ex);
 			}
 			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
 			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);

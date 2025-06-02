@@ -18,6 +18,7 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Identifier;
@@ -30,16 +31,22 @@ import static org.laokou.auth.model.OAuth2Constants.TENANT_NOT_EXIST;
 /**
  * @author laokou
  */
-@Getter
 @Entity
 public class CaptchaE extends Identifier {
 
+	@Setter
+	@Getter
 	private String uuid;
 
+	@Setter
+	@Getter
 	private SendCaptchaTypeEnum sendCaptchaTypeEnum;
 
+	@Setter
+	@Getter
 	private String tenantCode;
 
+	@Getter
 	private Long tenantId;
 
 	@Autowired
@@ -49,14 +56,6 @@ public class CaptchaE extends Identifier {
 	@Autowired
 	@Qualifier("mobileCaptchaParamValidator")
 	private CaptchaParamValidator mobileCaptchaParamValidator;
-
-	public CaptchaE fillValue(Long id, String uuid, String tag, String tenantCode) {
-		super.id = id;
-		this.uuid = uuid;
-		this.sendCaptchaTypeEnum = SendCaptchaTypeEnum.getByCode(tag);
-		this.tenantCode = tenantCode;
-		return this;
-	}
 
 	public void getTenantId(Long tenantId) {
 		this.tenantId = tenantId;

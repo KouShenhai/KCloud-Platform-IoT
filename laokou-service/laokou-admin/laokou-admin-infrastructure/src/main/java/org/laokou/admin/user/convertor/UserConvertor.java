@@ -160,16 +160,7 @@ public final class UserConvertor {
 	}
 
 	public static UserE toEntity(UserCO userCO) {
-		UserE userE = UserDomainFactory.getUser();
-		userE.setId(userCO.getId());
-		userE.setUsername(userCO.getUsername());
-		userE.setSuperAdmin(userCO.getSuperAdmin());
-		userE.setPassword(userCO.getPassword());
-		userE.setMail(userCO.getMail());
-		userE.setMobile(userCO.getMobile());
-		userE.setStatus(userCO.getStatus());
-		userE.setAvatar(userCO.getAvatar());
-		return userE;
+		return null;
 	}
 
 	public static UserE toEntity(UserCO userCO, Long id) {

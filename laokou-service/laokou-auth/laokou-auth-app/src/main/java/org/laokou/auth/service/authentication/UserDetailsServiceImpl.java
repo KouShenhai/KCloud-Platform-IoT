@@ -20,8 +20,9 @@ package org.laokou.auth.service.authentication;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.factory.DomainFactory;
+import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.GrantTypeEnum;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
 import org.laokou.common.i18n.common.exception.BizException;
@@ -33,6 +34,7 @@ import org.springframework.stereotype.Component;
 
 import static org.laokou.auth.factory.DomainFactory.PASSWORD;
 import static org.laokou.auth.factory.DomainFactory.TENANT_CODE;
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 用户认证.
@@ -60,10 +62,10 @@ final class UserDetailsServiceImpl implements UserDetailsService {
 			HttpServletRequest request = RequestUtils.getHttpServletRequest();
 			String password = request.getParameter(PASSWORD);
 			String tenantCode = request.getParameter(TENANT_CODE);
-			AuthA auth = DomainFactory.getAuthorizationCodeAuth(distributedIdentifierWrapperRpc.getId(), username,
-					password, tenantCode);
-			auth.createUserByAuthorizationCode();
-			return (UserDetails) authProcessor.authenticationToken(auth, request).getPrincipal();
+			AuthA authA = AuthConvertor.toEntity(distributedIdentifierWrapperRpc.getId(), username, password,
+					tenantCode, GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
+			authA.createUserByAuthorizationCode();
+			return (UserDetails) authProcessor.authenticationToken(authA, request).getPrincipal();
 		}
 		catch (GlobalException e) {
 			throw new UsernameNotFoundException(e.getMsg(), e);

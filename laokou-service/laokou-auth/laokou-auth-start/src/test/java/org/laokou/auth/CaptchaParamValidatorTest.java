@@ -20,10 +20,7 @@ package org.laokou.auth;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.factory.DomainFactory;
-import org.laokou.auth.model.CaptchaE;
-import org.laokou.auth.model.CaptchaParamValidator;
-import org.laokou.auth.model.CaptchaValidator;
-import org.laokou.auth.model.PasswordValidator;
+import org.laokou.auth.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -56,16 +53,25 @@ class CaptchaParamValidatorTest {
 
 	@Test
 	void testMailCaptchaParamValidator() {
-		CaptchaE captcha = DomainFactory.getCaptcha(1L, "2413176044@qq.com", SEND_MAIL_CAPTCHA.getCode(), "laokou");
+		CaptchaE captcha = getCaptcha("2413176044@qq.com", SEND_MAIL_CAPTCHA.getCode());
 		// 校验邮箱验证码
 		Assertions.assertDoesNotThrow(() -> mailCaptchaParamValidator.validateCaptcha(captcha));
 	}
 
 	@Test
 	void testMobileCaptchaParamValidator() {
-		CaptchaE captcha = DomainFactory.getCaptcha(1L, "18888888888", SEND_MOBILE_CAPTCHA.getCode(), "laokou");
+		CaptchaE captcha = getCaptcha("18888888888", SEND_MOBILE_CAPTCHA.getCode());
 		// 校验手机号验证码
 		Assertions.assertDoesNotThrow(() -> mobileCaptchaParamValidator.validateCaptcha(captcha));
+	}
+
+	private CaptchaE getCaptcha(String uuid, String tag) {
+		CaptchaE captchaE = DomainFactory.getCaptcha();
+		captchaE.setId(1L);
+		captchaE.setUuid(uuid);
+		captchaE.setSendCaptchaTypeEnum(SendCaptchaTypeEnum.getByCode(tag));
+		captchaE.setTenantCode("laokou");
+		return captchaE;
 	}
 
 }

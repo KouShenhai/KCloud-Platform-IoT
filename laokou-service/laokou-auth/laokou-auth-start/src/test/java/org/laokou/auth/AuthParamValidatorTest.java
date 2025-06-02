@@ -22,9 +22,13 @@ import org.junit.jupiter.api.Test;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.AuthParamValidator;
+import org.laokou.auth.model.CaptchaV;
+import org.laokou.auth.model.GrantTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 认证参数校验器测试.
@@ -56,38 +60,49 @@ class AuthParamValidatorTest {
 
 	@Test
 	void testTestAuthParamValidator() {
-		AuthA auth = DomainFactory.getTestAuth(1L, "admin", "123", "laokou");
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.TEST, EMPTY, EMPTY);
 		// 校验测试登录
 		Assertions.assertDoesNotThrow(() -> testAuthParamValidator.validateAuth(auth));
 	}
 
 	@Test
 	void testUsernamePasswordAuthParamValidator() {
-		AuthA auth = DomainFactory.getUsernamePasswordAuth(1L, "admin", "123", "laokou", "1", "1234");
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 校验用户名密码登录
 		Assertions.assertDoesNotThrow(() -> usernamePasswordAuthParamValidator.validateAuth(auth));
 	}
 
 	@Test
 	void testAuthorizationCodeAuthParamValidator() {
-		AuthA auth = DomainFactory.getAuthorizationCodeAuth(1L, "admin", "123", "laokou");
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
 		// 校验授权码登录
 		Assertions.assertDoesNotThrow(() -> authorizationCodeAuthParamValidator.validateAuth(auth));
 	}
 
 	@Test
 	void testMailAuthParamValidator() {
-		AuthA auth = DomainFactory.getMailAuth(1L, "2413176044@qq.com", "123456", "laokou");
+		AuthA auth = getAuth(EMPTY, EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
 		// 校验邮箱登录
 		Assertions.assertDoesNotThrow(() -> mailAuthParamValidator.validateAuth(auth));
 	}
 
 	@Test
 	void testMobileAuthParamValidator() {
-		AuthA auth = DomainFactory.getMobileAuth(1L, "18888888888", "123456", "laokou");
+		AuthA auth = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
 		Assertions.assertNotNull(auth);
 		// 校验手机号登录
 		Assertions.assertDoesNotThrow(() -> mobileAuthParamValidator.validateAuth(auth));
+	}
+
+	private AuthA getAuth(String username, String password, GrantTypeEnum grantTypeEnum, String uuid, String captcha) {
+		AuthA authA = DomainFactory.getAuth();
+		authA.setId(1L);
+		authA.setUsername(username);
+		authA.setPassword(password);
+		authA.setTenantCode("laokou");
+		authA.setGrantTypeEnum(grantTypeEnum);
+		authA.setCaptcha(new CaptchaV(uuid, captcha));
+		return authA;
 	}
 
 }

@@ -15,25 +15,33 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.admin.user.model;
 
 import lombok.Getter;
-import lombok.Setter;
-
-import java.io.Serializable;
 
 /**
- * 标识.
- *
  * @author laokou
  */
-@Setter
 @Getter
-public abstract class Identifier implements Serializable {
+public enum UserOperateTypeEnum {
 
-	/**
-	 * ID.
-	 */
-	protected Long id;
+	SAVE("save", "新增用户"),
+
+	MODIFY("modify", "修改用户"),
+
+	REMOVE("remove", "删除用户"),
+
+	RESET_PWD("rest_pwd", "重置用户密码"),
+
+	MODIFY_AUTHORITY("modify_authority", "修改用户权限");
+
+	private final String code;
+
+	private final String desc;
+
+	UserOperateTypeEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

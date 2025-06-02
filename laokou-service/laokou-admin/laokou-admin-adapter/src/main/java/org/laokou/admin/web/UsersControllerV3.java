@@ -98,8 +98,8 @@ public class UsersControllerV3 {
 
 	@PutMapping("reset-pwd")
 	@PreAuthorize("hasAuthority('sys:user:modify')")
-	@OperateLog(module = "用户管理", operation = "重置密码")
-	@Operation(summary = "重置密码", description = "重置密码")
+	@OperateLog(module = "用户管理", operation = "重置用户密码")
+	@Operation(summary = "重置用户密码", description = "重置用户密码")
 	public void resetUserPwd(@RequestBody UserResetPwdCmd cmd) throws Exception {
 		usersServiceI.resetUserPwd(cmd);
 	}
