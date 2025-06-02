@@ -22,8 +22,12 @@ jobs:
           cache: maven
           architecture: x64
       - name: Run the Maven verify phase
+        env:
+          GIT_SSL_NO_VERIFY: "true"
         run: mvn --batch-mode --update-snapshots verify -DskipTests
       - name: Test with Maven
+        env:
+          GIT_SSL_NO_VERIFY: "true"
         run: mvn clean test -P dev
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5.4.3
@@ -55,6 +59,8 @@ jobs:
             ./laokou-service/laokou-auth/laokou-auth-domain/target/site/jacoco/jacoco.xml
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Build with Maven
+        env:
+          GIT_SSL_NO_VERIFY: "true"
         run: mvn clean install -P dev -DskipTests -B
       - name: Build the Docker image
         run: |
