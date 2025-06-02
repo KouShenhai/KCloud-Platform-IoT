@@ -209,7 +209,7 @@
       </snapshots>
       <id>ias-snapshots</id>
       <name>Infinite Automation Snapshot Repository</name>
-      <url>https://maven.mangoautomation.net/repository/ias-snapshot/</url>
+      <url>http://maven.mangoautomation.net/repository/ias-snapshot/</url>
     </repository>
     <repository>
       <releases>
@@ -220,7 +220,7 @@
       </snapshots>
       <id>ias-releases</id>
       <name>Infinite Automation Release Repository</name>
-      <url>https://maven.mangoautomation.net/repository/ias-release/</url>
+      <url>http://maven.mangoautomation.net/repository/ias-release/</url>
     </repository>
   </repositories>
 
