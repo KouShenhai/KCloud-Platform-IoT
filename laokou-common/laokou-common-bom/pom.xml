@@ -31,8 +31,6 @@
     <laokou.version>3.5.0</laokou.version>
     <!--spring-boot版本-->
     <spring-boot.version>3.5.0</spring-boot.version>
-    <!--spring-cloud-component版本-->
-    <spring-cloud-component.version>4.3.0-RC1</spring-cloud-component.version>
     <!--lombok版本-->
     <lombok.version>1.18.38</lombok.version>
     <!--postgresql版本-->
@@ -393,11 +391,6 @@
         <groupId>org.laokou</groupId>
         <artifactId>laokou-mqtt-start</artifactId>
         <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-gateway-server-webflux</artifactId>
-        <version>${spring-cloud-component.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springdoc</groupId>
