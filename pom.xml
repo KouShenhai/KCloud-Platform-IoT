@@ -195,7 +195,7 @@
     <repository>
       <id>apache-snapshots</id>
       <name>Apache Snapshots</name>
-      <url>https://repository.apache.org/content/repositories/snapshots</url>
+      <url>https://repository.apache.org/snapshots/</url>
       <releases>
         <enabled>false</enabled>
       </releases>
@@ -221,16 +221,6 @@
       <id>ias-releases</id>
       <name>Infinite Automation Release Repository</name>
       <url>https://maven.mangoautomation.net/repository/ias-release/</url>
-    </repository>
-    <repository>
-      <id>apache</id>
-      <url>https://repository.apache.org/snapshots/</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
     </repository>
   </repositories>
 
