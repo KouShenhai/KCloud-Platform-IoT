@@ -45,7 +45,8 @@ public class UserMenuTreeBuilder implements MenuTreeBuilder {
 
 	@Override
 	@DataCache(name = USER_MENU, key = "#userId", operateType = GET)
-	public MenuTreeCO buildMenuTree(MenuTreeListQry qry, Long userId) {
+	public Object buildMenuTree(Object obj, Long userId) {
+		MenuTreeListQry qry = (MenuTreeListQry) obj;
 		qry.setStatus(MenuStatusEnum.ENABLE.getCode());
 		qry.setType(MenuTypeEnum.MENU.getCode());
 		List<MenuDO> list = menuMapper.selectObjectList(qry);

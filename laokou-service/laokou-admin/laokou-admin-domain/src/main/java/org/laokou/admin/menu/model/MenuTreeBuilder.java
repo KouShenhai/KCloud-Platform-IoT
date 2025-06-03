@@ -17,14 +17,11 @@
 
 package org.laokou.admin.menu.model;
 
-import org.laokou.admin.menu.dto.MenuTreeListQry;
-import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
-
 /**
  * @author laokou
  */
 public interface MenuTreeBuilder {
 
-	MenuTreeCO buildMenuTree(MenuTreeListQry qry, Long userId);
+	Object buildMenuTree(Object obj, Long userId);
 
 }

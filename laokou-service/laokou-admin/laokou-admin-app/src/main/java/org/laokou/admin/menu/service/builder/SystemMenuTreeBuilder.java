@@ -39,8 +39,8 @@ public class SystemMenuTreeBuilder implements MenuTreeBuilder {
 	private final MenuMapper menuMapper;
 
 	@Override
-	public MenuTreeCO buildMenuTree(MenuTreeListQry qry, Long userId) {
-		List<MenuDO> list = menuMapper.selectObjectList(qry);
+	public Object buildMenuTree(Object obj, Long userId) {
+		List<MenuDO> list = menuMapper.selectObjectList((MenuTreeListQry) obj);
 		return TreeUtils.buildTreeNode(MenuConvertor.toClientObjs(list), MenuTreeCO.class);
 	}
 

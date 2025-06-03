@@ -49,8 +49,8 @@ public class MenuTreeListQryExe {
 	public Result<List<MenuTreeCO>> execute(MenuTreeListQry qry) {
 		MenuTypeTreeEnum menuTypeTreeEnum = MenuTypeTreeEnum.getByCode(qry.getCode());
 		Assert.notNull(menuTypeTreeEnum, "菜单类型不存在");
-		return Result.ok(menuTypeTreeEnum
-			.buildMenuTree(qry, UserContextHolder.get().getId(), userMenuTreeBuilder, systemMenuTreeBuilder)
+		return Result.ok(((MenuTreeCO) menuTypeTreeEnum.buildMenuTree(qry, UserContextHolder.get().getId(),
+				userMenuTreeBuilder, systemMenuTreeBuilder))
 			.getChildren());
 	}
 

@@ -18,8 +18,6 @@
 package org.laokou.admin.menu.model;
 
 import lombok.Getter;
-import org.laokou.admin.menu.dto.MenuTreeListQry;
-import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.common.i18n.util.EnumParser;
 
 /**
@@ -30,17 +28,17 @@ public enum MenuTypeTreeEnum {
 
 	USER(0, "用户菜单") {
 		@Override
-		public MenuTreeCO buildMenuTree(MenuTreeListQry qry, Long userId, MenuTreeBuilder userMenuTreeBuilder,
+		public Object buildMenuTree(Object obj, Long userId, MenuTreeBuilder userMenuTreeBuilder,
 				MenuTreeBuilder systemMenuTreeBuilder) {
-			return userMenuTreeBuilder.buildMenuTree(qry, userId);
+			return userMenuTreeBuilder.buildMenuTree(obj, userId);
 		}
 	},
 
 	SYSTEM(1, "系统菜单") {
 		@Override
-		public MenuTreeCO buildMenuTree(MenuTreeListQry qry, Long userId, MenuTreeBuilder userMenuTreeBuilder,
+		public Object buildMenuTree(Object obj, Long userId, MenuTreeBuilder userMenuTreeBuilder,
 				MenuTreeBuilder systemMenuTreeBuilder) {
-			return systemMenuTreeBuilder.buildMenuTree(qry, userId);
+			return systemMenuTreeBuilder.buildMenuTree(obj, userId);
 		}
 	};
 
@@ -57,7 +55,7 @@ public enum MenuTypeTreeEnum {
 		return EnumParser.parse(MenuTypeTreeEnum.class, MenuTypeTreeEnum::getCode, code);
 	}
 
-	public abstract MenuTreeCO buildMenuTree(MenuTreeListQry qry, Long userId, MenuTreeBuilder userMenuTreeBuilder,
+	public abstract Object buildMenuTree(Object obj, Long userId, MenuTreeBuilder userMenuTreeBuilder,
 			MenuTreeBuilder systemMenuTreeBuilder);
 
 }
