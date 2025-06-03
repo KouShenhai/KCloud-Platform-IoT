@@ -17,7 +17,6 @@
 
 package org.laokou.common.algorithm;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.algorithm.template.Algorithm;
@@ -28,11 +27,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @SpringBootTest
-@RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class AlgorithmTest {
 
@@ -41,7 +39,7 @@ class AlgorithmTest {
 		List<OssApi> ossApis = List.of(new TencentcloudOssApi(), new AliyunOssApi());
 		// 负载均衡【哈希算法】
 		Algorithm algorithm = new HashAlgorithm();
-		algorithm.select(ossApis, new Random().nextInt(10)).upload();
+		algorithm.select(ossApis, ThreadLocalRandom.current().nextInt(0, 10)).upload();
 		// 负载均衡【轮询算法】
 		algorithm = new RoundRobinAlgorithm();
 		algorithm.select(ossApis, "").upload();
