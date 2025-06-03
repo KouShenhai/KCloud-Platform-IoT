@@ -18,7 +18,7 @@
 package org.laokou.common.algorithm.template.select;
 
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 负载均衡-随机算法.
@@ -26,11 +26,6 @@ import java.util.Random;
  * @author laokou
  */
 public class RandomAlgorithm extends AbstractAlgorithm {
-
-	/**
-	 * 数字随机生成器.
-	 */
-	private final Random RANDOM = new Random(System.currentTimeMillis());
 
 	/**
 	 * 随机算法.
@@ -41,7 +36,7 @@ public class RandomAlgorithm extends AbstractAlgorithm {
 	 */
 	@Override
 	public <T> T select(List<T> list, Object arg) {
-		int value = this.RANDOM.nextInt(list.size());
+		int value = ThreadLocalRandom.current().nextInt(0, list.size());
 		return list.get(value);
 	}
 
