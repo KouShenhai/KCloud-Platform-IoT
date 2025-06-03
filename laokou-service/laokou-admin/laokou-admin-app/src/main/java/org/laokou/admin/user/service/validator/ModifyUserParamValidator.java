@@ -15,34 +15,33 @@
  *
  */
 
-package org.laokou.admin.user.service.extensionpoint.extension;
+package org.laokou.admin.user.service.validator;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
+import org.laokou.admin.user.model.UserParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Component("resetUserPwdParamValidator")
+@Component("modifyUserParamValidator")
 @RequiredArgsConstructor
-public class ResetUserPwdParamValidator implements UserParamValidatorExtPt {
-
-	private final PasswordEncoder passwordEncoder;
+public class ModifyUserParamValidator implements UserParamValidator {
 
 	private final UserMapper userMapper;
 
 	@Override
-	public void validateUser(UserE userE) {
+	public void validateUser(UserE userE) throws Exception {
 		ParamValidator.validate(
 				// 校验ID
-				UserParamValidator.validateId(userE),
-				// 校验密码
-				UserParamValidator.validatePassword(userE, passwordEncoder, userMapper));
+				org.laokou.admin.user.service.validator.UserParamValidator.validateId(userE),
+				// 校验邮箱
+				org.laokou.admin.user.service.validator.UserParamValidator.validateMail(userE, userMapper, false),
+				// 校验手机号
+				org.laokou.admin.user.service.validator.UserParamValidator.validateMobile(userE, userMapper, false));
 	}
 
 }

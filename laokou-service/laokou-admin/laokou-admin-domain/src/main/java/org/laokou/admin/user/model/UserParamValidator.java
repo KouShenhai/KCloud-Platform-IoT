@@ -15,14 +15,12 @@
  *
  */
 
-package org.laokou.admin.user.service.extensionpoint;
-
-import org.laokou.admin.user.model.UserE;
+package org.laokou.admin.user.model;
 
 /**
  * @author laokou
  */
-public interface UserParamValidatorExtPt {
+public interface UserParamValidator {
 
 	void validateUser(UserE userE) throws Exception;
 

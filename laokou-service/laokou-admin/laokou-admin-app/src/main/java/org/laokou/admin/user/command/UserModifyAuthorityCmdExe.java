@@ -17,43 +17,33 @@
 
 package org.laokou.admin.user.command;
 
+import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserModifyAuthorityCmd;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
 @Component
+@RequiredArgsConstructor
 public class UserModifyAuthorityCmdExe {
 
 	private final UserDomainService userDomainService;
 
 	private final TransactionalUtils transactionalUtils;
 
-	@Autowired
-	@Qualifier("modifyUserAuthorityParamValidator")
-	private UserParamValidatorExtPt modifyUserAuthorityParamValidator;
-
-	public UserModifyAuthorityCmdExe(UserDomainService userDomainService, TransactionalUtils transactionalUtils) {
-		this.userDomainService = userDomainService;
-		this.transactionalUtils = transactionalUtils;
-	}
-
 	@CommandLog
 	public void executeVoid(UserModifyAuthorityCmd cmd) throws Exception {
 		// 校验参数
 		UserCO co = cmd.getCo();
 		UserE userE = UserConvertor.toEntity(co, co.getId());
-		modifyUserAuthorityParamValidator.validateUser(userE);
+		// modifyUserAuthorityParamValidator.validateUser(userE);
 		transactionalUtils.executeInTransaction(() -> userDomainService.updateAuthorityUser(userE));
 	}
 

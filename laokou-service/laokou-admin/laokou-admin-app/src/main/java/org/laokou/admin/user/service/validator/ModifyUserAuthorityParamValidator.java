@@ -15,33 +15,30 @@
  *
  */
 
-package org.laokou.admin.user.service.extensionpoint.extension;
+package org.laokou.admin.user.service.validator;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
+import org.laokou.admin.user.model.UserParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Component("saveUserParamValidator")
+@Component("modifyUserAuthorityParamValidator")
 @RequiredArgsConstructor
-public class SaveUserParamValidator implements UserParamValidatorExtPt {
-
-	private final UserMapper userMapper;
+public class ModifyUserAuthorityParamValidator implements UserParamValidator {
 
 	@Override
-	public void validateUser(UserE userE) throws Exception {
+	public void validateUser(UserE userE) {
 		ParamValidator.validate(
-				// 校验用户名
-				UserParamValidator.validateUsername(userE, userMapper, true),
-				// 校验邮箱
-				UserParamValidator.validateMail(userE, userMapper, true),
-				// 校验手机号
-				UserParamValidator.validateMobile(userE, userMapper, true));
+				// 校验ID
+				org.laokou.admin.user.service.validator.UserParamValidator.validateId(userE),
+				// 校验角色IDS
+				org.laokou.admin.user.service.validator.UserParamValidator.validateRoleIds(userE),
+				// 校验部门IDS
+				org.laokou.admin.user.service.validator.UserParamValidator.validateDeptIds(userE));
 	}
 
 }

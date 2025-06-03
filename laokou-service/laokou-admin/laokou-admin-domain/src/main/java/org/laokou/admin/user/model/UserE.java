@@ -23,6 +23,8 @@ import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,101 +36,142 @@ import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
  *
  * @author laokou
  */
-@Getter
-@Setter
 @Entity
 public class UserE extends Identifier {
 
 	/**
 	 * 用户密码.
 	 */
+	@Getter
+	@Setter
 	private String password;
 
 	/**
 	 * 超级管理员标识 0否 1是.
 	 */
+	@Getter
+	@Setter
 	private Integer superAdmin;
 
 	/**
 	 * 用户邮箱.
 	 */
+	@Getter
+	@Setter
 	private String mail;
 
 	/**
 	 * 用户手机号.
 	 */
+	@Getter
+	@Setter
 	private String mobile;
 
 	/**
 	 * 用户状态 0启用 1禁用.
 	 */
+	@Getter
+	@Setter
 	private Integer status;
 
 	/**
 	 * 用户头像.
 	 */
+	@Getter
+	@Setter
 	private String avatar;
 
 	/**
 	 * 用户名短语.
 	 */
+	@Getter
 	private String usernamePhrase;
 
 	/**
 	 * 用户邮箱短语.
 	 */
+	@Getter
 	private String mailPhrase;
 
 	/**
 	 * 用户手机号短语.
 	 */
+	@Getter
 	private String mobilePhrase;
 
 	/**
 	 * 用户名.
 	 */
+	@Getter
+	@Setter
 	private String username;
 
 	/**
 	 * 角色IDS.
 	 */
+	@Getter
+	@Setter
 	private List<String> roleIds;
 
 	/**
 	 * 部门IDS.
 	 */
+	@Getter
+	@Setter
 	private List<String> deptIds;
 
 	/**
 	 * 用户角色IDS.
 	 */
+	@Getter
+	@Setter
 	private List<Long> userRoleIds;
 
 	/**
 	 * 用户部门IDS.
 	 */
+	@Getter
+	@Setter
 	private List<Long> userDeptIds;
 
 	/**
 	 * 用户IDS.
 	 */
+	@Getter
+	@Setter
 	private List<Long> userIds;
 
 	/**
 	 * 用户操作类型.
 	 */
+	@Setter
 	private UserOperateTypeEnum userOperateTypeEnum;
 
-	public UserE fillValue(Long id, String username, Integer superAdmin, String mail, String mobile, Integer status,
-			String avatar) {
-		super.id = id;
-		this.username = username;
-		this.superAdmin = superAdmin;
-		this.mail = mail;
-		this.mobile = mobile;
-		this.status = status;
-		this.avatar = avatar;
-		return this;
+	@Autowired
+	@Qualifier("saveUserParamValidator")
+	private UserParamValidator saveUserParamValidator;
+
+	@Autowired
+	@Qualifier("modifyUserParamValidator")
+	private UserParamValidator modifyUserParamValidator;
+
+	@Autowired
+	@Qualifier("resetUserPwdParamValidator")
+	private UserParamValidator resetUserPwdParamValidator;
+
+	@Autowired
+	@Qualifier("modifyUserAuthorityParamValidator")
+	private UserParamValidator modifyUserAuthorityParamValidator;
+
+	public void checkUserParam() throws Exception {
+		switch (userOperateTypeEnum) {
+			case SAVE -> saveUserParamValidator.validateUser(this);
+			case MODIFY -> modifyUserParamValidator.validateUser(this);
+			case RESET_PWD -> resetUserPwdParamValidator.validateUser(this);
+			case MODIFY_AUTHORITY -> modifyUserAuthorityParamValidator.validateUser(this);
+			default -> {
+			}
+		}
 	}
 
 	public void encryptUsername() throws Exception {

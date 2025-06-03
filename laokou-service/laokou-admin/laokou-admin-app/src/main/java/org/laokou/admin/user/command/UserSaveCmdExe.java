@@ -17,16 +17,16 @@
 
 package org.laokou.admin.user.command;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserSaveCmd;
+import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,26 +36,21 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class UserSaveCmdExe {
-
-	@Autowired
-	@Qualifier("saveUserParamValidator")
-	private UserParamValidatorExtPt saveUserParamValidator;
 
 	private final UserDomainService userDomainService;
 
 	private final TransactionalUtils transactionalUtils;
 
-	public UserSaveCmdExe(UserDomainService userDomainService, TransactionalUtils transactionalUtils) {
-		this.userDomainService = userDomainService;
-		this.transactionalUtils = transactionalUtils;
-	}
+	private final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
 
 	@CommandLog
 	public void executeVoid(UserSaveCmd cmd) throws Exception {
 		// 校验参数
-		UserE userE = UserConvertor.toEntity(cmd.getCo());
-		saveUserParamValidator.validateUser(userE);
+		UserCO co = cmd.getCo();
+		UserE userE = UserConvertor.toEntity(distributedIdentifierWrapperRpc.getId(), co.getUsername(),
+				co.getSuperAdmin(), co.getMail(), co.getMobile(), co.getStatus(), co.getAvatar(), true);
 		transactionalUtils.executeInTransaction(() -> userDomainService.createUser(userE));
 	}
 

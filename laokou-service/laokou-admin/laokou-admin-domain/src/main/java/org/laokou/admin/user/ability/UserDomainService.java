@@ -38,6 +38,8 @@ public class UserDomainService {
 	private final UserDeptGateway userDeptGateway;
 
 	public void createUser(UserE userE) throws Exception {
+		// 校验用户参数
+		userE.checkUserParam();
 		// 用户名加密
 		userE.encryptUsername();
 		// 邮箱加密
@@ -48,6 +50,8 @@ public class UserDomainService {
 	}
 
 	public void updateUser(UserE userE) throws Exception {
+		// 校验用户参数
+		userE.checkUserParam();
 		// 邮箱加密
 		userE.encryptMail();
 		// 手机号加密
@@ -55,7 +59,9 @@ public class UserDomainService {
 		userGateway.updateUser(userE);
 	}
 
-	public void updateAuthorityUser(UserE userE) {
+	public void updateAuthorityUser(UserE userE) throws Exception {
+		// 校验用户参数
+		userE.checkUserParam();
 		userRoleGateway.updateUserRole(userE);
 		userDeptGateway.updateUserDept(userE);
 	}

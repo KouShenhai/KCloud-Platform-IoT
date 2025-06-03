@@ -24,6 +24,7 @@ import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
+import org.laokou.admin.user.model.UserOperateTypeEnum;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.security.util.UserDetails;
@@ -159,8 +160,18 @@ public final class UserConvertor {
 		}).toList();
 	}
 
-	public static UserE toEntity(UserCO userCO) {
-		return null;
+	public static UserE toEntity(Long id, String username, Integer superAdmin, String mail, String mobile,
+			Integer status, String avatar, boolean isInsert) {
+		UserE user = UserDomainFactory.getUser();
+		user.setId(id);
+		user.setUsername(username);
+		user.setSuperAdmin(superAdmin);
+		user.setMail(mail);
+		user.setMobile(mobile);
+		user.setStatus(status);
+		user.setAvatar(avatar);
+		user.setUserOperateTypeEnum(isInsert ? UserOperateTypeEnum.SAVE : UserOperateTypeEnum.MODIFY);
+		return user;
 	}
 
 	public static UserE toEntity(UserCO userCO, Long id) {

@@ -17,16 +17,16 @@
 
 package org.laokou.admin.user.command;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.user.ability.UserDomainService;
+import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserModifyCmd;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,29 +36,21 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class UserModifyCmdExe {
-
-	@Autowired
-	@Qualifier("modifyUserParamValidator")
-	private UserParamValidatorExtPt modifyUserParamValidator;
 
 	private final UserDomainService userDomainService;
 
 	private final TransactionalUtils transactionalUtils;
 
-	public UserModifyCmdExe(UserDomainService userDomainService, TransactionalUtils transactionalUtils) {
-		this.userDomainService = userDomainService;
-		this.transactionalUtils = transactionalUtils;
-	}
+	private final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
 
 	@CommandLog
 	public void executeVoid(UserModifyCmd cmd) throws Exception {
 		// 校验参数
 		UserCO co = cmd.getCo();
-		UserE userE = null;
-		// UserDomainFactory.getUser(co.getId(), co.getUsername(), co.getSuperAdmin(),
-		// co.getMail(), co.getMobile(), co.getStatus(), co.getAvatar());
-		modifyUserParamValidator.validateUser(userE);
+		UserE userE = UserConvertor.toEntity(distributedIdentifierWrapperRpc.getId(), co.getUsername(),
+				co.getSuperAdmin(), co.getMail(), co.getMobile(), co.getStatus(), co.getAvatar(), false);
 		transactionalUtils.executeInTransaction(() -> userDomainService.updateUser(userE));
 	}
 

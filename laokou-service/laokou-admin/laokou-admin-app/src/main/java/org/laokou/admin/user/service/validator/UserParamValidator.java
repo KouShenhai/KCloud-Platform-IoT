@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.user.service.extensionpoint.extension;
+package org.laokou.admin.user.service.validator;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;

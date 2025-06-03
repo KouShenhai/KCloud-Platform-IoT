@@ -26,21 +26,9 @@ import org.laokou.common.i18n.util.EnumParser;
 @Getter
 public enum MenuTypeTreeEnum {
 
-	USER(0, "用户菜单") {
-		@Override
-		public Object buildMenuTree(Object obj, Long userId, MenuTreeBuilder userMenuTreeBuilder,
-				MenuTreeBuilder systemMenuTreeBuilder) {
-			return userMenuTreeBuilder.buildMenuTree(obj, userId);
-		}
-	},
+	USER(0, "用户菜单"),
 
-	SYSTEM(1, "系统菜单") {
-		@Override
-		public Object buildMenuTree(Object obj, Long userId, MenuTreeBuilder userMenuTreeBuilder,
-				MenuTreeBuilder systemMenuTreeBuilder) {
-			return systemMenuTreeBuilder.buildMenuTree(obj, userId);
-		}
-	};
+	SYSTEM(1, "系统菜单");
 
 	private final int code;
 
@@ -54,8 +42,5 @@ public enum MenuTypeTreeEnum {
 	public static MenuTypeTreeEnum getByCode(int code) {
 		return EnumParser.parse(MenuTypeTreeEnum.class, MenuTypeTreeEnum::getCode, code);
 	}
-
-	public abstract Object buildMenuTree(Object obj, Long userId, MenuTreeBuilder userMenuTreeBuilder,
-			MenuTreeBuilder systemMenuTreeBuilder);
 
 }

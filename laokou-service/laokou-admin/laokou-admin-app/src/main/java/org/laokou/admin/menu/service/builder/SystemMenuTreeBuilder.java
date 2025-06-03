@@ -23,7 +23,6 @@ import org.laokou.admin.menu.dto.MenuTreeListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.admin.menu.model.MenuTreeBuilder;
 import org.laokou.common.core.util.TreeUtils;
 import org.springframework.stereotype.Component;
 
@@ -39,8 +38,8 @@ public class SystemMenuTreeBuilder implements MenuTreeBuilder {
 	private final MenuMapper menuMapper;
 
 	@Override
-	public Object buildMenuTree(Object obj, Long userId) {
-		List<MenuDO> list = menuMapper.selectObjectList((MenuTreeListQry) obj);
+	public MenuTreeCO buildMenuTree(MenuTreeListQry qry, Long userId) {
+		List<MenuDO> list = menuMapper.selectObjectList(qry);
 		return TreeUtils.buildTreeNode(MenuConvertor.toClientObjs(list), MenuTreeCO.class);
 	}
 

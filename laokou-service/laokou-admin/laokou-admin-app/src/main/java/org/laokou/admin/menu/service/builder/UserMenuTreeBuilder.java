@@ -25,7 +25,6 @@ import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuStatusEnum;
 import org.laokou.admin.menu.model.MenuTypeEnum;
-import org.laokou.admin.menu.model.MenuTreeBuilder;
 import org.laokou.common.core.util.TreeUtils;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.springframework.stereotype.Component;
@@ -45,8 +44,7 @@ public class UserMenuTreeBuilder implements MenuTreeBuilder {
 
 	@Override
 	@DataCache(name = USER_MENU, key = "#userId", operateType = GET)
-	public Object buildMenuTree(Object obj, Long userId) {
-		MenuTreeListQry qry = (MenuTreeListQry) obj;
+	public MenuTreeCO buildMenuTree(MenuTreeListQry qry, Long userId) {
 		qry.setStatus(MenuStatusEnum.ENABLE.getCode());
 		qry.setType(MenuTypeEnum.MENU.getCode());
 		List<MenuDO> list = menuMapper.selectObjectList(qry);

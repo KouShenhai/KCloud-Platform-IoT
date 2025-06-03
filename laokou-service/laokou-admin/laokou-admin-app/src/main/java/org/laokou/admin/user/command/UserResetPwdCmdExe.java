@@ -17,16 +17,14 @@
 
 package org.laokou.admin.user.command;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserResetPwdCmd;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.admin.user.service.extensionpoint.UserParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,25 +32,17 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class UserResetPwdCmdExe {
-
-	@Autowired
-	@Qualifier("resetUserPwdParamValidator")
-	private UserParamValidatorExtPt resetUserPwdParamValidator;
 
 	private final UserDomainService userDomainService;
 
 	private final TransactionalUtils transactionalUtils;
 
-	public UserResetPwdCmdExe(UserDomainService userDomainService, TransactionalUtils transactionalUtils) {
-		this.userDomainService = userDomainService;
-		this.transactionalUtils = transactionalUtils;
-	}
-
 	@CommandLog
 	public void executeVoid(UserResetPwdCmd cmd) throws Exception {
 		UserE userE = UserConvertor.toEntity(cmd.getId(), cmd.getPassword());
-		resetUserPwdParamValidator.validateUser(userE);
+		// resetUserPwdParamValidator.validateUser(userE);
 		transactionalUtils.executeInTransaction(() -> userDomainService.updateUser(userE));
 	}
 
