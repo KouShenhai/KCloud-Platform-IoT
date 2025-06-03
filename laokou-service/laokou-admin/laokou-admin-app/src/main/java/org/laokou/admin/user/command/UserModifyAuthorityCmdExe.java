@@ -42,8 +42,7 @@ public class UserModifyAuthorityCmdExe {
 	public void executeVoid(UserModifyAuthorityCmd cmd) throws Exception {
 		// 校验参数
 		UserCO co = cmd.getCo();
-		UserE userE = UserConvertor.toEntity(co, co.getId());
-		// modifyUserAuthorityParamValidator.validateUser(userE);
+		UserE userE = UserConvertor.toEntity(co.getId(), co.getRoleIds(), co.getDeptIds());
 		transactionalUtils.executeInTransaction(() -> userDomainService.updateAuthorityUser(userE));
 	}
 

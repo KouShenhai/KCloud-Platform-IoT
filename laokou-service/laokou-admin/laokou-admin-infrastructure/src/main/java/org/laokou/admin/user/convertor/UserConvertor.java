@@ -34,6 +34,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 用户转换器.
@@ -49,10 +50,11 @@ public final class UserConvertor {
 		List<UserRoleDO> list = new ArrayList<>(roleIds.size());
 		for (String roleId : roleIds) {
 			UserRoleDO userRoleDO = new UserRoleDO();
-			userRoleDO.setId(id++);
+			userRoleDO.setId(id + ThreadLocalRandom.current().nextLong(1, 1000));
 			userRoleDO.setRoleId(Long.valueOf(roleId));
 			userRoleDO.setUserId(userId);
 			list.add(userRoleDO);
+			id++;
 		}
 		return list;
 	}
@@ -61,10 +63,11 @@ public final class UserConvertor {
 		List<UserDeptDO> list = new ArrayList<>(deptIds.size());
 		for (String deptId : deptIds) {
 			UserDeptDO userDeptDO = new UserDeptDO();
-			userDeptDO.setId(id++);
+			userDeptDO.setId(id + ThreadLocalRandom.current().nextLong(1, 1000));
 			userDeptDO.setDeptId(Long.valueOf(deptId));
 			userDeptDO.setUserId(userId);
 			list.add(userDeptDO);
+			id++;
 		}
 		return list;
 	}
@@ -174,12 +177,12 @@ public final class UserConvertor {
 		return user;
 	}
 
-	public static UserE toEntity(UserCO userCO, Long id) {
+	public static UserE toEntity(Long id, List<String> roleIds, List<String> deptIds) {
 		UserE userE = UserDomainFactory.getUser();
 		userE.setId(id);
 		userE.setUserIds(Collections.singletonList(id));
-		userE.setRoleIds(userCO.getRoleIds());
-		userE.setDeptIds(userCO.getDeptIds());
+		userE.setRoleIds(roleIds);
+		userE.setDeptIds(deptIds);
 		return userE;
 	}
 

@@ -27,6 +27,7 @@ import org.laokou.admin.role.model.RoleE;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 角色转换器.
@@ -53,10 +54,11 @@ public class RoleConvertor {
 		List<RoleMenuDO> list = new ArrayList<>(menuIds.size());
 		for (String menuId : menuIds) {
 			RoleMenuDO roleMenuDO = new RoleMenuDO();
-			roleMenuDO.setId(id++);
+			roleMenuDO.setId(id + ThreadLocalRandom.current().nextLong(1, 1000));
 			roleMenuDO.setRoleId(roleId);
 			roleMenuDO.setMenuId(Long.valueOf(menuId));
 			list.add(roleMenuDO);
+			id++;
 		}
 		return list;
 	}
@@ -73,10 +75,11 @@ public class RoleConvertor {
 		List<RoleDeptDO> list = new ArrayList<>(deptIds.size());
 		for (String deptId : deptIds) {
 			RoleDeptDO roleDeptDO = new RoleDeptDO();
-			roleDeptDO.setId(id++);
+			roleDeptDO.setId(id + ThreadLocalRandom.current().nextLong(1, 1000));
 			roleDeptDO.setRoleId(roleId);
 			roleDeptDO.setDeptId(Long.valueOf(deptId));
 			list.add(roleDeptDO);
+			id++;
 		}
 		return list;
 	}
