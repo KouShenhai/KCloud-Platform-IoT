@@ -73,6 +73,7 @@ public class DeptE extends Identifier {
 	/**
 	 * 旧路径.
 	 */
+	@Getter
 	private String oldPath;
 
 	@Autowired
