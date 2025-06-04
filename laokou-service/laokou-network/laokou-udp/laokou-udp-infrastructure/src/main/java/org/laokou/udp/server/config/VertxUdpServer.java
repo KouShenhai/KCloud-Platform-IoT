@@ -39,7 +39,7 @@ public final class VertxUdpServer extends AbstractVerticle {
 
 	VertxUdpServer(Vertx vertx, SpringUdpServerProperties springUdpServerProperties) {
 		this.springUdpServerProperties = springUdpServerProperties;
-		this.vertx = vertx;
+		super.vertx = vertx;
 	}
 
 	@Override

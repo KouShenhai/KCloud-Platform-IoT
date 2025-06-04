@@ -24,7 +24,7 @@ import org.laokou.common.vertx.model.MqttMessageEnum;
 import org.laokou.common.vertx.model.PropertyMessage;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
-import org.laokou.common.network.mqtt.client.util.TopicUtils;
+import org.laokou.common.network.mqtt.client.util.VertxMqttUtils;
 import org.springframework.pulsar.reactive.core.ReactivePulsarTemplate;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -42,7 +42,7 @@ public class ReactiveDownPropertyReadReplyMqttMessageHandler implements Reactive
 
 	@Override
 	public boolean isSubscribe(String topic) {
-		return TopicUtils.match(MqttMessageEnum.UP_PROPERTY_READ_REPLY.getTopic(), topic);
+		return VertxMqttUtils.matchTopic(MqttMessageEnum.UP_PROPERTY_READ_REPLY.getTopic(), topic);
 	}
 
 	@Override

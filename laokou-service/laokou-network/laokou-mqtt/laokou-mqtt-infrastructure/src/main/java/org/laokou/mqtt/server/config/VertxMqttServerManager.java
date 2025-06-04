@@ -17,8 +17,12 @@
 
 package org.laokou.mqtt.server.config;
 
+import io.vertx.core.Future;
 import io.vertx.core.Vertx;
+import io.vertx.core.buffer.Buffer;
 import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
+import reactor.core.publisher.Mono;
+
 import java.util.List;
 
 /**
@@ -26,12 +30,19 @@ import java.util.List;
  */
 public final class VertxMqttServerManager {
 
+	private static volatile VertxMqttServer vertxMqttServer;
+
 	private VertxMqttServerManager() {
 	}
 
-	public static void deploy(final Vertx vertx, final SpringMqttServerProperties properties,
+	public synchronized static void deployServer(final Vertx vertx, final SpringMqttServerProperties properties,
 			final List<ReactiveMqttMessageHandler> reactiveMqttMessageHandlers) {
-		new VertxMqttServer(vertx, properties, reactiveMqttMessageHandlers).deploy();
+		vertxMqttServer = new VertxMqttServer(vertx, properties, reactiveMqttMessageHandlers);
+		vertxMqttServer.deploy();
+	}
+
+	public static Mono<Future<Integer>> publishMessage(String clientId, String topic, int qos, Buffer payload) {
+		return vertxMqttServer.publish(clientId, topic, qos, payload);
 	}
 
 }

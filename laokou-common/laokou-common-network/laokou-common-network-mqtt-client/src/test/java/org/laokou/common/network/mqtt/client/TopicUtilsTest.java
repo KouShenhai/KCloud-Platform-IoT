@@ -19,7 +19,7 @@ package org.laokou.common.network.mqtt.client;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.network.mqtt.client.util.TopicUtils;
+import org.laokou.common.network.mqtt.client.util.VertxMqttUtils;
 
 /**
  * @author laokou
@@ -28,12 +28,12 @@ class TopicUtilsTest {
 
 	@Test
 	void testMatch() {
-		Assertions.assertTrue(TopicUtils.match("test/topic", "test/topic"));
-		Assertions.assertFalse(TopicUtils.match("test/topic", "test/topic/"));
-		Assertions.assertTrue(TopicUtils.match("test/#", "test/topic/test"));
-		Assertions.assertTrue(TopicUtils.match("test/+", "test/topic"));
-		Assertions.assertTrue(TopicUtils.match("test/+/test", "test/topic/test"));
-		Assertions.assertTrue(TopicUtils.match("test/+/+", "test/topic/test"));
+		Assertions.assertTrue(VertxMqttUtils.matchTopic("test/topic", "test/topic"));
+		Assertions.assertFalse(VertxMqttUtils.matchTopic("test/topic", "test/topic/"));
+		Assertions.assertTrue(VertxMqttUtils.matchTopic("test/#", "test/topic/test"));
+		Assertions.assertTrue(VertxMqttUtils.matchTopic("test/+", "test/topic"));
+		Assertions.assertTrue(VertxMqttUtils.matchTopic("test/+/test", "test/topic/test"));
+		Assertions.assertTrue(VertxMqttUtils.matchTopic("test/+/+", "test/topic/test"));
 	}
 
 }

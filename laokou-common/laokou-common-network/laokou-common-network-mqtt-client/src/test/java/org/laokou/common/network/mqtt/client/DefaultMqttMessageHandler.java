@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.MqttMessageHandler;
-import org.laokou.common.network.mqtt.client.util.TopicUtils;
+import org.laokou.common.network.mqtt.client.util.VertxMqttUtils;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
@@ -36,7 +36,7 @@ class DefaultMqttMessageHandler implements MqttMessageHandler {
 
 	@Override
 	public boolean isSubscribe(String topic) {
-		return TopicUtils.match("/test-topic-1/#", topic);
+		return VertxMqttUtils.matchTopic("/test-topic-1/#", topic);
 	}
 
 	@Override

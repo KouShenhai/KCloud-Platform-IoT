@@ -17,22 +17,28 @@
 
 package org.laokou.common.network.mqtt.client.util;
 
+import io.netty.handler.codec.mqtt.MqttQoS;
+
 import java.util.regex.Pattern;
 
 /**
  * @author laokou
  */
-public final class TopicUtils {
+public final class VertxMqttUtils {
 
-	private TopicUtils() {
+	private VertxMqttUtils() {
 	}
 
-	public static boolean match(String subscribeTopic, String publishTopic) {
+	public static boolean matchTopic(String subscribeTopic, String publishTopic) {
 		if (subscribeTopic.equals(publishTopic)) {
 			return true;
 		}
 		String regex = subscribeTopic.replace("+", "[^/]+").replace("#", ".+");
 		return Pattern.matches(regex, publishTopic);
+	}
+
+	public static MqttQoS convertQos(int qos) {
+		return MqttQoS.valueOf(qos);
 	}
 
 }

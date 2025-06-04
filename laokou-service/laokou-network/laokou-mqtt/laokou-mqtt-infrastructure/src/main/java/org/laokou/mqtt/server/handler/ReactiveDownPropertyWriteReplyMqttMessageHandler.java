@@ -22,7 +22,7 @@ import org.apache.pulsar.client.api.MessageId;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.ReactiveMqttMessageHandler;
-import org.laokou.common.network.mqtt.client.util.TopicUtils;
+import org.laokou.common.network.mqtt.client.util.VertxMqttUtils;
 import org.laokou.common.vertx.model.MqttMessageEnum;
 import org.laokou.common.vertx.model.PropertyMessage;
 import org.springframework.pulsar.reactive.core.ReactivePulsarTemplate;
@@ -42,7 +42,7 @@ public class ReactiveDownPropertyWriteReplyMqttMessageHandler implements Reactiv
 
 	@Override
 	public boolean isSubscribe(String topic) {
-		return TopicUtils.match(MqttMessageEnum.UP_PROPERTY_WRITE_REPLY.getTopic(), topic);
+		return VertxMqttUtils.matchTopic(MqttMessageEnum.UP_PROPERTY_WRITE_REPLY.getTopic(), topic);
 	}
 
 	@Override

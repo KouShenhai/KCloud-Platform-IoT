@@ -45,7 +45,7 @@ final class VertxHttpServer extends AbstractVerticle {
 	private boolean isClosed = false;
 
 	VertxHttpServer(Vertx vertx, SpringHttpServerProperties properties) {
-		this.vertx = vertx;
+		super.vertx = vertx;
 		this.properties = properties;
 		this.router = getRouter();
 	}

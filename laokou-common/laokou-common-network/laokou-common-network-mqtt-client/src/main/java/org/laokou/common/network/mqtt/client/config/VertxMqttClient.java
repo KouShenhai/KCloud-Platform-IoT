@@ -18,7 +18,6 @@
 package org.laokou.common.network.mqtt.client.config;
 
 import io.netty.handler.codec.mqtt.MqttProperties;
-import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.mqtt.MqttClient;
@@ -39,6 +38,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import static org.laokou.common.network.mqtt.client.util.VertxMqttUtils.convertQos;
 
 /**
  * @author laokou
@@ -178,11 +179,11 @@ public final class VertxMqttClient {
 			virtualThreadExecutor.execute(this::subscribe);
 		}
 		if (isLoaded.compareAndSet(false, true)) {
-			virtualThreadExecutor.execute(this::consume);
+			virtualThreadExecutor.execute(this::consumeMessage);
 		}
 	}
 
-	private void consume() {
+	private void consumeMessage() {
 		consumeDisposable = messageSink.asFlux().doOnNext(mqttPublishMessage -> {
 			String topic = mqttPublishMessage.topicName();
 			log.info("【Vertx-MQTT-Client】 => MQTT接收到消息，Topic：{}", topic);
@@ -267,10 +268,6 @@ public final class VertxMqttClient {
 		if (CollectionUtils.isEmpty(topics)) {
 			throw new IllegalArgumentException("【Vertx-MQTT-Client】 => Topics list cannot be empty");
 		}
-	}
-
-	private MqttQoS convertQos(int qos) {
-		return MqttQoS.valueOf(qos);
 	}
 
 }

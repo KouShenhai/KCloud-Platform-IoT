@@ -38,7 +38,7 @@ final class VertxTcpServer extends AbstractVerticle {
 	private boolean isClosed = false;
 
 	VertxTcpServer(Vertx vertx, SpringTcpServerProperties properties) {
-		this.vertx = vertx;
+		super.vertx = vertx;
 		this.properties = properties;
 	}
 
