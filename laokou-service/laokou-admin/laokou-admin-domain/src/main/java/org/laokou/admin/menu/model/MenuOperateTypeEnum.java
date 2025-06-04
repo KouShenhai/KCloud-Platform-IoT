@@ -15,15 +15,27 @@
  *
  */
 
-package org.laokou.admin.dept.service.extensionpoint;
+package org.laokou.admin.menu.model;
 
-import org.laokou.admin.dept.model.DeptE;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-public interface DeptParamValidatorExtPt {
+@Getter
+public enum MenuOperateTypeEnum {
 
-	void validateDept(DeptE deptE);
+	SAVE("save", "新增菜单"),
+
+	MODIFY("modify", "修改菜单");
+
+	private final String code;
+
+	private final String desc;
+
+	MenuOperateTypeEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

@@ -21,6 +21,7 @@ import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
 import org.laokou.iot.productCategory.factory.ProductCategoryFactory;
 import org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO;
 import org.laokou.iot.productCategory.model.ProductCategoryE;
+import org.laokou.iot.productCategory.model.ProductCategoryOperateTypeEnum;
 
 import java.util.List;
 
@@ -58,13 +59,15 @@ public class ProductCategoryConvertor {
 		return productCategoryCO;
 	}
 
-	public static ProductCategoryE toEntity(ProductCategoryCO productCategoryCO) {
+	public static ProductCategoryE toEntity(ProductCategoryCO productCategoryCO, boolean isInsert) {
 		ProductCategoryE productCategoryE = ProductCategoryFactory.getProductCategory();
 		productCategoryE.setName(productCategoryCO.getName());
 		productCategoryE.setSort(productCategoryCO.getSort());
 		productCategoryE.setPid(productCategoryCO.getPid());
 		productCategoryE.setRemark(productCategoryCO.getRemark());
 		productCategoryE.setId(productCategoryCO.getId());
+		productCategoryE.setProductCategoryOperateTypeEnum(
+				isInsert ? ProductCategoryOperateTypeEnum.SAVE : ProductCategoryOperateTypeEnum.MODIFY);
 		return productCategoryE;
 	}
 

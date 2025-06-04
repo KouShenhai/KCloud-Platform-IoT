@@ -20,6 +20,9 @@ package org.laokou.iot.thingModel.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.dto.Identifier;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  *
@@ -27,64 +30,97 @@ import org.laokou.common.i18n.annotation.Entity;
  *
  * @author laokou
  */
-@Getter
-@Setter
 @Entity
-public class ThingModelE {
-
-	/**
-	 * ID.
-	 */
-	private Long id;
+public class ThingModelE extends Identifier {
 
 	/**
 	 * 物模型名称.
 	 */
+	@Getter
+	@Setter
 	private String name;
 
 	/**
 	 * 物模型编码.
 	 */
+	@Getter
+	@Setter
 	private String code;
 
 	/**
 	 * 数据类型 integer string decimal boolean.
 	 */
+	@Getter
+	@Setter
 	private String dataType;
 
 	/**
 	 * 物模型类别 1属性 2事件.
 	 */
+	@Getter
+	@Setter
 	private Integer category;
 
 	/**
 	 * 物模型类型 read读 write写 report上报.
 	 */
+	@Getter
+	@Setter
 	private String type;
 
 	/**
 	 * 表达式.
 	 */
+	@Getter
+	@Setter
 	private String expression;
 
 	/**
 	 * 物模型排序.
 	 */
+	@Getter
+	@Setter
 	private Integer sort;
 
 	/**
 	 * 物模型规则说明.
 	 */
+	@Getter
+	@Setter
 	private String specs;
 
 	/**
 	 * 物模型备注.
 	 */
+	@Getter
+	@Setter
 	private String remark;
 
 	/**
 	 * 表达式标识 0否 1是.
 	 */
+	@Getter
+	@Setter
 	private Integer expressionFlag;
+
+	@Setter
+	private ThingModelOperateTypeEnum thingModelOperateTypeEnum;
+
+	@Autowired
+	@Qualifier("saveThingModelParamValidator")
+	private ThingModelParamValidator saveThingModelParamValidator;
+
+	@Autowired
+	@Qualifier("modifyThingModelParamValidator")
+	private ThingModelParamValidator modifyThingModelParamValidator;
+
+	public void checkThingModelParam() throws Exception {
+		switch (thingModelOperateTypeEnum) {
+			case SAVE -> saveThingModelParamValidator.validateThingModel(this);
+			case MODIFY -> modifyThingModelParamValidator.validateThingModel(this);
+			default -> {
+			}
+		}
+	}
 
 }

@@ -15,30 +15,32 @@
  *
  */
 
-package org.laokou.iot.productCategory.service.extensionpoint.extension;
+package org.laokou.admin.dept.service.validator;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dept.model.DeptE;
+import org.laokou.admin.dept.model.DeptParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
-import org.laokou.iot.productCategory.gatewayimpl.database.ProductCategoryMapper;
-import org.laokou.iot.productCategory.model.ProductCategoryE;
-import org.laokou.iot.productCategory.service.extensionpoint.ProductCategoryParamValidatorExtPt;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Component("saveProductCategoryParamValidator")
+@Component("modifyDeptParamValidator")
 @RequiredArgsConstructor
-public class SaveProductCategoryModelParamValidator implements ProductCategoryParamValidatorExtPt {
-
-	private final ProductCategoryMapper productCategoryMapper;
+public class ModifyDeptParamValidator implements DeptParamValidator {
 
 	@Override
-	public void validateProductCategory(ProductCategoryE productCategoryE) {
+	public void validateDept(DeptE deptE) {
 		ParamValidator.validate(
-				ProductCategoryParamValidator.validateName(productCategoryE, true, productCategoryMapper),
-				ProductCategoryParamValidator.validateSort(productCategoryE),
-				ProductCategoryParamValidator.validateParentId(productCategoryE));
+				// 校验ID
+				org.laokou.admin.dept.service.validator.DeptParamValidator.validateId(deptE),
+				// 校验父级ID
+				org.laokou.admin.dept.service.validator.DeptParamValidator.validateParentId(deptE),
+				// 校验名称
+				org.laokou.admin.dept.service.validator.DeptParamValidator.validateName(deptE),
+				// 校验排序
+				org.laokou.admin.dept.service.validator.DeptParamValidator.validateSort(deptE));
 	}
 
 }

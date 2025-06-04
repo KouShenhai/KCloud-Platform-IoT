@@ -18,13 +18,11 @@
 package org.laokou.iot.productCategory.command;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.iot.productCategory.dto.ProductCategorySaveCmd;
 import org.laokou.iot.productCategory.model.ProductCategoryE;
-import org.laokou.iot.productCategory.service.extensionpoint.extension.SaveProductCategoryModelParamValidator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 import org.laokou.iot.productCategory.ability.ProductCategoryDomainService;
@@ -37,25 +35,19 @@ import static org.laokou.common.tenant.constant.DSConstants.IOT;
  * @author laokou
  */
 @Component
+@RequiredArgsConstructor
 public class ProductCategorySaveCmdExe {
 
-	@Autowired
-	@Qualifier("saveProductCategoryParamValidator")
-	private SaveProductCategoryModelParamValidator saveProductCategoryParamValidator;
+	private final ProductCategoryDomainService productCategoryDomainService;
 
-	@Autowired
-	private ProductCategoryDomainService productCategoryDomainService;
-
-	@Autowired
-	private TransactionalUtils transactionalUtils;
+	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(ProductCategorySaveCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(IOT);
 			// 校验参数
-			ProductCategoryE productCategoryE = ProductCategoryConvertor.toEntity(cmd.getCo());
-			saveProductCategoryParamValidator.validateProductCategory(productCategoryE);
+			ProductCategoryE productCategoryE = ProductCategoryConvertor.toEntity(cmd.getCo(), true);
 			transactionalUtils
 				.executeInTransaction(() -> productCategoryDomainService.createProductCategory(productCategoryE));
 		}

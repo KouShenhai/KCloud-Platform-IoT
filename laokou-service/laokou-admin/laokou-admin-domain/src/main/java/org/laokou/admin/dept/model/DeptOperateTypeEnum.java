@@ -15,36 +15,27 @@
  *
  */
 
-package org.laokou.admin.dept.ability;
+package org.laokou.admin.dept.model;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dept.gateway.*;
-import org.laokou.admin.dept.model.DeptE;
-import org.springframework.stereotype.Component;
+import lombok.Getter;
 
 /**
- * 部门领域服务.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class DeptDomainService {
+@Getter
+public enum DeptOperateTypeEnum {
 
-	private final DeptGateway deptGateway;
+	SAVE("save", "新增部门"),
 
-	public void createDept(DeptE deptE) {
-		deptE.checkDeptParam();
-		deptGateway.createDept(deptE);
-	}
+	MODIFY("modify", "修改部门");
 
-	public void updateDept(DeptE deptE) {
-		deptE.checkDeptParam();
-		deptGateway.updateDept(deptE);
-	}
+	private final String code;
 
-	public void deleteDept(Long[] ids) {
-		deptGateway.deleteDept(ids);
+	private final String desc;
+
+	DeptOperateTypeEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }

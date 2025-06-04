@@ -20,6 +20,9 @@ package org.laokou.admin.role.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.dto.Identifier;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 
@@ -28,54 +31,88 @@ import java.util.List;
  *
  * @author laokou
  */
-@Setter
-@Getter
 @Entity
-public class RoleE {
-
-	/**
-	 * ID.
-	 */
-	private Long id;
+public class RoleE extends Identifier {
 
 	/**
 	 * 角色名称.
 	 */
+	@Setter
+	@Getter
 	private String name;
 
 	/**
 	 * 角色排序.
 	 */
+	@Setter
+	@Getter
 	private Integer sort;
 
 	/**
 	 * 数据范围 all全部 custom自定义 dept_self仅本部门 dept部门及以下 self仅本人.
 	 */
+	@Setter
+	@Getter
 	private String dataScope;
 
 	/**
 	 * 菜单IDS.
 	 */
+	@Setter
+	@Getter
 	private List<String> menuIds;
 
 	/**
 	 * 部门IDS.
 	 */
+	@Setter
+	@Getter
 	private List<String> deptIds;
 
 	/**
 	 * 角色菜单IDS.
 	 */
+	@Setter
+	@Getter
 	private List<Long> roleMenuIds;
 
 	/**
 	 * 角色部门IDS.
 	 */
+	@Setter
+	@Getter
 	private List<Long> roleDeptIds;
 
 	/**
 	 * 角色IDS.
 	 */
+	@Setter
+	@Getter
 	private List<Long> roleIds;
+
+	@Setter
+	private RoleOperateTypeEnum roleOperateTypeEnum;
+
+	@Autowired
+	@Qualifier("saveRoleParamValidator")
+	private RoleParamValidator saveRoleParamValidator;
+
+	@Autowired
+	@Qualifier("modifyRoleParamValidator")
+	private RoleParamValidator modifyRoleParamValidator;
+
+	@Autowired
+	@Qualifier("modifyRoleAuthorityParamValidator")
+	private RoleParamValidator modifyRoleAuthorityParamValidator;
+
+	public void checkRoleParam() {
+		switch (roleOperateTypeEnum) {
+			case SAVE -> saveRoleParamValidator.validateRole(this);
+			case MODIFY -> modifyRoleParamValidator.validateRole(this);
+			case MODIFY_AUTHORITY -> modifyRoleAuthorityParamValidator.validateRole(this);
+			default -> {
+			}
+		}
+	}
 
 }

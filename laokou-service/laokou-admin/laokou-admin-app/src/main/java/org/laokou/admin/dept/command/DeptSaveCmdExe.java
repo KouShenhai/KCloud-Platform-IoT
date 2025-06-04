@@ -17,15 +17,13 @@
 
 package org.laokou.admin.dept.command;
 
+import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.ability.DeptDomainService;
 import org.laokou.admin.dept.convertor.DeptConvertor;
 import org.laokou.admin.dept.dto.DeptSaveCmd;
 import org.laokou.admin.dept.model.DeptE;
-import org.laokou.admin.dept.service.extensionpoint.DeptParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,26 +32,17 @@ import org.springframework.stereotype.Component;
  * @author laokou
  */
 @Component
+@RequiredArgsConstructor
 public class DeptSaveCmdExe {
-
-	@Autowired
-	@Qualifier("saveDeptParamValidator")
-	private DeptParamValidatorExtPt saveDeptParamValidator;
 
 	private final DeptDomainService deptDomainService;
 
 	private final TransactionalUtils transactionalUtils;
 
-	public DeptSaveCmdExe(DeptDomainService deptDomainService, TransactionalUtils transactionalUtils) {
-		this.deptDomainService = deptDomainService;
-		this.transactionalUtils = transactionalUtils;
-	}
-
 	@CommandLog
 	public void executeVoid(DeptSaveCmd cmd) {
 		// 校验参数
 		DeptE deptE = DeptConvertor.toEntity(cmd.getCo());
-		saveDeptParamValidator.validateDept(deptE);
 		transactionalUtils.executeInTransaction(() -> deptDomainService.createDept(deptE));
 	}
 

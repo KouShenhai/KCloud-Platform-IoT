@@ -17,15 +17,14 @@
 
 package org.laokou.admin.role.command;
 
+import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.ability.RoleDomainService;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleSaveCmd;
+import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.admin.role.model.RoleE;
-import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,26 +33,18 @@ import org.springframework.stereotype.Component;
  * @author laokou
  */
 @Component
+@RequiredArgsConstructor
 public class RoleSaveCmdExe {
-
-	@Autowired
-	@Qualifier("saveRoleParamValidator")
-	private RoleParamValidatorExtPt saveRoleParamValidator;
 
 	private final RoleDomainService roleDomainService;
 
 	private final TransactionalUtils transactionalUtils;
 
-	public RoleSaveCmdExe(RoleDomainService roleDomainService, TransactionalUtils transactionalUtils) {
-		this.roleDomainService = roleDomainService;
-		this.transactionalUtils = transactionalUtils;
-	}
-
 	@CommandLog
 	public void executeVoid(RoleSaveCmd cmd) {
 		// 校验参数
-		RoleE roleE = RoleConvertor.toEntity(cmd.getCo());
-		saveRoleParamValidator.validateRole(roleE);
+		RoleCO co = cmd.getCo();
+		RoleE roleE = RoleConvertor.toEntity(null, co.getName(), co.getSort(), true);
 		transactionalUtils.executeInTransaction(() -> roleDomainService.createRole(roleE));
 	}
 

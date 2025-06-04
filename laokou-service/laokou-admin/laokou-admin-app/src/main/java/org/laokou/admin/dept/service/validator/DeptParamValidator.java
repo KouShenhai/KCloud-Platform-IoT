@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.dept.service.extensionpoint.extension;
+package org.laokou.admin.dept.service.validator;
 
 import org.laokou.admin.dept.model.DeptE;
 import org.laokou.common.i18n.util.ObjectUtils;

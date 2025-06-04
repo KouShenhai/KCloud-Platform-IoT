@@ -23,6 +23,7 @@ import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.admin.role.model.RoleE;
+import org.laokou.admin.role.model.RoleOperateTypeEnum;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -106,21 +107,23 @@ public class RoleConvertor {
 		return roleCO;
 	}
 
-	public static RoleE toEntity(RoleCO roleCO) {
+	public static RoleE toEntity(Long id, String name, Integer sort, boolean isInsert) {
 		RoleE roleE = RoleDomainFactory.getRole();
-		roleE.setId(roleCO.getId());
-		roleE.setName(roleCO.getName());
-		roleE.setSort(roleCO.getSort());
+		roleE.setId(id);
+		roleE.setName(name);
+		roleE.setSort(sort);
+		roleE.setRoleOperateTypeEnum(isInsert ? RoleOperateTypeEnum.SAVE : RoleOperateTypeEnum.MODIFY);
 		return roleE;
 	}
 
-	public static RoleE toEntity(RoleCO roleCO, Long id) {
+	public static RoleE toEntity(Long id, String dataScope, List<String> menuIds, List<String> deptIds) {
 		RoleE roleE = RoleDomainFactory.getRole();
 		roleE.setId(id);
-		roleE.setMenuIds(roleCO.getMenuIds());
-		roleE.setDataScope(roleCO.getDataScope());
-		roleE.setDeptIds(roleCO.getDeptIds());
+		roleE.setMenuIds(menuIds);
+		roleE.setDataScope(dataScope);
+		roleE.setDeptIds(deptIds);
 		roleE.setRoleIds(Collections.singletonList(id));
+		roleE.setRoleOperateTypeEnum(RoleOperateTypeEnum.MODIFY_AUTHORITY);
 		return roleE;
 	}
 

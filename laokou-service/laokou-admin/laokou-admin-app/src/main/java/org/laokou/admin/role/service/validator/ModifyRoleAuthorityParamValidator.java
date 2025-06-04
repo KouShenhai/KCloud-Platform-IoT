@@ -15,11 +15,11 @@
  *
  */
 
-package org.laokou.admin.role.service.extensionpoint.extension;
+package org.laokou.admin.role.service.validator;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.model.RoleE;
-import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
+import org.laokou.admin.role.model.RoleParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
@@ -28,19 +28,19 @@ import org.springframework.stereotype.Component;
  */
 @Component("modifyRoleAuthorityParamValidator")
 @RequiredArgsConstructor
-public class ModifyRoleAuthorityParamValidator implements RoleParamValidatorExtPt {
+public class ModifyRoleAuthorityParamValidator implements RoleParamValidator {
 
 	@Override
 	public void validateRole(RoleE roleE) {
 		ParamValidator.validate(
 				// 校验ID
-				RoleParamValidator.validateId(roleE),
+				org.laokou.admin.role.service.validator.RoleParamValidator.validateId(roleE),
 				// 校验数据范围
-				RoleParamValidator.validateDataScope(roleE),
+				org.laokou.admin.role.service.validator.RoleParamValidator.validateDataScope(roleE),
 				// 校验菜单IDS
-				RoleParamValidator.validateMenuIds(roleE),
+				org.laokou.admin.role.service.validator.RoleParamValidator.validateMenuIds(roleE),
 				// 校验部门IDS
-				RoleParamValidator.validateDeptIds(roleE));
+				org.laokou.admin.role.service.validator.RoleParamValidator.validateDeptIds(roleE));
 	}
 
 }

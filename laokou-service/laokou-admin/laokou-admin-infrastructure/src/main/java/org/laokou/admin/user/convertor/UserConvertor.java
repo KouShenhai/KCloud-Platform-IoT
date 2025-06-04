@@ -183,6 +183,7 @@ public final class UserConvertor {
 		userE.setUserIds(Collections.singletonList(id));
 		userE.setRoleIds(roleIds);
 		userE.setDeptIds(deptIds);
+		userE.setUserOperateTypeEnum(UserOperateTypeEnum.MODIFY_AUTHORITY);
 		return userE;
 	}
 
@@ -190,6 +191,7 @@ public final class UserConvertor {
 		UserE userE = UserDomainFactory.getUser();
 		userE.setId(id);
 		userE.setPassword(password);
+		userE.setUserOperateTypeEnum(UserOperateTypeEnum.RESET_PWD);
 		return userE;
 	}
 

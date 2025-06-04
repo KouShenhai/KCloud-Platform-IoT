@@ -21,42 +21,49 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * 部门领域对象【实体】.
  *
  * @author laokou
  */
-@Setter
-@Getter
 @Entity
-public class DeptE {
-
-	/**
-	 * ID.
-	 */
-	private Long id;
+public class DeptE extends Identifier {
 
 	/**
 	 * 部门父节点ID.
 	 */
+	@Setter
+	@Getter
 	private Long pid;
 
 	/**
 	 * 部门名称.
 	 */
+	@Setter
+	@Getter
 	private String name;
 
 	/**
 	 * 部门节点.
 	 */
+	@Setter
+	@Getter
 	private String path;
 
 	/**
 	 * 部门排序.
 	 */
+	@Setter
+	@Getter
 	private Integer sort;
+
+	@Setter
+	private DeptOperateTypeEnum deptOperateTypeEnum;
 
 	/**
 	 * 部门父节点路径.
@@ -67,6 +74,23 @@ public class DeptE {
 	 * 旧路径.
 	 */
 	private String oldPath;
+
+	@Autowired
+	@Qualifier("saveDeptParamValidator")
+	private DeptParamValidator saveDeptParamValidator;
+
+	@Autowired
+	@Qualifier("modifyDeptParamValidator")
+	private DeptParamValidator modifyDeptParamValidator;
+
+	public void checkDeptParam() {
+		switch (deptOperateTypeEnum) {
+			case SAVE -> saveDeptParamValidator.validateDept(this);
+			case MODIFY -> modifyDeptParamValidator.validateDept(this);
+			default -> {
+			}
+		}
+	}
 
 	public void getOldPath(String oldPath) {
 		this.oldPath = oldPath;

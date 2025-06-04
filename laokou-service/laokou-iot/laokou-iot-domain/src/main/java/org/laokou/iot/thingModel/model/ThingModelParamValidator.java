@@ -15,14 +15,12 @@
  *
  */
 
-package org.laokou.iot.thingModel.service.extensionpoint;
-
-import org.laokou.iot.thingModel.model.ThingModelE;
+package org.laokou.iot.thingModel.model;
 
 /**
  * @author laokou
  */
-public interface ThingModelParamValidatorExtPt {
+public interface ThingModelParamValidator {
 
 	void validateThingModel(ThingModelE thingModelE) throws Exception;
 

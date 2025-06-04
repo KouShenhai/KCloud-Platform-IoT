@@ -17,7 +17,7 @@
 
 package org.laokou.admin.menu.command;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.ability.MenuDomainService;
 import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuModifyCmd;
@@ -31,28 +31,18 @@ import org.springframework.stereotype.Component;
  *
  * @author laokou
  */
-@Slf4j
 @Component
+@RequiredArgsConstructor
 public class MenuModifyCmdExe {
 
 	private final MenuDomainService menuDomainService;
 
 	private final TransactionalUtils transactionalUtils;
 
-	// @Autowired
-	// @Qualifier("modifyMenuParamValidator")
-	// private MenuParamValidator modifyMenuParamValidator;
-
-	public MenuModifyCmdExe(MenuDomainService menuDomainService, TransactionalUtils transactionalUtils) {
-		this.menuDomainService = menuDomainService;
-		this.transactionalUtils = transactionalUtils;
-	}
-
 	@CommandLog
 	public void executeVoid(MenuModifyCmd cmd) {
 		// 校验参数
-		MenuE menuE = MenuConvertor.toEntity(cmd.getCo());
-		// modifyMenuParamValidator.validateMenu(menuE);
+		MenuE menuE = MenuConvertor.toEntity(cmd.getCo(), false);
 		transactionalUtils.executeInTransaction(() -> menuDomainService.updateMenu(menuE));
 	}
 

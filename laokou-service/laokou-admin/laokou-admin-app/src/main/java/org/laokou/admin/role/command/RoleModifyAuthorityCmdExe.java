@@ -17,42 +17,33 @@
 
 package org.laokou.admin.role.command;
 
+import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.ability.RoleDomainService;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleModifyAuthorityCmd;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.admin.role.model.RoleE;
-import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
+ * 修改角色权限命令执行器.
+ *
  * @author laokou
  */
 @Component
+@RequiredArgsConstructor
 public class RoleModifyAuthorityCmdExe {
-
-	@Autowired
-	@Qualifier("modifyRoleAuthorityParamValidator")
-	private RoleParamValidatorExtPt modifyRoleAuthorityParamValidator;
 
 	private final RoleDomainService roleDomainService;
 
 	private final TransactionalUtils transactionalUtils;
 
-	public RoleModifyAuthorityCmdExe(RoleDomainService roleDomainService, TransactionalUtils transactionalUtils) {
-		this.roleDomainService = roleDomainService;
-		this.transactionalUtils = transactionalUtils;
-	}
-
 	@CommandLog
 	public void executeVoid(RoleModifyAuthorityCmd cmd) throws Exception {
 		RoleCO co = cmd.getCo();
-		RoleE roleE = RoleConvertor.toEntity(co, co.getId());
-		modifyRoleAuthorityParamValidator.validateRole(roleE);
+		RoleE roleE = RoleConvertor.toEntity(co.getId(), co.getDataScope(), co.getMenuIds(), co.getDeptIds());
 		transactionalUtils.executeInTransaction(() -> roleDomainService.updateAuthorityRole(roleE));
 	}
 

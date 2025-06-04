@@ -20,60 +20,92 @@ package org.laokou.admin.menu.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.dto.Identifier;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * 菜单领域对象【实体】.
  *
  * @author laokou
  */
-@Setter
-@Getter
 @Entity
-public class MenuE {
-
-	/**
-	 * ID.
-	 */
-	private Long id;
+public class MenuE extends Identifier {
 
 	/**
 	 * 菜单父节点ID.
 	 */
+	@Setter
+	@Getter
 	private Long pid;
 
 	/**
 	 * 菜单权限标识.
 	 */
+	@Setter
+	@Getter
 	private String permission;
 
 	/**
 	 * 菜单类型 0菜单 1按钮.
 	 */
+	@Setter
+	@Getter
 	private Integer type;
 
 	/**
 	 * 菜单名称.
 	 */
+	@Setter
+	@Getter
 	private String name;
 
 	/**
 	 * 菜单路径.
 	 */
+	@Setter
+	@Getter
 	private String path;
 
 	/**
 	 * 菜单图标.
 	 */
+	@Setter
+	@Getter
 	private String icon;
 
 	/**
 	 * 菜单排序.
 	 */
+	@Setter
+	@Getter
 	private Integer sort;
 
 	/**
 	 * 菜单状态 0启用 1停用.
 	 */
+	@Setter
+	@Getter
 	private Integer status;
+
+	@Setter
+	private MenuOperateTypeEnum menuOperateTypeEnum;
+
+	@Autowired
+	@Qualifier("saveMenuParamValidator")
+	private MenuParamValidator saveMenuParamValidator;
+
+	@Autowired
+	@Qualifier("modifyMenuParamValidator")
+	private MenuParamValidator modifyMenuParamValidator;
+
+	public void checkMenuParam() {
+		switch (menuOperateTypeEnum) {
+			case SAVE -> saveMenuParamValidator.validateMenu(this);
+			case MODIFY -> modifyMenuParamValidator.validateMenu(this);
+			default -> {
+			}
+		}
+	}
 
 }

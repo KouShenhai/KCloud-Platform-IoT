@@ -15,15 +15,27 @@
  *
  */
 
-package org.laokou.admin.role.service.extensionpoint;
+package org.laokou.iot.thingModel.model;
 
-import org.laokou.admin.role.model.RoleE;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-public interface RoleParamValidatorExtPt {
+@Getter
+public enum ThingModelOperateTypeEnum {
 
-	void validateRole(RoleE roleE);
+	SAVE("save", "新增物模型"),
+
+	MODIFY("modify", "修改物模型");
+
+	private final String code;
+
+	private final String desc;
+
+	ThingModelOperateTypeEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

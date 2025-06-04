@@ -29,8 +29,6 @@ public enum UserOperateTypeEnum {
 
 	MODIFY("modify", "修改用户"),
 
-	REMOVE("remove", "删除用户"),
-
 	RESET_PWD("rest_pwd", "重置用户密码"),
 
 	MODIFY_AUTHORITY("modify_authority", "修改用户权限");

@@ -20,6 +20,9 @@ package org.laokou.iot.productCategory.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.dto.Identifier;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  *
@@ -27,34 +30,55 @@ import org.laokou.common.i18n.annotation.Entity;
  *
  * @author laokou
  */
-@Getter
-@Setter
 @Entity
-public class ProductCategoryE {
-
-	/**
-	 * ID.
-	 */
-	private Long id;
+public class ProductCategoryE extends Identifier {
 
 	/**
 	 * 产品类别名称.
 	 */
+	@Getter
+	@Setter
 	private String name;
 
 	/**
 	 * 产品类别排序.
 	 */
+	@Getter
+	@Setter
 	private Integer sort;
 
 	/**
 	 * 产品类别父节点ID.
 	 */
+	@Getter
+	@Setter
 	private Long pid;
 
 	/**
 	 * 产品类别备注.
 	 */
+	@Getter
+	@Setter
 	private String remark;
+
+	@Setter
+	private ProductCategoryOperateTypeEnum productCategoryOperateTypeEnum;
+
+	@Autowired
+	@Qualifier("saveProductCategoryParamValidator")
+	private ProductCategoryParamValidator saveProductCategoryParamValidator;
+
+	@Autowired
+	@Qualifier("modifyProductCategoryParamValidator")
+	private ProductCategoryParamValidator modifyProductCategoryParamValidator;
+
+	public void checkProductCategoryParam() {
+		switch (productCategoryOperateTypeEnum) {
+			case SAVE -> saveProductCategoryParamValidator.validateProductCategory(this);
+			case MODIFY -> modifyProductCategoryParamValidator.validateProductCategory(this);
+			default -> {
+			}
+		}
+	}
 
 }

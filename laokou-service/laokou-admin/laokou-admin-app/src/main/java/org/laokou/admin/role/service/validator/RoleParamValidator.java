@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.role.service.extensionpoint.extension;
+package org.laokou.admin.role.service.validator;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;

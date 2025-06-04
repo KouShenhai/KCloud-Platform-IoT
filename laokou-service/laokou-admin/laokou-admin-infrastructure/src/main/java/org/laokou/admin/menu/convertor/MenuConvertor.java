@@ -22,6 +22,7 @@ import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.factory.MenuDomainFactory;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuE;
+import org.laokou.admin.menu.model.MenuOperateTypeEnum;
 
 import java.util.List;
 
@@ -93,7 +94,7 @@ public final class MenuConvertor {
 		return list.stream().map(MenuConvertor::toClientObj).toList();
 	}
 
-	public static MenuE toEntity(MenuCO menuCO) {
+	public static MenuE toEntity(MenuCO menuCO, boolean isInsert) {
 		MenuE menuE = MenuDomainFactory.getMenu();
 		menuE.setId(menuCO.getId());
 		menuE.setPid(menuCO.getPid());
@@ -104,6 +105,7 @@ public final class MenuConvertor {
 		menuE.setIcon(menuCO.getIcon());
 		menuE.setSort(menuCO.getSort());
 		menuE.setStatus(menuCO.getStatus());
+		menuE.setMenuOperateTypeEnum(isInsert ? MenuOperateTypeEnum.SAVE : MenuOperateTypeEnum.MODIFY);
 		return menuE;
 	}
 

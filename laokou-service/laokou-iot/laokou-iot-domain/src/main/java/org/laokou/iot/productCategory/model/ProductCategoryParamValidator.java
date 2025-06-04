@@ -15,36 +15,13 @@
  *
  */
 
-package org.laokou.admin.dept.ability;
-
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dept.gateway.*;
-import org.laokou.admin.dept.model.DeptE;
-import org.springframework.stereotype.Component;
+package org.laokou.iot.productCategory.model;
 
 /**
- * 部门领域服务.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class DeptDomainService {
+public interface ProductCategoryParamValidator {
 
-	private final DeptGateway deptGateway;
-
-	public void createDept(DeptE deptE) {
-		deptE.checkDeptParam();
-		deptGateway.createDept(deptE);
-	}
-
-	public void updateDept(DeptE deptE) {
-		deptE.checkDeptParam();
-		deptGateway.updateDept(deptE);
-	}
-
-	public void deleteDept(Long[] ids) {
-		deptGateway.deleteDept(ids);
-	}
+	void validateProductCategory(ProductCategoryE productCategoryE);
 
 }

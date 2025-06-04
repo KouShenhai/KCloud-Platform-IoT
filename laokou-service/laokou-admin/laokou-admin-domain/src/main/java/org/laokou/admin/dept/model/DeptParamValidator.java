@@ -15,15 +15,13 @@
  *
  */
 
-package org.laokou.iot.productCategory.service.extensionpoint;
-
-import org.laokou.iot.productCategory.model.ProductCategoryE;
+package org.laokou.admin.dept.model;
 
 /**
  * @author laokou
  */
-public interface ProductCategoryParamValidatorExtPt {
+public interface DeptParamValidator {
 
-	void validateProductCategory(ProductCategoryE productCategoryE) throws Exception;
+	void validateDept(DeptE deptE);
 
 }

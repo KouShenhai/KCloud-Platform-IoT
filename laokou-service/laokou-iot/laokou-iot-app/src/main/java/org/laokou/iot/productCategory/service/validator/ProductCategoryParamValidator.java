@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.productCategory.service.extensionpoint.extension;
+package org.laokou.iot.productCategory.service.validator;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.common.i18n.util.ObjectUtils;

@@ -38,14 +38,17 @@ public class RoleDomainService {
 	private final RoleDeptGateway roleDeptGateway;
 
 	public void createRole(RoleE roleE) {
+		roleE.checkRoleParam();
 		roleGateway.createRole(roleE);
 	}
 
 	public void updateRole(RoleE roleE) {
+		roleE.checkRoleParam();
 		roleGateway.updateRole(roleE);
 	}
 
 	public void updateAuthorityRole(RoleE roleE) {
+		roleE.checkRoleParam();
 		roleGateway.updateRole(roleE);
 		roleMenuGateway.updateRoleMenu(roleE);
 		roleDeptGateway.updateRoleDept(roleE);

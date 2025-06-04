@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.thingModel.service.extensionpoint.extension;
+package org.laokou.iot.thingModel.service.validator;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.fasterxml.jackson.core.JsonProcessingException;

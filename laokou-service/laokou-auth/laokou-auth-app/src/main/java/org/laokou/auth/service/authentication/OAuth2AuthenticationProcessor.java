@@ -38,6 +38,8 @@ import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_UR
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getOAuth2AuthenticationException;
 
 /**
+ * 认证授权处理器.
+ *
  * @author laokou
  */
 @Slf4j

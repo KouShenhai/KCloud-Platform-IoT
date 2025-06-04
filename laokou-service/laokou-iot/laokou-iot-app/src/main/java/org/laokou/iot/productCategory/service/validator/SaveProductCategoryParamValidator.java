@@ -15,30 +15,33 @@
  *
  */
 
-package org.laokou.iot.productCategory.service.extensionpoint.extension;
+package org.laokou.iot.productCategory.service.validator;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.iot.productCategory.gatewayimpl.database.ProductCategoryMapper;
 import org.laokou.iot.productCategory.model.ProductCategoryE;
-import org.laokou.iot.productCategory.service.extensionpoint.ProductCategoryParamValidatorExtPt;
+import org.laokou.iot.productCategory.model.ProductCategoryParamValidator;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Component("modifyProductCategoryParamValidator")
+@Component("saveProductCategoryParamValidator")
 @RequiredArgsConstructor
-public class ModifyProductCategoryParamValidator implements ProductCategoryParamValidatorExtPt {
+public class SaveProductCategoryParamValidator implements ProductCategoryParamValidator {
 
 	private final ProductCategoryMapper productCategoryMapper;
 
 	@Override
 	public void validateProductCategory(ProductCategoryE productCategoryE) {
-		ParamValidator.validate(ProductCategoryParamValidator.validateId(productCategoryE),
-				ProductCategoryParamValidator.validateName(productCategoryE, false, productCategoryMapper),
-				ProductCategoryParamValidator.validateSort(productCategoryE),
-				ProductCategoryParamValidator.validateParentId(productCategoryE));
+		ParamValidator.validate(
+				org.laokou.iot.productCategory.service.validator.ProductCategoryParamValidator
+					.validateName(productCategoryE, true, productCategoryMapper),
+				org.laokou.iot.productCategory.service.validator.ProductCategoryParamValidator
+					.validateSort(productCategoryE),
+				org.laokou.iot.productCategory.service.validator.ProductCategoryParamValidator
+					.validateParentId(productCategoryE));
 	}
 
 }

@@ -15,33 +15,30 @@
  *
  */
 
-package org.laokou.admin.role.service.extensionpoint.extension;
+package org.laokou.admin.dept.service.validator;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
-import org.laokou.admin.role.model.RoleE;
-import org.laokou.admin.role.service.extensionpoint.RoleParamValidatorExtPt;
+import org.laokou.admin.dept.model.DeptE;
+import org.laokou.admin.dept.model.DeptParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Component("modifyRoleParamValidator")
+@Component("saveDeptParamValidator")
 @RequiredArgsConstructor
-public class ModifyRoleParamValidator implements RoleParamValidatorExtPt {
-
-	private final RoleMapper roleMapper;
+public class SaveDeptParamValidator implements DeptParamValidator {
 
 	@Override
-	public void validateRole(RoleE roleE) {
+	public void validateDept(DeptE deptE) {
 		ParamValidator.validate(
-				// 校验ID
-				RoleParamValidator.validateId(roleE),
+				// 校验父级ID
+				org.laokou.admin.dept.service.validator.DeptParamValidator.validateParentId(deptE),
 				// 校验名称
-				RoleParamValidator.validateName(roleE, roleMapper, false),
+				org.laokou.admin.dept.service.validator.DeptParamValidator.validateName(deptE),
 				// 校验排序
-				RoleParamValidator.validateSort(roleE));
+				org.laokou.admin.dept.service.validator.DeptParamValidator.validateSort(deptE));
 	}
 
 }

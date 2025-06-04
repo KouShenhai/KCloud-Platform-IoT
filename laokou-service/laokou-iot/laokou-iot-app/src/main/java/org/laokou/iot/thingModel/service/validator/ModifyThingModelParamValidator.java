@@ -15,14 +15,14 @@
  *
  */
 
-package org.laokou.iot.thingModel.service.extensionpoint.extension;
+package org.laokou.iot.thingModel.service.validator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
 import org.laokou.iot.thingModel.model.ThingModelE;
-import org.laokou.iot.thingModel.service.extensionpoint.ThingModelParamValidatorExtPt;
+import org.laokou.iot.thingModel.model.ThingModelParamValidator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,18 +30,21 @@ import org.springframework.stereotype.Component;
  */
 @Component("modifyThingModelParamValidator")
 @RequiredArgsConstructor
-public class ModifyThingModelParamValidator implements ThingModelParamValidatorExtPt {
+public class ModifyThingModelParamValidator implements ThingModelParamValidator {
 
 	private final ThingModelMapper thingModelMapper;
 
 	@Override
 	public void validateThingModel(ThingModelE thingModelE) throws JsonProcessingException {
-		ParamValidator.validate(ThingModelParamValidator.validateId(thingModelE),
-				ThingModelParamValidator.validateCodeAndName(thingModelE, false, thingModelMapper),
-				ThingModelParamValidator.validateCategory(thingModelE),
-				ThingModelParamValidator.validateDataType(thingModelE),
-				ThingModelParamValidator.validateSpecs(thingModelE), ThingModelParamValidator.validateType(thingModelE),
-				ThingModelParamValidator.validateSort(thingModelE));
+		ParamValidator.validate(
+				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateId(thingModelE),
+				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateCodeAndName(thingModelE,
+						false, thingModelMapper),
+				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateCategory(thingModelE),
+				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateDataType(thingModelE),
+				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateSpecs(thingModelE),
+				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateType(thingModelE),
+				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateSort(thingModelE));
 	}
 
 }

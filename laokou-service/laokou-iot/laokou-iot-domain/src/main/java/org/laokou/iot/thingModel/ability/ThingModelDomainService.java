@@ -34,11 +34,13 @@ public class ThingModelDomainService {
 
 	private final ThingModelGateway thingModelGateway;
 
-	public void createThingModel(ThingModelE thingModelE) {
+	public void createThingModel(ThingModelE thingModelE) throws Exception {
+		thingModelE.checkThingModelParam();
 		thingModelGateway.createThingModel(thingModelE);
 	}
 
-	public void updateThingModel(ThingModelE thingModelE) {
+	public void updateThingModel(ThingModelE thingModelE) throws Exception {
+		thingModelE.checkThingModelParam();
 		thingModelGateway.updateThingModel(thingModelE);
 	}
 
