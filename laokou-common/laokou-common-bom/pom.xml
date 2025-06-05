@@ -164,6 +164,11 @@
     <dependencies>
       <dependency>
         <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-plugin</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-distributed-identifier-adapter</artifactId>
         <version>${laokou.version}</version>
       </dependency>
