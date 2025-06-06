@@ -22,6 +22,6 @@ import reactor.core.publisher.Mono;
 
 public interface TraceLogStorage {
 
-	Mono<Void> batchSave(Flux<String> messages);
+	Mono<Void> batchSave(Flux<Object> messages);
 
 }

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.oss.entity;
+package org.laokou.common.oss.model;
 
 import lombok.Data;
 

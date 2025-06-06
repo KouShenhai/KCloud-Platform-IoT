@@ -19,8 +19,8 @@ package org.laokou.oss.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.oss.entity.OssInfo;
-import org.laokou.common.oss.entity.Type;
+import org.laokou.common.oss.model.OssInfo;
+import org.laokou.common.oss.model.Type;
 import org.laokou.common.oss.template.StorageTemplate;
 import org.laokou.oss.dto.OssUploadCmd;
 import org.laokou.oss.model.OssE;

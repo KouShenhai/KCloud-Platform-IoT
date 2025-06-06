@@ -42,7 +42,7 @@ public class TraceLogLokiStorage extends AbstractTraceLogStorage {
 	}
 
 	@Override
-	public Mono<Void> batchSave(Flux<String> messages) {
+	public Mono<Void> batchSave(Flux<Object> messages) {
 		return messages.collectList()
 			.map(item -> item.stream().map(this::getTraceLogIndex).filter(Objects::nonNull).toList())
 			.map(TraceLogConvertor::toDTO)

@@ -39,7 +39,7 @@ public class TraceLogHandler {
 
 	private final TraceLogServiceI traceLogServiceI;
 
-	private final DefaultKafkaReceiver<String, String> reactiveKafkaReceiver;
+	private final DefaultKafkaReceiver<String, Object> reactiveKafkaReceiver;
 
 	public Flux<Void> consumeMessages() {
 		return reactiveKafkaReceiver.receiveBatch(1000)

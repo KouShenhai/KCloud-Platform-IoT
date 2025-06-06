@@ -32,7 +32,7 @@ import reactor.kafka.sender.internals.DefaultKafkaSender;
 @RequiredArgsConstructor
 public class ReactiveKafkaSender implements KafkaSender {
 
-	private final DefaultKafkaSender<String, String> defaultKafkaSender;
+	private final DefaultKafkaSender<String, Object> defaultKafkaSender;
 
 	@Override
 	public Flux<Boolean> send(String topic, String payload) {

@@ -18,7 +18,7 @@
 package org.laokou.oss.model;
 
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.oss.entity.FileInfo;
+import org.laokou.common.oss.model.FileInfo;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 

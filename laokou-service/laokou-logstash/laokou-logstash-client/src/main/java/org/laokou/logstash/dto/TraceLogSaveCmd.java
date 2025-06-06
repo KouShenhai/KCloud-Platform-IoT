@@ -31,6 +31,6 @@ import reactor.core.publisher.Flux;
 @AllArgsConstructor
 public class TraceLogSaveCmd extends CommonCommand {
 
-	private Flux<String> messages;
+	private Flux<Object> messages;
 
 }

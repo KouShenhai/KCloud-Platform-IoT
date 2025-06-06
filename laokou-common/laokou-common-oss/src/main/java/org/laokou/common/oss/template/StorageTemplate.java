@@ -19,8 +19,8 @@ package org.laokou.common.oss.template;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.oss.entity.FileInfo;
-import org.laokou.common.oss.entity.OssInfo;
+import org.laokou.common.oss.model.FileInfo;
+import org.laokou.common.oss.model.OssInfo;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 

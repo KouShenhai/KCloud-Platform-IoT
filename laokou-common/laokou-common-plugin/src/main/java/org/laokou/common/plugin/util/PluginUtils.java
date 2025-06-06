@@ -15,25 +15,14 @@
  *
  */
 
-package org.laokou.logstash.ability;
-
-import lombok.RequiredArgsConstructor;
-import org.laokou.logstash.gateway.TraceLogGateway;
-import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+package org.laokou.common.plugin.util;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class DomainService {
+public final class PluginUtils {
 
-	private final TraceLogGateway traceLogGateway;
-
-	public Mono<Void> createTraceLog(Flux<Object> messages) {
-		return traceLogGateway.createTraceLog(messages);
+	private PluginUtils() {
 	}
 
 }

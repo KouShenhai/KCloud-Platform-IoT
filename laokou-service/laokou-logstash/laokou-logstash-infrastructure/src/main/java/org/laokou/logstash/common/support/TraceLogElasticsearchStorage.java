@@ -44,7 +44,7 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 	}
 
 	@Override
-	public Mono<Void> batchSave(Flux<String> messages) {
+	public Mono<Void> batchSave(Flux<Object> messages) {
 		return messages.collectList().flatMap(item -> {
 			Map<String, TraceLogIndex> dataMap = item.stream()
 				.map(this::getTraceLogIndex)

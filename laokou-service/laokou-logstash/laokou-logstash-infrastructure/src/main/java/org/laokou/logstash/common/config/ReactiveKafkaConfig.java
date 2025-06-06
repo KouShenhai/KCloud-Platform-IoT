@@ -28,14 +28,14 @@ import java.util.List;
  * @author laokou
  */
 @Configuration
-public class ReactiveKafkaConsumerConfig {
+public class ReactiveKafkaConfig {
 
 	@Bean("reactiveKafkaReceiver")
-	public DefaultKafkaReceiver<String, String> reactiveKafkaReceiver(ReceiverOptions<String, String> receiverOptions) {
+	public DefaultKafkaReceiver<String, Object> reactiveKafkaReceiver(ReceiverOptions<String, Object> receiverOptions) {
 		return new DefaultKafkaReceiver<>(ConsumerFactory.INSTANCE,
-				receiverOptions.subscription(List.of("gateway-trace-log", "auth-trace-log", "admin-trace-log",
-						"iot-trace-log", "oss-trace-log", "generator-trace-log", "matt-trace-log", "udp-trace-log",
-						"http-trace-log", "tcp-trace-log", "report-trace-log")));
+				receiverOptions.subscription(List.of("distributed-identifier-trace-log", "gateway-trace-log",
+						"auth-trace-log", "admin-trace-log", "iot-trace-log", "oss-trace-log", "generator-trace-log",
+						"mqtt-trace-log", "udp-trace-log", "http-trace-log", "tcp-trace-log", "report-trace-log")));
 	}
 
 }

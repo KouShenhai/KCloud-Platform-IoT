@@ -18,8 +18,8 @@
 package org.laokou.common.oss.template;
 
 import org.laokou.common.core.util.FileUtils;
-import org.laokou.common.oss.entity.FileInfo;
-import org.laokou.common.oss.entity.OssInfo;
+import org.laokou.common.oss.model.FileInfo;
+import org.laokou.common.oss.model.OssInfo;
 
 import java.io.IOException;
 import java.nio.file.Path;
