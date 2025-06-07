@@ -16,13 +16,13 @@ const HomePage: React.FC = () => {
 						<div className={'pro-card-footer'}>
 							<Row gutter={24}>
 								<Col span={7}>
-									<Space><Badge status="success" /> 启用</Space>
+									<Space><Badge status="success"/> 启用</Space>
 								</Col>
 								<Col span={5}>
 									8
 								</Col>
 								<Col span={7}>
-									<Space><Badge status="error" /> 禁用</Space>
+									<Space><Badge status="error"/> 禁用</Space>
 								</Col>
 								<Col span={5}>
 									2
@@ -40,13 +40,13 @@ const HomePage: React.FC = () => {
 						<div className={'pro-card-footer'}>
 							<Row gutter={24}>
 								<Col span={6}>
-									<Space><Badge status="success" /> 在线</Space>
+									<Space><Badge status="success"/> 在线</Space>
 								</Col>
 								<Col span={6}>
 									3
 								</Col>
 								<Col span={6}>
-									<Space><Badge status="error" /> 离线</Space>
+									<Space><Badge status="error"/> 离线</Space>
 								</Col>
 								<Col span={6}>
 									2
