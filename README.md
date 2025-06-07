@@ -61,7 +61,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - 项目驱动学习任何知识
 
 ### 👉 项目定位
-只适用于中大型微服务项目【业务复杂】
+只适用于中大型微服务IoT项目【业务复杂】
 
 <img src="doc/image/img_1.png" width=400 height=400 alt="COLA架构图"/>
 <img src="doc/image/img.png" width=400 height=400 alt="COLA架构图"/>
@@ -165,7 +165,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - 负载均衡：Spring Cloud Loadbalancer
 - 服务熔断&降级&限流：Resilience4j
 - 分库分表：Mybatis Plus
-- 消息队列：Kafka & MQTT & Pulsar
+- 消息队列：Kafka & Pulsar
 - 服务监控：Spring Boot Admin & Prometheus
 - 高亮搜索：Elasticsearch
 - 链路跟踪：Jaeger

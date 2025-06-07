@@ -61,7 +61,7 @@ image:https://deepwiki.com/badge.svg[Ask DeepWiki,link=https://deepwiki.com/KouS
 - 项目驱动学习任何知识
 
 === 👉 项目定位
-只适用于中大型微服务项目【业务复杂】
+只适用于中大型微服务IoT项目【业务复杂】
 
 image:doc/image/img_1.png[COLA架构图,400,400,align=center]
 image:doc/image/img.png[COLA架构图,400,400,align=center]
@@ -175,7 +175,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 - 负载均衡：Spring Cloud Loadbalancer
 - 服务熔断&降级&限流：Resilience4j
 - 分库分表：Mybatis Plus
-- 消息队列：Kafka & MQTT & Pulsar
+- 消息队列：Kafka & Pulsar
 - 服务监控：Spring Boot Admin & Prometheus
 - 高亮搜索：Elasticsearch
 - 链路跟踪：Jaeger
@@ -204,7 +204,6 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
         └── laokou-common-log                      --- 日志组件
         └── laokou-common-core                     --- 核心组件
         └── laokou-common-cors                     --- 跨域组件
-        └── laokou-common-mqtt                     --- 消息组件
         └── laokou-common-redis                    --- 缓存组件
         └── laokou-common-kafka                    --- 消息组件
         └── laokou-common-log4j2                   --- 日志组件

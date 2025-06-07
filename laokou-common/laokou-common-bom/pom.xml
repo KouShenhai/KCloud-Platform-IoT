@@ -157,11 +157,18 @@
     <jsoup.version>1.20.1</jsoup.version>
     <!--dubbo版本-->
     <dubbo.version>3.3.4</dubbo.version>
+    <!--pf4j版本-->
+    <pf4j.version>0.10.0</pf4j.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.pf4j</groupId>
+        <artifactId>pf4j-spring</artifactId>
+        <version>${pf4j.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-common-plugin</artifactId>
