@@ -24,8 +24,11 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.core.util.SpringUtils;
+import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
 import org.laokou.common.log.annotation.OperateLog;
-import org.laokou.common.log.factory.DomainFactory;
+import org.laokou.common.log.convertor.OperateLogConvertor;
+import org.laokou.common.log.model.MqEnum;
 import org.laokou.common.log.model.OperateLogA;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.core.env.Environment;
@@ -48,11 +51,15 @@ public class OperateLogAop {
 
 	private final Environment environment;
 
+	private final DomainEventPublisher KafkaDomainEventPublisher;
+
+	private final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
+
 	@Around("@annotation(operateLog)")
 	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) throws Throwable {
 		StopWatch stopWatch = new StopWatch("操作日志");
 		stopWatch.start();
-		OperateLogA operateLogA = DomainFactory.getOperateLog(1L);
+		OperateLogA operateLogA = OperateLogConvertor.toEntity(distributedIdentifierWrapperRpc.getId());
 		operateLogA.getModuleName(operateLog.module());
 		operateLogA.getName(operateLog.operation());
 		operateLogA.getServiceId(springUtils.getServiceId());
@@ -76,14 +83,9 @@ public class OperateLogAop {
 			operateLogA.calculateTaskTime(stopWatch);
 			// 获取错误
 			operateLogA.getThrowable(throwable);
-			// 记录事件
-			// operateLogA.recordOperateLog(1L);
 			// 发布事件
-			// operateLogA.releaseEvents()
-			// .forEach(item -> rocketMQDomainEventPublisher.publish(item,
-			// SendMessageTypeEnum.ASYNC));
-			// // 清除事件
-			// operateLogA.clearEvents();
+			KafkaDomainEventPublisher.publish(MqEnum.OPERATE_LOG.getTopic(),
+					OperateLogConvertor.toDomainEvent(operateLogA));
 		}
 	}
 

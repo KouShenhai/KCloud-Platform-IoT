@@ -18,42 +18,60 @@
 package org.laokou.common.log.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.laokou.common.i18n.dto.DomainEvent;
+import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.log.factory.DomainFactory;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.laokou.common.log.handler.event.OperateEvent;
+import org.laokou.common.log.model.OperateLogA;
 
 public final class OperateLogConvertor {
 
 	private OperateLogConvertor() {
 	}
 
-	public static OperateLogDO toDataObject(DomainEvent event) throws JsonProcessingException {
-		OperateEvent operateEvent = null;
+	public static OperateLogA toEntity(Long id) {
+		OperateLogA operateLog = DomainFactory.getOperateLog();
+		operateLog.setId(id);
+		return operateLog;
+	}
+
+	public static OperateEvent toDomainEvent(OperateLogA operateLogA) {
+		UserContextHolder.User user = UserContextHolder.get();
+		return new OperateEvent(operateLogA.getId(), operateLogA.getName(), operateLogA.getModuleName(),
+				operateLogA.getUri(), operateLogA.getMethodName(), operateLogA.getRequestType(),
+				operateLogA.getRequestParams(), operateLogA.getUserAgent(), operateLogA.getIp(),
+				operateLogA.getAddress(), operateLogA.getStatus(), user.getUsername(), operateLogA.getErrorMessage(),
+				operateLogA.getCostTime(), operateLogA.getServiceId(), operateLogA.getServiceAddress(),
+				operateLogA.getProfile(), operateLogA.getStackTrace(), operateLogA.getCreateTime(), user.getTenantId(),
+				user.getId());
+	}
+
+	public static OperateLogDO toDataObject(OperateEvent operateEvent) throws JsonProcessingException {
 		OperateLogDO operateLogDO = new OperateLogDO();
-		operateLogDO.setName(operateEvent.name());
-		operateLogDO.setModuleName(operateEvent.moduleName());
-		operateLogDO.setUri(operateEvent.uri());
-		operateLogDO.setRequestType(operateEvent.requestType());
-		operateLogDO.setUserAgent(operateEvent.userAgent());
-		operateLogDO.setAddress(operateEvent.address());
-		operateLogDO.setOperator(operateEvent.operator());
-		operateLogDO.setServiceId(operateEvent.serviceId());
-		operateLogDO.setServiceAddress(operateEvent.serviceAddress());
-		operateLogDO.setStackTrace(operateEvent.stackTrace());
-		operateLogDO.setIp(operateEvent.ip());
-		operateLogDO.setProfile(operateEvent.profile());
-		operateLogDO.setMethodName(operateEvent.methodName());
-		operateLogDO.setRequestParams(operateEvent.requestParams());
-		operateLogDO.setStatus(operateEvent.status());
-		operateLogDO.setCostTime(operateEvent.costTime());
-		operateLogDO.setErrorMessage(truncate(operateEvent.errorMessage()));
-		operateLogDO.setId(event.getId());
-		// operateLogDO.setTenantId(event.getTenantId());
-		// operateLogDO.setCreator(event.getUserId());
-		// operateLogDO.setEditor(event.getUserId());
-		operateLogDO.setCreateTime(operateEvent.createTime());
-		operateLogDO.setUpdateTime(operateEvent.createTime());
+		operateLogDO.setName(operateEvent.getName());
+		operateLogDO.setModuleName(operateEvent.getModuleName());
+		operateLogDO.setUri(operateEvent.getUri());
+		operateLogDO.setRequestType(operateEvent.getRequestType());
+		operateLogDO.setUserAgent(operateEvent.getUserAgent());
+		operateLogDO.setAddress(operateEvent.getAddress());
+		operateLogDO.setOperator(operateEvent.getOperator());
+		operateLogDO.setServiceId(operateEvent.getServiceId());
+		operateLogDO.setServiceAddress(operateEvent.getServiceAddress());
+		operateLogDO.setStackTrace(operateEvent.getStackTrace());
+		operateLogDO.setIp(operateEvent.getIp());
+		operateLogDO.setProfile(operateEvent.getProfile());
+		operateLogDO.setMethodName(operateEvent.getMethodName());
+		operateLogDO.setRequestParams(operateEvent.getRequestParams());
+		operateLogDO.setStatus(operateEvent.getStatus());
+		operateLogDO.setCostTime(operateEvent.getCostTime());
+		operateLogDO.setErrorMessage(truncate(operateEvent.getErrorMessage()));
+		operateLogDO.setId(operateEvent.getId());
+		operateLogDO.setTenantId(operateEvent.getTenantId());
+		operateLogDO.setCreator(operateEvent.getUserId());
+		operateLogDO.setEditor(operateEvent.getUserId());
+		operateLogDO.setCreateTime(operateEvent.getCreateTime());
+		operateLogDO.setUpdateTime(operateEvent.getCreateTime());
 		return operateLogDO;
 	}
 

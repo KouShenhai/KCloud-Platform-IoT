@@ -19,7 +19,6 @@ package org.laokou.auth.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -89,14 +88,6 @@ public class UserE extends Identifier {
 	@Setter
 	@Getter
 	private Long tenantId;
-
-	public UserE fillValue(String username, String mail, String mobile, Long tenantId) throws Exception {
-		this.username = AESUtils.encrypt(username);
-		this.mail = AESUtils.encrypt(mail);
-		this.mobile = AESUtils.encrypt(mobile);
-		this.tenantId = tenantId;
-		return this;
-	}
 
 	public boolean isSuperAdministrator() {
 		return ObjectUtils.equals(YES.getCode(), this.superAdmin);

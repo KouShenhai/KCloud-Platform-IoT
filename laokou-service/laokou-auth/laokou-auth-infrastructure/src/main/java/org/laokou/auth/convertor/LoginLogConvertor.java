@@ -26,12 +26,14 @@ import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.LoginLogE;
 import org.laokou.auth.model.LoginStatusEnum;
+import org.laokou.auth.model.UserE;
 import org.laokou.common.core.util.AddressUtils;
 import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.ObjectUtils;
 
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.laokou.common.i18n.util.StringUtils.truncate;
 
 /**
@@ -102,13 +104,14 @@ public final class LoginLogConvertor {
 		String os = capabilities.getPlatform();
 		String browser = capabilities.getBrowser();
 		int status = LoginStatusEnum.OK.getCode();
-		String errorMessage = "";
+		UserE userE = authA.getUser();
+		String errorMessage = EMPTY;
 		if (ObjectUtils.isNotNull(ex)) {
 			status = LoginStatusEnum.FAIL.getCode();
 			errorMessage = ex.getMsg();
 		}
 		return new LoginEvent(authA.getId(), authA.getLoginName(), ip, address, browser, os, status, errorMessage,
-				authA.getGrantTypeEnum().getCode(), authA.getInstant(), authA.getTenantId(), authA.getUserId());
+				authA.getGrantTypeEnum().getCode(), authA.getCreateTime(), userE.getTenantId(), userE.getId());
 	}
 
 }

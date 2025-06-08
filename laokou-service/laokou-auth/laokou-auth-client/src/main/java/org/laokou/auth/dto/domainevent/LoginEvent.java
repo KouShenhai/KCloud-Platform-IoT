@@ -29,7 +29,7 @@ import java.time.Instant;
  * @author laokou
  */
 @Getter
-public class LoginEvent extends DomainEvent {
+public final class LoginEvent extends DomainEvent {
 
 	@Serial
 	private static final long serialVersionUID = -325094951800650353L;

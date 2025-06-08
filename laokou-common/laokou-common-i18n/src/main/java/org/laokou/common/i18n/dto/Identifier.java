@@ -27,13 +27,13 @@ import java.io.Serializable;
  *
  * @author laokou
  */
-@Setter
-@Getter
 public abstract class Identifier implements Serializable {
 
 	/**
 	 * ID.
 	 */
+	@Setter
+	@Getter
 	protected Long id;
 
 }

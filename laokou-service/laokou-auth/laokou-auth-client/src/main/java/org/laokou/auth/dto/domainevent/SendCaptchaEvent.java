@@ -24,7 +24,7 @@ import org.laokou.common.i18n.dto.DomainEvent;
  * @author laokou
  */
 @Getter
-public class SendCaptchaEvent extends DomainEvent {
+public final class SendCaptchaEvent extends DomainEvent {
 
 	private final String uuid;
 

@@ -140,6 +140,7 @@ class AuthATest {
 		// 校验租户ID
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 获取租户ID
+		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
 		Assertions.assertDoesNotThrow(() -> auth.getTenantId(tenantGateway.getTenantId(auth.getTenantCode())));
 		Assertions.assertDoesNotThrow(auth::checkTenantId);
 		// 校验调用次数

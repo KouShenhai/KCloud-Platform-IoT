@@ -19,21 +19,18 @@ package org.laokou.common.log.model;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.laokou.common.core.context.UserContextHolder;
+import lombok.Getter;
 import org.laokou.common.core.util.*;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.log.handler.event.OperateEvent;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.time.Instant;
 import java.util.*;
 import static org.laokou.common.i18n.util.JacksonUtils.EMPTY_JSON;
 import static org.laokou.common.i18n.common.constant.StringConstants.*;
@@ -52,102 +49,98 @@ public class OperateLogA extends AggregateRoot {
 	/**
 	 * 操作名称.
 	 */
+	@Getter
 	private String name;
 
 	/**
 	 * 操作的模块名称.
 	 */
+	@Getter
 	private String moduleName;
 
 	/**
 	 * 操作的请求路径.
 	 */
+	@Getter
 	private String uri;
 
 	/**
 	 * 操作的请求类型.
 	 */
+	@Getter
 	private String requestType;
 
 	/**
 	 * 操作的浏览器.
 	 */
+	@Getter
 	private String userAgent;
 
 	/**
 	 * 操作的归属地.
 	 */
+	@Getter
 	private String address;
-
-	/**
-	 * 操作人.
-	 */
-	private String operator;
 
 	/**
 	 * 服务ID.
 	 */
+	@Getter
 	private String serviceId;
-
-	/**
-	 * 创建时间.
-	 */
-	private Instant createTime;
 
 	/**
 	 * 操作的方法名.
 	 */
+	@Getter
 	private String methodName;
 
 	/**
 	 * 操作的请求参数.
 	 */
+	@Getter
 	private String requestParams;
 
 	/**
 	 * 错误信息.
 	 */
+	@Getter
 	private String errorMessage;
 
 	/**
 	 * 操作状态 0成功 1失败.
 	 */
+	@Getter
 	private Integer status;
 
 	/**
 	 * 操作的消耗时间(毫秒).
 	 */
+	@Getter
 	private Long costTime;
 
 	/**
 	 * 操作的IP地址.
 	 */
+	@Getter
 	private String ip;
 
 	/**
 	 * 操作的服务环境.
 	 */
+	@Getter
 	private String profile;
 
 	/**
 	 * 操作的服务地址.
 	 */
+	@Getter
 	private String serviceAddress;
 
 	/**
 	 * 操作的堆栈信息.
 	 */
+	@Getter
 	private String stackTrace;
-
-	public OperateLogA fillValue(Long id) {
-		UserContextHolder.User user = UserContextHolder.get();
-		this.id = id;
-		this.createTime = DateUtils.nowInstant();
-		this.operator = user.getUsername();
-		this.tenantId = user.getTenantId();
-		this.userId = user.getId();
-		return this;
-	}
 
 	public void getProfile(String profile) {
 		this.profile = profile;
@@ -217,16 +210,6 @@ public class OperateLogA extends AggregateRoot {
 		}
 	}
 
-	public void recordOperateLog(Long eventId) {
-		OperateEvent event = getEvent();
-		// addEvent(new DomainEvent(eventId, tenantId, userId, id,
-		// MqEnum.OPERATE_LOG.getTopic(),
-		// MqEnum.OPERATE_LOG.getTag(), super.version, JacksonUtils.toJsonStr(event),
-		// OPERATE_EVENT,
-		// UserContextHolder.get().getSourcePrefix()));
-		// super.version++;
-	}
-
 	private void deleteAny(Map<String, String> map, String... keys) {
 		for (String key : keys) {
 			map.remove(key);
@@ -247,13 +230,6 @@ public class OperateLogA extends AggregateRoot {
 			throwable.printStackTrace(printWriter);
 		}
 		return stringWriter.toString();
-	}
-
-	private OperateEvent getEvent() {
-		return new OperateEvent(this.name, this.moduleName, this.uri, this.methodName, this.requestType,
-				this.requestParams, this.userAgent, this.ip, this.address, this.status, this.operator,
-				this.errorMessage, this.costTime, this.serviceId, this.serviceAddress, this.profile, this.stackTrace,
-				this.createTime);
 	}
 
 }

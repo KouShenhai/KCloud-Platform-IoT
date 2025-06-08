@@ -28,7 +28,7 @@ public enum MqEnum {
 	OPERATE_LOG("operate_log", "操作日志") {
 		@Override
 		public String getTopic() {
-			return LOG_TOPIC;
+			return OPERATE_LOG_TOPIC;
 		}
 
 	};
@@ -44,7 +44,7 @@ public enum MqEnum {
 
 	public abstract String getTopic();
 
-	public static final String LOG_TOPIC = "operate-log";
+	public static final String OPERATE_LOG_TOPIC = "operate-log";
 
 	public static final String OPERATE_LOG_CONSUMER_GROUP = "operate-log-consumer-group";
 

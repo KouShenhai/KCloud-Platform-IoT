@@ -27,22 +27,12 @@ import java.time.Instant;
  *
  * @author laokou
  */
-@Getter
 public abstract class AggregateRoot extends Identifier {
 
 	/**
-	 * 操作时间.
+	 * 创建时间.
 	 */
-	protected final Instant instant = DateUtils.nowInstant();
-
-	/**
-	 * 租户ID.
-	 */
-	protected Long tenantId;
-
-	/**
-	 * 用户ID.
-	 */
-	protected Long userId;
+	@Getter
+	protected final Instant createTime = DateUtils.nowInstant();
 
 }

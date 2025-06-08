@@ -17,39 +17,86 @@
 
 package org.laokou.common.log.handler.event;
 
+import lombok.Getter;
+import org.laokou.common.i18n.dto.DomainEvent;
+
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.Instant;
 
 /**
  * 操作事件.
  *
- * @param name
- * @param moduleName
- * @param uri
- * @param methodName
- * @param requestType
- * @param requestParams
- * @param userAgent
- * @param address
- * @param status
- * @param operator
- * @param errorMessage
- * @param costTime
- * @param ip
- * @param serviceId
- * @param serviceAddress
- * @param profile
- * @param stackTrace
- * @param createTime
  * @author laokou
  */
-public record OperateEvent(String name, String moduleName, String uri, String methodName, String requestType,
-		String requestParams, String userAgent, String ip, String address, Integer status, String operator,
-		String errorMessage, Long costTime, String serviceId, String serviceAddress, String profile, String stackTrace,
-		Instant createTime) implements Serializable {
+@Getter
+public final class OperateEvent extends DomainEvent {
 
 	@Serial
 	private static final long serialVersionUID = -6523521638764501311L;
+
+	private final String name;
+
+	private final String moduleName;
+
+	private final String uri;
+
+	private final String methodName;
+
+	private final String requestType;
+
+	private final String requestParams;
+
+	private final String userAgent;
+
+	private final String ip;
+
+	private final String address;
+
+	private final Integer status;
+
+	private final String operator;
+
+	private final String errorMessage;
+
+	private final Long costTime;
+
+	private final String serviceId;
+
+	private final String serviceAddress;
+
+	private final String profile;
+
+	private final String stackTrace;
+
+	private final Instant createTime;
+
+	public OperateEvent(final Long id, final String name, final String moduleName, final String uri,
+			final String methodName, final String requestType, final String requestParams, final String userAgent,
+			final String ip, final String address, final Integer status, final String operator,
+			final String errorMessage, final Long costTime, final String serviceId, final String serviceAddress,
+			final String profile, final String stackTrace, final Instant createTime, final Long tenantId,
+			final Long userId) {
+		super.id = id;
+		super.userId = userId;
+		super.tenantId = tenantId;
+		this.name = name;
+		this.moduleName = moduleName;
+		this.uri = uri;
+		this.methodName = methodName;
+		this.requestType = requestType;
+		this.requestParams = requestParams;
+		this.userAgent = userAgent;
+		this.ip = ip;
+		this.address = address;
+		this.status = status;
+		this.operator = operator;
+		this.errorMessage = errorMessage;
+		this.costTime = costTime;
+		this.serviceId = serviceId;
+		this.serviceAddress = serviceAddress;
+		this.profile = profile;
+		this.stackTrace = stackTrace;
+		this.createTime = createTime;
+	}
 
 }

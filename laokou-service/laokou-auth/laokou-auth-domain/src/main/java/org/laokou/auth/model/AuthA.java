@@ -138,32 +138,31 @@ public class AuthA extends AggregateRoot {
 	private AuthParamValidator usernamePasswordAuthParamValidator;
 
 	public void createUserByUsernamePassword() throws Exception {
-		this.user = getUser(this.username, EMPTY, EMPTY, super.tenantId);
+		this.user = getUser(this.username, EMPTY, EMPTY);
 	}
 
 	public void createUserByMobile() throws Exception {
-		this.user = getUser(EMPTY, EMPTY, this.captcha.uuid(), super.tenantId);
+		this.user = getUser(EMPTY, EMPTY, this.captcha.uuid());
 	}
 
 	public void createUserByMail() throws Exception {
-		this.user = getUser(EMPTY, this.captcha.uuid(), EMPTY, super.tenantId);
+		this.user = getUser(EMPTY, this.captcha.uuid(), EMPTY);
 	}
 
 	public void createUserByAuthorizationCode() throws Exception {
-		this.user = getUser(this.username, EMPTY, EMPTY, super.tenantId);
+		this.user = getUser(this.username, EMPTY, EMPTY);
 	}
 
 	public void createUserByTest() throws Exception {
-		this.user = getUser(this.username, EMPTY, EMPTY, super.tenantId);
+		this.user = getUser(this.username, EMPTY, EMPTY);
 	}
 
 	public void getTenantId(Long tenantId) {
-		super.tenantId = tenantId;
+		this.user.setTenantId(tenantId);
 	}
 
 	public void getUserInfo(UserE user) {
 		this.user = user;
-		super.userId = ObjectUtils.isNotNull(user) ? user.getId() : null;
 	}
 
 	public void getMenuPermissions(Set<String> permissions) {
@@ -187,7 +186,7 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void checkTenantId() {
-		if (ObjectUtils.isNull(super.tenantId)) {
+		if (ObjectUtils.isNull(this.user.getTenantId())) {
 			throw new BizException(TENANT_NOT_EXIST);
 		}
 	}
@@ -281,12 +280,11 @@ public class AuthA extends AggregateRoot {
 		};
 	}
 
-	private UserE getUser(String username, String mail, String mobile, Long tenantId) throws Exception {
+	private UserE getUser(String username, String mail, String mobile) throws Exception {
 		UserE userE = DomainFactory.getUser();
 		userE.setUsername(AESUtils.encrypt(username));
 		userE.setMail(AESUtils.encrypt(mail));
 		userE.setMobile(AESUtils.encrypt(mobile));
-		userE.setTenantId(tenantId);
 		return userE;
 	}
 

@@ -25,10 +25,6 @@ public final class DomainFactory {
 	private DomainFactory() {
 	}
 
-	public static OperateLogA getOperateLog(Long aggregateId) {
-		return getOperateLog().fillValue(aggregateId);
-	}
-
 	public static OperateLogA getOperateLog() {
 		return SpringContextUtils.getBeanProvider(OperateLogA.class);
 	}
