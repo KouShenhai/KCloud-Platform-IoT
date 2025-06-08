@@ -44,8 +44,6 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
 @Entity
 public class OperateLogA extends AggregateRoot {
 
-	private final Set<String> removeParams = Set.of("username", "password", "mail", "mobile");
-
 	/**
 	 * 操作名称.
 	 */
@@ -198,21 +196,7 @@ public class OperateLogA extends AggregateRoot {
 			this.requestParams = EMPTY_JSON;
 		}
 		else {
-			Object obj = params.getFirst();
-			try {
-				Map<String, String> map = JacksonUtils.toMap(obj, String.class, String.class);
-				deleteAny(map, removeParams.toArray(String[]::new));
-				this.requestParams = JacksonUtils.toJsonStr(map, true);
-			}
-			catch (Exception e) {
-				this.requestParams = JacksonUtils.toJsonStr(obj, true);
-			}
-		}
-	}
-
-	private void deleteAny(Map<String, String> map, String... keys) {
-		for (String key : keys) {
-			map.remove(key);
+			this.requestParams = JacksonUtils.toJsonStr(params.getFirst());
 		}
 	}
 
