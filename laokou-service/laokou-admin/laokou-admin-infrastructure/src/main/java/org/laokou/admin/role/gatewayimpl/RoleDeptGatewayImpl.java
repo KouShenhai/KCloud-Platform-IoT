@@ -58,7 +58,7 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 
 	private void insertRoleDept(List<String> deptIds, Long roleId) {
 		// 新增角色菜单关联表
-		List<RoleDeptDO> list = RoleConvertor.toDataObjs(distributedIdentifierWrapperRpc.getId(), deptIds, roleId);
+		List<RoleDeptDO> list = RoleConvertor.toDataObjs(distributedIdentifierWrapperRpc::getId, deptIds, roleId);
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, RoleDeptMapper.class, RoleDeptMapper::insert);
 		}

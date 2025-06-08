@@ -58,7 +58,7 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 
 	private void insertUserRole(List<String> roleIds, Long userId) {
 		// 新增用户角色关联表
-		List<UserRoleDO> list = UserConvertor.toDataObjects(distributedIdentifierWrapperRpc.getId(), roleIds, userId);
+		List<UserRoleDO> list = UserConvertor.toDataObjects(distributedIdentifierWrapperRpc::getId, roleIds, userId);
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::insert);
 		}

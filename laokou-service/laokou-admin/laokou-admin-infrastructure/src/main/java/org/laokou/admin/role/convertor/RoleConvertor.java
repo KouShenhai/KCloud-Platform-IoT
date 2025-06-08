@@ -28,7 +28,7 @@ import org.laokou.admin.role.model.RoleOperateTypeEnum;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Supplier;
 
 /**
  * 角色转换器.
@@ -51,15 +51,14 @@ public class RoleConvertor {
 		return roleDO;
 	}
 
-	public static List<RoleMenuDO> toDataObjects(Long id, List<String> menuIds, Long roleId) {
+	public static List<RoleMenuDO> toDataObjects(Supplier<Long> supplier, List<String> menuIds, Long roleId) {
 		List<RoleMenuDO> list = new ArrayList<>(menuIds.size());
 		for (String menuId : menuIds) {
 			RoleMenuDO roleMenuDO = new RoleMenuDO();
-			roleMenuDO.setId(id + ThreadLocalRandom.current().nextLong(1, 1000));
+			roleMenuDO.setId(supplier.get());
 			roleMenuDO.setRoleId(roleId);
 			roleMenuDO.setMenuId(Long.valueOf(menuId));
 			list.add(roleMenuDO);
-			id++;
 		}
 		return list;
 	}
@@ -72,15 +71,14 @@ public class RoleConvertor {
 		}).toList();
 	}
 
-	public static List<RoleDeptDO> toDataObjs(Long id, List<String> deptIds, Long roleId) {
+	public static List<RoleDeptDO> toDataObjs(Supplier<Long> supplier, List<String> deptIds, Long roleId) {
 		List<RoleDeptDO> list = new ArrayList<>(deptIds.size());
 		for (String deptId : deptIds) {
 			RoleDeptDO roleDeptDO = new RoleDeptDO();
-			roleDeptDO.setId(id + ThreadLocalRandom.current().nextLong(1, 1000));
+			roleDeptDO.setId(supplier.get());
 			roleDeptDO.setRoleId(roleId);
 			roleDeptDO.setDeptId(Long.valueOf(deptId));
 			list.add(roleDeptDO);
-			id++;
 		}
 		return list;
 	}

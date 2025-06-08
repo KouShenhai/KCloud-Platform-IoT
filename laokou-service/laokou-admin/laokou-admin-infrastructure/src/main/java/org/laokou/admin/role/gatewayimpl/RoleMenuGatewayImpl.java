@@ -58,7 +58,7 @@ public class RoleMenuGatewayImpl implements RoleMenuGateway {
 
 	private void insertRoleMenu(List<String> menuIds, Long roleId) {
 		// 新增角色菜单关联表
-		List<RoleMenuDO> list = RoleConvertor.toDataObjects(distributedIdentifierWrapperRpc.getId(), menuIds, roleId);
+		List<RoleMenuDO> list = RoleConvertor.toDataObjects(distributedIdentifierWrapperRpc::getId, menuIds, roleId);
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, RoleMenuMapper.class, RoleMenuMapper::insert);
 		}

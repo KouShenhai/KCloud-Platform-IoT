@@ -20,6 +20,7 @@ package org.laokou.auth.model;
 /**
  * @author laokou
  */
+@FunctionalInterface
 public interface CaptchaParamValidator {
 
 	void validateCaptcha(CaptchaE captcha);

@@ -20,6 +20,7 @@ package org.laokou.auth.model;
 /**
  * @author laokou
  */
+@FunctionalInterface
 public interface AuthParamValidator {
 
 	void validateAuth(AuthA auth);

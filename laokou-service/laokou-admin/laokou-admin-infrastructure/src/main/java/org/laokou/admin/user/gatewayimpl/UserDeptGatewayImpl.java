@@ -58,7 +58,7 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 
 	private void insertUserDept(List<String> deptIds, Long userId) {
 		// 新增用户部门关联表
-		List<UserDeptDO> list = UserConvertor.toDataObjs(distributedIdentifierWrapperRpc.getId(), deptIds, userId);
+		List<UserDeptDO> list = UserConvertor.toDataObjs(distributedIdentifierWrapperRpc::getId, deptIds, userId);
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, UserDeptMapper.class, UserDeptMapper::insert);
 		}

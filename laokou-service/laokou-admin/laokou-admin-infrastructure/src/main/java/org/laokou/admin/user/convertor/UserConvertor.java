@@ -34,7 +34,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Supplier;
 
 /**
  * 用户转换器.
@@ -46,28 +46,26 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static List<UserRoleDO> toDataObjects(Long id, List<String> roleIds, Long userId) {
+	public static List<UserRoleDO> toDataObjects(Supplier<Long> supplier, List<String> roleIds, Long userId) {
 		List<UserRoleDO> list = new ArrayList<>(roleIds.size());
 		for (String roleId : roleIds) {
 			UserRoleDO userRoleDO = new UserRoleDO();
-			userRoleDO.setId(id + ThreadLocalRandom.current().nextLong(1, 1000));
+			userRoleDO.setId(supplier.get());
 			userRoleDO.setRoleId(Long.valueOf(roleId));
 			userRoleDO.setUserId(userId);
 			list.add(userRoleDO);
-			id++;
 		}
 		return list;
 	}
 
-	public static List<UserDeptDO> toDataObjs(Long id, List<String> deptIds, Long userId) {
+	public static List<UserDeptDO> toDataObjs(Supplier<Long> supplier, List<String> deptIds, Long userId) {
 		List<UserDeptDO> list = new ArrayList<>(deptIds.size());
 		for (String deptId : deptIds) {
 			UserDeptDO userDeptDO = new UserDeptDO();
-			userDeptDO.setId(id + ThreadLocalRandom.current().nextLong(1, 1000));
+			userDeptDO.setId(supplier.get());
 			userDeptDO.setDeptId(Long.valueOf(deptId));
 			userDeptDO.setUserId(userId);
 			list.add(userDeptDO);
-			id++;
 		}
 		return list;
 	}
