@@ -1,19 +1,20 @@
 import React from "react";
-import {ProCard} from '@ant-design/pro-components';
+import {ProCard, ProFormDateRangePicker} from '@ant-design/pro-components';
 import {Badge, Col, Row, Space} from "antd";
 import './index.less'
+import DeviceMessageArea from "@/pages/Home/DeviceMessage";
 
 const HomePage: React.FC = () => {
 	return (
 		<>
 			<Row gutter={24}>
 				<Col span={6}>
-					<ProCard layout="default" bordered className={'pro-card'}>
-						<div className={'pro-card-header'}>
-							<div className={'pro-card-title'}><Space>产品数量</Space></div>
-							<div className={'pro-card-content'}><Space>10</Space></div>
+					<ProCard hoverable layout="default" bordered className={'pro-card-1'}>
+						<div className={'pro-card-1-header'}>
+							<div className={'pro-card-1-title'}><Space>产品数量</Space></div>
+							<div className={'pro-card-1-content'}><Space>10</Space></div>
 						</div>
-						<div className={'pro-card-footer'}>
+						<div className={'pro-card-1-footer'}>
 							<Row gutter={24}>
 								<Col span={7}>
 									<Space><Badge status="success"/> 启用</Space>
@@ -32,12 +33,12 @@ const HomePage: React.FC = () => {
 					</ProCard>
 				</Col>
 				<Col span={6}>
-					<ProCard layout="default" bordered className={'pro-card'}>
-						<div className={'pro-card-header'}>
-							<div className={'pro-card-title'}><Space>设备数量</Space></div>
-							<div className={'pro-card-content'}><Space>5</Space></div>
+					<ProCard hoverable layout="default" bordered className={'pro-card-1'}>
+						<div className={'pro-card-1-header'}>
+							<div className={'pro-card-1-title'}><Space>设备数量</Space></div>
+							<div className={'pro-card-1-content'}><Space>5</Space></div>
 						</div>
-						<div className={'pro-card-footer'}>
+						<div className={'pro-card-1-footer'}>
 							<Row gutter={24}>
 								<Col span={6}>
 									<Space><Badge status="success"/> 在线</Space>
@@ -56,39 +57,51 @@ const HomePage: React.FC = () => {
 					</ProCard>
 				</Col>
 				<Col span={6}>
-					<ProCard layout="default" bordered className={'pro-card'}>
-						<div className={'pro-card-header'}>
-							<div className={'pro-card-title'}><Space>今日设备消息数量</Space></div>
-							<div className={'pro-card-content'}><Space>10000</Space></div>
+					<ProCard hoverable layout="default" bordered className={'pro-card-1'}>
+						<div className={'pro-card-1-header'}>
+							<div className={'pro-card-1-title'}><Space>今日设备消息数量</Space></div>
+							<div className={'pro-card-1-content'}><Space>10000</Space></div>
 						</div>
-						<div className={'pro-card-footer'}>
+						<div className={'pro-card-1-footer'}>
 							<Row gutter={24}>
-								<Col span={18}>
+								<Col span={17}>
 									<Space>本月设备消息数量</Space>
 								</Col>
-								<Col span={6}>
-									3
+								<Col span={7}>
+									1000000
 								</Col>
 							</Row>
 						</div>
 					</ProCard>
 				</Col>
 				<Col span={6}>
-					<ProCard layout="default" bordered className={'pro-card'}>
-						<div className={'pro-card-header'}>
-							<div className={'pro-card-title'}><Space>今日设备告警数量</Space></div>
-							<div className={'pro-card-content'}><Space>200</Space></div>
+					<ProCard hoverable layout="default" bordered className={'pro-card-1'}>
+						<div className={'pro-card-1-header'}>
+							<div className={'pro-card-1-title'}><Space>今日设备告警数量</Space></div>
+							<div className={'pro-card-1-content'}><Space>200</Space></div>
 						</div>
-						<div className={'pro-card-footer'}>
+						<div className={'pro-card-1-footer'}>
 							<Row gutter={24}>
-								<Col span={18}>
+								<Col span={17}>
 									<Space>本月设备告警数量</Space>
 								</Col>
-								<Col span={6}>
-									3
+								<Col span={7}>
+									50000
 								</Col>
 							</Row>
 						</div>
+					</ProCard>
+				</Col>
+			</Row>
+			<Row gutter={24}>
+				<Col span={24}>
+					<ProCard layout="center" hoverable bordered className={'pro-card-2'} headerBordered
+							 title={'设备消息'} extra={
+						<>
+							<ProFormDateRangePicker allowClear={false}/>
+						</>
+					}>
+						<DeviceMessageArea/>
 					</ProCard>
 				</Col>
 			</Row>
