@@ -43,8 +43,7 @@ public final class UserConvertor {
 		userDetails.setMobile(user.getMobile());
 		userDetails.setDeptPaths(auth.getDeptPaths());
 		userDetails.setPermissions(auth.getPermissions());
-		userDetails.setTenantId(auth.getTenantId());
-		userDetails.setPassword(user.getPassword());
+		userDetails.setTenantId(user.getTenantId());
 		return userDetails;
 	}
 
