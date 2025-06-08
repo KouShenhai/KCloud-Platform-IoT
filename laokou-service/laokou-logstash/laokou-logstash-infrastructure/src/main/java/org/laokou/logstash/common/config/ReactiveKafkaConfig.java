@@ -24,6 +24,8 @@ import reactor.kafka.receiver.internals.ConsumerFactory;
 import reactor.kafka.receiver.internals.DefaultKafkaReceiver;
 import java.util.List;
 
+import static org.laokou.common.log4j2.model.MqEnum.*;
+
 /**
  * @author laokou
  */
@@ -33,9 +35,10 @@ public class ReactiveKafkaConfig {
 	@Bean("reactiveKafkaReceiver")
 	public DefaultKafkaReceiver<String, Object> reactiveKafkaReceiver(ReceiverOptions<String, Object> receiverOptions) {
 		return new DefaultKafkaReceiver<>(ConsumerFactory.INSTANCE,
-				receiverOptions.subscription(List.of("distributed-identifier-trace-log", "gateway-trace-log",
-						"auth-trace-log", "admin-trace-log", "iot-trace-log", "oss-trace-log", "generator-trace-log",
-						"mqtt-trace-log", "udp-trace-log", "http-trace-log", "tcp-trace-log", "report-trace-log")));
+				receiverOptions.subscription(List.of(DISTRIBUTED_IDENTIFIER_TRACE_LOG_TOPIC, GATEWAY_TRACE_LOG_TOPIC,
+						AUTH_TRACE_LOG_TOPIC, ADMIN_TRACE_LOG_TOPIC, IOT_TRACE_LOG_TOPIC, OSS_TRACE_LOG_TOPIC,
+						GENERATOR_TRACE_LOG_TOPIC, MQTT_TRACE_LOG_TOPIC, UDP_TRACE_LOG_TOPIC, HTTP_TRACE_LOG_TOPIC,
+						TCP_TRACE_LOG_TOPIC, REPORT_TRACE_LOG_TOPIC)));
 	}
 
 }

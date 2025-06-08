@@ -262,7 +262,7 @@ class OAuth2AuthorizationServerConfig {
 		return this::validateCaptcha;
 	}
 
-	@Bean
+	@Bean("authNewTopics")
 	KafkaAdmin.NewTopics newTopics() {
 		return new KafkaAdmin.NewTopics(new NewTopic(LOGIN_LOG_TOPIC, 3, (short) 1),
 				new NewTopic(MAIL_CAPTCHA_TOPIC, 3, (short) 1), new NewTopic(MOBILE_CAPTCHA_TOPIC, 3, (short) 1));

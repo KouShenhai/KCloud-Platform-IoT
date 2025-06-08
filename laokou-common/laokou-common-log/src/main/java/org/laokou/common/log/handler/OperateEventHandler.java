@@ -46,8 +46,7 @@ public class OperateEventHandler {
 
 	private final TransactionalUtils transactionalUtils;
 
-	@KafkaListener(topics = OPERATE_LOG_TOPIC,
-			groupId = OPERATE_LOG_CONSUMER_GROUP + "-${spring.kafka.consumer.group-id}")
+	@KafkaListener(topics = OPERATE_LOG_TOPIC, groupId = OPERATE_LOG_CONSUMER_GROUP)
 	public void handleOperateLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			DynamicDataSourceContextHolder.push(DOMAIN);
