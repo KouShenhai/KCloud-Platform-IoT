@@ -161,25 +161,26 @@ export default () => {
 			key: 'typeValue',
 			dataIndex: 'typeValue',
 			valueType: 'select',
+			hideInTable: true,
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
 				options: [
 					{
-							value: "authorization_code",
-							label: "授权码登录",
+						value: "username_password",
+						label: "用户名密码登录",
 					},
 					{
-							value: "mail",
-							label: "邮箱登录",
+						value: "mail",
+						label: "邮箱登录",
 					},
 					{
-							value: "mobile",
-							label: "手机号登录",
+						value: "mobile",
+						label: "手机号登录",
 					},
 					{
-							value: "username_password",
-							label: "用户名密码登录",
+						value: "authorization_code",
+						label: "授权码登录",
 					},
 				],
 				placeholder: '请选择登录类型',
@@ -190,10 +191,10 @@ export default () => {
 			dataIndex: 'type',
 			hideInSearch: true,
 			valueEnum: {
-				'authorization_code':{ text: '授权码登录', status: 'Error'},
-				'mail': { text: '邮箱登录', status: 'Success'},
-				'mobile': { text: '手机号登录', status: 'Default' },
-				'username_password': { text: '用户名密码登录', status: 'Processing' }
+				authorization_code:{ text: '授权码登录', status: 'Error'},
+				mail: { text: '邮箱登录', status: 'Success'},
+				mobile: { text: '手机号登录', status: 'Default' },
+				username_password: { text: '用户名密码登录', status: 'Processing' }
 			},
 			width: 160,
 			ellipsis: true
