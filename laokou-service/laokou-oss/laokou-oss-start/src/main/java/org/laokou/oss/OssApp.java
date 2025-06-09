@@ -24,7 +24,6 @@ import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnableServiceShutDown;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
-import org.laokou.common.security.annotation.EnableSecurity;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
@@ -33,7 +32,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StopWatch;
 
 import java.net.InetAddress;
@@ -49,7 +47,6 @@ import java.security.NoSuchAlgorithmException;
 @Slf4j
 @EnableWarmUp
 @EnableRouter
-@EnableSecurity
 @EnableScheduling
 @EnableServiceShutDown
 @EnableRedisRepository
@@ -68,9 +65,7 @@ public class OssApp {
 		// undertow虚拟线程 => EmbeddedWebServerFactoryCustomizerAutoConfiguration#virtualThreadsUndertowDeploymentInfoCustomizer
 		StopWatch stopWatch = new StopWatch("Oss应用程序");
 		stopWatch.start();
-		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "9991")));
-		// SpringSecurity 子线程读取父线程的上下文
-		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.TTL_MODE_INHERITABLETHREADLOCAL);
+		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "9091")));
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		// 忽略SSL认证

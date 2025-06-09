@@ -29,6 +29,7 @@
     "js-export-excel": "^1.1.4",
     "jsencrypt": "^3.3.2",
     "moment": "^2.30.1",
+    "react-amap": "^1.2.8",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

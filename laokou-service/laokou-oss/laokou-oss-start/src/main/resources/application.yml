@@ -113,19 +113,6 @@ spring:
         - docker0
         - veth.*
 
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    enabled: true
-    path: /v3/api-docs
-  group-configs:
-    - group: 'default'
-      paths-to-match: '/**'
-      packages-to-scan: org.laokou.oss.web
-
 # MybatisPlus配置
 mybatis-plus:
   # 全局处理

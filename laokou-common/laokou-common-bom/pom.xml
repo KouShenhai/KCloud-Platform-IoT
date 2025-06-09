@@ -40,7 +40,7 @@
     <!--mybatis-plus版本 -->
     <mybatis-plus.version>3.5.12</mybatis-plus.version>
     <!--redisson版本-->
-    <redisson.version>3.48.0</redisson.version>
+    <redisson.version>3.49.0</redisson.version>
     <!--jsoup版本-->
     <jsoup.version>1.20.1</jsoup.version>
     <!--jasypt版本-->
@@ -60,7 +60,7 @@
     <!--spring-security-oauth2-authorization-server版本-->
     <spring-security-oauth2-authorization-server.version>1.5.0</spring-security-oauth2-authorization-server.version>
     <!--aws-java-sdk-s3版本-->
-    <aws-java-sdk-s3.version>1.12.783</aws-java-sdk-s3.version>
+    <aws-java-sdk-s3.version>1.12.785</aws-java-sdk-s3.version>
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
     <!--httpclient5版本-->
@@ -74,7 +74,7 @@
     <!--spring-kafka版本-->
     <spring-kafka.version>3.3.6</spring-kafka.version>
     <!--netty版本-->
-    <netty.version>4.2.1.Final</netty.version>
+    <netty.version>4.2.2.Final</netty.version>
     <!--gson版本-->
     <gson.version>2.13.1</gson.version>
     <!--swagger-annotations-jakarta版本-->

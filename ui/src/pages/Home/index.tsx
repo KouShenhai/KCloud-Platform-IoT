@@ -3,7 +3,7 @@ import {ProCard, ProFormDateRangePicker} from '@ant-design/pro-components';
 import {Badge, Col, Row, Space} from "antd";
 import './index.less'
 import DeviceMessageArea from "@/pages/Home/DeviceMessage";
-
+import { Map } from 'react-amap';
 const HomePage: React.FC = () => {
 	return (
 		<>
@@ -102,6 +102,14 @@ const HomePage: React.FC = () => {
 						</>
 					}>
 						<DeviceMessageArea/>
+					</ProCard>
+				</Col>
+			</Row>
+			<Row gutter={24}>
+				<Col span={24}>
+					<ProCard layout="center" hoverable bordered className={'pro-card-2 pro-card-3'} headerBordered
+							 title={'设备分布'}>
+						<Map amapkey={'1cab232de3d4891f17d3ce3cadf99dcc'}/>
 					</ProCard>
 				</Col>
 			</Row>
