@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
  * @author laokou
  */
 @Service
-@DubboService
+@DubboService(token = "3f7c5e45d6a7", version = "v3")
 @RequiredArgsConstructor
 public class DistributedIdentifierServiceImpl implements DistributedIdentifierServiceI {
 

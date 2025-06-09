@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DistributedIdentifierWrapperRpc {
 
-	@DubboReference
+	@DubboReference(version = "v3")
 	private DistributedIdentifierServiceI distributedIdentifierServiceI;
 
 	public Long getId() {
