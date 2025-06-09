@@ -22,7 +22,7 @@
   <parent>
     <artifactId>laokou-cloud</artifactId>
     <groupId>org.laokou</groupId>
-    <version>3.5.0</version>
+    <version>3.5.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-nacos</artifactId>
@@ -31,7 +31,7 @@
     <!--nacos版本-->
     <nacos.version>3.0.0</nacos.version>
     <!--spring-boot版本-->
-    <spring-boot.version>3.5.0</spring-boot.version>
+    <spring-boot.version>3.5.1-SNAPSHOT</spring-boot.version>
     <!--postgresql版本-->
     <postgresql.version>42.7.6</postgresql.version>
     <!--grpc版本-->
