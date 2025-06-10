@@ -33,6 +33,5 @@
     <module>laokou-gateway</module>
     <module>laokou-monitor</module>
     <module>laokou-nacos</module>
-    <module>laokou-snail-job</module>
   </modules>
 </project>

@@ -477,22 +477,6 @@ services:
       - nacos
       - elasticsearch
       - kafka
-  job:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-snail-job:3.5.1
-    container_name: job
-    tty: true
-    env_file:
-      - env/job.env
-    ports:
-      - "8088:8088"
-    volumes:
-      - ./job/logs:/opt
-    restart: always
-    privileged: true
-    networks:
-      - iot_network
-    depends_on:
-      - postgresql
   ui:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.5.1
     container_name: ui

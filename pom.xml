@@ -240,20 +240,12 @@
       <properties>
         <DATASOURCE-USERNAME-NACOS>ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)</DATASOURCE-USERNAME-NACOS>
         <DATASOURCE-PASSWORD-NACOS>ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)</DATASOURCE-PASSWORD-NACOS>
-        <DATASOURCE-USERNAME-SNAIL-JOB>
-          ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
-        </DATASOURCE-USERNAME-SNAIL-JOB>
-        <DATASOURCE-PASSWORD-SNAIL-JOB>
-          ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
-        </DATASOURCE-PASSWORD-SNAIL-JOB>
         <DATASOURCE-HOST>postgresql</DATASOURCE-HOST>
         <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-nacos&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-NACOS>
-        <DATASOURCE-PARAM-SNAIL-JOB>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-SNAIL-JOB>
         <DATASOURCE-PORT>5432</DATASOURCE-PORT>
         <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
         <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
         <DATASOURCE-DB-NACOS>kcloud_platform_nacos</DATASOURCE-DB-NACOS>
-        <DATASOURCE-DB-SNAIL-JOB>kcloud_platform_snail_job</DATASOURCE-DB-SNAIL-JOB>
         <NACOS-NAMESPACE>0dac1a68-2f01-40df-bd26-bf0cb199057a</NACOS-NAMESPACE>
         <NACOS-DISCOVERY-ADDRESS>nacos:8848</NACOS-DISCOVERY-ADDRESS>
         <NACOS-CONFIG-ADDRESS>nacos:8848</NACOS-CONFIG-ADDRESS>
@@ -279,20 +271,12 @@
       <properties>
         <DATASOURCE-USERNAME-NACOS>ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)</DATASOURCE-USERNAME-NACOS>
         <DATASOURCE-PASSWORD-NACOS>ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)</DATASOURCE-PASSWORD-NACOS>
-        <DATASOURCE-USERNAME-SNAIL-JOB>
-          ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
-        </DATASOURCE-USERNAME-SNAIL-JOB>
-        <DATASOURCE-PASSWORD-SNAIL-JOB>
-          ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
-        </DATASOURCE-PASSWORD-SNAIL-JOB>
         <DATASOURCE-HOST>postgresql</DATASOURCE-HOST>
         <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-nacos&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-NACOS>
-        <DATASOURCE-PARAM-SNAIL-JOB>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-SNAIL-JOB>
         <DATASOURCE-PORT>5432</DATASOURCE-PORT>
         <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
         <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
         <DATASOURCE-DB-NACOS>kcloud_platform_nacos</DATASOURCE-DB-NACOS>
-        <DATASOURCE-DB-SNAIL-JOB>kcloud_platform_snail_job</DATASOURCE-DB-SNAIL-JOB>
         <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
         <NACOS-DISCOVERY-ADDRESS>nacos:8848</NACOS-DISCOVERY-ADDRESS>
         <NACOS-CONFIG-ADDRESS>nacos:8848</NACOS-CONFIG-ADDRESS>
@@ -325,23 +309,11 @@
           ${DATASOURCE_PASSWORD_NACOS:ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)}
         </DATASOURCE-PASSWORD-NACOS>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-USERNAME-SNAIL-JOB>
-          ${DATASOURCE_USERNAME_SNAIL_JOB:ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)}
-        </DATASOURCE-USERNAME-SNAIL-JOB>
-        <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-PASSWORD-SNAIL-JOB>
-          ${DATASOURCE_PASSWORD_SNAIL_JOB:ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)}
-        </DATASOURCE-PASSWORD-SNAIL-JOB>
-        <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-HOST>${DATASOURCE_HOST:postgresql}</DATASOURCE-HOST>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PARAM-NACOS>
           ${DATASOURCE_PARAM_NACOS:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-nacos&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified}
         </DATASOURCE-PARAM-NACOS>
-        <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-PARAM-SNAIL-JOB>
-          ${DATASOURCE_PARAM_SNAIL_JOB:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-snail-job&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified}
-        </DATASOURCE-PARAM-SNAIL-JOB>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-PORT>${DATASOURCE_PORT:5432}</DATASOURCE-PORT>
         <!--suppress UnresolvedMavenProperty -->
@@ -352,8 +324,6 @@
         <DATASOURCE-PLATFORM>${DATASOURCE_PLATFORM:postgresql}</DATASOURCE-PLATFORM>
         <!--suppress UnresolvedMavenProperty -->
         <DATASOURCE-DB-NACOS>${DATASOURCE_DB_NACOS:kcloud_platform_nacos}</DATASOURCE-DB-NACOS>
-        <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-DB-SNAIL-JOB>${DATASOURCE_DB_POWER_JOB:kcloud_platform_snail_job}</DATASOURCE-DB-SNAIL-JOB>
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-NAMESPACE>${NACOS_NAMESPACE:8140e92b-fb43-48f5-b63b-7506185206a5}</NACOS-NAMESPACE>
         <!--suppress UnresolvedMavenProperty -->

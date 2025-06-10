@@ -222,7 +222,6 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
         └── laokou-nacos                           --- 服务治理
         └── laokou-gateway                         --- API网关
         └── laokou-monitor                         --- 服务监控
-        └── laokou-snail-job                       --- 分布式任务调度
 ├── laokou-service
         └── laokou-iot                             --- 物联网模块
         └── laokou-auth                            --- 认证授权模块
