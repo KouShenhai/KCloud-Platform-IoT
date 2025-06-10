@@ -23,6 +23,8 @@ import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
+
 /**
  * @author laokou
  */
@@ -32,5 +34,17 @@ import org.springframework.web.multipart.MultipartFile;
 public class OssUploadCmd extends CommonCommand {
 
 	private MultipartFile file;
+
+	private InputStream inputStream;
+
+	private String fileName;
+
+	private OssTypeEnum ossTypeEnum;
+
+	public enum OssTypeEnum {
+
+		LOCAL, ALIYUN, TENCENT, HUAWEI, QINIU, MINIO, FTP, S3
+
+	}
 
 }
