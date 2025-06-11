@@ -64,5 +64,9 @@
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-pulsar</artifactId>
+    </dependency>
   </dependencies>
 </project>

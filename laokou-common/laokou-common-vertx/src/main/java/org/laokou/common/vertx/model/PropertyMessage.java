@@ -19,7 +19,9 @@ package org.laokou.common.vertx.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.pulsar.common.schema.SchemaType;
 import org.laokou.common.i18n.common.constant.StringConstants;
+import org.springframework.pulsar.annotation.PulsarMessage;
 
 import java.io.Serializable;
 
@@ -30,6 +32,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
+@PulsarMessage(schemaType = SchemaType.BYTES)
 public class PropertyMessage implements Serializable {
 
 	private Long deviceId;

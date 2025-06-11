@@ -19,7 +19,6 @@ package org.laokou.mqtt.server.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.pulsar.client.api.MessageId;
-import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.vertx.model.MqttMessageEnum;
 import org.laokou.common.vertx.model.PropertyMessage;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
@@ -38,7 +37,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class ReactiveUpPropertyReportMqttMessageHandler implements ReactiveMqttMessageHandler {
 
-	private final ReactivePulsarTemplate<String> reactivePulsarTemplate;
+	private final ReactivePulsarTemplate<Object> reactivePulsarTemplate;
 
 	@Override
 	public boolean isSubscribe(String topic) {
@@ -50,8 +49,8 @@ public class ReactiveUpPropertyReportMqttMessageHandler implements ReactiveMqttM
 		MqttMessageEnum upPropertyReport = MqttMessageEnum.UP_PROPERTY_REPORT;
 		String topic = org.laokou.common.pulsar.util.TopicUtils.getTopic("laokou", "mqtt",
 				upPropertyReport.getMqTopic());
-		return reactivePulsarTemplate.send(topic, JacksonUtils.toJsonStr(new PropertyMessage(mqttMessage.getTopic(),
-				mqttMessage.getPayload().toString(), upPropertyReport.getCode())));
+		return reactivePulsarTemplate.send(topic, new PropertyMessage(mqttMessage.getTopic(),
+				mqttMessage.getPayload().toString(), upPropertyReport.getCode()));
 	}
 
 }
