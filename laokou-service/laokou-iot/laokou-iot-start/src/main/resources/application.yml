@@ -179,6 +179,9 @@ spring:
       auto-create: true
     template:
       observation-enabled: true
+  pulsar:
+    client:
+      service-url: pulsar://pulsar:6650
   cloud:
     # Loadbalancer配置
     loadbalancer:
