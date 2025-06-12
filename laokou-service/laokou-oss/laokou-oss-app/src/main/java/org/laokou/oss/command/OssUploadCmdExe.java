@@ -49,7 +49,7 @@ public class OssUploadCmdExe {
 	// TODO 从数据库获取配置，根据系统设置进行负载均衡
 	private OssInfo getInfo() {
 		OssInfo ossInfo = new OssInfo();
-		//ossInfo.setStoragePolicyEnum(StoragePolicyEnum.LOCAL);
+		// ossInfo.setStoragePolicyEnum(StoragePolicyEnum.LOCAL);
 		ossInfo.setDomain("http://localhost:82");
 		ossInfo.setDirectory("D:\\laokou\\temp");
 		ossInfo.setPath("/temp/");

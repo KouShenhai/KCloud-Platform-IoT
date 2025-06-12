@@ -40,8 +40,8 @@ import static org.laokou.common.i18n.common.constant.StringConstants.TRUE;
  *
  * @author laokou
  */
-@Configuration
 @Slf4j
+@Configuration
 public class CorsConfig {
 
 	@Bean

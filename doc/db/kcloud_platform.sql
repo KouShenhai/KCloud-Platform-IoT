@@ -290,8 +290,6 @@ INSERT INTO "public"."sys_menu" VALUES (32, 1, 1, '2025-01-21 05:19:17', '2025-0
 INSERT INTO "public"."sys_menu" VALUES (33, 1, 1, '2024-09-15 12:56:07', '2024-09-15 12:56:10', 0, 0, 0, 2, NULL, 0, '操作日志', '/sys/log/operate', '', 900, 0);
 INSERT INTO "public"."sys_menu" VALUES (34, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 31, NULL, 0, '国际化', '/sys/base/i18n', NULL, 800, 0);
 INSERT INTO "public"."sys_menu" VALUES (36, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 1, NULL, 0, '对象存储', '/sys/oss', NULL, 1000, 0);
-INSERT INTO "public"."sys_menu" VALUES (37, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 36, NULL, 0, '对象存储配置', '/sys/oss/config', NULL, 200, 0);
-INSERT INTO "public"."sys_menu" VALUES (38, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 36, NULL, 0, '对象存储日志', '/sys/oss/log', NULL, 100, 0);
 INSERT INTO "public"."sys_menu" VALUES (39, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 1, NULL, 0, '集群管理', '/sys/cluster', NULL, 3000, 0);
 INSERT INTO "public"."sys_menu" VALUES (40, 1, 1, '2025-01-21 05:19:17', '2025-01-29 11:20:15.092772', 0, 0, 0, 23, 'sys:menu:list-tree', 1, '查询菜单树列表', '', NULL, 50, 0);
 INSERT INTO "public"."sys_menu" VALUES (41, 1, 1, '2025-01-21 05:19:17', '2025-01-29 11:20:15.092772', 0, 0, 0, 23, 'sys:menu:remove', 1, '删除菜单', '', NULL, 20, 0);

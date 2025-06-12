@@ -159,11 +159,18 @@
     <dubbo.version>3.3.4</dubbo.version>
     <!--pf4j版本-->
     <pf4j.version>0.10.0</pf4j.version>
+    <!--spring-cloud-starter-circuitbreaker-reactor-resilience4j版本-->
+    <spring-cloud-starter-circuitbreaker-reactor-resilience4j.version>3.3.0</spring-cloud-starter-circuitbreaker-reactor-resilience4j.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
+        <version>${spring-cloud-starter-circuitbreaker-reactor-resilience4j.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.pf4j</groupId>
         <artifactId>pf4j-spring</artifactId>
