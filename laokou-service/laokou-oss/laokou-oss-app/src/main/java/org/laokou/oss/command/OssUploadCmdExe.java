@@ -20,7 +20,6 @@ package org.laokou.oss.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.oss.model.OssInfo;
-import org.laokou.common.oss.model.StoragePolicyEnum;
 import org.laokou.common.oss.template.StorageTemplate;
 import org.laokou.oss.dto.OssUploadCmd;
 import org.laokou.oss.model.OssE;
@@ -50,7 +49,7 @@ public class OssUploadCmdExe {
 	// TODO 从数据库获取配置，根据系统设置进行负载均衡
 	private OssInfo getInfo() {
 		OssInfo ossInfo = new OssInfo();
-		ossInfo.setStoragePolicyEnum(StoragePolicyEnum.LOCAL);
+		//ossInfo.setStoragePolicyEnum(StoragePolicyEnum.LOCAL);
 		ossInfo.setDomain("http://localhost:82");
 		ossInfo.setDirectory("D:\\laokou\\temp");
 		ossInfo.setPath("/temp/");
