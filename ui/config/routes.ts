@@ -92,19 +92,9 @@ export default [
 				path: '/iot/device',
 				routes: [
 					{
-						name: '设备',
-						path: '/iot/device/index',
-						component: './IoT/Device/index'
-					},
-					{
 						name: '物模型',
 						path: '/iot/device/thingModel',
 						component: './IoT/Device/thingModel'
-					},
-					{
-						name: '产品',
-						path: '/iot/device/product',
-						component: './IoT/Device/product'
 					},
 					{
 						name: '产品类别',

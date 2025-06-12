@@ -58,6 +58,11 @@ spring:
   pulsar:
     client:
       service-url: pulsar://pulsar:6650
+    producer:
+      batching-enabled: true
+      cache:
+        enabled: true
+        maximum-size: 1000
   mqtt-server:
     auth: true
     username: vertx
