@@ -20,21 +20,24 @@ package org.laokou.iot.handler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.apache.pulsar.common.schema.SchemaType;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.pulsar.annotation.PulsarListener;
+import org.springframework.pulsar.listener.AckMode;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
 @Slf4j
-@Configuration
-public class TransportProtocolHandler {
+@Component
+public class MessageHandler {
 
-	@PulsarListener(topicPattern = "persistent://laokou/mqtt/up-property-report",
-			subscriptionName = "up-property-report", schemaType = SchemaType.JSON,
-			subscriptionType = SubscriptionType.Shared)
-	public void handleMqttMessage(Object message) {
-		log.info("接收到MQTT消息：{}", message);
+	@PulsarListener(topicPattern = "${pulsar.topic.tenant1}/up-property-report",
+			subscriptionName = "up-property-report", schemaType = SchemaType.BYTES, batch = true,
+			ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Shared)
+	public void handleMqttMessage(List<byte[]> messages) {
+		log.info("接收到MQTT消息：{}", messages);
 	}
 
 }

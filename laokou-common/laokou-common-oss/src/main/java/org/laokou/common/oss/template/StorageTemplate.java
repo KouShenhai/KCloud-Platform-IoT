@@ -31,7 +31,7 @@ import java.security.NoSuchAlgorithmException;
 public class StorageTemplate {
 
 	public Result<String> uploadOss(FileInfo fileInfo, OssInfo ossInfo) throws IOException, NoSuchAlgorithmException {
-		return Result.ok(ossInfo.getType().getStorage(fileInfo, ossInfo).uploadOss());
+		return null;
 	}
 
 }

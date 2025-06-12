@@ -39,12 +39,4 @@ public class OssUploadCmd extends CommonCommand {
 
 	private String fileName;
 
-	private OssTypeEnum ossTypeEnum;
-
-	public enum OssTypeEnum {
-
-		LOCAL, ALIYUN, TENCENT, HUAWEI, QINIU, MINIO, FTP, S3
-
-	}
-
 }

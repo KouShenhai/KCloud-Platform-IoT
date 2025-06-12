@@ -24,7 +24,7 @@ import org.laokou.common.oss.template.LocalStorage;
 import org.laokou.common.oss.template.Storage;
 
 @Getter
-public enum Type {
+public enum StoragePolicyEnum {
 
 	LOCAL("local", "本地") {
 		@Override
@@ -33,7 +33,7 @@ public enum Type {
 		}
 	},
 
-	CLOUD("cloud", "云端") {
+	AMAZON_S3("amazon_s3", "亚马逊S3") {
 		@Override
 		public Storage getStorage(FileInfo fileInfo, OssInfo ossInfo) {
 			return new AmazonS3Storage(fileInfo, ossInfo);
@@ -44,13 +44,13 @@ public enum Type {
 
 	private final String desc;
 
-	Type(String code, String desc) {
+	StoragePolicyEnum(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
-	public static Type getByCode(String code) {
-		return EnumParser.parse(Type.class, Type::getCode, code);
+	public static StoragePolicyEnum getByCode(String code) {
+		return EnumParser.parse(StoragePolicyEnum.class, StoragePolicyEnum::getCode, code);
 	}
 
 	public abstract Storage getStorage(FileInfo fileInfo, OssInfo ossInfo);

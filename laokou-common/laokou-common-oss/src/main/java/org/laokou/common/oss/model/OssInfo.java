@@ -26,11 +26,6 @@ import lombok.Data;
 public class OssInfo {
 
 	/**
-	 * OSS类型【本地/云端】.
-	 */
-	private Type type;
-
-	/**
 	 * OSS的目录【本地】.
 	 */
 	private String directory;

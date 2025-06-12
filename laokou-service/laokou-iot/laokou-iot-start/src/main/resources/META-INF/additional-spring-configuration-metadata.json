@@ -1,0 +1,11 @@
+{
+  "groups": [],
+  "properties": [
+    {
+      "name": "pulsar.topic.tenant1",
+      "type": "java.lang.String",
+      "description": "Pulsar Topic租户1.",
+      "defaultValue": "persistent://test/test"
+    }
+  ]
+}

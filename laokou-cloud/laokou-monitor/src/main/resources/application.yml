@@ -53,7 +53,6 @@ spring:
         mail:
           from: koushenhai@163.com
           to: 2413176044@qq.com
-          template: META-INF/spring-boot-admin-server/mail/status-changed.html
   # security
   security:
     user:
