@@ -18,9 +18,7 @@ export default () => {
 	const [dataSource, setDataSource] = useState<any>({})
 	const [title, setTitle] = useState("")
 	const [readOnly, setReadOnly] = useState(false)
-	const [value, setValue] = useState("");
 	const [ids, setIds] = useState<any>([])
-	const [flag, setFlag] = useState(0)
 	const [dataType, setDataType] = useState('integer')
 	const [requestId, setRequestId] = useState('')
 
@@ -32,8 +30,6 @@ export default () => {
 		dataType: string | undefined;
 		category: number | undefined;
 		type: string | undefined;
-		expression: string | undefined;
-		expressionFlag: number;
 		specs: string | undefined;
 		remark: string | undefined;
 		createTime: string | undefined;
@@ -313,10 +309,6 @@ export default () => {
 					// @ts-ignore
 					actionRef?.current?.reload();
 				}}
-				value={value}
-				setValue={setValue}
-				flag={flag}
-				setFlag={setFlag}
 				setDataType={setDataType}
 				dataType={dataType}
 				requestId={requestId}
@@ -354,11 +346,9 @@ export default () => {
 							setRequestId(uuidV7())
 							setReadOnly(false)
 							setModalVisit(true)
-							setFlag(0)
 							setDataSource({
 								id: undefined,
 								sort: 1,
-								expressionFlag: 0,
 								dataType: 'integer',
 								category: 1,
 							})

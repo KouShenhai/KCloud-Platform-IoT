@@ -105,11 +105,9 @@ CREATE TABLE "public"."iot_thing_model" (
 "data_type" varchar(20)  NOT NULL,
 "category" int2 NOT NULL,
 "type" varchar(30)  NOT NULL,
-"expression" text,
 "sort" int4 NOT NULL DEFAULT 1,
 "specs" json,
-"remark" varchar(400) ,
-"expression_flag" int2 NOT NULL DEFAULT 0
+"remark" varchar(400)
 )
 ;
 COMMENT ON COLUMN "public"."iot_thing_model"."id" IS 'ID';
@@ -125,11 +123,9 @@ COMMENT ON COLUMN "public"."iot_thing_model"."code" IS '物模型编码';
 COMMENT ON COLUMN "public"."iot_thing_model"."data_type" IS '数据类型 integer string decimal boolean';
 COMMENT ON COLUMN "public"."iot_thing_model"."category" IS '物模型类别 1属性 2事件';
 COMMENT ON COLUMN "public"."iot_thing_model"."type" IS '物模型类型 read读 write写 report上报';
-COMMENT ON COLUMN "public"."iot_thing_model"."expression" IS '表达式';
 COMMENT ON COLUMN "public"."iot_thing_model"."sort" IS '物模型排序';
 COMMENT ON COLUMN "public"."iot_thing_model"."specs" IS '物模型规则说明';
 COMMENT ON COLUMN "public"."iot_thing_model"."remark" IS '物模型备注';
-COMMENT ON COLUMN "public"."iot_thing_model"."expression_flag" IS '表达式标识 0否 1是';
 COMMENT ON TABLE "public"."iot_thing_model" IS '物模型';
 
 ALTER TABLE "public"."iot_thing_model" ADD CONSTRAINT "iot_thing_model_pkey" PRIMARY KEY ("id");

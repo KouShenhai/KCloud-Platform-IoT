@@ -54,9 +54,6 @@ public class ThingModelCO extends ClientObject {
 	@Schema(name = "物模型类型 read读 write写 report上报", description = "物模型类型 read读 write写 report上报")
 	private String type;
 
-	@Schema(name = "表达式", description = "表达式")
-	private String expression;
-
 	@Schema(name = "物模型排序", description = "物模型排序")
 	private Integer sort;
 
@@ -68,8 +65,5 @@ public class ThingModelCO extends ClientObject {
 
 	@Schema(name = "创建时间", description = "创建时间")
 	private Instant createTime;
-
-	@Schema(name = "表达式标识 0否 1是", description = "表达式标识 0否 1是")
-	private Integer expressionFlag;
 
 }

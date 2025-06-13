@@ -136,31 +136,6 @@ declare namespace API {
 		co?: I18nMessageCO;
 	};
 
-	type IpCO = {
-		extValues?: Record<string, any>;
-		id?: number;
-		label?: string;
-		value?: string;
-	};
-
-	type IpExportCmd = true;
-
-	type IpModifyCmd = {
-		co?: IpCO;
-	};
-
-	type IpPageQry = {
-		pageNum?: number;
-		pageSize?: number;
-		pageIndex?: number;
-		sqlFilter?: string;
-		params?: Record<string, any>;
-	};
-
-	type IpSaveCmd = {
-		co?: IpCO;
-	};
-
 	type LoginLogCO = {
 		extValues?: Record<string, any>;
 		id?: number;
@@ -274,35 +249,6 @@ declare namespace API {
 	};
 
 	type OssExportCmd = true;
-
-	type OssLogCO = {
-		extValues?: Record<string, any>;
-		id?: number;
-		name?: string;
-		md5?: string;
-		url?: string;
-		size?: number;
-		status?: number;
-		errorMessage?: string;
-	};
-
-	type OssLogExportCmd = true;
-
-	type OssLogModifyCmd = {
-		co?: OssLogCO;
-	};
-
-	type OssLogPageQry = {
-		pageNum?: number;
-		pageSize?: number;
-		pageIndex?: number;
-		sqlFilter?: string;
-		params?: Record<string, any>;
-	};
-
-	type OssLogSaveCmd = {
-		co?: OssLogCO;
-	};
 
 	type OssModifyCmd = {
 		co?: OssCO;

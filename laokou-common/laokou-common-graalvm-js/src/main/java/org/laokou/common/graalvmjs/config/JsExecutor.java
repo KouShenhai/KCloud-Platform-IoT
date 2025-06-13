@@ -17,21 +17,22 @@
 
 package org.laokou.common.graalvmjs.config;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import lombok.RequiredArgsConstructor;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Value;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import org.springframework.util.Assert;
 
 /**
  * @author laokou
  */
+@RequiredArgsConstructor
 public class JsExecutor implements Executor {
 
 	private volatile Context context;
 
-	private final Map<String, Value> cacheMap = new ConcurrentHashMap<>(4096);
+	private final Cache<String, Value> jsCaffeine;
 
 	@Override
 	public synchronized void init() {
@@ -50,7 +51,9 @@ public class JsExecutor implements Executor {
 
 	@Override
 	public Value execute(String script, Object... arguments) {
-		return cacheMap.computeIfAbsent(script, k -> context.eval("js", script)).execute(arguments);
+		Value value = jsCaffeine.get(script, k -> context.eval("js", script));
+		Assert.notNull(value, "script is null");
+		return value.execute(arguments);
 	}
 
 }

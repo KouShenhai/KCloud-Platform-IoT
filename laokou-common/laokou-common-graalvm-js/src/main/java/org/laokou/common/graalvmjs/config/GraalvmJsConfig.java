@@ -17,8 +17,13 @@
 
 package org.laokou.common.graalvmjs.config;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import org.graalvm.polyglot.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
@@ -27,8 +32,13 @@ import org.springframework.context.annotation.Configuration;
 public class GraalvmJsConfig {
 
 	@Bean(initMethod = "init", destroyMethod = "close")
-	public Executor jsExecutor() {
-		return new JsExecutor();
+	public Executor jsExecutor(Cache<String, Value> jsCaffeine) {
+		return new JsExecutor(jsCaffeine);
+	}
+
+	@Bean
+	public Cache<String, Value> jsCaffeine() {
+		return Caffeine.newBuilder().maximumSize(8192).expireAfterWrite(1, TimeUnit.HOURS).build();
 	}
 
 }

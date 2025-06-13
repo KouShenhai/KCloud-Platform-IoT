@@ -69,13 +69,6 @@ public class ThingModelE extends Identifier {
 	private String type;
 
 	/**
-	 * 表达式.
-	 */
-	@Getter
-	@Setter
-	private String expression;
-
-	/**
 	 * 物模型排序.
 	 */
 	@Getter
@@ -95,13 +88,6 @@ public class ThingModelE extends Identifier {
 	@Getter
 	@Setter
 	private String remark;
-
-	/**
-	 * 表达式标识 0否 1是.
-	 */
-	@Getter
-	@Setter
-	private Integer expressionFlag;
 
 	@Setter
 	private ThingModelOperateTypeEnum thingModelOperateTypeEnum;

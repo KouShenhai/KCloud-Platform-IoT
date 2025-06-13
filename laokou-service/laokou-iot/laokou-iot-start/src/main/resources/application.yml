@@ -182,6 +182,11 @@ spring:
   pulsar:
     client:
       service-url: pulsar://pulsar:6650
+    producer:
+      batching-enabled: true
+      cache:
+        maximum-size: 1000
+        enabled: true
   cloud:
     # Loadbalancer配置
     loadbalancer:

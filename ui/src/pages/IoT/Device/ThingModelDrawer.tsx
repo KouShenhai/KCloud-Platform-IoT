@@ -1,9 +1,7 @@
 import {DrawerForm, ProFormDigit, ProFormSelect, ProFormText} from '@ant-design/pro-components';
 import {Col, message, Row} from 'antd';
 import React, {useState} from "react";
-import CodeMirror from '@uiw/react-codemirror';
-import { javascript } from '@codemirror/lang-javascript';
-import {ProFormItem, ProFormTextArea} from "@ant-design/pro-form";
+import {ProFormTextArea} from "@ant-design/pro-form";
 import {v7 as uuidV7} from "uuid";
 import {modifyThingModel, saveThingModel} from "@/services/iot/thingModel";
 
@@ -14,10 +12,6 @@ interface ThingModelDrawerProps {
 	readOnly: boolean;
 	dataSource: TableColumns;
 	onComponent: () => void;
-	value: string;
-	setValue: (value: string) => void;
-	flag: number;
-	setFlag: (flag: number) => void;
 	dataType: string;
 	setDataType: (type: string) => void;
 	requestId: string
@@ -32,21 +26,14 @@ type TableColumns = {
 	dataType: string | undefined;
 	category: number | undefined;
 	type: string | undefined;
-	expression: string | undefined;
-	expressionFlag: number;
 	specs: string | undefined;
 	remark: string | undefined;
 	createTime: string | undefined;
 };
 
-export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, value, setValue, flag, setFlag, dataType, setDataType, requestId, setRequestId }) => {
+export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent,dataType, setDataType, requestId, setRequestId }) => {
 
 	const [loading, setLoading] = useState(false)
-
-	const onChange = React.useCallback((val: any) => {
-		dataSource.expression = val;
-		setValue(val);
-	}, []);
 
 	const getSpecs = (value: any) => {
 		switch (value.dataType) {
@@ -180,34 +167,6 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				max={99999}
 				rules={[{ required: true, message: '请输入排序' }]}
 			/>
-
-			<ProFormSelect
-				disabled={loading}
-				name="expressionFlag"
-				label="是否使用表达式"
-				readonly={readOnly}
-				rules={[{required: true, message: '请选择是否使用表达式',}]}
-				options={[
-					{label:"是",value: 1 },
-					{label:"否",value: 0 }
-				]}
-				onChange={setFlag}
-			/>
-
-			{flag === 1 && (
-				<ProFormItem
-					label="表达式"
-					tooltip={"JS脚本，参数【inputMap】"}
-				>
-					<CodeMirror
-						readOnly={readOnly}
-						value={value}
-						height="400px"
-						extensions={[javascript({ jsx: true, typescript: true })]}
-						onChange={onChange}
-					/>
-				</ProFormItem>
-			)}
 
 			<ProFormSelect
 				disabled={loading}

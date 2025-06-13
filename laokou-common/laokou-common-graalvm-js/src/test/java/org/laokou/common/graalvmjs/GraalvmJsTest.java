@@ -41,6 +41,14 @@ class GraalvmJsTest {
 		String script = "function processData(inputMap) { return inputMap['test']; } processData;";
 		Map<String, Object> inputMap = Map.of("test", 123);
 		Assertions.assertEquals(123, jsExecutor.execute(script, inputMap).asInt());
+		String script2 = "function processData(s) { const p = JSON.parse(s); return p   } processData;";
+		Map<?, ?> map = jsExecutor.execute(script2, "{\"test\":\"123\"}").as(Map.class);
+		Assertions.assertEquals("123", map.get("test"));
+		String script3 = "function processData(s) { return {}   } processData;";
+		map = jsExecutor.execute(script3, "{\"test\":\"123\"}").as(Map.class);
+		Assertions.assertTrue(map.isEmpty());
+		String script4 = "function processData(s) { return parseInt(s, 16)   } processData;";
+		Assertions.assertEquals(26, jsExecutor.execute(script4, "0x1a").asInt());
 	}
 
 }

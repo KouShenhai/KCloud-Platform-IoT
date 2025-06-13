@@ -6,7 +6,6 @@ import * as tenant from './tenant';
 import * as source from './source';
 import * as role from './role';
 import * as oss from './oss';
-import * as ossLog from './ossLog';
 import * as operateLog from './operateLog';
 import * as menu from './menu';
 import * as loginLog from './loginLog';
@@ -22,7 +21,6 @@ export default {
 	source,
 	role,
 	oss,
-	ossLog,
 	operateLog,
 	menu,
 	loginLog,

@@ -57,11 +57,6 @@ public class ThingModelDO extends BaseDO {
 	private String type;
 
 	/**
-	 * 表达式.
-	 */
-	private String expression;
-
-	/**
 	 * 排序.
 	 */
 	private Integer sort;
@@ -75,10 +70,5 @@ public class ThingModelDO extends BaseDO {
 	 * 物模型备注.
 	 */
 	private String remark;
-
-	/**
-	 * 表达式标识 0否 1是.
-	 */
-	private Integer expressionFlag;
 
 }

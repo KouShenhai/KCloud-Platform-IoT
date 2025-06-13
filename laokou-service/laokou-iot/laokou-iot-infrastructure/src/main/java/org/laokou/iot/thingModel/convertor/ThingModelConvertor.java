@@ -46,11 +46,9 @@ public class ThingModelConvertor {
 		thingModelDO.setDataType(thingModelE.getDataType());
 		thingModelDO.setCategory(thingModelE.getCategory());
 		thingModelDO.setType(thingModelE.getType());
-		thingModelDO.setExpression(thingModelE.getExpression());
 		thingModelDO.setSort(thingModelE.getSort());
 		thingModelDO.setSpecs(thingModelE.getSpecs());
 		thingModelDO.setRemark(thingModelE.getRemark());
-		thingModelDO.setExpressionFlag(thingModelE.getExpressionFlag());
 		return thingModelDO;
 	}
 
@@ -66,12 +64,10 @@ public class ThingModelConvertor {
 		thingModelCO.setDataType(thingModelDO.getDataType());
 		thingModelCO.setCategory(thingModelDO.getCategory());
 		thingModelCO.setType(thingModelDO.getType());
-		thingModelCO.setExpression(thingModelDO.getExpression());
 		thingModelCO.setSort(thingModelDO.getSort());
 		thingModelCO.setSpecs(thingModelDO.getSpecs());
 		thingModelCO.setRemark(thingModelDO.getRemark());
 		thingModelCO.setCreateTime(thingModelDO.getCreateTime());
-		thingModelCO.setExpressionFlag(thingModelDO.getExpressionFlag());
 		return thingModelCO;
 	}
 
@@ -83,11 +79,9 @@ public class ThingModelConvertor {
 		thingModelE.setDataType(thingModelCO.getDataType());
 		thingModelE.setCategory(thingModelCO.getCategory());
 		thingModelE.setType(thingModelCO.getType());
-		thingModelE.setExpression(thingModelCO.getExpression());
 		thingModelE.setSort(thingModelCO.getSort());
 		thingModelE.setSpecs(thingModelCO.getSpecs());
 		thingModelE.setRemark(thingModelCO.getRemark());
-		thingModelE.setExpressionFlag(thingModelCO.getExpressionFlag());
 		thingModelE
 			.setThingModelOperateTypeEnum(isInsert ? ThingModelOperateTypeEnum.SAVE : ThingModelOperateTypeEnum.MODIFY);
 		return thingModelE;
