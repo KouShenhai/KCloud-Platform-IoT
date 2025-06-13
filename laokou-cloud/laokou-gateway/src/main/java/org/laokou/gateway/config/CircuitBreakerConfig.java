@@ -17,7 +17,6 @@
 
 package org.laokou.gateway.config;
 
-import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.timelimiter.TimeLimiterConfig;
 import org.apache.hc.core5.http.HttpStatus;
 import org.laokou.common.i18n.dto.Result;
@@ -39,7 +38,7 @@ import java.time.Duration;
  * @author laokou
  */
 @Configuration
-public class Resilience4JConfig {
+public class CircuitBreakerConfig {
 
 	@Bean
 	public RouterFunction<ServerResponse> routerFunction() {
@@ -55,7 +54,7 @@ public class Resilience4JConfig {
 		return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
 			// 3秒后超时时间
 			.timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(3)).build())
-			.circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
+			.circuitBreakerConfig(io.github.resilience4j.circuitbreaker.CircuitBreakerConfig.ofDefaults())
 			.build());
 	}
 

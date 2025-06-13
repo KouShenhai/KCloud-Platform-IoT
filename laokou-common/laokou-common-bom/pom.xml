@@ -161,11 +161,35 @@
     <pf4j.version>0.10.0</pf4j.version>
     <!--spring-cloud-starter-circuitbreaker-reactor-resilience4j版本-->
     <spring-cloud-starter-circuitbreaker-reactor-resilience4j.version>3.3.0</spring-cloud-starter-circuitbreaker-reactor-resilience4j.version>
+    <!--dubbo-serialization版本-->
+    <dubbo-serialization.version>3.3.1</dubbo-serialization.version>
+    <!--kryo版本-->
+    <kryo.version>5.6.2</kryo.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+        <version>${spring-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.esotericsoftware</groupId>
+        <artifactId>kryo</artifactId>
+        <version>${kryo.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.dubbo.extensions</groupId>
+        <artifactId>dubbo-serialization-fury</artifactId>
+        <version>${dubbo-serialization.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.dubbo.extensions</groupId>
+        <artifactId>dubbo-serialization-kryo</artifactId>
+        <version>${dubbo-serialization.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
