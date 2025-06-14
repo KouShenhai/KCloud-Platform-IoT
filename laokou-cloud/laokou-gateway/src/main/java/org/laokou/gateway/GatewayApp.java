@@ -64,7 +64,7 @@ public class GatewayApp implements CommandLineRunner {
 	// @formatter:off
     /// ```properties
     /// -Dserver.port=5555
-	/// -XX:+UseZGC
+	/// -XX:+UseG1GC
 	///
     /// ```
     /// ```properties
