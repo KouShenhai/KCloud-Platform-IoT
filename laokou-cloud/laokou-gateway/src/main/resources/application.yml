@@ -120,6 +120,7 @@ spring:
     gateway:
       server:
         webflux:
+          enabled: true
           discovery:
             locator:
               # 关闭动态生成路由 => DiscoveryClientRouteDefinitionLocator
