@@ -18,12 +18,10 @@
 package org.laokou.gateway.config;
 
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.Assert;
 import reactor.core.publisher.Mono;
-
-import java.net.InetSocketAddress;
 
 /**
  * @author laokou
@@ -32,12 +30,8 @@ import java.net.InetSocketAddress;
 public class RequestRateLimiterConfig {
 
 	@Bean(value = "ipKeyResolver")
-	public KeyResolver ipKeyResolver() {
-		return exchange -> {
-			InetSocketAddress socketAddress = exchange.getRequest().getRemoteAddress();
-			Assert.notNull(socketAddress, "socketAddress can not be null");
-			return Mono.just(socketAddress.getAddress().getHostAddress());
-		};
+	public KeyResolver ipKeyResolver(RemoteAddressResolver remoteAddressResolver) {
+		return exchange -> Mono.just(remoteAddressResolver.resolve(exchange).getAddress().getHostAddress());
 	}
 
 }

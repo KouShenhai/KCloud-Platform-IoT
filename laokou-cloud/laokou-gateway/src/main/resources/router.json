@@ -32,6 +32,14 @@
         }
       },
       {
+        "name": "RequestRateLimiter",
+        "args": {
+          "key-resolver": "#{@ipKeyResolver}",
+          "redis-rate-limiter.replenishRate": "10000",
+          "redis-rate-limiter.burstCapacity": "30000"
+        }
+      },
+      {
         "name": "CircuitBreaker",
         "args": {
           "name": "default",
@@ -74,6 +82,14 @@
         "args": {
           "_genkey_0": "/admin/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
+        }
+      },
+      {
+        "name": "RequestRateLimiter",
+        "args": {
+          "key-resolver": "#{@ipKeyResolver}",
+          "redis-rate-limiter.replenishRate": "10000",
+          "redis-rate-limiter.burstCapacity": "30000"
         }
       },
       {
@@ -122,6 +138,14 @@
         }
       },
       {
+        "name": "RequestRateLimiter",
+        "args": {
+          "key-resolver": "#{@ipKeyResolver}",
+          "redis-rate-limiter.replenishRate": "10000",
+          "redis-rate-limiter.burstCapacity": "30000"
+        }
+      },
+      {
         "name": "CircuitBreaker",
         "args": {
           "name": "default",
@@ -167,6 +191,14 @@
         }
       },
       {
+        "name": "RequestRateLimiter",
+        "args": {
+          "key-resolver": "#{@ipKeyResolver}",
+          "redis-rate-limiter.replenishRate": "10000",
+          "redis-rate-limiter.burstCapacity": "30000"
+        }
+      },
+      {
         "name": "CircuitBreaker",
         "args": {
           "name": "default",
@@ -209,6 +241,14 @@
         "args": {
           "_genkey_0": "/iot-websocket/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
+        }
+      },
+      {
+        "name": "RequestRateLimiter",
+        "args": {
+          "key-resolver": "#{@ipKeyResolver}",
+          "redis-rate-limiter.replenishRate": "10000",
+          "redis-rate-limiter.burstCapacity": "30000"
         }
       },
       {

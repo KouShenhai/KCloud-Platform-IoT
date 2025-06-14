@@ -431,6 +431,21 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
           "_genkey_0": "/auth/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
+      },
+	  {
+        "name": "RequestRateLimiter",
+        "args": {
+          "key-resolver": "#{@ipKeyResolver}",
+          "redis-rate-limiter.replenishRate": "10000",
+          "redis-rate-limiter.burstCapacity": "30000"
+        }
+      },
+      {
+        "name": "CircuitBreaker",
+        "args": {
+          "name": "default",
+          "fallbackUri": "forward:/fallback"
+        }
       }
     ],
     "metadata": {
@@ -586,6 +601,21 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
           "_genkey_0": "/auth/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
+      },
+	  {
+        "name": "RequestRateLimiter",
+        "args": {
+          "key-resolver": "#{@ipKeyResolver}",
+          "redis-rate-limiter.replenishRate": "10000",
+          "redis-rate-limiter.burstCapacity": "30000"
+        }
+      },
+      {
+        "name": "CircuitBreaker",
+        "args": {
+          "name": "default",
+          "fallbackUri": "forward:/fallback"
+        }
       }
     ],
     "metadata": {
@@ -740,6 +770,21 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
         "args": {
           "_genkey_0": "/auth/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
+        }
+      },
+	  {
+        "name": "RequestRateLimiter",
+        "args": {
+          "key-resolver": "#{@ipKeyResolver}",
+          "redis-rate-limiter.replenishRate": "10000",
+          "redis-rate-limiter.burstCapacity": "30000"
+        }
+      },
+      {
+        "name": "CircuitBreaker",
+        "args": {
+          "name": "default",
+          "fallbackUri": "forward:/fallback"
         }
       }
     ],
