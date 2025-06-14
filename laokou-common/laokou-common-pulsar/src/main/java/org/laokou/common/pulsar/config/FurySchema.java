@@ -32,12 +32,12 @@ public class FurySchema extends AbstractSchema<Object> {
 
 	@Override
 	public byte[] encode(Object message) {
-		return FuryFactory.getFuryFactory().serialize(message);
+		return FuryFactory.INSTANCE.serialize(message);
 	}
 
 	@Override
 	public Object decode(byte[] bytes) {
-		return FuryFactory.getFuryFactory().deserialize(bytes);
+		return FuryFactory.INSTANCE.deserialize(bytes);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class FurySchema extends AbstractSchema<Object> {
 
 	@Override
 	public Object decode(ByteBuf byteBuf) {
-		return FuryFactory.getFuryFactory().deserialize(byteBuf.array());
+		return FuryFactory.INSTANCE.deserialize(byteBuf.array());
 	}
 
 }

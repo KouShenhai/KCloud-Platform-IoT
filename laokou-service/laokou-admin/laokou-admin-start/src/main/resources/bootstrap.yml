@@ -59,7 +59,6 @@ dubbo:
     name: dubbo
     port: 0
     serialization: fury
-    prefer-serialization: fury,kryo
   application:
     name: dubbo-${spring.application.name}
     logger: slf4j

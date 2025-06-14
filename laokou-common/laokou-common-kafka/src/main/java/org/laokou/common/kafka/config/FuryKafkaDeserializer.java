@@ -27,7 +27,7 @@ public class FuryKafkaDeserializer implements Deserializer<Object> {
 
 	@Override
 	public Object deserialize(String s, byte[] bytes) {
-		return FuryFactory.getFuryFactory().deserialize(bytes);
+		return FuryFactory.INSTANCE.deserialize(bytes);
 	}
 
 }

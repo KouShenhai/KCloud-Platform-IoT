@@ -29,7 +29,7 @@ import java.nio.charset.StandardCharsets;
  */
 public final class FuryFactory {
 
-	private static final FuryFactory FACTORY = new FuryFactory();
+	public static final FuryFactory INSTANCE = new FuryFactory();
 
 	private final ThreadSafeFury fury = Fury.builder()
 		.withLanguage(Language.JAVA)
@@ -46,11 +46,11 @@ public final class FuryFactory {
 		// .withCompatibleMode(CompatibleMode.COMPATIBLE)
 		// enable async multi-threaded compilation.
 		.withAsyncCompilation(true)
-		.requireClassRegistration(false)
+		.requireClassRegistration(true)
 		.buildThreadSafeFury();
 
-	public static FuryFactory getFuryFactory() {
-		return FACTORY;
+	public <T> void register(Class<T> clazz) {
+		fury.register(clazz);
 	}
 
 	public byte[] serialize(Object object) {

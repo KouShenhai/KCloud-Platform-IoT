@@ -53,12 +53,8 @@
       <artifactId>spring-cloud-starter-bootstrap</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.dubbo</groupId>
-      <artifactId>dubbo-spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.dubbo</groupId>
-      <artifactId>dubbo-nacos-spring-boot-starter</artifactId>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-dubbo</artifactId>
     </dependency>
   </dependencies>
 

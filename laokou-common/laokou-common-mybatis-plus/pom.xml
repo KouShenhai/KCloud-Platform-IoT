@@ -73,12 +73,8 @@
       <artifactId>spring-retry</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.fury</groupId>
-      <artifactId>fury-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.fury</groupId>
-      <artifactId>fury-extensions</artifactId>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-fury</artifactId>
     </dependency>
     <dependency>
       <groupId>com.baomidou</groupId>

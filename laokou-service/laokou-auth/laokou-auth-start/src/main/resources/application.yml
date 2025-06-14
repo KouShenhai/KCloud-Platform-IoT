@@ -227,7 +227,7 @@ spring:
       # 值的序列化方式
       value-deserializer: org.laokou.common.kafka.config.FuryKafkaDeserializer
       # 单位拉取量
-      fetch-min-size: 1048576
+      fetch-min-size: 102400
     producer:
       # 发生错误后，消息重发的次数。
       retries: 5

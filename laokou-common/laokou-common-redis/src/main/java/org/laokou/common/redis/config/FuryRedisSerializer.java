@@ -31,12 +31,12 @@ public final class FuryRedisSerializer implements RedisSerializer<Object> {
 
 	@Override
 	public byte[] serialize(Object obj) throws SerializationException {
-		return FuryFactory.getFuryFactory().serialize(obj);
+		return FuryFactory.INSTANCE.serialize(obj);
 	}
 
 	@Override
 	public Object deserialize(byte[] bytes) throws SerializationException {
-		return FuryFactory.getFuryFactory().deserialize(bytes);
+		return FuryFactory.INSTANCE.deserialize(bytes);
 	}
 
 	public static StringRedisSerializer getStringRedisSerializer() {

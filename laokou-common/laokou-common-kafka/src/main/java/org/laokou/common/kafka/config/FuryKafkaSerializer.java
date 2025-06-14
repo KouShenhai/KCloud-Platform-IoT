@@ -27,7 +27,7 @@ public class FuryKafkaSerializer implements Serializer<Object> {
 
 	@Override
 	public byte[] serialize(String s, Object o) {
-		return FuryFactory.getFuryFactory().serialize(o);
+		return FuryFactory.INSTANCE.serialize(o);
 	}
 
 }

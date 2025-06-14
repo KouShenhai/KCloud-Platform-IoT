@@ -25,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.laokou.auth.model.CaptchaValidator;
 import org.laokou.auth.model.PasswordValidator;
+import org.laokou.common.fury.config.FuryFactory;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -88,6 +89,11 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 class OAuth2AuthorizationServerConfig {
 
 	private final RedisUtils redisUtils;
+
+	static {
+		FuryFactory.INSTANCE.register(org.laokou.auth.dto.domainevent.LoginEvent.class);
+		FuryFactory.INSTANCE.register(org.laokou.auth.dto.domainevent.SendCaptchaEvent.class);
+	}
 
 	private static void applyDefaultSecurity(HttpSecurity http) throws Exception {
 		// @formatter:off
