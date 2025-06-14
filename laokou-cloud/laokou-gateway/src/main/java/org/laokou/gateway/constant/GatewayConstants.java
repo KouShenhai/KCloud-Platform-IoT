@@ -30,4 +30,9 @@ public final class GatewayConstants {
 	 */
 	public static final String ROUTER_NOT_EXIST = "S_Gateway_RouterNotExist";
 
+	/**
+	 * 服务已降级.
+	 */
+	public static final String SERVICE_DEGRADED = "S_Resilience4J_ServiceDegraded";
+
 }

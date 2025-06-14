@@ -34,6 +34,8 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 import java.time.Duration;
 
+import static org.laokou.gateway.constant.GatewayConstants.SERVICE_DEGRADED;
+
 /**
  * @author laokou
  */
@@ -46,7 +48,7 @@ public class CircuitBreakerConfig {
 				RequestPredicates.path("/fallback").and(RequestPredicates.accept(MediaType.TEXT_PLAIN)),
 				(request) -> ServerResponse.status(HttpStatus.SC_OK)
 					.contentType(MediaType.APPLICATION_JSON)
-					.body(BodyInserters.fromValue(Result.fail("S_Resilience4J_ServiceDegraded", "服务已降级"))));
+					.body(BodyInserters.fromValue(Result.fail(SERVICE_DEGRADED))));
 	}
 
 	@Bean
