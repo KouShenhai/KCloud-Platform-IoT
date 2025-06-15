@@ -34,7 +34,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 import java.time.Duration;
 
-import static org.laokou.gateway.constant.GatewayConstants.SERVICE_DEGRADED;
+import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAILABLE;
 
 /**
  * @author laokou
@@ -48,7 +48,7 @@ public class CircuitBreakerConfig {
 				RequestPredicates.path("/fallback").and(RequestPredicates.accept(MediaType.TEXT_PLAIN)),
 				(request) -> ServerResponse.status(HttpStatus.SC_OK)
 					.contentType(MediaType.APPLICATION_JSON)
-					.body(BodyInserters.fromValue(Result.fail(SERVICE_DEGRADED))));
+					.body(BodyInserters.fromValue(Result.fail(SERVICE_UNAVAILABLE))));
 	}
 
 	@Bean
