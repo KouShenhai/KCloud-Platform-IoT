@@ -33,7 +33,7 @@
     <!--spring-boot版本-->
     <spring-boot.version>3.5.1-SNAPSHOT</spring-boot.version>
     <!--postgresql版本-->
-    <postgresql.version>42.7.6</postgresql.version>
+    <postgresql.version>42.7.7</postgresql.version>
     <!--grpc版本-->
     <grpc.version>1.73.0</grpc.version>
     <!--client-java版本-->
