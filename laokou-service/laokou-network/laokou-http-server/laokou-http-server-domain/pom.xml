@@ -7,6 +7,6 @@
     <version>3.5.1</version>
   </parent>
 
-  <artifactId>laokou-http-domain</artifactId>
+  <artifactId>laokou-http-server-domain</artifactId>
 
 </project>
