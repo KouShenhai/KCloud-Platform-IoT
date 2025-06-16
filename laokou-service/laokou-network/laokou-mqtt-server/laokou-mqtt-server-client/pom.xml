@@ -5,19 +5,21 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.laokou</groupId>
-    <artifactId>laokou-service</artifactId>
+    <artifactId>laokou-mqtt-server</artifactId>
     <version>3.5.1</version>
   </parent>
 
-  <artifactId>laokou-network</artifactId>
-  <version>3.5.1</version>
-  <packaging>pom</packaging>
+  <artifactId>laokou-mqtt-server-client</artifactId>
 
-  <modules>
-    <module>laokou-http-server</module>
-    <module>laokou-tcp-server</module>
-    <module>laokou-udp-server</module>
-    <module>laokou-mqtt-server</module>
-  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-reactor</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-i18n</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>
