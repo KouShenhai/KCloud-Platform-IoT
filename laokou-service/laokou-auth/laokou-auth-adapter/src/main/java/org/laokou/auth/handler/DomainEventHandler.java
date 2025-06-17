@@ -55,7 +55,7 @@ public class DomainEventHandler {
 
 	private final NoticeLogServiceI noticeLogServiceI;
 
-	@KafkaListener(topics = LOGIN_LOG_TOPIC, groupId = LOGIN_LOG_CONSUMER_GROUP + "-${spring.kafka.consumer.group-id}")
+	@KafkaListener(topics = LOGIN_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + LOGIN_LOG_CONSUMER_GROUP)
 	public void handleLoginLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
@@ -69,7 +69,7 @@ public class DomainEventHandler {
 	}
 
 	@KafkaListener(topics = MAIL_CAPTCHA_TOPIC,
-			groupId = MAIL_CAPTCHA_CONSUMER_GROUP + "-${spring.kafka.consumer.group-id}")
+			groupId = "${spring.kafka.consumer.group-id}-" + MAIL_CAPTCHA_CONSUMER_GROUP)
 	public void handleMailCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
@@ -84,7 +84,7 @@ public class DomainEventHandler {
 	}
 
 	@KafkaListener(topics = MOBILE_CAPTCHA_TOPIC,
-			groupId = MOBILE_CAPTCHA_CONSUMER_GROUP + "-${spring.kafka.consumer.group-id}")
+			groupId = "${spring.kafka.consumer.group-id}-" + MOBILE_CAPTCHA_CONSUMER_GROUP)
 	public void handleMobileCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment)
 			throws JsonProcessingException {
 		try {
