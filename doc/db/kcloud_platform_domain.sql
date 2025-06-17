@@ -69,7 +69,7 @@ CREATE TABLE "public"."sys_login_log" (
 "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
-"tenant_id" int8 NOT NULL DEFAULT 0,
+"tenant_id" int8,
 "username" varchar(200) NOT NULL,
 "ip" varchar(50) NOT NULL,
 "address" varchar(200) NOT NULL,

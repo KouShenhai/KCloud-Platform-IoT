@@ -91,7 +91,7 @@ public class AuthA extends AggregateRoot {
 	 * 用户实体.
 	 */
 	@Getter
-	private UserE user;
+	private UserE user = DomainFactory.getUser();
 
 	/**
 	 * 菜单权限标识.
@@ -138,23 +138,23 @@ public class AuthA extends AggregateRoot {
 	private AuthParamValidator usernamePasswordAuthParamValidator;
 
 	public void createUserByUsernamePassword() throws Exception {
-		this.user = getUser(this.username, EMPTY, EMPTY);
+		fillUserValue(this.username, EMPTY, EMPTY);
 	}
 
 	public void createUserByMobile() throws Exception {
-		this.user = getUser(EMPTY, EMPTY, this.captcha.uuid());
+		fillUserValue(EMPTY, EMPTY, this.captcha.uuid());
 	}
 
 	public void createUserByMail() throws Exception {
-		this.user = getUser(EMPTY, this.captcha.uuid(), EMPTY);
+		fillUserValue(EMPTY, this.captcha.uuid(), EMPTY);
 	}
 
 	public void createUserByAuthorizationCode() throws Exception {
-		this.user = getUser(this.username, EMPTY, EMPTY);
+		fillUserValue(this.username, EMPTY, EMPTY);
 	}
 
 	public void createUserByTest() throws Exception {
-		this.user = getUser(this.username, EMPTY, EMPTY);
+		fillUserValue(this.username, EMPTY, EMPTY);
 	}
 
 	public void getTenantId(Long tenantId) {
@@ -280,12 +280,10 @@ public class AuthA extends AggregateRoot {
 		};
 	}
 
-	private UserE getUser(String username, String mail, String mobile) throws Exception {
-		UserE userE = DomainFactory.getUser();
-		userE.setUsername(AESUtils.encrypt(username));
-		userE.setMail(AESUtils.encrypt(mail));
-		userE.setMobile(AESUtils.encrypt(mobile));
-		return userE;
+	private void fillUserValue(String username, String mail, String mobile) throws Exception {
+		this.user.setUsername(AESUtils.encrypt(username));
+		this.user.setMail(AESUtils.encrypt(mail));
+		this.user.setMobile(AESUtils.encrypt(mobile));
 	}
 
 }

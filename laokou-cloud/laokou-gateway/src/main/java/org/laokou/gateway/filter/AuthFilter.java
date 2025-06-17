@@ -202,7 +202,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 					}
 				}
 				catch (Exception e) {
-					log.error("用户名密码认证模式，错误信息：{}", e.getMessage());
+					log.error("用户名密码RSA解密失败【用户名密码认证模式】，错误信息：{}", e.getMessage());
 				}
 			}
 			return Mono.just(MapUtils.parseParamterString(paramMap));

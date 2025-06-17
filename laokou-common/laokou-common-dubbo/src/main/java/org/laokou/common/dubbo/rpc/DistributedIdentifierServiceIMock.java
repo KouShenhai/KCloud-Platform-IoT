@@ -30,7 +30,7 @@ public class DistributedIdentifierServiceIMock implements DistributedIdentifierS
 	@Override
 	public Result<Long> generateSnowflake() {
 		log.error("调用获取分布式ID失败，请检查Dubbo服务");
-		return Result.ok(System.currentTimeMillis());
+		return Result.ok(System.nanoTime());
 	}
 
 }
