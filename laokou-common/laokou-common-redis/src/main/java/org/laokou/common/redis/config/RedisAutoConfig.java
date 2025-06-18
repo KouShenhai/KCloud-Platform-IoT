@@ -27,8 +27,8 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import static org.laokou.common.redis.config.FuryRedisSerializer.furyRedisSerializer;
-import static org.laokou.common.redis.config.FuryRedisSerializer.getStringRedisSerializer;
+import static org.laokou.common.redis.config.ForyRedisSerializer.foryRedisSerializer;
+import static org.laokou.common.redis.config.ForyRedisSerializer.getStringRedisSerializer;
 
 /**
  * Redis配置.
@@ -49,18 +49,18 @@ public class RedisAutoConfig {
 	public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(lettuceConnectionFactory);
-		// fury序列化
-		FuryRedisSerializer furyRedisSerializer = furyRedisSerializer();
+		// fory序列化
+		ForyRedisSerializer foryRedisSerializer = foryRedisSerializer();
 		// string序列化
 		StringRedisSerializer stringRedisSerializer = getStringRedisSerializer();
 		// key
 		redisTemplate.setKeySerializer(stringRedisSerializer);
 		// value
-		redisTemplate.setValueSerializer(furyRedisSerializer);
+		redisTemplate.setValueSerializer(foryRedisSerializer);
 		// hash-key
 		redisTemplate.setHashKeySerializer(stringRedisSerializer);
 		// hash-value
-		redisTemplate.setHashValueSerializer(furyRedisSerializer);
+		redisTemplate.setHashValueSerializer(foryRedisSerializer);
 		// 初始化
 		redisTemplate.afterPropertiesSet();
 		return redisTemplate;

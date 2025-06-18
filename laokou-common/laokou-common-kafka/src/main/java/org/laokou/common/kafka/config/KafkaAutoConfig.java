@@ -66,7 +66,7 @@ public class KafkaAutoConfig {
 		props.put(ProducerConfig.BATCH_SIZE_CONFIG, (int) producer.getBatchSize().toBytes());
 		props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, (int) producer.getBufferMemory().toBytes());
 		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, FuryKafkaSerializer.class);
+		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ForyKafkaSerializer.class);
 		props.put(ProducerConfig.LINGER_MS_CONFIG, 50);
 		props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, producer.getCompressionType());
 		return SenderOptions.create(props);
@@ -82,7 +82,7 @@ public class KafkaAutoConfig {
 		props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, consumer.getMaxPollRecords());
 		props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, consumer.getEnableAutoCommit());
 		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, FuryKafkaDeserializer.class);
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ForyKafkaDeserializer.class);
 		props.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, (int) consumer.getFetchMinSize().toBytes());
 		return ReceiverOptions.create(props);
 	}

@@ -91,8 +91,8 @@
     <knife4j.version>4.5.0</knife4j.version>
     <!--taos-jdbcdriver版本-->
     <taos-jdbcdriver.version>3.6.3</taos-jdbcdriver.version>
-    <!--fury-core版本-->
-    <fury-core.version>0.11.0-SNAPSHOT</fury-core.version>
+    <!--fory-core版本-->
+    <fory-core.version>0.11.0</fory-core.version>
     <!--browscap-java版本-->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!--liquibase-core版本-->
@@ -255,7 +255,7 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-fury</artifactId>
+        <artifactId>laokou-common-fory</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
@@ -819,14 +819,14 @@
         <version>${browscap-java.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.fury</groupId>
-        <artifactId>fury-core</artifactId>
-        <version>${fury-core.version}</version>
+        <groupId>org.apache.fory</groupId>
+        <artifactId>fory-core</artifactId>
+        <version>${fory-core.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.fury</groupId>
-        <artifactId>fury-extensions</artifactId>
-        <version>${fury-core.version}</version>
+        <groupId>org.apache.fory</groupId>
+        <artifactId>fory-extensions</artifactId>
+        <version>${fory-core.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>

@@ -19,7 +19,7 @@ package org.laokou.mqtt.server.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.pulsar.client.api.MessageId;
-import org.laokou.common.pulsar.config.FurySchema;
+import org.laokou.common.pulsar.config.ForySchema;
 import org.laokou.common.vertx.model.MqttMessageEnum;
 import org.laokou.common.vertx.model.PropertyMessage;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
@@ -51,7 +51,7 @@ public class ReactiveUpPropertyReportMqttMessageHandler implements ReactiveMqttM
 		String topic = org.laokou.common.pulsar.util.TopicUtils.getTopic("laokou", "mqtt",
 				upPropertyReport.getMqTopic());
 		return reactivePulsarTemplate.send(topic, new PropertyMessage(mqttMessage.getTopic(),
-				mqttMessage.getPayload().toString(), upPropertyReport.getCode()), FurySchema.INSTANCE);
+				mqttMessage.getPayload().toString(), upPropertyReport.getCode()), ForySchema.INSTANCE);
 	}
 
 }

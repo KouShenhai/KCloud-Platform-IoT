@@ -19,7 +19,7 @@ package org.laokou.gateway.repository;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.fury.config.FuryFactory;
+import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.nacos.util.ConfigUtils;
@@ -56,9 +56,9 @@ import static org.laokou.gateway.constant.GatewayConstants.ROUTER_NOT_EXIST;
 public class NacosRouteDefinitionRepository implements RouteDefinitionRepository, ApplicationEventPublisherAware {
 
 	static {
-		FuryFactory.INSTANCE.register(org.springframework.cloud.gateway.route.RouteDefinition.class);
-		FuryFactory.INSTANCE.register(org.springframework.cloud.gateway.filter.FilterDefinition.class);
-		FuryFactory.INSTANCE.register(org.springframework.cloud.gateway.handler.predicate.PredicateDefinition.class);
+		ForyFactory.INSTANCE.register(org.springframework.cloud.gateway.route.RouteDefinition.class);
+		ForyFactory.INSTANCE.register(org.springframework.cloud.gateway.filter.FilterDefinition.class);
+		ForyFactory.INSTANCE.register(org.springframework.cloud.gateway.handler.predicate.PredicateDefinition.class);
 	}
 
 	/**

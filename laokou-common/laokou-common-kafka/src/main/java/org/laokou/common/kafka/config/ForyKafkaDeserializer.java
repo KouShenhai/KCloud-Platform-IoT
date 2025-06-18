@@ -17,17 +17,17 @@
 
 package org.laokou.common.kafka.config;
 
-import org.apache.kafka.common.serialization.Serializer;
-import org.laokou.common.fury.config.FuryFactory;
+import org.apache.kafka.common.serialization.Deserializer;
+import org.laokou.common.fory.config.ForyFactory;
 
 /**
  * @author laokou
  */
-public class FuryKafkaSerializer implements Serializer<Object> {
+public class ForyKafkaDeserializer implements Deserializer<Object> {
 
 	@Override
-	public byte[] serialize(String s, Object o) {
-		return FuryFactory.INSTANCE.serialize(o);
+	public Object deserialize(String s, byte[] bytes) {
+		return ForyFactory.INSTANCE.deserialize(bytes);
 	}
 
 }

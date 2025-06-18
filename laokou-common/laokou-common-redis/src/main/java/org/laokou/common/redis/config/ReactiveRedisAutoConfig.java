@@ -31,8 +31,8 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import reactor.core.publisher.Flux;
 
-import static org.laokou.common.redis.config.FuryRedisSerializer.furyRedisSerializer;
-import static org.laokou.common.redis.config.FuryRedisSerializer.getStringRedisSerializer;
+import static org.laokou.common.redis.config.ForyRedisSerializer.foryRedisSerializer;
+import static org.laokou.common.redis.config.ForyRedisSerializer.getStringRedisSerializer;
 
 /**
  * @author laokou
@@ -46,16 +46,16 @@ public class ReactiveRedisAutoConfig {
 	@ConditionalOnMissingBean(ReactiveRedisTemplate.class)
 	public ReactiveRedisTemplate<String, Object> reactiveRedisTemplate(
 			ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
-		// fury序列化
-		FuryRedisSerializer furyRedisSerializer = furyRedisSerializer();
+		// fory序列化
+		ForyRedisSerializer foryRedisSerializer = foryRedisSerializer();
 		// string序列化
 		StringRedisSerializer stringRedisSerializer = getStringRedisSerializer();
 		RedisSerializationContext<String, Object> serializationContext = RedisSerializationContext
 			.<String, Object>newSerializationContext()
 			.key(stringRedisSerializer)
-			.value(furyRedisSerializer)
+			.value(foryRedisSerializer)
 			.hashKey(stringRedisSerializer)
-			.hashValue(furyRedisSerializer)
+			.hashValue(foryRedisSerializer)
 			.build();
 		return new ReactiveRedisTemplate<>(reactiveRedisConnectionFactory, serializationContext);
 	}

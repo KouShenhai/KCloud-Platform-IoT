@@ -9,16 +9,16 @@
     <version>3.5.1</version>
   </parent>
 
-  <artifactId>laokou-common-fury</artifactId>
+  <artifactId>laokou-common-fory</artifactId>
 
   <dependencies>
     <dependency>
-      <groupId>org.apache.fury</groupId>
-      <artifactId>fury-core</artifactId>
+      <groupId>org.apache.fory</groupId>
+      <artifactId>fory-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.fury</groupId>
-      <artifactId>fury-extensions</artifactId>
+      <groupId>org.apache.fory</groupId>
+      <artifactId>fory-extensions</artifactId>
     </dependency>
   </dependencies>
 

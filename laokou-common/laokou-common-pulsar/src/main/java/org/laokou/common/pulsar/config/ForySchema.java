@@ -21,23 +21,23 @@ import org.apache.pulsar.client.impl.schema.AbstractSchema;
 import org.apache.pulsar.common.schema.SchemaInfo;
 import org.apache.pulsar.common.schema.SchemaType;
 import org.apache.pulsar.shade.io.netty.buffer.ByteBuf;
-import org.laokou.common.fury.config.FuryFactory;
+import org.laokou.common.fory.config.ForyFactory;
 
 /**
  * @author laokou
  */
-public class FurySchema extends AbstractSchema<Object> {
+public class ForySchema extends AbstractSchema<Object> {
 
-	public static final FurySchema INSTANCE = new FurySchema();
+	public static final ForySchema INSTANCE = new ForySchema();
 
 	@Override
 	public byte[] encode(Object message) {
-		return FuryFactory.INSTANCE.serialize(message);
+		return ForyFactory.INSTANCE.serialize(message);
 	}
 
 	@Override
 	public Object decode(byte[] bytes) {
-		return FuryFactory.INSTANCE.deserialize(bytes);
+		return ForyFactory.INSTANCE.deserialize(bytes);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class FurySchema extends AbstractSchema<Object> {
 
 	@Override
 	public Object decode(ByteBuf byteBuf) {
-		return FuryFactory.INSTANCE.deserialize(byteBuf.array());
+		return ForyFactory.INSTANCE.deserialize(byteBuf.array());
 	}
 
 }

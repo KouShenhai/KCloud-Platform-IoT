@@ -74,7 +74,7 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-fury</artifactId>
+      <artifactId>laokou-common-fory</artifactId>
     </dependency>
     <dependency>
       <groupId>com.baomidou</groupId>

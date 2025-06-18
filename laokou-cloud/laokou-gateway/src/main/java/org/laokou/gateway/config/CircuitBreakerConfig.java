@@ -34,6 +34,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 import java.time.Duration;
 
+import static io.github.resilience4j.circuitbreaker.CircuitBreakerConfig.SlidingWindowType.COUNT_BASED;
 import static org.laokou.common.i18n.common.exception.StatusCode.SERVICE_UNAVAILABLE;
 
 /**
@@ -54,30 +55,29 @@ public class CircuitBreakerConfig {
 	@Bean
 	public Customizer<ReactiveResilience4JCircuitBreakerFactory> reactiveResilience4JCircuitBreakerFactoryCustomizer() {
 		return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
-			// 15秒后超时时间
+			// 超时时间
 			.timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(15)).build())
 			.circuitBreakerConfig(io.github.resilience4j.circuitbreaker.CircuitBreakerConfig.custom()
-				// 失败率阈值调至60%（超过则开启断路器）
-				.failureRateThreshold(60)
-				// 慢调用率阈值60%（超过则开启断路器）
+				// 失败率阈值（超过则开启断路器）
+				.failureRateThreshold(50)
+				// 慢调用率阈值（超过则开启断路器）
 				.slowCallRateThreshold(60)
-				// 慢调用判定时间5s
+				// 慢调用判定时间
 				.slowCallDurationThreshold(Duration.ofSeconds(5))
-				// 断路器开启25秒后进入半开状态
-				.waitDurationInOpenState(Duration.ofSeconds(25))
+				// 断路器开启后等待时间
+				.waitDurationInOpenState(Duration.ofSeconds(5))
 
 				// 基于时间的滑动窗口
-				.slidingWindowType(
-						io.github.resilience4j.circuitbreaker.CircuitBreakerConfig.SlidingWindowType.TIME_BASED)
-				// 10秒统计窗口
-				.slidingWindowSize(10)
-				// 窗口内至少30次调用才计算阈值
-				.minimumNumberOfCalls(30)
+				.slidingWindowType(COUNT_BASED)
+				// 统计窗口大小
+				.slidingWindowSize(30)
+				// 窗口内计算阈值的调用次数
+				.minimumNumberOfCalls(20)
 
-				// 半开状态下允许15次调用
+				// 半开状态下允许调用次数
 				.permittedNumberOfCallsInHalfOpenState(15)
-				// 半开状态最大等待3秒
-				.maxWaitDurationInHalfOpenState(Duration.ofSeconds(3))
+				// 半开状态最大等待时间
+				.maxWaitDurationInHalfOpenState(Duration.ofSeconds(5))
 
 				// 自动切换到半开
 				.automaticTransitionFromOpenToHalfOpenEnabled(true)

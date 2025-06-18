@@ -17,7 +17,7 @@
 
 package org.laokou.common.redis.config;
 
-import org.laokou.common.fury.config.FuryFactory;
+import org.laokou.common.fory.config.ForyFactory;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -27,25 +27,25 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author laokou
  */
-public final class FuryRedisSerializer implements RedisSerializer<Object> {
+public final class ForyRedisSerializer implements RedisSerializer<Object> {
 
 	@Override
 	public byte[] serialize(Object obj) throws SerializationException {
-		return FuryFactory.INSTANCE.serialize(obj);
+		return ForyFactory.INSTANCE.serialize(obj);
 	}
 
 	@Override
 	public Object deserialize(byte[] bytes) throws SerializationException {
-		return FuryFactory.INSTANCE.deserialize(bytes);
+		return ForyFactory.INSTANCE.deserialize(bytes);
 	}
 
 	public static StringRedisSerializer getStringRedisSerializer() {
 		return new Md5DigestStringRedisSerializer(StandardCharsets.UTF_8);
 	}
 
-	public static FuryRedisSerializer furyRedisSerializer() {
+	public static ForyRedisSerializer foryRedisSerializer() {
 		// Json序列化配置
-		return new FuryRedisSerializer();
+		return new ForyRedisSerializer();
 	}
 
 }

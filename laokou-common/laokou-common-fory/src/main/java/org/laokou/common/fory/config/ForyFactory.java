@@ -15,23 +15,23 @@
  *
  */
 
-package org.laokou.common.fury.config;
+package org.laokou.common.fory.config;
 
-import org.apache.fury.Fury;
-import org.apache.fury.ThreadSafeFury;
-import org.apache.fury.config.CompatibleMode;
-import org.apache.fury.config.Language;
+import org.apache.fory.Fory;
+import org.apache.fory.ThreadSafeFory;
+import org.apache.fory.config.CompatibleMode;
+import org.apache.fory.config.Language;
 
 import java.nio.charset.StandardCharsets;
 
 /**
  * @author laokou
  */
-public final class FuryFactory {
+public final class ForyFactory {
 
-	public static final FuryFactory INSTANCE = new FuryFactory();
+	public static final ForyFactory INSTANCE = new ForyFactory();
 
-	private final ThreadSafeFury fury = Fury.builder()
+	private final ThreadSafeFory fory = Fory.builder()
 		.withLanguage(Language.JAVA)
 		// enable reference tracking for shared/circular reference.
 		// Disable it will have better performance if no duplicate reference.
@@ -47,10 +47,10 @@ public final class FuryFactory {
 		// enable async multi-threaded compilation.
 		.withAsyncCompilation(true)
 		.requireClassRegistration(true)
-		.buildThreadSafeFury();
+		.buildThreadSafeFory();
 
 	public <T> void register(Class<T> clazz) {
-		fury.register(clazz);
+		fory.register(clazz);
 	}
 
 	public byte[] serialize(Object object) {
@@ -60,14 +60,14 @@ public final class FuryFactory {
 		if (object instanceof String str) {
 			return str.getBytes(StandardCharsets.UTF_8);
 		}
-		return fury.serialize(object);
+		return fory.serialize(object);
 	}
 
 	public Object deserialize(byte[] bytes) {
 		if (bytes == null) {
 			return null;
 		}
-		return fury.deserialize(bytes);
+		return fory.deserialize(bytes);
 	}
 
 }

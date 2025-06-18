@@ -17,7 +17,7 @@
 
 package org.laokou.common.security.config;
 
-import org.laokou.common.fury.config.FuryFactory;
+import org.laokou.common.fory.config.ForyFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -39,7 +39,7 @@ import static org.springframework.data.redis.core.RedisKeyValueAdapter.EnableKey
 public class OAuth2AuthorizationAutoConfig {
 
 	static {
-		FuryFactory.INSTANCE.register(org.laokou.common.security.util.UserDetails.class);
+		ForyFactory.INSTANCE.register(org.laokou.common.security.util.UserDetails.class);
 	}
 
 	/**

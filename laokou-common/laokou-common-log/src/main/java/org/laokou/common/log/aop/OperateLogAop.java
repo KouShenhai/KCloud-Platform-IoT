@@ -26,7 +26,7 @@ import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.core.util.SpringUtils;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
-import org.laokou.common.fury.config.FuryFactory;
+import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.convertor.OperateLogConvertor;
 import org.laokou.common.log.model.MqEnum;
@@ -57,7 +57,7 @@ public class OperateLogAop {
 	private final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
 
 	static {
-		FuryFactory.INSTANCE.register(org.laokou.common.log.handler.event.OperateEvent.class);
+		ForyFactory.INSTANCE.register(org.laokou.common.log.handler.event.OperateEvent.class);
 	}
 
 	@Around("@annotation(operateLog)")

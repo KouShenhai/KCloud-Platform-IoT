@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
 public class MybatisPlusAutoConfig {
 
 	static {
-		JsqlParserGlobal.setJsqlParseCache(new FurySerialCaffeineJsqlParseCache(
+		JsqlParserGlobal.setJsqlParseCache(new ForySerialCaffeineJsqlParseCache(
 				Caffeine.newBuilder().maximumSize(4096).expireAfterWrite(10, TimeUnit.MINUTES).build()));
 	}
 
