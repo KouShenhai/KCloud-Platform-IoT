@@ -44,7 +44,6 @@ public class UserModifyCmdExe {
 
 	@CommandLog
 	public void executeVoid(UserModifyCmd cmd) throws Exception {
-		// 校验参数
 		UserCO co = cmd.getCo();
 		UserE userE = UserConvertor.toEntity(co.getId(), co.getUsername(), co.getSuperAdmin(), co.getMail(),
 				co.getMobile(), co.getStatus(), co.getAvatar(), false);

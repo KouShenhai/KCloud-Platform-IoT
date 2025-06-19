@@ -45,7 +45,7 @@ public interface RolesServiceI {
 	 * 删除角色.
 	 * @param cmd 删除命令
 	 */
-	void removeRole(RoleRemoveCmd cmd);
+	void removeRole(RoleRemoveCmd cmd) throws InterruptedException;
 
 	/**
 	 * 导入角色.
@@ -63,7 +63,7 @@ public interface RolesServiceI {
 	 * 修改权限.
 	 * @param cmd 修改权限命令
 	 */
-	void modifyRoleAuthority(RoleModifyAuthorityCmd cmd) throws Exception;
+	void modifyRoleAuthority(RoleModifyAuthorityCmd cmd) throws InterruptedException;
 
 	/**
 	 * 分页查询角色.

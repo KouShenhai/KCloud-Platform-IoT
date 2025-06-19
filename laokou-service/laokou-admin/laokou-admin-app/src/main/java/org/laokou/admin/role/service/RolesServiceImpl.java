@@ -64,7 +64,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	@Override
-	public void removeRole(RoleRemoveCmd cmd) {
+	public void removeRole(RoleRemoveCmd cmd) throws InterruptedException {
 		roleRemoveCmdExe.executeVoid(cmd);
 	}
 
@@ -79,7 +79,7 @@ public class RolesServiceImpl implements RolesServiceI {
 	}
 
 	@Override
-	public void modifyRoleAuthority(RoleModifyAuthorityCmd cmd) throws Exception {
+	public void modifyRoleAuthority(RoleModifyAuthorityCmd cmd) throws InterruptedException {
 		roleModifyAuthorityCmdExe.executeVoid(cmd);
 	}
 

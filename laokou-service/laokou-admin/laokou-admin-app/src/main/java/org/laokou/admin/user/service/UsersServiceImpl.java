@@ -70,7 +70,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public void removeUser(UserRemoveCmd cmd) {
+	public void removeUser(UserRemoveCmd cmd) throws InterruptedException {
 		userRemoveCmdExe.executeVoid(cmd);
 	}
 

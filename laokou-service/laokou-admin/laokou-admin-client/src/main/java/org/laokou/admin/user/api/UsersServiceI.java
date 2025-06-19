@@ -46,7 +46,7 @@ public interface UsersServiceI {
 	 * 删除用户.
 	 * @param cmd 删除命令
 	 */
-	void removeUser(UserRemoveCmd cmd);
+	void removeUser(UserRemoveCmd cmd) throws InterruptedException;
 
 	/**
 	 * 导入用户.

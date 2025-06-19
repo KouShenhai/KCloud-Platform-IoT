@@ -24,7 +24,6 @@ import org.laokou.admin.role.dto.RoleModifyAuthorityCmd;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,13 +37,11 @@ public class RoleModifyAuthorityCmdExe {
 
 	private final RoleDomainService roleDomainService;
 
-	private final TransactionalUtils transactionalUtils;
-
 	@CommandLog
-	public void executeVoid(RoleModifyAuthorityCmd cmd) throws Exception {
+	public void executeVoid(RoleModifyAuthorityCmd cmd) throws InterruptedException {
 		RoleCO co = cmd.getCo();
 		RoleE roleE = RoleConvertor.toEntity(co.getId(), co.getDataScope(), co.getMenuIds(), co.getDeptIds());
-		transactionalUtils.executeInTransaction(() -> roleDomainService.updateAuthorityRole(roleE));
+		roleDomainService.updateAuthorityRole(roleE);
 	}
 
 }

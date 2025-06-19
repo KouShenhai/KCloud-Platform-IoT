@@ -20,7 +20,13 @@ package org.laokou.admin.role.ability;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.gateway.*;
 import org.laokou.admin.role.model.RoleE;
+import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 
 /**
  * 角色领域服务.
@@ -47,17 +53,43 @@ public class RoleDomainService {
 		roleGateway.updateRole(roleE);
 	}
 
-	public void updateAuthorityRole(RoleE roleE) {
+	public void updateAuthorityRole(RoleE roleE) throws InterruptedException {
 		roleE.checkRoleParam();
-		roleGateway.updateRole(roleE);
-		roleMenuGateway.updateRoleMenu(roleE);
-		roleDeptGateway.updateRoleDept(roleE);
+		List<Callable<Boolean>> futures = new ArrayList<>(3);
+		futures.add(() -> {
+			roleGateway.updateRole(roleE);
+			return true;
+		});
+		futures.add(() -> {
+			roleMenuGateway.updateRoleMenu(roleE);
+			return true;
+		});
+		futures.add(() -> {
+			roleDeptGateway.updateRoleDept(roleE);
+			return true;
+		});
+		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+			virtualTaskExecutor.invokeAll(futures);
+		}
 	}
 
-	public void deleteRole(Long[] ids) {
-		roleGateway.deleteRole(ids);
-		roleMenuGateway.deleteRoleMenu(ids);
-		roleDeptGateway.deleteRoleDept(ids);
+	public void deleteRole(Long[] ids) throws InterruptedException {
+		List<Callable<Boolean>> futures = new ArrayList<>(3);
+		futures.add(() -> {
+			roleGateway.deleteRole(ids);
+			return true;
+		});
+		futures.add(() -> {
+			roleMenuGateway.deleteRoleMenu(ids);
+			return true;
+		});
+		futures.add(() -> {
+			roleDeptGateway.deleteRoleDept(ids);
+			return true;
+		});
+		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+			virtualTaskExecutor.invokeAll(futures);
+		}
 	}
 
 }

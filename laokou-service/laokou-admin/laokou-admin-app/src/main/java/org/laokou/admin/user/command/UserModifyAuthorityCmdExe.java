@@ -24,7 +24,6 @@ import org.laokou.admin.user.dto.UserModifyAuthorityCmd;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,14 +35,11 @@ public class UserModifyAuthorityCmdExe {
 
 	private final UserDomainService userDomainService;
 
-	private final TransactionalUtils transactionalUtils;
-
 	@CommandLog
 	public void executeVoid(UserModifyAuthorityCmd cmd) throws Exception {
-		// 校验参数
 		UserCO co = cmd.getCo();
 		UserE userE = UserConvertor.toEntity(co.getId(), co.getRoleIds(), co.getDeptIds());
-		transactionalUtils.executeInTransaction(() -> userDomainService.updateAuthorityUser(userE));
+		userDomainService.updateAuthorityUser(userE);
 	}
 
 }

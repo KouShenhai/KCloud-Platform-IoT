@@ -76,7 +76,7 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:remove')")
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@Operation(summary = "删除用户", description = "删除用户")
-	public void removeUser(@RequestBody Long[] ids) {
+	public void removeUser(@RequestBody Long[] ids) throws InterruptedException {
 		usersServiceI.removeUser(new UserRemoveCmd(ids));
 	}
 

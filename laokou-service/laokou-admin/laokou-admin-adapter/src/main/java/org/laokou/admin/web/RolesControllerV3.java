@@ -70,7 +70,7 @@ public class RolesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:role:remove')")
 	@OperateLog(module = "角色管理", operation = "删除角色")
 	@Operation(summary = "删除角色", description = "删除角色")
-	public void removeRole(@RequestBody Long[] ids) {
+	public void removeRole(@RequestBody Long[] ids) throws InterruptedException {
 		rolesServiceI.removeRole(new RoleRemoveCmd(ids));
 	}
 
@@ -94,7 +94,7 @@ public class RolesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:role:modify')")
 	@OperateLog(module = "用户管理", operation = "修改角色权限")
 	@Operation(summary = "修改角色权限", description = "修改角色权限")
-	public void modifyRoleAuthority(@RequestBody RoleModifyAuthorityCmd cmd) throws Exception {
+	public void modifyRoleAuthority(@RequestBody RoleModifyAuthorityCmd cmd) throws InterruptedException {
 		rolesServiceI.modifyRoleAuthority(cmd);
 	}
 

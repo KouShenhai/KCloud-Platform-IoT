@@ -2,6 +2,18 @@
 
 [source,shell]
 ----
+pip install --upgrade pip
+
+pip install virtualenv
+
+# 创建虚拟环境
+virtualenv -p python3.12 tf_env
+
+# 激活环境【windows os】
+tf_env\Scripts\activate
+
 pip install -r requirements.txt
+
+pip install tensorflow
 ----
 

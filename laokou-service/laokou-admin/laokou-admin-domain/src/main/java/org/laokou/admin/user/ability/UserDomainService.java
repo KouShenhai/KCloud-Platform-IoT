@@ -20,7 +20,13 @@ package org.laokou.admin.user.ability;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.gateway.*;
 import org.laokou.admin.user.model.UserE;
+import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 
 /**
  * 用户领域服务.
@@ -62,14 +68,37 @@ public class UserDomainService {
 	public void updateAuthorityUser(UserE userE) throws Exception {
 		// 校验用户参数
 		userE.checkUserParam();
-		userRoleGateway.updateUserRole(userE);
-		userDeptGateway.updateUserDept(userE);
+		List<Callable<Boolean>> futures = new ArrayList<>(2);
+		futures.add(() -> {
+			userRoleGateway.updateUserRole(userE);
+			return true;
+		});
+		futures.add(() -> {
+			userDeptGateway.updateUserDept(userE);
+			return true;
+		});
+		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+			virtualTaskExecutor.invokeAll(futures);
+		}
 	}
 
-	public void deleteUser(Long[] ids) {
-		userGateway.deleteUser(ids);
-		userRoleGateway.deleteUserRole(ids);
-		userDeptGateway.deleteUserDept(ids);
+	public void deleteUser(Long[] ids) throws InterruptedException {
+		List<Callable<Boolean>> futures = new ArrayList<>(3);
+		futures.add(() -> {
+			userGateway.deleteUser(ids);
+			return true;
+		});
+		futures.add(() -> {
+			userRoleGateway.deleteUserRole(ids);
+			return true;
+		});
+		futures.add(() -> {
+			userDeptGateway.deleteUserDept(ids);
+			return true;
+		});
+		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+			virtualTaskExecutor.invokeAll(futures);
+		}
 	}
 
 }
