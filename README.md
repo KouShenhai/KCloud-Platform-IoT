@@ -197,7 +197,6 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
         └── laokou-common-kafka                    --- 消息组件
         └── laokou-common-log4j2                   --- 日志组件
         └── laokou-common-tenant                   --- 租户组件
-        └── laokou-common-mongodb                  --- 报表组件
         └── laokou-common-algorithm                --- 算法组件
         └── laokou-common-prometheus               --- 监控组件
         └── laokou-common-openapi-doc              --- 文档组件
