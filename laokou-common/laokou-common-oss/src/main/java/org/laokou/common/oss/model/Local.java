@@ -15,24 +15,29 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.common.oss.model;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.oss.model.FileInfo11;
-import org.laokou.common.oss.model.OssInfo;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
+import lombok.Data;
 
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class StorageTemplate {
+@Data
+final class Local extends BaseOss {
 
-	public Result<String> uploadOss(FileInfo11 fileInfo11, OssInfo ossInfo)
-			throws IOException, NoSuchAlgorithmException {
-		return null;
-	}
+	/**
+	 * 本地存储路径.
+	 */
+	private String path;
+
+	/**
+	 * 本地存储域名.
+	 */
+	private String domain;
+
+	/**
+	 * 本地存储目录.
+	 */
+	private String directory;
 
 }

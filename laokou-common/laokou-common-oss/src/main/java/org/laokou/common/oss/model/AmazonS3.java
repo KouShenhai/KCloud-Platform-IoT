@@ -15,24 +15,44 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.common.oss.model;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.oss.model.FileInfo11;
-import org.laokou.common.oss.model.OssInfo;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
+import lombok.Data;
 
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class StorageTemplate {
+@Data
+final class AmazonS3 extends BaseOss {
 
-	public Result<String> uploadOss(FileInfo11 fileInfo11, OssInfo ossInfo)
-			throws IOException, NoSuchAlgorithmException {
-		return null;
-	}
+	/**
+	 * 终端地址.
+	 */
+	private String endpoint;
+
+	/**
+	 * 区域.
+	 */
+	private String region;
+
+	/**
+	 * 访问密钥.
+	 */
+	private String accessKey;
+
+	/**
+	 * 用户密钥.
+	 */
+	private String secretKey;
+
+	/**
+	 * 桶名.
+	 */
+	private String bucketName;
+
+	/**
+	 * 路径样式访问 1已开启 0未启用.
+	 */
+	private Integer pathStyleAccessEnabled;
 
 }

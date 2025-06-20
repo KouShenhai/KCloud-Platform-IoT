@@ -27,7 +27,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import org.laokou.common.oss.model.FileInfo;
+import org.laokou.common.oss.model.FileInfo11;
 import org.laokou.common.oss.model.OssInfo;
 import java.net.URL;
 
@@ -36,8 +36,8 @@ import java.net.URL;
  */
 public class AmazonS3Storage extends AbstractStorage<AmazonS3> {
 
-	public AmazonS3Storage(FileInfo fileInfo, OssInfo ossInfo) {
-		super(fileInfo, ossInfo);
+	public AmazonS3Storage(FileInfo11 fileInfo11, OssInfo ossInfo) {
+		super(fileInfo11, ossInfo);
 	}
 
 	@Override
@@ -73,18 +73,18 @@ public class AmazonS3Storage extends AbstractStorage<AmazonS3> {
 	protected void upload(AmazonS3 obj) {
 		String bucketName = ossInfo.getBucketName();
 		ObjectMetadata objectMetadata = new ObjectMetadata();
-		objectMetadata.setContentLength(fileInfo.getSize());
-		objectMetadata.setContentType(fileInfo.getContentType());
-		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fileInfo.getName(),
-				fileInfo.getInputStream(), objectMetadata);
-		putObjectRequest.getRequestClientOptions().setReadLimit((int) (fileInfo.getSize() + 1));
+		objectMetadata.setContentLength(fileInfo11.getSize());
+		objectMetadata.setContentType(fileInfo11.getContentType());
+		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fileInfo11.getName(),
+				fileInfo11.getInputStream(), objectMetadata);
+		putObjectRequest.getRequestClientOptions().setReadLimit((int) (fileInfo11.getSize() + 1));
 		obj.putObject(putObjectRequest);
 	}
 
 	@Override
 	protected String getUrl(AmazonS3 obj) {
 		String bucketName = ossInfo.getBucketName();
-		URL url = obj.getUrl(bucketName, fileInfo.getName());
+		URL url = obj.getUrl(bucketName, fileInfo11.getName());
 		return url.toString();
 	}
 

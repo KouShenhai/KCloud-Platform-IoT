@@ -18,7 +18,7 @@
 package org.laokou.common.oss.template;
 
 import org.laokou.common.core.util.FileUtils;
-import org.laokou.common.oss.model.FileInfo;
+import org.laokou.common.oss.model.FileInfo11;
 import org.laokou.common.oss.model.OssInfo;
 
 import java.io.IOException;
@@ -30,13 +30,13 @@ import java.security.NoSuchAlgorithmException;
  */
 public class LocalStorage extends AbstractStorage<Path> {
 
-	public LocalStorage(FileInfo fileInfo, OssInfo ossInfo) {
-		super(fileInfo, ossInfo);
+	public LocalStorage(FileInfo11 fileInfo11, OssInfo ossInfo) {
+		super(fileInfo11, ossInfo);
 	}
 
 	@Override
 	protected Path getObj() throws IOException {
-		return FileUtils.create(ossInfo.getDirectory(), fileInfo.getName());
+		return FileUtils.create(ossInfo.getDirectory(), fileInfo11.getName());
 	}
 
 	@Override
@@ -45,12 +45,12 @@ public class LocalStorage extends AbstractStorage<Path> {
 
 	@Override
 	protected void upload(Path obj) throws NoSuchAlgorithmException {
-		FileUtils.write(obj, fileInfo.getInputStream(), fileInfo.getSize());
+		FileUtils.write(obj, fileInfo11.getInputStream(), fileInfo11.getSize());
 	}
 
 	@Override
 	protected String getUrl(Path obj) {
-		return ossInfo.getDomain() + ossInfo.getPath() + fileInfo.getName();
+		return ossInfo.getDomain() + ossInfo.getPath() + fileInfo11.getName();
 	}
 
 }

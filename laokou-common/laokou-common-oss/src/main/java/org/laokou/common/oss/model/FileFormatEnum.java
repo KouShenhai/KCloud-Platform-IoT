@@ -18,28 +18,42 @@
 package org.laokou.common.oss.model;
 
 import lombok.Getter;
-import org.laokou.common.i18n.util.EnumParser;
+
+import java.util.List;
 
 @Getter
-public enum StoragePolicyEnum {
+public enum FileFormatEnum {
 
-	LOCAL("local", "本地"),
+	VIDEO("video", "视频") {
+		@Override
+		public List<String> getExtNames() {
+			return List.of(".mp4", ".avi", ".mkv", ".wmv", ".mov", ".flv", ".m3u8");
+		}
+	},
 
-	AMAZON_S3("amazon_s3", "亚马逊S3"),
+	AUDIO("audio", "音频") {
+		@Override
+		public List<String> getExtNames() {
+			return List.of(".mp3", ".wav", ".aac", ".flac", ".ogg");
+		}
+	},
 
-	MINIO("minio", "MinIO");
+	IMAGE("image", "图片") {
+		@Override
+		public List<String> getExtNames() {
+			return List.of(".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp");
+		}
+	};
 
 	private final String code;
 
 	private final String desc;
 
-	StoragePolicyEnum(String code, String desc) {
+	FileFormatEnum(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
-	public static StoragePolicyEnum getByCode(String code) {
-		return EnumParser.parse(StoragePolicyEnum.class, StoragePolicyEnum::getCode, code);
-	}
+	public abstract List<String> getExtNames();
 
 }

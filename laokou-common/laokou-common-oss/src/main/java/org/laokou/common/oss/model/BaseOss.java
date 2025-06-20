@@ -15,24 +15,13 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.common.oss.model;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.oss.model.FileInfo11;
-import org.laokou.common.oss.model.OssInfo;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class StorageTemplate {
-
-	public Result<String> uploadOss(FileInfo11 fileInfo11, OssInfo ossInfo)
-			throws IOException, NoSuchAlgorithmException {
-		return null;
-	}
+abstract class BaseOss implements Serializable {
 
 }

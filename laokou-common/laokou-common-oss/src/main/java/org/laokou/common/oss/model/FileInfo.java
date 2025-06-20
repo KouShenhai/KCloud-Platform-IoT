@@ -17,37 +17,12 @@
 
 package org.laokou.common.oss.model;
 
-import lombok.Data;
-import org.laokou.common.core.util.FileUtils;
-import org.springframework.util.Assert;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.*;
-import java.util.UUID;
+import java.io.InputStream;
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-@Data
-public class FileInfo implements Serializable {
-
-	protected final long size;
-
-	protected final String name;
-
-	protected InputStream inputStream;
-
-	protected final String contentType;
-
-	protected final String ext;
-
-	public FileInfo(MultipartFile file) throws IOException {
-		String fileName = file.getOriginalFilename();
-		Assert.notNull(fileName, "File name is null");
-		this.inputStream = file.getInputStream();
-		this.size = file.getSize();
-		this.ext = FileUtils.getFileExt(fileName);
-		this.name = UUID.randomUUID() + this.ext;
-		this.contentType = file.getContentType();
-	}
-
+public record FileInfo(InputStream inputStream, long size, String contentType, String name,
+		String extName) implements Serializable {
 }

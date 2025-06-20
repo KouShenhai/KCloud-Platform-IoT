@@ -18,7 +18,7 @@
 package org.laokou.oss.model;
 
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.oss.model.FileInfo;
+import org.laokou.common.oss.model.FileInfo11;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * @author laokou
  */
-public class OssE extends FileInfo {
+public class OssE extends FileInfo11 {
 
 	private final List<String> EXT_LIST = List.of(".jpg", ".jpeg", ".png", ".gif", ".webp");
 
