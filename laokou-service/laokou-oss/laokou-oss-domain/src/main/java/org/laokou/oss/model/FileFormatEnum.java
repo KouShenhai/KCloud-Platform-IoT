@@ -15,9 +15,10 @@
  *
  */
 
-package org.laokou.common.oss.model;
+package org.laokou.oss.model;
 
 import lombok.Getter;
+import org.laokou.common.i18n.util.EnumParser;
 
 import java.util.List;
 
@@ -52,6 +53,10 @@ public enum FileFormatEnum {
 	FileFormatEnum(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
+	}
+
+	public static FileFormatEnum getByCode(String code) {
+		return EnumParser.parse(FileFormatEnum.class, FileFormatEnum::getCode, code);
 	}
 
 	public abstract List<String> getExtNames();

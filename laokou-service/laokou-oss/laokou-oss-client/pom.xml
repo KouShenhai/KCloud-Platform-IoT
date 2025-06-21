@@ -12,7 +12,7 @@
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-excel</artifactId>
+      <artifactId>laokou-common-core</artifactId>
     </dependency>
   </dependencies>
 

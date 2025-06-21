@@ -15,24 +15,34 @@
  *
  */
 
-package org.laokou.oss.dto;
+package org.laokou.oss.convertor;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.common.oss.model.FileInfo;
+import org.laokou.oss.factory.OssDomainFactory;
+import org.laokou.oss.model.FileFormatEnum;
+import org.laokou.oss.model.OssA;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class OssUploadCmd extends CommonCommand {
+public final class OssConvertor {
 
-	private MultipartFile file;
+	private OssConvertor() {
+	}
 
-	private String fileType;
+	public static OssA toEntity(MultipartFile file, String fileType) {
+		OssA oss = OssDomainFactory.getOss();
+		oss.setFile(file);
+		oss.setFileFormatEnum(FileFormatEnum.getByCode(fileType));
+		return oss;
+	}
+
+	public static FileInfo to(OssA ossA) throws IOException {
+		return new FileInfo(ossA.getInputStream(), ossA.getSize(), ossA.getContentType(), ossA.getName(),
+				ossA.getExtName());
+	}
 
 }

@@ -15,21 +15,21 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.oss.factory;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.oss.model.FileInfo11;
-import org.laokou.common.oss.model.OssInfo;
+import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.oss.model.OssA;
 
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class StorageTemplate {
+public final class OssDomainFactory {
 
-	public Result<String> uploadOss(FileInfo11 fileInfo11, OssInfo ossInfo) {
-		return null;
+	private OssDomainFactory() {
+	}
+
+	public static OssA getOss() {
+		return SpringContextUtils.getBeanProvider(OssA.class);
 	}
 
 }

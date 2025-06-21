@@ -19,14 +19,11 @@ package org.laokou.oss.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.oss.model.OssInfo;
 import org.laokou.common.oss.template.StorageTemplate;
+import org.laokou.oss.convertor.OssConvertor;
 import org.laokou.oss.dto.OssUploadCmd;
-import org.laokou.oss.model.OssE;
+import org.laokou.oss.model.OssA;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * @author laokou
@@ -37,23 +34,13 @@ public class OssUploadCmdExe {
 
 	private final StorageTemplate storageTemplate;
 
-	public Result<String> execute(OssUploadCmd cmd) throws IOException, NoSuchAlgorithmException {
-		OssE ossE = new OssE(cmd.getFile());
+	public Result<String> execute(OssUploadCmd cmd) {
+		OssA ossA = OssConvertor.toEntity(cmd.getFile(), cmd.getFileType());
 		// 校验文件大小
-		ossE.checkSize();
+		ossA.checkSize();
 		// 校验扩展名
-		ossE.checkExt();
-		return storageTemplate.uploadOss(ossE, getInfo());
-	}
-
-	// TODO 从数据库获取配置，根据系统设置进行负载均衡
-	private OssInfo getInfo() {
-		OssInfo ossInfo = new OssInfo();
-		// ossInfo.setStoragePolicyEnum(StoragePolicyEnum.LOCAL);
-		ossInfo.setDomain("http://localhost:82");
-		ossInfo.setDirectory("D:\\laokou\\temp");
-		ossInfo.setPath("/temp/");
-		return ossInfo;
+		ossA.checkExt();
+		return storageTemplate.uploadOss(null, null);
 	}
 
 }

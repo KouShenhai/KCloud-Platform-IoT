@@ -17,14 +17,12 @@
 
 package org.laokou.auth.factory;
 
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.*;
 import org.laokou.common.core.util.SpringContextUtils;
 
 /**
  * @author laokou
  */
-@Slf4j
 public final class DomainFactory {
 
 	/**

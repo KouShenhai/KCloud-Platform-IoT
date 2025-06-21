@@ -17,43 +17,61 @@
 
 package org.laokou.oss.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.laokou.common.core.util.FileUtils;
+import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.oss.model.FileInfo11;
-import org.springframework.util.DigestUtils;
+import org.laokou.common.i18n.dto.AggregateRoot;
+import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.List;
+import java.io.InputStream;
 
 /**
  * @author laokou
  */
-public class OssE extends FileInfo11 {
+@Entity
+public class OssA extends AggregateRoot {
 
-	private final List<String> EXT_LIST = List.of(".jpg", ".jpeg", ".png", ".gif", ".webp");
+	@Setter
+	private MultipartFile file;
 
-	public OssE(MultipartFile file) throws IOException {
-		super(file);
-	}
+	@Setter
+	private FileFormatEnum fileFormatEnum;
+
+	@Getter
+	private String extName;
+
+	@Getter
+	private long size;
+
+	@Getter
+	private String name;
 
 	public void checkSize() {
-		if (super.size > 1024 * 1024 * 10) {
-			throw new BizException("B_Oss_SizeExceeding10M", "文件大小不能超过10M");
+		this.size = file.getSize();
+		if (size > 1024 * 1024 * 100) {
+			throw new BizException("B_Oss_SizeExceeding100M", "文件大小不能超过100M");
 		}
 	}
 
 	public void checkExt() {
-		if (!EXT_LIST.contains(ext)) {
+		this.name = file.getOriginalFilename();
+		Assert.notNull(name, "File name is null");
+		this.extName = FileUtils.getFileExt(name);
+		if (!fileFormatEnum.getExtNames().contains(extName)) {
 			throw new BizException("B_Oss_ExtError", "文件格式错误");
 		}
 	}
 
-	public String getMd5() throws IOException {
-		ByteBuffer buffer = ByteBuffer.wrap(super.inputStream.readAllBytes());
-		super.inputStream = new ByteArrayInputStream(buffer.array());
-		return DigestUtils.md5DigestAsHex(buffer.array());
+	public InputStream getInputStream() throws IOException {
+		return file.getInputStream();
+	}
+
+	public String getContentType() {
+		return file.getContentType();
 	}
 
 }

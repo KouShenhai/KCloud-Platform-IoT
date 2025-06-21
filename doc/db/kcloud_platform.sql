@@ -423,12 +423,9 @@ CREATE TABLE "public"."sys_oss" (
  "version" int4 NOT NULL DEFAULT 0,
  "tenant_id" int8 NOT NULL DEFAULT 0,
  "name" varchar(20) NOT NULL,
- "endpoint" varchar(200) NOT NULL,
- "region" varchar(10),
- "access_key" varchar(50) NOT NULL,
- "secret_key" varchar(100)  NOT NULL,
- "bucket_name" varchar(20)  NOT NULL,
- "path_style_access_enabled" int2 NOT NULL DEFAULT 0
+ "type" varchar(50) NOT NULL,
+ "param" json NOT NULL,
+ "status" int2 NOT NULL DEFAULT 0
 );
 COMMENT ON COLUMN "public"."sys_oss"."id" IS 'ID';
 COMMENT ON COLUMN "public"."sys_oss"."creator" IS '创建人';
@@ -439,18 +436,14 @@ COMMENT ON COLUMN "public"."sys_oss"."del_flag" IS '删除标识 0未删除 1已
 COMMENT ON COLUMN "public"."sys_oss"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_oss"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."sys_oss"."name" IS 'OSS名称';
-COMMENT ON COLUMN "public"."sys_oss"."endpoint" IS 'OSS的终端地址';
-COMMENT ON COLUMN "public"."sys_oss"."region" IS 'OSS的区域';
-COMMENT ON COLUMN "public"."sys_oss"."access_key" IS 'OSS的访问密钥';
-COMMENT ON COLUMN "public"."sys_oss"."secret_key" IS 'OSS的用户密钥';
-COMMENT ON COLUMN "public"."sys_oss"."bucket_name" IS 'OSS的桶名';
-COMMENT ON COLUMN "public"."sys_oss"."path_style_access_enabled" IS '路径样式访问 1已开启 0未启用';
+COMMENT ON COLUMN "public"."sys_oss"."type" IS 'OSS的类型';
+COMMENT ON COLUMN "public"."sys_oss"."param" IS 'OSS的参数';
+COMMENT ON COLUMN "public"."sys_oss"."status" IS 'OSS的状态 0启用 1停用';
 COMMENT ON TABLE "public"."sys_oss" IS 'OSS';
 
 ALTER TABLE "public"."sys_oss" ADD CONSTRAINT "sys_oss_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."sys_oss" VALUES (1, 1, 1, '2023-01-05 16:36:37', '2023-09-18 15:15:05', 0, 32, 0, 'Minio OSS', 'http://127.0.0.1:9000', 'Shenzhen', 'minioadmin', 'minioadmin', 'laokou-minio-bucket', 1);
-INSERT INTO "public"."sys_oss" VALUES (2, 1, 1, '2022-11-02 14:35:46', '2023-10-21 15:44:18', 0, 36, 0, 'Aliyun OSS', 'https://oss-cn-shenzhen.aliyuncs.com', NULL, 'LTAI5tNvAEkJJHb9Gu6uGRxf', 'zbRGqzdY1y1JFXkKzrYdIeqgC0qpcc', 'koushenhai', 0);
+INSERT INTO "public"."sys_oss" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "name", "type", "param", "status") VALUES (1, 1, 1, '2025-06-21 15:41:16', '2025-06-21 15:41:19', 0, 0, 0, '本地 OSS', 'local', '{"path":"D:/laokou/tmp","directory":"/upload","domain":"http://oss.laokou.org"}', 0);
 
 -- ----------------------------
 -- -------------套餐------------
