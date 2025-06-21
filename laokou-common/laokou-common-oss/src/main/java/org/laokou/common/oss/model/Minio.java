@@ -24,7 +24,7 @@ import lombok.Data;
  */
 
 @Data
-final class Minio extends BaseOss {
+public final class Minio extends BaseOss {
 
 	/**
 	 * 终端地址.

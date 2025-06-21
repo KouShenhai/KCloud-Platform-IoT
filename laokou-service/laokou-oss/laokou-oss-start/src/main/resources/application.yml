@@ -37,21 +37,6 @@ spring:
   threads:
     virtual:
       enabled: true
-  # security
-  security:
-    oauth2:
-      resource-server:
-        enabled: true
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /v3/api-docs/**=laokou-oss
-              - /swagger-ui.html=laokou-oss
-              - /swagger-ui/**=laokou-oss
-              - /actuator/**=laokou-oss
-              - /error=laokou-oss
-              - /doc.html=laokou-oss
-              - /webjars/**=laokou-oss
   datasource:
     dynamic:
       # 默认false,建议线上关闭
@@ -63,21 +48,6 @@ spring:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
           url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
-          username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
-          password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
-          url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
           username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
           password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
           # https://blog.csdn.net/u014644574/article/details/123680515

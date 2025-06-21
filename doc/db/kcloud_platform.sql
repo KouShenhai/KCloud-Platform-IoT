@@ -435,7 +435,7 @@ COMMENT ON COLUMN "public"."sys_oss"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_oss"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_oss"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_oss"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."sys_oss"."name" IS 'OSS名称';
+COMMENT ON COLUMN "public"."sys_oss"."name" IS 'OSS的名称';
 COMMENT ON COLUMN "public"."sys_oss"."type" IS 'OSS的类型';
 COMMENT ON COLUMN "public"."sys_oss"."param" IS 'OSS的参数';
 COMMENT ON COLUMN "public"."sys_oss"."status" IS 'OSS的状态 0启用 1停用';

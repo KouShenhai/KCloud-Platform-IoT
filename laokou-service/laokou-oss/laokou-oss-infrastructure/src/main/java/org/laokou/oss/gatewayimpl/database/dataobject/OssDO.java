@@ -15,23 +15,39 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.oss.gatewayimpl.database.dataobject;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.oss.model.BaseOss;
-import org.laokou.common.oss.model.FileInfo;
-
-import java.util.List;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 /**
+ * OSS数据对象.
+ *
  * @author laokou
  */
-@RequiredArgsConstructor
-public class StorageTemplate {
+@Data
+@TableName("sys_oss")
+public class OssDO extends BaseDO {
 
-	public Result<String> uploadOss(FileInfo fileInfo, List<BaseOss> list) {
-		return null;
-	}
+	/**
+	 * OSS的名称.
+	 */
+	private String name;
+
+	/**
+	 * OSS的类型.
+	 */
+	private String type;
+
+	/**
+	 * OSS的参数.
+	 */
+	private String param;
+
+	/**
+	 * OSS的状态 0启用 1禁用.
+	 */
+	private Integer status;
 
 }

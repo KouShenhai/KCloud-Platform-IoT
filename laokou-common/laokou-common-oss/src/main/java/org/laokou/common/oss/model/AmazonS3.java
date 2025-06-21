@@ -23,7 +23,7 @@ import lombok.Data;
  * @author laokou
  */
 @Data
-final class AmazonS3 extends BaseOss {
+public final class AmazonS3 extends BaseOss {
 
 	/**
 	 * 终端地址.

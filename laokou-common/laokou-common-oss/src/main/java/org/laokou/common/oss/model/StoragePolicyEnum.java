@@ -17,17 +17,34 @@
 
 package org.laokou.common.oss.model;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
 import org.laokou.common.i18n.util.EnumParser;
+import org.laokou.common.i18n.util.JacksonUtils;
 
 @Getter
 public enum StoragePolicyEnum {
 
-	LOCAL("local", "本地"),
+	LOCAL("local", "本地") {
+		@Override
+		public BaseOss getOss(String param) throws JsonProcessingException {
+			return JacksonUtils.toBean(param, Local.class);
+		}
+	},
 
-	AMAZON_S3("amazon_s3", "亚马逊S3"),
+	AMAZON_S3("amazon_s3", "亚马逊S3") {
+		@Override
+		public BaseOss getOss(String param) throws JsonProcessingException {
+			return JacksonUtils.toBean(param, AmazonS3.class);
+		}
+	},
 
-	MINIO("minio", "MinIO");
+	MINIO("minio", "MinIO") {
+		@Override
+		public BaseOss getOss(String param) throws JsonProcessingException {
+			return JacksonUtils.toBean(param, Minio.class);
+		}
+	};
 
 	private final String code;
 
@@ -41,5 +58,7 @@ public enum StoragePolicyEnum {
 	public static StoragePolicyEnum getByCode(String code) {
 		return EnumParser.parse(StoragePolicyEnum.class, StoragePolicyEnum::getCode, code);
 	}
+
+	public abstract BaseOss getOss(String param) throws JsonProcessingException;
 
 }

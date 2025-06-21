@@ -20,11 +20,13 @@ package org.laokou.oss.api;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.oss.dto.OssUploadCmd;
 
+import java.io.IOException;
+
 /**
  * @author laokou
  */
 public interface OssServiceI {
 
-	Result<String> uploadOss(OssUploadCmd cmd);
+	Result<String> uploadOss(OssUploadCmd cmd) throws IOException;
 
 }

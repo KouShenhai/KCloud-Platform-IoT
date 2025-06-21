@@ -22,6 +22,6 @@ import java.io.Serializable;
 /**
  * @author laokou
  */
-abstract class BaseOss implements Serializable {
+public abstract class BaseOss implements Serializable {
 
 }

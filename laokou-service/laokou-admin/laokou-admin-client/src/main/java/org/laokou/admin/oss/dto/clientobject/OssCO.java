@@ -38,38 +38,23 @@ public class OssCO extends ClientObject {
 	private Long id;
 
 	/**
-	 * OSS名称.
+	 * OSS的名称.
 	 */
 	private String name;
 
 	/**
-	 * OSS的终端地址.
+	 * OSS的类型.
 	 */
-	private String endpoint;
+	private String type;
 
 	/**
-	 * OSS的区域.
+	 * OSS的参数.
 	 */
-	private String region;
+	private String param;
 
 	/**
-	 * OSS的访问密钥.
+	 * OSS的状态 0启用 1禁用.
 	 */
-	private String accessKey;
-
-	/**
-	 * OSS的用户密钥.
-	 */
-	private String secretKey;
-
-	/**
-	 * OSS的桶名.
-	 */
-	private String bucketName;
-
-	/**
-	 * 路径样式访问 1已开启 0未启用.
-	 */
-	private Integer pathStyleAccessEnabled;
+	private Integer status;
 
 }

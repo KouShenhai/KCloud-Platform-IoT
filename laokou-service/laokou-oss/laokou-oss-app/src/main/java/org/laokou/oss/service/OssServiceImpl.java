@@ -24,6 +24,8 @@ import org.laokou.oss.command.OssUploadCmdExe;
 import org.laokou.oss.dto.OssUploadCmd;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 /**
  * @author laokou
  */
@@ -34,7 +36,7 @@ public class OssServiceImpl implements OssServiceI {
 	private final OssUploadCmdExe ossUploadCmdExe;
 
 	@Override
-	public Result<String> uploadOss(OssUploadCmd cmd) {
+	public Result<String> uploadOss(OssUploadCmd cmd) throws IOException {
 		return ossUploadCmdExe.execute(cmd);
 	}
 

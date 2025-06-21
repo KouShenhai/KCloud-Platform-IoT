@@ -17,13 +17,18 @@
 
 package org.laokou.oss.convertor;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
+import org.laokou.common.oss.model.StoragePolicyEnum;
 import org.laokou.oss.factory.OssDomainFactory;
+import org.laokou.oss.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.oss.model.FileFormatEnum;
 import org.laokou.oss.model.OssA;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author laokou
@@ -43,6 +48,19 @@ public final class OssConvertor {
 	public static FileInfo to(OssA ossA) throws IOException {
 		return new FileInfo(ossA.getInputStream(), ossA.getSize(), ossA.getContentType(), ossA.getName(),
 				ossA.getExtName());
+	}
+
+	public static List<BaseOss> tos(List<OssDO> list) {
+		return list.stream().map(OssConvertor::to).toList();
+	}
+
+	private static BaseOss to(OssDO ossDO) {
+		try {
+			return StoragePolicyEnum.getByCode(ossDO.getType()).getOss(ossDO.getParam());
+		}
+		catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

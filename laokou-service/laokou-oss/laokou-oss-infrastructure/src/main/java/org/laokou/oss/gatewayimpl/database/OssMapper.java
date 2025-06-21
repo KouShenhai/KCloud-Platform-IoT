@@ -15,23 +15,20 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.oss.gatewayimpl.database;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.oss.model.BaseOss;
-import org.laokou.common.oss.model.FileInfo;
-
-import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
+import org.laokou.oss.gatewayimpl.database.dataobject.OssDO;
+import org.springframework.stereotype.Repository;
 
 /**
+ * OSS数据库映射.
+ *
  * @author laokou
  */
-@RequiredArgsConstructor
-public class StorageTemplate {
-
-	public Result<String> uploadOss(FileInfo fileInfo, List<BaseOss> list) {
-		return null;
-	}
+@Mapper
+@Repository
+public interface OssMapper extends CrudMapper<Long, Integer, OssDO> {
 
 }

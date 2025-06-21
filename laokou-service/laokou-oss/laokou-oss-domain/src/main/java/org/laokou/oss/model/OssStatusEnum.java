@@ -20,11 +20,26 @@ package org.laokou.oss.model;
 import lombok.Getter;
 
 /**
- * 上传策略.
+ * OSS状态枚举.
  *
  * @author laokou
  */
 @Getter
-public enum UploadPolicyEnum {
+public enum OssStatusEnum {
+
+	// @formatter:off
+	ENABLE(0, "启用"),
+
+	DISABLE(1, "禁用");
+
+	private final int code;
+
+	private final String desc;
+
+	OssStatusEnum(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+	// @formatter:on
 
 }

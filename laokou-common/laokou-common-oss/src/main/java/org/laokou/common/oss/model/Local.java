@@ -23,7 +23,7 @@ import lombok.Data;
  * @author laokou
  */
 @Data
-final class Local extends BaseOss {
+public final class Local extends BaseOss {
 
 	/**
 	 * 本地存储路径.

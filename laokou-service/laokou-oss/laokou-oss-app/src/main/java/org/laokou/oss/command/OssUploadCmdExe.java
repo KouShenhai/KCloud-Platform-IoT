@@ -17,13 +17,19 @@
 
 package org.laokou.oss.command;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.oss.template.StorageTemplate;
 import org.laokou.oss.convertor.OssConvertor;
 import org.laokou.oss.dto.OssUploadCmd;
+import org.laokou.oss.gatewayimpl.database.OssMapper;
+import org.laokou.oss.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.oss.model.OssA;
+import org.laokou.oss.model.OssStatusEnum;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 /**
  * @author laokou
@@ -34,13 +40,18 @@ public class OssUploadCmdExe {
 
 	private final StorageTemplate storageTemplate;
 
-	public Result<String> execute(OssUploadCmd cmd) {
+	private final OssMapper ossMapper;
+
+	public Result<String> execute(OssUploadCmd cmd) throws IOException {
 		OssA ossA = OssConvertor.toEntity(cmd.getFile(), cmd.getFileType());
 		// 校验文件大小
 		ossA.checkSize();
 		// 校验扩展名
 		ossA.checkExt();
-		return storageTemplate.uploadOss(null, null);
+		return storageTemplate.uploadOss(OssConvertor.to(ossA),
+				OssConvertor.tos(ossMapper.selectList(Wrappers.lambdaQuery(OssDO.class)
+					.eq(OssDO::getStatus, OssStatusEnum.ENABLE.getCode())
+					.select(OssDO::getParam, OssDO::getType))));
 	}
 
 }
