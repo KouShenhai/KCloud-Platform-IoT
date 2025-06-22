@@ -19,7 +19,6 @@ package org.laokou.admin;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.test.annotation.EnableRestfulApiStyleCheck;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
@@ -30,7 +29,6 @@ import org.springframework.web.context.WebApplicationContext;
  * @author laokou
  */
 @Slf4j
-@EnableRestfulApiStyleCheck
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class RestfulApiStyleCheckTest extends CommonTest {

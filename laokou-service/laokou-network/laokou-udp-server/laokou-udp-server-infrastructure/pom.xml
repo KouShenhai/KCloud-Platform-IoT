@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-udp-server</artifactId>
-    <version>3.5.1</version>
+    <version>4.0.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>laokou-udp-server-infrastructure</artifactId>

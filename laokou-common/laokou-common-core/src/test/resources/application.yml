@@ -8,6 +8,3 @@ spring:
     active: test
   disruptor:
     buffer-size: 1024
-  wiremock-server:
-    https-port: 8885
-    port: 8884
