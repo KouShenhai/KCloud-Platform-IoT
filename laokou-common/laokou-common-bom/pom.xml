@@ -52,7 +52,7 @@
     <!--oshi版本-->
     <oshi.version>6.8.2</oshi.version>
     <!--elasticsearch版本-->
-    <elasticsearch.version>8.18.1</elasticsearch.version>
+    <elasticsearch.version>9.0.2</elasticsearch.version>
     <!--jakarta.servlet-api版本-->
     <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
     <!--fastexcel-->
