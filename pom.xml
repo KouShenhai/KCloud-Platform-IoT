@@ -367,7 +367,7 @@
         <configuration>
           <!--备份版本-->
           <generateBackupPoms>true</generateBackupPoms>
-          <newVersion>4.0.0</newVersion>
+          <newVersion>3.5.4</newVersion>
           <oldVersion>3.5.1</oldVersion>
         </configuration>
       </plugin>
