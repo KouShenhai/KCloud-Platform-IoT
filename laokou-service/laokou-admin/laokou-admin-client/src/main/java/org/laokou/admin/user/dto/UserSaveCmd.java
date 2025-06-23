@@ -17,7 +17,6 @@
 
 package org.laokou.admin.user.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.common.i18n.dto.CommonCommand;
@@ -28,9 +27,8 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Data
-@AllArgsConstructor
 public class UserSaveCmd extends CommonCommand {
 
-	private final UserCO co;
+	private UserCO co;
 
 }

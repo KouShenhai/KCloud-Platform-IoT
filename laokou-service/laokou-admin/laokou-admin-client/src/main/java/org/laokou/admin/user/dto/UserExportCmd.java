@@ -17,7 +17,6 @@
 
 package org.laokou.admin.user.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 
@@ -27,7 +26,6 @@ import org.laokou.common.i18n.dto.PageQuery;
  * @author laokou
  */
 @Data
-@AllArgsConstructor
 public class UserExportCmd extends PageQuery {
 
 }

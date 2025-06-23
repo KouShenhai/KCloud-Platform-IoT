@@ -16,8 +16,6 @@
  */
 
 package org.laokou.admin.user.dto;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,9 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
  * @author laokou
  */
 @Data
-@AllArgsConstructor
 public class UserUploadAvatarCmd extends CommonCommand {
 
-	private final MultipartFile file;
+	private MultipartFile file;
 
 }
