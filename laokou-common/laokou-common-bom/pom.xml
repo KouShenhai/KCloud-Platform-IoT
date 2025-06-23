@@ -136,7 +136,7 @@
     <!--reactor-core版本-->
     <reactor-core.version>3.7.6</reactor-core.version>
     <!--opencsv版本-->
-    <opencsv.version>5.11.1</opencsv.version>
+    <opencsv.version>5.11.2</opencsv.version>
     <!--curator版本-->
     <curator.version>5.8.0</curator.version>
     <!--wiremock版本-->
