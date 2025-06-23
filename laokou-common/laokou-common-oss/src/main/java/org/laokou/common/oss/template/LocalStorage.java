@@ -18,13 +18,14 @@
 package org.laokou.common.oss.template;
 
 import org.laokou.common.core.util.FileUtils;
-import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.Local;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
+
+import static org.laokou.common.i18n.common.constant.StringConstants.SLASH;
 
 /**
  * @author laokou
@@ -38,7 +39,7 @@ public class LocalStorage extends AbstractStorage<Path> {
 	@Override
 	protected Path getObj() throws IOException {
 		Local local = getLocal();
-		return FileUtils.create(local.getPath() + local.getDirectory(), getFileName());
+		return FileUtils.create(local.getPath() + local.getDirectory(), fileInfo.name());
 	}
 
 	@Override
@@ -53,11 +54,7 @@ public class LocalStorage extends AbstractStorage<Path> {
 	@Override
 	protected String getUrl(Path path) {
 		Local local = getLocal();
-		return local.getDomain() + local.getDirectory() + getFileName();
-	}
-
-	private String getFileName() {
-		return UUIDGenerator.generateUUID() + fileInfo.extName();
+		return local.getDomain() + local.getDirectory() + SLASH + fileInfo.name();
 	}
 
 	private Local getLocal() {

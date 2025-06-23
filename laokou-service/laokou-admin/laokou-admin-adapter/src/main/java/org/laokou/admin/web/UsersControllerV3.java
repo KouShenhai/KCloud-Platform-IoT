@@ -146,7 +146,8 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:oss:upload') and hasAuthority('sys:user:modify')")
 	@Operation(summary = "用户管理", description = "上传用户头像")
 	@OperateLog(module = "用户管理", operation = "上传用户头像")
-	public Result<String> uploadUserAvatar(@RequestPart("file") MultipartFile file) throws IOException, NoSuchAlgorithmException {
+	public Result<String> uploadUserAvatar(@RequestPart("file") MultipartFile file)
+			throws IOException, NoSuchAlgorithmException {
 		return usersServiceI.uploadUserAvatar(new UserUploadAvatarCmd(file));
 	}
 

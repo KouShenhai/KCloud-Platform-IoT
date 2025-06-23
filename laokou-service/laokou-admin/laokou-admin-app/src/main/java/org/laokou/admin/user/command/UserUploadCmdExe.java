@@ -20,10 +20,14 @@ package org.laokou.admin.user.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.dto.UserUploadAvatarCmd;
 import org.laokou.admin.user.gatewayimpl.rpc.OssWrapperRpc;
+import org.laokou.common.core.util.FileUtils;
+import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.oss.dto.OssUploadCmd;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -39,7 +43,12 @@ public class UserUploadCmdExe {
 
 	@CommandLog
 	public Result<String> execute(UserUploadAvatarCmd cmd) throws IOException, NoSuchAlgorithmException {
-		return ossWrapperRpc.uploadOss(new OssUploadCmd(cmd.getFile(), "image"));
+		MultipartFile file = cmd.getFile();
+		String name = file.getOriginalFilename();
+		Assert.notNull(name, "文件名不能为空");
+		String extName = FileUtils.getFileExt(name);
+		return ossWrapperRpc.uploadOss(new OssUploadCmd("image", file.getBytes(),
+				UUIDGenerator.generateUUID() + extName, extName, file.getContentType(), file.getSize()));
 	}
 
 }

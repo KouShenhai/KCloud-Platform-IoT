@@ -30,6 +30,9 @@ import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * 用户接口实现类.
  *
@@ -112,7 +115,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public Result<String> uploadUserAvatar(UserUploadAvatarCmd cmd) {
+	public Result<String> uploadUserAvatar(UserUploadAvatarCmd cmd) throws IOException, NoSuchAlgorithmException {
 		return userUploadCmdEx.execute(cmd);
 	}
 

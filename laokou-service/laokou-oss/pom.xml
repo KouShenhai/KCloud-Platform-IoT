@@ -6,12 +6,12 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-service</artifactId>
-    <version>3.5.1</version>
+    <version>3.5.4-SNAPSHOT</version>
   </parent>
 
   <artifactId>laokou-oss</artifactId>
   <packaging>pom</packaging>
-  <version>3.5.1</version>
+  <version>3.5.4-SNAPSHOT</version>
 
   <modules>
     <module>laokou-oss-start</module>

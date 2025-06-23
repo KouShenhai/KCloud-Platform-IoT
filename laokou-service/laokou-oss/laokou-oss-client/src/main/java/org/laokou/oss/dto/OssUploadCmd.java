@@ -21,7 +21,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author laokou
@@ -31,8 +30,16 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class OssUploadCmd extends CommonCommand {
 
-	private MultipartFile file;
-
 	private String fileType;
+
+	private byte[] buffer;
+
+	private String name;
+
+	private String extName;
+
+	private String contentType;
+
+	private long size;
 
 }

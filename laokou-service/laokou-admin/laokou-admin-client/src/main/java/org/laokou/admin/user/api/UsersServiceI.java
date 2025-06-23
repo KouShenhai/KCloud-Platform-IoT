@@ -24,6 +24,9 @@ import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * 用户接口.
  *
@@ -94,6 +97,6 @@ public interface UsersServiceI {
 	 * 上传用户头像.
 	 * @param cmd 上传命令
 	 */
-	Result<String> uploadUserAvatar(UserUploadAvatarCmd cmd);
+	Result<String> uploadUserAvatar(UserUploadAvatarCmd cmd) throws IOException, NoSuchAlgorithmException;
 
 }

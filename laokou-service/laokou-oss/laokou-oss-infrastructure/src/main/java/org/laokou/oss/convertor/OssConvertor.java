@@ -25,8 +25,8 @@ import org.laokou.oss.factory.OssDomainFactory;
 import org.laokou.oss.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.oss.model.FileFormatEnum;
 import org.laokou.oss.model.OssA;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -38,16 +38,17 @@ public final class OssConvertor {
 	private OssConvertor() {
 	}
 
-	public static OssA toEntity(MultipartFile file, String fileType) {
+	public static OssA toEntity(String fileType, long size, String extName) {
 		OssA oss = OssDomainFactory.getOss();
-		oss.setFile(file);
+		oss.setSize(size);
+		oss.setExtName(extName);
 		oss.setFileFormatEnum(FileFormatEnum.getByCode(fileType));
 		return oss;
 	}
 
-	public static FileInfo to(OssA ossA) throws IOException {
-		return new FileInfo(ossA.getInputStream(), ossA.getSize(), ossA.getContentType(), ossA.getName(),
-				ossA.getExtName());
+	public static FileInfo to(byte[] buffer, long size, String contentType, String name, String extName)
+			throws IOException {
+		return new FileInfo(new ByteArrayInputStream(buffer), size, contentType, name, extName);
 	}
 
 	public static List<BaseOss> tos(List<OssDO> list) {

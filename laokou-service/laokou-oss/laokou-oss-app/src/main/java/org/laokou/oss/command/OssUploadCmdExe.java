@@ -44,12 +44,13 @@ public class OssUploadCmdExe {
 	private final OssMapper ossMapper;
 
 	public Result<String> execute(OssUploadCmd cmd) throws IOException, NoSuchAlgorithmException {
-		OssA ossA = OssConvertor.toEntity(cmd.getFile(), cmd.getFileType());
+		OssA ossA = OssConvertor.toEntity(cmd.getFileType(), cmd.getSize(), cmd.getExtName());
 		// 校验文件大小
 		ossA.checkSize();
 		// 校验扩展名
 		ossA.checkExt();
-		return storageTemplate.uploadOss(OssConvertor.to(ossA),
+		return storageTemplate.uploadOss(
+				OssConvertor.to(cmd.getBuffer(), cmd.getSize(), cmd.getContentType(), cmd.getName(), cmd.getExtName()),
 				OssConvertor.tos(ossMapper.selectList(Wrappers.lambdaQuery(OssDO.class)
 					.eq(OssDO::getStatus, OssStatusEnum.ENABLE.getCode())
 					.select(OssDO::getParam, OssDO::getType))));
