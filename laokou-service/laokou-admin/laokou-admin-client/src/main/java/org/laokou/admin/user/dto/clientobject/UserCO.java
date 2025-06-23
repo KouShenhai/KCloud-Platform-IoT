@@ -18,9 +18,7 @@
 package org.laokou.admin.user.dto.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.time.Instant;
@@ -32,8 +30,6 @@ import java.util.List;
  * @author laokou
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Schema(name = "用户客户端对象", description = "用户客户端对象")
 public class UserCO extends ClientObject {
 

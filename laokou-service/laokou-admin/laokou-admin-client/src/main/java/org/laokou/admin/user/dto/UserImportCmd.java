@@ -19,7 +19,6 @@ package org.laokou.admin.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,10 +28,9 @@ import org.springframework.web.multipart.MultipartFile;
  * @author laokou
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class UserImportCmd extends CommonCommand {
 
-	private MultipartFile[] files;
+	private final MultipartFile[] files;
 
 }
