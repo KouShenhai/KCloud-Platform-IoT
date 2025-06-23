@@ -18,7 +18,7 @@
       <artifactId>aws-java-sdk-s3</artifactId>
       <exclusions>
         <exclusion>
-          <groupId>org.apache.commons</groupId>
+          <groupId>commons-logging</groupId>
           <artifactId>commons-logging</artifactId>
         </exclusion>
       </exclusions>
