@@ -15,40 +15,22 @@
  *
  */
 
-package org.laokou.common.oss.model;
+package org.laokou.admin.user.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author laokou
  */
-
 @Data
-public final class Minio extends BaseOss {
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserUploadAvatarCmd extends CommonCommand {
 
-	/**
-	 * 终端地址.
-	 */
-	private String endpoint;
-
-	/**
-	 * 区域.
-	 */
-	private String region;
-
-	/**
-	 * 访问密钥.
-	 */
-	private String accessKey;
-
-	/**
-	 * 用户密钥.
-	 */
-	private String secretKey;
-
-	/**
-	 * 桶名.
-	 */
-	private String bucketName;
+	private MultipartFile file;
 
 }

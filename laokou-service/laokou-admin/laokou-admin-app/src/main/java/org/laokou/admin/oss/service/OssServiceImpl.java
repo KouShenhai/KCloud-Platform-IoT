@@ -51,8 +51,6 @@ public class OssServiceImpl implements OssServiceI {
 
 	private final OssGetQryExe ossGetQryExe;
 
-	private final OssUploadCmdExe ossUploadCmdExe;
-
 	@Override
 	public void saveOss(OssSaveCmd cmd) {
 		ossSaveCmdExe.executeVoid(cmd);
@@ -86,11 +84,6 @@ public class OssServiceImpl implements OssServiceI {
 	@Override
 	public Result<OssCO> getOssById(OssGetQry qry) {
 		return ossGetQryExe.execute(qry);
-	}
-
-	@Override
-	public Result<String> uploadOss(OssUploadCmd cmd) {
-		return ossUploadCmdExe.execute(cmd);
 	}
 
 }

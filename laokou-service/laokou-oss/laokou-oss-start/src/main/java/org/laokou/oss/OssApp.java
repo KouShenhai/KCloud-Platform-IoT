@@ -19,17 +19,15 @@ package org.laokou.oss;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
-import org.laokou.common.nacos.annotation.EnableServiceShutDown;
-import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.util.StopWatch;
@@ -46,11 +44,9 @@ import java.security.NoSuchAlgorithmException;
  */
 @Slf4j
 @EnableWarmUp
-@EnableRouter
+@EnableDubbo
 @EnableScheduling
-@EnableServiceShutDown
 @EnableRedisRepository
-@EnableDiscoveryClient
 @EnableAspectJAutoProxy
 @EnableEncryptableProperties
 @EnableConfigurationProperties

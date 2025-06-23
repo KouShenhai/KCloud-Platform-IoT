@@ -15,24 +15,31 @@
  *
  */
 
-package org.laokou.admin.oss.command;
+package org.laokou.admin.user.command;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.oss.dto.OssUploadCmd;
+import org.laokou.admin.user.dto.UserUploadAvatarCmd;
+import org.laokou.admin.user.gatewayimpl.rpc.OssWrapperRpc;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.oss.dto.OssUploadCmd;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class OssUploadCmdExe {
+public class UserUploadCmdExe {
+
+	private final OssWrapperRpc ossWrapperRpc;
 
 	@CommandLog
-	public Result<String> execute(OssUploadCmd cmd) {
-		return null;
+	public Result<String> execute(UserUploadAvatarCmd cmd) throws IOException, NoSuchAlgorithmException {
+		return ossWrapperRpc.uploadOss(new OssUploadCmd(cmd.getFile(), "image"));
 	}
 
 }

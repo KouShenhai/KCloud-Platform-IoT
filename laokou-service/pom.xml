@@ -37,7 +37,6 @@
     <module>laokou-distributed-identifier</module>
     <module>laokou-report</module>
     <module>laokou-iot</module>
-    <module>laokou-module</module>
     <module>laokou-oss</module>
     <module>laokou-network</module>
   </modules>

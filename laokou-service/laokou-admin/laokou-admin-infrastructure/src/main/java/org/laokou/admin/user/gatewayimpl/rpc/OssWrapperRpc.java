@@ -15,15 +15,14 @@
  *
  */
 
-package org.laokou.oss.service;
+package org.laokou.admin.user.gatewayimpl.rpc;
 
-import lombok.RequiredArgsConstructor;
-import org.apache.dubbo.config.annotation.DubboService;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.oss.api.OssServiceI;
-import org.laokou.oss.command.OssUploadCmdExe;
 import org.laokou.oss.dto.OssUploadCmd;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -31,16 +30,19 @@ import java.security.NoSuchAlgorithmException;
 /**
  * @author laokou
  */
-@Service
-@DubboService(token = "0e02b2c3d479", group = "iot", version = "v3", timeout = 5000)
-@RequiredArgsConstructor
-public class OssServiceImpl implements OssServiceI {
+@Component
+public class OssWrapperRpc {
 
-	private final OssUploadCmdExe ossUploadCmdExe;
+	@DubboReference(group = "iot", version = "v3", interfaceClass = OssServiceI.class,
+			mock = "org.laokou.admin.user.gatewayimpl.rpc.OssServiceIMock", loadbalance = "adaptive", retries = 3)
+	private OssServiceI ossServiceI;
 
-	@Override
 	public Result<String> uploadOss(OssUploadCmd cmd) throws IOException, NoSuchAlgorithmException {
-		return ossUploadCmdExe.execute(cmd);
+		Result<String> result = ossServiceI.uploadOss(cmd);
+		if (result.success()) {
+			return result;
+		}
+		throw new BizException(result.getCode(), result.getMsg());
 	}
 
 }

@@ -139,3 +139,15 @@ export async function modifyUserAuthority(body: API.UserModifyAuthorityCmd, opti
 		...(options || {}),
 	});
 }
+
+/** 上传用户头像 上传用户头像 POST /v3/users/upload */
+export async function uploadUserAvatar(body: FormData, options?: { [key: string]: any }) {
+	return request<API.Result>('/api/admin/v3/users/upload', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'multipart/form-data',
+		},
+		data: body,
+		...(options || {}),
+	});
+}

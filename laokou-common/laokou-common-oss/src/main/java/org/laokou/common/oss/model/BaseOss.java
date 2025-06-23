@@ -24,4 +24,6 @@ import java.io.Serializable;
  */
 public abstract class BaseOss implements Serializable {
 
+	public abstract StoragePolicyEnum getStoragePolicy();
+
 }

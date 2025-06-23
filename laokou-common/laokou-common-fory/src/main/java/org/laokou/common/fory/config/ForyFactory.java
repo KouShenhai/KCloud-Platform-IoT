@@ -17,9 +17,9 @@
 
 package org.laokou.common.fory.config;
 
-import org.apache.fory.Fory;
 import org.apache.fory.ThreadSafeFory;
 import org.apache.fory.config.CompatibleMode;
+import org.apache.fory.config.ForyBuilder;
 import org.apache.fory.config.Language;
 
 import java.nio.charset.StandardCharsets;
@@ -31,8 +31,7 @@ public final class ForyFactory {
 
 	public static final ForyFactory INSTANCE = new ForyFactory();
 
-	private final ThreadSafeFory fory = Fory.builder()
-		.withLanguage(Language.JAVA)
+	private final ThreadSafeFory fory = new ForyBuilder().withLanguage(Language.JAVA)
 		// enable reference tracking for shared/circular reference.
 		// Disable it will have better performance if no duplicate reference.
 		.withRefTracking(false)

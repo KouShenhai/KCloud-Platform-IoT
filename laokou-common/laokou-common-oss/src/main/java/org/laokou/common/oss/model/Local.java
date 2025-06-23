@@ -40,4 +40,9 @@ public final class Local extends BaseOss {
 	 */
 	private String directory;
 
+	@Override
+	public StoragePolicyEnum getStoragePolicy() {
+		return StoragePolicyEnum.LOCAL;
+	}
+
 }

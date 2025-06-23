@@ -18,9 +18,10 @@
 package org.laokou.common.oss.template;
 
 import org.laokou.common.core.util.FileUtils;
+import org.laokou.common.core.util.UUIDGenerator;
+import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
-import org.laokou.common.oss.model.OssInfo;
-
+import org.laokou.common.oss.model.Local;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
@@ -30,27 +31,40 @@ import java.security.NoSuchAlgorithmException;
  */
 public class LocalStorage extends AbstractStorage<Path> {
 
-	protected LocalStorage(FileInfo fileInfo, OssInfo ossInfo) {
-		super(fileInfo, ossInfo);
+	public LocalStorage(FileInfo fileInfo, BaseOss baseOss) {
+		super(fileInfo, baseOss);
 	}
 
 	@Override
 	protected Path getObj() throws IOException {
-		return FileUtils.create(ossInfo.getDirectory(), null);
+		Local local = getLocal();
+		return FileUtils.create(local.getPath() + local.getDirectory(), getFileName());
 	}
 
 	@Override
-	protected void createBucket(Path obj) {
+	protected void createBucket(Path path) {
 	}
 
 	@Override
-	protected void upload(Path obj) throws NoSuchAlgorithmException {
-		// FileUtils.write(obj, fileInfo11.getInputStream(), fileInfo11.getSize());
+	protected void upload(Path path) throws NoSuchAlgorithmException {
+		FileUtils.write(path, fileInfo.inputStream(), fileInfo.size());
 	}
 
 	@Override
-	protected String getUrl(Path obj) {
-		return ossInfo.getDomain() + ossInfo.getPath() + null;
+	protected String getUrl(Path path) {
+		Local local = getLocal();
+		return local.getDomain() + local.getDirectory() + getFileName();
+	}
+
+	private String getFileName() {
+		return UUIDGenerator.generateUUID() + fileInfo.extName();
+	}
+
+	private Local getLocal() {
+		if (baseOss instanceof Local local) {
+			return local;
+		}
+		throw new IllegalArgumentException("BaseOss must be an instance of Local");
 	}
 
 }

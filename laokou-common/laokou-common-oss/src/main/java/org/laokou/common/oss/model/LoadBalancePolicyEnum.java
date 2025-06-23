@@ -18,11 +18,32 @@
 package org.laokou.common.oss.model;
 
 import lombok.Getter;
+import org.laokou.common.algorithm.template.select.HashAlgorithm;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
 @Getter
 public enum LoadBalancePolicyEnum {
+
+	HASH("hash", "负载均衡【哈希】") {
+		@Override
+		public BaseOss choose(List<BaseOss> list) {
+			return new HashAlgorithm().select(list, System.currentTimeMillis());
+		}
+	};
+
+	private final String code;
+
+	private final String desc;
+
+	LoadBalancePolicyEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+
+	public abstract BaseOss choose(List<BaseOss> list);
 
 }

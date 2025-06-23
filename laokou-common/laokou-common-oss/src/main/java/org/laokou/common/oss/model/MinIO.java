@@ -15,22 +15,45 @@
  *
  */
 
-package org.laokou.admin.oss.dto;
+package org.laokou.common.oss.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class OssUploadCmd extends CommonCommand {
 
-	private MultipartFile file;
+@Data
+public final class MinIO extends BaseOss {
+
+	/**
+	 * 终端地址.
+	 */
+	private String endpoint;
+
+	/**
+	 * 区域.
+	 */
+	private String region;
+
+	/**
+	 * 访问密钥.
+	 */
+	private String accessKey;
+
+	/**
+	 * 用户密钥.
+	 */
+	private String secretKey;
+
+	/**
+	 * 桶名.
+	 */
+	private String bucketName;
+
+	@Override
+	public StoragePolicyEnum getStoragePolicy() {
+		return StoragePolicyEnum.MINIO;
+	}
 
 }

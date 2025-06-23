@@ -15,7 +15,6 @@ export default {
 			// 要代理的地址
 			target: 'http://gateway:5555',
 			changeOrigin: true,
-			secure: false,
 			pathRewrite: {'^/api': ''}
 		},
 	},

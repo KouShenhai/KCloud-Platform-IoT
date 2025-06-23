@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.user.dto.UserUploadAvatarCmd;
 import org.laokou.admin.user.api.UsersServiceI;
 import org.laokou.admin.user.dto.*;
 import org.laokou.admin.user.dto.clientobject.UserCO;
@@ -36,6 +37,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 import static org.laokou.common.data.cache.constant.NameConstants.USERS;
 import static org.laokou.common.data.cache.model.OperateTypeEnum.DEL;
@@ -135,6 +139,15 @@ public class UsersControllerV3 {
 	@Operation(summary = "查看个人信息", description = "查看个人信息")
 	public Result<UserProfileCO> getUserProfile() {
 		return usersServiceI.getUserProfile();
+	}
+
+	@TraceLog
+	@PostMapping(value = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PreAuthorize("hasAuthority('sys:oss:upload') and hasAuthority('sys:user:modify')")
+	@Operation(summary = "用户管理", description = "上传用户头像")
+	@OperateLog(module = "用户管理", operation = "上传用户头像")
+	public Result<String> uploadUserAvatar(@RequestPart("file") MultipartFile file) throws IOException, NoSuchAlgorithmException {
+		return usersServiceI.uploadUserAvatar(new UserUploadAvatarCmd(file));
 	}
 
 }

@@ -15,17 +15,24 @@
  *
  */
 
-package org.laokou.jtt808;
+package org.laokou.admin.user.gatewayimpl.rpc;
 
-import org.springframework.boot.WebApplicationType;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.oss.api.OssServiceI;
+import org.laokou.oss.dto.OssUploadCmd;
 
-@SpringBootApplication(scanBasePackages = { "org.laokou" })
-public class Jtt808App {
+/**
+ * @author laokou
+ */
+@Slf4j
+public class OssServiceIMock implements OssServiceI {
 
-	public static void main(String[] args) {
-		new SpringApplicationBuilder(Jtt808App.class).web(WebApplicationType.REACTIVE).run(args);
+	@Override
+	public Result<String> uploadOss(OssUploadCmd cmd) {
+		log.error("调用上传文件失败，请检查Dubbo服务");
+		throw new BizException("B_Dubbo_CallOssUploadFailed", "调用上传文件失败，请检查Dubbo服务");
 	}
 
 }

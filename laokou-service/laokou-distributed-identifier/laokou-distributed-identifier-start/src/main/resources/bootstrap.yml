@@ -8,9 +8,9 @@ dubbo:
     group: DUBBO_${NACOS-GROUP}
   protocol:
     name: dubbo
-    port: 0
+    port: -1
     serialization: fury
   application:
     name: dubbo-${spring.application.name}
     logger: slf4j
-    qos-port: 0
+    qos-port: -1

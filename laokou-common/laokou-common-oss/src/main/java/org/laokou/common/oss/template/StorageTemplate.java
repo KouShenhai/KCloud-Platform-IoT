@@ -21,7 +21,10 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
+import org.laokou.common.oss.model.LoadBalancePolicyEnum;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -30,8 +33,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StorageTemplate {
 
-	public Result<String> uploadOss(FileInfo fileInfo, List<BaseOss> list) {
-		return null;
+	public Result<String> uploadOss(FileInfo fileInfo, List<BaseOss> list)
+			throws IOException, NoSuchAlgorithmException {
+		BaseOss baseOss = LoadBalancePolicyEnum.HASH.choose(list);
+		return Result.ok(baseOss.getStoragePolicy().getStorage(fileInfo, baseOss).uploadOss());
 	}
 
 }

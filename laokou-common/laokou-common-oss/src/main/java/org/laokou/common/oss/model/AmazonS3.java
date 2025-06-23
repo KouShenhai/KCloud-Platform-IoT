@@ -55,4 +55,9 @@ public final class AmazonS3 extends BaseOss {
 	 */
 	private Integer pathStyleAccessEnabled;
 
+	@Override
+	public StoragePolicyEnum getStoragePolicy() {
+		return StoragePolicyEnum.AMAZON_S3;
+	}
+
 }

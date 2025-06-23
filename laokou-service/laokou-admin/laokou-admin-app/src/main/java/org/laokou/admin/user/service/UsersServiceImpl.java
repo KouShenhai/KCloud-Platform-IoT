@@ -59,6 +59,8 @@ public class UsersServiceImpl implements UsersServiceI {
 
 	private final UserProfileGetQryExe userProfileGetQryExe;
 
+	private final UserUploadCmdExe userUploadCmdEx;
+
 	@Override
 	public void saveUser(UserSaveCmd cmd) throws Exception {
 		userSaveCmdExe.executeVoid(cmd);
@@ -107,6 +109,11 @@ public class UsersServiceImpl implements UsersServiceI {
 	@Override
 	public Result<UserProfileCO> getUserProfile() {
 		return userProfileGetQryExe.execute();
+	}
+
+	@Override
+	public Result<String> uploadUserAvatar(UserUploadAvatarCmd cmd) {
+		return userUploadCmdEx.execute(cmd);
 	}
 
 }

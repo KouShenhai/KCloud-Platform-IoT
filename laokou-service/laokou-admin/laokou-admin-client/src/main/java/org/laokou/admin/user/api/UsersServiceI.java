@@ -17,6 +17,7 @@
 
 package org.laokou.admin.user.api;
 
+import org.laokou.admin.user.dto.UserUploadAvatarCmd;
 import org.laokou.admin.user.dto.*;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
@@ -88,5 +89,11 @@ public interface UsersServiceI {
 	 * 查看个人信息.
 	 */
 	Result<UserProfileCO> getUserProfile();
+
+	/**
+	 * 上传用户头像.
+	 * @param cmd 上传命令
+	 */
+	Result<String> uploadUserAvatar(UserUploadAvatarCmd cmd);
 
 }

@@ -17,9 +17,8 @@
 
 package org.laokou.common.oss.template;
 
+import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
-import org.laokou.common.oss.model.OssInfo;
-
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
@@ -30,11 +29,11 @@ public abstract class AbstractStorage<O> implements Storage {
 
 	protected final FileInfo fileInfo;
 
-	protected final OssInfo ossInfo;
+	protected final BaseOss baseOss;
 
-	protected AbstractStorage(FileInfo fileInfo, OssInfo ossInfo) {
+	protected AbstractStorage(FileInfo fileInfo, BaseOss baseOss) {
 		this.fileInfo = fileInfo;
-		this.ossInfo = ossInfo;
+		this.baseOss = baseOss;
 	}
 
 	@Override

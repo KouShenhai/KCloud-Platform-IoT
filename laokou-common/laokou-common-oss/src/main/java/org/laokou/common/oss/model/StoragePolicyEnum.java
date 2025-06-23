@@ -21,6 +21,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
 import org.laokou.common.i18n.util.EnumParser;
 import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.oss.template.AmazonS3Storage;
+import org.laokou.common.oss.template.LocalStorage;
+import org.laokou.common.oss.template.Storage;
 
 @Getter
 public enum StoragePolicyEnum {
@@ -30,6 +33,11 @@ public enum StoragePolicyEnum {
 		public BaseOss getOss(String param) throws JsonProcessingException {
 			return JacksonUtils.toBean(param, Local.class);
 		}
+
+		@Override
+		public Storage getStorage(FileInfo fileInfo, BaseOss baseOss) {
+			return new LocalStorage(fileInfo, baseOss);
+		}
 	},
 
 	AMAZON_S3("amazon_s3", "亚马逊S3") {
@@ -37,12 +45,22 @@ public enum StoragePolicyEnum {
 		public BaseOss getOss(String param) throws JsonProcessingException {
 			return JacksonUtils.toBean(param, AmazonS3.class);
 		}
+
+		@Override
+		public Storage getStorage(FileInfo fileInfo, BaseOss baseOss) {
+			return new AmazonS3Storage(fileInfo, baseOss);
+		}
 	},
 
 	MINIO("minio", "MinIO") {
 		@Override
 		public BaseOss getOss(String param) throws JsonProcessingException {
-			return JacksonUtils.toBean(param, Minio.class);
+			return JacksonUtils.toBean(param, MinIO.class);
+		}
+
+		@Override
+		public Storage getStorage(FileInfo fileInfo, BaseOss baseOss) {
+			throw new UnsupportedOperationException();
 		}
 	};
 
@@ -60,5 +78,7 @@ public enum StoragePolicyEnum {
 	}
 
 	public abstract BaseOss getOss(String param) throws JsonProcessingException;
+
+	public abstract Storage getStorage(FileInfo fileInfo, BaseOss baseOss);
 
 }
