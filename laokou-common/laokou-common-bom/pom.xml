@@ -156,7 +156,7 @@
     <!--jsoup版本-->
     <jsoup.version>1.20.1</jsoup.version>
     <!--dubbo版本-->
-    <dubbo.version>3.3.4</dubbo.version>
+    <dubbo.version>3.3.5</dubbo.version>
     <!--pf4j版本-->
     <pf4j.version>0.10.0</pf4j.version>
     <!--spring-cloud-starter-circuitbreaker-reactor-resilience4j版本-->
