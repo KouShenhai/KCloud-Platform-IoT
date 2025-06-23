@@ -53,10 +53,6 @@ import java.security.NoSuchAlgorithmException;
 @SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
 public class OssApp {
 
-	// @formatter:off
-    /// ```properties
-    /// -Dserver.port=9991
-    /// ```
 	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		// undertow虚拟线程 => EmbeddedWebServerFactoryCustomizerAutoConfiguration#virtualThreadsUndertowDeploymentInfoCustomizer
 		StopWatch stopWatch = new StopWatch("Oss应用程序");

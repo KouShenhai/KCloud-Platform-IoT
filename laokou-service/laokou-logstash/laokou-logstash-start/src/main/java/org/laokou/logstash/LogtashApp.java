@@ -54,10 +54,6 @@ public class LogtashApp implements CommandLineRunner {
 
 	private final ExecutorService virtualThreadExecutor;
 
-	// @formatter:off
-    /// ```properties
-    /// -Dserver.port=10003
-    /// ```
 	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("Logstash应用程序");
 		stopWatch.start();

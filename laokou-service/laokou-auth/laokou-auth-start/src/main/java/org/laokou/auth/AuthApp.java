@@ -62,14 +62,6 @@ import java.security.NoSuchAlgorithmException;
 		OAuth2AuthorizationServerJwtAutoConfiguration.class })
 public class AuthApp {
 
-	// @formatter:off
-    /// ```properties
-    /// -Dserver.port=1111
-    /// ```
-    /// ```properties
-    /// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
-    /// client_secret => FpHwIfw4wY92dO
-    /// ```
 	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		// undertow虚拟线程 => EmbeddedWebServerFactoryCustomizerAutoConfiguration#virtualThreadsUndertowDeploymentInfoCustomizer
 		StopWatch stopWatch = new StopWatch("Auth应用程序");

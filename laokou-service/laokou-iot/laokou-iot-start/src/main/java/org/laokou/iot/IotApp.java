@@ -64,14 +64,6 @@ import java.security.NoSuchAlgorithmException;
 @SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
 public class IotApp {
 
-	// @formatter:off
-	/// ```properties
-	/// -Dserver.port=10005
-	/// ```
-	/// ```properties
-	/// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
-	/// client_secret => FpHwIfw4wY92dO
-	/// ```
 	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		// undertow虚拟线程 => EmbeddedWebServerFactoryCustomizerAutoConfiguration#virtualThreadsUndertowDeploymentInfoCustomizer
 		StopWatch stopWatch = new StopWatch("IoT应用程序");

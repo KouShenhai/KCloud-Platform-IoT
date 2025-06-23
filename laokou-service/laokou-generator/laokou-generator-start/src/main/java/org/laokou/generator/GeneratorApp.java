@@ -57,14 +57,6 @@ import java.security.NoSuchAlgorithmException;
 @MapperScan(basePackages = "org.laokou.generator.**.gatewayimpl.database")
 public class GeneratorApp {
 
-	// @formatter:off
-	/// ```properties
-	/// -Dserver.port=8086
-	/// ```
-	/// ```properties
-	/// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
-	/// client_secret => FpHwIfw4wY92dO
-	/// ```
 	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		// undertow虚拟线程 => EmbeddedWebServerFactoryCustomizerAutoConfiguration#virtualThreadsUndertowDeploymentInfoCustomizer
 		StopWatch stopWatch = new StopWatch("Generator应用程序");

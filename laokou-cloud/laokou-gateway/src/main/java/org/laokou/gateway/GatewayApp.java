@@ -61,16 +61,6 @@ public class GatewayApp implements CommandLineRunner {
 
 	private final ExecutorService virtualThreadExecutor;
 
-	// @formatter:off
-    /// ```properties
-    /// -Dserver.port=5555
-	/// -XX:+UseG1GC
-	///
-    /// ```
-    /// ```properties
-    /// client_id => 95TxSsTPFA3tF12TBSMmUVK0da
-    /// client_secret => FpHwIfw4wY92dO
-    /// ```
 	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("Gateway应用程序");
 		stopWatch.start();

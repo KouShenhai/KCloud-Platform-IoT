@@ -32,10 +32,6 @@ import java.net.UnknownHostException;
 @EnableConfigurationProperties
 public class ReportApp {
 
-	// @formatter:off
-    /// ```properties
-    /// -Dserver.port=10002
-    /// ```
 	public static void main(String[] args) throws UnknownHostException {
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "10002")));
 		// 因为nacos的log4j2导致本项目的日志不输出的问题
