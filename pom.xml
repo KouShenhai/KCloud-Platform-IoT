@@ -69,7 +69,7 @@
     <!--spring-cloud版本-->
     <spring-cloud.version>2025.0.0</spring-cloud.version>
     <!--spring-framework版本-->
-    <spring-framework.version>6.2.7</spring-framework.version>
+    <spring-framework.version>6.2.8</spring-framework.version>
     <!--cloud-alibaba版本-->
     <spring-cloud-alibaba.version>2023.0.3.2</spring-cloud-alibaba.version>
     <!--springdoc-openapi版本-->
@@ -85,7 +85,7 @@
     <versions-maven-plugin.version>2.18.0</versions-maven-plugin.version>
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <asciidoctor-maven-plugin.version>3.2.0</asciidoctor-maven-plugin.version>
-    <spring-javaformat-maven-plugin.version>0.0.45</spring-javaformat-maven-plugin.version>
+    <spring-javaformat-maven-plugin.version>0.0.47</spring-javaformat-maven-plugin.version>
     <maven-archetype-plugin.version>3.4.0</maven-archetype-plugin.version>
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
   </properties>
@@ -367,7 +367,7 @@
         <configuration>
           <!--备份版本-->
           <generateBackupPoms>true</generateBackupPoms>
-          <newVersion>4.0.0</newVersion>
+          <newVersion>3.5.4</newVersion>
           <oldVersion>3.5.1</oldVersion>
         </configuration>
       </plugin>
