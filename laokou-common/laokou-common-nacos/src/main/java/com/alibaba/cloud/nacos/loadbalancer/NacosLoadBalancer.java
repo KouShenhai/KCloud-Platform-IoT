@@ -74,8 +74,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
 import static org.laokou.common.i18n.common.constant.StringConstants.TRUE;
 import static org.laokou.common.i18n.common.constant.TraceConstants.*;
 
@@ -185,7 +183,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			if (ipv6InstanceList.isEmpty()) {
 				return instances.stream()
 					.filter(instance -> RegexUtils.ipv4Regex(instance.getHost()))
-					.collect(Collectors.toList());
+					.toList();
 			}
 			else {
 				return ipv6InstanceList;
@@ -193,7 +191,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		}
 		return instances.stream()
 			.filter(instance -> RegexUtils.ipv4Regex(instance.getHost()))
-			.collect(Collectors.toList());
+			.toList();
 	}
 
 	/**
@@ -264,7 +262,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 				List<ServiceInstance> sameClusterInstances = serviceInstances.stream().filter(serviceInstance -> {
 					String cluster = serviceInstance.getMetadata().get(CLUSTER_CONFIG);
 					return com.alibaba.cloud.commons.lang.StringUtils.equals(cluster, clusterName);
-				}).collect(Collectors.toList());
+				}).toList();
 				if (!CollectionUtils.isEmpty(sameClusterInstances)) {
 					instancesToChoose = sameClusterInstances;
 				}

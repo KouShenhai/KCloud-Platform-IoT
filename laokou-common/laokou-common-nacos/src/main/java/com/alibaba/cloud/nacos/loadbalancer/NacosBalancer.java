@@ -84,7 +84,7 @@ public class NacosBalancer extends Balancer {
 			instance.setHealthy(Boolean.parseBoolean(metadata.get("nacos.healthy")));
 			instanceMap.put(instance, serviceInstance);
 			return instance;
-		}).collect(Collectors.toList());
+		}).toList();
 
 		Instance instance = getHostByRandomWeight2(nacosInstance);
 		NacosServiceInstance nacosServiceInstance = (NacosServiceInstance) instanceMap.get(instance);

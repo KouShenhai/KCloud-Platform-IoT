@@ -49,7 +49,7 @@ final class OAuth2AuthenticationProcessor {
 
 	private final DomainService domainService;
 
-	private final DomainEventPublisher KafkaDomainEventPublisher;
+	private final DomainEventPublisher kafkaDomainEventPublisher;
 
 	public UsernamePasswordAuthenticationToken authenticationToken(AuthA authA, HttpServletRequest request)
 			throws Exception {
@@ -80,7 +80,7 @@ final class OAuth2AuthenticationProcessor {
 		finally {
 			// 发布事件
 			if (ObjectUtils.isNotNull(evt)) {
-				KafkaDomainEventPublisher.publish(MqEnum.LOGIN_LOG.getTopic(), evt);
+				kafkaDomainEventPublisher.publish(MqEnum.LOGIN_LOG.getTopic(), evt);
 			}
 		}
 	}

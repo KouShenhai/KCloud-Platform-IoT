@@ -36,7 +36,7 @@ public class CaptchaSendCmdExe {
 
 	private final DomainService domainService;
 
-	private final DomainEventPublisher KafkaDomainEventPublisher;
+	private final DomainEventPublisher kafkaDomainEventPublisher;
 
 	private final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
 
@@ -44,7 +44,7 @@ public class CaptchaSendCmdExe {
 	public void executeVoid(CaptchaSendCmd cmd) {
 		CaptchaE captchaE = CaptchaConvertor.toEntity(distributedIdentifierWrapperRpc.getId(), cmd.getCo());
 		domainService.createSendCaptchaInfo(captchaE);
-		KafkaDomainEventPublisher.publish(captchaE.getSendCaptchaTypeEnum().getMqTopic(),
+		kafkaDomainEventPublisher.publish(captchaE.getSendCaptchaTypeEnum().getMqTopic(),
 				CaptchaConvertor.toDomainEvent(captchaE));
 	}
 

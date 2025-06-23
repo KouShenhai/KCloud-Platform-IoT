@@ -52,7 +52,7 @@ public class OperateLogAop {
 
 	private final Environment environment;
 
-	private final DomainEventPublisher KafkaDomainEventPublisher;
+	private final DomainEventPublisher kafkaDomainEventPublisher;
 
 	private final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
 
@@ -89,7 +89,7 @@ public class OperateLogAop {
 			// 获取错误
 			operateLogA.getThrowable(throwable);
 			// 发布事件
-			KafkaDomainEventPublisher.publish(MqEnum.OPERATE_LOG.getTopic(),
+			kafkaDomainEventPublisher.publish(MqEnum.OPERATE_LOG.getTopic(),
 					OperateLogConvertor.toDomainEvent(operateLogA));
 		}
 	}
