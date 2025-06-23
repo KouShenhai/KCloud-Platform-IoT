@@ -72,7 +72,7 @@
     <!--jackson版本-->
     <jackson.version>2.19.1</jackson.version>
     <!--spring-kafka版本-->
-    <spring-kafka.version>3.3.6</spring-kafka.version>
+    <spring-kafka.version>3.3.7</spring-kafka.version>
     <!--netty版本-->
     <netty.version>4.2.2.Final</netty.version>
     <!--gson版本-->
