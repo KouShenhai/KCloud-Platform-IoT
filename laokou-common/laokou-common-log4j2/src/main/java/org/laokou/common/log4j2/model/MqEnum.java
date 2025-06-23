@@ -27,15 +27,6 @@ public enum MqEnum {
 
 	;
 
-	private final String code;
-
-	private final String desc;
-
-	MqEnum(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
-
 	public static final String DISTRIBUTED_IDENTIFIER_TRACE_LOG_TOPIC = "distributed-identifier-trace-log";
 
 	public static final String GATEWAY_TRACE_LOG_TOPIC = "gateway-trace-log";
