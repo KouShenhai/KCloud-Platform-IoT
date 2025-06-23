@@ -78,7 +78,7 @@
     <!--gson版本-->
     <gson.version>2.13.1</gson.version>
     <!--swagger-annotations-jakarta版本-->
-    <swagger-annotations-jakarta.version>2.2.32</swagger-annotations-jakarta.version>
+    <swagger-annotations-jakarta.version>2.2.34</swagger-annotations-jakarta.version>
     <!--disruptor版本-->
     <disruptor.version>4.0.0</disruptor.version>
     <!--transmittable-thread-local版本-->
@@ -102,7 +102,7 @@
     <!--grpc版本-->
     <grpc.version>1.73.0</grpc.version>
     <!--proto-google-common-protos版本-->
-    <proto-google-common-protos.version>2.57.0</proto-google-common-protos.version>
+    <proto-google-common-protos.version>2.58.2</proto-google-common-protos.version>
     <!--error_prone_annotations版本-->
     <error_prone_annotations.version>2.38.0</error_prone_annotations.version>
     <!--checker-qual版本-->
@@ -118,7 +118,7 @@
     <!--archunit-junit5版本-->
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
     <!--opentelemetry-api-incubator版本-->
-    <opentelemetry-api-incubator.version>1.50.0-alpha</opentelemetry-api-incubator.version>
+    <opentelemetry-api-incubator.version>1.51.0-alpha</opentelemetry-api-incubator.version>
     <!--opentelemetry-exporter-jaeger版本-->
     <opentelemetry-exporter-jaeger.version>1.34.1</opentelemetry-exporter-jaeger.version>
     <!--caffeine版本-->
@@ -134,13 +134,13 @@
     <!--okhttp3版本-->
     <okhttp3.version>4.12.0</okhttp3.version>
     <!--reactor-core版本-->
-    <reactor-core.version>3.7.6</reactor-core.version>
+    <reactor-core.version>3.7.7</reactor-core.version>
     <!--opencsv版本-->
     <opencsv.version>5.11.2</opencsv.version>
     <!--curator版本-->
     <curator.version>5.8.0</curator.version>
     <!--wiremock版本-->
-    <wiremock.version>4.0.0-beta.9</wiremock.version>
+    <wiremock.version>4.0.0-beta.12</wiremock.version>
     <!--commons-net版本-->
     <commons-net.version>3.11.1</commons-net.version>
     <!--vertx版本-->
@@ -156,7 +156,7 @@
     <!--jsoup版本-->
     <jsoup.version>1.20.1</jsoup.version>
     <!--dubbo版本-->
-    <dubbo.version>3.3.4</dubbo.version>
+    <dubbo.version>3.3.5</dubbo.version>
     <!--pf4j版本-->
     <pf4j.version>0.10.0</pf4j.version>
     <!--spring-cloud-starter-circuitbreaker-reactor-resilience4j版本-->
