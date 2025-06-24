@@ -25,7 +25,6 @@ import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnableServiceShutDown;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
-import org.laokou.common.secret.annotation.EnableApiSecret;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
@@ -54,7 +53,6 @@ import java.security.NoSuchAlgorithmException;
 @EnableWarmUp
 @EnableRouter
 @EnableSecurity
-@EnableApiSecret
 @EnableScheduling
 @EnableServiceShutDown
 @EnableRedisRepository
