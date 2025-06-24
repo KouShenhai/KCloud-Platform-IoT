@@ -64,6 +64,7 @@ import java.security.NoSuchAlgorithmException;
 @SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
 public class AdminApp {
 
+	// @formatter:off
 	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		// undertow虚拟线程 => EmbeddedWebServerFactoryCustomizerAutoConfiguration#virtualThreadsUndertowDeploymentInfoCustomizer
 		StopWatch stopWatch = new StopWatch("Admin应用程序");
@@ -81,6 +82,6 @@ public class AdminApp {
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
 	}
-    // @formatter:on
+	// @formatter:on
 
 }

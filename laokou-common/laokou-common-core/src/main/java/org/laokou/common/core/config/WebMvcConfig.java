@@ -17,13 +17,14 @@
 
 package org.laokou.common.core.config;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.filter.I18nRequestContextFilter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.web.servlet.ConditionalOnMissingFilterBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.filter.RequestContextFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -33,12 +34,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Slf4j
 @Configuration
-@RequiredArgsConstructor
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Bean(bootstrap = Bean.Bootstrap.BACKGROUND)
-	@ConditionalOnMissingBean(name = "requestContextFilter")
+	@ConditionalOnMissingBean({ RequestContextListener.class, RequestContextFilter.class })
+	@ConditionalOnMissingFilterBean
 	public static RequestContextFilter requestContextFilter() {
 		log.info("{} => Initializing RequestContextFilter", Thread.currentThread().getName());
 		return new I18nRequestContextFilter();
