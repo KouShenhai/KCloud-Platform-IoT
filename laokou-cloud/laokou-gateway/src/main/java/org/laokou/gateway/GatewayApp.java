@@ -62,6 +62,7 @@ public class GatewayApp implements CommandLineRunner {
 
 	private final ExecutorService virtualThreadExecutor;
 
+	// @formatter:off
 	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("Gateway应用程序");
 		stopWatch.start();
@@ -81,33 +82,31 @@ public class GatewayApp implements CommandLineRunner {
 	}
 
 	@Override
-    public void run(String... args)  {
+	public void run(String... args) {
 		// 同步路由
 		virtualThreadExecutor.execute(this::syncRouters);
-    }
+	}
 
 	private void syncRouters() {
 		// 删除路由
-		nacosRouteDefinitionRepository.removeRouters()
-			.subscribeOn(Schedulers.boundedElastic())
-			.subscribe(delFlag -> {
+		nacosRouteDefinitionRepository.removeRouters().subscribeOn(Schedulers.boundedElastic()).subscribe(delFlag -> {
 			if (ObjectUtils.equals(Boolean.TRUE, delFlag)) {
 				log.info("删除路由成功");
-			} else {
+			}
+			else {
 				log.error("删除路由失败");
 			}
 		});
 		// 保存路由
-		nacosRouteDefinitionRepository.saveRouters()
-			.subscribeOn(Schedulers.boundedElastic())
-			.subscribe(saveFlag -> {
+		nacosRouteDefinitionRepository.saveRouters().subscribeOn(Schedulers.boundedElastic()).subscribe(saveFlag -> {
 			if (ObjectUtils.equals(Boolean.TRUE, saveFlag)) {
 				log.info("保存路由成功");
-			} else {
+			}
+			else {
 				log.error("保存路由失败");
 			}
 		});
 	}
-    // @formatter:on
+	// @formatter:on
 
 }

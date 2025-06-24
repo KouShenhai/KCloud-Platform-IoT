@@ -181,17 +181,13 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			}
 			// Provider has no IPv6, should use IPv4.
 			if (ipv6InstanceList.isEmpty()) {
-				return instances.stream()
-					.filter(instance -> RegexUtils.ipv4Regex(instance.getHost()))
-					.toList();
+				return instances.stream().filter(instance -> RegexUtils.ipv4Regex(instance.getHost())).toList();
 			}
 			else {
 				return ipv6InstanceList;
 			}
 		}
-		return instances.stream()
-			.filter(instance -> RegexUtils.ipv4Regex(instance.getHost()))
-			.toList();
+		return instances.stream().filter(instance -> RegexUtils.ipv4Regex(instance.getHost())).toList();
 	}
 
 	/**

@@ -42,6 +42,7 @@ import java.net.UnknownHostException;
 @SpringBootApplication(scanBasePackages = "org.laokou")
 public class DistributedIdentifierApp {
 
+	// @formatter:off
 	public static void main(String[] args) throws UnknownHostException {
 		// undertow虚拟线程 => EmbeddedWebServerFactoryCustomizerAutoConfiguration#virtualThreadsUndertowDeploymentInfoCustomizer
 		StopWatch stopWatch = new StopWatch("DistributedIdentifier应用程序");
@@ -53,6 +54,6 @@ public class DistributedIdentifierApp {
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
 	}
-    // @formatter:on
+	// @formatter:on
 
 }

@@ -30,13 +30,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.util.StopWatch;
 import reactor.core.scheduler.Schedulers;
-import reactor.util.retry.Retry;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -54,6 +51,7 @@ public class LogtashApp implements CommandLineRunner {
 
 	private final ExecutorService virtualThreadExecutor;
 
+	// @formatter:off
 	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("Logstash应用程序");
 		stopWatch.start();
@@ -70,20 +68,14 @@ public class LogtashApp implements CommandLineRunner {
 	}
 
 	@Override
-    public void run(String... args)  {
+	public void run(String... args) {
 		// 监听消息
 		virtualThreadExecutor.execute(this::listenMessages);
-    }
-    // @formatter:on
+	}
+	// @formatter:on
 
 	private void listenMessages() {
-		tracingLogConsumer.consumeMessages()
-			.subscribeOn(Schedulers.boundedElastic())
-			.retryWhen(Retry.backoff(5, Duration.ofMillis(100))
-				.maxBackoff(Duration.ofSeconds(1))
-				.jitter(0.5)
-				.doBeforeRetry(retry -> log.info("Retry attempt #{}", retry.totalRetriesInARow()))) // 增强型指数退避策略
-			.subscribe();
+		tracingLogConsumer.consumeMessages().subscribeOn(Schedulers.boundedElastic()).subscribe();
 	}
 
 }
