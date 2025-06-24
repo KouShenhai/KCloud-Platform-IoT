@@ -87,6 +87,7 @@ spring:
             POST:
               - /v3/captchas/send/mail=laokou-gateway
               - /v3/captchas/send/mobile=laokou-gateway
+              - /oauth2/token=laokou-gateway
             DELETE:
               - /v3/tokens=laokou-gateway
   data:

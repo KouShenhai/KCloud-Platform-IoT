@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
-import org.laokou.common.nacos.annotation.EnableServiceShutDown;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
 import org.laokou.common.security.annotation.EnableSecurity;
@@ -55,7 +54,6 @@ import java.security.NoSuchAlgorithmException;
 @EnableSecurity
 @EnableScheduling
 @EnableWebSocketServer
-@EnableServiceShutDown
 @EnableRedisRepository
 @EnableDiscoveryClient
 @EnableAspectJAutoProxy

@@ -37,6 +37,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
@@ -159,7 +161,9 @@ public final class RequestUtils {
 
 	public final static class RequestWrapper extends HttpServletRequestWrapper {
 
-		private final byte[] REQUEST_BODY;
+		private final byte[] requestBody;
+
+		private final Map<String, String[]> parameterMap;
 
 		/**
 		 * Constructs a request object wrapping the given request.
@@ -168,17 +172,33 @@ public final class RequestUtils {
 		 */
 		public RequestWrapper(HttpServletRequest request) throws IOException {
 			super(request);
-			REQUEST_BODY = getRequestBody(request);
+			requestBody = getRequestBody(request);
+			parameterMap = new HashMap<>(request.getParameterMap());
 		}
 
 		@Override
 		public BufferedReader getReader() {
-			return new BufferedReader(new ByteArrayInputStreamReader(REQUEST_BODY));
+			return new BufferedReader(new ByteArrayInputStreamReader(requestBody));
+		}
+
+		@Override
+		public Map<String, String[]> getParameterMap() {
+			return parameterMap;
+		}
+
+		@Override
+		public String getParameter(String name) {
+			return getParameterValues(name)[0];
+		}
+
+		@Override
+		public String[] getParameterValues(String name) {
+			return parameterMap.getOrDefault(name, new String[0]);
 		}
 
 		@Override
 		public ServletInputStream getInputStream() {
-			return RequestUtils.getInputStream(REQUEST_BODY);
+			return RequestUtils.getInputStream(requestBody);
 		}
 
 		private static class ByteArrayInputStreamReader extends InputStreamReader {

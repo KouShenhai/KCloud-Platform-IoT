@@ -58,7 +58,6 @@ import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.nacos.util.ReactiveRequestUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.*;
@@ -66,12 +65,9 @@ import org.springframework.cloud.loadbalancer.core.NoopServiceInstanceListSuppli
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.util.Assert;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import static org.laokou.common.i18n.common.constant.StringConstants.TRUE;
@@ -88,11 +84,6 @@ import static org.laokou.common.i18n.common.constant.TraceConstants.*;
  */
 @Slf4j
 public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
-
-	/**
-	 * 优雅停机URL.
-	 */
-	public static final String GRACEFUL_SHUTDOWN_URL = "/graceful-shutdown";
 
 	/**
 	 * Nacos集群配置.
@@ -215,23 +206,12 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			return new EmptyResponse();
 		}
 		if (request.getContext() instanceof RequestDataContext context) {
-			// IP优先（优雅停机）
 			String path = context.getClientRequest().getUrl().getPath();
 			HttpHeaders headers = context.getClientRequest().getHeaders();
-			if (ReactiveRequestUtils.pathMatcher(HttpMethod.GET.name(), path,
-					Map.of(HttpMethod.GET.name(), Collections.singleton(GRACEFUL_SHUTDOWN_URL)))) {
-				ServiceInstance serviceInstance = serviceInstances.stream()
-					.filter(instance -> match(instance, headers))
-					.findFirst()
-					.orElse(null);
-				if (ObjectUtils.isNotNull(serviceInstance)) {
-					return new DefaultResponse(serviceInstance);
-				}
-			}
 			// 服务灰度路由
 			if (isGrayRouter(headers)) {
 				String version = RegexUtils.getRegexValue(path, "/(v\\d+)/");
-				if (com.alibaba.cloud.commons.lang.StringUtils.isNotEmpty(version)) {
+				if (StringUtils.isNotEmpty(version)) {
 					serviceInstances = serviceInstances.stream()
 						.filter(item -> item.getMetadata().getOrDefault(VERSION, DEFAULT_VERSION_VALUE).equals(version))
 						.toList();
@@ -301,21 +281,6 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	private boolean isGrayRouter(HttpHeaders headers) {
 		String gray = headers.getFirst(SERVICE_GRAY);
 		return ObjectUtils.equals(TRUE, gray);
-	}
-
-	/**
-	 * 根据IP和端口匹配服务节点.
-	 * @param serviceInstance 服务实例
-	 * @param headers 请求头
-	 * @return 匹配结果
-	 */
-	private boolean match(ServiceInstance serviceInstance, HttpHeaders headers) {
-		String host = headers.getFirst(SERVICE_HOST);
-		String port = headers.getFirst(SERVICE_PORT);
-		Assert.isTrue(StringUtils.isNotEmpty(host), "service-host is empty");
-		Assert.isTrue(StringUtils.isNotEmpty(port), "service-port is empty");
-		return ObjectUtils.equals(host, serviceInstance.getHost())
-				&& Integer.parseInt(port) == serviceInstance.getPort();
 	}
 
 }
