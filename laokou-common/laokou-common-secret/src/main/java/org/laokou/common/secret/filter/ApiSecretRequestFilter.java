@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.secret.annotation.ApiSecret;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.method.HandlerMethod;
@@ -39,9 +38,11 @@ import org.springframework.web.servlet.HandlerMapping;
 @NonNullApi
 public class ApiSecretRequestFilter extends OncePerRequestFilter {
 
-	@Autowired
-	@Qualifier("requestMappingHandlerMapping")
-	private HandlerMapping handlerMapping;
+	private final HandlerMapping handlerMapping;
+
+	public ApiSecretRequestFilter(@Qualifier("requestMappingHandlerMapping") HandlerMapping handlerMapping) {
+		this.handlerMapping = handlerMapping;
+	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
