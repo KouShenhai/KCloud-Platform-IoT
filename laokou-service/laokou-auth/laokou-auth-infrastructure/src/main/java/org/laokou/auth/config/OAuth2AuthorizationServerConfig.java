@@ -28,6 +28,7 @@ import org.laokou.auth.model.PasswordValidator;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.redis.util.RedisUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -70,7 +71,6 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -126,14 +126,14 @@ class OAuth2AuthorizationServerConfig {
 	@Bean
 	@Order(HIGHEST_PRECEDENCE)
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
-			AuthenticationProvider usernamePasswordAuthenticationProvider,
-			AuthenticationProvider testAuthenticationProvider,
-			AuthenticationProvider mailAuthenticationProvider,
-			AuthenticationProvider mobileAuthenticationProvider,
-			AuthenticationConverter usernamePasswordAuthenticationConverter,
-			AuthenticationConverter testAuthenticationConverter,
-			AuthenticationConverter mailAuthenticationConverter,
-			AuthenticationConverter mobileAuthenticationConverter,
+			@Qualifier("usernamePasswordAuthenticationProvider") AuthenticationProvider usernamePasswordAuthenticationProvider,
+			@Qualifier("testAuthenticationProvider") AuthenticationProvider testAuthenticationProvider,
+			@Qualifier("mailAuthenticationProvider") AuthenticationProvider mailAuthenticationProvider,
+			@Qualifier("mobileAuthenticationProvider") AuthenticationProvider mobileAuthenticationProvider,
+			@Qualifier("usernamePasswordAuthenticationConverter") AuthenticationConverter usernamePasswordAuthenticationConverter,
+			@Qualifier("testAuthenticationConverter") AuthenticationConverter testAuthenticationConverter,
+			@Qualifier("mailAuthenticationConverter") AuthenticationConverter mailAuthenticationConverter,
+			@Qualifier("mobileAuthenticationConverter") AuthenticationConverter mobileAuthenticationConverter,
 			AuthorizationServerSettings authorizationServerSettings,
 			OAuth2AuthorizationService authorizationService)
 			throws Exception {
@@ -142,17 +142,17 @@ class OAuth2AuthorizationServerConfig {
 		http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
 			// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
 			.tokenEndpoint((tokenEndpoint) -> tokenEndpoint
-				.accessTokenRequestConverter(
-					new DelegatingAuthenticationConverter(List.of(usernamePasswordAuthenticationConverter,
-							testAuthenticationConverter,
-							mobileAuthenticationConverter,
-							mailAuthenticationConverter)
-					)
+				.accessTokenRequestConverter(new DelegatingAuthenticationConverter(usernamePasswordAuthenticationConverter,
+					testAuthenticationConverter,
+					mobileAuthenticationConverter,
+					mailAuthenticationConverter)
 				)
-				.authenticationProvider(usernamePasswordAuthenticationProvider)
-				.authenticationProvider(mobileAuthenticationProvider)
-				.authenticationProvider(testAuthenticationProvider)
-				.authenticationProvider(mailAuthenticationProvider))
+				.authenticationProviders(providers -> {
+					providers.add(usernamePasswordAuthenticationProvider);
+					providers.add(testAuthenticationProvider);
+					providers.add(mobileAuthenticationProvider);
+					providers.add(mailAuthenticationProvider);
+				}))
 			.oidc(Customizer.withDefaults())
 			.authorizationService(authorizationService)
 			.authorizationServerSettings(authorizationServerSettings);
