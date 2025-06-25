@@ -67,7 +67,7 @@ public final class RSAUtils {
 		}
 		catch (IOException e) {
 			log.error("读取私钥或密钥失败，错误信息：{}", e.getMessage(), e);
-			throw new RuntimeException(e);
+			throw new IllegalArgumentException(e);
 		}
 	}
 
