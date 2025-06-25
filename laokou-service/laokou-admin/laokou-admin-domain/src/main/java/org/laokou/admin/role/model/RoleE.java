@@ -21,7 +21,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
@@ -93,17 +92,19 @@ public class RoleE extends Identifier {
 	@Setter
 	private RoleOperateTypeEnum roleOperateTypeEnum;
 
-	@Autowired
-	@Qualifier("saveRoleParamValidator")
-	private RoleParamValidator saveRoleParamValidator;
+	private final RoleParamValidator saveRoleParamValidator;
 
-	@Autowired
-	@Qualifier("modifyRoleParamValidator")
-	private RoleParamValidator modifyRoleParamValidator;
+	private final RoleParamValidator modifyRoleParamValidator;
 
-	@Autowired
-	@Qualifier("modifyRoleAuthorityParamValidator")
-	private RoleParamValidator modifyRoleAuthorityParamValidator;
+	private final RoleParamValidator modifyRoleAuthorityParamValidator;
+
+	public RoleE(@Qualifier("saveRoleParamValidator") RoleParamValidator saveRoleParamValidator,
+			@Qualifier("modifyRoleParamValidator") RoleParamValidator modifyRoleParamValidator,
+			@Qualifier("modifyRoleAuthorityParamValidator") RoleParamValidator modifyRoleAuthorityParamValidator) {
+		this.saveRoleParamValidator = saveRoleParamValidator;
+		this.modifyRoleParamValidator = modifyRoleParamValidator;
+		this.modifyRoleAuthorityParamValidator = modifyRoleAuthorityParamValidator;
+	}
 
 	public void checkRoleParam() {
 		switch (roleOperateTypeEnum) {

@@ -21,7 +21,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
@@ -64,13 +63,16 @@ public class ProductCategoryE extends Identifier {
 	@Setter
 	private ProductCategoryOperateTypeEnum productCategoryOperateTypeEnum;
 
-	@Autowired
-	@Qualifier("saveProductCategoryParamValidator")
-	private ProductCategoryParamValidator saveProductCategoryParamValidator;
+	private final ProductCategoryParamValidator saveProductCategoryParamValidator;
 
-	@Autowired
-	@Qualifier("modifyProductCategoryParamValidator")
-	private ProductCategoryParamValidator modifyProductCategoryParamValidator;
+	private final ProductCategoryParamValidator modifyProductCategoryParamValidator;
+
+	public ProductCategoryE(
+			@Qualifier("saveProductCategoryParamValidator") ProductCategoryParamValidator saveProductCategoryParamValidator,
+			@Qualifier("modifyProductCategoryParamValidator") ProductCategoryParamValidator modifyProductCategoryParamValidator) {
+		this.saveProductCategoryParamValidator = saveProductCategoryParamValidator;
+		this.modifyProductCategoryParamValidator = modifyProductCategoryParamValidator;
+	}
 
 	public void checkProductCategoryParam() {
 		switch (productCategoryOperateTypeEnum) {

@@ -25,7 +25,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.RequestUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -41,9 +40,11 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class RequestUtilsTest {
 
-	@Autowired
-	@Qualifier("requestMappingHandlerMapping")
-	private HandlerMapping handlerMapping;
+	private final HandlerMapping handlerMapping;
+
+	RequestUtilsTest(@Qualifier("requestMappingHandlerMapping") HandlerMapping handlerMapping) {
+		this.handlerMapping = handlerMapping;
+	}
 
 	@Test
 	void testRequest() throws Exception {

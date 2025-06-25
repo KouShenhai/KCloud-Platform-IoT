@@ -21,7 +21,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
@@ -91,13 +90,15 @@ public class MenuE extends Identifier {
 	@Setter
 	private MenuOperateTypeEnum menuOperateTypeEnum;
 
-	@Autowired
-	@Qualifier("saveMenuParamValidator")
-	private MenuParamValidator saveMenuParamValidator;
+	private final MenuParamValidator saveMenuParamValidator;
 
-	@Autowired
-	@Qualifier("modifyMenuParamValidator")
-	private MenuParamValidator modifyMenuParamValidator;
+	private final MenuParamValidator modifyMenuParamValidator;
+
+	public MenuE(@Qualifier("saveMenuParamValidator") MenuParamValidator saveMenuParamValidator,
+			@Qualifier("modifyMenuParamValidator") MenuParamValidator modifyMenuParamValidator) {
+		this.saveMenuParamValidator = saveMenuParamValidator;
+		this.modifyMenuParamValidator = modifyMenuParamValidator;
+	}
 
 	public void checkMenuParam() {
 		switch (menuOperateTypeEnum) {

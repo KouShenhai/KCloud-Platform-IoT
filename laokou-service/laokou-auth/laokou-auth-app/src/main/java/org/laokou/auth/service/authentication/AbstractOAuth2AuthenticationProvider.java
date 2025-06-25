@@ -24,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -86,8 +85,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			throw e;
 		}
 		catch (Exception e) {
-			log.error("未知错误，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+			log.error("认证异常，错误信息：{}", e.getMessage());
+			throw new RuntimeException(e);
 		}
 	}
 

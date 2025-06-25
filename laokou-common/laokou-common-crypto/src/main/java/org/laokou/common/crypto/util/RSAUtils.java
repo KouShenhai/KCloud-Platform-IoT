@@ -18,7 +18,6 @@
 package org.laokou.common.crypto.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ResourceUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.util.Assert;
@@ -67,8 +66,8 @@ public final class RSAUtils {
 				.trim();
 		}
 		catch (IOException e) {
-			log.error("读取私钥或密钥失败，错误信息：{}", e.getMessage());
-			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+			log.error("读取私钥或密钥失败，错误信息：{}", e.getMessage(), e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -89,6 +88,7 @@ public final class RSAUtils {
 			return new String(bytes, StandardCharsets.UTF_8);
 		}
 		catch (Exception e) {
+			log.error("RSA解密失败，错误信息：{}", e.getMessage(), e);
 			return str;
 		}
 	}
@@ -115,6 +115,7 @@ public final class RSAUtils {
 			return encryptBase64(bytes);
 		}
 		catch (Exception e) {
+			log.error("RSA加密失败，错误信息：{}", e.getMessage(), e);
 			return str;
 		}
 	}

@@ -21,17 +21,15 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.common.crypto.util.AESUtils;
+import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.CollectionUtils;
-
 import java.util.*;
-
 import static org.laokou.auth.model.GrantTypeEnum.*;
 import static org.laokou.auth.model.OAuth2Constants.*;
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
@@ -108,34 +106,45 @@ public class AuthA extends AggregateRoot {
 	/**
 	 * 密码校验器.
 	 */
-	@Autowired
-	private PasswordValidator passwordValidator;
+	private final PasswordValidator passwordValidator;
 
 	/**
 	 * 验证码校验器.
 	 */
-	@Autowired
-	private CaptchaValidator captchaValidator;
+	private final CaptchaValidator captchaValidator;
 
-	@Autowired
-	@Qualifier("authorizationCodeAuthParamValidator")
-	private AuthParamValidator authorizationCodeAuthParamValidator;
+	private final AuthParamValidator authorizationCodeAuthParamValidator;
 
-	@Autowired
-	@Qualifier("mailAuthParamValidator")
-	private AuthParamValidator mailAuthParamValidator;
+	private final AuthParamValidator mailAuthParamValidator;
 
-	@Autowired
-	@Qualifier("mobileAuthParamValidator")
-	private AuthParamValidator mobileAuthParamValidator;
+	private final AuthParamValidator mobileAuthParamValidator;
 
-	@Autowired
-	@Qualifier("testAuthParamValidator")
-	private AuthParamValidator testAuthParamValidator;
+	private final AuthParamValidator testAuthParamValidator;
 
-	@Autowired
-	@Qualifier("usernamePasswordAuthParamValidator")
-	private AuthParamValidator usernamePasswordAuthParamValidator;
+	private final AuthParamValidator usernamePasswordAuthParamValidator;
+
+	// @formatter:off
+	public AuthA(PasswordValidator passwordValidator,
+				 CaptchaValidator captchaValidator,
+				 @Qualifier("authorizationCodeAuthParamValidator") AuthParamValidator authorizationCodeAuthParamValidator,
+				 @Qualifier("mailAuthParamValidator") AuthParamValidator mailAuthParamValidator,
+				 @Qualifier("mobileAuthParamValidator") AuthParamValidator mobileAuthParamValidator,
+				 @Qualifier("testAuthParamValidator") AuthParamValidator testAuthParamValidator,
+				 @Qualifier("usernamePasswordAuthParamValidator") AuthParamValidator usernamePasswordAuthParamValidator) {
+		this.passwordValidator = passwordValidator;
+		this.captchaValidator = captchaValidator;
+		this.authorizationCodeAuthParamValidator = authorizationCodeAuthParamValidator;
+		this.mailAuthParamValidator = mailAuthParamValidator;
+		this.mobileAuthParamValidator = mobileAuthParamValidator;
+		this.testAuthParamValidator = testAuthParamValidator;
+		this.usernamePasswordAuthParamValidator = usernamePasswordAuthParamValidator;
+	}
+	// @formatter:on
+
+	public void decryptUsernamePassword() {
+		username = RSAUtils.decryptByPrivateKey(username);
+		password = RSAUtils.decryptByPrivateKey(password);
+	}
 
 	public void createUserByUsernamePassword() throws Exception {
 		fillUserValue(this.username, EMPTY, EMPTY);

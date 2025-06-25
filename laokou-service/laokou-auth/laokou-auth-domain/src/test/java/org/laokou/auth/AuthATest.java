@@ -23,6 +23,7 @@ import org.laokou.auth.model.*;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gateway.*;
 import org.laokou.common.crypto.util.AESUtils;
+import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -83,6 +84,22 @@ class AuthATest {
 	private AuthParamValidator usernamePasswordAuthParamValidator;
 
 	@Test
+	void testDecryptUsernamePassword() {
+		String username = "admin";
+		String password = "123";
+		String encryptUsername = RSAUtils.encryptByPublicKey(username);
+		String decryptUsername = RSAUtils.decryptByPrivateKey(encryptUsername);
+		String encryptPassword = RSAUtils.encryptByPublicKey(password);
+		String decryptPassword = RSAUtils.decryptByPrivateKey(encryptPassword);
+		Assertions.assertEquals(username, decryptUsername);
+		Assertions.assertEquals(password, decryptPassword);
+		AuthA authA = getAuth(encryptUsername, encryptPassword, GrantTypeEnum.USERNAME_PASSWORD, EMPTY, EMPTY);
+		Assertions.assertDoesNotThrow(authA::decryptUsernamePassword);
+		Assertions.assertEquals(username, authA.getUsername());
+		Assertions.assertEquals(password, authA.getPassword());
+	}
+
+	@Test
 	void testCreateUserByTest() throws Exception {
 		AuthA authA = getAuth("admin", "123", GrantTypeEnum.TEST, EMPTY, EMPTY);
 		// 创建用户【测试】
@@ -105,7 +122,6 @@ class AuthATest {
 	@Test
 	void testCreateUserByMobile() throws Exception {
 		AuthA authA = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
-		;
 		// 创建用户【手机号】
 		Assertions.assertDoesNotThrow(authA::createUserByMobile);
 		UserE user = authA.getUser();

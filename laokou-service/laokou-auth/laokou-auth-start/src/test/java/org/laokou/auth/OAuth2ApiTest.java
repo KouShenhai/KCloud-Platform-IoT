@@ -46,6 +46,7 @@ import org.springframework.web.client.RestClient;
 import java.net.URI;
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -126,8 +127,10 @@ class OAuth2ApiTest {
 	@Test
 	void testTtlMDC() {
 		MDCUtils.put("111", "222");
-		ThreadUtils.newTtlVirtualTaskExecutor()
-			.execute(() -> log.info("TraceId：{}，SpanId：{}", MDCUtils.getSpanId(), MDCUtils.getSpanId()));
+		try (ExecutorService virtualTaskExecutor = ThreadUtils.newTtlVirtualTaskExecutor()) {
+			virtualTaskExecutor
+				.execute(() -> log.info("TraceId：{}，SpanId：{}", MDCUtils.getSpanId(), MDCUtils.getSpanId()));
+		}
 	}
 
 	@Test
@@ -153,7 +156,9 @@ class OAuth2ApiTest {
 		String encryptPassword = RSAUtils.encryptByPublicKey(PASSWORD);
 		String decryptUsername = RSAUtils.decryptByPrivateKey(encryptUsername);
 		String decryptPassword = RSAUtils.decryptByPrivateKey(encryptPassword);
-		Map<String, String> tokenMap = usernamePasswordAuth(captcha, decryptUsername, decryptPassword);
+		Assertions.assertEquals(USERNAME, decryptUsername);
+		Assertions.assertEquals(PASSWORD, decryptPassword);
+		Map<String, String> tokenMap = usernamePasswordAuth(captcha, encryptUsername, encryptPassword);
 		log.info("验证码：{}", captcha);
 		log.info("加密用户名：{}", encryptUsername);
 		log.info("加密密码：{}", encryptPassword);

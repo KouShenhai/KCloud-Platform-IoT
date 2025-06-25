@@ -22,7 +22,6 @@ import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.security.util.UserDetails;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,13 +43,13 @@ import static org.laokou.common.security.config.GlobalOpaqueTokenIntrospector.FU
 @Component
 public class TokenRemoveCmdExe {
 
-	@Autowired
-	@Qualifier("redissonCacheManager")
-	private CacheManager redissonCacheManager;
+	private final CacheManager redissonCacheManager;
 
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 
-	public TokenRemoveCmdExe(OAuth2AuthorizationService oAuth2AuthorizationService) {
+	public TokenRemoveCmdExe(@Qualifier("redissonCacheManager") CacheManager redissonCacheManager,
+			OAuth2AuthorizationService oAuth2AuthorizationService) {
+		this.redissonCacheManager = redissonCacheManager;
 		this.oAuth2AuthorizationService = oAuth2AuthorizationService;
 	}
 

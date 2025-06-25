@@ -21,7 +21,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
@@ -92,13 +91,15 @@ public class ThingModelE extends Identifier {
 	@Setter
 	private ThingModelOperateTypeEnum thingModelOperateTypeEnum;
 
-	@Autowired
-	@Qualifier("saveThingModelParamValidator")
-	private ThingModelParamValidator saveThingModelParamValidator;
+	private final ThingModelParamValidator saveThingModelParamValidator;
 
-	@Autowired
-	@Qualifier("modifyThingModelParamValidator")
-	private ThingModelParamValidator modifyThingModelParamValidator;
+	private final ThingModelParamValidator modifyThingModelParamValidator;
+
+	public ThingModelE(@Qualifier("saveThingModelParamValidator") ThingModelParamValidator saveThingModelParamValidator,
+			@Qualifier("modifyThingModelParamValidator") ThingModelParamValidator modifyThingModelParamValidator) {
+		this.saveThingModelParamValidator = saveThingModelParamValidator;
+		this.modifyThingModelParamValidator = modifyThingModelParamValidator;
+	}
 
 	public void checkThingModelParam() throws Exception {
 		switch (thingModelOperateTypeEnum) {

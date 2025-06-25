@@ -23,7 +23,6 @@ import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
@@ -76,13 +75,17 @@ public class DeptE extends Identifier {
 	@Getter
 	private String oldPath;
 
-	@Autowired
-	@Qualifier("saveDeptParamValidator")
-	private DeptParamValidator saveDeptParamValidator;
+	private final DeptParamValidator saveDeptParamValidator;
 
-	@Autowired
-	@Qualifier("modifyDeptParamValidator")
-	private DeptParamValidator modifyDeptParamValidator;
+	private final DeptParamValidator modifyDeptParamValidator;
+
+	// @formatter:off
+	public DeptE(@Qualifier("modifyDeptParamValidator") DeptParamValidator saveDeptParamValidator,
+				 @Qualifier("saveDeptParamValidator") DeptParamValidator modifyDeptParamValidator) {
+		this.saveDeptParamValidator = saveDeptParamValidator;
+		this.modifyDeptParamValidator = modifyDeptParamValidator;
+	}
+	// @formatter:on
 
 	public void checkDeptParam() {
 		switch (deptOperateTypeEnum) {

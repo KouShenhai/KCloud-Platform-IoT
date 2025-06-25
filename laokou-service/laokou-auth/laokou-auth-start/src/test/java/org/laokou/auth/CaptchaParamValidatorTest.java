@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -37,19 +36,21 @@ import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MOBILE_CAPTCHA;
 @SpringBootTest
 class CaptchaParamValidatorTest {
 
-	@Autowired
-	@Qualifier("mailCaptchaParamValidator")
-	private CaptchaParamValidator mailCaptchaParamValidator;
+	private final CaptchaParamValidator mailCaptchaParamValidator;
 
-	@Autowired
-	@Qualifier("mobileCaptchaParamValidator")
-	private CaptchaParamValidator mobileCaptchaParamValidator;
+	private final CaptchaParamValidator mobileCaptchaParamValidator;
 
 	@MockitoBean
 	private PasswordValidator passwordValidator;
 
 	@MockitoBean
 	private CaptchaValidator captchaValidator;
+
+	CaptchaParamValidatorTest(@Qualifier("mailCaptchaParamValidator") CaptchaParamValidator mailCaptchaParamValidator,
+			@Qualifier("mobileCaptchaParamValidator") CaptchaParamValidator mobileCaptchaParamValidator) {
+		this.mailCaptchaParamValidator = mailCaptchaParamValidator;
+		this.mobileCaptchaParamValidator = mobileCaptchaParamValidator;
+	}
 
 	@Test
 	void testMailCaptchaParamValidator() {

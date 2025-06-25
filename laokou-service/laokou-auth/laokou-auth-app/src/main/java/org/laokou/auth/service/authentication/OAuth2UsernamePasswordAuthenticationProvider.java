@@ -61,6 +61,7 @@ final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2A
 		String tenantCode = request.getParameter(TENANT_CODE);
 		AuthA authA = AuthConvertor.toEntity(distributedIdentifierWrapperRpc.getId(), username, password, tenantCode,
 				GrantTypeEnum.USERNAME_PASSWORD, uuid, captcha);
+		authA.decryptUsernamePassword();
 		authA.createUserByUsernamePassword();
 		return authenticationToken(authA, request);
 	}

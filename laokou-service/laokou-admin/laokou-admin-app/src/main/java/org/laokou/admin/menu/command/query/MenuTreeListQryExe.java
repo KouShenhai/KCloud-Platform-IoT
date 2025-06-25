@@ -23,7 +23,6 @@ import org.laokou.admin.menu.service.builder.MenuTreeBuilder;
 import org.laokou.admin.menu.model.MenuTypeTreeEnum;
 import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.dto.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -38,13 +37,15 @@ import java.util.List;
 @Component
 public class MenuTreeListQryExe {
 
-	@Autowired
-	@Qualifier("userMenuTreeBuilder")
-	private MenuTreeBuilder userMenuTreeBuilder;
+	private final MenuTreeBuilder userMenuTreeBuilder;
 
-	@Autowired
-	@Qualifier("systemMenuTreeBuilder")
-	private MenuTreeBuilder systemMenuTreeBuilder;
+	private final MenuTreeBuilder systemMenuTreeBuilder;
+
+	public MenuTreeListQryExe(@Qualifier("userMenuTreeBuilder") MenuTreeBuilder userMenuTreeBuilder,
+			@Qualifier("systemMenuTreeBuilder") MenuTreeBuilder systemMenuTreeBuilder) {
+		this.userMenuTreeBuilder = userMenuTreeBuilder;
+		this.systemMenuTreeBuilder = systemMenuTreeBuilder;
+	}
 
 	public Result<List<MenuTreeCO>> execute(MenuTreeListQry qry) {
 		MenuTypeTreeEnum menuTypeTreeEnum = MenuTypeTreeEnum.getByCode(qry.getCode());

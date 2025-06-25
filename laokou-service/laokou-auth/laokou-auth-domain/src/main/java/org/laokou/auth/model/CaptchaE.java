@@ -23,7 +23,6 @@ import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import static org.laokou.auth.model.OAuth2Constants.TENANT_NOT_EXIST;
@@ -49,13 +48,15 @@ public class CaptchaE extends Identifier {
 	@Getter
 	private Long tenantId;
 
-	@Autowired
-	@Qualifier("mailCaptchaParamValidator")
-	private CaptchaParamValidator mailCaptchaParamValidator;
+	private final CaptchaParamValidator mailCaptchaParamValidator;
 
-	@Autowired
-	@Qualifier("mobileCaptchaParamValidator")
-	private CaptchaParamValidator mobileCaptchaParamValidator;
+	private final CaptchaParamValidator mobileCaptchaParamValidator;
+
+	public CaptchaE(@Qualifier("mailCaptchaParamValidator") CaptchaParamValidator mailCaptchaParamValidator,
+			@Qualifier("mobileCaptchaParamValidator") CaptchaParamValidator mobileCaptchaParamValidator) {
+		this.mailCaptchaParamValidator = mailCaptchaParamValidator;
+		this.mobileCaptchaParamValidator = mobileCaptchaParamValidator;
+	}
 
 	public void getTenantId(Long tenantId) {
 		this.tenantId = tenantId;

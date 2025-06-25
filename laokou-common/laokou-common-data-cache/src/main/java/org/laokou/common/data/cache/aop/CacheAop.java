@@ -24,7 +24,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.util.SpringExpressionUtils;
 import org.laokou.common.data.cache.annotation.DataCache;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
@@ -39,9 +38,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class CacheAop {
 
-	@Autowired
-	@Qualifier("redissonCacheManager")
-	private CacheManager redissonCacheManager;
+	private final CacheManager redissonCacheManager;
+
+	public CacheAop(@Qualifier("redissonCacheManager") CacheManager redissonCacheManager) {
+		this.redissonCacheManager = redissonCacheManager;
+	}
 
 	@Around("@annotation(dataCache)")
 	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) {

@@ -23,7 +23,6 @@ import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
@@ -147,21 +146,23 @@ public class UserE extends Identifier {
 	@Setter
 	private UserOperateTypeEnum userOperateTypeEnum;
 
-	@Autowired
-	@Qualifier("saveUserParamValidator")
-	private UserParamValidator saveUserParamValidator;
+	private final UserParamValidator saveUserParamValidator;
 
-	@Autowired
-	@Qualifier("modifyUserParamValidator")
-	private UserParamValidator modifyUserParamValidator;
+	private final UserParamValidator modifyUserParamValidator;
 
-	@Autowired
-	@Qualifier("resetUserPwdParamValidator")
-	private UserParamValidator resetUserPwdParamValidator;
+	private final UserParamValidator resetUserPwdParamValidator;
 
-	@Autowired
-	@Qualifier("modifyUserAuthorityParamValidator")
-	private UserParamValidator modifyUserAuthorityParamValidator;
+	private final UserParamValidator modifyUserAuthorityParamValidator;
+
+	public UserE(@Qualifier("saveUserParamValidator") UserParamValidator saveUserParamValidator,
+			@Qualifier("modifyUserParamValidator") UserParamValidator modifyUserParamValidator,
+			@Qualifier("resetUserPwdParamValidator") UserParamValidator resetUserPwdParamValidator,
+			@Qualifier("modifyUserAuthorityParamValidator") UserParamValidator modifyUserAuthorityParamValidator) {
+		this.saveUserParamValidator = saveUserParamValidator;
+		this.modifyUserParamValidator = modifyUserParamValidator;
+		this.resetUserPwdParamValidator = resetUserPwdParamValidator;
+		this.modifyUserAuthorityParamValidator = modifyUserAuthorityParamValidator;
+	}
 
 	public void checkUserParam() throws Exception {
 		switch (userOperateTypeEnum) {

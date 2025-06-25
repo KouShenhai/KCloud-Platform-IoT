@@ -24,7 +24,6 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.AuthParamValidator;
 import org.laokou.auth.model.CaptchaV;
 import org.laokou.auth.model.GrantTypeEnum;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -38,25 +37,28 @@ import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 @SpringBootTest
 class AuthParamValidatorTest {
 
-	@Autowired
-	@Qualifier("authorizationCodeAuthParamValidator")
-	private AuthParamValidator authorizationCodeAuthParamValidator;
+	private final AuthParamValidator authorizationCodeAuthParamValidator;
 
-	@Autowired
-	@Qualifier("mailAuthParamValidator")
-	private AuthParamValidator mailAuthParamValidator;
+	private final AuthParamValidator mailAuthParamValidator;
 
-	@Autowired
-	@Qualifier("mobileAuthParamValidator")
-	private AuthParamValidator mobileAuthParamValidator;
+	private final AuthParamValidator mobileAuthParamValidator;
 
-	@Autowired
-	@Qualifier("testAuthParamValidator")
-	private AuthParamValidator testAuthParamValidator;
+	private final AuthParamValidator testAuthParamValidator;
 
-	@Autowired
-	@Qualifier("usernamePasswordAuthParamValidator")
-	private AuthParamValidator usernamePasswordAuthParamValidator;
+	private final AuthParamValidator usernamePasswordAuthParamValidator;
+
+	AuthParamValidatorTest(
+			@Qualifier("authorizationCodeAuthParamValidator") AuthParamValidator authorizationCodeAuthParamValidator,
+			@Qualifier("mailAuthParamValidator") AuthParamValidator mailAuthParamValidator,
+			@Qualifier("mobileAuthParamValidator") AuthParamValidator mobileAuthParamValidator,
+			@Qualifier("testAuthParamValidator") AuthParamValidator testAuthParamValidator,
+			@Qualifier("usernamePasswordAuthParamValidator") AuthParamValidator usernamePasswordAuthParamValidator) {
+		this.authorizationCodeAuthParamValidator = authorizationCodeAuthParamValidator;
+		this.mailAuthParamValidator = mailAuthParamValidator;
+		this.mobileAuthParamValidator = mobileAuthParamValidator;
+		this.testAuthParamValidator = testAuthParamValidator;
+		this.usernamePasswordAuthParamValidator = usernamePasswordAuthParamValidator;
+	}
 
 	@Test
 	void testTestAuthParamValidator() {
