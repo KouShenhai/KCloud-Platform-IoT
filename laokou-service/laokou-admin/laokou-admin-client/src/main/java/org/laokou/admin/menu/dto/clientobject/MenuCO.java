@@ -17,9 +17,7 @@
 
 package org.laokou.admin.menu.dto.clientobject;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 import org.laokou.common.i18n.util.StringUtils;
 
@@ -31,8 +29,6 @@ import java.time.Instant;
  * @author laokou
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class MenuCO extends ClientObject {
 
 	/**

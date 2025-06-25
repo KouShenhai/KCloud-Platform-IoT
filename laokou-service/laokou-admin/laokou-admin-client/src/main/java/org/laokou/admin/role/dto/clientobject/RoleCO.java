@@ -17,9 +17,7 @@
 
 package org.laokou.admin.role.dto.clientobject;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 import org.laokou.common.i18n.util.StringUtils;
 
@@ -32,8 +30,6 @@ import java.util.List;
  * @author laokou
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class RoleCO extends ClientObject {
 
 	/**

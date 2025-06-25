@@ -19,9 +19,7 @@ package org.laokou.iot.productCategory.dto.clientobject;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.core.util.TreeUtils;
 import java.time.Instant;
 
@@ -32,8 +30,6 @@ import java.time.Instant;
  * @author laokou
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Schema(name = "产品类别客户端对象", description = "产品类别客户端对象")
 public class ProductCategoryCO extends TreeUtils.TreeNode<ProductCategoryCO> {

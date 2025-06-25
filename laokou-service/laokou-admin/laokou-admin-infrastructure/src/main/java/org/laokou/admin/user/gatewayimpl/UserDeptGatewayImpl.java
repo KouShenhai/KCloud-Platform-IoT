@@ -25,7 +25,7 @@ import org.laokou.admin.user.gatewayimpl.database.UserDeptMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.util.CollectionUtils;
-import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierRpc;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
@@ -43,7 +43,7 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 
 	private final UserDeptMapper userDeptMapper;
 
-	private final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
+	private final DistributedIdentifierRpc distributedIdentifierRpc;
 
 	@Override
 	public void updateUserDept(UserE userE) {
@@ -58,7 +58,7 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 
 	private void insertUserDept(List<String> deptIds, Long userId) {
 		// 新增用户部门关联表
-		List<UserDeptDO> list = UserConvertor.toDataObjs(distributedIdentifierWrapperRpc::getId, deptIds, userId);
+		List<UserDeptDO> list = UserConvertor.toDataObjs(distributedIdentifierRpc::getId, deptIds, userId);
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, UserDeptMapper.class, UserDeptMapper::insert);
 		}

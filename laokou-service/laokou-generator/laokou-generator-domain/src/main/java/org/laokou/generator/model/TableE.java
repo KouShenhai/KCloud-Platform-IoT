@@ -17,22 +17,11 @@
 
 package org.laokou.generator.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class TableE {
-
-	private String table;
-
-	private String tablePrefix;
-
-	private String sourceName;
+public record TableE(String table, String tablePrefix, String sourceName) {
 
 }

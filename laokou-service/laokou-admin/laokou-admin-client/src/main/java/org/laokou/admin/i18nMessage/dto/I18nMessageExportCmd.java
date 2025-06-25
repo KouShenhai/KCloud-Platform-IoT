@@ -18,7 +18,6 @@
 package org.laokou.admin.i18nMessage.dto;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.PageQuery;
 
 /**
@@ -27,7 +26,6 @@ import org.laokou.common.i18n.dto.PageQuery;
  * @author laokou
  */
 @Data
-@NoArgsConstructor
 public class I18nMessageExportCmd extends PageQuery {
 
 }

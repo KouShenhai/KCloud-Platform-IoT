@@ -17,14 +17,10 @@
 
 package org.laokou.common.elasticsearch;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.elasticsearch.annotation.*;
 
 import java.io.Serializable;
 
-@Data
 @Index(setting = @Setting(refreshInterval = "-1"), analysis = @Analysis(
 		filters = { @Filter(name = "pinyin_filter",
 				options = { @Option(key = "type", value = "pinyin"), @Option(key = "keep_full_pinyin", value = "false"),
@@ -35,11 +31,7 @@ import java.io.Serializable;
 						@Option(key = "none_chinese_pinyin_tokenize", value = "false") }) },
 		analyzers = {
 				@Analyzer(name = "ik_pinyin", args = @Args(filter = "pinyin_filter", tokenizer = "ik_max_word")) }))
-@NoArgsConstructor
-@AllArgsConstructor
-class TestResource implements Serializable {
-
-	@Field(type = Type.TEXT, searchAnalyzer = "ik_smart", analyzer = "ik_pinyin")
-	private String name;
-
+record TestResource(@Field(type = Type.TEXT, searchAnalyzer = "ik_smart", analyzer = "ik_pinyin") String name)
+		implements
+			Serializable {
 }

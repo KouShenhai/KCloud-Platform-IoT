@@ -18,9 +18,7 @@
 package org.laokou.common.i18n.dto;
 
 import jakarta.validation.constraints.Min;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.util.Map;
@@ -31,8 +29,6 @@ import java.util.Map;
  * @author laokou
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class PageQuery extends Query {
 
 	/**

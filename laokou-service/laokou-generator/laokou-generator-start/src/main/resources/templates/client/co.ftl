@@ -19,9 +19,7 @@
 package ${packageName}.${instanceName}.dto.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 import java.time.Instant;
 
@@ -32,8 +30,6 @@ import java.time.Instant;
  * @author ${author}
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Schema(name = "${comment}客户端对象", description = "${comment}客户端对象")
 public class ${className}CO extends ClientObject {
 

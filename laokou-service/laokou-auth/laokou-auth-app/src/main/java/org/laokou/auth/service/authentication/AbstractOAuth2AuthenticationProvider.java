@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.util.RequestUtils;
-import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierRpc;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -70,7 +70,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 
 	private final OAuth2AuthenticationProcessor authProcessor;
 
-	protected final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
+	protected final DistributedIdentifierRpc distributedIdentifierRpc;
 
 	/**
 	 * 认证授权.

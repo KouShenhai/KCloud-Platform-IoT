@@ -17,19 +17,17 @@
 
 package org.laokou.auth.dto.clientobject;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public class SecretCO extends ClientObject {
 
-	private String publicKey;
+	private final String publicKey;
 
 }

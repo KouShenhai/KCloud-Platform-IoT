@@ -22,8 +22,7 @@ import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.ObjectUtils;
 
@@ -31,13 +30,12 @@ import org.laokou.common.i18n.util.ObjectUtils;
  * @author laokou
  */
 @Slf4j
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CryptoSerializer extends JsonSerializer<String> implements ContextualSerializer {
 
-	private CipherType cipherType;
+	private final CipherType cipherType;
 
-	private boolean isEncrypt;
+	private final boolean isEncrypt;
 
 	@Override
 	public void serialize(String str, JsonGenerator generator, SerializerProvider provider) {

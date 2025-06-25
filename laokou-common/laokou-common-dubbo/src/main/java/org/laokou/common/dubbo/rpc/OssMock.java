@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.user.gatewayimpl.rpc;
+package org.laokou.common.dubbo.rpc;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.BizException;
@@ -27,7 +27,7 @@ import org.laokou.oss.dto.OssUploadCmd;
  * @author laokou
  */
 @Slf4j
-public class OssServiceIMock implements OssServiceI {
+public class OssMock implements OssServiceI {
 
 	@Override
 	public Result<String> uploadOss(OssUploadCmd cmd) {

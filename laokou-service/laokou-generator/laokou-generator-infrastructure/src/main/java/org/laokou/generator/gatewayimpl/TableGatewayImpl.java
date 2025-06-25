@@ -52,9 +52,9 @@ public class TableGatewayImpl implements TableGateway {
 
 	public List<TableV> list(TableE tableE) {
 		try {
-			DynamicDataSourceContextHolder.push(tableE.getSourceName());
-			List<TableDO> tables = tableMapper.selectObjects(tableE.getTable());
-			List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects(tableE.getTable());
+			DynamicDataSourceContextHolder.push(tableE.sourceName());
+			List<TableDO> tables = tableMapper.selectObjects(tableE.table());
+			List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects(tableE.table());
 			Map<String, List<TableColumnDO>> cloumnMap = tableColumns.stream()
 				.collect(Collectors.groupingBy(TableColumnDO::getTableName));
 			Map<String, String> tableMap = tables.stream()
@@ -72,7 +72,7 @@ public class TableGatewayImpl implements TableGateway {
 		cloumnMap.forEach((tableName, items) -> {
 			String tableComment = tableMap.get(tableName);
 			List<TableColumnV> columns = items.stream().map(this::convert).toList();
-			tableVList.add(convert(tableName, tableComment, tableE.getTablePrefix(), columns));
+			tableVList.add(convert(tableName, tableComment, tableE.tablePrefix(), columns));
 		});
 		return tableVList;
 	}

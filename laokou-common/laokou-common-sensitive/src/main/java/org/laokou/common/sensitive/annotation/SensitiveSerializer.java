@@ -21,8 +21,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.annotation.AbstractContextualSerializer;
 import org.laokou.common.i18n.util.ObjectUtils;
 
@@ -31,11 +30,10 @@ import java.io.IOException;
 /**
  * @author laokou
  */
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SensitiveSerializer extends AbstractContextualSerializer {
 
-	private SensitiveType sensitiveType;
+	private final SensitiveType sensitiveType;
 
 	@Override
 	public void serialize(String str, JsonGenerator generator, SerializerProvider provider) throws IOException {

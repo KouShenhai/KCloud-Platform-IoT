@@ -19,9 +19,7 @@ package org.laokou.admin.dept.dto.clientobject;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.core.util.TreeUtils;
 
 import java.time.Instant;
@@ -32,8 +30,6 @@ import java.time.Instant;
  * @author laokou
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class DeptTreeCO extends TreeUtils.TreeNode<DeptTreeCO> {
 

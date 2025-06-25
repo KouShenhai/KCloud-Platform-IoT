@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.user.gatewayimpl.rpc;
+package org.laokou.common.dubbo.rpc;
 
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.laokou.common.core.util.FileUtils;
@@ -35,10 +35,10 @@ import java.security.NoSuchAlgorithmException;
  * @author laokou
  */
 @Component
-public class OssWrapperRpc {
+public class OssRpc {
 
 	@DubboReference(group = "iot", version = "v3", interfaceClass = OssServiceI.class,
-			mock = "org.laokou.admin.user.gatewayimpl.rpc.OssServiceIMock", loadbalance = "adaptive", retries = 3)
+			mock = "org.laokou.common.dubbo.rpc.OssMock", loadbalance = "adaptive", retries = 3)
 	private OssServiceI ossServiceI;
 
 	public Result<String> uploadOss(MultipartFile file, String fileType) throws IOException, NoSuchAlgorithmException {

@@ -24,7 +24,7 @@ import org.laokou.admin.role.gateway.RoleGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.model.RoleE;
-import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierRpc;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
@@ -40,11 +40,11 @@ public class RoleGatewayImpl implements RoleGateway {
 
 	private final RoleMapper roleMapper;
 
-	private final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
+	private final DistributedIdentifierRpc distributedIdentifierRpc;
 
 	@Override
 	public void createRole(RoleE roleE) {
-		RoleDO roleDO = RoleConvertor.toDataObject(distributedIdentifierWrapperRpc.getId(), roleE, true);
+		RoleDO roleDO = RoleConvertor.toDataObject(distributedIdentifierRpc.getId(), roleE, true);
 		roleMapper.insert(roleDO);
 	}
 

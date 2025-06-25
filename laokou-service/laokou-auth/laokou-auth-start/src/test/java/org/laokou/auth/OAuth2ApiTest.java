@@ -101,10 +101,12 @@ class OAuth2ApiTest {
 		CaptchaCO co = new CaptchaCO();
 		co.setTenantCode(TENANT_CODE);
 		co.setUuid(MAIL);
+		CaptchaSendCmd cmd = new CaptchaSendCmd();
+		cmd.setCo(co);
 		restClient.post()
 			.uri(getSendMailCaptchaUrl())
 			.header(REQUEST_ID, UUIDGenerator.generateUUID())
-			.body(new CaptchaSendCmd(co))
+			.body(cmd)
 			.accept(MediaType.APPLICATION_JSON)
 			.retrieve()
 			.toBodilessEntity();
@@ -115,10 +117,12 @@ class OAuth2ApiTest {
 		CaptchaCO co = new CaptchaCO();
 		co.setTenantCode(TENANT_CODE);
 		co.setUuid(MOBILE);
+		CaptchaSendCmd cmd = new CaptchaSendCmd();
+		cmd.setCo(co);
 		restClient.post()
 			.uri(getSendMobileCaptchaUrl())
 			.header(REQUEST_ID, UUIDGenerator.generateUUID())
-			.body(new CaptchaSendCmd(co))
+			.body(cmd)
 			.accept(MediaType.APPLICATION_JSON)
 			.retrieve()
 			.toBodilessEntity();
@@ -254,9 +258,11 @@ class OAuth2ApiTest {
 	void testLogoutApi() {
 		log.info("---------- 登录已注销，开始清除令牌 ----------");
 		String apiUrl = getTokenUrlV3();
+		TokenRemoveCmd cmd = new TokenRemoveCmd();
+		cmd.setToken(TOKEN);
 		restClient.method(HttpMethod.DELETE)
 			.uri(apiUrl)
-			.body(new TokenRemoveCmd(TOKEN))
+			.body(cmd)
 			.contentType(MediaType.APPLICATION_JSON)
 			.retrieve()
 			.toBodilessEntity();

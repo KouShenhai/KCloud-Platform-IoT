@@ -18,7 +18,6 @@
 package org.laokou.admin.loginLog.dto;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 导出登录日志命令.
@@ -26,7 +25,6 @@ import lombok.NoArgsConstructor;
  * @author laokou
  */
 @Data
-@NoArgsConstructor
 public class LoginLogExportCmd extends LoginLogPageQry {
 
 }

@@ -17,9 +17,8 @@
 
 package org.laokou.auth.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
@@ -28,13 +27,12 @@ import org.laokou.common.i18n.dto.CommonCommand;
  * @author laokou
  */
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CaptchaGetQry extends CommonCommand {
 
 	/**
 	 * 唯一标识.
 	 */
-	private String uuid;
+	private final String uuid;
 
 }

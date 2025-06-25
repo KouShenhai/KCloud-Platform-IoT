@@ -18,9 +18,7 @@
 
 package ${packageName}.${instanceName}.dto;
 
-import lombok.Data;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
@@ -29,12 +27,11 @@ import org.laokou.common.i18n.dto.CommonCommand;
  *
  * @author ${author}
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public class ${className}RemoveCmd extends CommonCommand {
 
-	private Long[] ids;
+	private final Long[] ids;
 
 }
 // @formatter:on

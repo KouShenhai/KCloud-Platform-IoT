@@ -18,9 +18,7 @@
 package org.laokou.admin.tenant.dto.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
@@ -29,8 +27,6 @@ import org.laokou.common.i18n.dto.ClientObject;
  * @author laokou
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Schema(name = "租户客户端对象", description = "租户客户端对象")
 public class TenantCO extends ClientObject {
 

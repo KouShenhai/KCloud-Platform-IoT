@@ -17,9 +17,12 @@
 
 package org.laokou.admin.dept.dto;
 
+import lombok.Data;
+
 /**
  * @author laokou
  */
+@Data
 public class DeptTreeListQry extends DeptPageQry {
 
 }

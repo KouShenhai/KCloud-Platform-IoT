@@ -25,7 +25,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.core.util.SpringUtils;
 import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierRpc;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.convertor.OperateLogConvertor;
@@ -54,7 +54,7 @@ public class OperateLogAop {
 
 	private final DomainEventPublisher kafkaDomainEventPublisher;
 
-	private final DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc;
+	private final DistributedIdentifierRpc distributedIdentifierRpc;
 
 	static {
 		ForyFactory.INSTANCE.register(org.laokou.common.log.handler.event.OperateEvent.class);
@@ -64,7 +64,7 @@ public class OperateLogAop {
 	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) throws Throwable {
 		StopWatch stopWatch = new StopWatch("操作日志");
 		stopWatch.start();
-		OperateLogA operateLogA = OperateLogConvertor.toEntity(distributedIdentifierWrapperRpc.getId());
+		OperateLogA operateLogA = OperateLogConvertor.toEntity(distributedIdentifierRpc.getId());
 		operateLogA.getModuleName(operateLog.module());
 		operateLogA.getName(operateLog.operation());
 		operateLogA.getServiceId(springUtils.getServiceId());

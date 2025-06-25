@@ -18,7 +18,6 @@
 package org.laokou.admin.noticeLog.dto;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 导出通知日志命令.
@@ -26,7 +25,6 @@ import lombok.NoArgsConstructor;
  * @author laokou
  */
 @Data
-@NoArgsConstructor
 public class NoticeLogExportCmd extends NoticeLogPageQry {
 
 }

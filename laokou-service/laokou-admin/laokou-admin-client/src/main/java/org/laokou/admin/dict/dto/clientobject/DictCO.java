@@ -17,9 +17,7 @@
 
 package org.laokou.admin.dict.dto.clientobject;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
@@ -28,8 +26,6 @@ import org.laokou.common.i18n.dto.ClientObject;
  * @author laokou
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class DictCO extends ClientObject {
 
 	/**

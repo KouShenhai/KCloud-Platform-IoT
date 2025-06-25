@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.GrantTypeEnum;
-import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierRpc;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -43,8 +43,8 @@ final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2A
 
 	public OAuth2UsernamePasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
 			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor,
-			DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc) {
-		super(authorizationService, tokenGenerator, authProcessor, distributedIdentifierWrapperRpc);
+			DistributedIdentifierRpc distributedIdentifierRpc) {
+		super(authorizationService, tokenGenerator, authProcessor, distributedIdentifierRpc);
 	}
 
 	@Override
@@ -59,7 +59,7 @@ final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2A
 		String username = request.getParameter(USERNAME);
 		String password = request.getParameter(PASSWORD);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		AuthA authA = AuthConvertor.toEntity(distributedIdentifierWrapperRpc.getId(), username, password, tenantCode,
+		AuthA authA = AuthConvertor.toEntity(distributedIdentifierRpc.getId(), username, password, tenantCode,
 				GrantTypeEnum.USERNAME_PASSWORD, uuid, captcha);
 		authA.decryptUsernamePassword();
 		authA.createUserByUsernamePassword();

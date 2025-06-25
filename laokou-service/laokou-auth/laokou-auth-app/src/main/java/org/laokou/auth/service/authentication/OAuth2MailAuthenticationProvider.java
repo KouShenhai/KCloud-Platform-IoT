@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.GrantTypeEnum;
-import org.laokou.common.dubbo.rpc.DistributedIdentifierWrapperRpc;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierRpc;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -44,8 +44,8 @@ final class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticatio
 
 	public OAuth2MailAuthenticationProvider(OAuth2AuthorizationService authorizationService,
 			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor,
-			DistributedIdentifierWrapperRpc distributedIdentifierWrapperRpc) {
-		super(authorizationService, tokenGenerator, authProcessor, distributedIdentifierWrapperRpc);
+			DistributedIdentifierRpc distributedIdentifierRpc) {
+		super(authorizationService, tokenGenerator, authProcessor, distributedIdentifierRpc);
 	}
 
 	@Override
@@ -58,7 +58,7 @@ final class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticatio
 		String code = request.getParameter(CODE);
 		String mail = request.getParameter(MAIL);
 		String tenantCode = request.getParameter(TENANT_CODE);
-		AuthA authA = AuthConvertor.toEntity(distributedIdentifierWrapperRpc.getId(), EMPTY, EMPTY, tenantCode,
+		AuthA authA = AuthConvertor.toEntity(distributedIdentifierRpc.getId(), EMPTY, EMPTY, tenantCode,
 				GrantTypeEnum.MAIL, code, mail);
 		authA.createUserByMail();
 		return authenticationToken(authA, request);

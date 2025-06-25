@@ -18,9 +18,7 @@
 
 package ${packageName}.${instanceName}.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.laokou.common.i18n.dto.CommonCommand;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,12 +28,11 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author ${author}
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public class ${className}ImportCmd extends CommonCommand {
 
-	private MultipartFile[] files;
+	private final MultipartFile[] files;
 
 }
 // @formatter:on

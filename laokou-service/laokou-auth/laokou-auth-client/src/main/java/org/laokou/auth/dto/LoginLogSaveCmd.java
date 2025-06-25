@@ -17,20 +17,18 @@
 
 package org.laokou.auth.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.clientobject.LoginLogCO;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public class LoginLogSaveCmd extends CommonCommand {
 
-	private LoginLogCO co;
+	private final LoginLogCO co;
 
 }

@@ -18,9 +18,7 @@
 package org.laokou.iot.thingModel.dto.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 import java.time.Instant;
 
@@ -31,8 +29,6 @@ import java.time.Instant;
  * @author laokou
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Schema(name = "物模型客户端对象", description = "物模型客户端对象")
 public class ThingModelCO extends ClientObject {
 

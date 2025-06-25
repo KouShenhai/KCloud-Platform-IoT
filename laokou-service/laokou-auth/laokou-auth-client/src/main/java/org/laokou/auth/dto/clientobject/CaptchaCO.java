@@ -17,17 +17,13 @@
 
 package org.laokou.auth.dto.clientobject;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class CaptchaCO extends ClientObject {
 
 	private String uuid;

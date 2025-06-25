@@ -17,29 +17,26 @@
 
 package org.laokou.oss.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public class OssUploadCmd extends CommonCommand {
 
-	private String fileType;
+	private final String fileType;
 
-	private byte[] buffer;
+	private final byte[] buffer;
 
-	private String name;
+	private final String name;
 
-	private String extName;
+	private final String extName;
 
-	private String contentType;
+	private final String contentType;
 
-	private long size;
+	private final long size;
 
 }

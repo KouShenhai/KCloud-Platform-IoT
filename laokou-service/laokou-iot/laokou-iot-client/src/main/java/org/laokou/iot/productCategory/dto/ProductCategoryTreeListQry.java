@@ -17,9 +17,12 @@
 
 package org.laokou.iot.productCategory.dto;
 
+import lombok.Data;
+
 /**
  * @author laokou
  */
+@Data
 public class ProductCategoryTreeListQry extends ProductCategoryPageQry {
 
 }
