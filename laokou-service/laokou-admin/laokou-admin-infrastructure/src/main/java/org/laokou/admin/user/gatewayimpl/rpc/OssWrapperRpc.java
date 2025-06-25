@@ -18,11 +18,15 @@
 package org.laokou.admin.user.gatewayimpl.rpc;
 
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.laokou.common.core.util.FileUtils;
+import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.oss.api.OssServiceI;
 import org.laokou.oss.dto.OssUploadCmd;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -37,8 +41,12 @@ public class OssWrapperRpc {
 			mock = "org.laokou.admin.user.gatewayimpl.rpc.OssServiceIMock", loadbalance = "adaptive", retries = 3)
 	private OssServiceI ossServiceI;
 
-	public Result<String> uploadOss(OssUploadCmd cmd) throws IOException, NoSuchAlgorithmException {
-		Result<String> result = ossServiceI.uploadOss(cmd);
+	public Result<String> uploadOss(MultipartFile file, String fileType) throws IOException, NoSuchAlgorithmException {
+		String name = file.getOriginalFilename();
+		Assert.notNull(name, "文件名不能为空");
+		String extName = FileUtils.getFileExt(name);
+		Result<String> result = ossServiceI.uploadOss(new OssUploadCmd(fileType, file.getBytes(),
+				UUIDGenerator.generateUUID() + extName, extName, file.getContentType(), file.getSize()));
 		if (result.success()) {
 			return result;
 		}
