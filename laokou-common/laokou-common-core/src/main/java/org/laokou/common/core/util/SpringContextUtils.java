@@ -167,12 +167,12 @@ public final class SpringContextUtils implements ApplicationContextAware, Dispos
 	}
 
 	public static String getServiceId() {
-		return applicationContext.getEnvironment().getProperty(APPLICATION_NAME, DEFAULT_SERVICE_ID);
+		return SpringContextUtils.applicationContext.getEnvironment().getProperty(APPLICATION_NAME, DEFAULT_SERVICE_ID);
 	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext context) throws BeansException {
-		applicationContext = context;
+		SpringContextUtils.applicationContext = context;
 	}
 
 	/**
@@ -180,7 +180,7 @@ public final class SpringContextUtils implements ApplicationContextAware, Dispos
 	 */
 	@Override
 	public void destroy() {
-		applicationContext = null;
+		SpringContextUtils.applicationContext = null;
 	}
 
 }
