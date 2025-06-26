@@ -41,8 +41,4 @@ public class SpringUtils {
 		return environment.getProperty(APPLICATION_NAME, DEFAULT_SERVICE_ID);
 	}
 
-	public String getServiceVersion() {
-		return "v3";
-	}
-
 }
