@@ -20,7 +20,6 @@ package org.laokou.common.oss.template;
 import io.minio.*;
 import io.minio.errors.*;
 import io.minio.http.Method;
-import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.MinIO;
@@ -34,21 +33,22 @@ import java.security.NoSuchAlgorithmException;
  */
 public final class MinIOStorage extends AbstractStorage<MinioClient> {
 
-	private volatile MinIO minIO;
-
-	private final Object lock = new Object();
+	private final MinIO minIO;
 
 	public MinIOStorage(FileInfo fileInfo, BaseOss baseOss) {
 		super(fileInfo, baseOss);
+		if (baseOss instanceof MinIO minio) {
+			this.minIO = minio;
+		}
+		throw new IllegalArgumentException("BaseOss must be an instance of MinIO");
 	}
 
 	@Override
 	protected MinioClient getObj() {
-		MinIO minIO = getMinIO();
 		return MinioClient.builder()
-			.endpoint(minIO.getEndpoint())
-			.credentials(minIO.getAccessKey(), minIO.getSecretKey())
-			.region(minIO.getRegion())
+			.endpoint(this.minIO.getEndpoint())
+			.credentials(this.minIO.getAccessKey(), this.minIO.getSecretKey())
+			.region(this.minIO.getRegion())
 			.build();
 	}
 
@@ -56,8 +56,7 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 	protected void createBucket(MinioClient minioClient) throws ServerException, InsufficientDataException,
 			ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException,
 			InvalidResponseException, XmlParserException, InternalException {
-		MinIO minIO = getMinIO();
-		String bucketName = minIO.getBucketName();
+		String bucketName = this.minIO.getBucketName();
 		boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
 		if (!isExist) {
 			minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
@@ -68,9 +67,8 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 	protected void upload(MinioClient minioClient) throws ServerException, InsufficientDataException,
 			ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException,
 			InvalidResponseException, XmlParserException, InternalException {
-		MinIO minIO = getMinIO();
 		PutObjectArgs objectArgs = PutObjectArgs.builder()
-			.bucket(minIO.getBucketName())
+			.bucket(this.minIO.getBucketName())
 			.object(fileInfo.name())
 			.stream(fileInfo.inputStream(), fileInfo.size(), -1)
 			.contentType(fileInfo.contentType())
@@ -82,27 +80,12 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 	protected String getUrl(MinioClient minioClient) throws ServerException, InsufficientDataException,
 			ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException,
 			InvalidResponseException, XmlParserException, InternalException {
-		MinIO minIO = getMinIO();
 		GetPresignedObjectUrlArgs objectUrlArgs = GetPresignedObjectUrlArgs.builder()
-			.bucket(minIO.getBucketName())
+			.bucket(this.minIO.getBucketName())
 			.object(fileInfo.name())
 			.method(Method.GET)
 			.build();
 		return minioClient.getPresignedObjectUrl(objectUrlArgs);
-	}
-
-	private MinIO getMinIO() {
-		if (ObjectUtils.isNull(minIO)) {
-			synchronized (lock) {
-				if (ObjectUtils.isNull(minIO)) {
-					if (baseOss instanceof MinIO minio) {
-						return this.minIO = minio;
-					}
-					throw new IllegalArgumentException("BaseOss must be an instance of MinIO");
-				}
-			}
-		}
-		return minIO;
 	}
 
 }

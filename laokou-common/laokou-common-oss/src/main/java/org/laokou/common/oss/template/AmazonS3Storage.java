@@ -27,7 +27,6 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 
@@ -36,22 +35,23 @@ import org.laokou.common.oss.model.FileInfo;
  */
 public final class AmazonS3Storage extends AbstractStorage<AmazonS3> {
 
-	private volatile org.laokou.common.oss.model.AmazonS3 amazonS3;
-
-	private final Object lock = new Object();
+	private final org.laokou.common.oss.model.AmazonS3 amazonS3;
 
 	public AmazonS3Storage(FileInfo fileInfo, BaseOss baseOss) {
 		super(fileInfo, baseOss);
+		if (baseOss instanceof org.laokou.common.oss.model.AmazonS3 s3) {
+			this.amazonS3 = s3;
+		}
+		throw new IllegalArgumentException("BaseOss must be an instance of AmazonS3");
 	}
 
 	@Override
 	protected AmazonS3 getObj() {
-		org.laokou.common.oss.model.AmazonS3 s3 = getAmazonS3();
-		String accessKey = s3.getAccessKey();
-		String secretKey = s3.getSecretKey();
-		String region = s3.getRegion();
-		String endpoint = s3.getEndpoint();
-		Boolean pathStyleAccessEnabled = s3.getPathStyleAccessEnabled() == 1;
+		String accessKey = this.amazonS3.getAccessKey();
+		String secretKey = this.amazonS3.getSecretKey();
+		String region = this.amazonS3.getRegion();
+		String endpoint = this.amazonS3.getEndpoint();
+		Boolean pathStyleAccessEnabled = this.amazonS3.getPathStyleAccessEnabled() == 1;
 		ClientConfiguration clientConfiguration = new ClientConfiguration();
 		AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(
 				endpoint, region);
@@ -67,8 +67,7 @@ public final class AmazonS3Storage extends AbstractStorage<AmazonS3> {
 
 	@Override
 	protected void createBucket(AmazonS3 amazonS3) {
-		org.laokou.common.oss.model.AmazonS3 s3 = getAmazonS3();
-		String bucketName = s3.getBucketName();
+		String bucketName = this.amazonS3.getBucketName();
 		// bucketName不存在则新建
 		if (!amazonS3.doesBucketExistV2(bucketName)) {
 			amazonS3.createBucket(bucketName);
@@ -77,8 +76,7 @@ public final class AmazonS3Storage extends AbstractStorage<AmazonS3> {
 
 	@Override
 	protected void upload(AmazonS3 amazonS3) {
-		org.laokou.common.oss.model.AmazonS3 s3 = getAmazonS3();
-		String bucketName = s3.getBucketName();
+		String bucketName = this.amazonS3.getBucketName();
 		ObjectMetadata objectMetadata = new ObjectMetadata();
 		objectMetadata.setContentLength(fileInfo.size());
 		objectMetadata.setContentType(fileInfo.contentType());
@@ -90,23 +88,8 @@ public final class AmazonS3Storage extends AbstractStorage<AmazonS3> {
 
 	@Override
 	protected String getUrl(AmazonS3 amazonS3) {
-		org.laokou.common.oss.model.AmazonS3 s3 = getAmazonS3();
-		String bucketName = s3.getBucketName();
+		String bucketName = this.amazonS3.getBucketName();
 		return amazonS3.getUrl(bucketName, fileInfo.name()).toString();
-	}
-
-	private org.laokou.common.oss.model.AmazonS3 getAmazonS3() {
-		if (ObjectUtils.isNull(amazonS3)) {
-			synchronized (lock) {
-				if (ObjectUtils.isNull(amazonS3)) {
-					if (baseOss instanceof org.laokou.common.oss.model.AmazonS3 s3) {
-						return amazonS3 = s3;
-					}
-					throw new IllegalArgumentException("BaseOss must be an instance of AmazonS3");
-				}
-			}
-		}
-		return amazonS3;
 	}
 
 }

@@ -18,7 +18,6 @@
 package org.laokou.common.oss.template;
 
 import org.laokou.common.core.util.FileUtils;
-import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.Local;
@@ -33,18 +32,19 @@ import static org.laokou.common.i18n.common.constant.StringConstants.SLASH;
  */
 public final class LocalStorage extends AbstractStorage<Path> {
 
-	private volatile Local local;
-
-	private final Object lock = new Object();
+	private final Local local;
 
 	public LocalStorage(FileInfo fileInfo, BaseOss baseOss) {
 		super(fileInfo, baseOss);
+		if (baseOss instanceof Local l) {
+			local = l;
+		}
+		throw new IllegalArgumentException("BaseOss must be an instance of Local");
 	}
 
 	@Override
 	protected Path getObj() throws IOException {
-		Local local = getLocal();
-		return FileUtils.create(local.getPath() + local.getDirectory(), fileInfo.name());
+		return FileUtils.create(this.local.getPath() + this.local.getDirectory(), fileInfo.name());
 	}
 
 	@Override
@@ -58,22 +58,7 @@ public final class LocalStorage extends AbstractStorage<Path> {
 
 	@Override
 	protected String getUrl(Path path) {
-		Local local = getLocal();
-		return local.getDomain() + local.getDirectory() + SLASH + fileInfo.name();
-	}
-
-	private Local getLocal() {
-		if (ObjectUtils.isNull(local)) {
-			synchronized (lock) {
-				if (ObjectUtils.isNull(local)) {
-					if (baseOss instanceof Local l) {
-						return local = l;
-					}
-					throw new IllegalArgumentException("BaseOss must be an instance of Local");
-				}
-			}
-		}
-		return local;
+		return local.getDomain() + this.local.getDirectory() + SLASH + fileInfo.name();
 	}
 
 }
