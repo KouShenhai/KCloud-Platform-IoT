@@ -24,9 +24,6 @@ import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-
 /**
  * @author laokou
  */
@@ -37,7 +34,7 @@ public class UserUploadCmdExe {
 	private final OssRpc ossRpc;
 
 	@CommandLog
-	public Result<String> execute(UserUploadAvatarCmd cmd) throws IOException, NoSuchAlgorithmException {
+	public Result<String> execute(UserUploadAvatarCmd cmd) throws Exception {
 		return ossRpc.uploadOss(cmd.getFile(), "image");
 	}
 

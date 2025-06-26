@@ -23,6 +23,7 @@ import org.laokou.common.i18n.util.EnumParser;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.oss.template.AmazonS3Storage;
 import org.laokou.common.oss.template.LocalStorage;
+import org.laokou.common.oss.template.MinIOStorage;
 import org.laokou.common.oss.template.Storage;
 
 @Getter
@@ -60,7 +61,7 @@ public enum StoragePolicyEnum {
 
 		@Override
 		public Storage getStorage(FileInfo fileInfo, BaseOss baseOss) {
-			throw new UnsupportedOperationException();
+			return new MinIOStorage(fileInfo, baseOss);
 		}
 	};
 

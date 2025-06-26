@@ -28,9 +28,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-
 /**
  * @author laokou
  */
@@ -41,7 +38,7 @@ public class OssRpc {
 			mock = "org.laokou.common.dubbo.rpc.OssMock", loadbalance = "adaptive", retries = 3)
 	private OssServiceI ossServiceI;
 
-	public Result<String> uploadOss(MultipartFile file, String fileType) throws IOException, NoSuchAlgorithmException {
+	public Result<String> uploadOss(MultipartFile file, String fileType) throws Exception {
 		String name = file.getOriginalFilename();
 		Assert.notNull(name, "文件名不能为空");
 		String extName = FileUtils.getFileExt(name);

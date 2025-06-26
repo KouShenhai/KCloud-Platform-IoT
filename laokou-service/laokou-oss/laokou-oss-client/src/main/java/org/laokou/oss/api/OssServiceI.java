@@ -20,14 +20,11 @@ package org.laokou.oss.api;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.oss.dto.OssUploadCmd;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-
 /**
  * @author laokou
  */
 public interface OssServiceI {
 
-	Result<String> uploadOss(OssUploadCmd cmd) throws IOException, NoSuchAlgorithmException;
+	Result<String> uploadOss(OssUploadCmd cmd) throws Exception;
 
 }

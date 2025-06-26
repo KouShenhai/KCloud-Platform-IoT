@@ -20,7 +20,6 @@ package org.laokou.common.oss.template;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * @author laokou
@@ -37,7 +36,7 @@ public abstract class AbstractStorage<O> implements Storage {
 	}
 
 	@Override
-	public String uploadOss() throws IOException, NoSuchAlgorithmException {
+	public String uploadOss() throws Exception {
 		O obj = getObj();
 		createBucket(obj);
 		upload(obj);
@@ -46,10 +45,10 @@ public abstract class AbstractStorage<O> implements Storage {
 
 	protected abstract O getObj() throws IOException;
 
-	protected abstract void createBucket(O obj);
+	protected abstract void createBucket(O obj) throws Exception;
 
-	protected abstract void upload(O obj) throws IOException, NoSuchAlgorithmException;
+	protected abstract void upload(O obj) throws Exception;
 
-	protected abstract String getUrl(O obj);
+	protected abstract String getUrl(O obj) throws Exception;
 
 }

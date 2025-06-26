@@ -29,9 +29,6 @@ import org.laokou.oss.model.OssA;
 import org.laokou.oss.model.OssStatusEnum;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-
 /**
  * @author laokou
  */
@@ -43,7 +40,7 @@ public class OssUploadCmdExe {
 
 	private final OssMapper ossMapper;
 
-	public Result<String> execute(OssUploadCmd cmd) throws IOException, NoSuchAlgorithmException {
+	public Result<String> execute(OssUploadCmd cmd) throws Exception {
 		OssA ossA = OssConvertor.toEntity(cmd.getFileType(), cmd.getSize(), cmd.getExtName());
 		// 校验文件大小
 		ossA.checkSize();

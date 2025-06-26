@@ -38,9 +38,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-
 import static org.laokou.common.data.cache.constant.NameConstants.USERS;
 import static org.laokou.common.data.cache.model.OperateTypeEnum.DEL;
 
@@ -146,8 +143,7 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:oss:upload') and hasAuthority('sys:user:modify')")
 	@Operation(summary = "用户管理", description = "上传用户头像")
 	@OperateLog(module = "用户管理", operation = "上传用户头像")
-	public Result<String> uploadUserAvatar(@RequestPart("file") MultipartFile file)
-			throws IOException, NoSuchAlgorithmException {
+	public Result<String> uploadUserAvatar(@RequestPart("file") MultipartFile file) throws Exception {
 		return usersServiceI.uploadUserAvatar(new UserUploadAvatarCmd(file));
 	}
 

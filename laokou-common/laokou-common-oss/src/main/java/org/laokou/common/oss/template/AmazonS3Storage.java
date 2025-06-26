@@ -27,13 +27,18 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 
 /**
  * @author laokou
  */
-public class AmazonS3Storage extends AbstractStorage<AmazonS3> {
+public final class AmazonS3Storage extends AbstractStorage<AmazonS3> {
+
+	private volatile org.laokou.common.oss.model.AmazonS3 amazonS3;
+
+	private final Object lock = new Object();
 
 	public AmazonS3Storage(FileInfo fileInfo, BaseOss baseOss) {
 		super(fileInfo, baseOss);
@@ -91,10 +96,17 @@ public class AmazonS3Storage extends AbstractStorage<AmazonS3> {
 	}
 
 	private org.laokou.common.oss.model.AmazonS3 getAmazonS3() {
-		if (baseOss instanceof org.laokou.common.oss.model.AmazonS3 s3) {
-			return s3;
+		if (ObjectUtils.isNull(amazonS3)) {
+			synchronized (lock) {
+				if (ObjectUtils.isNull(amazonS3)) {
+					if (baseOss instanceof org.laokou.common.oss.model.AmazonS3 s3) {
+						return amazonS3 = s3;
+					}
+					throw new IllegalArgumentException("BaseOss must be an instance of AmazonS3");
+				}
+			}
 		}
-		throw new IllegalArgumentException("BaseOss must be an instance of AmazonS3");
+		return amazonS3;
 	}
 
 }

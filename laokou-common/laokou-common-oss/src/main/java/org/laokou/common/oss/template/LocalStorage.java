@@ -18,6 +18,7 @@
 package org.laokou.common.oss.template;
 
 import org.laokou.common.core.util.FileUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.Local;
@@ -30,7 +31,11 @@ import static org.laokou.common.i18n.common.constant.StringConstants.SLASH;
 /**
  * @author laokou
  */
-public class LocalStorage extends AbstractStorage<Path> {
+public final class LocalStorage extends AbstractStorage<Path> {
+
+	private volatile Local local;
+
+	private final Object lock = new Object();
 
 	public LocalStorage(FileInfo fileInfo, BaseOss baseOss) {
 		super(fileInfo, baseOss);
@@ -58,10 +63,17 @@ public class LocalStorage extends AbstractStorage<Path> {
 	}
 
 	private Local getLocal() {
-		if (baseOss instanceof Local local) {
-			return local;
+		if (ObjectUtils.isNull(local)) {
+			synchronized (lock) {
+				if (ObjectUtils.isNull(local)) {
+					if (baseOss instanceof Local l) {
+						return local = l;
+					}
+					throw new IllegalArgumentException("BaseOss must be an instance of Local");
+				}
+			}
 		}
-		throw new IllegalArgumentException("BaseOss must be an instance of Local");
+		return local;
 	}
 
 }

@@ -17,14 +17,11 @@
 
 package org.laokou.common.oss.template;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-
 /**
  * @author laokou
  */
 public interface Storage {
 
-	String uploadOss() throws IOException, NoSuchAlgorithmException;
+	String uploadOss() throws Exception;
 
 }

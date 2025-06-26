@@ -79,8 +79,8 @@ public class CircuitBreakerConfig {
 				// 半开状态最大等待时间
 				.maxWaitDurationInHalfOpenState(Duration.ofSeconds(5))
 
-				// 自动切换到半开
-				.automaticTransitionFromOpenToHalfOpenEnabled(true)
+				// 关闭自动切换到半开
+				.automaticTransitionFromOpenToHalfOpenEnabled(false)
 				// 禁用堆栈跟踪提升性能
 				.writableStackTraceEnabled(false)
 
