@@ -17,7 +17,6 @@
 
 package org.laokou.common.oss.template;
 
-import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import java.io.IOException;
 
@@ -28,11 +27,8 @@ public abstract class AbstractStorage<O> implements Storage {
 
 	protected final FileInfo fileInfo;
 
-	protected final BaseOss baseOss;
-
-	protected AbstractStorage(FileInfo fileInfo, BaseOss baseOss) {
+	protected AbstractStorage(FileInfo fileInfo) {
 		this.fileInfo = fileInfo;
-		this.baseOss = baseOss;
 	}
 
 	@Override

@@ -35,11 +35,8 @@ public final class LocalStorage extends AbstractStorage<Path> {
 	private final Local local;
 
 	public LocalStorage(FileInfo fileInfo, BaseOss baseOss) {
-		super(fileInfo, baseOss);
-		if (baseOss instanceof Local l) {
-			local = l;
-		}
-		throw new IllegalArgumentException("BaseOss must be an instance of Local");
+		super(fileInfo);
+		this.local = (Local) baseOss;
 	}
 
 	@Override

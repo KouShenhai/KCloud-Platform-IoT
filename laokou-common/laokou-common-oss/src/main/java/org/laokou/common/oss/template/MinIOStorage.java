@@ -36,11 +36,8 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 	private final MinIO minIO;
 
 	public MinIOStorage(FileInfo fileInfo, BaseOss baseOss) {
-		super(fileInfo, baseOss);
-		if (baseOss instanceof MinIO minio) {
-			this.minIO = minio;
-		}
-		throw new IllegalArgumentException("BaseOss must be an instance of MinIO");
+		super(fileInfo);
+		minIO = (MinIO) baseOss;
 	}
 
 	@Override

@@ -18,19 +18,13 @@
 package org.laokou.oss;
 
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.FileUtils;
-import org.springframework.boot.system.SystemProperties;
+import org.laokou.common.core.util.UUIDGenerator;
+import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.oss.api.OssServiceI;
+import org.laokou.oss.dto.OssUploadCmd;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author laokou
@@ -40,23 +34,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class OssTest {
 
-	@BeforeEach
-	void setUp() throws IOException {
-		String testPath = SystemProperties.get("user.home") + "/test";
-		Path testFile = Path.of(testPath, "upload", "test.txt");
-
-		// 创建文件
-		assertDoesNotThrow(() -> FileUtils.create(testFile.getParent(), testFile));
-		assertTrue(FileUtils.isExist(testFile));
-
-		// 数据写入文件
-		assertDoesNotThrow(() -> FileUtils.write(testFile, "test content".getBytes(StandardCharsets.UTF_8)));
-		assertEquals("test content", Files.readString(testFile));
-	}
+	private final OssServiceI ossServiceI;
 
 	@Test
-	void testLocalUpload() {
-
+	void testOssUpload() throws Exception {
+		byte[] bytes = ResourceUtils.getResource("classpath:1.jpg").getInputStream().readAllBytes();
+		ossServiceI.uploadOss(new OssUploadCmd("image", bytes, UUIDGenerator.generateUUID() + ".jpg", ".jpg",
+				"image/jpeg", bytes.length));
 	}
 
 }

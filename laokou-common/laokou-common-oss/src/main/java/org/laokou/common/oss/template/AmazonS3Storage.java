@@ -38,11 +38,8 @@ public final class AmazonS3Storage extends AbstractStorage<AmazonS3> {
 	private final org.laokou.common.oss.model.AmazonS3 amazonS3;
 
 	public AmazonS3Storage(FileInfo fileInfo, BaseOss baseOss) {
-		super(fileInfo, baseOss);
-		if (baseOss instanceof org.laokou.common.oss.model.AmazonS3 s3) {
-			this.amazonS3 = s3;
-		}
-		throw new IllegalArgumentException("BaseOss must be an instance of AmazonS3");
+		super(fileInfo);
+		this.amazonS3 = (org.laokou.common.oss.model.AmazonS3) baseOss;
 	}
 
 	@Override

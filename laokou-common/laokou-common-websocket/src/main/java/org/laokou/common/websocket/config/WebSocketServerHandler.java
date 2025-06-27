@@ -131,10 +131,9 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		try {
 			WebSocketMessageCO co = JacksonUtils.toBean(str, WebSocketMessageCO.class);
 			OAuth2AuthenticatedPrincipal principal = globalOpaqueTokenIntrospector.introspect(co.getToken());
-			if (principal instanceof UserDetails userDetails) {
-				log.info("【WebSocket-Server】 => 令牌校验成功，用户名：{}", principal.getName());
-				WebSocketTypeEnum.getByCode(co.getType()).handle(userDetails, co, channel);
-			}
+			UserDetails userDetails = (UserDetails) principal;
+			log.info("【WebSocket-Server】 => 令牌校验成功，用户名：{}", principal.getName());
+			WebSocketTypeEnum.getByCode(co.getType()).handle(userDetails, co, channel);
 		}
 		catch (JsonParseException e) {
 			log.error("【WebSocket-Server】 => JSON格式转换失败，错误信息：{}", e.getMessage(), e);
