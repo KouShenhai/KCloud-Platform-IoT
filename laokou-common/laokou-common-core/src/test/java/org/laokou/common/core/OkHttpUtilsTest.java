@@ -20,6 +20,7 @@ package org.laokou.common.core;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,7 +54,13 @@ class OkHttpUtilsTest {
 				new HashMap<>(0), new HashMap<>(0));
 		Assertions.assertEquals("hello wiremock", resultJson);
 		Assertions.assertDoesNotThrow(OkHttpUtils::destroy);
-		wireMockServer.stop();
+	}
+
+	@AfterEach
+	void tearDown() {
+		if (wireMockServer != null && wireMockServer.isRunning()) {
+			wireMockServer.stop();
+		}
 	}
 
 }
