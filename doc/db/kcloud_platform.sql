@@ -444,6 +444,8 @@ COMMENT ON TABLE "public"."sys_oss" IS 'OSS';
 ALTER TABLE "public"."sys_oss" ADD CONSTRAINT "sys_oss_pkey" PRIMARY KEY ("id");
 
 INSERT INTO "public"."sys_oss" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "name", "type", "param", "status") VALUES (1, 1, 1, '2025-06-21 15:41:16', '2025-06-21 15:41:19', 0, 0, 0, '本地 OSS', 'local', '{"path":"D:/laokou/tmp","directory":"/upload","domain":"http://oss.laokou.org"}', 0);
+INSERT INTO "public"."sys_oss" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "name", "type", "param", "status") VALUES (2, 1, 1, '2025-06-28 12:30:53', '2025-06-28 12:30:55', 0, 0, 0, '亚马逊S3 OSS', 'amazon_s3', '{"endpoint":"https://s3.oss-cn-shenzhen.aliyuncs.com", "region":"shenzhen", "accessKey":"LTAI5tAEkzXJzbNjvYZPRgtf", "secretKey":"exoPPyR6e4uS0sCf6IwsCJnpJ95gal", "bucketName":"laokou","pathStyleAccessEnabled":0}', 0);
+INSERT INTO "public"."sys_oss" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "name", "type", "param", "status") VALUES (3, 1, 1, '2025-06-28 12:30:53', '2025-06-28 12:30:55', 0, 0, 0, 'MinIO OSS', 'minio', '{"endpoint":"http://oss.laokou.org:9040", "region":"shenzhen", "accessKey":"asZo0GlcnCDRA0V8kqFg", "secretKey":"ebjV0cWm0MIE8JLPygWNXZuiBRxEv5o7XzvLA3yr", "bucketName":"laokou"}', 0);
 
 -- ----------------------------
 -- -------------套餐------------

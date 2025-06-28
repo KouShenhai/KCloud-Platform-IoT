@@ -112,11 +112,15 @@ public final class FileUtils {
 	}
 
 	public static byte[] getBytes(String url) throws IOException {
-		URI uri = URI.create(url);
-		URLConnection connection = uri.toURL().openConnection();
-		try (InputStream in = connection.getInputStream()) {
+		try (InputStream in = getInputStream(url)) {
 			return in.readAllBytes();
 		}
+	}
+
+	public static InputStream getInputStream(String url) throws IOException {
+		URI uri = URI.create(url);
+		URLConnection connection = uri.toURL().openConnection();
+		return connection.getInputStream();
 	}
 
 	public static byte[] getBytes(Path path) throws IOException {

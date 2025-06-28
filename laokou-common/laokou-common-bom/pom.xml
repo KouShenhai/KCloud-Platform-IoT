@@ -59,8 +59,8 @@
     <fastexcel.version>1.2.0</fastexcel.version>
     <!--spring-security-oauth2-authorization-server版本-->
     <spring-security-oauth2-authorization-server.version>1.5.2-SNAPSHOT</spring-security-oauth2-authorization-server.version>
-    <!--aws-java-sdk-s3版本-->
-    <aws-java-sdk-s3.version>1.12.787</aws-java-sdk-s3.version>
+    <!--s3版本-->
+    <s3.version>2.31.72</s3.version>
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
     <!--httpclient5版本-->
@@ -1211,9 +1211,9 @@
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.amazonaws</groupId>
-        <artifactId>aws-java-sdk-s3</artifactId>
-        <version>${aws-java-sdk-s3.version}</version>
+        <groupId>software.amazon.awssdk</groupId>
+        <artifactId>s3</artifactId>
+        <version>${s3.version}</version>
       </dependency>
       <!-- 定义 lombok 版本 -->
       <dependency>

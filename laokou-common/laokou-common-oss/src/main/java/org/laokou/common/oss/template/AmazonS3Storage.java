@@ -17,23 +17,24 @@
 
 package org.laokou.common.oss.template;
 
-import com.amazonaws.ClientConfiguration;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.S3Configuration;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+
+import java.net.URI;
+import java.time.Duration;
 
 /**
  * @author laokou
  */
-public final class AmazonS3Storage extends AbstractStorage<AmazonS3> {
+public final class AmazonS3Storage extends AbstractStorage<S3Client> {
 
 	private final org.laokou.common.oss.model.AmazonS3 amazonS3;
 
@@ -43,50 +44,66 @@ public final class AmazonS3Storage extends AbstractStorage<AmazonS3> {
 	}
 
 	@Override
-	protected AmazonS3 getObj() {
+	protected S3Client getObj() {
 		String accessKey = this.amazonS3.getAccessKey();
 		String secretKey = this.amazonS3.getSecretKey();
 		String region = this.amazonS3.getRegion();
 		String endpoint = this.amazonS3.getEndpoint();
 		Boolean pathStyleAccessEnabled = this.amazonS3.getPathStyleAccessEnabled() == 1;
-		ClientConfiguration clientConfiguration = new ClientConfiguration();
-		AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(
-				endpoint, region);
-		AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
-		AWSCredentialsProvider awsCredentialsProvider = new AWSStaticCredentialsProvider(awsCredentials);
-		return AmazonS3Client.builder()
-			.withEndpointConfiguration(endpointConfiguration)
-			.withClientConfiguration(clientConfiguration)
-			.withCredentials(awsCredentialsProvider)
-			.withPathStyleAccessEnabled(pathStyleAccessEnabled)
+		return S3Client.builder()
+			.region(Region.of(region))
+			.endpointOverride(URI.create(endpoint))
+			.credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey)))
+			.serviceConfiguration(S3Configuration.builder()
+				.pathStyleAccessEnabled(pathStyleAccessEnabled)
+				.chunkedEncodingEnabled(false)
+				.build())
 			.build();
 	}
 
 	@Override
-	protected void createBucket(AmazonS3 amazonS3) {
+	protected void createBucket(S3Client s3Client) {
 		String bucketName = this.amazonS3.getBucketName();
 		// bucketName不存在则新建
-		if (!amazonS3.doesBucketExistV2(bucketName)) {
-			amazonS3.createBucket(bucketName);
+		if (s3Client.listBuckets().buckets().stream().noneMatch(b -> b.name().equals(bucketName))) {
+			s3Client.createBucket(b -> b.bucket(bucketName));
 		}
 	}
 
 	@Override
-	protected void upload(AmazonS3 amazonS3) {
+	protected void upload(S3Client s3Client) {
 		String bucketName = this.amazonS3.getBucketName();
-		ObjectMetadata objectMetadata = new ObjectMetadata();
-		objectMetadata.setContentLength(fileInfo.size());
-		objectMetadata.setContentType(fileInfo.contentType());
-		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fileInfo.name(), fileInfo.inputStream(),
-				objectMetadata);
-		putObjectRequest.getRequestClientOptions().setReadLimit((int) (fileInfo.size() + 1));
-		amazonS3.putObject(putObjectRequest);
+		PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+			.bucket(bucketName)
+			.key(fileInfo.name())
+			.contentType(fileInfo.contentType())
+			.contentLength(fileInfo.size())
+			.build();
+		s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(fileInfo.inputStream(), fileInfo.size()));
 	}
 
 	@Override
-	protected String getUrl(AmazonS3 amazonS3) {
+	protected String getUrl(S3Client s3Client) {
 		String bucketName = this.amazonS3.getBucketName();
-		return amazonS3.getUrl(bucketName, fileInfo.name()).toString();
+		String accessKey = this.amazonS3.getAccessKey();
+		String secretKey = this.amazonS3.getSecretKey();
+		String region = this.amazonS3.getRegion();
+		Boolean pathStyleAccessEnabled = this.amazonS3.getPathStyleAccessEnabled() == 1;
+		try (S3Presigner s3Presigner = S3Presigner.builder()
+			.region(Region.of(region))
+			.serviceConfiguration(S3Configuration.builder()
+				.pathStyleAccessEnabled(pathStyleAccessEnabled)
+				.chunkedEncodingEnabled(false)
+				.build())
+			.endpointOverride(URI.create(this.amazonS3.getEndpoint()))
+			.credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey)))
+			.build()) {
+			return s3Presigner
+				.presignGetObject(builder -> builder.signatureDuration(Duration.ofDays(5))
+					.getObjectRequest(gor -> gor.bucket(bucketName).key(fileInfo.name())))
+				.url()
+				.toString();
+		}
 	}
 
 }

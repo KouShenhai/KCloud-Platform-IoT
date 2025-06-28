@@ -71,6 +71,7 @@
     <!-- 禁止非法导入 https://checkstyle.sourceforge.io/checks/imports/illegalimport.html -->
     <module name="IllegalImport">
       <property name="illegalClasses" value="lombok.SneakyThrows"/>
+      <property name="illegalClasses" value="org.springframework.beans.factory.annotation.Autowired"/>
     </module>
 
   </module>

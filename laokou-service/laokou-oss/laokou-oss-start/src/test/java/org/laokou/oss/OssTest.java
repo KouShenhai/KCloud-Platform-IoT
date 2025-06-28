@@ -18,13 +18,17 @@
 package org.laokou.oss;
 
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.core.util.UUIDGenerator;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.ResourceUtils;
 import org.laokou.oss.api.OssServiceI;
 import org.laokou.oss.dto.OssUploadCmd;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
+import org.springframework.util.DigestUtils;
 
 /**
  * @author laokou
@@ -39,8 +43,12 @@ class OssTest {
 	@Test
 	void testOssUpload() throws Exception {
 		byte[] bytes = ResourceUtils.getResource("classpath:1.jpg").getInputStream().readAllBytes();
-		ossServiceI.uploadOss(new OssUploadCmd("image", bytes, UUIDGenerator.generateUUID() + ".jpg", ".jpg",
-				"image/jpeg", bytes.length));
+		Result<String> result = ossServiceI.uploadOss(new OssUploadCmd("image", bytes,
+				UUIDGenerator.generateUUID() + ".jpg", ".jpg", "image/jpeg", bytes.length));
+		Assertions.assertTrue(result.success());
+		Assertions.assertEquals("OK", result.getCode());
+		Assertions.assertEquals(DigestUtils.md5DigestAsHex(bytes),
+				DigestUtils.md5DigestAsHex(FileUtils.getBytes(result.getData())));
 	}
 
 }

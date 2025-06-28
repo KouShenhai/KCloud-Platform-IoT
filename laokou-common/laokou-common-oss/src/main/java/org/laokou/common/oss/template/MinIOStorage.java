@@ -27,6 +27,7 @@ import org.laokou.common.oss.model.MinIO;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
@@ -81,6 +82,7 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 			.bucket(this.minIO.getBucketName())
 			.object(fileInfo.name())
 			.method(Method.GET)
+			.expiry(5, TimeUnit.DAYS)
 			.build();
 		return minioClient.getPresignedObjectUrl(objectUrlArgs);
 	}
