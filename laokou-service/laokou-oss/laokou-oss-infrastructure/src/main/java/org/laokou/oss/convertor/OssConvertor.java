@@ -27,7 +27,6 @@ import org.laokou.oss.model.FileFormatEnum;
 import org.laokou.oss.model.OssA;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -46,12 +45,11 @@ public final class OssConvertor {
 		return oss;
 	}
 
-	public static FileInfo to(byte[] buffer, long size, String contentType, String name, String extName)
-			throws IOException {
+	public static FileInfo toFileInfo(byte[] buffer, long size, String contentType, String name, String extName) {
 		return new FileInfo(new ByteArrayInputStream(buffer), size, contentType, name, extName);
 	}
 
-	public static List<BaseOss> tos(List<OssDO> list) {
+	public static List<BaseOss> toBaseOssList(List<OssDO> list) {
 		return list.stream().map(OssConvertor::to).toList();
 	}
 

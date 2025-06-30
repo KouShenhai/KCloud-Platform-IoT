@@ -82,6 +82,16 @@ public final class DSConstants {
 		 */
 		public static final String ROLE_DEPT_TABLE = "sys_role_dept";
 
+		/**
+		 * OSS表.
+		 */
+		public static final String OSS_TABLE = "sys_oss";
+
+		/**
+		 * OSS日志表.
+		 */
+		public static final String OSS_LOG_TABLE = "sys_oss_log";
+
 	}
 
 	public static final class Domain {

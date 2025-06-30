@@ -60,7 +60,7 @@ final class OAuth2AuthenticationProcessor {
 			// 记录日志【登录成功】
 			evt = LoginLogConvertor.toDomainEvent(request, authA, null);
 			// 登录成功，转换成用户对象【业务】
-			UserDetails userDetails = UserConvertor.to(authA);
+			UserDetails userDetails = UserConvertor.toUserDetails(authA);
 			// 认证成功，转换成认证对象【系统】
 			return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getUsername(),
 					userDetails.getAuthorities());

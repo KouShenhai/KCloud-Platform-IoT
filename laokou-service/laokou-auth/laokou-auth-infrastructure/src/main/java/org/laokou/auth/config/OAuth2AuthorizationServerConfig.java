@@ -24,7 +24,9 @@ import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.laokou.auth.model.CaptchaValidator;
+import org.laokou.auth.model.IdGenerator;
 import org.laokou.auth.model.PasswordValidator;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierRpc;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.redis.util.RedisUtils;
@@ -217,6 +219,15 @@ class OAuth2AuthorizationServerConfig {
 		JwtGenerator generator = new JwtGenerator(jwtEncoder);
 		return new DelegatingOAuth2TokenGenerator(generator, new OAuth2AccessTokenGenerator(),
 				new OAuth2RefreshTokenGenerator());
+	}
+
+	/**
+	 * 分布式ID生成器.
+	 * @return 分布式ID生成器
+	 */
+	@Bean
+	IdGenerator distributedIdentifierGenerator(DistributedIdentifierRpc distributedIdentifierRpc) {
+		return distributedIdentifierRpc::getId;
 	}
 
 	/**

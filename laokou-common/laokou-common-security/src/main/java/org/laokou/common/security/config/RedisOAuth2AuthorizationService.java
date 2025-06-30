@@ -76,9 +76,10 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		try {
 			RedisOAuth2Authorization redisOAuth2Authorization = convert(authorization);
 			List<Instant> expireAtList = Stream.of(redisOAuth2Authorization.getAuthorizationCodeExpiresAt(),
-					redisOAuth2Authorization.getAccessTokenExpiresAt(), redisOAuth2Authorization.getOidcIdTokenExpiresAt(),
-					redisOAuth2Authorization.getRefreshTokenExpiresAt(), redisOAuth2Authorization.getUserCodeExpiresAt(),
-					redisOAuth2Authorization.getDeviceCodeExpiresAt())
+					redisOAuth2Authorization.getAccessTokenExpiresAt(),
+					redisOAuth2Authorization.getOidcIdTokenExpiresAt(),
+					redisOAuth2Authorization.getRefreshTokenExpiresAt(),
+					redisOAuth2Authorization.getUserCodeExpiresAt(), redisOAuth2Authorization.getDeviceCodeExpiresAt())
 				.filter(ObjectUtils::isNotNull)
 				.toList();
 			expireAtList.stream()
@@ -88,7 +89,8 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 			// 先删除后新增
 			remove(authorization);
 			redisOAuth2AuthorizationRepository.save(redisOAuth2Authorization);
-		} catch (JsonProcessingException e) {
+		}
+		catch (JsonProcessingException e) {
 			throw new RuntimeException(e);
 		}
 	}

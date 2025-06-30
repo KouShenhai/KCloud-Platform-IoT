@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserModifyAuthorityCmd;
-import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.springframework.stereotype.Component;
@@ -37,8 +36,7 @@ public class UserModifyAuthorityCmdExe {
 
 	@CommandLog
 	public void executeVoid(UserModifyAuthorityCmd cmd) throws Exception {
-		UserCO co = cmd.getCo();
-		UserE userE = UserConvertor.toEntity(co.getId(), co.getRoleIds(), co.getDeptIds());
+		UserE userE = UserConvertor.toEntity(cmd.getCo());
 		userDomainService.updateAuthorityUser(userE);
 	}
 

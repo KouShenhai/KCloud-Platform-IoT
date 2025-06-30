@@ -25,7 +25,6 @@ import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.util.CollectionUtils;
-import org.laokou.common.dubbo.rpc.DistributedIdentifierRpc;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
@@ -43,12 +42,10 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 
 	private final UserRoleMapper userRoleMapper;
 
-	private final DistributedIdentifierRpc distributedIdentifierRpc;
-
 	@Override
 	public void updateUserRole(UserE userE) {
 		deleteUserRole(getUserRoleIds(userE.getUserIds()));
-		insertUserRole(userE.getRoleIds(), userE.getId());
+		insertUserRole(userE);
 	}
 
 	@Override
@@ -56,9 +53,9 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 		deleteUserRole(getUserRoleIds(Arrays.asList(userIds)));
 	}
 
-	private void insertUserRole(List<String> roleIds, Long userId) {
+	private void insertUserRole(UserE userE) {
 		// 新增用户角色关联表
-		List<UserRoleDO> list = UserConvertor.toDataObjects(distributedIdentifierRpc::getId, roleIds, userId);
+		List<UserRoleDO> list = UserConvertor.toDataObjects(userE);
 		if (CollectionUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::insert);
 		}

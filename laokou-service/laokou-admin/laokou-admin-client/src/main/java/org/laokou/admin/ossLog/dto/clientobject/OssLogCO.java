@@ -15,16 +15,52 @@
  *
  */
 
-package org.laokou.admin.common.constant;
+package org.laokou.admin.ossLog.dto.clientobject;
+
+import lombok.Data;
+import org.laokou.common.i18n.dto.ClientObject;
 
 /**
+ * OSS日志客户端对象.
+ *
  * @author laokou
  */
-public final class ServiceConstants {
+@Data
+public class OssLogCO extends ClientObject {
 
-	private ServiceConstants() {
-	}
+	/**
+	 * ID.
+	 */
+	private Long id;
 
-	public static final String OSS = "laokou-oss";
+	/**
+	 * 文件名称.
+	 */
+	private String name;
+
+	/**
+	 * 文件的MD5标识.
+	 */
+	private String md5;
+
+	/**
+	 * 文件的URL.
+	 */
+	private String url;
+
+	/**
+	 * 文件大小.
+	 */
+	private Long size;
+
+	/**
+	 * 上传状态 0成功 1失败.
+	 */
+	private Integer status;
+
+	/**
+	 * 错误信息.
+	 */
+	private String errorMessage;
 
 }

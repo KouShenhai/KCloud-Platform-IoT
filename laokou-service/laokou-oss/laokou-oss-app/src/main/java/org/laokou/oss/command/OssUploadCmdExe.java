@@ -47,8 +47,9 @@ public class OssUploadCmdExe {
 		// 校验扩展名
 		ossA.checkExt();
 		return storageTemplate.uploadOss(
-				OssConvertor.to(cmd.getBuffer(), cmd.getSize(), cmd.getContentType(), cmd.getName(), cmd.getExtName()),
-				OssConvertor.tos(ossMapper.selectList(Wrappers.lambdaQuery(OssDO.class)
+				OssConvertor.toFileInfo(cmd.getBuffer(), cmd.getSize(), cmd.getContentType(), cmd.getName(),
+						cmd.getExtName()),
+				OssConvertor.toBaseOssList(ossMapper.selectList(Wrappers.lambdaQuery(OssDO.class)
 					.eq(OssDO::getStatus, OssStatusEnum.ENABLE.getCode())
 					.select(OssDO::getParam, OssDO::getType))));
 	}

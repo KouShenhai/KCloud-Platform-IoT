@@ -31,7 +31,7 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static UserDetails to(AuthA auth) {
+	public static UserDetails toUserDetails(AuthA auth) {
 		UserDetails userDetails = new UserDetails();
 		UserE user = auth.getUser();
 		userDetails.setId(user.getId());

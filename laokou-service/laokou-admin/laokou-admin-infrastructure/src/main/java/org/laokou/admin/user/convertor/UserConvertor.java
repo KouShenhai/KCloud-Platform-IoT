@@ -29,12 +29,9 @@ import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.mybatisplus.util.UserDetails;
 import org.laokou.common.sensitive.util.SensitiveUtils;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * 用户转换器.
@@ -46,11 +43,13 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static List<UserRoleDO> toDataObjects(Supplier<Long> supplier, List<String> roleIds, Long userId) {
+	public static List<UserRoleDO> toDataObjects(UserE userE) {
+		List<String> roleIds = userE.getRoleIds();
+		Long userId = userE.getId();
 		List<UserRoleDO> list = new ArrayList<>(roleIds.size());
 		for (String roleId : roleIds) {
 			UserRoleDO userRoleDO = new UserRoleDO();
-			userRoleDO.setId(supplier.get());
+			userRoleDO.setId(userE.getPrimaryKey());
 			userRoleDO.setRoleId(Long.valueOf(roleId));
 			userRoleDO.setUserId(userId);
 			list.add(userRoleDO);
@@ -58,11 +57,13 @@ public final class UserConvertor {
 		return list;
 	}
 
-	public static List<UserDeptDO> toDataObjs(Supplier<Long> supplier, List<String> deptIds, Long userId) {
+	public static List<UserDeptDO> toDataObjs(UserE userE) {
+		List<String> deptIds = userE.getDeptIds();
+		Long userId = userE.getId();
 		List<UserDeptDO> list = new ArrayList<>(deptIds.size());
 		for (String deptId : deptIds) {
 			UserDeptDO userDeptDO = new UserDeptDO();
-			userDeptDO.setId(supplier.get());
+			userDeptDO.setId(userE.getPrimaryKey());
 			userDeptDO.setDeptId(Long.valueOf(deptId));
 			userDeptDO.setUserId(userId);
 			list.add(userDeptDO);
@@ -86,19 +87,21 @@ public final class UserConvertor {
 		}).toList();
 	}
 
-	public static UserDO toDataObject(Long id, PasswordEncoder passwordEncoder, UserE userE, boolean isInsert) {
+	public static UserDO toDataObject(UserE userE) {
 		UserDO userDO = new UserDO();
-		if (isInsert) {
-			userDO.setId(id);
-			userDO.setPassword(passwordEncoder.encode("laokou123"));
-			userDO.setUsername(userE.getUsername());
-			userDO.setUsernamePhrase(userE.getUsernamePhrase());
-		}
-		else {
-			userDO.setId(userE.getId());
-			String password = userE.getPassword();
-			if (StringUtils.isNotEmpty(password)) {
-				userDO.setPassword(passwordEncoder.encode(password));
+		switch (userE.getUserOperateTypeEnum()) {
+			case SAVE -> {
+				userDO.setId(userE.getPrimaryKey());
+				userDO.setPassword(userE.getDefaultEncodedPassword());
+				userDO.setUsername(userE.getUsername());
+				userDO.setUsernamePhrase(userE.getUsernamePhrase());
+			}
+			case MODIFY -> {
+				userDO.setId(userE.getId());
+				String password = userE.getPassword();
+				if (StringUtils.isNotEmpty(password)) {
+					userDO.setPassword(userE.getEncodedPassword());
+				}
 			}
 		}
 		String mobile = userE.getMobile();
@@ -161,26 +164,24 @@ public final class UserConvertor {
 		}).toList();
 	}
 
-	public static UserE toEntity(Long id, String username, Integer superAdmin, String mail, String mobile,
-			Integer status, String avatar, boolean isInsert) {
+	public static UserE toEntity(UserCO userCO, boolean isInsert) {
 		UserE user = UserDomainFactory.getUser();
-		user.setId(id);
-		user.setUsername(username);
-		user.setSuperAdmin(superAdmin);
-		user.setMail(mail);
-		user.setMobile(mobile);
-		user.setStatus(status);
-		user.setAvatar(avatar);
+		user.setUsername(userCO.getUsername());
+		user.setSuperAdmin(userCO.getSuperAdmin());
+		user.setMail(userCO.getMail());
+		user.setMobile(userCO.getMobile());
+		user.setStatus(userCO.getStatus());
+		user.setAvatar(userCO.getAvatar());
 		user.setUserOperateTypeEnum(isInsert ? UserOperateTypeEnum.SAVE : UserOperateTypeEnum.MODIFY);
 		return user;
 	}
 
-	public static UserE toEntity(Long id, List<String> roleIds, List<String> deptIds) {
+	public static UserE toEntity(UserCO userCO) {
 		UserE userE = UserDomainFactory.getUser();
-		userE.setId(id);
-		userE.setUserIds(Collections.singletonList(id));
-		userE.setRoleIds(roleIds);
-		userE.setDeptIds(deptIds);
+		userE.setId(userCO.getId());
+		userE.setUserIds(Collections.singletonList(userCO.getId()));
+		userE.setRoleIds(userCO.getRoleIds());
+		userE.setDeptIds(userCO.getDeptIds());
 		userE.setUserOperateTypeEnum(UserOperateTypeEnum.MODIFY_AUTHORITY);
 		return userE;
 	}

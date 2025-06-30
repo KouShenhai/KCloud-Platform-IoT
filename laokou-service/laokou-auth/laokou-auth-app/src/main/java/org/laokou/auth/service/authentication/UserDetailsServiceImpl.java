@@ -24,7 +24,6 @@ import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.GrantTypeEnum;
 import org.laokou.common.core.util.RequestUtils;
-import org.laokou.common.dubbo.rpc.DistributedIdentifierRpc;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,8 +47,6 @@ final class UserDetailsServiceImpl implements UserDetailsService {
 
 	private final OAuth2AuthenticationProcessor authProcessor;
 
-	private final DistributedIdentifierRpc distributedIdentifierRpc;
-
 	/**
 	 * 获取用户信息.
 	 * @param username 用户名
@@ -62,8 +59,8 @@ final class UserDetailsServiceImpl implements UserDetailsService {
 			HttpServletRequest request = RequestUtils.getHttpServletRequest();
 			String password = request.getParameter(PASSWORD);
 			String tenantCode = request.getParameter(TENANT_CODE);
-			AuthA authA = AuthConvertor.toEntity(distributedIdentifierRpc.getId(), username, password, tenantCode,
-					GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
+			AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.AUTHORIZATION_CODE,
+					EMPTY, EMPTY);
 			authA.createUserByAuthorizationCode();
 			return (UserDetails) authProcessor.authenticationToken(authA, request).getPrincipal();
 		}

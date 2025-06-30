@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserModifyCmd;
-import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
@@ -44,9 +43,7 @@ public class UserModifyCmdExe {
 
 	@CommandLog
 	public void executeVoid(UserModifyCmd cmd) throws Exception {
-		UserCO co = cmd.getCo();
-		UserE userE = UserConvertor.toEntity(co.getId(), co.getUsername(), co.getSuperAdmin(), co.getMail(),
-				co.getMobile(), co.getStatus(), co.getAvatar(), false);
+		UserE userE = UserConvertor.toEntity(cmd.getCo(), false);
 		transactionalUtils.executeInTransaction(() -> userDomainService.updateUser(userE));
 	}
 

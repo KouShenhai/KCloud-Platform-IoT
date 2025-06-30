@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserSaveCmd;
-import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
@@ -44,10 +43,7 @@ public class UserSaveCmdExe {
 
 	@CommandLog
 	public void executeVoid(UserSaveCmd cmd) throws Exception {
-		// 校验参数
-		UserCO co = cmd.getCo();
-		UserE userE = UserConvertor.toEntity(null, co.getUsername(), co.getSuperAdmin(), co.getMail(), co.getMobile(),
-				co.getStatus(), co.getAvatar(), true);
+		UserE userE = UserConvertor.toEntity(cmd.getCo(), true);
 		transactionalUtils.executeInTransaction(() -> userDomainService.createUser(userE));
 	}
 

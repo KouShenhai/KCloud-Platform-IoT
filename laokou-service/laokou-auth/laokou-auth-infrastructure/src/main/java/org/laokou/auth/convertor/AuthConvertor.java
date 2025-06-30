@@ -30,10 +30,10 @@ public final class AuthConvertor {
 	private AuthConvertor() {
 	}
 
-	public static AuthA toEntity(Long id, String username, String password, String tenantCode,
-			GrantTypeEnum grantTypeEnum, String uuid, String captcha) {
+	public static AuthA toEntity(String username, String password, String tenantCode, GrantTypeEnum grantTypeEnum,
+			String uuid, String captcha) {
 		AuthA authA = DomainFactory.getAuth();
-		authA.setId(id);
+		authA.generateId();
 		authA.setUsername(username);
 		authA.setPassword(password);
 		authA.setTenantCode(tenantCode);

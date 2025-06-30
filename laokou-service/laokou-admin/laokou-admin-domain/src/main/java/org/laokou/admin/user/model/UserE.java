@@ -24,6 +24,7 @@ import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,7 +145,10 @@ public class UserE extends Identifier {
 	 * 用户操作类型.
 	 */
 	@Setter
+	@Getter
 	private UserOperateTypeEnum userOperateTypeEnum;
+
+	private final IdGenerator idGenerator;
 
 	private final UserParamValidator saveUserParamValidator;
 
@@ -154,14 +158,32 @@ public class UserE extends Identifier {
 
 	private final UserParamValidator modifyUserAuthorityParamValidator;
 
-	public UserE(@Qualifier("saveUserParamValidator") UserParamValidator saveUserParamValidator,
+	private final PasswordEncoder passwordEncoder;
+
+	public UserE(IdGenerator idGenerator,
+			@Qualifier("saveUserParamValidator") UserParamValidator saveUserParamValidator,
 			@Qualifier("modifyUserParamValidator") UserParamValidator modifyUserParamValidator,
 			@Qualifier("resetUserPwdParamValidator") UserParamValidator resetUserPwdParamValidator,
-			@Qualifier("modifyUserAuthorityParamValidator") UserParamValidator modifyUserAuthorityParamValidator) {
+			@Qualifier("modifyUserAuthorityParamValidator") UserParamValidator modifyUserAuthorityParamValidator,
+			PasswordEncoder passwordEncoder) {
+		this.idGenerator = idGenerator;
 		this.saveUserParamValidator = saveUserParamValidator;
 		this.modifyUserParamValidator = modifyUserParamValidator;
 		this.resetUserPwdParamValidator = resetUserPwdParamValidator;
 		this.modifyUserAuthorityParamValidator = modifyUserAuthorityParamValidator;
+		this.passwordEncoder = passwordEncoder;
+	}
+
+	public Long getPrimaryKey() {
+		return idGenerator.getId();
+	}
+
+	public String getDefaultEncodedPassword() {
+		return passwordEncoder.encode("laokou123");
+	}
+
+	public String getEncodedPassword() {
+		return passwordEncoder.encode(password);
 	}
 
 	public void checkUserParam() throws Exception {
