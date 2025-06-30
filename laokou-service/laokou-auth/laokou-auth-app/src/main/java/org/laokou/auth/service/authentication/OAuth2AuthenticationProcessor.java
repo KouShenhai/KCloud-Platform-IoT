@@ -31,7 +31,7 @@ import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.security.util.UserDetails;
+import org.laokou.common.mybatisplus.util.UserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
