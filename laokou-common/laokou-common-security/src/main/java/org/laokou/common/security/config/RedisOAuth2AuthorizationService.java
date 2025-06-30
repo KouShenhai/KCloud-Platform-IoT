@@ -72,21 +72,25 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 	// @formatter:on
 
 	@Override
-	public void save(@NonNull OAuth2Authorization authorization) throws JsonProcessingException {
-		RedisOAuth2Authorization redisOAuth2Authorization = convert(authorization);
-		List<Instant> expireAtList = Stream.of(redisOAuth2Authorization.getAuthorizationCodeExpiresAt(),
-				redisOAuth2Authorization.getAccessTokenExpiresAt(), redisOAuth2Authorization.getOidcIdTokenExpiresAt(),
-				redisOAuth2Authorization.getRefreshTokenExpiresAt(), redisOAuth2Authorization.getUserCodeExpiresAt(),
-				redisOAuth2Authorization.getDeviceCodeExpiresAt())
-			.filter(ObjectUtils::isNotNull)
-			.toList();
-		expireAtList.stream()
-			.max(Comparator.comparing(Instant::getEpochSecond))
-			.ifPresent(instant -> redisOAuth2Authorization
-				.setTtl(ChronoUnit.SECONDS.between(DateUtils.nowInstant(), instant)));
-		// 先删除后新增
-		remove(authorization);
-		redisOAuth2AuthorizationRepository.save(redisOAuth2Authorization);
+	public void save(@NonNull OAuth2Authorization authorization) {
+		try {
+			RedisOAuth2Authorization redisOAuth2Authorization = convert(authorization);
+			List<Instant> expireAtList = Stream.of(redisOAuth2Authorization.getAuthorizationCodeExpiresAt(),
+					redisOAuth2Authorization.getAccessTokenExpiresAt(), redisOAuth2Authorization.getOidcIdTokenExpiresAt(),
+					redisOAuth2Authorization.getRefreshTokenExpiresAt(), redisOAuth2Authorization.getUserCodeExpiresAt(),
+					redisOAuth2Authorization.getDeviceCodeExpiresAt())
+				.filter(ObjectUtils::isNotNull)
+				.toList();
+			expireAtList.stream()
+				.max(Comparator.comparing(Instant::getEpochSecond))
+				.ifPresent(instant -> redisOAuth2Authorization
+					.setTtl(ChronoUnit.SECONDS.between(DateUtils.nowInstant(), instant)));
+			// 先删除后新增
+			remove(authorization);
+			redisOAuth2AuthorizationRepository.save(redisOAuth2Authorization);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	// @formatter:off
@@ -104,7 +108,9 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 
 	@Nullable
 	@Override
-	public OAuth2Authorization findByToken(@NonNull String token, @NonNull OAuth2TokenType tokenType) {
+	public OAuth2Authorization findByToken(@NonNull String token, @Nullable OAuth2TokenType tokenType) {
+		Assert.hasText(token, "Token cannot be empty");
+		Assert.notNull(tokenType, "Token type cannot be null");
 		return switch (tokenType.getValue()) {
 			case STATE -> redisOAuth2AuthorizationRepository.findByState(token).map(this::parse).orElse(null);
 			case CODE ->

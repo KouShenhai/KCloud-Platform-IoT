@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.security.util;
+package org.laokou.common.mybatisplus.util;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,12 +32,9 @@ public final class UserUtils {
 	}
 
 	public static UserDetails user() {
-		return Optional.ofNullable(getAuthentication()).map(authentication -> {
-			if (authentication.getPrincipal() instanceof UserDetails userDetails) {
-				return userDetails;
-			}
-			return new UserDetails();
-		}).orElse(new UserDetails());
+		return Optional.ofNullable(getAuthentication())
+			.map(authentication -> (UserDetails) authentication.getPrincipal())
+			.orElse(new UserDetails());
 	}
 
 	/**
@@ -70,6 +67,14 @@ public final class UserUtils {
 	 */
 	public static Long getTenantId() {
 		return user().getTenantId();
+	}
+
+	/**
+	 * 是否是超级管理员.
+	 * @return Boolean
+	 */
+	public static Boolean isSuperAdmin() {
+		return user().getSuperAdmin();
 	}
 
 	private static Authentication getAuthentication() {
