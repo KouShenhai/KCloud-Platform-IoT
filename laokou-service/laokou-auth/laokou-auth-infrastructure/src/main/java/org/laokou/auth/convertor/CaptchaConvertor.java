@@ -32,9 +32,8 @@ public final class CaptchaConvertor {
 
 	}
 
-	public static CaptchaE toEntity(Long id, CaptchaCO co) {
+	public static CaptchaE toEntity(CaptchaCO co) {
 		CaptchaE captchaE = DomainFactory.getCaptcha();
-		captchaE.setId(id);
 		captchaE.setUuid(co.getUuid());
 		captchaE.setSendCaptchaTypeEnum(SendCaptchaTypeEnum.getByCode(co.getTag()));
 		captchaE.setTenantCode(co.getTenantCode());

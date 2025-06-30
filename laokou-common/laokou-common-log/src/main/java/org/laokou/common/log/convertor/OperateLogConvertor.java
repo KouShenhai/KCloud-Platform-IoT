@@ -30,10 +30,8 @@ public final class OperateLogConvertor {
 	private OperateLogConvertor() {
 	}
 
-	public static OperateLogA toEntity(Long id) {
-		OperateLogA operateLog = DomainFactory.getOperateLog();
-		operateLog.setId(id);
-		return operateLog;
+	public static OperateLogA toEntity() {
+		return DomainFactory.getOperateLog();
 	}
 
 	public static OperateEvent toDomainEvent(OperateLogA operateLogA) {

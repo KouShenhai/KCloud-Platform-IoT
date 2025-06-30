@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import org.laokou.common.core.util.*;
+import org.laokou.common.dubbo.rpc.DistributedIdentifierRpc;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.AggregateRoot;
@@ -139,6 +140,10 @@ public class OperateLogA extends AggregateRoot {
 	 */
 	@Getter
 	private String stackTrace;
+
+	public OperateLogA(DistributedIdentifierRpc distributedIdentifierRpc) {
+		this.id = distributedIdentifierRpc.getId();
+	}
 
 	public void getProfile(String profile) {
 		this.profile = profile;

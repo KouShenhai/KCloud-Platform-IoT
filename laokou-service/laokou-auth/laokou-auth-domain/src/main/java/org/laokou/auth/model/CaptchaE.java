@@ -53,9 +53,11 @@ public class CaptchaE extends Identifier {
 	private final CaptchaParamValidator mobileCaptchaParamValidator;
 
 	public CaptchaE(@Qualifier("mailCaptchaParamValidator") CaptchaParamValidator mailCaptchaParamValidator,
-			@Qualifier("mobileCaptchaParamValidator") CaptchaParamValidator mobileCaptchaParamValidator) {
+			@Qualifier("mobileCaptchaParamValidator") CaptchaParamValidator mobileCaptchaParamValidator,
+			IdGenerator idGenerator) {
 		this.mailCaptchaParamValidator = mailCaptchaParamValidator;
 		this.mobileCaptchaParamValidator = mobileCaptchaParamValidator;
+		super.id = idGenerator.getId();
 	}
 
 	public void getTenantId(Long tenantId) {
