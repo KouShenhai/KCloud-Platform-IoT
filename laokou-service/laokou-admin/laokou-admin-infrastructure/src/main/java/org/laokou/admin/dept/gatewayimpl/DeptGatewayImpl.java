@@ -40,7 +40,7 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	@Override
 	public void createDept(DeptE deptE) {
-		DeptDO deptDO = DeptConvertor.toDataObject(1L, deptE);
+		DeptDO deptDO = DeptConvertor.toDataObject(deptE);
 		// 校验父级路径
 		checkDeptParentPath(deptE, deptDO.getId());
 		deptDO.setPath(deptE.getPath());

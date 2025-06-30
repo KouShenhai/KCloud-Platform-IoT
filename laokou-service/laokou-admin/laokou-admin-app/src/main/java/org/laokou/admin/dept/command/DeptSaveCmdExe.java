@@ -41,8 +41,7 @@ public class DeptSaveCmdExe {
 
 	@CommandLog
 	public void executeVoid(DeptSaveCmd cmd) {
-		// 校验参数
-		DeptE deptE = DeptConvertor.toEntity(cmd.getCo());
+		DeptE deptE = DeptConvertor.toEntity(cmd.getCo(), true);
 		transactionalUtils.executeInTransaction(() -> deptDomainService.createDept(deptE));
 	}
 

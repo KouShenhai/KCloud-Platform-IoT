@@ -41,12 +41,12 @@ public class ThingModelGatewayImpl implements ThingModelGateway {
 
 	@Override
 	public void createThingModel(ThingModelE thingModelE) {
-		thingModelMapper.insert(ThingModelConvertor.toDataObject(1L, thingModelE, true));
+		thingModelMapper.insert(ThingModelConvertor.toDataObject(thingModelE));
 	}
 
 	@Override
 	public void updateThingModel(ThingModelE thingModelE) {
-		ThingModelDO thingModelDO = ThingModelConvertor.toDataObject(null, thingModelE, false);
+		ThingModelDO thingModelDO = ThingModelConvertor.toDataObject(thingModelE);
 		thingModelDO.setVersion(thingModelMapper.selectVersion(thingModelE.getId()));
 		thingModelMapper.updateById(thingModelDO);
 	}

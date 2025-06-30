@@ -33,13 +33,11 @@ import java.util.List;
  */
 public class ProductCategoryConvertor {
 
-	public static ProductCategoryDO toDataObject(Long id, ProductCategoryE productCategoryE, boolean isInsert) {
+	public static ProductCategoryDO toDataObject(ProductCategoryE productCategoryE) {
 		ProductCategoryDO productCategoryDO = new ProductCategoryDO();
-		if (isInsert) {
-			productCategoryDO.setId(id);
-		}
-		else {
-			productCategoryDO.setId(productCategoryE.getId());
+		switch (productCategoryE.getProductCategoryOperateTypeEnum()) {
+			case SAVE -> productCategoryDO.setId(productCategoryE.getPrimaryKey());
+			case MODIFY -> productCategoryDO.setId(productCategoryE.getId());
 		}
 		productCategoryDO.setName(productCategoryE.getName());
 		productCategoryDO.setSort(productCategoryE.getSort());

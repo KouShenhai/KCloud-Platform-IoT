@@ -40,12 +40,12 @@ public class OssLogGatewayImpl implements OssLogGateway {
 
 	@Override
 	public void createOssLog(OssLogE ossLogE) {
-		ossLogMapper.insert(OssLogConvertor.toDataObject(1L, ossLogE));
+		ossLogMapper.insert(OssLogConvertor.toDataObject(ossLogE));
 	}
 
 	@Override
 	public void updateOssLog(OssLogE ossLogE) {
-		OssLogDO ossLogDO = OssLogConvertor.toDataObject(null, ossLogE);
+		OssLogDO ossLogDO = OssLogConvertor.toDataObject(ossLogE);
 		ossLogDO.setVersion(ossLogMapper.selectVersion(ossLogE.getId()));
 		ossLogMapper.updateById(ossLogDO);
 	}

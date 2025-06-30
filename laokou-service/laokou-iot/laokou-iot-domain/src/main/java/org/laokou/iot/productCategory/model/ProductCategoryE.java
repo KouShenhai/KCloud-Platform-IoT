@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
+import org.laokou.iot.thingModel.model.IdGenerator;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
@@ -61,17 +62,26 @@ public class ProductCategoryE extends Identifier {
 	private String remark;
 
 	@Setter
+	@Getter
 	private ProductCategoryOperateTypeEnum productCategoryOperateTypeEnum;
 
 	private final ProductCategoryParamValidator saveProductCategoryParamValidator;
 
 	private final ProductCategoryParamValidator modifyProductCategoryParamValidator;
 
+	private final IdGenerator idGenerator;
+
 	public ProductCategoryE(
 			@Qualifier("saveProductCategoryParamValidator") ProductCategoryParamValidator saveProductCategoryParamValidator,
-			@Qualifier("modifyProductCategoryParamValidator") ProductCategoryParamValidator modifyProductCategoryParamValidator) {
+			@Qualifier("modifyProductCategoryParamValidator") ProductCategoryParamValidator modifyProductCategoryParamValidator,
+			IdGenerator idGenerator) {
 		this.saveProductCategoryParamValidator = saveProductCategoryParamValidator;
 		this.modifyProductCategoryParamValidator = modifyProductCategoryParamValidator;
+		this.idGenerator = idGenerator;
+	}
+
+	public Long getPrimaryKey() {
+		return idGenerator.getId();
 	}
 
 	public void checkProductCategoryParam() {

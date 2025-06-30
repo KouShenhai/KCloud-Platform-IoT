@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.ability.RoleDomainService;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleModifyCmd;
-import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
@@ -42,9 +41,7 @@ public class RoleModifyCmdExe {
 
 	@CommandLog
 	public void executeVoid(RoleModifyCmd cmd) {
-		// 校验参数
-		RoleCO co = cmd.getCo();
-		RoleE roleE = RoleConvertor.toEntity(co.getId(), co.getName(), co.getSort(), false);
+		RoleE roleE = RoleConvertor.toEntity(cmd.getCo(), false);
 		transactionalUtils.executeInTransaction(() -> roleDomainService.updateRole(roleE));
 	}
 

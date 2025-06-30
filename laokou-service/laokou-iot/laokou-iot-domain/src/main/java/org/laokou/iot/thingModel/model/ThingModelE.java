@@ -89,16 +89,25 @@ public class ThingModelE extends Identifier {
 	private String remark;
 
 	@Setter
+	@Getter
 	private ThingModelOperateTypeEnum thingModelOperateTypeEnum;
 
 	private final ThingModelParamValidator saveThingModelParamValidator;
 
 	private final ThingModelParamValidator modifyThingModelParamValidator;
 
+	private final IdGenerator idGenerator;
+
 	public ThingModelE(@Qualifier("saveThingModelParamValidator") ThingModelParamValidator saveThingModelParamValidator,
-			@Qualifier("modifyThingModelParamValidator") ThingModelParamValidator modifyThingModelParamValidator) {
+			@Qualifier("modifyThingModelParamValidator") ThingModelParamValidator modifyThingModelParamValidator,
+			IdGenerator idGenerator) {
 		this.saveThingModelParamValidator = saveThingModelParamValidator;
 		this.modifyThingModelParamValidator = modifyThingModelParamValidator;
+		this.idGenerator = idGenerator;
+	}
+
+	public Long getPrimaryKey() {
+		return idGenerator.getId();
 	}
 
 	public void checkThingModelParam() throws Exception {

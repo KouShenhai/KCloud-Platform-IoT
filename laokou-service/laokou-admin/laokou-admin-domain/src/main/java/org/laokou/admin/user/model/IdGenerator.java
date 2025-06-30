@@ -17,6 +17,9 @@
 
 package org.laokou.admin.user.model;
 
+/**
+ * @author laokou
+ */
 public interface IdGenerator {
 
 	long getId();

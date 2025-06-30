@@ -22,6 +22,7 @@ import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
 import org.laokou.admin.dept.factory.DeptDomainFactory;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.dept.model.DeptE;
+import org.laokou.admin.dept.model.DeptOperateTypeEnum;
 
 import java.util.List;
 
@@ -32,9 +33,13 @@ import java.util.List;
  */
 public class DeptConvertor {
 
-	public static DeptDO toDataObject(Long id, DeptE deptE) {
+	public static DeptDO toDataObject(DeptE deptE) {
 		DeptDO deptDO = new DeptDO();
-		deptDO.setId(id);
+		switch (deptE.getDeptOperateTypeEnum()) {
+			case SAVE -> deptDO.setId(deptE.getPrimaryKey());
+			case MODIFY -> deptDO.setId(deptE.getId());
+		}
+		deptDO.setId(deptE.getPrimaryKey());
 		deptDO.setPid(deptE.getPid());
 		deptDO.setName(deptE.getName());
 		deptDO.setPath(deptE.getPath());
@@ -57,13 +62,14 @@ public class DeptConvertor {
 		return list.stream().map(DeptConvertor::toClientObject).toList();
 	}
 
-	public static DeptE toEntity(DeptCO deptCO) {
+	public static DeptE toEntity(DeptCO deptCO, boolean isInsert) {
 		DeptE deptE = DeptDomainFactory.getDept();
 		deptE.setId(deptCO.getId());
 		deptE.setPid(deptCO.getPid());
 		deptE.setName(deptCO.getName());
 		deptE.setPath(deptCO.getPath());
 		deptE.setSort(deptCO.getSort());
+		deptE.setDeptOperateTypeEnum(isInsert ? DeptOperateTypeEnum.SAVE : DeptOperateTypeEnum.MODIFY);
 		return deptE;
 	}
 

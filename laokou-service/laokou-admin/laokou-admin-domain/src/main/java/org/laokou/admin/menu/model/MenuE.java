@@ -19,6 +19,7 @@ package org.laokou.admin.menu.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.laokou.admin.user.model.IdGenerator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -88,16 +89,25 @@ public class MenuE extends Identifier {
 	private Integer status;
 
 	@Setter
+	@Getter
 	private MenuOperateTypeEnum menuOperateTypeEnum;
 
 	private final MenuParamValidator saveMenuParamValidator;
 
 	private final MenuParamValidator modifyMenuParamValidator;
 
+	private final IdGenerator idGenerator;
+
 	public MenuE(@Qualifier("saveMenuParamValidator") MenuParamValidator saveMenuParamValidator,
-			@Qualifier("modifyMenuParamValidator") MenuParamValidator modifyMenuParamValidator) {
+			@Qualifier("modifyMenuParamValidator") MenuParamValidator modifyMenuParamValidator,
+			IdGenerator idGenerator) {
 		this.saveMenuParamValidator = saveMenuParamValidator;
 		this.modifyMenuParamValidator = modifyMenuParamValidator;
+		this.idGenerator = idGenerator;
+	}
+
+	public Long getPrimaryKey() {
+		return idGenerator.getId();
 	}
 
 	public void checkMenuParam() {

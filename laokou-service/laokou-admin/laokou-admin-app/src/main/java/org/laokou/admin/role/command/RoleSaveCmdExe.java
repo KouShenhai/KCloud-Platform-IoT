@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.ability.RoleDomainService;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleSaveCmd;
-import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
@@ -42,9 +41,7 @@ public class RoleSaveCmdExe {
 
 	@CommandLog
 	public void executeVoid(RoleSaveCmd cmd) {
-		// 校验参数
-		RoleCO co = cmd.getCo();
-		RoleE roleE = RoleConvertor.toEntity(null, co.getName(), co.getSort(), true);
+		RoleE roleE = RoleConvertor.toEntity(cmd.getCo(), true);
 		transactionalUtils.executeInTransaction(() -> roleDomainService.createRole(roleE));
 	}
 

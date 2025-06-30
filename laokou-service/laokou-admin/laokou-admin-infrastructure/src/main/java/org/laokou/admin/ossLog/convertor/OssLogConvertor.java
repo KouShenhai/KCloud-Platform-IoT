@@ -30,10 +30,10 @@ import org.laokou.common.i18n.util.ObjectUtils;
  */
 public class OssLogConvertor {
 
-	public static OssLogDO toDataObject(Long id, OssLogE ossLogE) {
+	public static OssLogDO toDataObject(OssLogE ossLogE) {
 		OssLogDO ossLogDO = ConvertUtils.sourceToTarget(ossLogE, OssLogDO.class);
 		if (ObjectUtils.isNull(ossLogDO.getId())) {
-			ossLogDO.setId(id);
+			ossLogDO.setId(1L);
 		}
 		return ossLogDO;
 	}

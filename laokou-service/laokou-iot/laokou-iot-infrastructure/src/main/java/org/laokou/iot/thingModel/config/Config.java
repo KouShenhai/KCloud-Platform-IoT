@@ -15,13 +15,22 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.iot.thingModel.config;
+
+import org.laokou.common.dubbo.rpc.DistributedIdentifierRpc;
+import org.laokou.iot.thingModel.model.IdGenerator;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author laokou
  */
-public interface IdGenerator {
+@Configuration
+public class Config {
 
-	long getId();
+	@Bean
+	IdGenerator idGenerator(DistributedIdentifierRpc distributedIdentifierRpc) {
+		return distributedIdentifierRpc::getId;
+	}
 
 }

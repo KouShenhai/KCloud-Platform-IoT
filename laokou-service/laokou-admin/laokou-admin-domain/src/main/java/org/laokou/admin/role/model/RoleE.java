@@ -19,6 +19,7 @@ package org.laokou.admin.role.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.laokou.admin.user.model.IdGenerator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -90,7 +91,10 @@ public class RoleE extends Identifier {
 	private List<Long> roleIds;
 
 	@Setter
+	@Getter
 	private RoleOperateTypeEnum roleOperateTypeEnum;
+
+	private final IdGenerator idGenerator;
 
 	private final RoleParamValidator saveRoleParamValidator;
 
@@ -98,12 +102,18 @@ public class RoleE extends Identifier {
 
 	private final RoleParamValidator modifyRoleAuthorityParamValidator;
 
-	public RoleE(@Qualifier("saveRoleParamValidator") RoleParamValidator saveRoleParamValidator,
+	public RoleE(IdGenerator idGenerator,
+			@Qualifier("saveRoleParamValidator") RoleParamValidator saveRoleParamValidator,
 			@Qualifier("modifyRoleParamValidator") RoleParamValidator modifyRoleParamValidator,
 			@Qualifier("modifyRoleAuthorityParamValidator") RoleParamValidator modifyRoleAuthorityParamValidator) {
+		this.idGenerator = idGenerator;
 		this.saveRoleParamValidator = saveRoleParamValidator;
 		this.modifyRoleParamValidator = modifyRoleParamValidator;
 		this.modifyRoleAuthorityParamValidator = modifyRoleAuthorityParamValidator;
+	}
+
+	public Long getPrimaryKey() {
+		return idGenerator.getId();
 	}
 
 	public void checkRoleParam() {

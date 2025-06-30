@@ -103,8 +103,6 @@ public class AuthA extends AggregateRoot {
 	@Getter
 	private Set<String> deptPaths;
 
-	private final IdGenerator idGenerator;
-
 	/**
 	 * 密码校验器.
 	 */
@@ -134,7 +132,7 @@ public class AuthA extends AggregateRoot {
 				 @Qualifier("mobileAuthParamValidator") AuthParamValidator mobileAuthParamValidator,
 				 @Qualifier("testAuthParamValidator") AuthParamValidator testAuthParamValidator,
 				 @Qualifier("usernamePasswordAuthParamValidator") AuthParamValidator usernamePasswordAuthParamValidator) {
-		this.idGenerator = idGenerator;
+		this.id = idGenerator.getId();
 		this.passwordValidator = passwordValidator;
 		this.captchaValidator = captchaValidator;
 		this.authorizationCodeAuthParamValidator = authorizationCodeAuthParamValidator;
@@ -145,10 +143,6 @@ public class AuthA extends AggregateRoot {
 	}
 
 	// @formatter:on
-
-	public void generateId() {
-		super.id = idGenerator.getId();
-	}
 
 	public void decryptUsernamePassword() {
 		username = RSAUtils.decryptByPrivateKey(username);

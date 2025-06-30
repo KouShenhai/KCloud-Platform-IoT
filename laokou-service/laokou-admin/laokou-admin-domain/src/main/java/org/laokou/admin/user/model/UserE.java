@@ -179,11 +179,11 @@ public class UserE extends Identifier {
 	}
 
 	public String getDefaultEncodedPassword() {
-		return passwordEncoder.encode("laokou123");
+		return encodedPassword("laokou123");
 	}
 
 	public String getEncodedPassword() {
-		return passwordEncoder.encode(password);
+		return encodedPassword(password);
 	}
 
 	public void checkUserParam() throws Exception {
@@ -226,6 +226,10 @@ public class UserE extends Identifier {
 			list.add(AESUtils.encrypt(str.substring(i, i + 4)));
 		}
 		return StringUtils.collectionToDelimitedString(list, "~");
+	}
+
+	private String encodedPassword(String pwd) {
+		return passwordEncoder.encode(pwd);
 	}
 
 }

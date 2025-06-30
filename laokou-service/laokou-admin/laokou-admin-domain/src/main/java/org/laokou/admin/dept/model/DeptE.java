@@ -19,6 +19,7 @@ package org.laokou.admin.dept.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.laokou.admin.user.model.IdGenerator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Identifier;
@@ -62,6 +63,7 @@ public class DeptE extends Identifier {
 	private Integer sort;
 
 	@Setter
+	@Getter
 	private DeptOperateTypeEnum deptOperateTypeEnum;
 
 	/**
@@ -79,13 +81,21 @@ public class DeptE extends Identifier {
 
 	private final DeptParamValidator modifyDeptParamValidator;
 
+	private final IdGenerator idGenerator;
+
 	// @formatter:off
 	public DeptE(@Qualifier("modifyDeptParamValidator") DeptParamValidator saveDeptParamValidator,
-				 @Qualifier("saveDeptParamValidator") DeptParamValidator modifyDeptParamValidator) {
+				 @Qualifier("saveDeptParamValidator") DeptParamValidator modifyDeptParamValidator,
+				 IdGenerator idGenerator) {
 		this.saveDeptParamValidator = saveDeptParamValidator;
 		this.modifyDeptParamValidator = modifyDeptParamValidator;
+		this.idGenerator = idGenerator;
 	}
 	// @formatter:on
+
+	public Long getPrimaryKey() {
+		return idGenerator.getId();
+	}
 
 	public void checkDeptParam() {
 		switch (deptOperateTypeEnum) {

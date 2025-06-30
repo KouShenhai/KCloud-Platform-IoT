@@ -166,6 +166,7 @@ public final class UserConvertor {
 
 	public static UserE toEntity(UserCO userCO, boolean isInsert) {
 		UserE user = UserDomainFactory.getUser();
+		user.setId(userCO.getId());
 		user.setUsername(userCO.getUsername());
 		user.setSuperAdmin(userCO.getSuperAdmin());
 		user.setMail(userCO.getMail());

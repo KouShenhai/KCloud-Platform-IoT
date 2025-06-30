@@ -36,13 +36,11 @@ public final class MenuConvertor {
 	private MenuConvertor() {
 	}
 
-	public static MenuDO toDataObject(Long id, MenuE menuE, boolean isInsert) {
+	public static MenuDO toDataObject(MenuE menuE) {
 		MenuDO menuDO = new MenuDO();
-		if (isInsert) {
-			menuDO.setId(id);
-		}
-		else {
-			menuDO.setId(menuE.getId());
+		switch (menuE.getMenuOperateTypeEnum()) {
+			case SAVE -> menuDO.setId(menuE.getPrimaryKey());
+			case MODIFY -> menuDO.setId(menuE.getId());
 		}
 		menuDO.setPid(menuE.getPid());
 		menuDO.setPermission(menuE.getPermission());

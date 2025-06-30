@@ -33,13 +33,11 @@ import java.util.List;
  */
 public class ThingModelConvertor {
 
-	public static ThingModelDO toDataObject(Long id, ThingModelE thingModelE, boolean isInsert) {
+	public static ThingModelDO toDataObject(ThingModelE thingModelE) {
 		ThingModelDO thingModelDO = new ThingModelDO();
-		if (isInsert) {
-			thingModelDO.setId(id);
-		}
-		else {
-			thingModelDO.setId(thingModelE.getId());
+		switch (thingModelE.getThingModelOperateTypeEnum()) {
+			case SAVE -> thingModelDO.setId(thingModelE.getPrimaryKey());
+			case MODIFY -> thingModelDO.setId(thingModelE.getId());
 		}
 		thingModelDO.setName(thingModelE.getName());
 		thingModelDO.setCode(thingModelE.getCode());

@@ -28,7 +28,6 @@ import org.laokou.admin.role.model.RoleOperateTypeEnum;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * 角色转换器.
@@ -37,13 +36,11 @@ import java.util.function.Supplier;
  */
 public class RoleConvertor {
 
-	public static RoleDO toDataObject(Long id, RoleE roleE, boolean isInsert) {
+	public static RoleDO toDataObject(RoleE roleE) {
 		RoleDO roleDO = new RoleDO();
-		if (isInsert) {
-			roleDO.setId(id);
-		}
-		else {
-			roleDO.setId(roleE.getId());
+		switch (roleE.getRoleOperateTypeEnum()) {
+			case SAVE -> roleDO.setId(roleE.getPrimaryKey());
+			case MODIFY -> roleDO.setId(roleE.getId());
 		}
 		roleDO.setName(roleE.getName());
 		roleDO.setSort(roleE.getSort());
@@ -51,11 +48,13 @@ public class RoleConvertor {
 		return roleDO;
 	}
 
-	public static List<RoleMenuDO> toDataObjects(Supplier<Long> supplier, List<String> menuIds, Long roleId) {
+	public static List<RoleMenuDO> toDataObjects(RoleE roleE) {
+		Long roleId = roleE.getId();
+		List<String> menuIds = roleE.getMenuIds();
 		List<RoleMenuDO> list = new ArrayList<>(menuIds.size());
 		for (String menuId : menuIds) {
 			RoleMenuDO roleMenuDO = new RoleMenuDO();
-			roleMenuDO.setId(supplier.get());
+			roleMenuDO.setId(roleE.getPrimaryKey());
 			roleMenuDO.setRoleId(roleId);
 			roleMenuDO.setMenuId(Long.valueOf(menuId));
 			list.add(roleMenuDO);
@@ -71,11 +70,13 @@ public class RoleConvertor {
 		}).toList();
 	}
 
-	public static List<RoleDeptDO> toDataObjs(Supplier<Long> supplier, List<String> deptIds, Long roleId) {
+	public static List<RoleDeptDO> toDataObjs(RoleE roleE) {
+		Long roleId = roleE.getId();
+		List<String> deptIds = roleE.getDeptIds();
 		List<RoleDeptDO> list = new ArrayList<>(deptIds.size());
 		for (String deptId : deptIds) {
 			RoleDeptDO roleDeptDO = new RoleDeptDO();
-			roleDeptDO.setId(supplier.get());
+			roleDeptDO.setId(roleE.getPrimaryKey());
 			roleDeptDO.setRoleId(roleId);
 			roleDeptDO.setDeptId(Long.valueOf(deptId));
 			list.add(roleDeptDO);
@@ -105,22 +106,22 @@ public class RoleConvertor {
 		return roleCO;
 	}
 
-	public static RoleE toEntity(Long id, String name, Integer sort, boolean isInsert) {
+	public static RoleE toEntity(RoleCO roleCO, boolean isInsert) {
 		RoleE roleE = RoleDomainFactory.getRole();
-		roleE.setId(id);
-		roleE.setName(name);
-		roleE.setSort(sort);
+		roleE.setId(roleCO.getId());
+		roleE.setName(roleCO.getName());
+		roleE.setSort(roleCO.getSort());
 		roleE.setRoleOperateTypeEnum(isInsert ? RoleOperateTypeEnum.SAVE : RoleOperateTypeEnum.MODIFY);
 		return roleE;
 	}
 
-	public static RoleE toEntity(Long id, String dataScope, List<String> menuIds, List<String> deptIds) {
+	public static RoleE toEntity(RoleCO roleCO) {
 		RoleE roleE = RoleDomainFactory.getRole();
-		roleE.setId(id);
-		roleE.setMenuIds(menuIds);
-		roleE.setDataScope(dataScope);
-		roleE.setDeptIds(deptIds);
-		roleE.setRoleIds(Collections.singletonList(id));
+		roleE.setId(roleCO.getId());
+		roleE.setMenuIds(roleCO.getMenuIds());
+		roleE.setDataScope(roleCO.getDataScope());
+		roleE.setDeptIds(roleCO.getDeptIds());
+		roleE.setRoleIds(Collections.singletonList(roleCO.getId()));
 		roleE.setRoleOperateTypeEnum(RoleOperateTypeEnum.MODIFY_AUTHORITY);
 		return roleE;
 	}

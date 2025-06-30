@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.ability.RoleDomainService;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleModifyAuthorityCmd;
-import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.springframework.stereotype.Component;
@@ -39,8 +38,7 @@ public class RoleModifyAuthorityCmdExe {
 
 	@CommandLog
 	public void executeVoid(RoleModifyAuthorityCmd cmd) throws InterruptedException {
-		RoleCO co = cmd.getCo();
-		RoleE roleE = RoleConvertor.toEntity(co.getId(), co.getDataScope(), co.getMenuIds(), co.getDeptIds());
+		RoleE roleE = RoleConvertor.toEntity(cmd.getCo());
 		roleDomainService.updateAuthorityRole(roleE);
 	}
 
