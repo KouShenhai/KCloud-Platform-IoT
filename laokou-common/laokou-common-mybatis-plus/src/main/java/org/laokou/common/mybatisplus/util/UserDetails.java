@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.security.util;
+package org.laokou.common.mybatisplus.util;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

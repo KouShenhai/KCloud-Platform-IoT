@@ -18,12 +18,12 @@
 package org.laokou.common.log.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.log.factory.DomainFactory;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.laokou.common.log.handler.event.OperateEvent;
 import org.laokou.common.log.model.OperateLogA;
+import org.laokou.common.mybatisplus.util.UserUtils;
 
 public final class OperateLogConvertor {
 
@@ -37,14 +37,13 @@ public final class OperateLogConvertor {
 	}
 
 	public static OperateEvent toDomainEvent(OperateLogA operateLogA) {
-		UserContextHolder.User user = UserContextHolder.get();
 		return new OperateEvent(operateLogA.getId(), operateLogA.getName(), operateLogA.getModuleName(),
 				operateLogA.getUri(), operateLogA.getMethodName(), operateLogA.getRequestType(),
 				operateLogA.getRequestParams(), operateLogA.getUserAgent(), operateLogA.getIp(),
-				operateLogA.getAddress(), operateLogA.getStatus(), user.getUsername(), operateLogA.getErrorMessage(),
-				operateLogA.getCostTime(), operateLogA.getServiceId(), operateLogA.getServiceAddress(),
-				operateLogA.getProfile(), operateLogA.getStackTrace(), operateLogA.getCreateTime(), user.getTenantId(),
-				user.getId());
+				operateLogA.getAddress(), operateLogA.getStatus(), UserUtils.getUserName(),
+				operateLogA.getErrorMessage(), operateLogA.getCostTime(), operateLogA.getServiceId(),
+				operateLogA.getServiceAddress(), operateLogA.getProfile(), operateLogA.getStackTrace(),
+				operateLogA.getCreateTime(), UserUtils.getTenantId(), UserUtils.getUserId());
 	}
 
 	public static OperateLogDO toDataObject(OperateEvent operateEvent) throws JsonProcessingException {
