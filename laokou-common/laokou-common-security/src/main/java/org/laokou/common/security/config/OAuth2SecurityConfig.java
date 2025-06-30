@@ -17,7 +17,6 @@
 
 package org.laokou.common.security.config;
 
-import com.baomidou.dynamic.datasource.annotation.Master;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +33,6 @@ import javax.sql.DataSource;
 public class OAuth2SecurityConfig {
 
 	@Bean
-	@Master
 	@ConditionalOnMissingBean(RegisteredClientRepository.class)
 	public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
 		return new JdbcRegisteredClientRepository(jdbcTemplate);

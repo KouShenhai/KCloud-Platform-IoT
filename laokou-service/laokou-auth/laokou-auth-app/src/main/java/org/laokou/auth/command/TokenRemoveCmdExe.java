@@ -21,7 +21,7 @@ import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.security.util.UserDetails;
+import org.laokou.common.mybatisplus.util.UserDetails;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

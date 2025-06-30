@@ -36,7 +36,7 @@
     <!--postgresql版本-->
     <postgresql.version>42.7.7</postgresql.version>
     <!--admin版本-->
-    <spring-boot-admin.version>3.5.0</spring-boot-admin.version>
+    <spring-boot-admin.version>3.5.1</spring-boot-admin.version>
     <!--mybatis-plus版本 -->
     <mybatis-plus.version>3.5.12</mybatis-plus.version>
     <!--redisson版本-->
@@ -86,7 +86,7 @@
     <!--mockito版本-->
     <mockito.version>5.18.0</mockito.version>
     <!--nacos版本-->
-    <nacos.version>3.0.1</nacos.version>
+    <nacos.version>3.0.2</nacos.version>
     <!--knife4j版本-->
     <knife4j.version>4.5.0</knife4j.version>
     <!--taos-jdbcdriver版本-->
@@ -104,7 +104,7 @@
     <!--proto-google-common-protos版本-->
     <proto-google-common-protos.version>2.58.2</proto-google-common-protos.version>
     <!--error_prone_annotations版本-->
-    <error_prone_annotations.version>2.38.0</error_prone_annotations.version>
+    <error_prone_annotations.version>2.39.0</error_prone_annotations.version>
     <!--checker-qual版本-->
     <checker-qual.version>3.49.4</checker-qual.version>
     <!--commons-io版本-->
@@ -140,11 +140,11 @@
     <!--curator版本-->
     <curator.version>5.8.0</curator.version>
     <!--wiremock版本-->
-    <wiremock.version>4.0.0-beta.12</wiremock.version>
+    <wiremock.version>4.0.0-beta.13</wiremock.version>
     <!--commons-net版本-->
     <commons-net.version>3.11.1</commons-net.version>
     <!--vertx版本-->
-    <vertx.version>5.0.0</vertx.version>
+    <vertx.version>5.0.1</vertx.version>
     <!--springdoc-openapi版本-->
     <springdoc-openapi.version>2.8.9</springdoc-openapi.version>
     <!--modbus4j版本-->
@@ -165,11 +165,23 @@
     <dubbo-serialization.version>3.3.1</dubbo-serialization.version>
     <!--minio版本-->
     <minio.version>8.5.17</minio.version>
+    <!--spring-security版本-->
+    <spring-security.version>6.5.1</spring-security.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-oauth2-core</artifactId>
+        <version>${spring-security.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-core</artifactId>
+        <version>${spring-security.version}</version>
+      </dependency>
       <dependency>
         <groupId>io.minio</groupId>
         <artifactId>minio</artifactId>
