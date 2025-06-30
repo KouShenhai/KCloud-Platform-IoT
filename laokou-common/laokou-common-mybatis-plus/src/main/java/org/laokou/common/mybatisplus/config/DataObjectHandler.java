@@ -20,8 +20,8 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
-import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.mybatisplus.util.UserUtils;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import java.time.Instant;
 
@@ -36,20 +36,18 @@ public class DataObjectHandler implements MetaObjectHandler {
 
 	@Override
 	public void insertFill(MetaObject metaObject) {
-		UserContextHolder.User user = UserContextHolder.get();
-		this.strictInsertFill(metaObject, CREATOR, user::getId, Long.class);
-		this.strictInsertFill(metaObject, EDITOR, user::getId, Long.class);
+		this.strictInsertFill(metaObject, CREATOR, UserUtils::getUserId, Long.class);
+		this.strictInsertFill(metaObject, EDITOR, UserUtils::getUserId, Long.class);
 		this.strictInsertFill(metaObject, CREATE_TIME, DateUtils::nowInstant, Instant.class);
 		this.strictInsertFill(metaObject, UPDATE_TIME, DateUtils::nowInstant, Instant.class);
 		this.strictInsertFill(metaObject, DEL_FLAG, () -> 0, Integer.class);
 		this.strictInsertFill(metaObject, VERSION, () -> 0, Integer.class);
-		this.strictInsertFill(metaObject, TENANT_ID, user::getTenantId, Long.class);
+		this.strictInsertFill(metaObject, TENANT_ID, UserUtils::getTenantId, Long.class);
 	}
 
 	@Override
 	public void updateFill(MetaObject metaObject) {
-		UserContextHolder.User user = UserContextHolder.get();
-		this.strictUpdateFill(metaObject, EDITOR, user::getId, Long.class);
+		this.strictUpdateFill(metaObject, EDITOR, UserUtils::getUserId, Long.class);
 		this.strictUpdateFill(metaObject, UPDATE_TIME, DateUtils::nowInstant, Instant.class);
 	}
 
