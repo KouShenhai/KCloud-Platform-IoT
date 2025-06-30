@@ -69,7 +69,7 @@ public class AuthApp {
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "1111")));
 		// SpringSecurity 子线程读取父线程的上下文
-		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.TTL_MODE_INHERITABLETHREADLOCAL);
+		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
 		// nacos认证 => HttpLoginProcessor，https://github.com/alibaba/nacos/pull/3654
 		// 忽略SSL认证
 		SslUtils.ignoreSSLTrust();
