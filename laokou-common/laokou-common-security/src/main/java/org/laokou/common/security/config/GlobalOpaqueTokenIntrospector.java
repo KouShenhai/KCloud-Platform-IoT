@@ -23,8 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
-import org.laokou.common.security.util.UserDetails;
-import org.laokou.common.tenant.annotation.Master;
+import org.laokou.common.mybatisplus.util.UserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
@@ -34,9 +33,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.util.Assert;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 import java.security.Principal;
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
 import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
@@ -48,14 +44,13 @@ import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getOAuth
 @Slf4j
 @NonNullApi
 @RequiredArgsConstructor
-public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, WebMvcConfigurer {
+public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
 	public static final OAuth2TokenType FULL = new OAuth2TokenType(RedisOAuth2AuthorizationService.FULL);
 
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 
 	// @formatter:off
-    @Master
 	@Override
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
 		// 低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
@@ -95,11 +90,6 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector, W
 		catch (GlobalException e) {
 			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
-	}
-
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new UserContextInterceptor()).addPathPatterns("/**");
 	}
 
 }

@@ -21,7 +21,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.UserE;
-import org.laokou.common.security.util.UserDetails;
+import org.laokou.common.mybatisplus.util.UserDetails;
 
 /**
  * @author laokou
