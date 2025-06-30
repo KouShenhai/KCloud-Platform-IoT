@@ -21,8 +21,8 @@ import org.laokou.admin.menu.dto.MenuTreeListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.service.builder.MenuTreeBuilder;
 import org.laokou.admin.menu.model.MenuTypeTreeEnum;
-import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.mybatisplus.util.UserUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -51,10 +51,8 @@ public class MenuTreeListQryExe {
 		MenuTypeTreeEnum menuTypeTreeEnum = MenuTypeTreeEnum.getByCode(qry.getCode());
 		Assert.notNull(menuTypeTreeEnum, "菜单类型不存在");
 		return switch (menuTypeTreeEnum) {
-			case USER ->
-				Result.ok(userMenuTreeBuilder.buildMenuTree(qry, UserContextHolder.get().getId()).getChildren());
-			case SYSTEM ->
-				Result.ok(systemMenuTreeBuilder.buildMenuTree(qry, UserContextHolder.get().getId()).getChildren());
+			case USER -> Result.ok(userMenuTreeBuilder.buildMenuTree(qry, UserUtils.getUserId()).getChildren());
+			case SYSTEM -> Result.ok(systemMenuTreeBuilder.buildMenuTree(qry, UserUtils.getUserId()).getChildren());
 		};
 	}
 

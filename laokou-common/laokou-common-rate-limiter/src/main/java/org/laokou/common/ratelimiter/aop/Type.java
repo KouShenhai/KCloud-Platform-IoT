@@ -18,8 +18,8 @@
 package org.laokou.common.ratelimiter.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.laokou.common.core.context.UserContextHolder;
 import org.laokou.common.core.util.IpUtils;
+import org.laokou.common.mybatisplus.util.UserUtils;
 
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
@@ -66,7 +66,7 @@ public enum Type {
 	USER {
 		@Override
 		public String resolve(HttpServletRequest request) {
-			return UserContextHolder.get().getId().toString();
+			return UserUtils.getUserId().toString();
 		}
 	},
 
@@ -76,7 +76,7 @@ public enum Type {
 	TENANT {
 		@Override
 		public String resolve(HttpServletRequest request) {
-			return UserContextHolder.get().getTenantId().toString();
+			return UserUtils.getTenantId().toString();
 		}
 	};
 
