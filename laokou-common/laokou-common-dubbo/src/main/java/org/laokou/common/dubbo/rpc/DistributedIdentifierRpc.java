@@ -29,7 +29,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class DistributedIdentifierRpc {
 
-	@DubboReference(group = "iot", version = "v3", interfaceClass = DistributedIdentifierServiceI.class,
+	@DubboReference(group = "iot-distributed-identifier-consumer", version = "v3",
+			interfaceClass = DistributedIdentifierServiceI.class,
 			mock = "org.laokou.common.dubbo.rpc.DistributedIdentifierMock", loadbalance = "adaptive", retries = 3)
 	private DistributedIdentifierServiceI distributedIdentifierServiceI;
 

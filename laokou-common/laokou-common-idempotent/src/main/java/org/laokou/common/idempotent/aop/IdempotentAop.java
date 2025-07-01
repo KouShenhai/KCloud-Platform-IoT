@@ -57,10 +57,13 @@ public class IdempotentAop {
 		if (!redisUtils.setIfAbsent(apiIdempotentKey, 0, FIVE_MINUTE_EXPIRE)) {
 			throw new SystemException("S_Idempotent_RequestRepeatedSubmit", "不可重复提交请求");
 		}
-		doBefore();
-		Object proceed = point.proceed();
-		doAfter();
-		return proceed;
+		try {
+			doBefore();
+			return point.proceed();
+		}
+		finally {
+			doAfter();
+		}
 	}
 
 	public void doBefore() {
