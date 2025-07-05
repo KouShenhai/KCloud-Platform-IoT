@@ -552,7 +552,7 @@ services:
       - iot_network
   # rabbitmq-plugins enable rabbitmq_management
   rabbitmq:
-    image: rabbitmq:4.1.0-management
+    image: rabbitmq:4.1.2-management
     container_name: rabbitmq
     # 保持容器在没有守护程序的情况下运行
     tty: true
