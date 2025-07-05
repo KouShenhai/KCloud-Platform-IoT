@@ -443,11 +443,11 @@
         <artifactId>docker-maven-plugin</artifactId>
         <version>${docker-maven-plugin.version}</version>
         <configuration>
-          <!--Docker主机-->
+          <!--Docker主机 -->
           <dockerHost>${docker.host}</dockerHost>
-          <!--Docker私库-->
+          <!--Docker私库 -->
           <registry>${docker.registry}</registry>
-          <!-- 认证信息-->
+          <!-- 认证信息 -->
           <authConfig>
             <push>
               <username>${docker.username}</username>
@@ -456,13 +456,13 @@
           </authConfig>
           <images>
             <image>
-              <!-- 推送仓库/命名空间/仓库名称:镜像版本号-->
+              <!-- 推送仓库/命名空间/仓库名称:镜像版本号 -->
               <name>${docker.registry}/${docker.namespace}/${project.artifactId}:${project.version}</name>
               <build>
                 <tags>
                   <tag>${project.version}</tag>
                 </tags>
-                <!-- 指定dockerfile文件的位置-->
+                <!-- 指定dockerfile文件的位置 -->
                 <dockerFile>${project.basedir}/Dockerfile</dockerFile>
               </build>
             </image>

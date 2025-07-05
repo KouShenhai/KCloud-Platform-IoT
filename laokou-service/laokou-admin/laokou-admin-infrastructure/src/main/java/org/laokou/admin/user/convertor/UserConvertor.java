@@ -96,7 +96,8 @@ public final class UserConvertor {
 				userDO.setUsername(userE.getUsername());
 				userDO.setUsernamePhrase(userE.getUsernamePhrase());
 			}
-			case MODIFY -> {
+			case MODIFY, MODIFY_AUTHORITY -> userDO.setId(userE.getId());
+			case RESET_PWD -> {
 				userDO.setId(userE.getId());
 				String password = userE.getPassword();
 				if (StringUtils.isNotEmpty(password)) {

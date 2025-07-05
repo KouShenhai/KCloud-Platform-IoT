@@ -67,7 +67,6 @@ public class CircuitBreakerConfig {
 				// 断路器开启后等待时间
 				.waitDurationInOpenState(Duration.ofSeconds(5))
 
-				// 基于时间的滑动窗口
 				.slidingWindowType(COUNT_BASED)
 				// 统计窗口大小
 				.slidingWindowSize(30)
@@ -79,8 +78,8 @@ public class CircuitBreakerConfig {
 				// 半开状态最大等待时间
 				.maxWaitDurationInHalfOpenState(Duration.ofSeconds(5))
 
-				// 关闭自动切换到半开
-				.automaticTransitionFromOpenToHalfOpenEnabled(false)
+				// 自动切换到半开
+				.automaticTransitionFromOpenToHalfOpenEnabled(true)
 				// 禁用堆栈跟踪提升性能
 				.writableStackTraceEnabled(false)
 

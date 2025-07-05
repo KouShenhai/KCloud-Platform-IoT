@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
  * @author laokou
  */
 @Service
-@DubboService(token = "3f7c5e45d6a7", group = "iot-distributed-identifier-provider", version = "v3", timeout = 5000)
+@DubboService(token = "3f7c5e45d6a7", group = "iot-distributed-identifier", version = "v3", timeout = 5000)
 @RequiredArgsConstructor
 public class DistributedIdentifierServiceImpl implements DistributedIdentifierServiceI {
 

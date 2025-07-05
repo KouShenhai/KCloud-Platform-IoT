@@ -32,9 +32,12 @@ public final class UserUtils {
 	}
 
 	public static UserDetails user() {
-		return Optional.ofNullable(getAuthentication())
-			.map(authentication -> (UserDetails) authentication.getPrincipal())
-			.orElse(new UserDetails());
+		return Optional.ofNullable(getAuthentication()).map(authentication -> {
+			if (authentication.getPrincipal() instanceof UserDetails userDetails) {
+				return userDetails;
+			}
+			return new UserDetails();
+		}).orElse(new UserDetails());
 	}
 
 	/**

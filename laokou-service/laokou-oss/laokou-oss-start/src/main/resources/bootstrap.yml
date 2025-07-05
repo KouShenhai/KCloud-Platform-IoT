@@ -27,6 +27,6 @@ dubbo:
     port: ${PROTOCOL_PORT:1114}
     serialization: fury-compatible
   application:
-    name: dubbo-${spring.application.name}
+    name: ${spring.application.name}
     logger: slf4j
     qos-port: ${QOS_PORT:1115}

@@ -40,7 +40,7 @@ public class RoleConvertor {
 		RoleDO roleDO = new RoleDO();
 		switch (roleE.getRoleOperateTypeEnum()) {
 			case SAVE -> roleDO.setId(roleE.getPrimaryKey());
-			case MODIFY -> roleDO.setId(roleE.getId());
+			case MODIFY, MODIFY_AUTHORITY -> roleDO.setId(roleE.getId());
 		}
 		roleDO.setName(roleE.getName());
 		roleDO.setSort(roleE.getSort());
