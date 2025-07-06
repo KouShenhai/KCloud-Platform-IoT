@@ -46,7 +46,7 @@ services:
       --lower-case-table-names=1
     volumes:
       - ./mysql9/data:/var/lib/mysql
-      - ./mysql9/conf/my.cnf:/etc/mysql/my.cnf
+      - ./mysql9/my.cnf:/etc/mysql/my.cnf
       - ./mysql9/logs:/var/log/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=laokou123
@@ -548,30 +548,6 @@ services:
       nofile:
         soft: 262144
         hard: 262144
-    networks:
-      - iot_network
-  # rabbitmq-plugins enable rabbitmq_management
-  rabbitmq:
-    image: rabbitmq:4.1.0-management
-    container_name: rabbitmq
-    # 保持容器在没有守护程序的情况下运行
-    tty: true
-    restart: always
-    privileged: true
-    # 节点名 rabbit@rabbitserver，不然会去容器ID
-    hostname: rabbitmq
-    environment:
-      # 默认虚拟机名
-      RABBITMQ_DEFAULT_VHOST: /
-      # 用户名
-      RABBITMQ_DEFAULT_USER: root
-      # 密码
-      RABBITMQ_DEFAULT_PASS: laokou123
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    volumes:
-      - ./rabbitmq/data:/var/lib/rabbitmq
     networks:
       - iot_network
   nexus:
