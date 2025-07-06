@@ -60,7 +60,7 @@
     <!--spring-security-oauth2-authorization-server版本-->
     <spring-security-oauth2-authorization-server.version>1.5.2-SNAPSHOT</spring-security-oauth2-authorization-server.version>
     <!--s3版本-->
-    <s3.version>2.31.73</s3.version>
+    <s3.version>2.31.77</s3.version>
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
     <!--httpclient5版本-->
@@ -140,7 +140,7 @@
     <!--curator版本-->
     <curator.version>5.8.0</curator.version>
     <!--wiremock版本-->
-    <wiremock.version>4.0.0-beta.13</wiremock.version>
+    <wiremock.version>4.0.0-beta.14</wiremock.version>
     <!--commons-net版本-->
     <commons-net.version>3.11.1</commons-net.version>
     <!--vertx版本-->
@@ -150,7 +150,7 @@
     <!--modbus4j版本-->
     <modbus4j.version>3.1.0</modbus4j.version>
     <!--jSerialComm版本-->
-    <jSerialComm.version>2.11.0</jSerialComm.version>
+    <jSerialComm.version>2.11.2</jSerialComm.version>
     <!--californium版本-->
     <californium.version>4.0.0-M5</californium.version>
     <!--jsoup版本-->
