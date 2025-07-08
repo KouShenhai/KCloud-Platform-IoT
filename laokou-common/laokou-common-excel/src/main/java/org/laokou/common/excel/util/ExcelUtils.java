@@ -136,7 +136,7 @@ public final class ExcelUtils {
 							List<List<DO>> partition = Lists.partition(list, PARTITION_SIZE);
 							List<Callable<Boolean>> futures = partition.stream().map(item -> (Callable<Boolean>) () -> {
 								// 写数据
-								excelWriter.write(convertor.toExcels(list), writeSheet);
+								excelWriter.write(convertor.toExcels(item), writeSheet);
 								return true;
 							}).toList();
 							virtualTaskExecutor.invokeAll(futures);
