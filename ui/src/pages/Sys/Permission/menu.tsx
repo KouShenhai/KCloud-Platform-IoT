@@ -77,7 +77,7 @@ export default () => {
 			dataIndex: 'name',
 			hideInSearch: true,
 			ellipsis: true,
-			width: 210,
+			width: 220,
 		},
 		{
 			title: '菜单路径',

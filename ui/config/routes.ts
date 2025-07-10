@@ -79,6 +79,17 @@ export default [
 						component: './Sys/Log/operate'
 					}
 				]
+			},
+			{
+				name: '对象存储',
+				path: '/sys/oss',
+				routes: [
+					{
+						name: '对象存储配置',
+						path: '/sys/oss/config',
+						component: './Sys/Oss/config'
+					}
+				]
 			}
 		]
 	},
