@@ -31,9 +31,12 @@
  * limitations under the License.
  */
 
-package org.springframework.security.core.context;
+package org.laokou.common.security.config;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolderStrategy;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.util.Assert;
 
 import java.util.function.Supplier;
@@ -47,13 +50,13 @@ import java.util.function.Supplier;
  * @author laokou
  * @see ThreadLocal
  */
-final class TransmittableThreadLocalSecurityContextHolderStrategy implements SecurityContextHolderStrategy {
+public final class TransmittableThreadLocalSecurityContextHolderStrategy implements SecurityContextHolderStrategy {
 
-	private static final ThreadLocal<Supplier<SecurityContext>> contextHolder = new TransmittableThreadLocal<>();
+	private static final ThreadLocal<Supplier<SecurityContext>> CONTEXT_HOLDER = new TransmittableThreadLocal<>();
 
 	@Override
 	public void clearContext() {
-		contextHolder.remove();
+		CONTEXT_HOLDER.remove();
 	}
 
 	@Override
@@ -64,16 +67,16 @@ final class TransmittableThreadLocalSecurityContextHolderStrategy implements Sec
 	@Override
 	public void setContext(SecurityContext context) {
 		Assert.notNull(context, "Only non-null SecurityContext instances are permitted");
-		contextHolder.set(() -> context);
+		CONTEXT_HOLDER.set(() -> context);
 	}
 
 	@Override
 	public Supplier<SecurityContext> getDeferredContext() {
-		Supplier<SecurityContext> result = contextHolder.get();
+		Supplier<SecurityContext> result = CONTEXT_HOLDER.get();
 		if (result == null) {
 			SecurityContext context = createEmptyContext();
 			result = () -> context;
-			contextHolder.set(result);
+			CONTEXT_HOLDER.set(result);
 		}
 		return result;
 	}
@@ -86,7 +89,7 @@ final class TransmittableThreadLocalSecurityContextHolderStrategy implements Sec
 			Assert.notNull(result, "A Supplier<SecurityContext> returned null and is not allowed.");
 			return result;
 		};
-		contextHolder.set(notNullDeferredContext);
+		CONTEXT_HOLDER.set(notNullDeferredContext);
 	}
 
 	@Override

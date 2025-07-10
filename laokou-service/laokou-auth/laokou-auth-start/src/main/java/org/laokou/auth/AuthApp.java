@@ -24,6 +24,7 @@ import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.redis.annotation.EnableRedisRepository;
+import org.laokou.common.security.config.TransmittableThreadLocalSecurityContextHolderStrategy;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerAutoConfiguration;
@@ -69,7 +70,7 @@ public class AuthApp {
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "1111")));
 		// SpringSecurity 子线程读取父线程的上下文
-		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, SecurityContextHolder.TTL_MODE_INHERITABLETHREADLOCAL);
+		SecurityContextHolder.setContextHolderStrategy(new TransmittableThreadLocalSecurityContextHolderStrategy());
 		// nacos认证 => HttpLoginProcessor，https://github.com/alibaba/nacos/pull/3654
 		// 忽略SSL认证
 		SslUtils.ignoreSSLTrust();
