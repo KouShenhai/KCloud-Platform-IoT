@@ -52,6 +52,12 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
+			title: '序号',
+			dataIndex: 'index',
+			valueType: 'indexBorder',
+			width: 60,
+		},
+		{
 			title: '产品类别名称',
 			dataIndex: 'name',
 			ellipsis: true,

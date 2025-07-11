@@ -89,6 +89,12 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
+			title: '序号',
+			dataIndex: 'index',
+			valueType: 'indexBorder',
+			width: 60,
+		},
+		{
 			title: '用户名',
 			dataIndex: 'username',
 			tooltip: "仅支持四个字符的模糊查询",
