@@ -71,7 +71,7 @@ export default () => {
 			title: '序号',
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 60,
+			width: 110,
 		},
 		{
 			title: '部门名称',

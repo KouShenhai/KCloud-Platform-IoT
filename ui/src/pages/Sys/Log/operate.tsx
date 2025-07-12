@@ -72,12 +72,6 @@ export default () => {
 			width: 60,
 		},
 		{
-			title: '序号',
-			dataIndex: 'index',
-			valueType: 'indexBorder',
-			width: 60,
-		},
-		{
 			title: '模块名称',
 			dataIndex: 'moduleName',
 			ellipsis: true,
