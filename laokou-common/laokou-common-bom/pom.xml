@@ -168,7 +168,7 @@
     <!--spring-security版本-->
     <spring-security.version>6.5.1</spring-security.version>
     <!--fury版本-->
-    <fury.version>0.9.0</fury.version>
+    <fury.version>0.10.3</fury.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
