@@ -156,7 +156,7 @@
     <!--jsoup版本-->
     <jsoup.version>1.21.1</jsoup.version>
     <!--dubbo版本-->
-    <dubbo.version>3.3.5</dubbo.version>
+    <dubbo.version>3.3.6-SNAPSHOT</dubbo.version>
     <!--pf4j版本-->
     <pf4j.version>0.10.0</pf4j.version>
     <!--spring-cloud-starter-circuitbreaker-reactor-resilience4j版本-->
@@ -167,11 +167,18 @@
     <minio.version>8.5.17</minio.version>
     <!--spring-security版本-->
     <spring-security.version>6.5.1</spring-security.version>
+    <!--fury版本-->
+    <fury.version>0.9.0</fury.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.apache.fury</groupId>
+        <artifactId>fury-core</artifactId>
+        <version>${fury.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-oauth2-core</artifactId>

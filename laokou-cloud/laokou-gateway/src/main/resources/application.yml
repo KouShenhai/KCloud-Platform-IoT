@@ -158,6 +158,8 @@ spring:
               enabled: true
             request-rate-limiter:
               enabled: true
+            retry:
+              enabled: true
 
 # actuator
 management:
@@ -216,3 +218,40 @@ knife4j:
         service-name: laokou-iot
         context-path: /iot
         order: 2
+
+
+resilience4j:
+  timelimiter:
+    configs:
+      default:
+        # 超时时间
+        timeout-duration:
+          seconds: 15
+  circuitbreaker:
+    instances:
+      default:
+        # 失败率阈值（超过则开启断路器）
+        failure-rate-threshold: 50
+        # 慢调用率阈值（超过则开启断路器）
+        slow-call-rate-threshold: 60
+        # 慢调用判定时间
+        slow-call-duration-threshold:
+          seconds: 5
+        # 断路器开启后等待时间
+        wait-duration-in-open-state:
+          seconds: 1
+        # 滑动窗口的类型为时间窗口
+        sliding-window-type: time_based
+        # 统计窗口大小
+        sliding-window-size: 60
+        # 窗口内计算阈值的调用次数
+        minimum-number-of-calls: 5
+        # 半开状态下允许调用次数
+        permitted-number-of-calls-in-half-open-state: 15
+        # 半开状态最大等待时间
+        max-wait-duration-in-half-open-state:
+          seconds: 10
+        # 自动切换到半开
+        automatic-transition-from-open-to-half-open-enabled: true
+        # 禁用堆栈跟踪提升性能
+        writable-stack-trace-enabled: false

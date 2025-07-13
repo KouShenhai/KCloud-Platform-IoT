@@ -43,7 +43,7 @@ public class OssPageQryExe {
 	public Result<Page<OssCO>> execute(OssPageQry qry) {
 		List<OssDO> list = ossMapper.selectObjectPage(qry);
 		long total = ossMapper.selectObjectCount(qry);
-		return Result.ok(Page.create(list.stream().map(OssConvertor::toClientObject).toList(), total));
+		return Result.ok(Page.create(OssConvertor.toClientObjects(list), total));
 	}
 
 }

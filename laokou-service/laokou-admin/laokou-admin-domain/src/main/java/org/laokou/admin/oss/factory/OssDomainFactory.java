@@ -15,49 +15,21 @@
  *
  */
 
-package org.laokou.admin.oss.dto.clientobject;
+package org.laokou.admin.oss.factory;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.ClientObject;
-
-import java.time.Instant;
+import org.laokou.admin.oss.model.OssE;
+import org.laokou.common.core.util.SpringContextUtils;
 
 /**
- * OSS客户端对象.
- *
  * @author laokou
  */
-@Data
-public class OssCO extends ClientObject {
+public final class OssDomainFactory {
 
-	/**
-	 * ID.
-	 */
-	private Long id;
+	private OssDomainFactory() {
+	}
 
-	/**
-	 * OSS的名称.
-	 */
-	private String name;
-
-	/**
-	 * OSS的类型.
-	 */
-	private String type;
-
-	/**
-	 * OSS的参数.
-	 */
-	private String param;
-
-	/**
-	 * OSS的状态 0启用 1禁用.
-	 */
-	private Integer status;
-
-	/**
-	 * 创建时间.
-	 */
-	private Instant createTime;
+	public static OssE getOss() {
+		return SpringContextUtils.getBeanProvider(OssE.class);
+	}
 
 }

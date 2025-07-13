@@ -46,7 +46,7 @@ class OssTest {
 				UUIDGenerator.generateUUID() + ".jpg", ".jpg", "image/jpeg", bytes.length));
 		Assertions.assertTrue(result.success());
 		Assertions.assertEquals("OK", result.getCode());
-		Assertions.assertArrayEquals(bytes, FileUtils.getBytes(result.getData()));
+		Assertions.assertArrayEquals(bytes, FileUtils.getBytesByUrl(result.getData()));
 	}
 
 }

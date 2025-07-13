@@ -60,6 +60,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 	public static final String FULL = "full";
 
 	// @formatter:off
+	// 模仿JdbcRegisteredClientRepository ObjectMapper#registerModules
 	private static final ObjectMapper MAPPER = new ObjectMapper()
 		// https://docs.spring.io/spring-security/reference/servlet/integrations/jackson.html#page-title
 		.registerModules(SecurityJackson2Modules.getModules(RedisOAuth2AuthorizationService.class.getClassLoader()))

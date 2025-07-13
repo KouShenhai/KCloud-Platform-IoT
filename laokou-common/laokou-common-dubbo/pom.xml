@@ -13,8 +13,18 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.apache.fury</groupId>
+      <artifactId>fury-core</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.apache.dubbo.extensions</groupId>
       <artifactId>dubbo-serialization-fury</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.fury</groupId>
+          <artifactId>fury-core</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.dubbo</groupId>

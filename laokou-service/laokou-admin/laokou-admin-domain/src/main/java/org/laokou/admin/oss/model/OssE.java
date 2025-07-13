@@ -17,54 +17,74 @@
 
 package org.laokou.admin.oss.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.laokou.admin.user.model.IdGenerator;
+import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.dto.Identifier;
 
 /**
  * OSS领域对象【实体】.
  *
  * @author laokou
  */
-@Data
-public class OssE {
+@Entity
+public class OssE extends Identifier {
 
 	/**
-	 * ID.
+	 * OSS的名称.
 	 */
-	private Long id;
-
-	/**
-	 * OSS名称.
-	 */
+	@Setter
+	@Getter
 	private String name;
 
 	/**
-	 * OSS的终端地址.
+	 * OSS的类型.
 	 */
-	private String endpoint;
+	@Setter
+	@Getter
+	private String type;
 
 	/**
-	 * OSS的区域.
+	 * OSS的参数.
 	 */
-	private String region;
+	@Setter
+	@Getter
+	private String param;
 
 	/**
-	 * OSS的访问密钥.
+	 * OSS的状态 0启用 1禁用.
 	 */
-	private String accessKey;
+	@Setter
+	@Getter
+	private Integer status;
 
 	/**
-	 * OSS的用户密钥.
+	 * OSS操作类型.
 	 */
-	private String secretKey;
+	@Setter
+	@Getter
+	private OssOperateTypeEnum ossOperateTypeEnum;
 
-	/**
-	 * OSS的桶名.
-	 */
-	private String bucketName;
+	private final IdGenerator idGenerator;
 
-	/**
-	 * 路径样式访问 1已开启 0未启用.
-	 */
-	private Integer pathStyleAccessEnabled;
+	public OssE(IdGenerator idGenerator) {
+		this.idGenerator = idGenerator;
+	}
+
+	public Long getPrimaryKey() {
+		return idGenerator.getId();
+	}
+
+	public void checkOssParam() {
+		switch (ossOperateTypeEnum) {
+			case SAVE -> {
+			}
+			case MODIFY -> {
+			}
+			default -> {
+			}
+		}
+	}
 
 }

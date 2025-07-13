@@ -111,7 +111,7 @@ public final class FileUtils {
 		Files.createDirectories(directoryPath);
 	}
 
-	public static byte[] getBytes(String url) throws IOException {
+	public static byte[] getBytesByUrl(String url) throws IOException {
 		try (InputStream in = getInputStream(url)) {
 			return in.readAllBytes();
 		}

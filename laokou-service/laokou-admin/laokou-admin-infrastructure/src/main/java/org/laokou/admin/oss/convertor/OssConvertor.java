@@ -17,11 +17,13 @@
 
 package org.laokou.admin.oss.convertor;
 
+import org.laokou.admin.oss.factory.OssDomainFactory;
 import org.laokou.admin.oss.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.common.core.util.ConvertUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.admin.oss.dto.clientobject.OssCO;
 import org.laokou.admin.oss.model.OssE;
+import java.util.List;
 
 /**
  * OSS转换器.
@@ -39,11 +41,28 @@ public class OssConvertor {
 	}
 
 	public static OssCO toClientObject(OssDO ossDO) {
-		return ConvertUtils.sourceToTarget(ossDO, OssCO.class);
+		OssCO ossCO = new OssCO();
+		ossCO.setId(ossDO.getId());
+		ossCO.setName(ossDO.getName());
+		ossCO.setType(ossDO.getType());
+		ossCO.setParam(ossDO.getParam());
+		ossCO.setStatus(ossDO.getStatus());
+		ossCO.setCreateTime(ossDO.getCreateTime());
+		return ossCO;
+	}
+
+	public static List<OssCO> toClientObjects(List<OssDO> list) {
+		return list.stream().map(OssConvertor::toClientObject).toList();
 	}
 
 	public static OssE toEntity(OssCO ossCO) {
-		return ConvertUtils.sourceToTarget(ossCO, OssE.class);
+		OssE ossE = OssDomainFactory.getOss();
+		ossE.setId(ossCO.getId());
+		ossE.setName(ossCO.getName());
+		ossE.setType(ossCO.getType());
+		ossE.setParam(ossCO.getParam());
+		ossE.setStatus(ossCO.getStatus());
+		return ossE;
 	}
 
 }

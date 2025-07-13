@@ -145,7 +145,7 @@
     <repository>
       <id>tencent-cloud-mirror</id>
       <name>TenantCloud Maven Central</name>
-      <url>https://mirrors.cloud.tencent.com/nexus/repository/maven-public</url>
+      <url>https://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>

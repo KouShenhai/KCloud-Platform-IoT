@@ -15,49 +15,27 @@
  *
  */
 
-package org.laokou.admin.oss.dto.clientobject;
+package org.laokou.admin.oss.model;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.ClientObject;
-
-import java.time.Instant;
+import lombok.Getter;
 
 /**
- * OSS客户端对象.
- *
  * @author laokou
  */
-@Data
-public class OssCO extends ClientObject {
+@Getter
+public enum OssOperateTypeEnum {
 
-	/**
-	 * ID.
-	 */
-	private Long id;
+	SAVE("save", "新增OSS"),
 
-	/**
-	 * OSS的名称.
-	 */
-	private String name;
+	MODIFY("modify", "修改OSS");
 
-	/**
-	 * OSS的类型.
-	 */
-	private String type;
+	private final String code;
 
-	/**
-	 * OSS的参数.
-	 */
-	private String param;
+	private final String desc;
 
-	/**
-	 * OSS的状态 0启用 1禁用.
-	 */
-	private Integer status;
-
-	/**
-	 * 创建时间.
-	 */
-	private Instant createTime;
+	OssOperateTypeEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

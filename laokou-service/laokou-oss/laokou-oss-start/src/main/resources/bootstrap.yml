@@ -25,7 +25,7 @@ dubbo:
   protocol:
     name: dubbo
     port: ${PROTOCOL_PORT:1114}
-    serialization: fury-compatible
+    serialization: fury
   application:
     name: ${spring.application.name}
     logger: slf4j
