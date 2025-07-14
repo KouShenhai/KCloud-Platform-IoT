@@ -12,7 +12,7 @@
   <artifactId>laokou-common-graalvm-js</artifactId>
 
   <properties>
-    <js.version>21.3.14</js.version>
+    <js.version>24.2.1</js.version>
   </properties>
 
   <dependencies>
