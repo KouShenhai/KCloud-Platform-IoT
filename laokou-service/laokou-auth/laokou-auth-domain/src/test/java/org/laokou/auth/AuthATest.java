@@ -68,6 +68,9 @@ class AuthATest {
 	@MockitoBean
 	private NoticeLogGateway noticeLogGateway;
 
+	@MockitoBean
+	private IdGenerator idGenerator;
+
 	@MockitoBean("authorizationCodeAuthParamValidator")
 	private AuthParamValidator authorizationCodeAuthParamValidator;
 

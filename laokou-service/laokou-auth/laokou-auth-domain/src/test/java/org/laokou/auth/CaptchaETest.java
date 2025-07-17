@@ -23,6 +23,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.CaptchaE;
 import org.laokou.auth.model.CaptchaParamValidator;
+import org.laokou.auth.model.IdGenerator;
 import org.laokou.auth.model.SendCaptchaTypeEnum;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -53,6 +54,9 @@ class CaptchaETest {
 
 	@MockitoBean
 	private NoticeLogGateway noticeLogGateway;
+
+	@MockitoBean
+	private IdGenerator idGenerator;
 
 	@MockitoBean("mailCaptchaParamValidator")
 	private CaptchaParamValidator mailCaptchaParamValidator;

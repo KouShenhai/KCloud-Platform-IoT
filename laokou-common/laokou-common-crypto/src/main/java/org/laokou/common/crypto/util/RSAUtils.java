@@ -85,7 +85,8 @@ public final class RSAUtils {
 				byte[] privateKey = StringUtils.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PRIVATE_KEY);
 				byte[] bytes = decryptByPrivateKey(decryptBase64(str), privateKey);
 				return new String(bytes, StandardCharsets.UTF_8);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("RSA解密失败【私钥】，错误信息：{}", e.getMessage(), e);
 				throw new SystemException("S_RSA_DecryptFailedByPrivateKey", "RSA解密失败，请检查私钥是否正确", e);
 			}
@@ -114,7 +115,8 @@ public final class RSAUtils {
 				byte[] publicKey = StringUtils.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PUBLIC_KEY);
 				byte[] bytes = encryptByPublicKey(str.getBytes(StandardCharsets.UTF_8), publicKey);
 				return encryptBase64(bytes);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				log.error("RSA加密失败【公钥】，错误信息：{}", e.getMessage(), e);
 				throw new SystemException("S_RSA_EncryptFailedByPublicKey", "RSA加密失败，请检查公钥是否正确", e);
 			}

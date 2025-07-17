@@ -17,10 +17,12 @@
 
 package org.laokou.admin.user.model;
 
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
-public interface IdGenerator {
+public interface IdGenerator extends Serializable {
 
 	long getId();
 

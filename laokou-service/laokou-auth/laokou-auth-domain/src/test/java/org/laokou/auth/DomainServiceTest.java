@@ -75,6 +75,9 @@ class DomainServiceTest {
 	@MockitoSpyBean
 	private DomainService domainService;
 
+	@MockitoBean
+	private IdGenerator idGenerator;
+
 	@MockitoBean("authorizationCodeAuthParamValidator")
 	private AuthParamValidator authorizationCodeAuthParamValidator;
 
