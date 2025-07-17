@@ -34,8 +34,6 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.mybatisplus.util.UserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getOAuth2AuthenticationException;
 
 /**
  * 认证授权处理器.
@@ -70,8 +68,7 @@ final class OAuth2AuthenticationProcessor {
 			if (e instanceof BizException ex) {
 				evt = LoginLogConvertor.toDomainEvent(request, authA, ex);
 			}
-			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
-			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
+			throw e;
 		}
 		catch (Exception e) {
 			log.error("未知错误，错误信息：{}", e.getMessage(), e);

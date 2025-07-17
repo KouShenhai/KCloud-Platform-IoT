@@ -18,10 +18,9 @@
 package org.laokou.common.crypto.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ResourceUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.springframework.util.Assert;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -81,16 +80,17 @@ public final class RSAUtils {
 	 * @return 解密后的字符串
 	 */
 	public static String decryptByPrivateKey(String str, String key) {
-		try {
-			byte[] privateKey = StringUtils.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PRIVATE_KEY);
-			byte[] bytes = decryptByPrivateKey(decryptBase64(str), privateKey);
-			Assert.notNull(bytes, "bytes is null");
-			return new String(bytes, StandardCharsets.UTF_8);
+		if (StringUtils.isNotEmpty(str)) {
+			try {
+				byte[] privateKey = StringUtils.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PRIVATE_KEY);
+				byte[] bytes = decryptByPrivateKey(decryptBase64(str), privateKey);
+				return new String(bytes, StandardCharsets.UTF_8);
+			} catch (Exception e) {
+				log.error("RSA解密失败【私钥】，错误信息：{}", e.getMessage(), e);
+				throw new SystemException("S_RSA_DecryptFailedByPrivateKey", "RSA解密失败，请检查私钥是否正确", e);
+			}
 		}
-		catch (Exception e) {
-			log.error("RSA解密失败，错误信息：{}", e.getMessage(), e);
-			return str;
-		}
+		return str;
 	}
 
 	/**
@@ -109,15 +109,17 @@ public final class RSAUtils {
 	 * @return 加密后的字符串
 	 */
 	public static String encryptByPublicKey(String str, String key) {
-		try {
-			byte[] publicKey = StringUtils.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PUBLIC_KEY);
-			byte[] bytes = encryptByPublicKey(str.getBytes(StandardCharsets.UTF_8), publicKey);
-			return encryptBase64(bytes);
+		if (StringUtils.isNotEmpty(str)) {
+			try {
+				byte[] publicKey = StringUtils.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PUBLIC_KEY);
+				byte[] bytes = encryptByPublicKey(str.getBytes(StandardCharsets.UTF_8), publicKey);
+				return encryptBase64(bytes);
+			} catch (Exception e) {
+				log.error("RSA加密失败【公钥】，错误信息：{}", e.getMessage(), e);
+				throw new SystemException("S_RSA_EncryptFailedByPublicKey", "RSA加密失败，请检查公钥是否正确", e);
+			}
 		}
-		catch (Exception e) {
-			log.error("RSA加密失败，错误信息：{}", e.getMessage(), e);
-			return str;
-		}
+		return str;
 	}
 
 	/**

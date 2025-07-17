@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,7 +49,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.laokou.auth.model.OAuth2Constants.*;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getException;
+import static org.laokou.common.security.handler.OAuth2ExceptionHandler.*;
 import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
 import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
 
@@ -77,6 +78,10 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		try {
 			return authentication(authentication, getPrincipal(request));
+		}
+		catch (GlobalException e) {
+			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
+			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
 		}
 		catch (OAuth2AuthenticationException e) {
 			throw e;
