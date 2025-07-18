@@ -30,21 +30,6 @@
           "_genkey_0": "/auth/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
-      },
-      {
-        "name": "RequestRateLimiter",
-        "args": {
-          "key-resolver": "#{@ipKeyResolver}",
-          "redis-rate-limiter.replenishRate": "10000",
-          "redis-rate-limiter.burstCapacity": "30000"
-        }
-      },
-      {
-        "name": "CircuitBreaker",
-        "args": {
-          "name": "default",
-          "fallbackUri": "forward:/fallback"
-        }
       }
     ],
     "metadata": {
@@ -82,21 +67,6 @@
         "args": {
           "_genkey_0": "/admin/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
-        }
-      },
-      {
-        "name": "RequestRateLimiter",
-        "args": {
-          "key-resolver": "#{@ipKeyResolver}",
-          "redis-rate-limiter.replenishRate": "10000",
-          "redis-rate-limiter.burstCapacity": "30000"
-        }
-      },
-      {
-        "name": "CircuitBreaker",
-        "args": {
-          "name": "default",
-          "fallbackUri": "forward:/fallback"
         }
       }
     ],
@@ -136,21 +106,6 @@
           "_genkey_0": "/iot/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
-      },
-      {
-        "name": "RequestRateLimiter",
-        "args": {
-          "key-resolver": "#{@ipKeyResolver}",
-          "redis-rate-limiter.replenishRate": "10000",
-          "redis-rate-limiter.burstCapacity": "30000"
-        }
-      },
-      {
-        "name": "CircuitBreaker",
-        "args": {
-          "name": "default",
-          "fallbackUri": "forward:/fallback"
-        }
       }
     ],
     "metadata": {
@@ -189,21 +144,6 @@
           "_genkey_0": "/generator/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
-      },
-      {
-        "name": "RequestRateLimiter",
-        "args": {
-          "key-resolver": "#{@ipKeyResolver}",
-          "redis-rate-limiter.replenishRate": "10000",
-          "redis-rate-limiter.burstCapacity": "30000"
-        }
-      },
-      {
-        "name": "CircuitBreaker",
-        "args": {
-          "name": "default",
-          "fallbackUri": "forward:/fallback"
-        }
       }
     ],
     "metadata": {
@@ -241,21 +181,6 @@
         "args": {
           "_genkey_0": "/iot-websocket/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
-        }
-      },
-      {
-        "name": "RequestRateLimiter",
-        "args": {
-          "key-resolver": "#{@ipKeyResolver}",
-          "redis-rate-limiter.replenishRate": "10000",
-          "redis-rate-limiter.burstCapacity": "30000"
-        }
-      },
-      {
-        "name": "CircuitBreaker",
-        "args": {
-          "name": "default",
-          "fallbackUri": "forward:/fallback"
         }
       }
     ],

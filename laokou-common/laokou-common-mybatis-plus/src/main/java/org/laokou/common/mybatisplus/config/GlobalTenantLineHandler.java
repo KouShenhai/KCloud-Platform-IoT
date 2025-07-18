@@ -40,7 +40,7 @@ public class GlobalTenantLineHandler implements TenantLineHandler {
 
 	@Override
 	public boolean ignoreTable(String tableName) {
-		return ignoreTables.contains(tableName);
+		return UserUtils.isSuperAdmin() || ignoreTables.contains(tableName);
 	}
 
 	@Override

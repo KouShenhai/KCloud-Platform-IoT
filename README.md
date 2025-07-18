@@ -163,7 +163,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - 远程调用：Dubbo
 - 客户端请求：OkHttp & HttpClient & WebClient & RestClient
 - 负载均衡：Spring Cloud Loadbalancer
-- 服务熔断&降级&限流：Resilience4j
+- 服务熔断&降级&限流：Sentinel
 - 分库分表：Mybatis Plus
 - 消息队列：Kafka & Pulsar
 - 服务监控：Spring Boot Admin & Prometheus

@@ -159,8 +159,6 @@
     <dubbo.version>3.3.6-SNAPSHOT</dubbo.version>
     <!--pf4j版本-->
     <pf4j.version>0.10.0</pf4j.version>
-    <!--spring-cloud-starter-circuitbreaker-reactor-resilience4j版本-->
-    <spring-cloud-starter-circuitbreaker-reactor-resilience4j.version>3.3.0</spring-cloud-starter-circuitbreaker-reactor-resilience4j.version>
     <!--dubbo-serialization版本-->
     <dubbo-serialization.version>3.3.1</dubbo-serialization.version>
     <!--minio版本-->
@@ -178,6 +176,11 @@
         <groupId>org.apache.fury</groupId>
         <artifactId>fury-core</artifactId>
         <version>${fury.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-sentinel</artifactId>
+        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.security</groupId>
@@ -200,19 +203,9 @@
         <version>${spring-boot.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
-        <version>${spring-boot.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.apache.dubbo.extensions</groupId>
         <artifactId>dubbo-serialization-fury</artifactId>
         <version>${dubbo-serialization.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
-        <version>${spring-cloud-starter-circuitbreaker-reactor-resilience4j.version}</version>
       </dependency>
       <dependency>
         <groupId>org.pf4j</groupId>

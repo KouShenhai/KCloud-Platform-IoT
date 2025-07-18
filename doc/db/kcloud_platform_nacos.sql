@@ -399,6 +399,2199 @@ CREATE UNIQUE INDEX "config_info_data_id_group_id_tenant_id_idx" ON "public"."co
 "tenant_id"
 	);
 
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-flow.json', 'IOT_GROUP', '[
+  {
+    "resource": "/v3/users",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/profile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/all",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
+', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-12 11:21:13.251', '2024-11-12 11:22:10.475', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '8140e92b-fb43-48f5-b63b-7506185206a5', 'admin sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (11, 'gateway-flow.json', 'IOT_GROUP', '[
+  {
+    "resource": "laokou-auth",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-admin",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-iot",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-generator",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  }
+]', '5e013d830e3af21e5e321c0f4910fda0', '2024-05-25 18:12:47.358', '2024-11-11 20:51:44.543', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-flow.json', 'IOT_GROUP', '[
+  {
+    "resource": "/v3/captchas/{uuid}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/captchas/send/mobile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+    {
+    "resource": "/v3/captchas/send/mail",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/secrets",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tokens",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
+', '2bb6ed92c98b4a1693426dadf1c96a30', '2024-11-11 21:17:37.578', '2024-11-11 21:18:17.553', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', 'auth sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES (39, 'auth-flow.json', 'IOT_GROUP', '[
+  {
+    "resource": "/v3/captchas/{uuid}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/captchas/send/mobile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+    {
+    "resource": "/v3/captchas/send/mail",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/secrets",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tokens",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
+', '2bb6ed92c98b4a1693426dadf1c96a30', '2024-11-11 21:16:13.23', '2024-11-11 21:17:25.382', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'auth sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-flow.json', 'IOT_GROUP', '[
+  {
+    "resource": "/v3/users",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/profile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/all",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
+', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-11 21:19:54.557', '2024-11-12 11:13:47.766', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-flow.json', 'IOT_GROUP', '[
+  {
+    "resource": "/v3/users",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/users/profile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tenants/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/sources/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/roles/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/oss/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/operate-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/notice-logs/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/menus/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/login-log/all",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/i18n-messages/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/domain-events/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dicts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/dict-items/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/depts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/clusters/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
+', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-11 21:20:18.495', '2024-11-12 11:14:01.899', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (43, 'auth-flow.json', 'IOT_GROUP', '[
+  {
+    "resource": "/v3/captchas/{uuid}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/captchas/send/mobile",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+    {
+    "resource": "/v3/captchas/send/mail",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/secrets",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/v3/tokens",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  }
+]
+', '2bb6ed92c98b4a1693426dadf1c96a30', '2024-11-11 21:17:33.583', '2024-11-11 21:18:04.394', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'auth sentinel flow rule', '', '', 'json', '', '');
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (13, 'gateway-flow.json', 'IOT_GROUP', '[
+  {
+    "resource": "laokou-auth",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-admin",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-iot",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-generator",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  }
+]', '5e013d830e3af21e5e321c0f4910fda0', '2024-05-25 18:13:10.6', '2024-11-11 20:52:03.56', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway sentinel flow rule', '', '', 'json', '', '');
+
+INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (51, 'gateway-flow.json', 'IOT_GROUP', '[
+  {
+    "resource": "laokou-auth",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-admin",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-iot",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "laokou-generator",
+    "grade": 1,
+    "count": 100000,
+    "intervalSec": 1,
+    "burst": 500000,
+    "controlBehavior": 0
+  }
+]', '5e013d830e3af21e5e321c0f4910fda0', '2023-02-26 14:59:20', '2024-11-11 20:51:31.708', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'gateway sentinel flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router.json', 'IOT_GROUP', '[
   {
     "id": "laokou-auth",
@@ -430,21 +2623,6 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
         "args": {
           "_genkey_0": "/auth/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
-        }
-      },
-	  {
-        "name": "RequestRateLimiter",
-        "args": {
-          "key-resolver": "#{@ipKeyResolver}",
-          "redis-rate-limiter.replenishRate": "10000",
-          "redis-rate-limiter.burstCapacity": "30000"
-        }
-      },
-      {
-        "name": "CircuitBreaker",
-        "args": {
-          "name": "default",
-          "fallbackUri": "forward:/fallback"
         }
       }
     ],
@@ -601,21 +2779,6 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
           "_genkey_0": "/auth/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
-      },
-	  {
-        "name": "RequestRateLimiter",
-        "args": {
-          "key-resolver": "#{@ipKeyResolver}",
-          "redis-rate-limiter.replenishRate": "10000",
-          "redis-rate-limiter.burstCapacity": "30000"
-        }
-      },
-      {
-        "name": "CircuitBreaker",
-        "args": {
-          "name": "default",
-          "fallbackUri": "forward:/fallback"
-        }
       }
     ],
     "metadata": {
@@ -770,21 +2933,6 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
         "args": {
           "_genkey_0": "/auth/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
-        }
-      },
-	  {
-        "name": "RequestRateLimiter",
-        "args": {
-          "key-resolver": "#{@ipKeyResolver}",
-          "redis-rate-limiter.replenishRate": "10000",
-          "redis-rate-limiter.burstCapacity": "30000"
-        }
-      },
-      {
-        "name": "CircuitBreaker",
-        "args": {
-          "name": "default",
-          "fallbackUri": "forward:/fallback"
         }
       }
     ],

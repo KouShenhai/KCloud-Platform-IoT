@@ -30,6 +30,7 @@
     <module>laokou-service</module>
     <module>laokou-tool</module>
     <module>laokou-cola</module>
+    <module>laokou-common/laokou-common-sentinel</module>
   </modules>
   <name>KCloud-Platform-IoT</name>
   <description>一个企业级微服务架构的云服务多租户IoT平台</description>
@@ -256,10 +257,6 @@
         <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
         <SSL-ENABLED>false</SSL-ENABLED>
         <JASYPT-ENCRYPTOR-PASSWORD>laokou</JASYPT-ENCRYPTOR-PASSWORD>
-        <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
-        <SEATA-USERNAME>seata</SEATA-USERNAME>
-        <SEATA-PASSWORD>seata</SEATA-PASSWORD>
-        <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
       </properties>
       <activation>
         <activeByDefault>true</activeByDefault>
@@ -287,10 +284,6 @@
         <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
         <SSL-ENABLED>true</SSL-ENABLED>
         <JASYPT-ENCRYPTOR-PASSWORD>laokou</JASYPT-ENCRYPTOR-PASSWORD>
-        <SEATA-GROUP>SEATA_GROUP</SEATA-GROUP>
-        <SEATA-USERNAME>seata</SEATA-USERNAME>
-        <SEATA-PASSWORD>seata</SEATA-PASSWORD>
-        <SEATA-LOG-PATH>./logs/seata</SEATA-LOG-PATH>
       </properties>
       <activation>
         <activeByDefault>false</activeByDefault>
@@ -342,14 +335,6 @@
         <SSL-ENABLED>true</SSL-ENABLED>
         <!--suppress UnresolvedMavenProperty -->
         <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:laokou}</JASYPT-ENCRYPTOR-PASSWORD>
-        <!--suppress UnresolvedMavenProperty -->
-        <SEATA-GROUP>${SEATA_GROUP:SEATA_GROUP}</SEATA-GROUP>
-        <!--suppress UnresolvedMavenProperty -->
-        <SEATA-USERNAME>${SEATA_USERNAME:seata}</SEATA-USERNAME>
-        <!--suppress UnresolvedMavenProperty -->
-        <SEATA-PASSWORD>${SEATA_PASSWORD:seata}</SEATA-PASSWORD>
-        <!--suppress UnresolvedMavenProperty -->
-        <SEATA-LOG-PATH>${SEATA_LOG_PATH:/opt}</SEATA-LOG-PATH>
       </properties>
       <activation>
         <activeByDefault>false</activeByDefault>

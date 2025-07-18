@@ -66,6 +66,8 @@ public class GeneratorApp {
 		SecurityContextHolder.setContextHolderStrategy(new TransmittableThreadLocalSecurityContextHolderStrategy());
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
+		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494
+		System.setProperty("management.health.sentinel.enabled", "false");
 		// 忽略SSL认证
 		SslUtils.ignoreSSLTrust();
 		new SpringApplicationBuilder(GeneratorApp.class).web(WebApplicationType.SERVLET).run(args);

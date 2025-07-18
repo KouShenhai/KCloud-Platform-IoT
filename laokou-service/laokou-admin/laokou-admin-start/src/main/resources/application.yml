@@ -182,10 +182,28 @@ spring:
       ignored-interfaces:
         - docker0
         - veth.*
+    # Sentinel配置
+    sentinel:
+      datasource:
+        db0:
+          nacos:
+            server-addr: @NACOS-CONFIG-ADDRESS@
+            namespace: @NACOS-NAMESPACE@
+            group-id: @NACOS-GROUP@
+            data-id: admin-flow.json
+            data-type: json
+            username: @NACOS-USERNAME@
+            password: @NACOS-PASSWORD@
+            rule-type: flow
+      filter:
+        enabled: true
+      web-context-unify: false
+      eager: true #开启饥饿加载，直接初始化
+      transport:
+        dashboard: sentinel:8972
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.xml
-
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml

@@ -74,6 +74,8 @@ public class GatewayApp implements CommandLineRunner {
 		// 开启reactor的上下文传递
 		// https://spring.io/blog/2023/03/30/context-propagation-with-project-reactor-3-unified-bridging-between-reactive
 		Hooks.enableAutomaticContextPropagation();
+		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494
+		System.setProperty("management.health.sentinel.enabled", "false");
 		// 启用虚拟线程支持
 		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
 		new SpringApplicationBuilder(GatewayApp.class).web(WebApplicationType.REACTIVE).run(args);

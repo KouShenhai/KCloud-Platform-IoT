@@ -71,6 +71,8 @@ public class AdminApp {
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "9990")));
 		// SpringSecurity 子线程读取父线程的上下文
 		SecurityContextHolder.setContextHolderStrategy(new TransmittableThreadLocalSecurityContextHolderStrategy());
+		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494
+		System.setProperty("management.health.sentinel.enabled", "false");
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		// 忽略SSL认证

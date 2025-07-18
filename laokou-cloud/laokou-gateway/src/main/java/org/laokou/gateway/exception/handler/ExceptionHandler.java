@@ -17,6 +17,7 @@
 
 package org.laokou.gateway.exception.handler;
 
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.dto.Result;
@@ -73,6 +74,11 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 					log.error("状态码：{}，服务器内部错误，无法完成请求，错误信息：{}", statusCode, e.getMessage());
 					return ReactiveResponseUtils.responseOk(exchange, Result.fail(INTERNAL_SERVER_ERROR));
 				}
+			}
+			if (BlockException.isBlockException(e)) {
+				// 思路来源于SentinelGatewayBlockExceptionHandler
+				log.error("请求太频繁，错误信息：{}", e.getMessage());
+				return ReactiveResponseUtils.responseOk(exchange, Result.fail(TOO_MANY_REQUESTS));
 			}
 			log.error("错误网关，错误信息：{}", e.getMessage());
 			return ReactiveResponseUtils.responseOk(exchange, Result.fail(BAD_GATEWAY));

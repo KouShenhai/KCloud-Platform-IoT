@@ -119,6 +119,22 @@ services:
     privileged: true
     networks:
       - iot_network
+  # https://github.com/KouShenhai/Sentinel
+  sentinel-dashboard:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/sentinel-dashboard:3.5.4
+    container_name: sentinel-dashboard
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "8972:8972"
+    volumes:
+      - ./sentinel/logs:/opt/logs/csp
+    env_file:
+      - env/sentinel.env
+    networks:
+      - iot_network
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
@@ -131,6 +147,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./portainer/data:/data
+    networks:
+      - iot_network
 networks:
   iot_network:
     driver: bridge

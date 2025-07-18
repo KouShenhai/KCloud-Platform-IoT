@@ -15,23 +15,39 @@
  *
  */
 
-package org.laokou.gateway.config;
-
-import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
-import org.springframework.cloud.gateway.support.ipresolver.RemoteAddressResolver;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import reactor.core.publisher.Mono;
+package org.laokou.common.sentinel.constant;
 
 /**
  * @author laokou
  */
-@Configuration
-public class RequestRateLimiterConfig {
+public final class SentinelConstants {
 
-	@Bean(value = "ipKeyResolver")
-	public KeyResolver ipKeyResolver(RemoteAddressResolver remoteAddressResolver) {
-		return exchange -> Mono.just(remoteAddressResolver.resolve(exchange).getAddress().getHostAddress());
+	private SentinelConstants() {
 	}
+
+	/**
+	 * 授权规则错误.
+	 */
+	public static final String AUTHORITY = "S_Sentinel_Authority";
+
+	/**
+	 * 系统规则错误.
+	 */
+	public static final String SYSTEM_BLOCKED = "S_Sentinel_SystemBlocked";
+
+	/**
+	 * 热点参数已限流.
+	 */
+	public static final String PARAM_FLOWED = "S_Sentinel_ParamFlowed";
+
+	/**
+	 * 已降级.
+	 */
+	public static final String DEGRADED = "S_Sentinel_Degraded";
+
+	/**
+	 * 已限流.
+	 */
+	public static final String FLOWED = "S_Sentinel_Flowed";
 
 }

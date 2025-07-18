@@ -71,6 +71,8 @@ public class AuthApp {
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "1111")));
 		// SpringSecurity 子线程读取父线程的上下文
 		SecurityContextHolder.setContextHolderStrategy(new TransmittableThreadLocalSecurityContextHolderStrategy());
+		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494
+		System.setProperty("management.health.sentinel.enabled", "false");
 		// nacos认证 => HttpLoginProcessor，https://github.com/alibaba/nacos/pull/3654
 		// 忽略SSL认证
 		SslUtils.ignoreSSLTrust();
