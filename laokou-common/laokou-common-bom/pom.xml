@@ -134,7 +134,7 @@
     <!--okhttp3版本-->
     <okhttp3.version>4.12.0</okhttp3.version>
     <!--reactor-core版本-->
-    <reactor-core.version>3.7.7</reactor-core.version>
+    <reactor-core.version>3.7.8</reactor-core.version>
     <!--opencsv版本-->
     <opencsv.version>5.11.2</opencsv.version>
     <!--curator版本-->
