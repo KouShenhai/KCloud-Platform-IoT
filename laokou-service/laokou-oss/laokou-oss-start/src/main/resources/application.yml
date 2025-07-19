@@ -74,10 +74,6 @@ spring:
           max-idle: 500 #连接池最大空闲连接
           min-idle: 200 #连接池最小空间连接
   cloud:
-    # loadbalancer
-    loadbalancer:
-      nacos:
-        enabled: true
     inetutils:
       ignored-interfaces:
         - docker0
