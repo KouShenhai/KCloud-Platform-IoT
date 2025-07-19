@@ -120,6 +120,7 @@ services:
     networks:
       - iot_network
   # https://github.com/KouShenhai/Sentinel
+  # 账号/密码 => sentinel/laokou123
   sentinel-dashboard:
     image: registry.cn-shenzhen.aliyuncs.com/koushenhai/sentinel-dashboard:3.5.4
     container_name: sentinel-dashboard
@@ -133,6 +134,23 @@ services:
       - ./sentinel/logs:/opt/logs/csp
     env_file:
       - env/sentinel.env
+    networks:
+      - iot_network
+  # https://github.com/KouShenhai/snail-job
+  # 账号/密码 => admin/laokou123
+  snail-job:
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/snail-job:3.5.4.1
+    container_name: snail-job
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "8088:8088"
+    volumes:
+      - ./snail-job/logs:/opt/data/log
+    env_file:
+      - env/snail-job.env
     networks:
       - iot_network
   portainer:

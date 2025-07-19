@@ -5,3 +5,4 @@ kafka
 minio
 mysql9
 sentinel
+postgresql17

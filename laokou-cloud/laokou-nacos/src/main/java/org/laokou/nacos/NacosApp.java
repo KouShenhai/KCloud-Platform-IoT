@@ -54,7 +54,6 @@ public class NacosApp {
 		// -Dnacos.home => Nacos的根目录
 		// Nacos控制台 => http://【ip:8848】/nacos
 		// -Dnacos.standalone=true
-		// -Dnacos.home=./logs/nacos
 		// -Dcom.google.protobuf.use_unsafe_pre22_gencode
 		// -XX:+UseG1GC
 		// @formatter:on
