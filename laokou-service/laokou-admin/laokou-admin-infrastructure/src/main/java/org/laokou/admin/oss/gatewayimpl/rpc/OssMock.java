@@ -15,24 +15,24 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.admin.oss.gatewayimpl.rpc;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.oss.model.BaseOss;
-import org.laokou.common.oss.model.FileInfo;
-import org.laokou.common.oss.model.LoadBalancePolicyEnum;
-
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.oss.api.OssServiceI;
+import org.laokou.oss.dto.OssUploadCmd;
 
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class StorageTemplate {
+@Slf4j
+public class OssMock implements OssServiceI {
 
-	public String uploadOss(FileInfo fileInfo, List<BaseOss> list) throws Exception {
-		BaseOss baseOss = LoadBalancePolicyEnum.HASH.choose(list);
-		return baseOss.getStoragePolicy().getStorage(fileInfo, baseOss).uploadOss();
+	@Override
+	public Result<String> uploadOss(OssUploadCmd cmd) {
+		log.error("调用上传文件失败，请检查Dubbo服务");
+		throw new BizException("B_Dubbo_CallOssUploadFailed", "调用上传文件失败，请检查Dubbo服务");
 	}
 
 }

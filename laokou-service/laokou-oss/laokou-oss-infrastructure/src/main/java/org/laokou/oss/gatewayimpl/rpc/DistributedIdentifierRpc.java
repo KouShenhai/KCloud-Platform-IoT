@@ -15,22 +15,31 @@
  *
  */
 
-package org.laokou.common.dubbo.rpc;
+package org.laokou.oss.gatewayimpl.rpc;
 
-import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.distributed.identifier.api.DistributedIdentifierServiceI;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-@Slf4j
-public class DistributedIdentifierMock implements DistributedIdentifierServiceI {
+@Component
+public class DistributedIdentifierRpc {
 
-	@Override
-	public Result<Long> generateSnowflake() {
-		log.error("调用获取分布式ID失败，请检查Dubbo服务");
-		return Result.ok(System.nanoTime());
+	@DubboReference(group = "iot-distributed-identifier", version = "v3",
+			interfaceClass = DistributedIdentifierServiceI.class,
+			mock = "org.laokou.oss.gatewayimpl.rpc.DistributedIdentifierMock", loadbalance = "adaptive", retries = 3)
+	private DistributedIdentifierServiceI distributedIdentifierServiceI;
+
+	public Long getId() {
+		Result<Long> result = distributedIdentifierServiceI.generateSnowflake();
+		if (result.success()) {
+			return result.getData();
+		}
+		throw new BizException(result.getCode(), result.getMsg());
 	}
 
 }

@@ -41,6 +41,8 @@ public class DomainService {
 
 	private final NoticeLogGateway noticeLogGateway;
 
+	private final OssLogGateway ossLogGateway;
+
 	public void createLoginLog(LoginLogE loginLogE) {
 		// 保存登录日志
 		loginLogGateway.createLoginLog(loginLogE);
@@ -85,6 +87,8 @@ public class DomainService {
 		authA.getDeptPaths(deptGateway.getDeptPaths(authA.getUser()));
 		// 校验部门路径集合
 		authA.checkDeptPaths();
+		// 获取用户头像
+		authA.getUserAvatar(ossLogGateway.getOssUrl(authA.getUser().getAvatar()));
 	}
 
 }

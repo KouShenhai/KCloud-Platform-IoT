@@ -79,7 +79,7 @@ public class UserE extends Identifier {
 	 */
 	@Getter
 	@Setter
-	private String avatar;
+	private Long avatar;
 
 	/**
 	 * 用户名短语.

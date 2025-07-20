@@ -52,7 +52,7 @@ public class UserCO extends ClientObject {
 	private Integer status;
 
 	@Schema(name = "用户头像", description = "用户头像")
-	private String avatar;
+	private Long avatar;
 
 	@Schema(name = "用户名", description = "用户名")
 	private String username;

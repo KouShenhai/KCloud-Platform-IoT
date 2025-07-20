@@ -15,24 +15,22 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.common.log.rpc;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.oss.model.BaseOss;
-import org.laokou.common.oss.model.FileInfo;
-import org.laokou.common.oss.model.LoadBalancePolicyEnum;
-
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.distributed.identifier.api.DistributedIdentifierServiceI;
 
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class StorageTemplate {
+@Slf4j
+public class DistributedIdentifierMock implements DistributedIdentifierServiceI {
 
-	public String uploadOss(FileInfo fileInfo, List<BaseOss> list) throws Exception {
-		BaseOss baseOss = LoadBalancePolicyEnum.HASH.choose(list);
-		return baseOss.getStoragePolicy().getStorage(fileInfo, baseOss).uploadOss();
+	@Override
+	public Result<Long> generateSnowflake() {
+		log.error("调用获取分布式ID失败，请检查Dubbo服务");
+		return Result.ok(System.nanoTime());
 	}
 
 }

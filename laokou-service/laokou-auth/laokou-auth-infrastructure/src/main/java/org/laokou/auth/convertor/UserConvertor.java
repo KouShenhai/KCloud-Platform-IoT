@@ -36,7 +36,7 @@ public final class UserConvertor {
 		UserE user = auth.getUser();
 		userDetails.setId(user.getId());
 		userDetails.setUsername(user.getUsername());
-		userDetails.setAvatar(user.getAvatar());
+		userDetails.setAvatar(auth.getAvatar());
 		userDetails.setSuperAdmin(user.isSuperAdministrator());
 		userDetails.setStatus(user.getStatus());
 		userDetails.setMail(user.getMail());

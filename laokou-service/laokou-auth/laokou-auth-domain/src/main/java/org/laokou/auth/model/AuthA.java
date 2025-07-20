@@ -104,6 +104,12 @@ public class AuthA extends AggregateRoot {
 	private Set<String> deptPaths;
 
 	/**
+	 * 头像.
+	 */
+	@Getter
+	private String avatar;
+
+	/**
 	 * 密码校验器.
 	 */
 	private final PasswordValidator passwordValidator;
@@ -250,6 +256,10 @@ public class AuthA extends AggregateRoot {
 			return this.username;
 		}
 		return this.captcha.uuid();
+	}
+
+	public void getUserAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	private boolean isUseCaptcha() {

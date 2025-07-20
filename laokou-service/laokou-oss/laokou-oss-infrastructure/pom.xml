@@ -63,46 +63,20 @@
       <artifactId>laokou-common-oss</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.fury</groupId>
-      <artifactId>fury-core</artifactId>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-dubbo</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.dubbo.extensions</groupId>
-      <artifactId>dubbo-serialization-fury</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.fury</groupId>
-          <artifactId>fury-core</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-distributed-identifier-client</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.dubbo</groupId>
-      <artifactId>dubbo-spring-boot-starter</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bouncycastle</groupId>
-          <artifactId>bcprov-jdk18on</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.dubbo</groupId>
-      <artifactId>dubbo-nacos-spring-boot-starter</artifactId>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-mybatis-plus</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-bootstrap</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bouncycastle</groupId>
-          <artifactId>bcprov-jdk18on</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
 </project>

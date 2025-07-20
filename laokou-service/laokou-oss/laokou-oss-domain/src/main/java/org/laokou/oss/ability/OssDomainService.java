@@ -15,24 +15,29 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.oss.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.oss.model.BaseOss;
-import org.laokou.common.oss.model.FileInfo;
-import org.laokou.common.oss.model.LoadBalancePolicyEnum;
-
-import java.util.List;
+import org.laokou.oss.gateway.OssGateway;
+import org.laokou.oss.model.OssA;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
+@Component
 @RequiredArgsConstructor
-public class StorageTemplate {
+public class OssDomainService {
 
-	public String uploadOss(FileInfo fileInfo, List<BaseOss> list) throws Exception {
-		BaseOss baseOss = LoadBalancePolicyEnum.HASH.choose(list);
-		return baseOss.getStoragePolicy().getStorage(fileInfo, baseOss).uploadOss();
+	private final OssGateway ossGateway;
+
+	public void uploadOss(OssA ossA) throws Exception {
+		// 校验文件大小
+		ossA.checkSize();
+		// 校验扩展名
+		ossA.checkExt();
+		// 上传文件并获取地址
+		ossA.getFileUrl(ossGateway.uploadOssAndGetUrl(ossA));
 	}
 
 }

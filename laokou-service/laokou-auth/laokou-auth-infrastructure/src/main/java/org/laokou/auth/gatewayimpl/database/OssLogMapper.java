@@ -15,24 +15,18 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.auth.gatewayimpl.database;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.oss.model.BaseOss;
-import org.laokou.common.oss.model.FileInfo;
-import org.laokou.common.oss.model.LoadBalancePolicyEnum;
-
-import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.auth.gatewayimpl.database.dataobject.OssLogDO;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class StorageTemplate {
-
-	public String uploadOss(FileInfo fileInfo, List<BaseOss> list) throws Exception {
-		BaseOss baseOss = LoadBalancePolicyEnum.HASH.choose(list);
-		return baseOss.getStoragePolicy().getStorage(fileInfo, baseOss).uploadOss();
-	}
+@Mapper
+@Repository
+public interface OssLogMapper extends CrudMapper<Long, Integer, OssLogDO> {
 
 }

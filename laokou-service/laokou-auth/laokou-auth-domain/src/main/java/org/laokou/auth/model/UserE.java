@@ -59,7 +59,7 @@ public class UserE extends Identifier {
 	 */
 	@Setter
 	@Getter
-	private String avatar;
+	private Long avatar;
 
 	/**
 	 * 用户邮箱.
