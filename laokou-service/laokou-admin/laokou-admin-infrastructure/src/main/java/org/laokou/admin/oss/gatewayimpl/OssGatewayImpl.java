@@ -39,12 +39,12 @@ public class OssGatewayImpl implements OssGateway {
 
 	@Override
 	public void createOss(OssE ossE) {
-		ossMapper.insert(OssConvertor.toDataObject(1L, ossE));
+		ossMapper.insert(OssConvertor.toDataObject(ossE));
 	}
 
 	@Override
 	public void updateOss(OssE ossE) {
-		OssDO ossDO = OssConvertor.toDataObject(null, ossE);
+		OssDO ossDO = OssConvertor.toDataObject(ossE);
 		ossDO.setVersion(ossMapper.selectVersion(ossE.getId()));
 		ossMapper.updateById(ossDO);
 	}

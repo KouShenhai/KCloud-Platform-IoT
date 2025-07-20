@@ -19,10 +19,16 @@ package org.laokou.admin.oss.convertor;
 
 import org.laokou.admin.oss.factory.OssDomainFactory;
 import org.laokou.admin.oss.gatewayimpl.database.dataobject.OssDO;
+import org.laokou.admin.oss.gatewayimpl.rpc.assembler.OssUploadAssembler;
 import org.laokou.common.core.util.ConvertUtils;
-import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.core.util.FileUtils;
+import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.admin.oss.dto.clientobject.OssCO;
 import org.laokou.admin.oss.model.OssE;
+import org.springframework.util.Assert;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -32,12 +38,8 @@ import java.util.List;
  */
 public class OssConvertor {
 
-	public static OssDO toDataObject(Long id, OssE ossE) {
-		OssDO ossDO = ConvertUtils.sourceToTarget(ossE, OssDO.class);
-		if (ObjectUtils.isNull(ossDO.getId())) {
-			ossDO.setId(id);
-		}
-		return ossDO;
+	public static OssDO toDataObject(OssE ossE) {
+		return ConvertUtils.sourceToTarget(ossE, OssDO.class);
 	}
 
 	public static OssCO toClientObject(OssDO ossDO) {
@@ -49,6 +51,14 @@ public class OssConvertor {
 		ossCO.setStatus(ossDO.getStatus());
 		ossCO.setCreateTime(ossDO.getCreateTime());
 		return ossCO;
+	}
+
+	public static OssUploadAssembler toAssembler(MultipartFile file, String fileType) throws IOException {
+		String name = file.getOriginalFilename();
+		Assert.notNull(name, "File name must not be null");
+		String extName = FileUtils.getFileExt(name);
+		return new OssUploadAssembler(fileType, file.getBytes(), UUIDGenerator.generateUUID() + extName, extName,
+				file.getContentType(), file.getSize());
 	}
 
 	public static List<OssCO> toClientObjects(List<OssDO> list) {
