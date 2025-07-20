@@ -15,22 +15,15 @@
  *
  */
 
-package org.laokou.iot.thingModel.config;
+package org.laokou.oss.gateway;
 
-import org.laokou.common.dubbo.rpc.DistributedIdentifierRpc;
-import org.laokou.iot.thingModel.model.IdGenerator;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.laokou.oss.model.OssA;
 
 /**
  * @author laokou
  */
-@Configuration
-public class Config {
+public interface OssGateway {
 
-	@Bean
-	IdGenerator idGenerator(DistributedIdentifierRpc distributedIdentifierRpc) {
-		return distributedIdentifierRpc::getId;
-	}
+	String uploadOssAndGetUrl(OssA ossA) throws Exception;
 
 }

@@ -60,7 +60,7 @@ public class UserDO extends BaseDO {
 	/**
 	 * 用户头像.
 	 */
-	private String avatar;
+	private Long avatar;
 
 	/**
 	 * 用户名短语.

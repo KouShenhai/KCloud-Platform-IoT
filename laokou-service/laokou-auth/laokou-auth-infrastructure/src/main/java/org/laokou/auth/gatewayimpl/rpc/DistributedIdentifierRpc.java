@@ -15,37 +15,29 @@
  *
  */
 
-package org.laokou.common.dubbo.rpc;
+package org.laokou.auth.gatewayimpl.rpc;
 
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.laokou.common.core.util.FileUtils;
-import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.oss.api.OssServiceI;
-import org.laokou.oss.dto.OssUploadCmd;
+import org.laokou.distributed.identifier.api.DistributedIdentifierServiceI;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author laokou
  */
 @Component
-public class OssRpc {
+public class DistributedIdentifierRpc {
 
-	@DubboReference(group = "iot-oss", version = "v3", interfaceClass = OssServiceI.class,
-			mock = "org.laokou.common.dubbo.rpc.OssMock", loadbalance = "adaptive", retries = 3)
-	private OssServiceI ossServiceI;
+	@DubboReference(group = "iot-distributed-identifier", version = "v3",
+			interfaceClass = DistributedIdentifierServiceI.class,
+			mock = "org.laokou.auth.gatewayimpl.rpc.DistributedIdentifierMock", loadbalance = "adaptive", retries = 3)
+	private DistributedIdentifierServiceI distributedIdentifierServiceI;
 
-	public Result<String> uploadOss(MultipartFile file, String fileType) throws Exception {
-		String name = file.getOriginalFilename();
-		Assert.notNull(name, "文件名不能为空");
-		String extName = FileUtils.getFileExt(name);
-		Result<String> result = ossServiceI.uploadOss(new OssUploadCmd(fileType, file.getBytes(),
-				UUIDGenerator.generateUUID() + extName, extName, file.getContentType(), file.getSize()));
+	public Long getId() {
+		Result<Long> result = distributedIdentifierServiceI.generateSnowflake();
 		if (result.success()) {
-			return result;
+			return result.getData();
 		}
 		throw new BizException(result.getCode(), result.getMsg());
 	}

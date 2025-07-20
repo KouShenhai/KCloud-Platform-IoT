@@ -15,24 +15,15 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.oss.model;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.oss.model.BaseOss;
-import org.laokou.common.oss.model.FileInfo;
-import org.laokou.common.oss.model.LoadBalancePolicyEnum;
-
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class StorageTemplate {
+public interface IdGenerator extends Serializable {
 
-	public String uploadOss(FileInfo fileInfo, List<BaseOss> list) throws Exception {
-		BaseOss baseOss = LoadBalancePolicyEnum.HASH.choose(list);
-		return baseOss.getStoragePolicy().getStorage(fileInfo, baseOss).uploadOss();
-	}
+	long getId();
 
 }

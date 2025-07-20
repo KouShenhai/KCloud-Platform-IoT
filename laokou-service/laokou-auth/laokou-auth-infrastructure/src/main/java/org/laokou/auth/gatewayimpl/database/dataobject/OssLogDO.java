@@ -20,70 +20,49 @@ package org.laokou.auth.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
-import java.io.Serial;
 
-import static org.laokou.common.tenant.constant.DSConstants.Master.USER_TABLE;
+import static org.laokou.common.tenant.constant.DSConstants.Master.OSS_LOG_TABLE;
 
 /**
- * 用户.
- *
  * @author laokou
  */
 @Data
-@TableName(USER_TABLE)
-public class UserDO extends BaseDO {
-
-	@Serial
-	private static final long serialVersionUID = 1181289215379287683L;
+@TableName(OSS_LOG_TABLE)
+public class OssLogDO extends BaseDO {
 
 	/**
-	 * 用户名.
+	 * 文件名称.
 	 */
-	private String username;
+	private String name;
 
 	/**
-	 * 用户密码.
+	 * 文件的MD5标识.
 	 */
-	private String password;
+	private String md5;
 
 	/**
-	 * 超级管理员标识 0否 1是.
+	 * 文件的URL.
 	 */
-	private Integer superAdmin;
+	private String url;
 
 	/**
-	 * 用户头像.
+	 * 文件大小.
 	 */
-	private Long avatar;
+	private Long size;
 
 	/**
-	 * 用户邮箱.
+	 * OSS存储ID.
 	 */
-	private String mail;
+	private Long ossId;
 
 	/**
-	 * 用户状态 0启用 1禁用.
+	 * 文件类型.
 	 */
-	private Integer status;
+	private String contentType;
 
 	/**
-	 * 用户手机号.
+	 * 文件格式.
 	 */
-	private String mobile;
-
-	/**
-	 * 用户名短语.
-	 */
-	private String usernamePhrase;
-
-	/**
-	 * 用户邮箱短语.
-	 */
-	private String mailPhrase;
-
-	/**
-	 * 用户手机号短语.
-	 */
-	private String mobilePhrase;
+	private String format;
 
 }

@@ -15,10 +15,10 @@
  *
  */
 
-package org.laokou.admin.user.config;
+package org.laokou.iot.common.config;
 
-import org.laokou.admin.user.model.IdGenerator;
-import org.laokou.common.dubbo.rpc.DistributedIdentifierRpc;
+import org.laokou.common.log.rpc.DistributedIdentifierRpc;
+import org.laokou.iot.thingModel.model.IdGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

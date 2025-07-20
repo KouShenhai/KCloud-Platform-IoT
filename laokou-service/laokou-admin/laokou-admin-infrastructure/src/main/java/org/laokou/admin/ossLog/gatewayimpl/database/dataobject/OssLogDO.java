@@ -52,4 +52,19 @@ public class OssLogDO extends BaseDO {
 	 */
 	private Long size;
 
+	/**
+	 * OSS存储ID.
+	 */
+	private Long ossId;
+
+	/**
+	 * 文件类型.
+	 */
+	private String contentType;
+
+	/**
+	 * 文件格式.
+	 */
+	private String format;
+
 }

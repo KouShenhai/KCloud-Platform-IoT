@@ -15,24 +15,22 @@
  *
  */
 
-package org.laokou.common.dubbo.rpc;
+package org.laokou.oss.config;
 
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.oss.api.OssServiceI;
-import org.laokou.oss.dto.OssUploadCmd;
+import org.laokou.oss.gatewayimpl.rpc.DistributedIdentifierRpc;
+import org.laokou.oss.model.IdGenerator;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author laokou
  */
-@Slf4j
-public class OssMock implements OssServiceI {
+@Configuration
+public class Config {
 
-	@Override
-	public Result<String> uploadOss(OssUploadCmd cmd) {
-		log.error("调用上传文件失败，请检查Dubbo服务");
-		throw new BizException("B_Dubbo_CallOssUploadFailed", "调用上传文件失败，请检查Dubbo服务");
+	@Bean
+	IdGenerator idGenerator(DistributedIdentifierRpc distributedIdentifierRpc) {
+		return distributedIdentifierRpc::getId;
 	}
 
 }

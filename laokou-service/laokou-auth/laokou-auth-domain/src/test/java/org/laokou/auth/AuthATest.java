@@ -71,6 +71,9 @@ class AuthATest {
 	@MockitoBean
 	private IdGenerator idGenerator;
 
+	@MockitoBean
+	private OssLogGateway ossLogGateway;
+
 	@MockitoBean("authorizationCodeAuthParamValidator")
 	private AuthParamValidator authorizationCodeAuthParamValidator;
 
@@ -85,6 +88,17 @@ class AuthATest {
 
 	@MockitoBean("usernamePasswordAuthParamValidator")
 	private AuthParamValidator usernamePasswordAuthParamValidator;
+
+	@Test
+	void testGetUserAvatar() {
+		AuthA authA = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
+		UserE user = authA.getUser();
+		Assertions.assertDoesNotThrow(() -> user.setAvatar(1L));
+		// 构造租户
+		when(ossLogGateway.getOssUrl(1L)).thenReturn("https://laokou.png");
+		authA.getUserAvatar(ossLogGateway.getOssUrl(user.getAvatar()));
+		Assertions.assertEquals("https://laokou.png", authA.getAvatar());
+	}
 
 	@Test
 	void testDecryptUsernamePassword() {

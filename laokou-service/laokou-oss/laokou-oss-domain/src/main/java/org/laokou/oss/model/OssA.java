@@ -17,6 +17,7 @@
 
 package org.laokou.oss.model;
 
+import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
@@ -32,10 +33,35 @@ public class OssA extends AggregateRoot {
 	private FileFormatEnum fileFormatEnum;
 
 	@Setter
+	@Getter
 	private String extName;
 
 	@Setter
+	@Getter
 	private long size;
+
+	@Setter
+	@Getter
+	private byte[] buffer;
+
+	@Setter
+	@Getter
+	private String name;
+
+	@Setter
+	@Getter
+	private String contentType;
+
+	@Getter
+	private String url;
+
+	@Setter
+	@Getter
+	private String md5;
+
+	public OssA(IdGenerator idGenerator) {
+		this.id = idGenerator.getId();
+	}
 
 	public void checkSize() {
 		if (size > 1024 * 1024 * 100) {
@@ -47,6 +73,10 @@ public class OssA extends AggregateRoot {
 		if (!fileFormatEnum.getExtNames().contains(extName)) {
 			throw new BizException("B_Oss_ExtError", "文件格式错误");
 		}
+	}
+
+	public void getFileUrl(String url) {
+		this.url = url;
 	}
 
 }

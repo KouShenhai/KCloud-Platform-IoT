@@ -15,24 +15,22 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.admin.common.config;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.oss.model.BaseOss;
-import org.laokou.common.oss.model.FileInfo;
-import org.laokou.common.oss.model.LoadBalancePolicyEnum;
-
-import java.util.List;
+import org.laokou.common.log.rpc.DistributedIdentifierRpc;
+import org.laokou.admin.user.model.IdGenerator;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class StorageTemplate {
+@Configuration
+public class Config {
 
-	public String uploadOss(FileInfo fileInfo, List<BaseOss> list) throws Exception {
-		BaseOss baseOss = LoadBalancePolicyEnum.HASH.choose(list);
-		return baseOss.getStoragePolicy().getStorage(fileInfo, baseOss).uploadOss();
+	@Bean
+	IdGenerator idGenerator(DistributedIdentifierRpc distributedIdentifierRpc) {
+		return distributedIdentifierRpc::getId;
 	}
 
 }

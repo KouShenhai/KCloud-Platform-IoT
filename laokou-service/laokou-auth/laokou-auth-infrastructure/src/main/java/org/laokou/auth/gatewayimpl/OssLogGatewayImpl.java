@@ -15,27 +15,37 @@
  *
  */
 
-package org.laokou.admin.user.command;
+package org.laokou.auth.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.user.dto.UserUploadAvatarCmd;
-import org.laokou.admin.oss.gatewayimpl.rpc.OssRpc;
-import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.auth.gateway.OssLogGateway;
+import org.laokou.auth.gatewayimpl.database.OssLogMapper;
+import org.laokou.auth.gatewayimpl.database.dataobject.OssLogDO;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class UserUploadCmdExe {
+public class OssLogGatewayImpl implements OssLogGateway {
 
-	private final OssRpc ossRpc;
+	private final OssLogMapper ossLogMapper;
 
-	@CommandLog
-	public Result<String> execute(UserUploadAvatarCmd cmd) throws Exception {
-		return ossRpc.uploadOss(cmd.getFile(), "image");
+	@Override
+	public String getOssUrl(Long id) {
+		try {
+			DynamicDataSourceContextHolder.push(DOMAIN);
+			OssLogDO ossLogDO = ossLogMapper.selectById(id);
+			return ObjectUtils.isNotNull(ossLogDO) ? ossLogDO.getUrl() : "";
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

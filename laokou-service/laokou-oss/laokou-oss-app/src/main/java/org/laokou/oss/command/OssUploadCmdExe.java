@@ -17,16 +17,12 @@
 
 package org.laokou.oss.command;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.oss.template.StorageTemplate;
+import org.laokou.oss.ability.OssDomainService;
 import org.laokou.oss.convertor.OssConvertor;
 import org.laokou.oss.dto.OssUploadCmd;
-import org.laokou.oss.gatewayimpl.database.OssMapper;
-import org.laokou.oss.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.oss.model.OssA;
-import org.laokou.oss.model.OssStatusEnum;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,22 +32,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OssUploadCmdExe {
 
-	private final StorageTemplate storageTemplate;
-
-	private final OssMapper ossMapper;
+	private final OssDomainService ossDomainService;
 
 	public Result<String> execute(OssUploadCmd cmd) throws Exception {
-		OssA ossA = OssConvertor.toEntity(cmd.getFileType(), cmd.getSize(), cmd.getExtName());
-		// 校验文件大小
-		ossA.checkSize();
-		// 校验扩展名
-		ossA.checkExt();
-		return storageTemplate.uploadOss(
-				OssConvertor.toFileInfo(cmd.getBuffer(), cmd.getSize(), cmd.getContentType(), cmd.getName(),
-						cmd.getExtName()),
-				OssConvertor.toBaseOssList(ossMapper.selectList(Wrappers.lambdaQuery(OssDO.class)
-					.eq(OssDO::getStatus, OssStatusEnum.ENABLE.getCode())
-					.select(OssDO::getParam, OssDO::getType))));
+		OssA ossA = OssConvertor.toEntity(cmd.getFileType(), cmd.getSize(), cmd.getExtName(), cmd.getBuffer(),
+				cmd.getContentType(), cmd.getName());
+		ossDomainService.uploadOss(ossA);
+		return Result.ok("");
 	}
 
 }
