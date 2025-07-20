@@ -6,6 +6,7 @@ dubbo:
       register-consumer-url: true
       namespace: ${NACOS-NAMESPACE}
     group: DUBBO_${NACOS-GROUP}
+    check: false
   protocol:
     name: dubbo
     port: ${PROTOCOL_PORT:1112}
@@ -14,3 +15,5 @@ dubbo:
     name: ${spring.application.name}
     logger: slf4j
     qos-port: ${QOS_PORT:1113}
+  consumer:
+    check: false

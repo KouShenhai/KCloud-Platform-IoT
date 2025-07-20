@@ -41,7 +41,7 @@ public class OssLogGatewayImpl implements OssLogGateway {
 		try {
 			DynamicDataSourceContextHolder.push(DOMAIN);
 			OssLogDO ossLogDO = ossLogMapper.selectById(id);
-			return ObjectUtils.isNotNull(ossLogDO) ? ossLogDO.getUrl() : "";
+			return ObjectUtils.isNotNull(ossLogDO) ? ossLogDO.getUrl() : "https://yrsh.f2z.cn/zZapbE";
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
