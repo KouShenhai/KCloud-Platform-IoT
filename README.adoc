@@ -36,7 +36,7 @@ image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark[
 
 image:https://gitcode.com/qq_39893313/KCloud-Platform-IoT/star/badge.svg?theme=dark[GitCode star,link=https://gitcode.com/qq_39893313/KCloud-Platform-IoT]
 
-image:https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.5&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
+image:https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.9&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
 image:https://img.shields.io/static/v1?label=Spring%20Boot&message=3.5.4&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud&message=2025.0.0&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.3.3&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
@@ -162,7 +162,8 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |TimescaleDB                 |17
 |TDengine                    |3.3.5.0
 |Liquibase                   |4.30.0
-|Snail Job                   |1.1.2
+|Snail Job                   |1.6.0
+|Sentinel                    |1.8.8
 |===
 
 ==== 🍺 相关技术

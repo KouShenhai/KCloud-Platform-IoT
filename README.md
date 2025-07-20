@@ -36,7 +36,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 
 <a href="https://gitcode.com/qq_39893313/KCloud-Platform-IoT" target="_blank"><img src="https://gitcode.com/qq_39893313/KCloud-Platform-IoT/star/badge.svg?theme=dark" alt="GitCode star"/></a>
 
-<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.5&color=green" alt="Spring Framework"/></a>
+<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.9&color=green" alt="Spring Framework"/></a>
 <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Boot&message=3.5.4&color=green" alt="Spring Boot"/></a>
 <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud&message=2025.0.0&color=green" alt="Spring Cloud"/></a>
 <a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2023.0.3.3&color=orange" alt="Spring Cloud Alibaba"/></a>
@@ -154,6 +154,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |          TDengine           |   3.3.5.0   |
 |          Liquibase          |   4.30.0    |
 |          Snail Job          |    1.1.2    |
+|          Sentinel           |    1.8.8    |
 
 #### 🍺 相关技术
 
