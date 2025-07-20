@@ -610,7 +610,7 @@ services:
   # https://github.com/KouShenhai/Sentinel
   # 账号/密码 => sentinel/laokou123
   sentinel-dashboard:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/sentinel-dashboard:3.5.4
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/sentinel-dashboard:3.5.4.2
     container_name: sentinel-dashboard
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -626,8 +626,9 @@ services:
       - iot_network
   # https://github.com/KouShenhai/snail-job
   # 账号/密码 => admin/laokou123
+  # 访问地址 => http://127.0.0.1:8088/snail-job
   snail-job:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/snail-job:3.5.4.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/snail-job:3.5.4.2
     container_name: snail-job
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -635,12 +636,15 @@ services:
     privileged: true
     ports:
       - "8088:8088"
+      - "17888:17888"
     volumes:
       - ./snail-job/logs:/opt/data/log
     env_file:
       - env/snail-job.env
     networks:
       - iot_network
+    depends_on:
+      - postgresql
 networks:
   iot_network:
     driver: bridge
