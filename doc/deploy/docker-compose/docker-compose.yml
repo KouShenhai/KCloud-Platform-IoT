@@ -358,7 +358,7 @@ services:
           cpus: '0.50'
           memory: 1G
   nacos:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-nacos:3.5.4.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-nacos:3.5.4.2
     container_name: nacos
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -377,7 +377,7 @@ services:
     depends_on:
       - postgresql
   monitor:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.5.4.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-monitor:3.5.4.2
     container_name: monitor
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -398,7 +398,7 @@ services:
     networks:
       - iot_network
   gateway:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.5.4.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway:3.5.4.2
     container_name: gateway
     tty: true
     env_file:
@@ -417,7 +417,7 @@ services:
       - kafka
       - redis
   auth:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.5.4.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-auth-start:3.5.4.2
     container_name: auth
     tty: true
     env_file:
@@ -437,7 +437,7 @@ services:
       - kafka
       - redis
   iot:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-iot-start:3.5.4.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-iot-start:3.5.4.2
     container_name: iot
     tty: true
     env_file:
@@ -456,7 +456,7 @@ services:
       - kafka
       - redis
   admin:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.5.4.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-admin-start:3.5.4.2
     container_name: admin
     tty: true
     env_file:
@@ -476,7 +476,7 @@ services:
       - kafka
       - redis
   logstash:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.5.4.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-logstash-start:3.5.4.2
     container_name: logstash
     tty: true
     env_file:
@@ -495,7 +495,7 @@ services:
       - elasticsearch
       - kafka
   ui:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.5.4.1
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.5.4.2
     container_name: ui
     # 保持容器在没有守护程序的情况下运行
     tty: true
