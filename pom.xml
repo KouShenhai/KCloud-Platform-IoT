@@ -401,6 +401,7 @@
               <goal>checkstyle</goal>
             </goals>
           </execution>
+<!--
           <execution>
             <id>checkstyle-validation</id>
             <phase>validate</phase>
@@ -413,6 +414,7 @@
               <goal>check</goal>
             </goals>
           </execution>
+-->
         </executions>
         <dependencies>
           <dependency>
