@@ -1,1 +1,0 @@
-package KCloud_Platform_IoT_Go
