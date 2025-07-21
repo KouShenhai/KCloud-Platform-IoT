@@ -10,6 +10,6 @@ require (
 require (
 	github.com/gorilla/websocket v1.5.3 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
-	golang.org/x/net v0.27.0 // indirect
+	golang.org/x/net v0.38.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
 )
