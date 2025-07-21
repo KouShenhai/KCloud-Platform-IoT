@@ -59,7 +59,9 @@ func SendRequestAndGetBody(method, url string, param map[string]string, header m
 	if err != nil {
 		return nil, err
 	}
-	return io.ReadAll(response.Body)
+	body, err := io.ReadAll(response.Body)
+	defer response.Body.Close()
+	return body, err
 }
 
 func sendHttpRequest(request *http.Request) (*http.Response, error) {
@@ -72,6 +74,5 @@ func sendHttpRequest(request *http.Request) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer response.Body.Close()
 	return response, nil
 }

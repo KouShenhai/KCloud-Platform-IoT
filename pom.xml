@@ -89,6 +89,8 @@
     <spring-javaformat-maven-plugin.version>0.0.47</spring-javaformat-maven-plugin.version>
     <maven-archetype-plugin.version>3.4.0</maven-archetype-plugin.version>
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
+    <checkstyle.version>10.26.1</checkstyle.version>
+    <spring-javaformat-checkstyle.version>0.0.47</spring-javaformat-checkstyle.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -360,6 +362,15 @@
         <groupId>io.spring.javaformat</groupId>
         <artifactId>spring-javaformat-maven-plugin</artifactId>
         <version>${spring-javaformat-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <inherited>true</inherited>
+            <goals>
+              <goal>validate</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -390,7 +401,31 @@
               <goal>checkstyle</goal>
             </goals>
           </execution>
+          <execution>
+            <id>checkstyle-validation</id>
+            <phase>validate</phase>
+            <inherited>true</inherited>
+            <configuration>
+              <configLocation>io/spring/javaformat/checkstyle/checkstyle.xml</configLocation>
+              <includeTestSourceDirectory>true</includeTestSourceDirectory>
+            </configuration>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
         </executions>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>${checkstyle.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.spring.javaformat</groupId>
+            <artifactId>spring-javaformat-checkstyle</artifactId>
+            <version>${spring-javaformat-checkstyle.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
       <!-- 打包插件，将 Java 源代码编译为字节码（.class 文件） -->
       <plugin>

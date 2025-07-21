@@ -25,7 +25,6 @@ import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.xss.util.XssUtils;
-import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -89,7 +88,7 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 	}
 
 	/**
-	 * @see DefaultMultipartHttpServletRequest#getParameterMap().
+	 * @see org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest#getParameterMap().
 	 * @return Map<String,String[]>
 	 */
 	@Override

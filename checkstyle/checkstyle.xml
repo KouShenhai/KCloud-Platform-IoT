@@ -20,7 +20,7 @@
 <!DOCTYPE module PUBLIC
 		"-//Puppy Crawl//DTD Check Configuration 1.3//EN"
 		"https://www.puppycrawl.com/dtds/configuration_1_3.dtd">
-<module name="Checker">
+<module name="com.puppycrawl.tools.checkstyle.Checker">
 
   <!-- https://checkstyle.sourceforge.io/property_types.html -->
 
@@ -29,6 +29,12 @@
 
 	<!-- 检查级别 -->
 	<property name="severity" value="error"/>
+
+<!--
+  <module name="io.spring.javaformat.checkstyle.SpringChecks">
+    <property name="excludes" value="io.spring.javaformat.checkstyle.check.SpringAvoidStaticImportCheck" />
+  </module>
+-->
 
   <!-- 抑制过滤器 https://checkstyle.sourceforge.io/filters/suppressionfilter.html#SuppressionFilter -->
   <module name="SuppressionFilter">
