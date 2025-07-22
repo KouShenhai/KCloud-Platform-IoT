@@ -32,7 +32,7 @@ services:
     volumes:
       - ./minio/data:/data
   mysql:
-    image: mysql:9.3
+    image: mysql:9.4
     container_name: mysql
     # 保持容器在没有守护程序的情况下运行
     tty: true
