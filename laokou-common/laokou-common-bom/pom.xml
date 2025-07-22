@@ -52,7 +52,7 @@
     <!--oshi版本-->
     <oshi.version>6.8.2</oshi.version>
     <!--elasticsearch版本-->
-    <elasticsearch.version>8.18.3</elasticsearch.version>
+    <elasticsearch.version>8.18.4</elasticsearch.version>
     <!--jakarta.servlet-api版本-->
     <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
     <!--fastexcel-->
@@ -164,7 +164,7 @@
     <!--minio版本-->
     <minio.version>8.5.17</minio.version>
     <!--spring-security版本-->
-    <spring-security.version>6.5.1</spring-security.version>
+    <spring-security.version>6.5.2</spring-security.version>
     <!--fury版本-->
     <fury.version>0.9.0</fury.version>
   </properties>
