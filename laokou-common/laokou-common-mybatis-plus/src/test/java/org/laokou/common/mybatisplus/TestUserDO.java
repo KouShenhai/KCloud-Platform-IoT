@@ -19,9 +19,10 @@ package org.laokou.common.mybatisplus;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -36,7 +37,7 @@ class TestUserDO extends BaseDO {
 	void test() {
 		TestUserDO user = new TestUserDO();
 		user.setId(1L);
-		Assertions.assertEquals(1L, user.getId());
+		assertThat(user.getId()).isEqualTo(1L);
 	}
 
 }
