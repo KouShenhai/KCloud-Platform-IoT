@@ -17,9 +17,10 @@
 
 package org.laokou.common.core;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ArrayUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -29,22 +30,22 @@ class ArrayUtilsTest {
 	@Test
 	void testByteArray() {
 		byte[] bytes = { 1 };
-		Assertions.assertTrue(ArrayUtils.isNotEmpty(bytes));
-		Assertions.assertFalse(ArrayUtils.isEmpty(bytes));
+		assertThat(ArrayUtils.isNotEmpty(bytes)).isTrue();
+		assertThat(ArrayUtils.isEmpty(bytes)).isFalse();
 	}
 
 	@Test
 	void testStrArray() {
 		String[] str = { "1" };
-		Assertions.assertTrue(ArrayUtils.isNotEmpty(str));
-		Assertions.assertFalse(ArrayUtils.isEmpty(str));
+		assertThat(ArrayUtils.isNotEmpty(str)).isTrue();
+		assertThat(ArrayUtils.isEmpty(str)).isFalse();
 	}
 
 	@Test
 	void testObjArray() {
 		Object[] obj = { "1" };
-		Assertions.assertTrue(ArrayUtils.isNotEmpty(obj));
-		Assertions.assertFalse(ArrayUtils.isEmpty(obj));
+		assertThat(ArrayUtils.isNotEmpty(obj)).isTrue();
+		assertThat(ArrayUtils.isEmpty(obj)).isFalse();
 	}
 
 }

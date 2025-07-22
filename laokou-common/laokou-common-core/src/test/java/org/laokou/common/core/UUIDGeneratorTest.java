@@ -17,9 +17,10 @@
 
 package org.laokou.common.core;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.UUIDGenerator;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -28,7 +29,7 @@ class UUIDGeneratorTest {
 
 	@Test
 	void testGenerateUUID() {
-		Assertions.assertNotNull(UUIDGenerator.generateUUID());
+		assertThat(UUIDGenerator.generateUUID()).isNotBlank();
 	}
 
 }

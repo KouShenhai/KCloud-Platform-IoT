@@ -18,7 +18,6 @@
 package org.laokou.common.xss;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.xss.util.XssUtils;
 
@@ -39,27 +38,27 @@ class XssTest {
 	void testHtmlScripTagJsonString() {
 		String json = "{\"s\": \"" + xssAttackVectors[0] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
-		Assertions.assertEquals("{\"s\": \"alert(1)\"}", cleaned);
-		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
-		Assertions.assertFalse(cleaned.contains("<script>"));
+		assertThat( cleaned).isEqualTo("{\"s\": \"alert(1)\"}");
+		assertThat(cleaned.startsWith("{") && cleaned.endsWith("}")).isTrue();
+		assertThat(cleaned.contains("<script>")).isFalse();
 	}
 
 	@Test
 	void testHtmlTagJsonString() {
 		String json = "{\"s\": \"" + xssAttackVectors[1] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
-		Assertions.assertEquals("{\"s\": \"<img>\"}", cleaned);
-		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
-		Assertions.assertFalse(cleaned.contains("<IMG"));
+		assertThat( cleaned).isEqualTo("{\"s\": \"<img>\"}");
+		assertThat(cleaned.startsWith("{") && cleaned.endsWith("}")).isTrue();
+		assertThat(cleaned.contains("<IMG")).isFalse();
 	}
 
 	@Test
 	void testSvgJsonString() {
 		String json = "{\"s\": \"" + xssAttackVectors[2] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
-		Assertions.assertEquals("{\"s\": \"\"}", cleaned);
-		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
-		Assertions.assertFalse(cleaned.contains("<svg"));
+		assertThat(cleaned).isEqualTo("{\"s\": \"\"}");
+		assertThat(cleaned.startsWith("{") && cleaned.endsWith("}")).isTrue();
+		assertThat(cleaned.contains("<svg")).isFalse();
 	}
 
 	@Test
@@ -82,7 +81,7 @@ class XssTest {
 		catch (Exception e) {
 			sqlInjection = true;
 		}
-		Assertions.assertTrue(sqlInjection);
+		assertThat(sqlInjection).isTrue();
 	}
 
 }

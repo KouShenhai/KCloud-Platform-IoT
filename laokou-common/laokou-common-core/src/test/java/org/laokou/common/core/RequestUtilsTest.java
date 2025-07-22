@@ -22,7 +22,6 @@ import com.blueconic.browscap.Capabilities;
 import com.blueconic.browscap.UserAgentParser;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.RequestUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,6 +30,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -49,43 +50,43 @@ class RequestUtilsTest {
 	@Test
 	void testRequest() throws Exception {
 		HttpServletRequest request = RequestUtils.getHttpServletRequest();
-		Assertions.assertNotNull(request);
-		Assertions.assertNotNull(handlerMapping);
-		Assertions.assertFalse(request.getHeaderNames().hasMoreElements());
+		assertThat(request).isNotNull();
+		assertThat(handlerMapping).isNotNull();
+		assertThat(request.getHeaderNames().hasMoreElements()).isFalse();
 		UserAgentParser parser = RequestUtils.getUserAgentParser();
-		Assertions.assertNotNull(parser);
+		assertThat(parser).isNotNull();
 		String defaultUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3";
 		Capabilities capabilities = parser.parse(defaultUserAgent);
-		Assertions.assertEquals("Chrome", capabilities.getBrowser());
-		Assertions.assertEquals("Browser", capabilities.getBrowserType());
-		Assertions.assertEquals("58", capabilities.getBrowserMajorVersion());
-		Assertions.assertEquals("Win10", capabilities.getPlatform());
-		Assertions.assertEquals("10.0", capabilities.getPlatformVersion());
-		Assertions.assertEquals("Desktop", capabilities.getDeviceType());
-		Assertions.assertEquals("Microsoft Corporation", capabilities.getValue(BrowsCapField.PLATFORM_MAKER));
-		Assertions.assertEquals("Blink", capabilities.getValue(BrowsCapField.RENDERING_ENGINE_NAME));
-		Assertions.assertEquals("Unknown", capabilities.getValue(BrowsCapField.RENDERING_ENGINE_VERSION));
-		Assertions.assertEquals("Google Inc", capabilities.getValue(BrowsCapField.RENDERING_ENGINE_MAKER));
-		Assertions.assertNull(RequestUtils.getHandlerMethod(request, handlerMapping));
+		assertThat(capabilities.getBrowser()).isEqualTo("Chrome");
+		assertThat(capabilities.getBrowserType()).isEqualTo("Browser");
+		assertThat(capabilities.getBrowserMajorVersion()).isEqualTo("58");
+		assertThat(capabilities.getPlatform()).isEqualTo("Win10");
+		assertThat(capabilities.getPlatformVersion()).isEqualTo("10.0");
+		assertThat(capabilities.getDeviceType()).isEqualTo("Desktop");
+		assertThat(capabilities.getValue(BrowsCapField.PLATFORM_MAKER)).isEqualTo("Microsoft Corporation");
+		assertThat(capabilities.getValue(BrowsCapField.RENDERING_ENGINE_NAME)).isEqualTo("Blink");
+		assertThat(capabilities.getValue(BrowsCapField.RENDERING_ENGINE_VERSION)).isEqualTo("Unknown");
+		assertThat(capabilities.getValue(BrowsCapField.RENDERING_ENGINE_MAKER)).isEqualTo("Google Inc");
+		assertThat(RequestUtils.getHandlerMethod(request, handlerMapping)).isNull();
 		capabilities = RequestUtils.getCapabilities(request);
-		Assertions.assertEquals("Unknown", capabilities.getValue(BrowsCapField.BROWSER));
-		Assertions.assertEquals("Unknown", capabilities.getValue(BrowsCapField.BROWSER_TYPE));
-		Assertions.assertEquals("Unknown", capabilities.getValue(BrowsCapField.BROWSER_MAJOR_VERSION));
-		Assertions.assertEquals("Unknown", capabilities.getValue(BrowsCapField.PLATFORM));
-		Assertions.assertEquals("Unknown", capabilities.getValue(BrowsCapField.PLATFORM_VERSION));
-		Assertions.assertEquals("Unknown", capabilities.getValue(BrowsCapField.PLATFORM_MAKER));
-		Assertions.assertEquals("Unknown", capabilities.getValue(BrowsCapField.DEVICE_TYPE));
-		Assertions.assertEquals("Unknown", capabilities.getValue(BrowsCapField.RENDERING_ENGINE_NAME));
-		Assertions.assertEquals("Unknown", capabilities.getValue(BrowsCapField.RENDERING_ENGINE_VERSION));
-		Assertions.assertEquals("Unknown", capabilities.getValue(BrowsCapField.RENDERING_ENGINE_MAKER));
-		Assertions.assertEquals("", RequestUtils.getParamValue(request, "test"));
+		assertThat(capabilities.getValue(BrowsCapField.BROWSER)).isEqualTo("Unknown");
+		assertThat(capabilities.getValue(BrowsCapField.BROWSER_TYPE)).isEqualTo("Unknown");
+		assertThat(capabilities.getValue(BrowsCapField.BROWSER_MAJOR_VERSION)).isEqualTo("Unknown");
+		assertThat(capabilities.getValue(BrowsCapField.PLATFORM)).isEqualTo("Unknown");
+		assertThat(capabilities.getValue(BrowsCapField.PLATFORM_VERSION)).isEqualTo("Unknown");
+		assertThat(capabilities.getValue(BrowsCapField.PLATFORM_MAKER)).isEqualTo("Unknown");
+		assertThat(capabilities.getValue(BrowsCapField.DEVICE_TYPE)).isEqualTo("Unknown");
+		assertThat(capabilities.getValue(BrowsCapField.RENDERING_ENGINE_NAME)).isEqualTo("Unknown");
+		assertThat(capabilities.getValue(BrowsCapField.RENDERING_ENGINE_VERSION)).isEqualTo("Unknown");
+		assertThat(capabilities.getValue(BrowsCapField.RENDERING_ENGINE_MAKER)).isEqualTo("Unknown");
+		assertThat(RequestUtils.getParamValue(request, "test")).isEqualTo("");
 		byte[] body = RequestUtils.getRequestBody(request);
-		Assertions.assertEquals(0, body.length);
-		Assertions.assertNotNull(RequestUtils.getInputStream(body));
+		assertThat(body.length).isEqualTo(0);
+		assertThat(RequestUtils.getInputStream(body)).isNotNull();
 		ServletRequest requestWrapper = new RequestUtils.RequestWrapper(request);
-		Assertions.assertNotNull(requestWrapper);
-		Assertions.assertNotNull(requestWrapper.getInputStream());
-		Assertions.assertNotNull(requestWrapper.getReader());
+		assertThat(requestWrapper).isNotNull();
+		assertThat(requestWrapper.getInputStream()).isNotNull();
+		assertThat(requestWrapper.getReader()).isNotNull();
 	}
 
 }

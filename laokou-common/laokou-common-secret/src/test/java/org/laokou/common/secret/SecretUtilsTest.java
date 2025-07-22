@@ -17,9 +17,10 @@
 
 package org.laokou.common.secret;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.secret.util.SecretUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -29,7 +30,7 @@ class SecretUtilsTest {
 	@Test
 	void test() {
 		String sign = SecretUtils.sign(SecretUtils.APP_KEY, SecretUtils.APP_SECRET, "1", String.valueOf(100000), "");
-		Assertions.assertEquals("e1506abd8395b0763f08d2a0e56f6738", sign);
+		assertThat(sign).isEqualTo("e1506abd8395b0763f08d2a0e56f6738");
 	}
 
 }

@@ -22,10 +22,7 @@ import org.laokou.common.core.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * CollectionUtils测试类.
@@ -57,44 +54,28 @@ class CollectionUtilsTest {
 
 	@Test
 	void testToList() {
-		assertEquals(Arrays.asList("a", "b", "c"), CollectionUtils.toList("a,b,c", ","));
-		// 测试空字符串
-		assertTrue(CollectionUtils.toList("", ",").isEmpty());
-
-		// 测试null
-		assertTrue(CollectionUtils.toList(null, ",").isEmpty());
-
-		// 测试带空格的字符串
-		String strWithSpaces = "a, b , c";
-		List<String> expectedTrimmed = Arrays.asList("a", "b", "c");
-		assertEquals(expectedTrimmed, CollectionUtils.toList(strWithSpaces, ","));
+		assertThat(CollectionUtils.toList("a,b,c", ",")).isEqualTo(Arrays.asList("a", "b", "c"));
+		assertThat(CollectionUtils.toList("", ",").isEmpty()).isTrue();
+		assertThat(CollectionUtils.toList(null, ",").isEmpty()).isTrue();
+		assertThat(CollectionUtils.toList("a, b , c", ",")).isEqualTo(Arrays.asList("a", "b", "c"));
 	}
 
 	@Test
 	void testContains() {
-		List<String> list = Arrays.asList("a", "b", "c");
-		assertTrue(CollectionUtils.contains(list, "a"));
-		assertFalse(CollectionUtils.contains(list, "d"));
+		assertThat(CollectionUtils.contains(Arrays.asList("a", "b", "c"), "a")).isTrue();
+		assertThat(CollectionUtils.contains(Arrays.asList("a", "b", "c"), "d")).isFalse();
 	}
 
 	@Test
 	void testAnyMatch() {
-		List<String> list1 = Arrays.asList("a", "b", "c");
-		List<String> list2 = Arrays.asList("c", "d", "e");
-		assertTrue(CollectionUtils.anyMatch(list1, list2));
-
-		List<String> list3 = Arrays.asList("x", "y", "z");
-		assertFalse(CollectionUtils.anyMatch(list1, list3));
+		assertThat(CollectionUtils.anyMatch(Arrays.asList("a", "b", "c"), Arrays.asList("c", "d", "e"))).isTrue();
+		assertThat(CollectionUtils.anyMatch(Arrays.asList("c", "d", "e"), Arrays.asList("x", "y", "z"))).isFalse();
 	}
 
 	@Test
 	void testContainsAll() {
-		List<String> subList = Arrays.asList("a", "b");
-		List<String> fullList = Arrays.asList("a", "b", "c");
-		assertTrue(CollectionUtils.containsAll(subList, fullList));
-
-		List<String> differentList = Arrays.asList("x", "y");
-		assertFalse(CollectionUtils.containsAll(differentList, fullList));
+		assertThat(CollectionUtils.containsAll(Arrays.asList("a", "b"), Arrays.asList("a", "b", "c"))).isTrue();
+		assertThat(CollectionUtils.containsAll(Arrays.asList("x", "y"), Arrays.asList("a", "b", "c"))).isFalse();
 	}
 
 }

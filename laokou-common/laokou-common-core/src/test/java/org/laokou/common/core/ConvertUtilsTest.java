@@ -25,6 +25,8 @@ import org.laokou.common.core.util.ConvertUtils;
 import java.io.Serializable;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * @author laokou
  */
@@ -34,7 +36,7 @@ class ConvertUtilsTest {
 	void test() {
 		TestUser testUser = new TestUser(1L, "laokou");
 		User user = ConvertUtils.sourceToTarget(testUser, User.class);
-		Assertions.assertNotNull(user);
+		assertThat(user).isNotNull();
 		Assertions.assertEquals(testUser.getId(), user.getId());
 		Assertions.assertEquals(testUser.getName(), user.getName());
 		TestUser testUser2 = new TestUser(2L, "老寇");
