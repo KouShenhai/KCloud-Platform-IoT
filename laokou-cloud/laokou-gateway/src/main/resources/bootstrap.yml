@@ -22,6 +22,8 @@ spring:
   cloud:
     nacos:
       discovery:
+        # 开启服务注册&发现
+        enabled: true
         # 服务注册&发现-地址
         server-addr: ${NACOS-DISCOVERY-ADDRESS}
         # 服务注册&发现-命名空间
@@ -46,6 +48,8 @@ spring:
         # 超过30秒，则标记为不健康
         heart-beat-timeout: 30000
       config:
+        # 开启配置中心
+        enabled: true
         # 配置中心-地址
         server-addr: ${NACOS-CONFIG-ADDRESS}
         # 配置中心-命名空间

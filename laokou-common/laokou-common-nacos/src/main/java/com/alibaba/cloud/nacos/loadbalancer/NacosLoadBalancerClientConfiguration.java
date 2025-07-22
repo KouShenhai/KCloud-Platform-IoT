@@ -35,9 +35,7 @@ package com.alibaba.cloud.nacos.loadbalancer;
 
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.*;
 import org.springframework.cloud.client.ConditionalOnBlockingDiscoveryEnabled;
 import org.springframework.cloud.client.ConditionalOnDiscoveryEnabled;
 import org.springframework.cloud.client.ConditionalOnReactiveDiscoveryEnabled;
@@ -77,19 +75,21 @@ public class NacosLoadBalancerClientConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
+	@ConditionalOnBean({ LoadBalancerClientFactory.class, NacosDiscoveryProperties.class, InetIPv6Utils.class })
 	public ReactorLoadBalancer<ServiceInstance> nacosLoadBalancer(Environment environment,
 			LoadBalancerClientFactory loadBalancerClientFactory, NacosDiscoveryProperties nacosDiscoveryProperties,
 			InetIPv6Utils inetIPv6Utils, List<ServiceInstanceFilter> serviceInstanceFilters,
 			List<LoadBalancerAlgorithm> loadBalancerAlgorithms) {
-		String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
+		String serviceId = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
 		Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap = new HashMap<>();
 		loadBalancerAlgorithms.forEach(loadBalancerAlgorithm -> {
 			if (!loadBalancerAlgorithmMap.containsKey(loadBalancerAlgorithm.getServiceId())) {
 				loadBalancerAlgorithmMap.put(loadBalancerAlgorithm.getServiceId(), loadBalancerAlgorithm);
 			}
 		});
-		return new NacosLoadBalancer(loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class),
-				name, nacosDiscoveryProperties, inetIPv6Utils, serviceInstanceFilters, loadBalancerAlgorithmMap);
+		return new NacosLoadBalancer(
+				loadBalancerClientFactory.getLazyProvider(serviceId, ServiceInstanceListSupplier.class), serviceId,
+				nacosDiscoveryProperties, inetIPv6Utils, serviceInstanceFilters, loadBalancerAlgorithmMap);
 	}
 
 	@Configuration(proxyBeanMethods = false)

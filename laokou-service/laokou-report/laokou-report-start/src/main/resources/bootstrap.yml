@@ -18,6 +18,8 @@ spring:
   cloud:
     nacos:
       config:
+        # 开启配置中心
+        enabled: true
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
         username: ${NACOS-USERNAME}

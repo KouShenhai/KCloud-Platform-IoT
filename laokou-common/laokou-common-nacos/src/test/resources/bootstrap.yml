@@ -18,6 +18,8 @@ spring:
   cloud:
     nacos:
       discovery:
+        # 开启服务注册&发现
+        enabled: true
         server-addr: 127.0.0.1:8848
         namespace: public
         username: nacos

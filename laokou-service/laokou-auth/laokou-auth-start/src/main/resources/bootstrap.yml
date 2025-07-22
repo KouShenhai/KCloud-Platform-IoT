@@ -18,6 +18,8 @@ spring:
   cloud:
     nacos:
       discovery:
+        # 开启服务注册&发现
+        enabled: true
         server-addr: ${NACOS-DISCOVERY-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
         username: ${NACOS-USERNAME}
@@ -36,6 +38,8 @@ spring:
         # 超过30秒，则标记为不健康
         heart-beat-timeout: 30000
       config:
+        # 开启配置中心
+        enabled: true
         server-addr: ${NACOS-CONFIG-ADDRESS}
         namespace: ${NACOS-NAMESPACE}
         username: ${NACOS-USERNAME}
