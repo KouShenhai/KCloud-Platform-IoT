@@ -298,6 +298,10 @@ KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.or
 
 值此开源三周年之际，我们准备了承载心意的特别礼物。感谢10位贡献者的代码筑城，致敬40个开源先驱项目的火炬传递，珍藏社区累计900次的温暖互动。每一份实体礼物都将镌刻您的GitHub ID，这不仅是致谢，更是属于技术人的浪漫勋章。
 
+<img src="doc/image/img_2.png" alt="贡献者奖杯" />
+
+<img src="doc/image/img_3.png" alt="贡献者礼包" />
+
 [抖音视频-老寇IoT云平台开源三周年](https://v.douyin.com/7tquJphUnAI)
 
 [哔哩哔哩视频-老寇IoT云平台开源三周年](https://www.bilibili.com/video/BV1KPdxYaESL)
