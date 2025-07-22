@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.mockito.Mockito.*;
 
@@ -93,11 +94,11 @@ class AuthATest {
 	void testGetUserAvatar() {
 		AuthA authA = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		UserE user = authA.getUser();
-		Assertions.assertDoesNotThrow(() -> user.setAvatar(1L));
+		assertThatNoException().isThrownBy(() -> user.setAvatar(1L));
 		// 构造租户
 		when(ossLogGateway.getOssUrl(1L)).thenReturn("https://laokou.png");
 		authA.getUserAvatar(ossLogGateway.getOssUrl(user.getAvatar()));
-		Assertions.assertEquals("https://laokou.png", authA.getAvatar());
+		assertThat(authA.getAvatar()).isEqualTo("https://laokou.png");
 	}
 
 	@Test

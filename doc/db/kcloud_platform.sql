@@ -256,6 +256,10 @@ COMMENT ON COLUMN "public"."sys_menu"."status" IS '菜单状态 0启用 1停用'
 COMMENT ON TABLE "public"."sys_menu" IS '菜单';
 
 ALTER TABLE "public"."sys_menu" ADD CONSTRAINT "sys_menu_pkey" PRIMARY KEY ("id");
+ALTER TABLE "public"."sys_menu" ADD CONSTRAINT "sys_menu_permission_unique" UNIQUE ("permission");
+
+CREATE INDEX "sys_menu_type_idx" ON "public"."sys_menu" USING btree ("type");
+COMMENT ON INDEX "public"."sys_menu_type_idx" IS '菜单类型_索引';
 
 INSERT INTO "public"."sys_menu" VALUES (1, 1, 1, '2024-06-04 17:20:42', '2024-06-04 17:20:46', 0, 0, 0, 0, NULL, 0, '系统管理', '/sys', 'SettingOutlined', 90000, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (2, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 0, 1, NULL, 0, '日志管理', '/sys/log', '', 1000, 0, 0, NULL);
