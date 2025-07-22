@@ -17,7 +17,6 @@
 
 package org.laokou.auth;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
@@ -27,6 +26,8 @@ import org.laokou.auth.model.GrantTypeEnum;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
@@ -64,36 +65,36 @@ class AuthParamValidatorTest {
 	void testTestAuthParamValidator() {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.TEST, EMPTY, EMPTY);
 		// 校验测试登录
-		Assertions.assertDoesNotThrow(() -> testAuthParamValidator.validateAuth(auth));
+		assertThatNoException().isThrownBy(() -> testAuthParamValidator.validateAuth(auth));
 	}
 
 	@Test
 	void testUsernamePasswordAuthParamValidator() {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 校验用户名密码登录
-		Assertions.assertDoesNotThrow(() -> usernamePasswordAuthParamValidator.validateAuth(auth));
+		assertThatNoException().isThrownBy(() -> usernamePasswordAuthParamValidator.validateAuth(auth));
 	}
 
 	@Test
 	void testAuthorizationCodeAuthParamValidator() {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
 		// 校验授权码登录
-		Assertions.assertDoesNotThrow(() -> authorizationCodeAuthParamValidator.validateAuth(auth));
+		assertThatNoException().isThrownBy(() -> authorizationCodeAuthParamValidator.validateAuth(auth));
 	}
 
 	@Test
 	void testMailAuthParamValidator() {
 		AuthA auth = getAuth(EMPTY, EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
 		// 校验邮箱登录
-		Assertions.assertDoesNotThrow(() -> mailAuthParamValidator.validateAuth(auth));
+		assertThatNoException().isThrownBy(() -> mailAuthParamValidator.validateAuth(auth));
 	}
 
 	@Test
 	void testMobileAuthParamValidator() {
 		AuthA auth = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
-		Assertions.assertNotNull(auth);
+		assertThat(auth).isNotNull();
 		// 校验手机号登录
-		Assertions.assertDoesNotThrow(() -> mobileAuthParamValidator.validateAuth(auth));
+		assertThatNoException().isThrownBy(() -> mobileAuthParamValidator.validateAuth(auth));
 	}
 
 	private AuthA getAuth(String username, String password, GrantTypeEnum grantTypeEnum, String uuid, String captcha) {

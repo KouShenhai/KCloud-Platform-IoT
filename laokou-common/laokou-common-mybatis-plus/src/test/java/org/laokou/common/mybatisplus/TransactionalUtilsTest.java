@@ -30,6 +30,8 @@ import org.springframework.transaction.TransactionDefinition;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThatNoException;
+
 /**
  * @author laokou
  */
@@ -45,32 +47,33 @@ class TransactionalUtilsTest {
 
 	@Test
 	void testWithoutResult() {
-		Assertions.assertDoesNotThrow(
-				() -> transactionalUtils.executeInTransaction(() -> testUserMapper.insert(getTestUserDO())));
+		assertThatNoException()
+			.isThrownBy(() -> transactionalUtils.executeInTransaction(() -> testUserMapper.insert(getTestUserDO())));
 		Assertions.assertEquals(1,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)));
-		Assertions.assertDoesNotThrow(
-				() -> transactionalUtils.executeInTransaction(() -> testUserMapper.deleteTestUser(List.of(9L)),
-						TransactionDefinition.ISOLATION_READ_COMMITTED, false));
+		assertThatNoException()
+			.isThrownBy(() -> transactionalUtils.executeInTransaction(() -> testUserMapper.deleteTestUser(List.of(9L)),
+					TransactionDefinition.ISOLATION_READ_COMMITTED, false));
 		Assertions.assertEquals(0,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)));
-		Assertions.assertDoesNotThrow(
-				() -> transactionalUtils.executeInNewTransaction(() -> testUserMapper.insert(getTestUserDO())));
+		assertThatNoException()
+			.isThrownBy(() -> transactionalUtils.executeInNewTransaction(() -> testUserMapper.insert(getTestUserDO())));
 		Assertions.assertEquals(1,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)));
-		Assertions.assertDoesNotThrow(
+		assertThatNoException().isThrownBy(
 				() -> transactionalUtils.executeInNewTransaction(() -> testUserMapper.deleteTestUser(List.of(9L)),
 						TransactionDefinition.ISOLATION_READ_COMMITTED, false));
 		Assertions.assertEquals(0,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)));
-		Assertions.assertDoesNotThrow(() -> transactionalUtils.executeInTransaction(
-				() -> testUserMapper.insert(getTestUserDO()), TransactionDefinition.PROPAGATION_REQUIRED,
-				TransactionDefinition.ISOLATION_READ_COMMITTED, false));
+		assertThatNoException()
+			.isThrownBy(() -> transactionalUtils.executeInTransaction(() -> testUserMapper.insert(getTestUserDO()),
+					TransactionDefinition.PROPAGATION_REQUIRED, TransactionDefinition.ISOLATION_READ_COMMITTED, false));
 		Assertions.assertEquals(1,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)));
-		Assertions.assertDoesNotThrow(() -> transactionalUtils.executeInTransaction(
-				() -> testUserMapper.deleteTestUser(List.of(9L)), TransactionDefinition.PROPAGATION_REQUIRES_NEW,
-				TransactionDefinition.ISOLATION_READ_COMMITTED, false));
+		assertThatNoException()
+			.isThrownBy(() -> transactionalUtils.executeInTransaction(() -> testUserMapper.deleteTestUser(List.of(9L)),
+					TransactionDefinition.PROPAGATION_REQUIRES_NEW, TransactionDefinition.ISOLATION_READ_COMMITTED,
+					false));
 		Assertions.assertEquals(0,
 				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)));
 	}

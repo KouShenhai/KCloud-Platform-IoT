@@ -21,10 +21,11 @@ import io.vertx.core.Vertx;
 import io.vertx.core.datagram.DatagramSocket;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
+
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
  * @author laokou
@@ -52,7 +53,7 @@ class UdpTest {
 				}
 			});
 			Thread.sleep(2000);
-			Assertions.assertDoesNotThrow(datagramSocket::close);
+			assertThatNoException().isThrownBy(datagramSocket::close);
 		}
 	}
 

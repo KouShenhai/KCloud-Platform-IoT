@@ -27,6 +27,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 
+import static org.assertj.core.api.Assertions.assertThatNoException;
+
 /**
  * @author laokou
  */
@@ -51,15 +53,15 @@ class SpringContextUtilsTest {
 		Assertions.assertTrue(beanFactory.containsBeanDefinition("testEventListener"));
 		Assertions.assertFalse(beanFactory.containsBeanDefinition("testEventListener1"));
 		Assertions.assertFalse(beanFactory.containsBean("testEventListener1"));
-		Assertions.assertDoesNotThrow(() -> beanFactory.removeBeanDefinition("testEventListener"));
+		assertThatNoException().isThrownBy(() -> beanFactory.removeBeanDefinition("testEventListener"));
 		Assertions.assertFalse(beanFactory.containsBeanDefinition("testEventListener"));
 		Assertions
 			.assertDoesNotThrow(() -> SpringContextUtils.registerBean("testEventListener", TestEventListener.class));
 		Assertions.assertTrue(beanFactory.containsBeanDefinition("testEventListener"));
-		Assertions.assertDoesNotThrow(() -> SpringContextUtils.removeBean("testEventListener"));
+		assertThatNoException().isThrownBy(() -> SpringContextUtils.removeBean("testEventListener"));
 		Assertions.assertFalse(beanFactory.containsBeanDefinition("testEventListener"));
 		Assertions.assertEquals("laokou-common-core", SpringContextUtils.getServiceId());
-		Assertions.assertDoesNotThrow(() -> beanFactory.registerBeanDefinition("testEventListener",
+		assertThatNoException().isThrownBy(() -> beanFactory.registerBeanDefinition("testEventListener",
 				BeanDefinitionBuilder.genericBeanDefinition(TestEventListener.class).getBeanDefinition()));
 		Assertions.assertEquals(SpringContextUtils.getBean("testEventListener"),
 				SpringContextUtils.getBean(TestEventListener.class));

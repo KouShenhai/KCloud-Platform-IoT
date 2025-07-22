@@ -17,7 +17,6 @@
 
 package org.laokou.auth;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.*;
@@ -25,6 +24,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA;
 import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MOBILE_CAPTCHA;
 
@@ -56,14 +56,14 @@ class CaptchaParamValidatorTest {
 	void testMailCaptchaParamValidator() {
 		CaptchaE captcha = getCaptcha("2413176044@qq.com", SEND_MAIL_CAPTCHA.getCode());
 		// 校验邮箱验证码
-		Assertions.assertDoesNotThrow(() -> mailCaptchaParamValidator.validateCaptcha(captcha));
+		assertThatNoException().isThrownBy(() -> mailCaptchaParamValidator.validateCaptcha(captcha));
 	}
 
 	@Test
 	void testMobileCaptchaParamValidator() {
 		CaptchaE captcha = getCaptcha("18888888888", SEND_MOBILE_CAPTCHA.getCode());
 		// 校验手机号验证码
-		Assertions.assertDoesNotThrow(() -> mobileCaptchaParamValidator.validateCaptcha(captcha));
+		assertThatNoException().isThrownBy(() -> mobileCaptchaParamValidator.validateCaptcha(captcha));
 	}
 
 	private CaptchaE getCaptcha(String uuid, String tag) {

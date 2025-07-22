@@ -27,6 +27,8 @@ import org.springframework.boot.system.SystemProperties;
 import java.io.File;
 import java.io.IOException;
 
+import static org.assertj.core.api.Assertions.assertThatNoException;
+
 /**
  * @author laokou
  */
@@ -44,9 +46,9 @@ class CsvUtilsTest {
 		String fileName = "test.csv";
 		String[] arr = { "1", "2", "3" };
 		File file = new File(testPath, fileName);
-		Assertions.assertDoesNotThrow(() -> CsvUtils.execute(file, csvWriter -> csvWriter.writeNext(arr), false));
+		assertThatNoException().isThrownBy(() -> CsvUtils.execute(file, csvWriter -> csvWriter.writeNext(arr), false));
 		Assertions.assertEquals("\"1\",\"2\",\"3\"", FileUtils.readFileToString(file, "UTF-8").trim());
-		Assertions.assertDoesNotThrow(() -> FileUtils.forceDeleteOnExit(file));
+		assertThatNoException().isThrownBy(() -> FileUtils.forceDeleteOnExit(file));
 	}
 
 }

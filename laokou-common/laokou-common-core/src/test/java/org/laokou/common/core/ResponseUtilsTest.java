@@ -28,6 +28,8 @@ import org.springframework.test.context.TestConstructor;
 
 import java.io.IOException;
 
+import static org.assertj.core.api.Assertions.assertThatNoException;
+
 /**
  * @author laokou
  */
@@ -41,8 +43,8 @@ class ResponseUtilsTest {
 	void testResponse() throws IOException {
 		HttpServletResponse response = ResponseUtils.getHttpServletResponse();
 		Assertions.assertNotNull(response);
-		Assertions.assertDoesNotThrow(() -> ResponseUtils.responseOk(response, "ok"));
-		Assertions.assertDoesNotThrow(() -> ResponseUtils.responseOk(response, "ok", "text/plain"));
+		assertThatNoException().isThrownBy(() -> ResponseUtils.responseOk(response, "ok"));
+		assertThatNoException().isThrownBy(() -> ResponseUtils.responseOk(response, "ok", "text/plain"));
 	}
 
 }

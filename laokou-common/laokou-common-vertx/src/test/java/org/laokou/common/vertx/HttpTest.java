@@ -23,7 +23,6 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +31,8 @@ import org.springframework.test.context.TestConstructor;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
  * @author laokou
@@ -64,7 +65,7 @@ class HttpTest {
 				}
 			});
 			Thread.sleep(2000);
-			Assertions.assertDoesNotThrow(webSocketClient::close);
+			assertThatNoException().isThrownBy(webSocketClient::close);
 		}
 	}
 
@@ -94,7 +95,7 @@ class HttpTest {
 				request.end();
 			});
 			Thread.sleep(1000);
-			Assertions.assertDoesNotThrow(httpClient::close);
+			assertThatNoException().isThrownBy(httpClient::close);
 		}
 	}
 

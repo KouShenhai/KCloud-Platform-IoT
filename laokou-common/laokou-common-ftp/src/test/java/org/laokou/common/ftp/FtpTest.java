@@ -30,6 +30,8 @@ import org.springframework.test.context.TestConstructor;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static org.assertj.core.api.Assertions.assertThatNoException;
+
 /**
  * @author laokou
  */
@@ -46,12 +48,12 @@ class FtpTest {
 
 	@Test
 	void test() throws IOException {
-		Assertions.assertDoesNotThrow(() -> ftpTemplate.upload(ftpProperties.getDirectory(), "测试中文文本.txt",
+		assertThatNoException().isThrownBy(() -> ftpTemplate.upload(ftpProperties.getDirectory(), "测试中文文本.txt",
 				ResourceUtils.getResource("classpath:测试中文文本.txt").getInputStream()));
 		InputStream inputStream = ftpTemplate.download(ftpProperties.getDirectory(), "测试中文文本.txt");
 		Assertions.assertNotNull(inputStream);
 		Assertions.assertEquals("123", new String(inputStream.readAllBytes()).trim());
-		Assertions.assertDoesNotThrow(() -> ftpTemplate.delete(ftpProperties.getDirectory(), "测试中文文本.txt"));
+		assertThatNoException().isThrownBy(() -> ftpTemplate.delete(ftpProperties.getDirectory(), "测试中文文本.txt"));
 		Assertions.assertNull(ftpTemplate.download(ftpProperties.getDirectory(), "测试中文文本.txt"));
 	}
 

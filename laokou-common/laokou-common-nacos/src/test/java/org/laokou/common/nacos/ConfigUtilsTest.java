@@ -31,6 +31,8 @@ import org.springframework.util.DigestUtils;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * @author laokou
  */
@@ -112,8 +114,8 @@ class ConfigUtilsTest {
 
 			@Override
 			public void receiveConfigInfo(String s) {
-				Assertions.assertNotNull(s);
-				Assertions.assertTrue(s.contains("test"));
+				assertThat(s).isNotBlank();
+				assertThat(s.contains("test")).isTrue();
 			}
 		});
 	}

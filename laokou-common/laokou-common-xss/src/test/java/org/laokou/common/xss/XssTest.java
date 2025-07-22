@@ -22,6 +22,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.xss.util.XssUtils;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * @author laokou
  */
@@ -64,10 +66,10 @@ class XssTest {
 	void testHtmlScriptJsonString() {
 		String json = "{\"s\": \"" + xssAttackVectors[3] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
-		Assertions.assertEquals(
-				"{\"s\": \"/*-/*`/*\\`/*'/*\"/**/(/* */onerror=alert(1) )//%0D%0A%0d%0a//\\x3csVg/\\x3e\"}", cleaned);
-		Assertions.assertTrue(cleaned.startsWith("{") && cleaned.endsWith("}"));
-		Assertions.assertFalse(cleaned.contains("javascript:"));
+		assertThat(cleaned)
+			.isEqualTo("{\"s\": \"/*-/*`/*\\`/*'/*\"/**/(/* */onerror=alert(1) )//%0D%0A%0d%0a//\\x3csVg/\\x3e\"}");
+		assertThat(cleaned.startsWith("{") && cleaned.endsWith("}")).isTrue();
+		assertThat(cleaned.contains("javascript:")).isFalse();
 	}
 
 	@Test

@@ -17,7 +17,6 @@
 
 package org.laokou.common.core;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.CollectionUtils;
 
@@ -25,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -36,46 +36,28 @@ class CollectionUtilsTest {
 
 	@Test
 	void testIsNotEmpty() {
-		List<String> list = Arrays.asList("1", "2", "3");
-		Assertions.assertTrue(CollectionUtils.isNotEmpty(list));
-
-		List<String> emptyList = new ArrayList<>();
-		assertFalse(CollectionUtils.isNotEmpty(emptyList));
-
-		assertFalse(CollectionUtils.isNotEmpty(null));
+		assertThat(CollectionUtils.isNotEmpty(Arrays.asList("1", "2", "3"))).isTrue();
+		assertThat(CollectionUtils.isNotEmpty(new ArrayList<>())).isFalse();
+		assertThat(CollectionUtils.isNotEmpty(null)).isFalse();
 	}
 
 	@Test
 	void testIsEmpty() {
-		List<String> list = Arrays.asList("1", "2", "3");
-		assertFalse(CollectionUtils.isEmpty(list));
-
-		List<String> emptyList = new ArrayList<>();
-		assertTrue(CollectionUtils.isEmpty(emptyList));
-
-		assertTrue(CollectionUtils.isEmpty(null));
+		assertThat(CollectionUtils.isEmpty(Arrays.asList("1", "2", "3"))).isFalse();
+		assertThat(CollectionUtils.isEmpty(new ArrayList<>())).isTrue();
+		assertThat(CollectionUtils.isEmpty(null)).isTrue();
 	}
 
 	@Test
 	void testToStr() {
-		List<String> list = Arrays.asList("a", "b", "c");
-		assertEquals("a,b,c", CollectionUtils.toStr(list, ","));
-
-		// 测试空列表
-		List<String> emptyList = new ArrayList<>();
-		assertEquals("", CollectionUtils.toStr(emptyList, ","));
-
-		// 测试包含null值的列表
-		List<String> listWithNull = Arrays.asList("a", null, "c");
-		assertEquals("a,c", CollectionUtils.toStr(listWithNull, ","));
+		assertThat(CollectionUtils.toStr(Arrays.asList("a", "b", "c"), ",")).isEqualTo("a,b,c");
+		assertThat(CollectionUtils.toStr(new ArrayList<>(), ",")).isEqualTo("");
+		assertThat(CollectionUtils.toStr(Arrays.asList("a", null, "c"), ",")).isEqualTo("a,c");
 	}
 
 	@Test
 	void testToList() {
-		String str = "a,b,c";
-		List<String> expected = Arrays.asList("a", "b", "c");
-		assertEquals(expected, CollectionUtils.toList(str, ","));
-
+		assertEquals(Arrays.asList("a", "b", "c"), CollectionUtils.toList("a,b,c", ","));
 		// 测试空字符串
 		assertTrue(CollectionUtils.toList("", ",").isEmpty());
 
