@@ -17,9 +17,10 @@
 
 package org.laokou.common.core;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.BigDecimalUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -30,16 +31,16 @@ class BigDecimalUtilsTest {
 	void test() {
 		double a = 2.0;
 		double b = 1.0;
-		Assertions.assertEquals(3.0, BigDecimalUtils.add(a, b));
-		Assertions.assertEquals(1.0, BigDecimalUtils.subtract(a, b));
-		Assertions.assertEquals(2.0, BigDecimalUtils.multiply(a, b));
-		Assertions.assertEquals(2.0, BigDecimalUtils.divide(a, b));
-		Assertions.assertEquals(2.0, BigDecimalUtils.divide(a, b, 0));
-		Assertions.assertEquals(3.12, BigDecimalUtils.round(3.118, 2));
-		Assertions.assertEquals(a, BigDecimalUtils.returnMax(a, b));
-		Assertions.assertEquals(b, BigDecimalUtils.returnMin(a, b));
-		Assertions.assertTrue(BigDecimalUtils.compareTo(a, b) > 0);
-		Assertions.assertFalse(BigDecimalUtils.compareTo(a, b) < 0);
+		assertThat(BigDecimalUtils.add(a, b)).isEqualTo(3.0);
+		assertThat(BigDecimalUtils.subtract(a, b)).isEqualTo(1.0);
+		assertThat(BigDecimalUtils.multiply(a, b)).isEqualTo(2.0);
+		assertThat(BigDecimalUtils.divide(a, b)).isEqualTo(2.0);
+		assertThat(BigDecimalUtils.divide(a, b, 0)).isEqualTo(2.0);
+		assertThat(BigDecimalUtils.round(3.118, 2)).isEqualTo(3.12);
+		assertThat(BigDecimalUtils.returnMax(a, b)).isEqualTo(a);
+		assertThat(BigDecimalUtils.returnMin(a, b)).isEqualTo(b);
+		assertThat(BigDecimalUtils.compareTo(a, b) > 0).isTrue();
+		assertThat(BigDecimalUtils.compareTo(a, b) < 0).isFalse();
 	}
 
 }

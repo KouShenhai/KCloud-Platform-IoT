@@ -20,7 +20,6 @@ package org.laokou.common.excel;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.excel.util.ExcelUtils;
@@ -33,6 +32,7 @@ import java.io.FileOutputStream;
 import java.nio.file.Path;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
@@ -51,10 +51,10 @@ class ExcelTest {
 
 	@Test
 	void testExport() {
-		Assertions.assertNotNull(testUserMapper);
+		assertThat(testUserMapper).isNotNull();
 		List<TestUserDO> list = testUserMapper.selectList(Wrappers.emptyWrapper());
-		Assertions.assertEquals(1, list.size());
-		Assertions.assertTrue(list.stream().map(TestUserDO::getName).toList().contains("老寇"));
+		assertThat(list.size()).isEqualTo(1);
+		assertThat(list.stream().map(TestUserDO::getName).toList().contains("老寇")).isTrue();
 		assertThatNoException().isThrownBy(() -> ExcelUtils.doImport(EMPTY, TestUserExcel.class,
 				TestUserConvertor.INSTANCE, ResourceUtils.getResource("classpath:test3.xlsx").getInputStream(),
 				TestUserMapper.class, TestUserMapper::insert, mybatisUtils));
@@ -68,14 +68,14 @@ class ExcelTest {
 				TestUserConvertor.INSTANCE, ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(),
 				TestUserMapper.class, TestUserMapper::insert, mybatisUtils));
 		long count = testUserMapper.selectObjectCount(new PageQuery());
-		Assertions.assertEquals(7, count);
+		assertThat(count).isEqualTo(7);
 		assertThatNoException()
 			.isThrownBy(() -> ExcelUtils.doExport("测试用户Sheet页", 1000, new FileOutputStream("test.xlsx"),
 					new PageQuery(), testUserMapper, TestUserExcel.class, TestUserConvertor.INSTANCE));
 		assertThatNoException().isThrownBy(() -> FileUtils.deleteIfExists(Path.of("test.xlsx")));
 		assertThatNoException().isThrownBy(() -> testUserMapper.deleteUser(List.of(2L, 3L, 4L, 5L, 6L, 7L)));
 		count = testUserMapper.selectObjectCount(new PageQuery());
-		Assertions.assertEquals(1, count);
+		assertThat(count).isEqualTo(1);
 	}
 
 }

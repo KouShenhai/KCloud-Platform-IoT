@@ -17,7 +17,6 @@
 
 package org.laokou.common.core;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.MapUtils;
 import org.springframework.util.MultiValueMap;
@@ -26,6 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.laokou.common.i18n.common.constant.StringConstants.AND;
 import static org.laokou.common.i18n.common.constant.StringConstants.EQUAL;
 
@@ -41,34 +41,34 @@ class MapUtilsTest {
 						Set.of("/test=laokou-common-core", "/test2=laokou-common-core", "/test3=laokou-common-i18n")),
 				"laokou-common-core");
 		Set<String> set = map.get("POST");
-		Assertions.assertNotNull(map);
-		Assertions.assertEquals(1, map.size());
-		Assertions.assertEquals(2, set.size());
-		Assertions.assertTrue(set.contains("/test"));
-		Assertions.assertTrue(set.contains("/test2"));
-		Assertions.assertFalse(set.contains("/test3"));
-		Assertions.assertEquals(100, MapUtils.initialCapacity(75));
-		Assertions.assertFalse(MapUtils.isEmpty(map));
-		Assertions.assertTrue(MapUtils.isNotEmpty(map));
+		assertThat(map).isNotNull();
+		assertThat(map.size()).isEqualTo(1);
+		assertThat(set.size()).isEqualTo(2);
+		assertThat(set.contains("/test")).isTrue();
+		assertThat(set.contains("/test2")).isTrue();
+		assertThat(set.contains("/test3")).isFalse();
+		assertThat(MapUtils.initialCapacity(75)).isEqualTo(100);
+		assertThat(MapUtils.isEmpty(map)).isFalse();
+		assertThat(MapUtils.isNotEmpty(map)).isTrue();
 		map = MapUtils.toUriMap(Map.of("POST", Set.of("/test3=laokou-common-i18n")), "laokou-common-core", EQUAL);
-		Assertions.assertNotNull(map);
-		Assertions.assertEquals(1, map.size());
-		Assertions.assertEquals(0, map.get("POST").size());
+		assertThat(map).isNotNull();
+		assertThat(map.size()).isEqualTo(1);
+		assertThat(map.get("POST").size()).isEqualTo(0);
 		Map<String, String> paramMap = MapUtils.getParameterMap("a=1&b=2", AND).asSingleValueMap();
-		Assertions.assertEquals(2, paramMap.size());
-		Assertions.assertEquals("1", paramMap.get("a"));
-		Assertions.assertEquals("2", paramMap.get("b"));
-		Assertions.assertEquals("a=1&b=2", MapUtils.parseParamterString(paramMap));
+		assertThat(paramMap.size()).isEqualTo(2);
+		assertThat(paramMap.get("a")).isEqualTo("1");
+		assertThat(paramMap.get("b")).isEqualTo("2");
+		assertThat(MapUtils.parseParamterString(paramMap)).isEqualTo("a=1&b=2");
 		Map<String, String> m = new LinkedHashMap<>(3);
 		m.put("a", "哈哈哈");
 		m.put("b", "嘻嘻");
-		Assertions.assertEquals("a=%E5%93%88%E5%93%88%E5%93%88&b=%E5%98%BB%E5%98%BB", MapUtils.parseParamterString(m));
-		Assertions.assertEquals("a=哈哈哈&b=嘻嘻", MapUtils.parseParamterString(m, false));
+		assertThat(MapUtils.parseParamterString(m)).isEqualTo("a=%E5%93%88%E5%93%88%E5%93%88&b=%E5%98%BB%E5%98%BB");
+		assertThat(MapUtils.parseParamterString(m, false)).isEqualTo("a=哈哈哈&b=嘻嘻");
 		MultiValueMap<String, String> multiValueMap = MapUtils.getParameterMap(Map.of("a", new String[] { "1", "2" }));
-		Assertions.assertEquals(1, multiValueMap.size());
-		Assertions.assertEquals(2, multiValueMap.get("a").size());
-		Assertions.assertEquals("1", multiValueMap.getFirst("a"));
-		Assertions.assertEquals("2", multiValueMap.get("a").get(1));
+		assertThat(multiValueMap.size()).isEqualTo(1);
+		assertThat(multiValueMap.get("a").size()).isEqualTo(2);
+		assertThat(multiValueMap.getFirst("a")).isEqualTo("1");
+		assertThat(multiValueMap.get("a").get(1)).isEqualTo("2");
 	}
 
 }

@@ -18,7 +18,6 @@
 package org.laokou.common.core;
 
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.SpringContextUtils;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -27,6 +26,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
@@ -45,33 +45,33 @@ class SpringContextUtilsTest {
 
 	@Test
 	void testGetBean() {
-		Assertions.assertNotNull(SpringContextUtils.getBean(TestEventListener.class));
+		assertThat(SpringContextUtils.getBean(TestEventListener.class)).isNotNull();
 		DefaultListableBeanFactory beanFactory = SpringContextUtils.getFactory();
-		Assertions.assertNotNull(beanFactory);
-		Assertions.assertEquals("testEventListener", beanFactory.getBeanNamesForType(TestEventListener.class)[0]);
-		Assertions.assertTrue(beanFactory.containsBean("testEventListener"));
-		Assertions.assertTrue(beanFactory.containsBeanDefinition("testEventListener"));
-		Assertions.assertFalse(beanFactory.containsBeanDefinition("testEventListener1"));
-		Assertions.assertFalse(beanFactory.containsBean("testEventListener1"));
+		assertThat(beanFactory).isNotNull();
+		assertThat(beanFactory.getBeanNamesForType(TestEventListener.class)[0]).isEqualTo("testEventListener");
+		assertThat(beanFactory.containsBean("testEventListener")).isTrue();
+		assertThat(beanFactory.containsBeanDefinition("testEventListener")).isTrue();
+		assertThat(beanFactory.containsBeanDefinition("testEventListener1")).isFalse();
+		assertThat(beanFactory.containsBean("testEventListener1")).isFalse();
 		assertThatNoException().isThrownBy(() -> beanFactory.removeBeanDefinition("testEventListener"));
-		Assertions.assertFalse(beanFactory.containsBeanDefinition("testEventListener"));
-		Assertions
-			.assertDoesNotThrow(() -> SpringContextUtils.registerBean("testEventListener", TestEventListener.class));
-		Assertions.assertTrue(beanFactory.containsBeanDefinition("testEventListener"));
+		assertThat(beanFactory.containsBeanDefinition("testEventListener")).isFalse();
+		assertThatNoException()
+			.isThrownBy(() -> SpringContextUtils.registerBean("testEventListener", TestEventListener.class));
+		assertThat(beanFactory.containsBeanDefinition("testEventListener")).isTrue();
 		assertThatNoException().isThrownBy(() -> SpringContextUtils.removeBean("testEventListener"));
-		Assertions.assertFalse(beanFactory.containsBeanDefinition("testEventListener"));
-		Assertions.assertEquals("laokou-common-core", SpringContextUtils.getServiceId());
+		assertThat(beanFactory.containsBeanDefinition("testEventListener")).isFalse();
+		assertThat(SpringContextUtils.getServiceId()).isEqualTo("laokou-common-core");
 		assertThatNoException().isThrownBy(() -> beanFactory.registerBeanDefinition("testEventListener",
 				BeanDefinitionBuilder.genericBeanDefinition(TestEventListener.class).getBeanDefinition()));
-		Assertions.assertEquals(SpringContextUtils.getBean("testEventListener"),
-				SpringContextUtils.getBean(TestEventListener.class));
-		Assertions.assertTrue(SpringContextUtils.containsBean("testEventListener"));
-		Assertions.assertTrue(SpringContextUtils.isSingleton("testEventListener"));
-		Assertions.assertEquals(TestEventListener.class, SpringContextUtils.getType("testEventListener"));
-		Assertions.assertEquals(SpringContextUtils.getBean("testEventListener", TestEventListener.class),
-				SpringContextUtils.getBean(TestEventListener.class));
-		Assertions.assertEquals(SpringContextUtils.getBeansOfType(TestEventListener.class).get("testEventListener"),
-				SpringContextUtils.getBean("testEventListener"));
+		assertThat(SpringContextUtils.getBean(TestEventListener.class))
+			.isEqualTo(SpringContextUtils.getBean("testEventListener"));
+		assertThat(SpringContextUtils.containsBean("testEventListener")).isTrue();
+		assertThat(SpringContextUtils.isSingleton("testEventListener")).isTrue();
+		assertThat(SpringContextUtils.getType("testEventListener")).isEqualTo(TestEventListener.class);
+		assertThat(SpringContextUtils.getBean(TestEventListener.class))
+			.isEqualTo(SpringContextUtils.getBean("testEventListener", TestEventListener.class));
+		assertThat(SpringContextUtils.getBean("testEventListener"))
+			.isEqualTo(SpringContextUtils.getBeansOfType(TestEventListener.class).get("testEventListener"));
 	}
 
 }

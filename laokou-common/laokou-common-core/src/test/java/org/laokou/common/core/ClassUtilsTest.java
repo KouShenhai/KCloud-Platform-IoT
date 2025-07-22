@@ -23,7 +23,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchException;
 
 /**
  * ClassUtils测试类.
@@ -35,19 +36,20 @@ class ClassUtilsTest {
 	@Test
 	void testParseClass_ValidClassName() throws ClassNotFoundException {
 		// 测试解析有效的类名
-		assertEquals(String.class, ClassUtils.parseClass("java.lang.String"));
+		assertThat(ClassUtils.parseClass("java.lang.String")).isEqualTo(String.class);
 	}
 
 	@Test
 	void testParseClass_InvalidClassName() {
 		// 测试解析无效的类名
-		assertThrows(ClassNotFoundException.class, () -> ClassUtils.parseClass("invalid.class.name"));
+		assertThat(catchException(() -> ClassUtils.parseClass("invalid.class.name")))
+			.isInstanceOf(ClassNotFoundException.class);
 	}
 
 	@Test
 	void testParseClass_NullClassName() {
 		// 测试解析null类名
-		assertThrows(NullPointerException.class, () -> ClassUtils.parseClass(null));
+		assertThat(catchException(() -> ClassUtils.parseClass(null))).isInstanceOf(NullPointerException.class);
 	}
 
 	@Test
@@ -55,13 +57,14 @@ class ClassUtilsTest {
 		// 测试扫描有效包中的注解类
 		// 由于测试包中可能没有@Component注解的类，所以这里只验证返回的Set不为null
 		Set<Class<?>> classes = ClassUtils.scanAnnotatedClasses("org.laokou.common.core.util", Component.class);
-		assertNotNull(classes);
+		assertThat(classes).isNotNull();
 	}
 
 	@Test
 	void testScanAnnotatedClasses_NullPackage() {
 		// 测试扫描null包名
-		assertThrows(IllegalArgumentException.class, () -> ClassUtils.scanAnnotatedClasses(null, Component.class));
+		assertThat(catchException(() -> ClassUtils.scanAnnotatedClasses(null, Component.class)))
+			.isInstanceOf(IllegalArgumentException.class);
 	}
 
 }

@@ -20,9 +20,10 @@ package org.laokou.common.crypto;
 import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 只针对 spring-boot 2.x.x.
@@ -41,7 +42,7 @@ class Jasypt2Test {
 		String decryptWithMD5AndDESStr = decryptWithMD5AndDES(encryptWithMD5AndDESStr, factor);
 		log.info("采用PBEWithMD5AndDES加密后：{}", encryptWithMD5AndDESStr);
 		log.info("采用PBEWithMD5AndDES解密后：{}", decryptWithMD5AndDESStr);
-		Assertions.assertEquals(plainText, decryptWithMD5AndDESStr);
+		assertThat(decryptWithMD5AndDESStr).isEqualTo(plainText);
 	}
 
 	/**

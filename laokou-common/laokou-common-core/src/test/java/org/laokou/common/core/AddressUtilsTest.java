@@ -17,9 +17,10 @@
 
 package org.laokou.common.core;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.AddressUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -29,7 +30,7 @@ class AddressUtilsTest {
 	@Test
 	void testAddress() throws Exception {
 		String address = "127.0.0.1";
-		Assertions.assertEquals("内网IP", AddressUtils.getRealAddress(address));
+		assertThat(AddressUtils.getRealAddress(address)).isEqualTo("内网IP");
 	}
 
 }

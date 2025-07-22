@@ -38,7 +38,7 @@ class XssTest {
 	void testHtmlScripTagJsonString() {
 		String json = "{\"s\": \"" + xssAttackVectors[0] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
-		assertThat( cleaned).isEqualTo("{\"s\": \"alert(1)\"}");
+		assertThat(cleaned).isEqualTo("{\"s\": \"alert(1)\"}");
 		assertThat(cleaned.startsWith("{") && cleaned.endsWith("}")).isTrue();
 		assertThat(cleaned.contains("<script>")).isFalse();
 	}
@@ -47,7 +47,7 @@ class XssTest {
 	void testHtmlTagJsonString() {
 		String json = "{\"s\": \"" + xssAttackVectors[1] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
-		assertThat( cleaned).isEqualTo("{\"s\": \"<img>\"}");
+		assertThat(cleaned).isEqualTo("{\"s\": \"<img>\"}");
 		assertThat(cleaned.startsWith("{") && cleaned.endsWith("}")).isTrue();
 		assertThat(cleaned.contains("<IMG")).isFalse();
 	}

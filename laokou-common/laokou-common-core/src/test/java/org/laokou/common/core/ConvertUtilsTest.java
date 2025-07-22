@@ -18,7 +18,6 @@
 package org.laokou.common.core;
 
 import lombok.Data;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ConvertUtils;
 
@@ -37,13 +36,13 @@ class ConvertUtilsTest {
 		TestUser testUser = new TestUser(1L, "laokou");
 		User user = ConvertUtils.sourceToTarget(testUser, User.class);
 		assertThat(user).isNotNull();
-		Assertions.assertEquals(testUser.getId(), user.getId());
-		Assertions.assertEquals(testUser.getName(), user.getName());
+		assertThat(user.getId()).isEqualTo(testUser.getId());
+		assertThat(user.getName()).isEqualTo(testUser.getName());
 		TestUser testUser2 = new TestUser(2L, "老寇");
 		List<User> userList = ConvertUtils.sourceToTarget(List.of(testUser2), User.class);
-		Assertions.assertEquals(1, userList.size());
-		Assertions.assertEquals(testUser2.getId(), userList.getFirst().getId());
-		Assertions.assertEquals(testUser2.getName(), userList.getFirst().getName());
+		assertThat(userList.size()).isEqualTo(1);
+		assertThat(userList.getFirst().getId()).isEqualTo(testUser2.getId());
+		assertThat(userList.getFirst().getName()).isEqualTo(testUser2.getName());
 	}
 
 	@Data

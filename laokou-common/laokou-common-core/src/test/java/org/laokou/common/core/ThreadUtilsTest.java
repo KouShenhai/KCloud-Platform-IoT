@@ -17,11 +17,12 @@
 
 package org.laokou.common.core;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ThreadUtils;
 
 import java.util.concurrent.ExecutorService;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -34,26 +35,26 @@ class ThreadUtilsTest {
 		ExecutorService ttlVirtualTaskExecutor = ThreadUtils.newTtlVirtualTaskExecutor();
 		ThreadUtils.shutdown(virtualTaskExecutor, 1);
 		ThreadUtils.shutdown(ttlVirtualTaskExecutor, 1);
-		Assertions.assertTrue(virtualTaskExecutor.isShutdown());
-		Assertions.assertTrue(ttlVirtualTaskExecutor.isShutdown());
+		assertThat(virtualTaskExecutor.isShutdown()).isTrue();
+		assertThat(ttlVirtualTaskExecutor.isShutdown()).isTrue();
 	}
 
 	@Test
 	void testNewVirtualTaskExecutor() {
 		ExecutorService executorService = ThreadUtils.newVirtualTaskExecutor();
-		executorService.execute(() -> Assertions.assertNotNull(executorService));
+		executorService.execute(() -> assertThat(executorService).isNotNull());
 	}
 
 	@Test
 	void testNewTtlVirtualTaskExecutor() {
 		ExecutorService executorService = ThreadUtils.newTtlVirtualTaskExecutor();
-		executorService.execute(() -> Assertions.assertNotNull(executorService));
+		executorService.execute(() -> assertThat(executorService).isNotNull());
 	}
 
 	@Test
 	void testNewScheduledThreadPool() {
 		try (ExecutorService executorService = ThreadUtils.newScheduledThreadPool(1)) {
-			executorService.execute(() -> Assertions.assertNotNull(executorService));
+			executorService.execute(() -> assertThat(executorService).isNotNull());
 		}
 	}
 
