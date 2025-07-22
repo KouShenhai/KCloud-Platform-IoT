@@ -22,7 +22,6 @@ import com.alibaba.cloud.nacos.NacosConfigProperties;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.nacos.util.ConfigUtils;
@@ -52,42 +51,41 @@ class ConfigUtilsTest {
 		nacosConfigProperties.setPassword("nacos");
 		nacosConfigProperties.setGroup("DEFAULT_GROUP");
 
-		Assertions.assertNotNull(nacosConfigProperties);
-		Assertions.assertEquals("public", nacosConfigProperties.getNamespace());
-		Assertions.assertEquals("127.0.0.1:8848", nacosConfigProperties.getServerAddr());
-		Assertions.assertEquals("nacos", nacosConfigProperties.getPassword());
-		Assertions.assertEquals("nacos", nacosConfigProperties.getUsername());
-		Assertions.assertEquals("DEFAULT_GROUP", nacosConfigProperties.getGroup());
-		Assertions.assertNotNull(nacosConfigProperties.assembleConfigServiceProperties());
+		assertThat(nacosConfigProperties).isNotNull();
+		assertThat( nacosConfigProperties.getNamespace()).isEqualTo("public");
+		assertThat( nacosConfigProperties.getServerAddr()).isEqualTo("127.0.0.1:8848");
+		assertThat(nacosConfigProperties.getPassword()).isEqualTo("nacos");
+		assertThat(nacosConfigProperties.getUsername()).isEqualTo("nacos");
+		assertThat( nacosConfigProperties.getGroup()).isEqualTo("DEFAULT_GROUP");
+		assertThat(nacosConfigProperties.assembleConfigServiceProperties()).isNotNull();
 
 		NacosConfigManager nacosConfigManager = new NacosConfigManager(nacosConfigProperties);
-		Assertions.assertNotNull(nacosConfigManager);
+		assertThat(nacosConfigManager).isNotNull();
 
 		configUtils = new ConfigUtils(nacosConfigManager);
-		Assertions.assertNotNull(configUtils);
+		assertThat(configUtils).isNotNull();
 	}
 
 	@Test
 	void testGetGroup() {
-		Assertions.assertEquals("DEFAULT_GROUP", configUtils.getGroup());
+		assertThat( configUtils.getGroup()).isEqualTo("DEFAULT_GROUP");
 	}
 
 	@Test
 	void testCreateConfigService() throws NacosException {
 		ConfigService configService = ConfigUtils.createConfigService(nacosConfigProperties.getServerAddr());
-		Assertions.assertNotNull(configService);
-		Assertions.assertEquals("UP", configService.getServerStatus());
+		assertThat(configService).isNotNull();
+		assertThat(configService.getServerStatus()).isEqualTo("UP");
 
 		configService = ConfigUtils.createConfigService(nacosConfigProperties.assembleConfigServiceProperties());
-		Assertions.assertNotNull(configService);
-		Assertions.assertEquals("UP", configService.getServerStatus());
+		assertThat(configService).isNotNull();
+		assertThat(configService.getServerStatus()).isEqualTo("UP");
 	}
 
 	@Test
 	void testGetConfig() throws NacosException {
 		String config = configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000);
-		Assertions.assertNotNull(config);
-		Assertions.assertTrue(config.contains("test"));
+		assertThat(config).isNotNull().contains("test");
 		config = configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000, new Listener() {
 			@Override
 			public Executor getExecutor() {
@@ -96,12 +94,10 @@ class ConfigUtilsTest {
 
 			@Override
 			public void receiveConfigInfo(String s) {
-				Assertions.assertNotNull(s);
-				Assertions.assertTrue(s.contains("test"));
+				assertThat(s).isNotBlank().contains("test");
 			}
 		});
-		Assertions.assertNotNull(config);
-		Assertions.assertTrue(config.contains("test"));
+		assertThat(config).isNotNull().contains("test");
 	}
 
 	@Test
@@ -114,8 +110,7 @@ class ConfigUtilsTest {
 
 			@Override
 			public void receiveConfigInfo(String s) {
-				assertThat(s).isNotBlank();
-				assertThat(s.contains("test")).isTrue();
+				assertThat(s).isNotBlank().contains("test");
 			}
 		});
 	}
@@ -130,48 +125,47 @@ class ConfigUtilsTest {
 
 			@Override
 			public void receiveConfigInfo(String s) {
-				Assertions.assertNotNull(s);
-				Assertions.assertTrue(s.contains("test"));
+				assertThat(s).isNotBlank().contains("test");
 			}
 		});
 	}
 
 	@Test
 	void testPublishConfig() throws NacosException, InterruptedException {
-		Assertions.assertTrue(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 123"));
+		assertThat(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 123")).isTrue();
 		Thread.sleep(100);
-		Assertions.assertEquals("test: 123", configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
+		assertThat(configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 123");
 
-		Assertions.assertTrue(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 456", "yaml"));
-		Assertions.assertEquals("test: 456", configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
+		assertThat(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 456", "yaml")).isTrue();
+		assertThat(configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 456");
 
-		Assertions.assertTrue(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 123"));
-		Assertions.assertEquals("test: 123", configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
+		assertThat(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 123")).isTrue();
+		assertThat(configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 123");
 
 		String md5 = DigestUtils.md5DigestAsHex("test: 123".getBytes());
-		Assertions.assertEquals("5e76b5e94b54e1372f8b452ef64dc55c", md5);
-		Assertions.assertTrue(configUtils.publishConfigCas("test.yaml", nacosConfigProperties.getGroup(), "test: 456", md5));
-		Assertions.assertEquals("test: 456", configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
+		assertThat(md5).isEqualTo("5e76b5e94b54e1372f8b452ef64dc55c");
+		assertThat(configUtils.publishConfigCas("test.yaml", nacosConfigProperties.getGroup(), "test: 456", md5)).isTrue();
+		assertThat(configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 456");
 
 		md5 = DigestUtils.md5DigestAsHex("test: 456".getBytes());
-		Assertions.assertEquals("76e2eabbf24a8c90dc3b4372c20a72cf", md5);
-		Assertions.assertTrue(configUtils.publishConfigCas("test.yaml", nacosConfigProperties.getGroup(), "test: 789", md5, "yaml"));
-		Assertions.assertEquals("test: 789", configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000));
+		assertThat(md5).isEqualTo("76e2eabbf24a8c90dc3b4372c20a72cf");
+		assertThat(configUtils.publishConfigCas("test.yaml", nacosConfigProperties.getGroup(), "test: 789", md5, "yaml")).isTrue();
+		assertThat(configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 789");
 	}
 
 	@Test
 	void testRemoveConfig() throws NacosException, InterruptedException {
-		Assertions.assertTrue(configUtils.publishConfig("test1.yaml", nacosConfigProperties.getGroup(), "test: 123"));
+		assertThat(configUtils.publishConfig("test1.yaml", nacosConfigProperties.getGroup(), "test: 123")).isTrue();
 		Thread.sleep(2000);
-		Assertions.assertEquals("test: 123", configUtils.getConfig("test1.yaml", nacosConfigProperties.getGroup(), 5000));
+		assertThat( configUtils.getConfig("test1.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 123");
 
-		Assertions.assertTrue(configUtils.removeConfig("test1.yaml", nacosConfigProperties.getGroup()));
-		Assertions.assertNull(configUtils.getConfig("test1.yaml", nacosConfigProperties.getGroup(), 5000));
+		assertThat(configUtils.removeConfig("test1.yaml", nacosConfigProperties.getGroup())).isTrue();
+		assertThat(configUtils.getConfig("test1.yaml", nacosConfigProperties.getGroup(), 5000)).isNull();
 	}
 
 	@Test
 	void testGetServerStatus() {
-		Assertions.assertEquals("UP", configUtils.getServerStatus());
+		assertThat(configUtils.getServerStatus()).isEqualTo("UP");
 	}
 	// @formatter:on
 

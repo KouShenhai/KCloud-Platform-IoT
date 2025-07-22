@@ -17,9 +17,10 @@
 
 package org.laokou.common.core;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.RegexUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -28,24 +29,24 @@ class RegexUtilsTest {
 
 	@Test
 	void testRegex() {
-		Assertions.assertTrue(RegexUtils.mailRegex("2413176044@qq.com"));
-		Assertions.assertFalse(RegexUtils.mailRegex("123"));
-		Assertions.assertTrue(RegexUtils.ipv4Regex("127.0.0.1"));
-		Assertions.assertFalse(RegexUtils.ipv4Regex("127.0.0.256"));
-		Assertions.assertFalse(RegexUtils.ipv4Regex("127.0.0.x"));
-		Assertions.assertFalse(RegexUtils.ipv4Regex("2001:0db8:85a3:0000:0000:8a2e:0370:7334"));
-		Assertions.assertTrue(RegexUtils.ipv6Regex("2001:0db8:85a3:0000:0000:8a2e:0370:7334"));
-		Assertions.assertFalse(RegexUtils.ipv6Regex("127.0.0.1"));
-		Assertions.assertFalse(RegexUtils.numberRegex("-1"));
-		Assertions.assertTrue(RegexUtils.numberRegex("123"));
-		Assertions.assertFalse(RegexUtils.numberRegex("xx"));
-		Assertions.assertTrue(RegexUtils.mobileRegex("18888888888"));
-		Assertions.assertFalse(RegexUtils.mobileRegex("188888888888"));
-		Assertions.assertFalse(RegexUtils.mobileRegex("1888888888"));
-		Assertions.assertFalse(RegexUtils.mobileRegex("1888888888x"));
-		Assertions.assertFalse(RegexUtils.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", "哈哈哈"));
-		Assertions.assertTrue(RegexUtils.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", "admin123"));
-		Assertions.assertEquals("v3", RegexUtils.getRegexValue("/v3/test", "/(v\\d+)/"));
+		assertThat(RegexUtils.mailRegex("2413176044@qq.com")).isTrue();
+		assertThat(RegexUtils.mailRegex("123")).isFalse();
+		assertThat(RegexUtils.ipv4Regex("127.0.0.1")).isTrue();
+		assertThat(RegexUtils.ipv4Regex("127.0.0.256")).isFalse();
+		assertThat(RegexUtils.ipv4Regex("127.0.0.x")).isFalse();
+		assertThat(RegexUtils.ipv4Regex("2001:0db8:85a3:0000:0000:8a2e:0370:7334")).isFalse();
+		assertThat(RegexUtils.ipv6Regex("2001:0db8:85a3:0000:0000:8a2e:0370:7334")).isTrue();
+		assertThat(RegexUtils.ipv6Regex("127.0.0.1")).isFalse();
+		assertThat(RegexUtils.numberRegex("-1")).isFalse();
+		assertThat(RegexUtils.numberRegex("123")).isTrue();
+		assertThat(RegexUtils.numberRegex("xx")).isFalse();
+		assertThat(RegexUtils.mobileRegex("18888888888")).isTrue();
+		assertThat(RegexUtils.mobileRegex("188888888888")).isFalse();
+		assertThat(RegexUtils.mobileRegex("1888888888")).isFalse();
+		assertThat(RegexUtils.mobileRegex("1888888888x")).isFalse();
+		assertThat(RegexUtils.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", "哈哈哈")).isFalse();
+		assertThat(RegexUtils.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", "admin123")).isTrue();
+		assertThat(RegexUtils.getRegexValue("/v3/test", "/(v\\d+)/")).isEqualTo("v3");
 	}
 
 }

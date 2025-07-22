@@ -86,34 +86,11 @@ import static org.laokou.common.i18n.common.constant.TraceConstants.*;
 public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 
 	/**
-	 * Nacos集群配置.
-	 */
-	private static final String CLUSTER_CONFIG = "nacos.cluster";
-
-	/**
-	 * 版本.
-	 */
-	private static final String VERSION = "version";
-
-	/**
-	 * 版本号.
-	 */
-	private static final String DEFAULT_VERSION_VALUE = "v3";
-
-	/**
-	 * IPV6常量.
-	 */
-	private static final String IPV6_KEY = "IPv6";
-
-	/**
 	 * Storage local valid IPv6 address, it's a flag whether local machine support IPv6
 	 * address stack.
 	 */
 	public static String ipv6;
 
-	/**
-	 * 服务ID.
-	 */
 	private final String serviceId;
 
 	private final ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;
@@ -145,7 +122,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	public void init() {
 		String ip = nacosDiscoveryProperties.getIp();
 		if (com.alibaba.cloud.commons.lang.StringUtils.isNotEmpty(ip)) {
-			ipv6 = RegexUtils.ipv4Regex(ip) ? nacosDiscoveryProperties.getMetadata().get(IPV6_KEY) : ip;
+			ipv6 = RegexUtils.ipv4Regex(ip) ? nacosDiscoveryProperties.getMetadata().get("IPv6") : ip;
 		}
 		else {
 			ipv6 = inetIPv6Utils.findIPv6Address();
@@ -162,7 +139,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			List<ServiceInstance> ipv6InstanceList = new ArrayList<>();
 			for (ServiceInstance instance : instances) {
 				if (RegexUtils.ipv4Regex(instance.getHost())) {
-					if (com.alibaba.cloud.commons.lang.StringUtils.isNotEmpty(instance.getMetadata().get(IPV6_KEY))) {
+					if (com.alibaba.cloud.commons.lang.StringUtils.isNotEmpty(instance.getMetadata().get("IPv6"))) {
 						ipv6InstanceList.add(instance);
 					}
 				}
@@ -213,7 +190,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 				String version = RegexUtils.getRegexValue(path, "/(v\\d+)/");
 				if (StringUtils.isNotEmpty(version)) {
 					serviceInstances = serviceInstances.stream()
-						.filter(item -> item.getMetadata().getOrDefault(VERSION, DEFAULT_VERSION_VALUE).equals(version))
+						.filter(item -> item.getMetadata().getOrDefault("version", "v3").equals(version))
 						.toList();
 				}
 			}
@@ -236,7 +213,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			List<ServiceInstance> instancesToChoose = serviceInstances;
 			if (com.alibaba.cloud.commons.lang.StringUtils.isNotBlank(clusterName)) {
 				List<ServiceInstance> sameClusterInstances = serviceInstances.stream().filter(serviceInstance -> {
-					String cluster = serviceInstance.getMetadata().get(CLUSTER_CONFIG);
+					String cluster = serviceInstance.getMetadata().get("nacos.cluster");
 					return com.alibaba.cloud.commons.lang.StringUtils.equals(cluster, clusterName);
 				}).toList();
 				if (!CollectionUtils.isEmpty(sameClusterInstances)) {
