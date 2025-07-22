@@ -22,7 +22,6 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.indices.IndexState;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.elasticsearch.entity.Search;
@@ -37,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
@@ -56,17 +56,17 @@ class Elasticsearch8ApiTest {
 
 	@BeforeEach
 	void contextLoads() {
-		Assertions.assertNotNull(elasticsearchClient);
-		Assertions.assertNotNull(elasticsearchAsyncClient);
-		Assertions.assertNotNull(elasticsearchTemplate);
+		assertThat(elasticsearchClient).isNotNull();
+		assertThat(elasticsearchAsyncClient).isNotNull();
+		assertThat(elasticsearchTemplate).isNotNull();
 	}
 
 	@Test
 	void test() throws IOException {
-		Assertions
-			.assertDoesNotThrow(() -> elasticsearchTemplate.createIndex("iot_res_1", "iot_res", TestResource.class));
-		Assertions
-			.assertDoesNotThrow(() -> elasticsearchTemplate.createIndex("iot_pro_1", "iot_pro", TestProject.class));
+		assertThatNoException()
+			.isThrownBy(() -> elasticsearchTemplate.createIndex("iot_res_1", "iot_res", TestResource.class));
+		assertThatNoException()
+			.isThrownBy(() -> elasticsearchTemplate.createIndex("iot_pro_1", "iot_pro", TestProject.class));
 		assertThatNoException().isThrownBy(() -> elasticsearchTemplate.asyncCreateIndex("iot_resp_1", "iot_resp",
 				TestResp.class, Executors.newSingleThreadExecutor()));
 		assertThatNoException().isThrownBy(
@@ -86,13 +86,13 @@ class Elasticsearch8ApiTest {
 		Page<TestResult> results = elasticsearchTemplate.search(List.of("iot_res", "iot_res_1"), search,
 				TestResult.class);
 		log.info("{}", results);
-		Assertions.assertNotNull(results);
-		Assertions.assertTrue(results.getTotal() > 0);
+		assertThat(results).isNotNull();
+		assertThat(results.getTotal() > 0).isTrue();
 		Map<String, IndexState> result = elasticsearchTemplate
 			.getIndex(List.of("iot_res_1", "iot_pro_1", "iot_resp_1"));
 		log.info("索引信息：{}", JacksonUtils.toJsonStr(result));
-		Assertions.assertNotNull(result);
-		Assertions.assertFalse(result.isEmpty());
+		assertThat(result).isNotNull();
+		assertThat(result.isEmpty()).isFalse();
 		assertThatNoException().isThrownBy(
 				() -> elasticsearchTemplate.deleteIndex(List.of("laokou_res_1", "laokou_pro_1", "laokou_resp_1")));
 	}

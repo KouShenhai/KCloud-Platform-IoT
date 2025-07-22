@@ -19,15 +19,12 @@ package org.laokou.common.core;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ResponseUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
-
-import java.io.IOException;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
@@ -40,9 +37,9 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 class ResponseUtilsTest {
 
 	@Test
-	void testResponse() throws IOException {
+	void testResponse() {
 		HttpServletResponse response = ResponseUtils.getHttpServletResponse();
-		Assertions.assertNotNull(response);
+		assertThat(response).isNotNull();
 		assertThatNoException().isThrownBy(() -> ResponseUtils.responseOk(response, "ok"));
 		assertThatNoException().isThrownBy(() -> ResponseUtils.responseOk(response, "ok", "text/plain"));
 	}

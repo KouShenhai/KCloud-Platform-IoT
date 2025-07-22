@@ -17,10 +17,11 @@
 
 package org.laokou.common.crypto;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -37,18 +38,18 @@ class CryptoTest {
 		String encryptPassword = RSAUtils.encryptByPublicKey(PASSWORD);
 		String decryptUsername = RSAUtils.decryptByPrivateKey(encryptUsername);
 		String decryptPassword = RSAUtils.decryptByPrivateKey(encryptPassword);
-		Assertions.assertEquals(USERNAME, decryptUsername);
-		Assertions.assertEquals(PASSWORD, decryptPassword);
+		assertThat(decryptUsername).isEqualTo(USERNAME);
+		assertThat(decryptPassword).isEqualTo(PASSWORD);
 	}
 
 	@Test
 	void testAES() throws Exception {
 		String encryptUsername = AESUtils.encrypt(USERNAME);
 		String decryptUsername = AESUtils.decrypt(encryptUsername);
-		Assertions.assertEquals(USERNAME, decryptUsername);
+		assertThat(decryptUsername).isEqualTo(USERNAME);
 		String encryptPassword = AESUtils.encrypt(PASSWORD);
 		String decryptPassword = AESUtils.decrypt(encryptPassword);
-		Assertions.assertEquals(PASSWORD, decryptPassword);
+		assertThat(decryptPassword).isEqualTo(PASSWORD);
 	}
 
 }

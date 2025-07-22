@@ -49,65 +49,65 @@ class TransactionalUtilsTest {
 	void testWithoutResult() {
 		assertThatNoException()
 			.isThrownBy(() -> transactionalUtils.executeInTransaction(() -> testUserMapper.insert(getTestUserDO())));
-		assertThat(
-				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L))).isEqualTo(1);
+		assertThat(testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)))
+			.isEqualTo(1);
 		assertThatNoException()
 			.isThrownBy(() -> transactionalUtils.executeInTransaction(() -> testUserMapper.deleteTestUser(List.of(9L)),
 					TransactionDefinition.ISOLATION_READ_COMMITTED, false));
-		assertThat(
-				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L))).isEqualTo(0);
+		assertThat(testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)))
+			.isEqualTo(0);
 		assertThatNoException()
 			.isThrownBy(() -> transactionalUtils.executeInNewTransaction(() -> testUserMapper.insert(getTestUserDO())));
-		assertThat(
-				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L))).isEqualTo(1);
+		assertThat(testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)))
+			.isEqualTo(1);
 		assertThatNoException().isThrownBy(
 				() -> transactionalUtils.executeInNewTransaction(() -> testUserMapper.deleteTestUser(List.of(9L)),
 						TransactionDefinition.ISOLATION_READ_COMMITTED, false));
-		assertThat(
-				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L))).isEqualTo(0);
+		assertThat(testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)))
+			.isEqualTo(0);
 		assertThatNoException()
 			.isThrownBy(() -> transactionalUtils.executeInTransaction(() -> testUserMapper.insert(getTestUserDO()),
 					TransactionDefinition.PROPAGATION_REQUIRED, TransactionDefinition.ISOLATION_READ_COMMITTED, false));
-		assertThat(
-				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L))).isEqualTo(1);
+		assertThat(testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)))
+			.isEqualTo(1);
 		assertThatNoException()
 			.isThrownBy(() -> transactionalUtils.executeInTransaction(() -> testUserMapper.deleteTestUser(List.of(9L)),
 					TransactionDefinition.PROPAGATION_REQUIRES_NEW, TransactionDefinition.ISOLATION_READ_COMMITTED,
 					false));
-		assertThat(
-				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L))).isEqualTo(0);
+		assertThat(testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 9L)))
+			.isEqualTo(0);
 	}
 
 	@Test
 	void testResult() {
 		int count = transactionalUtils.executeResultInNewTransaction(() -> testUserMapper.insert(getTestUserDO2()));
 		assertThat(count > 0).isTrue();
-		assertThat(
-				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L))).isEqualTo(1);
+		assertThat(testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L)))
+			.isEqualTo(1);
 		count = transactionalUtils.executeResultInTransaction(() -> testUserMapper.deleteTestUser(List.of(10L)));
 		assertThat(count > 0).isTrue();
-		assertThat(
-				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L))).isEqualTo(0);
+		assertThat(testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L)))
+			.isEqualTo(0);
 		count = transactionalUtils.executeResultInNewTransaction(() -> testUserMapper.insert(getTestUserDO2()),
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		assertThat(count > 0).isTrue();
-		assertThat(
-				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L))).isEqualTo(1);
+		assertThat(testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L)))
+			.isEqualTo(1);
 		count = transactionalUtils.executeResultInTransaction(() -> testUserMapper.deleteTestUser(List.of(10L)),
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		assertThat(count > 0).isTrue();
-		assertThat(
-				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L))).isEqualTo(0);
+		assertThat(testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L)))
+			.isEqualTo(0);
 		count = transactionalUtils.executeResultInTransaction(() -> testUserMapper.insert(getTestUserDO2()),
 				TransactionDefinition.PROPAGATION_REQUIRES_NEW, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		assertThat(count > 0).isTrue();
-		assertThat(
-				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L))).isEqualTo(1);
+		assertThat(testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L)))
+			.isEqualTo(1);
 		count = transactionalUtils.executeResultInTransaction(() -> testUserMapper.deleteTestUser(List.of(10L)),
 				TransactionDefinition.PROPAGATION_REQUIRED, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		assertThat(count > 0).isTrue();
-		assertThat(
-				testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L))).isEqualTo(0);
+		assertThat(testUserMapper.selectCount(Wrappers.lambdaQuery(TestUserDO.class).eq(TestUserDO::getId, 10L)))
+			.isEqualTo(0);
 	}
 
 	private TestUserDO getTestUserDO() {

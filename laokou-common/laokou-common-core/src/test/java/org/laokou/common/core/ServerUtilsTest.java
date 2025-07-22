@@ -19,13 +19,14 @@ package org.laokou.common.core;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ServerUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
 import java.net.UnknownHostException;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -40,8 +41,8 @@ class ServerUtilsTest {
 	void testGetServerInfo() throws UnknownHostException {
 		ServerUtils.Server serverInfo = ServerUtils.getServerInfo();
 		log.info("获取系统参数：{}", serverInfo);
-		Assertions.assertEquals("Windows 11", serverInfo.getSys().getOsName());
-		Assertions.assertEquals("amd64", serverInfo.getSys().getOsArch());
+		assertThat(serverInfo.getSys().getOsName()).isEqualTo("Windows 11");
+		assertThat(serverInfo.getSys().getOsArch()).isEqualTo("amd64");
 	}
 
 }

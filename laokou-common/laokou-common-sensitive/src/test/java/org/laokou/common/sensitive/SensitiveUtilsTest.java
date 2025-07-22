@@ -39,17 +39,17 @@ class SensitiveUtilsTest {
 	void testStr() {
 		assertThat(SensitiveUtils.formatStr(null, "", 3, 7)).isEqualTo(EMPTY);
 		assertThat(SensitiveUtils.formatStr("", "", 3, 7)).isEqualTo(EMPTY);
-		assertThat( SensitiveUtils.formatStr("1234567890", null, 3, 7)).isEqualTo("123890");
+		assertThat(SensitiveUtils.formatStr("1234567890", null, 3, 7)).isEqualTo("123890");
 		assertThat(SensitiveUtils.formatStr("1234567890", EMPTY, 3, 7)).isEqualTo("123890");
-		assertThat( SensitiveUtils.formatStr("1234567890", EMPTY, -1, 7)).isEqualTo("890");
-		assertThat( SensitiveUtils.formatStr("1234567890", EMPTY, 11, 7)).isEqualTo("1234567");
-		assertThat( SensitiveUtils.formatStr("1234567890", EMPTY, 1, 12)).isEqualTo("1");
-		assertThat( SensitiveUtils.formatStr("1234567890", EMPTY, 1, -1)).isEqualTo("234567890");
+		assertThat(SensitiveUtils.formatStr("1234567890", EMPTY, -1, 7)).isEqualTo("890");
+		assertThat(SensitiveUtils.formatStr("1234567890", EMPTY, 11, 7)).isEqualTo("1234567");
+		assertThat(SensitiveUtils.formatStr("1234567890", EMPTY, 1, 12)).isEqualTo("1");
+		assertThat(SensitiveUtils.formatStr("1234567890", EMPTY, 1, -1)).isEqualTo("234567890");
 	}
 
 	@Test
 	void testMail() {
-		assertThat( SensitiveUtils.formatMail("2413176044@qq.com")).isEqualTo("2****@qq.com");
+		assertThat(SensitiveUtils.formatMail("2413176044@qq.com")).isEqualTo("2****@qq.com");
 		assertThat(SensitiveUtils.formatMail(null)).isEqualTo(EMPTY);
 		assertThat(SensitiveUtils.formatMail(EMPTY)).isEqualTo(EMPTY);
 	}

@@ -18,7 +18,6 @@
 package org.laokou.common.core;
 
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.config.SpringDisruptorProperties;
 import org.laokou.common.core.util.PropertyUtils;
@@ -26,6 +25,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
 import java.io.IOException;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -39,8 +40,8 @@ class PropertyUtilsTest {
 	void testBindProperties() throws IOException {
 		SpringDisruptorProperties properties = PropertyUtils.bindOrCreate("spring.disruptor",
 				SpringDisruptorProperties.class, "application.yml", "yaml");
-		Assertions.assertNotNull(properties);
-		Assertions.assertEquals(1024, properties.getBufferSize());
+		assertThat(properties).isNotNull();
+		assertThat(properties.getBufferSize()).isEqualTo(1024);
 	}
 
 }

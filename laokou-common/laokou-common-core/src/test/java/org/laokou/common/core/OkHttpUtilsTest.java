@@ -21,7 +21,6 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.OkHttpUtils;
@@ -31,6 +30,7 @@ import org.springframework.test.context.TestConstructor;
 
 import java.util.HashMap;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
@@ -54,7 +54,7 @@ class OkHttpUtilsTest {
 		wireMockServer.stubFor(WireMock.post("/test").willReturn(WireMock.ok("hello wiremock")));
 		String resultJson = OkHttpUtils.doFormDataPost("http://localhost:" + wireMockServer.port() + "/test",
 				new HashMap<>(0), new HashMap<>(0));
-		Assertions.assertEquals("hello wiremock", resultJson);
+		assertThat(resultJson).isEqualTo("hello wiremock");
 		assertThatNoException().isThrownBy(OkHttpUtils::destroy);
 	}
 

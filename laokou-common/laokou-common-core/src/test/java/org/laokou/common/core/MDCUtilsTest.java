@@ -17,10 +17,10 @@
 
 package org.laokou.common.core;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.MDCUtils;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
@@ -31,11 +31,11 @@ class MDCUtilsTest {
 	@Test
 	void testMDC() {
 		MDCUtils.put("111", "222");
-		Assertions.assertNotNull(MDCUtils.getTraceId());
-		Assertions.assertNotNull(MDCUtils.getSpanId());
+		assertThat(MDCUtils.getTraceId()).isNotBlank();
+		assertThat(MDCUtils.getSpanId()).isNotBlank();
 		assertThatNoException().isThrownBy(MDCUtils::clear);
-		Assertions.assertNull(MDCUtils.getTraceId());
-		Assertions.assertNull(MDCUtils.getSpanId());
+		assertThat(MDCUtils.getTraceId()).isBlank();
+		assertThat(MDCUtils.getSpanId()).isBlank();
 	}
 
 }

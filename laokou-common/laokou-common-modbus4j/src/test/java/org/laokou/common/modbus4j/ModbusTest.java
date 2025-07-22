@@ -23,12 +23,13 @@ import com.serotonin.modbus4j.exception.ModbusTransportException;
 import com.serotonin.modbus4j.msg.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ConvertUtils;
 import org.laokou.common.modbus4j.config.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -66,25 +67,25 @@ class ModbusTest {
 	private void test(ModbusTypeEnum typeEnum) throws ModbusInitException, ModbusTransportException {
 		SpringModbusProperties properties = ConvertUtils.sourceToTarget(springModbusProperties,
 				SpringModbusProperties.class);
-		Assertions.assertNotNull(properties);
+		assertThat(properties).isNotNull();
 		properties.setType(typeEnum);
 		Modbus modbus = properties.getType().getModbus(modbusFactory, properties);
 		modbus.open();
 		ModbusResponse modbusResponse = modbus.sendReadHoldingRegistersRequest(1, 0, 1);
 		if (modbusResponse instanceof ReadHoldingRegistersResponse readRegistersResponse) {
-			Assertions.assertEquals(1, readRegistersResponse.getShortData()[0]);
+			assertThat(readRegistersResponse.getShortData()[0]).isEqualTo(1);
 		}
 		modbusResponse = modbus.sendReadCoilsRequest(1, 0, 1);
 		if (modbusResponse instanceof ReadCoilsResponse readCoilsResponse) {
-			Assertions.assertTrue(readCoilsResponse.getBooleanData()[0]);
+			assertThat(readCoilsResponse.getBooleanData()[0]).isTrue();
 		}
 		modbusResponse = modbus.sendReadInputRegistersRequest(1, 0, 1);
 		if (modbusResponse instanceof ReadInputRegistersResponse readInputRegistersResponse) {
-			Assertions.assertEquals(1, readInputRegistersResponse.getShortData()[0]);
+			assertThat(readInputRegistersResponse.getShortData()[0]).isEqualTo(1);
 		}
 		modbusResponse = modbus.sendReadDiscreteInputsRequest(1, 0, 1);
 		if (modbusResponse instanceof ReadDiscreteInputsResponse readDiscreteInputsResponse) {
-			Assertions.assertTrue(readDiscreteInputsResponse.getBooleanData()[0]);
+			assertThat(readDiscreteInputsResponse.getBooleanData()[0]).isTrue();
 		}
 		modbus.close();
 	}

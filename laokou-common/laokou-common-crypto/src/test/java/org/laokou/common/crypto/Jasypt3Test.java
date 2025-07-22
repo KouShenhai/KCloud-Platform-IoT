@@ -20,9 +20,10 @@ package org.laokou.common.crypto;
 import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 只针对 spring-boot 3.x.x.
@@ -41,7 +42,7 @@ class Jasypt3Test {
 		String decryptWithMD5ANDAES256Str = decryptWithHMACSHA512ANDAES256(encryptWithMD5ANDAES256Str, factor);
 		log.info("采用PBEWITHHMACSHA512ANDAES_256加密后：{}", encryptWithMD5ANDAES256Str);
 		log.info("采用PBEWITHHMACSHA512ANDAES_256解密后：{}", decryptWithMD5ANDAES256Str);
-		Assertions.assertEquals(plainText, decryptWithMD5ANDAES256Str);
+		assertThat(decryptWithMD5ANDAES256Str).isEqualTo(plainText);
 	}
 
 	/**

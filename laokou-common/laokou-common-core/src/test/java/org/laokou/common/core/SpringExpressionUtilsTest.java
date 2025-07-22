@@ -17,9 +17,10 @@
 
 package org.laokou.common.core;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.SpringExpressionUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -28,8 +29,8 @@ class SpringExpressionUtilsTest {
 
 	@Test
 	void testSpringExpression() {
-		Assertions.assertEquals("1",
-				SpringExpressionUtils.parse("#id", new String[] { "id" }, new String[] { "1" }, String.class));
+		assertThat(SpringExpressionUtils.parse("#id", new String[] { "id" }, new String[] { "1" }, String.class))
+			.isEqualTo("1");
 	}
 
 }

@@ -78,6 +78,7 @@
     <module name="IllegalImport">
       <property name="illegalClasses" value="lombok.SneakyThrows"/>
       <property name="illegalClasses" value="org.springframework.beans.factory.annotation.Autowired"/>
+      <property name="illegalClasses" value="org.junit.jupiter.api.Assertions.*"/>
     </module>
 
   </module>
