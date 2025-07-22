@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.MDCUtils;
 
+import static org.assertj.core.api.Assertions.assertThatNoException;
+
 /**
  * @author laokou
  */
@@ -31,7 +33,7 @@ class MDCUtilsTest {
 		MDCUtils.put("111", "222");
 		Assertions.assertNotNull(MDCUtils.getTraceId());
 		Assertions.assertNotNull(MDCUtils.getSpanId());
-		Assertions.assertDoesNotThrow(MDCUtils::clear);
+		assertThatNoException().isThrownBy(MDCUtils::clear);
 		Assertions.assertNull(MDCUtils.getTraceId());
 		Assertions.assertNull(MDCUtils.getSpanId());
 	}

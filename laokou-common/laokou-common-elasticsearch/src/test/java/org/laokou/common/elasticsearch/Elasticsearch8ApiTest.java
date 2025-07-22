@@ -37,6 +37,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 
+import static org.assertj.core.api.Assertions.assertThatNoException;
+
 /**
  * @author laokou
  */
@@ -65,18 +67,18 @@ class Elasticsearch8ApiTest {
 			.assertDoesNotThrow(() -> elasticsearchTemplate.createIndex("iot_res_1", "iot_res", TestResource.class));
 		Assertions
 			.assertDoesNotThrow(() -> elasticsearchTemplate.createIndex("iot_pro_1", "iot_pro", TestProject.class));
-		Assertions.assertDoesNotThrow(() -> elasticsearchTemplate.asyncCreateIndex("iot_resp_1", "iot_resp",
+		assertThatNoException().isThrownBy(() -> elasticsearchTemplate.asyncCreateIndex("iot_resp_1", "iot_resp",
 				TestResp.class, Executors.newSingleThreadExecutor()));
-		Assertions.assertDoesNotThrow(
+		assertThatNoException().isThrownBy(
 				() -> elasticsearchTemplate.asyncCreateDocument("iot_res_1", "222", new TestResource("8888")).join());
-		Assertions.assertDoesNotThrow(
+		assertThatNoException().isThrownBy(
 				() -> elasticsearchTemplate
 					.asyncBulkCreateDocument("iot_res_1", Map.of("555", new TestResource("6666")),
 							Executors.newSingleThreadExecutor())
 					.join());
-		Assertions.assertDoesNotThrow(
-				() -> elasticsearchTemplate.createDocument("iot_res_1", "444", new TestResource("3333")));
-		Assertions.assertDoesNotThrow(
+		assertThatNoException()
+			.isThrownBy(() -> elasticsearchTemplate.createDocument("iot_res_1", "444", new TestResource("3333")));
+		assertThatNoException().isThrownBy(
 				() -> elasticsearchTemplate.bulkCreateDocument("iot_res_1", Map.of("333", new TestResource("5555"))));
 		Search.Highlight highlight = new Search.Highlight();
 		highlight.setFields(List.of(new Search.HighlightField("name", 0, 0)));
@@ -91,7 +93,7 @@ class Elasticsearch8ApiTest {
 		log.info("索引信息：{}", JacksonUtils.toJsonStr(result));
 		Assertions.assertNotNull(result);
 		Assertions.assertFalse(result.isEmpty());
-		Assertions.assertDoesNotThrow(
+		assertThatNoException().isThrownBy(
 				() -> elasticsearchTemplate.deleteIndex(List.of("laokou_res_1", "laokou_pro_1", "laokou_resp_1")));
 	}
 

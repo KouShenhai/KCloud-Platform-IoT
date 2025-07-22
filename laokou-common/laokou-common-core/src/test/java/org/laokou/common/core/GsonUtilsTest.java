@@ -18,10 +18,11 @@
 package org.laokou.common.core;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.GsonUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -32,14 +33,14 @@ class GsonUtilsTest {
 	void test() throws JsonProcessingException {
 		TestUser user = new TestUser(1L, "laokou");
 		String json = GsonUtils.toPrettyFormat(user);
-		Assertions.assertEquals("""
+		assertThat(json).isEqualTo("""
 				{
 				  "id": 1,
 				  "name": "laokou"
-				}""", json);
+				}""");
 		TestUser testUser = JacksonUtils.toBean(json, TestUser.class);
-		Assertions.assertEquals(1L, testUser.getId());
-		Assertions.assertEquals("laokou", testUser.getName());
+		assertThat(testUser.getId()).isEqualTo(1L);
+		assertThat(testUser.getName()).isEqualTo("laokou");
 	}
 
 }

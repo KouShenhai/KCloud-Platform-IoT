@@ -17,7 +17,6 @@
 
 package org.laokou.auth;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.model.*;
 import org.laokou.auth.factory.DomainFactory;
@@ -109,62 +108,62 @@ class AuthATest {
 		String decryptUsername = RSAUtils.decryptByPrivateKey(encryptUsername);
 		String encryptPassword = RSAUtils.encryptByPublicKey(password);
 		String decryptPassword = RSAUtils.decryptByPrivateKey(encryptPassword);
-		Assertions.assertEquals(username, decryptUsername);
-		Assertions.assertEquals(password, decryptPassword);
+		assertThat(username).isEqualTo(decryptUsername);
+		assertThat(password).isEqualTo(decryptPassword);
 		AuthA authA = getAuth(encryptUsername, encryptPassword, GrantTypeEnum.USERNAME_PASSWORD, EMPTY, EMPTY);
-		Assertions.assertDoesNotThrow(authA::decryptUsernamePassword);
-		Assertions.assertEquals(username, authA.getUsername());
-		Assertions.assertEquals(password, authA.getPassword());
+		assertThatNoException().isThrownBy(authA::decryptUsernamePassword);
+		assertThat(authA.getUsername()).isEqualTo(username);
+		assertThat(authA.getPassword()).isEqualTo(password);
 	}
 
 	@Test
 	void testCreateUserByTest() throws Exception {
 		AuthA authA = getAuth("admin", "123", GrantTypeEnum.TEST, EMPTY, EMPTY);
 		// 创建用户【测试】
-		Assertions.assertDoesNotThrow(authA::createUserByTest);
+		assertThatNoException().isThrownBy(authA::createUserByTest);
 		UserE user = authA.getUser();
-		Assertions.assertNotNull(user);
-		Assertions.assertEquals(AESUtils.encrypt("admin"), user.getUsername());
+		assertThat(user).isNotNull();
+		assertThat(user.getUsername()).isEqualTo(AESUtils.encrypt("admin"));
 	}
 
 	@Test
 	void testCreateUserByUsernamePassword() throws Exception {
 		AuthA authA = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 创建用户【用户名密码】
-		Assertions.assertDoesNotThrow(authA::createUserByUsernamePassword);
+		assertThatNoException().isThrownBy(authA::createUserByUsernamePassword);
 		UserE user = authA.getUser();
-		Assertions.assertNotNull(user);
-		Assertions.assertEquals(AESUtils.encrypt("admin"), user.getUsername());
+		assertThat(user).isNotNull();
+		assertThat(user.getUsername()).isEqualTo(AESUtils.encrypt("admin"));
 	}
 
 	@Test
 	void testCreateUserByMobile() throws Exception {
 		AuthA authA = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
 		// 创建用户【手机号】
-		Assertions.assertDoesNotThrow(authA::createUserByMobile);
+		assertThatNoException().isThrownBy(authA::createUserByMobile);
 		UserE user = authA.getUser();
-		Assertions.assertNotNull(user);
-		Assertions.assertEquals(AESUtils.encrypt("18888888888"), user.getMobile());
+		assertThat(user).isNotNull();
+		assertThat(user.getMobile()).isEqualTo(AESUtils.encrypt("18888888888"));
 	}
 
 	@Test
 	void testCreateUserByMail() throws Exception {
 		AuthA authA = getAuth(EMPTY, EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
 		// 创建用户【邮箱】
-		Assertions.assertDoesNotThrow(authA::createUserByMail);
+		assertThatNoException().isThrownBy(authA::createUserByMail);
 		UserE user = authA.getUser();
-		Assertions.assertNotNull(user);
-		Assertions.assertEquals(AESUtils.encrypt("2413176044@qq.com"), user.getMail());
+		assertThat(user).isNotNull();
+		assertThat(user.getMail()).isEqualTo(AESUtils.encrypt("2413176044@qq.com"));
 	}
 
 	@Test
 	void testCreateUserByAuthorizationCode() throws Exception {
 		AuthA authA = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
 		// 创建用户【授权码】
-		Assertions.assertDoesNotThrow(authA::createUserByAuthorizationCode);
+		assertThatNoException().isThrownBy(authA::createUserByAuthorizationCode);
 		UserE user = authA.getUser();
-		Assertions.assertNotNull(user);
-		Assertions.assertEquals(AESUtils.encrypt("admin"), user.getUsername());
+		assertThat(user).isNotNull();
+		assertThat(user.getUsername()).isEqualTo(AESUtils.encrypt("admin"));
 	}
 
 	@Test
@@ -174,9 +173,9 @@ class AuthATest {
 		// 校验租户ID
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 获取租户ID
-		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
-		Assertions.assertDoesNotThrow(() -> auth.getTenantId(tenantGateway.getTenantId(auth.getTenantCode())));
-		Assertions.assertDoesNotThrow(auth::checkTenantId);
+		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
+		assertThatNoException().isThrownBy(() -> auth.getTenantId(tenantGateway.getTenantId(auth.getTenantCode())));
+		assertThatNoException().isThrownBy(auth::checkTenantId);
 		// 校验调用次数
 		verify(tenantGateway, times(1)).getTenantId("laokou");
 	}
@@ -192,13 +191,13 @@ class AuthATest {
 			.validateCaptcha(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
 		// 校验验证码【用户名密码登录】
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
-		Assertions.assertDoesNotThrow(auth::checkCaptcha);
+		assertThatNoException().isThrownBy(auth::checkCaptcha);
 		// 校验验证码【邮箱登录】
 		AuthA auth1 = getAuth(EMPTY, EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
-		Assertions.assertDoesNotThrow(auth1::checkCaptcha);
+		assertThatNoException().isThrownBy(auth1::checkCaptcha);
 		// 校验验证码【手机号登录】
 		AuthA auth2 = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
-		Assertions.assertDoesNotThrow(auth2::checkCaptcha);
+		assertThatNoException().isThrownBy(auth2::checkCaptcha);
 		// 校验调用次数
 		verify(captchaValidator, times(1)).validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"),
 				"1234");
@@ -215,8 +214,8 @@ class AuthATest {
 		when(userGateway.getUserProfile(user)).thenReturn(user);
 		// 校验用户名
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
-		Assertions.assertDoesNotThrow(() -> auth.getUserInfo(userGateway.getUserProfile(user)));
-		Assertions.assertDoesNotThrow(auth::checkUsername);
+		assertThatNoException().isThrownBy(() -> auth.getUserInfo(userGateway.getUserProfile(user)));
+		assertThatNoException().isThrownBy(auth::checkUsername);
 	}
 
 	@Test
@@ -225,52 +224,52 @@ class AuthATest {
 		doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		// 创建用户【用户名密码】
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
-		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
-		Assertions.assertNotNull(auth.getUser());
+		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
+		assertThat(auth.getUser()).isNotNull();
 		// 构建密码
 		UserE user = auth.getUser();
-		Assertions.assertDoesNotThrow(() -> user
+		assertThatNoException().isThrownBy(() -> user
 			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
 		// 校验密码
-		Assertions.assertDoesNotThrow(auth::checkPassword);
+		assertThatNoException().isThrownBy(auth::checkPassword);
 	}
 
 	@Test
 	void testCheckUserStatus() {
 		// 创建用户【用户名密码】
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
-		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
-		Assertions.assertNotNull(auth.getUser());
+		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
+		assertThat(auth.getUser()).isNotNull();
 		// 校验用户状态
-		Assertions.assertDoesNotThrow(auth::checkUserStatus);
+		assertThatNoException().isThrownBy(auth::checkUserStatus);
 	}
 
 	@Test
 	void testCheckMenuPermissions() {
 		// 创建用户【用户名密码】
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
-		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
+		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
 		UserE user = auth.getUser();
-		Assertions.assertNotNull(user);
+		assertThat(user).isNotNull();
 		// 构造菜单
 		when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
 		// 校验菜单权限集合
-		Assertions.assertDoesNotThrow(() -> auth.getMenuPermissions(menuGateway.getMenuPermissions(user)));
-		Assertions.assertDoesNotThrow(auth::checkMenuPermissions);
+		assertThatNoException().isThrownBy(() -> auth.getMenuPermissions(menuGateway.getMenuPermissions(user)));
+		assertThatNoException().isThrownBy(auth::checkMenuPermissions);
 	}
 
 	@Test
 	void testCheckDeptPaths() {
 		// 创建用户【用户名密码】
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
-		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
+		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
 		UserE user = auth.getUser();
-		Assertions.assertNotNull(user);
+		assertThat(user).isNotNull();
 		// 构造部门
 		when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 校验部门路径集合
-		Assertions.assertDoesNotThrow(() -> auth.getDeptPaths(deptGateway.getDeptPaths(user)));
-		Assertions.assertDoesNotThrow(auth::checkDeptPaths);
+		assertThatNoException().isThrownBy(() -> auth.getDeptPaths(deptGateway.getDeptPaths(user)));
+		assertThatNoException().isThrownBy(auth::checkDeptPaths);
 	}
 
 	private AuthA getAuth(String username, String password, GrantTypeEnum grantTypeEnum, String uuid, String captcha) {

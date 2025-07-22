@@ -17,7 +17,6 @@
 
 package org.laokou.auth;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gateway.*;
@@ -28,6 +27,7 @@ import org.laokou.auth.model.SendCaptchaTypeEnum;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA;
 import static org.mockito.Mockito.*;
 
@@ -71,8 +71,9 @@ class CaptchaETest {
 		// 校验租户ID
 		CaptchaE captchaE = getCaptcha(SEND_MAIL_CAPTCHA.getCode());
 		// 获取租户ID
-		Assertions.assertDoesNotThrow(() -> captchaE.getTenantId(tenantGateway.getTenantId(captchaE.getTenantCode())));
-		Assertions.assertDoesNotThrow(captchaE::checkTenantId);
+		assertThatNoException()
+			.isThrownBy(() -> captchaE.getTenantId(tenantGateway.getTenantId(captchaE.getTenantCode())));
+		assertThatNoException().isThrownBy(captchaE::checkTenantId);
 		// 校验调用次数
 		verify(tenantGateway, times(1)).getTenantId("laokou");
 	}

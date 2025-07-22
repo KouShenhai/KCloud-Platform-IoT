@@ -19,7 +19,6 @@ package org.laokou.auth;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.dto.TokenRemoveCmd;
@@ -49,6 +48,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.laokou.common.i18n.common.constant.StringConstants.RISK;
 import static org.laokou.common.i18n.common.constant.TraceConstants.REQUEST_ID;
@@ -149,7 +149,7 @@ class OAuth2ApiTest {
 	void testEncodePassword() {
 		String pwd = passwordEncoder.encode(PASSWORD);
 		log.info("生成密码：{}", pwd);
-		Assertions.assertTrue(passwordEncoder.matches(PASSWORD, pwd));
+		assertThat(passwordEncoder.matches(PASSWORD, pwd)).isTrue();
 	}
 
 	@Test
@@ -160,8 +160,8 @@ class OAuth2ApiTest {
 		String encryptPassword = RSAUtils.encryptByPublicKey(PASSWORD);
 		String decryptUsername = RSAUtils.decryptByPrivateKey(encryptUsername);
 		String decryptPassword = RSAUtils.decryptByPrivateKey(encryptPassword);
-		Assertions.assertEquals(USERNAME, decryptUsername);
-		Assertions.assertEquals(PASSWORD, decryptPassword);
+		assertThat(decryptUsername).isEqualTo(USERNAME);
+		assertThat(decryptPassword).isEqualTo(PASSWORD);
 		Map<String, String> tokenMap = usernamePasswordAuth(captcha, encryptUsername, encryptPassword);
 		log.info("验证码：{}", captcha);
 		log.info("加密用户名：{}", encryptUsername);
@@ -278,7 +278,7 @@ class OAuth2ApiTest {
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("设备授权码认证模式，返回信息：{}", json);
-			Assertions.assertNotNull(json);
+			assertThat(json).isNotEmpty();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -297,7 +297,7 @@ class OAuth2ApiTest {
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("客户端认证模式，返回信息：{}", json);
-			Assertions.assertNotNull(json);
+			assertThat(json).isNotEmpty();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken);
@@ -316,7 +316,7 @@ class OAuth2ApiTest {
 					"Basic ZWI3RGVkNWJiRmJkNzg5NmY4YTJjZmREYzk6RHBBa1BmejRlVzE4ZDI=");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("授权码认证模式，返回信息：{}", json);
-			Assertions.assertNotNull(json);
+			assertThat(json).isNotEmpty();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -343,7 +343,7 @@ class OAuth2ApiTest {
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("手机号认证，返回信息：{}", json);
-			Assertions.assertNotNull(json);
+			assertThat(json).isNotEmpty();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -364,7 +364,7 @@ class OAuth2ApiTest {
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("邮箱认证，返回信息：{}", json);
-			Assertions.assertNotNull(json);
+			assertThat(json).isNotEmpty();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -385,7 +385,7 @@ class OAuth2ApiTest {
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = OkHttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("用户名密码认证模式，返回信息：{}", json);
-			Assertions.assertNotNull(json);
+			assertThat(json).isNotEmpty();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -406,7 +406,7 @@ class OAuth2ApiTest {
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = OkHttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("测试认证模式，返回信息：{}", json);
-			Assertions.assertNotNull(json);
+			assertThat(json).isNotEmpty();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -424,7 +424,7 @@ class OAuth2ApiTest {
 			Map<String, String> headers = Collections.singletonMap("Authorization", secretHeadValue);
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("刷新令牌模式，返回信息；{}", json);
-			Assertions.assertNotNull(json);
+			assertThat(json).isNotEmpty();
 			return JacksonUtils.readTree(json).get("access_token").asText();
 		}
 		catch (Exception e) {

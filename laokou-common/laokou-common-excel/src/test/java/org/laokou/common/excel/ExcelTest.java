@@ -33,6 +33,7 @@ import java.io.FileOutputStream;
 import java.nio.file.Path;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
@@ -54,24 +55,25 @@ class ExcelTest {
 		List<TestUserDO> list = testUserMapper.selectList(Wrappers.emptyWrapper());
 		Assertions.assertEquals(1, list.size());
 		Assertions.assertTrue(list.stream().map(TestUserDO::getName).toList().contains("老寇"));
-		Assertions.assertDoesNotThrow(() -> ExcelUtils.doImport(EMPTY, TestUserExcel.class, TestUserConvertor.INSTANCE,
-				ResourceUtils.getResource("classpath:test3.xlsx").getInputStream(), TestUserMapper.class,
-				TestUserMapper::insert, mybatisUtils));
-		Assertions.assertDoesNotThrow(() -> ExcelUtils.doImport("test", TestUserExcel.class, TestUserConvertor.INSTANCE,
-				ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
-				TestUserMapper::insert, mybatisUtils));
-		Assertions.assertDoesNotThrow(() -> ExcelUtils.doImport("test2", TestUserExcel.class,
+		assertThatNoException().isThrownBy(() -> ExcelUtils.doImport(EMPTY, TestUserExcel.class,
+				TestUserConvertor.INSTANCE, ResourceUtils.getResource("classpath:test3.xlsx").getInputStream(),
+				TestUserMapper.class, TestUserMapper::insert, mybatisUtils));
+		assertThatNoException().isThrownBy(() -> ExcelUtils.doImport("test", TestUserExcel.class,
 				TestUserConvertor.INSTANCE, ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(),
 				TestUserMapper.class, TestUserMapper::insert, mybatisUtils));
-		Assertions.assertDoesNotThrow(() -> ExcelUtils.doImport("test3", TestUserExcel.class,
+		assertThatNoException().isThrownBy(() -> ExcelUtils.doImport("test2", TestUserExcel.class,
+				TestUserConvertor.INSTANCE, ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(),
+				TestUserMapper.class, TestUserMapper::insert, mybatisUtils));
+		assertThatNoException().isThrownBy(() -> ExcelUtils.doImport("test3", TestUserExcel.class,
 				TestUserConvertor.INSTANCE, ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(),
 				TestUserMapper.class, TestUserMapper::insert, mybatisUtils));
 		long count = testUserMapper.selectObjectCount(new PageQuery());
 		Assertions.assertEquals(7, count);
-		Assertions.assertDoesNotThrow(() -> ExcelUtils.doExport("测试用户Sheet页", 1000, new FileOutputStream("test.xlsx"),
-				new PageQuery(), testUserMapper, TestUserExcel.class, TestUserConvertor.INSTANCE));
-		Assertions.assertDoesNotThrow(() -> FileUtils.deleteIfExists(Path.of("test.xlsx")));
-		Assertions.assertDoesNotThrow(() -> testUserMapper.deleteUser(List.of(2L, 3L, 4L, 5L, 6L, 7L)));
+		assertThatNoException()
+			.isThrownBy(() -> ExcelUtils.doExport("测试用户Sheet页", 1000, new FileOutputStream("test.xlsx"),
+					new PageQuery(), testUserMapper, TestUserExcel.class, TestUserConvertor.INSTANCE));
+		assertThatNoException().isThrownBy(() -> FileUtils.deleteIfExists(Path.of("test.xlsx")));
+		assertThatNoException().isThrownBy(() -> testUserMapper.deleteUser(List.of(2L, 3L, 4L, 5L, 6L, 7L)));
 		count = testUserMapper.selectObjectCount(new PageQuery());
 		Assertions.assertEquals(1, count);
 	}

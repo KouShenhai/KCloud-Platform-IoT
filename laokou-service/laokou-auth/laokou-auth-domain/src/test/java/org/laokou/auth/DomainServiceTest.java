@@ -17,7 +17,6 @@
 
 package org.laokou.auth;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.model.CaptchaValidator;
@@ -35,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA;
 import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MOBILE_CAPTCHA;
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
@@ -103,7 +103,7 @@ class DomainServiceTest {
 	void testUsernamePasswordAuth() {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 创建用户【用户名密码】
-		Assertions.assertDoesNotThrow(auth::createUserByUsernamePassword);
+		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
 		// 构造租户
 		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 构造验证码校验
@@ -111,7 +111,7 @@ class DomainServiceTest {
 			.validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
 		// 构造用户信息
 		UserE user = auth.getUser();
-		Assertions.assertDoesNotThrow(() -> user
+		assertThatNoException().isThrownBy(() -> user
 			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
 		when(userGateway.getUserProfile(user)).thenReturn(user);
 		// 构造密码校验
@@ -121,7 +121,7 @@ class DomainServiceTest {
 		// 构造部门
 		when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 用户名密码登录
-		Assertions.assertDoesNotThrow(() -> domainService.auth(auth));
+		assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
 		verify(deptGateway, times(1)).getDeptPaths(user);
 		verify(menuGateway, times(1)).getMenuPermissions(user);
@@ -136,7 +136,7 @@ class DomainServiceTest {
 	void testMailAuth() {
 		AuthA auth = getAuth(EMPTY, EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
 		// 创建用户【邮箱】
-		Assertions.assertDoesNotThrow(auth::createUserByMail);
+		assertThatNoException().isThrownBy(auth::createUserByMail);
 		// 构造租户
 		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 构造验证码校验
@@ -150,7 +150,7 @@ class DomainServiceTest {
 		// 构造部门
 		when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 邮箱登录
-		Assertions.assertDoesNotThrow(() -> domainService.auth(auth));
+		assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
 		verify(deptGateway, times(1)).getDeptPaths(user);
 		verify(menuGateway, times(1)).getMenuPermissions(user);
@@ -164,7 +164,7 @@ class DomainServiceTest {
 	void testMobileAuth() {
 		AuthA auth = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
 		// 创建用户【手机号】
-		Assertions.assertDoesNotThrow(auth::createUserByMobile);
+		assertThatNoException().isThrownBy(auth::createUserByMobile);
 		// 构造租户
 		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 构造验证码校验
@@ -178,7 +178,7 @@ class DomainServiceTest {
 		// 构造部门
 		when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 手机号登录
-		Assertions.assertDoesNotThrow(() -> domainService.auth(auth));
+		assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
 		verify(deptGateway, times(1)).getDeptPaths(user);
 		verify(menuGateway, times(1)).getMenuPermissions(user);
@@ -190,12 +190,12 @@ class DomainServiceTest {
 	void testAuthorizationCodeAuth() {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
 		// 创建用户【授权码】
-		Assertions.assertDoesNotThrow(auth::createUserByAuthorizationCode);
+		assertThatNoException().isThrownBy(auth::createUserByAuthorizationCode);
 		// 构造租户
 		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 构造用户信息
 		UserE user = auth.getUser();
-		Assertions.assertDoesNotThrow(() -> user
+		assertThatNoException().isThrownBy(() -> user
 			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
 		when(userGateway.getUserProfile(user)).thenReturn(user);
 		// 构造密码校验
@@ -205,7 +205,7 @@ class DomainServiceTest {
 		// 构造部门
 		when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 授权码登录
-		Assertions.assertDoesNotThrow(() -> domainService.auth(auth));
+		assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
 		verify(deptGateway, times(1)).getDeptPaths(user);
 		verify(menuGateway, times(1)).getMenuPermissions(user);
@@ -218,12 +218,12 @@ class DomainServiceTest {
 	void testTestAuth() {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.TEST, EMPTY, EMPTY);
 		// 创建用户【测试】
-		Assertions.assertDoesNotThrow(auth::createUserByTest);
+		assertThatNoException().isThrownBy(auth::createUserByTest);
 		// 构造租户
 		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 构造用户信息
 		UserE user = auth.getUser();
-		Assertions.assertDoesNotThrow(() -> user
+		assertThatNoException().isThrownBy(() -> user
 			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
 		when(userGateway.getUserProfile(user)).thenReturn(user);
 		// 构造密码校验
@@ -233,7 +233,7 @@ class DomainServiceTest {
 		// 构造部门
 		when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 测试登录
-		Assertions.assertDoesNotThrow(() -> domainService.auth(auth));
+		assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
 		verify(deptGateway, times(1)).getDeptPaths(user);
 		verify(menuGateway, times(1)).getMenuPermissions(user);
@@ -246,39 +246,39 @@ class DomainServiceTest {
 	void testCreateLoginLog() {
 		LoginLogE loginLog = DomainFactory.getLoginLog();
 		// 创建登录日志
-		Assertions.assertDoesNotThrow(() -> domainService.createLoginLog(loginLog));
+		assertThatNoException().isThrownBy(() -> domainService.createLoginLog(loginLog));
 	}
 
 	@Test
 	void testCreateSendCaptchaInfoByMail() {
 		// 创建发送验证码信息
 		CaptchaE captcha = getCaptcha("2413176044@qq.com", SEND_MAIL_CAPTCHA.getCode());
-		Assertions.assertDoesNotThrow(() -> domainService.createSendCaptchaInfo(captcha));
+		assertThatNoException().isThrownBy(() -> domainService.createSendCaptchaInfo(captcha));
 	}
 
 	@Test
 	void testCreateSendCaptchaInfoByMobile() {
 		// 创建发送验证码信息
 		CaptchaE captcha = getCaptcha("18888888888", SEND_MOBILE_CAPTCHA.getCode());
-		Assertions.assertDoesNotThrow(() -> domainService.createSendCaptchaInfo(captcha));
+		assertThatNoException().isThrownBy(() -> domainService.createSendCaptchaInfo(captcha));
 	}
 
 	@Test
 	void testCreateNoticeLogByMailCaptcha() {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
-		Assertions.assertDoesNotThrow(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));
-		Assertions.assertDoesNotThrow(() -> noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode()));
-		Assertions.assertDoesNotThrow(() -> domainService.createNoticeLog(noticeLog));
+		assertThatNoException().isThrownBy(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));
+		assertThatNoException().isThrownBy(() -> noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode()));
+		assertThatNoException().isThrownBy(() -> domainService.createNoticeLog(noticeLog));
 	}
 
 	@Test
 	void testCreateNoticeLogByMobileCaptcha() {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
-		Assertions.assertDoesNotThrow(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));
-		Assertions.assertDoesNotThrow(() -> noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode()));
-		Assertions.assertDoesNotThrow(() -> domainService.createNoticeLog(noticeLog));
+		assertThatNoException().isThrownBy(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));
+		assertThatNoException().isThrownBy(() -> noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode()));
+		assertThatNoException().isThrownBy(() -> domainService.createNoticeLog(noticeLog));
 	}
 
 	private CaptchaE getCaptcha(String uuid, String tag) {

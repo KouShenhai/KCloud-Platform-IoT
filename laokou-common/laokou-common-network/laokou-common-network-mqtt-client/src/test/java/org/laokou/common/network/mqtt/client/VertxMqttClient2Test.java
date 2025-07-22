@@ -19,7 +19,6 @@ package org.laokou.common.network.mqtt.client;
 
 import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.network.mqtt.client.config.SpringMqttClientProperties;
 import org.laokou.common.network.mqtt.client.config.VertxMqttClient;
@@ -28,6 +27,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
  * @author laokou
@@ -67,12 +68,12 @@ class VertxMqttClient2Test {
 			properties.setClientId("test-client-" + i);
 			VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx, virtualThreadExecutor, properties,
 					mqttMessageHandlers);
-			Assertions.assertDoesNotThrow(vertxMqttClient::open);
+			assertThatNoException().isThrownBy(vertxMqttClient::open);
 			Thread.sleep(1000);
-			Assertions.assertDoesNotThrow(() -> vertxMqttClient.publish("/1/2/up/property/report", qos,
+			assertThatNoException().isThrownBy(() -> vertxMqttClient.publish("/1/2/up/property/report", qos,
 					"{\"id\":\"1\",\"name\":\"test\",\"value\":\"test\"}", false, false));
 			Thread.sleep(1000);
-			Assertions.assertDoesNotThrow(vertxMqttClient::close);
+			assertThatNoException().isThrownBy(vertxMqttClient::close);
 		}
 	}
 
