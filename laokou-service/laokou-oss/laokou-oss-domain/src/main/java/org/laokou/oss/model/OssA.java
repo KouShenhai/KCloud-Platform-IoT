@@ -22,6 +22,7 @@ import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.dto.IdGenerator;
 
 /**
  * @author laokou

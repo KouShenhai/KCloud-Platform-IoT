@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.StoragePolicyEnum;
+import org.laokou.oss.dto.clientobject.OssUploadCO;
 import org.laokou.oss.factory.OssDomainFactory;
 import org.laokou.oss.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.oss.model.FileFormatEnum;
@@ -51,6 +52,13 @@ public final class OssConvertor {
 		return oss;
 	}
 
+	public static OssUploadCO toClientObject(OssA ossA) {
+		OssUploadCO ossUploadCO = new OssUploadCO();
+		ossUploadCO.setUrl(ossA.getUrl());
+		ossUploadCO.setId(ossA.getId());
+		return ossUploadCO;
+	}
+
 	public static FileInfo toFileInfo(byte[] buffer, long size, String contentType, String name, String extName) {
 		return new FileInfo(new ByteArrayInputStream(buffer), size, contentType, name, extName);
 	}
@@ -61,7 +69,7 @@ public final class OssConvertor {
 
 	private static BaseOss to(OssDO ossDO) {
 		try {
-			return StoragePolicyEnum.getByCode(ossDO.getType()).getOss(ossDO.getParam());
+			return StoragePolicyEnum.getByCode(ossDO.getType()).getOss(ossDO.getName(), ossDO.getParam());
 		}
 		catch (JsonProcessingException e) {
 			throw new RuntimeException(e);

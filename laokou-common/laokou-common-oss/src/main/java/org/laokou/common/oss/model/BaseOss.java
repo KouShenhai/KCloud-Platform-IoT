@@ -17,13 +17,17 @@
 
 package org.laokou.common.oss.model;
 
+import lombok.Data;
 import java.io.Serializable;
 
 /**
  * @author laokou
  */
+@Data
 public abstract class BaseOss implements Serializable {
 
 	public abstract StoragePolicyEnum getStoragePolicy();
+
+	protected String name;
 
 }

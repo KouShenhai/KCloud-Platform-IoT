@@ -23,6 +23,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.oss.api.OssServiceI;
 import org.laokou.oss.command.OssUploadCmdExe;
 import org.laokou.oss.dto.OssUploadCmd;
+import org.laokou.oss.dto.clientobject.OssUploadCO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -36,7 +37,7 @@ public class OssServiceImpl implements OssServiceI {
 	private final OssUploadCmdExe ossUploadCmdExe;
 
 	@Override
-	public Result<String> uploadOss(OssUploadCmd cmd) throws Exception {
+	public Result<OssUploadCO> uploadOss(OssUploadCmd cmd) throws Exception {
 		return ossUploadCmdExe.execute(cmd);
 	}
 

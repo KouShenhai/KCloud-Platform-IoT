@@ -22,6 +22,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.oss.ability.OssDomainService;
 import org.laokou.oss.convertor.OssConvertor;
 import org.laokou.oss.dto.OssUploadCmd;
+import org.laokou.oss.dto.clientobject.OssUploadCO;
 import org.laokou.oss.model.OssA;
 import org.springframework.stereotype.Component;
 
@@ -34,11 +35,11 @@ public class OssUploadCmdExe {
 
 	private final OssDomainService ossDomainService;
 
-	public Result<String> execute(OssUploadCmd cmd) throws Exception {
+	public Result<OssUploadCO> execute(OssUploadCmd cmd) throws Exception {
 		OssA ossA = OssConvertor.toEntity(cmd.getFileType(), cmd.getSize(), cmd.getExtName(), cmd.getBuffer(),
 				cmd.getContentType(), cmd.getName());
 		ossDomainService.uploadOss(ossA);
-		return Result.ok("");
+		return Result.ok(OssConvertor.toClientObject(ossA));
 	}
 
 }

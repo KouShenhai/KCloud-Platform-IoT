@@ -18,6 +18,7 @@
 package org.laokou.admin.user.service;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.oss.dto.clientobject.OssUploadCO;
 import org.laokou.admin.user.api.UsersServiceI;
 import org.laokou.admin.user.command.*;
 import org.laokou.admin.user.command.query.UserGetQryExe;
@@ -112,7 +113,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public Result<String> uploadUserAvatar(UserUploadAvatarCmd cmd) throws Exception {
+	public Result<OssUploadCO> uploadUserAvatar(UserUploadAvatarCmd cmd) throws Exception {
 		return userUploadCmdEx.execute(cmd);
 	}
 

@@ -25,6 +25,7 @@ import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -131,13 +132,13 @@ public class AuthA extends AggregateRoot {
 
 	// @formatter:off
 	public AuthA(IdGenerator idGenerator,
-				 PasswordValidator passwordValidator,
-				 CaptchaValidator captchaValidator,
-				 @Qualifier("authorizationCodeAuthParamValidator") AuthParamValidator authorizationCodeAuthParamValidator,
-				 @Qualifier("mailAuthParamValidator") AuthParamValidator mailAuthParamValidator,
-				 @Qualifier("mobileAuthParamValidator") AuthParamValidator mobileAuthParamValidator,
-				 @Qualifier("testAuthParamValidator") AuthParamValidator testAuthParamValidator,
-				 @Qualifier("usernamePasswordAuthParamValidator") AuthParamValidator usernamePasswordAuthParamValidator) {
+                 PasswordValidator passwordValidator,
+                 CaptchaValidator captchaValidator,
+                 @Qualifier("authorizationCodeAuthParamValidator") AuthParamValidator authorizationCodeAuthParamValidator,
+                 @Qualifier("mailAuthParamValidator") AuthParamValidator mailAuthParamValidator,
+                 @Qualifier("mobileAuthParamValidator") AuthParamValidator mobileAuthParamValidator,
+                 @Qualifier("testAuthParamValidator") AuthParamValidator testAuthParamValidator,
+                 @Qualifier("usernamePasswordAuthParamValidator") AuthParamValidator usernamePasswordAuthParamValidator) {
 		this.id = idGenerator.getId();
 		this.passwordValidator = passwordValidator;
 		this.captchaValidator = captchaValidator;

@@ -19,7 +19,7 @@ package org.laokou.admin.dept.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.admin.user.model.IdGenerator;
+import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Identifier;

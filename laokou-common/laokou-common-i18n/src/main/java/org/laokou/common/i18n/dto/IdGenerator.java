@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.thingModel.model;
+package org.laokou.common.i18n.dto;
 
 import java.io.Serializable;
 

@@ -24,7 +24,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.laokou.auth.model.CaptchaValidator;
-import org.laokou.auth.model.IdGenerator;
+import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.auth.model.PasswordValidator;
 import org.laokou.auth.gatewayimpl.rpc.DistributedIdentifierRpc;
 import org.laokou.common.fory.config.ForyFactory;
