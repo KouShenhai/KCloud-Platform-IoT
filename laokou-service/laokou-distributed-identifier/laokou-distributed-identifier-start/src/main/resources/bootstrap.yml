@@ -8,12 +8,13 @@ dubbo:
     group: DUBBO_${NACOS-GROUP}
     check: false
   protocol:
-    name: dubbo
-    port: ${PROTOCOL_PORT:1112}
-    serialization: fury
+    name: tri
+    port: -1
   application:
     name: ${spring.application.name}
     logger: slf4j
     qos-port: ${QOS_PORT:1113}
+  provider:
+    filter: dubboException,-exception
   consumer:
     check: false

@@ -22,6 +22,7 @@ import lombok.Setter;
 import org.laokou.common.i18n.util.MessageUtils;
 
 import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * 全局异常.
@@ -30,7 +31,7 @@ import java.io.Serial;
  */
 @Getter
 @Setter
-public abstract class GlobalException extends RuntimeException {
+public abstract class GlobalException extends RuntimeException implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 4102669900127613541L;
