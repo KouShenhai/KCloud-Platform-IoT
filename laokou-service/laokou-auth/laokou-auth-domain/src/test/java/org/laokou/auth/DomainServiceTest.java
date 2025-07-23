@@ -24,6 +24,7 @@ import org.laokou.auth.model.PasswordValidator;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gateway.*;
 import org.laokou.auth.model.*;
+import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;

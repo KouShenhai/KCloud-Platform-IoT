@@ -22,6 +22,7 @@ import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.oss.api.OssServiceI;
 import org.laokou.oss.dto.OssUploadCmd;
+import org.laokou.oss.dto.clientobject.OssUploadCO;
 
 /**
  * @author laokou
@@ -30,7 +31,7 @@ import org.laokou.oss.dto.OssUploadCmd;
 public class OssMock implements OssServiceI {
 
 	@Override
-	public Result<String> uploadOss(OssUploadCmd cmd) {
+	public Result<OssUploadCO> uploadOss(OssUploadCmd cmd) {
 		log.error("调用上传文件失败，请检查Dubbo服务");
 		throw new BizException("B_Dubbo_CallOssUploadFailed", "调用上传文件失败，请检查Dubbo服务");
 	}

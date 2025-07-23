@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.oss.dto.clientobject.OssUploadCO;
 import org.laokou.admin.user.dto.UserUploadAvatarCmd;
 import org.laokou.admin.user.api.UsersServiceI;
 import org.laokou.admin.user.dto.*;
@@ -143,7 +144,7 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:oss:upload') and hasAuthority('sys:user:modify')")
 	@Operation(summary = "用户管理", description = "上传用户头像")
 	@OperateLog(module = "用户管理", operation = "上传用户头像")
-	public Result<String> uploadUserAvatar(@RequestPart("file") MultipartFile file) throws Exception {
+	public Result<OssUploadCO> uploadUserAvatar(@RequestPart("file") MultipartFile file) throws Exception {
 		return usersServiceI.uploadUserAvatar(new UserUploadAvatarCmd(file));
 	}
 

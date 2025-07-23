@@ -15,15 +15,19 @@
  *
  */
 
-package org.laokou.admin.user.model;
+package org.laokou.admin.oss.dto.clientobject;
 
-import java.io.Serializable;
+import lombok.Data;
+import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
-public interface IdGenerator extends Serializable {
+@Data
+public class OssUploadCO extends ClientObject {
 
-	long getId();
+	private Long logId;
+
+	private String url;
 
 }

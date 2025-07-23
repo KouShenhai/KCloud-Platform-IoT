@@ -31,8 +31,10 @@ public enum StoragePolicyEnum {
 
 	LOCAL("local", "本地") {
 		@Override
-		public BaseOss getOss(String param) throws JsonProcessingException {
-			return JacksonUtils.toBean(param, Local.class);
+		public BaseOss getOss(String name, String param) throws JsonProcessingException {
+			Local local = JacksonUtils.toBean(param, Local.class);
+			local.setName(name);
+			return local;
 		}
 
 		@Override
@@ -43,8 +45,10 @@ public enum StoragePolicyEnum {
 
 	AMAZON_S3("amazon_s3", "亚马逊S3") {
 		@Override
-		public BaseOss getOss(String param) throws JsonProcessingException {
-			return JacksonUtils.toBean(param, AmazonS3.class);
+		public BaseOss getOss(String name, String param) throws JsonProcessingException {
+			AmazonS3 amazonS3 = JacksonUtils.toBean(param, AmazonS3.class);
+			amazonS3.setName(name);
+			return amazonS3;
 		}
 
 		@Override
@@ -55,8 +59,10 @@ public enum StoragePolicyEnum {
 
 	MINIO("minio", "MinIO") {
 		@Override
-		public BaseOss getOss(String param) throws JsonProcessingException {
-			return JacksonUtils.toBean(param, MinIO.class);
+		public BaseOss getOss(String name, String param) throws JsonProcessingException {
+			MinIO minIO = JacksonUtils.toBean(param, MinIO.class);
+			minIO.setName(name);
+			return minIO;
 		}
 
 		@Override
@@ -78,7 +84,7 @@ public enum StoragePolicyEnum {
 		return EnumParser.parse(StoragePolicyEnum.class, StoragePolicyEnum::getCode, code);
 	}
 
-	public abstract BaseOss getOss(String param) throws JsonProcessingException;
+	public abstract BaseOss getOss(String name, String param) throws JsonProcessingException;
 
 	public abstract Storage getStorage(FileInfo fileInfo, BaseOss baseOss);
 

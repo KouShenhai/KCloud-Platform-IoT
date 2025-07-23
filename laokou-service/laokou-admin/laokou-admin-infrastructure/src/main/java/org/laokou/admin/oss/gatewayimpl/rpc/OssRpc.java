@@ -22,6 +22,7 @@ import org.laokou.admin.oss.convertor.OssConvertor;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.oss.api.OssServiceI;
+import org.laokou.oss.dto.clientobject.OssUploadCO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,10 +36,10 @@ public class OssRpc {
 			mock = "org.laokou.admin.oss.gatewayimpl.rpc.OssMock", loadbalance = "adaptive", retries = 3)
 	private OssServiceI ossServiceI;
 
-	public Result<String> uploadOss(MultipartFile file, String fileType) throws Exception {
-		Result<String> result = ossServiceI.uploadOss(OssConvertor.toAssembler(file, fileType));
+	public OssUploadCO uploadOss(MultipartFile file, String fileType) throws Exception {
+		Result<OssUploadCO> result = ossServiceI.uploadOss(OssConvertor.toAssembler(file, fileType));
 		if (result.success()) {
-			return result;
+			return result.getData();
 		}
 		throw new BizException(result.getCode(), result.getMsg());
 	}

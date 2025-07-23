@@ -19,8 +19,8 @@ package org.laokou.admin.oss.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.admin.user.model.IdGenerator;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.dto.Identifier;
 
 /**

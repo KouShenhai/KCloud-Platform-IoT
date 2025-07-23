@@ -15,22 +15,19 @@
  *
  */
 
-package org.laokou.iot.common.config;
+package org.laokou.oss.dto.clientobject;
 
-import org.laokou.common.log.rpc.DistributedIdentifierRpc;
-import org.laokou.iot.thingModel.model.IdGenerator;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import lombok.Data;
+import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
-@Configuration
-public class Config {
+@Data
+public class OssUploadCO extends ClientObject {
 
-	@Bean
-	IdGenerator idGenerator(DistributedIdentifierRpc distributedIdentifierRpc) {
-		return distributedIdentifierRpc::getId;
-	}
+	private Long id;
+
+	private String url;
 
 }
