@@ -17,11 +17,13 @@
 
 package org.laokou.common.core;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.config.SpringDisruptorProperties;
 import org.laokou.common.core.util.PropertyUtils;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Component;
 import org.springframework.test.context.TestConstructor;
 
 import java.io.IOException;
@@ -42,6 +44,15 @@ class PropertyUtilsTest {
 				SpringDisruptorProperties.class, "application.yml", "yaml");
 		assertThat(properties).isNotNull();
 		assertThat(properties.getBufferSize()).isEqualTo(1024);
+	}
+
+	@Data
+	@Component
+	@ConfigurationProperties(prefix = "spring.disruptor")
+	static class SpringDisruptorProperties {
+
+		private int bufferSize = 1024;
+
 	}
 
 }

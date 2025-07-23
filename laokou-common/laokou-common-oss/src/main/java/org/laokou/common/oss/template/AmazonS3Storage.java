@@ -67,7 +67,7 @@ public final class AmazonS3Storage extends AbstractStorage<S3Client> {
 		String bucketName = this.amazonS3.getBucketName();
 		if (s3Client.listBuckets().buckets().stream().noneMatch(b -> b.name().equals(bucketName))) {
 			throw new BizException("B_Oss_AmazonS3BucketNotExist",
-					String.format("%s 存储桶 %s 不存在【AmazonS3】", amazonS3.getName(), bucketName));
+					String.format("【AmazonS3】 %s 存储桶 %s 不存在", amazonS3.getName(), bucketName));
 		}
 	}
 

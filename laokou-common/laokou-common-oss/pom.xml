@@ -9,10 +9,10 @@
   <artifactId>laokou-common-oss</artifactId>
 
   <dependencies>
-      <dependency>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-core</artifactId>
-      </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-core</artifactId>
+    </dependency>
     <dependency>
       <groupId>software.amazon.awssdk</groupId>
       <artifactId>s3</artifactId>

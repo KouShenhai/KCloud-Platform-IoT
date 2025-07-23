@@ -59,7 +59,7 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 		boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
 		if (!isExist) {
 			throw new BizException("B_Oss_MinIOBucketNotExist",
-					String.format("%s 存储桶 %s 不存在【MinIO】", minIO.getName(), bucketName));
+					String.format("【MinIO】 %s 存储桶 %s 不存在", minIO.getName(), bucketName));
 		}
 	}
 
