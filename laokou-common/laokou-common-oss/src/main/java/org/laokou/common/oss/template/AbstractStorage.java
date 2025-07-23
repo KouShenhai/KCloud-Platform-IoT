@@ -34,14 +34,14 @@ public abstract class AbstractStorage<O> implements Storage {
 	@Override
 	public String uploadOss() throws Exception {
 		O obj = getObj();
-		createBucket(obj);
+		checkBucket(obj);
 		upload(obj);
 		return getUrl(obj);
 	}
 
 	protected abstract O getObj() throws IOException;
 
-	protected abstract void createBucket(O obj) throws Exception;
+	protected abstract void checkBucket(O obj) throws Exception;
 
 	protected abstract void upload(O obj) throws Exception;
 

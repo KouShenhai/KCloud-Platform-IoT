@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Qualifier;

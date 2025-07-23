@@ -20,6 +20,7 @@ package org.laokou.common.oss.template;
 import io.minio.*;
 import io.minio.errors.*;
 import io.minio.http.Method;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.MinIO;
@@ -51,13 +52,14 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 	}
 
 	@Override
-	protected void createBucket(MinioClient minioClient) throws ServerException, InsufficientDataException,
+	protected void checkBucket(MinioClient minioClient) throws ServerException, InsufficientDataException,
 			ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException,
 			InvalidResponseException, XmlParserException, InternalException {
 		String bucketName = this.minIO.getBucketName();
 		boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
 		if (!isExist) {
-			minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
+			throw new BizException("B_Oss_MinIOBucketNotExist",
+					String.format("%s 存储桶 %s 不存在【MinIO】", minIO.getName(), bucketName));
 		}
 	}
 

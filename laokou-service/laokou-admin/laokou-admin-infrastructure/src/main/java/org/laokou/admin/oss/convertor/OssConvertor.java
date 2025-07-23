@@ -17,6 +17,7 @@
 
 package org.laokou.admin.oss.convertor;
 
+import org.laokou.admin.oss.dto.clientobject.OssUploadCO;
 import org.laokou.admin.oss.factory.OssDomainFactory;
 import org.laokou.admin.oss.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.admin.oss.gatewayimpl.rpc.assembler.OssUploadAssembler;
@@ -51,6 +52,13 @@ public class OssConvertor {
 		ossCO.setStatus(ossDO.getStatus());
 		ossCO.setCreateTime(ossDO.getCreateTime());
 		return ossCO;
+	}
+
+	public static OssUploadCO toClientObject(org.laokou.oss.dto.clientobject.OssUploadCO ossUploadCO) {
+		OssUploadCO co = new OssUploadCO();
+		co.setLogId(ossUploadCO.getId());
+		co.setUrl(ossUploadCO.getUrl());
+		return co;
 	}
 
 	public static OssUploadAssembler toAssembler(MultipartFile file, String fileType) throws IOException {

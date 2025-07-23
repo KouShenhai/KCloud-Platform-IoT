@@ -17,6 +17,7 @@
 
 package org.laokou.common.oss.template;
 
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -62,11 +63,11 @@ public final class AmazonS3Storage extends AbstractStorage<S3Client> {
 	}
 
 	@Override
-	protected void createBucket(S3Client s3Client) {
+	protected void checkBucket(S3Client s3Client) {
 		String bucketName = this.amazonS3.getBucketName();
-		// bucketName不存在则新建
 		if (s3Client.listBuckets().buckets().stream().noneMatch(b -> b.name().equals(bucketName))) {
-			s3Client.createBucket(b -> b.bucket(bucketName));
+			throw new BizException("B_Oss_AmazonS3BucketNotExist",
+					String.format("%s 存储桶 %s 不存在【AmazonS3】", amazonS3.getName(), bucketName));
 		}
 	}
 

@@ -17,6 +17,7 @@
 
 package org.laokou.admin.user.api;
 
+import org.laokou.admin.oss.dto.clientobject.OssUploadCO;
 import org.laokou.admin.user.dto.UserUploadAvatarCmd;
 import org.laokou.admin.user.dto.*;
 import org.laokou.admin.user.dto.clientobject.UserCO;
@@ -94,6 +95,6 @@ public interface UsersServiceI {
 	 * 上传用户头像.
 	 * @param cmd 上传命令
 	 */
-	Result<String> uploadUserAvatar(UserUploadAvatarCmd cmd) throws Exception;
+	Result<OssUploadCO> uploadUserAvatar(UserUploadAvatarCmd cmd) throws Exception;
 
 }

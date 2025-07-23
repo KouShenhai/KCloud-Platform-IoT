@@ -45,7 +45,7 @@ public final class LocalStorage extends AbstractStorage<Path> {
 	}
 
 	@Override
-	protected void createBucket(Path path) {
+	protected void checkBucket(Path path) {
 	}
 
 	@Override
