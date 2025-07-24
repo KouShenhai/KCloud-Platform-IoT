@@ -11,7 +11,7 @@ Gitee 地址：[KCloud-Platform-IoT](https://gitee.com/laokouyun/KCloud-Platform
 
 # 启动
 ```shell
-# 注意：node版本必须为16.x
+# 注意：node版本必须为18.x
 
 # 安装
 npm install
