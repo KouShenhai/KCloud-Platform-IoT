@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package oss;
+option java_multiple_files = true;
+option java_string_check_utf8 = true;
+option java_package = "org.laokou.oss.api";
+option java_outer_classname = "OssProto";
+
+message OssUploadCmd {
+	string fileType = 1;
+	bytes buffer = 2;
+	string name = 3;
+	string extName = 4;
+	string contentType = 5;
+	int64 size = 6;
+}
+
+message OssUploadCO {
+	int64 id = 1;
+	string url = 2;
+}
+
+message OssUploadResult {
+	int32 code = 1;
+	string msg = 2;
+	OssUploadCO data = 3;
+}
+
+service OssServiceI {
+	rpc upload(OssUploadCmd) returns (OssUploadResult);
+}
