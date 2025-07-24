@@ -35,9 +35,10 @@ public class OssUploadCmdExe {
 
 	private final OssDomainService ossDomainService;
 
-	public Result<OssUploadCO> execute(OssUploadCmd cmd) throws Exception {
+	public Result<OssUploadCO> execute(OssUploadCmd cmd) {
 		OssA ossA = OssConvertor.toEntity(cmd.getFileType(), cmd.getSize(), cmd.getExtName(), cmd.getBuffer(),
 				cmd.getContentType(), cmd.getName());
+		// 上传文件
 		ossDomainService.uploadOss(ossA);
 		return Result.ok(OssConvertor.toClientObject(ossA));
 	}

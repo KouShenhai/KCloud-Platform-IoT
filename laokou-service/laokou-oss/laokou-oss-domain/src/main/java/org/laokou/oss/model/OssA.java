@@ -23,6 +23,9 @@ import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.IdGenerator;
+import org.laokou.common.i18n.util.StringUtils;
+
+import java.util.function.Supplier;
 
 /**
  * @author laokou
@@ -76,8 +79,11 @@ public class OssA extends AggregateRoot {
 		}
 	}
 
-	public void getFileUrl(String url) {
-		this.url = url;
+	public void getFileUrl(Supplier<String> url1, Supplier<String> url2) {
+		this.url = url1.get();
+		if (StringUtils.isEmpty(this.url)) {
+			this.url = url2.get();
+		}
 	}
 
 }

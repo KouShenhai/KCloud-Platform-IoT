@@ -37,7 +37,7 @@ public class OssServiceImpl implements OssServiceI {
 	private final OssUploadCmdExe ossUploadCmdExe;
 
 	@Override
-	public Result<OssUploadCO> uploadOss(OssUploadCmd cmd) throws Exception {
+	public Result<OssUploadCO> uploadOss(OssUploadCmd cmd) {
 		return ossUploadCmdExe.execute(cmd);
 	}
 

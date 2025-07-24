@@ -18,26 +18,44 @@
 package org.laokou.oss.ability;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.oss.gateway.OssGateway;
+import org.laokou.oss.gateway.OssLogGateway;
 import org.laokou.oss.model.OssA;
 import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OssDomainService {
 
 	private final OssGateway ossGateway;
 
-	public void uploadOss(OssA ossA) throws Exception {
+	private final OssLogGateway ossLogGateway;
+
+	public void uploadOss(OssA ossA) {
 		// 校验文件大小
 		ossA.checkSize();
 		// 校验扩展名
 		ossA.checkExt();
-		// 上传文件并获取地址
-		ossA.getFileUrl(ossGateway.uploadOssAndGetUrl(ossA));
+		// 获取文件地址
+		ossA.getFileUrl(() -> ossLogGateway.getUrl(ossA.getMd5()), () -> {
+			try {
+				return ossGateway.uploadOssAndGetUrl(ossA);
+			}
+			catch (GlobalException ex) {
+				throw ex;
+			}
+			catch (Exception e) {
+				log.error("OSS上传失败，错误信息：{}", e.getMessage(), e);
+				throw new BizException("B_OSS_UploadFailed", "OSS上传失败", e);
+			}
+		});
 	}
 
 }
