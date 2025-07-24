@@ -138,7 +138,7 @@
     <!--opencsv版本-->
     <opencsv.version>5.11.2</opencsv.version>
     <!--curator版本-->
-    <curator.version>5.8.0</curator.version>
+    <curator.version>5.9.0</curator.version>
     <!--wiremock版本-->
     <wiremock.version>4.0.0-beta.14</wiremock.version>
     <!--commons-net版本-->
