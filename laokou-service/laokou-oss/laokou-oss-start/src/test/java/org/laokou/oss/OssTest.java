@@ -23,7 +23,7 @@ import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.ResourceUtils;
-import org.laokou.oss.api.OssServiceI;
+import org.laokou.oss.api2.OssServiceI;
 import org.laokou.oss.dto.OssUploadCmd;
 import org.laokou.oss.dto.clientobject.OssUploadCO;
 import org.springframework.boot.test.context.SpringBootTest;

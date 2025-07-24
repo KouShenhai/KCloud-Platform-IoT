@@ -14,6 +14,14 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.dubbo</groupId>
+      <artifactId>dubbo</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -23,9 +31,16 @@
         <artifactId>dubbo-maven-plugin</artifactId>
         <version>${dubbo-maven-plugin.version}</version>
         <configuration>
-          <outputDir>build/generated/source/proto/main/java</outputDir>
+          <outputDir>src/main/java</outputDir>
           <protocVersion>${protobuf-java.version}</protocVersion>
         </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

@@ -21,7 +21,7 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.laokou.admin.oss.convertor.OssConvertor;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.oss.api.OssServiceI;
+import org.laokou.oss.api2.OssServiceI;
 import org.laokou.oss.dto.clientobject.OssUploadCO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

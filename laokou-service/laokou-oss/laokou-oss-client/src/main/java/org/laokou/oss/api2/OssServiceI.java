@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.oss.api;
+package org.laokou.oss.api2;
 
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.oss.dto.OssUploadCmd;

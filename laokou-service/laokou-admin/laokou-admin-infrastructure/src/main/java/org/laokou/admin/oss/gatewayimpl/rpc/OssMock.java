@@ -20,7 +20,7 @@ package org.laokou.admin.oss.gatewayimpl.rpc;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.oss.api.OssServiceI;
+import org.laokou.oss.api2.OssServiceI;
 import org.laokou.oss.dto.OssUploadCmd;
 import org.laokou.oss.dto.clientobject.OssUploadCO;
 
