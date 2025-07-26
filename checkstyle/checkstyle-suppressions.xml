@@ -24,4 +24,5 @@
   <!-- https://checkstyle.sourceforge.io/filters/suppressionfilter.html -->
   <suppress files="[/\\]target[/\\]" checks=".*"/>
   <suppress files="[\\/]org[\\/]laokou[\\/]oss[\\/]api[\\/]" checks=".*" />
+  <suppress files="[\\/]org[\\/]laokou[\\/]distributed[\\/]identifier[\\/]api[\\/]" checks=".*" />
 </suppressions>

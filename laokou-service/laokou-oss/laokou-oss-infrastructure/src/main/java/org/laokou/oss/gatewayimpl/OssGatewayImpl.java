@@ -46,7 +46,7 @@ public class OssGatewayImpl implements OssGateway {
 						ossA.getExtName()),
 				OssConvertor.toBaseOssList(ossMapper.selectList(Wrappers.lambdaQuery(OssDO.class)
 					.eq(OssDO::getStatus, OssStatusEnum.ENABLE.getCode())
-					.select(OssDO::getParam, OssDO::getType))));
+					.select(OssDO::getParam, OssDO::getType, OssDO::getName))));
 	}
 
 }

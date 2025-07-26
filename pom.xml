@@ -356,6 +356,7 @@
         <configuration>
           <includes>src/main/java/**/*.java</includes>
           <excludes>src/main/java/org/laokou/oss/api/*.java</excludes>
+          <excludes>src/main/java/org/laokou/distributed/identifier/api/*.java</excludes>
         </configuration>
       </plugin>
       <plugin>

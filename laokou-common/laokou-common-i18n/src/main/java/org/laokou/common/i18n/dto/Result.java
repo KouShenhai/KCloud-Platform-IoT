@@ -28,10 +28,10 @@ import java.io.Serializable;
 import static org.laokou.common.i18n.common.exception.StatusCode.OK;
 
 /**
+ * 请求响应统一格式.
  * @author laokou
  */
 @Data
-@Schema(name = "请求响应统一格式", description = "请求响应统一格式")
 public class Result<T> implements Serializable {
 
 	@Serial

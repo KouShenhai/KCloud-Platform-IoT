@@ -50,7 +50,7 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-dubbo</artifactId>
+      <artifactId>laokou-distributed-identifier-proto</artifactId>
     </dependency>
   </dependencies>
 

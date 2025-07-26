@@ -27,6 +27,13 @@
         <configuration>
           <outputDir>src/main/java</outputDir>
         </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

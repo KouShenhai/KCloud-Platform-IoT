@@ -17,17 +17,13 @@
       <artifactId>laokou-common-domain</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-dubbo</artifactId>
-    </dependency>
-    <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-distributed-identifier-client</artifactId>
+      <artifactId>laokou-distributed-identifier-proto</artifactId>
     </dependency>
   </dependencies>
 

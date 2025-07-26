@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
  * @author laokou
  */
 @Service
-@DubboService(token = "0e02b2c3d479", group = "iot-oss", version = "v3", timeout = 5000)
+@DubboService(token = "0e02b2c3d479", group = "iot-oss", version = "v3", timeout = 10000)
 @RequiredArgsConstructor
 public class OssServiceImpl extends DubboOssServiceITriple.OssServiceIImplBase {
 

@@ -18,8 +18,11 @@
 package org.laokou.common.log.rpc;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.distributed.identifier.api.DistributedIdentifierCmd;
+import org.laokou.distributed.identifier.api.DistributedIdentifierResult;
 import org.laokou.distributed.identifier.api.DistributedIdentifierServiceI;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author laokou
@@ -28,9 +31,15 @@ import org.laokou.distributed.identifier.api.DistributedIdentifierServiceI;
 public class DistributedIdentifierMock implements DistributedIdentifierServiceI {
 
 	@Override
-	public Result<Long> generateSnowflake() {
+	public DistributedIdentifierResult generateSnowflake(DistributedIdentifierCmd cmd) {
 		log.error("调用获取分布式ID失败，请检查Dubbo服务");
-		return Result.ok(System.nanoTime());
+		return DistributedIdentifierResult.newBuilder()
+			.setData(System.nanoTime())
+			.build();
 	}
 
+	@Override
+	public CompletableFuture<DistributedIdentifierResult> generateSnowflakeAsync(DistributedIdentifierCmd cmd) {
+		return CompletableFuture.supplyAsync(() -> generateSnowflake(cmd));
+	}
 }

@@ -20,7 +20,9 @@ package org.laokou.distributed.identifier.service;
 import lombok.RequiredArgsConstructor;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.distributed.identifier.api.DistributedIdentifierServiceI;
+import org.laokou.distributed.identifier.api.DistributedIdentifierCmd;
+import org.laokou.distributed.identifier.api.DistributedIdentifierResult;
+import org.laokou.distributed.identifier.api.DubboDistributedIdentifierServiceITriple;
 import org.laokou.distributed.identifier.command.DistributedIdentifierGenerateCmdExe;
 import org.springframework.stereotype.Service;
 
@@ -28,15 +30,19 @@ import org.springframework.stereotype.Service;
  * @author laokou
  */
 @Service
-@DubboService(token = "3f7c5e45d6a7", group = "iot-distributed-identifier", version = "v3", timeout = 5000)
+@DubboService(token = "3f7c5e45d6a7", group = "iot-distributed-identifier", version = "v3", timeout = 10000)
 @RequiredArgsConstructor
-public class DistributedIdentifierServiceImpl implements DistributedIdentifierServiceI {
+public class DistributedIdentifierServiceImpl extends DubboDistributedIdentifierServiceITriple.DistributedIdentifierServiceIImplBase {
 
 	private final DistributedIdentifierGenerateCmdExe distributedIdentifierGenerateCmdExe;
 
 	@Override
-	public Result<Long> generateSnowflake() {
-		return distributedIdentifierGenerateCmdExe.execute();
+	public DistributedIdentifierResult generateSnowflake(DistributedIdentifierCmd cmd) {
+		Result<Long> result = distributedIdentifierGenerateCmdExe.execute();
+		return DistributedIdentifierResult.newBuilder()
+			.setCode(result.getCode())
+			.setMsg(result.getMsg())
+			.setData(result.getData())
+			.build();
 	}
-
 }

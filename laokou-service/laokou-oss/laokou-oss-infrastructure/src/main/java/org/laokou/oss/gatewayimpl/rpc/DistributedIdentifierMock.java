@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.rpc;
+package org.laokou.oss.gatewayimpl.rpc;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.distributed.identifier.api.DistributedIdentifierCmd;

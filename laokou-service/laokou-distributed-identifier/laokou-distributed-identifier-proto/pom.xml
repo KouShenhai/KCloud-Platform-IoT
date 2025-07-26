@@ -11,6 +11,13 @@
 
   <artifactId>laokou-distributed-identifier-proto</artifactId>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-dubbo</artifactId>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -20,6 +27,13 @@
         <configuration>
           <outputDir>src/main/java</outputDir>
         </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.log.rpc;
+package org.laokou.oss.gatewayimpl.rpc;
 
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.laokou.common.i18n.common.exception.BizException;

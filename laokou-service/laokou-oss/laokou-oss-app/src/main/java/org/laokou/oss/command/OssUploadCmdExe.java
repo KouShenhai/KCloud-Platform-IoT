@@ -44,7 +44,7 @@ public class OssUploadCmdExe {
 			ossDomainService.uploadOss(ossA);
 			return Result.ok(OssConvertor.toClientObject(ossA));
 		} catch (GlobalException e) {
-			return Result.fail(e.getCode(), e.getMessage());
+			return Result.fail(e.getCode(), e.getMsg());
 		}
 	}
 
