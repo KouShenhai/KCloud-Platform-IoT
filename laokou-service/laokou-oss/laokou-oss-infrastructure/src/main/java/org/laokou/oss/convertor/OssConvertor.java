@@ -18,6 +18,7 @@
 package org.laokou.oss.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.StoragePolicyEnum;
@@ -59,6 +60,9 @@ public final class OssConvertor {
 	}
 
 	public static org.laokou.oss.api.OssUploadCO toClientObject(OssUploadCO co) {
+		if (ObjectUtils.isNull(co)) {
+			return org.laokou.oss.api.OssUploadCO.newBuilder().build();
+		}
 		return org.laokou.oss.api.OssUploadCO.newBuilder()
 			.setId(co.getId())
 			.setUrl(co.getUrl())

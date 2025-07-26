@@ -91,10 +91,7 @@
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
     <checkstyle.version>10.26.1</checkstyle.version>
     <spring-javaformat-checkstyle.version>0.0.47</spring-javaformat-checkstyle.version>
-    <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
     <dubbo.version>3.3.5</dubbo.version>
-    <protoc.version>3.22.3</protoc.version>
-    <os.maven.plugin.version>1.7.1</os.maven.plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>

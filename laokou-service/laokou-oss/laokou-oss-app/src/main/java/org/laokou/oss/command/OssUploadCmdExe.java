@@ -18,6 +18,8 @@
 package org.laokou.oss.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.oss.ability.OssDomainService;
 import org.laokou.oss.convertor.OssConvertor;
 import org.laokou.oss.dto.OssUploadCmd;
@@ -34,12 +36,16 @@ public class OssUploadCmdExe {
 
 	private final OssDomainService ossDomainService;
 
-	public OssUploadCO execute(OssUploadCmd cmd) {
-		OssA ossA = OssConvertor.toEntity(cmd.getFileType(), cmd.getSize(), cmd.getExtName(), cmd.getBuffer(),
+	public Result<OssUploadCO> execute(OssUploadCmd cmd) {
+		try {
+			OssA ossA = OssConvertor.toEntity(cmd.getFileType(), cmd.getSize(), cmd.getExtName(), cmd.getBuffer(),
 				cmd.getContentType(), cmd.getName());
-		// 上传文件
-		ossDomainService.uploadOss(ossA);
-		return OssConvertor.toClientObject(ossA);
+			// 上传文件
+			ossDomainService.uploadOss(ossA);
+			return Result.ok(OssConvertor.toClientObject(ossA));
+		} catch (GlobalException e) {
+			return Result.fail(e.getCode(), e.getMessage());
+		}
 	}
 
 }

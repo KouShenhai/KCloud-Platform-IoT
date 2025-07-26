@@ -35,7 +35,8 @@ import static org.laokou.common.i18n.common.exception.StatusCode.OK;
 @Component
 public class OssRpc {
 
-	@DubboReference(group = "iot-oss", version = "v3", loadbalance = "adaptive", retries = 3, timeout = 100000000)
+	@DubboReference(group = "iot-oss", version = "v3", interfaceClass = OssServiceI.class,
+			mock = "org.laokou.admin.oss.gatewayimpl.rpc.OssMock", loadbalance = "adaptive", retries = 3)
 	private OssServiceI ossServiceI;
 
 	public OssUploadCO uploadOss(MultipartFile file, String fileType) throws Exception {

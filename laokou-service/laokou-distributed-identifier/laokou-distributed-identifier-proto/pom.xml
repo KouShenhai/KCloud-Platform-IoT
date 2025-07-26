@@ -11,4 +11,17 @@
 
   <artifactId>laokou-distributed-identifier-proto</artifactId>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.dubbo</groupId>
+        <artifactId>dubbo-maven-plugin</artifactId>
+        <version>${dubbo.version}</version>
+        <configuration>
+          <outputDir>src/main/java</outputDir>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>
