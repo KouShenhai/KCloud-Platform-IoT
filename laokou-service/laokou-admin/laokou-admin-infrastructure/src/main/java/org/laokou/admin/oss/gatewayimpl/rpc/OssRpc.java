@@ -20,11 +20,14 @@ package org.laokou.admin.oss.gatewayimpl.rpc;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.laokou.admin.oss.convertor.OssConvertor;
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.oss.api2.OssServiceI;
-import org.laokou.oss.dto.clientobject.OssUploadCO;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.oss.api.OssServiceI;
+import org.laokou.oss.api.OssUploadCO;
+import org.laokou.oss.api.OssUploadResult;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+
+import static org.laokou.common.i18n.common.exception.StatusCode.OK;
 
 /**
  * @author laokou
@@ -32,13 +35,12 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class OssRpc {
 
-	@DubboReference(group = "iot-oss", version = "v3", interfaceClass = OssServiceI.class,
-			mock = "org.laokou.admin.oss.gatewayimpl.rpc.OssMock", loadbalance = "adaptive", retries = 3)
+	@DubboReference(group = "iot-oss", version = "v3", loadbalance = "adaptive", retries = 3, timeout = 100000000)
 	private OssServiceI ossServiceI;
 
 	public OssUploadCO uploadOss(MultipartFile file, String fileType) throws Exception {
-		Result<OssUploadCO> result = ossServiceI.uploadOss(OssConvertor.toAssembler(file, fileType));
-		if (result.success()) {
+		OssUploadResult result = ossServiceI.uploadOss(OssConvertor.toAssembler(file, fileType));
+		if (ObjectUtils.equals(OK, result.getCode())) {
 			return result.getData();
 		}
 		throw new BizException(result.getCode(), result.getMsg());

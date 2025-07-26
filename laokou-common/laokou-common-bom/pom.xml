@@ -174,6 +174,11 @@
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-oss-proto</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-oauth2-core</artifactId>
         <version>${spring-security.version}</version>
@@ -239,6 +244,11 @@
         <version>${protobuf-java.version}</version>
       </dependency>
       <dependency>
+        <groupId>com.google.protobuf</groupId>
+        <artifactId>protobuf-java-util</artifactId>
+        <version>${protobuf-java.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-common-dubbo</artifactId>
         <version>${laokou.version}</version>
@@ -251,11 +261,6 @@
       <dependency>
         <groupId>org.apache.dubbo</groupId>
         <artifactId>dubbo-nacos-spring-boot-starter</artifactId>
-        <version>${dubbo.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.dubbo</groupId>
-        <artifactId>dubbo</artifactId>
         <version>${dubbo.version}</version>
       </dependency>
       <dependency>

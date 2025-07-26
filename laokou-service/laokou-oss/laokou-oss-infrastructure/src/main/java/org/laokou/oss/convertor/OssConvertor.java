@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.StoragePolicyEnum;
+import org.laokou.oss.dto.OssUploadCmd;
 import org.laokou.oss.dto.clientobject.OssUploadCO;
 import org.laokou.oss.factory.OssDomainFactory;
 import org.laokou.oss.gatewayimpl.database.dataobject.OssDO;
@@ -50,6 +51,18 @@ public final class OssConvertor {
 		oss.setBuffer(buffer);
 		oss.setMd5(DigestUtils.md5DigestAsHex(buffer));
 		return oss;
+	}
+
+	public static OssUploadCmd toAssembler(org.laokou.oss.api.OssUploadCmd cmd) {
+		return new OssUploadCmd(cmd.getFileType(), cmd.getBuffer().toByteArray(), cmd.getName(), cmd.getExtName(),
+				cmd.getContentType(), cmd.getSize());
+	}
+
+	public static org.laokou.oss.api.OssUploadCO toClientObject(OssUploadCO co) {
+		return org.laokou.oss.api.OssUploadCO.newBuilder()
+			.setId(co.getId())
+			.setUrl(co.getUrl())
+			.build();
 	}
 
 	public static OssUploadCO toClientObject(OssA ossA) {

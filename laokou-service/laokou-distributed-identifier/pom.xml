@@ -14,5 +14,6 @@
     <module>laokou-distributed-identifier-app</module>
     <module>laokou-distributed-identifier-client</module>
     <module>laokou-distributed-identifier-domain</module>
+      <module>laokou-distributed-identifier-proto</module>
   </modules>
 </project>

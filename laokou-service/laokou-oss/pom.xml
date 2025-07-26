@@ -20,6 +20,7 @@
     <module>laokou-oss-app</module>
     <module>laokou-oss-client</module>
     <module>laokou-oss-domain</module>
+      <module>laokou-oss-proto</module>
   </modules>
 
 </project>

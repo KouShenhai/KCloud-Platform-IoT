@@ -21,9 +21,8 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.core.util.UUIDGenerator;
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.ResourceUtils;
-import org.laokou.oss.api2.OssServiceI;
+import org.laokou.oss.command.OssUploadCmdExe;
 import org.laokou.oss.dto.OssUploadCmd;
 import org.laokou.oss.dto.clientobject.OssUploadCO;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,16 +38,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class OssTest {
 
-	private final OssServiceI ossServiceI;
+	private final OssUploadCmdExe ossUploadCmdExe;
 
 	@Test
 	void testOssUpload() throws Exception {
 		byte[] bytes = ResourceUtils.getResource("classpath:1.jpg").getInputStream().readAllBytes();
-		Result<OssUploadCO> result = ossServiceI.uploadOss(new OssUploadCmd("image", bytes,
+		OssUploadCO co = ossUploadCmdExe.execute(new OssUploadCmd("image", bytes,
 				UUIDGenerator.generateUUID() + ".jpg", ".jpg", "image/jpeg", bytes.length));
-		assertThat(result.success()).isTrue();
-		assertThat(result.getCode()).isEqualTo("OK");
-		assertThat(FileUtils.getBytesByUrl(result.getData().getUrl())).isEqualTo(bytes);
+		assertThat(FileUtils.getBytesByUrl(co.getUrl())).isEqualTo(bytes);
 	}
 
 }

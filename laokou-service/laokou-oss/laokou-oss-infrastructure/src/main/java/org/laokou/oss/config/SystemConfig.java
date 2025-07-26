@@ -17,9 +17,6 @@
 
 package org.laokou.oss.config;
 
-import org.laokou.common.i18n.dto.IdGenerator;
-import org.laokou.oss.gatewayimpl.rpc.DistributedIdentifierRpc;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -27,10 +24,5 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class SystemConfig {
-
-	@Bean
-	IdGenerator idGenerator(DistributedIdentifierRpc distributedIdentifierRpc) {
-		return distributedIdentifierRpc::getId;
-	}
 
 }

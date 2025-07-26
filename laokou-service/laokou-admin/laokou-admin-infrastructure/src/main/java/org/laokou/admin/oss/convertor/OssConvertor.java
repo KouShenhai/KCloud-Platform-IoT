@@ -17,6 +17,7 @@
 
 package org.laokou.admin.oss.convertor;
 
+import com.google.protobuf.ByteString;
 import org.laokou.admin.oss.dto.clientobject.OssUploadCO;
 import org.laokou.admin.oss.factory.OssDomainFactory;
 import org.laokou.admin.oss.gatewayimpl.database.dataobject.OssDO;
@@ -25,7 +26,7 @@ import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.admin.oss.dto.clientobject.OssCO;
 import org.laokou.admin.oss.model.OssE;
-import org.laokou.oss.dto.OssUploadCmd;
+import org.laokou.oss.api.OssUploadCmd;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,7 +55,7 @@ public class OssConvertor {
 		return ossCO;
 	}
 
-	public static OssUploadCO toClientObject(org.laokou.oss.dto.clientobject.OssUploadCO ossUploadCO) {
+	public static OssUploadCO toClientObject(org.laokou.oss.api.OssUploadCO ossUploadCO) {
 		OssUploadCO co = new OssUploadCO();
 		co.setLogId(ossUploadCO.getId());
 		co.setUrl(ossUploadCO.getUrl());
@@ -65,8 +66,14 @@ public class OssConvertor {
 		String name = file.getOriginalFilename();
 		Assert.notNull(name, "File name must not be null");
 		String extName = FileUtils.getFileExt(name);
-		return new OssUploadCmd(fileType, file.getBytes(), UUIDGenerator.generateUUID() + extName, extName,
-				file.getContentType(), file.getSize());
+		return OssUploadCmd.newBuilder()
+				.setBuffer(ByteString.copyFrom(file.getBytes()))
+				.setName(UUIDGenerator.generateUUID() + extName)
+				.setExtName(extName)
+				.setContentType(file.getContentType())
+				.setSize(file.getSize())
+				.setFileType(fileType)
+				.build();
 	}
 
 	public static List<OssCO> toClientObjects(List<OssDO> list) {
