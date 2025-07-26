@@ -18,13 +18,12 @@
 package org.laokou.logstash.api;
 
 import org.laokou.logstash.dto.TraceLogSaveCmd;
-import reactor.core.publisher.Mono;
 
 /**
  * @author laokou
  */
 public interface TraceLogServiceI {
 
-	Mono<Void> saveTraceLog(TraceLogSaveCmd cmd);
+	void saveTraceLog(TraceLogSaveCmd cmd);
 
 }

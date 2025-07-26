@@ -127,6 +127,14 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-distributed-identifier-proto</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-tenant</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-lock</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

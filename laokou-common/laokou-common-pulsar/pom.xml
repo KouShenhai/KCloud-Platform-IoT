@@ -24,6 +24,10 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-fory</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

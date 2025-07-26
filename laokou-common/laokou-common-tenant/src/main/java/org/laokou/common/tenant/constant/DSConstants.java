@@ -92,6 +92,16 @@ public final class DSConstants {
 		 */
 		public static final String OSS_LOG_TABLE = "sys_oss_log";
 
+		/**
+		 * 租户表.
+		 */
+		public static final String TENANT_TABLE = "sys_tenant";
+
+		/**
+		 * 数据源表.
+		 */
+		public static final String SOURCE_TABLE = "sys_source";
+
 	}
 
 	public static final class Domain {

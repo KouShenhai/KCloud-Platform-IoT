@@ -21,13 +21,15 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
+import static org.laokou.common.tenant.constant.DSConstants.Master.TENANT_TABLE;
+
 /**
  * 租户数据对象.
  *
  * @author laokou
  */
 @Data
-@TableName("sys_tenant")
+@TableName(TENANT_TABLE)
 public class TenantDO extends BaseDO {
 
 	/**

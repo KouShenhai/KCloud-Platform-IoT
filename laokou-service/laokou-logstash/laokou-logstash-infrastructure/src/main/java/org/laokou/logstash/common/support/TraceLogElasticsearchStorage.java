@@ -18,16 +18,13 @@
 package org.laokou.logstash.common.support;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -44,24 +41,15 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 	}
 
 	@Override
-	public Mono<Void> batchSave(Flux<Object> messages) {
-		return messages.collectList().flatMap(item -> {
-			Map<String, TraceLogIndex> dataMap = item.stream()
-				.map(this::getTraceLogIndex)
-				.filter(Objects::nonNull)
-				.collect(Collectors.toMap(TraceLogIndex::getId, Function.identity(),
-						(existing, replacement) -> existing));
-			if (MapUtils.isEmpty(dataMap)) {
-				return Mono.empty();
-			}
-			return Mono.fromFuture(elasticsearchTemplate
+	public void batchSave(List<Object> messages) {
+		Map<String, TraceLogIndex> traceLogMap = messages.stream().map(this::getTraceLogIndex)
+			.filter(Objects::nonNull)
+			.collect(Collectors.toMap(TraceLogIndex::getId, traceLogIndex -> traceLogIndex));
+		elasticsearchTemplate
 				.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, virtualThreadExecutor)
-				.thenComposeAsync(result -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), dataMap,
-						virtualThreadExecutor), virtualThreadExecutor));
-		}).onErrorResume(e -> {
-			log.error("【Elasticsearch-Trace-Log】 => 分布式链路写入失败，错误信息：{}", e.getMessage(), e);
-			return Mono.error(e);
-		});
+				.thenComposeAsync(result -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), traceLogMap,
+						virtualThreadExecutor), virtualThreadExecutor);
+
 	}
 
 }

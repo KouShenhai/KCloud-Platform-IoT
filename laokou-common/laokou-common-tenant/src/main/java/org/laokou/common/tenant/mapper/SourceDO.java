@@ -21,13 +21,15 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
+import static org.laokou.common.tenant.constant.DSConstants.Master.SOURCE_TABLE;
+
 /**
  * 数据源数据对象.
  *
  * @author laokou
  */
 @Data
-@TableName("sys_source")
+@TableName(SOURCE_TABLE)
 public class SourceDO extends BaseDO {
 
 	/**

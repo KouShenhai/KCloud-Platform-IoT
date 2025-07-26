@@ -20,43 +20,34 @@ package org.laokou.logstash.common.support;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.logstash.common.config.LokiProperties;
 import org.laokou.logstash.convertor.TraceLogConvertor;
+import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-
+import org.springframework.web.client.RestClient;
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
 @Component
 public class TraceLogLokiStorage extends AbstractTraceLogStorage {
 
-	private final WebClient webClient;
+	private final RestClient restClient;
 
 	private final LokiProperties lokiProperties;
 
-	public TraceLogLokiStorage(WebClient webClient, LokiProperties lokiProperties) {
-		this.webClient = webClient;
+	public TraceLogLokiStorage(RestClient restClient, LokiProperties lokiProperties) {
+		this.restClient = restClient;
 		this.lokiProperties = lokiProperties;
 	}
 
 	@Override
-	public Mono<Void> batchSave(Flux<Object> messages) {
-		return messages.collectList()
-			.map(item -> item.stream().map(this::getTraceLogIndex).filter(Objects::nonNull).toList())
-			.map(TraceLogConvertor::toDTO)
-			.flatMap(item -> webClient.post()
-				.uri(lokiProperties.getUrl())
-				.accept(MediaType.APPLICATION_JSON)
-				.bodyValue(item)
-				.retrieve()
-				.toBodilessEntity()
-				.then())
-			.onErrorResume(e -> {
-				log.error("【Loki-Trace-Log】 => 分布式链路写入失败，错误信息：{}", e.getMessage(), e);
-				return Mono.error(e);
-			});
+	public void batchSave(List<Object> messages) {
+		List<TraceLogIndex> list = messages.stream().map(this::getTraceLogIndex).filter(Objects::nonNull).toList();
+		restClient.post()
+			.uri(lokiProperties.getUrl())
+			.accept(MediaType.APPLICATION_JSON)
+			.body(TraceLogConvertor.toDTO(list))
+			.retrieve()
+			.toBodilessEntity();
 	}
-
 }

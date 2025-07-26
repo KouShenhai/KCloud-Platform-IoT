@@ -28,14 +28,14 @@ import org.springframework.kafka.core.KafkaTemplate;
 @RequiredArgsConstructor
 public class DefaultKafkaTemplate {
 
-	private final KafkaTemplate<String, String> kafkaTemplate;
+	private final KafkaTemplate<String, Object> kafkaTemplate;
 
 	/**
 	 * 发送消息.
 	 * @param topic 主题
 	 * @param payload 内容
 	 */
-	public void send(String topic, String payload) {
+	public <T> void send(String topic, T payload) {
 		kafkaTemplate.send(topic, payload);
 	}
 

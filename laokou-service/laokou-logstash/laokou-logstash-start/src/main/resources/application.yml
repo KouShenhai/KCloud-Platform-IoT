@@ -36,6 +36,19 @@ server:
     enabled: @SSL-ENABLED@
   forward-headers-strategy: native
   shutdown: graceful
+  servlet:
+    encoding:
+      charset: UTF-8
+  undertow:
+    threads:
+      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
+      io: 16
+      # 工作线程数
+      worker: 512
+    # 每块buffer的空间大小
+    buffer-size: 2048
+    # 分配堆外内存
+    direct-buffers: true
 
 spring:
   application:
@@ -45,6 +58,9 @@ spring:
   threads:
     virtual:
       enabled: true
+  # Loki配置
+  loki:
+    url: http://loki:3100/loki/api/v1/push
   # Elasticsearch配置
   elasticsearch:
     uris:
@@ -114,6 +130,3 @@ logging:
 
 storage:
   type: elasticsearch
-
-loki:
-  url: http://loki:3100/loki/api/v1/push

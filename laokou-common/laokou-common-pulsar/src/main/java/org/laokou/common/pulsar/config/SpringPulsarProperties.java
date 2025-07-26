@@ -15,14 +15,23 @@
  *
  */
 
-package org.laokou.common.domain.config;
+package org.laokou.common.pulsar.config;
 
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author laokou
  */
-@AutoConfiguration
-public class DomainAutoConfig {
+@Data
+@Component
+@ConfigurationProperties(prefix = "spring.pulsar")
+public class SpringPulsarProperties {
+
+	private Map<String, String> topics = new HashMap<>();
 
 }

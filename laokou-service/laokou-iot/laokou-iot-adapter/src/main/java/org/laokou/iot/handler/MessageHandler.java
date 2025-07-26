@@ -33,7 +33,7 @@ import java.util.List;
 @Component
 public class MessageHandler {
 
-	@PulsarListener(topicPattern = "${pulsar.topic.tenant1}/up-property-report",
+	@PulsarListener(topicPattern = "${spring.pulsar.topic.tenant1}/up-property-report",
 			subscriptionName = "up-property-report", schemaType = SchemaType.BYTES, batch = true,
 			ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Shared)
 	public void handleMqttMessage(List<byte[]> messages) {

@@ -22,12 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.laokou.logstash.api.TraceLogServiceI;
 import org.laokou.logstash.dto.TraceLogSaveCmd;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.KafkaListeners;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import reactor.kafka.receiver.internals.DefaultKafkaReceiver;
+import java.util.List;
 
-import java.time.Duration;
+import static org.laokou.common.log4j2.model.MqEnum.*;
 
 /**
  * @author laokou
@@ -39,18 +40,27 @@ public class TraceLogHandler {
 
 	private final TraceLogServiceI traceLogServiceI;
 
-	private final DefaultKafkaReceiver<String, Object> reactiveKafkaReceiver;
-
-	public Flux<Void> consumeMessages() {
-		return reactiveKafkaReceiver.receiveBatch(1000)
-			// 控制消费速率（背压）
-			.delayElements(Duration.ofMillis(10))
-			.onBackpressureBuffer(8192)
-			.flatMap(records -> traceLogServiceI.saveTraceLog(new TraceLogSaveCmd(records.map(ConsumerRecord::value))))
-			.onErrorResume(e -> {
-				log.error("Kafka消费失败，错误信息：{}", e.getMessage(), e);
-				return Mono.error(e);
-			});
+	@KafkaListeners(value = {
+			@KafkaListener(topics = DISTRIBUTED_IDENTIFIER_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + DISTRIBUTED_IDENTIFIER_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = GATEWAY_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + GATEWAY_TRACE_LOG_COSUMER_GROUP),
+			@KafkaListener(topics = AUTH_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + AUTH_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = ADMIN_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + ADMIN_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = IOT_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + IOT_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = OSS_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + OSS_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = GENERATOR_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + GENERATOR_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = MQTT_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MQTT_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = UDP_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + UDP_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = HTTP_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + HTTP_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = TCP_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + TCP_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = REPORT_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + REPORT_TRACE_LOG_CONSUMER_GROUP)
+		})
+	public void handleTraceLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
+		try {
+			traceLogServiceI.saveTraceLog(new TraceLogSaveCmd(messages.stream().map(ConsumerRecord::value).toList()));
+		}
+		finally {
+			acknowledgment.acknowledge();
+		}
 	}
 
 }

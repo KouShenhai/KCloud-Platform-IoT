@@ -33,9 +33,9 @@ public final class TraceLogConvertor {
 	private TraceLogConvertor() {
 	}
 
-	public static LokiPushDTO toDTO(List<TraceLogIndex> traceLogIndexList) {
+	public static LokiPushDTO toDTO(List<TraceLogIndex> list) {
 		LokiPushDTO lokiPushDTO = new LokiPushDTO();
-		List<LokiPushDTO.Stream> streams = traceLogIndexList.stream().map(TraceLogConvertor::toDTO).toList();
+		List<LokiPushDTO.Stream> streams = list.stream().map(TraceLogConvertor::toDTO).toList();
 		lokiPushDTO.setStreams(streams);
 		return lokiPushDTO;
 	}

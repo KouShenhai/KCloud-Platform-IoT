@@ -180,6 +180,8 @@ spring:
     template:
       observation-enabled: true
   pulsar:
+    topic:
+      tenant1: persistent://laokou/mqtt
     client:
       service-url: pulsar://pulsar:6650
     producer:
@@ -260,6 +262,3 @@ knife4j:
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
 
-pulsar:
-  topic:
-    tenant1: persistent://laokou/mqtt

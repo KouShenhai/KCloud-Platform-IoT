@@ -25,6 +25,9 @@ import org.laokou.common.tenant.mapper.SourceDO;
  */
 public final class SourceConvertor {
 
+	private SourceConvertor() {
+	}
+
 	public static DataSourceProperty toDataSourceProperty(SourceDO sourceDO) {
 		DataSourceProperty properties = new DataSourceProperty();
 		properties.setUsername(sourceDO.getUsername());

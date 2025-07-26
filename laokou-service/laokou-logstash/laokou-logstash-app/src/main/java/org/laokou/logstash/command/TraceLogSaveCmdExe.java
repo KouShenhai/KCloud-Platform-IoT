@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.logstash.ability.DomainService;
 import org.laokou.logstash.dto.TraceLogSaveCmd;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 /**
  * @author laokou
@@ -32,8 +31,8 @@ public class TraceLogSaveCmdExe {
 
 	private final DomainService domainService;
 
-	public Mono<Void> executeVoid(TraceLogSaveCmd cmd) {
-		return domainService.createTraceLog(cmd.getMessages());
+	public void executeVoid(TraceLogSaveCmd cmd) {
+		domainService.createTraceLog(cmd.getMessages());
 	}
 
 }

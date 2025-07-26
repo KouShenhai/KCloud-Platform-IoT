@@ -24,10 +24,6 @@
       <artifactId>laokou-common-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.projectreactor.kafka</groupId>
-      <artifactId>reactor-kafka</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-fory</artifactId>
     </dependency>

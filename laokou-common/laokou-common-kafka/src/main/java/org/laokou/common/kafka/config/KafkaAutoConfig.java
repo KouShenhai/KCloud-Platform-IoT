@@ -16,25 +16,11 @@
  */
 
 package org.laokou.common.kafka.config;
-
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.StringDeserializer;
-import org.apache.kafka.common.serialization.StringSerializer;
 import org.laokou.common.kafka.template.DefaultKafkaTemplate;
-import org.laokou.common.kafka.template.KafkaSender;
-import org.laokou.common.kafka.template.ReactiveKafkaSender;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaTemplate;
-import reactor.kafka.receiver.ReceiverOptions;
-import reactor.kafka.sender.SenderOptions;
-import reactor.kafka.sender.internals.ProducerFactory;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author laokou
@@ -44,47 +30,8 @@ public class KafkaAutoConfig {
 
 	@Bean("defaultKafkaTemplate")
 	@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-	public DefaultKafkaTemplate defaultKafkaTemplate(KafkaTemplate<String, String> kafkaTemplate) {
+	public DefaultKafkaTemplate defaultKafkaTemplate(KafkaTemplate<String, Object> kafkaTemplate) {
 		return new DefaultKafkaTemplate(kafkaTemplate);
-	}
-
-	@Bean(value = "reactiveKafkaSender")
-	@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
-	public KafkaSender reactiveKafkaSender(SenderOptions<String, Object> senderOptions) {
-		return new ReactiveKafkaSender(
-				new reactor.kafka.sender.internals.DefaultKafkaSender<>(ProducerFactory.INSTANCE, senderOptions));
-	}
-
-	@Bean
-	@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
-	public SenderOptions<String, Object> senderOptions(KafkaProperties kafkaProperties) {
-		Map<String, Object> props = new HashMap<>();
-		KafkaProperties.Producer producer = kafkaProperties.getProducer();
-		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
-		props.put(ProducerConfig.ACKS_CONFIG, producer.getAcks());
-		props.put(ProducerConfig.RETRIES_CONFIG, producer.getRetries());
-		props.put(ProducerConfig.BATCH_SIZE_CONFIG, (int) producer.getBatchSize().toBytes());
-		props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, (int) producer.getBufferMemory().toBytes());
-		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ForyKafkaSerializer.class);
-		props.put(ProducerConfig.LINGER_MS_CONFIG, 50);
-		props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, producer.getCompressionType());
-		return SenderOptions.create(props);
-	}
-
-	@Bean
-	@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
-	public ReceiverOptions<String, Object> receiverOptions(KafkaProperties kafkaProperties) {
-		Map<String, Object> props = new HashMap<>();
-		KafkaProperties.Consumer consumer = kafkaProperties.getConsumer();
-		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
-		props.put(ConsumerConfig.GROUP_ID_CONFIG, consumer.getGroupId());
-		props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, consumer.getMaxPollRecords());
-		props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, consumer.getEnableAutoCommit());
-		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ForyKafkaDeserializer.class);
-		props.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, (int) consumer.getFetchMinSize().toBytes());
-		return ReceiverOptions.create(props);
 	}
 
 }

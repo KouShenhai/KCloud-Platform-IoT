@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "loki")
+@ConfigurationProperties(prefix = "spring.loki")
 public class LokiProperties {
 
 	private String url;
