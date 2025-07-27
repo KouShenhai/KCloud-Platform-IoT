@@ -23,9 +23,11 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.oss.convertor.OssConvertor;
+import org.laokou.oss.convertor.OssLogConvertor;
 import org.laokou.oss.gateway.OssLogGateway;
 import org.laokou.oss.gatewayimpl.database.OssLogMapper;
 import org.laokou.oss.gatewayimpl.database.dataobject.OssLogDO;
+import org.laokou.oss.model.OssLogE;
 import org.laokou.oss.model.OssUploadV;
 import org.springframework.stereotype.Component;
 
@@ -52,6 +54,11 @@ public class OssLogGatewayImpl implements OssLogGateway {
 		} finally {
 			DynamicDataSourceContextHolder.clear();
 		}
+	}
+
+	@Override
+	public void createOssLog(OssLogE ossLogE) {
+		ossLogMapper.insert(OssLogConvertor.toDataObject(ossLogE));
 	}
 
 }

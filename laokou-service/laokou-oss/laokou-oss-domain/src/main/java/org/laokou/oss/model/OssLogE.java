@@ -15,80 +15,91 @@
  *
  */
 
-package org.laokou.oss.dto.domainevent;
+package org.laokou.oss.model;
 
 import lombok.Getter;
-import org.laokou.common.i18n.dto.DomainEvent;
+import lombok.Setter;
+import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.dto.Identifier;
 
 import java.time.Instant;
 
 /**
+ * OSS日志领域对象【实体】.
+ *
  * @author laokou
  */
-@Getter
-public class OssUploadEvent extends DomainEvent {
+@Entity
+public class OssLogE extends Identifier {
 
 	/**
 	 * 文件名称.
 	 */
-	private final String name;
+	@Setter
+	@Getter
+	private String name;
 
 	/**
 	 * 文件的MD5标识.
 	 */
-	private final String md5;
+	@Setter
+	@Getter
+	private String md5;
 
 	/**
 	 * 文件的URL.
 	 */
-	private final String url;
+	@Setter
+	@Getter
+	private String url;
 
 	/**
 	 * 文件大小.
 	 */
-	private final Long size;
+	@Setter
+	@Getter
+	private Long size;
 
 	/**
 	 * OSS存储ID.
 	 */
-	private final Long ossId;
+	@Setter
+	@Getter
+	private Long ossId;
 
 	/**
 	 * 文件类型.
 	 */
-	private final String contentType;
+	@Setter
+	@Getter
+	private String contentType;
 
 	/**
 	 * 文件格式.
 	 */
-	private final String format;
+	@Setter
+	@Getter
+	private String format;
 
 	/**
 	 * 上传时间.
 	 */
-	private final Instant uploadTime;
+	@Setter
+	@Getter
+	private Instant uploadTime;
 
-	public OssUploadEvent(final Long id,
-						  final String name,
-						  final String md5,
-						  final  String url,
-						  final  Long size,
-						  final  Long ossId,
-						  final  String contentType,
-						  final  String format,
-						  final Instant uploadTime,
-						  final Long tenantId,
-						  final Long userId) {
-		this.id = id;
-		this.name = name;
-		this.md5 = md5;
-		this.url = url;
-		this.size = size;
-		this.ossId = ossId;
-		this.contentType = contentType;
-		this.format = format;
-		this.uploadTime = uploadTime;
-		this.tenantId = tenantId;
-		this.userId = userId;
-	}
+	/**
+	 * 租户ID.
+	 */
+	@Setter
+	@Getter
+	private Long tenantId;
+
+	/**
+	 * 用户ID.
+	 */
+	@Setter
+	@Getter
+	private Long userId;
+
 }

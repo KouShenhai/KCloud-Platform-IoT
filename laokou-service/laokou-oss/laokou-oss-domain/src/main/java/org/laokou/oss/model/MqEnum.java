@@ -15,26 +15,14 @@
  *
  */
 
-package org.laokou.oss.factory;
+package org.laokou.oss.model;
 
-import org.laokou.common.core.util.SpringContextUtils;
-import org.laokou.oss.model.OssA;
-import org.laokou.oss.model.OssLogE;
+public enum MqEnum {
 
-/**
- * @author laokou
- */
-public final class OssDomainFactory {
+	;
 
-	private OssDomainFactory() {
-	}
+	public static final String OSS_LOG_TOPIC = "oss-log";
 
-	public static OssA getOss() {
-		return SpringContextUtils.getBeanProvider(OssA.class);
-	}
-
-	public static OssLogE getOssLog() {
-		return SpringContextUtils.getBeanProvider(OssLogE.class);
-	}
+	public static final String OSS_LOG_CONSUMER_GROUP = "oss-log-consumer-group";
 
 }

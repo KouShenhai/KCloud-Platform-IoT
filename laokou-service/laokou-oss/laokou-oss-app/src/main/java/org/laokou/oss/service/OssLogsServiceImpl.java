@@ -15,25 +15,28 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.rpc;
+package org.laokou.oss.service;
 
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.distributed.identifier.api.DistributedIdentifierCmd;
-import org.laokou.distributed.identifier.api.DistributedIdentifierResult;
-import org.laokou.distributed.identifier.api.DubboDistributedIdentifierServiceITriple;
-
+import lombok.RequiredArgsConstructor;
+import org.laokou.oss.api.OssLogsServiceI;
+import org.laokou.oss.command.OssLogSaveCmdExe;
+import org.laokou.oss.dto.OssLogSaveCmd;
+import org.springframework.stereotype.Service;
 
 /**
+ * OSS日志接口实现类.
+ *
  * @author laokou
  */
-@Slf4j
-public class DistributedIdentifierMock extends DubboDistributedIdentifierServiceITriple.DistributedIdentifierServiceIImplBase {
+@Service
+@RequiredArgsConstructor
+public class OssLogsServiceImpl implements OssLogsServiceI {
+
+	private final OssLogSaveCmdExe ossLogSaveCmdExe;
 
 	@Override
-	public DistributedIdentifierResult generateSnowflake(DistributedIdentifierCmd cmd) {
-		log.error("调用获取分布式ID失败，请检查Dubbo服务");
-		return DistributedIdentifierResult.newBuilder()
-			.setData(System.nanoTime())
-			.build();
+	public void saveOssLog(OssLogSaveCmd cmd) {
+		ossLogSaveCmdExe.executeVoid(cmd);
 	}
+
 }

@@ -17,7 +17,9 @@
 
 package org.laokou.admin.user.command.query;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.ossLog.gatewayimpl.database.OssLogMapper;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserGetQry;
 import org.laokou.admin.user.dto.clientobject.UserCO;
@@ -26,6 +28,8 @@ import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * 查看用户请求执行器.
@@ -42,11 +46,19 @@ public class UserGetQryExe {
 
 	private final UserDeptMapper userDeptMapper;
 
+	private final OssLogMapper ossLogMapper;
+
 	public Result<UserCO> execute(UserGetQry qry) throws Exception {
-		UserCO userCO = UserConvertor.toClientObject(userMapper.selectById(qry.getId()));
-		userCO.setRoleIds(userRoleMapper.selectRoleIdsByUserId(qry.getId()));
-		userCO.setDeptIds(userDeptMapper.selectDeptIdsByUserId(qry.getId()));
-		return Result.ok(userCO);
+		try {
+			UserCO userCO = UserConvertor.toClientObject(userMapper.selectById(qry.getId()));
+			userCO.setRoleIds(userRoleMapper.selectRoleIdsByUserId(qry.getId()));
+			userCO.setDeptIds(userDeptMapper.selectDeptIdsByUserId(qry.getId()));
+			DynamicDataSourceContextHolder.push(DOMAIN);
+			userCO.setAvatarUrl(ossLogMapper.selectById(userCO.getAvatar()).getUrl());
+			return Result.ok(userCO);
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

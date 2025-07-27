@@ -18,9 +18,12 @@
 package org.laokou.admin.oss.gatewayimpl.rpc;
 
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.apache.dubbo.rpc.RpcContext;
+import org.apache.dubbo.rpc.RpcContextAttachment;
 import org.laokou.admin.oss.convertor.OssConvertor;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.mybatisplus.util.UserUtils;
 import org.laokou.oss.api.OssServiceI;
 import org.laokou.oss.api.OssUploadCO;
 import org.laokou.oss.api.OssUploadResult;
@@ -28,6 +31,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import static org.laokou.common.i18n.common.exception.StatusCode.OK;
+import static org.laokou.common.mybatisplus.mapper.BaseDO.CREATOR;
+import static org.laokou.common.mybatisplus.mapper.BaseDO.TENANT_ID;
 
 /**
  * @author laokou
@@ -40,6 +45,9 @@ public class OssRpc {
 	private OssServiceI ossServiceI;
 
 	public OssUploadCO uploadOss(MultipartFile file, String fileType) throws Exception {
+		RpcContextAttachment serverAttachment = RpcContext.getServerAttachment();
+		serverAttachment.setAttachment(TENANT_ID, UserUtils.getTenantId());
+		serverAttachment.setAttachment(CREATOR, UserUtils.getUserId());
 		OssUploadResult result = ossServiceI.uploadOss(OssConvertor.toAssembler(file, fileType));
 		if (ObjectUtils.equals(OK, result.getCode())) {
 			return result.getData();

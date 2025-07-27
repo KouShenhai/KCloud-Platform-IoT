@@ -18,6 +18,7 @@
 package org.laokou.oss.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.oss.ability.OssDomainService;
@@ -26,6 +27,7 @@ import org.laokou.oss.dto.OssUploadCmd;
 import org.laokou.oss.dto.clientobject.OssUploadCO;
 import org.laokou.oss.model.OssA;
 import org.springframework.stereotype.Component;
+import static org.laokou.oss.model.MqEnum.OSS_LOG_TOPIC;
 
 /**
  * @author laokou
@@ -35,6 +37,8 @@ import org.springframework.stereotype.Component;
 public class OssUploadCmdExe {
 
 	private final OssDomainService ossDomainService;
+
+	private final DomainEventPublisher domainEventPublisher;
 
 	public Result<OssUploadCO> execute(OssUploadCmd cmd) {
 		OssA ossA = OssConvertor.toEntity(cmd.getFileType(), cmd.getSize(), cmd.getExtName(), cmd.getBuffer(),
@@ -48,7 +52,7 @@ public class OssUploadCmdExe {
 		} finally {
 			// 发布领域事件
 			if (ossA.isPublishEvent()) {
-				OssConvertor.toDomainEvent(ossA);
+				domainEventPublisher.publish(OSS_LOG_TOPIC, OssConvertor.toDomainEvent(ossA));
 			}
 		}
 	}

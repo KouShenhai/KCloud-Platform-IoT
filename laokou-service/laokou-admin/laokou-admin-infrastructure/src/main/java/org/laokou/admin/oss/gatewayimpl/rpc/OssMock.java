@@ -19,23 +19,15 @@ package org.laokou.admin.oss.gatewayimpl.rpc;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.oss.api.OssServiceI;
+import org.laokou.oss.api.DubboOssServiceITriple;
 import org.laokou.oss.api.OssUploadCmd;
 import org.laokou.oss.api.OssUploadResult;
-
-import java.util.concurrent.CompletableFuture;
 
 /**
  * @author laokou
  */
 @Slf4j
-public class OssMock implements OssServiceI {
-
-	@Override
-	public CompletableFuture<OssUploadResult> uploadOssAsync(OssUploadCmd cmd) {
-		log.error("调用上传文件失败，请检查Dubbo服务");
-		throw new BizException("B_Dubbo_CallOssUploadFailed", "调用上传文件失败，请检查Dubbo服务");
-	}
+public class OssMock extends DubboOssServiceITriple.OssServiceIImplBase {
 
 	@Override
 	public OssUploadResult uploadOss(OssUploadCmd cmd) {

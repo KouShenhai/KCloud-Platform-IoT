@@ -15,26 +15,21 @@
  *
  */
 
-package org.laokou.oss.factory;
-
-import org.laokou.common.core.util.SpringContextUtils;
-import org.laokou.oss.model.OssA;
-import org.laokou.oss.model.OssLogE;
+package org.laokou.oss.dto;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.oss.dto.clientobject.OssLogCO;
 
 /**
+ * 保存OSS日志命令.
+ *
  * @author laokou
  */
-public final class OssDomainFactory {
+@Getter
+@RequiredArgsConstructor
+public class OssLogSaveCmd extends CommonCommand {
 
-	private OssDomainFactory() {
-	}
-
-	public static OssA getOss() {
-		return SpringContextUtils.getBeanProvider(OssA.class);
-	}
-
-	public static OssLogE getOssLog() {
-		return SpringContextUtils.getBeanProvider(OssLogE.class);
-	}
+	private final OssLogCO co;
 
 }

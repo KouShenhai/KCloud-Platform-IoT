@@ -20,15 +20,13 @@ package org.laokou.oss.gatewayimpl.rpc;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.distributed.identifier.api.DistributedIdentifierCmd;
 import org.laokou.distributed.identifier.api.DistributedIdentifierResult;
-import org.laokou.distributed.identifier.api.DistributedIdentifierServiceI;
-
-import java.util.concurrent.CompletableFuture;
+import org.laokou.distributed.identifier.api.DubboDistributedIdentifierServiceITriple;
 
 /**
  * @author laokou
  */
 @Slf4j
-public class DistributedIdentifierMock implements DistributedIdentifierServiceI {
+public class DistributedIdentifierMock extends DubboDistributedIdentifierServiceITriple.DistributedIdentifierServiceIImplBase {
 
 	@Override
 	public DistributedIdentifierResult generateSnowflake(DistributedIdentifierCmd cmd) {
@@ -36,10 +34,5 @@ public class DistributedIdentifierMock implements DistributedIdentifierServiceI 
 		return DistributedIdentifierResult.newBuilder()
 			.setData(System.nanoTime())
 			.build();
-	}
-
-	@Override
-	public CompletableFuture<DistributedIdentifierResult> generateSnowflakeAsync(DistributedIdentifierCmd cmd) {
-		return CompletableFuture.supplyAsync(() -> generateSnowflake(cmd));
 	}
 }

@@ -42,6 +42,7 @@ export default () => {
 	const [roleList, setRoleList] = useState<any[]>([])
 	const [fileList, setFileList] = useState<UploadFile[]>([])
 	const [requestId, setRequestId] = useState('')
+	const [logId, setLogId] = useState<number>(1);
 
 	const getDeptTreeList = async () => {
 		listTreeDept({}).then(res => {
@@ -239,9 +240,10 @@ export default () => {
 							   setModalVisit(true)
 							   setReadOnly(true)
 							   setDataSource(res?.data)
-							   const avatar = res?.data?.avatar;
-							   if (avatar) {
-								   setFileList([{uid: '-1', name: '用户头像.png', status: 'done', url: avatar}])
+							   setLogId(res?.data?.logId)
+							   const avatarUrl = res?.data?.avatarUrl;
+							   if (avatarUrl) {
+								   setFileList([{uid: '-1', name: '用户头像.png', status: 'done', url: avatarUrl}])
 							   } else {
 								   setFileList([])
 							   }
@@ -260,9 +262,9 @@ export default () => {
 							   setReadOnly(false)
 							   setEdit(true)
 							   setDataSource(res?.data)
-							   const avatar = res?.data?.avatar;
-							   if (avatar) {
-								   setFileList([{uid: '-1', name: '用户头像.png', status: 'done', url: avatar}])
+							   const avatarUrl = res?.data?.avatarUrl;
+							   if (avatarUrl) {
+								   setFileList([{uid: '-1', name: '用户头像.png', status: 'done', url: avatarUrl}])
 							   } else {
 								   setFileList([])
 							   }
@@ -337,6 +339,8 @@ export default () => {
 				setFileList={setFileList}
 				requestId={requestId}
 				setRequestId={setRequestId}
+				setLogId={setLogId}
+				logId={logId}
 			/>
 
 			<UserModifyAuthorityDrawer

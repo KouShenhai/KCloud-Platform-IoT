@@ -17,10 +17,15 @@
 
 package org.laokou.oss.config;
 
+import org.apache.kafka.clients.admin.NewTopic;
+import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.oss.gatewayimpl.rpc.DistributedIdentifierRpc;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.core.KafkaAdmin;
+
+import static org.laokou.oss.model.MqEnum.OSS_LOG_TOPIC;
 
 /**
  * @author laokou
@@ -28,9 +33,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SystemConfig {
 
+	static {
+		ForyFactory.INSTANCE.register(org.laokou.oss.dto.domainevent.OssUploadEvent.class);
+	}
+
 	@Bean
 	IdGenerator idGenerator(DistributedIdentifierRpc distributedIdentifierRpc) {
 		return distributedIdentifierRpc::getId;
+	}
+
+	@Bean("authNewTopics")
+	KafkaAdmin.NewTopics newTopics() {
+		return new KafkaAdmin.NewTopics(new NewTopic(OSS_LOG_TOPIC, 3, (short) 1));
 	}
 
 }

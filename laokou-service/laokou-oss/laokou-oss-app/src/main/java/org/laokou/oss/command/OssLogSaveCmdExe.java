@@ -15,39 +15,32 @@
  *
  */
 
-package org.laokou.oss.ability;
+package org.laokou.oss.command;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.oss.gateway.OssGateway;
-import org.laokou.oss.gateway.OssLogGateway;
-import org.laokou.oss.model.OssA;
-import org.laokou.oss.model.OssLogE;
+import org.laokou.common.domain.annotation.CommandLog;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
+import org.laokou.oss.ability.OssDomainService;
+import org.laokou.oss.convertor.OssLogConvertor;
+import org.laokou.oss.dto.OssLogSaveCmd;
 import org.springframework.stereotype.Component;
 
 /**
+ * 保存OSS日志命令执行器.
+ *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
-public class OssDomainService {
+public class OssLogSaveCmdExe {
 
-	private final OssGateway ossGateway;
+	private final OssDomainService ossDomainService;
 
-	private final OssLogGateway ossLogGateway;
+	private final TransactionalUtils transactionalUtils;
 
-	public void createOssLog(OssLogE ossLogE) {
-		ossLogGateway.createOssLog(ossLogE);
-	}
-
-	public void uploadOss(OssA ossA) {
-		// 校验文件大小
-		ossA.checkSize();
-		// 校验扩展名
-		ossA.checkExt();
-		// 获取OSS信息
-		ossA.getOssInfo(() -> ossLogGateway.getOssInfoByMd5(ossA.getMd5()), () -> ossGateway.uploadOssAndGetInfo(ossA));
+	@CommandLog
+	public void executeVoid(OssLogSaveCmd cmd) {
+		transactionalUtils.executeInTransaction(() -> ossDomainService.createOssLog(OssLogConvertor.toEntity(cmd.getCo())));
 	}
 
 }

@@ -20,6 +20,8 @@ interface UserDrawerProps {
 	setFileList: (fileList: UploadFile[]) => void
 	requestId: string
 	setRequestId: (requestId: string) => void
+	logId: number
+	setLogId: (logId: number) => void
 }
 
 type TableColumns = {
@@ -34,7 +36,7 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, edit, roleList, deptTreeList, fileList, setFileList, requestId, setRequestId }) => {
+export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, edit, roleList, deptTreeList, fileList, setFileList, requestId, setRequestId, logId, setLogId }) => {
 
 	const [previewOpen, setPreviewOpen] = useState(false);
 	const [previewImage, setPreviewImage] = useState('');
@@ -68,9 +70,10 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 					status: value?.status,
 					mail: value?.mail,
 					mobile: value?.mobile,
-					avatar: fileList.length > 0 ? (fileList[0]?.url ? fileList[0]?.url : fileList[0]?.response?.data) : "",
+					avatar: logId,
 				}
 				if (value.id === undefined) {
+					// @ts-ignore
 					saveUser({co: co}, requestId).then(res => {
 						if (res.code === 'OK') {
 							message.success("新增成功").then()
@@ -82,6 +85,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 						setLoading(false)
 					})
 				} else {
+					// @ts-ignore
 					modifyUser({co: co}).then(res => {
 						if (res.code === 'OK') {
 							message.success("修改成功").then()
@@ -135,6 +139,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 						setPreviewImage={setPreviewImage}
 						setPreviewOpen={setPreviewOpen}
 						fileList={fileList}
+						setLogId={setLogId}
 						setFileList={setFileList}/>
 				</ProFormItem>
 			)}

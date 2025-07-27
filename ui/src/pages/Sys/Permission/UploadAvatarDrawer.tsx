@@ -10,9 +10,10 @@ interface UploadAvatarDrawerProps {
 	setPreviewOpen: (visible: boolean) => void;
 	fileList: UploadFile[];
 	setFileList: (visible: UploadFile[]) => void;
+	setLogId: (logId: number) => void;
 }
 
-export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({ setPreviewOpen, setPreviewImage, fileList, setFileList }) => {
+export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({ setPreviewOpen, setPreviewImage, fileList, setFileList, setLogId }) => {
 
 	const getBase64 = (file: FileType): Promise<string> =>
 		new Promise((resolve, reject) => {
@@ -56,10 +57,14 @@ export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({ setPrevi
 						if (res.code === 'OK') {
 							// @ts-ignore
 							onSuccess(res, file)
+							// 修改日志ID
+							setLogId(res.data.logId)
 						} else {
 							// @ts-ignore
 							onError({status: 500, url: '', method: 'POST'}, res)
 						}
+					}).catch(() => {
+						setFileList([])
 					})
 				}
 			}

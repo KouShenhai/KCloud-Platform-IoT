@@ -17,6 +17,7 @@
 
 package org.laokou.oss.gateway;
 
+import org.laokou.oss.model.OssLogE;
 import org.laokou.oss.model.OssUploadV;
 
 /**
@@ -25,5 +26,10 @@ import org.laokou.oss.model.OssUploadV;
 public interface OssLogGateway {
 
 	OssUploadV getOssInfoByMd5(String md5);
+
+	/**
+	 * 新增OSS日志.
+	 */
+	void createOssLog(OssLogE ossLogE);
 
 }
