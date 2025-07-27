@@ -90,6 +90,11 @@ public final class NameConstants {
 	 */
 	public static final String OSS_LOG = "oss_log" + "#5m#10m#1024";
 
+	/**
+	 * OSS资源缓存配置.
+	 */
+	public static final String OSS_RESOURCE = "oss_resource" + "#5m#10m#1024";
+
 	private NameConstants() {
 	}
 
