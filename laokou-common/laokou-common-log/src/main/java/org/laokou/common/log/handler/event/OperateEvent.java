@@ -70,12 +70,27 @@ public final class OperateEvent extends DomainEvent {
 
 	private final Instant createTime;
 
-	public OperateEvent(final Long id, final String name, final String moduleName, final String uri,
-			final String methodName, final String requestType, final String requestParams, final String userAgent,
-			final String ip, final String address, final Integer status, final String operator,
-			final String errorMessage, final Long costTime, final String serviceId, final String serviceAddress,
-			final String profile, final String stackTrace, final Instant createTime, final Long tenantId,
-			final Long userId) {
+	public OperateEvent(final Long id,
+						final String name,
+						final String moduleName,
+						final String uri,
+						final String methodName,
+						final String requestType,
+						final String requestParams,
+						final String userAgent,
+						final String ip,
+						final String address,
+						final Integer status,
+						final String operator,
+						final String errorMessage,
+						final Long costTime,
+						final String serviceId,
+						final String serviceAddress,
+						final String profile,
+						final String stackTrace,
+						final Instant createTime,
+						final Long tenantId,
+						final Long userId) {
 		super.id = id;
 		super.userId = userId;
 		super.tenantId = tenantId;

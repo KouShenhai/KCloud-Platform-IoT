@@ -30,4 +30,6 @@ public abstract class BaseOss implements Serializable {
 
 	protected String name;
 
+	protected Long id;
+
 }

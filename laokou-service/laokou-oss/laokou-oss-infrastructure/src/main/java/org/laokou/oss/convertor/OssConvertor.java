@@ -28,6 +28,7 @@ import org.laokou.oss.factory.OssDomainFactory;
 import org.laokou.oss.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.oss.model.FileFormatEnum;
 import org.laokou.oss.model.OssA;
+import org.laokou.oss.model.OssUploadV;
 import org.springframework.util.DigestUtils;
 
 import java.io.ByteArrayInputStream;
@@ -81,12 +82,16 @@ public final class OssConvertor {
 	}
 
 	public static List<BaseOss> toBaseOssList(List<OssDO> list) {
-		return list.stream().map(OssConvertor::to).toList();
+		return list.stream().map(OssConvertor::toBaseOss).toList();
 	}
 
-	private static BaseOss to(OssDO ossDO) {
+	public static OssUploadV toValueObject(org.laokou.common.oss.model.OssUploadCO ossUploadCO) {
+		return new OssUploadV(ossUploadCO.getUrl(), ossUploadCO.getOssId());
+	}
+
+	private static BaseOss toBaseOss(OssDO ossDO) {
 		try {
-			return StoragePolicyEnum.getByCode(ossDO.getType()).getOss(ossDO.getName(), ossDO.getParam());
+			return StoragePolicyEnum.getByCode(ossDO.getType()).getOss(ossDO.getId(), ossDO.getName(), ossDO.getParam());
 		}
 		catch (JsonProcessingException e) {
 			throw new RuntimeException(e);

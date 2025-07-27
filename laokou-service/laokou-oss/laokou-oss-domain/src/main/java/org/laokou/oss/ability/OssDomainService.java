@@ -19,8 +19,6 @@ package org.laokou.oss.ability;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.oss.gateway.OssGateway;
 import org.laokou.oss.gateway.OssLogGateway;
 import org.laokou.oss.model.OssA;
@@ -43,19 +41,11 @@ public class OssDomainService {
 		ossA.checkSize();
 		// 校验扩展名
 		ossA.checkExt();
-		// 获取文件地址
-		ossA.getFileUrl(() -> ossLogGateway.getUrl(ossA.getMd5()), () -> {
-			try {
-				return ossGateway.uploadOssAndGetUrl(ossA);
-			}
-			catch (GlobalException ex) {
-				throw ex;
-			}
-			catch (Exception e) {
-				log.error("OSS上传失败，错误信息：{}", e.getMessage(), e);
-				throw new BizException("B_OSS_UploadFailed", "OSS上传失败", e);
-			}
-		});
+		// 获取OSS信息
+		ossA.getOssInfo(() -> ossLogGateway.getOssInfo(ossA.getMd5()), () -> ossGateway.uploadOssAndGetInfo(ossA));
+		// 发布领域事件
+		if (ossA.isPublishEvent()) {
+		}
 	}
 
 }

@@ -20,7 +20,7 @@ package org.laokou.common.oss.model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
 import org.laokou.common.i18n.util.EnumParser;
-import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.oss.convertor.OssConvertor;
 import org.laokou.common.oss.template.AmazonS3Storage;
 import org.laokou.common.oss.template.LocalStorage;
 import org.laokou.common.oss.template.MinIOStorage;
@@ -31,10 +31,8 @@ public enum StoragePolicyEnum {
 
 	LOCAL("local", "本地") {
 		@Override
-		public BaseOss getOss(String name, String param) throws JsonProcessingException {
-			Local local = JacksonUtils.toBean(param, Local.class);
-			local.setName(name);
-			return local;
+		public BaseOss getOss(Long id, String name, String param) throws JsonProcessingException {
+			return OssConvertor.toLocal(id, name, param);
 		}
 
 		@Override
@@ -45,10 +43,8 @@ public enum StoragePolicyEnum {
 
 	AMAZON_S3("amazon_s3", "亚马逊S3") {
 		@Override
-		public BaseOss getOss(String name, String param) throws JsonProcessingException {
-			AmazonS3 amazonS3 = JacksonUtils.toBean(param, AmazonS3.class);
-			amazonS3.setName(name);
-			return amazonS3;
+		public BaseOss getOss(Long id, String name, String param) throws JsonProcessingException {
+			return OssConvertor.toAmazonS3(id, name, param);
 		}
 
 		@Override
@@ -59,10 +55,8 @@ public enum StoragePolicyEnum {
 
 	MINIO("minio", "MinIO") {
 		@Override
-		public BaseOss getOss(String name, String param) throws JsonProcessingException {
-			MinIO minIO = JacksonUtils.toBean(param, MinIO.class);
-			minIO.setName(name);
-			return minIO;
+		public BaseOss getOss(Long id, String name, String param) throws JsonProcessingException {
+			return OssConvertor.toMinIO(id, name, param);
 		}
 
 		@Override
@@ -84,7 +78,7 @@ public enum StoragePolicyEnum {
 		return EnumParser.parse(StoragePolicyEnum.class, StoragePolicyEnum::getCode, code);
 	}
 
-	public abstract BaseOss getOss(String name, String param) throws JsonProcessingException;
+	public abstract BaseOss getOss(Long id, String name, String param) throws JsonProcessingException;
 
 	public abstract Storage getStorage(FileInfo fileInfo, BaseOss baseOss);
 

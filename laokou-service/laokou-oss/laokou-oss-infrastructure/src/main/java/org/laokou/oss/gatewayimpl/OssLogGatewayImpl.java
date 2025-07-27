@@ -19,6 +19,7 @@ package org.laokou.oss.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.oss.gateway.OssLogGateway;
+import org.laokou.oss.model.OssUploadV;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,8 +30,8 @@ import org.springframework.stereotype.Component;
 public class OssLogGatewayImpl implements OssLogGateway {
 
 	@Override
-	public String getUrl(String md5) {
-		return "";
+	public OssUploadV getOssInfo(String md5) {
+		return null;
 	}
 
 }

@@ -41,6 +41,7 @@ public class CaptchaSendCmdExe {
 	public void executeVoid(CaptchaSendCmd cmd) {
 		CaptchaE captchaE = CaptchaConvertor.toEntity(cmd.getCo());
 		domainService.createSendCaptchaInfo(captchaE);
+		// 发布领域事件
 		kafkaDomainEventPublisher.publish(captchaE.getSendCaptchaTypeEnum().getMqTopic(),
 				CaptchaConvertor.toDomainEvent(captchaE));
 	}

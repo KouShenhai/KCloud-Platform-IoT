@@ -252,7 +252,11 @@ COMMENT ON TABLE "public"."sys_oss_log" IS 'OSS日志';
 
 ALTER TABLE "public"."sys_oss_log" ADD CONSTRAINT "sys_oss_log_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."sys_oss_log" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "name", "md5", "url", "size", "oss_id", "content_type", "format") VALUES (1, 1, 1, '2025-07-20 16:12:56', '2025-07-20 16:12:58', 0, 0, 0, '4215328e32f94b668d4dcfc9cb8621d7.png', 'e39fe32418f9e115b2703350e581feb6', 'https://youke1.picui.cn/s1/2025/07/20/687ca202b2c53.jpg', 518124, 1, 'image/jpeg', 'image');
+CREATE UNIQUE INDEX "sys_oss_log_md5_idx" ON "public"."sys_oss_log" USING btree (
+"md5"
+);
+
+INSERT INTO "public"."sys_oss_log" VALUES (1, 1, 1, '2025-07-20 16:12:56', '2025-07-20 16:12:58', 0, 0, 0, '4215328e32f94b668d4dcfc9cb8621d7.png', 'e39fe32418f9e115b2703350e581feb6', 'https://youke1.picui.cn/s1/2025/07/20/687ca202b2c53.jpg', 518124, 1, 'image/jpeg', 'image');
 
 ALTER TABLE "public"."sys_sql_log" ADD CONSTRAINT "sys_sql_log_pkey" PRIMARY KEY ("id");
 

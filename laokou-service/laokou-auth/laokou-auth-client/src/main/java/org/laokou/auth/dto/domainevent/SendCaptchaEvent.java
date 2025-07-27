@@ -28,7 +28,9 @@ public final class SendCaptchaEvent extends DomainEvent {
 
 	private final String uuid;
 
-	public SendCaptchaEvent(final Long id, final String uuid, final Long tenantId) {
+	public SendCaptchaEvent(final Long id,
+							final String uuid,
+							final Long tenantId) {
 		super.id = id;
 		super.tenantId = tenantId;
 		this.uuid = uuid;
