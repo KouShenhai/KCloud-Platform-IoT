@@ -17,10 +17,21 @@
 
 package org.laokou.oss.gatewayimpl;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.oss.convertor.OssConvertor;
 import org.laokou.oss.gateway.OssLogGateway;
+import org.laokou.oss.gatewayimpl.database.OssLogMapper;
+import org.laokou.oss.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.oss.model.OssUploadV;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.data.cache.constant.NameConstants.OSS_LOG;
+import static org.laokou.common.data.cache.model.OperateTypeEnum.GET;
+import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * @author laokou
@@ -29,9 +40,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OssLogGatewayImpl implements OssLogGateway {
 
+	private final OssLogMapper ossLogMapper;
+
 	@Override
-	public OssUploadV getOssInfo(String md5) {
-		return null;
+	@DataCache(name = OSS_LOG, key = "#md5", operateType = GET)
+	public OssUploadV getOssInfoByMd5(String md5) {
+		try {
+			DynamicDataSourceContextHolder.push(DOMAIN);
+			OssLogDO ossLogDO = ossLogMapper.selectOne(Wrappers.lambdaQuery(OssLogDO.class).select(OssLogDO::getId, OssLogDO::getUrl).eq(OssLogDO::getMd5, md5));
+			return ObjectUtils.isNotNull(ossLogDO) ? OssConvertor.toValueObject(ossLogDO) : null;
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

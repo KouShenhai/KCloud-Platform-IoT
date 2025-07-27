@@ -15,15 +15,20 @@
  *
  */
 
-package org.laokou.oss.gateway;
+package org.laokou.oss.gatewayimpl.database;
 
-import org.laokou.oss.model.OssUploadV;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
+import org.laokou.oss.gatewayimpl.database.dataobject.OssLogDO;
+import org.springframework.stereotype.Repository;
 
 /**
+ * OSS日志数据库映射.
+ *
  * @author laokou
  */
-public interface OssLogGateway {
-
-	OssUploadV getOssInfoByMd5(String md5);
+@Mapper
+@Repository
+public interface OssLogMapper extends CrudMapper<Long, Integer, OssLogDO> {
 
 }

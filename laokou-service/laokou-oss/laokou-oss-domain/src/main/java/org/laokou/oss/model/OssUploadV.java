@@ -20,5 +20,5 @@ package org.laokou.oss.model;
 /**
  * @author laokou
  */
-public record OssUploadV(String url, Long ossId) {
+public record OssUploadV(String url, Long id) {
 }

@@ -66,7 +66,8 @@ public class OssUploadEvent extends DomainEvent {
 	 */
 	private final Instant uploadTime;
 
-	public OssUploadEvent(final String name,
+	public OssUploadEvent(final Long id,
+						  final String name,
 						  final String md5,
 						  final  String url,
 						  final  Long size,
@@ -76,6 +77,7 @@ public class OssUploadEvent extends DomainEvent {
 						  final Instant uploadTime,
 						  final Long tenantId,
 						  final Long userId) {
+		this.id = id;
 		this.name = name;
 		this.md5 = md5;
 		this.url = url;

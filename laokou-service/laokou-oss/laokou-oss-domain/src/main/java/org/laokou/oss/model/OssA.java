@@ -90,16 +90,14 @@ public class OssA extends AggregateRoot {
 		OssUploadV ossUploadV = info1.get();
 		if (ObjectUtils.isNull(ossUploadV)) {
 			ossUploadV = info2.get();
+			this.id = idGenerator.getId();
 			this.url = ossUploadV.url();
-			this.ossId = ossUploadV.ossId();
+			this.ossId = ossUploadV.id();
 			this.publishEvent = true;
 		} else {
 			this.url = ossUploadV.url();
+			this.id = ossUploadV.id();
 		}
-	}
-
-	public Long getPrimaryKey() {
-		return idGenerator.getId();
 	}
 
 }

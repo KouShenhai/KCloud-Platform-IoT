@@ -85,6 +85,11 @@ public final class NameConstants {
 	 */
 	public static final String USER_MENU = "user_menu" + "#5m#10m#1024";
 
+	/**
+	 * OSS日志缓存配置.
+	 */
+	public static final String OSS_LOG = "oss_log" + "#5m#10m#1024";
+
 	private NameConstants() {
 	}
 

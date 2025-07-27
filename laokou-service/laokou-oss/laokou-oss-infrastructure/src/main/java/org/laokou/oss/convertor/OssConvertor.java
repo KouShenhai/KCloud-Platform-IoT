@@ -24,8 +24,10 @@ import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.StoragePolicyEnum;
 import org.laokou.oss.dto.OssUploadCmd;
 import org.laokou.oss.dto.clientobject.OssUploadCO;
+import org.laokou.oss.dto.domainevent.OssUploadEvent;
 import org.laokou.oss.factory.OssDomainFactory;
 import org.laokou.oss.gatewayimpl.database.dataobject.OssDO;
+import org.laokou.oss.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.oss.model.FileFormatEnum;
 import org.laokou.oss.model.OssA;
 import org.laokou.oss.model.OssUploadV;
@@ -77,6 +79,11 @@ public final class OssConvertor {
 		return ossUploadCO;
 	}
 
+	public static OssUploadEvent toDomainEvent(OssA ossA) {
+		return new OssUploadEvent(ossA.getId(), ossA.getName(), ossA.getMd5(), ossA.getUrl(), ossA.getSize(), ossA.getOssId(),
+				ossA.getContentType(), ossA.getContentType(), null, null, null);
+	}
+
 	public static FileInfo toFileInfo(byte[] buffer, long size, String contentType, String name, String extName) {
 		return new FileInfo(new ByteArrayInputStream(buffer), size, contentType, name, extName);
 	}
@@ -87,6 +94,10 @@ public final class OssConvertor {
 
 	public static OssUploadV toValueObject(org.laokou.common.oss.model.OssUploadCO ossUploadCO) {
 		return new OssUploadV(ossUploadCO.getUrl(), ossUploadCO.getOssId());
+	}
+
+	public static OssUploadV toValueObject(OssLogDO ossLogDO) {
+		return new OssUploadV(ossLogDO.getUrl(), ossLogDO.getId());
 	}
 
 	private static BaseOss toBaseOss(OssDO ossDO) {

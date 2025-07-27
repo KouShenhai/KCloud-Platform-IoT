@@ -21,35 +21,50 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 
-import static org.laokou.common.tenant.constant.DSConstants.Master.OSS_TABLE;
+import static org.laokou.common.tenant.constant.DSConstants.Master.OSS_LOG_TABLE;
 
 /**
- * OSS数据对象.
+ * OSS日志数据对象.
  *
  * @author laokou
  */
 @Data
-@TableName(OSS_TABLE)
-public class OssDO extends BaseDO {
+@TableName(OSS_LOG_TABLE)
+public class OssLogDO extends BaseDO {
 
 	/**
-	 * OSS的名称.
+	 * 文件名称.
 	 */
 	private String name;
 
 	/**
-	 * OSS的类型.
+	 * 文件的MD5标识.
 	 */
-	private String type;
+	private String md5;
 
 	/**
-	 * OSS的参数.
+	 * 文件的URL.
 	 */
-	private String param;
+	private String url;
 
 	/**
-	 * OSS的状态 0启用 1禁用.
+	 * 文件大小.
 	 */
-	private Integer status;
+	private Long size;
+
+	/**
+	 * OSS存储ID.
+	 */
+	private Long ossId;
+
+	/**
+	 * 文件类型.
+	 */
+	private String contentType;
+
+	/**
+	 * 文件格式.
+	 */
+	private String format;
 
 }

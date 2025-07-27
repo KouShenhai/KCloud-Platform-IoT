@@ -42,10 +42,7 @@ public class OssDomainService {
 		// 校验扩展名
 		ossA.checkExt();
 		// 获取OSS信息
-		ossA.getOssInfo(() -> ossLogGateway.getOssInfo(ossA.getMd5()), () -> ossGateway.uploadOssAndGetInfo(ossA));
-		// 发布领域事件
-		if (ossA.isPublishEvent()) {
-		}
+		ossA.getOssInfo(() -> ossLogGateway.getOssInfoByMd5(ossA.getMd5()), () -> ossGateway.uploadOssAndGetInfo(ossA));
 	}
 
 }
