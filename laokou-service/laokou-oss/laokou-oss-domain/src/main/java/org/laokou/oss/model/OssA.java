@@ -23,8 +23,7 @@ import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.IdGenerator;
-import org.laokou.common.i18n.util.StringUtils;
-
+import org.laokou.common.i18n.util.ObjectUtils;
 import java.util.function.Supplier;
 
 /**
@@ -63,8 +62,16 @@ public class OssA extends AggregateRoot {
 	@Getter
 	private String md5;
 
+	@Getter
+	private boolean publishEvent = false;
+
+	@Getter
+	private Long ossId;
+
+	private final IdGenerator idGenerator;
+
 	public OssA(IdGenerator idGenerator) {
-		this.id = idGenerator.getId();
+		this.idGenerator = idGenerator;
 	}
 
 	public void checkSize() {
@@ -79,11 +86,20 @@ public class OssA extends AggregateRoot {
 		}
 	}
 
-	public void getFileUrl(Supplier<String> url1, Supplier<String> url2) {
-		this.url = url1.get();
-		if (StringUtils.isEmpty(this.url)) {
-			this.url = url2.get();
+	public void getOssInfo(Supplier<OssUploadV> info1, Supplier<OssUploadV> info2) {
+		OssUploadV ossUploadV = info1.get();
+		if (ObjectUtils.isNull(ossUploadV)) {
+			ossUploadV = info2.get();
+			this.url = ossUploadV.url();
+			this.ossId = ossUploadV.ossId();
+			this.publishEvent = true;
+		} else {
+			this.url = ossUploadV.url();
 		}
+	}
+
+	public Long getPrimaryKey() {
+		return idGenerator.getId();
 	}
 
 }

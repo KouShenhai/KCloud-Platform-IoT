@@ -85,7 +85,7 @@ public class OperateLogAop {
 			operateLogA.calculateTaskTime(stopWatch);
 			// 获取错误
 			operateLogA.getThrowable(throwable);
-			// 发布事件
+			// 发布领域事件
 			kafkaDomainEventPublisher.publish(MqEnum.OPERATE_LOG.getTopic(),
 					OperateLogConvertor.toDomainEvent(operateLogA));
 		}

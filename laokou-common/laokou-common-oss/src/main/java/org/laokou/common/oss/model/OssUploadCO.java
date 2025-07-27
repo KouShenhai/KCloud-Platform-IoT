@@ -15,25 +15,20 @@
  *
  */
 
-package org.laokou.common.oss.template;
-
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.oss.model.BaseOss;
-import org.laokou.common.oss.model.FileInfo;
-import org.laokou.common.oss.model.LoadBalancePolicyEnum;
-import org.laokou.common.oss.model.OssUploadCO;
-
-import java.util.List;
+package org.laokou.common.oss.model;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class StorageTemplate {
+@Getter
+@AllArgsConstructor
+public class OssUploadCO extends ClientObject {
 
-	public OssUploadCO uploadOss(FileInfo fileInfo, List<BaseOss> list) throws Exception {
-		BaseOss baseOss = LoadBalancePolicyEnum.HASH.choose(list);
-		return new OssUploadCO(baseOss.getStoragePolicy().getStorage(fileInfo, baseOss).uploadOss(), baseOss.getId());
-	}
+	private String url;
+
+	private Long ossId;
 
 }

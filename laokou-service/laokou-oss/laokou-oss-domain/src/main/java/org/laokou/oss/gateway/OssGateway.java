@@ -18,12 +18,13 @@
 package org.laokou.oss.gateway;
 
 import org.laokou.oss.model.OssA;
+import org.laokou.oss.model.OssUploadV;
 
 /**
  * @author laokou
  */
 public interface OssGateway {
 
-	String uploadOssAndGetUrl(OssA ossA) throws Exception;
+	OssUploadV uploadOssAndGetInfo(OssA ossA);
 
 }

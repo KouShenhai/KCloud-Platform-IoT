@@ -75,7 +75,7 @@ final class OAuth2AuthenticationProcessor {
 			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
 		}
 		finally {
-			// 发布事件
+			// 发布领域事件
 			if (ObjectUtils.isNotNull(evt)) {
 				kafkaDomainEventPublisher.publish(MqEnum.LOGIN_LOG.getTopic(), evt);
 			}

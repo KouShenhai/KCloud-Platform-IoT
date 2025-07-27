@@ -17,11 +17,13 @@
 
 package org.laokou.oss.gateway;
 
+import org.laokou.oss.model.OssUploadV;
+
 /**
  * @author laokou
  */
 public interface OssLogGateway {
 
-	String getUrl(String md5);
+	OssUploadV getOssInfo(String md5);
 
 }
