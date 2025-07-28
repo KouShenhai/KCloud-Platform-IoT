@@ -100,7 +100,7 @@
     <!--protobuf-java版本-->
     <protobuf-java.version>3.25.8</protobuf-java.version>
     <!--grpc版本-->
-    <grpc.version>1.73.0</grpc.version>
+    <grpc.version>1.74.0</grpc.version>
     <!--proto-google-common-protos版本-->
     <proto-google-common-protos.version>2.59.2</proto-google-common-protos.version>
     <!--error_prone_annotations版本-->
