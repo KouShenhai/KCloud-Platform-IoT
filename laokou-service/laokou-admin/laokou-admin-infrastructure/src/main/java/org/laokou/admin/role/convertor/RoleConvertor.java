@@ -51,12 +51,14 @@ public class RoleConvertor {
 	public static List<RoleMenuDO> toDataObjects(RoleE roleE) {
 		Long roleId = roleE.getId();
 		List<String> menuIds = roleE.getMenuIds();
-		List<RoleMenuDO> list = new ArrayList<>(menuIds.size());
-		for (String menuId : menuIds) {
+		int size = menuIds.size();
+		List<Long> primaryKeys = roleE.getPrimaryKeys(size);
+		List<RoleMenuDO> list = new ArrayList<>(size);
+		for (int i = 0; i < size; i++) {
 			RoleMenuDO roleMenuDO = new RoleMenuDO();
-			roleMenuDO.setId(roleE.getPrimaryKey());
+			roleMenuDO.setId(primaryKeys.get(i));
 			roleMenuDO.setRoleId(roleId);
-			roleMenuDO.setMenuId(Long.valueOf(menuId));
+			roleMenuDO.setMenuId(Long.valueOf(menuIds.get(i)));
 			list.add(roleMenuDO);
 		}
 		return list;
@@ -73,12 +75,14 @@ public class RoleConvertor {
 	public static List<RoleDeptDO> toDataObjs(RoleE roleE) {
 		Long roleId = roleE.getId();
 		List<String> deptIds = roleE.getDeptIds();
-		List<RoleDeptDO> list = new ArrayList<>(deptIds.size());
-		for (String deptId : deptIds) {
+		int size = deptIds.size();
+		List<Long> primaryKeys = roleE.getPrimaryKeys(size);
+		List<RoleDeptDO> list = new ArrayList<>(size);
+		for (int i = 0; i < size; i++) {
 			RoleDeptDO roleDeptDO = new RoleDeptDO();
-			roleDeptDO.setId(roleE.getPrimaryKey());
+			roleDeptDO.setId(primaryKeys.get(i));
 			roleDeptDO.setRoleId(roleId);
-			roleDeptDO.setDeptId(Long.valueOf(deptId));
+			roleDeptDO.setDeptId(Long.valueOf(deptIds.get(i)));
 			list.add(roleDeptDO);
 		}
 		return list;

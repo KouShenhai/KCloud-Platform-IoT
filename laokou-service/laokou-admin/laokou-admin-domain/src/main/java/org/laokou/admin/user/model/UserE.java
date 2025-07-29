@@ -22,6 +22,7 @@ import lombok.Setter;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.IdGenerator;
+import org.laokou.common.i18n.dto.IdGeneratorBatch;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -161,22 +162,30 @@ public class UserE extends Identifier {
 
 	private final PasswordEncoder passwordEncoder;
 
+	private final IdGeneratorBatch idGeneratorBatch;
+
 	public UserE(IdGenerator idGenerator,
-			@Qualifier("saveUserParamValidator") UserParamValidator saveUserParamValidator,
-			@Qualifier("modifyUserParamValidator") UserParamValidator modifyUserParamValidator,
-			@Qualifier("resetUserPwdParamValidator") UserParamValidator resetUserPwdParamValidator,
-			@Qualifier("modifyUserAuthorityParamValidator") UserParamValidator modifyUserAuthorityParamValidator,
-			PasswordEncoder passwordEncoder) {
+				 IdGeneratorBatch idGeneratorBatch,
+				 @Qualifier("saveUserParamValidator") UserParamValidator saveUserParamValidator,
+				 @Qualifier("modifyUserParamValidator") UserParamValidator modifyUserParamValidator,
+				 @Qualifier("resetUserPwdParamValidator") UserParamValidator resetUserPwdParamValidator,
+				 @Qualifier("modifyUserAuthorityParamValidator") UserParamValidator modifyUserAuthorityParamValidator,
+				 PasswordEncoder passwordEncoder) {
 		this.idGenerator = idGenerator;
 		this.saveUserParamValidator = saveUserParamValidator;
 		this.modifyUserParamValidator = modifyUserParamValidator;
 		this.resetUserPwdParamValidator = resetUserPwdParamValidator;
 		this.modifyUserAuthorityParamValidator = modifyUserAuthorityParamValidator;
 		this.passwordEncoder = passwordEncoder;
+		this.idGeneratorBatch = idGeneratorBatch;
 	}
 
 	public Long getPrimaryKey() {
 		return idGenerator.getId();
+	}
+
+	public List<Long> getPrimaryKeys(int num) {
+		return idGeneratorBatch.getIds(num);
 	}
 
 	public String getDefaultEncodedPassword() {

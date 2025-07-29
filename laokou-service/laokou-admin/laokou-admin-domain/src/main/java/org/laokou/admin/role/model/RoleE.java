@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.dto.IdGeneratorBatch;
 import org.laokou.common.i18n.dto.Identifier;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -96,6 +97,8 @@ public class RoleE extends Identifier {
 
 	private final IdGenerator idGenerator;
 
+	private final IdGeneratorBatch idGeneratorBatch;
+
 	private final RoleParamValidator saveRoleParamValidator;
 
 	private final RoleParamValidator modifyRoleParamValidator;
@@ -103,10 +106,12 @@ public class RoleE extends Identifier {
 	private final RoleParamValidator modifyRoleAuthorityParamValidator;
 
 	public RoleE(IdGenerator idGenerator,
-			@Qualifier("saveRoleParamValidator") RoleParamValidator saveRoleParamValidator,
-			@Qualifier("modifyRoleParamValidator") RoleParamValidator modifyRoleParamValidator,
-			@Qualifier("modifyRoleAuthorityParamValidator") RoleParamValidator modifyRoleAuthorityParamValidator) {
+				 IdGeneratorBatch idGeneratorBatch,
+				 @Qualifier("saveRoleParamValidator") RoleParamValidator saveRoleParamValidator,
+				 @Qualifier("modifyRoleParamValidator") RoleParamValidator modifyRoleParamValidator,
+				 @Qualifier("modifyRoleAuthorityParamValidator") RoleParamValidator modifyRoleAuthorityParamValidator) {
 		this.idGenerator = idGenerator;
+		this.idGeneratorBatch = idGeneratorBatch;
 		this.saveRoleParamValidator = saveRoleParamValidator;
 		this.modifyRoleParamValidator = modifyRoleParamValidator;
 		this.modifyRoleAuthorityParamValidator = modifyRoleAuthorityParamValidator;
@@ -114,6 +119,10 @@ public class RoleE extends Identifier {
 
 	public Long getPrimaryKey() {
 		return idGenerator.getId();
+	}
+
+	public List<Long> getPrimaryKeys(int num) {
+		return idGeneratorBatch.getIds(num);
 	}
 
 	public void checkRoleParam() {

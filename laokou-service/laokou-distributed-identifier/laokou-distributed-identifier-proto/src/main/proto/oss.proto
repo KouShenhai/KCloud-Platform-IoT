@@ -13,6 +13,17 @@ message DistributedIdentifierResult {
 	int64 data = 3;
 }
 
+message DistributedIdentifierBatchCmd {
+	int32 num = 1;
+}
+
+ message DistributedIdentifierBatchResult {
+	string code = 1;
+	string msg = 2;
+	repeated int64 data = 3;
+}
+
 service DistributedIdentifierServiceI {
 	rpc generateSnowflake(DistributedIdentifierCmd) returns (DistributedIdentifierResult);
+	rpc generateSnowflakeBatch(DistributedIdentifierBatchCmd) returns (DistributedIdentifierBatchResult);
 }

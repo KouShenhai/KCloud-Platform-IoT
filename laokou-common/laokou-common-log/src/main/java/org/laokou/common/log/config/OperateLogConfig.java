@@ -19,6 +19,7 @@ package org.laokou.common.log.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.laokou.common.i18n.dto.IdGenerator;
+import org.laokou.common.i18n.dto.IdGeneratorBatch;
 import org.laokou.common.log.rpc.DistributedIdentifierRpc;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +41,11 @@ public class OperateLogConfig {
 	@Bean
 	IdGenerator distributedIdentifierGenerator(DistributedIdentifierRpc distributedIdentifierRpc) {
 		return distributedIdentifierRpc::getId;
+	}
+
+	@Bean
+	IdGeneratorBatch distributedIdentifierGeneratorBatch(DistributedIdentifierRpc distributedIdentifierRpc) {
+		return distributedIdentifierRpc::getIds;
 	}
 
 }

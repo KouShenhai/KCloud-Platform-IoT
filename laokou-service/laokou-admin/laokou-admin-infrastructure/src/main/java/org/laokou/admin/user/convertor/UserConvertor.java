@@ -46,11 +46,13 @@ public final class UserConvertor {
 	public static List<UserRoleDO> toDataObjects(UserE userE) {
 		List<String> roleIds = userE.getRoleIds();
 		Long userId = userE.getId();
-		List<UserRoleDO> list = new ArrayList<>(roleIds.size());
-		for (String roleId : roleIds) {
+		int size = roleIds.size();
+		List<Long> primaryKeys = userE.getPrimaryKeys(size);
+		List<UserRoleDO> list = new ArrayList<>(size);
+		for (int i = 0; i < size; i++) {
 			UserRoleDO userRoleDO = new UserRoleDO();
-			userRoleDO.setId(userE.getPrimaryKey());
-			userRoleDO.setRoleId(Long.valueOf(roleId));
+			userRoleDO.setId(primaryKeys.get(i));
+			userRoleDO.setRoleId(Long.valueOf(roleIds.get(i)));
 			userRoleDO.setUserId(userId);
 			list.add(userRoleDO);
 		}
@@ -60,11 +62,13 @@ public final class UserConvertor {
 	public static List<UserDeptDO> toDataObjs(UserE userE) {
 		List<String> deptIds = userE.getDeptIds();
 		Long userId = userE.getId();
-		List<UserDeptDO> list = new ArrayList<>(deptIds.size());
-		for (String deptId : deptIds) {
+		int size = deptIds.size();
+		List<Long> primaryKeys = userE.getPrimaryKeys(size);
+		List<UserDeptDO> list = new ArrayList<>(size);
+		for (int i = 0; i < size; i++) {
 			UserDeptDO userDeptDO = new UserDeptDO();
-			userDeptDO.setId(userE.getPrimaryKey());
-			userDeptDO.setDeptId(Long.valueOf(deptId));
+			userDeptDO.setId(primaryKeys.get(i));
+			userDeptDO.setDeptId(Long.valueOf(deptIds.get(i)));
 			userDeptDO.setUserId(userId);
 			list.add(userDeptDO);
 		}

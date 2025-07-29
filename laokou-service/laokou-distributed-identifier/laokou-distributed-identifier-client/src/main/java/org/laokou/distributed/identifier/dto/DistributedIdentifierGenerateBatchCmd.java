@@ -15,15 +15,20 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.distributed.identifier.dto;
 
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
+ * 分布式标识生成批量命令.
+ *
  * @author laokou
  */
-public interface IdGenerator extends Serializable {
+@Getter
+@RequiredArgsConstructor
+public class DistributedIdentifierGenerateBatchCmd {
 
-	Long getId();
+	private final Integer num;
 
 }

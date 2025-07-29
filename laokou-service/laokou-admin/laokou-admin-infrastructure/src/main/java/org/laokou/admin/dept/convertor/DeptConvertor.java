@@ -39,7 +39,6 @@ public class DeptConvertor {
 			case SAVE -> deptDO.setId(deptE.getPrimaryKey());
 			case MODIFY -> deptDO.setId(deptE.getId());
 		}
-		deptDO.setId(deptE.getPrimaryKey());
 		deptDO.setPid(deptE.getPid());
 		deptDO.setName(deptE.getName());
 		deptDO.setPath(deptE.getPath());

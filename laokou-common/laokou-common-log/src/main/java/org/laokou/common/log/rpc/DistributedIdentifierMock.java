@@ -18,9 +18,13 @@
 package org.laokou.common.log.rpc;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.distributed.identifier.api.DistributedIdentifierCmd;
-import org.laokou.distributed.identifier.api.DistributedIdentifierResult;
-import org.laokou.distributed.identifier.api.DubboDistributedIdentifierServiceITriple;
+import org.laokou.common.i18n.util.MessageUtils;
+import org.laokou.distributed.identifier.api.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.laokou.common.i18n.common.exception.StatusCode.OK;
 
 /**
  * @author laokou
@@ -35,4 +39,20 @@ public class DistributedIdentifierMock extends DubboDistributedIdentifierService
 			.setData(System.nanoTime())
 			.build();
 	}
+
+	@Override
+	public DistributedIdentifierBatchResult generateSnowflakeBatch(DistributedIdentifierBatchCmd cmd) {
+		log.error("调用批量获取分布式ID失败，请检查Dubbo服务");
+		int num = cmd.getNum();
+		List<Long> list = new ArrayList<>(num);
+		for (int i = 0; i < num; i++) {
+			list.add(System.nanoTime());
+		}
+		return DistributedIdentifierBatchResult.newBuilder()
+			.setCode(OK)
+			.setMsg(MessageUtils.getMessage(OK))
+			.addAllData(list)
+			.build();
+	}
+
 }
