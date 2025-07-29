@@ -230,6 +230,7 @@ CREATE TABLE "public"."sys_oss_log" (
 	"size" int8 NOT NULL,
 	"oss_id" int8 NOT NULL,
 	"content_type" varchar(100) NOT NULL,
+	"type" varchar(50) NOT NULL,
 	"format" varchar(50) NOT NULL
 )
 ;
@@ -246,6 +247,7 @@ COMMENT ON COLUMN "public"."sys_oss_log"."md5" IS '文件的MD5标识';
 COMMENT ON COLUMN "public"."sys_oss_log"."url" IS '文件的URL';
 COMMENT ON COLUMN "public"."sys_oss_log"."size" IS '文件大小';
 COMMENT ON COLUMN "public"."sys_oss_log"."content_type" IS '文件类型';
+COMMENT ON COLUMN "public"."sys_oss_log"."type" IS '类型';
 COMMENT ON COLUMN "public"."sys_oss_log"."format" IS '文件格式';
 COMMENT ON COLUMN "public"."sys_oss_log"."oss_id" IS 'OSS存储ID';
 COMMENT ON TABLE "public"."sys_oss_log" IS 'OSS日志';
@@ -256,7 +258,7 @@ CREATE UNIQUE INDEX "sys_oss_log_md5_idx" ON "public"."sys_oss_log" USING btree 
 "md5"
 );
 
-INSERT INTO "public"."sys_oss_log" VALUES (1, 1, 1, '2025-07-20 16:12:56', '2025-07-20 16:12:58', 0, 0, 0, '4215328e32f94b668d4dcfc9cb8621d7.png', 'e39fe32418f9e115b2703350e581feb6', 'https://youke1.picui.cn/s1/2025/07/20/687ca202b2c53.jpg', 518124, 1, 'image/jpeg', 'image');
+INSERT INTO "public"."sys_oss_log" VALUES (1, 1, 1, '2025-07-20 16:12:56', '2025-07-20 16:12:58', 0, 0, 0, '4215328e32f94b668d4dcfc9cb8621d7.png', 'e39fe32418f9e115b2703350e581feb6', 'https://youke1.picui.cn/s1/2025/07/20/687ca202b2c53.jpg', 518124, 1, 'image/jpeg', 'image', '.jpg');
 
 ALTER TABLE "public"."sys_sql_log" ADD CONSTRAINT "sys_sql_log_pkey" PRIMARY KEY ("id");
 

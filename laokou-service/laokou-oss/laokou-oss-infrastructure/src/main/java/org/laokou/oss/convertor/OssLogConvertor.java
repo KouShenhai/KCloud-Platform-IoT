@@ -42,6 +42,7 @@ public class OssLogConvertor {
 		ossLogCO.setUserId(evt.getUserId());
 		ossLogCO.setUploadTime(evt.getUploadTime());
 		ossLogCO.setTenantId(evt.getTenantId());
+		ossLogCO.setType(evt.getType());
 		return ossLogCO;
 	}
 
@@ -61,6 +62,7 @@ public class OssLogConvertor {
 		ossLogDO.setUpdateTime(ossLogE.getUploadTime());
 		ossLogDO.setTenantId(ossLogE.getTenantId());
 		ossLogDO.setId(ossLogE.getId());
+		ossLogDO.setType(ossLogE.getType());
 		return ossLogDO;
 	}
 
@@ -77,6 +79,7 @@ public class OssLogConvertor {
 		ossLogE.setTenantId(ossLogCO.getTenantId());
 		ossLogE.setUploadTime(ossLogCO.getUploadTime());
 		ossLogE.setId(ossLogCO.getId());
+		ossLogE.setType(ossLogCO.getType());
 		return ossLogE;
 	}
 

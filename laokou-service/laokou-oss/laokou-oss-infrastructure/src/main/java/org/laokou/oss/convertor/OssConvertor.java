@@ -86,8 +86,9 @@ public final class OssConvertor {
 	public static OssUploadEvent toDomainEvent(OssA ossA) {
 		String creator = RpcContext.getServerAttachment().getAttachment(CREATOR);
 		String tenantId = RpcContext.getServerAttachment().getAttachment(TENANT_ID);
+		FileFormatEnum fileFormatEnum = ossA.getFileFormatEnum();
 		return new OssUploadEvent(ossA.getId(), ossA.getName(), ossA.getMd5(), ossA.getUrl(), ossA.getSize(), ossA.getOssId(),
-				ossA.getContentType(), ossA.getContentType(), ossA.getCreateTime(), Long.valueOf(tenantId), Long.valueOf(creator));
+				ossA.getContentType(), fileFormatEnum.getDesc(), ossA.getCreateTime(), Long.valueOf(tenantId), Long.valueOf(creator), fileFormatEnum.getCode());
 	}
 
 	public static FileInfo toFileInfo(byte[] buffer, long size, String contentType, String name, String extName) {

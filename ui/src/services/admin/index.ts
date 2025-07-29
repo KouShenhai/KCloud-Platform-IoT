@@ -14,8 +14,10 @@ import * as dictType from './dict';
 import * as dictItem from './dictItem';
 import * as dept from './dept';
 import * as noticeLog from './noticeLog';
+import * as ossLog from './ossLog'
 
 export default {
+	ossLog,
 	user,
 	tenant,
 	source,

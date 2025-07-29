@@ -88,6 +88,11 @@ export default [
 						name: '对象存储配置',
 						path: '/sys/oss/config',
 						component: './Sys/Oss/config'
+					},
+					{
+						name: '对象存储日志',
+						path: '/sys/oss/log',
+						component: './Sys/Oss/log'
 					}
 				]
 			}

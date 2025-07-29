@@ -33,6 +33,7 @@ import java.util.function.Supplier;
 public class OssA extends AggregateRoot {
 
 	@Setter
+	@Getter
 	private FileFormatEnum fileFormatEnum;
 
 	@Setter
@@ -62,6 +63,10 @@ public class OssA extends AggregateRoot {
 	@Getter
 	private String md5;
 
+	@Setter
+	@Getter
+	private String fileFormat;
+
 	@Getter
 	private boolean publishEvent = false;
 
@@ -76,13 +81,13 @@ public class OssA extends AggregateRoot {
 
 	public void checkSize() {
 		if (size > 1024 * 1024 * 100) {
-			throw new BizException("B_Oss_SizeExceeding100M", "文件大小不能超过100M");
+			throw new BizException("B_Oss_FileSizeExceeding100M", "文件大小不能超过100M");
 		}
 	}
 
 	public void checkExt() {
 		if (!fileFormatEnum.getExtNames().contains(extName)) {
-			throw new BizException("B_Oss_ExtError", "文件格式错误");
+			throw new BizException("B_Oss_FileExtFormatError", "文件扩展格式错误");
 		}
 	}
 

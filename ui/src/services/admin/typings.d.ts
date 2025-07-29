@@ -405,4 +405,34 @@ declare namespace API {
 	type UserSaveCmd = {
 		co?: UserCO;
 	};
+
+	type OssLogExportCmd = true;
+
+	type OssLogPageQry = {
+		pageNum?: number;
+		pageSize?: number;
+		pageIndex?: number;
+		sqlFilter?: string;
+		params?: Record<string, any>;
+	};
+
+	type OssLogSaveCmd = {
+		co?: OssLogCO;
+	};
+
+	type OssLogCO = {
+		extValues?: Record<string, any>;
+		id?: number;
+		name?: string;
+		md5?: string;
+		url?: string;
+		size?: number;
+		status?: number;
+		errorMessage?: string;
+	};
+
+	type OssLogModifyCmd = {
+		co?: OssLogCO;
+	};
+
 }

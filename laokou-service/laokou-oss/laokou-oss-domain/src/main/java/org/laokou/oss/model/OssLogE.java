@@ -75,6 +75,13 @@ public class OssLogE extends Identifier {
 	private String contentType;
 
 	/**
+	 * 类型.
+	 */
+	@Setter
+	@Getter
+	private String type;
+
+	/**
 	 * 文件格式.
 	 */
 	@Setter

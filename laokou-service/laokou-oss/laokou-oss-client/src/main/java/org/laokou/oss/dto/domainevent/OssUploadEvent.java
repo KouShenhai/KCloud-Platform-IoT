@@ -58,6 +58,11 @@ public class OssUploadEvent extends DomainEvent {
 	 */
 	private final String contentType;
 
+	/*
+	 * 类型.
+	 */
+	private final String type;
+
 	/**
 	 * 文件格式.
 	 */
@@ -78,7 +83,9 @@ public class OssUploadEvent extends DomainEvent {
 						  final  String format,
 						  final Instant uploadTime,
 						  final Long tenantId,
-						  final Long userId) {
+						  final Long userId,
+						  String type) {
+		this.type = type;
 		this.id = id;
 		this.name = name;
 		this.md5 = md5;

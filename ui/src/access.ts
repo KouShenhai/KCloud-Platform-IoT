@@ -25,6 +25,15 @@ export default (initialState: any) => {
 		canUserSave: 						permissions?.includes('sys:user:save'),
 
 		canOssUpload: 						permissions?.includes('sys:oss:upload'),
+		canOssGetDetail: 						permissions?.includes('sys:oss:detail'),
+		canOssModify: 						permissions?.includes('sys:oss:modify'),
+		canOssRemove: 						permissions?.includes('sys:oss:remove'),
+		canOssSave: 						permissions?.includes('sys:oss:save'),
+
+		canOssLogGetDetail: 						permissions?.includes('sys:oss-log:detail'),
+		canOssLogModify: 						permissions?.includes('sys:oss-log:modify'),
+		canOssLogRemove: 						permissions?.includes('sys:oss-log:remove'),
+		canOssLogSave: 						permissions?.includes('sys:oss-log:save'),
 
 		canDeviceGetDetail: 				permissions?.includes('iot:device:detail'),
 		canDeviceModify: 					permissions?.includes('iot:device:modify'),

@@ -343,6 +343,11 @@ INSERT INTO "public"."sys_menu" VALUES (79, 1, 1, '2025-03-16 11:17:16.858243', 
 INSERT INTO "public"."sys_menu" VALUES (80, 1, 1, '2025-03-16 11:16:56.540728', '2025-03-16 11:18:02.393751', 0, 1, 0, 31, 'sys:oss:save', 1, '新增OSS', NULL, NULL, 40, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (81, 1, 1, '2025-03-16 11:04:36.477875', '2025-03-16 11:04:36.477875', 0, 0, 0, 31, 'sys:oss:page', 1, '分页查询OSS列表', NULL, NULL, 50, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (82, 1, 1, '2025-03-15 12:15:37.277552', '2025-03-15 12:15:37.278549', 0, 0, 0, 31, 'sys:oss:upload', 1, '上传文件', NULL, NULL, 5, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (83, 1, 1, '2025-07-29 21:39:07', '2025-07-29 21:39:08', 0, 0, 0, 32, 'sys:oss-log:page', 1, '分页查询OSS日志列表', NULL, NULL, 50, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (84, 1, 1, '2025-07-29 21:40:53', '2025-07-29 21:40:55', 0, 0, 0, 32, 'sys:oss-log:save', 1, '新增OSS日志', NULL, NULL, 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (85, 1, 1, '2025-07-29 21:44:42', '2025-07-29 21:44:44', 0, 0, 0, 32, 'sys:oss-log:modify', 1, '修改OSS日志', NULL, NULL, 30, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (86, 1, 1, '2025-07-29 21:45:40', '2025-07-29 21:45:44', 0, 0, 0, 32, 'sys:oss-log:remove', 1, '删除OSS日志', NULL, NULL, 20, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (87, 1, 1, '2025-07-29 21:46:17', '2025-07-29 21:46:19', 0, 0, 0, 32, 'sys:oss-log:detail', 1, '查看OSS日志', NULL, NULL, 10, 0, 0, NULL);
 -- ----------------------------
 -- -------------菜单套餐------------
 -- ----------------------------
