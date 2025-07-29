@@ -25,6 +25,7 @@ import org.laokou.distributed.identifier.dto.DistributedIdentifierGenerateBatchC
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -50,6 +51,8 @@ public class DistributedIdentifierGenerateBatchCmdExe {
 			for (Callable<Long> future : futures) {
 				list.add(future.call());
 			}
+			// 排序
+			Collections.sort(list);
 			return Result.ok(list);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
