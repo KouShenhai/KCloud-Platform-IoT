@@ -23,6 +23,8 @@ import org.laokou.admin.ossLog.model.OssLogE;
 import org.laokou.common.core.util.ConvertUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 
+import java.util.List;
+
 /**
  * OSS日志转换器.
  *
@@ -38,8 +40,23 @@ public class OssLogConvertor {
 		return ossLogDO;
 	}
 
+	public static List<OssLogCO> toClientObjects(List<OssLogDO> list) {
+		return list.stream().map(OssLogConvertor::toClientObject).toList();
+	}
+
 	public static OssLogCO toClientObject(OssLogDO ossLogDO) {
-		return ConvertUtils.sourceToTarget(ossLogDO, OssLogCO.class);
+		OssLogCO ossLogCO = new OssLogCO();
+		ossLogCO.setId(ossLogDO.getId());
+		ossLogCO.setName(ossLogDO.getName());
+		ossLogCO.setMd5(ossLogDO.getMd5());
+		ossLogCO.setUrl(ossLogDO.getUrl());
+		ossLogCO.setSize(ossLogDO.getSize());
+		ossLogCO.setContentType(ossLogDO.getContentType());
+		ossLogCO.setFormat(ossLogDO.getFormat());
+		ossLogCO.setOssId(ossLogDO.getOssId());
+		ossLogCO.setCreateTime(ossLogDO.getCreateTime());
+		ossLogCO.setType(ossLogDO.getType());
+		return ossLogCO;
 	}
 
 	public static OssLogE toEntity(OssLogCO ossLogCO) {

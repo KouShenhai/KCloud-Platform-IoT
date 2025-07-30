@@ -63,6 +63,11 @@ public class OssLogDO extends BaseDO {
 	private String contentType;
 
 	/**
+	 * 类型.
+	 */
+	private String type;
+
+	/**
 	 * 文件格式.
 	 */
 	private String format;

@@ -14,6 +14,7 @@ export default () => {
 		contentType: string | undefined;
 		format: string | undefined;
 		ossId: number | undefined;
+		type: string | undefined;
 		createTime: string | undefined;
 	};
 
@@ -67,7 +68,21 @@ export default () => {
 			hideInSearch: true
 		},
 		{
-			title: '上传日期',
+			title: '类型',
+			dataIndex: 'type',
+			ellipsis: true,
+			valueType: 'text',
+			hideInSearch: true
+		},
+		{
+			title: '文件格式',
+			dataIndex: 'format',
+			ellipsis: true,
+			valueType: 'text',
+			hideInSearch: true
+		},
+		{
+			title: '创建日期',
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
@@ -76,7 +91,7 @@ export default () => {
 			ellipsis: true
 		},
 		{
-			title: '上传日期',
+			title: '创建日期',
 			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,

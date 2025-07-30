@@ -20,25 +20,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.ossLog.gatewayimpl.database.OssLogMapper">
 
-	<select id="selectObjectPage"
-			resultType="org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO">
-		SELECT *
-		from sys_oss_log
-		where del_flag = 0
-		order by id desc
-		limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
-	</select>
+  <sql id="selectColumns">
+    id,
+    "name",
+    "md5",
+    "url",
+    "size",
+    "oss_id",
+    "content_type",
+    "type",
+    "format",
+    "create_time"
+  </sql>
 
-	<select id="selectObjectCount" resultType="long">
-		SELECT count(1)
-		from sys_oss_log
-		where del_flag = 0
-	</select>
+  <sql id="selectConditions">
+    where del_flag = 0
+    <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
+      and create_time <![CDATA[ <= ]]> #{pageQuery.params.endTime}
+    </if>
+  </sql>
 
-	<select id="selectVersion" resultType="integer">
-		select version
-		from sys_oss_log
-		where id = #{id}
-	</select>
+  <sql id="selectObjectList">
+    SELECT <include refid="selectColumns"/>
+    from sys_oss_log
+    <include refid="selectConditions"/>
+    order by id desc
+  </sql>
+
+  <select id="selectObjectPage"
+          resultType="org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO">
+    <include refid="selectObjectList"/>
+    limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
+  </select>
+
+  <select id="selectObjectCount" resultType="long">
+    SELECT count(1)
+    from sys_oss_log
+    <include refid="selectConditions"/>
+  </select>
+
+  <select id="selectVersion" resultType="integer">
+    select version
+    from sys_oss_log
+    where id = #{id}
+  </select>
 
 </mapper>

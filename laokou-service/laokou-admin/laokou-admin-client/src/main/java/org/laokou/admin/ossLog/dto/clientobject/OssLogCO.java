@@ -20,6 +20,8 @@ package org.laokou.admin.ossLog.dto.clientobject;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
+import java.time.Instant;
+
 /**
  * OSS日志客户端对象.
  *
@@ -54,13 +56,28 @@ public class OssLogCO extends ClientObject {
 	private Long size;
 
 	/**
-	 * 上传状态 0成功 1失败.
+	 * OSS存储ID.
 	 */
-	private Integer status;
+	private Long ossId;
 
 	/**
-	 * 错误信息.
+	 * 文件类型.
 	 */
-	private String errorMessage;
+	private String contentType;
+
+	/**
+	 * 类型.
+	 */
+	private String type;
+
+	/**
+	 * 文件格式.
+	 */
+	private String format;
+
+	/**
+	 * 创建时间.
+	 */
+	private Instant createTime;
 
 }

@@ -50,7 +50,7 @@ public class OssLogPageQryExe {
 			DynamicDataSourceContextHolder.push(DOMAIN);
 			List<OssLogDO> list = ossLogMapper.selectObjectPage(qry);
 			long total = ossLogMapper.selectObjectCount(qry);
-			return Result.ok(Page.create(list.stream().map(OssLogConvertor::toClientObject).toList(), total));
+			return Result.ok(Page.create(OssLogConvertor.toClientObjects(list), total));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
