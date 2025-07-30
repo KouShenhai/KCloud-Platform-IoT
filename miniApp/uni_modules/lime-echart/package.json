@@ -85,7 +85,7 @@
     }
   },
   "dependencies": {
-    "echarts": "^5.4.1",
+    "echarts": "^6.0.0",
     "zrender": "^6.0.0"
   }
 }
