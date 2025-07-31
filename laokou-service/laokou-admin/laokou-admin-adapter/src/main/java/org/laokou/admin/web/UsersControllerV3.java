@@ -141,7 +141,7 @@ public class UsersControllerV3 {
 
 	@TraceLog
 	@PostMapping(value = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:oss:upload') and hasAuthority('sys:user:modify')")
+	@PreAuthorize("(hasAuthority('sys:oss:upload') or hasAuthority('sys:oss:save')) and hasAuthority('sys:user:modify')")
 	@Operation(summary = "上传用户头像", description = "上传用户头像")
 	@OperateLog(module = "用户管理", operation = "上传用户头像")
 	public Result<OssUploadCO> uploadUserAvatar(@RequestPart("file") MultipartFile file) throws Exception {

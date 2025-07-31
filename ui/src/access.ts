@@ -25,15 +25,12 @@ export default (initialState: any) => {
 		canUserSave: 						permissions?.includes('sys:user:save'),
 
 		canOssUpload: 						permissions?.includes('sys:oss:upload'),
-		canOssGetDetail: 						permissions?.includes('sys:oss:detail'),
+		canOssGetDetail: 					permissions?.includes('sys:oss:detail'),
 		canOssModify: 						permissions?.includes('sys:oss:modify'),
 		canOssRemove: 						permissions?.includes('sys:oss:remove'),
 		canOssSave: 						permissions?.includes('sys:oss:save'),
 
-		canOssLogGetDetail: 						permissions?.includes('sys:oss-log:detail'),
-		canOssLogModify: 						permissions?.includes('sys:oss-log:modify'),
-		canOssLogRemove: 						permissions?.includes('sys:oss-log:remove'),
-		canOssLogSave: 						permissions?.includes('sys:oss-log:save'),
+		canOssLogExport: 					permissions?.includes('sys:oss-log:export'),
 
 		canDeviceGetDetail: 				permissions?.includes('iot:device:detail'),
 		canDeviceModify: 					permissions?.includes('iot:device:modify'),
@@ -50,20 +47,10 @@ export default (initialState: any) => {
 		canThingModelRemove: 				permissions?.includes('iot:thing-model:remove'),
 		canThingModelSave: 					permissions?.includes('iot:thing-model:save'),
 
-		canCommunicationProtocolGetDetail: 	permissions?.includes('iot:communication-protocol:detail'),
-		canCommunicationProtocolModify:		permissions?.includes('iot:communication-protocol:modify'),
-		canCommunicationProtocolRemove: 	permissions?.includes('iot:communication-protocol:remove'),
-		canCommunicationProtocolSave: 		permissions?.includes('iot:communication-protocol:save'),
-
 		canProductCategoryGetDetail: 		permissions?.includes('iot:product-category:detail'),
 		canProductCategoryModify: 			permissions?.includes('iot:product-category:modify'),
 		canProductCategoryRemove: 			permissions?.includes('iot:product-category:remove'),
 		canProductCategorySave: 			permissions?.includes('iot:product-category:save'),
-
-		canTransportProtocolGetDetail: 		permissions?.includes('iot:transport-protocol:detail'),
-		canTransportProtocolModify: 		permissions?.includes('iot:transport-protocol:modify'),
-		canTransportProtocolRemove: 		permissions?.includes('iot:transport-protocol:remove'),
-		canTransportProtocolSave: 			permissions?.includes('iot:transport-protocol:save'),
 
 		canOperateLogGetDetail: 			permissions?.includes('sys:operate-log:detail'),
 		canOperateLogExport: 				permissions?.includes('sys:operate-log:export'),

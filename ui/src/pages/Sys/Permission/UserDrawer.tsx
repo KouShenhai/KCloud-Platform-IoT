@@ -5,6 +5,7 @@ import React, {useState} from "react";
 import {UploadAvatarDrawer} from "@/pages/Sys/Permission/UploadAvatarDrawer";
 import {ProFormItem} from "@ant-design/pro-form";
 import {v7 as uuidV7} from "uuid";
+import {useAccess} from "@@/exports";
 
 interface UserDrawerProps {
 	modalVisit: boolean;
@@ -38,6 +39,7 @@ type TableColumns = {
 
 export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, edit, roleList, deptTreeList, fileList, setFileList, requestId, setRequestId, logId, setLogId }) => {
 
+	const access = useAccess()
 	const [previewOpen, setPreviewOpen] = useState(false);
 	const [previewImage, setPreviewImage] = useState('');
 	const [loading, setLoading] = useState(false)
@@ -133,7 +135,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 				placeholder={'请输入用户手机号'}
 			/>
 
-			{!readOnly && (
+			{!readOnly && (access.canUserModify || access.canUserModify) && access.canOssUpload && (
 				<ProFormItem label={"用户头像"}>
 					<UploadAvatarDrawer
 						setPreviewImage={setPreviewImage}

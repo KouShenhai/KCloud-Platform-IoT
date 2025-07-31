@@ -2,6 +2,7 @@ import type {ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {pageOssLog} from "@/services/admin/ossLog";
 import {useRef} from "react";
+import {Space, Tag} from "antd";
 
 export default () => {
 
@@ -72,7 +73,28 @@ export default () => {
 			dataIndex: 'type',
 			ellipsis: true,
 			valueType: 'text',
-			hideInSearch: true
+			renderFormItem: (_, { defaultRender }) => {
+				return defaultRender(_);
+			},
+			render: (_, record) => (
+				<Space>
+					{record?.type === 'image' && (
+						<Tag color={'rgb(51 114 253)'} key={'image'}>
+							图片
+						</Tag>
+					)}
+					{record?.type === 'video' && (
+						<Tag color={'#fd5251'} key={'video'}>
+							视频
+						</Tag>
+					)}
+					{record?.type === 'audio' && (
+						<Tag color={'#ffa500'} key={'audio'}>
+							音频
+						</Tag>
+					)}
+				</Space>
+			),
 		},
 		{
 			title: '文件格式',
