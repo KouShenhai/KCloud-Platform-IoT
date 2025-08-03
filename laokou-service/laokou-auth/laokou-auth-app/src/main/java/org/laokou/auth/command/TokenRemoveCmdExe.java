@@ -24,6 +24,7 @@ import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.mybatisplus.util.UserDetails;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
@@ -57,6 +58,7 @@ public class TokenRemoveCmdExe {
 	 * 执行退出登录.
 	 * @param cmd 退出登录参数
 	 */
+	@Async
 	@CommandLog
 	public void executeVoid(TokenRemoveCmd cmd) {
 		String token = cmd.getToken();

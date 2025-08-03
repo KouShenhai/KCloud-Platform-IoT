@@ -33,7 +33,7 @@ public class LoginLogServiceImpl implements LoginLogServiceI {
 	private final LoginLogSaveCmdExe loginLogSaveCmdExe;
 
 	@Override
-	public void save(LoginLogSaveCmd cmd) {
+	public void saveLoginLog(LoginLogSaveCmd cmd) {
 		loginLogSaveCmdExe.executeVoid(cmd);
 	}
 

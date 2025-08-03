@@ -95,6 +95,17 @@ export default [
 						component: './Sys/Oss/log'
 					}
 				]
+			},
+			{
+				name: '系统配置',
+				path: '/sys/config',
+				routes: [
+					{
+						name: '代码生成器',
+						path: '/sys/config/generator',
+						component: './Sys/Config/generator'
+					}
+				]
 			}
 		]
 	},

@@ -24,6 +24,7 @@ import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.model.CaptchaE;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.domain.support.DomainEventPublisher;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,6 +38,7 @@ public class CaptchaSendCmdExe {
 
 	private final DomainEventPublisher kafkaDomainEventPublisher;
 
+	@Async
 	@CommandLog
 	public void executeVoid(CaptchaSendCmd cmd) {
 		CaptchaE captchaE = CaptchaConvertor.toEntity(cmd.getCo());

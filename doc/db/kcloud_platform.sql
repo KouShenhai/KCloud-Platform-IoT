@@ -262,7 +262,7 @@ CREATE INDEX "sys_menu_type_idx" ON "public"."sys_menu" USING btree ("type");
 COMMENT ON INDEX "public"."sys_menu_type_idx" IS '菜单类型_索引';
 
 INSERT INTO "public"."sys_menu" VALUES (1, 1, 1, '2024-06-04 17:20:42', '2024-06-04 17:20:46', 0, 0, 0, 0, NULL, 0, '系统管理', '/sys', 'SettingOutlined', 90000, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (2, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 0, 1, NULL, 0, '日志管理', '/sys/log', '', 1000, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (2, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 0, 1, NULL, 0, '日志管理', '/sys/log', '', 1500, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (3, 1, 1, '2024-09-15 12:56:07', '2024-09-15 12:56:10', 0, 0, 0, 2, NULL, 0, '登录日志', '/sys/log/login', '', 800, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (4, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 0, 3, 'sys:login-log:page', 1, '分页查询登录日志列表', NULL, '', 50, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (5, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 0, 3, 'sys:login-log:export', 1, '导出全部登录日志', NULL, '', 40, 0, 0, NULL);
@@ -290,7 +290,7 @@ INSERT INTO "public"."sys_menu" VALUES (26, 1, 1, '2025-01-21 05:19:17', '2025-0
 INSERT INTO "public"."sys_menu" VALUES (27, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 26, NULL, 0, '数据字典', '/sys/base/dict', NULL, 900, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (28, 1, 1, '2024-09-15 12:56:07', '2024-09-15 12:56:10', 0, 0, 0, 2, NULL, 0, '操作日志', '/sys/log/operate', '', 900, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (29, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 26, NULL, 0, '国际化', '/sys/base/i18n', NULL, 800, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (30, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 1, NULL, 0, '对象存储', '/sys/oss', NULL, 1000, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (30, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 1, NULL, 0, '对象存储', '/sys/oss', NULL, 1200, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (31, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 30, NULL, 0, '对象存储配置', '/sys/oss/config', NULL, 200, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (32, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 30, NULL, 0, '对象存储日志', '/sys/oss/log', NULL, 100, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (33, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 1, NULL, 0, '集群管理', '/sys/cluster', NULL, 3000, 0, 0, NULL);
@@ -345,6 +345,8 @@ INSERT INTO "public"."sys_menu" VALUES (81, 1, 1, '2025-03-16 11:04:36.477875', 
 INSERT INTO "public"."sys_menu" VALUES (82, 1, 1, '2025-03-15 12:15:37.277552', '2025-03-15 12:15:37.278549', 0, 0, 0, 31, 'sys:oss:upload', 1, '上传文件', NULL, NULL, 5, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (83, 1, 1, '2025-07-29 21:39:07', '2025-07-29 21:39:08', 0, 0, 0, 32, 'sys:oss-log:page', 1, '分页查询OSS日志列表', NULL, NULL, 50, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (84, 1, 1, '2025-07-29 21:40:53', '2025-07-29 21:40:55', 0, 0, 0, 32, 'sys:oss-log:export', 1, '导出全部OSS日志', NULL, NULL, 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (88, 1, 1, '2025-08-02 09:46:49.7142', '2025-08-02 09:46:49.715253', 0, 0, 0, 1, NULL, 0, '系统配置', '/sys/config', '', 1000, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (89, 1, 1, '2025-08-02 09:51:11', '2025-08-02 09:51:13', 0, 0, 0, 88, NULL, 0, '代码生成器', '/sys/config/generator', NULL, 800, 0, 0, NULL);
 -- ----------------------------
 -- -------------菜单套餐------------
 -- ----------------------------

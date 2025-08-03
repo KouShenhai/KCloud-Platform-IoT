@@ -17,7 +17,6 @@
 
 package org.laokou.auth.handler;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +38,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 import static org.laokou.auth.model.MqEnum.*;
-import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * @author laokou
@@ -60,15 +58,13 @@ public class DomainEventHandler {
 	@KafkaListener(topics = LOGIN_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + LOGIN_LOG_CONSUMER_GROUP)
 	public void handleLoginLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
-			DynamicDataSourceContextHolder.push(DOMAIN);
 			for (ConsumerRecord<String, Object> record : messages) {
 				loginLogServiceI
-					.save(new LoginLogSaveCmd(LoginLogConvertor.toClientObject((LoginEvent) record.value())));
+					.saveLoginLog(new LoginLogSaveCmd(LoginLogConvertor.toClientObject((LoginEvent) record.value())));
 			}
 		}
 		finally {
 			acknowledgment.acknowledge();
-			DynamicDataSourceContextHolder.clear();
 		}
 	}
 
@@ -78,7 +74,7 @@ public class DomainEventHandler {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
 				SendCaptchaEvent evt = (SendCaptchaEvent) record.value();
-				noticeLogServiceI.save(
+				noticeLogServiceI.saveNoticeLog(
 						new NoticeLogSaveCmd(NoticeLogConvertor.toClientObject(evt, mailService.send(evt.getUuid()))));
 			}
 		}
@@ -95,7 +91,7 @@ public class DomainEventHandler {
 			for (ConsumerRecord<String, Object> record : messages) {
 				SendCaptchaEvent evt = (SendCaptchaEvent) record.value();
 				noticeLogServiceI
-					.save(new NoticeLogSaveCmd(NoticeLogConvertor.toClientObject(evt, smsService.send(evt.getUuid()))));
+					.saveNoticeLog(new NoticeLogSaveCmd(NoticeLogConvertor.toClientObject(evt, smsService.send(evt.getUuid()))));
 			}
 		}
 		finally {

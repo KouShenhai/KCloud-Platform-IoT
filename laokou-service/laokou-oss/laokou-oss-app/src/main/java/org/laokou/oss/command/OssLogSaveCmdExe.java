@@ -17,13 +17,17 @@
 
 package org.laokou.oss.command;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.oss.ability.OssDomainService;
 import org.laokou.oss.convertor.OssLogConvertor;
 import org.laokou.oss.dto.OssLogSaveCmd;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * 保存OSS日志命令执行器.
@@ -38,9 +42,15 @@ public class OssLogSaveCmdExe {
 
 	private final TransactionalUtils transactionalUtils;
 
+	@Async
 	@CommandLog
 	public void executeVoid(OssLogSaveCmd cmd) {
-		transactionalUtils.executeInTransaction(() -> ossDomainService.createOssLog(OssLogConvertor.toEntity(cmd.getCo())));
+		try {
+			DynamicDataSourceContextHolder.push(DOMAIN);
+			transactionalUtils.executeInTransaction(() -> ossDomainService.createOssLog(OssLogConvertor.toEntity(cmd.getCo())));
+		} finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

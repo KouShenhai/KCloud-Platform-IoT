@@ -24,6 +24,6 @@ import org.laokou.auth.dto.LoginLogSaveCmd;
  */
 public interface LoginLogServiceI {
 
-	void save(LoginLogSaveCmd cmd);
+	void saveLoginLog(LoginLogSaveCmd cmd);
 
 }

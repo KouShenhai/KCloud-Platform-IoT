@@ -2707,6 +2707,44 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
     },
     "order": 1
   },
+    {
+    "id": "laokou-generator",
+    "uri": "lb://laokou-generator",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/generator/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "generator",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/generator/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  },
   {
     "id": "laokou-iot-websocket",
     "uri": "lb:wss://laokou-iot-websocket",
@@ -2862,6 +2900,44 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
     },
     "order": 1
   },
+    {
+    "id": "laokou-generator",
+    "uri": "lb://laokou-generator",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/generator/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "generator",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/generator/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  },
   {
     "id": "laokou-iot-websocket",
     "uri": "lb:ws://laokou-iot-websocket",
@@ -3008,6 +3084,44 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
         "name": "RewritePath",
         "args": {
           "_genkey_0": "/iot/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v3"
+    },
+    "order": 1
+  },
+    {
+    "id": "laokou-generator",
+    "uri": "lb://laokou-generator",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/generator/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "generator",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "1"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/generator/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }

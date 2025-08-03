@@ -17,7 +17,6 @@
 
 package org.laokou.oss.handler;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -32,7 +31,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 import static org.laokou.oss.model.MqEnum.OSS_LOG_CONSUMER_GROUP;
 import static org.laokou.oss.model.MqEnum.OSS_LOG_TOPIC;
 
@@ -49,7 +47,6 @@ public class DomainEventHandler {
 	@KafkaListener(topics = OSS_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + OSS_LOG_CONSUMER_GROUP)
 	public void handleLoginLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
-			DynamicDataSourceContextHolder.push(DOMAIN);
 			for (ConsumerRecord<String, Object> record : messages) {
 				ossLogsServiceI.saveOssLog(new OssLogSaveCmd(OssLogConvertor.toClientObject((OssUploadEvent) record.value())));
 			}
@@ -58,7 +55,6 @@ public class DomainEventHandler {
 		}
 		finally {
 			acknowledgment.acknowledge();
-			DynamicDataSourceContextHolder.clear();
 		}
 	}
 

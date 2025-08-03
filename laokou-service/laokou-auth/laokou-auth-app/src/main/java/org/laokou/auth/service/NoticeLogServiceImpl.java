@@ -33,7 +33,7 @@ public class NoticeLogServiceImpl implements NoticeLogServiceI {
 	private final NoticeLogSaveCmdExe noticeLogSaveCmdExe;
 
 	@Override
-	public void save(NoticeLogSaveCmd cmd) {
+	public void saveNoticeLog(NoticeLogSaveCmd cmd) {
 		noticeLogSaveCmdExe.executeVoid(cmd);
 	}
 

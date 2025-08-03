@@ -24,6 +24,6 @@ import org.laokou.auth.dto.NoticeLogSaveCmd;
  */
 public interface NoticeLogServiceI {
 
-	void save(NoticeLogSaveCmd cmd);
+	void saveNoticeLog(NoticeLogSaveCmd cmd);
 
 }
