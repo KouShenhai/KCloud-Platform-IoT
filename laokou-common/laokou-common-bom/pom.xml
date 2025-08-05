@@ -140,7 +140,7 @@
     <!--commons-net版本-->
     <commons-net.version>3.12.0</commons-net.version>
     <!--vertx版本-->
-    <vertx.version>5.0.1</vertx.version>
+    <vertx.version>5.0.2</vertx.version>
     <!--springdoc-openapi版本-->
     <springdoc-openapi.version>2.8.9</springdoc-openapi.version>
     <!--modbus4j版本-->
