@@ -89,7 +89,7 @@
     <spring-javaformat-maven-plugin.version>0.0.47</spring-javaformat-maven-plugin.version>
     <maven-archetype-plugin.version>3.4.0</maven-archetype-plugin.version>
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
-    <checkstyle.version>10.26.1</checkstyle.version>
+    <checkstyle.version>11.0.0</checkstyle.version>
     <spring-javaformat-checkstyle.version>0.0.47</spring-javaformat-checkstyle.version>
     <dubbo.version>3.3.5</dubbo.version>
   </properties>
