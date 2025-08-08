@@ -19,9 +19,8 @@ package main
 
 import (
 	"fmt"
-	"testing"
-
 	"gopkg.in/yaml.v3"
+	"testing"
 )
 
 func TestNetPlanConfig(t *testing.T) {
@@ -52,8 +51,27 @@ func TestNetPlanConfig(t *testing.T) {
 		return
 	}
 	fmt.Println(config.Network.Ethernets[LAN1].DHCP4)
+	config.Network.Ethernets[LAN1].DHCP4 = false
+	config.Network.Ethernets[LAN1].Addresses = []string{"192.168.1.10/24"}
+	config.Network.Ethernets[LAN1].Gateway4 = "192.168.1.1"
+	config.Network.Ethernets[LAN1].Nameservers.Addresses = []string{"8.8.8.8", "114.114.114.114"}
+	out, err = yaml.Marshal(config)
+	err = SaveNetPlanConfig(out, "ethernets.yaml")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 	fmt.Println(GetNetmask())
 	fmt.Println(GetMacAddress())
 	fmt.Println(GetIpAddress())
 	fmt.Println(GetGateway())
+	networkConfig, err := GetNetworkConfig("ethernets.yaml")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	fmt.Println(networkConfig.Dns)
+	fmt.Println(networkConfig.Gateway)
+	fmt.Println(networkConfig.Address)
+	fmt.Println(networkConfig.MacAddress)
 }

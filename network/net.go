@@ -96,6 +96,13 @@ const (
 	LAN2 = "eth1"
 )
 
+type NetworkConfig struct {
+	Address    string `json:"address"`
+	Gateway    string `json:"gateway"`
+	Dns        string `json:"dns"`
+	MacAddress string `json:"macAddress"`
+}
+
 type NetPlanConfig struct {
 	Network struct {
 		// Version 必须为 2，表示 Netplan 配置的版本
@@ -282,6 +289,30 @@ func GetNetmask() (string, error) {
 		return "", errors.New("获取子网掩码长度失败，错误信息：" + err.Error())
 	}
 	return strings.TrimSpace(string(output)), nil
+}
+
+func GetNetworkConfig(path string) (*NetworkConfig, error) {
+	config, err := getNetPlanConfig(path)
+	if err != nil {
+		return nil, err
+	}
+	ethernet := config.Network.Ethernets[LAN1]
+	return &NetworkConfig{
+		Address:    ethernet.Addresses[0],
+		Gateway:    ethernet.Gateway4,
+		Dns:        strings.Join(ethernet.Nameservers.Addresses, ","),
+		MacAddress: ethernet.MacAddress,
+	}, nil
+}
+
+func getNetPlanConfig(path string) (*NetPlanConfig, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, errors.New("获取网络配置失败，错误信息：" + err.Error())
+	}
+	netConfig := &NetPlanConfig{}
+	err = yaml.Unmarshal(data, netConfig)
+	return netConfig, nil
 }
 
 func validateOS() error {
