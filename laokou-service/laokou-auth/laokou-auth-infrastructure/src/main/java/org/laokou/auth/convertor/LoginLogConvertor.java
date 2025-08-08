@@ -32,6 +32,9 @@ import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.ObjectUtils;
+
+import java.util.Optional;
+
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.laokou.common.i18n.util.StringUtils.truncate;
 
@@ -104,8 +107,9 @@ public final class LoginLogConvertor {
 		String browser = capabilities.getBrowser();
 		int status = LoginStatusEnum.OK.getCode();
 		UserE userE = authA.getUser();
-		Long userId = ObjectUtils.isNull(userE) ? null : userE.getId();
-		Long tenantId = ObjectUtils.isNull(userE) ? 0 : userE.getTenantId();
+		Optional<UserE> optional = Optional.ofNullable(userE);
+		Long userId = optional.map(UserE::getId).orElse(null);
+		Long tenantId = optional.map(UserE::getTenantId).orElse(null);
 		String errorMessage = EMPTY;
 		if (ObjectUtils.isNotNull(ex)) {
 			status = LoginStatusEnum.FAIL.getCode();
