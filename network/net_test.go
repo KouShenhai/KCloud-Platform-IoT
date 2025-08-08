@@ -19,8 +19,9 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/yaml.v3"
 	"testing"
+
+	"gopkg.in/yaml.v3"
 )
 
 func TestNetPlanConfig(t *testing.T) {
