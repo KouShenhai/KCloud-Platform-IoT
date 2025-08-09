@@ -137,6 +137,7 @@ module.exports = {
 							{text: '物联网之使用Vertx实现HTTPWebSocket最佳实践【响应式】', link: '/pages/04e661/'},
 							{text: '物联网之使用Vertx实现UDP最佳实践【响应式】', link: '/pages/3e4283/'},
 							{text: 'Spring Cloud Gateway实现分布式限流和熔断降级', link: '/pages/4b37fa/'},
+							{text: '物联网之常见网络配置', link: '/pages/9d20f6/'}
 						]
 					},
 					{
