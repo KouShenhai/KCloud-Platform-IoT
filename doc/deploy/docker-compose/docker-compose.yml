@@ -336,7 +336,7 @@ services:
         hard: -1
   # ./bin/elasticsearch-setup-passwords interactive
   kibana:
-    image: docker.elastic.co/kibana/kibana:8.19.0
+    image: docker.elastic.co/kibana/kibana:8.19.1
     container_name: kibana
     # 保持容器在没有守护程序的情况下运行
     tty: true
