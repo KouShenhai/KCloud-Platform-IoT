@@ -319,12 +319,9 @@ services:
       - "9200:9200"
       - "9300:9300"
     volumes:
-      - ./elasticsearch8/data:/usr/share/elasticsearch/data
-      - ./elasticsearch8/logs:/usr/share/elasticsearch/logs
       - ./elasticsearch8/plugins:/usr/share/elasticsearch/plugins
-      - ./elasticsearch8/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      - ./elasticsearch8/config/certs/elastic-certificates.p12:/usr/share/elasticsearch/config/certs/elastic-certificates.p12
     environment:
+      - discovery.type=single-node
       - TZ=Asia/Shanghai
       - ES_JAVA_OPTS=-Xmx1g -Xms1g
       - ELASTIC_PASSWORD=laokou123

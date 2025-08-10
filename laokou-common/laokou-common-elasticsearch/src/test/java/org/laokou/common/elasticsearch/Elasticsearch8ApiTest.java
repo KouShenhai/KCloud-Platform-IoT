@@ -20,18 +20,28 @@ package org.laokou.common.elasticsearch;
 import co.elastic.clients.elasticsearch.ElasticsearchAsyncClient;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.indices.IndexState;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.elasticsearch.annotation.*;
 import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.util.JacksonUtils;
+import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -95,6 +105,53 @@ class Elasticsearch8ApiTest {
 		assertThat(result.isEmpty()).isFalse();
 		assertThatNoException().isThrownBy(
 				() -> elasticsearchTemplate.deleteIndex(List.of("laokou_res_1", "laokou_pro_1", "laokou_resp_1")));
+	}
+
+}
+
+@Index(setting = @Setting(refreshInterval = "-1"), analysis = @Analysis(
+	filters = { @Filter(name = "pinyin_filter",
+		options = { @Option(key = "type", value = "pinyin"), @Option(key = "keep_full_pinyin", value = "false"),
+			@Option(key = "keep_joined_full_pinyin", value = "true"),
+			@Option(key = "keep_original", value = "true"),
+			@Option(key = "limit_first_letter_length", value = "16"),
+			@Option(key = "remove_duplicated_term", value = "true"),
+			@Option(key = "none_chinese_pinyin_tokenize", value = "false") }) },
+	analyzers = {
+		@Analyzer(name = "ik_pinyin", args = @Args(filter = "pinyin_filter", tokenizer = "ik_max_word")) }))
+record TestResource(@Field(type = Type.TEXT, searchAnalyzer = "ik_smart", analyzer = "ik_pinyin") String name)
+	implements
+	Serializable {
+}
+
+@Data
+@Index
+class TestResp implements Serializable {
+	@Field(type = Type.KEYWORD) private String key;
+}
+
+@Data
+@Index
+class TestProject implements Serializable {
+	@JsonSerialize(using = ToStringSerializer.class)
+	@Field(type = Type.LONG)
+	private Long businessKey;
+}
+
+@Data
+class TestResult implements Serializable {
+
+	private String id;
+	private String name;
+}
+
+@EnableEncryptableProperties
+@EnableConfigurationProperties
+@SpringBootApplication(scanBasePackages = "org.laokou")
+class AppTest {
+
+	public static void main(String[] args) {
+		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
 	}
 
 }
