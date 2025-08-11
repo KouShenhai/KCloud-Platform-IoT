@@ -52,7 +52,7 @@ class HttpUtilsTest {
 	}
 
 	@Test
-	void test() throws NoSuchAlgorithmException, KeyManagementException {
+	void test_http() throws NoSuchAlgorithmException, KeyManagementException {
 		wireMockServer.stubFor(WireMock.post("/test").willReturn(WireMock.ok("hello wiremock")));
 		String resultJson = HttpUtils.doFormDataPost("http://localhost:" + wireMockServer.port() + "/test",
 				new HashMap<>(0), new HashMap<>(0));

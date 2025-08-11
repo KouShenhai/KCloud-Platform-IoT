@@ -55,19 +55,19 @@ class TableTest {
 	private final ExecutorService virtualThreadExecutor;
 
 	@Test
-	void testTable() {
+	void test_table() {
 		List<TableDO> tables = tableMapper.selectObjects("sys_user");
 		log.info("获取表：{}", JacksonUtils.toJsonStr(tables));
 	}
 
 	@Test
-	void testTableColumn() {
+	void test_tableColumn() {
 		List<TableColumnDO> tableColumns = tableColumnMapper.selectObjects("sys_user");
 		log.info("获取字段：{}", JacksonUtils.toJsonStr(tableColumns));
 	}
 
 	@Test
-	void testMasterGenerateCode() {
+	void test_masterGenerateCode() {
 		// 已注释代码生成【跑CI已注释】
 		// 已注释代码生成【跑CI已注释】
 		// 已注释代码生成【跑CI已注释】
@@ -91,7 +91,7 @@ class TableTest {
 	}
 
 	@Test
-	void testDomainGenerateCode() {
+	void test_domainGenerateCode() {
 		// 已注释代码生成【跑CI已注释】
 		// 已注释代码生成【跑CI已注释】
 		// 已注释代码生成【跑CI已注释】
@@ -115,7 +115,7 @@ class TableTest {
 	}
 
 	@Test
-	void testIotGenerateCode() {
+	void test_iotGenerateCode() {
 		// 已注释代码生成【跑CI已注释】
 		// 已注释代码生成【跑CI已注释】
 		// 已注释代码生成【跑CI已注释】
@@ -140,7 +140,7 @@ class TableTest {
 	}
 
 	@Test
-	void testGeneratorGenerateCode() {
+	void test_generatorGenerateCode() {
 		// 已注释代码生成【跑CI已注释】
 		// 已注释代码生成【跑CI已注释】
 		// 已注释代码生成【跑CI已注释】

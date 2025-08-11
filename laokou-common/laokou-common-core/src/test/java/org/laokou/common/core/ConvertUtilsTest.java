@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ConvertUtilsTest {
 
 	@Test
-	void test() {
+	void test_convert() {
 		TestUser testUser = new TestUser(1L, "laokou");
 		User user = ConvertUtils.sourceToTarget(testUser, User.class);
 		assertThat(user).isNotNull();

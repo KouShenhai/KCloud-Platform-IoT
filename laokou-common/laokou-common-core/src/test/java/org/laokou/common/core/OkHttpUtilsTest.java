@@ -50,7 +50,7 @@ class OkHttpUtilsTest {
 	}
 
 	@Test
-	void testOkHttp() {
+	void test_okHttp() {
 		wireMockServer.stubFor(WireMock.post("/test").willReturn(WireMock.ok("hello wiremock")));
 		String resultJson = OkHttpUtils.doFormDataPost("http://localhost:" + wireMockServer.port() + "/test",
 				new HashMap<>(0), new HashMap<>(0));

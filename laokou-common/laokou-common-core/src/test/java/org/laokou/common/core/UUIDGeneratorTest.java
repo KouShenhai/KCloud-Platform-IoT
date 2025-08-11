@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class UUIDGeneratorTest {
 
 	@Test
-	void testGenerateUUID() {
+	void test_generateUUID() {
 		assertThat(UUIDGenerator.generateUUID()).isNotBlank();
 	}
 

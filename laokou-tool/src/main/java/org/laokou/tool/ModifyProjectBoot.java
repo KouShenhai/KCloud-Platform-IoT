@@ -18,6 +18,7 @@
 package org.laokou.tool;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.laokou.common.core.util.FileUtils;
 import org.springframework.util.StopWatch;
 
@@ -80,8 +81,9 @@ final class ModifyProjectBoot {
 		String projectPath = System.getProperty("user.dir");
 		FileUtils.walkFileTree(Paths.get(projectPath), new SimpleFileVisitor<>() {
 
+			@NotNull
 			@Override
-			public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) throws IOException {
+			public FileVisitResult visitFile(@NotNull Path path, @NotNull BasicFileAttributes attrs) throws IOException {
 				String filePath = path.toAbsolutePath().toString();
 				String newPath = getNewPath(filePath);
 				// 创建目录或文件
@@ -103,8 +105,9 @@ final class ModifyProjectBoot {
 				return FileVisitResult.CONTINUE;
 			}
 
+			@NotNull
 			@Override
-			public FileVisitResult preVisitDirectory(Path path, BasicFileAttributes attrs) {
+			public FileVisitResult preVisitDirectory(@NotNull Path path, @NotNull BasicFileAttributes attrs) {
 				boolean isExclude = false;
 				String dir = path.toString();
 				for (String module : MODULES) {
@@ -119,8 +122,9 @@ final class ModifyProjectBoot {
 				return FileVisitResult.SKIP_SUBTREE;
 			}
 
+			@NotNull
 			@Override
-			public FileVisitResult visitFileFailed(Path file, IOException exc) {
+			public FileVisitResult visitFileFailed(@NotNull Path file, @NotNull IOException exc) {
 				return FileVisitResult.CONTINUE;
 			}
 

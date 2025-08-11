@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SpringExpressionUtilsTest {
 
 	@Test
-	void testSpringExpression() {
+	void test_springExpression() {
 		assertThat(SpringExpressionUtils.parse("#id", new String[] { "id" }, new String[] { "1" }, String.class))
 			.isEqualTo("1");
 	}

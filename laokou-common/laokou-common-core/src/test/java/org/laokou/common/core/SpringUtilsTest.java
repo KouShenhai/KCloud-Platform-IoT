@@ -40,7 +40,7 @@ class SpringUtilsTest {
 	private final SpringUtils springUtils;
 
 	@Test
-	void testGetServiceId() {
+	void test_getServiceId() {
 		assertThat(springUtils).isNotNull();
 		String serviceId = springUtils.getServiceId();
 		log.info("应用名称：{}", serviceId);

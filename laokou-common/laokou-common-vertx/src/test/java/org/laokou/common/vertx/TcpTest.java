@@ -41,7 +41,7 @@ class TcpTest {
 	private final Vertx vertx;
 
 	@Test
-	void test() throws InterruptedException {
+	void test_tpc() throws InterruptedException {
 		for (int i = 3880; i <= 4000; i++) {
 			int finalI = i;
 			ConnectOptions connectOptions = new ConnectOptions();

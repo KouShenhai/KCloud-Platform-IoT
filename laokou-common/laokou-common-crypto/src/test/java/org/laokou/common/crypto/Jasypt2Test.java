@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class Jasypt2Test {
 
 	@Test
-	void testJasypt2() {
+	void test_jasypt_2() {
 		String factor = "laokou";
 		String plainText = "laokou123";
 		String encryptWithMD5AndDESStr = encryptWithMD5AndDES(plainText, factor);

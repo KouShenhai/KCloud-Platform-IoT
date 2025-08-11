@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ThreadUtilsTest {
 
 	@Test
-	void testShutdownThreadExecutor() {
+	void test_shutdownThreadExecutor() {
 		ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor();
 		ExecutorService ttlVirtualTaskExecutor = ThreadUtils.newTtlVirtualTaskExecutor();
 		ThreadUtils.shutdown(virtualTaskExecutor, 1);
@@ -40,19 +40,19 @@ class ThreadUtilsTest {
 	}
 
 	@Test
-	void testNewVirtualTaskExecutor() {
+	void test_newVirtualTaskExecutor() {
 		ExecutorService executorService = ThreadUtils.newVirtualTaskExecutor();
 		executorService.execute(() -> assertThat(executorService).isNotNull());
 	}
 
 	@Test
-	void testNewTtlVirtualTaskExecutor() {
+	void test_newTtlVirtualTaskExecutor() {
 		ExecutorService executorService = ThreadUtils.newTtlVirtualTaskExecutor();
 		executorService.execute(() -> assertThat(executorService).isNotNull());
 	}
 
 	@Test
-	void testNewScheduledThreadPool() {
+	void test_newScheduledThreadPool() {
 		try (ExecutorService executorService = ThreadUtils.newScheduledThreadPool(1)) {
 			executorService.execute(() -> assertThat(executorService).isNotNull());
 		}

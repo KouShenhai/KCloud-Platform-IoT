@@ -83,7 +83,7 @@ class NamingUtilsTest {
 	}
 
 	@Test
-	void testCreateNamingService() throws Exception {
+	void test_createNamingService() throws Exception {
 		NamingService namingService = NamingUtils.createNamingService(nacosDiscoveryProperties.getServerAddr());
 		assertThat(namingService).isNotNull();
 		namingService = NamingUtils.createNamingService(nacosDiscoveryProperties.getNacosProperties());
@@ -91,12 +91,12 @@ class NamingUtilsTest {
 	}
 
 	@Test
-	void testIsNacosDiscoveryInfoChanged() {
+	void test_isNacosDiscoveryInfoChanged() {
 		assertThat(namingUtils.isNacosDiscoveryInfoChanged(nacosDiscoveryProperties)).isFalse();
 	}
 
 	@Test
-	void testGetAllInstances() throws NacosException, InterruptedException {
+	void test_getAllInstances() throws NacosException, InterruptedException {
 		assertThat(namingUtils.getAllInstances("test-service").isEmpty()).isTrue();
 
 		assertThatNoException().isThrownBy(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080));
@@ -152,7 +152,7 @@ class NamingUtilsTest {
 	}
 
 	@Test
-	void testSelectInstances() throws NacosException, InterruptedException {
+	void test_selectInstances() throws NacosException, InterruptedException {
 		assertThatNoException().isThrownBy(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		assertThat(namingUtils.selectInstances("test-service", true).isEmpty()).isFalse();
@@ -178,7 +178,7 @@ class NamingUtilsTest {
 	}
 
 	@Test
-	void testSelectOneHealthyInstance() throws NacosException, InterruptedException {
+	void test_selectOneHealthyInstance() throws NacosException, InterruptedException {
 		assertThatNoException().isThrownBy(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		assertThat(namingUtils.selectInstances("test-service", true).isEmpty()).isFalse();
@@ -198,7 +198,7 @@ class NamingUtilsTest {
 	}
 
 	@Test
-	void testSubscribeService() throws NacosException, InterruptedException {
+	void test_subscribeService() throws NacosException, InterruptedException {
 		assertThatNoException().isThrownBy(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		assertThat(namingUtils.selectInstances("test-service", true).isEmpty()).isFalse();
@@ -229,7 +229,7 @@ class NamingUtilsTest {
 	}
 
 	@Test
-	void testGetServicesOfServer() throws NacosException, InterruptedException {
+	void test_getServicesOfServer() throws NacosException, InterruptedException {
 		assertThatNoException().isThrownBy(() -> namingUtils.registerInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		assertThat(namingUtils.selectInstances("test-service", true).isEmpty()).isFalse();
@@ -246,7 +246,7 @@ class NamingUtilsTest {
 	}
 
 	@Test
-	void testBatchRegisterInstance() throws NacosException, InterruptedException {
+	void test_batchRegisterInstance() throws NacosException, InterruptedException {
 		Instance instance = new Instance();
 		instance.setIp("127.0.0.1");
 		instance.setPort(8080);
@@ -260,7 +260,7 @@ class NamingUtilsTest {
 	}
 
 	@Test
-	void testNacosServiceShutDown() throws InterruptedException {
+	void test_nacosServiceShutDown() throws InterruptedException {
 		Thread.sleep(1000);
 		assertThatNoException().isThrownBy(namingUtils::nacosServiceShutDown);
 	}

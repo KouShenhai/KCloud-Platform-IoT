@@ -32,28 +32,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CollectionUtilsTest {
 
 	@Test
-	void testIsNotEmpty() {
+	void test_isNotEmpty() {
 		assertThat(CollectionUtils.isNotEmpty(Arrays.asList("1", "2", "3"))).isTrue();
 		assertThat(CollectionUtils.isNotEmpty(new ArrayList<>())).isFalse();
 		assertThat(CollectionUtils.isNotEmpty(null)).isFalse();
 	}
 
 	@Test
-	void testIsEmpty() {
+	void test_isEmpty() {
 		assertThat(CollectionUtils.isEmpty(Arrays.asList("1", "2", "3"))).isFalse();
 		assertThat(CollectionUtils.isEmpty(new ArrayList<>())).isTrue();
 		assertThat(CollectionUtils.isEmpty(null)).isTrue();
 	}
 
 	@Test
-	void testToStr() {
+	void test_toStr() {
 		assertThat(CollectionUtils.toStr(Arrays.asList("a", "b", "c"), ",")).isEqualTo("a,b,c");
 		assertThat(CollectionUtils.toStr(new ArrayList<>(), ",")).isEqualTo("");
 		assertThat(CollectionUtils.toStr(Arrays.asList("a", null, "c"), ",")).isEqualTo("a,c");
 	}
 
 	@Test
-	void testToList() {
+	void test_toList() {
 		assertThat(CollectionUtils.toList("a,b,c", ",")).isEqualTo(Arrays.asList("a", "b", "c"));
 		assertThat(CollectionUtils.toList("", ",").isEmpty()).isTrue();
 		assertThat(CollectionUtils.toList(null, ",").isEmpty()).isTrue();
@@ -61,19 +61,19 @@ class CollectionUtilsTest {
 	}
 
 	@Test
-	void testContains() {
+	void test_contains() {
 		assertThat(CollectionUtils.contains(Arrays.asList("a", "b", "c"), "a")).isTrue();
 		assertThat(CollectionUtils.contains(Arrays.asList("a", "b", "c"), "d")).isFalse();
 	}
 
 	@Test
-	void testAnyMatch() {
+	void test_anyMatch() {
 		assertThat(CollectionUtils.anyMatch(Arrays.asList("a", "b", "c"), Arrays.asList("c", "d", "e"))).isTrue();
 		assertThat(CollectionUtils.anyMatch(Arrays.asList("c", "d", "e"), Arrays.asList("x", "y", "z"))).isFalse();
 	}
 
 	@Test
-	void testContainsAll() {
+	void test_containsAll() {
 		assertThat(CollectionUtils.containsAll(Arrays.asList("a", "b"), Arrays.asList("a", "b", "c"))).isTrue();
 		assertThat(CollectionUtils.containsAll(Arrays.asList("x", "y"), Arrays.asList("a", "b", "c"))).isFalse();
 	}

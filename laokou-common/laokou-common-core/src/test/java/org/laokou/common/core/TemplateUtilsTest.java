@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TemplateUtilsTest {
 
 	@Test
-	void testTemplate() {
+	void test_template() {
 		assertThat(TemplateUtils.getContent("123${code}", Map.of("code", "4"))).isEqualTo("1234");
 	}
 

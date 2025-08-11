@@ -67,12 +67,12 @@ class ConfigUtilsTest {
 	}
 
 	@Test
-	void testGetGroup() {
+	void test_getGroup() {
 		assertThat( configUtils.getGroup()).isEqualTo("DEFAULT_GROUP");
 	}
 
 	@Test
-	void testCreateConfigService() throws NacosException {
+	void test_createConfigService() throws NacosException {
 		ConfigService configService = ConfigUtils.createConfigService(nacosConfigProperties.getServerAddr());
 		assertThat(configService).isNotNull();
 		assertThat(configService.getServerStatus()).isEqualTo("UP");
@@ -83,7 +83,7 @@ class ConfigUtilsTest {
 	}
 
 	@Test
-	void testGetConfig() throws NacosException {
+	void test_getConfig() throws NacosException {
 		String config = configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000);
 		assertThat(config).isNotNull().contains("test");
 		config = configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000, new Listener() {
@@ -101,7 +101,7 @@ class ConfigUtilsTest {
 	}
 
 	@Test
-	void testAddListener() throws NacosException {
+	void test_addListener() throws NacosException {
 		configUtils.addListener("test.yaml", nacosConfigProperties.getGroup(), new Listener() {
 			@Override
 			public Executor getExecutor() {
@@ -116,7 +116,7 @@ class ConfigUtilsTest {
 	}
 
 	@Test
-	void testRemoveListener() throws NacosException {
+	void test_removeListener() throws NacosException {
 		configUtils.removeListener("test.yaml", nacosConfigProperties.getGroup(), new Listener() {
 			@Override
 			public Executor getExecutor() {
@@ -131,7 +131,7 @@ class ConfigUtilsTest {
 	}
 
 	@Test
-	void testPublishConfig() throws NacosException, InterruptedException {
+	void test_publishConfig() throws NacosException, InterruptedException {
 		assertThat(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 123")).isTrue();
 		Thread.sleep(100);
 		assertThat(configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 123");
@@ -154,7 +154,7 @@ class ConfigUtilsTest {
 	}
 
 	@Test
-	void testRemoveConfig() throws NacosException, InterruptedException {
+	void test_removeConfig() throws NacosException, InterruptedException {
 		assertThat(configUtils.publishConfig("test1.yaml", nacosConfigProperties.getGroup(), "test: 123")).isTrue();
 		Thread.sleep(2000);
 		assertThat( configUtils.getConfig("test1.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 123");
@@ -164,7 +164,7 @@ class ConfigUtilsTest {
 	}
 
 	@Test
-	void testGetServerStatus() {
+	void test_getServerStatus() {
 		assertThat(configUtils.getServerStatus()).isEqualTo("UP");
 	}
 	// @formatter:on

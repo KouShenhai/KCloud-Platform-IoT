@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AddressUtilsTest {
 
 	@Test
-	void testAddress() throws Exception {
+	void test_address() throws Exception {
 		String address = "127.0.0.1";
 		assertThat(AddressUtils.getRealAddress(address)).isEqualTo("内网IP");
 	}

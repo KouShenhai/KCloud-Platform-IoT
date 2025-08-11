@@ -47,7 +47,7 @@ class FtpTest {
 	private final FtpProperties ftpProperties;
 
 	@Test
-	void test() throws IOException {
+	void test_ftp() throws IOException {
 		assertThatNoException().isThrownBy(() -> ftpTemplate.upload(ftpProperties.getDirectory(), "测试中文文本.txt",
 				ResourceUtils.getResource("classpath:测试中文文本.txt").getInputStream()));
 		InputStream inputStream = ftpTemplate.download(ftpProperties.getDirectory(), "测试中文文本.txt");

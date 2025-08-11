@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DateUtilsTest {
 
 	@Test
-	void test() {
+	void test_date() {
 		String str = "2024-09-24 11:33:33";
 		LocalDateTime localDateTime = DateUtils.parseTime(str, DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
 		assertThat(DateUtils.format(localDateTime, DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS)).isEqualTo(str);

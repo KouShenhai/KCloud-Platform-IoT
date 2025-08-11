@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 class ResponseUtilsTest {
 
 	@Test
-	void testResponse() {
+	void test_response() {
 		HttpServletResponse response = ResponseUtils.getHttpServletResponse();
 		assertThat(response).isNotNull();
 		assertThatNoException().isThrownBy(() -> ResponseUtils.responseOk(response, "ok"));

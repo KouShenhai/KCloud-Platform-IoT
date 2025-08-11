@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RegexUtilsTest {
 
 	@Test
-	void testRegex() {
+	void test_regex() {
 		assertThat(RegexUtils.mailRegex("2413176044@qq.com")).isTrue();
 		assertThat(RegexUtils.mailRegex("123")).isFalse();
 		assertThat(RegexUtils.ipv4Regex("127.0.0.1")).isTrue();

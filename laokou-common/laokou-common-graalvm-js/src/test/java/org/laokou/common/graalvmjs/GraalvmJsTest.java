@@ -38,7 +38,7 @@ class GraalvmJsTest {
 	private final Executor jsExecutor;
 
 	@Test
-	void test() {
+	void test_graalvmJs() {
 		String script = "function processData(inputMap) { return inputMap['test']; } processData;";
 		Map<String, Object> inputMap = Map.of("test", 123);
 		assertThat(jsExecutor.execute(script, inputMap).asInt()).isEqualTo(123);

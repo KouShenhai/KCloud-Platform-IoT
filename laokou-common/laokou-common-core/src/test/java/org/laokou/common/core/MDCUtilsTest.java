@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 class MDCUtilsTest {
 
 	@Test
-	void testMDC() {
+	void test_mdc() {
 		MDCUtils.put("111", "222");
 		assertThat(MDCUtils.getTraceId()).isNotBlank();
 		assertThat(MDCUtils.getSpanId()).isNotBlank();

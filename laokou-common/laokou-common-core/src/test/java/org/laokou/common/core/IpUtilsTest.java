@@ -32,7 +32,7 @@ import static org.mockito.Mockito.mock;
 class IpUtilsTest {
 
 	@Test
-	void testIp() {
+	void test_ip() {
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		assertThat(request).isNotNull();
 		String ip = IpUtils.getIpAddr(request);

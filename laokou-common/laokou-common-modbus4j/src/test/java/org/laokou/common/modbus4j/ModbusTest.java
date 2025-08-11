@@ -45,22 +45,22 @@ class ModbusTest {
 	private final SpringModbusProperties springModbusProperties;
 
 	@Test
-	void testAscii() throws ModbusInitException, ModbusTransportException {
+	void test_ascii() throws ModbusInitException, ModbusTransportException {
 		test(ModbusTypeEnum.ASCII_MASTER);
 	}
 
 	@Test
-	void testRtu() throws ModbusInitException, ModbusTransportException {
+	void test_rtu() throws ModbusInitException, ModbusTransportException {
 		test(ModbusTypeEnum.RTU_MASTER);
 	}
 
 	@Test
-	void testUdp() throws ModbusInitException, ModbusTransportException {
+	void test_udp() throws ModbusInitException, ModbusTransportException {
 		test(ModbusTypeEnum.UDP_MASTER);
 	}
 
 	@Test
-	void testTcp() throws ModbusInitException, ModbusTransportException {
+	void test_tcp() throws ModbusInitException, ModbusTransportException {
 		test(ModbusTypeEnum.TCP_MASTER);
 	}
 

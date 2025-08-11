@@ -35,7 +35,7 @@ import org.springframework.test.context.TestConstructor;
 class SpringEventBusTest {
 
 	@Test
-	void testPublishEvent() {
+	void test_publishEvent() {
 		SpringEventBus.publish(new TestEvent(this, "123"));
 	}
 

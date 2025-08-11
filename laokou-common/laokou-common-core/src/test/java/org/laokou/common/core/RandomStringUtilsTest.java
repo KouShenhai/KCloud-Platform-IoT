@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RandomStringUtilsTest {
 
 	@Test
-	void testRandomNumeric() {
+	void test_randomNumeric() {
 		assertThat(RandomStringUtils.randomNumeric(6)).isNotBlank();
 		assertThat(RandomStringUtils.randomNumeric()).isNotBlank();
 		// 验证长度正确

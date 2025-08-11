@@ -33,7 +33,7 @@ class CryptoTest {
 	private static final String PASSWORD = "laokou123";
 
 	@Test
-	void testRSA() {
+	void test_rsa() {
 		String encryptUsername = RSAUtils.encryptByPublicKey(USERNAME);
 		String encryptPassword = RSAUtils.encryptByPublicKey(PASSWORD);
 		String decryptUsername = RSAUtils.decryptByPrivateKey(encryptUsername);
@@ -43,7 +43,7 @@ class CryptoTest {
 	}
 
 	@Test
-	void testAES() throws Exception {
+	void test_aes() throws Exception {
 		String encryptUsername = AESUtils.encrypt(USERNAME);
 		String decryptUsername = AESUtils.decrypt(encryptUsername);
 		assertThat(decryptUsername).isEqualTo(USERNAME);

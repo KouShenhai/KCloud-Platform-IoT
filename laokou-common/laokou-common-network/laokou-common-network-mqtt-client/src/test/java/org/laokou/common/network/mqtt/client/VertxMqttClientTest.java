@@ -46,7 +46,7 @@ class VertxMqttClientTest {
 	private final ExecutorService virtualThreadExecutor;
 
 	@Test
-	void testMqttClient() throws InterruptedException {
+	void test_mqttClient() throws InterruptedException {
 		SpringMqttClientProperties properties = new SpringMqttClientProperties();
 		properties.setHost("127.0.0.1");
 		properties.setPort(1883);

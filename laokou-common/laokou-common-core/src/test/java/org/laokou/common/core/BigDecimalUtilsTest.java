@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BigDecimalUtilsTest {
 
 	@Test
-	void test() {
+	void test_BigDecimal() {
 		double a = 2.0;
 		double b = 1.0;
 		assertThat(BigDecimalUtils.add(a, b)).isEqualTo(3.0);

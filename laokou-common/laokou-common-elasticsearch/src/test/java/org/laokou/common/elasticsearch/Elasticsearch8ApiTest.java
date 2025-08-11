@@ -72,7 +72,7 @@ class Elasticsearch8ApiTest {
 	}
 
 	@Test
-	void test() throws IOException {
+	void test_elasticsearch() throws IOException {
 		assertThatNoException()
 			.isThrownBy(() -> elasticsearchTemplate.createIndex("iot_res_1", "iot_res", TestResource.class));
 		assertThatNoException()

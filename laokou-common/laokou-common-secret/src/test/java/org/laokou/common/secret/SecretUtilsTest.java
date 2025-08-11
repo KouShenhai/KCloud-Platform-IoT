@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SecretUtilsTest {
 
 	@Test
-	void test() {
+	void test_secret() {
 		String sign = SecretUtils.sign(SecretUtils.APP_KEY, SecretUtils.APP_SECRET, "1", String.valueOf(100000), "");
 		assertThat(sign).isEqualTo("e1506abd8395b0763f08d2a0e56f6738");
 	}

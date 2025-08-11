@@ -48,7 +48,7 @@ class RequestUtilsTest {
 	}
 
 	@Test
-	void testRequest() throws Exception {
+	void test_request() throws Exception {
 		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		assertThat(request).isNotNull();
 		assertThat(handlerMapping).isNotNull();

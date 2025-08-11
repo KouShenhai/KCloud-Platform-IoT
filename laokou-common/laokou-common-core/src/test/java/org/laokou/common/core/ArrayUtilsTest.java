@@ -28,21 +28,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ArrayUtilsTest {
 
 	@Test
-	void testByteArray() {
+	void test_byteArray() {
 		byte[] bytes = { 1 };
 		assertThat(ArrayUtils.isNotEmpty(bytes)).isTrue();
 		assertThat(ArrayUtils.isEmpty(bytes)).isFalse();
 	}
 
 	@Test
-	void testStrArray() {
+	void test_strArray() {
 		String[] str = { "1" };
 		assertThat(ArrayUtils.isNotEmpty(str)).isTrue();
 		assertThat(ArrayUtils.isEmpty(str)).isFalse();
 	}
 
 	@Test
-	void testObjArray() {
+	void test_objArray() {
 		Object[] obj = { "1" };
 		assertThat(ArrayUtils.isNotEmpty(obj)).isTrue();
 		assertThat(ArrayUtils.isEmpty(obj)).isFalse();

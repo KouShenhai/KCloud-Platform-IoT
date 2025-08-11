@@ -39,7 +39,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PropertyUtilsTest {
 
 	@Test
-	void testBindProperties() throws IOException {
+	void test_bindProperties() throws IOException {
 		SpringDisruptorProperties properties = PropertyUtils.bindOrCreate("spring.disruptor",
 				SpringDisruptorProperties.class, "application.yml", "yaml");
 		assertThat(properties).isNotNull();

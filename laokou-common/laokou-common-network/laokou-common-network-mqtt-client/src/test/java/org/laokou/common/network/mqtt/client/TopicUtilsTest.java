@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TopicUtilsTest {
 
 	@Test
-	void testMatch() {
+	void test_match() {
 		assertThat(VertxMqttUtils.matchTopic("test/topic", "test/topic")).isTrue();
 		assertThat(VertxMqttUtils.matchTopic("test/topic", "test/topic/")).isFalse();
 		assertThat(VertxMqttUtils.matchTopic("test/#", "test/topic/test")).isTrue();

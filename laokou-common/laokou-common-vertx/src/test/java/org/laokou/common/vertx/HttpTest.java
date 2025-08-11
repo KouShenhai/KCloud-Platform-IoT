@@ -46,7 +46,7 @@ class HttpTest {
 	private final Vertx vertx;
 
 	@Test
-	void testWebSocket() throws InterruptedException {
+	void test_webSocket() throws InterruptedException {
 		for (int i = 2883; i <= 3000; i++) {
 			WebSocketConnectOptions options = new WebSocketConnectOptions();
 			options.setHost("127.0.0.1");
@@ -70,7 +70,7 @@ class HttpTest {
 	}
 
 	@Test
-	void testHttp() throws InterruptedException {
+	void test_http() throws InterruptedException {
 		Map<String, String> map = new HashMap<>();
 		map.put("name", "laokou");
 		map.put("age", "18");

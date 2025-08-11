@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SystemUtilsTest {
 
 	@Test
-	void testWindows() {
+	void test_windows() {
 		assertThat(SystemUtils.isWindows()).isTrue();
 	}
 

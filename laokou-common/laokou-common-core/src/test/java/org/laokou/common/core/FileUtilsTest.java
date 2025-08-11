@@ -40,7 +40,7 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void testCreateAndDeleteFile() throws IOException {
+	void test_createAndDeleteFile() throws IOException {
 		Path testFile = Path.of(testPath, "upload", "test.txt");
 
 		// 创建文件
@@ -69,7 +69,7 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void testCheckPathExists() {
+	void test_checkPathExists() {
 		Path existingFile = Path.of(testPath, "upload", "existing.txt");
 		// 创建文件
 		assertThatNoException().isThrownBy(() -> {
@@ -85,7 +85,7 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void testFileStreamOperations() throws IOException {
+	void test_fileStreamOperations() throws IOException {
 		Path streamFile = Path.of(testPath, "upload", "stream.txt");
 		byte[] content = "stream data".getBytes(StandardCharsets.UTF_8);
 		assertThatNoException().isThrownBy(() -> FileUtils.write(streamFile, content));
@@ -97,7 +97,7 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void testZipOperations() throws IOException {
+	void test_zipOperations() throws IOException {
 		// 测试多文件压缩场景
 		Path srcFile1 = Path.of(testPath, "upload", "file1.txt");
 		Path srcFile2 = Path.of(testPath, "upload", "file2.log");

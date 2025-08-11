@@ -29,7 +29,7 @@ import static org.laokou.common.core.util.RandomIdGenerator.generateRandomId;
 class RandomIdGeneratorTest {
 
 	@Test
-	void testGenerateRandomId() {
+	void test_generateRandomId() {
 		assertThat(generateRandomId()).isNotBlank();
 		assertThat(generateRandomId(16)).isNotBlank();
 		assertThat(generateBase64RandomId()).isNotBlank();

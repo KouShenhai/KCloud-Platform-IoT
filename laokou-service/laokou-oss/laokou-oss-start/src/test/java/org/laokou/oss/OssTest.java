@@ -42,7 +42,7 @@ class OssTest {
 	private final OssUploadCmdExe ossUploadCmdExe;
 
 	@Test
-	void testOssUpload() throws Exception {
+	void test_ossUpload() throws Exception {
 		byte[] bytes = ResourceUtils.getResource("classpath:1.jpg").getInputStream().readAllBytes();
 		Result<OssUploadCO> result = ossUploadCmdExe.execute(new OssUploadCmd("image", bytes,
 				UUIDGenerator.generateUUID() + ".jpg", ".jpg", "image/jpeg", bytes.length));

@@ -39,7 +39,7 @@ class UdpTest {
 	private final Vertx vertx;
 
 	@Test
-	void test() throws InterruptedException {
+	void test_udp() throws InterruptedException {
 		for (int i = 4880; i < 5000; i++) {
 			DatagramSocket datagramSocket = vertx.createDatagramSocket();
 			int finalI = i;

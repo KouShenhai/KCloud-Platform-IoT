@@ -35,7 +35,7 @@ class XssTest {
 			"select 1 from test" };
 
 	@Test
-	void testHtmlScripTagJsonString() {
+	void test_htmlScripTagJsonString() {
 		String json = "{\"s\": \"" + xssAttackVectors[0] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
 		assertThat(cleaned).isEqualTo("{\"s\": \"alert(1)\"}");
@@ -44,7 +44,7 @@ class XssTest {
 	}
 
 	@Test
-	void testHtmlTagJsonString() {
+	void test_htmlTagJsonString() {
 		String json = "{\"s\": \"" + xssAttackVectors[1] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
 		assertThat(cleaned).isEqualTo("{\"s\": \"<img>\"}");
@@ -53,7 +53,7 @@ class XssTest {
 	}
 
 	@Test
-	void testSvgJsonString() {
+	void test_svgJsonString() {
 		String json = "{\"s\": \"" + xssAttackVectors[2] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
 		assertThat(cleaned).isEqualTo("{\"s\": \"\"}");
@@ -62,7 +62,7 @@ class XssTest {
 	}
 
 	@Test
-	void testHtmlScriptJsonString() {
+	void test_htmlScriptJsonString() {
 		String json = "{\"s\": \"" + xssAttackVectors[3] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
 		assertThat(cleaned)
@@ -72,7 +72,7 @@ class XssTest {
 	}
 
 	@Test
-	void testSqlJsonString() {
+	void test_sqlJsonString() {
 		String json = xssAttackVectors[4];
 		boolean sqlInjection = false;
 		try {

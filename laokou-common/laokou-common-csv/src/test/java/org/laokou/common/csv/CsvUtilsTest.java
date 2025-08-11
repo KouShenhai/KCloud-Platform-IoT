@@ -42,7 +42,7 @@ class CsvUtilsTest {
 	}
 
 	@Test
-	void test() throws IOException {
+	void test_csv() throws IOException {
 		String fileName = "test.csv";
 		String[] arr = { "1", "2", "3" };
 		File file = new File(testPath, fileName);

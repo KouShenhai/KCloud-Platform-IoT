@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TreeUtilsTest {
 
 	@Test
-	void testTree() {
+	void test_treeNode() {
 		Node n1 = new Node(1L, "节点1", 0L);
 		Node n2 = new Node(11L, "节点1-1", 1L);
 		Node node = TreeUtils.buildTreeNode(List.of(n1, n2), Node.class);

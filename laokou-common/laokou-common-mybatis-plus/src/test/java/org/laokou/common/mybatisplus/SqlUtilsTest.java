@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SqlUtilsTest {
 
 	@Test
-	void test() {
+	void test_plainSelect() {
 		String sql = "select * from t_user \nwhere id = 1";
 		PlainSelect plainSelect = SqlUtils.plainSelect(sql);
 		assertThat(plainSelect.getFromItem().toString()).isEqualTo("t_user");

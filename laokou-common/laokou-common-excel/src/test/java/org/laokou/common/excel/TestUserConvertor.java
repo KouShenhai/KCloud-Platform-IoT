@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author laokou
  */
-final class TestUserConvertor implements ExcelUtils.ExcelConvertor<TestUserDO, TestUserExcel> {
+final class TestUserConvertor implements ExcelUtils.ExcelConvertor<ExcelTest.TestUserDO, TestUserExcel> {
 
 	public static final TestUserConvertor INSTANCE = new TestUserConvertor();
 
@@ -33,13 +33,13 @@ final class TestUserConvertor implements ExcelUtils.ExcelConvertor<TestUserDO, T
 	}
 
 	@Override
-	public List<TestUserExcel> toExcels(List<TestUserDO> list) {
+	public List<TestUserExcel> toExcels(List<ExcelTest.TestUserDO> list) {
 		return list.stream().map(TestUserConvertor::toExcel).toList();
 	}
 
 	@Override
-	public TestUserDO toDataObject(TestUserExcel testUserExcel) {
-		TestUserDO testUserDO = new TestUserDO();
+	public ExcelTest.TestUserDO toDataObject(TestUserExcel testUserExcel) {
+		ExcelTest.TestUserDO testUserDO = new ExcelTest.TestUserDO();
 		testUserDO.setId(testUserExcel.getId());
 		testUserDO.setName(testUserExcel.getName());
 		testUserDO.setCreator(1L);
@@ -52,7 +52,7 @@ final class TestUserConvertor implements ExcelUtils.ExcelConvertor<TestUserDO, T
 		return testUserDO;
 	}
 
-	private static TestUserExcel toExcel(TestUserDO testUserDO) {
+	private static TestUserExcel toExcel(ExcelTest.TestUserDO testUserDO) {
 		TestUserExcel testUserExcel = new TestUserExcel();
 		testUserExcel.setId(testUserDO.getId());
 		testUserExcel.setName(testUserDO.getName());

@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class Base64UtilsTest {
 
 	@Test
-	void testBase64() {
+	void test_base64() {
 		String name = "zzzzzzzzzzzccccc\nccccccccccccccccccc231231qweqweqw";
 		String encodeToString = Base64Utils.encodeToString(name.getBytes(StandardCharsets.UTF_8));
 		byte[] decode = Base64Utils.decode(encodeToString);
@@ -38,7 +38,7 @@ class Base64UtilsTest {
 	}
 
 	@Test
-	void testMimeBase64() {
+	void test_mimeBase64() {
 		String name = "zzzzzzzzzzzccccc\nccccccccccccccccccc231231qweqweqw";
 		String encodeToStringOfMime = Base64Utils.encodeToStringOfMime(name.getBytes(StandardCharsets.UTF_8));
 		byte[] mimeDecode = Base64Utils.decodeOfMime(encodeToStringOfMime);

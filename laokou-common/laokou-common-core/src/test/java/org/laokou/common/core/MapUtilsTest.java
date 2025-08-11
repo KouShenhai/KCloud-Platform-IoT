@@ -35,7 +35,7 @@ import static org.laokou.common.i18n.common.constant.StringConstants.EQUAL;
 class MapUtilsTest {
 
 	@Test
-	void testMap() {
+	void test_map() {
 		Map<String, Set<String>> map = MapUtils.toUriMap(
 				Map.of("POST",
 						Set.of("/test=laokou-common-core", "/test2=laokou-common-core", "/test3=laokou-common-i18n")),

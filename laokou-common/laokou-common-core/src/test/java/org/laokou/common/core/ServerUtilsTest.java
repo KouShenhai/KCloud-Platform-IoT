@@ -38,7 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ServerUtilsTest {
 
 	@Test
-	void testGetServerInfo() throws UnknownHostException {
+	void test_getServerInfo() throws UnknownHostException {
 		ServerUtils.Server serverInfo = ServerUtils.getServerInfo();
 		log.info("获取系统参数：{}", serverInfo);
 		assertThat(serverInfo.getSys().getOsName()).isEqualTo("Windows 11");

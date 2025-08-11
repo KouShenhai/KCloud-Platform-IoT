@@ -35,7 +35,7 @@ import java.util.concurrent.ThreadLocalRandom;
 class AlgorithmTest {
 
 	@Test
-	void testApi() {
+	void test_loadbalancer() {
 		List<OssApi> ossApis = List.of(new TencentcloudOssApi(), new AliyunOssApi());
 		// 负载均衡【哈希算法】
 		Algorithm algorithm = new HashAlgorithm();

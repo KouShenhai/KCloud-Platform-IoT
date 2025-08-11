@@ -17,7 +17,11 @@
 
 package org.laokou.common.core;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.core.util.I18nUtils;
+import org.mockito.Mockito;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
  * @author laokou
@@ -25,8 +29,9 @@ import org.junit.jupiter.api.Test;
 class I18nUtilsTest {
 
 	@Test
-	void testI18n() {
-
+	void test_i18n() {
+		assertThatNoException().isThrownBy(() -> I18nUtils.set(Mockito.mock(HttpServletRequest.class)));
+		assertThatNoException().isThrownBy(I18nUtils::reset);
 	}
 
 }

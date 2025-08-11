@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class GsonUtilsTest {
 
 	@Test
-	void test() throws JsonProcessingException {
+	void test_gson() throws JsonProcessingException {
 		TestUser user = new TestUser(1L, "laokou");
 		String json = GsonUtils.toPrettyFormat(user);
 		assertThat(json).isEqualTo("""

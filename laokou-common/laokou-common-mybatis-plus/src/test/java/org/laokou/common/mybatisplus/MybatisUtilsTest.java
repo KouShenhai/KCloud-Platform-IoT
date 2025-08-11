@@ -17,13 +17,16 @@
 
 package org.laokou.common.mybatisplus;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.mybatisplus.config.GlobalTenantLineHandler;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
@@ -48,7 +51,7 @@ class MybatisUtilsTest {
 	private final MybatisUtils mybatisUtils;
 
 	@Test
-	void testIgnoreTable() {
+	void test_ignoreTable() {
 		GlobalTenantLineHandler globalTenantLineHandler = new GlobalTenantLineHandler(Set.of("test", "t_user"));
 		assertThat(globalTenantLineHandler.ignoreTable("t_user")).isTrue();
 		assertThat(globalTenantLineHandler.ignoreTable("t_test")).isFalse();
@@ -56,7 +59,7 @@ class MybatisUtilsTest {
 	}
 
 	@Test
-	void test() {
+	void test_mybatisPlus() {
 		assertThat(testUserMapper).isNotNull();
 		assertThat(mybatisUtils).isNotNull();
 		assertThatNoException().isThrownBy(
@@ -95,6 +98,14 @@ class MybatisUtilsTest {
 		testUserDO.setDelFlag(0);
 		testUserDO.setId(8L);
 		return testUserDO;
+	}
+
+	@Data
+	@TableName("t_user")
+	static class TestUserDO extends BaseDO {
+
+		private String name;
+
 	}
 
 }

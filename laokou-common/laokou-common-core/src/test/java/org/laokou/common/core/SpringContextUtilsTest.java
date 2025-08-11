@@ -39,12 +39,12 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 class SpringContextUtilsTest {
 
 	@Test
-	void testPublishEvent() {
+	void test_publishEvent() {
 		SpringContextUtils.publishEvent(new TestEvent(this, "456"));
 	}
 
 	@Test
-	void testGetBean() {
+	void test_getBean() {
 		assertThat(SpringContextUtils.getBean(TestEventListener.class)).isNotNull();
 		DefaultListableBeanFactory beanFactory = SpringContextUtils.getFactory();
 		assertThat(beanFactory).isNotNull();

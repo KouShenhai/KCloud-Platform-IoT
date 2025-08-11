@@ -45,12 +45,12 @@ class VertxMqttClient2Test {
 	private final List<MqttMessageHandler> mqttMessageHandlers;
 
 	@Test
-	void testMqttClientByQos1() throws InterruptedException {
+	void test_mqttClientByQos_1() throws InterruptedException {
 		connectMqttServer(1);
 	}
 
 	@Test
-	void testMqttClientByQos2() throws InterruptedException {
+	void test_mqttClientByQos_2() throws InterruptedException {
 		connectMqttServer(2);
 	}
 

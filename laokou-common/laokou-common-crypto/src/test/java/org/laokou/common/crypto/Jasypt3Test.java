@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class Jasypt3Test {
 
 	@Test
-	void testJasypt3() {
+	void test_jasypt_3() {
 		String factor = "laokou";
 		String plainText = "elastic";
 		String encryptWithMD5ANDAES256Str = encryptWithHMACSHA512ANDAES256(plainText, factor);
