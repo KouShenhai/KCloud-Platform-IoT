@@ -96,7 +96,7 @@ class OAuth2ApiTest {
 	private final PasswordEncoder passwordEncoder;
 
 	@Test
-	void testSendMailCaptcha() {
+	void test_sendMailCaptcha() {
 		CaptchaCO co = new CaptchaCO();
 		co.setTenantCode(TENANT_CODE);
 		co.setUuid(MAIL);
@@ -112,7 +112,7 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void testSendMobileCaptcha() {
+	void test_sendMobileCaptcha() {
 		CaptchaCO co = new CaptchaCO();
 		co.setTenantCode(TENANT_CODE);
 		co.setUuid(MOBILE);
@@ -128,7 +128,7 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void testTtlMDC() {
+	void test_ttlMDC() {
 		MDCUtils.put("111", "222");
 		try (ExecutorService virtualTaskExecutor = ThreadUtils.newTtlVirtualTaskExecutor()) {
 			virtualTaskExecutor
@@ -137,7 +137,7 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void testSetInstant() {
+	void test_setInstant() {
 		String key = "test:instant";
 		redisUtils.set(key, DateUtils.nowInstant());
 		log.info("获取Instant值：{}", redisUtils.get(key));
@@ -145,14 +145,14 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void testEncodePassword() {
+	void test_encodePassword() {
 		String pwd = passwordEncoder.encode(PASSWORD);
 		log.info("生成密码：{}", pwd);
 		assertThat(passwordEncoder.matches(PASSWORD, pwd)).isTrue();
 	}
 
 	@Test
-	void testUsernamePasswordAuthApi() {
+	void test_usernamePasswordAuthApi() {
 		log.info("---------- 用户名密码认证模式开始 ----------");
 		String captcha = getCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(UUID));
 		String encryptUsername = RSAUtils.encryptByPublicKey(USERNAME);
@@ -181,7 +181,7 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void testMailAuthApi() {
+	void test_mailAuthApi() {
 		log.info("---------- 邮箱认证开始 ----------");
 		String code = getCode(RedisKeyUtils.getMailAuthCaptchaKey(MAIL));
 		Map<String, String> tokenMap = mailAuth(code);
@@ -194,7 +194,7 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void testMobileAuthApi() {
+	void test_mobileAuthApi() {
 		log.info("---------- 手机号认证开始 ----------");
 		String code = getCode(RedisKeyUtils.getMobileAuthCaptchaKey(MOBILE));
 		Map<String, String> tokenMap = mobileAuth(code);
@@ -207,7 +207,7 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void testAuthorizationCodeAuthApi() {
+	void test_authorizationCodeAuthApi() {
 		log.info("---------- 授权码认证模式开始 ----------");
 		Map<String, String> tokenMap = authorizationCodeAuth();
 		log.info("编码：{}", CODE);
@@ -218,7 +218,7 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void testTestAuthApi() {
+	void test_testAuthApi() {
 		log.info("---------- 测试认证模式开始 ----------");
 		String encryptUsername = RSAUtils.encryptByPublicKey(USERNAME);
 		String encryptPassword = RSAUtils.encryptByPublicKey(PASSWORD);
@@ -233,7 +233,7 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void testClientCredentialsAuthApi() {
+	void test_clientCredentialsAuthApi() {
 		log.info("---------- 客户端认证模式开始 ----------");
 		Map<String, String> tokenMap = clientCredentialsAuth();
 		log.info("token：{}", tokenMap.get(ACCESS_TOKEN));
@@ -241,7 +241,7 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void testDeviceAuthorizationCodeAuthApi() {
+	void test_deviceAuthorizationCodeAuthApi() {
 		log.info("---------- 设备授权码认证模式开始 ----------");
 		String deviceCode = getDeviceCode();
 		// 需要用户确认
@@ -254,7 +254,7 @@ class OAuth2ApiTest {
 	}
 
 	@Test
-	void testLogoutApi() {
+	void test_logoutApi() {
 		log.info("---------- 登录已注销，开始清除令牌 ----------");
 		String apiUrl = getTokenUrlV3();
 		TokenRemoveCmd cmd = new TokenRemoveCmd();
