@@ -15,10 +15,11 @@
  *
  */
 
-package main
+package core
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"os/exec"
 	"runtime"
@@ -94,9 +95,14 @@ const (
 	LAN1 = "eth0"
 	// LAN2 网口2
 	LAN2 = "eth1"
+	// 静态配置
+	STATIC = "static"
+	// 动态Dhcp
+	DHCP = "dhcp"
 )
 
 type NetworkConfig struct {
+	Mode       string `yaml:"mode"`
 	Address    string `json:"address"`
 	Gateway    string `json:"gateway"`
 	Dns        string `json:"dns"`
@@ -297,12 +303,34 @@ func GetNetworkConfig(path string) (*NetworkConfig, error) {
 		return nil, err
 	}
 	ethernet := config.Network.Ethernets[LAN1]
-	return &NetworkConfig{
-		Address:    ethernet.Addresses[0],
-		Gateway:    ethernet.Gateway4,
-		Dns:        strings.Join(ethernet.Nameservers.Addresses, ","),
-		MacAddress: ethernet.MacAddress,
-	}, nil
+	if ethernet.DHCP4 {
+		address, err := GetIpAddress()
+		if err != nil {
+			return nil, err
+		}
+		netmask, err := GetNetmask()
+		if err != nil {
+			return nil, err
+		}
+		gateway, err := GetGateway()
+		if err != nil {
+			return nil, err
+		}
+		return &NetworkConfig{
+			Mode:       DHCP,
+			Address:    fmt.Sprintf("%s/%s", address, netmask),
+			Gateway:    gateway,
+			MacAddress: ethernet.MacAddress,
+		}, nil
+	} else {
+		return &NetworkConfig{
+			Mode:       STATIC,
+			Address:    ethernet.Addresses[0],
+			Gateway:    ethernet.Gateway4,
+			Dns:        strings.Join(ethernet.Nameservers.Addresses, ","),
+			MacAddress: ethernet.MacAddress,
+		}, nil
+	}
 }
 
 func getNetPlanConfig(path string) (*NetPlanConfig, error) {

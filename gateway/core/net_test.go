@@ -15,7 +15,7 @@
  *
  */
 
-package main
+package core
 
 import (
 	"fmt"
@@ -74,4 +74,5 @@ func TestNetPlanConfig(t *testing.T) {
 	fmt.Println(networkConfig.Gateway)
 	fmt.Println(networkConfig.Address)
 	fmt.Println(networkConfig.MacAddress)
+	fmt.Println(networkConfig.Mode)
 }
