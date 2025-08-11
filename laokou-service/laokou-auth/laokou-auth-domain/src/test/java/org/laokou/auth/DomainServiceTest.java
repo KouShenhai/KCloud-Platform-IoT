@@ -68,6 +68,9 @@ class DomainServiceTest {
 	private NoticeLogGateway noticeLogGateway;
 
 	@MockitoBean
+	private OssLogGateway ossLogGateway;
+
+	@MockitoBean
 	private PasswordValidator passwordValidator;
 
 	@MockitoBean
@@ -101,7 +104,7 @@ class DomainServiceTest {
 	private CaptchaParamValidator mobileCaptchaParamValidator;
 
 	@Test
-	void testUsernamePasswordAuth() {
+	void test_usernamePasswordAuth() {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 创建用户【用户名密码】
 		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
@@ -134,7 +137,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testMailAuth() {
+	void test_mailAuth() {
 		AuthA auth = getAuth(EMPTY, EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
 		// 创建用户【邮箱】
 		assertThatNoException().isThrownBy(auth::createUserByMail);
@@ -162,7 +165,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testMobileAuth() {
+	void test_mobileAuth() {
 		AuthA auth = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
 		// 创建用户【手机号】
 		assertThatNoException().isThrownBy(auth::createUserByMobile);
@@ -188,7 +191,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testAuthorizationCodeAuth() {
+	void test_authorizationCodeAuth() {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
 		// 创建用户【授权码】
 		assertThatNoException().isThrownBy(auth::createUserByAuthorizationCode);
@@ -216,7 +219,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testTestAuth() {
+	void test_testAuth() {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.TEST, EMPTY, EMPTY);
 		// 创建用户【测试】
 		assertThatNoException().isThrownBy(auth::createUserByTest);
@@ -244,28 +247,28 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testCreateLoginLog() {
+	void test_createLoginLog() {
 		LoginLogE loginLog = DomainFactory.getLoginLog();
 		// 创建登录日志
 		assertThatNoException().isThrownBy(() -> domainService.createLoginLog(loginLog));
 	}
 
 	@Test
-	void testCreateSendCaptchaInfoByMail() {
+	void test_createSendCaptchaInfoByMail() {
 		// 创建发送验证码信息
 		CaptchaE captcha = getCaptcha("2413176044@qq.com", SEND_MAIL_CAPTCHA.getCode());
 		assertThatNoException().isThrownBy(() -> domainService.createSendCaptchaInfo(captcha));
 	}
 
 	@Test
-	void testCreateSendCaptchaInfoByMobile() {
+	void test_createSendCaptchaInfoByMobile() {
 		// 创建发送验证码信息
 		CaptchaE captcha = getCaptcha("18888888888", SEND_MOBILE_CAPTCHA.getCode());
 		assertThatNoException().isThrownBy(() -> domainService.createSendCaptchaInfo(captcha));
 	}
 
 	@Test
-	void testCreateNoticeLogByMailCaptcha() {
+	void test_createNoticeLogByMailCaptcha() {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
 		assertThatNoException().isThrownBy(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));
@@ -274,7 +277,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	void testCreateNoticeLogByMobileCaptcha() {
+	void test_createNoticeLogByMobileCaptcha() {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
 		assertThatNoException().isThrownBy(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));

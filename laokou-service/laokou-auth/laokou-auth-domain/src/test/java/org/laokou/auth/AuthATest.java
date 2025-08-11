@@ -91,7 +91,7 @@ class AuthATest {
 	private AuthParamValidator usernamePasswordAuthParamValidator;
 
 	@Test
-	void testGetUserAvatar() {
+	void test_getUserAvatar() {
 		AuthA authA = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		UserE user = authA.getUser();
 		assertThatNoException().isThrownBy(() -> user.setAvatar(1L));
@@ -102,7 +102,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testDecryptUsernamePassword() {
+	void test_decryptUsernamePassword() {
 		String username = "admin";
 		String password = "123";
 		String encryptUsername = RSAUtils.encryptByPublicKey(username);
@@ -118,7 +118,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCreateUserByTest() throws Exception {
+	void test_createUserByTest() throws Exception {
 		AuthA authA = getAuth("admin", "123", GrantTypeEnum.TEST, EMPTY, EMPTY);
 		// 创建用户【测试】
 		assertThatNoException().isThrownBy(authA::createUserByTest);
@@ -128,7 +128,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCreateUserByUsernamePassword() throws Exception {
+	void test_createUserByUsernamePassword() throws Exception {
 		AuthA authA = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 创建用户【用户名密码】
 		assertThatNoException().isThrownBy(authA::createUserByUsernamePassword);
@@ -138,7 +138,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCreateUserByMobile() throws Exception {
+	void test_createUserByMobile() throws Exception {
 		AuthA authA = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
 		// 创建用户【手机号】
 		assertThatNoException().isThrownBy(authA::createUserByMobile);
@@ -148,7 +148,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCreateUserByMail() throws Exception {
+	void test_createUserByMail() throws Exception {
 		AuthA authA = getAuth(EMPTY, EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
 		// 创建用户【邮箱】
 		assertThatNoException().isThrownBy(authA::createUserByMail);
@@ -158,7 +158,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCreateUserByAuthorizationCode() throws Exception {
+	void test_createUserByAuthorizationCode() throws Exception {
 		AuthA authA = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
 		// 创建用户【授权码】
 		assertThatNoException().isThrownBy(authA::createUserByAuthorizationCode);
@@ -168,7 +168,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckTenantId() {
+	void test_checkTenantId() {
 		// 构造租户
 		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 校验租户ID
@@ -182,7 +182,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckCaptcha() {
+	void test_checkCaptcha() {
 		// 构造验证码校验
 		doReturn(true).when(captchaValidator)
 			.validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
@@ -209,7 +209,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckUsername() {
+	void test_checkUsername() {
 		// 构造用户信息
 		UserE user = DomainFactory.getUser();
 		when(userGateway.getUserProfile(user)).thenReturn(user);
@@ -220,7 +220,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckPassword() {
+	void test_checkPassword() {
 		// 构造密码校验
 		doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		// 创建用户【用户名密码】
@@ -236,7 +236,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckUserStatus() {
+	void test_checkUserStatus() {
 		// 创建用户【用户名密码】
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
@@ -246,7 +246,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckMenuPermissions() {
+	void test_checkMenuPermissions() {
 		// 创建用户【用户名密码】
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
@@ -260,7 +260,7 @@ class AuthATest {
 	}
 
 	@Test
-	void testCheckDeptPaths() {
+	void test_checkDeptPaths() {
 		// 创建用户【用户名密码】
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);

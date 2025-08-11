@@ -53,6 +53,9 @@ class CaptchaETest {
 	private LoginLogGateway loginLogGateway;
 
 	@MockitoBean
+	private OssLogGateway ossLogGateway;
+
+	@MockitoBean
 	private NoticeLogGateway noticeLogGateway;
 
 	@MockitoBean
@@ -65,7 +68,7 @@ class CaptchaETest {
 	private CaptchaParamValidator mobileCaptchaParamValidator;
 
 	@Test
-	void testCheckTenantId() {
+	void test_checkTenantId() {
 		// 构造租户
 		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 校验租户ID

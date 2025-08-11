@@ -23,7 +23,7 @@ import (
 	"testing"
 )
 
-func TestNetPlanConfig(t *testing.T) {
+func Test_NetPlanConfig(t *testing.T) {
 	netConfig := NewDefaultNetPlanConfig()
 	netConfig.Network.Ethernets[LAN1].DHCP4 = true
 	netConfig.Network.Ethernets[LAN1].MacAddress = "22:03:xz:2f:a2:1a"
@@ -47,7 +47,7 @@ func TestNetPlanConfig(t *testing.T) {
 	}
 	config, err := ReadNetPlanConfig("ethernets.yaml")
 	if err != nil {
-		fmt.Println(err.Error())
+		t.Error(err.Error())
 		return
 	}
 	fmt.Println(config.Network.Ethernets[LAN1].DHCP4)
@@ -58,8 +58,7 @@ func TestNetPlanConfig(t *testing.T) {
 	out, err = yaml.Marshal(config)
 	err = SaveNetPlanConfig(out, "ethernets.yaml")
 	if err != nil {
-		fmt.Println(err.Error())
-		return
+		t.Error(err.Error())
 	}
 	fmt.Println(GetNetmask())
 	fmt.Println(GetMacAddress())
@@ -67,7 +66,7 @@ func TestNetPlanConfig(t *testing.T) {
 	fmt.Println(GetGateway())
 	networkConfig, err := GetNetworkConfig("ethernets.yaml")
 	if err != nil {
-		fmt.Println(err.Error())
+		t.Error(err.Error())
 		return
 	}
 	fmt.Println(networkConfig.Dns)
@@ -75,4 +74,5 @@ func TestNetPlanConfig(t *testing.T) {
 	fmt.Println(networkConfig.Address)
 	fmt.Println(networkConfig.MacAddress)
 	fmt.Println(networkConfig.Mode)
+	t.Log("网络配置测试通过")
 }

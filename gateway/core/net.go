@@ -336,10 +336,13 @@ func GetNetworkConfig(path string) (*NetworkConfig, error) {
 func getNetPlanConfig(path string) (*NetPlanConfig, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
-		return nil, errors.New("获取网络配置失败，错误信息：" + err.Error())
+		return nil, errors.New("读取网络配置失败，错误信息：" + err.Error())
 	}
 	netConfig := &NetPlanConfig{}
 	err = yaml.Unmarshal(data, netConfig)
+	if err != nil {
+		return nil, errors.New("网络配置反序列化失败，错误信息：" + err.Error())
+	}
 	return netConfig, nil
 }
 

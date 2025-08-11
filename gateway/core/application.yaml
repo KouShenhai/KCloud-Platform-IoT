@@ -1,0 +1,47 @@
+#   /*
+#    * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+#    *
+#    * Licensed under the Apache License, Version 2.0 (the "License");
+#    * you may not use this file except in compliance with the License.
+#    * You may obtain a copy of the License at
+#    *
+#    *   http://www.apache.org/licenses/LICENSE-2.0
+#    *
+#    * Unless required by applicable law or agreed to in writing, software
+#    * distributed under the License is distributed on an "AS IS" BASIS,
+#    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    * See the License for the specific language governing permissions and
+#    * limitations under the License.
+#    *
+#    */
+log:
+  # 级别
+  level: error
+  # 环境
+  profile: prod
+  # 日志格式
+  pattern: 2006-01-02 15:04:05.000
+  # 日志文件路径
+  file-path: test.log
+  # 日志最大容量【单位M】
+  max-size: 500
+  # 日志最大数量
+  max-backups: 10
+  # 日志保留时间【单位天】
+  max-age: 30
+  # 是否压缩
+  compress: true
+  # 本地时间，默认值：false（使用UTC）
+  local-time: true
+  # json格式
+  json-format: false
+  # 转换频率
+  rotation-interval: 24h
+  # 转换时间【分钟】
+  rotate-at-minutes:
+    - 0
+    - 15
+    - 30
+    - 45
+  # 日志时间格式
+  backup-time-format: 2006-01-02-15-04-05

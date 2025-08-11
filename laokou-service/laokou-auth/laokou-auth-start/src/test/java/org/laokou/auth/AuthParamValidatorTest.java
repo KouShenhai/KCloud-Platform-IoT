@@ -62,35 +62,35 @@ class AuthParamValidatorTest {
 	}
 
 	@Test
-	void testTestAuthParamValidator() {
+	void test_testAuthParamValidator() {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.TEST, EMPTY, EMPTY);
 		// 校验测试登录
 		assertThatNoException().isThrownBy(() -> testAuthParamValidator.validateAuth(auth));
 	}
 
 	@Test
-	void testUsernamePasswordAuthParamValidator() {
+	void test_usernamePasswordAuthParamValidator() {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 校验用户名密码登录
 		assertThatNoException().isThrownBy(() -> usernamePasswordAuthParamValidator.validateAuth(auth));
 	}
 
 	@Test
-	void testAuthorizationCodeAuthParamValidator() {
+	void test_authorizationCodeAuthParamValidator() {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
 		// 校验授权码登录
 		assertThatNoException().isThrownBy(() -> authorizationCodeAuthParamValidator.validateAuth(auth));
 	}
 
 	@Test
-	void testMailAuthParamValidator() {
+	void test_mailAuthParamValidator() {
 		AuthA auth = getAuth(EMPTY, EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
 		// 校验邮箱登录
 		assertThatNoException().isThrownBy(() -> mailAuthParamValidator.validateAuth(auth));
 	}
 
 	@Test
-	void testMobileAuthParamValidator() {
+	void test_mobileAuthParamValidator() {
 		AuthA auth = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
 		assertThat(auth).isNotNull();
 		// 校验手机号登录

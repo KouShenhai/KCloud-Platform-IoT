@@ -53,14 +53,14 @@ class CaptchaParamValidatorTest {
 	}
 
 	@Test
-	void testMailCaptchaParamValidator() {
+	void test_mailCaptchaParamValidator() {
 		CaptchaE captcha = getCaptcha("2413176044@qq.com", SEND_MAIL_CAPTCHA.getCode());
 		// 校验邮箱验证码
 		assertThatNoException().isThrownBy(() -> mailCaptchaParamValidator.validateCaptcha(captcha));
 	}
 
 	@Test
-	void testMobileCaptchaParamValidator() {
+	void test_mobileCaptchaParamValidator() {
 		CaptchaE captcha = getCaptcha("18888888888", SEND_MOBILE_CAPTCHA.getCode());
 		// 校验手机号验证码
 		assertThatNoException().isThrownBy(() -> mobileCaptchaParamValidator.validateCaptcha(captcha));
