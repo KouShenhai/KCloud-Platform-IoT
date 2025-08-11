@@ -18,33 +18,16 @@
 package core
 
 import (
-	"bytes"
 	"crypto/tls"
-	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
-	"strings"
 )
 
-func SendRequest(method, url string, param map[string]string, header map[string]string, str string) (*http.Response, error) {
-	var request *http.Request
-	if http.MethodGet == method {
-		if param != nil {
-			var s string
-			for k, v := range param {
-				s += k + "=" + v + "&"
-			}
-			s, _ = strings.CutSuffix(s, "&")
-			url += "?" + s
-		}
-		request, _ = http.NewRequest(method, url, nil)
-	} else if len(param) > 0 {
-		marshal, _ := json.Marshal(param)
-		request, _ = http.NewRequest(method, url, bytes.NewReader(marshal))
-	} else if str != "" {
-		request, _ = http.NewRequest(method, url, strings.NewReader(str))
-	} else {
-		request, _ = http.NewRequest(method, url, nil)
+func SendRequest(method, url string, param io.Reader, header map[string]string) (*http.Response, error) {
+	request, err := http.NewRequest(method, url, param)
+	if err != nil {
+		return nil, errors.New("创建Request失败，错误信息：" + err.Error())
 	}
 	if header != nil {
 		for k, v := range header {
@@ -54,8 +37,8 @@ func SendRequest(method, url string, param map[string]string, header map[string]
 	return sendHttpRequest(request)
 }
 
-func SendRequestAndGetBody(method, url string, param map[string]string, header map[string]string, str string) ([]byte, error) {
-	response, err := SendRequest(method, url, param, header, str)
+func SendRequestAndGetBody(method, url string, param io.Reader, header map[string]string) ([]byte, error) {
+	response, err := SendRequest(method, url, param, header)
 	if err != nil {
 		return nil, err
 	}
