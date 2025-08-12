@@ -24,37 +24,17 @@ package org.laokou.common.i18n.common.constant;
  */
 public final class TraceConstants {
 
-	/**
-	 * 链路ID.
-	 */
-	public static final String TRACE_ID = "trace-id";
-
-	/**
-	 * 请求ID.
-	 */
-	public static final String REQUEST_ID = "request-id";
+	private TraceConstants() {
+	}
 
 	/**
 	 * 标签ID.
 	 */
-	public static final String SPAN_ID = "span-id";
+	public static final String SPAN_ID = "spanId";
 
 	/**
-	 * 服务主机.
+	 * 链路ID.
 	 */
-	public static final String SERVICE_HOST = "service-host";
-
-	/**
-	 * 服务端口.
-	 */
-	public static final String SERVICE_PORT = "service-port";
-
-	/**
-	 * 服务灰度.
-	 */
-	public static final String SERVICE_GRAY = "service-gray";
-
-	private TraceConstants() {
-	}
+	public static final String TRACE_ID = "traceId";
 
 }

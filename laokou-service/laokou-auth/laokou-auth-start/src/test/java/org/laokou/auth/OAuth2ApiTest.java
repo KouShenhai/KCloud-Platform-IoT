@@ -19,6 +19,7 @@ package org.laokou.auth;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.dto.TokenRemoveCmd;
@@ -50,7 +51,7 @@ import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.laokou.common.i18n.common.constant.StringConstants.RISK;
-import static org.laokou.common.i18n.common.constant.TraceConstants.REQUEST_ID;
+import static org.laokou.common.idempotent.aop.IdempotentAop.REQUEST_ID;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpMethod.POST;
 
@@ -59,6 +60,7 @@ import static org.springframework.http.HttpMethod.POST;
  */
 @Slf4j
 @SpringBootTest
+@DisplayName("OAuth2测试")
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class OAuth2ApiTest {

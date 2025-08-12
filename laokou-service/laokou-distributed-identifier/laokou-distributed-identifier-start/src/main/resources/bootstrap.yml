@@ -15,6 +15,6 @@ dubbo:
     logger: slf4j
     qos-port: ${QOS_PORT:1113}
   provider:
-    filter: dubboException,-exception
+    filter: dubboException,dubboTraceProvider,-exception
   consumer:
     check: false

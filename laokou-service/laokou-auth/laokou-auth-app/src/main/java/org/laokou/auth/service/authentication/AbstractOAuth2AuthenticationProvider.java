@@ -68,12 +68,13 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 
 	private final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
 
-	private final OAuth2AuthenticationProcessor authProcessor;
+	private final OAuth2AuthenticationProcessor authenticationProcessor;
 
 	/**
 	 * 认证授权.
 	 * @param authentication 认证对象
 	 */
+	@Override
 	public Authentication authenticate(Authentication authentication) {
 		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		try {
@@ -87,7 +88,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			throw e;
 		}
 		catch (Exception e) {
-			log.error("认证异常，错误信息：{}", e.getMessage());
+			log.error("认证异常，错误信息：{}", e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
 	}
@@ -202,9 +203,9 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	 * @param authA 认证聚合根
 	 * @return 用户信息
 	 */
-	protected UsernamePasswordAuthenticationToken authenticationToken(AuthA authA, HttpServletRequest request)
+	protected UsernamePasswordAuthenticationToken authentication(AuthA authA, HttpServletRequest request)
 			throws Exception {
-		return authProcessor.authenticationToken(authA, request);
+		return authenticationProcessor.authentication(authA, request);
 	}
 
 	private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(

@@ -42,14 +42,14 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @RequiredArgsConstructor
-@Component("authProcessor")
+@Component("authenticationProcessor")
 final class OAuth2AuthenticationProcessor {
 
 	private final DomainService domainService;
 
 	private final DomainEventPublisher kafkaDomainEventPublisher;
 
-	public UsernamePasswordAuthenticationToken authenticationToken(AuthA authA, HttpServletRequest request)
+	public UsernamePasswordAuthenticationToken authentication(AuthA authA, HttpServletRequest request)
 			throws Exception {
 		LoginEvent evt = null;
 		try {

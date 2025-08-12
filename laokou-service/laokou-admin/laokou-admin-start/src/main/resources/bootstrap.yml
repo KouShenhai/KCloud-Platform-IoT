@@ -69,3 +69,4 @@ dubbo:
     qos-port: ${QOS_PORT:1117}
   consumer:
     check: false
+    filter: dubboTraceConsumer

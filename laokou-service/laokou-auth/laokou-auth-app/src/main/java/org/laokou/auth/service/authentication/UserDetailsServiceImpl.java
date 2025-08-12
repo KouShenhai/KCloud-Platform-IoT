@@ -45,7 +45,7 @@ import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 @Component("userDetailsServiceImpl")
 final class UserDetailsServiceImpl implements UserDetailsService {
 
-	private final OAuth2AuthenticationProcessor authProcessor;
+	private final OAuth2AuthenticationProcessor authenticationProcessor;
 
 	/**
 	 * 获取用户信息.
@@ -62,7 +62,7 @@ final class UserDetailsServiceImpl implements UserDetailsService {
 			AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.AUTHORIZATION_CODE,
 					EMPTY, EMPTY);
 			authA.createUserByAuthorizationCode();
-			return (UserDetails) authProcessor.authenticationToken(authA, request).getPrincipal();
+			return (UserDetails) authenticationProcessor.authentication(authA, request).getPrincipal();
 		}
 		catch (GlobalException e) {
 			throw new UsernameNotFoundException(e.getMsg(), e);

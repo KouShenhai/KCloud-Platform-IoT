@@ -41,8 +41,8 @@ import static org.laokou.auth.factory.DomainFactory.*;
 final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2UsernamePasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor) {
-		super(authorizationService, tokenGenerator, authProcessor);
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authenticationProcessor) {
+		super(authorizationService, tokenGenerator, authenticationProcessor);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2A
 				captcha);
 		authA.decryptUsernamePassword();
 		authA.createUserByUsernamePassword();
-		return authenticationToken(authA, request);
+		return authentication(authA, request);
 	}
 
 	@Override

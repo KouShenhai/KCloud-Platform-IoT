@@ -256,7 +256,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 * @return 判断结果
 	 */
 	private boolean isGrayRouter(HttpHeaders headers) {
-		String gray = headers.getFirst(SERVICE_GRAY);
+		String gray = headers.getFirst("service-gray");
 		return ObjectUtils.equals(TRUE, gray);
 	}
 

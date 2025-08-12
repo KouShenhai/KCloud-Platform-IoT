@@ -1,1 +1,3 @@
 dubboException=org.laokou.common.dubbo.filter.DubboExceptionFilter
+dubboTraceProvider=org.laokou.common.dubbo.filter.DubboTraceProviderFilter
+dubboTraceConsumer=org.laokou.common.dubbo.filter.DubboTraceConsumerFilter

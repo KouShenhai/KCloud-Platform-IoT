@@ -42,8 +42,8 @@ import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 final class OAuth2TestAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2TestAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authProcessor) {
-		super(authorizationService, tokenGenerator, authProcessor);
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authenticationProcessor) {
+		super(authorizationService, tokenGenerator, authenticationProcessor);
 	}
 
 	@Override
@@ -58,7 +58,7 @@ final class OAuth2TestAuthenticationProvider extends AbstractOAuth2Authenticatio
 		String tenantCode = request.getParameter(TENANT_CODE);
 		AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.TEST, EMPTY, EMPTY);
 		authA.createUserByTest();
-		return authenticationToken(authA, request);
+		return authentication(authA, request);
 	}
 
 	@Override

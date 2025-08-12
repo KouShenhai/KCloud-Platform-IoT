@@ -31,7 +31,6 @@ import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.constant.TraceConstants.REQUEST_ID;
 import static org.laokou.common.redis.util.RedisUtils.FIVE_MINUTE_EXPIRE;
 
 /**
@@ -44,6 +43,8 @@ import static org.laokou.common.redis.util.RedisUtils.FIVE_MINUTE_EXPIRE;
 @Component
 @RequiredArgsConstructor
 public class IdempotentAop {
+
+	public static final String REQUEST_ID = "request-id";
 
 	private final RedisUtils redisUtils;
 
