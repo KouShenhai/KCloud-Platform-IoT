@@ -136,7 +136,7 @@
     <!--curator版本-->
     <curator.version>5.9.0</curator.version>
     <!--wiremock版本-->
-    <wiremock.version>4.0.0-beta.14</wiremock.version>
+    <wiremock.version>4.0.0-beta.15</wiremock.version>
     <!--commons-net版本-->
     <commons-net.version>3.12.0</commons-net.version>
     <!--vertx版本-->
