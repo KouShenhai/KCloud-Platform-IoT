@@ -71,7 +71,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import static org.laokou.common.i18n.common.constant.StringConstants.TRUE;
-import static org.laokou.common.i18n.common.constant.TraceConstants.*;
 
 /**
  * nacos路由负载均衡.
