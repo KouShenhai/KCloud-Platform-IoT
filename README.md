@@ -273,6 +273,7 @@ KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.or
 ### 🙋 技术分享【请关注公众号加技术群】
 
 <img src="doc/image/gzh.jpg" alt="微信公众号" width=201 height=300 />
+<img src="doc/image/img_4.png" alt="微信公众号" width=201 height=300 />
 
 ### 🐭 鸣谢组织
 
