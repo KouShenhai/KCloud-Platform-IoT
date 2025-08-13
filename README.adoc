@@ -284,7 +284,7 @@ https://gitee.com/laokouyun/KCloud-Platform-IoT[Gitee 地址]
 === 🙋 技术分享【请关注公众号加技术群】
 
 image:doc/image/gzh.jpg[微信公众号,201,300]
-image:doc/image/img_4.png[微信公众号,100,100]
+image:doc/image/img_4.png[微信公众号,201,100]
 
 === 🐭 鸣谢组织
 
