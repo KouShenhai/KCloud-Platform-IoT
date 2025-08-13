@@ -21,8 +21,10 @@ import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 import org.laokou.common.core.util.SpringContextUtils;
-import org.laokou.common.i18n.common.constant.TraceConstants;
 import org.laokou.common.trace.util.TraceUtils;
+
+import static org.laokou.common.core.util.MDCUtils.SPAN_ID;
+import static org.laokou.common.core.util.MDCUtils.TRACE_ID;
 
 /**
  * @author laokou
@@ -34,8 +36,8 @@ public class DubboTraceConsumerFilter implements Filter {
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 		TraceUtils traceUtils = SpringContextUtils.getBean(TraceUtils.class);
 		RpcContextAttachment clientAttachment = RpcContext.getClientAttachment();
-		clientAttachment.setAttachment(TraceConstants.TRACE_ID, traceUtils.getTraceId());
-		clientAttachment.setAttachment(TraceConstants.SPAN_ID, traceUtils.getSpanId());
+		clientAttachment.setAttachment(TRACE_ID, traceUtils.getTraceId());
+		clientAttachment.setAttachment(SPAN_ID, traceUtils.getSpanId());
 		return invoker.invoke(invocation);
 	}
 

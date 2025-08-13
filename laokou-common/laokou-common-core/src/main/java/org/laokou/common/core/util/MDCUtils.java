@@ -26,9 +26,9 @@ import org.slf4j.MDC;
  */
 public final class MDCUtils {
 
-	private static final String TRACE_ID = "traceId";
+	public static final String TRACE_ID = "traceId";
 
-	private static final String SPAN_ID = "spanId";
+	public static final String SPAN_ID = "spanId";
 
 	private MDCUtils() {
 	}

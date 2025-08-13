@@ -20,8 +20,11 @@ package org.laokou.common.dubbo.filter;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
-import org.laokou.common.i18n.common.constant.TraceConstants;
-import org.slf4j.MDC;
+import org.laokou.common.core.util.MDCUtils;
+import java.util.function.Supplier;
+
+import static org.laokou.common.core.util.MDCUtils.SPAN_ID;
+import static org.laokou.common.core.util.MDCUtils.TRACE_ID;
 
 /**
  * @author laokou
@@ -31,13 +34,15 @@ public class DubboTraceProviderFilter implements Filter {
 
 	@Override
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-		RpcContextAttachment rpcContextAttachment = RpcContext.getServerAttachment();
-		MDC.put(TraceConstants.TRACE_ID, rpcContextAttachment.getAttachment(TraceConstants.TRACE_ID));
-		MDC.put(TraceConstants.SPAN_ID, rpcContextAttachment.getAttachment(TraceConstants.SPAN_ID));
+		return invoke(RpcContext.getServerAttachment(), () -> invoker.invoke(invocation));
+	}
+
+	private Result invoke(RpcContextAttachment rpcContextAttachment, Supplier<Result> supplier) {
 		try {
-            return invoker.invoke(invocation);
-        } finally {
-			MDC.clear();
+			MDCUtils.put(rpcContextAttachment.getAttachment(TRACE_ID), rpcContextAttachment.getAttachment(SPAN_ID));
+			return supplier.get();
+		} finally {
+			MDCUtils.clear();
 		}
 	}
 
