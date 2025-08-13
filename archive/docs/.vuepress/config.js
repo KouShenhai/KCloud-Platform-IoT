@@ -138,7 +138,8 @@ module.exports = {
 							{text: '物联网之使用Vertx实现UDP最佳实践【响应式】', link: '/pages/3e4283/'},
 							{text: 'Spring Cloud Gateway实现分布式限流和熔断降级', link: '/pages/4b37fa/'},
 							{text: '物联网之常见网络配置', link: '/pages/9d20f6/'},
-							{text: 'Go之封装Http请求和日志', link: '/pages/673aba/'}
+							{text: 'Go之封装Http请求和日志', link: '/pages/673aba/'},
+							{text: '物联网之小白调试网关设备', link: '/pages/7a9112/'}
 						]
 					},
 					{
