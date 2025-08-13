@@ -58,7 +58,7 @@ importers:
         version: 1.1.4
       jsencrypt:
         specifier: ^3.3.2
-        version: 3.5.2
+        version: 3.5.4
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -4346,8 +4346,8 @@ packages:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
     hasBin: true
 
-  jsencrypt@3.5.2:
-    resolution: {integrity: sha512-v8MzbiHS4JkwE5iW5IXSdPazX+gS7FxcZatct+FKo96Rcu50Y5Ct8uoLscJAK8artM0zGpAj3+jMndz8dsljCA==}
+  jsencrypt@3.5.4:
+    resolution: {integrity: sha512-kNjfYEMNASxrDGsmcSQh/rUTmcoRfSUkxnAz+MMywM8jtGu+fFEZ3nJjHM58zscVnwR0fYmG9sGkTDjqUdpiwA==}
 
   jsesc@2.5.2:
     resolution: {integrity: sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==}
@@ -12978,7 +12978,7 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  jsencrypt@3.5.2: {}
+  jsencrypt@3.5.4: {}
 
   jsesc@2.5.2: {}
 
