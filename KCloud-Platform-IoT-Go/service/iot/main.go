@@ -15,4 +15,4 @@
  *
  */
 
-package laokou_iot
+package iot

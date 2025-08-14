@@ -8,7 +8,9 @@ set GOARCH=amd64
 go env -w GOARCH=amd64
 set GOOS=linux
 go env -w GOOS=linux
+```
 
+```shell
 set GOARCH=arm
 go env -w GOARCH=arm
 set GOARM=8
