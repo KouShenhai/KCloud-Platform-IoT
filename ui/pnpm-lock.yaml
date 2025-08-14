@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@ant-design/charts':
         specifier: ^2.3.0
-        version: 2.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(workerize-loader@2.0.2(webpack@5.99.9))
+        version: 2.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(workerize-loader@2.0.2(webpack@5.99.9))
       '@ant-design/icons':
         specifier: ^6.0.0
         version: 6.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -123,8 +123,8 @@ packages:
       react: '>=16.8.4'
       react-dom: '>=16.8.4'
 
-  '@ant-design/charts@2.6.1':
-    resolution: {integrity: sha512-IIIFgg49VCO01mc7t2+wlMQnFNwjV0KqO2n9fhMwif/+r0W0ELOzdMbNkrzkZPEWp9p5YhN6cnlnkGeUt488cg==}
+  '@ant-design/charts@2.6.2':
+    resolution: {integrity: sha512-v/v/9A83F8xPuUdK3FcluNywZ9fV/u9mYwQj8RUhI9Sn/wnDD6ImInEl2pzs9a134WWxVqLCUxM+NWEgnHTbMA==}
     peerDependencies:
       react: '>=16.8.4'
       react-dom: '>=16.8.4'
@@ -164,8 +164,8 @@ packages:
     resolution: {integrity: sha512-eqvpP7xEDm2S7dUzl5srEQCBTXZMmY3ekf97zI+M2DHOYyKdJGH0qua0JACHTqbkRnD/KHFQP9J1uMJ/XWVzzA==}
     engines: {node: '>=8.x'}
 
-  '@ant-design/graphs@2.1.0':
-    resolution: {integrity: sha512-JavZyJVDRyO5wjReqz3CRYhml5MMpOe+fT4ucebdkfOfWYTlOG+W9vxtNSITJmCGHUVphQkQo9r1CPkZysDT0g==}
+  '@ant-design/graphs@2.1.1':
+    resolution: {integrity: sha512-qT3Oo8BWeoAmZEy9gfR6uIk+rczbNJ3sWXKonoOD5koATWv7dY0kgvS1JnhdM1QW4FkfPPJTeQVSlRRUtvWDwA==}
     peerDependencies:
       react: '>=16.8.4'
       react-dom: '>=16.8.4'
@@ -347,17 +347,11 @@ packages:
   '@antv/g-camera-api@2.0.41':
     resolution: {integrity: sha512-dF52/wpzHDKi7ZzPlaHurEjWrF9aBKL2udDwQkEeVtfkJ0DHaavr3BAvhuGhtHoecRYQJvpzP1OkGNDLQJQQlw==}
 
-  '@antv/g-canvas@2.0.47':
-    resolution: {integrity: sha512-IB7GvL9QXEQoVvQwOrcvxt0wD+9MQ7uSLS0mXyUeyURj3YUiOSO9aDgc7CdmkjwDvjd3eLmnqOROTFO+NWAtnA==}
-
   '@antv/g-canvas@2.0.48':
     resolution: {integrity: sha512-P98cTLRbKbCAcUVgHqMjKcvOany6nR7wvt+g+sazIfKSMUCWgjLTOjlLezux2up3At29mt80StaV2AR3d61YQA==}
 
   '@antv/g-dom-mutation-observer-api@2.0.38':
     resolution: {integrity: sha512-xzgbt8GUOiToBeDVv+jmGkDE+HtI9tD6uO8TirJbCya88DKcY/jurQALq0NdWKgMJLn7WPiUKyDwHWimwQcBJw==}
-
-  '@antv/g-lite@2.3.1':
-    resolution: {integrity: sha512-9Dwc/IItd5oIB+70rfkaVwHs6yT42M88KT1F4/g5mJnL4lpBprCj+yWXBkoS1gKIvc4ua2KOd2wEGv4ziTMvJA==}
 
   '@antv/g-lite@2.3.2':
     resolution: {integrity: sha512-fkIxRoqLOGsNPwsp26bPp58cPWuX3E4wQ9cfkB/DHy5LtLrPpvOwHWB3+MBPgZwzk8jTTjchiXa756ZFOAWyQQ==}
@@ -365,56 +359,35 @@ packages:
   '@antv/g-math@3.0.1':
     resolution: {integrity: sha512-FvkDBNRpj+HsLINunrL2PW0OlG368MlpHuihbxleuajGim5kra8tgISwCLmAf8Yz2b1CgZ9PvpohqiLzHS7HLg==}
 
-  '@antv/g-plugin-canvas-path-generator@2.1.21':
-    resolution: {integrity: sha512-vA53t7H/K/yXGs7hzEcYL27bxDq6eNcPRjfqSNB41hn5UjKZkwm5zslow8reWW+xvFmFfOmLBHxLFzACVgbz5w==}
-
   '@antv/g-plugin-canvas-path-generator@2.1.22':
     resolution: {integrity: sha512-Z0IawzTGgTppa9IpkNNKsqgoU89oOjUsiU8GZZlkDkUggQTHP0wOxTeLAb43YgClx3aTI3bRs44uMQutNdSVxw==}
-
-  '@antv/g-plugin-canvas-picker@2.1.26':
-    resolution: {integrity: sha512-gH0Ji6c0BQ0wKf/1QHstjsM1UflPWAPQqZwrbwxa4qBqhqZ1uLjcabUa6xpjcXIcV4E+B2QX46+Rud0If7CdIw==}
 
   '@antv/g-plugin-canvas-picker@2.1.27':
     resolution: {integrity: sha512-DHQ0YLYNXAm6O63pW6nKs/R0fuqlUYfehNs/EtzrmqyUkKASd/Vhs4HLNeHTMUdBMgg41T+x5qay0GGttK4Xdw==}
 
-  '@antv/g-plugin-canvas-renderer@2.3.2':
-    resolution: {integrity: sha512-32oh/ZXyihPdisIcpna9q+CwM7TinQw65hLGItY+z1zESswQZb1oYV6G9EdeqeGeoXYK+U/hfu8gM+haMMoNvw==}
-
   '@antv/g-plugin-canvas-renderer@2.3.3':
     resolution: {integrity: sha512-d6JkZy1YmLnvI9wsbO8QVpBz7z7tl6JRQkF5hx9XLDtf2fD4n83KINeMq13skiNwaiudS771WWiBtfzUHB73pQ==}
-
-  '@antv/g-plugin-dom-interaction@2.1.26':
-    resolution: {integrity: sha512-3DVsP1wHiLVXkGcjTyCfdlddP+du54s8XkjpBz4mW6Ynufz6C9OXR8A6Fgm62I+VJ+UVu9Cir4kyffpXt/sRkw==}
 
   '@antv/g-plugin-dom-interaction@2.1.27':
     resolution: {integrity: sha512-hltVZZH+bj0uXmGSR+6BIwhCFYyHmDIQi3vrj/Wn1Dn6PgufvMCXfjr3DfmkQnY+FFP8ZCpg5N9MaE0BE9OddA==}
 
-  '@antv/g-plugin-dragndrop@2.0.37':
-    resolution: {integrity: sha512-cStWWmXe6cNQpSlr22vrA8Moub8l4TXO0A8wvm7cTZg0DIkbBA1KaL18a7tNE1W3xUSkO8ttLmHcwv2xDLEADA==}
-
   '@antv/g-plugin-dragndrop@2.0.38':
     resolution: {integrity: sha512-yCef5ER759i0WpuOekFQ+AcDTu0N/COMbkPOG6YuswVnhQH447GUpuNm7Le+Mq26qONlXTDyjxuMHoUOWwJ7Cw==}
-
-  '@antv/g-plugin-html-renderer@2.1.26':
-    resolution: {integrity: sha512-G74ZAicXLYS93my4ciKr0HiW7VDcBnVLSL0mLO2mfrACDKme6+Xo03Cu0Bkdlt7iraKYR3soO6TFCc9hatIx5A==}
 
   '@antv/g-plugin-html-renderer@2.1.27':
     resolution: {integrity: sha512-NnI4GxDBb71o/XZzoRdi0xI3xg7GJmthyO5xP5/MiOFmwJ/jW/QDz17vUonmzUVbCt6upikHV5GyYOaogRqdVg==}
 
-  '@antv/g-plugin-image-loader@2.1.25':
-    resolution: {integrity: sha512-J5eCow6zZa5krXDMfIemt5Y10nWmUQmeBig+o/STRoo4MTpWrUrBuG/LgNaOw/tbXar7/Anf2yuahit4pKwc4A==}
-
   '@antv/g-plugin-image-loader@2.1.26':
     resolution: {integrity: sha512-AElV0QOX2LAhB3jr9XtvkynntuKhcaU5n7avu5ynM5VoAtMaJRANhCyefA2G3myeJxWcHk4nWDX6u4YMaZnnvw==}
 
-  '@antv/g-plugin-svg-picker@2.0.41':
-    resolution: {integrity: sha512-j0VqmBCN2v23lZvuBG7Le7em35XhTiv3PKhjnCM53R8uREJGDiWFIVuFZ5FOzosFMOCoPz/1/Uc6tV4c5KYe5w==}
+  '@antv/g-plugin-svg-picker@2.0.42':
+    resolution: {integrity: sha512-MxnaDdLM251Mv+o66emC6TKAoz0uVaPvlbE7eIZ35Aa/UIlkPMtbMBruBOh2JR/C8JKAn9N1V3CYx3WLxiPfYg==}
 
-  '@antv/g-plugin-svg-renderer@2.2.23':
-    resolution: {integrity: sha512-NtZsI3394MQVZ6V0r1PISNegcRXlZGnda+O1Y+X6TTVe/qS8rtdOh+Vh7M6/JH/oqYMkQ9NF6pM/IbjYwRA5ag==}
+  '@antv/g-plugin-svg-renderer@2.2.24':
+    resolution: {integrity: sha512-QTq+rMNtD1Yg6fT6HqkCViho21rESIvhORzv9y/J/zmY3CkBWpg8JtiRqDhDBuce+1dxjO193fiR8L7ZW9+Ziw==}
 
-  '@antv/g-svg@2.0.41':
-    resolution: {integrity: sha512-QgzfAR1pA3CygQmq/G1+Onx51mrqrv8jFsoE8ugjgwkEKaNmv5BndZZnzZY9YGnon2UZ+QcGUrj1fJkO2eY02g==}
+  '@antv/g-svg@2.0.42':
+    resolution: {integrity: sha512-0vunUSvG1CgcW2bzSY8H7naa8ItU1k/l2sdyrvlcdM2mAvq5Yjx2MFm0PBCMvvSr8w4JKW0I0fnvk35NePf3uA==}
 
   '@antv/g-web-animations-api@2.1.28':
     resolution: {integrity: sha512-V5g8bO2D1hb8fRMMi5hXL/De+1UDRzW3C5EX07oazR0q71GONASP+sVwniZdt9R1HAmJSN5dvW3SqWeU3EEstQ==}
@@ -3763,6 +3736,9 @@ packages:
 
   gl-matrix@3.4.3:
     resolution: {integrity: sha512-wcCp8vu8FT22BnvKVPjXa/ICBWRq/zjFfdofZy1WSpQZpphblv12/bOQLBC1rMM7SGOFS9ltVmKOHil5+Ml7gA==}
+
+  gl-matrix@3.4.4:
+    resolution: {integrity: sha512-latSnyDNt/8zYUB6VIJ6PCh2jBjJX6gnDsoCZ7LyW7GkqrD51EWwa9qCoGixj8YqBtETQK/xY7OmpTF8xz1DdQ==}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -7221,9 +7197,9 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@ant-design/charts@2.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(workerize-loader@2.0.2(webpack@5.99.9))':
+  '@ant-design/charts@2.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(workerize-loader@2.0.2(webpack@5.99.9))':
     dependencies:
-      '@ant-design/graphs': 2.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(workerize-loader@2.0.2(webpack@5.99.9))
+      '@ant-design/graphs': 2.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(workerize-loader@2.0.2(webpack@5.99.9))
       '@ant-design/plots': 2.6.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       lodash: 4.17.21
       react: 18.3.1
@@ -7281,7 +7257,7 @@ snapshots:
 
   '@ant-design/fast-color@3.0.0': {}
 
-  '@ant-design/graphs@2.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(workerize-loader@2.0.2(webpack@5.99.9))':
+  '@ant-design/graphs@2.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(workerize-loader@2.0.2(webpack@5.99.9))':
     dependencies:
       '@ant-design/charts-util': 0.0.1-alpha.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@antv/g6': 5.0.49(workerize-loader@2.0.2(webpack@5.99.9))
@@ -7851,19 +7827,6 @@ snapshots:
       gl-matrix: 3.4.3
       tslib: 2.8.1
 
-  '@antv/g-canvas@2.0.47':
-    dependencies:
-      '@antv/g-lite': 2.3.1
-      '@antv/g-plugin-canvas-path-generator': 2.1.21
-      '@antv/g-plugin-canvas-picker': 2.1.26
-      '@antv/g-plugin-canvas-renderer': 2.3.2
-      '@antv/g-plugin-dom-interaction': 2.1.26
-      '@antv/g-plugin-html-renderer': 2.1.26
-      '@antv/g-plugin-image-loader': 2.1.25
-      '@antv/util': 3.3.11
-      '@babel/runtime': 7.28.2
-      tslib: 2.8.1
-
   '@antv/g-canvas@2.0.48':
     dependencies:
       '@antv/g-lite': 2.3.2
@@ -7881,17 +7844,6 @@ snapshots:
     dependencies:
       '@antv/g-lite': 2.3.2
       '@babel/runtime': 7.28.2
-
-  '@antv/g-lite@2.3.1':
-    dependencies:
-      '@antv/g-math': 3.0.1
-      '@antv/util': 3.3.11
-      '@antv/vendor': 1.0.11
-      '@babel/runtime': 7.28.2
-      eventemitter3: 5.0.1
-      gl-matrix: 3.4.3
-      rbush: 3.0.1
-      tslib: 2.8.1
 
   '@antv/g-lite@2.3.2':
     dependencies:
@@ -7911,14 +7863,6 @@ snapshots:
       gl-matrix: 3.4.3
       tslib: 2.8.1
 
-  '@antv/g-plugin-canvas-path-generator@2.1.21':
-    dependencies:
-      '@antv/g-lite': 2.3.1
-      '@antv/g-math': 3.0.1
-      '@antv/util': 3.3.11
-      '@babel/runtime': 7.28.2
-      tslib: 2.8.1
-
   '@antv/g-plugin-canvas-path-generator@2.1.22':
     dependencies:
       '@antv/g-lite': 2.3.2
@@ -7927,34 +7871,12 @@ snapshots:
       '@babel/runtime': 7.28.2
       tslib: 2.8.1
 
-  '@antv/g-plugin-canvas-picker@2.1.26':
-    dependencies:
-      '@antv/g-lite': 2.3.1
-      '@antv/g-math': 3.0.1
-      '@antv/g-plugin-canvas-path-generator': 2.1.21
-      '@antv/g-plugin-canvas-renderer': 2.3.2
-      '@antv/util': 3.3.11
-      '@babel/runtime': 7.28.2
-      gl-matrix: 3.4.3
-      tslib: 2.8.1
-
   '@antv/g-plugin-canvas-picker@2.1.27':
     dependencies:
       '@antv/g-lite': 2.3.2
       '@antv/g-math': 3.0.1
       '@antv/g-plugin-canvas-path-generator': 2.1.22
       '@antv/g-plugin-canvas-renderer': 2.3.3
-      '@antv/util': 3.3.11
-      '@babel/runtime': 7.28.2
-      gl-matrix: 3.4.3
-      tslib: 2.8.1
-
-  '@antv/g-plugin-canvas-renderer@2.3.2':
-    dependencies:
-      '@antv/g-lite': 2.3.1
-      '@antv/g-math': 3.0.1
-      '@antv/g-plugin-canvas-path-generator': 2.1.21
-      '@antv/g-plugin-image-loader': 2.1.25
       '@antv/util': 3.3.11
       '@babel/runtime': 7.28.2
       gl-matrix: 3.4.3
@@ -7971,22 +7893,9 @@ snapshots:
       gl-matrix: 3.4.3
       tslib: 2.8.1
 
-  '@antv/g-plugin-dom-interaction@2.1.26':
-    dependencies:
-      '@antv/g-lite': 2.3.1
-      '@babel/runtime': 7.28.2
-      tslib: 2.8.1
-
   '@antv/g-plugin-dom-interaction@2.1.27':
     dependencies:
       '@antv/g-lite': 2.3.2
-      '@babel/runtime': 7.28.2
-      tslib: 2.8.1
-
-  '@antv/g-plugin-dragndrop@2.0.37':
-    dependencies:
-      '@antv/g-lite': 2.3.1
-      '@antv/util': 3.3.11
       '@babel/runtime': 7.28.2
       tslib: 2.8.1
 
@@ -7997,25 +7906,9 @@ snapshots:
       '@babel/runtime': 7.28.2
       tslib: 2.8.1
 
-  '@antv/g-plugin-html-renderer@2.1.26':
-    dependencies:
-      '@antv/g-lite': 2.3.1
-      '@antv/util': 3.3.11
-      '@babel/runtime': 7.28.2
-      gl-matrix: 3.4.3
-      tslib: 2.8.1
-
   '@antv/g-plugin-html-renderer@2.1.27':
     dependencies:
       '@antv/g-lite': 2.3.2
-      '@antv/util': 3.3.11
-      '@babel/runtime': 7.28.2
-      gl-matrix: 3.4.3
-      tslib: 2.8.1
-
-  '@antv/g-plugin-image-loader@2.1.25':
-    dependencies:
-      '@antv/g-lite': 2.3.1
       '@antv/util': 3.3.11
       '@babel/runtime': 7.28.2
       gl-matrix: 3.4.3
@@ -8029,27 +7922,27 @@ snapshots:
       gl-matrix: 3.4.3
       tslib: 2.8.1
 
-  '@antv/g-plugin-svg-picker@2.0.41':
+  '@antv/g-plugin-svg-picker@2.0.42':
     dependencies:
-      '@antv/g-lite': 2.3.1
-      '@antv/g-plugin-svg-renderer': 2.2.23
+      '@antv/g-lite': 2.3.2
+      '@antv/g-plugin-svg-renderer': 2.2.24
       '@babel/runtime': 7.28.2
       tslib: 2.8.1
 
-  '@antv/g-plugin-svg-renderer@2.2.23':
+  '@antv/g-plugin-svg-renderer@2.2.24':
     dependencies:
-      '@antv/g-lite': 2.3.1
+      '@antv/g-lite': 2.3.2
       '@antv/util': 3.3.11
       '@babel/runtime': 7.28.2
-      gl-matrix: 3.4.3
+      gl-matrix: 3.4.4
       tslib: 2.8.1
 
-  '@antv/g-svg@2.0.41':
+  '@antv/g-svg@2.0.42':
     dependencies:
-      '@antv/g-lite': 2.3.1
-      '@antv/g-plugin-dom-interaction': 2.1.26
-      '@antv/g-plugin-svg-picker': 2.0.41
-      '@antv/g-plugin-svg-renderer': 2.2.23
+      '@antv/g-lite': 2.3.2
+      '@antv/g-plugin-dom-interaction': 2.1.27
+      '@antv/g-plugin-svg-picker': 2.0.42
+      '@antv/g-plugin-svg-renderer': 2.2.24
       '@antv/util': 3.3.11
       '@babel/runtime': 7.28.2
       tslib: 2.8.1
@@ -8085,7 +7978,7 @@ snapshots:
   '@antv/g6-extension-react@0.2.4(@antv/g6@5.0.49(workerize-loader@2.0.2(webpack@5.99.9)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@antv/g': 6.1.28
-      '@antv/g-svg': 2.0.41
+      '@antv/g-svg': 2.0.42
       '@antv/g6': 5.0.49(workerize-loader@2.0.2(webpack@5.99.9))
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -8096,8 +7989,8 @@ snapshots:
       '@antv/component': 2.1.5
       '@antv/event-emitter': 0.1.3
       '@antv/g': 6.1.28
-      '@antv/g-canvas': 2.0.47
-      '@antv/g-plugin-dragndrop': 2.0.37
+      '@antv/g-canvas': 2.0.48
+      '@antv/g-plugin-dragndrop': 2.0.38
       '@antv/graphlib': 2.0.4
       '@antv/hierarchy': 0.6.14
       '@antv/layout': 1.2.14-beta.9(workerize-loader@2.0.2(webpack@5.99.9))
@@ -12361,6 +12254,8 @@ snapshots:
   git-hooks-list@4.1.1: {}
 
   gl-matrix@3.4.3: {}
+
+  gl-matrix@3.4.4: {}
 
   glob-parent@5.1.2:
     dependencies:
