@@ -154,7 +154,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Dubbo                       |3.3.5
 |Redis                       |8.0.1
 |Elasticsearch               |8.19.1
-|Netty                       |4.2.3.Final
+|Netty                       |4.2.4.Final
 |Kafka                       |4.0.0
 |Pulsar                      |4.0.5
 |EMQX                        |5.4.1
@@ -284,7 +284,6 @@ https://gitee.com/laokouyun/KCloud-Platform-IoT[Gitee 地址]
 === 🙋 技术分享【请关注公众号加技术群】
 
 image:doc/image/gzh.jpg[微信公众号,201,300]
-image:doc/image/img_4.png[微信公众号,201,200]
 
 === 🐭 鸣谢组织
 
@@ -328,13 +327,14 @@ https://www.bilibili.com/video/BV1KPdxYaESL[哔哩哔哩视频-老寇IoT云平�
 |2   |image:https://avatars.githubusercontent.com/u/58894276?v=4&s=64[liang99的头像,50,50]          |https://github.com/liang99[liang99]
 |3   |image:https://avatars.githubusercontent.com/u/50291874?s=64&v=4[livk-cloud的头像,50,50]       |https://github.com/livk-cloud[livk-cloud]
 |4   |image:https://avatars.githubusercontent.com/u/21030225?s=64&v=4[liukefu2050的头像,50,50]      |https://github.com/liukefu2050[liukefu2050]
-|5   |image:https://avatars.githubusercontent.com/u/58894276?v=4&s=64[HalfPomelo的头像,50,50]      |https://github.com/HalfPomelo[HalfPomelo]
+|5   |image:https://avatars.githubusercontent.com/u/58894276?v=4&s=64[HalfPomelo的头像,50,50]       |https://github.com/HalfPomelo[HalfPomelo]
 |6   |image:https://avatars.githubusercontent.com/u/69209385?s=64&v=4[lixin的头像,50,50]            |https://github.com/lixin[lixin]
 |7   |image:https://avatars.githubusercontent.com/u/2041471?s=64&v=4[simman的头像,50,50]            |https://github.com/simman[simman]
 |8   |image:https://avatars.githubusercontent.com/u/43296325?s=64&v=4[suhengli的头像,50,50]         |https://github.com/suhengli[suhengli]
 |9   |image:https://avatars.githubusercontent.com/u/89563182?s=64&v=4[gitkakafu的头像,50,50]        |https://github.com/gitkakafu[gitkakafu]
 |10  |image:https://avatars.githubusercontent.com/u/32741993?s=64&v=4[LeiZhiMin1的头像,50,50]       |https://github.com/LeiZhiMin1[LeiZhiMin1]
-|11  |image:https://avatars.githubusercontent.com/u/24284648?s=64&v=4[FlySkyBear的头像,50,50]      |https://github.com/FlySkyBear[FlySkyBear]
+|11  |image:https://avatars.githubusercontent.com/u/24284648?s=64&v=4[FlySkyBear的头像,50,50]       |https://github.com/FlySkyBear[FlySkyBear]
+|12  |image:https://avatars.githubusercontent.com/u/121850259?s=60&v=4[sd-xiaoZheng的头像,50,50]    |https://github.com/sd-xiaoZheng[sd-xiaoZheng]
 |===
 
 === ⛳️ 赞助列表（感谢各位大佬的赞助）
