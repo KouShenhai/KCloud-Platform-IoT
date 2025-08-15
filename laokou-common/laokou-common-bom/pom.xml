@@ -84,7 +84,7 @@
     <!--transmittable-thread-local版本-->
     <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
     <!--mockito版本-->
-    <mockito.version>5.18.0</mockito.version>
+    <mockito.version>5.19.0</mockito.version>
     <!--nacos版本-->
     <nacos.version>3.0.2</nacos.version>
     <!--knife4j版本-->
