@@ -77,6 +77,7 @@ CREATE TABLE "public"."generator_info" (
 	"version" int4 NOT NULL DEFAULT 0,
 	"tenant_id" int8 NOT NULL DEFAULT 0,
 	"ds_name" varchar(50) NOT NULL,
+	"database_name" varchar(50) NOT NULL,
 	"table_name" varchar(50) NOT NULL,
 	"author" varchar(50)  NOT NULL,
 	"comment" varchar(50)  NOT NULL,
@@ -98,6 +99,7 @@ COMMENT ON COLUMN "public"."generator_info"."del_flag" IS '删除标识 0未删�
 COMMENT ON COLUMN "public"."generator_info"."version" IS '版本号';
 COMMENT ON COLUMN "public"."generator_info"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."generator_info"."ds_name" IS '数据源名称';
+COMMENT ON COLUMN "public"."generator_info"."database_name" IS '数据库名称';
 COMMENT ON COLUMN "public"."generator_info"."table_name" IS '数据库表名称';
 COMMENT ON COLUMN "public"."generator_info"."author" IS '作者';
 COMMENT ON COLUMN "public"."generator_info"."comment" IS '表描述';
