@@ -107,7 +107,7 @@ const HomePage: React.FC = () => {
 			</Row>
 			<Row gutter={24}>
 				<Col span={24}>
-					<ProCard layout="center" hoverable bordered className={'pro-card-2 pro-card-3'} headerBordered
+					<ProCard layout="center" hoverable bordered className={'pro-card-3'} headerBordered
 							 title={'设备分布'}>
 						<Map amapkey={'1cab232de3d4891f17d3ce3cadf99dcc'}/>
 					</ProCard>
