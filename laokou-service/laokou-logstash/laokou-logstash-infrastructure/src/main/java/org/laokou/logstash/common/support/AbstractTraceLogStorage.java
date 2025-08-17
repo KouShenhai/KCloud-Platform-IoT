@@ -28,7 +28,7 @@ import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 @RequiredArgsConstructor
 public abstract class AbstractTraceLogStorage implements TraceLogStorage {
 
-	protected static final String TRACE_INDEX = "trace_log";
+	protected static final String TRACE_INDEX = "trace-log";
 
 	protected String getIndexName() {
 		return TRACE_INDEX + StringConstants.UNDER + DateUtils.format(DateUtils.nowDate(), DateUtils.YYYYMMDD);

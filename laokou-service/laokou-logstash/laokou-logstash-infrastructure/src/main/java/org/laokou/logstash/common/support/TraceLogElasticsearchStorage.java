@@ -22,10 +22,8 @@ import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
@@ -42,14 +40,14 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 
 	@Override
 	public void batchSave(List<Object> messages) {
-		Map<String, TraceLogIndex> traceLogMap = messages.stream().map(this::getTraceLogIndex)
+		List<TraceLogIndex> list = messages.stream().map(this::getTraceLogIndex)
 			.filter(Objects::nonNull)
-			.collect(Collectors.toMap(TraceLogIndex::getId, traceLogIndex -> traceLogIndex));
+			.toList();
 		elasticsearchTemplate
 				.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, virtualThreadExecutor)
-				.thenComposeAsync(result -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), traceLogMap,
-						virtualThreadExecutor), virtualThreadExecutor);
-
+				.thenComposeAsync(result -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), list,
+						virtualThreadExecutor), virtualThreadExecutor)
+			.join();
 	}
 
 }

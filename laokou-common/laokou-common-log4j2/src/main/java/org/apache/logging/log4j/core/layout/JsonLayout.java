@@ -162,31 +162,6 @@ public final class JsonLayout extends AbstractJacksonLayout {
 
 	}
 
-	/**
-	 * @deprecated Use {@link #newBuilder()} instead
-	 */
-	@Deprecated
-	protected JsonLayout(final Configuration config, final boolean locationInfo, final boolean properties,
-			final boolean encodeThreadContextAsList, final boolean complete, final boolean compact,
-			final boolean eventEol, final String endOfLine, final String headerPattern, final String footerPattern,
-			final Charset charset, final boolean includeStacktrace) {
-		super(config,
-				new JacksonFactory.JSON(encodeThreadContextAsList, includeStacktrace, false, false)
-					.newWriter(locationInfo, properties, compact),
-				charset, compact, complete, eventEol, endOfLine,
-				PatternLayout.newSerializerBuilder()
-					.setConfiguration(config)
-					.setPattern(headerPattern)
-					.setDefaultPattern(DEFAULT_HEADER)
-					.build(),
-				PatternLayout.newSerializerBuilder()
-					.setConfiguration(config)
-					.setPattern(footerPattern)
-					.setDefaultPattern(DEFAULT_FOOTER)
-					.build(),
-				false, null);
-	}
-
 	private JsonLayout(final Configuration config, final boolean locationInfo, final boolean properties,
 			final boolean encodeThreadContextAsList, final boolean complete, final boolean compact,
 			final boolean eventEol, final String endOfLine, final String headerPattern, final String footerPattern,
@@ -347,7 +322,6 @@ public final class JsonLayout extends AbstractJacksonLayout {
 		Map<String, String> additionalFieldsMap = resolveAdditionalFields(evt);
 		additionalFieldsMap.putAll(evt.getContextData().toMap());
 		additionalFieldsMap.putAll(Map.of(
-			 "id", String.valueOf(timeMillis),
 			"address", System.getProperty("address", ""),
 			"dateTime", FORMATTER.format(getLocalDateTimeOfTimestamp(timeMillis)),
 			"level", evt.getLevel().name(),
@@ -367,8 +341,8 @@ public final class JsonLayout extends AbstractJacksonLayout {
 		StringWriter stringWriter = new StringWriter();
 		try (PrintWriter printWriter = new PrintWriter(stringWriter)) {
 			throwable.printStackTrace(printWriter);
+			return stringWriter.toString();
 		}
-		return stringWriter.toString();
 	}
 
 }

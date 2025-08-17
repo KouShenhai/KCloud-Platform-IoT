@@ -31,9 +31,6 @@ import static org.laokou.common.i18n.util.DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS_
 @Index(setting = @Setting(refreshInterval = "1"))
 public final class TraceLogIndex implements Serializable {
 
-	@Field(type = Type.LONG)
-	private String id;
-
 	@Field(type = Type.KEYWORD)
 	private String serviceId;
 

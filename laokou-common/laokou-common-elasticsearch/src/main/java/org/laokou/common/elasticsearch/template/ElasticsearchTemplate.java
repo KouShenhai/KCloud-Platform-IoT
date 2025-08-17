@@ -170,9 +170,39 @@ public class ElasticsearchTemplate {
 		}
 	}
 
+	public <T> void bulkCreateDocument(String index, List<T> list) {
+		try {
+			boolean errors = elasticsearchClient
+				.bulk(bulk -> bulk.index(index).refresh(Refresh.True).operations(getBulkOperations(list)))
+				.errors();
+			if (errors) {
+				log.info("索引：{} -> 批量同步索引失败", index);
+			}
+			else {
+				log.info("索引：{} -> 批量同步索引成功", index);
+			}
+		}
+		catch (Throwable e) {
+			log.error("批量同步索引失败，错误信息：{}", e.getMessage());
+		}
+	}
+
 	public <T> CompletableFuture<Void> asyncBulkCreateDocument(String index, Map<String, T> map, Executor executor) {
 		return elasticsearchAsyncClient
 			.bulk(bulk -> bulk.index(index).refresh(Refresh.True).operations(getBulkOperations(map)))
+			.thenAcceptAsync(resp -> {
+				if (resp.errors()) {
+					log.info("索引：{} -> 异步批量同步索引失败", index);
+				}
+				else {
+					log.info("索引：{} -> 异步批量同步索引成功", index);
+				}
+			}, executor);
+	}
+
+	public <T> CompletableFuture<Void> asyncBulkCreateDocument(String index, List<T> list, Executor executor) {
+		return elasticsearchAsyncClient
+			.bulk(bulk -> bulk.index(index).refresh(Refresh.True).operations(getBulkOperations(list)))
 			.thenAcceptAsync(resp -> {
 				if (resp.errors()) {
 					log.info("索引：{} -> 异步批量同步索引失败", index);
@@ -290,6 +320,10 @@ public class ElasticsearchTemplate {
 			builder.numberOfFragments(j.getNumberOfFragments());
 			return builder.build();
 		}));
+	}
+
+	private <T> List<BulkOperation> getBulkOperations(List<T> list) {
+		return list.stream().map(item -> BulkOperation.of(idx -> idx.index(fn -> fn.document(item)))).toList();
 	}
 
 	private <T> List<BulkOperation> getBulkOperations(Map<String, T> map) {
