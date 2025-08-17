@@ -153,7 +153,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |         TimescaleDB         |     17      |
 |          TDengine           |   3.3.5.0   |
 |          Liquibase          |   4.30.0    |
-|          Snail Job          |    1.1.2    |
+|          Snail Job          |    1.6.0    |
 |          Sentinel           |    1.8.8    |
 
 #### 🍺 相关技术
