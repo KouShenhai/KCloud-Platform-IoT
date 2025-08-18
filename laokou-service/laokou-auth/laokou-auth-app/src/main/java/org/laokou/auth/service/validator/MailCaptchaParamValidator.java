@@ -33,7 +33,7 @@ public class MailCaptchaParamValidator implements CaptchaParamValidator {
 		ParamValidator.validate(
 				// 校验租户编码
 				OAuth2ParamValidator.validateTenantCode(captcha.getTenantCode()),
-				// 校验手邮箱
+				// 校验邮箱
 				OAuth2ParamValidator.validateMail(captcha.getUuid()));
 	}
 
