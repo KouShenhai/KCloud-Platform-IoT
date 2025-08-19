@@ -148,7 +148,7 @@
     <!--jSerialComm版本-->
     <jSerialComm.version>2.11.2</jSerialComm.version>
     <!--californium版本-->
-    <californium.version>4.0.0-M5</californium.version>
+    <californium.version>4.0.0-M6</californium.version>
     <!--jsoup版本-->
     <jsoup.version>1.21.1</jsoup.version>
     <!--dubbo版本-->
