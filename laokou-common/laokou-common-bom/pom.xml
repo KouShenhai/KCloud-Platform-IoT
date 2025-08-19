@@ -158,7 +158,7 @@
     <!--minio版本-->
     <minio.version>8.5.17</minio.version>
     <!--spring-security版本-->
-    <spring-security.version>6.5.2</spring-security.version>
+    <spring-security.version>6.5.3</spring-security.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
