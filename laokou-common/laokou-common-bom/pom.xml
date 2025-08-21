@@ -30,7 +30,7 @@
     <!--项目版本-->
     <laokou.version>3.5.4-SNAPSHOT</laokou.version>
     <!--spring-boot版本-->
-    <spring-boot.version>3.5.4</spring-boot.version>
+    <spring-boot.version>3.5.5</spring-boot.version>
     <!--lombok版本-->
     <lombok.version>1.18.38</lombok.version>
     <!--postgresql版本-->
