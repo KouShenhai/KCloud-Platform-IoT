@@ -86,7 +86,7 @@
     <!--mockito版本-->
     <mockito.version>5.19.0</mockito.version>
     <!--nacos版本-->
-    <nacos.version>3.0.2</nacos.version>
+    <nacos.version>3.0.3</nacos.version>
     <!--knife4j版本-->
     <knife4j.version>4.5.0</knife4j.version>
     <!--taos-jdbcdriver版本-->
