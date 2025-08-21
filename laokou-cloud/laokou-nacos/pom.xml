@@ -35,7 +35,7 @@
     <!--postgresql版本-->
     <postgresql.version>42.7.7</postgresql.version>
     <!--grpc版本-->
-    <grpc.version>1.74.0</grpc.version>
+    <grpc.version>1.75.0</grpc.version>
     <!--client-java版本-->
     <client-java.version>19.0.3</client-java.version>
     <!--lombok版本-->
