@@ -51,6 +51,7 @@
     <module>laokou-common-idempotent</module>
     <module>laokou-common-lock</module>
     <module>laokou-common-sensitive</module>
+    <module>laokou-common-sentinel</module>
     <module>laokou-common-rate-limiter</module>
     <module>laokou-common-domain</module>
     <module>laokou-common-log</module>
