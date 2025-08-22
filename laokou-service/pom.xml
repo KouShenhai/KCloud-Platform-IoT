@@ -39,5 +39,6 @@
     <module>laokou-iot</module>
     <module>laokou-oss</module>
     <module>laokou-network</module>
+    <module>laokou-cola</module>
   </modules>
 </project>
