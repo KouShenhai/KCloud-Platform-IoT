@@ -129,7 +129,9 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * @return 删除结果
 	 */
 	public Mono<Boolean> removeRouters() {
-		return reactiveHashOperations.delete(RedisKeyUtils.getRouteDefinitionHashKey()).doFinally(c -> refreshEvent());
+		return reactiveHashOperations.delete(RedisKeyUtils.getRouteDefinitionHashKey())
+			.doOnError(throwable -> log.error("删除路由失败，错误信息：{}", throwable.getMessage(), throwable))
+			.doOnNext(c -> refreshEvent());
 	}
 
 	/**
