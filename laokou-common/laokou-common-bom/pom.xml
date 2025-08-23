@@ -159,11 +159,25 @@
     <minio.version>8.5.17</minio.version>
     <!--spring-security版本-->
     <spring-security.version>6.5.3</spring-security.version>
+    <!--spring-ai-alibaba-mcp-registry版本-->
+    <spring-ai-alibaba-mcp-registry.version>1.0.0.3</spring-ai-alibaba-mcp-registry.version>
+    <!--spring-ai-starter-mcp-server-webflux版本-->
+    <spring-ai-starter-mcp-server-webflux.version>1.0.1</spring-ai-starter-mcp-server-webflux.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.springframework.ai</groupId>
+        <artifactId>spring-ai-starter-mcp-server-webflux</artifactId>
+        <version>${spring-ai-starter-mcp-server-webflux.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba.cloud.ai</groupId>
+        <artifactId>spring-ai-alibaba-mcp-registry</artifactId>
+        <version>${spring-ai-alibaba-mcp-registry.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-common-sentinel</artifactId>
@@ -720,6 +734,36 @@
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-mcp-adapter</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-mcp-app</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-mcp-client</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-mcp-domain</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-mcp-infrastructure</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-mcp-start</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
         <groupId>com.aizuda</groupId>
         <artifactId>snail-job-client-starter</artifactId>
         <version>${snail-job.version}</version>
@@ -781,32 +825,7 @@
       </dependency>
       <dependency>
         <groupId>io.grpc</groupId>
-        <artifactId>grpc-inprocess</artifactId>
-        <version>${grpc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
-        <artifactId>grpc-netty-shaded</artifactId>
-        <version>${grpc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
-        <artifactId>grpc-protobuf</artifactId>
-        <version>${grpc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
-        <artifactId>grpc-services</artifactId>
-        <version>${grpc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
         <artifactId>grpc-util</artifactId>
-        <version>${grpc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
-        <artifactId>grpc-stub</artifactId>
         <version>${grpc.version}</version>
       </dependency>
       <dependency>
