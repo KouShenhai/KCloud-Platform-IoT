@@ -96,7 +96,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			.mapNotNull(Map.Entry::getValue)
 			.onErrorContinue((throwable, routeDefinition) -> {
 				if (log.isErrorEnabled()) {
-					log.error("Get routes from redis error cause : {}", throwable.toString(), throwable);
+					log.error("从Redis获取路由失败，错误信息：{}", throwable.getMessage(), throwable);
 				}
 			});
 	}
@@ -119,7 +119,9 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 */
 	public Flux<Boolean> saveRouters() {
 		return Flux.fromIterable(pullRouters())
-			.flatMap(router -> reactiveHashOperations.putIfAbsent(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router)).doFinally(c -> refreshEvent());
+			.flatMap(router -> reactiveHashOperations.put(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router))
+			.doOnError(throwable -> log.error("保存路由失败，错误信息：{}", throwable.getMessage(), throwable))
+			.doOnNext(c -> refreshEvent());
 	}
 
 	/**
