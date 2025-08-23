@@ -264,7 +264,7 @@
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
         <NACOS-CLUSTER-NAME>nacos-cluster</NACOS-CLUSTER-NAME>
         <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
-        <SSL-ENABLED>true</SSL-ENABLED>
+        <SSL-ENABLED>false</SSL-ENABLED>
         <JASYPT-ENCRYPTOR-PASSWORD>laokou</JASYPT-ENCRYPTOR-PASSWORD>
       </properties>
       <activation>
@@ -314,7 +314,7 @@
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-CLUSTER-NAME>${NACOS_CLUSTER_NAME:nacos-cluster}</NACOS-CLUSTER-NAME>
         <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
-        <SSL-ENABLED>true</SSL-ENABLED>
+        <SSL-ENABLED>false</SSL-ENABLED>
         <!--suppress UnresolvedMavenProperty -->
         <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:laokou}</JASYPT-ENCRYPTOR-PASSWORD>
       </properties>
