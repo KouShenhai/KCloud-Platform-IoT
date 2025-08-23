@@ -20,7 +20,6 @@ package org.laokou.gateway;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.redis.annotation.EnableReactiveRedisRepository;
 import org.laokou.gateway.repository.NacosRouteDefinitionRepository;
@@ -91,23 +90,9 @@ public class GatewayApp implements CommandLineRunner {
 
 	private void syncRouters() {
 		// 删除路由
-		nacosRouteDefinitionRepository.removeRouters().subscribeOn(Schedulers.boundedElastic()).subscribe(delFlag -> {
-			if (ObjectUtils.equals(Boolean.TRUE, delFlag)) {
-				log.info("删除路由成功");
-			}
-			else {
-				log.error("删除路由失败");
-			}
-		});
+		// nacosRouteDefinitionRepository.removeRouters().subscribeOn(Schedulers.boundedElastic()).subscribe();
 		// 保存路由
-		nacosRouteDefinitionRepository.saveRouters().subscribeOn(Schedulers.boundedElastic()).subscribe(saveFlag -> {
-			if (ObjectUtils.equals(Boolean.TRUE, saveFlag)) {
-				log.info("保存路由成功");
-			}
-			else {
-				log.error("保存路由失败");
-			}
-		});
+		nacosRouteDefinitionRepository.saveRouters().subscribeOn(Schedulers.boundedElastic()).subscribe();
 	}
 	// @formatter:on
 
