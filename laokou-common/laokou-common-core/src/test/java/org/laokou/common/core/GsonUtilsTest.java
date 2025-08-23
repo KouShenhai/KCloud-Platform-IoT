@@ -31,14 +31,14 @@ class GsonUtilsTest {
 
 	@Test
 	void test_gson() throws JsonProcessingException {
-		TestUser user = new TestUser(1L, "laokou");
+		ConvertUtilsTest.User user = new ConvertUtilsTest.User(1L, "laokou");
 		String json = GsonUtils.toPrettyFormat(user);
 		assertThat(json).isEqualTo("""
 				{
 				  "id": 1,
 				  "name": "laokou"
 				}""");
-		TestUser testUser = JacksonUtils.toBean(json, TestUser.class);
+		ConvertUtilsTest.User testUser = JacksonUtils.toBean(json, ConvertUtilsTest.User.class);
 		assertThat(testUser.getId()).isEqualTo(1L);
 		assertThat(testUser.getName()).isEqualTo("laokou");
 	}

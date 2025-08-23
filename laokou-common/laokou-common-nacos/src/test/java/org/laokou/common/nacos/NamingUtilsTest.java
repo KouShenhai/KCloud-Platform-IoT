@@ -26,7 +26,6 @@ import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.alibaba.nacos.api.naming.selector.NamingSelector;
 import com.alibaba.nacos.client.naming.selector.NamingSelectorFactory;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.nacos.util.NamingUtils;
@@ -48,7 +47,6 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
  * @author laokou
  */
 // @formatter:off
-@Slf4j
 @SpringBootTest
 @RequiredArgsConstructor
 @ContextConfiguration(classes = { NamingUtils.class,

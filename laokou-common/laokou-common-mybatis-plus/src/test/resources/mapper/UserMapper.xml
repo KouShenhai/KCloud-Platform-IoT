@@ -33,4 +33,8 @@
     </foreach>
   </delete>
 
+  <delete id="deleteAllUser">
+    truncate t_user
+  </delete>
+
 </mapper>

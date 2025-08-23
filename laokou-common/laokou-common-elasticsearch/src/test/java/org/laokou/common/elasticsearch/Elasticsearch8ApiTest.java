@@ -25,14 +25,12 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.elasticsearch.annotation.*;
 import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.i18n.util.JacksonUtils;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -52,7 +50,6 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 /**
  * @author laokou
  */
-@Slf4j
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
@@ -95,12 +92,10 @@ class Elasticsearch8ApiTest {
 		Search search = new Search(highlight, 1, 10, null);
 		Page<TestResult> results = elasticsearchTemplate.search(List.of("iot_res", "iot_res_1"), search,
 				TestResult.class);
-		log.info("{}", results);
 		assertThat(results).isNotNull();
 		assertThat(results.getTotal() > 0).isTrue();
 		Map<String, IndexState> result = elasticsearchTemplate
 			.getIndex(List.of("iot_res_1", "iot_pro_1", "iot_resp_1"));
-		log.info("索引信息：{}", JacksonUtils.toJsonStr(result));
 		assertThat(result).isNotNull();
 		assertThat(result.isEmpty()).isFalse();
 		assertThatNoException().isThrownBy(

@@ -14,12 +14,6 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-crypto</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.logging.log4j</groupId>
-          <artifactId>log4j-to-slf4j</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
@@ -28,12 +22,6 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
-      <scope>test</scope>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-log4j2</artifactId>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>

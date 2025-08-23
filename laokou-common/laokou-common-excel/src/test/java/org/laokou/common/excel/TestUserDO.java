@@ -15,20 +15,19 @@
  *
  */
 
-package org.laokou.common.algorithm;
+package org.laokou.common.excel;
 
-import org.springframework.boot.WebApplicationType;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 /**
  * @author laokou
  */
-@SpringBootApplication
-class AppTest {
+@Data
+@TableName("t_user")
+class TestUserDO extends BaseDO {
 
-	public static void main(String[] args) {
-		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
-	}
+		private String name;
 
 }

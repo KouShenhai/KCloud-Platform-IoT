@@ -33,4 +33,6 @@ interface TestUserMapper extends CrudMapper<Long, Integer, MybatisUtilsTest.Test
 
 	int deleteTestUser(@Param("ids") List<Long> ids);
 
+	void deleteAllUser();
+
 }

@@ -19,7 +19,6 @@ package org.laokou.common.mybatisplus;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
@@ -35,7 +34,6 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 /**
  * @author laokou
  */
-@Slf4j
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)

@@ -22,10 +22,12 @@ import com.serotonin.modbus4j.exception.ModbusInitException;
 import com.serotonin.modbus4j.exception.ModbusTransportException;
 import com.serotonin.modbus4j.msg.*;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ConvertUtils;
 import org.laokou.common.modbus4j.config.*;
+import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
@@ -34,7 +36,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author laokou
  */
-@Slf4j
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
@@ -88,6 +89,15 @@ class ModbusTest {
 			assertThat(readDiscreteInputsResponse.getBooleanData()[0]).isTrue();
 		}
 		modbus.close();
+	}
+
+	@SpringBootApplication
+	static class AppTest {
+
+		public static void main(String[] args) {
+			new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
+		}
+
 	}
 
 }

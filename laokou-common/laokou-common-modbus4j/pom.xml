@@ -26,12 +26,6 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-log4j2</artifactId>
-      <scope>test</scope>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
       <scope>test</scope>
       <optional>true</optional>

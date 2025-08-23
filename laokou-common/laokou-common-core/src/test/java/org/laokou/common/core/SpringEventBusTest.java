@@ -17,11 +17,14 @@
 
 package org.laokou.common.core;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.SpringEventBus;
 import org.laokou.common.core.util.SpringContextUtils;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 
@@ -35,8 +38,21 @@ import org.springframework.test.context.TestConstructor;
 class SpringEventBusTest {
 
 	@Test
-	void test_publishEvent() {
-		SpringEventBus.publish(new TestEvent(this, "123"));
+	void test_publishLogoutEvent() {
+		SpringEventBus.publish(new LogoutEvent(this, "laokou"));
+	}
+
+	@Getter
+	@Setter
+	static class LogoutEvent extends ApplicationEvent {
+
+		private String username;
+
+		public LogoutEvent(Object source, String username) {
+			super(source);
+			this.username = username;
+		}
+
 	}
 
 }

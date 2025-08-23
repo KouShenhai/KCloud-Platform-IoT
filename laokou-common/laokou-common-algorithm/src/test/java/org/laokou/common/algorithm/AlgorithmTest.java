@@ -16,60 +16,28 @@
  */
 
 package org.laokou.common.algorithm;
-
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.algorithm.template.Algorithm;
 import org.laokou.common.algorithm.template.select.HashAlgorithm;
-import org.laokou.common.algorithm.template.select.RoundRobinAlgorithm;
 import org.laokou.common.algorithm.template.select.RandomAlgorithm;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestConstructor;
-
+import org.laokou.common.algorithm.template.select.RoundRobinAlgorithm;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@Slf4j
-@SpringBootTest
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class AlgorithmTest {
 
 	@Test
 	void test_loadbalancer() {
-		List<OssApi> ossApis = List.of(new TencentcloudOssApi(), new AliyunOssApi());
+		List<Integer> numbers = List.of(1, 2);
 		// 负载均衡【哈希算法】
-		Algorithm algorithm = new HashAlgorithm();
-		algorithm.select(ossApis, ThreadLocalRandom.current().nextInt(0, 10)).upload();
+		assertThat(new HashAlgorithm().select(numbers, 100)).isEqualTo(1);
 		// 负载均衡【轮询算法】
-		algorithm = new RoundRobinAlgorithm();
-		algorithm.select(ossApis, "").upload();
+		assertThat(new RoundRobinAlgorithm().select(numbers, null)).isEqualTo(1);
 		// 负载均衡【随机算法】
-		algorithm = new RandomAlgorithm();
-		algorithm.select(ossApis, "").upload();
+		assertThat(new RandomAlgorithm().select(numbers, null)).satisfiesAnyOf(
+			number -> assertThat(number).isEqualTo(1),
+			number -> assertThat(number).isEqualTo(2)
+		);
 	}
 
-	interface OssApi {
-
-		void upload();
-
-	}
-
-	static class AliyunOssApi implements OssApi {
-
-		@Override
-		public void upload() {
-			log.info("阿里云OSS => 上传文件成功");
-		}
-
-	}
-
-	static class TencentcloudOssApi implements OssApi {
-
-		@Override
-		public void upload() {
-			log.info("腾讯云OSS => 上传文件成功");
-		}
-
-	}
 
 }

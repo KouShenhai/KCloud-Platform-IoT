@@ -21,7 +21,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.DateUtils;
@@ -40,7 +39,6 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 /**
  * @author laokou
  */
-@Slf4j
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
@@ -62,8 +60,9 @@ class MybatisUtilsTest {
 	void test_mybatisPlus() {
 		assertThat(testUserMapper).isNotNull();
 		assertThat(mybatisUtils).isNotNull();
+		assertThatNoException().isThrownBy(testUserMapper::deleteAllUser);
 		assertThatNoException().isThrownBy(
-				() -> mybatisUtils.batch(List.of(getTestUserDO()), TestUserMapper.class, TestUserMapper::insert));
+				() -> mybatisUtils.batch(List.of(getTestUserDO(), getTestUser1DO()), TestUserMapper.class, TestUserMapper::insert));
 		List<TestUserDO> list = testUserMapper.selectList(Wrappers.emptyWrapper());
 		assertThat(list.size()).isEqualTo(2);
 		assertThat(list.stream().map(TestUserDO::getName).anyMatch("张三"::equals)).isTrue();
@@ -97,6 +96,20 @@ class MybatisUtilsTest {
 		testUserDO.setTenantId(0L);
 		testUserDO.setDelFlag(0);
 		testUserDO.setId(8L);
+		return testUserDO;
+	}
+
+	private TestUserDO getTestUser1DO() {
+		TestUserDO testUserDO = new TestUserDO();
+		testUserDO.setName("李四");
+		testUserDO.setCreator(1L);
+		testUserDO.setEditor(1L);
+		testUserDO.setCreateTime(DateUtils.nowInstant());
+		testUserDO.setUpdateTime(DateUtils.nowInstant());
+		testUserDO.setVersion(0);
+		testUserDO.setTenantId(0L);
+		testUserDO.setDelFlag(0);
+		testUserDO.setId(20L);
 		return testUserDO;
 	}
 

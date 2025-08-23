@@ -29,8 +29,10 @@ import java.util.List;
  */
 @Mapper
 @Repository
-interface TestUserMapper extends CrudMapper<Long, Integer, ExcelTest.TestUserDO> {
+interface TestUserMapper extends CrudMapper<Long, Integer, TestUserDO> {
 
 	void deleteUser(@Param("ids") List<Long> ids);
+
+	void deleteAllUser();
 
 }

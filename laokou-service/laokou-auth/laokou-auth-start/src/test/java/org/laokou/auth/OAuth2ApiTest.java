@@ -32,6 +32,7 @@ import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
+import org.laokou.common.trace.util.MDCUtils;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;

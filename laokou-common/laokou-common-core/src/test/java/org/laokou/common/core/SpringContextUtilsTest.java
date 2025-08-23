@@ -17,12 +17,15 @@
 
 package org.laokou.common.core;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.SpringContextUtils;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 
@@ -40,7 +43,7 @@ class SpringContextUtilsTest {
 
 	@Test
 	void test_publishEvent() {
-		SpringContextUtils.publishEvent(new TestEvent(this, "456"));
+		SpringContextUtils.publishEvent(new LoginEvent(this, "laokou"));
 	}
 
 	@Test
@@ -72,6 +75,19 @@ class SpringContextUtilsTest {
 			.isEqualTo(SpringContextUtils.getBean("testEventListener", TestEventListener.class));
 		assertThat(SpringContextUtils.getBean("testEventListener"))
 			.isEqualTo(SpringContextUtils.getBeansOfType(TestEventListener.class).get("testEventListener"));
+	}
+
+	@Getter
+	@Setter
+	static class LoginEvent extends ApplicationEvent {
+
+		private String username;
+
+		public LoginEvent(Object source, String username) {
+			super(source);
+			this.username = username;
+		}
+
 	}
 
 }

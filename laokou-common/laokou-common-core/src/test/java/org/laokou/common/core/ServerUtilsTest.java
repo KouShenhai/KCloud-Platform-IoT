@@ -18,7 +18,6 @@
 package org.laokou.common.core;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ServerUtils;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,7 +30,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author laokou
  */
-@Slf4j
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
@@ -40,7 +38,6 @@ class ServerUtilsTest {
 	@Test
 	void test_getServerInfo() throws UnknownHostException {
 		ServerUtils.Server serverInfo = ServerUtils.getServerInfo();
-		log.info("获取系统参数：{}", serverInfo);
 		assertThat(serverInfo.getSys().getOsName()).isEqualTo("Windows 11");
 		assertThat(serverInfo.getSys().getOsArch()).isEqualTo("amd64");
 	}

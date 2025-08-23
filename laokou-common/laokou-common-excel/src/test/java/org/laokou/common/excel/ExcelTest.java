@@ -17,17 +17,14 @@
 
 package org.laokou.common.excel;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.excel.util.ExcelUtils;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.i18n.util.ResourceUtils;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
@@ -42,7 +39,6 @@ import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 /**
  * @author laokou
  */
-@Slf4j
 @SpringBootTest
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
@@ -55,6 +51,20 @@ class ExcelTest {
 	@Test
 	void test_exportExcel() {
 		assertThat(testUserMapper).isNotNull();
+		assertThatNoException().isThrownBy(testUserMapper::deleteAllUser);
+		assertThatNoException().isThrownBy(() -> {
+			TestUserDO testUserDO = new TestUserDO();
+			testUserDO.setName("老寇");
+			testUserDO.setId(1L);
+			testUserDO.setCreator(1L);
+			testUserDO.setEditor(1L);
+			testUserDO.setCreateTime(DateUtils.nowInstant());
+			testUserDO.setUpdateTime(DateUtils.nowInstant());
+			testUserDO.setVersion(0);
+			testUserDO.setTenantId(0L);
+			testUserDO.setDelFlag(0);
+			testUserMapper.insert(testUserDO);
+		});
 		List<TestUserDO> list = testUserMapper.selectList(Wrappers.emptyWrapper());
 		assertThat(list.size()).isEqualTo(1);
 		assertThat(list.stream().map(TestUserDO::getName).toList().contains("老寇")).isTrue();
@@ -79,14 +89,6 @@ class ExcelTest {
 		assertThatNoException().isThrownBy(() -> testUserMapper.deleteUser(List.of(2L, 3L, 4L, 5L, 6L, 7L)));
 		count = testUserMapper.selectObjectCount(new PageQuery());
 		assertThat(count).isEqualTo(1);
-	}
-
-	@Data
-	@TableName("t_user")
-	public static class TestUserDO extends BaseDO {
-
-		private String name;
-
 	}
 
 }

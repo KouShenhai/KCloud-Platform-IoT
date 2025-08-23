@@ -20,7 +20,6 @@ package org.laokou.common.trace.util;
 import io.micrometer.tracing.TraceContext;
 import io.micrometer.tracing.Tracer;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.util.MDCUtils;
 import org.springframework.stereotype.Component;
 
 /**

@@ -133,12 +133,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-log4j2</artifactId>
-      <optional>true</optional>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>com.squareup.okhttp3</groupId>
       <artifactId>okhttp</artifactId>
     </dependency>

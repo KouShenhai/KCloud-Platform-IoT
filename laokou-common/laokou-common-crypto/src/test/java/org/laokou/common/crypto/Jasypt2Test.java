@@ -17,7 +17,6 @@
 
 package org.laokou.common.crypto;
 
-import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
 import org.junit.jupiter.api.Test;
@@ -30,7 +29,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author laokou
  */
-@Slf4j
 @SpringBootTest
 class Jasypt2Test {
 
@@ -40,8 +38,6 @@ class Jasypt2Test {
 		String plainText = "laokou123";
 		String encryptWithMD5AndDESStr = encryptWithMD5AndDES(plainText, factor);
 		String decryptWithMD5AndDESStr = decryptWithMD5AndDES(encryptWithMD5AndDESStr, factor);
-		log.info("采用PBEWithMD5AndDES加密后：{}", encryptWithMD5AndDESStr);
-		log.info("采用PBEWithMD5AndDES解密后：{}", decryptWithMD5AndDESStr);
 		assertThat(decryptWithMD5AndDESStr).isEqualTo(plainText);
 	}
 

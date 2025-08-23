@@ -15,22 +15,27 @@
  *
  */
 
-package org.laokou.common.graalvmjs;
+package org.laokou.common.trace;
 
-import org.springframework.boot.WebApplicationType;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.trace.util.MDCUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
  * @author laokou
  */
-@EnableConfigurationProperties
-@SpringBootApplication(scanBasePackages = "org.laokou")
-class AppTest {
+class MDCUtilsTest {
 
-	public static void main(String[] args) {
-		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
+	@Test
+	void test_mdc() {
+		MDCUtils.put("111", "222");
+		assertThat(MDCUtils.getTraceId()).isEqualTo("111");
+		assertThat(MDCUtils.getSpanId()).isEqualTo("222");
+		assertThatNoException().isThrownBy(MDCUtils::clear);
+		assertThat(MDCUtils.getTraceId()).isBlank();
+		assertThat(MDCUtils.getSpanId()).isBlank();
 	}
 
 }

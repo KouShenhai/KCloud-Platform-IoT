@@ -16,20 +16,22 @@
  */
 
 package org.laokou.common.core;
-
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.util.JacksonUtils;
 import org.springframework.context.event.EventListener;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
  */
-@Slf4j
 class TestEventListener {
 
 	@EventListener
-	public void onEvent(TestEvent event) {
-		log.info("接收事件：{}", JacksonUtils.toJsonStr(event));
+	public void onLogoutEvent(SpringEventBusTest.LogoutEvent event) {
+		assertThat(event.getUsername()).isEqualTo("laokou");
+	}
+
+	@EventListener
+	public void onLoginEvent(SpringContextUtilsTest.LoginEvent event) {
+		assertThat(event.getUsername()).isEqualTo("laokou");
 	}
 
 }

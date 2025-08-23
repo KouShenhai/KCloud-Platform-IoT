@@ -17,7 +17,9 @@
 
 package org.laokou.common.core;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ConvertUtils;
 
@@ -33,12 +35,12 @@ class ConvertUtilsTest {
 
 	@Test
 	void test_convert() {
-		TestUser testUser = new TestUser(1L, "laokou");
+		User testUser = new User(1L, "laokou");
 		User user = ConvertUtils.sourceToTarget(testUser, User.class);
 		assertThat(user).isNotNull();
 		assertThat(user.getId()).isEqualTo(testUser.getId());
 		assertThat(user.getName()).isEqualTo(testUser.getName());
-		TestUser testUser2 = new TestUser(2L, "老寇");
+		User testUser2 = new User(2L, "老寇");
 		List<User> userList = ConvertUtils.sourceToTarget(List.of(testUser2), User.class);
 		assertThat(userList.size()).isEqualTo(1);
 		assertThat(userList.getFirst().getId()).isEqualTo(testUser2.getId());
@@ -46,6 +48,8 @@ class ConvertUtilsTest {
 	}
 
 	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
 	static class User implements Serializable {
 
 		private Long id;

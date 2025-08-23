@@ -23,8 +23,8 @@ import org.apache.dubbo.rpc.*;
 import org.laokou.common.core.util.SpringContextUtils;
 import org.laokou.common.trace.util.TraceUtils;
 
-import static org.laokou.common.core.util.MDCUtils.SPAN_ID;
-import static org.laokou.common.core.util.MDCUtils.TRACE_ID;
+import static org.laokou.common.trace.util.MDCUtils.SPAN_ID;
+import static org.laokou.common.trace.util.MDCUtils.TRACE_ID;
 
 /**
  * @author laokou

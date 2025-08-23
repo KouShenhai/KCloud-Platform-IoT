@@ -20,11 +20,11 @@ package org.laokou.common.dubbo.filter;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
-import org.laokou.common.core.util.MDCUtils;
+import org.laokou.common.trace.util.MDCUtils;
 import java.util.function.Supplier;
 
-import static org.laokou.common.core.util.MDCUtils.SPAN_ID;
-import static org.laokou.common.core.util.MDCUtils.TRACE_ID;
+import static org.laokou.common.trace.util.MDCUtils.SPAN_ID;
+import static org.laokou.common.trace.util.MDCUtils.TRACE_ID;
 
 /**
  * @author laokou
