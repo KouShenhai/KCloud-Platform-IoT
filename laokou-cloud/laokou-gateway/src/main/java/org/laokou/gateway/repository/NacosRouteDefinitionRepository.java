@@ -28,14 +28,11 @@ import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.data.redis.core.ReactiveHashOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
 import java.util.Collection;
 import java.util.Map;
 
@@ -50,10 +47,9 @@ import static org.laokou.gateway.constant.GatewayConstants.ROUTER_NOT_EXIST;
  */
 // @formatter:on
 @Slf4j
-@Component
 @NonNullApi
 @Repository
-public class NacosRouteDefinitionRepository implements RouteDefinitionRepository, ApplicationEventPublisherAware {
+public class NacosRouteDefinitionRepository implements RouteDefinitionRepository {
 
 	static {
 		ForyFactory.INSTANCE.register(org.springframework.cloud.gateway.route.RouteDefinition.class);
@@ -70,12 +66,14 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	private final ReactiveHashOperations<String, String, RouteDefinition> reactiveHashOperations;
 
-	private ApplicationEventPublisher applicationEventPublisher;
+	private final ApplicationEventPublisher applicationEventPublisher;
 
 	public NacosRouteDefinitionRepository(ConfigUtils configUtils,
-			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
+			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate,
+										  ApplicationEventPublisher applicationEventPublisher) {
 		this.configUtils = configUtils;
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
+		this.applicationEventPublisher = applicationEventPublisher;
 	}
 
 	// @formatter:off
@@ -102,7 +100,6 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	}
 	// @formatter:on
 
-	// @formatter:off
 	@Override
 	public Mono<Void> save(Mono<RouteDefinition> route) {
 		return Mono.empty();
@@ -114,26 +111,21 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	}
 
 	/**
-	 * 保存路由【同步Nacos路由配置到Redis】.
-	 * @return 保存结果
+	 * 同步路由【同步Nacos动态路由配置到Redis，并且刷新本地缓存】.
+	 * @return 同步结果
 	 */
-	public Flux<Boolean> saveRouters() {
-		return Flux.fromIterable(pullRouters())
-			.flatMap(router -> reactiveHashOperations.put(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router))
-			.doOnError(throwable -> log.error("保存路由失败，错误信息：{}", throwable.getMessage(), throwable))
-			.doOnNext(c -> refreshEvent());
-	}
-
-	/**
-	 * 删除路由.
-	 * @return 删除结果
-	 */
-	public Mono<Boolean> removeRouters() {
+	public Mono<Void> syncRouters() {
 		return reactiveHashOperations.delete(RedisKeyUtils.getRouteDefinitionHashKey())
 			.doOnError(throwable -> log.error("删除路由失败，错误信息：{}", throwable.getMessage(), throwable))
-			.doOnNext(c -> refreshEvent());
+			.doOnSuccess(c -> refreshEvent())
+			.thenMany(Flux.fromIterable(pullRouters()))
+			.flatMap(router -> reactiveHashOperations.putIfAbsent(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router)
+				.doOnError(throwable -> log.error("保存路由失败，错误信息：{}", throwable.getMessage(), throwable)))
+			.then()
+			.doOnSuccess(c -> refreshEvent());
 	}
 
+	// @formatter:off
 	/**
 	 * 拉取nacos动态路由配置.
 	 * @return 拉取结果
@@ -149,11 +141,6 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			log.error("动态路由【API网关】不存在，错误信息：{}", e.getMessage(), e);
 			throw new SystemException(ROUTER_NOT_EXIST);
 		}
-	}
-
-	@Override
-	public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
-		this.applicationEventPublisher = applicationEventPublisher;
 	}
 
 	/**

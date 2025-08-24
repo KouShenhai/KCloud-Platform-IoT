@@ -89,10 +89,10 @@ public class GatewayApp implements CommandLineRunner {
 	}
 
 	private void syncRouters() {
-		// 删除路由
-		// nacosRouteDefinitionRepository.removeRouters().subscribeOn(Schedulers.boundedElastic()).subscribe();
-		// 保存路由
-		nacosRouteDefinitionRepository.saveRouters().subscribeOn(Schedulers.boundedElastic()).subscribe();
+		// 同步路由
+		nacosRouteDefinitionRepository.syncRouters()
+			.subscribeOn(Schedulers.boundedElastic())
+			.subscribe();
 	}
 	// @formatter:on
 
