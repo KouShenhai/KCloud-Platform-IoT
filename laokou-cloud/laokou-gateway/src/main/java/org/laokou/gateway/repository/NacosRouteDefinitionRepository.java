@@ -117,12 +117,12 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	public Mono<Void> syncRouters() {
 		return reactiveHashOperations.delete(RedisKeyUtils.getRouteDefinitionHashKey())
 			.doOnError(throwable -> log.error("删除路由失败，错误信息：{}", throwable.getMessage(), throwable))
-			.doOnSuccess(c -> refreshEvent())
+			.doOnSuccess(removeFlag -> refreshEvent())
 			.thenMany(Flux.fromIterable(pullRouters()))
 			.flatMap(router -> reactiveHashOperations.putIfAbsent(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router)
 				.doOnError(throwable -> log.error("保存路由失败，错误信息：{}", throwable.getMessage(), throwable)))
 			.then()
-			.doOnSuccess(c -> refreshEvent());
+			.doOnSuccess(saveFlag -> refreshEvent());
 	}
 
 	// @formatter:off
