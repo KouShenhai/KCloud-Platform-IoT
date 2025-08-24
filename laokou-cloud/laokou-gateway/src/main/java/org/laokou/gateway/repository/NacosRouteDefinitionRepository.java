@@ -17,25 +17,35 @@
 
 package org.laokou.gateway.repository;
 
+import com.alibaba.nacos.api.config.listener.Listener;
+import com.alibaba.nacos.api.exception.NacosException;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.util.SpringContextUtils;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.nacos.util.ConfigUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.core.ReactiveHashOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
+
+import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.laokou.gateway.constant.GatewayConstants.ROUTER_NOT_EXIST;
 
 // @formatter:off
@@ -57,23 +67,38 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		ForyFactory.INSTANCE.register(org.springframework.cloud.gateway.handler.predicate.PredicateDefinition.class);
 	}
 
-	/**
-	 * 动态路由配置.
-	 */
-	private static final String DATA_ID = "router.json";
+	private final String dataId = "router.json";
 
 	private final ConfigUtils configUtils;
 
 	private final ReactiveHashOperations<String, String, RouteDefinition> reactiveHashOperations;
 
-	private final ApplicationEventPublisher applicationEventPublisher;
+	private final ExecutorService virtualThreadExecutor;
 
 	public NacosRouteDefinitionRepository(ConfigUtils configUtils,
-			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate,
-										  ApplicationEventPublisher applicationEventPublisher) {
+										  ReactiveRedisTemplate<String, Object> reactiveRedisTemplate,
+										  ExecutorService virtualThreadExecutor) {
 		this.configUtils = configUtils;
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
-		this.applicationEventPublisher = applicationEventPublisher;
+		this.virtualThreadExecutor = virtualThreadExecutor;
+	}
+
+	@PostConstruct
+	public void listenRouter() throws NacosException {
+		configUtils.addListener(dataId, configUtils.getGroup(), new Listener() {
+			@Override
+			public Executor getExecutor() {
+				return Executors.newSingleThreadExecutor();
+			}
+
+			@Override
+			public void receiveConfigInfo(String routes) {
+				log.info("监听路由配置信息，开始同步路由配置：{}", routes);
+				virtualThreadExecutor.execute(() -> syncRouter(getRoutes(routes))
+					.subscribeOn(Schedulers.boundedElastic())
+					.subscribe());
+			}
+		});
 	}
 
 	// @formatter:off
@@ -114,28 +139,44 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * 同步路由【同步Nacos动态路由配置到Redis，并且刷新本地缓存】.
 	 * @return 同步结果
 	 */
-	public Mono<Void> syncRouters() {
+	public Mono<Void> syncRouter() {
+		return syncRouter(getRoutes());
+	}
+
+	/**
+	 * 同步路由【同步Nacos动态路由配置到Redis，并且刷新本地缓存】.
+	 * @param routes 路由
+	 * @return 同步结果
+	 */
+	private Mono<Void> syncRouter(Collection<RouteDefinition> routes) {
 		return reactiveHashOperations.delete(RedisKeyUtils.getRouteDefinitionHashKey())
 			.doOnError(throwable -> log.error("删除路由失败，错误信息：{}", throwable.getMessage(), throwable))
-			.doOnSuccess(removeFlag -> refreshEvent())
-			.thenMany(Flux.fromIterable(pullRouters()))
+			.doOnSuccess(removeFlag -> publishRefreshRoutesEvent())
+			.thenMany(Flux.fromIterable(routes))
 			.flatMap(router -> reactiveHashOperations.putIfAbsent(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router)
 				.doOnError(throwable -> log.error("保存路由失败，错误信息：{}", throwable.getMessage(), throwable)))
 			.then()
-			.doOnSuccess(saveFlag -> refreshEvent());
+			.doOnSuccess(saveFlag -> publishRefreshRoutesEvent());
 	}
 
 	// @formatter:off
 	/**
-	 * 拉取nacos动态路由配置.
+	 * 获取nacos动态路由配置.
 	 * @return 拉取结果
 	 */
-	private Collection<RouteDefinition> pullRouters() {
+	private Collection<RouteDefinition> getRoutes() {
+		return getRoutes(EMPTY);
+	}
+
+	/**
+	 * 获取nacos动态路由配置.
+	 * @param str 路由配置
+	 * @return 拉取结果
+	 */
+	private Collection<RouteDefinition> getRoutes(String str) {
 		try {
-			// pull nacos config info
-			String group = configUtils.getGroup();
-			String configInfo = configUtils.getConfig(DATA_ID, group, 5000);
-			return JacksonUtils.toList(configInfo, RouteDefinition.class);
+			String routes = StringUtils.isEmpty(str) ? configUtils.getConfig(dataId, configUtils.getGroup(), 5000) : str;
+			return JacksonUtils.toList(routes, RouteDefinition.class);
 		}
 		catch (Exception e) {
 			log.error("动态路由【API网关】不存在，错误信息：{}", e.getMessage(), e);
@@ -146,9 +187,9 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	/**
 	 * 刷新事件.
 	 */
-	private void refreshEvent() {
+	private void publishRefreshRoutesEvent() {
 		// 刷新事件
-		applicationEventPublisher.publishEvent(new RefreshRoutesEvent(this));
+		SpringContextUtils.publishEvent(new RefreshRoutesEvent(this));
 	}
 	// @formatter:on
 

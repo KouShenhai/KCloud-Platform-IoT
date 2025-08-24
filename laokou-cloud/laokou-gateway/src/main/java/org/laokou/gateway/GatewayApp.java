@@ -35,6 +35,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.util.StopWatch;
 import reactor.core.publisher.Hooks;
 import reactor.core.scheduler.Schedulers;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
@@ -84,15 +85,10 @@ public class GatewayApp implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		// 同步路由
-		virtualThreadExecutor.execute(this::syncRouters);
-	}
-
-	private void syncRouters() {
-		// 同步路由
-		nacosRouteDefinitionRepository.syncRouters()
+		// 执行同步路由任务
+		virtualThreadExecutor.execute(() -> nacosRouteDefinitionRepository.syncRouter()
 			.subscribeOn(Schedulers.boundedElastic())
-			.subscribe();
+			.subscribe());
 	}
 	// @formatter:on
 
