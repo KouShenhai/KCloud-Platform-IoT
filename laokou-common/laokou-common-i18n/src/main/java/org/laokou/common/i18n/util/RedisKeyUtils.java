@@ -33,10 +33,6 @@ public final class RedisKeyUtils {
 		return "auth:username-password:captcha:" + uuid;
 	}
 
-	public static String getMenuKey(String token) {
-		return "menu:user:" + token;
-	}
-
 	/**
 	 * 布隆过滤器Key.
 	 */
@@ -73,14 +69,6 @@ public final class RedisKeyUtils {
 	 */
 	public static String getRouteDefinitionHashKey() {
 		return "route:definition";
-	}
-
-	/**
-	 * IP缓存Key.
-	 * @param type 类型
-	 */
-	public static String getIpCacheHashKey(String type) {
-		return "ip:cache:" + type;
 	}
 
 }
