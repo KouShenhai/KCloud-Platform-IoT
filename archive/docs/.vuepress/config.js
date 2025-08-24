@@ -112,7 +112,7 @@ module.exports = {
 							{text: '一键生成后端COLA代码', link: '/pages/889fdb/'},
 							{text: '分布式链路跟踪之ELK日志', link: '/pages/fe2754/'},
 							{text: '一键检查代码规范', link: '/pages/cf6984/'},
-							{text: '动态路由', link: '/pages/4bce44/'}
+							{text: 'Spring Cloud Gateway+Redis+Nacos之动态路由和负载均衡', link: '/pages/4bce44/'}
 						]
 					},
 					{
