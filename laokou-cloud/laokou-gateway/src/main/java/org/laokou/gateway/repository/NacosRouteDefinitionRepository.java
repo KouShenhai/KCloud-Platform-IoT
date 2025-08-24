@@ -85,6 +85,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	@PostConstruct
 	public void listenRouter() throws NacosException {
+		log.info("开始监听路由配置信息");
 		configUtils.addListener(dataId, configUtils.getGroup(), new Listener() {
 			@Override
 			public Executor getExecutor() {
