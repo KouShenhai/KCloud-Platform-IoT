@@ -140,7 +140,8 @@ module.exports = {
 							{text: '物联网之常见网络配置', link: '/pages/9d20f6/'},
 							{text: 'Go之封装Http请求和日志', link: '/pages/673aba/'},
 							{text: '物联网之小白调试网关设备', link: '/pages/7a9112/'},
-							{text: '微服务之注册中心与ShardingSphere关于分库分表的那些事', link: '/pages/b69179/'}
+							{text: '微服务之注册中心与ShardingSphere关于分库分表的那些事', link: '/pages/b69179/'},
+							{text: 'Fory序列化与反序列化', link: '/pages/6acecd/'}
 						]
 					},
 					{

@@ -26,7 +26,7 @@ import org.laokou.common.fory.config.ForyFactory;
 /**
  * @author laokou
  */
-public class ForySchema extends AbstractSchema<Object> {
+public final class ForySchema extends AbstractSchema<Object> {
 
 	public static final ForySchema INSTANCE = new ForySchema();
 
