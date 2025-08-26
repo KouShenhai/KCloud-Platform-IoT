@@ -19,6 +19,7 @@ package org.laokou.common.dubbo.filter;
 
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
+import org.apache.dubbo.common.utils.StringUtils;
 import org.apache.dubbo.rpc.*;
 import org.laokou.common.trace.util.MDCUtils;
 import java.util.function.Supplier;
@@ -38,11 +39,17 @@ public class DubboTraceProviderFilter implements Filter {
 	}
 
 	private Result invoke(RpcContextAttachment rpcContextAttachment, Supplier<Result> supplier) {
-		try {
-			MDCUtils.put(rpcContextAttachment.getAttachment(TRACE_ID), rpcContextAttachment.getAttachment(SPAN_ID));
+		String traceId = rpcContextAttachment.getAttachment(TRACE_ID);
+		String spanId = rpcContextAttachment.getAttachment(SPAN_ID);
+		if (StringUtils.isNotBlank(traceId) && StringUtils.isNotBlank(spanId)) {
+			try {
+				MDCUtils.put(traceId, spanId);
+				return supplier.get();
+			} finally {
+				MDCUtils.clear();
+			}
+		} else {
 			return supplier.get();
-		} finally {
-			MDCUtils.clear();
 		}
 	}
 

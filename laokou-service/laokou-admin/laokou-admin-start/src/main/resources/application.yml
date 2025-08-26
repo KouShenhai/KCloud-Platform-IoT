@@ -19,6 +19,8 @@ jasypt:
     password: @JASYPT-ENCRYPTOR-PASSWORD@
 server:
   port: ${SERVER_PORT:9990}
+  compression:
+    enabled: true
   ssl:
     # 开启证书
     enabled: @SSL-ENABLED@
