@@ -29,6 +29,7 @@ spring:
         version: 3.5.4
         type: ASYNC
         instructions: "IoT intelligent assistant, providing tools, resources, and services for IoT developers."
+        sse-endpoint: /sse
         sse-message-endpoint: /mcp/iot/messages/
         capabilities:
           tool: true
