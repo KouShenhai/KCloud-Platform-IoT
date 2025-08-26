@@ -23,6 +23,7 @@ spring:
           password: @NACOS-PASSWORD@
           register:
             service-group: @NACOS-GROUP@
+            service-name: ${spring.application.name}-iot-server
     mcp:
       server:
         name: ${spring.application.name}-iot-server
