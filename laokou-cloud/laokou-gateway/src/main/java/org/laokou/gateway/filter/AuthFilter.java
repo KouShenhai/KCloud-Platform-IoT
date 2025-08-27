@@ -24,7 +24,7 @@ import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.SpringUtils;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.nacos.util.ReactiveResponseUtils;
+import org.laokou.common.reactor.util.ReactiveResponseUtils;
 import org.laokou.gateway.util.ReactiveI18nUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -39,10 +39,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
-import static org.laokou.common.nacos.util.ReactiveRequestUtils.getMethodName;
-import static org.laokou.common.nacos.util.ReactiveRequestUtils.getParamValue;
-import static org.laokou.common.nacos.util.ReactiveRequestUtils.getRequestURL;
-import static org.laokou.common.nacos.util.ReactiveRequestUtils.pathMatcher;
+import static org.laokou.common.reactor.util.ReactiveRequestUtils.getMethodName;
+import static org.laokou.common.reactor.util.ReactiveRequestUtils.getParamValue;
+import static org.laokou.common.reactor.util.ReactiveRequestUtils.getRequestURL;
+import static org.laokou.common.reactor.util.ReactiveRequestUtils.pathMatcher;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 /**

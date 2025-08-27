@@ -27,7 +27,7 @@ import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.model.UserOperateTypeEnum;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.mybatisplus.util.UserDetails;
+import org.laokou.common.context.util.UserDetails;
 import org.laokou.common.sensitive.util.SensitiveUtils;
 import java.util.ArrayList;
 import java.util.Collections;

@@ -21,8 +21,8 @@ import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
 import net.sf.jsqlparser.schema.Column;
+import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.mybatisplus.util.UserUtils;
 
 import java.util.List;
 import java.util.Set;

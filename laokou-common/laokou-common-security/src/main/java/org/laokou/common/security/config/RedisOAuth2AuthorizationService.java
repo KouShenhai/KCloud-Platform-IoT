@@ -57,8 +57,6 @@ import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParamet
 @RequiredArgsConstructor
 public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationService {
 
-	public static final String FULL = "full";
-
 	// @formatter:off
 	// 模仿JdbcRegisteredClientRepository ObjectMapper#registerModules
 	private static final ObjectMapper MAPPER = new ObjectMapper()
@@ -128,7 +126,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 				redisOAuth2AuthorizationRepository.findByUserCodeValue(token).map(this::parse).orElse(null);
 			case DEVICE_CODE ->
 				redisOAuth2AuthorizationRepository.findByDeviceCodeValue(token).map(this::parse).orElse(null);
-			case FULL -> redisOAuth2AuthorizationRepository.findByAccessTokenValue(token)
+			default -> redisOAuth2AuthorizationRepository.findByAccessTokenValue(token)
 				.or(() -> redisOAuth2AuthorizationRepository.findByAuthorizationCodeValue(token))
 				.or(() -> redisOAuth2AuthorizationRepository.findByOidcIdTokenValue(token))
 				.or(() -> redisOAuth2AuthorizationRepository.findByDeviceCodeValue(token))
@@ -137,7 +135,6 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 				.or(() -> redisOAuth2AuthorizationRepository.findByState(token))
 				.map(this::parse)
 				.orElse(null);
-			default -> null;
 		};
 	}
 

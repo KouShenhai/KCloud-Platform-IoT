@@ -27,6 +27,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -35,7 +36,6 @@ import java.security.Principal;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.laokou.common.security.config.GlobalOpaqueTokenIntrospector.FULL;
 
 /**
  * @author laokou
@@ -54,7 +54,7 @@ class CommonTest {
 	@BeforeEach
 	void setUp() throws JsonProcessingException {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(getToken(), FULL);
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(getToken(), OAuth2TokenType.ACCESS_TOKEN);
 		assertThat(authorization).isNotNull();
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = authorization
 			.getAttribute(Principal.class.getName());

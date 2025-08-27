@@ -18,7 +18,7 @@
 package org.laokou.common.security.config;
 
 import org.laokou.common.fory.config.ForyFactory;
-import org.laokou.common.mybatisplus.util.UserDetails;
+import org.laokou.common.context.util.UserDetails;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;

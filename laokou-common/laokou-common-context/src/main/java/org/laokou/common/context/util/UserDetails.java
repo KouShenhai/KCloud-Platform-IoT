@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.mybatisplus.util;
+package org.laokou.common.context.util;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,6 +30,7 @@ import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;

@@ -5,16 +5,24 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.laokou</groupId>
-    <artifactId>laokou-mqtt-server</artifactId>
+    <artifactId>laokou-common</artifactId>
     <version>3.5.4-SNAPSHOT</version>
   </parent>
 
-  <artifactId>laokou-mqtt-server-client</artifactId>
+  <artifactId>laokou-common-context</artifactId>
 
   <dependencies>
     <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-reactor</artifactId>
+      <artifactId>laokou-common-crypto</artifactId>
     </dependency>
   </dependencies>
 

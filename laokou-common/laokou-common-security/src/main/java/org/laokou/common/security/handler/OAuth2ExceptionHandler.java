@@ -22,10 +22,13 @@ import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.MessageUtils;
+import org.laokou.common.reactor.util.ReactiveResponseUtils;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 
@@ -66,6 +69,26 @@ public class OAuth2ExceptionHandler {
 		if (ex instanceof InsufficientAuthenticationException) {
 			ResponseUtils.responseOk(response, Result.fail(StatusCode.UNAUTHORIZED));
 		}
+	}
+
+	public static Mono<Void> handleAccessDenied(ServerWebExchange exchange, Throwable ex) {
+		if (ex instanceof AccessDeniedException) {
+			return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.FORBIDDEN));
+		}
+		return Mono.error(ex);
+	}
+
+	public static Mono<Void> handleAuthentication(ServerWebExchange exchange, Throwable ex) {
+		if (ex instanceof OAuth2AuthenticationException authenticationException) {
+			OAuth2Error error = authenticationException.getError();
+			String code = error.getErrorCode();
+			String msg = error.getDescription();
+			return ReactiveResponseUtils.responseOk(exchange, Result.fail(code, msg));
+		}
+		if (ex instanceof InsufficientAuthenticationException) {
+			return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.UNAUTHORIZED));
+		}
+		return Mono.error(ex);
 	}
 
 }

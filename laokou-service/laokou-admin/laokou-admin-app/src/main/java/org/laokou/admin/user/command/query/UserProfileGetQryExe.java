@@ -19,8 +19,8 @@ package org.laokou.admin.user.command.query;
 
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
+import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.mybatisplus.util.UserUtils;
 import org.springframework.stereotype.Component;
 
 /**

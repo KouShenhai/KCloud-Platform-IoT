@@ -23,7 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
-import org.laokou.common.mybatisplus.util.UserDetails;
+import org.laokou.common.context.util.UserDetails;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
@@ -44,9 +45,8 @@ import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getOAuth
 @Slf4j
 @NonNullApi
 @RequiredArgsConstructor
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
-
-	public static final OAuth2TokenType FULL = new OAuth2TokenType(RedisOAuth2AuthorizationService.FULL);
 
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 
@@ -54,7 +54,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 	@Override
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
 		// 低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
-		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, FULL);
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
 		if (ObjectUtils.isNull(authorization)) {
 			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED);
 		}

@@ -21,7 +21,7 @@ import io.netty.channel.Channel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.EnumParser;
-import org.laokou.common.mybatisplus.util.UserDetails;
+import org.laokou.common.context.util.UserDetails;
 import org.laokou.common.websocket.config.WebSocketSessionHeartBeatManager;
 import org.laokou.common.websocket.config.WebSocketSessionManager;
 

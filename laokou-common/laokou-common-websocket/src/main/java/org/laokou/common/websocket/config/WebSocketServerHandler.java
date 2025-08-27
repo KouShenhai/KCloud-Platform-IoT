@@ -33,7 +33,7 @@ import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
-import org.laokou.common.mybatisplus.util.UserDetails;
+import org.laokou.common.context.util.UserDetails;
 import org.laokou.common.websocket.model.WebSocketMessageCO;
 import org.laokou.common.websocket.model.WebSocketTypeEnum;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;

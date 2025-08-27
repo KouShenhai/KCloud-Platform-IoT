@@ -19,7 +19,7 @@ package org.laokou.gateway.util;
 
 import org.laokou.common.i18n.util.LocaleUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.nacos.util.ReactiveRequestUtils;
+import org.laokou.common.reactor.util.ReactiveRequestUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;

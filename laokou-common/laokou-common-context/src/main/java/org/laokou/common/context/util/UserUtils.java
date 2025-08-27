@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.mybatisplus.util;
+package org.laokou.common.context.util;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

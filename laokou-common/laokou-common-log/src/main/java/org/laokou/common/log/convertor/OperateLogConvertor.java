@@ -18,12 +18,12 @@
 package org.laokou.common.log.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.log.factory.DomainFactory;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.laokou.common.log.handler.event.OperateEvent;
 import org.laokou.common.log.model.OperateLogA;
-import org.laokou.common.mybatisplus.util.UserUtils;
 
 public final class OperateLogConvertor {
 

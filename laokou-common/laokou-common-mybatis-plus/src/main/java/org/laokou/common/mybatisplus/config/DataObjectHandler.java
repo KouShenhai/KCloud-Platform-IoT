@@ -20,8 +20,8 @@ package org.laokou.common.mybatisplus.config;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
+import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.i18n.util.DateUtils;
-import org.laokou.common.mybatisplus.util.UserUtils;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import java.time.Instant;
 

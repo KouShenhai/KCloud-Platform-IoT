@@ -91,6 +91,10 @@
       <artifactId>jsqlparser</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-context</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.github.ulisesbocchio</groupId>
       <artifactId>jasypt-spring-boot-starter</artifactId>
       <optional>true</optional>
@@ -107,14 +111,6 @@
       <artifactId>spring-boot-starter-web</artifactId>
       <optional>true</optional>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-oauth2-core</artifactId>
     </dependency>
   </dependencies>
 </project>

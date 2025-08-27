@@ -18,8 +18,8 @@
 package org.laokou.common.ratelimiter.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.core.util.IpUtils;
-import org.laokou.common.mybatisplus.util.UserUtils;
 
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 

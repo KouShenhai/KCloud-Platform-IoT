@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.nacos.util;
+package org.laokou.common.reactor.util;
 
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.i18n.util.StringUtils;
@@ -25,8 +25,6 @@ import org.springframework.util.AntPathMatcher;
 
 import java.util.Map;
 import java.util.Set;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 响应式请求工具类.
@@ -50,7 +48,7 @@ public class ReactiveRequestUtils {
 		if (StringUtils.isEmpty(paramValue)) {
 			paramValue = request.getQueryParams().getFirst(paramName);
 		}
-		return StringUtils.isEmpty(paramValue) ? EMPTY : paramValue.trim();
+		return StringUtils.isEmpty(paramValue) ? "" : paramValue.trim();
 	}
 
 	/**
