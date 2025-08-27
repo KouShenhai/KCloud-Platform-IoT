@@ -141,7 +141,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 	private OAuth2Authorization parse(RedisOAuth2Authorization redisOAuth2Authorization) {
 		RegisteredClient registeredClient = registeredClientRepository
 			.findByClientId(redisOAuth2Authorization.getRegisteredClientId());
-		Assert.isTrue(ObjectUtils.isNotNull(registeredClient), "registeredClient is null");
+		Assert.isTrue(ObjectUtils.isNotNull(registeredClient), "RegisteredClient is null");
 		MapType mapType = MAPPER.getTypeFactory().constructMapType(Map.class, String.class, Object.class);
 		OAuth2Authorization.Builder builder = OAuth2Authorization.withRegisteredClient(registeredClient)
 			.id(redisOAuth2Authorization.getId())

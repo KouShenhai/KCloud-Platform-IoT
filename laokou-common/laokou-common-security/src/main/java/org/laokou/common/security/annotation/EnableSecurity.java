@@ -17,9 +17,7 @@
 
 package org.laokou.common.security.annotation;
 
-import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
-import org.laokou.common.security.config.OAuth2ResourceServerConfig;
-import org.laokou.common.security.config.OAuth2SecurityConfig;
+import org.laokou.common.security.config.*;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -27,7 +25,13 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ GlobalOpaqueTokenIntrospector.class, OAuth2SecurityConfig.class, OAuth2ResourceServerConfig.class })
+@Import({
+	GlobalOpaqueTokenIntrospector.class,
+	OAuth2SecurityConfig.class,
+	OAuth2ResourceServerConfig.class,
+	ReactiveOAuth2ResourceServerConfig.class,
+	ReactiveGlobalOpaqueTokenIntrospector.class
+})
 public @interface EnableSecurity {
 
 }

@@ -44,13 +44,13 @@ public class ReactiveOAuth2ResourceServerConfig {
 	@Bean
 	@Order(HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityWebFilterChain.class)
-	SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http) {
+	SecurityWebFilterChain springWebFilterChain(ServerHttpSecurity http, ReactiveGlobalOpaqueTokenIntrospector reactiveGlobalOpaqueTokenIntrospector) {
 		return http
 			.requestCache(ServerHttpSecurity.RequestCacheSpec::disable)
 			.httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
 			.csrf(ServerHttpSecurity.CsrfSpec::disable)
 			.authorizeExchange(exchange -> exchange.anyExchange().authenticated())
-			.oauth2ResourceServer(oauth2 -> oauth2.opaqueToken(spec -> spec.introspector(null))
+			.oauth2ResourceServer(oauth2 -> oauth2.opaqueToken(spec -> spec.introspector(reactiveGlobalOpaqueTokenIntrospector))
 				.accessDeniedHandler(OAuth2ExceptionHandler::handleAccessDenied)
 				.authenticationEntryPoint((OAuth2ExceptionHandler::handleAuthentication))
 			)

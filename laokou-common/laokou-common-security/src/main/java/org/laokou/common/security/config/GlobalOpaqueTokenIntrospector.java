@@ -82,7 +82,7 @@ public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 	 * @param userDetails 用户信息
 	 * @return UserDetail
 	 */
-	private UserDetails decryptInfo(UserDetails userDetails) {
+	public static UserDetails decryptInfo(UserDetails userDetails) {
 		try {
 			// 解密
 			return userDetails.getDecryptInfo();
