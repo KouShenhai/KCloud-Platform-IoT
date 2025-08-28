@@ -27,7 +27,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Import({
 	GlobalOpaqueTokenIntrospector.class,
-	OAuth2SecurityConfig.class,
 	OAuth2ResourceServerConfig.class,
 	ReactiveOAuth2ResourceServerConfig.class,
 	ReactiveGlobalOpaqueTokenIntrospector.class

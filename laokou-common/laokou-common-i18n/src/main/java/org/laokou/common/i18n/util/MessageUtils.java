@@ -36,7 +36,7 @@ public final class MessageUtils {
 		RESOURCE_BUNDLE_MESSAGE_SOURCE = new ReloadableResourceBundleMessageSource();
 		RESOURCE_BUNDLE_MESSAGE_SOURCE.setDefaultEncoding(StandardCharsets.UTF_8.name());
 		RESOURCE_BUNDLE_MESSAGE_SOURCE.setBasenames("classpath:i18n/base_message", "classpath:i18n/auth_message",
-				"classpath:i18n/gateway_message", "classpath:i18n/sentinel_message");
+				"classpath:i18n/gateway_message", "classpath:i18n/sentinel_message", "classpath:i18n/message");
 	}
 
 	private MessageUtils() {

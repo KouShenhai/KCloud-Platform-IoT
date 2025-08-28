@@ -19,25 +19,26 @@ package org.laokou.common.security.config;
 
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.context.util.UserDetails;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.laokou.common.security.config.convertor.*;
+import org.laokou.common.security.config.repository.OAuth2AuthorizationGrantAuthorizationRepository;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.convert.RedisCustomConversions;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 
-import static org.springframework.data.redis.core.RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP;
+import java.util.Arrays;
 
 /**
  * @author laokou
  */
-@AutoConfiguration
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-@EnableRedisRepositories(enableKeyspaceEvents = ON_STARTUP, basePackages = { "org.laokou.common.security.config" })
-public class OAuth2AuthorizationAutoConfig {
+@Configuration(proxyBeanMethods = false)
+@EnableRedisRepositories(basePackages = { "org.laokou.common.security.config.repository" })
+public class OAuth2AuthorizationConfig {
 
 	static {
 		ForyFactory.INSTANCE.register(UserDetails.class);
@@ -45,16 +46,26 @@ public class OAuth2AuthorizationAutoConfig {
 
 	/**
 	 * 认证配置.
-	 * @param redisOAuth2AuthorizationRepository Redis缓存
+	 * @param authorizationGrantAuthorizationRepository 认证
 	 * @param registeredClientRepository 注册客户端
 	 * @return OAuth2AuthorizationService
 	 */
 	@Bean
 	@ConditionalOnMissingBean(OAuth2AuthorizationService.class)
 	OAuth2AuthorizationService auth2AuthorizationService(
-			RedisOAuth2AuthorizationRepository redisOAuth2AuthorizationRepository,
-			RegisteredClientRepository registeredClientRepository) {
-		return new RedisOAuth2AuthorizationService(redisOAuth2AuthorizationRepository, registeredClientRepository);
+		RegisteredClientRepository registeredClientRepository,
+		OAuth2AuthorizationGrantAuthorizationRepository authorizationGrantAuthorizationRepository) {
+		return new RedisOAuth2AuthorizationService(registeredClientRepository, authorizationGrantAuthorizationRepository);
+	}
+
+	@Bean
+	public RedisCustomConversions redisCustomConversions() {
+		return new RedisCustomConversions(Arrays.asList(new UsernamePasswordAuthenticationTokenToBytesConverter(),
+			new BytesToUsernamePasswordAuthenticationTokenConverter(),
+			new OAuth2AuthorizationRequestToBytesConverter(),
+			new BytesToOAuth2AuthorizationRequestConverter(),
+			new ClaimsHolderToBytesConverter(),
+			new BytesToClaimsHolderConverter()));
 	}
 
 	/**

@@ -30,6 +30,10 @@ import org.laokou.auth.gatewayimpl.rpc.DistributedIdentifierRpc;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.redis.util.RedisUtils;
+import org.laokou.common.security.config.RedisOAuth2AuthorizationConsentService;
+import org.laokou.common.security.config.RedisRegisteredClientRepository;
+import org.laokou.common.security.config.repository.OAuth2RegisteredClientRepository;
+import org.laokou.common.security.config.repository.OAuth2UserConsentRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -40,7 +44,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -52,11 +55,9 @@ import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
-import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
@@ -165,17 +166,17 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 构造注册信息.
-	 * @param propertiesMapper 配置
-	 * @param jdbcTemplate JDBC模板
+	 * @param authRegisteredClientRepository 注册信息
+	 * @param propertiesMapper 配置映射
 	 * @return 注册信息
 	 */
 	@Bean
 	@ConditionalOnMissingBean(RegisteredClientRepository.class)
-	RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate,
-			OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
-		JdbcRegisteredClientRepository registeredClientRepository = new JdbcRegisteredClientRepository(jdbcTemplate);
-		propertiesMapper.asRegisteredClients().forEach(registeredClientRepository::save);
-		return registeredClientRepository;
+	RegisteredClientRepository registeredClientRepository(OAuth2RegisteredClientRepository authRegisteredClientRepository,
+														  OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
+		RedisRegisteredClientRepository redisRegisteredClientRepository = new RedisRegisteredClientRepository(authRegisteredClientRepository);
+		propertiesMapper.asRegisteredClients().forEach(redisRegisteredClientRepository::save);
+		return redisRegisteredClientRepository;
 	}
 
 	/**
@@ -258,15 +259,13 @@ class OAuth2AuthorizationServerConfig {
 
 	/**
 	 * 认证授权配置.
-	 * @param jdbcTemplate JDBC模板
-	 * @param registeredClientRepository 注册信息
+	 * @param userConsentRepository 用户同意存储库
 	 * @return 认证授权配置
 	 */
 	@Bean
 	@ConditionalOnMissingBean(OAuth2AuthorizationConsentService.class)
-	OAuth2AuthorizationConsentService authorizationConsentService(JdbcTemplate jdbcTemplate,
-			RegisteredClientRepository registeredClientRepository) {
-		return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
+	OAuth2AuthorizationConsentService authorizationConsentService(OAuth2UserConsentRepository userConsentRepository) {
+		return new RedisOAuth2AuthorizationConsentService(userConsentRepository);
 	}
 
 	@Bean
