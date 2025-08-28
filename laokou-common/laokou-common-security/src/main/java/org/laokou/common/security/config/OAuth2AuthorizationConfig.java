@@ -18,7 +18,6 @@
 package org.laokou.common.security.config;
 
 import org.laokou.common.fory.config.ForyFactory;
-import org.laokou.common.context.util.UserDetails;
 import org.laokou.common.security.config.convertor.*;
 import org.laokou.common.security.config.repository.OAuth2AuthorizationGrantAuthorizationRepository;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -41,7 +40,7 @@ import java.util.Arrays;
 public class OAuth2AuthorizationConfig {
 
 	static {
-		ForyFactory.INSTANCE.register(UserDetails.class);
+		ForyFactory.INSTANCE.register(org.laokou.common.context.util.UserDetails.class);
 	}
 
 	/**

@@ -99,6 +99,8 @@ class OAuth2AuthorizationServerConfig {
 	static {
 		ForyFactory.INSTANCE.register(org.laokou.auth.dto.domainevent.LoginEvent.class);
 		ForyFactory.INSTANCE.register(org.laokou.auth.dto.domainevent.SendCaptchaEvent.class);
+		ForyFactory.INSTANCE.register(java.net.URL.class);
+		ForyFactory.INSTANCE.register(org.springframework.security.core.authority.SimpleGrantedAuthority.class);
 	}
 
 	private static void applyDefaultSecurity(HttpSecurity http) throws Exception {

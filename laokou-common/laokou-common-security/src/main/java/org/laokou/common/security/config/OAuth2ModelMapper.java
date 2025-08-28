@@ -35,6 +35,7 @@ package org.laokou.common.security.config;
 
 import java.security.Principal;
 
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.config.entity.*;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
@@ -60,7 +61,9 @@ import org.springframework.util.StringUtils;
  * @author spring-authorization-server
  * @author laokou
  */
-final class OAuth2ModelMapper {
+public final class OAuth2ModelMapper {
+
+	public static final AuthorizationGrantType USERNAME_PASSWORD = new AuthorizationGrantType("username_password");
 
 	static OAuth2RegisteredClient convertOAuth2RegisteredClient(RegisteredClient registeredClient) {
 		OAuth2RegisteredClient.ClientSettings clientSettings = new OAuth2RegisteredClient.ClientSettings(
@@ -98,7 +101,9 @@ final class OAuth2ModelMapper {
 
 	static OAuth2AuthorizationGrantAuthorization convertOAuth2AuthorizationGrantAuthorization(
 			OAuth2Authorization authorization) {
-		if (AuthorizationGrantType.AUTHORIZATION_CODE.equals(authorization.getAuthorizationGrantType())) {
+		if (ObjectUtils.equals(USERNAME_PASSWORD, authorization.getAuthorizationGrantType())) {
+			return convertOAuth2UsernamePasswordGrantAuthorization(authorization);
+		} else if (AuthorizationGrantType.AUTHORIZATION_CODE.equals(authorization.getAuthorizationGrantType())) {
 			OAuth2AuthorizationRequest authorizationRequest = authorization
 				.getAttribute(OAuth2AuthorizationRequest.class.getName());
 			Assert.notNull(authorizationRequest, "AuthorizationRequest cannot be null");
@@ -181,6 +186,14 @@ final class OAuth2ModelMapper {
 
 		return new OAuth2TokenExchangeGrantAuthorization(authorization.getId(), authorization.getRegisteredClientId(),
 				authorization.getPrincipalName(), authorization.getAuthorizedScopes(), accessToken);
+	}
+
+	static OAuth2UsernamePasswordGrantAuthorization convertOAuth2UsernamePasswordGrantAuthorization(
+			OAuth2Authorization authorization) {
+		OAuth2AuthorizationGrantAuthorization.AccessToken accessToken = extractAccessToken(authorization);
+		OAuth2AuthorizationGrantAuthorization.RefreshToken refreshToken = extractRefreshToken(authorization);
+		return new OAuth2UsernamePasswordGrantAuthorization(authorization.getId(), authorization.getRegisteredClientId(),
+				authorization.getPrincipalName(), authorization.getAuthorizedScopes(), accessToken, refreshToken, authorization.getAttribute(Principal.class.getName()));
 	}
 
 	static OAuth2AuthorizationCodeGrantAuthorization.AuthorizationCode extractAuthorizationCode(
@@ -350,8 +363,10 @@ final class OAuth2ModelMapper {
 	static void mapOAuth2AuthorizationGrantAuthorization(
 			OAuth2AuthorizationGrantAuthorization authorizationGrantAuthorization,
 			OAuth2Authorization.Builder builder) {
-
-		if (authorizationGrantAuthorization instanceof OidcAuthorizationCodeGrantAuthorization authorizationGrant) {
+		if (authorizationGrantAuthorization instanceof OAuth2UsernamePasswordGrantAuthorization authorizationGrant) {
+			mapOAuth2UsernamePasswordGrantAuthorization(authorizationGrant, builder);
+		}
+		else if (authorizationGrantAuthorization instanceof OidcAuthorizationCodeGrantAuthorization authorizationGrant) {
 			mapOidcAuthorizationCodeGrantAuthorization(authorizationGrant, builder);
 		}
 		else if (authorizationGrantAuthorization instanceof OAuth2AuthorizationCodeGrantAuthorization authorizationGrant) {
@@ -396,15 +411,25 @@ final class OAuth2ModelMapper {
 		mapRefreshToken(authorizationCodeGrantAuthorization.getRefreshToken(), builder);
 	}
 
+	static void mapOAuth2UsernamePasswordGrantAuthorization(
+		OAuth2UsernamePasswordGrantAuthorization usernamePasswordGrantAuthorization,
+		OAuth2Authorization.Builder builder) {
+		builder.id(usernamePasswordGrantAuthorization.getId())
+			.principalName(usernamePasswordGrantAuthorization.getPrincipalName())
+			.authorizationGrantType(USERNAME_PASSWORD)
+			.authorizedScopes(usernamePasswordGrantAuthorization.getAuthorizedScopes())
+			.attribute(Principal.class.getName(), usernamePasswordGrantAuthorization.getPrincipal());
+		mapAccessToken(usernamePasswordGrantAuthorization.getAccessToken(), builder);
+		mapRefreshToken(usernamePasswordGrantAuthorization.getRefreshToken(), builder);
+	}
+
 	static void mapOAuth2ClientCredentialsGrantAuthorization(
 			OAuth2ClientCredentialsGrantAuthorization clientCredentialsGrantAuthorization,
 			OAuth2Authorization.Builder builder) {
-
 		builder.id(clientCredentialsGrantAuthorization.getId())
 			.principalName(clientCredentialsGrantAuthorization.getPrincipalName())
 			.authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
 			.authorizedScopes(clientCredentialsGrantAuthorization.getAuthorizedScopes());
-
 		mapAccessToken(clientCredentialsGrantAuthorization.getAccessToken(), builder);
 	}
 

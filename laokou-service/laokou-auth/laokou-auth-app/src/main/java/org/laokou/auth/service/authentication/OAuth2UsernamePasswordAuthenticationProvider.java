@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.GrantTypeEnum;
+import org.laokou.common.security.config.OAuth2ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -66,7 +67,7 @@ final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2A
 
 	@Override
 	AuthorizationGrantType getGrantType() {
-		return new AuthorizationGrantType(USERNAME_PASSWORD);
+		return OAuth2ModelMapper.USERNAME_PASSWORD;
 	}
 
 }

@@ -39,7 +39,7 @@ public final class ForyFactory {
 		// .withIntCompressed(true)
 		// compress long for smaller size
 		// .withLongCompressed(true)
-		.withCompatibleMode(CompatibleMode.SCHEMA_CONSISTENT)
+		.withCompatibleMode(CompatibleMode.COMPATIBLE)
 		// enable type forward/backward compatibility
 		// disable it for small size and better performance.
 		// .withCompatibleMode(CompatibleMode.COMPATIBLE)
@@ -63,10 +63,14 @@ public final class ForyFactory {
 	}
 
 	public Object deserialize(byte[] bytes) {
+		return fory.deserialize(bytes, Object.class);
+	}
+
+	public <T> T deserialize(byte[] bytes, Class<T> clazz) {
 		if (bytes == null) {
 			return null;
 		}
-		return fory.deserialize(bytes);
+		return fory.deserialize(bytes, clazz);
 	}
 
 }

@@ -82,9 +82,9 @@ public final class OkHttpUtils {
 		return new OkHttpClient.Builder()
 			.sslSocketFactory(SslUtils.sslContext().getSocketFactory(), SslUtils.DisableValidationTrustManager.INSTANCE)
 			.hostnameVerifier((hostname, session) -> true)
-			.connectTimeout(Duration.ofSeconds(10))
-			.readTimeout(Duration.ofSeconds(10))
-			.writeTimeout(Duration.ofSeconds(10))
+			.connectTimeout(Duration.ofSeconds(15))
+			.readTimeout(Duration.ofSeconds(15))
+			.writeTimeout(Duration.ofSeconds(15))
 			.pingInterval(Duration.ZERO)
 			.connectionPool(new ConnectionPool(50, Duration.ofMinutes(5).toNanos(), TimeUnit.NANOSECONDS))
 			.build();

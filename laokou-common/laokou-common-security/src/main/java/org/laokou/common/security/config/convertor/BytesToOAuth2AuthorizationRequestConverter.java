@@ -48,7 +48,7 @@ public final class BytesToOAuth2AuthorizationRequestConverter implements Convert
 
 	@Override
 	public OAuth2AuthorizationRequest convert(@NotNull byte[] value) {
-		return (OAuth2AuthorizationRequest) ForyFactory.INSTANCE.deserialize(value);
+		return ForyFactory.INSTANCE.deserialize(value, OAuth2AuthorizationRequest.class);
 	}
 
 }

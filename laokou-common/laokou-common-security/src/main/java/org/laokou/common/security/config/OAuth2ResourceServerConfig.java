@@ -21,6 +21,7 @@ import jakarta.validation.constraints.NotNull;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.SpringUtils;
+import org.laokou.common.security.config.repository.OAuth2RegisteredClientRepository;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -35,6 +36,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.HashSet;
@@ -56,6 +58,13 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.security.oauth2.resource-server",
 		name = "enabled")
 public class OAuth2ResourceServerConfig {
+
+	@Bean
+	@ConditionalOnMissingBean(RegisteredClientRepository.class)
+	RegisteredClientRepository registeredClientRepository(OAuth2RegisteredClientRepository authRegisteredClientRepository) {
+		return new RedisRegisteredClientRepository(authRegisteredClientRepository);
+	}
+
 
 	// @formatter:off
 	@NotNull

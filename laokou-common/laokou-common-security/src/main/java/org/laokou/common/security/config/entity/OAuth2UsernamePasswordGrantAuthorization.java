@@ -31,24 +31,26 @@
  * limitations under the License.
  */
 
-package org.laokou.common.security.config.convertor;
-import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-import org.laokou.common.fory.config.ForyFactory;
-import org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.convert.ReadingConverter;
+package org.laokou.common.security.config.entity;
+
+import lombok.Getter;
+
+import java.security.Principal;
+import java.util.Set;
+
 /**
  * @author spring-authorization-server
  * @author laokou
  */
-@NoArgsConstructor
-@ReadingConverter
-public final class BytesToClaimsHolderConverter implements Converter<byte[], OAuth2AuthorizationGrantAuthorization.ClaimsHolder> {
+@Getter
+public final class OAuth2UsernamePasswordGrantAuthorization extends OAuth2AuthorizationGrantAuthorization {
 
-	@Override
-	public OAuth2AuthorizationGrantAuthorization.ClaimsHolder convert(@NotNull byte[] value) {
-		return ForyFactory.INSTANCE.deserialize(value, OAuth2AuthorizationGrantAuthorization.ClaimsHolder.class);
+	private final Principal principal;
+
+	public OAuth2UsernamePasswordGrantAuthorization(String id, String registeredClientId, String principalName,
+                                                    Set<String> authorizedScopes, AccessToken accessToken, RefreshToken refreshToken, Principal principal) {
+		super(id, registeredClientId, principalName, authorizedScopes, accessToken, refreshToken);
+		this.principal = principal;
 	}
 
 }

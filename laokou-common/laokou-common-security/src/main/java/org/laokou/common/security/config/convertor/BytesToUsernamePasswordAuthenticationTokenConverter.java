@@ -47,7 +47,7 @@ public final class BytesToUsernamePasswordAuthenticationTokenConverter implement
 
 	@Override
 	public UsernamePasswordAuthenticationToken convert(@NotNull byte[] value) {
-		return (UsernamePasswordAuthenticationToken) ForyFactory.INSTANCE.deserialize(value);
+		return ForyFactory.INSTANCE.deserialize(value, UsernamePasswordAuthenticationToken.class);
 	}
 
 }

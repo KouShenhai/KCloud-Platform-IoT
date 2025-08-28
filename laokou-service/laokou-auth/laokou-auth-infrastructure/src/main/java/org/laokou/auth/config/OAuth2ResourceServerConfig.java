@@ -27,10 +27,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.session.data.redis.RedisIndexedSessionRepository;
-import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 import static org.laokou.common.security.config.OAuth2ResourceServerConfig.customizer;
 
@@ -58,10 +55,10 @@ class OAuth2ResourceServerConfig {
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
 		SpringUtils springUtils,
-		OAuth2ResourceServerProperties oAuth2ResourceServerProperties,
-		SessionExpiredStrategy sessionExpiredStrategy,
-        SessionInvalidStrategy sessionInvalidStrategy,
-		SessionRegistry springSessionBackedSessionRegistry
+		OAuth2ResourceServerProperties oAuth2ResourceServerProperties
+		// SessionExpiredStrategy sessionExpiredStrategy,
+        // SessionInvalidStrategy sessionInvalidStrategy,
+		// SessionRegistry springSessionBackedSessionRegistry
 	) throws Exception {
 		return http
 			//   // 只会在需要时创建 HttpSession【默认配置】
@@ -92,9 +89,9 @@ class OAuth2ResourceServerConfig {
 			.build();
 	}
 
-	@Bean
-	SessionRegistry springSessionBackedSessionRegistry(RedisIndexedSessionRepository redisIndexedSessionRepository) {
-		return new SpringSessionBackedSessionRegistry<>(redisIndexedSessionRepository);
-	}
+//	@Bean
+//	SessionRegistry springSessionBackedSessionRegistry(RedisIndexedSessionRepository redisIndexedSessionRepository) {
+//		return new SpringSessionBackedSessionRegistry<>(redisIndexedSessionRepository);
+//	}
 
 }

@@ -840,31 +840,3 @@ CREATE UNIQUE INDEX "sys_user_role_userId_roleId_idx" ON "public"."sys_user_role
 	"role_id"
 );
 COMMENT ON INDEX "public"."sys_user_role_userId_roleId_idx" IS '用户ID_角色ID_唯一索引';
-
-DROP TABLE IF EXISTS "public"."oauth2_authorization_consent";
-CREATE TABLE "public"."oauth2_authorization_consent" (
-	 "registered_client_id" varchar(100) NOT NULL,
-	 "principal_name" varchar(200) NOT NULL,
-	 "authorities" varchar(1000) NOT NULL
-);
-
-ALTER TABLE "public"."oauth2_authorization_consent" ADD CONSTRAINT "oauth2_authorization_consent_pkey" PRIMARY KEY ("registered_client_id", "principal_name");
-
-DROP TABLE IF EXISTS "public"."oauth2_registered_client";
-CREATE TABLE "public"."oauth2_registered_client" (
-	"id" varchar(100) NOT NULL,
-	"client_id" varchar(100)  NOT NULL,
-	"client_id_issued_at" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	"client_secret" varchar(200) ,
-	"client_secret_expires_at" timestamp(6),
-	"client_name" varchar(200)  NOT NULL,
-	"client_authentication_methods" varchar(1000)  NOT NULL,
-	"authorization_grant_types" varchar(1000)  NOT NULL,
-	"redirect_uris" varchar(1000) ,
-	"post_logout_redirect_uris" varchar(1000) ,
-	"scopes" varchar(1000) NOT NULL,
-	"client_settings" varchar(2000) NOT NULL,
-	"token_settings" varchar(2000) NOT NULL
-);
-
-ALTER TABLE "public"."oauth2_registered_client" ADD CONSTRAINT "oauth2_registered_client_pkey" PRIMARY KEY ("id");
