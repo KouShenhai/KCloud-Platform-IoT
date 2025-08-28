@@ -55,7 +55,7 @@ public class RedisOAuth2AuthorizationConsentService implements OAuth2Authorizati
 	@Override
 	public void save(OAuth2AuthorizationConsent authorizationConsent) {
 		Assert.notNull(authorizationConsent, "AuthorizationConsent cannot be null");
-		OAuth2UserConsent oauth2UserConsent = ModelMapper.convertOAuth2UserConsent(authorizationConsent);
+		OAuth2UserConsent oauth2UserConsent = OAuth2ModelMapper.convertOAuth2UserConsent(authorizationConsent);
 		this.userConsentRepository.save(oauth2UserConsent);
 	}
 
@@ -73,7 +73,7 @@ public class RedisOAuth2AuthorizationConsentService implements OAuth2Authorizati
 		Assert.hasText(principalName, "PrincipalName cannot be empty");
 		OAuth2UserConsent oauth2UserConsent = this.userConsentRepository
 			.findByRegisteredClientIdAndPrincipalName(registeredClientId, principalName);
-		return oauth2UserConsent != null ? ModelMapper.convertOAuth2AuthorizationConsent(oauth2UserConsent) : null;
+		return oauth2UserConsent != null ? OAuth2ModelMapper.convertOAuth2AuthorizationConsent(oauth2UserConsent) : null;
 	}
 
 }

@@ -24,7 +24,6 @@ import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.laokou.common.context.util.UserDetails;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
@@ -45,8 +44,7 @@ import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getOAuth
 @Slf4j
 @NonNullApi
 @RequiredArgsConstructor
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-public class GlobalOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
+public class OAuth2OpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
 

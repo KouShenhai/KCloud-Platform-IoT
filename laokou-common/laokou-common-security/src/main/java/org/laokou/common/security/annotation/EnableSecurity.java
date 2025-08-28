@@ -26,10 +26,10 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import({
-	GlobalOpaqueTokenIntrospector.class,
+	OAuth2OpaqueTokenIntrospector.class,
 	OAuth2ResourceServerConfig.class,
 	ReactiveOAuth2ResourceServerConfig.class,
-	ReactiveGlobalOpaqueTokenIntrospector.class
+	ReactiveOAuth2OpaqueTokenIntrospector.class
 })
 public @interface EnableSecurity {
 

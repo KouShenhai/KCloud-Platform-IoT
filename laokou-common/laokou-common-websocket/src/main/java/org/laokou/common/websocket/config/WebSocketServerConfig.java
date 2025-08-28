@@ -21,7 +21,7 @@ import com.alibaba.cloud.nacos.ConditionalOnNacosDiscoveryEnabled;
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import io.netty.channel.ChannelHandler;
 import org.laokou.common.nacos.util.NamingUtils;
-import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
+import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
 import java.util.concurrent.ExecutorService;
@@ -43,8 +43,8 @@ public class WebSocketServerConfig {
 	}
 
 	@Bean("webSocketServerHandler")
-	public ChannelHandler webSocketServerHandler(SpringWebSocketServerProperties springWebSocketServerProperties, GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector) {
-		return new WebSocketServerHandler(springWebSocketServerProperties, globalOpaqueTokenIntrospector);
+	public ChannelHandler webSocketServerHandler(SpringWebSocketServerProperties springWebSocketServerProperties, OAuth2OpaqueTokenIntrospector oAuth2OpaqueTokenIntrospector) {
+		return new WebSocketServerHandler(springWebSocketServerProperties, oAuth2OpaqueTokenIntrospector);
 	}
 
 	@Bean

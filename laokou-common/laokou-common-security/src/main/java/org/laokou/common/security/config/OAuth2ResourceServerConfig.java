@@ -84,8 +84,8 @@ public class OAuth2ResourceServerConfig {
 	@Bean
 	@Order(HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
-	SecurityFilterChain resourceFilterChain(GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector,
-			SpringUtils springUtils, OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http)
+	SecurityFilterChain resourceFilterChain(OAuth2OpaqueTokenIntrospector oAuth2OpaqueTokenIntrospector,
+                                            SpringUtils springUtils, OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http)
 			throws Exception {
 		return http
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer
@@ -105,7 +105,7 @@ public class OAuth2ResourceServerConfig {
 			// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
 			// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
 			.oauth2ResourceServer(resource -> resource
-						.opaqueToken(token -> token.introspector(globalOpaqueTokenIntrospector))
+						.opaqueToken(token -> token.introspector(oAuth2OpaqueTokenIntrospector))
 						.accessDeniedHandler((request, response, ex) -> OAuth2ExceptionHandler.handleAccessDenied(response, ex))
 						.authenticationEntryPoint((request, response, ex) -> OAuth2ExceptionHandler.handleAuthentication(response, ex)))
 			.build();

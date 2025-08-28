@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
+import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
 import org.laokou.common.context.util.UserDetails;
 import org.laokou.common.websocket.model.WebSocketMessageCO;
 import org.laokou.common.websocket.model.WebSocketTypeEnum;
@@ -54,7 +54,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 
 	private final SpringWebSocketServerProperties springWebSocketServerProperties;
 
-	private final GlobalOpaqueTokenIntrospector globalOpaqueTokenIntrospector;
+	private final OAuth2OpaqueTokenIntrospector oAuth2OpaqueTokenIntrospector;
 
 	/**
 	 * see
@@ -130,7 +130,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		}
 		try {
 			WebSocketMessageCO co = JacksonUtils.toBean(str, WebSocketMessageCO.class);
-			OAuth2AuthenticatedPrincipal principal = globalOpaqueTokenIntrospector.introspect(co.getToken());
+			OAuth2AuthenticatedPrincipal principal = oAuth2OpaqueTokenIntrospector.introspect(co.getToken());
 			UserDetails userDetails = (UserDetails) principal;
 			log.info("【WebSocket-Server】 => 令牌校验成功，用户名：{}", principal.getName());
 			WebSocketTypeEnum.getByCode(co.getType()).handle(userDetails, co, channel);

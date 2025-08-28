@@ -31,7 +31,7 @@ import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.redis.util.RedisUtils;
-import org.laokou.common.security.config.GlobalOpaqueTokenIntrospector;
+import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
 import org.laokou.common.trace.util.MDCUtils;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -177,7 +177,7 @@ class OAuth2ApiTest {
 		log.info("刷新token：{}", token);
 		log.info("---------- 模拟认证开始 ----------");
 		assertThat(token).isNotBlank();
-		GlobalOpaqueTokenIntrospector introspector = new GlobalOpaqueTokenIntrospector(oAuth2AuthorizationService);
+		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(oAuth2AuthorizationService);
 		log.info("认证数据：{}", JacksonUtils.toJsonStr(introspector.introspect(token)));
 		log.info("---------- 模拟认证结束 ----------");
 		log.info("---------- 用户名密码认证模式结束 ----------");

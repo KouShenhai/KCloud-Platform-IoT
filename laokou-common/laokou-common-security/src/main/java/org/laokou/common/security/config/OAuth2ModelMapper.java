@@ -60,7 +60,7 @@ import org.springframework.util.StringUtils;
  * @author spring-authorization-server
  * @author laokou
  */
-final class ModelMapper {
+final class OAuth2ModelMapper {
 
 	static OAuth2RegisteredClient convertOAuth2RegisteredClient(RegisteredClient registeredClient) {
 		OAuth2RegisteredClient.ClientSettings clientSettings = new OAuth2RegisteredClient.ClientSettings(

@@ -52,7 +52,7 @@ public class RedisRegisteredClientRepository implements RegisteredClientReposito
 	@Override
 	public void save(RegisteredClient registeredClient) {
 		Assert.notNull(registeredClient, "RegisteredClient cannot be null");
-		OAuth2RegisteredClient oauth2RegisteredClient = ModelMapper.convertOAuth2RegisteredClient(registeredClient);
+		OAuth2RegisteredClient oauth2RegisteredClient = OAuth2ModelMapper.convertOAuth2RegisteredClient(registeredClient);
 		this.registeredClientRepository.save(oauth2RegisteredClient);
 	}
 
@@ -60,7 +60,7 @@ public class RedisRegisteredClientRepository implements RegisteredClientReposito
 	@Override
 	public RegisteredClient findById(String id) {
 		Assert.hasText(id, "Id cannot be empty");
-		return this.registeredClientRepository.findById(id).map(ModelMapper::convertRegisteredClient).orElse(null);
+		return this.registeredClientRepository.findById(id).map(OAuth2ModelMapper::convertRegisteredClient).orElse(null);
 	}
 
 	@Nullable
@@ -68,7 +68,7 @@ public class RedisRegisteredClientRepository implements RegisteredClientReposito
 	public RegisteredClient findByClientId(String clientId) {
 		Assert.hasText(clientId, "ClientId cannot be empty");
 		OAuth2RegisteredClient oauth2RegisteredClient = this.registeredClientRepository.findByClientId(clientId);
-		return oauth2RegisteredClient != null ? ModelMapper.convertRegisteredClient(oauth2RegisteredClient) : null;
+		return oauth2RegisteredClient != null ? OAuth2ModelMapper.convertRegisteredClient(oauth2RegisteredClient) : null;
 	}
 
 }

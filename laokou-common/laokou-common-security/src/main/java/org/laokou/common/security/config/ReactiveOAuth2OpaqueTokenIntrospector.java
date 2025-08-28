@@ -32,12 +32,13 @@ import reactor.core.publisher.Mono;
 @NonNullApi
 @RequiredArgsConstructor
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
-public class ReactiveGlobalOpaqueTokenIntrospector implements ReactiveOpaqueTokenIntrospector {
+public class ReactiveOAuth2OpaqueTokenIntrospector implements ReactiveOpaqueTokenIntrospector {
+
+	private final OAuth2OpaqueTokenIntrospector oAuth2OpaqueTokenIntrospector;
 
 	@Override
 	public Mono<OAuth2AuthenticatedPrincipal> introspect(String token) {
-		// 直接读取参数【1+1】
-		return Mono.empty();
+		return Mono.create(sink -> sink.success(oAuth2OpaqueTokenIntrospector.introspect(token)));
 	}
 
 }
