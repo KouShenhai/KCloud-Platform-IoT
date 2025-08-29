@@ -125,7 +125,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	 */
 	protected Authentication authentication(Authentication authentication, Authentication principal)
 			throws JsonProcessingException {
-		// see OAuth2AuthorizationCodeAuthenticationProvider#authenticate(Authentication)
+		// 查看 OAuth2AuthorizationCodeAuthenticationProvider#authenticate(Authentication)
 		AbstractOAuth2AuthenticationToken abstractOAuth2Authentication = (AbstractOAuth2AuthenticationToken) authentication;
 		OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(abstractOAuth2Authentication);
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
@@ -181,7 +181,6 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		OidcIdToken idToken;
 		if (authorizedScopes.contains(OidcScopes.OPENID)) {
 			tokenContext = tokenContextBuilder.tokenType(ID_TOKEN_TOKEN_TYPE)
-				// ID令牌定制器可能需要访问访问令牌、刷新令牌
 				.authorization(authorizationBuilder.build())
 				.build();
 			OAuth2Token generatedIdToken = Optional.ofNullable(this.tokenGenerator.generate(tokenContext))
