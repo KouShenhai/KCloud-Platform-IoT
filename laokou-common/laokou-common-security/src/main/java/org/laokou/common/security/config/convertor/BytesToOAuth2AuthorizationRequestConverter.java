@@ -32,23 +32,36 @@
  */
 package org.laokou.common.security.config.convertor;
 
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
-import org.laokou.common.fory.config.ForyFactory;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2AuthorizationServerJackson2Module;
+
 /**
  * @author spring-authorization-server
  * @author laokou
  */
-@NoArgsConstructor
 @ReadingConverter
 public final class BytesToOAuth2AuthorizationRequestConverter implements Converter<byte[], OAuth2AuthorizationRequest> {
 
+	private final Jackson2JsonRedisSerializer<OAuth2AuthorizationRequest> serializer;
+
+	public BytesToOAuth2AuthorizationRequestConverter() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModules(
+			SecurityJackson2Modules.getModules(BytesToOAuth2AuthorizationRequestConverter.class.getClassLoader()));
+		objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
+		this.serializer = new Jackson2JsonRedisSerializer<>(objectMapper, OAuth2AuthorizationRequest.class);
+	}
+
 	@Override
 	public OAuth2AuthorizationRequest convert(@NotNull byte[] value) {
-		return ForyFactory.INSTANCE.deserialize(value, OAuth2AuthorizationRequest.class);
+		return this.serializer.deserialize(value);
 	}
+
 
 }

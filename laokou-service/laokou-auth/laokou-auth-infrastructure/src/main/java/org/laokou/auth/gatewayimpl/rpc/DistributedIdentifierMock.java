@@ -18,9 +18,12 @@
 package org.laokou.auth.gatewayimpl.rpc;
 
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.util.MessageUtils;
 import org.laokou.distributed.identifier.api.DistributedIdentifierCmd;
 import org.laokou.distributed.identifier.api.DistributedIdentifierResult;
 import org.laokou.distributed.identifier.api.DubboDistributedIdentifierServiceITriple;
+
+import static org.laokou.common.i18n.common.exception.StatusCode.OK;
 
 
 /**
@@ -33,6 +36,8 @@ public class DistributedIdentifierMock extends DubboDistributedIdentifierService
 	public DistributedIdentifierResult generateSnowflake(DistributedIdentifierCmd cmd) {
 		log.error("调用获取分布式ID失败，请检查Dubbo服务");
 		return DistributedIdentifierResult.newBuilder()
+			.setCode(OK)
+			.setMsg(MessageUtils.getMessage(OK))
 			.setData(System.nanoTime())
 			.build();
 	}

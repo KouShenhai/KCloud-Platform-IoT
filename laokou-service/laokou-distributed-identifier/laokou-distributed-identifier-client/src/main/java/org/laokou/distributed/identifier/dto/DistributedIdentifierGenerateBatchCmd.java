@@ -17,18 +17,11 @@
 
 package org.laokou.distributed.identifier.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
 /**
  * 分布式标识生成批量命令.
  *
  * @author laokou
  */
-@Getter
-@RequiredArgsConstructor
-public class DistributedIdentifierGenerateBatchCmd {
-
-	private final Integer num;
+public record DistributedIdentifierGenerateBatchCmd(Integer num) {
 
 }

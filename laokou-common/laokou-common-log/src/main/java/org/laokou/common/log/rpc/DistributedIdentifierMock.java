@@ -36,6 +36,8 @@ public class DistributedIdentifierMock extends DubboDistributedIdentifierService
 	public DistributedIdentifierResult generateSnowflake(DistributedIdentifierCmd cmd) {
 		log.error("调用获取分布式ID失败，请检查Dubbo服务");
 		return DistributedIdentifierResult.newBuilder()
+			.setCode(OK)
+			.setMsg(MessageUtils.getMessage(OK))
 			.setData(System.nanoTime())
 			.build();
 	}

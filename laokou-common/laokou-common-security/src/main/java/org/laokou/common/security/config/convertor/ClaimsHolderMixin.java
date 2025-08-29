@@ -33,36 +33,21 @@
 
 package org.laokou.common.security.config.convertor;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.convert.WritingConverter;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.security.jackson2.SecurityJackson2Modules;
-import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
-import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2AuthorizationServerJackson2Module;
+import com.fasterxml.jackson.annotation.*;
+
+import java.util.Map;
 
 /**
  * @author spring-authorization-server
  * @author laokou
  */
-@WritingConverter
-public final class OAuth2AuthorizationRequestToBytesConverter implements Converter<OAuth2AuthorizationRequest, byte[]> {
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
+@JsonIgnoreProperties(ignoreUnknown = true)
+abstract class ClaimsHolderMixin {
 
-	private final Jackson2JsonRedisSerializer<OAuth2AuthorizationRequest> serializer;
-
-	public OAuth2AuthorizationRequestToBytesConverter() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.registerModules(
-			SecurityJackson2Modules.getModules(OAuth2AuthorizationRequestToBytesConverter.class.getClassLoader()));
-		objectMapper.registerModules(new OAuth2AuthorizationServerJackson2Module());
-		this.serializer = new Jackson2JsonRedisSerializer<>(objectMapper, OAuth2AuthorizationRequest.class);
-	}
-
-	@Override
-	public byte[] convert(@NotNull OAuth2AuthorizationRequest value) {
-		return this.serializer.serialize(value);
-	}
-
+	@JsonCreator
+    ClaimsHolderMixin(@JsonProperty("claims") Map<String, Object> claims) {}
 
 }

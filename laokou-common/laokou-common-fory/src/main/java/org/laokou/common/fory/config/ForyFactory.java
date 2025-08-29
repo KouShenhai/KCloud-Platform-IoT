@@ -39,7 +39,7 @@ public final class ForyFactory {
 		// .withIntCompressed(true)
 		// compress long for smaller size
 		// .withLongCompressed(true)
-		.withCompatibleMode(CompatibleMode.COMPATIBLE)
+		.withCompatibleMode(CompatibleMode.SCHEMA_CONSISTENT)
 		// enable type forward/backward compatibility
 		// disable it for small size and better performance.
 		// .withCompatibleMode(CompatibleMode.COMPATIBLE)
@@ -50,6 +50,10 @@ public final class ForyFactory {
 
 	public <T> void register(Class<T> clazz) {
 		fory.register(clazz);
+	}
+
+	public <T> void register(Class<T> clazz, String typeName) {
+		fory.register(clazz, typeName);
 	}
 
 	public byte[] serialize(Object object) {

@@ -41,7 +41,7 @@ public class DistributedIdentifierGenerateBatchCmdExe {
 
 	public Result<List<Long>> execute(DistributedIdentifierGenerateBatchCmd cmd) {
 		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
-			Integer num = cmd.getNum();
+			Integer num = cmd.num();
 			List<Callable<Long>> futures = new ArrayList<>(num);
 			List<Long> list = new ArrayList<>(num);
 			for (int i = 0; i < num; i++) {
