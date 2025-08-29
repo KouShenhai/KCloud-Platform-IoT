@@ -139,6 +139,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		String loginName = principal.getCredentials().toString();
 		// 认证类型
 		AuthorizationGrantType grantType = getGrantType();
+		// JWT
 		Jwt dPoPProof = verifyIfAvailable(abstractOAuth2Authentication);
 		// 获取上下文
 		DefaultOAuth2TokenContext.Builder tokenContextBuilder = DefaultOAuth2TokenContext.builder()
