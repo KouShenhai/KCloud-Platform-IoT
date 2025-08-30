@@ -320,6 +320,8 @@ services:
       - "9300:9300"
     volumes:
       - ./elasticsearch8/plugins:/usr/share/elasticsearch/plugins
+#      - ./elasticsearch8/data:/usr/share/elasticsearch/data
+#      - ./elasticsearch8/logs:/usr/share/elasticsearch/logs
     environment:
       - discovery.type=single-node
       - TZ=Asia/Shanghai
@@ -642,6 +644,59 @@ services:
       - iot_network
     depends_on:
       - postgresql
+  # 修改密码
+  # mysql -h 127.0.0.1 -P 9030 -u root -p
+  # SET PASSWORD = PASSWORD('laokou123');
+  starrocks-fe:
+    image: starrocks/fe-ubuntu:3.4.7
+    hostname: starrocks-fe
+    container_name: starrocks-fe
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    environment:
+      - TZ=Asia/Shanghai        # 设置时区
+      - FE_SERVERS=starrocks-fe:9010
+      - FE_CIDR=0.0.0.0/0
+    ports:
+      - "8030:8030" # FE http port
+      - "9070:9020" # FE rpc port
+      - "9030:9030" # FE mysql port
+#    volumes:
+#      - ./starrocks/fe/meta:/opt/starrocks/fe/meta  # 持久化元数据
+#      - ./starrocks/fe/log:/opt/starrocks/fe/log    # 持久化日志
+    command:
+      - /opt/starrocks/fe/bin/start_fe.sh
+    networks:
+      - iot_network
+  starrocks-be:
+    image: starrocks/be-ubuntu:3.4.7
+    hostname: starrocks-be
+    container_name: starrocks-be
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "8040:8040" # BE http port
+      - "8060:8060" # BE brpc port
+      - "9050:9050" # BE heartbeat service port
+      - "9060:9060" # BE thrift port
+    environment:
+      - TZ=Asia/Shanghai        # 设置时区
+      # 以下是BE的一些可选配置参数，可以根据需要添加
+      - BE_ADDR=starrocks-be:9050
+      - BE_DATA_DIR=/opt/starrocks/be/storage
+    depends_on:
+      - starrocks-fe
+    command:
+      - /opt/starrocks/be/bin/start_be.sh
+#    volumes:
+#      - ./starrocks/be/storage:/opt/starrocks/be/storage # 持久化数据
+#      - ./starrocks/be/log:/opt/starrocks/be/log         # 持久化日志
+    networks:
+      - iot_network
 networks:
   iot_network:
     driver: bridge

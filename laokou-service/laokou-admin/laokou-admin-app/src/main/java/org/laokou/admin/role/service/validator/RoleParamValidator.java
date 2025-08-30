@@ -35,7 +35,7 @@ import static org.laokou.common.i18n.util.ParamValidator.validate;
 /**
  * @author laokou
  */
-public final class RoleParamValidator {
+final class RoleParamValidator {
 
 	private RoleParamValidator() {
 	}

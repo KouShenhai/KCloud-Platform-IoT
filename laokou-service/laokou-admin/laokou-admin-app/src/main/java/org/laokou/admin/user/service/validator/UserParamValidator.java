@@ -36,7 +36,7 @@ import static org.laokou.common.i18n.util.ParamValidator.validate;
 /**
  * @author laokou
  */
-public final class UserParamValidator {
+final class UserParamValidator {
 
 	private UserParamValidator() {
 

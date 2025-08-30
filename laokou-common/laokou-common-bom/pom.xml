@@ -163,11 +163,23 @@
     <spring-ai-alibaba-mcp-registry.version>1.0.0.3</spring-ai-alibaba-mcp-registry.version>
     <!--spring-ai-starter-mcp-server-webflux版本-->
     <spring-ai-starter-mcp-server-webflux.version>1.0.1</spring-ai-starter-mcp-server-webflux.version>
+    <!--mysql版本-->
+    <mysql-connector-j.version>9.4.0</mysql-connector-j.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-starrocks</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.mysql</groupId>
+        <artifactId>mysql-connector-j</artifactId>
+        <version>${mysql-connector-j.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.springframework.ai</groupId>
         <artifactId>spring-ai-starter-mcp-server-webflux</artifactId>

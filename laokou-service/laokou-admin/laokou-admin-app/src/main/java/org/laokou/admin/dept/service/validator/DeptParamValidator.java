@@ -28,7 +28,7 @@ import static org.laokou.common.i18n.util.ParamValidator.validate;
 /**
  * @author laokou
  */
-public final class DeptParamValidator {
+final class DeptParamValidator {
 
 	private DeptParamValidator() {
 	}

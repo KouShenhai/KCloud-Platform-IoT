@@ -21,6 +21,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.DateUtils;
@@ -28,7 +30,10 @@ import org.laokou.common.mybatisplus.config.GlobalTenantLineHandler;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.util.List;
 import java.util.Set;
@@ -47,6 +52,27 @@ class MybatisUtilsTest {
 	private final TestUserMapper testUserMapper;
 
 	private final MybatisUtils mybatisUtils;
+
+	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
+		.withUsername("root")
+		.withPassword("laokou123")
+		.withInitScript("init.sql")
+		.withDatabaseName("kcloud_platform_test");
+
+	@BeforeAll
+	static void beforeAll() {
+		postgres.start();
+	}
+
+	@AfterAll
+	static void afterAll() {
+		postgres.stop();
+	}
+
+	@DynamicPropertySource
+	static void configureProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.dynamic.datasource.master.url", postgres::getJdbcUrl);
+	}
 
 	@Test
 	void test_ignoreTable() {

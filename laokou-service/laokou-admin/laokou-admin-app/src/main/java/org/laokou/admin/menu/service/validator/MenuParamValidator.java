@@ -32,7 +32,7 @@ import static org.laokou.common.i18n.util.ParamValidator.validate;
 /**
  * @author laokou
  */
-public final class MenuParamValidator {
+final class MenuParamValidator {
 
 	private MenuParamValidator() {
 	}

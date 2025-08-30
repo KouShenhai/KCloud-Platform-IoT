@@ -19,12 +19,17 @@ package org.laokou.common.mybatisplus;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.transaction.TransactionDefinition;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.util.List;
 
@@ -42,6 +47,27 @@ class TransactionalUtilsTest {
 	private final TestUserMapper testUserMapper;
 
 	private final TransactionalUtils transactionalUtils;
+
+	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
+		.withUsername("root")
+		.withPassword("laokou123")
+		.withInitScripts("init.sql")
+		.withDatabaseName("kcloud_platform_test");
+
+	@BeforeAll
+	static void beforeAll() {
+		postgres.start();
+	}
+
+	@AfterAll
+	static void afterAll() {
+		postgres.stop();
+	}
+
+	@DynamicPropertySource
+	static void configureProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.dynamic.datasource.master.url", postgres::getJdbcUrl);
+	}
 
 	@Test
 	void test_withoutResult() {
