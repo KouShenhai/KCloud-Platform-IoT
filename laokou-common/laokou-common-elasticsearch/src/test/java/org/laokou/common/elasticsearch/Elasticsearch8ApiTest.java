@@ -17,15 +17,14 @@
 
 package org.laokou.common.elasticsearch;
 
-import co.elastic.clients.elasticsearch.ElasticsearchAsyncClient;
-import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.indices.IndexState;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.elasticsearch.annotation.*;
 import org.laokou.common.elasticsearch.entity.Search;
@@ -36,7 +35,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
+import org.testcontainers.elasticsearch.ElasticsearchContainer;
+import org.testcontainers.utility.DockerImageName;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -55,17 +58,24 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class Elasticsearch8ApiTest {
 
-	private final ElasticsearchClient elasticsearchClient;
-
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
-	private final ElasticsearchAsyncClient elasticsearchAsyncClient;
+	static ElasticsearchContainer elasticsearch = new ElasticsearchContainer(DockerImageName.parse("registry.cn-shenzhen.aliyuncs.com/koushenhai/elasticsearch8:8.19.3").asCompatibleSubstituteFor("docker.elastic.co/elasticsearch/elasticsearch"))
+		.withPassword("laokou123");
 
-	@BeforeEach
-	void contextLoads() {
-		assertThat(elasticsearchClient).isNotNull();
-		assertThat(elasticsearchAsyncClient).isNotNull();
-		assertThat(elasticsearchTemplate).isNotNull();
+	@BeforeAll
+	static void beforeAll() {
+		elasticsearch.start();
+	}
+
+	@AfterAll
+	static void afterAll() {
+		elasticsearch.stop();
+	}
+
+	@DynamicPropertySource
+	static void configureProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.elasticsearch.uris", () -> List.of("https://" + elasticsearch.getHttpHostAddress()));
 	}
 
 	@Test
@@ -83,10 +93,18 @@ class Elasticsearch8ApiTest {
 					.asyncBulkCreateDocument("iot_res_1", Map.of("555", new TestResource("6666")),
 							Executors.newSingleThreadExecutor())
 					.join());
+		assertThatNoException().isThrownBy(
+			() -> elasticsearchTemplate
+				.asyncBulkCreateDocument("iot_res_1", List.of(new TestResource("6666")),
+					Executors.newSingleThreadExecutor())
+				.join());
 		assertThatNoException()
 			.isThrownBy(() -> elasticsearchTemplate.createDocument("iot_res_1", "444", new TestResource("3333")));
 		assertThatNoException().isThrownBy(
 				() -> elasticsearchTemplate.bulkCreateDocument("iot_res_1", Map.of("333", new TestResource("5555"))));
+		assertThatNoException().isThrownBy(
+			() -> elasticsearchTemplate.bulkCreateDocument("iot_res_1", List.of(new TestResource("5555"))));
+		assertThat(elasticsearchTemplate.exist(List.of("iot_res_1", "iot_pro_1", "iot_resp_1"))).isTrue();
 		Search.Highlight highlight = new Search.Highlight();
 		highlight.setFields(List.of(new Search.HighlightField("name", 0, 0)));
 		Search search = new Search(highlight, 1, 10, null);

@@ -36,6 +36,10 @@
       <optional>true</optional>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>elasticsearch</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

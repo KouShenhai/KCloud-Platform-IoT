@@ -6,3 +6,9 @@ docker cp elasticsearch:/usr/share/elasticsearch/plugins elasticsearch/
 docker cp elasticsearch:/usr/share/elasticsearch/config elasticsearch/
 docker cp elasticsearch:/usr/share/elasticsearch/logs elasticsearch/
 ```
+
+```shell
+docker build -t elasticsearch8:8.19.3 .
+docker tag xxx registry.cn-shenzhen.aliyuncs.com/koushenhai/elasticsearch8:8.19.3
+docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/elasticsearch8:8.19.3
+```
