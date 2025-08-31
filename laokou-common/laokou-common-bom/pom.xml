@@ -106,7 +106,7 @@
     <!--error_prone_annotations版本-->
     <error_prone_annotations.version>2.41.0</error_prone_annotations.version>
     <!--checker-qual版本-->
-    <checker-qual.version>3.49.5</checker-qual.version>
+    <checker-qual.version>3.50.0</checker-qual.version>
     <!--commons-io版本-->
     <commons-io.version>2.20.0</commons-io.version>
     <!--commons-text版本-->
