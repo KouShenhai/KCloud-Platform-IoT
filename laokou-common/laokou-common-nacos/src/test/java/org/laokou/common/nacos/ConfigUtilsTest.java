@@ -22,6 +22,8 @@ import com.alibaba.cloud.nacos.NacosConfigProperties;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.nacos.util.ConfigUtils;
@@ -42,21 +44,26 @@ class ConfigUtilsTest {
 
 	private NacosConfigProperties nacosConfigProperties;
 
+	static NamingUtilsTest.NacosContainer nacos = new NamingUtilsTest.NacosContainer();
+
+	@BeforeAll
+	static void beforeAll() {
+		nacos.start();
+	}
+
+	@AfterAll
+	static void afterAll() {
+		nacos.stop();
+	}
+
 	@BeforeEach
 	void setUp() {
 		nacosConfigProperties = new NacosConfigProperties();
-		nacosConfigProperties.setServerAddr("127.0.0.1:8848");
+		nacosConfigProperties.setServerAddr(nacos.getHost() + ":" + nacos.getMappedPort(8848));
 		nacosConfigProperties.setNamespace("public");
 		nacosConfigProperties.setUsername("nacos");
 		nacosConfigProperties.setPassword("nacos");
 		nacosConfigProperties.setGroup("DEFAULT_GROUP");
-
-		assertThat(nacosConfigProperties).isNotNull();
-		assertThat( nacosConfigProperties.getNamespace()).isEqualTo("public");
-		assertThat( nacosConfigProperties.getServerAddr()).isEqualTo("127.0.0.1:8848");
-		assertThat(nacosConfigProperties.getPassword()).isEqualTo("nacos");
-		assertThat(nacosConfigProperties.getUsername()).isEqualTo("nacos");
-		assertThat( nacosConfigProperties.getGroup()).isEqualTo("DEFAULT_GROUP");
 		assertThat(nacosConfigProperties.assembleConfigServiceProperties()).isNotNull();
 
 		NacosConfigManager nacosConfigManager = new NacosConfigManager(nacosConfigProperties);

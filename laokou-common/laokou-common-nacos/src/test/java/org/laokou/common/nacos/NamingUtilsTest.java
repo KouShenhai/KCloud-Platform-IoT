@@ -26,6 +26,8 @@ import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.alibaba.nacos.api.naming.selector.NamingSelector;
 import com.alibaba.nacos.client.naming.selector.NamingSelectorFactory;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.nacos.util.NamingUtils;
@@ -35,8 +37,13 @@ import org.springframework.cloud.commons.util.InetUtilsProperties;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.wait.strategy.Wait;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 
@@ -64,11 +71,28 @@ class NamingUtilsTest {
 
 	private final NacosDiscoveryProperties nacosDiscoveryProperties;
 
+	static NacosContainer nacos = new NacosContainer();
+
+	@BeforeAll
+	static void beforeAll() {
+		nacos.start();
+	}
+
+	@AfterAll
+	static void afterAll() {
+		nacos.stop();
+	}
+
+	@DynamicPropertySource
+	static void configureProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.cloud.nacos.discovery.server-addr", () -> nacos.getHost() + ":" + nacos.getMappedPort(8848));
+	}
+
 	@BeforeEach
 	void setUp() {
 		assertThat(nacosDiscoveryProperties).isNotNull();
 		assertThat(nacosDiscoveryProperties.getNamespace()).isEqualTo("public");
-		assertThat(nacosDiscoveryProperties.getServerAddr()).isEqualTo("127.0.0.1:8848");
+		assertThat(nacosDiscoveryProperties.getServerAddr()).isEqualTo(nacos.getHost() + ":" + nacos.getMappedPort(8848));
 		assertThat(nacosDiscoveryProperties.getGroup()).isEqualTo("DEFAULT_GROUP");
 		assertThat(nacosDiscoveryProperties.getUsername()).isEqualTo("nacos");
 		assertThat(nacosDiscoveryProperties.getPassword()).isEqualTo("nacos");
@@ -261,6 +285,20 @@ class NamingUtilsTest {
 	void test_nacosServiceShutDown() throws InterruptedException {
 		Thread.sleep(1000);
 		assertThatNoException().isThrownBy(namingUtils::nacosServiceShutDown);
+	}
+
+	static class NacosContainer extends GenericContainer<NacosContainer> {
+
+		public NacosContainer() {
+			super("nacos/nacos-server:v2.5.1");
+			this.addExposedPorts(8848, 9848);
+			this.addEnv("MODE", "standalone");
+			this.addEnv("NACOS_AUTH_TOKEN", "SecretKey012345678901234567890123456789012345678901234567890123456789");
+			this.addEnv("NACOS_AUTH_IDENTITY_KEY", "serverIdentity");
+			this.addEnv("NACOS_AUTH_IDENTITY_VALUE", "security");
+			this.setWaitStrategy(Wait.defaultWaitStrategy().withStartupTimeout(Duration.ofSeconds(120)));
+		}
+
 	}
 
 }
