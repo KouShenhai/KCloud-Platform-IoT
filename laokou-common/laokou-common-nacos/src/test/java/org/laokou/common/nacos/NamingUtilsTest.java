@@ -41,8 +41,6 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
-
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
@@ -106,6 +104,7 @@ class NamingUtilsTest {
 
 	@Test
 	void test_createNamingService() throws Exception {
+		Thread.sleep(Duration.ofSeconds(1));
 		NamingService namingService = NamingUtils.createNamingService(nacosDiscoveryProperties.getServerAddr());
 		assertThat(namingService).isNotNull();
 		namingService = NamingUtils.createNamingService(nacosDiscoveryProperties.getNacosProperties());
@@ -113,12 +112,14 @@ class NamingUtilsTest {
 	}
 
 	@Test
-	void test_isNacosDiscoveryInfoChanged() {
+	void test_isNacosDiscoveryInfoChanged()throws InterruptedException {
+		Thread.sleep(Duration.ofSeconds(1));
 		assertThat(namingUtils.isNacosDiscoveryInfoChanged(nacosDiscoveryProperties)).isFalse();
 	}
 
 	@Test
 	void test_getAllInstances() throws NacosException, InterruptedException {
+		Thread.sleep(Duration.ofSeconds(8));
 		assertThat(namingUtils.getAllInstances("test-service").isEmpty()).isTrue();
 
 		assertThatNoException().isThrownBy(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080));
@@ -175,6 +176,7 @@ class NamingUtilsTest {
 
 	@Test
 	void test_selectInstances() throws NacosException, InterruptedException {
+		Thread.sleep(Duration.ofSeconds(15));
 		assertThatNoException().isThrownBy(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		assertThat(namingUtils.selectInstances("test-service", true).isEmpty()).isFalse();
@@ -201,6 +203,7 @@ class NamingUtilsTest {
 
 	@Test
 	void test_selectOneHealthyInstance() throws NacosException, InterruptedException {
+		Thread.sleep(Duration.ofSeconds(8));
 		assertThatNoException().isThrownBy(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		assertThat(namingUtils.selectInstances("test-service", true).isEmpty()).isFalse();
@@ -221,6 +224,7 @@ class NamingUtilsTest {
 
 	@Test
 	void test_subscribeService() throws NacosException, InterruptedException {
+		Thread.sleep(Duration.ofSeconds(8));
 		assertThatNoException().isThrownBy(() -> namingUtils.registerInstance("test-service", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		assertThat(namingUtils.selectInstances("test-service", true).isEmpty()).isFalse();
@@ -252,6 +256,7 @@ class NamingUtilsTest {
 
 	@Test
 	void test_getServicesOfServer() throws NacosException, InterruptedException {
+		Thread.sleep(Duration.ofSeconds(8));
 		assertThatNoException().isThrownBy(() -> namingUtils.registerInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080, nacosDiscoveryProperties.getClusterName()));
 		Thread.sleep(1000);
 		assertThat(namingUtils.selectInstances("test-service", true).isEmpty()).isFalse();
@@ -269,6 +274,7 @@ class NamingUtilsTest {
 
 	@Test
 	void test_batchRegisterInstance() throws NacosException, InterruptedException {
+		Thread.sleep(Duration.ofSeconds(8));
 		Instance instance = new Instance();
 		instance.setIp("127.0.0.1");
 		instance.setPort(8080);
@@ -283,7 +289,7 @@ class NamingUtilsTest {
 
 	@Test
 	void test_nacosServiceShutDown() throws InterruptedException {
-		Thread.sleep(1000);
+		Thread.sleep(Duration.ofSeconds(1));
 		assertThatNoException().isThrownBy(namingUtils::nacosServiceShutDown);
 	}
 
@@ -291,12 +297,14 @@ class NamingUtilsTest {
 
 		public NacosContainer() {
 			super("nacos/nacos-server:v2.5.1");
-			this.addExposedPorts(8848, 9848);
 			this.addEnv("MODE", "standalone");
 			this.addEnv("NACOS_AUTH_TOKEN", "SecretKey012345678901234567890123456789012345678901234567890123456789");
 			this.addEnv("NACOS_AUTH_IDENTITY_KEY", "serverIdentity");
 			this.addEnv("NACOS_AUTH_IDENTITY_VALUE", "security");
-			this.setWaitStrategy(Wait.defaultWaitStrategy().withStartupTimeout(Duration.ofSeconds(120)));
+			this.addFixedExposedPort(8848, 8848);
+			this.addFixedExposedPort(9848, 9848);
+			this.addFixedExposedPort(8080, 8080);
+			this.withStartupTimeout(Duration.ofSeconds(60));
 		}
 
 	}
