@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - checkout
-      - run: mvn clean install -P dev -DskipTests -B
+      - run: mvn clean install -P dev -DskipTests -B -Dmaven.resolver.transport=wagon -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
 workflows:
   maven-build:
     jobs:
