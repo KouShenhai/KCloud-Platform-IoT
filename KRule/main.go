@@ -1,1 +1,5 @@
 package KRule
+
+func main() {
+
+}
