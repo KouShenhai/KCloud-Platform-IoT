@@ -21,8 +21,6 @@ jobs:
           distribution: 'temurin'
           cache: maven
           architecture: x64
-      - name: Run the Maven verify phase
-        run: mvn --batch-mode --update-snapshots verify -DskipTests
       - name: Test with Maven
         run: mvn clean test -P dev
       - name: Upload coverage reports to Codecov
