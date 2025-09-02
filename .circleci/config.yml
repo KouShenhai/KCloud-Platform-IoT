@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - checkout
-      - run: mvn clean install -P dev -DskipTests -B
+      - run: mvn clean install -P dev -DskipTests -B allow-unsafe-ssl
 workflows:
   maven-build:
     jobs:

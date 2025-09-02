@@ -71,6 +71,8 @@
     <ip2region.version>2.7.0</ip2region.version>
     <!--jackson版本-->
     <jackson.version>2.20.0</jackson.version>
+    <!--jackson-annotations版本-->
+    <jackson-annotations.version>2.20</jackson-annotations.version>
     <!--spring-kafka版本-->
     <spring-kafka.version>3.3.9</spring-kafka.version>
     <!--netty版本-->
@@ -943,7 +945,7 @@
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-annotations</artifactId>
-        <version>${jackson.version}</version>
+        <version>${jackson-annotations.version}</version>
       </dependency>
       <dependency>
         <groupId>com.fasterxml.jackson.datatype</groupId>
