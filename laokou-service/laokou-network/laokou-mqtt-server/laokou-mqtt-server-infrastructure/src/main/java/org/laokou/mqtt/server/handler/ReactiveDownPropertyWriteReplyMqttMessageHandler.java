@@ -48,7 +48,7 @@ public class ReactiveDownPropertyWriteReplyMqttMessageHandler implements Reactiv
 	@Override
 	public Mono<MessageId> handle(MqttMessage mqttMessage) {
 		MqttMessageEnum upPropertyWriteReply = MqttMessageEnum.UP_PROPERTY_WRITE_REPLY;
-		String topic = org.laokou.common.pulsar.util.TopicUtils.getTopic("laokou", "mqtt",
+		String topic = org.laokou.common.pulsar.util.TopicUtils.getTopic("laokouyun", "mqtt",
 				upPropertyWriteReply.getMqTopic());
 		return reactivePulsarTemplate.send(topic, JacksonUtils.toJsonStr(new PropertyMessage(mqttMessage.getTopic(),
 				mqttMessage.getPayload().toString(), upPropertyWriteReply.getCode())));

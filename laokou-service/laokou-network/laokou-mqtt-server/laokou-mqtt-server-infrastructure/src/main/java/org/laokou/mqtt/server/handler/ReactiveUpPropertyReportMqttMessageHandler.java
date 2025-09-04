@@ -48,7 +48,7 @@ public class ReactiveUpPropertyReportMqttMessageHandler implements ReactiveMqttM
 	@Override
 	public Mono<MessageId> handle(MqttMessage mqttMessage) {
 		MqttMessageEnum upPropertyReport = MqttMessageEnum.UP_PROPERTY_REPORT;
-		String topic = org.laokou.common.pulsar.util.TopicUtils.getTopic("laokou", "mqtt",
+		String topic = org.laokou.common.pulsar.util.TopicUtils.getTopic("laokouyun", "mqtt",
 				upPropertyReport.getMqTopic());
 		return reactivePulsarTemplate.send(topic, new PropertyMessage(mqttMessage.getTopic(),
 				mqttMessage.getPayload().toString(), upPropertyReport.getCode()), ForySchema.INSTANCE);

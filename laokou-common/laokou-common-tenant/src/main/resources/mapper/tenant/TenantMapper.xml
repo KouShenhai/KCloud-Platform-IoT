@@ -43,7 +43,7 @@
 
   <select id="selectIdByCode" resultType="java.lang.Long">
     <choose>
-      <when test="code == 'laokou'">
+      <when test="code == 'laokouyun'">
         select 0
       </when>
       <otherwise>

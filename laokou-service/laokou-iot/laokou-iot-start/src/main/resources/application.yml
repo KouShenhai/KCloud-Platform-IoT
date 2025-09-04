@@ -182,8 +182,6 @@ spring:
     template:
       observation-enabled: true
   pulsar:
-    topic:
-      tenant1: persistent://laokou/mqtt
     client:
       service-url: pulsar://pulsar:6650
     producer:
