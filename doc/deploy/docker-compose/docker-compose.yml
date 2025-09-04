@@ -70,7 +70,7 @@ services:
     networks:
       - iot_network
   promtail:
-    image: grafana/promtail:3.5.3
+    image: grafana/promtail:3.5.4
     container_name: promtail
     # 保持容器在没有守护程序的情况下运行
     tty: true
