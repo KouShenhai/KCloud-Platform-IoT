@@ -296,7 +296,7 @@ class NamingUtilsTest {
 	static class NacosContainer extends GenericContainer<NacosContainer> {
 
 		public NacosContainer() {
-			super("nacos/nacos-server:v2.5.1");
+			super("nacos/nacos-server:v3.0.3");
 			this.addEnv("MODE", "standalone");
 			this.addEnv("NACOS_AUTH_TOKEN", "SecretKey012345678901234567890123456789012345678901234567890123456789");
 			this.addEnv("NACOS_AUTH_IDENTITY_KEY", "serverIdentity");

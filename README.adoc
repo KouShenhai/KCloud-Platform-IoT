@@ -94,7 +94,7 @@ image:doc/image/img.png[COLA架构图,400,400,align=center]
 |1    |laokou |admin   |admin123
 |===
 
-=== 🔗 开发测试
+=== 📏 开发测试
 
 [width=100%]
 |===
@@ -161,7 +161,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Nacos                       |3.0.0
 |Dubbo                       |3.3.5
 |Redis                       |8.0.1
-|Elasticsearch               |8.19.2
+|Elasticsearch               |8.19.3
 |Netty                       |4.2.3.Final
 |Kafka                       |4.0.0
 |Pulsar                      |4.0.5
