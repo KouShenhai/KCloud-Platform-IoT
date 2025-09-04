@@ -66,7 +66,7 @@ public class DomainService {
 		// 校验认证参数
 		authA.checkAuthParam();
 		// 获取租户ID
-		authA.getTenantId(tenantGateway.getTenantId(authA.getTenantCode()));
+		authA.getTenantId(() -> tenantGateway.getTenantId(authA.getTenantCode()));
 		// 校验租户ID
 		authA.checkTenantId();
 		// 校验验证码

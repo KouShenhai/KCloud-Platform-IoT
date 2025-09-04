@@ -42,17 +42,9 @@
 	</select>
 
   <select id="selectIdByCode" resultType="java.lang.Long">
-    <choose>
-      <when test="code == 'laokouyun'">
-        select 0
-      </when>
-      <otherwise>
-        select id
-        from sys_tenant
-        where code = #{code}
-        and del_flag = 0
-      </otherwise>
-    </choose>
+    select id
+    from sys_tenant
+    where code = #{code} and del_flag = 0
   </select>
 
 </mapper>

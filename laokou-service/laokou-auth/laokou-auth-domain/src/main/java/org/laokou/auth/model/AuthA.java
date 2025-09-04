@@ -31,6 +31,9 @@ import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.CollectionUtils;
 import java.util.*;
+import java.util.function.Supplier;
+
+import static org.laokou.auth.factory.DomainFactory.DEFAULT_TENANT;
 import static org.laokou.auth.model.GrantTypeEnum.*;
 import static org.laokou.auth.model.OAuth2Constants.*;
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
@@ -176,8 +179,12 @@ public class AuthA extends AggregateRoot {
 		fillUserValue(this.username, EMPTY, EMPTY);
 	}
 
-	public void getTenantId(Long tenantId) {
-		this.user.setTenantId(tenantId);
+	public void getTenantId(Supplier<Long> supplier) {
+		if (isDefaultTenant()) {
+			this.user.setTenantId(0L);
+		} else {
+			this.user.setTenantId(supplier.get());
+		}
 	}
 
 	public void getUserInfo(UserE user) {
@@ -301,6 +308,10 @@ public class AuthA extends AggregateRoot {
 			case USERNAME_PASSWORD -> RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(captcha.uuid());
 			case AUTHORIZATION_CODE, TEST -> EMPTY;
 		};
+	}
+
+	private boolean isDefaultTenant() {
+		return ObjectUtils.equals(DEFAULT_TENANT, tenantCode);
 	}
 
 	private void fillUserValue(String username, String mail, String mobile) throws Exception {

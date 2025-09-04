@@ -175,7 +175,7 @@ class AuthATest {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 获取租户ID
 		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
-		assertThatNoException().isThrownBy(() -> auth.getTenantId(tenantGateway.getTenantId(auth.getTenantCode())));
+		assertThatNoException().isThrownBy(() -> auth.getTenantId(() -> tenantGateway.getTenantId(auth.getTenantCode())));
 		assertThatNoException().isThrownBy(auth::checkTenantId);
 		// 校验调用次数
 		verify(tenantGateway, times(1)).getTenantId("laokou");

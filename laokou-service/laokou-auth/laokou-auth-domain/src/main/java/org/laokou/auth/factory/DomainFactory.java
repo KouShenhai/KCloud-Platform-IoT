@@ -80,6 +80,11 @@ public final class DomainFactory {
 	 */
 	public static final String TENANT_CODE = "tenant_code";
 
+	/**
+	 * 默认租户.
+	 */
+	public static final String DEFAULT_TENANT = "laokouyun";
+
 	private DomainFactory() {
 	}
 
