@@ -39,7 +39,7 @@
     <!--client-java版本-->
     <client-java.version>19.0.3</client-java.version>
     <!--lombok版本-->
-    <lombok.version>1.18.38</lombok.version>
+    <lombok.version>1.18.40</lombok.version>
     <!--jasypt版本-->
     <jasypt.version>3.0.5</jasypt.version>
     <!--liquibase版本-->
