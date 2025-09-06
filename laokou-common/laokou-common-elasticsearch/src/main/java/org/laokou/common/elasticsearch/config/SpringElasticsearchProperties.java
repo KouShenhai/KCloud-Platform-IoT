@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +42,8 @@ public class SpringElasticsearchProperties {
 	private boolean socketKeepAlive = false;
 	private String pathPrefix;
 	private boolean useSsl = false;
-	private String version = "9.1.4";
+	private String version = "9.1.3";
+	private String clientVersion = "9.1.4";
 	private final ElasticsearchProperties.Restclient restclient = new ElasticsearchProperties.Restclient();
 
 }

@@ -31,6 +31,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.client5.http.ssl.DefaultClientTlsStrategy;
+import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.message.BasicHeader;
@@ -48,7 +50,6 @@ import org.springframework.boot.ssl.SslBundles;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
 
-import javax.net.ssl.SSLContext;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.nio.charset.Charset;
@@ -67,6 +68,7 @@ import static co.elastic.clients.transport.rest5_client.low_level.Rest5ClientBui
 import static org.apache.hc.core5.http.HttpHeaders.AUTHORIZATION;
 
 /**
+ * @author spring-data-elasticsearch
  * @author laokou
  */
 @Slf4j
@@ -107,7 +109,7 @@ class ElasticsearchAutoConfig {
 		Assert.notNull(rest5Client, "restClient must not be null");
 		Assert.notNull(jsonpMapper, "jsonpMapper must not be null");
 		Rest5ClientOptions.Builder rest5ClientOptionsBuilder = getRest5ClientOptionsBuilder(transportOptions());
-		rest5ClientOptionsBuilder.addHeader("Elasticsearch-Client", getClientVersion());
+		rest5ClientOptionsBuilder.addHeader("Elasticsearch", getClientVersion());
 		return new Rest5ClientTransport(rest5Client, jsonpMapper, rest5ClientOptionsBuilder.build());
 	}
 
@@ -164,17 +166,15 @@ class ElasticsearchAutoConfig {
 
 		builder.setConnectionManagerCallback(poolingAsyncClientConnectionManagerBuilder -> {
 			String sslBundle = springElasticsearchProperties.getRestclient().getSsl().getBundle();
-			SSLContext sslContext;
 			try {
 				if (StringUtils.isNotEmpty(sslBundle)) {
-					sslContext = sslBundles.getBundle(sslBundle).createSslContext();
+					poolingAsyncClientConnectionManagerBuilder.setTlsStrategy(new BasicClientTlsStrategy(sslBundles.getBundle(sslBundle).createSslContext()));
 				} else {
-					sslContext = SslUtils.sslContext();
+					poolingAsyncClientConnectionManagerBuilder.setTlsStrategy(new DefaultClientTlsStrategy(SslUtils.sslContext(), NoopHostnameVerifier.INSTANCE));
 				}
 			} catch (KeyManagementException | NoSuchAlgorithmException e) {
 				throw new IllegalStateException("could not create the default ssl context", e);
 			}
-			poolingAsyncClientConnectionManagerBuilder.setTlsStrategy(new BasicClientTlsStrategy(sslContext));
 		});
 
 		builder.setRequestConfigCallback(requestConfigBuilder -> {
@@ -247,7 +247,8 @@ class ElasticsearchAutoConfig {
 
 	private String getClientVersion() {
 		String version = springElasticsearchProperties.getVersion();
-		return String.format("elasticsearch %s / elasticsearch client %s / imperative", version, version);
+		String clientVersion = springElasticsearchProperties.getClientVersion();
+		return String.format("elasticsearch %s / elasticsearch client %s / imperative", version, clientVersion);
 	}
 
 }

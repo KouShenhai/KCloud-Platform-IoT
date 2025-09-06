@@ -61,23 +61,23 @@ class Elasticsearch8ApiTest {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
-//	static ElasticsearchContainer elasticsearch = new ElasticsearchContainer(DockerImageName.parse("registry.cn-shenzhen.aliyuncs.com/koushenhai/elasticsearch8:8.19.3").asCompatibleSubstituteFor("docker.elastic.co/elasticsearch/elasticsearch"))
-//		.withPassword("laokou123");
-//
-//	@BeforeAll
-//	static void beforeAll() {
-//		elasticsearch.start();
-//	}
-//
-//	@AfterAll
-//	static void afterAll() {
-//		elasticsearch.stop();
-//	}
-//
-//	@DynamicPropertySource
-//	static void configureProperties(DynamicPropertyRegistry registry) {
-//		registry.add("spring.elasticsearch.uris", () -> List.of("https://" + elasticsearch.getHttpHostAddress()));
-//	}
+	static ElasticsearchContainer elasticsearch = new ElasticsearchContainer(DockerImageName.parse("registry.cn-shenzhen.aliyuncs.com/koushenhai/elasticsearch9:9.1.3").asCompatibleSubstituteFor("docker.elastic.co/elasticsearch/elasticsearch"))
+		.withPassword("laokou123");
+
+	@BeforeAll
+	static void beforeAll() {
+		elasticsearch.start();
+	}
+
+	@AfterAll
+	static void afterAll() {
+		elasticsearch.stop();
+	}
+
+	@DynamicPropertySource
+	static void configureProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.elasticsearch.uris", () -> List.of("https://" + elasticsearch.getHttpHostAddress()));
+	}
 
 	@Test
 	void test_elasticsearch() throws IOException {
