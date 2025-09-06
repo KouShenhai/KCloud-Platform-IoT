@@ -23,6 +23,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.laokou.common.elasticsearch.annotation.Constant.POST_TAGS;
 import static org.laokou.common.elasticsearch.annotation.Constant.PRE_TAGS;
@@ -54,7 +55,7 @@ public class Search {
 
 		private boolean requireFieldMatch;
 
-		private List<HighlightField> fields;
+		private Set<HighlightField> fields;
 
 	}
 

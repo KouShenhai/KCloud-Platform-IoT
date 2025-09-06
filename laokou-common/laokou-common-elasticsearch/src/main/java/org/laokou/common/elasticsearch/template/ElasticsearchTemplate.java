@@ -29,9 +29,11 @@ import co.elastic.clients.elasticsearch.core.IndexResponse;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.bulk.BulkOperation;
+import co.elastic.clients.elasticsearch.core.search.HighlightField;
 import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
 import co.elastic.clients.elasticsearch.indices.*;
 import co.elastic.clients.transport.endpoints.BooleanResponse;
+import co.elastic.clients.util.NamedValue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.JacksonUtils;
@@ -50,6 +52,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
@@ -127,7 +130,7 @@ public class ElasticsearchTemplate {
 	}
 
 	public Map<String, IndexState> getIndex(List<String> names) throws IOException {
-		return elasticsearchClient.indices().get(getIndexRequest(names)).result();
+		return elasticsearchClient.indices().get(getIndexRequest(names)).indices();
 	}
 
 	public <T> void createDocument(String index, String id, T obj) throws IOException {
@@ -306,20 +309,18 @@ public class ElasticsearchTemplate {
 		builder.postTags(highlight.getPostTags());
 		// 多个字段高亮，需要设置false
 		builder.requireFieldMatch(highlight.isRequireFieldMatch());
-		// numberOfFragments => 获取高亮片段位置
-		// fragmentSize => 最大高亮分片数
-		builder.fields(getHighlightFieldMap(highlight.getFields()));
+		builder.fields(getHighlightFields(highlight.getFields()));
 		return builder.build();
 	}
 
-	private Map<String, co.elastic.clients.elasticsearch.core.search.HighlightField> getHighlightFieldMap(
-			List<Search.HighlightField> fields) {
-		return fields.stream().collect(Collectors.toMap(Search.HighlightField::getName, j -> {
-			co.elastic.clients.elasticsearch.core.search.HighlightField.Builder builder = new co.elastic.clients.elasticsearch.core.search.HighlightField.Builder();
-			builder.fragmentSize(j.getFragmentSize());
-			builder.numberOfFragments(j.getNumberOfFragments());
-			return builder.build();
-		}));
+	private List<NamedValue<HighlightField>> getHighlightFields(Set<Search.HighlightField> fields) {
+		return fields.stream()
+			.map(item -> NamedValue.of(item.getName(), new co.elastic.clients.elasticsearch.core.search.HighlightField.Builder()
+				// fragmentSize => 最大高亮分片数
+				.fragmentSize(item.getFragmentSize())
+				// numberOfFragments => 获取高亮片段位置
+				.numberOfFragments(item.getNumberOfFragments())
+				.build())).toList();
 	}
 
 	private <T> List<BulkOperation> getBulkOperations(List<T> list) {

@@ -13,10 +13,14 @@ spring:
   threads:
     virtual:
       enabled: true
-  elasticsearch:
-    uris:
-      - https://elasticsearch:9200
-    username: ENC(288BcA+5uF75oMpMHekXLLG+DBnzJbj3eFEY5uEG9G1TWvv7dR2TXJ8jc13MtHDk)
-    password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
-    connection-timeout: 60s
-    socket-timeout: 60s
+  data:
+    elasticsearch:
+      endpoints:
+        - elasticsearch:9200
+      username: ENC(288BcA+5uF75oMpMHekXLLG+DBnzJbj3eFEY5uEG9G1TWvv7dR2TXJ8jc13MtHDk)
+      password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+      connection-timeout: 60s
+      socket-timeout: 60s
+      use-ssl: true
+      version: 9.1.3
+      client-version: 9.1.4
