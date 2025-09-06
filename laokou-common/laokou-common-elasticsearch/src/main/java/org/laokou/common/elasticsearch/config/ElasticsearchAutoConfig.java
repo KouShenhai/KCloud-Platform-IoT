@@ -16,55 +16,55 @@
  */
 
 package org.laokou.common.elasticsearch.config;
-
 import co.elastic.clients.elasticsearch.ElasticsearchAsyncClient;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.json.JsonpMapper;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
-import co.elastic.clients.transport.rest_client.RestClientTransport;
+import co.elastic.clients.transport.TransportOptions;
+import co.elastic.clients.transport.rest5_client.Rest5ClientOptions;
+import co.elastic.clients.transport.rest5_client.Rest5ClientTransport;
+import co.elastic.clients.transport.rest5_client.low_level.RequestOptions;
+import co.elastic.clients.transport.rest5_client.low_level.Rest5Client;
+import co.elastic.clients.transport.rest5_client.low_level.Rest5ClientBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpHost;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.Credentials;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
-import org.apache.http.impl.nio.reactor.IOReactorConfig;
-import org.apache.http.nio.conn.ssl.SSLIOSessionStrategy;
-import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestClientBuilder;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.HttpHost;
+import org.apache.hc.core5.http.message.BasicHeader;
+import org.apache.hc.core5.http.nio.ssl.BasicClientTlsStrategy;
+import org.apache.hc.core5.util.Timeout;
+import org.laokou.common.core.util.ArrayUtils;
+import org.laokou.common.i18n.util.SslUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchProperties;
-import org.springframework.boot.autoconfigure.elasticsearch.RestClientBuilderCustomizer;
-import org.springframework.boot.autoconfigure.service.connection.ConnectionDetails;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.context.properties.PropertyMapper;
-import org.springframework.boot.ssl.SslBundle;
 import org.springframework.boot.ssl.SslBundles;
-import org.springframework.boot.ssl.SslOptions;
 import org.springframework.context.annotation.Bean;
-import org.springframework.util.StringUtils;
+import org.springframework.util.Assert;
 
-import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
+import java.net.InetSocketAddress;
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.concurrent.TimeUnit;
 
-import static org.laokou.common.i18n.util.SslUtils.sslContext;
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.constant.StringConstants.RISK;
+import static co.elastic.clients.transport.rest5_client.low_level.Rest5ClientBuilder.DEFAULT_RESPONSE_TIMEOUT_MILLIS;
+import static co.elastic.clients.transport.rest5_client.low_level.Rest5ClientBuilder.DEFAULT_SOCKET_TIMEOUT_MILLIS;
+import static org.apache.hc.core5.http.HttpHeaders.AUTHORIZATION;
 
 /**
  * @author laokou
@@ -75,325 +75,179 @@ import static org.laokou.common.i18n.common.constant.StringConstants.RISK;
 @EnableConfigurationProperties(ElasticsearchProperties.class)
 class ElasticsearchAutoConfig {
 
-	/**
-	 * HTTP协议头.
-	 */
-	private static final String HTTP_SCHEME = "http://";
+	private final SpringElasticsearchProperties springElasticsearchProperties;
 
 	/**
-	 * HTTPS协议头.
+	 * Provides the {@link ElasticsearchClient} to be used.
+	 *
+	 * @param transport the {@link ElasticsearchTransport} to use
+	 * @return ElasticsearchClient instance
 	 */
-	private static final String HTTPS_SCHEME = "https://";
-
-	private final ElasticsearchProperties properties;
-
-	@Bean
-	@ConditionalOnMissingBean(ElasticsearchConnectionDetails.class)
-	PropertiesElasticsearchConnectionDetails elasticsearchConnectionDetails() {
-		return new PropertiesElasticsearchConnectionDetails(this.properties);
+	@Bean(name = "elasticsearchClient", destroyMethod = "close")
+	@ConditionalOnMissingBean(ElasticsearchClient.class)
+	ElasticsearchClient elasticsearchClient(ElasticsearchTransport transport) {
+		Assert.notNull(transport, "transport must not be null");
+		return new ElasticsearchClient(transport);
 	}
 
-	@Bean
-	RestClientBuilderCustomizer defaultRestClientBuilderCustomizer(ElasticsearchConnectionDetails connectionDetails) {
-		return new DefaultRestClientBuilderCustomizer(this.properties, connectionDetails);
+	@Bean(name = "elasticsearchAsyncClient", destroyMethod = "close")
+	@ConditionalOnMissingBean(ElasticsearchAsyncClient.class)
+	ElasticsearchAsyncClient elasticsearchAsyncClient(ElasticsearchTransport transport) {
+		return new ElasticsearchAsyncClient(transport);
 	}
 
+	/**
+	 * Provides the Elasticsearch transport to be used. The default implementation uses the {@link Rest5Client} bean and
+	 * the {@link JsonpMapper} bean provided in this class.
+	 *
+	 * @return the {@link ElasticsearchTransport}
+	 */
 	@Bean
-	RestClientBuilder elasticsearchRestClientBuilder(ElasticsearchConnectionDetails connectionDetails,
-			ObjectProvider<RestClientBuilderCustomizer> builderCustomizers, ObjectProvider<SslBundles> sslBundles) {
-		RestClientBuilder builder = RestClient.builder(connectionDetails.getNodes()
-			.stream()
-			.map((node) -> new HttpHost(node.hostname(), node.port(), node.protocol().getScheme()))
-			.toArray(HttpHost[]::new));
-		builder.setHttpClientConfigCallback((httpClientBuilder) -> {
-			builderCustomizers.orderedStream().forEach((customizer) -> customizer.customize(httpClientBuilder));
-			String sslBundleName = this.properties.getRestclient().getSsl().getBundle();
-			if (StringUtils.hasText(sslBundleName)) {
-				configureSsl(httpClientBuilder, sslBundles.getObject().getBundle(sslBundleName));
-			}
-			else {
-				try {
-					ignoreConfigureSsl(httpClientBuilder);
-				}
-				catch (NoSuchAlgorithmException | KeyManagementException e) {
-					log.error("ignoreConfigureSsl error", e);
-					throw new SystemException("S_Elasticsearch_IgnoreSslFailed", "忽略SSL验证失败", e);
-				}
-			}
-			return httpClientBuilder;
-		});
-		builder.setRequestConfigCallback((requestConfigBuilder) -> {
-			builderCustomizers.orderedStream().forEach((customizer) -> customizer.customize(requestConfigBuilder));
-			return requestConfigBuilder;
-		});
-		String pathPrefix = connectionDetails.getPathPrefix();
-		if (pathPrefix != null) {
+	ElasticsearchTransport elasticsearchTransport(Rest5Client rest5Client, JsonpMapper jsonpMapper) {
+		Assert.notNull(rest5Client, "restClient must not be null");
+		Assert.notNull(jsonpMapper, "jsonpMapper must not be null");
+		Rest5ClientOptions.Builder rest5ClientOptionsBuilder = getRest5ClientOptionsBuilder(transportOptions());
+		rest5ClientOptionsBuilder.addHeader("Elasticsearch-Client", getClientVersion());
+		return new Rest5ClientTransport(rest5Client, jsonpMapper, rest5ClientOptionsBuilder.build());
+	}
+
+	/**
+	 * Provides the JsonpMapper bean that is used in the {@link #elasticsearchTransport(Rest5Client, JsonpMapper)} method.
+	 *
+	 * @return the {@link JsonpMapper} to use
+	 * @since 5.2
+	 */
+	@Bean
+	JsonpMapper jsonpMapper() {
+		// we need to create our own objectMapper that keeps null values in order to provide the storeNullValue
+		// functionality. The one Elasticsearch would provide removes the nulls. We remove unwanted nulls before they get
+		// into this mapper, so we can safely keep them here.
+		var objectMapper = new ObjectMapper().configure(SerializationFeature.INDENT_OUTPUT, false);
+		return new JacksonJsonpMapper(objectMapper);
+	}
+
+	/**
+	 * Provides the underlying low level Elasticsearch RestClient.
+	 *
+	 * @return RestClient
+	 */
+	@Bean
+	Rest5Client elasticsearchRest5Client(ObjectProvider<SslBundles> sslBundles) {
+		return getRest5ClientBuilder(sslBundles.getObject()).build();
+	}
+
+	private Rest5ClientBuilder getRest5ClientBuilder(SslBundles sslBundles) {
+		Rest5ClientBuilder builder = Rest5Client.builder(getHttpHosts());
+		String pathPrefix = springElasticsearchProperties.getPathPrefix();
+		if (StringUtils.isNotEmpty(pathPrefix)) {
 			builder.setPathPrefix(pathPrefix);
 		}
-		builderCustomizers.orderedStream().forEach((customizer) -> customizer.customize(builder));
+		Header[] headers = getHeaders();
+		if (ArrayUtils.isNotEmpty(headers)) {
+			builder.setDefaultHeaders(headers);
+		}
+		Duration connectionTimeout = springElasticsearchProperties.getConnectionTimeout();
+		Duration socketTimeout = springElasticsearchProperties.getSocketTimeout();
+
+		builder.setConnectionConfigCallback(connectionConfigBuilder -> {
+			if (!connectionTimeout.isNegative()) {
+				connectionConfigBuilder.setConnectTimeout(
+					Timeout.of(Math.toIntExact(connectionTimeout.toMillis()), TimeUnit.MILLISECONDS));
+			}
+			if (!socketTimeout.isNegative()) {
+				var soTimeout = Timeout.of(Math.toIntExact(socketTimeout.toMillis()), TimeUnit.MILLISECONDS);
+				connectionConfigBuilder.setSocketTimeout(soTimeout);
+			} else {
+				connectionConfigBuilder.setSocketTimeout(Timeout.of(DEFAULT_SOCKET_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS));
+			}
+		});
+
+		builder.setConnectionManagerCallback(poolingAsyncClientConnectionManagerBuilder -> {
+			String sslBundle = springElasticsearchProperties.getRestclient().getSsl().getBundle();
+			SSLContext sslContext;
+			try {
+				if (StringUtils.isNotEmpty(sslBundle)) {
+					sslContext = sslBundles.getBundle(sslBundle).createSslContext();
+				} else {
+					sslContext = SslUtils.sslContext();
+				}
+			} catch (KeyManagementException | NoSuchAlgorithmException e) {
+				throw new IllegalStateException("could not create the default ssl context", e);
+			}
+			poolingAsyncClientConnectionManagerBuilder.setTlsStrategy(new BasicClientTlsStrategy(sslContext));
+		});
+
+		builder.setRequestConfigCallback(requestConfigBuilder -> {
+			if (!socketTimeout.isNegative()) {
+				var soTimeout = Timeout.of(Math.toIntExact(socketTimeout.toMillis()), TimeUnit.MILLISECONDS);
+				requestConfigBuilder.setConnectionRequestTimeout(soTimeout);
+			} else {
+				requestConfigBuilder.setConnectionRequestTimeout(Timeout.of(DEFAULT_RESPONSE_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS));
+			}
+		});
 		return builder;
 	}
 
-	@Bean(name = "elasticsearchClient", destroyMethod = "shutdown")
-	@ConditionalOnMissingBean(ElasticsearchClient.class)
-	@ConditionalOnClass(RestClientBuilder.class)
-	ElasticsearchClient elasticsearchClient(RestClientBuilder elasticsearchRestClientBuilder) {
-		return new ElasticsearchClient(getTransport(elasticsearchRestClientBuilder));
+	private HttpHost [] getHttpHosts() {
+		List<InetSocketAddress> hosts = springElasticsearchProperties.getEndpoints().stream().map(this::parse).toList();
+		boolean useSsl = springElasticsearchProperties.isUseSsl();
+		return hosts.stream()
+			.map(it -> (useSsl ? "https" : "http") + "://" + it.getHostString() + ':' + it.getPort())
+			.map(URI::create)
+			.map(HttpHost::create)
+			.toArray(HttpHost[]::new);
 	}
 
-	@Bean(name = "elasticsearchAsyncClient", destroyMethod = "shutdown")
-	@ConditionalOnMissingBean(ElasticsearchAsyncClient.class)
-	@ConditionalOnClass(RestClientBuilder.class)
-	ElasticsearchAsyncClient elasticsearchAsyncClient(RestClientBuilder elasticsearchRestClientBuilder) {
-		return new ElasticsearchAsyncClient(getTransport(elasticsearchRestClientBuilder));
+	private Header[] getHeaders() {
+		List<Header> headers = new ArrayList<>();
+		String username = springElasticsearchProperties.getUsername();
+		String password = springElasticsearchProperties.getPassword();
+		if (StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(password)) {
+			headers.add(new BasicHeader(AUTHORIZATION, "Basic " + encodeBasicAuth(username, password)));
+		}
+		return headers.toArray(new Header[0]);
 	}
 
-	private ElasticsearchTransport getTransport(RestClientBuilder elasticsearchRestClientBuilder) {
-		return new RestClientTransport(elasticsearchRestClientBuilder.build(), new JacksonJsonpMapper());
+	private InetSocketAddress parse(String endpoint) {
+		String[] hostAndPort = endpoint.split(":");
+		return InetSocketAddress.createUnresolved(hostAndPort[0], Integer.parseInt(hostAndPort[1]));
 	}
 
-	private void configureSsl(HttpAsyncClientBuilder httpClientBuilder, SslBundle sslBundle) {
-		SSLContext sslcontext = sslBundle.createSslContext();
-		SslOptions sslOptions = sslBundle.getOptions();
-		httpClientBuilder.setSSLStrategy(new SSLIOSessionStrategy(sslcontext, sslOptions.getEnabledProtocols(),
-				sslOptions.getCiphers(), (HostnameVerifier) null));
+	private String encodeBasicAuth(String username, String password) {
+		Assert.notNull(username, "Username must not be null");
+		Assert.doesNotContain(username, ":", "Username must not contain a colon");
+		Assert.notNull(password, "Password must not be null");
+		Charset charset = StandardCharsets.ISO_8859_1;
+		CharsetEncoder encoder = charset.newEncoder();
+		if (encoder.canEncode(username) && encoder.canEncode(password)) {
+			String credentialsString = username + ':' + password;
+			byte[] encodedBytes = Base64.getEncoder().encode(credentialsString.getBytes(charset));
+			return new String(encodedBytes, charset);
+		} else {
+			throw new IllegalArgumentException("Username or password contains characters that cannot be encoded to " + charset.displayName());
+		}
 	}
 
-	private void ignoreConfigureSsl(HttpAsyncClientBuilder httpClientBuilder)
-			throws NoSuchAlgorithmException, KeyManagementException {
-		httpClientBuilder.setSSLContext(sslContext()).setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE);
+	private TransportOptions transportOptions() {
+		return new Rest5ClientOptions(RequestOptions.DEFAULT, false);
 	}
 
-	interface ElasticsearchConnectionDetails extends ConnectionDetails {
-
-		/**
-		 * List of the Elasticsearch nodes to use.
-		 * @return list of the Elasticsearch nodes to use
-		 */
-		List<Node> getNodes();
-
-		/**
-		 * Username for authentication with Elasticsearch.
-		 * @return username for authentication with Elasticsearch or {@code null}
-		 */
-		default String getUsername() {
-			return null;
+	private Rest5ClientOptions.Builder getRest5ClientOptionsBuilder(TransportOptions transportOptions) {
+		if (transportOptions instanceof Rest5ClientOptions rest5ClientOptions) {
+			return rest5ClientOptions.toBuilder();
 		}
-
-		/**
-		 * Password for authentication with Elasticsearch.
-		 * @return password for authentication with Elasticsearch or {@code null}
-		 */
-		default String getPassword() {
-			return null;
+		Rest5ClientOptions.Builder builder = new Rest5ClientOptions.Builder(RequestOptions.DEFAULT.toBuilder());
+		if (transportOptions != null) {
+			transportOptions.headers().forEach(header -> builder.addHeader(header.getKey(), header.getValue()));
+			transportOptions.queryParameters().forEach(builder::setParameter);
+			builder.onWarnings(transportOptions.onWarnings());
 		}
-
-		/**
-		 * Prefix added to the path of every request sent to Elasticsearch.
-		 * @return prefix added to the path of every request sent to Elasticsearch or
-		 * {@code null}
-		 */
-		default String getPathPrefix() {
-			return null;
-		}
-
-		/**
-		 * An Elasticsearch node.
-		 *
-		 * @param hostname the hostname
-		 * @param port the port
-		 * @param protocol the protocol
-		 * @param username the username or {@code null}
-		 * @param password the password or {@code null}
-		 */
-		record Node(String hostname, int port, Protocol protocol, String username, String password) {
-
-			URI toUri() {
-				try {
-					return new URI(this.protocol.getScheme(), userInfo(), this.hostname, this.port, null, null, null);
-				}
-				catch (URISyntaxException ex) {
-					throw new IllegalStateException("Can't construct URI", ex);
-				}
-			}
-
-			private String userInfo() {
-				if (this.username == null) {
-					return null;
-				}
-				return (this.password != null) ? (this.username + RISK + this.password) : this.username;
-			}
-
-			/**
-			 * Connection protocol.
-			 */
-			public enum Protocol {
-
-				/**
-				 * HTTP.
-				 */
-				HTTP("http"),
-
-				/**
-				 * HTTPS.
-				 */
-				HTTPS("https");
-
-				private final String scheme;
-
-				Protocol(String scheme) {
-					this.scheme = scheme;
-				}
-
-				static Protocol forScheme(String scheme) {
-					for (Protocol protocol : values()) {
-						if (protocol.scheme.equals(scheme)) {
-							return protocol;
-						}
-					}
-					throw new IllegalArgumentException("Unknown scheme '" + scheme + "'");
-				}
-
-				String getScheme() {
-					return this.scheme;
-				}
-
-			}
-		}
-
+		return builder;
 	}
 
-	static class DefaultRestClientBuilderCustomizer implements RestClientBuilderCustomizer {
-
-		private static final PropertyMapper PROPERTY_MAPPER = PropertyMapper.get();
-
-		private final ElasticsearchProperties properties;
-
-		private final ElasticsearchConnectionDetails connectionDetails;
-
-		DefaultRestClientBuilderCustomizer(ElasticsearchProperties properties,
-				ElasticsearchConnectionDetails connectionDetails) {
-			this.properties = properties;
-			this.connectionDetails = connectionDetails;
-		}
-
-		@Override
-		public void customize(RestClientBuilder builder) {
-		}
-
-		@Override
-		public void customize(HttpAsyncClientBuilder builder) {
-			builder.setDefaultCredentialsProvider(new ConnectionDetailsCredentialsProvider(this.connectionDetails));
-			PROPERTY_MAPPER.from(this.properties::isSocketKeepAlive)
-				.to((keepAlive) -> builder
-					.setDefaultIOReactorConfig(IOReactorConfig.custom().setSoKeepAlive(keepAlive).build()));
-		}
-
-		@Override
-		public void customize(RequestConfig.Builder builder) {
-			PROPERTY_MAPPER.from(this.properties::getConnectionTimeout)
-				.whenNonNull()
-				.asInt(Duration::toMillis)
-				.to(builder::setConnectTimeout);
-			PROPERTY_MAPPER.from(this.properties::getSocketTimeout)
-				.whenNonNull()
-				.asInt(Duration::toMillis)
-				.to(builder::setSocketTimeout);
-		}
-
-	}
-
-	private static class ConnectionDetailsCredentialsProvider extends BasicCredentialsProvider {
-
-		ConnectionDetailsCredentialsProvider(ElasticsearchConnectionDetails connectionDetails) {
-			String username = connectionDetails.getUsername();
-			if (StringUtils.hasText(username)) {
-				Credentials credentials = new UsernamePasswordCredentials(username, connectionDetails.getPassword());
-				setCredentials(AuthScope.ANY, credentials);
-			}
-			Stream<URI> uris = getUris(connectionDetails);
-			uris.filter(this::hasUserInfo).forEach(this::addUserInfoCredentials);
-		}
-
-		private Stream<URI> getUris(ElasticsearchConnectionDetails connectionDetails) {
-			return connectionDetails.getNodes().stream().map(ElasticsearchConnectionDetails.Node::toUri);
-		}
-
-		private boolean hasUserInfo(URI uri) {
-			return uri != null && StringUtils.hasLength(uri.getUserInfo());
-		}
-
-		private void addUserInfoCredentials(URI uri) {
-			AuthScope authScope = new AuthScope(uri.getHost(), uri.getPort());
-			Credentials credentials = createUserInfoCredentials(uri.getUserInfo());
-			setCredentials(authScope, credentials);
-		}
-
-		private Credentials createUserInfoCredentials(String userInfo) {
-			int delimiter = userInfo.indexOf(':');
-			if (delimiter == -1) {
-				return new UsernamePasswordCredentials(userInfo, null);
-			}
-			String username = userInfo.substring(0, delimiter);
-			String password = userInfo.substring(delimiter + 1);
-			return new UsernamePasswordCredentials(username, password);
-		}
-
-	}
-
-	/**
-	 * Adapts {@link ElasticsearchProperties} to {@link ElasticsearchConnectionDetails}.
-	 */
-	static class PropertiesElasticsearchConnectionDetails implements ElasticsearchConnectionDetails {
-
-		private final ElasticsearchProperties properties;
-
-		PropertiesElasticsearchConnectionDetails(ElasticsearchProperties properties) {
-			this.properties = properties;
-		}
-
-		@Override
-		public List<Node> getNodes() {
-			return this.properties.getUris().stream().map(this::createNode).toList();
-		}
-
-		@Override
-		public String getUsername() {
-			return this.properties.getUsername();
-		}
-
-		@Override
-		public String getPassword() {
-			return this.properties.getPassword();
-		}
-
-		@Override
-		public String getPathPrefix() {
-			return this.properties.getPathPrefix();
-		}
-
-		private Node createNode(String uri) {
-			if (!(uri.startsWith(HTTP_SCHEME) || uri.startsWith(HTTPS_SCHEME))) {
-				uri = HTTP_SCHEME + uri;
-			}
-			return createNode(URI.create(uri));
-		}
-
-		private Node createNode(URI uri) {
-			String userInfo = uri.getUserInfo();
-			Node.Protocol protocol = Node.Protocol.forScheme(uri.getScheme());
-			if (!StringUtils.hasLength(userInfo)) {
-				return new Node(uri.getHost(), uri.getPort(), protocol, null, null);
-			}
-			int separatorIndex = userInfo.indexOf(RISK);
-			if (separatorIndex == -1) {
-				return new Node(uri.getHost(), uri.getPort(), protocol, userInfo, null);
-			}
-			String[] components = userInfo.split(RISK);
-			return new Node(uri.getHost(), uri.getPort(), protocol, components[0],
-					(components.length > 1) ? components[1] : EMPTY);
-		}
-
+	private String getClientVersion() {
+		String version = springElasticsearchProperties.getVersion();
+		return String.format("elasticsearch %s / elasticsearch client %s / imperative", version, version);
 	}
 
 }
