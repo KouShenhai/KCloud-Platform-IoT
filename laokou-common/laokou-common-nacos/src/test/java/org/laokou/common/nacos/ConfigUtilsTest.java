@@ -60,7 +60,7 @@ class ConfigUtilsTest {
 	@BeforeEach
 	void setUp() {
 		nacosConfigProperties = new NacosConfigProperties();
-		nacosConfigProperties.setServerAddr(nacos.getHost() + ":" + nacos.getMappedPort(8848));
+		nacosConfigProperties.setServerAddr(nacos.getServerAddr());
 		nacosConfigProperties.setNamespace("public");
 		nacosConfigProperties.setUsername("nacos");
 		nacosConfigProperties.setPassword("nacos");
@@ -87,7 +87,7 @@ class ConfigUtilsTest {
 		assertThat(configService).isNotNull();
 		assertThat(configService.getServerStatus()).isEqualTo("UP");
 		assertThat(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 123")).isTrue();
-		Thread.sleep(100);
+		Thread.sleep(2000);
 		assertThat(configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 123");
 
 		assertThat(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 456", "yaml")).isTrue();
@@ -124,6 +124,7 @@ class ConfigUtilsTest {
 		assertThat( configUtils.getConfig("test1.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 123");
 
 		assertThat(configUtils.removeConfig("test1.yaml", nacosConfigProperties.getGroup())).isTrue();
+		Thread.sleep(2000);
 		assertThat(configUtils.getConfig("test1.yaml", nacosConfigProperties.getGroup(), 5000)).isNull();
 
 		configUtils.removeListener("test.yaml", nacosConfigProperties.getGroup(), new Listener() {

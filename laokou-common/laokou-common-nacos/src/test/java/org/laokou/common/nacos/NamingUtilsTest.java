@@ -41,6 +41,8 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
 import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.wait.strategy.Wait;
+
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
@@ -83,14 +85,14 @@ class NamingUtilsTest {
 
 	@DynamicPropertySource
 	static void configureProperties(DynamicPropertyRegistry registry) {
-		registry.add("spring.cloud.nacos.discovery.server-addr", () -> nacos.getHost() + ":" + nacos.getMappedPort(8848));
+		registry.add("spring.cloud.nacos.discovery.server-addr", () -> nacos.getServerAddr());
 	}
 
 	@BeforeEach
 	void setUp() {
 		assertThat(nacosDiscoveryProperties).isNotNull();
 		assertThat(nacosDiscoveryProperties.getNamespace()).isEqualTo("public");
-		assertThat(nacosDiscoveryProperties.getServerAddr()).isEqualTo(nacos.getHost() + ":" + nacos.getMappedPort(8848));
+		assertThat(nacosDiscoveryProperties.getServerAddr()).isEqualTo(nacos.getServerAddr());
 		assertThat(nacosDiscoveryProperties.getGroup()).isEqualTo("DEFAULT_GROUP");
 		assertThat(nacosDiscoveryProperties.getUsername()).isEqualTo("nacos");
 		assertThat(nacosDiscoveryProperties.getPassword()).isEqualTo("nacos");
@@ -297,14 +299,25 @@ class NamingUtilsTest {
 
 		public NacosContainer() {
 			super("nacos/nacos-server:v3.0.3");
-			this.addEnv("MODE", "standalone");
-			this.addEnv("NACOS_AUTH_TOKEN", "SecretKey012345678901234567890123456789012345678901234567890123456789");
-			this.addEnv("NACOS_AUTH_IDENTITY_KEY", "serverIdentity");
-			this.addEnv("NACOS_AUTH_IDENTITY_VALUE", "security");
-			this.addFixedExposedPort(8848, 8848);
-			this.addFixedExposedPort(9848, 9848);
-			this.addFixedExposedPort(8080, 8080);
-			this.withStartupTimeout(Duration.ofSeconds(60));
+			// 根据Nacos的设计，gRPC客户端端口为主端口加1000，即如果主端口为8849，则gRPC端口默认为9849
+			addFixedExposedPort(38848, 8848);
+			addFixedExposedPort(39848, 9848);
+			addFixedExposedPort(38080, 8080);
+			// 单机启动
+			withEnv("MODE", "standalone");
+			// Nacos 用于生成JWT Token的密钥，使用长度大于32字符的字符串，再经过Base64编码。
+			withEnv("NACOS_AUTH_TOKEN", "SecretKey012345678901234567890123456789012345678901234567890123456789");
+			// Nacos Server端之间 Inner API的身份标识的Key，必填。
+			withEnv("NACOS_AUTH_IDENTITY_KEY", "serverIdentity");
+			// Nacos Server端之间 Inner API的身份标识的Value，必填。
+			withEnv("NACOS_AUTH_IDENTITY_VALUE", "security");
+			// Wait until the Nacos server is ready to accept requests.
+			// Visit the login page to verify if nacos is running.
+			setWaitStrategy(Wait.forHttp("/#/login").forPort(8080).forStatusCode(200));
+		}
+
+		public String getServerAddr() {
+			return String.format("%s:%s", this.getHost(), this.getMappedPort(8848));
 		}
 
 	}
