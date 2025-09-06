@@ -109,7 +109,7 @@ class ElasticsearchAutoConfig {
 		Assert.notNull(rest5Client, "restClient must not be null");
 		Assert.notNull(jsonpMapper, "jsonpMapper must not be null");
 		Rest5ClientOptions.Builder rest5ClientOptionsBuilder = getRest5ClientOptionsBuilder(transportOptions());
-		rest5ClientOptionsBuilder.addHeader("Elasticsearch", getClientVersion());
+		rest5ClientOptionsBuilder.addHeader("Elasticsearch", getVersion());
 		return new Rest5ClientTransport(rest5Client, jsonpMapper, rest5ClientOptionsBuilder.build());
 	}
 
@@ -245,7 +245,7 @@ class ElasticsearchAutoConfig {
 		return builder;
 	}
 
-	private String getClientVersion() {
+	private String getVersion() {
 		String version = springElasticsearchProperties.getVersion();
 		String clientVersion = springElasticsearchProperties.getClientVersion();
 		return String.format("elasticsearch %s / elasticsearch client %s / imperative", version, clientVersion);
