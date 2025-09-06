@@ -76,7 +76,7 @@ class Elasticsearch8ApiTest {
 
 	@DynamicPropertySource
 	static void configureProperties(DynamicPropertyRegistry registry) {
-		registry.add("spring.elasticsearch.uris", () -> List.of("https://" + elasticsearch.getHttpHostAddress()));
+		registry.add("spring.data.elasticsearch.endpoints", () -> Set.of(elasticsearch.getHttpHostAddress()));
 	}
 
 	@Test
