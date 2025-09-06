@@ -31,6 +31,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.nacos.util.NamingUtils;
+import org.laokou.common.testcontainers.NacosContainer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.commons.util.InetUtils;
 import org.springframework.cloud.commons.util.InetUtilsProperties;
@@ -40,9 +41,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
-
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
@@ -293,33 +291,6 @@ class NamingUtilsTest {
 	void test_nacosServiceShutDown() throws InterruptedException {
 		Thread.sleep(Duration.ofSeconds(1));
 		assertThatNoException().isThrownBy(namingUtils::nacosServiceShutDown);
-	}
-
-	static class NacosContainer extends GenericContainer<NacosContainer> {
-
-		public NacosContainer() {
-			super("nacos/nacos-server:v3.0.3");
-			// 根据Nacos的设计，gRPC客户端端口为主端口加1000，即如果主端口为8849，则gRPC端口默认为9849
-			addFixedExposedPort(38848, 8848);
-			addFixedExposedPort(39848, 9848);
-			addFixedExposedPort(38080, 8080);
-			// 单机启动
-			withEnv("MODE", "standalone");
-			// Nacos 用于生成JWT Token的密钥，使用长度大于32字符的字符串，再经过Base64编码。
-			withEnv("NACOS_AUTH_TOKEN", "SecretKey012345678901234567890123456789012345678901234567890123456789");
-			// Nacos Server端之间 Inner API的身份标识的Key，必填。
-			withEnv("NACOS_AUTH_IDENTITY_KEY", "serverIdentity");
-			// Nacos Server端之间 Inner API的身份标识的Value，必填。
-			withEnv("NACOS_AUTH_IDENTITY_VALUE", "security");
-			// Wait until the Nacos server is ready to accept requests.
-			// Visit the login page to verify if nacos is running.
-			setWaitStrategy(Wait.forHttp("/#/login").forPort(8080).forStatusCode(200));
-		}
-
-		public String getServerAddr() {
-			return String.format("%s:%s", this.getHost(), this.getMappedPort(8848));
-		}
-
 	}
 
 }

@@ -184,6 +184,11 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
+        <artifactId>laokou-common-testcontainers</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
         <artifactId>laokou-common-modbus4j</artifactId>
         <version>${laokou.version}</version>
       </dependency>

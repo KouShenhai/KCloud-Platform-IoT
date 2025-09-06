@@ -124,7 +124,7 @@ class ElasticsearchAutoConfig {
 		// we need to create our own objectMapper that keeps null values in order to provide the storeNullValue
 		// functionality. The one Elasticsearch would provide removes the nulls. We remove unwanted nulls before they get
 		// into this mapper, so we can safely keep them here.
-		var objectMapper = new ObjectMapper().configure(SerializationFeature.INDENT_OUTPUT, false);
+		ObjectMapper objectMapper = new ObjectMapper().configure(SerializationFeature.INDENT_OUTPUT, false);
 		return new JacksonJsonpMapper(objectMapper);
 	}
 
@@ -157,7 +157,7 @@ class ElasticsearchAutoConfig {
 					Timeout.of(Math.toIntExact(connectionTimeout.toMillis()), TimeUnit.MILLISECONDS));
 			}
 			if (!socketTimeout.isNegative()) {
-				var soTimeout = Timeout.of(Math.toIntExact(socketTimeout.toMillis()), TimeUnit.MILLISECONDS);
+				Timeout soTimeout = Timeout.of(Math.toIntExact(socketTimeout.toMillis()), TimeUnit.MILLISECONDS);
 				connectionConfigBuilder.setSocketTimeout(soTimeout);
 			} else {
 				connectionConfigBuilder.setSocketTimeout(Timeout.of(DEFAULT_SOCKET_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS));
@@ -179,7 +179,7 @@ class ElasticsearchAutoConfig {
 
 		builder.setRequestConfigCallback(requestConfigBuilder -> {
 			if (!socketTimeout.isNegative()) {
-				var soTimeout = Timeout.of(Math.toIntExact(socketTimeout.toMillis()), TimeUnit.MILLISECONDS);
+				Timeout soTimeout = Timeout.of(Math.toIntExact(socketTimeout.toMillis()), TimeUnit.MILLISECONDS);
 				requestConfigBuilder.setConnectionRequestTimeout(soTimeout);
 			} else {
 				requestConfigBuilder.setConnectionRequestTimeout(Timeout.of(DEFAULT_RESPONSE_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS));

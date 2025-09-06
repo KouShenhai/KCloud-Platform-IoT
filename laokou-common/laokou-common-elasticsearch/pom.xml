@@ -37,26 +37,16 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.github.ulisesbocchio</groupId>
-      <artifactId>jasypt-spring-boot-starter</artifactId>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-testcontainers</artifactId>
       <optional>true</optional>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>elasticsearch</artifactId>
-      <scope>test</scope>
+      <groupId>com.github.ulisesbocchio</groupId>
+      <artifactId>jasypt-spring-boot-starter</artifactId>
       <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>net.java.dev.jna</groupId>
-          <artifactId>jna</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.jetbrains</groupId>
-          <artifactId>annotations</artifactId>
-        </exclusion>
-      </exclusions>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

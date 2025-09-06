@@ -27,6 +27,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.nacos.util.ConfigUtils;
+import org.laokou.common.testcontainers.NacosContainer;
 import org.springframework.util.DigestUtils;
 
 import java.time.Duration;
@@ -45,7 +46,7 @@ class ConfigUtilsTest {
 
 	private NacosConfigProperties nacosConfigProperties;
 
-	static NamingUtilsTest.NacosContainer nacos = new NamingUtilsTest.NacosContainer();
+	static NacosContainer nacos = new NacosContainer();
 
 	@BeforeAll
 	static void beforeAll() {
