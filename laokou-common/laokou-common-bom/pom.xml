@@ -144,7 +144,7 @@
     <!--vertx版本-->
     <vertx.version>5.0.4</vertx.version>
     <!--springdoc-openapi版本-->
-    <springdoc-openapi.version>2.8.12</springdoc-openapi.version>
+    <springdoc-openapi.version>2.8.13</springdoc-openapi.version>
     <!--jSerialComm版本-->
     <jSerialComm.version>2.11.2</jSerialComm.version>
     <!--californium版本-->
