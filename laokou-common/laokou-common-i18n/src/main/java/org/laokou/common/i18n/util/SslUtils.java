@@ -30,11 +30,6 @@ import java.security.cert.X509Certificate;
  */
 public final class SslUtils {
 
-	/**
-	 * TLS协议版本.
-	 */
-	private static final String TLS_PROTOCOL_VERSION = "TLSv1.3";
-
 	private SslUtils() {
 	}
 
@@ -49,7 +44,7 @@ public final class SslUtils {
 		TrustManager[] trustManagers = new TrustManager[] { disabledTrustManager };
 		// 怎么选择加密协议，请看 ProtocolVersion
 		// 为什么能找到对应的加密协议 请查看 SSLContextSpi
-		SSLContext sslContext = SSLContext.getInstance(TLS_PROTOCOL_VERSION);
+		SSLContext sslContext = SSLContext.getInstance("TLSv1.3");
 		sslContext.init(null, trustManagers, new java.security.SecureRandom());
 		return sslContext;
 	}
