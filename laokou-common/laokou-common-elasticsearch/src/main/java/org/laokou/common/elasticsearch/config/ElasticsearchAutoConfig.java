@@ -44,7 +44,6 @@ import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.ssl.SslBundles;
 import org.springframework.context.annotation.Bean;
@@ -74,7 +73,7 @@ import static org.apache.hc.core5.http.HttpHeaders.AUTHORIZATION;
 @Slf4j
 @AutoConfiguration
 @RequiredArgsConstructor
-@EnableConfigurationProperties(ElasticsearchProperties.class)
+@EnableConfigurationProperties(SpringElasticsearchProperties.class)
 class ElasticsearchAutoConfig {
 
 	private final SpringElasticsearchProperties springElasticsearchProperties;

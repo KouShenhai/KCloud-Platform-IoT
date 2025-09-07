@@ -48,7 +48,6 @@ import org.springframework.util.ReflectionUtils;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +56,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.constant.StringConstants.COMMA;
+import static org.laokou.common.i18n.common.constant.StringConstants.DROP;
 
 /**
  * @author laokou
@@ -116,16 +115,16 @@ public class ElasticsearchTemplate {
 
 	public void deleteIndex(List<String> names) throws IOException {
 		if (!exist(names)) {
-			log.info("索引：{} -> 删除索引失败，索引不存在", StringUtils.collectionToDelimitedString(names, COMMA));
+			log.info("索引：{} -> 删除索引失败，索引不存在", StringUtils.collectionToDelimitedString(names, DROP));
 			return;
 		}
 		DeleteIndexResponse deleteIndexResponse = elasticsearchClient.indices().delete(getDeleteIndexRequest(names));
 		boolean acknowledged = deleteIndexResponse.acknowledged();
 		if (acknowledged) {
-			log.info("索引：{} -> 删除索引成功", StringUtils.collectionToDelimitedString(names, COMMA));
+			log.info("索引：{} -> 删除索引成功", StringUtils.collectionToDelimitedString(names, DROP));
 		}
 		else {
-			log.info("索引：{} -> 删除索引失败", StringUtils.collectionToDelimitedString(names, COMMA));
+			log.info("索引：{} -> 删除索引失败", StringUtils.collectionToDelimitedString(names, DROP));
 		}
 	}
 
@@ -216,8 +215,14 @@ public class ElasticsearchTemplate {
 			}, executor);
 	}
 
-	public boolean exist(List<String> names) throws IOException {
-		return elasticsearchClient.indices().exists(getExists(names)).value();
+	public boolean exist(List<String> names) {
+		try {
+			return elasticsearchClient.indices().exists(getExists(names)).value();
+		} catch (Exception e) {
+			log.error("索引：{} -> 查看索引是否存在失败，错误信息：{}", StringUtils.collectionToDelimitedString(names, DROP),
+				e.getMessage());
+			return false;
+		}
 	}
 
 	public <R> Page<R> search(List<String> names, Search search, Class<R> clazz) throws IOException {
@@ -395,7 +400,7 @@ public class ElasticsearchTemplate {
 		Map<String, String> map = options.stream()
 			.collect(Collectors.toMap(Document.Option::getKey, Document.Option::getValue));
 		filterBuilder.definition(fn -> fn
-			.withJson(new ByteArrayInputStream(JacksonUtils.toJsonStr(map).getBytes(StandardCharsets.UTF_8))));
+			.withJson(new ByteArrayInputStream(JacksonUtils.toBytes(map))));
 		return filterBuilder.build();
 	}
 

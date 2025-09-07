@@ -127,6 +127,14 @@ public final class JacksonUtils {
 		}
 	}
 
+	public static byte[] toBytes(Object obj) {
+		try {
+			return MAPPER.writeValueAsBytes(obj);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	/**
 	 * json字符串转集合对象.
 	 * @param json json数组
