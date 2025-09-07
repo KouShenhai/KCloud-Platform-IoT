@@ -39,7 +39,7 @@ public final class SslUtils {
 	 */
 	public static SSLContext sslContext() throws NoSuchAlgorithmException, KeyManagementException {
 		// X.509是密码学里公钥证书的格式标准，作为证书标准
-		X509TrustManager disabledTrustManager = new DisableValidationTrustManager();
+		X509TrustManager disabledTrustManager = DisableValidationTrustManager.INSTANCE;
 		// 信任库
 		TrustManager[] trustManagers = new TrustManager[] { disabledTrustManager };
 		// 怎么选择加密协议，请看 ProtocolVersion
