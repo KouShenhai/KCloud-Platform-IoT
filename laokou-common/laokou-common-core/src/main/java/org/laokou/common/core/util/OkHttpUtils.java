@@ -28,7 +28,6 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
@@ -39,11 +38,11 @@ import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 @Slf4j
 public final class OkHttpUtils {
 
-	private static final OkHttpClient CLIENT;
+	private static final OkHttpClient INSTANCE;
 
 	static {
 		try {
-			CLIENT = getOkHttpClient();
+			INSTANCE = getOkHttpClient();
 		}
 		catch (NoSuchAlgorithmException | KeyManagementException e) {
 			log.error("SSL初始化失败，错误信息：{}", e.getMessage(), e);
@@ -60,7 +59,7 @@ public final class OkHttpUtils {
 			params.forEach(builder::add);
 		}
 		Request request = new Request.Builder().url(url).headers(Headers.of(headers)).post(builder.build()).build();
-		try (Response response = CLIENT.newCall(request).execute()) {
+		try (Response response = INSTANCE.newCall(request).execute()) {
 			ResponseBody body = response.body();
 			return ObjectUtils.isNotNull(body) ? body.string() : EMPTY;
 		}
@@ -68,14 +67,6 @@ public final class OkHttpUtils {
 			log.error("调用失败，错误信息：{}", e.getMessage());
 		}
 		return EMPTY;
-	}
-
-	public static void destroy() throws IOException {
-		try (Cache ignored = CLIENT.cache(); ExecutorService executorService = CLIENT.dispatcher().executorService();) {
-			CLIENT.connectionPool().evictAll();
-			executorService.shutdown();
-		}
-
 	}
 
 	private static OkHttpClient getOkHttpClient() throws NoSuchAlgorithmException, KeyManagementException {

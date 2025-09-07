@@ -33,7 +33,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
  * @author laokou
@@ -58,7 +57,6 @@ class HttpUtilsTest {
 				new HashMap<>(0), new HashMap<>(0));
 		assertThat(resultJson).isEqualTo("hello wiremock");
 		assertThat(HttpUtils.getHttpClient()).isNotNull();
-		assertThatNoException().isThrownBy(HttpUtils::destroy);
 	}
 
 	@AfterEach

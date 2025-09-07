@@ -28,15 +28,12 @@ import org.apache.hc.client5.http.ssl.DefaultClientTlsStrategy;
 import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.apache.hc.core5.io.CloseMode;
 import org.laokou.common.i18n.common.exception.SystemException;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
-
 import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 import static org.laokou.common.i18n.util.SslUtils.sslContext;
 
@@ -48,11 +45,11 @@ import static org.laokou.common.i18n.util.SslUtils.sslContext;
 @Slf4j
 public final class HttpUtils {
 
-	private static final CloseableHttpClient CLIENT;
+	private static final CloseableHttpClient INSTANCE;
 
 	static {
 		try {
-			CLIENT = getHttpClient();
+			INSTANCE = getHttpClient();
 		}
 		catch (NoSuchAlgorithmException | KeyManagementException e) {
 			log.error("SSL初始化失败，错误信息：{}", e.getMessage(), e);
@@ -84,7 +81,7 @@ public final class HttpUtils {
 		String resultString = EMPTY;
 		try {
 			// 执行请求
-			resultString = CLIENT.execute(httpPost,
+			resultString = INSTANCE.execute(httpPost,
 					handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 		}
 		catch (IOException e) {
@@ -104,11 +101,6 @@ public final class HttpUtils {
 			.build();
 		httpClientBuilder.setConnectionManager(poolingHttpClientConnectionManager);
 		return httpClientBuilder.build();
-	}
-
-	public static void destroy() {
-		// 优雅停机
-		CLIENT.close(CloseMode.GRACEFUL);
 	}
 
 }

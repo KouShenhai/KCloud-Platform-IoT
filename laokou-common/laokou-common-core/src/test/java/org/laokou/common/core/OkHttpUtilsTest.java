@@ -31,7 +31,6 @@ import org.springframework.test.context.TestConstructor;
 import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
  * @author laokou
@@ -55,7 +54,6 @@ class OkHttpUtilsTest {
 		String resultJson = OkHttpUtils.doFormDataPost("http://localhost:" + wireMockServer.port() + "/test",
 				new HashMap<>(0), new HashMap<>(0));
 		assertThat(resultJson).isEqualTo("hello wiremock");
-		assertThatNoException().isThrownBy(OkHttpUtils::destroy);
 	}
 
 	@AfterEach
