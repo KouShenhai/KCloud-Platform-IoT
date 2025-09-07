@@ -43,8 +43,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.github.ulisesbocchio</groupId>
-      <artifactId>jasypt-spring-boot-starter</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-testcontainers</artifactId>
       <optional>true</optional>
       <scope>test</scope>
     </dependency>

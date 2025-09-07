@@ -1,8 +1,0 @@
-server:
-  port: 8086
-
-spring:
-  application:
-    name: laokou-common-crypto
-  profiles:
-    active: test

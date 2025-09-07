@@ -29,6 +29,9 @@ import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.mybatisplus.config.GlobalTenantLineHandler;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -44,8 +47,11 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 /**
  * @author laokou
  */
-@SpringBootTest
+@SpringBootConfiguration
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
+@MapperScan(basePackages = "org.laokou.common.mybatisplus")
+@SpringBootApplication(scanBasePackages = "org.laokou")
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class MybatisUtilsTest {
 

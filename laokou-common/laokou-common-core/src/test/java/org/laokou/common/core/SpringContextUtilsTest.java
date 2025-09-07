@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 /**
  * @author laokou
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
 @ContextConfiguration(classes = { SpringContextUtils.class, TestEventListener.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)

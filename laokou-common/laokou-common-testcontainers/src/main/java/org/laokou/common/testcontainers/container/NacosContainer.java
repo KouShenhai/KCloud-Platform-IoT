@@ -15,22 +15,27 @@
  *
  */
 
-package org.laokou.common.testcontainers;
+package org.laokou.common.testcontainers.container;
 
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.utility.DockerImageName;
 
 /**
  * @author laokou
  */
 public class NacosContainer extends GenericContainer<NacosContainer> {
 
-		public NacosContainer() {
-			super("nacos/nacos-server:v3.0.3");
+		public NacosContainer(DockerImageName dockerImageName) {
+			this(dockerImageName, 38848, 38080, 39848);
+		}
+
+	    public NacosContainer(DockerImageName dockerImageName, int adminPort, int consolePort, int grpcPort) {
+			super(dockerImageName);
 			// 根据Nacos的设计，gRPC客户端端口为主端口加1000，即如果主端口为8849，则gRPC端口默认为9849
-			addFixedExposedPort(38848, 8848);
-			addFixedExposedPort(39848, 9848);
-			addFixedExposedPort(38080, 8080);
+			addFixedExposedPort(adminPort, 8848);
+			addFixedExposedPort(consolePort, 8080);
+			addFixedExposedPort(grpcPort, 9848);
 			// 单机启动
 			withEnv("MODE", "standalone");
 			// Nacos 用于生成JWT Token的密钥，使用长度大于32字符的字符串，再经过Base64编码。

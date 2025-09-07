@@ -16,13 +16,8 @@
  */
 
 package org.laokou.common.core;
-
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ServerUtils;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestConstructor;
-
 import java.net.UnknownHostException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,9 +25,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author laokou
  */
-@SpringBootTest
-@RequiredArgsConstructor
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class ServerUtilsTest {
 
 	@Test

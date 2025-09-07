@@ -20,7 +20,9 @@ package org.laokou.common.crypto;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,7 +31,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author laokou
  */
-@SpringBootTest
+@TestConfiguration
+@SpringBootConfiguration
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class Jasypt3Test {
 
 	@Test

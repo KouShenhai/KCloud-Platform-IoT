@@ -17,6 +17,8 @@
 
 package org.laokou.gateway.repository;
 
+import com.alibaba.cloud.nacos.NacosConfigManager;
+import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
 import io.micrometer.common.lang.NonNullApi;
@@ -26,7 +28,6 @@ import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.nacos.util.ConfigUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
@@ -69,16 +70,18 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	private final String dataId = "router.json";
 
-	private final ConfigUtils configUtils;
+	private final String group;
+	private final ConfigService configService;
 
 	private final ReactiveHashOperations<String, String, RouteDefinition> reactiveHashOperations;
 
 	private final ExecutorService virtualThreadExecutor;
 
-	public NacosRouteDefinitionRepository(ConfigUtils configUtils,
+	public NacosRouteDefinitionRepository(NacosConfigManager nacosConfigManager,
 										  ReactiveRedisTemplate<String, Object> reactiveRedisTemplate,
 										  ExecutorService virtualThreadExecutor) {
-		this.configUtils = configUtils;
+		this.group = nacosConfigManager.getNacosConfigProperties().getGroup();
+		this.configService = nacosConfigManager.getConfigService();
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
 		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
@@ -86,7 +89,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	@PostConstruct
 	public void listenRouter() throws NacosException {
 		log.info("开始监听路由配置信息");
-		configUtils.addListener(dataId, configUtils.getGroup(), new Listener() {
+		configService.addListener(dataId, group, new Listener() {
 			@Override
 			public Executor getExecutor() {
 				return Executors.newSingleThreadExecutor();
@@ -176,7 +179,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 */
 	private Collection<RouteDefinition> getRoutes(String str) {
 		try {
-			String routes = StringUtils.isEmpty(str) ? configUtils.getConfig(dataId, configUtils.getGroup(), 5000) : str;
+			String routes = StringUtils.isEmpty(str) ? configService.getConfig(dataId, group, 5000) : str;
 			return JacksonUtils.toList(routes, RouteDefinition.class);
 		}
 		catch (Exception e) {

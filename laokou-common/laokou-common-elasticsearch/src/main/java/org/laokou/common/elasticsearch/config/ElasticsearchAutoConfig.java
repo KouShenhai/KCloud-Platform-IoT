@@ -39,10 +39,12 @@ import org.apache.hc.core5.http.message.BasicHeader;
 import org.apache.hc.core5.http.nio.ssl.BasicClientTlsStrategy;
 import org.apache.hc.core5.util.Timeout;
 import org.laokou.common.core.util.ArrayUtils;
+import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.ssl.SslBundles;
@@ -65,6 +67,7 @@ import java.util.concurrent.TimeUnit;
 import static co.elastic.clients.transport.rest5_client.low_level.Rest5ClientBuilder.DEFAULT_RESPONSE_TIMEOUT_MILLIS;
 import static co.elastic.clients.transport.rest5_client.low_level.Rest5ClientBuilder.DEFAULT_SOCKET_TIMEOUT_MILLIS;
 import static org.apache.hc.core5.http.HttpHeaders.AUTHORIZATION;
+import static org.laokou.common.i18n.common.constant.StringConstants.RISK;
 
 /**
  * @author spring-data-elasticsearch
@@ -74,7 +77,7 @@ import static org.apache.hc.core5.http.HttpHeaders.AUTHORIZATION;
 @AutoConfiguration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(SpringElasticsearchProperties.class)
-class ElasticsearchAutoConfig {
+public class ElasticsearchAutoConfig {
 
 	private final SpringElasticsearchProperties springElasticsearchProperties;
 
@@ -95,6 +98,13 @@ class ElasticsearchAutoConfig {
 	@ConditionalOnMissingBean(ElasticsearchAsyncClient.class)
 	ElasticsearchAsyncClient elasticsearchAsyncClient(ElasticsearchTransport transport) {
 		return new ElasticsearchAsyncClient(transport);
+	}
+
+	@Bean(name = "elasticsearchTemplate")
+	@ConditionalOnMissingBean(ElasticsearchTemplate.class)
+	@ConditionalOnClass({ElasticsearchAsyncClient.class, ElasticsearchClient.class})
+	ElasticsearchTemplate elasticsearchTemplate(ElasticsearchClient elasticsearchClient, ElasticsearchAsyncClient elasticsearchAsyncClient) {
+		return new ElasticsearchTemplate(elasticsearchClient, elasticsearchAsyncClient);
 	}
 
 	/**
@@ -208,13 +218,13 @@ class ElasticsearchAutoConfig {
 	}
 
 	private InetSocketAddress parse(String endpoint) {
-		String[] hostAndPort = endpoint.split(":");
+		String[] hostAndPort = endpoint.split(RISK);
 		return InetSocketAddress.createUnresolved(hostAndPort[0], Integer.parseInt(hostAndPort[1]));
 	}
 
 	private String encodeBasicAuth(String username, String password) {
 		Assert.notNull(username, "Username must not be null");
-		Assert.doesNotContain(username, ":", "Username must not contain a colon");
+		Assert.doesNotContain(username, RISK, "Username must not contain a colon");
 		Assert.notNull(password, "Password must not be null");
 		Charset charset = StandardCharsets.ISO_8859_1;
 		CharsetEncoder encoder = charset.newEncoder();

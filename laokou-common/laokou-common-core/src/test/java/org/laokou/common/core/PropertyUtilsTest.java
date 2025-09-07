@@ -21,8 +21,10 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.PropertyUtils;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.TestConstructor;
 
@@ -33,7 +35,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author laokou
  */
-@SpringBootTest
+@TestConfiguration
+@SpringBootConfiguration
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class PropertyUtilsTest {

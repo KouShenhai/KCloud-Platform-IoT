@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author laokou
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
 @ContextConfiguration(classes = { SpringUtils.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)

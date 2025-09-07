@@ -24,6 +24,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
+import org.laokou.common.testcontainers.util.DockerImageNames;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -39,7 +40,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 /**
  * @author laokou
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class TransactionalUtilsTest {
@@ -48,7 +49,7 @@ class TransactionalUtilsTest {
 
 	private final TransactionalUtils transactionalUtils;
 
-	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
+	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageNames.postgresql())
 		.withUsername("root")
 		.withPassword("laokou123")
 		.withInitScripts("init.sql")

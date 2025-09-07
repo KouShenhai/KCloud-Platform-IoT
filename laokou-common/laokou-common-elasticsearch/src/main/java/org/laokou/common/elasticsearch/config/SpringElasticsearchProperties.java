@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -34,7 +35,7 @@ import java.util.Set;
 @ConfigurationProperties("spring.data.elasticsearch")
 public class SpringElasticsearchProperties {
 
-	private Set<String> endpoints = Collections.singleton("localhost:9200");
+	private Set<String> endpoints = new HashSet<>(Collections.singleton("localhost:9200"));
 	private String username;
 	private String password;
 	private Duration connectionTimeout = Duration.ofSeconds(15L);

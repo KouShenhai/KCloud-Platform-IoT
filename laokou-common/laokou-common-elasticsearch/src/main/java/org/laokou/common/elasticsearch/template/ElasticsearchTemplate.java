@@ -42,7 +42,6 @@ import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
 import java.io.ByteArrayInputStream;
@@ -62,7 +61,6 @@ import static org.laokou.common.i18n.common.constant.StringConstants.DROP;
  * @author laokou
  */
 @Slf4j
-@Component
 @RequiredArgsConstructor
 public class ElasticsearchTemplate {
 

@@ -15,20 +15,16 @@
  *
  */
 
-package org.laokou.common.nacos;
+package org.laokou.common.elasticsearch;
 
-import org.springframework.boot.WebApplicationType;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 /**
  * @author laokou
  */
-@SpringBootApplication
-class AppTest {
+@Testcontainers
+public class ElasticsearchAutoConfigTest {
 
-	public static void main(String[] args) {
-		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
-	}
+
 
 }

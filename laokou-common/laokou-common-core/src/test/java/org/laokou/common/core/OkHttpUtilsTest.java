@@ -24,7 +24,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.OkHttpUtils;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
@@ -35,8 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author laokou
  */
-@EnableConfigurationProperties
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class OkHttpUtilsTest {
 

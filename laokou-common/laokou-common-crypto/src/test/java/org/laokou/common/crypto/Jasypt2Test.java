@@ -21,6 +21,7 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,7 +30,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author laokou
  */
-@SpringBootTest
+@TestConfiguration
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class Jasypt2Test {
 
 	@Test

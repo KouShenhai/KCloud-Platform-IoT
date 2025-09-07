@@ -17,23 +17,20 @@
 
 package org.laokou.common.nacos;
 
-import com.alibaba.cloud.nacos.NacosConfigManager;
-import com.alibaba.cloud.nacos.NacosConfigProperties;
+import com.alibaba.nacos.api.PropertyKeyConst;
 import com.alibaba.nacos.api.config.ConfigService;
-import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.nacos.util.ConfigUtils;
-import org.laokou.common.testcontainers.NacosContainer;
+import org.laokou.common.testcontainers.container.NacosContainer;
+import org.laokou.common.testcontainers.util.DockerImageNames;
 import org.springframework.util.DigestUtils;
 
 import java.time.Duration;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-
+import java.util.Properties;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -41,12 +38,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class ConfigUtilsTest {
 
-	// @formatter:off
-	private ConfigUtils configUtils;
+	private ConfigService configService;
 
-	private NacosConfigProperties nacosConfigProperties;
-
-	static NacosContainer nacos = new NacosContainer();
+	static final NacosContainer nacos = new NacosContainer(DockerImageNames.nacos("v3.0.3"));
 
 	@BeforeAll
 	static void beforeAll() {
@@ -59,99 +53,51 @@ class ConfigUtilsTest {
 	}
 
 	@BeforeEach
-	void setUp() {
-		nacosConfigProperties = new NacosConfigProperties();
-		nacosConfigProperties.setServerAddr(nacos.getServerAddr());
-		nacosConfigProperties.setNamespace("public");
-		nacosConfigProperties.setUsername("nacos");
-		nacosConfigProperties.setPassword("nacos");
-		nacosConfigProperties.setGroup("DEFAULT_GROUP");
-		assertThat(nacosConfigProperties.assembleConfigServiceProperties()).isNotNull();
-
-		NacosConfigManager nacosConfigManager = new NacosConfigManager(nacosConfigProperties);
-		assertThat(nacosConfigManager).isNotNull();
-
-		configUtils = new ConfigUtils(nacosConfigManager);
-		assertThat(configUtils).isNotNull();
+	void setUp() throws NacosException {
+		Properties properties = new Properties();
+		properties.setProperty(PropertyKeyConst.USERNAME, "nacos");
+		properties.setProperty(PropertyKeyConst.NAMESPACE, "nacos");
+		properties.setProperty(PropertyKeyConst.SERVER_ADDR, nacos.getServerAddr());
+		properties.setProperty(PropertyKeyConst.NAMESPACE, "public");
+		configService = ConfigUtils.createConfigService(properties);
+		assertThat(configService.getServerStatus()).isEqualTo("UP");
+		configService = ConfigUtils.createConfigService(nacos.getServerAddr());
+		assertThat(configService.getServerStatus()).isEqualTo("UP");
 	}
 
 	@Test
 	void test_config() throws NacosException, InterruptedException {
-		Thread.sleep(Duration.ofSeconds(15));
-		assertThat( configUtils.getGroup()).isEqualTo("DEFAULT_GROUP");
-		assertThat(configUtils.getServerStatus()).isEqualTo("UP");
-		ConfigService configService = ConfigUtils.createConfigService(nacosConfigProperties.getServerAddr());
-		assertThat(configService).isNotNull();
-		assertThat(configService.getServerStatus()).isEqualTo("UP");
+		assertThat(configService.publishConfig("test.yaml", "DEFAULT", "test: 123")).isTrue();
+		Thread.sleep(Duration.ofSeconds(1));
+		assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 123");
 
-		configService = ConfigUtils.createConfigService(nacosConfigProperties.assembleConfigServiceProperties());
-		assertThat(configService).isNotNull();
-		assertThat(configService.getServerStatus()).isEqualTo("UP");
-		assertThat(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 123")).isTrue();
-		Thread.sleep(2000);
-		assertThat(configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 123");
+		assertThat(configService.publishConfig("test.yaml", "DEFAULT", "test: 456", "yaml")).isTrue();
+		Thread.sleep(Duration.ofSeconds(1));
+		assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 456");
 
-		assertThat(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 456", "yaml")).isTrue();
-		assertThat(configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 456");
-
-		assertThat(configUtils.publishConfig("test.yaml", nacosConfigProperties.getGroup(), "test: 123")).isTrue();
-		assertThat(configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 123");
+		assertThat(configService.publishConfig("test.yaml", "DEFAULT", "test: 123")).isTrue();
+		Thread.sleep(Duration.ofSeconds(1));
+		assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 123");
 
 		String md5 = DigestUtils.md5DigestAsHex("test: 123".getBytes());
 		assertThat(md5).isEqualTo("5e76b5e94b54e1372f8b452ef64dc55c");
-		assertThat(configUtils.publishConfigCas("test.yaml", nacosConfigProperties.getGroup(), "test: 456", md5)).isTrue();
-		assertThat(configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 456");
-
-		String test = configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000, new Listener() {
-			@Override
-			public Executor getExecutor() {
-				return Executors.newSingleThreadExecutor();
-			}
-
-			@Override
-			public void receiveConfigInfo(String s) {
-				assertThat(s).isNotBlank().contains("test");
-			}
-		});
-		assertThat(test).isEqualTo("test: 456");
+		assertThat(configService.publishConfigCas("test.yaml", "DEFAULT", "test: 456", md5)).isTrue();
+		Thread.sleep(Duration.ofSeconds(1));
+		assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 456");
 
 		md5 = DigestUtils.md5DigestAsHex("test: 456".getBytes());
 		assertThat(md5).isEqualTo("76e2eabbf24a8c90dc3b4372c20a72cf");
-		assertThat(configUtils.publishConfigCas("test.yaml", nacosConfigProperties.getGroup(), "test: 789", md5, "yaml")).isTrue();
-		assertThat(configUtils.getConfig("test.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 789");
+		assertThat(configService.publishConfigCas("test.yaml", "DEFAULT", "test: 789", md5, "yaml")).isTrue();
+		Thread.sleep(Duration.ofSeconds(1));
+		assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 789");
 
-		assertThat(configUtils.publishConfig("test1.yaml", nacosConfigProperties.getGroup(), "test: 123")).isTrue();
-		Thread.sleep(2000);
-		assertThat( configUtils.getConfig("test1.yaml", nacosConfigProperties.getGroup(), 5000)).isEqualTo("test: 123");
+		assertThat(configService.publishConfig("test1.yaml", "DEFAULT", "test: 123")).isTrue();
+		Thread.sleep(Duration.ofSeconds(1));
+		assertThat( configService.getConfig("test1.yaml", "DEFAULT", 5000)).isEqualTo("test: 123");
 
-		assertThat(configUtils.removeConfig("test1.yaml", nacosConfigProperties.getGroup())).isTrue();
-		Thread.sleep(2000);
-		assertThat(configUtils.getConfig("test1.yaml", nacosConfigProperties.getGroup(), 5000)).isNull();
-
-		configUtils.removeListener("test.yaml", nacosConfigProperties.getGroup(), new Listener() {
-			@Override
-			public Executor getExecutor() {
-				return Executors.newSingleThreadExecutor();
-			}
-
-			@Override
-			public void receiveConfigInfo(String s) {
-				assertThat(s).isNotBlank().contains("test");
-			}
-		});
-		configUtils.addListener("test.yaml", nacosConfigProperties.getGroup(), new Listener() {
-			@Override
-			public Executor getExecutor() {
-				return Executors.newSingleThreadExecutor();
-			}
-
-			@Override
-			public void receiveConfigInfo(String s) {
-				assertThat(s).isNotBlank().contains("test");
-			}
-		});
+		assertThat(configService.removeConfig("test1.yaml", "DEFAULT")).isTrue();
+		Thread.sleep(Duration.ofSeconds(1));
+		assertThat(configService.getConfig("test1.yaml", "DEFAULT", 5000)).isNull();
 	}
-
-	// @formatter:on
 
 }

@@ -19,10 +19,10 @@ package org.laokou.common.websocket.config;
 
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.nacos.api.exception.NacosException;
+import com.alibaba.nacos.api.naming.NamingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.laokou.common.nacos.util.NamingUtils;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 
@@ -37,12 +37,12 @@ public class WebSocketRegister implements ApplicationListener<ApplicationReadyEv
 
 	private final SpringWebSocketServerProperties springWebSocketServerProperties;
 
-	private final NamingUtils namingUtils;
+	private final NamingService namingService;
 
 	@Override
 	public void onApplicationEvent(@NotNull ApplicationReadyEvent event) {
 		try {
-			namingUtils.registerInstance(springWebSocketServerProperties.getServiceId(),
+			namingService.registerInstance(springWebSocketServerProperties.getServiceId(),
 					nacosDiscoveryProperties.getGroup(), springWebSocketServerProperties.getIp(),
 					springWebSocketServerProperties.getPort(), nacosDiscoveryProperties.getClusterName());
 			log.info("【WebSocket-Server】 => 注册Nacos成功");

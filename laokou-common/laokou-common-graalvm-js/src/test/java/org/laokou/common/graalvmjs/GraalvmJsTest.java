@@ -20,11 +20,9 @@ package org.laokou.common.graalvmjs;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.graalvmjs.config.Executor;
-import org.springframework.boot.WebApplicationType;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.laokou.common.graalvmjs.config.GraalvmJsConfig;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 
 import java.util.Map;
@@ -34,7 +32,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author laokou
  */
-@SpringBootTest
+@ContextConfiguration(classes = { GraalvmJsConfig.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class GraalvmJsTest {
@@ -54,16 +53,6 @@ class GraalvmJsTest {
 		assertThat(map.isEmpty()).isTrue();
 		String script4 = "function processData(s) { return parseInt(s, 16)   } processData;";
 		assertThat(jsExecutor.execute(script4, "0x1a").asInt()).isEqualTo(26);
-	}
-
-	@EnableConfigurationProperties
-	@SpringBootApplication(scanBasePackages = "org.laokou")
-	static class AppTest {
-
-		public static void main(String[] args) {
-			new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
-		}
-
 	}
 
 }

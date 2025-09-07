@@ -28,6 +28,9 @@ import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.i18n.util.ResourceUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
+import org.laokou.common.testcontainers.util.DockerImageNames;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -45,8 +48,10 @@ import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 /**
  * @author laokou
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
+@SpringBootApplication(scanBasePackages = "org.laokou")
+@MapperScan(basePackages = "org.laokou.common.excel")
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class ExcelTest {
 
@@ -54,7 +59,7 @@ class ExcelTest {
 
 	private final MybatisUtils mybatisUtils;
 
-	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
+	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageNames.postgresql())
 		.withUsername("root")
 		.withPassword("laokou123")
 		.withInitScripts("init.sql")

@@ -31,7 +31,7 @@ import org.springframework.test.context.TestConstructor;
 /**
  * @author laokou
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
 @ContextConfiguration(classes = { SpringContextUtils.class, TestEventListener.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
