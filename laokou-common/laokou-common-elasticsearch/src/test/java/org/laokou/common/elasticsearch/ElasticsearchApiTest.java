@@ -41,6 +41,7 @@ import org.springframework.test.context.TestConstructor;
 import org.testcontainers.elasticsearch.ElasticsearchContainer;
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -86,7 +87,8 @@ class ElasticsearchApiTest {
 	}
 
 	@Test
-	void test_elasticsearch() throws IOException {
+	void test_elasticsearch() throws IOException, InterruptedException {
+		Thread.sleep(Duration.ofSeconds(2));
 		assertThatNoException()
 			.isThrownBy(() -> elasticsearchTemplate.createIndex("iot_res_1", "iot_res", TestResource.class));
 
