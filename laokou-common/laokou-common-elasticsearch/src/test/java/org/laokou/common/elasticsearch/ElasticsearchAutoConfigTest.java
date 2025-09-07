@@ -16,15 +16,31 @@
  */
 
 package org.laokou.common.elasticsearch;
-
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.elasticsearch.config.ElasticsearchAutoConfig;
+import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigurations;
+import org.springframework.boot.ssl.DefaultSslBundleRegistry;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.context.runner.ApplicationContextRunner;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
  */
-@Testcontainers
-public class ElasticsearchAutoConfigTest {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@TestConfiguration
+@SpringBootConfiguration
+class ElasticsearchAutoConfigTest {
 
+	final ApplicationContextRunner contextRunner = new ApplicationContextRunner()
+		.withConfiguration(AutoConfigurations.of(ElasticsearchAutoConfig.class, DefaultSslBundleRegistry.class));
 
+	@Test
+	void test() {
+		contextRunner.run(context -> assertThat(context).hasSingleBean(ElasticsearchTemplate.class));
+	}
 
 }

@@ -52,7 +52,7 @@ public final class DockerImageNames {
 	}
 
 	public static DockerImageName postgresql() {
-		return elasticsearch("latest");
+		return postgresql("latest");
 	}
 
 }
