@@ -30,7 +30,7 @@ import org.laokou.common.elasticsearch.config.ElasticsearchAutoConfig;
 import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.testcontainers.util.DockerImageNames;
+import org.laokou.common.testcontainers.container.ElasticsearchContainer;
 import org.springframework.boot.ssl.DefaultSslBundleRegistry;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -38,7 +38,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
-import org.testcontainers.elasticsearch.ElasticsearchContainer;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.Duration;
@@ -61,8 +60,7 @@ class ElasticsearchApiTest {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
-	static final ElasticsearchContainer elasticsearch = new ElasticsearchContainer(DockerImageNames.elasticsearch("9.1.3"))
-		.withPassword("laokou123");
+	static final ElasticsearchContainer elasticsearch = new ElasticsearchContainer("9.1.3", "laokou123");
 
 	@BeforeAll
 	static void beforeAll() {

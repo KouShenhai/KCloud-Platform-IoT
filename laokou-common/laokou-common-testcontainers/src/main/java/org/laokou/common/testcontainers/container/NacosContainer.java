@@ -33,20 +33,20 @@ public class NacosContainer extends GenericContainer<NacosContainer> {
 	    public NacosContainer(DockerImageName dockerImageName, int adminPort, int consolePort, int grpcPort) {
 			super(dockerImageName);
 			// 根据Nacos的设计，gRPC客户端端口为主端口加1000，即如果主端口为8849，则gRPC端口默认为9849
-			addFixedExposedPort(adminPort, 8848);
-			addFixedExposedPort(consolePort, 8080);
-			addFixedExposedPort(grpcPort, 9848);
+			this.addFixedExposedPort(adminPort, 8848);
+			this.addFixedExposedPort(consolePort, 8080);
+			this.addFixedExposedPort(grpcPort, 9848);
 			// 单机启动
-			withEnv("MODE", "standalone");
+			this.withEnv("MODE", "standalone");
 			// Nacos 用于生成JWT Token的密钥，使用长度大于32字符的字符串，再经过Base64编码。
-			withEnv("NACOS_AUTH_TOKEN", "SecretKey012345678901234567890123456789012345678901234567890123456789");
+			this.withEnv("NACOS_AUTH_TOKEN", "SecretKey012345678901234567890123456789012345678901234567890123456789");
 			// Nacos Server端之间 Inner API的身份标识的Key，必填。
-			withEnv("NACOS_AUTH_IDENTITY_KEY", "serverIdentity");
+			this.withEnv("NACOS_AUTH_IDENTITY_KEY", "serverIdentity");
 			// Nacos Server端之间 Inner API的身份标识的Value，必填。
-			withEnv("NACOS_AUTH_IDENTITY_VALUE", "security");
+			this.withEnv("NACOS_AUTH_IDENTITY_VALUE", "security");
 			// Wait until the Nacos server is ready to accept requests.
 			// Visit the login page to verify if nacos is running.
-			setWaitStrategy(Wait.forHttp("/#/login").forPort(8080).forStatusCode(200));
+			this.setWaitStrategy(Wait.forHttp("/#/login").forPort(8080).forStatusCode(200));
 		}
 
 		public String getServerAddr() {
