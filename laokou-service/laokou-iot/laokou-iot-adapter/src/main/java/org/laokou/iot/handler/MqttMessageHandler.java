@@ -93,15 +93,15 @@ public class MqttMessageHandler {
 
 	@PulsarListeners(
 			value = {
-					@PulsarListener(topicPattern = "persistent://laokouyun/mqtt/up-ota-upgrade",
-							subscriptionName = "laokouyun-mqtt-up-ota-upgrade",
+					@PulsarListener(topicPattern = "persistent://laokouyun/mqtt/up-ota-upgrade-set",
+							subscriptionName = "laokouyun-mqtt-up-ota-upgrade-set",
 							schemaType = SchemaType.BYTES,
 							batch = true,
 							ackMode = AckMode.BATCH,
 							subscriptionType = SubscriptionType.Shared),
 			}
 	)
-	public void handleOtaUpgradeMessage(List<byte[]> messages) {
+	public void handleOtaUpgradeSetMessage(List<byte[]> messages) {
 		log.info("接收到MQTT消息：{}", messages);
 	}
 

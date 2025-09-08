@@ -28,8 +28,7 @@ public final class DockerImageNames {
 	}
 
 	public static DockerImageName elasticsearch(String tag) {
-		return DockerImageName.parse("registry.cn-shenzhen.aliyuncs.com/koushenhai/elasticsearch9")
-			.asCompatibleSubstituteFor("docker.elastic.co/elasticsearch/elasticsearch")
+		return DockerImageName.parse("elasticsearch/elasticsearch")
 			.withTag(tag);
 	}
 
