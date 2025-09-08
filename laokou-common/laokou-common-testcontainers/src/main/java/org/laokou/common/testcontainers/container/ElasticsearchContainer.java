@@ -17,31 +17,16 @@
 
 package org.laokou.common.testcontainers.container;
 
-import com.github.dockerjava.api.command.InspectContainerResponse;
 import org.laokou.common.testcontainers.util.DockerImageNames;
-
-import java.io.IOException;
 
 /**
  * @author laokou
  */
 public class ElasticsearchContainer extends org.testcontainers.elasticsearch.ElasticsearchContainer {
 
-	private final String tag;
-
-	public ElasticsearchContainer(String tag, String password) {
-		super(DockerImageNames.elasticsearch(tag));
+	public ElasticsearchContainer(String password) {
+		super(DockerImageNames.elasticsearch());
 		super.withPassword(password);
-		this.tag = tag;
 	}
 
-	@Override
-	protected void containerIsStarted(InspectContainerResponse containerInfo) {
-		try {
-			super.execInContainer("elasticsearch-plugin", "install", "--batch", String.format("https://release.infinilabs.com/analysis-ik/stable/elasticsearch-analysis-ik-%s.zip", tag));
-			super.execInContainer("elasticsearch-plugin", "install", "--batch", String.format("https://release.infinilabs.com/analysis-ik/stable/elasticsearch-analysis-ik-%s.zip", tag));
-		} catch (IOException | InterruptedException e) {
-			throw new RuntimeException(e);
-		}
-	}
 }

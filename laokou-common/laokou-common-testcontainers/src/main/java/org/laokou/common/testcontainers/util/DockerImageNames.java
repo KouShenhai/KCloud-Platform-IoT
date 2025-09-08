@@ -28,12 +28,13 @@ public final class DockerImageNames {
 	}
 
 	public static DockerImageName elasticsearch(String tag) {
-		return DockerImageName.parse("elasticsearch/elasticsearch")
+		return DockerImageName.parse("koushenhai/elasticsearch9")
+			.asCompatibleSubstituteFor("docker.elastic.co/elasticsearch/elasticsearch")
 			.withTag(tag);
 	}
 
 	public static DockerImageName elasticsearch() {
-		return elasticsearch("9.1.3");
+		return elasticsearch("latest");
 	}
 
 	public static DockerImageName nacos(String tag) {

@@ -60,7 +60,7 @@ class ElasticsearchApiTest {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
 
-	static final ElasticsearchContainer elasticsearch = new ElasticsearchContainer("9.1.3", "laokou123");
+	static final ElasticsearchContainer elasticsearch = new ElasticsearchContainer("laokou123");
 
 	@BeforeAll
 	static void beforeAll() {
