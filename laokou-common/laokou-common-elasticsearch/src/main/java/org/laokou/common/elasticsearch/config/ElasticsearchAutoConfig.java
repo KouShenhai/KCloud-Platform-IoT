@@ -29,6 +29,7 @@ import co.elastic.clients.transport.rest5_client.low_level.Rest5Client;
 import co.elastic.clients.transport.rest5_client.low_level.Rest5ClientBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.common.io.BaseEncoding;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.ssl.DefaultClientTlsStrategy;
@@ -53,21 +54,19 @@ import org.springframework.util.Assert;
 
 import java.net.InetSocketAddress;
 import java.net.URI;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
-import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static co.elastic.clients.transport.rest5_client.low_level.Rest5ClientBuilder.DEFAULT_RESPONSE_TIMEOUT_MILLIS;
 import static co.elastic.clients.transport.rest5_client.low_level.Rest5ClientBuilder.DEFAULT_SOCKET_TIMEOUT_MILLIS;
+import static org.apache.hc.client5.http.auth.StandardAuthScheme.BASIC;
 import static org.apache.hc.core5.http.HttpHeaders.AUTHORIZATION;
 import static org.laokou.common.i18n.common.constant.StringConstants.RISK;
+import static org.laokou.common.i18n.common.constant.StringConstants.SPACE;
 
 /**
  * @author spring-data-elasticsearch
@@ -212,7 +211,7 @@ public class ElasticsearchAutoConfig {
 		String username = springElasticsearchProperties.getUsername();
 		String password = springElasticsearchProperties.getPassword();
 		if (StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(password)) {
-			headers.add(new BasicHeader(AUTHORIZATION, "Basic " + encodeBasicAuth(username, password)));
+			headers.add(new BasicHeader(AUTHORIZATION, BASIC + SPACE + encodeBasicAuth(username, password)));
 		}
 		return headers.toArray(new Header[0]);
 	}
@@ -224,17 +223,8 @@ public class ElasticsearchAutoConfig {
 
 	private String encodeBasicAuth(String username, String password) {
 		Assert.notNull(username, "Username must not be null");
-		Assert.doesNotContain(username, RISK, "Username must not contain a colon");
 		Assert.notNull(password, "Password must not be null");
-		Charset charset = StandardCharsets.ISO_8859_1;
-		CharsetEncoder encoder = charset.newEncoder();
-		if (encoder.canEncode(username) && encoder.canEncode(password)) {
-			String credentialsString = username + ':' + password;
-			byte[] encodedBytes = Base64.getEncoder().encode(credentialsString.getBytes(charset));
-			return new String(encodedBytes, charset);
-		} else {
-			throw new IllegalArgumentException("Username or password contains characters that cannot be encoded to " + charset.displayName());
-		}
+		return BaseEncoding.base64().encode((username + ":" + password).getBytes());
 	}
 
 	private TransportOptions transportOptions() {
