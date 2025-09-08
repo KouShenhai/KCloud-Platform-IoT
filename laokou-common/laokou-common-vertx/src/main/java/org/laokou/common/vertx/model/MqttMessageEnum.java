@@ -88,7 +88,7 @@ public enum MqttMessageEnum {
 	UP_OTA_UPGRADE_REPORT("up_ota_upgrade_report", "OTA固件升级上报【上行】") {
 		@Override
 		public String getTopic() {
-			return "/+/+/up/ota/upgrade/report";
+			return "/+/up/ota/upgrade/report";
 		}
 
 		@Override
@@ -97,22 +97,22 @@ public enum MqttMessageEnum {
 		}
 	},
 
-	UP_OTA_UPGRADE("up_ota_upgrade", "OTA固件升级【上行】") {
+	UP_OTA_UPGRADE("up_ota_upgrade_set", "OTA固件升级【上行】") {
 		@Override
 		public String getTopic() {
-			return "/+/+/up/ota/upgrade";
+			return "/+/up/ota/upgrade/set";
 		}
 
 		@Override
 		public String getMqTopic() {
-			return "up-ota-upgrade";
+			return "up-ota-upgrade-set";
 		}
 	},
 
-	DOWN_OTA_UPGRADE_GET("down_ota_upgrade_get", "OTA固件升级接收【下行】") {
+	DOWN_OTA_UPGRADE_GET("down_ota_upgrade_get", "OTA固件升级【下行】") {
 		@Override
 		public String getTopic() {
-			return "/+/+/down/ota/upgrade/get";
+			return "/+/down/ota/upgrade/get";
 		}
 
 		@Override
