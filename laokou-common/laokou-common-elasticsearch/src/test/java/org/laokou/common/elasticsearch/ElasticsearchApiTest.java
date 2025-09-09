@@ -41,7 +41,6 @@ import org.springframework.test.context.TestConstructor;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -63,9 +62,8 @@ class ElasticsearchApiTest {
 
 	static final ElasticsearchContainer elasticsearch = new ElasticsearchContainer("laokou123");
 	@BeforeAll
-	static void beforeAll() throws InterruptedException {
+	static void beforeAll() {
 		elasticsearch.start();
-		Thread.sleep(Duration.ofSeconds(5));
 	}
 
 	@AfterAll
