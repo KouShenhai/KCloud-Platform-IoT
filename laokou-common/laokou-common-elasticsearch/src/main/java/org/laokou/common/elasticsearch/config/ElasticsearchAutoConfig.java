@@ -32,6 +32,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.io.BaseEncoding;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.client5.http.impl.routing.DefaultProxyRoutePlanner;
+import org.apache.hc.client5.http.routing.HttpRoutePlanner;
 import org.apache.hc.client5.http.ssl.DefaultClientTlsStrategy;
 import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.core5.http.Header;
@@ -54,6 +56,7 @@ import org.springframework.util.Assert;
 
 import java.net.InetSocketAddress;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
@@ -158,6 +161,22 @@ public class ElasticsearchAutoConfig {
 		}
 		Duration connectionTimeout = springElasticsearchProperties.getConnectionTimeout();
 		Duration socketTimeout = springElasticsearchProperties.getSocketTimeout();
+
+		builder.setHttpClientConfigCallback(httpAsyncClientBuilder -> {
+			// 默认情况下，HTTP 客户端使用抢占式身份验证：它在初始请求中包含凭据。
+			// 您可能希望使用非抢占式身份验证，即发送不带凭据的请求，并在质询后使用标头重试401 Unauthorized。
+			// 为此，请设置一个HttpClientConfigCallback禁用身份验证缓存的参数。
+			httpAsyncClientBuilder.disableAuthCaching();
+			String proxy = springElasticsearchProperties.getProxy();
+			if (StringUtils.isNotEmpty(proxy)) {
+				try {
+					HttpRoutePlanner proxyRoutePlanner = new DefaultProxyRoutePlanner(HttpHost.create(proxy));
+					httpAsyncClientBuilder.setRoutePlanner(proxyRoutePlanner);
+				} catch (URISyntaxException ex) {
+					throw new IllegalArgumentException(ex);
+				}
+			}
+		});
 
 		builder.setConnectionConfigCallback(connectionConfigBuilder -> {
 			if (!connectionTimeout.isNegative()) {

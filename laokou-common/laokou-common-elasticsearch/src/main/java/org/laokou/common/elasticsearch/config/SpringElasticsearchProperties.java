@@ -42,6 +42,7 @@ public class SpringElasticsearchProperties {
 	private Duration socketTimeout = Duration.ofSeconds(30L);
 	private boolean socketKeepAlive = false;
 	private String pathPrefix;
+	private String proxy;
 	private boolean useSsl = false;
 	private String version = "9.1.3";
 	private String clientVersion = "9.1.4";
