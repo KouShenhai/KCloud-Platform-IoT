@@ -21,7 +21,6 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.json.JsonpMapper;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
-import co.elastic.clients.transport.TransportOptions;
 import co.elastic.clients.transport.rest5_client.Rest5ClientOptions;
 import co.elastic.clients.transport.rest5_client.Rest5ClientTransport;
 import co.elastic.clients.transport.rest5_client.low_level.RequestOptions;
@@ -29,7 +28,6 @@ import co.elastic.clients.transport.rest5_client.low_level.Rest5Client;
 import co.elastic.clients.transport.rest5_client.low_level.Rest5ClientBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.google.common.io.BaseEncoding;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.impl.routing.DefaultProxyRoutePlanner;
@@ -42,6 +40,7 @@ import org.apache.hc.core5.http.message.BasicHeader;
 import org.apache.hc.core5.http.nio.ssl.BasicClientTlsStrategy;
 import org.apache.hc.core5.util.Timeout;
 import org.laokou.common.core.util.ArrayUtils;
+import org.laokou.common.core.util.Base64Utils;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.i18n.util.StringUtils;
@@ -57,6 +56,8 @@ import org.springframework.util.Assert;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
@@ -119,9 +120,7 @@ public class ElasticsearchAutoConfig {
 	ElasticsearchTransport elasticsearchTransport(Rest5Client rest5Client, JsonpMapper jsonpMapper) {
 		Assert.notNull(rest5Client, "restClient must not be null");
 		Assert.notNull(jsonpMapper, "jsonpMapper must not be null");
-		Rest5ClientOptions.Builder rest5ClientOptionsBuilder = getRest5ClientOptionsBuilder(transportOptions());
-		rest5ClientOptionsBuilder.addHeader("Elasticsearch", getVersion());
-		return new Rest5ClientTransport(rest5Client, jsonpMapper, rest5ClientOptionsBuilder.build());
+		return new Rest5ClientTransport(rest5Client, jsonpMapper, getRest5ClientOptions());
 	}
 
 	/**
@@ -243,24 +242,19 @@ public class ElasticsearchAutoConfig {
 	private String encodeBasicAuth(String username, String password) {
 		Assert.notNull(username, "Username must not be null");
 		Assert.notNull(password, "Password must not be null");
-		return BaseEncoding.base64().encode((username + ":" + password).getBytes());
+		CharsetEncoder encoder = StandardCharsets.UTF_8.newEncoder();
+		if (encoder.canEncode(username) && encoder.canEncode(password)) {
+			return Base64Utils.encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
+		}
+		else {
+			throw new IllegalArgumentException("Username or password contains characters that cannot be encoded to " + StandardCharsets.UTF_8.displayName());
+		}
 	}
 
-	private TransportOptions transportOptions() {
-		return new Rest5ClientOptions(RequestOptions.DEFAULT, false);
-	}
-
-	private Rest5ClientOptions.Builder getRest5ClientOptionsBuilder(TransportOptions transportOptions) {
-		if (transportOptions instanceof Rest5ClientOptions rest5ClientOptions) {
-			return rest5ClientOptions.toBuilder();
-		}
-		Rest5ClientOptions.Builder builder = new Rest5ClientOptions.Builder(RequestOptions.DEFAULT.toBuilder());
-		if (transportOptions != null) {
-			transportOptions.headers().forEach(header -> builder.addHeader(header.getKey(), header.getValue()));
-			transportOptions.queryParameters().forEach(builder::setParameter);
-			builder.onWarnings(transportOptions.onWarnings());
-		}
-		return builder;
+	private Rest5ClientOptions getRest5ClientOptions() {
+		Rest5ClientOptions.Builder rest5ClientOptionsBuilder = new Rest5ClientOptions(RequestOptions.DEFAULT, false).toBuilder();
+		rest5ClientOptionsBuilder.addHeader("Elasticsearch", getVersion());
+		return rest5ClientOptionsBuilder.build();
 	}
 
 	private String getVersion() {
