@@ -23,10 +23,10 @@ jobs:
           architecture: x64
       - name: Install with Maven Mvnd
         run: |
-          curl -s "https://get.sdkman.io" | bash
-          source "$HOME/.sdkman/bin/sdkman-init.sh"
-          sdk install mvnd
-          echo mvnd --version
+          MVND_VERSION="1.0.2"
+          wget https://downloads.apache.org/maven/mvnd/${MVND_VERSION}/maven-mvnd-${MVND_VERSION}-linux-amd64.zip
+          unzip maven-mvnd-${MVND_VERSION}-linux-amd64.zip
+          echo "${PWD}/maven-mvnd-${MVND_VERSION}-linux-amd64/bin" >> $GITHUB_PATH
       - name: Test with Maven Mvnd
         run: mvnd clean test -P dev
       - name: Upload coverage reports to Codecov
