@@ -21,7 +21,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
           architecture: x64
-      - name: Install Maven Mvnd
+      - name: Install with Maven Mvnd
         run: |
           curl -s "https://get.sdkman.io" | bash
           source "$HOME/.sdkman/bin/sdkman-init.sh"
