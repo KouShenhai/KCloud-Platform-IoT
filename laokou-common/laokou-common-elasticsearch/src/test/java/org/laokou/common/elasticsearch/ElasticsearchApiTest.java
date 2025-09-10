@@ -64,6 +64,7 @@ class ElasticsearchApiTest {
 
 	static final ElasticsearchContainer elasticsearch = new ElasticsearchContainer(DockerImageNames.elasticsearch())
 		.withPassword("laokou123");
+
 	@BeforeAll
 	static void beforeAll() throws InterruptedException {
 		elasticsearch.start();
