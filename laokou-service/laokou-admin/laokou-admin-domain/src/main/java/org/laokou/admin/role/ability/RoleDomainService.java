@@ -18,7 +18,9 @@
 package org.laokou.admin.role.ability;
 
 import lombok.RequiredArgsConstructor;
-
+import org.laokou.admin.role.gateway.RoleDeptGateway;
+import org.laokou.admin.role.gateway.RoleGateway;
+import org.laokou.admin.role.gateway.RoleMenuGateway;
 import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.stereotype.Component;

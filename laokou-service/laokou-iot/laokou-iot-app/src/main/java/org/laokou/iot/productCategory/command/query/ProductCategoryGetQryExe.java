@@ -19,12 +19,13 @@ package org.laokou.iot.productCategory.command.query;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.tenant.constant.DSConstants;
+import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 import org.laokou.iot.productCategory.dto.ProductCategoryGetQry;
 import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
 import org.laokou.iot.productCategory.gatewayimpl.database.ProductCategoryMapper;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 
 
 /**

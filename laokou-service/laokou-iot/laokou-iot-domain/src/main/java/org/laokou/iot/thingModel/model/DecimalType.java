@@ -19,6 +19,7 @@ package org.laokou.iot.thingModel.model;
 
 import lombok.Data;
 import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.util.ObjectUtils;
 

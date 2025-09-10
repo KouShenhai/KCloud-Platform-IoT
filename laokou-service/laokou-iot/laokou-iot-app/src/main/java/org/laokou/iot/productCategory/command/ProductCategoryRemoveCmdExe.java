@@ -21,9 +21,10 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
+import org.laokou.common.tenant.constant.DSConstants;
+import org.laokou.iot.productCategory.ability.ProductCategoryDomainService;
 import org.laokou.iot.productCategory.dto.ProductCategoryRemoveCmd;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.productCategory.ability.ProductCategoryDomainService;
 
 
 /**

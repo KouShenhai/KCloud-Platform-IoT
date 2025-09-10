@@ -18,7 +18,7 @@
 package org.laokou.admin.source.ability;
 
 import lombok.RequiredArgsConstructor;
-
+import org.laokou.admin.source.gateway.SourceGateway;
 import org.laokou.admin.source.model.SourceE;
 import org.springframework.stereotype.Component;
 

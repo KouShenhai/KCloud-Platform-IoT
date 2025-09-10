@@ -23,6 +23,7 @@ import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.Constants;
 import org.laokou.auth.model.GrantTypeEnum;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.security.config.OAuth2ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;

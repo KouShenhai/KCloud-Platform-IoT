@@ -19,6 +19,14 @@ package org.laokou.iot.productCategory.api;
 
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.productCategory.dto.ProductCategoryExportCmd;
+import org.laokou.iot.productCategory.dto.ProductCategoryGetQry;
+import org.laokou.iot.productCategory.dto.ProductCategoryImportCmd;
+import org.laokou.iot.productCategory.dto.ProductCategoryModifyCmd;
+import org.laokou.iot.productCategory.dto.ProductCategoryPageQry;
+import org.laokou.iot.productCategory.dto.ProductCategoryRemoveCmd;
+import org.laokou.iot.productCategory.dto.ProductCategorySaveCmd;
+import org.laokou.iot.productCategory.dto.ProductCategoryTreeListQry;
 import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
 
 import java.util.List;

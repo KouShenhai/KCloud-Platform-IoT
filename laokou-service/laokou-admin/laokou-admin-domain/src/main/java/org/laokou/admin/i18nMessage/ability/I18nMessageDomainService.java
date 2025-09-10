@@ -18,6 +18,7 @@
 package org.laokou.admin.i18nMessage.ability;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.i18nMessage.gateway.I18nMessageGateway;
 import org.laokou.admin.i18nMessage.model.I18nMessageE;
 import org.springframework.stereotype.Component;
 

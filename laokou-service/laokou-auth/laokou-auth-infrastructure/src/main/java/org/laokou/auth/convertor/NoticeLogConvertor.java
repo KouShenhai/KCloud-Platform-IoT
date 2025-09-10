@@ -23,6 +23,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.auth.model.NoticeLogE;
 import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.mail.dto.MailResult;
 import org.laokou.common.sms.entity.SmsResult;
 

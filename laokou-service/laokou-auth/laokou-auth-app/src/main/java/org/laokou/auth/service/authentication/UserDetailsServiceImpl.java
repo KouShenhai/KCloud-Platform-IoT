@@ -25,6 +25,7 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.Constants;
 import org.laokou.auth.model.GrantTypeEnum;
 import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.springframework.security.core.userdetails.UserDetails;

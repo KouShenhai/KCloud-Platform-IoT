@@ -18,6 +18,7 @@
 package org.laokou.admin.dictItem.ability;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dictItem.gateway.DictItemGateway;
 import org.laokou.admin.dictItem.model.DictItemE;
 import org.springframework.stereotype.Component;
 

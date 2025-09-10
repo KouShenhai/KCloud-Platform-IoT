@@ -19,6 +19,12 @@ package org.laokou.iot.device.api;
 
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.device.dto.DeviceExportCmd;
+import org.laokou.iot.device.dto.DeviceGetQry;
+import org.laokou.iot.device.dto.DeviceImportCmd;
+import org.laokou.iot.device.dto.DeviceModifyCmd;
+import org.laokou.iot.device.dto.DevicePageQry;
+import org.laokou.iot.device.dto.DeviceRemoveCmd;
 import org.laokou.iot.device.dto.DeviceSaveCmd;
 import org.laokou.iot.device.dto.clientobject.DeviceCO;
 

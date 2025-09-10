@@ -18,6 +18,7 @@
 package org.laokou.admin.oss.ability;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.oss.gateway.OssGateway;
 import org.laokou.admin.oss.model.OssE;
 import org.springframework.stereotype.Component;
 

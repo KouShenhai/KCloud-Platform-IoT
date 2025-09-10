@@ -18,6 +18,7 @@
 package org.laokou.admin.menu.ability;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.menu.gateway.MenuGateway;
 import org.laokou.admin.menu.model.MenuE;
 import org.springframework.stereotype.Component;
 

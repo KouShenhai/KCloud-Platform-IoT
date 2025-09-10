@@ -21,11 +21,12 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
+import org.laokou.common.tenant.constant.DSConstants;
+import org.laokou.iot.thingModel.ability.ThingModelDomainService;
+import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
 import org.laokou.iot.thingModel.dto.ThingModelModifyCmd;
 import org.laokou.iot.thingModel.model.ThingModelE;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
-import org.laokou.iot.thingModel.ability.ThingModelDomainService;
 
 
 /**

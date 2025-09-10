@@ -20,6 +20,7 @@ package org.laokou.oss.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.tenant.constant.DSConstants;
 
 
 /**

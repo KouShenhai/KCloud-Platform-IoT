@@ -17,6 +17,7 @@
 
 package org.laokou.auth.config;
 
+import org.laokou.auth.model.OAuth2Constants;
 import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.security.web.session.SessionInformationExpiredEvent;

@@ -18,6 +18,7 @@
 package org.laokou.generator.info.ability;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.generator.info.gateway.InfoGateway;
 import org.laokou.generator.info.model.InfoE;
 import org.springframework.stereotype.Component;
 

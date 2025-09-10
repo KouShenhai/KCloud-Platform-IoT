@@ -26,11 +26,26 @@ import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.laokou.iot.device.api.DevicesServiceI;
+import org.laokou.iot.device.dto.DeviceExportCmd;
+import org.laokou.iot.device.dto.DeviceGetQry;
+import org.laokou.iot.device.dto.DeviceImportCmd;
+import org.laokou.iot.device.dto.DeviceModifyCmd;
+import org.laokou.iot.device.dto.DevicePageQry;
+import org.laokou.iot.device.dto.DeviceRemoveCmd;
+import org.laokou.iot.device.dto.DeviceSaveCmd;
 import org.laokou.iot.device.dto.clientobject.DeviceCO;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
