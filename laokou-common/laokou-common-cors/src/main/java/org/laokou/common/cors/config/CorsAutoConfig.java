@@ -21,12 +21,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
  * 跨域配置.
@@ -35,7 +35,7 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
  */
 @Slf4j
 @AutoConfiguration
-@Order(HIGHEST_PRECEDENCE + 10)
+@Order(Ordered.HIGHEST_PRECEDENCE + 10)
 public class CorsAutoConfig {
 
 	@Bean

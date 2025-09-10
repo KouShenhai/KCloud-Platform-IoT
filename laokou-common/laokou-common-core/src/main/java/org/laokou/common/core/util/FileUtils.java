@@ -19,15 +19,30 @@ package org.laokou.common.core.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.net.URI;
 import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
+import java.nio.file.CopyOption;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -38,7 +53,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
-import static org.laokou.common.i18n.common.constant.StringConstants.*;
 
 /**
  * 文件工具类.
@@ -145,8 +159,8 @@ public final class FileUtils {
 
 	public static void write(Path sourcePath, InputStream inputStream, long size) throws NoSuchAlgorithmException {
 		try (FileOutputStream fos = new FileOutputStream(sourcePath.toFile());
-				FileChannel outChannel = fos.getChannel();
-				ReadableByteChannel inChannel = Channels.newChannel(inputStream)) {
+			 FileChannel outChannel = fos.getChannel();
+			 ReadableByteChannel inChannel = Channels.newChannel(inputStream)) {
 			outChannel.transferFrom(inChannel, 0, size);
 		}
 		catch (IOException e) {
@@ -201,7 +215,7 @@ public final class FileUtils {
 	 * @return 文件扩展名
 	 */
 	public static String getFileExt(String fileName) {
-		return fileName.substring(fileName.lastIndexOf(DOT));
+		return fileName.substring(fileName.lastIndexOf(StringConstants.DOT));
 	}
 
 	public static void copy(Path source, OutputStream out) throws IOException {
@@ -304,7 +318,7 @@ public final class FileUtils {
 						throws IOException {
 					// 对于每个文件，创建一个 ZipEntry 并写入
 					Path targetPath = sourcePath.relativize(filePath);
-					zos.putNextEntry(new ZipEntry(sourcePath.getFileName() + SLASH + targetPath));
+					zos.putNextEntry(new ZipEntry(sourcePath.getFileName() + StringConstants.SLASH + targetPath));
 					copy(filePath, zos);
 					zos.closeEntry();
 					return FileVisitResult.CONTINUE;
@@ -316,7 +330,7 @@ public final class FileUtils {
 						throws IOException {
 					// 对于每个目录，创建一个 ZipEntry（目录也需要在 ZIP 中存在）
 					Path targetPath = sourcePath.relativize(dirPath);
-					zos.putNextEntry(new ZipEntry(sourcePath.getFileName() + SLASH + targetPath));
+					zos.putNextEntry(new ZipEntry(sourcePath.getFileName() + StringConstants.SLASH + targetPath));
 					zos.closeEntry();
 					return FileVisitResult.CONTINUE;
 				}
@@ -359,7 +373,7 @@ public final class FileUtils {
 
 	private static void chunkWrite(File file, FileChannel inChannel, long start, long end, long size) {
 		try (RandomAccessFile accessFile = new RandomAccessFile(file, "rw");
-				FileChannel outChannel = accessFile.getChannel()) {
+			 FileChannel outChannel = accessFile.getChannel()) {
 			// 零拷贝
 			// transferFrom 与 transferTo 区别
 			// transferTo 最多拷贝2gb，和源文件大小保持一致【发送，从当前通道读取数据并写入外部通道】

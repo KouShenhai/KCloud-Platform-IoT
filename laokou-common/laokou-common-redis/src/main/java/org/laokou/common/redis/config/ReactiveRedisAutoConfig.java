@@ -31,8 +31,6 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import reactor.core.publisher.Flux;
 
-import static org.laokou.common.redis.config.ForyRedisSerializer.foryRedisSerializer;
-import static org.laokou.common.redis.config.ForyRedisSerializer.getStringRedisSerializer;
 
 /**
  * @author laokou
@@ -47,9 +45,9 @@ public class ReactiveRedisAutoConfig {
 	public ReactiveRedisTemplate<String, Object> reactiveRedisTemplate(
 			ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
 		// fory序列化
-		ForyRedisSerializer foryRedisSerializer = foryRedisSerializer();
+		ForyRedisSerializer foryRedisSerializer = ForyRedisSerializer.foryRedisSerializer();
 		// string序列化
-		StringRedisSerializer stringRedisSerializer = getStringRedisSerializer();
+		StringRedisSerializer stringRedisSerializer = ForyRedisSerializer.getStringRedisSerializer();
 		RedisSerializationContext<String, Object> serializationContext = RedisSerializationContext
 			.<String, Object>newSerializationContext()
 			.key(stringRedisSerializer)

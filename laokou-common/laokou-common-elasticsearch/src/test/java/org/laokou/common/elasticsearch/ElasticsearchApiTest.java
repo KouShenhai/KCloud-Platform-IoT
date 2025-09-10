@@ -22,10 +22,19 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.elasticsearch.annotation.*;
+import org.laokou.common.elasticsearch.annotation.Analysis;
+import org.laokou.common.elasticsearch.annotation.Analyzer;
+import org.laokou.common.elasticsearch.annotation.Args;
+import org.laokou.common.elasticsearch.annotation.Field;
+import org.laokou.common.elasticsearch.annotation.Filter;
+import org.laokou.common.elasticsearch.annotation.Index;
+import org.laokou.common.elasticsearch.annotation.Option;
+import org.laokou.common.elasticsearch.annotation.Setting;
+import org.laokou.common.elasticsearch.annotation.Type;
 import org.laokou.common.elasticsearch.config.ElasticsearchAutoConfig;
 import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
@@ -47,8 +56,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executors;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
  * @author laokou
@@ -90,55 +97,54 @@ class ElasticsearchApiTest {
 
 	@Test
 	void test_elasticsearch() throws IOException {
-		assertThatNoException()
+		Assertions.assertThatNoException()
 			.isThrownBy(() -> elasticsearchTemplate.createIndex("iot_res_1", "iot_res", TestResource.class));
 
-		assertThatNoException()
+		Assertions.assertThatNoException()
 			.isThrownBy(() -> elasticsearchTemplate.createIndex("iot_pro_1", "iot_pro", TestProject.class));
 
-		assertThatNoException().isThrownBy(() -> elasticsearchTemplate.asyncCreateIndex("iot_resp_1", "iot_resp",
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchTemplate.asyncCreateIndex("iot_resp_1", "iot_resp",
 			TestResp.class, Executors.newSingleThreadExecutor()));
 
-		assertThatNoException().isThrownBy(
+		Assertions.assertThatNoException().isThrownBy(
 			() -> elasticsearchTemplate.asyncCreateDocument("iot_res_1", "222", new TestResource("8888")).join());
 
-		assertThatNoException().isThrownBy(
+		Assertions.assertThatNoException().isThrownBy(
 			() -> elasticsearchTemplate
 				.asyncBulkCreateDocument("iot_res_1", Map.of("555", new TestResource("6666")),
 					Executors.newSingleThreadExecutor())
 				.join());
 
-		assertThatNoException().isThrownBy(
+		Assertions.assertThatNoException().isThrownBy(
 			() -> elasticsearchTemplate
 				.asyncBulkCreateDocument("iot_res_1", List.of(new TestResource("6666")),
 					Executors.newSingleThreadExecutor())
 				.join());
 
-		assertThatNoException()
+		Assertions.assertThatNoException()
 			.isThrownBy(() -> elasticsearchTemplate.createDocument("iot_res_1", "444", new TestResource("3333")));
 
-		assertThatNoException().isThrownBy(
+		Assertions.assertThatNoException().isThrownBy(
 			() -> elasticsearchTemplate.bulkCreateDocument("iot_res_1", Map.of("333", new TestResource("5555"))));
 
-		assertThatNoException().isThrownBy(
+		Assertions.assertThatNoException().isThrownBy(
 			() -> elasticsearchTemplate.bulkCreateDocument("iot_res_1", List.of(new TestResource("5555"))));
 
-		assertThat(elasticsearchTemplate.exist(List.of("iot_res_1", "iot_pro_1", "iot_resp_1"))).isTrue();
+		Assertions.assertThat(elasticsearchTemplate.exist(List.of("iot_res_1", "iot_pro_1", "iot_resp_1"))).isTrue();
 
 		Search.Highlight highlight = new Search.Highlight();
 		highlight.setFields(Set.of(new Search.HighlightField("name", 0, 0)));
 		Search search = new Search(highlight, 1, 10, null);
 		Page<TestResult> results = elasticsearchTemplate.search(List.of("iot_res", "iot_res_1"), search,
 			TestResult.class);
-		assertThat(results).isNotNull();
-		assertThat(results.getTotal() > 0).isTrue();
+		Assertions.assertThat(results.getTotal() > 0).isTrue();
 
 		Map<String, IndexState> result = elasticsearchTemplate
 			.getIndex(List.of("iot_res_1", "iot_pro_1", "iot_resp_1"));
-		assertThat(result).isNotNull();
-		assertThat(result.isEmpty()).isFalse();
+		Assertions.assertThat(result).isNotNull();
+		Assertions.assertThat(result.isEmpty()).isFalse();
 
-		assertThatNoException().isThrownBy(
+		Assertions.assertThatNoException().isThrownBy(
 			() -> elasticsearchTemplate.deleteIndex(List.of("laokou_res_1", "laokou_pro_1", "laokou_resp_1")));
 	}
 

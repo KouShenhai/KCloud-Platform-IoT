@@ -23,16 +23,14 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.laokou.common.log.convertor.OperateLogConvertor;
 import org.laokou.common.log.handler.event.OperateEvent;
 import org.laokou.common.log.mapper.OperateLogMapper;
+import org.laokou.common.log.model.MqEnum;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static org.laokou.common.log.model.MqEnum.OPERATE_LOG_CONSUMER_GROUP;
-import static org.laokou.common.log.model.MqEnum.OPERATE_LOG_TOPIC;
-import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * @author laokou
@@ -46,10 +44,10 @@ public class OperateEventHandler {
 
 	private final TransactionalUtils transactionalUtils;
 
-	@KafkaListener(topics = OPERATE_LOG_TOPIC, groupId = OPERATE_LOG_CONSUMER_GROUP)
+	@KafkaListener(topics = MqEnum.OPERATE_LOG_TOPIC, groupId = MqEnum.OPERATE_LOG_CONSUMER_GROUP)
 	public void handleOperateLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
-			DynamicDataSourceContextHolder.push(DOMAIN);
+			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			for (ConsumerRecord<String, Object> record : messages) {
 				transactionalUtils.executeInTransaction(
 						() -> operateLogMapper.insert(OperateLogConvertor.toDataObject((OperateEvent) record.value())));

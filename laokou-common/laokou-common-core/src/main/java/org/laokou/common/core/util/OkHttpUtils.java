@@ -18,7 +18,14 @@
 package org.laokou.common.core.util;
 
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.*;
+import okhttp3.ConnectionPool;
+import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.SslUtils;
@@ -30,7 +37,6 @@ import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -61,12 +67,12 @@ public final class OkHttpUtils {
 		Request request = new Request.Builder().url(url).headers(Headers.of(headers)).post(builder.build()).build();
 		try (Response response = INSTANCE.newCall(request).execute()) {
 			ResponseBody body = response.body();
-			return ObjectUtils.isNotNull(body) ? body.string() : EMPTY;
+			return ObjectUtils.isNotNull(body) ? body.string() : StringConstants.EMPTY;
 		}
 		catch (IOException e) {
 			log.error("调用失败，错误信息：{}", e.getMessage());
 		}
-		return EMPTY;
+		return StringConstants.EMPTY;
 	}
 
 	private static OkHttpClient getOkHttpClient() throws NoSuchAlgorithmException, KeyManagementException {

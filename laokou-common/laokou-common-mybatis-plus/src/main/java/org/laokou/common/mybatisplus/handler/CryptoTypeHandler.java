@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 import org.laokou.common.crypto.util.AESUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -28,8 +29,6 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -58,7 +57,7 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 		try {
 			String data = resultSet.getString(columnName);
 			if (StringUtils.isEmpty(data)) {
-				return EMPTY;
+				return StringConstants.EMPTY;
 			}
 			return AESUtils.decrypt(data.trim());
 		}
@@ -73,7 +72,7 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 		try {
 			String data = resultSet.getString(columnIndex);
 			if (StringUtils.isEmpty(data)) {
-				return EMPTY;
+				return StringConstants.EMPTY;
 			}
 			return AESUtils.decrypt(data.trim());
 		}
@@ -88,7 +87,7 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 		try {
 			String data = callableStatement.getString(columnIndex);
 			if (StringUtils.isEmpty(data)) {
-				return EMPTY;
+				return StringConstants.EMPTY;
 			}
 			return AESUtils.decrypt(data.trim());
 		}

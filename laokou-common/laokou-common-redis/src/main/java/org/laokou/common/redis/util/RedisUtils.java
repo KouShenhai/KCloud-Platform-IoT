@@ -21,7 +21,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.redisson.api.*;
+import org.redisson.api.RAtomicLong;
+import org.redisson.api.RList;
+import org.redisson.api.RLock;
+import org.redisson.api.RMap;
+import org.redisson.api.RRateLimiter;
+import org.redisson.api.RateType;
+import org.redisson.api.RedissonClient;
 import org.redisson.api.options.KeysScanOptions;
 import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
@@ -30,7 +36,12 @@ import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.util.Assert;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -97,7 +108,7 @@ public class RedisUtils {
 	}
 
 	public boolean rateLimiter(String key, RateType mode, long replenishRate, Duration rateInterval,
-			Duration ttlInterval) {
+							   Duration ttlInterval) {
 		RRateLimiter rateLimiter = redissonClient.getRateLimiter(key);
 		rateLimiter.trySetRate(mode, replenishRate, rateInterval, ttlInterval);
 		return rateLimiter.tryAcquire();

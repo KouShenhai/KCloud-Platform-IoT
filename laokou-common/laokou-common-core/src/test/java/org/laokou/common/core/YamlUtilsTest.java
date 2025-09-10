@@ -19,6 +19,7 @@ package org.laokou.common.core;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.YamlUtils;
 import org.laokou.common.i18n.util.ResourceUtils;
@@ -28,8 +29,6 @@ import org.springframework.test.context.TestConstructor;
 
 import java.io.IOException;
 import java.io.Serializable;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -42,19 +41,19 @@ class YamlUtilsTest {
 
 	@Test
 	void test_getPropertyAndLoad() throws IOException {
-		assertThat(YamlUtils.getProperty("application.yml", "spring.application.name")).isEqualTo("laokou-common-core");
-		assertThat(YamlUtils.getProperty("application.yml", "spring.application.name2")).isEqualTo("");
-		assertThat(YamlUtils.getProperty("application.yml", "spring.application.name2", "default")).isEqualTo("default");
+		Assertions.assertThat(YamlUtils.getProperty("application.yml", "spring.application.name")).isEqualTo("laokou-common-core");
+		Assertions.assertThat(YamlUtils.getProperty("application.yml", "spring.application.name2")).isEqualTo("");
+		Assertions.assertThat(YamlUtils.getProperty("application.yml", "spring.application.name2", "default")).isEqualTo("default");
 		YamlTest yamlTest = YamlUtils.load("name: laokou", YamlTest.class);
-		assertThat(yamlTest.getName()).isEqualTo("laokou");
+		Assertions.assertThat(yamlTest.getName()).isEqualTo("laokou");
 		String str = YamlUtils.dumpAsMap(yamlTest).trim();
-		assertThat(str).isEqualTo("name: laokou");
+		Assertions.assertThat(str).isEqualTo("name: laokou");
 		YamlTest yamlTest2 = YamlUtils.load(str, YamlTest.class);
-		assertThat(yamlTest2.getName()).isEqualTo("laokou");
-		assertThat(yamlTest2).isEqualTo(yamlTest);
+		Assertions.assertThat(yamlTest2.getName()).isEqualTo("laokou");
+		Assertions.assertThat(yamlTest2).isEqualTo(yamlTest);
 		YamlTest yamlTest1 = YamlUtils.load(ResourceUtils.getResource("test.yaml").getInputStream(), YamlTest.class);
-		assertThat(yamlTest1.getName()).isEqualTo("laokou");
-		assertThat(yamlTest1).isEqualTo(yamlTest);
+		Assertions.assertThat(yamlTest1.getName()).isEqualTo("laokou");
+		Assertions.assertThat(yamlTest1).isEqualTo(yamlTest);
 	}
 
 	@Data

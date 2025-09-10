@@ -21,13 +21,12 @@ import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.ParamException;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.web.util.HtmlUtils;
 
 import java.util.regex.Pattern;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -48,7 +47,7 @@ public class XssUtils extends HtmlUtils {
 	public static String clearHtml(String str) {
 		if (StringUtils.isNotEmpty(str)) {
 			for (Pattern pattern : SCRIPT_PATTERNS) {
-				str = pattern.matcher(str).replaceAll(EMPTY);
+				str = pattern.matcher(str).replaceAll(StringConstants.EMPTY);
 			}
 			str = clearHtml(str, getSafelist());
 		}

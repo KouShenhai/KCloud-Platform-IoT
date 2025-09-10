@@ -18,10 +18,10 @@
 package org.laokou.common.mybatisplus;
 
 import net.sf.jsqlparser.statement.select.PlainSelect;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.mybatisplus.util.SqlUtils;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -32,9 +32,9 @@ class SqlUtilsTest {
 	void test_plainSelect() {
 		String sql = "select * from t_user \nwhere id = 1";
 		PlainSelect plainSelect = SqlUtils.plainSelect(sql);
-		assertThat(plainSelect.getFromItem().toString()).isEqualTo("t_user");
-		assertThat(plainSelect.getWhere().toString()).isEqualTo("id = 1");
-		assertThat(SqlUtils.formatSql(sql)).isEqualTo("SELECT * FROM t_user WHERE id = 1");
+		Assertions.assertThat(plainSelect.getFromItem().toString()).isEqualTo("t_user");
+		Assertions.assertThat(plainSelect.getWhere().toString()).isEqualTo("id = 1");
+		Assertions.assertThat(SqlUtils.formatSql(sql)).isEqualTo("SELECT * FROM t_user WHERE id = 1");
 	}
 
 }

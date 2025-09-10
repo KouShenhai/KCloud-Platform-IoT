@@ -18,13 +18,13 @@
 package org.laokou.common.core;
 
 import lombok.RequiredArgsConstructor;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.SpringUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -39,8 +39,8 @@ class SpringUtilsTest {
 
 	@Test
 	void test_getServiceId() {
-		assertThat(springUtils).isNotNull();
-		assertThat(springUtils.getServiceId()).isNotBlank().isEqualTo("laokou-common-core");
+		Assertions.assertThat(springUtils).isNotNull();
+		Assertions.assertThat(springUtils.getServiceId()).isNotBlank().isEqualTo("laokou-common-core");
 	}
 
 }

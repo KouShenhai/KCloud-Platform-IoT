@@ -20,6 +20,7 @@ package org.laokou.common.nacos;
 import com.alibaba.nacos.api.PropertyKeyConst;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.exception.NacosException;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +32,6 @@ import org.springframework.util.DigestUtils;
 
 import java.time.Duration;
 import java.util.Properties;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -60,44 +60,44 @@ class ConfigUtilsTest {
 		properties.setProperty(PropertyKeyConst.SERVER_ADDR, nacos.getServerAddr());
 		properties.setProperty(PropertyKeyConst.NAMESPACE, "public");
 		configService = ConfigUtils.createConfigService(properties);
-		assertThat(configService.getServerStatus()).isEqualTo("UP");
+		Assertions.assertThat(configService.getServerStatus()).isEqualTo("UP");
 		configService = ConfigUtils.createConfigService(nacos.getServerAddr());
-		assertThat(configService.getServerStatus()).isEqualTo("UP");
+		Assertions.assertThat(configService.getServerStatus()).isEqualTo("UP");
 	}
 
 	@Test
 	void test_config() throws NacosException, InterruptedException {
-		assertThat(configService.publishConfig("test.yaml", "DEFAULT", "test: 123")).isTrue();
+		Assertions.assertThat(configService.publishConfig("test.yaml", "DEFAULT", "test: 123")).isTrue();
 		Thread.sleep(Duration.ofSeconds(1));
-		assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 123");
+		Assertions.assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 123");
 
-		assertThat(configService.publishConfig("test.yaml", "DEFAULT", "test: 456", "yaml")).isTrue();
+		Assertions.assertThat(configService.publishConfig("test.yaml", "DEFAULT", "test: 456", "yaml")).isTrue();
 		Thread.sleep(Duration.ofSeconds(1));
-		assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 456");
+		Assertions.assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 456");
 
-		assertThat(configService.publishConfig("test.yaml", "DEFAULT", "test: 123")).isTrue();
+		Assertions.assertThat(configService.publishConfig("test.yaml", "DEFAULT", "test: 123")).isTrue();
 		Thread.sleep(Duration.ofSeconds(1));
-		assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 123");
+		Assertions.assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 123");
 
 		String md5 = DigestUtils.md5DigestAsHex("test: 123".getBytes());
-		assertThat(md5).isEqualTo("5e76b5e94b54e1372f8b452ef64dc55c");
-		assertThat(configService.publishConfigCas("test.yaml", "DEFAULT", "test: 456", md5)).isTrue();
+		Assertions.assertThat(md5).isEqualTo("5e76b5e94b54e1372f8b452ef64dc55c");
+		Assertions.assertThat(configService.publishConfigCas("test.yaml", "DEFAULT", "test: 456", md5)).isTrue();
 		Thread.sleep(Duration.ofSeconds(1));
-		assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 456");
+		Assertions.assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 456");
 
 		md5 = DigestUtils.md5DigestAsHex("test: 456".getBytes());
-		assertThat(md5).isEqualTo("76e2eabbf24a8c90dc3b4372c20a72cf");
-		assertThat(configService.publishConfigCas("test.yaml", "DEFAULT", "test: 789", md5, "yaml")).isTrue();
+		Assertions.assertThat(md5).isEqualTo("76e2eabbf24a8c90dc3b4372c20a72cf");
+		Assertions.assertThat(configService.publishConfigCas("test.yaml", "DEFAULT", "test: 789", md5, "yaml")).isTrue();
 		Thread.sleep(Duration.ofSeconds(1));
-		assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 789");
+		Assertions.assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 789");
 
-		assertThat(configService.publishConfig("test1.yaml", "DEFAULT", "test: 123")).isTrue();
+		Assertions.assertThat(configService.publishConfig("test1.yaml", "DEFAULT", "test: 123")).isTrue();
 		Thread.sleep(Duration.ofSeconds(1));
-		assertThat( configService.getConfig("test1.yaml", "DEFAULT", 5000)).isEqualTo("test: 123");
+		Assertions.assertThat( configService.getConfig("test1.yaml", "DEFAULT", 5000)).isEqualTo("test: 123");
 
-		assertThat(configService.removeConfig("test1.yaml", "DEFAULT")).isTrue();
+		Assertions.assertThat(configService.removeConfig("test1.yaml", "DEFAULT")).isTrue();
 		Thread.sleep(Duration.ofSeconds(1));
-		assertThat(configService.getConfig("test1.yaml", "DEFAULT", 5000)).isNull();
+		Assertions.assertThat(configService.getConfig("test1.yaml", "DEFAULT", 5000)).isNull();
 	}
 
 }

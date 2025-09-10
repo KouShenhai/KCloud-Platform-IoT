@@ -16,8 +16,8 @@
  */
 
 package org.laokou.common.core;
+import org.assertj.core.api.Assertions;
 import org.springframework.context.event.EventListener;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -26,12 +26,12 @@ class TestEventListener {
 
 	@EventListener
 	public void onLogoutEvent(SpringEventBusTest.LogoutEvent event) {
-		assertThat(event.getUsername()).isEqualTo("laokou");
+		Assertions.assertThat(event.getUsername()).isEqualTo("laokou");
 	}
 
 	@EventListener
 	public void onLoginEvent(SpringContextUtilsTest.LoginEvent event) {
-		assertThat(event.getUsername()).isEqualTo("laokou");
+		Assertions.assertThat(event.getUsername()).isEqualTo("laokou");
 	}
 
 }

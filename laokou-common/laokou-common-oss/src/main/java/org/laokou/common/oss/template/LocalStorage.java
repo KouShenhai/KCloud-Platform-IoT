@@ -18,14 +18,13 @@
 package org.laokou.common.oss.template;
 
 import org.laokou.common.core.util.FileUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.Local;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.SLASH;
 
 /**
  * @author laokou
@@ -55,7 +54,7 @@ public final class LocalStorage extends AbstractStorage<Path> {
 
 	@Override
 	protected String getUrl(Path path) {
-		return local.getDomain() + this.local.getDirectory() + SLASH + fileInfo.name();
+		return local.getDomain() + this.local.getDirectory() + StringConstants.SLASH + fileInfo.name();
 	}
 
 }

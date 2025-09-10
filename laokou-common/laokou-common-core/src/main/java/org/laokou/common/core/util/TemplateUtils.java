@@ -26,8 +26,6 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import java.io.IOException;
 import java.util.Map;
 
-import static freemarker.template.Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS;
-
 /**
  * 模板工具类.
  *
@@ -39,7 +37,7 @@ public final class TemplateUtils extends FreeMarkerTemplateUtils {
 	/**
 	 * 模板配置.
 	 */
-	private static final Configuration CONFIGURATION = new Configuration(DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
+	private static final Configuration CONFIGURATION = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
 
 	private TemplateUtils() {
 	}

@@ -17,11 +17,9 @@
 
 package org.laokou.common.core;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.laokou.common.core.util.RandomIdGenerator.generateBase64RandomId;
-import static org.laokou.common.core.util.RandomIdGenerator.generateRandomId;
+import org.laokou.common.core.util.RandomIdGenerator;
 
 /**
  * @author laokou
@@ -30,10 +28,10 @@ class RandomIdGeneratorTest {
 
 	@Test
 	void test_generateRandomId() {
-		assertThat(generateRandomId()).isNotBlank();
-		assertThat(generateRandomId(16)).isNotBlank();
-		assertThat(generateBase64RandomId()).isNotBlank();
-		assertThat(generateBase64RandomId(16)).isNotBlank();
+		Assertions.assertThat(RandomIdGenerator.generateRandomId()).isNotBlank();
+		Assertions.assertThat(RandomIdGenerator.generateRandomId(16)).isNotBlank();
+		Assertions.assertThat(RandomIdGenerator.generateBase64RandomId()).isNotBlank();
+		Assertions.assertThat(RandomIdGenerator.generateBase64RandomId(16)).isNotBlank();
 	}
 
 }

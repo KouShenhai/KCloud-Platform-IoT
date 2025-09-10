@@ -31,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.excel.validator.ExcelValidator;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -54,8 +55,6 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.function.BiConsumer;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.DROP;
 
 /**
  * Excel工具类.
@@ -230,7 +229,7 @@ public final class ExcelUtils {
 				validates = ValidatorUtils.validate(excel, groups);
 			}
 			if (CollectionUtils.isNotEmpty(validates)) {
-				ERRORS.add(getTemplate(currentRowNum, StringUtils.collectionToDelimitedString(validates, DROP)));
+				ERRORS.add(getTemplate(currentRowNum, StringUtils.collectionToDelimitedString(validates, StringConstants.DROP)));
 			}
 			else {
 				CACHED_DATA_LIST.add(convertor.toDataObject(excel));

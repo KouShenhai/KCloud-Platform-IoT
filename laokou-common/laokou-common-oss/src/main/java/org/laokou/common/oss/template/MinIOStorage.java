@@ -17,8 +17,16 @@
 
 package org.laokou.common.oss.template;
 
-import io.minio.*;
-import io.minio.errors.*;
+import io.minio.BucketExistsArgs;
+import io.minio.GetPresignedObjectUrlArgs;
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
+import io.minio.errors.ErrorResponseException;
+import io.minio.errors.InsufficientDataException;
+import io.minio.errors.InternalException;
+import io.minio.errors.InvalidResponseException;
+import io.minio.errors.ServerException;
+import io.minio.errors.XmlParserException;
 import io.minio.http.Method;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.oss.model.BaseOss;
@@ -53,8 +61,8 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 
 	@Override
 	protected void checkBucket(MinioClient minioClient) throws ServerException, InsufficientDataException,
-			ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException,
-			InvalidResponseException, XmlParserException, InternalException {
+		ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException,
+		InvalidResponseException, XmlParserException, InternalException {
 		String bucketName = this.minIO.getBucketName();
 		boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
 		if (!isExist) {

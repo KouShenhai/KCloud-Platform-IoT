@@ -17,10 +17,10 @@
 
 package org.laokou.common.core;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.SystemUtils;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -29,7 +29,7 @@ class SystemUtilsTest {
 
 	@Test
 	void test_windows() {
-		assertThat(SystemUtils.isWindows()).isTrue();
+		Assertions.assertThat(SystemUtils.isWindows()).isTrue();
 	}
 
 }

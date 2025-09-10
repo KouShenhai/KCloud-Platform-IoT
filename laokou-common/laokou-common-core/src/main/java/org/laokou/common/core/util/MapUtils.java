@@ -19,6 +19,7 @@ package org.laokou.common.core.util;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.util.LinkedMultiValueMap;
@@ -33,8 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.*;
 
 /**
  * map工具类.
@@ -98,7 +97,7 @@ public final class MapUtils {
 	 * @return Map对象
 	 */
 	public static Map<String, Set<String>> toUriMap(Map<String, Set<String>> uriMap, String serviceId) {
-		return toUriMap(uriMap, serviceId, EQUAL);
+		return toUriMap(uriMap, serviceId, StringConstants.EQUAL);
 	}
 
 	// @formatter:off
@@ -113,7 +112,7 @@ public final class MapUtils {
 			String[] strings = params.split(separator);
 			MultiValueMap<String, String> parameterMap = new LinkedMultiValueMap<>(strings.length * 2);
 			for (String string : strings) {
-				int index = string.indexOf(EQUAL);
+				int index = string.indexOf(StringConstants.EQUAL);
 				if (index > -1) {
 					String key = string.substring(0, index);
 					String value = UriEncoder.decode(string.substring(index + 1));
@@ -134,7 +133,7 @@ public final class MapUtils {
 	 */
 	public static String parseParamterString(Map<String, String> paramMap, boolean isEncode) {
 		if (paramMap.isEmpty()) {
-			return EMPTY;
+			return StringConstants.EMPTY;
 		}
 		Iterator<Map.Entry<String, String>> iterator = paramMap.entrySet().iterator();
 		StringBuilder stringBuilder = new StringBuilder();
@@ -143,9 +142,9 @@ public final class MapUtils {
 			String key = entry.getKey();
 			String value = entry.getValue();
 			stringBuilder.append(key)
-				.append(EQUAL)
+				.append(StringConstants.EQUAL)
 				.append(isEncode ? URLEncoder.encode(value, StandardCharsets.UTF_8) : value)
-				.append(AND);
+				.append(StringConstants.AND);
 		}
 		String str = stringBuilder.toString();
 		return str.substring(0, str.length() - 1);

@@ -63,14 +63,10 @@
     </module>
 
     <!-- 禁止使用System.out.println https://checkstyle.sourceforge.io/checks/regexp/regexp.html -->
-    <module name="Regexp">
-      <property name="format" value="System\.out\.println"/>
-      <property name="illegalPattern" value="true"/>
-    </module>
-
     <!-- 禁止使用System.out.print https://checkstyle.sourceforge.io/checks/regexp/regexp.html -->
     <module name="Regexp">
       <property name="format" value="System\.out\.print"/>
+      <property name="format" value="System\.out\.println"/>
       <property name="illegalPattern" value="true"/>
     </module>
 
@@ -80,6 +76,12 @@
       <property name="illegalClasses" value="org.springframework.beans.factory.annotation.Autowired"/>
       <property name="illegalClasses" value="org.junit.jupiter.api.Assertions.*"/>
     </module>
+
+    <!-- 禁止静态导入 https://checkstyle.sourceforge.io/checks/imports/avoidstaticimport.html -->
+    <module name="AvoidStaticImport"/>
+
+    <!-- 禁止导入* https://checkstyle.sourceforge.io/checks/imports/avoidstarimport.html -->
+    <module name="AvoidStarImport"/>
 
   </module>
 

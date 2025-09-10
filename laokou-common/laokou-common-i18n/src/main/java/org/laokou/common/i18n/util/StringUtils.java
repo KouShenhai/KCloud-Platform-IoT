@@ -17,11 +17,10 @@
 
 package org.laokou.common.i18n.util;
 
+import org.laokou.common.i18n.common.constant.StringConstants;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.constant.StringConstants.PERCENT;
 
 /**
  * 字符串工具类.
@@ -52,14 +51,14 @@ public final class StringUtils extends org.springframework.util.StringUtils {
 
 	public static String empty(String str) {
 		if (isEmpty(str)) {
-			return EMPTY;
+			return StringConstants.EMPTY;
 		}
 		return str;
 	}
 
 	public static String like(String str) {
 		if (isNotEmpty(str)) {
-			return PERCENT.concat(str.concat(PERCENT));
+			return StringConstants.PERCENT.concat(str.concat(StringConstants.PERCENT));
 		}
 		return str;
 	}

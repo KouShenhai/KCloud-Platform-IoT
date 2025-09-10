@@ -17,11 +17,9 @@
 
 package org.laokou.common.trace;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.trace.util.MDCUtils;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
  * @author laokou
@@ -31,11 +29,11 @@ class MDCUtilsTest {
 	@Test
 	void test_mdc() {
 		MDCUtils.put("111", "222");
-		assertThat(MDCUtils.getTraceId()).isEqualTo("111");
-		assertThat(MDCUtils.getSpanId()).isEqualTo("222");
-		assertThatNoException().isThrownBy(MDCUtils::clear);
-		assertThat(MDCUtils.getTraceId()).isBlank();
-		assertThat(MDCUtils.getSpanId()).isBlank();
+		Assertions.assertThat(MDCUtils.getTraceId()).isEqualTo("111");
+		Assertions.assertThat(MDCUtils.getSpanId()).isEqualTo("222");
+		Assertions.assertThatNoException().isThrownBy(MDCUtils::clear);
+		Assertions.assertThat(MDCUtils.getTraceId()).isBlank();
+		Assertions.assertThat(MDCUtils.getSpanId()).isBlank();
 	}
 
 }

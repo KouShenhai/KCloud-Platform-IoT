@@ -22,10 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import java.time.Instant;
-
-import static org.laokou.common.mybatisplus.mapper.BaseDO.*;
 
 /**
  * @author laokou
@@ -36,19 +35,19 @@ public class DataObjectHandler implements MetaObjectHandler {
 
 	@Override
 	public void insertFill(MetaObject metaObject) {
-		this.strictInsertFill(metaObject, CREATOR, UserUtils::getUserId, Long.class);
-		this.strictInsertFill(metaObject, EDITOR, UserUtils::getUserId, Long.class);
-		this.strictInsertFill(metaObject, CREATE_TIME, DateUtils::nowInstant, Instant.class);
-		this.strictInsertFill(metaObject, UPDATE_TIME, DateUtils::nowInstant, Instant.class);
-		this.strictInsertFill(metaObject, DEL_FLAG, () -> 0, Integer.class);
-		this.strictInsertFill(metaObject, VERSION, () -> 0, Integer.class);
-		this.strictInsertFill(metaObject, TENANT_ID, UserUtils::getTenantId, Long.class);
+		this.strictInsertFill(metaObject, BaseDO.CREATOR, UserUtils::getUserId, Long.class);
+		this.strictInsertFill(metaObject, BaseDO.EDITOR, UserUtils::getUserId, Long.class);
+		this.strictInsertFill(metaObject, BaseDO.CREATE_TIME, DateUtils::nowInstant, Instant.class);
+		this.strictInsertFill(metaObject, BaseDO.UPDATE_TIME, DateUtils::nowInstant, Instant.class);
+		this.strictInsertFill(metaObject, BaseDO.DEL_FLAG, () -> 0, Integer.class);
+		this.strictInsertFill(metaObject, BaseDO.VERSION, () -> 0, Integer.class);
+		this.strictInsertFill(metaObject, BaseDO.TENANT_ID, UserUtils::getTenantId, Long.class);
 	}
 
 	@Override
 	public void updateFill(MetaObject metaObject) {
-		this.strictUpdateFill(metaObject, EDITOR, UserUtils::getUserId, Long.class);
-		this.strictUpdateFill(metaObject, UPDATE_TIME, DateUtils::nowInstant, Instant.class);
+		this.strictUpdateFill(metaObject, BaseDO.EDITOR, UserUtils::getUserId, Long.class);
+		this.strictUpdateFill(metaObject, BaseDO.UPDATE_TIME, DateUtils::nowInstant, Instant.class);
 	}
 
 }

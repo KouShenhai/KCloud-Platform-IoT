@@ -16,6 +16,7 @@
  */
 
 package org.laokou.common.core.util;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.io.ClassPathResource;
 import org.yaml.snakeyaml.DumperOptions;
@@ -32,8 +33,6 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
-
 /**
  * @author laokou
  */
@@ -43,7 +42,7 @@ public final class YamlUtils {
 	}
 
 	public static String getProperty(String path, String key) {
-		return getProperty(path, key, EMPTY);
+		return getProperty(path, key, StringConstants.EMPTY);
 	}
 
 	public static String getProperty(String path, String key, String defaultValue) {

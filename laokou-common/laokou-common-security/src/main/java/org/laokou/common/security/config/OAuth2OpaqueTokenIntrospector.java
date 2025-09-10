@@ -21,6 +21,7 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.laokou.common.context.util.UserDetails;
@@ -34,9 +35,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.util.Assert;
 import java.security.Principal;
-import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.ERROR_URL;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.getOAuth2AuthenticationException;
 
 /**
  * @author laokou
@@ -54,7 +52,7 @@ public class OAuth2OpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		// 低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
 		if (ObjectUtils.isNull(authorization)) {
-			throw OAuth2ExceptionHandler.getException(UNAUTHORIZED);
+			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 		}
 		OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken = authorization.getRefreshToken();
 		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
@@ -71,7 +69,7 @@ public class OAuth2OpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		if (!refreshToken.isActive()) {
 			oAuth2AuthorizationService.remove(authorization);
 		}
-		throw OAuth2ExceptionHandler.getException(UNAUTHORIZED);
+		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 	}
 	// @formatter:on
 
@@ -86,7 +84,7 @@ public class OAuth2OpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 			return userDetails.getDecryptInfo();
 		}
 		catch (GlobalException e) {
-			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
+			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(e.getCode(), e.getMsg(), OAuth2ExceptionHandler.ERROR_URL);
 		}
 	}
 

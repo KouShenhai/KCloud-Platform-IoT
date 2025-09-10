@@ -17,11 +17,17 @@
 
 package org.laokou.common.core.util;
 
-import com.blueconic.browscap.*;
+import com.blueconic.browscap.BrowsCapField;
+import com.blueconic.browscap.Capabilities;
+import com.blueconic.browscap.ParseException;
+import com.blueconic.browscap.UserAgentParser;
+import com.blueconic.browscap.UserAgentService;
+import com.google.common.net.HttpHeaders;
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.util.Assert;
 import org.springframework.util.StreamUtils;
@@ -37,9 +43,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
-import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 /**
  * 请求工具类.
@@ -58,8 +61,8 @@ public final class RequestUtils {
 					BrowsCapField.RENDERING_ENGINE_NAME, BrowsCapField.PLATFORM_MAKER,
 					BrowsCapField.RENDERING_ENGINE_MAKER));
 		}
-		catch (IOException | ParseException e) {
-			throw new RuntimeException(e);
+		catch (IOException | ParseException ex) {
+			throw new RuntimeException(ex);
 		}
 	}
 
@@ -102,7 +105,7 @@ public final class RequestUtils {
 	 * @return 浏览器信息
 	 */
 	public static Capabilities getCapabilities(HttpServletRequest request) {
-		return PARSER.parse(request.getHeader(USER_AGENT));
+		return PARSER.parse(request.getHeader(HttpHeaders.USER_AGENT));
 	}
 
 	/**
@@ -116,7 +119,7 @@ public final class RequestUtils {
 		if (StringUtils.isEmpty(paramValue)) {
 			paramValue = request.getParameter(paramName);
 		}
-		return StringUtils.isEmpty(paramValue) ? EMPTY : paramValue.trim();
+		return StringUtils.isEmpty(paramValue) ? StringConstants.EMPTY : paramValue.trim();
 	}
 
 	/**

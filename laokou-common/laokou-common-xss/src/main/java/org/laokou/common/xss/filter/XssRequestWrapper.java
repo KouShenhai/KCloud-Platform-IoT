@@ -17,6 +17,7 @@
 
 package org.laokou.common.xss.filter;
 
+import com.google.common.net.HttpHeaders;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
@@ -25,13 +26,14 @@ import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.xss.util.XssUtils;
+import org.springframework.http.MediaType;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
-
-import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
-import static org.springframework.http.MediaType.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author laokou
@@ -117,8 +119,8 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 	}
 
 	private boolean checkJson() {
-		String header = super.getHeader(CONTENT_TYPE);
-		return StringUtils.startWith(header, APPLICATION_JSON_VALUE);
+		String header = super.getHeader(HttpHeaders.CONTENT_TYPE);
+		return StringUtils.startWith(header, MediaType.APPLICATION_JSON_VALUE);
 	}
 
 }

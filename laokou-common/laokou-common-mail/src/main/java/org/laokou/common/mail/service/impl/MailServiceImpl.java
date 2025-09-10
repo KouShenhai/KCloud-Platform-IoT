@@ -20,6 +20,7 @@ package org.laokou.common.mail.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.RandomStringUtils;
 import org.laokou.common.core.util.TemplateUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.mail.dto.MailResult;
 import org.laokou.common.mail.dto.SendStatus;
@@ -27,8 +28,6 @@ import org.laokou.common.sensitive.util.SensitiveUtils;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 
 import java.util.Map;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -56,7 +55,7 @@ public class MailServiceImpl extends AbstractMailServiceImpl {
 		try {
 			// 发送邮件
 			sendMail(subject, content, mail);
-			return new MailResult(name, SendStatus.OK.getCode(), EMPTY, paramString, captcha);
+			return new MailResult(name, SendStatus.OK.getCode(), StringConstants.EMPTY, paramString, captcha);
 		}
 		catch (Exception e) {
 			log.error("错误信息：{}", e.getMessage());

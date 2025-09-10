@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -29,7 +30,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 /**
  * 响应工具类.
@@ -47,7 +47,7 @@ public final class ResponseUtils {
 	 * @param obj 对象
 	 */
 	public static void responseOk(HttpServletResponse response, Object obj) throws IOException {
-		responseOk(response, JacksonUtils.toJsonStr(obj), APPLICATION_JSON_VALUE);
+		responseOk(response, JacksonUtils.toJsonStr(obj), MimeTypeUtils.APPLICATION_JSON_VALUE);
 	}
 
 	/**

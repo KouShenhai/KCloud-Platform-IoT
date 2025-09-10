@@ -19,10 +19,9 @@ package org.laokou.common.core.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.COMMA;
 
 /**
  * IP工具类.
@@ -75,7 +74,7 @@ public final class IpUtils {
 		if (conditionNull(ip)) {
 			ip = request.getRemoteAddr();
 		}
-		return ObjectUtils.equals(LOCAL_IPV6, ip) || StringUtils.isEmpty(ip) ? LOCAL_IPV4 : ip.split(COMMA)[0];
+		return ObjectUtils.equals(LOCAL_IPV6, ip) || StringUtils.isEmpty(ip) ? LOCAL_IPV4 : ip.split(StringConstants.COMMA)[0];
 	}
 
 	/**

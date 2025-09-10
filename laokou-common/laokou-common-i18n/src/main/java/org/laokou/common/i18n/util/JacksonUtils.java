@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -30,9 +31,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
-
-import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
-import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
 
 /**
  * Jackson工具类.
@@ -58,8 +56,8 @@ public final class JacksonUtils {
 	private static ObjectMapper getMapper() {
 		return new ObjectMapper()
 			// 没有的属性不报错
-			.configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
-			.configure(FAIL_ON_EMPTY_BEANS, false)
+			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+			.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
 			.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
 			.registerModule(new JavaTimeModule());
 	}

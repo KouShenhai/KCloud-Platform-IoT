@@ -19,11 +19,13 @@ package org.laokou.common.sms.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.common.net.HttpHeaders;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.HttpUtils;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.RandomStringUtils;
 import org.laokou.common.core.util.TemplateUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.sensitive.util.SensitiveUtils;
 import org.laokou.common.sms.config.SmsProperties;
@@ -32,9 +34,6 @@ import org.laokou.common.sms.entity.SmsResult;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 /**
  * @author laokou
@@ -89,7 +88,7 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		Map<String, Object> param = Map.of("captcha", captcha, "minute", 5);
 		String paramValue = TemplateUtils.getContent(PARAMS_TEMPLATE, param);
 		// 最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
-		Map<String, String> headers = Map.of(AUTHORIZATION, "APPCODE " + appcode);
+		Map<String, String> headers = Map.of(HttpHeaders.AUTHORIZATION, "APPCODE " + appcode);
 		// smsSignId（短信前缀）和templateId（短信模板），可登录国阳云控制台自助申请。参考文档：http://help.guoyangyun.com/Problem/Qm.html
 		Map<String, String> params = Map.of("mobile", mobile, "param", paramValue, "smsSignId", signId, "templateId",
 			templateId);
@@ -100,7 +99,7 @@ public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 		if (code != SendStatusEnum.OK.getCode()) {
 			return new SmsResult(name, SendStatusEnum.FAIL.getCode(), json, paramString, captcha);
 		}
-		return new SmsResult(name, SendStatusEnum.OK.getCode(), EMPTY, paramString, captcha);
+		return new SmsResult(name, SendStatusEnum.OK.getCode(), StringConstants.EMPTY, paramString, captcha);
 	}
 	// @formatter:on
 

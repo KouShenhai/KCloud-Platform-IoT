@@ -19,9 +19,12 @@ package org.laokou.common.lock.annotation;
 
 import org.laokou.common.lock.Type;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import static org.laokou.common.lock.Type.LOCK;
 
 /**
  * 分布式式锁注解.
@@ -51,7 +54,7 @@ public @interface Lock4j {
 	/**
 	 * 分布式锁类型.
 	 */
-	Type type() default LOCK;
+	Type type() default Type.LOCK;
 
 	/**
 	 * 重试次数，默认3次.

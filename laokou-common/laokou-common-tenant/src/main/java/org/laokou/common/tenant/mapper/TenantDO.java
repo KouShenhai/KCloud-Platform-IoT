@@ -20,8 +20,7 @@ package org.laokou.common.tenant.mapper;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
-
-import static org.laokou.common.tenant.constant.DSConstants.Master.TENANT_TABLE;
+import org.laokou.common.tenant.constant.DSConstants;
 
 /**
  * 租户数据对象.
@@ -29,7 +28,7 @@ import static org.laokou.common.tenant.constant.DSConstants.Master.TENANT_TABLE;
  * @author laokou
  */
 @Data
-@TableName(TENANT_TABLE)
+@TableName(DSConstants.Master.TENANT_TABLE)
 public class TenantDO extends BaseDO {
 
 	/**

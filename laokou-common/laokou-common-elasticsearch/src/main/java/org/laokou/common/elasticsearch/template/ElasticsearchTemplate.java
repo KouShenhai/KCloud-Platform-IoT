@@ -31,13 +31,29 @@ import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.bulk.BulkOperation;
 import co.elastic.clients.elasticsearch.core.search.HighlightField;
 import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
-import co.elastic.clients.elasticsearch.indices.*;
+import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
+import co.elastic.clients.elasticsearch.indices.CreateIndexResponse;
+import co.elastic.clients.elasticsearch.indices.DeleteIndexRequest;
+import co.elastic.clients.elasticsearch.indices.DeleteIndexResponse;
+import co.elastic.clients.elasticsearch.indices.ExistsRequest;
+import co.elastic.clients.elasticsearch.indices.GetIndexRequest;
+import co.elastic.clients.elasticsearch.indices.IndexSettings;
+import co.elastic.clients.elasticsearch.indices.IndexSettingsAnalysis;
+import co.elastic.clients.elasticsearch.indices.IndexState;
 import co.elastic.clients.transport.endpoints.BooleanResponse;
 import co.elastic.clients.util.NamedValue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.elasticsearch.annotation.Analysis;
+import org.laokou.common.elasticsearch.annotation.Analyzer;
+import org.laokou.common.elasticsearch.annotation.Args;
+import org.laokou.common.elasticsearch.annotation.Document;
+import org.laokou.common.elasticsearch.annotation.Filter;
+import org.laokou.common.elasticsearch.annotation.Index;
+import org.laokou.common.elasticsearch.annotation.Setting;
+import org.laokou.common.elasticsearch.annotation.Type;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.JacksonUtils;
-import org.laokou.common.elasticsearch.annotation.*;
 import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -54,8 +70,6 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.DROP;
 
 /**
  * @author laokou
@@ -113,16 +127,16 @@ public class ElasticsearchTemplate {
 
 	public void deleteIndex(List<String> names) throws IOException {
 		if (!exist(names)) {
-			log.info("索引：{} -> 删除索引失败，索引不存在", StringUtils.collectionToDelimitedString(names, DROP));
+			log.info("索引：{} -> 删除索引失败，索引不存在", StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
 			return;
 		}
 		DeleteIndexResponse deleteIndexResponse = elasticsearchClient.indices().delete(getDeleteIndexRequest(names));
 		boolean acknowledged = deleteIndexResponse.acknowledged();
 		if (acknowledged) {
-			log.info("索引：{} -> 删除索引成功", StringUtils.collectionToDelimitedString(names, DROP));
+			log.info("索引：{} -> 删除索引成功", StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
 		}
 		else {
-			log.info("索引：{} -> 删除索引失败", StringUtils.collectionToDelimitedString(names, DROP));
+			log.info("索引：{} -> 删除索引失败", StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
 		}
 	}
 
@@ -217,7 +231,7 @@ public class ElasticsearchTemplate {
 		try {
 			return elasticsearchClient.indices().exists(getExists(names)).value();
 		} catch (Exception e) {
-			log.error("索引：{} -> 查看索引是否存在失败，错误信息：{}", StringUtils.collectionToDelimitedString(names, DROP),
+			log.error("索引：{} -> 查看索引是否存在失败，错误信息：{}", StringUtils.collectionToDelimitedString(names, StringConstants.DROP),
 				e.getMessage());
 			return false;
 		}

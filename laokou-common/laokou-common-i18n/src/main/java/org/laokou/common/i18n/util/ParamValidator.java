@@ -17,14 +17,12 @@
 
 package org.laokou.common.i18n.util;
 
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.ParamException;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.DROP;
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -35,7 +33,7 @@ public final class ParamValidator {
 	}
 
 	public static void validate(Validate... validates) {
-		String validateString = StringUtils.collectionToDelimitedString(validates(validates), DROP);
+		String validateString = StringUtils.collectionToDelimitedString(validates(validates), StringConstants.DROP);
 		if (StringUtils.isNotEmpty(validateString)) {
 			throw new ParamException("P_System_ValidateFailed", validateString);
 		}
@@ -61,7 +59,7 @@ public final class ParamValidator {
 		private final String value;
 
 		public Validate() {
-			this(EMPTY);
+			this(StringConstants.EMPTY);
 		}
 
 		public Validate(String value) {

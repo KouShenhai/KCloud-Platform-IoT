@@ -23,14 +23,15 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
-import io.swagger.v3.oas.models.security.*;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpHeaders;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 /**
  * @author laokou
@@ -49,9 +50,9 @@ public class OpenApiDocAutoConfig {
 				.contact(new Contact().name("laokou").url("https://github.com/KouShenhai").email("2413176044@qq.com"))
 				.license(new License().name("Apache 2.0").url("https://www.apache.org/licenses/LICENSE-2.0.html")))
 			.externalDocs(new ExternalDocumentation().description("老寇IoT云平台").url("https://github.com/KouShenhai"))
-			.addSecurityItem(new SecurityRequirement().addList(AUTHORIZATION))
-			.components(new Components().addSecuritySchemes(AUTHORIZATION,
-					new SecurityScheme().name(AUTHORIZATION)
+			.addSecurityItem(new SecurityRequirement().addList(HttpHeaders.AUTHORIZATION))
+			.components(new Components().addSecuritySchemes(HttpHeaders.AUTHORIZATION,
+					new SecurityScheme().name(HttpHeaders.AUTHORIZATION)
 						.type(SecurityScheme.Type.OAUTH2)
 						// .flows(new OAuthFlows().authorizationCode(new OAuthFlow()
 						// .authorizationUrl(oAuth2ResourceServerProperties.getAuthorizationUrl())

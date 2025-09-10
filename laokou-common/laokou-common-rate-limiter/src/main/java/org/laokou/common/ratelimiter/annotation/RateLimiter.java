@@ -20,10 +20,11 @@ package org.laokou.common.ratelimiter.annotation;
 import org.laokou.common.ratelimiter.aop.Type;
 import org.redisson.api.RateType;
 
-import java.lang.annotation.*;
-
-import static org.laokou.common.ratelimiter.aop.Type.DEFAULT;
-import static org.redisson.api.RateType.OVERALL;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author laokou
@@ -56,11 +57,11 @@ public @interface RateLimiter {
 	/**
 	 * 类型.
 	 */
-	Type type() default DEFAULT;
+	Type type() default Type.DEFAULT;
 
 	/**
 	 * 样式 OVERALL -> 所有实例共享 PER_CLIENT -> 单个实例共享.
 	 */
-	RateType mode() default OVERALL;
+	RateType mode() default RateType.OVERALL;
 
 }

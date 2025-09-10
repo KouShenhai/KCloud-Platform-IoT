@@ -17,12 +17,11 @@
 
 package org.laokou.common.i18n.util;
 
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Arrays;
 import java.util.Locale;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.*;
 
 /**
  * 国际化语言工具类.
@@ -39,7 +38,7 @@ public final class LocaleUtils {
 			if (StringUtils.isEmpty(language)) {
 				return LocaleContextHolder.getLocale();
 			}
-			String[] str = getLanguage(language).split(ROD);
+			String[] str = getLanguage(language).split(StringConstants.ROD);
 			// 语言 国家
 			return Locale.of(str[0], str[1]);
 		}
@@ -49,7 +48,7 @@ public final class LocaleUtils {
 	}
 
 	private static String getLanguage(String language) {
-		return Arrays.stream(language.split(COMMA)).filter(i -> i.contains(ROD)).findFirst().orElse(EMPTY);
+		return Arrays.stream(language.split(StringConstants.COMMA)).filter(i -> i.contains(StringConstants.ROD)).findFirst().orElse(StringConstants.EMPTY);
 	}
 
 }

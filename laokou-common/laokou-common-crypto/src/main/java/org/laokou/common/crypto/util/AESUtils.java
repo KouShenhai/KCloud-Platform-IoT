@@ -17,6 +17,7 @@
 
 package org.laokou.common.crypto.util;
 
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ResourceUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.util.Assert;
@@ -28,8 +29,6 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * AES加密工具类.
@@ -84,7 +83,7 @@ public final class AESUtils {
 
 	public static String encrypt(String plainText, SecretKey key, byte[] iv) throws Exception {
 		if (StringUtils.isEmpty(plainText)) {
-			return EMPTY;
+			return StringConstants.EMPTY;
 		}
 		Cipher cipher = Cipher.getInstance(AES_GCM_NO_PADDING);
 		GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
@@ -102,7 +101,7 @@ public final class AESUtils {
 
 	public static String decrypt(String encryptedText, SecretKey key, byte[] iv) throws Exception {
 		if (StringUtils.isEmpty(encryptedText)) {
-			return EMPTY;
+			return StringConstants.EMPTY;
 		}
 		byte[] decoded = Base64.getDecoder().decode(encryptedText);
 		Cipher cipher = Cipher.getInstance(AES_GCM_NO_PADDING);

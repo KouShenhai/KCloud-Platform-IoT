@@ -20,16 +20,15 @@ package org.laokou.common.log.mapper;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.tenant.constant.DSConstants;
 
 import java.time.Instant;
-
-import static org.laokou.common.tenant.constant.DSConstants.Domain.OPERATE_LOG_TABLE;
 
 /**
  * @author laokou
  */
 @Data
-@TableName(OPERATE_LOG_TABLE)
+@TableName(DSConstants.Domain.OPERATE_LOG_TABLE)
 public class OperateLogDO extends BaseDO {
 
 	/**

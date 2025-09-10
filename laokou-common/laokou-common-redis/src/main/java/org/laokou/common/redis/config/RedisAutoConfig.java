@@ -27,8 +27,6 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import static org.laokou.common.redis.config.ForyRedisSerializer.foryRedisSerializer;
-import static org.laokou.common.redis.config.ForyRedisSerializer.getStringRedisSerializer;
 
 /**
  * Redis配置.
@@ -50,9 +48,9 @@ public class RedisAutoConfig {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(lettuceConnectionFactory);
 		// fory序列化
-		ForyRedisSerializer foryRedisSerializer = foryRedisSerializer();
+		ForyRedisSerializer foryRedisSerializer = ForyRedisSerializer.foryRedisSerializer();
 		// string序列化
-		StringRedisSerializer stringRedisSerializer = getStringRedisSerializer();
+		StringRedisSerializer stringRedisSerializer = ForyRedisSerializer.getStringRedisSerializer();
 		// key
 		redisTemplate.setKeySerializer(stringRedisSerializer);
 		// value

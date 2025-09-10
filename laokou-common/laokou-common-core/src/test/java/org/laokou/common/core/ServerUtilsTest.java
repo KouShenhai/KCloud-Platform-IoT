@@ -16,11 +16,11 @@
  */
 
 package org.laokou.common.core;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ServerUtils;
 import java.net.UnknownHostException;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -30,8 +30,8 @@ class ServerUtilsTest {
 	@Test
 	void test_getServerInfo() throws UnknownHostException {
 		ServerUtils.Server serverInfo = ServerUtils.getServerInfo();
-		assertThat(serverInfo.getSys().getOsName()).isEqualTo("Windows 11");
-		assertThat(serverInfo.getSys().getOsArch()).isEqualTo("amd64");
+		Assertions.assertThat(serverInfo.getSys().getOsName()).isEqualTo("Windows 11");
+		Assertions.assertThat(serverInfo.getSys().getOsArch()).isEqualTo("amd64");
 	}
 
 }

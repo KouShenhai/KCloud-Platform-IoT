@@ -17,6 +17,7 @@
 
 package org.laokou.common.core.util;
 
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ResourceUtils;
 import org.lionsoul.ip2region.xdb.Searcher;
@@ -24,8 +25,6 @@ import org.lionsoul.ip2region.xdb.Searcher;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.*;
 
 /**
  * IP所属位置解析.
@@ -77,9 +76,9 @@ public final class AddressUtils {
 	 */
 	private static String addressFormat(String address) {
 		StringBuilder stringBuilder = new StringBuilder(address.length());
-		String[] info = address.split(BACKSLASH + ERECT);
+		String[] info = address.split(StringConstants.BACKSLASH + StringConstants.ERECT);
 		Arrays.stream(info)
-			.forEach(str -> stringBuilder.append(ObjectUtils.equals(EMPTY_ADDR, str) ? EMPTY : str + SPACE));
+			.forEach(str -> stringBuilder.append(ObjectUtils.equals(EMPTY_ADDR, str) ? StringConstants.EMPTY : str + StringConstants.SPACE));
 		return stringBuilder.toString().trim();
 	}
 

@@ -17,11 +17,11 @@
 
 package org.laokou.common.sensitive;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.sensitive.util.SensitiveUtils;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * @author laokou
@@ -30,28 +30,28 @@ class SensitiveUtilsTest {
 
 	@Test
 	void test_mobile() {
-		assertThat(SensitiveUtils.formatMobile("18888888888")).isEqualTo("188****8888");
-		assertThat(SensitiveUtils.formatMobile(EMPTY)).isEqualTo(EMPTY);
-		assertThat(SensitiveUtils.formatMobile(null)).isEqualTo(EMPTY);
+		Assertions.assertThat(SensitiveUtils.formatMobile("18888888888")).isEqualTo("188****8888");
+		Assertions.assertThat(SensitiveUtils.formatMobile(StringConstants.EMPTY)).isEqualTo(StringConstants.EMPTY);
+		Assertions.assertThat(SensitiveUtils.formatMobile(null)).isEqualTo(StringConstants.EMPTY);
 	}
 
 	@Test
 	void test_str() {
-		assertThat(SensitiveUtils.formatStr(null, "", 3, 7)).isEqualTo(EMPTY);
-		assertThat(SensitiveUtils.formatStr("", "", 3, 7)).isEqualTo(EMPTY);
-		assertThat(SensitiveUtils.formatStr("1234567890", null, 3, 7)).isEqualTo("123890");
-		assertThat(SensitiveUtils.formatStr("1234567890", EMPTY, 3, 7)).isEqualTo("123890");
-		assertThat(SensitiveUtils.formatStr("1234567890", EMPTY, -1, 7)).isEqualTo("890");
-		assertThat(SensitiveUtils.formatStr("1234567890", EMPTY, 11, 7)).isEqualTo("1234567");
-		assertThat(SensitiveUtils.formatStr("1234567890", EMPTY, 1, 12)).isEqualTo("1");
-		assertThat(SensitiveUtils.formatStr("1234567890", EMPTY, 1, -1)).isEqualTo("234567890");
+		Assertions.assertThat(SensitiveUtils.formatStr(null, "", 3, 7)).isEqualTo(StringConstants.EMPTY);
+		Assertions.assertThat(SensitiveUtils.formatStr("", "", 3, 7)).isEqualTo(StringConstants.EMPTY);
+		Assertions.assertThat(SensitiveUtils.formatStr("1234567890", null, 3, 7)).isEqualTo("123890");
+		Assertions.assertThat(SensitiveUtils.formatStr("1234567890", StringConstants.EMPTY, 3, 7)).isEqualTo("123890");
+		Assertions.assertThat(SensitiveUtils.formatStr("1234567890", StringConstants.EMPTY, -1, 7)).isEqualTo("890");
+		Assertions.assertThat(SensitiveUtils.formatStr("1234567890", StringConstants.EMPTY, 11, 7)).isEqualTo("1234567");
+		Assertions.assertThat(SensitiveUtils.formatStr("1234567890", StringConstants.EMPTY, 1, 12)).isEqualTo("1");
+		Assertions.assertThat(SensitiveUtils.formatStr("1234567890", StringConstants.EMPTY, 1, -1)).isEqualTo("234567890");
 	}
 
 	@Test
 	void test_mail() {
-		assertThat(SensitiveUtils.formatMail("2413176044@qq.com")).isEqualTo("2****@qq.com");
-		assertThat(SensitiveUtils.formatMail(null)).isEqualTo(EMPTY);
-		assertThat(SensitiveUtils.formatMail(EMPTY)).isEqualTo(EMPTY);
+		Assertions.assertThat(SensitiveUtils.formatMail("2413176044@qq.com")).isEqualTo("2****@qq.com");
+		Assertions.assertThat(SensitiveUtils.formatMail(null)).isEqualTo(StringConstants.EMPTY);
+		Assertions.assertThat(SensitiveUtils.formatMail(StringConstants.EMPTY)).isEqualTo(StringConstants.EMPTY);
 	}
 
 }

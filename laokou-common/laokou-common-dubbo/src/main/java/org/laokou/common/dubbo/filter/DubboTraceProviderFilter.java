@@ -20,12 +20,15 @@ package org.laokou.common.dubbo.filter;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.common.utils.StringUtils;
-import org.apache.dubbo.rpc.*;
+import org.apache.dubbo.rpc.Filter;
+import org.apache.dubbo.rpc.Invocation;
+import org.apache.dubbo.rpc.Invoker;
+import org.apache.dubbo.rpc.Result;
+import org.apache.dubbo.rpc.RpcContext;
+import org.apache.dubbo.rpc.RpcContextAttachment;
+import org.apache.dubbo.rpc.RpcException;
 import org.laokou.common.trace.util.MDCUtils;
 import java.util.function.Supplier;
-
-import static org.laokou.common.trace.util.MDCUtils.SPAN_ID;
-import static org.laokou.common.trace.util.MDCUtils.TRACE_ID;
 
 /**
  * @author laokou
@@ -39,8 +42,8 @@ public class DubboTraceProviderFilter implements Filter {
 	}
 
 	private Result invoke(RpcContextAttachment rpcContextAttachment, Supplier<Result> supplier) {
-		String traceId = rpcContextAttachment.getAttachment(TRACE_ID);
-		String spanId = rpcContextAttachment.getAttachment(SPAN_ID);
+		String traceId = rpcContextAttachment.getAttachment(MDCUtils.TRACE_ID);
+		String spanId = rpcContextAttachment.getAttachment(MDCUtils.SPAN_ID);
 		if (StringUtils.isNotBlank(traceId) && StringUtils.isNotBlank(spanId)) {
 			try {
 				MDCUtils.put(traceId, spanId);

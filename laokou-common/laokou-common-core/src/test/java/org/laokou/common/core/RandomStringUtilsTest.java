@@ -17,10 +17,10 @@
 
 package org.laokou.common.core;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.RandomStringUtils;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -29,13 +29,13 @@ class RandomStringUtilsTest {
 
 	@Test
 	void test_randomNumeric() {
-		assertThat(RandomStringUtils.randomNumeric(6)).isNotBlank();
-		assertThat(RandomStringUtils.randomNumeric()).isNotBlank();
+		Assertions.assertThat(RandomStringUtils.randomNumeric(6)).isNotBlank();
+		Assertions.assertThat(RandomStringUtils.randomNumeric()).isNotBlank();
 		// 验证长度正确
-		assertThat(RandomStringUtils.randomNumeric().length()).isEqualTo(6);
-		assertThat(RandomStringUtils.randomNumeric(7).length()).isEqualTo(7);
+		Assertions.assertThat(RandomStringUtils.randomNumeric().length()).isEqualTo(6);
+		Assertions.assertThat(RandomStringUtils.randomNumeric(7).length()).isEqualTo(7);
 		// 验证字符串仅包含数字
-		assertThat(RandomStringUtils.randomNumeric().matches("\\d+")).isTrue();
+		Assertions.assertThat(RandomStringUtils.randomNumeric().matches("\\d+")).isTrue();
 	}
 
 }

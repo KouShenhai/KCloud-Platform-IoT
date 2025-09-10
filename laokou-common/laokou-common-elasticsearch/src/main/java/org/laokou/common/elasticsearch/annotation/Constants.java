@@ -17,13 +17,13 @@
 
 package org.laokou.common.elasticsearch.annotation;
 
-public final class Constant {
+public final class Constants {
 
 	public static final String PRE_TAGS = "<font color='red'>";
 
 	public static final String POST_TAGS = "</font>";
 
-	private Constant() {
+	private Constants() {
 	}
 
 }

@@ -29,16 +29,13 @@ import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.mybatisplus.util.SqlUtils;
 
 import java.util.Map;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.constant.StringConstants.SINGLE_QUOT;
-import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
 
 /**
  * @author laokou
@@ -51,7 +48,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
 			ResultHandler resultHandler, BoundSql boundSql) {
 		if (parameter instanceof Map<?, ?> map) {
 			try {
-				Object obj = map.get(PAGE_QUERY);
+				Object obj = map.get(PageQuery.PAGE_QUERY);
 				if (ObjectUtils.isNotNull(obj)) {
 					// 获取aop拼接的sql
 					PageQuery pageQuery = (PageQuery) obj;
@@ -70,7 +67,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
 						AndExpression andExpression = new AndExpression(expression, new StringValue(sqlFilter));
 						plainSelect.setWhere(andExpression);
 					}
-					String newSql = plainSelect.toString().replaceAll(SINGLE_QUOT, EMPTY);
+					String newSql = plainSelect.toString().replaceAll(StringConstants.SINGLE_QUOT, StringConstants.EMPTY);
 					// 新sql写入
 					PluginUtils.mpBoundSql(boundSql).sql(newSql);
 				}

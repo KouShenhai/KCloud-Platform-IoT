@@ -17,13 +17,12 @@
 
 package org.laokou.common.crypto;
 
+import org.assertj.core.api.Assertions;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 只针对 spring-boot 2.x.x.
@@ -40,7 +39,7 @@ class Jasypt2Test {
 		String plainText = "laokou123";
 		String encryptWithMD5AndDESStr = encryptWithMD5AndDES(plainText, factor);
 		String decryptWithMD5AndDESStr = decryptWithMD5AndDES(encryptWithMD5AndDESStr, factor);
-		assertThat(decryptWithMD5AndDESStr).isEqualTo(plainText);
+		Assertions.assertThat(decryptWithMD5AndDESStr).isEqualTo(plainText);
 	}
 
 	/**

@@ -18,13 +18,10 @@
 package org.laokou.common.core;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.IpUtils;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.laokou.common.core.util.IpUtils.LOCAL_IPV4;
-import static org.laokou.common.core.util.IpUtils.UNKNOWN_IP;
-import static org.mockito.Mockito.mock;
+import org.mockito.Mockito;
 
 /**
  * @author laokou
@@ -33,13 +30,13 @@ class IpUtilsTest {
 
 	@Test
 	void test_ip() {
-		HttpServletRequest request = mock(HttpServletRequest.class);
-		assertThat(request).isNotNull();
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		Assertions.assertThat(request).isNotNull();
 		String ip = IpUtils.getIpAddr(request);
-		assertThat(ip).isEqualTo(LOCAL_IPV4);
+		Assertions.assertThat(ip).isEqualTo(IpUtils.LOCAL_IPV4);
 		ip = IpUtils.getIpAddr(null);
-		assertThat(ip).isEqualTo(UNKNOWN_IP);
-		assertThat(IpUtils.internalIp(ip)).isFalse();
+		Assertions.assertThat(ip).isEqualTo(IpUtils.UNKNOWN_IP);
+		Assertions.assertThat(IpUtils.internalIp(ip)).isFalse();
 	}
 
 }

@@ -18,7 +18,12 @@
 package org.laokou.common.security.config;
 
 import org.laokou.common.fory.config.ForyFactory;
-import org.laokou.common.security.config.convertor.*;
+import org.laokou.common.security.config.convertor.BytesToClaimsHolderConverter;
+import org.laokou.common.security.config.convertor.BytesToOAuth2AuthorizationRequestConverter;
+import org.laokou.common.security.config.convertor.BytesToUsernamePasswordAuthenticationTokenConverter;
+import org.laokou.common.security.config.convertor.ClaimsHolderToBytesConverter;
+import org.laokou.common.security.config.convertor.OAuth2AuthorizationRequestToBytesConverter;
+import org.laokou.common.security.config.convertor.UsernamePasswordAuthenticationTokenToBytesConverter;
 import org.laokou.common.security.config.repository.OAuth2AuthorizationGrantAuthorizationRepository;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

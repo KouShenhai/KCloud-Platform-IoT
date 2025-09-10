@@ -18,20 +18,24 @@
 package org.laokou.common.dubbo.filter;
 
 import org.apache.dubbo.common.constants.CommonConstants;
+import org.apache.dubbo.common.constants.LoggerCodeConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.common.extension.DisableInject;
 import org.apache.dubbo.common.logger.ErrorTypeAwareLogger;
 import org.apache.dubbo.common.logger.LoggerFactory;
 import org.apache.dubbo.common.utils.ReflectUtils;
 import org.apache.dubbo.common.utils.StringUtils;
-import org.apache.dubbo.rpc.*;
+import org.apache.dubbo.rpc.Filter;
+import org.apache.dubbo.rpc.Invocation;
+import org.apache.dubbo.rpc.Invoker;
+import org.apache.dubbo.rpc.Result;
+import org.apache.dubbo.rpc.RpcContext;
+import org.apache.dubbo.rpc.RpcException;
 import org.apache.dubbo.rpc.service.GenericService;
 import org.apache.dubbo.rpc.support.RpcUtils;
 import org.laokou.common.i18n.common.exception.GlobalException;
 
 import java.lang.reflect.Method;
-
-import static org.apache.dubbo.common.constants.LoggerCodeConstants.CONFIG_FILTER_VALIDATION_EXCEPTION;
 
 /**
  * DubboExceptionInvokerFilter
@@ -87,7 +91,7 @@ public class DubboExceptionFilter implements Filter, Filter.Listener {
 
 				// for the exception not found in method's signature, print ERROR message
 				// in server's log.
-				logger.error(CONFIG_FILTER_VALIDATION_EXCEPTION, "", "",
+				logger.error(LoggerCodeConstants.CONFIG_FILTER_VALIDATION_EXCEPTION, "", "",
 						"Got unchecked and undeclared exception which called by "
 								+ RpcContext.getServiceContext().getRemoteHost() + ". service: "
 								+ invoker.getInterface().getName() + ", method: " + RpcUtils.getMethodName(invocation)
@@ -116,7 +120,7 @@ public class DubboExceptionFilter implements Filter, Filter.Listener {
 				appResponse.setException(new RuntimeException(StringUtils.toString(exception)));
 			}
 			catch (Throwable e) {
-				logger.warn(CONFIG_FILTER_VALIDATION_EXCEPTION, "", "",
+				logger.warn(LoggerCodeConstants.CONFIG_FILTER_VALIDATION_EXCEPTION, "", "",
 						"Fail to ExceptionFilter when called by " + RpcContext.getServiceContext().getRemoteHost()
 								+ ". service: " + invoker.getInterface().getName() + ", method: "
 								+ RpcUtils.getMethodName(invocation) + ", exception: " + e.getClass().getName() + ": "
@@ -128,7 +132,7 @@ public class DubboExceptionFilter implements Filter, Filter.Listener {
 
 	@Override
 	public void onError(Throwable e, Invoker<?> invoker, Invocation invocation) {
-		logger.error(CONFIG_FILTER_VALIDATION_EXCEPTION, "", "",
+		logger.error(LoggerCodeConstants.CONFIG_FILTER_VALIDATION_EXCEPTION, "", "",
 				"Got unchecked and undeclared exception which called by "
 						+ RpcContext.getServiceContext().getRemoteHost() + ". service: "
 						+ invoker.getInterface().getName() + ", method: " + RpcUtils.getMethodName(invocation)

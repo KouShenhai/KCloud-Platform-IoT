@@ -17,10 +17,10 @@
 
 package org.laokou.common.core.util;
 
+import org.laokou.common.i18n.common.constant.StringConstants;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 正则表达式工具类.
@@ -126,7 +126,7 @@ public final class RegexUtils {
 		if (matcher.find()) {
 			return matcher.group(1);
 		}
-		return EMPTY;
+		return StringConstants.EMPTY;
 	}
 
 }

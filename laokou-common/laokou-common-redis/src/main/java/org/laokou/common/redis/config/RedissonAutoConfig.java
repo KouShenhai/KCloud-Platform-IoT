@@ -17,6 +17,7 @@
 
 package org.laokou.common.redis.config;
 
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.redisson.Redisson;
@@ -32,8 +33,6 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.RISK;
 
 /**
  * @author livk
@@ -105,7 +104,7 @@ public class RedissonAutoConfig {
 	}
 
 	private String convertAddress(boolean isSsl, String host, int port) {
-		return getProtocolPrefix(isSsl) + host + RISK + port;
+		return getProtocolPrefix(isSsl) + host + StringConstants.RISK + port;
 	}
 
 	private String[] convertNodes(boolean isSsl, List<String> nodeList) {

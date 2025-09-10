@@ -18,10 +18,9 @@
 package org.laokou.common.xss;
 
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.xss.util.XssUtils;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -38,37 +37,37 @@ class XssTest {
 	void test_htmlScripTagJsonString() {
 		String json = "{\"s\": \"" + xssAttackVectors[0] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
-		assertThat(cleaned).isEqualTo("{\"s\": \"alert(1)\"}");
-		assertThat(cleaned.startsWith("{") && cleaned.endsWith("}")).isTrue();
-		assertThat(cleaned.contains("<script>")).isFalse();
+		Assertions.assertThat(cleaned).isEqualTo("{\"s\": \"alert(1)\"}");
+		Assertions.assertThat(cleaned.startsWith("{") && cleaned.endsWith("}")).isTrue();
+		Assertions.assertThat(cleaned.contains("<script>")).isFalse();
 	}
 
 	@Test
 	void test_htmlTagJsonString() {
 		String json = "{\"s\": \"" + xssAttackVectors[1] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
-		assertThat(cleaned).isEqualTo("{\"s\": \"<img>\"}");
-		assertThat(cleaned.startsWith("{") && cleaned.endsWith("}")).isTrue();
-		assertThat(cleaned.contains("<IMG")).isFalse();
+		Assertions.assertThat(cleaned).isEqualTo("{\"s\": \"<img>\"}");
+		Assertions.assertThat(cleaned.startsWith("{") && cleaned.endsWith("}")).isTrue();
+		Assertions.assertThat(cleaned.contains("<IMG")).isFalse();
 	}
 
 	@Test
 	void test_svgJsonString() {
 		String json = "{\"s\": \"" + xssAttackVectors[2] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
-		assertThat(cleaned).isEqualTo("{\"s\": \"\"}");
-		assertThat(cleaned.startsWith("{") && cleaned.endsWith("}")).isTrue();
-		assertThat(cleaned.contains("<svg")).isFalse();
+		Assertions.assertThat(cleaned).isEqualTo("{\"s\": \"\"}");
+		Assertions.assertThat(cleaned.startsWith("{") && cleaned.endsWith("}")).isTrue();
+		Assertions.assertThat(cleaned.contains("<svg")).isFalse();
 	}
 
 	@Test
 	void test_htmlScriptJsonString() {
 		String json = "{\"s\": \"" + xssAttackVectors[3] + "\"}";
 		String cleaned = XssUtils.clearHtml(json);
-		assertThat(cleaned)
+		Assertions.assertThat(cleaned)
 			.isEqualTo("{\"s\": \"/*-/*`/*\\`/*'/*\"/**/(/* */onerror=alert(1) )//%0D%0A%0d%0a//\\x3csVg/\\x3e\"}");
-		assertThat(cleaned.startsWith("{") && cleaned.endsWith("}")).isTrue();
-		assertThat(cleaned.contains("javascript:")).isFalse();
+		Assertions.assertThat(cleaned.startsWith("{") && cleaned.endsWith("}")).isTrue();
+		Assertions.assertThat(cleaned.contains("javascript:")).isFalse();
 	}
 
 	@Test
@@ -81,7 +80,7 @@ class XssTest {
 		catch (Exception e) {
 			sqlInjection = true;
 		}
-		assertThat(sqlInjection).isTrue();
+		Assertions.assertThat(sqlInjection).isTrue();
 	}
 
 }

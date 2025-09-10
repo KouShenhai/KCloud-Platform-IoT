@@ -18,6 +18,7 @@
 package org.laokou.common.core.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.util.HttpUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,8 +27,6 @@ import org.springframework.web.client.RestClient;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-
-import static org.laokou.common.core.util.HttpUtils.getHttpClient;
 
 /**
  * @author laokou
@@ -41,7 +40,7 @@ public class RestClientConfig {
 	public RestClient restClient() throws NoSuchAlgorithmException, KeyManagementException {
 		log.info("{} => Initializing Default RestClient", Thread.currentThread().getName());
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-		factory.setHttpClient(getHttpClient());
+		factory.setHttpClient(HttpUtils.getHttpClient());
 		return RestClient.builder().requestFactory(factory).build();
 	}
 

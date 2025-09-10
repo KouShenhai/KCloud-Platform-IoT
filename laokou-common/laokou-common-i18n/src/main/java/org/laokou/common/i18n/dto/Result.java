@@ -19,13 +19,12 @@ package org.laokou.common.i18n.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.util.MessageUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
-
-import static org.laokou.common.i18n.common.exception.StatusCode.OK;
 
 /**
  * 请求响应统一格式.
@@ -55,8 +54,8 @@ public class Result<T> implements Serializable {
 	public static <T> Result<T> ok(T data) {
 		Result<T> result = new Result<>();
 		result.setData(data);
-		result.setCode(OK);
-		result.setMsg(MessageUtils.getMessage(OK));
+		result.setCode(StatusCode.OK);
+		result.setMsg(MessageUtils.getMessage(StatusCode.OK));
 		return result;
 	}
 
@@ -83,7 +82,7 @@ public class Result<T> implements Serializable {
 	}
 
 	public boolean success() {
-		return ObjectUtils.equals(this.code, OK);
+		return ObjectUtils.equals(this.code, StatusCode.OK);
 	}
 
 	public boolean error() {

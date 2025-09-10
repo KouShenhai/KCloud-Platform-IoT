@@ -56,11 +56,16 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.core.util.RegexUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.loadbalancer.*;
+import org.springframework.cloud.client.loadbalancer.DefaultResponse;
+import org.springframework.cloud.client.loadbalancer.EmptyResponse;
+import org.springframework.cloud.client.loadbalancer.Request;
+import org.springframework.cloud.client.loadbalancer.RequestDataContext;
+import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.cloud.loadbalancer.core.NoopServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
@@ -70,7 +75,6 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import static org.laokou.common.i18n.common.constant.StringConstants.TRUE;
 
 /**
  * nacos路由负载均衡.
@@ -256,7 +260,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 */
 	private boolean isGrayRouter(HttpHeaders headers) {
 		String gray = headers.getFirst("service-gray");
-		return ObjectUtils.equals(TRUE, gray);
+		return ObjectUtils.equals(StringConstants.TRUE, gray);
 	}
 
 }

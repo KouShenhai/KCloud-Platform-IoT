@@ -20,8 +20,6 @@ package org.laokou.common.core.util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-import static org.laokou.common.core.util.SpringContextUtils.APPLICATION_NAME;
-import static org.laokou.common.core.util.SpringContextUtils.DEFAULT_SERVICE_ID;
 
 /**
  * Spring工具类.
@@ -38,7 +36,7 @@ public class SpringUtils {
 	 * 获取服务ID.
 	 */
 	public String getServiceId() {
-		return environment.getProperty(APPLICATION_NAME, DEFAULT_SERVICE_ID);
+		return environment.getProperty(SpringContextUtils.APPLICATION_NAME, SpringContextUtils.DEFAULT_SERVICE_ID);
 	}
 
 }

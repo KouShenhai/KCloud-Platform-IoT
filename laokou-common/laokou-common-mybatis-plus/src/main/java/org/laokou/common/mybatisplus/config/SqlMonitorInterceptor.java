@@ -26,13 +26,12 @@ import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.springframework.util.StopWatch;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.SPACE;
 
 // @formatter:off
 /**
@@ -68,7 +67,7 @@ public class SqlMonitorInterceptor implements Interceptor {
         if (sqlMonitor.isEnabled()
                 && costTime >= sqlMonitor.getInterval()
                 && target instanceof StatementHandler statementHandler) {
-			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", SPACE);
+			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", StringConstants.SPACE);
             log.info("Consume Time：{} ms，Execute SQL：{}", costTime, sql);
         }
 		return obj;

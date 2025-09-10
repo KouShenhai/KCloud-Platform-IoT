@@ -17,14 +17,13 @@
 
 package org.laokou.common.crypto;
 
+import org.assertj.core.api.Assertions;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * 只针对 spring-boot 3.x.x.
@@ -42,7 +41,7 @@ class Jasypt3Test {
 		String plainText = "elastic";
 		String encryptWithMD5ANDAES256Str = encryptWithHMACSHA512ANDAES256(plainText, factor);
 		String decryptWithMD5ANDAES256Str = decryptWithHMACSHA512ANDAES256(encryptWithMD5ANDAES256Str, factor);
-		assertThat(decryptWithMD5ANDAES256Str).isEqualTo(plainText);
+		Assertions.assertThat(decryptWithMD5ANDAES256Str).isEqualTo(plainText);
 	}
 
 	/**

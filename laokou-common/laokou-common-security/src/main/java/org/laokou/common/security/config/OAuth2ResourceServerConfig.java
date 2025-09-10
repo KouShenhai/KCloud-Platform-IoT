@@ -27,6 +27,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
@@ -43,8 +44,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-
-import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 /**
  * 关闭OAuth2,请在yml配置spring.oauth2.resource-server.enabled=false
@@ -91,7 +90,7 @@ public class OAuth2ResourceServerConfig {
 
 	// @formatter:off
 	@Bean
-	@Order(HIGHEST_PRECEDENCE + 1000)
+	@Order(Ordered.HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
 	SecurityFilterChain resourceFilterChain(OAuth2OpaqueTokenIntrospector oAuth2OpaqueTokenIntrospector,
                                             SpringUtils springUtils, OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http)

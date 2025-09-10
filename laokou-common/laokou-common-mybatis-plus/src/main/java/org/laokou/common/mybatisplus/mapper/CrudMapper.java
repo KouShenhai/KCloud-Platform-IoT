@@ -24,8 +24,6 @@ import org.laokou.common.i18n.dto.PageQuery;
 
 import java.util.List;
 
-import static org.laokou.common.i18n.dto.PageQuery.PAGE_QUERY;
-
 /**
  * 增删改查Mapper.
  *
@@ -35,12 +33,12 @@ public interface CrudMapper<ID, VERSION, DO> extends BaseMapper<DO> {
 
 	VERSION selectVersion(ID id);
 
-	void selectObjectListHandler(@Param(PAGE_QUERY) PageQuery pageQuery, ResultHandler<DO> handler);
+	void selectObjectListHandler(@Param(PageQuery.PAGE_QUERY) PageQuery pageQuery, ResultHandler<DO> handler);
 
-	long selectObjectCount(@Param(PAGE_QUERY) PageQuery pageQuery);
+	long selectObjectCount(@Param(PageQuery.PAGE_QUERY) PageQuery pageQuery);
 
-	List<DO> selectObjectPage(@Param(PAGE_QUERY) PageQuery pageQuery);
+	List<DO> selectObjectPage(@Param(PageQuery.PAGE_QUERY) PageQuery pageQuery);
 
-	List<DO> selectObjectList(@Param(PAGE_QUERY) PageQuery pageQuery);
+	List<DO> selectObjectList(@Param(PageQuery.PAGE_QUERY) PageQuery pageQuery);
 
 }

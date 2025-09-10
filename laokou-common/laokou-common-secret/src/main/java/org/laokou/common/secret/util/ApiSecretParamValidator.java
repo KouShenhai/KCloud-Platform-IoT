@@ -24,8 +24,6 @@ import org.laokou.common.i18n.util.StringUtils;
 
 import java.util.Map;
 
-import static org.laokou.common.secret.util.SecretUtils.*;
-
 /**
  * @author laokou
  */
@@ -41,14 +39,14 @@ public final class ApiSecretParamValidator {
 		if (StringUtils.isEmpty(appKey)) {
 			return ParamValidator.invalidate("appKey不为空");
 		}
-		return ObjectUtils.equals(APP_KEY, appKey) ? ParamValidator.validate() : ParamValidator.invalidate("appKey不存在");
+		return ObjectUtils.equals(SecretUtils.APP_KEY, appKey) ? ParamValidator.validate() : ParamValidator.invalidate("appKey不存在");
 	}
 
 	public static ParamValidator.Validate validateAppSecret(String appSecret) {
 		if (StringUtils.isEmpty(appSecret)) {
 			return ParamValidator.invalidate("appSecret不为空");
 		}
-		return ObjectUtils.equals(APP_SECRET, appSecret) ? ParamValidator.validate()
+		return ObjectUtils.equals(SecretUtils.APP_SECRET, appSecret) ? ParamValidator.validate()
 				: ParamValidator.invalidate("appSecret不存在");
 	}
 
@@ -77,7 +75,7 @@ public final class ApiSecretParamValidator {
 			return ParamValidator.invalidate("sign不能为空");
 		}
 		String params = MapUtils.parseParamterString(map, false);
-		String newSign = sign(appKey, appSecret, nonce, timestamp, params);
+		String newSign = SecretUtils.sign(appKey, appSecret, nonce, timestamp, params);
 		if (!ObjectUtils.equals(sign, newSign)) {
 			return ParamValidator.invalidate("Api验签失败");
 		}

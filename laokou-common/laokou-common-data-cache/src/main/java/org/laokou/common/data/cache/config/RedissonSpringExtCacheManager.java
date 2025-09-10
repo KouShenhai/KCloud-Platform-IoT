@@ -35,6 +35,7 @@ package org.laokou.common.data.cache.config;
 
 import io.micrometer.common.lang.NonNullApi;
 import lombok.Data;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.redisson.api.RMap;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
@@ -59,8 +60,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.WELL_NO;
 
 /**
  * 数据缓存扩展管理类. {@link org.springframework.cache.CacheManager}. implementation backed by
@@ -133,7 +132,7 @@ public class RedissonSpringExtCacheManager implements CacheManager, ResourceLoad
 	@Override
 	public Cache getCache(String name) {
 
-		String[] values = name.split(WELL_NO);
+		String[] values = name.split(StringConstants.WELL_NO);
 		name = values[0];
 
 		Cache cache = instanceMap.get(name);

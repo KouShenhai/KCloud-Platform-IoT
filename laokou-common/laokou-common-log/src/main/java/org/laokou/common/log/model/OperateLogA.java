@@ -17,11 +17,15 @@
 
 package org.laokou.common.log.model;
 
+import com.google.common.net.HttpHeaders;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
-import org.laokou.common.core.util.*;
+import org.laokou.common.core.util.AddressUtils;
+import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.IdGenerator;
@@ -31,10 +35,10 @@ import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.*;
-import static org.laokou.common.i18n.util.JacksonUtils.EMPTY_JSON;
-import static org.laokou.common.i18n.common.constant.StringConstants.*;
-import static org.springframework.http.HttpHeaders.USER_AGENT;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 /**
  * 操作日志聚合.
@@ -163,7 +167,7 @@ public class OperateLogA extends AggregateRoot {
 	public void getRequest(HttpServletRequest request) throws Exception {
 		this.uri = request.getRequestURI();
 		this.requestType = request.getMethod();
-		this.userAgent = request.getHeader(USER_AGENT);
+		this.userAgent = request.getHeader(HttpHeaders.USER_AGENT);
 		this.ip = IpUtils.getIpAddr(request);
 		this.address = AddressUtils.getRealAddress(this.ip);
 		this.serviceAddress = System.getProperty("address");
@@ -186,7 +190,7 @@ public class OperateLogA extends AggregateRoot {
 	}
 
 	public void decorateMethodName(String className, String methodName) {
-		this.methodName = className + DOT + methodName + LEFT + RIGHT;
+		this.methodName = className + StringConstants.DOT + methodName + StringConstants.LEFT + StringConstants.RIGHT;
 	}
 
 	public void calculateTaskTime(StopWatch stopWatch) {
@@ -197,7 +201,7 @@ public class OperateLogA extends AggregateRoot {
 	public void decorateRequestParams(Object[] args) {
 		List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs).toList();
 		if (CollectionUtils.isEmpty(params)) {
-			this.requestParams = EMPTY_JSON;
+			this.requestParams = JacksonUtils.EMPTY_JSON;
 		}
 		else {
 			this.requestParams = JacksonUtils.toJsonStr(params.getFirst());
@@ -211,7 +215,7 @@ public class OperateLogA extends AggregateRoot {
 
 	private String getStackTraceAsString(Throwable throwable) {
 		if (org.springframework.util.ObjectUtils.isEmpty(throwable)) {
-			return EMPTY;
+			return StringConstants.EMPTY;
 		}
 		StringWriter stringWriter = new StringWriter();
 		try (PrintWriter printWriter = new PrintWriter(stringWriter)) {

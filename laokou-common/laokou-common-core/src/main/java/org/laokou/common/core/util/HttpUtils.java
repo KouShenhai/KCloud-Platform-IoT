@@ -28,14 +28,15 @@ import org.apache.hc.client5.http.ssl.DefaultClientTlsStrategy;
 import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.util.SslUtils;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
-import static org.laokou.common.i18n.util.SslUtils.sslContext;
 
 /**
  * http客户端工具类.
@@ -78,7 +79,7 @@ public final class HttpUtils {
 		}
 		HttpEntity httpEntity = entityBuilder.build();
 		httpPost.setEntity(httpEntity);
-		String resultString = EMPTY;
+		String resultString = StringConstants.EMPTY;
 		try {
 			// 执行请求
 			resultString = INSTANCE.execute(httpPost,
@@ -93,7 +94,7 @@ public final class HttpUtils {
 	public static CloseableHttpClient getHttpClient() throws NoSuchAlgorithmException, KeyManagementException {
 		// 创建HttpClient对象
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-		DefaultClientTlsStrategy tlsStrategy = new DefaultClientTlsStrategy(sslContext(),
+		DefaultClientTlsStrategy tlsStrategy = new DefaultClientTlsStrategy(SslUtils.sslContext(),
 				NoopHostnameVerifier.INSTANCE);
 		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = PoolingHttpClientConnectionManagerBuilder
 			.create()

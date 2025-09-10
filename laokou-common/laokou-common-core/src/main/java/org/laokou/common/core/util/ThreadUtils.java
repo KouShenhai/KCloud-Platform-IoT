@@ -25,8 +25,7 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 线程池工具类.
@@ -49,7 +48,7 @@ public final class ThreadUtils {
 		if (ObjectUtils.isNotNull(executorService) && !executorService.isShutdown()) {
 			executorService.shutdown();
 			try {
-				if (!executorService.awaitTermination(timeout, SECONDS)) {
+				if (!executorService.awaitTermination(timeout, TimeUnit.SECONDS)) {
 					executorService.shutdownNow();
 				}
 			}

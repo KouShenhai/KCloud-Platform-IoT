@@ -20,8 +20,7 @@ package org.laokou.common.ratelimiter.aop;
 import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.core.util.IpUtils;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
+import org.laokou.common.i18n.common.constant.StringConstants;
 
 /**
  * 类型枚举.
@@ -36,7 +35,7 @@ public enum Type {
 	DEFAULT {
 		@Override
 		public String resolve(HttpServletRequest request) {
-			return EMPTY;
+			return StringConstants.EMPTY;
 		}
 	},
 

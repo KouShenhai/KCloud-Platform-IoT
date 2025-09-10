@@ -21,12 +21,10 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.common.elasticsearch.annotation.Constants;
 
 import java.util.List;
 import java.util.Set;
-
-import static org.laokou.common.elasticsearch.annotation.Constant.POST_TAGS;
-import static org.laokou.common.elasticsearch.annotation.Constant.PRE_TAGS;
 
 /**
  * @author laokou
@@ -49,9 +47,9 @@ public class Search {
 	@AllArgsConstructor
 	public static class Highlight {
 
-		private List<String> preTags = List.of(PRE_TAGS);
+		private List<String> preTags = List.of(Constants.PRE_TAGS);
 
-		private List<String> postTags = List.of(POST_TAGS);
+		private List<String> postTags = List.of(Constants.POST_TAGS);
 
 		private boolean requireFieldMatch;
 

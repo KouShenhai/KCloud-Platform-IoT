@@ -17,12 +17,12 @@
 
 package org.laokou.common.core;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * CollectionUtils测试类.
@@ -33,49 +33,49 @@ class CollectionUtilsTest {
 
 	@Test
 	void test_isNotEmpty() {
-		assertThat(CollectionUtils.isNotEmpty(Arrays.asList("1", "2", "3"))).isTrue();
-		assertThat(CollectionUtils.isNotEmpty(new ArrayList<>())).isFalse();
-		assertThat(CollectionUtils.isNotEmpty(null)).isFalse();
+		Assertions.assertThat(CollectionUtils.isNotEmpty(Arrays.asList("1", "2", "3"))).isTrue();
+		Assertions.assertThat(CollectionUtils.isNotEmpty(new ArrayList<>())).isFalse();
+		Assertions.assertThat(CollectionUtils.isNotEmpty(null)).isFalse();
 	}
 
 	@Test
 	void test_isEmpty() {
-		assertThat(CollectionUtils.isEmpty(Arrays.asList("1", "2", "3"))).isFalse();
-		assertThat(CollectionUtils.isEmpty(new ArrayList<>())).isTrue();
-		assertThat(CollectionUtils.isEmpty(null)).isTrue();
+		Assertions.assertThat(CollectionUtils.isEmpty(Arrays.asList("1", "2", "3"))).isFalse();
+		Assertions.assertThat(CollectionUtils.isEmpty(new ArrayList<>())).isTrue();
+		Assertions.assertThat(CollectionUtils.isEmpty(null)).isTrue();
 	}
 
 	@Test
 	void test_toStr() {
-		assertThat(CollectionUtils.toStr(Arrays.asList("a", "b", "c"), ",")).isEqualTo("a,b,c");
-		assertThat(CollectionUtils.toStr(new ArrayList<>(), ",")).isEqualTo("");
-		assertThat(CollectionUtils.toStr(Arrays.asList("a", null, "c"), ",")).isEqualTo("a,c");
+		Assertions.assertThat(CollectionUtils.toStr(Arrays.asList("a", "b", "c"), ",")).isEqualTo("a,b,c");
+		Assertions.assertThat(CollectionUtils.toStr(new ArrayList<>(), ",")).isEqualTo("");
+		Assertions.assertThat(CollectionUtils.toStr(Arrays.asList("a", null, "c"), ",")).isEqualTo("a,c");
 	}
 
 	@Test
 	void test_toList() {
-		assertThat(CollectionUtils.toList("a,b,c", ",")).isEqualTo(Arrays.asList("a", "b", "c"));
-		assertThat(CollectionUtils.toList("", ",").isEmpty()).isTrue();
-		assertThat(CollectionUtils.toList(null, ",").isEmpty()).isTrue();
-		assertThat(CollectionUtils.toList("a, b , c", ",")).isEqualTo(Arrays.asList("a", "b", "c"));
+		Assertions.assertThat(CollectionUtils.toList("a,b,c", ",")).isEqualTo(Arrays.asList("a", "b", "c"));
+		Assertions.assertThat(CollectionUtils.toList("", ",").isEmpty()).isTrue();
+		Assertions.assertThat(CollectionUtils.toList(null, ",").isEmpty()).isTrue();
+		Assertions.assertThat(CollectionUtils.toList("a, b , c", ",")).isEqualTo(Arrays.asList("a", "b", "c"));
 	}
 
 	@Test
 	void test_contains() {
-		assertThat(CollectionUtils.contains(Arrays.asList("a", "b", "c"), "a")).isTrue();
-		assertThat(CollectionUtils.contains(Arrays.asList("a", "b", "c"), "d")).isFalse();
+		Assertions.assertThat(CollectionUtils.contains(Arrays.asList("a", "b", "c"), "a")).isTrue();
+		Assertions.assertThat(CollectionUtils.contains(Arrays.asList("a", "b", "c"), "d")).isFalse();
 	}
 
 	@Test
 	void test_anyMatch() {
-		assertThat(CollectionUtils.anyMatch(Arrays.asList("a", "b", "c"), Arrays.asList("c", "d", "e"))).isTrue();
-		assertThat(CollectionUtils.anyMatch(Arrays.asList("c", "d", "e"), Arrays.asList("x", "y", "z"))).isFalse();
+		Assertions.assertThat(CollectionUtils.anyMatch(Arrays.asList("a", "b", "c"), Arrays.asList("c", "d", "e"))).isTrue();
+		Assertions.assertThat(CollectionUtils.anyMatch(Arrays.asList("c", "d", "e"), Arrays.asList("x", "y", "z"))).isFalse();
 	}
 
 	@Test
 	void test_containsAll() {
-		assertThat(CollectionUtils.containsAll(Arrays.asList("a", "b"), Arrays.asList("a", "b", "c"))).isTrue();
-		assertThat(CollectionUtils.containsAll(Arrays.asList("x", "y"), Arrays.asList("a", "b", "c"))).isFalse();
+		Assertions.assertThat(CollectionUtils.containsAll(Arrays.asList("a", "b"), Arrays.asList("a", "b", "c"))).isTrue();
+		Assertions.assertThat(CollectionUtils.containsAll(Arrays.asList("x", "y"), Arrays.asList("a", "b", "c"))).isFalse();
 	}
 
 }

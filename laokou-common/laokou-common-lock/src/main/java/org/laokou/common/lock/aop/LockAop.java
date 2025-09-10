@@ -25,6 +25,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.util.SpringExpressionUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
+import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.lock.Lock;
@@ -33,9 +35,6 @@ import org.laokou.common.lock.Type;
 import org.laokou.common.lock.annotation.Lock4j;
 import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.UNDER;
-import static org.laokou.common.i18n.common.exception.StatusCode.TOO_MANY_REQUESTS;
 
 /**
  * 分布式锁切面.
@@ -59,7 +58,7 @@ public class LockAop {
 		String name = lock4j.name();
 		String key = lock4j.key();
 		if (StringUtils.isNotEmpty(key) && key.contains("#")) {
-			key = name + UNDER + SpringExpressionUtils.parse(key, parameterNames, joinPoint.getArgs(), String.class);
+			key = name + StringConstants.UNDER + SpringExpressionUtils.parse(key, parameterNames, joinPoint.getArgs(), String.class);
 		}
 		else {
 			key = name;
@@ -76,7 +75,7 @@ public class LockAop {
 			}
 			while (!isLocked && --retry > 0);
 			if (!isLocked) {
-				throw new SystemException(TOO_MANY_REQUESTS);
+				throw new SystemException(StatusCode.TOO_MANY_REQUESTS);
 			}
 			return joinPoint.proceed();
 		}

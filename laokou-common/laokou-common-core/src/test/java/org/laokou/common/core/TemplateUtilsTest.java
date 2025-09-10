@@ -17,12 +17,12 @@
 
 package org.laokou.common.core;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.TemplateUtils;
 
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -31,7 +31,7 @@ class TemplateUtilsTest {
 
 	@Test
 	void test_template() {
-		assertThat(TemplateUtils.getContent("123${code}", Map.of("code", "4"))).isEqualTo("1234");
+		Assertions.assertThat(TemplateUtils.getContent("123${code}", Map.of("code", "4"))).isEqualTo("1234");
 	}
 
 }

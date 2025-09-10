@@ -18,6 +18,7 @@
 package org.laokou.common.graalvmjs;
 
 import lombok.RequiredArgsConstructor;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.graalvmjs.config.Executor;
 import org.laokou.common.graalvmjs.config.GraalvmJsConfig;
@@ -27,7 +28,6 @@ import org.springframework.test.context.TestConstructor;
 
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -44,15 +44,15 @@ class GraalvmJsTest {
 	void test_graalvmJs() {
 		String script = "function processData(inputMap) { return inputMap['test']; } processData;";
 		Map<String, Object> inputMap = Map.of("test", 123);
-		assertThat(jsExecutor.execute(script, inputMap).asInt()).isEqualTo(123);
+		Assertions.assertThat(jsExecutor.execute(script, inputMap).asInt()).isEqualTo(123);
 		String script2 = "function processData(s) { const p = JSON.parse(s); return p   } processData;";
 		Map<?, ?> map = jsExecutor.execute(script2, "{\"test\":\"123\"}").as(Map.class);
-		assertThat(map.get("test")).isEqualTo("123");
+		Assertions.assertThat(map.get("test")).isEqualTo("123");
 		String script3 = "function processData(s) { return {}   } processData;";
 		map = jsExecutor.execute(script3, "{\"test\":\"123\"}").as(Map.class);
-		assertThat(map.isEmpty()).isTrue();
+		Assertions.assertThat(map.isEmpty()).isTrue();
 		String script4 = "function processData(s) { return parseInt(s, 16)   } processData;";
-		assertThat(jsExecutor.execute(script4, "0x1a").asInt()).isEqualTo(26);
+		Assertions.assertThat(jsExecutor.execute(script4, "0x1a").asInt()).isEqualTo(26);
 	}
 
 }

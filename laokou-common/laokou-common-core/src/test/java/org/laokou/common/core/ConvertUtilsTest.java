@@ -20,13 +20,12 @@ package org.laokou.common.core;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ConvertUtils;
 
 import java.io.Serializable;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -37,14 +36,14 @@ class ConvertUtilsTest {
 	void test_convert() {
 		User testUser = new User(1L, "laokou");
 		User user = ConvertUtils.sourceToTarget(testUser, User.class);
-		assertThat(user).isNotNull();
-		assertThat(user.getId()).isEqualTo(testUser.getId());
-		assertThat(user.getName()).isEqualTo(testUser.getName());
+		Assertions.assertThat(user).isNotNull();
+		Assertions.assertThat(user.getId()).isEqualTo(testUser.getId());
+		Assertions.assertThat(user.getName()).isEqualTo(testUser.getName());
 		User testUser2 = new User(2L, "老寇");
 		List<User> userList = ConvertUtils.sourceToTarget(List.of(testUser2), User.class);
-		assertThat(userList.size()).isEqualTo(1);
-		assertThat(userList.getFirst().getId()).isEqualTo(testUser2.getId());
-		assertThat(userList.getFirst().getName()).isEqualTo(testUser2.getName());
+		Assertions.assertThat(userList.size()).isEqualTo(1);
+		Assertions.assertThat(userList.getFirst().getId()).isEqualTo(testUser2.getId());
+		Assertions.assertThat(userList.getFirst().getName()).isEqualTo(testUser2.getName());
 	}
 
 	@Data

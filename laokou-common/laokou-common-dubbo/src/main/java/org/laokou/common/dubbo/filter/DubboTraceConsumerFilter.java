@@ -19,12 +19,17 @@ package org.laokou.common.dubbo.filter;
 
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
-import org.apache.dubbo.rpc.*;
+import org.apache.dubbo.rpc.Filter;
+import org.apache.dubbo.rpc.Invocation;
+import org.apache.dubbo.rpc.Invoker;
+import org.apache.dubbo.rpc.Result;
+import org.apache.dubbo.rpc.RpcContext;
+import org.apache.dubbo.rpc.RpcContextAttachment;
+import org.apache.dubbo.rpc.RpcException;
 import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.trace.util.MDCUtils;
 import org.laokou.common.trace.util.TraceUtils;
 
-import static org.laokou.common.trace.util.MDCUtils.SPAN_ID;
-import static org.laokou.common.trace.util.MDCUtils.TRACE_ID;
 
 /**
  * @author laokou
@@ -36,8 +41,8 @@ public class DubboTraceConsumerFilter implements Filter {
 	public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 		TraceUtils traceUtils = SpringContextUtils.getBean(TraceUtils.class);
 		RpcContextAttachment clientAttachment = RpcContext.getClientAttachment();
-		clientAttachment.setAttachment(TRACE_ID, traceUtils.getTraceId());
-		clientAttachment.setAttachment(SPAN_ID, traceUtils.getSpanId());
+		clientAttachment.setAttachment(MDCUtils.TRACE_ID, traceUtils.getTraceId());
+		clientAttachment.setAttachment(MDCUtils.SPAN_ID, traceUtils.getSpanId());
 		return invoker.invoke(invocation);
 	}
 

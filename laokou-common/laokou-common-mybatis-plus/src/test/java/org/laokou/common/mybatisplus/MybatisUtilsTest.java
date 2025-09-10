@@ -21,6 +21,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -41,8 +42,6 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import java.util.List;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
  * @author laokou
@@ -83,38 +82,38 @@ class MybatisUtilsTest {
 	@Test
 	void test_ignoreTable() {
 		GlobalTenantLineHandler globalTenantLineHandler = new GlobalTenantLineHandler(Set.of("test", "t_user"));
-		assertThat(globalTenantLineHandler.ignoreTable("t_user")).isTrue();
-		assertThat(globalTenantLineHandler.ignoreTable("t_test")).isFalse();
-		assertThat(globalTenantLineHandler.ignoreTable("t_tes1")).isFalse();
+		Assertions.assertThat(globalTenantLineHandler.ignoreTable("t_user")).isTrue();
+		Assertions.assertThat(globalTenantLineHandler.ignoreTable("t_test")).isFalse();
+		Assertions.assertThat(globalTenantLineHandler.ignoreTable("t_tes1")).isFalse();
 	}
 
 	@Test
 	void test_mybatisPlus() {
-		assertThat(testUserMapper).isNotNull();
-		assertThat(mybatisUtils).isNotNull();
-		assertThatNoException().isThrownBy(testUserMapper::deleteAllUser);
-		assertThatNoException().isThrownBy(
+		Assertions.assertThat(testUserMapper).isNotNull();
+		Assertions.assertThat(mybatisUtils).isNotNull();
+		Assertions.assertThatNoException().isThrownBy(testUserMapper::deleteAllUser);
+		Assertions.assertThatNoException().isThrownBy(
 				() -> mybatisUtils.batch(List.of(getTestUserDO(), getTestUser1DO()), TestUserMapper.class, TestUserMapper::insert));
 		List<TestUserDO> list = testUserMapper.selectList(Wrappers.emptyWrapper());
-		assertThat(list.size()).isEqualTo(2);
-		assertThat(list.stream().map(TestUserDO::getName).anyMatch("张三"::equals)).isTrue();
-		assertThatNoException().isThrownBy(() -> testUserMapper.deleteTestUser(List.of(8L)));
-		assertThat(testUserMapper.selectObjectCount(new PageQuery())).isEqualTo(1);
-		assertThatNoException().isThrownBy(() -> mybatisUtils.batch(List.of(getTestUserDO()), TestUserMapper.class,
+		Assertions.assertThat(list.size()).isEqualTo(2);
+		Assertions.assertThat(list.stream().map(TestUserDO::getName).anyMatch("张三"::equals)).isTrue();
+		Assertions.assertThatNoException().isThrownBy(() -> testUserMapper.deleteTestUser(List.of(8L)));
+		Assertions.assertThat(testUserMapper.selectObjectCount(new PageQuery())).isEqualTo(1);
+		Assertions.assertThatNoException().isThrownBy(() -> mybatisUtils.batch(List.of(getTestUserDO()), TestUserMapper.class,
 				"master", TestUserMapper::insert));
-		assertThat(testUserMapper.selectObjectCount(new PageQuery())).isEqualTo(2);
-		assertThatNoException().isThrownBy(() -> testUserMapper.deleteTestUser(List.of(8L)));
-		assertThat(testUserMapper.selectObjectCount(new PageQuery())).isEqualTo(1);
-		assertThatNoException().isThrownBy(() -> mybatisUtils.batch(List.of(getTestUserDO()), 1000, 100, 180,
+		Assertions.assertThat(testUserMapper.selectObjectCount(new PageQuery())).isEqualTo(2);
+		Assertions.assertThatNoException().isThrownBy(() -> testUserMapper.deleteTestUser(List.of(8L)));
+		Assertions.assertThat(testUserMapper.selectObjectCount(new PageQuery())).isEqualTo(1);
+		Assertions.assertThatNoException().isThrownBy(() -> mybatisUtils.batch(List.of(getTestUserDO()), 1000, 100, 180,
 				TestUserMapper.class, "master", TestUserMapper::insert));
-		assertThat(testUserMapper.selectObjectCount(new PageQuery())).isEqualTo(2);
-		assertThatNoException().isThrownBy(() -> testUserMapper.deleteTestUser(List.of(8L)));
-		assertThat(testUserMapper.selectObjectCount(new PageQuery())).isEqualTo(1);
-		assertThatNoException().isThrownBy(() -> mybatisUtils.batch(List.of(getTestUserDO()), 1000, 100, 180,
+		Assertions.assertThat(testUserMapper.selectObjectCount(new PageQuery())).isEqualTo(2);
+		Assertions.assertThatNoException().isThrownBy(() -> testUserMapper.deleteTestUser(List.of(8L)));
+		Assertions.assertThat(testUserMapper.selectObjectCount(new PageQuery())).isEqualTo(1);
+		Assertions.assertThatNoException().isThrownBy(() -> mybatisUtils.batch(List.of(getTestUserDO()), 1000, 100, 180,
 				TestUserMapper.class, TestUserMapper::insert));
-		assertThat(testUserMapper.selectObjectCount(new PageQuery())).isEqualTo(2);
-		assertThatNoException().isThrownBy(() -> testUserMapper.deleteTestUser(List.of(8L)));
-		assertThat(testUserMapper.selectObjectCount(new PageQuery())).isEqualTo(1);
+		Assertions.assertThat(testUserMapper.selectObjectCount(new PageQuery())).isEqualTo(2);
+		Assertions.assertThatNoException().isThrownBy(() -> testUserMapper.deleteTestUser(List.of(8L)));
+		Assertions.assertThat(testUserMapper.selectObjectCount(new PageQuery())).isEqualTo(1);
 	}
 
 	private TestUserDO getTestUserDO() {

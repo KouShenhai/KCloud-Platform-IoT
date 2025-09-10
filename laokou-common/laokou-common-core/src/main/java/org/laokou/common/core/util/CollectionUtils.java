@@ -19,13 +19,13 @@ package org.laokou.common.core.util;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 集合工具类.
@@ -63,7 +63,7 @@ public final class CollectionUtils {
 	 */
 	public static String toStr(List<String> list, String on) {
 		if (list.isEmpty()) {
-			return EMPTY;
+			return StringConstants.EMPTY;
 		}
 		return Joiner.on(on).skipNulls().join(list);
 	}

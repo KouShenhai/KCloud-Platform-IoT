@@ -16,12 +16,12 @@
  */
 
 package org.laokou.common.algorithm;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.algorithm.template.select.HashAlgorithm;
 import org.laokou.common.algorithm.template.select.RandomAlgorithm;
 import org.laokou.common.algorithm.template.select.RoundRobinAlgorithm;
 import java.util.List;
-import static org.assertj.core.api.Assertions.assertThat;
 
 class AlgorithmTest {
 
@@ -29,13 +29,13 @@ class AlgorithmTest {
 	void test_loadbalancer() {
 		List<Integer> numbers = List.of(1, 2);
 		// 负载均衡【哈希算法】
-		assertThat(new HashAlgorithm().select(numbers, 100)).isEqualTo(1);
+		Assertions.assertThat(new HashAlgorithm().select(numbers, 100)).isEqualTo(1);
 		// 负载均衡【轮询算法】
-		assertThat(new RoundRobinAlgorithm().select(numbers, null)).isEqualTo(1);
+		Assertions.assertThat(new RoundRobinAlgorithm().select(numbers, null)).isEqualTo(1);
 		// 负载均衡【随机算法】
-		assertThat(new RandomAlgorithm().select(numbers, null)).satisfiesAnyOf(
-			number -> assertThat(number).isEqualTo(1),
-			number -> assertThat(number).isEqualTo(2)
+		Assertions.assertThat(new RandomAlgorithm().select(numbers, null)).satisfiesAnyOf(
+			number -> Assertions.assertThat(number).isEqualTo(1),
+			number -> Assertions.assertThat(number).isEqualTo(2)
 		);
 	}
 

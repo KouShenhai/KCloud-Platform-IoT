@@ -18,6 +18,7 @@
 package org.laokou.common.csv;
 
 import org.apache.commons.io.FileUtils;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.csv.utils.CsvUtils;
@@ -26,8 +27,6 @@ import org.springframework.boot.system.SystemProperties;
 import java.io.File;
 import java.io.IOException;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
  * @author laokou
@@ -46,9 +45,9 @@ class CsvUtilsTest {
 		String fileName = "test.csv";
 		String[] arr = { "1", "2", "3" };
 		File file = new File(testPath, fileName);
-		assertThatNoException().isThrownBy(() -> CsvUtils.execute(file, csvWriter -> csvWriter.writeNext(arr), false));
-		assertThat(FileUtils.readFileToString(file, "UTF-8").trim()).isEqualTo("\"1\",\"2\",\"3\"");
-		assertThatNoException().isThrownBy(() -> FileUtils.forceDeleteOnExit(file));
+		Assertions.assertThatNoException().isThrownBy(() -> CsvUtils.execute(file, csvWriter -> csvWriter.writeNext(arr), false));
+		Assertions.assertThat(FileUtils.readFileToString(file, "UTF-8").trim()).isEqualTo("\"1\",\"2\",\"3\"");
+		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.forceDeleteOnExit(file));
 	}
 
 }

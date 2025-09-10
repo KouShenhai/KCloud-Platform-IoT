@@ -28,8 +28,10 @@ import co.elastic.clients.transport.rest5_client.low_level.Rest5Client;
 import co.elastic.clients.transport.rest5_client.low_level.Rest5ClientBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.common.net.HttpHeaders;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.client5.http.auth.StandardAuthScheme;
 import org.apache.hc.client5.http.impl.routing.DefaultProxyRoutePlanner;
 import org.apache.hc.client5.http.routing.HttpRoutePlanner;
 import org.apache.hc.client5.http.ssl.DefaultClientTlsStrategy;
@@ -42,6 +44,7 @@ import org.apache.hc.core5.util.Timeout;
 import org.laokou.common.core.util.ArrayUtils;
 import org.laokou.common.core.util.Base64Utils;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.beans.factory.ObjectProvider;
@@ -65,12 +68,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static co.elastic.clients.transport.rest5_client.low_level.Rest5ClientBuilder.DEFAULT_RESPONSE_TIMEOUT_MILLIS;
-import static co.elastic.clients.transport.rest5_client.low_level.Rest5ClientBuilder.DEFAULT_SOCKET_TIMEOUT_MILLIS;
-import static org.apache.hc.client5.http.auth.StandardAuthScheme.BASIC;
-import static org.apache.hc.core5.http.HttpHeaders.AUTHORIZATION;
-import static org.laokou.common.i18n.common.constant.StringConstants.RISK;
-import static org.laokou.common.i18n.common.constant.StringConstants.SPACE;
 
 /**
  * @author spring-data-elasticsearch
@@ -131,9 +128,6 @@ public class ElasticsearchAutoConfig {
 	 */
 	@Bean
 	JsonpMapper jsonpMapper() {
-		// we need to create our own objectMapper that keeps null values in order to provide the storeNullValue
-		// functionality. The one Elasticsearch would provide removes the nulls. We remove unwanted nulls before they get
-		// into this mapper, so we can safely keep them here.
 		ObjectMapper objectMapper = new ObjectMapper().configure(SerializationFeature.INDENT_OUTPUT, false);
 		return new JacksonJsonpMapper(objectMapper);
 	}
@@ -186,7 +180,7 @@ public class ElasticsearchAutoConfig {
 				Timeout soTimeout = Timeout.of(Math.toIntExact(socketTimeout.toMillis()), TimeUnit.MILLISECONDS);
 				connectionConfigBuilder.setSocketTimeout(soTimeout);
 			} else {
-				connectionConfigBuilder.setSocketTimeout(Timeout.of(DEFAULT_SOCKET_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS));
+				connectionConfigBuilder.setSocketTimeout(Timeout.of(Rest5ClientBuilder.DEFAULT_SOCKET_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS));
 			}
 		});
 
@@ -208,7 +202,7 @@ public class ElasticsearchAutoConfig {
 				Timeout soTimeout = Timeout.of(Math.toIntExact(socketTimeout.toMillis()), TimeUnit.MILLISECONDS);
 				requestConfigBuilder.setConnectionRequestTimeout(soTimeout);
 			} else {
-				requestConfigBuilder.setConnectionRequestTimeout(Timeout.of(DEFAULT_RESPONSE_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS));
+				requestConfigBuilder.setConnectionRequestTimeout(Timeout.of(Rest5ClientBuilder.DEFAULT_RESPONSE_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS));
 			}
 		});
 		return builder;
@@ -229,13 +223,13 @@ public class ElasticsearchAutoConfig {
 		String username = springElasticsearchProperties.getUsername();
 		String password = springElasticsearchProperties.getPassword();
 		if (StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(password)) {
-			headers.add(new BasicHeader(AUTHORIZATION, BASIC + SPACE + encodeBasicAuth(username, password)));
+			headers.add(new BasicHeader(HttpHeaders.AUTHORIZATION, StandardAuthScheme.BASIC + StringConstants.SPACE + encodeBasicAuth(username, password)));
 		}
 		return headers.toArray(new Header[0]);
 	}
 
 	private InetSocketAddress parse(String endpoint) {
-		String[] hostAndPort = endpoint.split(RISK);
+		String[] hostAndPort = endpoint.split(StringConstants.RISK);
 		return InetSocketAddress.createUnresolved(hostAndPort[0], Integer.parseInt(hostAndPort[1]));
 	}
 

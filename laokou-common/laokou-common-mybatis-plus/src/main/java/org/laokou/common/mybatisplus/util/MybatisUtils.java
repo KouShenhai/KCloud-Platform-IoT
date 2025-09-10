@@ -17,6 +17,7 @@
 
 package org.laokou.common.mybatisplus.util;
 
+import com.baomidou.dynamic.datasource.enums.DdConstants;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
-import static com.baomidou.dynamic.datasource.enums.DdConstants.MASTER;
 
 /**
  * @author why
@@ -56,12 +56,12 @@ public class MybatisUtils {
 
 	public <DO, MAPPER extends CrudMapper<?, ?, DO>> void batch(List<DO> dataList, int partitionSize, int batchSize,
 			int timeout, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer) {
-		batch(dataList, partitionSize, batchSize, timeout, clazz, MASTER, consumer);
+		batch(dataList, partitionSize, batchSize, timeout, clazz, DdConstants.MASTER, consumer);
 	}
 
 	public <DO, MAPPER extends CrudMapper<?, ?, DO>> void batch(List<DO> dataList, Class<MAPPER> clazz,
 			BiConsumer<MAPPER, DO> consumer) {
-		batch(dataList, DEFAULT_PARTITION_SIZE, DEFAULT_BATCH_SIZE, 180, clazz, MASTER, consumer);
+		batch(dataList, DEFAULT_PARTITION_SIZE, DEFAULT_BATCH_SIZE, 180, clazz, DdConstants.MASTER, consumer);
 	}
 
 	public <DO, MAPPER extends CrudMapper<?, ?, DO>> void batch(List<DO> dataList, Class<MAPPER> clazz, String ds,

@@ -23,6 +23,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
+import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.redis.util.RedisUtils;
@@ -30,9 +32,6 @@ import org.redisson.api.RateType;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.UNDER;
-import static org.laokou.common.i18n.common.exception.StatusCode.TOO_MANY_REQUESTS;
 
 /**
  * 请查看 RequestRateLimiterGatewayFilterFactory.
@@ -55,14 +54,14 @@ public class RateLimiterAop {
 	@Around("@annotation(rateLimiter)")
 	public Object doAround(ProceedingJoinPoint point, RateLimiter rateLimiter) throws Throwable {
 		String key = getKey(rateLimiter.key()
-			.concat(UNDER)
+			.concat(StringConstants.UNDER)
 			.concat(rateLimiter.type().resolve(RequestUtils.getHttpServletRequest())));
 		long rate = rateLimiter.rate();
 		long ttl = rateLimiter.ttl();
 		long interval = rateLimiter.interval();
 		RateType mode = rateLimiter.mode();
 		if (!redisUtils.rateLimiter(key, mode, rate, Duration.ofSeconds(interval), Duration.ofSeconds(ttl))) {
-			throw new SystemException(TOO_MANY_REQUESTS);
+			throw new SystemException(StatusCode.TOO_MANY_REQUESTS);
 		}
 		return point.proceed();
 	}

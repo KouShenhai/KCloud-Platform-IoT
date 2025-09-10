@@ -19,13 +19,13 @@ package org.laokou.common.core;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.TreeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 class TreeUtilsTest {
 
@@ -34,7 +34,7 @@ class TreeUtilsTest {
 		Node n1 = new Node(1L, "节点1", 0L);
 		Node n2 = new Node(11L, "节点1-1", 1L);
 		Node node = TreeUtils.buildTreeNode(List.of(n1, n2), Node.class);
-		assertThat(node.getChildren().getFirst().getPid()).isEqualTo(node.getId());
+		Assertions.assertThat(node.getChildren().getFirst().getPid()).isEqualTo(node.getId());
 	}
 
 	@Data
