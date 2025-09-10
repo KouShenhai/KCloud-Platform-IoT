@@ -21,10 +21,19 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.api.DeptsServiceI;
-import org.laokou.admin.dept.dto.*;
+import org.laokou.admin.dept.dto.DeptExportCmd;
+import org.laokou.admin.dept.dto.DeptGetQry;
+import org.laokou.admin.dept.dto.DeptImportCmd;
+import org.laokou.admin.dept.dto.DeptModifyCmd;
+import org.laokou.admin.dept.dto.DeptPageQry;
+import org.laokou.admin.dept.dto.DeptRemoveCmd;
+import org.laokou.admin.dept.dto.DeptSaveCmd;
+import org.laokou.admin.dept.dto.DeptTreeListQry;
 import org.laokou.admin.dept.dto.clientobject.DeptCO;
 import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
 import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.constant.NameConstants;
+import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -33,13 +42,18 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
-import static org.laokou.common.data.cache.constant.NameConstants.DEPTS;
-import static org.laokou.common.data.cache.model.OperateTypeEnum.DEL;
 
 /**
  * 部门管理控制器.
@@ -67,7 +81,7 @@ public class DeptsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:dept:modify')")
 	@OperateLog(module = "部门管理", operation = "修改部门")
 	@Operation(summary = "修改部门", description = "修改部门")
-	@DataCache(name = DEPTS, key = "#cmd.co.id", operateType = DEL)
+	@DataCache(name = NameConstants.DEPTS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
 	public void modifyDept(@RequestBody DeptModifyCmd cmd) {
 		deptsServiceI.modifyDept(cmd);
 	}
@@ -114,7 +128,7 @@ public class DeptsControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
-	@DataCache(name = DEPTS, key = "#id")
+	@DataCache(name = NameConstants.DEPTS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:dept:detail')")
 	@Operation(summary = "查看部门详情", description = "查看部门详情")
 	public Result<DeptCO> getDeptById(@PathVariable("id") Long id) {

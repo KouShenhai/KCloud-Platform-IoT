@@ -19,7 +19,11 @@ package org.laokou.common.websocket.config;
 
 import io.netty.channel.Channel;
 import org.laokou.common.i18n.util.ObjectUtils;
-import java.util.*;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;

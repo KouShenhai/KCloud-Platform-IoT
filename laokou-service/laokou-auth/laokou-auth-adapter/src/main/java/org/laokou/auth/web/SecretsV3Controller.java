@@ -24,12 +24,11 @@ import org.laokou.auth.api.SecretsServiceI;
 import org.laokou.auth.dto.clientobject.SecretCO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
+import org.laokou.common.ratelimiter.aop.Type;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.laokou.common.ratelimiter.aop.Type.IP;
 
 /**
  * @author laokou
@@ -45,7 +44,7 @@ public class SecretsV3Controller {
 	@TraceLog
 	@GetMapping
 	@Operation(summary = "获取密钥", description = "获取密钥")
-	@RateLimiter(key = "AUTH_SECRET", type = IP)
+	@RateLimiter(key = "AUTH_SECRET", type = Type.IP)
 	public Result<SecretCO> getSecretInfo() {
 		return secretsServiceI.getSecretInfo();
 	}

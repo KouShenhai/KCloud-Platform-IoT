@@ -23,12 +23,12 @@ import org.laokou.auth.gateway.OssLogGateway;
 import org.laokou.auth.gatewayimpl.database.OssLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.constant.NameConstants;
+import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.data.cache.constant.NameConstants.OSS_RESOURCE;
-import static org.laokou.common.data.cache.model.OperateTypeEnum.GET;
-import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * @author laokou
@@ -40,10 +40,10 @@ public class OssLogGatewayImpl implements OssLogGateway {
 	private final OssLogMapper ossLogMapper;
 
 	@Override
-	@DataCache(name = OSS_RESOURCE, key = "#id", operateType = GET)
+	@DataCache(name = NameConstants.OSS_RESOURCE, key = "#id", operateType = OperateTypeEnum.GET)
 	public String getOssUrl(Long id) {
 		try {
-			DynamicDataSourceContextHolder.push(DOMAIN);
+			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			OssLogDO ossLogDO = ossLogMapper.selectById(id);
 			return ObjectUtils.isNotNull(ossLogDO) ? ossLogDO.getUrl() : "https://yrsh.f2z.cn/zZapbE";
 		}

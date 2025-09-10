@@ -19,13 +19,13 @@ package org.laokou.oss.gatewayimpl.rpc;
 
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.distributed.identifier.api.DistributedIdentifierCmd;
 import org.laokou.distributed.identifier.api.DistributedIdentifierResult;
 import org.laokou.distributed.identifier.api.DistributedIdentifierServiceI;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.i18n.common.exception.StatusCode.OK;
 
 /**
  * @author laokou
@@ -40,7 +40,7 @@ public class DistributedIdentifierRpc {
 
 	public Long getId() {
 		DistributedIdentifierResult result = distributedIdentifierServiceI.generateSnowflake(DistributedIdentifierCmd.newBuilder().build());
-		if (ObjectUtils.equals(OK, result.getCode())) {
+		if (ObjectUtils.equals(StatusCode.OK, result.getCode())) {
 			return result.getData();
 		}
 		throw new BizException(result.getCode(), result.getMsg());

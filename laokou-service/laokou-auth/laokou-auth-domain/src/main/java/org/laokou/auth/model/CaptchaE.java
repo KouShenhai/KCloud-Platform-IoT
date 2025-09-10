@@ -26,7 +26,6 @@ import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import static org.laokou.auth.model.OAuth2Constants.TENANT_NOT_EXIST;
 
 /**
  * @author laokou
@@ -67,7 +66,7 @@ public class CaptchaE extends Identifier {
 
 	public void checkTenantId() {
 		if (ObjectUtils.isNull(this.tenantId)) {
-			throw new BizException(TENANT_NOT_EXIST);
+			throw new BizException(OAuth2Constants.TENANT_NOT_EXIST);
 		}
 	}
 

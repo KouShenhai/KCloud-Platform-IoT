@@ -20,8 +20,7 @@ package org.laokou.admin.role.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
-
-import static org.laokou.common.tenant.constant.DSConstants.Master.ROLE_TABLE;
+import org.laokou.common.tenant.constant.DSConstants;
 
 /**
  * 角色数据对象.
@@ -29,7 +28,7 @@ import static org.laokou.common.tenant.constant.DSConstants.Master.ROLE_TABLE;
  * @author laokou
  */
 @Data
-@TableName(ROLE_TABLE)
+@TableName(DSConstants.Master.ROLE_TABLE)
 public class RoleDO extends BaseDO {
 
 	/**

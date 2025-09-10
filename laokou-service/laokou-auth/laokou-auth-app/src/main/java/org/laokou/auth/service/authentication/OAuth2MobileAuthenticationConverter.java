@@ -17,12 +17,12 @@
 
 package org.laokou.auth.service.authentication;
 
+import org.laokou.auth.model.Constants;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static org.laokou.auth.factory.DomainFactory.MOBILE;
 
 /**
  * 手机号转换器.
@@ -34,7 +34,7 @@ final class OAuth2MobileAuthenticationConverter extends AbstractOAuth2Authentica
 
 	@Override
 	String getGrantType() {
-		return MOBILE;
+		return Constants.MOBILE;
 	}
 
 	@Override

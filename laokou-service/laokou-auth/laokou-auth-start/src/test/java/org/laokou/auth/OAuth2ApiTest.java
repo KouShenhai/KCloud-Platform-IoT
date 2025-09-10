@@ -19,17 +19,23 @@ package org.laokou.auth;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.dto.clientobject.CaptchaCO;
-import org.laokou.common.core.util.*;
+import org.laokou.common.core.util.HttpUtils;
+import org.laokou.common.core.util.OkHttpUtils;
+import org.laokou.common.core.util.ThreadUtils;
+import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.common.crypto.util.RSAUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.idempotent.aop.IdempotentAop;
 import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
 import org.laokou.common.trace.util.MDCUtils;
@@ -49,12 +55,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.laokou.common.i18n.common.constant.StringConstants.RISK;
-import static org.laokou.common.idempotent.aop.IdempotentAop.REQUEST_ID;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpMethod.POST;
 
 /**
  * @author laokou
@@ -107,7 +107,7 @@ class OAuth2ApiTest {
 		cmd.setCo(co);
 		restClient.post()
 			.uri(getSendMailCaptchaUrl())
-			.header(REQUEST_ID, UUIDGenerator.generateUUID())
+			.header(IdempotentAop.REQUEST_ID, UUIDGenerator.generateUUID())
 			.body(cmd)
 			.accept(MediaType.APPLICATION_JSON)
 			.retrieve()
@@ -123,7 +123,7 @@ class OAuth2ApiTest {
 		cmd.setCo(co);
 		restClient.post()
 			.uri(getSendMobileCaptchaUrl())
-			.header(REQUEST_ID, UUIDGenerator.generateUUID())
+			.header(IdempotentAop.REQUEST_ID, UUIDGenerator.generateUUID())
 			.body(cmd)
 			.accept(MediaType.APPLICATION_JSON)
 			.retrieve()
@@ -151,7 +151,7 @@ class OAuth2ApiTest {
 	void test_encodePassword() {
 		String pwd = passwordEncoder.encode(PASSWORD);
 		log.info("生成密码：{}", pwd);
-		assertThat(passwordEncoder.matches(PASSWORD, pwd)).isTrue();
+		Assertions.assertThat(passwordEncoder.matches(PASSWORD, pwd)).isTrue();
 	}
 
 	@Test
@@ -162,8 +162,8 @@ class OAuth2ApiTest {
 		String encryptPassword = RSAUtils.encryptByPublicKey(PASSWORD);
 		String decryptUsername = RSAUtils.decryptByPrivateKey(encryptUsername);
 		String decryptPassword = RSAUtils.decryptByPrivateKey(encryptPassword);
-		assertThat(decryptUsername).isEqualTo(USERNAME);
-		assertThat(decryptPassword).isEqualTo(PASSWORD);
+		Assertions.assertThat(decryptUsername).isEqualTo(USERNAME);
+		Assertions.assertThat(decryptPassword).isEqualTo(PASSWORD);
 		Map<String, String> tokenMap = usernamePasswordAuth(captcha, encryptUsername, encryptPassword);
 		log.info("验证码：{}", captcha);
 		log.info("加密用户名：{}", encryptUsername);
@@ -176,7 +176,7 @@ class OAuth2ApiTest {
 				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 		log.info("刷新token：{}", token);
 		log.info("---------- 模拟认证开始 ----------");
-		assertThat(token).isNotBlank();
+		Assertions.assertThat(token).isNotBlank();
 		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(oAuth2AuthorizationService);
 		log.info("认证数据：{}", JacksonUtils.toJsonStr(introspector.introspect(token)));
 		log.info("---------- 模拟认证结束 ----------");
@@ -280,7 +280,7 @@ class OAuth2ApiTest {
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("设备授权码认证模式，返回信息：{}", json);
-			assertThat(json).isNotBlank();
+			Assertions.assertThat(json).isNotBlank();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -299,7 +299,7 @@ class OAuth2ApiTest {
 					"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("客户端认证模式，返回信息：{}", json);
-			assertThat(json).isNotBlank();
+			Assertions.assertThat(json).isNotBlank();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken);
@@ -318,7 +318,7 @@ class OAuth2ApiTest {
 					"Basic ZWI3RGVkNWJiRmJkNzg5NmY4YTJjZmREYzk6RHBBa1BmejRlVzE4ZDI=");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("授权码认证模式，返回信息：{}", json);
-			assertThat(json).isNotBlank();
+			Assertions.assertThat(json).isNotBlank();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -345,7 +345,7 @@ class OAuth2ApiTest {
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("手机号认证，返回信息：{}", json);
-			assertThat(json).isNotBlank();
+			Assertions.assertThat(json).isNotBlank();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -366,7 +366,7 @@ class OAuth2ApiTest {
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("邮箱认证，返回信息：{}", json);
-			assertThat(json).isNotBlank();
+			Assertions.assertThat(json).isNotBlank();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -387,7 +387,7 @@ class OAuth2ApiTest {
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = OkHttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("用户名密码认证模式，返回信息：{}", json);
-			assertThat(json).isNotBlank();
+			Assertions.assertThat(json).isNotBlank();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -408,7 +408,7 @@ class OAuth2ApiTest {
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0");
 			String json = OkHttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("测试认证模式，返回信息：{}", json);
-			assertThat(json).isNotBlank();
+			Assertions.assertThat(json).isNotBlank();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
 			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
@@ -426,7 +426,7 @@ class OAuth2ApiTest {
 			Map<String, String> headers = Collections.singletonMap("Authorization", secretHeadValue);
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("刷新令牌模式，返回信息；{}", json);
-			assertThat(json).isNotBlank();
+			Assertions.assertThat(json).isNotBlank();
 			return JacksonUtils.readTree(json).get("access_token").asText();
 		}
 		catch (Exception e) {
@@ -443,7 +443,7 @@ class OAuth2ApiTest {
 
 	private String getDeviceCode() {
 		try {
-			String json = restClient.method(POST)
+			String json = restClient.method(HttpMethod.POST)
 				.uri(getDeviceCodeApiUrl())
 				.headers(getHeaders())
 				.contentType(MediaType.MULTIPART_FORM_DATA)
@@ -457,32 +457,32 @@ class OAuth2ApiTest {
 	}
 
 	private Consumer<HttpHeaders> getHeaders() {
-		return headers -> headers.add(AUTHORIZATION, "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+		return headers -> headers.add(HttpHeaders.AUTHORIZATION, "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 	}
 
 	private String getOAuthApiUrl() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/oauth2/token";
+		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort() + "/oauth2/token";
 	}
 
 	private String getDeviceCodeApiUrl() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/oauth2/device_authorization";
+		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort() + "/oauth2/device_authorization";
 	}
 
 	private String getCaptchaApiUrlV3() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/captchas/"
+		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort() + "/v3/captchas/"
 				+ OAuth2ApiTest.UUID;
 	}
 
 	private String getTokenUrlV3() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/tokens";
+		return getSchema(disabledSsl()) + "auth" +StringConstants. RISK + serverProperties.getPort() + "/v3/tokens";
 	}
 
 	public String getSendMailCaptchaUrl() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/captchas/send/mail";
+		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort() + "/v3/captchas/send/mail";
 	}
 
 	public String getSendMobileCaptchaUrl() {
-		return getSchema(disabledSsl()) + "auth" + RISK + serverProperties.getPort() + "/v3/captchas/send/mobile";
+		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort() + "/v3/captchas/send/mobile";
 	}
 
 	private String getSchema(boolean disabled) {

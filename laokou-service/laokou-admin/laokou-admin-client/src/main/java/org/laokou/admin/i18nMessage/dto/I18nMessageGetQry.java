@@ -17,7 +17,6 @@
 
 package org.laokou.admin.i18nMessage.dto;
 
-import lombok.*;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**

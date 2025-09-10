@@ -19,10 +19,8 @@ package org.laokou.admin.i18nMessage.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.i18nMessage.api.I18nMessagesServiceI;
-import org.laokou.admin.i18nMessage.command.*;
 import org.laokou.admin.i18nMessage.command.query.I18nMessageGetQryExe;
 import org.laokou.admin.i18nMessage.command.query.I18nMessagePageQryExe;
-import org.laokou.admin.i18nMessage.dto.*;
 import org.laokou.admin.i18nMessage.dto.clientobject.I18nMessageCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;

@@ -24,10 +24,9 @@ import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.dto.LoginLogSaveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * @author laokou
@@ -44,7 +43,7 @@ public class LoginLogSaveCmdExe {
 	@CommandLog
 	public void executeVoid(LoginLogSaveCmd cmd) {
 		try {
-			DynamicDataSourceContextHolder.push(DOMAIN);
+			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			transactionalUtils.executeInTransaction(() -> domainService.createLoginLog(LoginLogConvertor.toEntity(cmd.getCo())));
 		}
 		finally {

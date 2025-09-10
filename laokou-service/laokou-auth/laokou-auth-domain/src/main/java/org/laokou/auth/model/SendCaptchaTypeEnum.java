@@ -21,8 +21,6 @@ import lombok.Getter;
 import org.laokou.common.i18n.util.EnumParser;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 
-import static org.laokou.auth.model.MqEnum.MAIL_CAPTCHA;
-import static org.laokou.auth.model.MqEnum.MOBILE_CAPTCHA;
 
 /**
  * @author laokou
@@ -38,7 +36,7 @@ public enum SendCaptchaTypeEnum {
 		}
 
 		@Override public String getMqTopic() {
-    		return MAIL_CAPTCHA.getTopic();
+    		return MqEnum.MAIL_CAPTCHA.getTopic();
     	}
 	},
 
@@ -49,7 +47,7 @@ public enum SendCaptchaTypeEnum {
 		}
 
 		@Override public String getMqTopic() {
-    		return MOBILE_CAPTCHA.getTopic();
+    		return MqEnum.MOBILE_CAPTCHA.getTopic();
     	}
 	};
 

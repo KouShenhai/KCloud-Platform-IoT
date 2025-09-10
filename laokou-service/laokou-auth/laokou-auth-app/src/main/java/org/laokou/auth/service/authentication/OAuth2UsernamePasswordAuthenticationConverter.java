@@ -17,12 +17,12 @@
 
 package org.laokou.auth.service.authentication;
 
+import org.laokou.auth.model.Constants;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static org.laokou.auth.factory.DomainFactory.USERNAME_PASSWORD;
 
 /**
  * 用户名密码转换器.
@@ -34,7 +34,7 @@ final class OAuth2UsernamePasswordAuthenticationConverter extends AbstractOAuth2
 
 	@Override
 	String getGrantType() {
-		return USERNAME_PASSWORD;
+		return Constants.USERNAME_PASSWORD;
 	}
 
 	@Override

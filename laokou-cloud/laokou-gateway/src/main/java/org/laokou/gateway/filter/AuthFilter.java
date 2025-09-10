@@ -17,13 +17,16 @@
 
 package org.laokou.gateway.filter;
 
+import com.google.common.net.HttpHeaders;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.SpringUtils;
+import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.reactor.util.ReactiveRequestUtils;
 import org.laokou.common.reactor.util.ReactiveResponseUtils;
 import org.laokou.gateway.util.ReactiveI18nUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -38,12 +41,6 @@ import reactor.core.publisher.Mono;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import static org.laokou.common.i18n.common.exception.StatusCode.UNAUTHORIZED;
-import static org.laokou.common.reactor.util.ReactiveRequestUtils.getMethodName;
-import static org.laokou.common.reactor.util.ReactiveRequestUtils.getParamValue;
-import static org.laokou.common.reactor.util.ReactiveRequestUtils.getRequestURL;
-import static org.laokou.common.reactor.util.ReactiveRequestUtils.pathMatcher;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 /**
  * 认证过滤器.
@@ -70,18 +67,18 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			// 获取request对象
 			ServerHttpRequest request = exchange.getRequest();
 			// 获取uri
-			String requestURL = getRequestURL(request);
+			String requestURL = ReactiveRequestUtils.getRequestURL(request);
 			// 请求放行，无需验证权限
-			if (pathMatcher(getMethodName(request), requestURL, uriMap)) {
+			if (ReactiveRequestUtils.pathMatcher(ReactiveRequestUtils.getMethodName(request), requestURL, uriMap)) {
 				return chain.filter(exchange.mutate().request(request.mutate().build()).build());
 			}
 			// 获取token
-			String token = getParamValue(request, AUTHORIZATION);
+			String token = ReactiveRequestUtils.getParamValue(request, HttpHeaders.AUTHORIZATION);
 			if (StringUtils.isEmpty(token)) {
-				return ReactiveResponseUtils.responseOk(exchange, Result.fail(UNAUTHORIZED));
+				return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.UNAUTHORIZED));
 			}
 			// 增加令牌
-			return chain.filter(exchange.mutate().request(request.mutate().header(AUTHORIZATION, token).build()).build());
+			return chain.filter(exchange.mutate().request(request.mutate().header(HttpHeaders.AUTHORIZATION, token).build()).build());
 		}
 		finally {
 			ReactiveI18nUtils.reset();

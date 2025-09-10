@@ -22,21 +22,38 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.OAuth2Constants;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.*;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClaimAccessor;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.OAuth2Error;
+import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
+import org.springframework.security.oauth2.core.OAuth2RefreshToken;
+import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
-import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.oauth2.jwt.DPoPProofContext;
+import org.springframework.security.oauth2.jwt.DPoPProofJwtDecoderFactory;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtDecoderFactory;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
-import org.springframework.security.oauth2.server.authorization.authentication.*;
+import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AccessTokenAuthenticationToken;
+import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationCodeAuthenticationProvider;
+import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationGrantAuthenticationToken;
+import org.springframework.security.oauth2.server.authorization.authentication.OAuth2ClientAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
 import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
@@ -47,12 +64,13 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.security.Principal;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
-import static org.laokou.auth.model.OAuth2Constants.*;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.*;
-import static org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames.ID_TOKEN;
-import static org.springframework.security.oauth2.server.authorization.OAuth2TokenType.ACCESS_TOKEN;
 
 /**
  * 抽象认证处理器.
@@ -63,7 +81,7 @@ import static org.springframework.security.oauth2.server.authorization.OAuth2Tok
 @RequiredArgsConstructor
 abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationProvider {
 
-	private static final OAuth2TokenType ID_TOKEN_TOKEN_TYPE = new OAuth2TokenType(ID_TOKEN);
+	private static final OAuth2TokenType ID_TOKEN_TOKEN_TYPE = new OAuth2TokenType(OidcParameterNames.ID_TOKEN);
 
 	private final JwtDecoderFactory<DPoPProofContext> dPoPProofVerifierFactory = new DPoPProofJwtDecoderFactory();
 
@@ -85,7 +103,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		}
 		catch (GlobalException e) {
 			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
-			throw getOAuth2AuthenticationException(e.getCode(), e.getMsg(), ERROR_URL);
+			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(e.getCode(), e.getMsg(), OAuth2ExceptionHandler.ERROR_URL);
 		}
 		catch (OAuth2AuthenticationException e) {
 			throw e;
@@ -130,7 +148,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(abstractOAuth2Authentication);
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 		if (ObjectUtils.isNull(registeredClient)) {
-			throw getException(REGISTERED_CLIENT_NOT_EXIST);
+			throw OAuth2ExceptionHandler.getException(OAuth2Constants.REGISTERED_CLIENT_NOT_EXIST);
 		}
 
 		// 获取认证范围
@@ -145,7 +163,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		DefaultOAuth2TokenContext.Builder tokenContextBuilder = DefaultOAuth2TokenContext.builder()
 			.registeredClient(registeredClient)
 			.principal(principal)
-			.tokenType(ACCESS_TOKEN)
+			.tokenType(OAuth2TokenType.ACCESS_TOKEN)
 			.authorizedScopes(authorizedScopes)
 			.authorizationServerContext(AuthorizationServerContextHolder.getContext())
 			.authorizationGrantType(grantType)
@@ -164,7 +182,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		// ----- Access token -----
 		OAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.ACCESS_TOKEN).build();
 		OAuth2Token generatedAccessToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
-			.orElseThrow(() -> getException(GENERATE_ACCESS_TOKEN_FAIL));
+			.orElseThrow(() -> OAuth2ExceptionHandler.getException(OAuth2Constants.GENERATE_ACCESS_TOKEN_FAIL));
 		OAuth2AccessToken accessToken = accessToken(authorizationBuilder, generatedAccessToken, tokenContext);
 
 		// ----- Refresh token -----
@@ -173,7 +191,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 				&& !clientPrincipal.getClientAuthenticationMethod().equals(ClientAuthenticationMethod.NONE)) {
 			tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
 			OAuth2Token generatedRefreshToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
-				.orElseThrow(() -> getException(GENERATE_REFRESH_TOKEN_FAIL));
+				.orElseThrow(() -> OAuth2ExceptionHandler.getException(OAuth2Constants.GENERATE_REFRESH_TOKEN_FAIL));
 			refreshToken = (OAuth2RefreshToken) generatedRefreshToken;
 			authorizationBuilder.refreshToken(refreshToken);
 		}
@@ -185,7 +203,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 				.authorization(authorizationBuilder.build())
 				.build();
 			OAuth2Token generatedIdToken = Optional.ofNullable(this.tokenGenerator.generate(tokenContext))
-				.orElseThrow(() -> getException(GENERATE_ID_TOKEN_FAIL));
+				.orElseThrow(() -> OAuth2ExceptionHandler.getException(OAuth2Constants.GENERATE_ID_TOKEN_FAIL));
 			// 生成id_token
 			idToken = new OidcIdToken(generatedIdToken.getTokenValue(), generatedIdToken.getIssuedAt(),
 					generatedIdToken.getExpiresAt(), ((Jwt) generatedIdToken).getClaims());
@@ -226,7 +244,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		if (ObjectUtils.isNotNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {
 			return clientPrincipal;
 		}
-		throw getException(INVALID_CLIENT);
+		throw OAuth2ExceptionHandler.getException(OAuth2Constants.INVALID_CLIENT);
 	}
 
 	private Jwt verifyIfAvailable(OAuth2AuthorizationGrantAuthenticationToken authorizationGrantAuthentication) {

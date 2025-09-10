@@ -26,8 +26,8 @@ import org.laokou.admin.loginLog.gatewayimpl.database.LoginLogMapper;
 import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.excel.util.ExcelUtils;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;
-import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * 导出登录日志命令执行器.
@@ -43,7 +43,7 @@ public class LoginLogExportCmdExe {
 	@CommandLog
 	public void executeVoid(LoginLogExportCmd cmd) {
 		try {
-			DynamicDataSourceContextHolder.push(DOMAIN);
+			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			ExcelUtils.doExport("登录日志", "登录日志", ResponseUtils.getHttpServletResponse(), cmd, loginLogMapper,
 					LoginLogExcel.class, LoginLogConvertor.INSTANCE);
 		}

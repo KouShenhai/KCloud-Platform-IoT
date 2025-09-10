@@ -18,7 +18,6 @@
 package org.laokou.admin.dept.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dept.gateway.*;
 import org.laokou.admin.dept.model.DeptE;
 import org.springframework.stereotype.Component;
 

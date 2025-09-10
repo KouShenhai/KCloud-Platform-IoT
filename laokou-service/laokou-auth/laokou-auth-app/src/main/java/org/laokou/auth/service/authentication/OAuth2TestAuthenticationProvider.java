@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.Constants;
 import org.laokou.auth.model.GrantTypeEnum;
 import org.laokou.common.security.config.OAuth2ModelMapper;
 import org.springframework.security.core.Authentication;
@@ -30,8 +31,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.factory.DomainFactory.*;
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 测试处理器.
@@ -54,10 +53,10 @@ final class OAuth2TestAuthenticationProvider extends AbstractOAuth2Authenticatio
 
 	@Override
 	Authentication getPrincipal(HttpServletRequest request) throws Exception {
-		String username = request.getParameter(USERNAME);
-		String password = request.getParameter(PASSWORD);
-		String tenantCode = request.getParameter(TENANT_CODE);
-		AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.TEST, EMPTY, EMPTY);
+		String username = request.getParameter(Constants.USERNAME);
+		String password = request.getParameter(Constants.PASSWORD);
+		String tenantCode = request.getParameter(Constants.TENANT_CODE);
+		AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.TEST, StringConstants.EMPTY, StringConstants.EMPTY);
 		authA.createUserByTest();
 		return authentication(authA, request);
 	}

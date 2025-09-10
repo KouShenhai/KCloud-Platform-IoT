@@ -25,7 +25,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static org.laokou.auth.model.OAuth2Constants.SESSION_EXPIRED;
 
 /**
  * @author laokou
@@ -35,7 +34,7 @@ public class SessionExpiredStrategy implements SessionInformationExpiredStrategy
 
 	@Override
 	public void onExpiredSessionDetected(SessionInformationExpiredEvent event) throws IOException {
-		ResponseUtils.responseOk(event.getResponse(), Result.fail(SESSION_EXPIRED));
+		ResponseUtils.responseOk(event.getResponse(), Result.fail(OAuth2Constants.SESSION_EXPIRED));
 	}
 
 }

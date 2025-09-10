@@ -17,25 +17,38 @@
 
 package org.laokou.auth;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.auth.model.*;
 import org.laokou.auth.factory.DomainFactory;
-import org.laokou.auth.gateway.*;
+import org.laokou.auth.gateway.DeptGateway;
+import org.laokou.auth.gateway.LoginLogGateway;
+import org.laokou.auth.gateway.MenuGateway;
+import org.laokou.auth.gateway.NoticeLogGateway;
+import org.laokou.auth.gateway.OssLogGateway;
+import org.laokou.auth.gateway.TenantGateway;
+import org.laokou.auth.gateway.UserGateway;
+import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.AuthParamValidator;
+import org.laokou.auth.model.CaptchaV;
+import org.laokou.auth.model.CaptchaValidator;
+import org.laokou.auth.model.GrantTypeEnum;
+import org.laokou.auth.model.PasswordValidator;
+import org.laokou.auth.model.UserE;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.util.RedisKeyUtils;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.util.DigestUtils;
+
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
-import static org.mockito.Mockito.*;
 
 /**
  * 认证聚合根测试.
@@ -94,11 +107,11 @@ class AuthATest {
 	void test_getUserAvatar() {
 		AuthA authA = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		UserE user = authA.getUser();
-		assertThatNoException().isThrownBy(() -> user.setAvatar(1L));
+		Assertions.assertThatNoException().isThrownBy(() -> user.setAvatar(1L));
 		// 构造租户
-		when(ossLogGateway.getOssUrl(1L)).thenReturn("https://laokou.png");
+		Mockito.when(ossLogGateway.getOssUrl(1L)).thenReturn("https://laokou.png");
 		authA.getUserAvatar(ossLogGateway.getOssUrl(user.getAvatar()));
-		assertThat(authA.getAvatar()).isEqualTo("https://laokou.png");
+		Assertions.assertThat(authA.getAvatar()).isEqualTo("https://laokou.png");
 	}
 
 	@Test
@@ -109,102 +122,102 @@ class AuthATest {
 		String decryptUsername = RSAUtils.decryptByPrivateKey(encryptUsername);
 		String encryptPassword = RSAUtils.encryptByPublicKey(password);
 		String decryptPassword = RSAUtils.decryptByPrivateKey(encryptPassword);
-		assertThat(username).isEqualTo(decryptUsername);
-		assertThat(password).isEqualTo(decryptPassword);
-		AuthA authA = getAuth(encryptUsername, encryptPassword, GrantTypeEnum.USERNAME_PASSWORD, EMPTY, EMPTY);
-		assertThatNoException().isThrownBy(authA::decryptUsernamePassword);
-		assertThat(authA.getUsername()).isEqualTo(username);
-		assertThat(authA.getPassword()).isEqualTo(password);
+		Assertions.assertThat(username).isEqualTo(decryptUsername);
+		Assertions.assertThat(password).isEqualTo(decryptPassword);
+		AuthA authA = getAuth(encryptUsername, encryptPassword, GrantTypeEnum.USERNAME_PASSWORD, StringConstants.EMPTY, StringConstants.EMPTY);
+		Assertions.assertThatNoException().isThrownBy(authA::decryptUsernamePassword);
+		Assertions.assertThat(authA.getUsername()).isEqualTo(username);
+		Assertions.assertThat(authA.getPassword()).isEqualTo(password);
 	}
 
 	@Test
 	void test_createUserByTest() throws Exception {
-		AuthA authA = getAuth("admin", "123", GrantTypeEnum.TEST, EMPTY, EMPTY);
+		AuthA authA = getAuth("admin", "123", GrantTypeEnum.TEST, StringConstants.EMPTY, StringConstants.EMPTY);
 		// 创建用户【测试】
-		assertThatNoException().isThrownBy(authA::createUserByTest);
+		Assertions.assertThatNoException().isThrownBy(authA::createUserByTest);
 		UserE user = authA.getUser();
-		assertThat(user).isNotNull();
-		assertThat(user.getUsername()).isEqualTo(AESUtils.encrypt("admin"));
+		Assertions.assertThat(user).isNotNull();
+		Assertions.assertThat(user.getUsername()).isEqualTo(AESUtils.encrypt("admin"));
 	}
 
 	@Test
 	void test_createUserByUsernamePassword() throws Exception {
 		AuthA authA = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 创建用户【用户名密码】
-		assertThatNoException().isThrownBy(authA::createUserByUsernamePassword);
+		Assertions.assertThatNoException().isThrownBy(authA::createUserByUsernamePassword);
 		UserE user = authA.getUser();
-		assertThat(user).isNotNull();
-		assertThat(user.getUsername()).isEqualTo(AESUtils.encrypt("admin"));
+		Assertions.assertThat(user).isNotNull();
+		Assertions.assertThat(user.getUsername()).isEqualTo(AESUtils.encrypt("admin"));
 	}
 
 	@Test
 	void test_createUserByMobile() throws Exception {
-		AuthA authA = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
+		AuthA authA = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
 		// 创建用户【手机号】
-		assertThatNoException().isThrownBy(authA::createUserByMobile);
+		Assertions.assertThatNoException().isThrownBy(authA::createUserByMobile);
 		UserE user = authA.getUser();
-		assertThat(user).isNotNull();
-		assertThat(user.getMobile()).isEqualTo(AESUtils.encrypt("18888888888"));
+		Assertions.assertThat(user).isNotNull();
+		Assertions.assertThat(user.getMobile()).isEqualTo(AESUtils.encrypt("18888888888"));
 	}
 
 	@Test
 	void test_createUserByMail() throws Exception {
-		AuthA authA = getAuth(EMPTY, EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
+		AuthA authA = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
 		// 创建用户【邮箱】
-		assertThatNoException().isThrownBy(authA::createUserByMail);
+		Assertions.assertThatNoException().isThrownBy(authA::createUserByMail);
 		UserE user = authA.getUser();
-		assertThat(user).isNotNull();
-		assertThat(user.getMail()).isEqualTo(AESUtils.encrypt("2413176044@qq.com"));
+		Assertions.assertThat(user).isNotNull();
+		Assertions.assertThat(user.getMail()).isEqualTo(AESUtils.encrypt("2413176044@qq.com"));
 	}
 
 	@Test
 	void test_createUserByAuthorizationCode() throws Exception {
-		AuthA authA = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
+		AuthA authA = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE,StringConstants. EMPTY, StringConstants.EMPTY);
 		// 创建用户【授权码】
-		assertThatNoException().isThrownBy(authA::createUserByAuthorizationCode);
+		Assertions.assertThatNoException().isThrownBy(authA::createUserByAuthorizationCode);
 		UserE user = authA.getUser();
-		assertThat(user).isNotNull();
-		assertThat(user.getUsername()).isEqualTo(AESUtils.encrypt("admin"));
+		Assertions.assertThat(user).isNotNull();
+		Assertions.assertThat(user.getUsername()).isEqualTo(AESUtils.encrypt("admin"));
 	}
 
 	@Test
 	void test_checkTenantId() {
 		// 构造租户
-		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
+		Mockito.when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 校验租户ID
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 获取租户ID
-		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
-		assertThatNoException().isThrownBy(() -> auth.getTenantId(() -> tenantGateway.getTenantId(auth.getTenantCode())));
-		assertThatNoException().isThrownBy(auth::checkTenantId);
+		Assertions.assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
+		Assertions.assertThatNoException().isThrownBy(() -> auth.getTenantId(() -> tenantGateway.getTenantId(auth.getTenantCode())));
+		Assertions.assertThatNoException().isThrownBy(auth::checkTenantId);
 		// 校验调用次数
-		verify(tenantGateway, times(1)).getTenantId("laokou");
+		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId("laokou");
 	}
 
 	@Test
 	void test_checkCaptcha() {
 		// 构造验证码校验
-		doReturn(true).when(captchaValidator)
+		Mockito.doReturn(true).when(captchaValidator)
 			.validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
-		doReturn(true).when(captchaValidator)
+		Mockito.doReturn(true).when(captchaValidator)
 			.validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
-		doReturn(true).when(captchaValidator)
+		Mockito.doReturn(true).when(captchaValidator)
 			.validateCaptcha(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
 		// 校验验证码【用户名密码登录】
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
-		assertThatNoException().isThrownBy(auth::checkCaptcha);
+		Assertions.assertThatNoException().isThrownBy(auth::checkCaptcha);
 		// 校验验证码【邮箱登录】
-		AuthA auth1 = getAuth(EMPTY, EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
-		assertThatNoException().isThrownBy(auth1::checkCaptcha);
+		AuthA auth1 = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
+		Assertions.assertThatNoException().isThrownBy(auth1::checkCaptcha);
 		// 校验验证码【手机号登录】
-		AuthA auth2 = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
-		assertThatNoException().isThrownBy(auth2::checkCaptcha);
+		AuthA auth2 = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
+		Assertions.assertThatNoException().isThrownBy(auth2::checkCaptcha);
 		// 校验调用次数
-		verify(captchaValidator, times(1)).validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"),
+		Mockito.verify(captchaValidator, Mockito.times(1)).validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"),
 				"1234");
-		verify(captchaValidator, times(1)).validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"),
+		Mockito.verify(captchaValidator, Mockito.times(1)).validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"),
 				"123456");
-		verify(captchaValidator, times(1)).validateCaptcha(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"),
+		Mockito.verify(captchaValidator, Mockito.times(1)).validateCaptcha(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"),
 				"123456");
 	}
 
@@ -212,65 +225,65 @@ class AuthATest {
 	void test_checkUsername() {
 		// 构造用户信息
 		UserE user = DomainFactory.getUser();
-		when(userGateway.getUserProfile(user)).thenReturn(user);
+		Mockito.when(userGateway.getUserProfile(user)).thenReturn(user);
 		// 校验用户名
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
-		assertThatNoException().isThrownBy(() -> auth.getUserInfo(userGateway.getUserProfile(user)));
-		assertThatNoException().isThrownBy(auth::checkUsername);
+		Assertions.assertThatNoException().isThrownBy(() -> auth.getUserInfo(userGateway.getUserProfile(user)));
+		Assertions.assertThatNoException().isThrownBy(auth::checkUsername);
 	}
 
 	@Test
 	void test_checkPassword() {
 		// 构造密码校验
-		doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
+		Mockito.doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		// 创建用户【用户名密码】
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
-		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
-		assertThat(auth.getUser()).isNotNull();
+		Assertions.assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
+		Assertions.assertThat(auth.getUser()).isNotNull();
 		// 构建密码
 		UserE user = auth.getUser();
-		assertThatNoException().isThrownBy(() -> user
+		Assertions.assertThatNoException().isThrownBy(() -> user
 			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
 		// 校验密码
-		assertThatNoException().isThrownBy(auth::checkPassword);
+		Assertions.assertThatNoException().isThrownBy(auth::checkPassword);
 	}
 
 	@Test
 	void test_checkUserStatus() {
 		// 创建用户【用户名密码】
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
-		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
-		assertThat(auth.getUser()).isNotNull();
+		Assertions.assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
+		Assertions.assertThat(auth.getUser()).isNotNull();
 		// 校验用户状态
-		assertThatNoException().isThrownBy(auth::checkUserStatus);
+		Assertions.assertThatNoException().isThrownBy(auth::checkUserStatus);
 	}
 
 	@Test
 	void test_checkMenuPermissions() {
 		// 创建用户【用户名密码】
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
-		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
+		Assertions.assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
 		UserE user = auth.getUser();
-		assertThat(user).isNotNull();
+		Assertions.assertThat(user).isNotNull();
 		// 构造菜单
-		when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
+		Mockito.when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
 		// 校验菜单权限集合
-		assertThatNoException().isThrownBy(() -> auth.getMenuPermissions(menuGateway.getMenuPermissions(user)));
-		assertThatNoException().isThrownBy(auth::checkMenuPermissions);
+		Assertions.assertThatNoException().isThrownBy(() -> auth.getMenuPermissions(menuGateway.getMenuPermissions(user)));
+		Assertions.assertThatNoException().isThrownBy(auth::checkMenuPermissions);
 	}
 
 	@Test
 	void test_checkDeptPaths() {
 		// 创建用户【用户名密码】
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
-		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
+		Assertions.assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
 		UserE user = auth.getUser();
-		assertThat(user).isNotNull();
+		Assertions.assertThat(user).isNotNull();
 		// 构造部门
-		when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
+		Mockito.when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 校验部门路径集合
-		assertThatNoException().isThrownBy(() -> auth.getDeptPaths(deptGateway.getDeptPaths(user)));
-		assertThatNoException().isThrownBy(auth::checkDeptPaths);
+		Assertions.assertThatNoException().isThrownBy(() -> auth.getDeptPaths(deptGateway.getDeptPaths(user)));
+		Assertions.assertThatNoException().isThrownBy(auth::checkDeptPaths);
 	}
 
 	private AuthA getAuth(String username, String password, GrantTypeEnum grantTypeEnum, String uuid, String captcha) {

@@ -26,7 +26,6 @@ import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 
-import static org.laokou.common.tenant.constant.DSConstants.IOT;
 
 /**
  * 查看产品类别请求执行器.
@@ -41,7 +40,7 @@ public class ProductCategoryGetQryExe {
 
 	public Result<ProductCategoryCO> execute(ProductCategoryGetQry qry) {
 		try {
-			DynamicDataSourceContextHolder.push(IOT);
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			return Result.ok(ProductCategoryConvertor.toClientObject(productCategoryMapper.selectById(qry.getId())));
 		}
 		finally {

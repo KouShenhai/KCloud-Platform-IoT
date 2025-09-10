@@ -18,8 +18,17 @@
 package org.laokou.auth.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.gateway.*;
-import org.laokou.auth.model.*;
+import org.laokou.auth.gateway.DeptGateway;
+import org.laokou.auth.gateway.LoginLogGateway;
+import org.laokou.auth.gateway.MenuGateway;
+import org.laokou.auth.gateway.NoticeLogGateway;
+import org.laokou.auth.gateway.OssLogGateway;
+import org.laokou.auth.gateway.TenantGateway;
+import org.laokou.auth.gateway.UserGateway;
+import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.CaptchaE;
+import org.laokou.auth.model.LoginLogE;
+import org.laokou.auth.model.NoticeLogE;
 import org.springframework.stereotype.Component;
 
 /**

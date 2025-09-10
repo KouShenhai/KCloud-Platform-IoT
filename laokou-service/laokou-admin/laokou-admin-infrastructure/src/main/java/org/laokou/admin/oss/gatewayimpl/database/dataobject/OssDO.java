@@ -20,8 +20,7 @@ package org.laokou.admin.oss.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
-
-import static org.laokou.common.tenant.constant.DSConstants.Master.OSS_TABLE;
+import org.laokou.common.tenant.constant.DSConstants;
 
 /**
  * OSS数据对象.
@@ -29,7 +28,7 @@ import static org.laokou.common.tenant.constant.DSConstants.Master.OSS_TABLE;
  * @author laokou
  */
 @Data
-@TableName(OSS_TABLE)
+@TableName(DSConstants.Master.OSS_TABLE)
 public class OssDO extends BaseDO {
 
 	/**

@@ -17,9 +17,15 @@
 
 package org.laokou.generator.template.api;
 
-import org.laokou.generator.template.dto.*;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.generator.template.dto.TemplateExportCmd;
+import org.laokou.generator.template.dto.TemplateGetQry;
+import org.laokou.generator.template.dto.TemplateImportCmd;
+import org.laokou.generator.template.dto.TemplateModifyCmd;
+import org.laokou.generator.template.dto.TemplatePageQry;
+import org.laokou.generator.template.dto.TemplateRemoveCmd;
+import org.laokou.generator.template.dto.TemplateSaveCmd;
 import org.laokou.generator.template.dto.clientobject.TemplateCO;
 
 /**

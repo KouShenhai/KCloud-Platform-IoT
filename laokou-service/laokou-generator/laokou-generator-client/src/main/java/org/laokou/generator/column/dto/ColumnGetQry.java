@@ -17,7 +17,7 @@
 
 package org.laokou.generator.column.dto;
 
-import lombok.*;
+
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**

@@ -17,9 +17,15 @@
 
 package org.laokou.iot.product.api;
 
-import org.laokou.iot.product.dto.*;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.product.dto.ProductExportCmd;
+import org.laokou.iot.product.dto.ProductGetQry;
+import org.laokou.iot.product.dto.ProductImportCmd;
+import org.laokou.iot.product.dto.ProductModifyCmd;
+import org.laokou.iot.product.dto.ProductPageQry;
+import org.laokou.iot.product.dto.ProductRemoveCmd;
+import org.laokou.iot.product.dto.ProductSaveCmd;
 import org.laokou.iot.product.dto.clientobject.ProductCO;
 
 /**

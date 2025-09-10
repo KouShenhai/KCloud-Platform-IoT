@@ -25,10 +25,12 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.SpringContextUtils;
 import org.laokou.common.fory.config.ForyFactory;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
+import org.laokou.gateway.constant.GatewayConstants;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
@@ -46,8 +48,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
-import static org.laokou.gateway.constant.GatewayConstants.ROUTER_NOT_EXIST;
 
 // @formatter:off
 /**
@@ -169,7 +169,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * @return 拉取结果
 	 */
 	private Collection<RouteDefinition> getRoutes() {
-		return getRoutes(EMPTY);
+		return getRoutes(StringConstants.EMPTY);
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		}
 		catch (Exception e) {
 			log.error("动态路由【API网关】不存在，错误信息：{}", e.getMessage(), e);
-			throw new SystemException(ROUTER_NOT_EXIST);
+			throw new SystemException(GatewayConstants.ROUTER_NOT_EXIST);
 		}
 	}
 

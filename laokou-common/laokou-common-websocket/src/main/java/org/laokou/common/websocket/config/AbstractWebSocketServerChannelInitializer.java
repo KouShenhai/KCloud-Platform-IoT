@@ -27,7 +27,7 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.RequiredArgsConstructor;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
@@ -52,7 +52,7 @@ public abstract class AbstractWebSocketServerChannelInitializer extends Abstract
 		// WebSocket协议
 		pipeline.addLast("webSocketServerProtocolHandler", new WebSocketServerProtocolHandler(springWebSocketServerProperties.getWebsocketPath()));
 		// 心跳检测
-		pipeline.addLast("idleStateHandler", new IdleStateHandler(springWebSocketServerProperties.getReaderIdleTime(), springWebSocketServerProperties.getWriterIdleTime(), springWebSocketServerProperties.getAllIdleTime(), SECONDS));
+		pipeline.addLast("idleStateHandler", new IdleStateHandler(springWebSocketServerProperties.getReaderIdleTime(), springWebSocketServerProperties.getWriterIdleTime(), springWebSocketServerProperties.getAllIdleTime(), TimeUnit.SECONDS));
 		// Flush合并
 		pipeline.addLast("flushConsolidationHandler", new FlushConsolidationHandler(springWebSocketServerProperties.getExplicitFlushAfterFlushes(), springWebSocketServerProperties.isConsolidateWhenNoReadInProgress()));
 		// 后置处理

@@ -17,12 +17,12 @@
 
 package org.laokou.auth.service.authentication;
 
+import org.laokou.auth.model.Constants;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 import java.util.Map;
 
-import static org.laokou.auth.factory.DomainFactory.TEST;
 
 /**
  * 测试令牌.
@@ -37,7 +37,7 @@ final class OAuth2TestAuthenticationToken extends AbstractOAuth2AuthenticationTo
 	 * @param additionalParameters the additional parameters
 	 */
 	OAuth2TestAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		super(new AuthorizationGrantType(TEST), clientPrincipal, additionalParameters);
+		super(new AuthorizationGrantType(Constants.TEST), clientPrincipal, additionalParameters);
 	}
 
 }

@@ -19,10 +19,9 @@ package org.laokou.admin.noticeLog.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.noticeLog.api.NoticeLogsServiceI;
-import org.laokou.admin.noticeLog.command.*;
 import org.laokou.admin.noticeLog.command.query.NoticeLogGetQryExe;
 import org.laokou.admin.noticeLog.command.query.NoticeLogPageQryExe;
-import org.laokou.admin.noticeLog.dto.*;
+
 import org.laokou.admin.noticeLog.dto.clientobject.NoticeLogCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;

@@ -26,11 +26,10 @@ import org.laokou.admin.noticeLog.gatewayimpl.database.NoticeLogMapper;
 import org.laokou.admin.noticeLog.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * 分页查询通知日志请求执行器.
@@ -45,7 +44,7 @@ public class NoticeLogPageQryExe {
 
 	public Result<Page<NoticeLogCO>> execute(NoticeLogPageQry qry) {
 		try {
-			DynamicDataSourceContextHolder.push(DOMAIN);
+			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			List<NoticeLogDO> list = noticeLogMapper.selectObjectPage(qry);
 			long total = noticeLogMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(NoticeLogConvertor.toClientObjects(list), total));

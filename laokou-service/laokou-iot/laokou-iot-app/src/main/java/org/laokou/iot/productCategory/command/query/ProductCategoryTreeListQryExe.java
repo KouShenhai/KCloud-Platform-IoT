@@ -21,6 +21,7 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.util.TreeUtils;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 import org.laokou.iot.productCategory.dto.ProductCategoryPageQry;
 import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
@@ -30,7 +31,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.tenant.constant.DSConstants.IOT;
 
 /**
  * @author laokou
@@ -43,7 +43,7 @@ public class ProductCategoryTreeListQryExe {
 
 	public Result<List<ProductCategoryCO>> execute(ProductCategoryPageQry qry) {
 		try {
-			DynamicDataSourceContextHolder.push(IOT);
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			List<ProductCategoryDO> list = productCategoryMapper.selectObjectList(qry);
 			ProductCategoryCO productCategory = TreeUtils.buildTreeNode(ProductCategoryConvertor.toClientObjs(list),
 					ProductCategoryCO.class);

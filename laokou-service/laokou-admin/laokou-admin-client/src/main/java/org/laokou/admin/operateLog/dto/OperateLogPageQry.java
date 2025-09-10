@@ -21,7 +21,6 @@ import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.StringUtils;
 
-import static org.laokou.common.i18n.util.StringUtils.trim;
 
 /**
  * 分页查询操作日志命令.
@@ -48,31 +47,31 @@ public class OperateLogPageQry extends PageQuery {
 	private Integer status;
 
 	public void setOperator(String operator) {
-		this.operator = StringUtils.like(trim(operator));
+		this.operator = StringUtils.like(StringUtils.trim(operator));
 	}
 
 	public void setName(String name) {
-		this.name = StringUtils.like(trim(name));
+		this.name = StringUtils.like(StringUtils.trim(name));
 	}
 
 	public void setModuleName(String moduleName) {
-		this.moduleName = StringUtils.like(trim(moduleName));
+		this.moduleName = StringUtils.like(StringUtils.trim(moduleName));
 	}
 
 	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = StringUtils.like(trim(errorMessage));
+		this.errorMessage = StringUtils.like(StringUtils.trim(errorMessage));
 	}
 
 	public void setIp(String ip) {
-		this.ip = StringUtils.like(trim(ip));
+		this.ip = StringUtils.like(StringUtils.trim(ip));
 	}
 
 	public void setRequestType(String requestType) {
-		this.requestType = StringUtils.like(trim(requestType));
+		this.requestType = StringUtils.like(StringUtils.trim(requestType));
 	}
 
 	public void setProfile(String profile) {
-		this.profile = StringUtils.like(trim(profile));
+		this.profile = StringUtils.like(StringUtils.trim(profile));
 	}
 
 }

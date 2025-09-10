@@ -21,9 +21,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.tenant.api.TenantsServiceI;
-import org.laokou.admin.tenant.dto.*;
+import org.laokou.admin.tenant.dto.TenantExportCmd;
+import org.laokou.admin.tenant.dto.TenantImportCmd;
+import org.laokou.admin.tenant.dto.TenantModifyCmd;
+import org.laokou.admin.tenant.dto.TenantSaveCmd;
 import org.laokou.admin.tenant.dto.clientobject.TenantCO;
 import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.constant.NameConstants;
+import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -32,11 +37,12 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import static org.laokou.common.data.cache.constant.NameConstants.TENANTS;
-import static org.laokou.common.data.cache.model.OperateTypeEnum.DEL;
 
 /**
  * 租户管理控制器.
@@ -64,7 +70,7 @@ public class TenantsControllerV3 {
 	@PreAuthorize("hasAuthority('sys:tenant:modify')")
 	@OperateLog(module = "租户管理", operation = "修改租户")
 	@Operation(summary = "修改租户", description = "修改租户")
-	@DataCache(name = TENANTS, key = "#cmd.co.id", operateType = DEL)
+	@DataCache(name = NameConstants.TENANTS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
 	public void modifyTenant(@RequestBody TenantModifyCmd cmd) {
 		tenantsServiceI.modifyTenant(cmd);
 	}
@@ -103,7 +109,7 @@ public class TenantsControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
-	@DataCache(name = TENANTS, key = "#id")
+	@DataCache(name = NameConstants.TENANTS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:tenant:detail')")
 	@Operation(summary = "查看租户详情", description = "查看租户详情")
 	public Result<TenantCO> getTenantById(@PathVariable("id") Long id) {

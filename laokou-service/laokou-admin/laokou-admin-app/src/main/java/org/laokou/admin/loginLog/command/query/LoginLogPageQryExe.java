@@ -27,11 +27,11 @@ import org.laokou.admin.loginLog.gatewayimpl.database.LoginLogMapper;
 import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * 分页查询登录日志请求执行器.
@@ -47,7 +47,7 @@ public class LoginLogPageQryExe {
 
 	public Result<Page<LoginLogCO>> execute(LoginLogPageQry qry) {
 		try {
-			DynamicDataSourceContextHolder.push(DOMAIN);
+			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			List<LoginLogDO> list = loginLogMapper.selectObjectPage(qry);
 			long total = loginLogMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(LoginLogConvertor.toClientObjects(list), total));

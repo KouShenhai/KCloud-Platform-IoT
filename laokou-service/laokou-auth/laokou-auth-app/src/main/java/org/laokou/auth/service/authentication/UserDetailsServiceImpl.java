@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.Constants;
 import org.laokou.auth.model.GrantTypeEnum;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.BizException;
@@ -31,9 +32,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.auth.factory.DomainFactory.PASSWORD;
-import static org.laokou.auth.factory.DomainFactory.TENANT_CODE;
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 用户认证.
@@ -57,10 +55,10 @@ final class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
 			HttpServletRequest request = RequestUtils.getHttpServletRequest();
-			String password = request.getParameter(PASSWORD);
-			String tenantCode = request.getParameter(TENANT_CODE);
+			String password = request.getParameter(Constants.PASSWORD);
+			String tenantCode = request.getParameter(Constants.TENANT_CODE);
 			AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.AUTHORIZATION_CODE,
-					EMPTY, EMPTY);
+				StringConstants.EMPTY, StringConstants.EMPTY);
 			authA.createUserByAuthorizationCode();
 			return (UserDetails) authenticationProcessor.authentication(authA, request).getPrincipal();
 		}

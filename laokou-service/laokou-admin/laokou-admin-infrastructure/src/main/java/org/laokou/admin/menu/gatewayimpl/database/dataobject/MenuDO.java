@@ -20,8 +20,7 @@ package org.laokou.admin.menu.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
-
-import static org.laokou.common.tenant.constant.DSConstants.Master.MENU_TABLE;
+import org.laokou.common.tenant.constant.DSConstants;
 
 /**
  * 菜单数据对象.
@@ -29,7 +28,7 @@ import static org.laokou.common.tenant.constant.DSConstants.Master.MENU_TABLE;
  * @author laokou
  */
 @Data
-@TableName(MENU_TABLE)
+@TableName(DSConstants.Master.MENU_TABLE)
 public class MenuDO extends BaseDO {
 
 	/**

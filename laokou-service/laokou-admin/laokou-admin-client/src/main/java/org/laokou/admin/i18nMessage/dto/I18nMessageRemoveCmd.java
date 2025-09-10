@@ -17,7 +17,9 @@
 
 package org.laokou.admin.i18nMessage.dto;
 
-import lombok.*;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**

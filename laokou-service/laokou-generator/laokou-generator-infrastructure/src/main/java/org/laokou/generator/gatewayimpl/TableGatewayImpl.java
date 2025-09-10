@@ -19,6 +19,7 @@ package org.laokou.generator.gatewayimpl;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.generator.gateway.TableGateway;
 import org.laokou.generator.gatewayimpl.database.TableColumnMapper;
@@ -36,8 +37,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.constant.StringConstants.UNDER;
 
 /**
  * @author laokou
@@ -84,8 +83,8 @@ public class TableGatewayImpl implements TableGateway {
 	}
 
 	private TableV convert(String name, String comment, String tablePrefix, List<TableColumnV> columns) {
-		String newName = name.replace(tablePrefix, EMPTY);
-		String className = StringUtils.convertUnder(UNDER.concat(newName));
+		String newName = name.replace(tablePrefix, StringConstants.EMPTY);
+		String className = StringUtils.convertUnder(StringConstants.UNDER.concat(newName));
 		String instanceName = StringUtils.convertUnder(newName);
 		return new TableV(name, comment, columns, className, instanceName);
 	}

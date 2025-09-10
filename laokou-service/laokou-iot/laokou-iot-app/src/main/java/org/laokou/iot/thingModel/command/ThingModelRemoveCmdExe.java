@@ -21,11 +21,11 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
+import org.laokou.common.tenant.constant.DSConstants;
+import org.laokou.iot.thingModel.ability.ThingModelDomainService;
 import org.laokou.iot.thingModel.dto.ThingModelRemoveCmd;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.thingModel.ability.ThingModelDomainService;
 
-import static org.laokou.common.tenant.constant.DSConstants.IOT;
 
 /**
  *
@@ -44,7 +44,7 @@ public class ThingModelRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(ThingModelRemoveCmd cmd) {
 		try {
-			DynamicDataSourceContextHolder.push(IOT);
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			// 校验参数
 			transactionalUtils.executeInTransaction(() -> thingModelDomainService.deleteThingModel(cmd.getIds()));
 		}

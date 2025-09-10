@@ -17,7 +17,7 @@
 
 package org.laokou.admin.tenant.dto;
 
-import lombok.*;
+
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**

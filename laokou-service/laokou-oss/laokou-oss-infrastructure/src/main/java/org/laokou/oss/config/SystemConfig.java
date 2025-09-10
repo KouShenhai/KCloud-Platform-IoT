@@ -21,11 +21,11 @@ import org.apache.kafka.clients.admin.NewTopic;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.oss.gatewayimpl.rpc.DistributedIdentifierRpc;
+import org.laokou.oss.model.MqEnum;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaAdmin;
 
-import static org.laokou.oss.model.MqEnum.OSS_LOG_TOPIC;
 
 /**
  * @author laokou
@@ -44,7 +44,7 @@ public class SystemConfig {
 
 	@Bean("authNewTopics")
 	KafkaAdmin.NewTopics newTopics() {
-		return new KafkaAdmin.NewTopics(new NewTopic(OSS_LOG_TOPIC, 3, (short) 1));
+		return new KafkaAdmin.NewTopics(new NewTopic(MqEnum.OSS_LOG_TOPIC, 3, (short) 1));
 	}
 
 }

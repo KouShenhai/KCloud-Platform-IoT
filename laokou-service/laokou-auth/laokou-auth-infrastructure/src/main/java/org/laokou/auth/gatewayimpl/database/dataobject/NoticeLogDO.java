@@ -20,14 +20,13 @@ package org.laokou.auth.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
-
-import static org.laokou.common.tenant.constant.DSConstants.Domain.NOTICE_LOG_TABLE;
+import org.laokou.common.tenant.constant.DSConstants;
 
 /**
  * @author laokou
  */
 @Data
-@TableName(NOTICE_LOG_TABLE)
+@TableName(DSConstants.Domain.NOTICE_LOG_TABLE)
 public class NoticeLogDO extends BaseDO {
 
 	private String code;

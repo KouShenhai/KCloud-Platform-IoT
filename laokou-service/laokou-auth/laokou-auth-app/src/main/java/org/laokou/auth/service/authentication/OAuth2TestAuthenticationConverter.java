@@ -17,12 +17,12 @@
 
 package org.laokou.auth.service.authentication;
 
+import org.laokou.auth.model.Constants;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static org.laokou.auth.factory.DomainFactory.TEST;
 
 /**
  * 测试转换器.
@@ -34,7 +34,7 @@ final class OAuth2TestAuthenticationConverter extends AbstractOAuth2Authenticati
 
 	@Override
 	String getGrantType() {
-		return TEST;
+		return Constants.TEST;
 	}
 
 	@Override

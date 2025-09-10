@@ -20,7 +20,11 @@ package org.laokou.common.modbus4j.config;
 import com.serotonin.modbus4j.ModbusMaster;
 import com.serotonin.modbus4j.exception.ModbusInitException;
 import com.serotonin.modbus4j.exception.ModbusTransportException;
-import com.serotonin.modbus4j.msg.*;
+import com.serotonin.modbus4j.msg.ModbusResponse;
+import com.serotonin.modbus4j.msg.ReadCoilsRequest;
+import com.serotonin.modbus4j.msg.ReadDiscreteInputsRequest;
+import com.serotonin.modbus4j.msg.ReadHoldingRegistersRequest;
+import com.serotonin.modbus4j.msg.ReadInputRegistersRequest;
 
 public abstract class AbstractModbus implements Modbus {
 

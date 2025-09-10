@@ -17,7 +17,7 @@
 
 package org.laokou.admin.i18nMessage.api;
 
-import org.laokou.admin.i18nMessage.dto.*;
+import org.laokou.admin.i18nMessage.dto.I18nMessageModifyCmd;
 import org.laokou.admin.i18nMessage.dto.clientobject.I18nMessageCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;

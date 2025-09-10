@@ -18,6 +18,7 @@
 package org.laokou.http.server.config;
 
 import io.vertx.core.http.Http2Settings;
+import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.http.HttpVersion;
 import io.vertx.core.tracing.TracingPolicy;
 import lombok.Data;
@@ -30,8 +31,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import static io.vertx.core.http.HttpServerOptions.DEFAULT_ALPN_VERSIONS;
-import static io.vertx.core.http.HttpServerOptions.DEFAULT_INITIAL_SETTINGS_MAX_CONCURRENT_STREAMS;
 
 /**
  * @author laokou
@@ -70,9 +69,9 @@ public class SpringHttpServerProperties {
 	private int maxFormBufferedBytes = 2048;
 
 	private Http2Settings initialSettings = new Http2Settings()
-		.setMaxConcurrentStreams(DEFAULT_INITIAL_SETTINGS_MAX_CONCURRENT_STREAMS);
+		.setMaxConcurrentStreams(HttpServerOptions.DEFAULT_INITIAL_SETTINGS_MAX_CONCURRENT_STREAMS);
 
-	private List<HttpVersion> alpnVersions = new ArrayList<>(DEFAULT_ALPN_VERSIONS);
+	private List<HttpVersion> alpnVersions = new ArrayList<>(HttpServerOptions.DEFAULT_ALPN_VERSIONS);
 
 	private boolean http2ClearTextEnabled = true;
 

@@ -18,6 +18,7 @@
 package org.laokou.auth.convertor;
 
 import com.blueconic.browscap.Capabilities;
+import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.auth.dto.clientobject.LoginLogCO;
 import org.laokou.auth.dto.domainevent.LoginEvent;
@@ -30,13 +31,12 @@ import org.laokou.auth.model.UserE;
 import org.laokou.common.core.util.AddressUtils;
 import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.ObjectUtils;
 
 import java.util.Optional;
 
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
-import static org.laokou.common.i18n.util.StringUtils.truncate;
 
 /**
  * @author laokou
@@ -91,7 +91,7 @@ public final class LoginLogConvertor {
 		loginLogCO.setBrowser(loginEvent.getBrowser());
 		loginLogCO.setOs(loginEvent.getOs());
 		loginLogCO.setStatus(loginEvent.getStatus());
-		loginLogCO.setErrorMessage(truncate(loginEvent.getErrorMessage(), 2000));
+		loginLogCO.setErrorMessage(StringUtils.truncate(loginEvent.getErrorMessage(), 2000));
 		loginLogCO.setType(loginEvent.getType());
 		loginLogCO.setLoginTime(loginEvent.getLoginTime());
 		loginLogCO.setTenantId(loginEvent.getTenantId());
@@ -110,7 +110,7 @@ public final class LoginLogConvertor {
 		Optional<UserE> optional = Optional.ofNullable(userE);
 		Long userId = optional.map(UserE::getId).orElse(null);
 		Long tenantId = optional.map(UserE::getTenantId).orElse(null);
-		String errorMessage = EMPTY;
+		String errorMessage = StringConstants.EMPTY;
 		if (ObjectUtils.isNotNull(ex)) {
 			status = LoginStatusEnum.FAIL.getCode();
 			errorMessage = ex.getMsg();

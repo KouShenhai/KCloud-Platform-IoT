@@ -28,10 +28,9 @@ import org.laokou.auth.model.SendCaptchaTypeEnum;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.common.redis.util.RedisUtils;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * @author laokou
@@ -51,7 +50,7 @@ public class NoticeLogSaveCmdExe {
 	public void executeVoid(NoticeLogSaveCmd cmd) {
 		NoticeLogCO co = cmd.getCo();
 		try {
-			DynamicDataSourceContextHolder.push(DOMAIN);
+			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			transactionalUtils
 				.executeInTransaction(() -> domainService.createNoticeLog(NoticeLogConvertor.toEntity(co)));
 		}

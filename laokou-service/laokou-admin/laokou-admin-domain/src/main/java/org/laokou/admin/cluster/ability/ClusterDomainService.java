@@ -18,7 +18,7 @@
 package org.laokou.admin.cluster.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.cluster.gateway.*;
+import org.laokou.admin.cluster.gateway.ClusterGateway;
 import org.laokou.admin.cluster.model.ClusterE;
 import org.springframework.stereotype.Component;
 

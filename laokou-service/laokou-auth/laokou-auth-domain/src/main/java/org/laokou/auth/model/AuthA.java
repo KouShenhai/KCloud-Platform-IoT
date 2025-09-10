@@ -23,21 +23,22 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.CollectionUtils;
-import java.util.*;
-import java.util.function.Supplier;
 
-import static org.laokou.auth.factory.DomainFactory.DEFAULT_TENANT;
-import static org.laokou.auth.model.GrantTypeEnum.*;
-import static org.laokou.auth.model.OAuth2Constants.*;
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
-import static org.laokou.common.i18n.common.exception.StatusCode.FORBIDDEN;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * 认证聚合.
@@ -160,23 +161,23 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void createUserByUsernamePassword() throws Exception {
-		fillUserValue(this.username, EMPTY, EMPTY);
+		fillUserValue(this.username, StringConstants.EMPTY, StringConstants.EMPTY);
 	}
 
 	public void createUserByMobile() throws Exception {
-		fillUserValue(EMPTY, EMPTY, this.captcha.uuid());
+		fillUserValue(StringConstants.EMPTY, StringConstants.EMPTY, this.captcha.uuid());
 	}
 
 	public void createUserByMail() throws Exception {
-		fillUserValue(EMPTY, this.captcha.uuid(), EMPTY);
+		fillUserValue(StringConstants.EMPTY, this.captcha.uuid(), StringConstants.EMPTY);
 	}
 
 	public void createUserByAuthorizationCode() throws Exception {
-		fillUserValue(this.username, EMPTY, EMPTY);
+		fillUserValue(this.username, StringConstants.EMPTY, StringConstants.EMPTY);
 	}
 
 	public void createUserByTest() throws Exception {
-		fillUserValue(this.username, EMPTY, EMPTY);
+		fillUserValue(this.username, StringConstants.EMPTY, StringConstants.EMPTY);
 	}
 
 	public void getTenantId(Supplier<Long> supplier) {
@@ -213,7 +214,7 @@ public class AuthA extends AggregateRoot {
 
 	public void checkTenantId() {
 		if (ObjectUtils.isNull(this.user.getTenantId())) {
-			throw new BizException(TENANT_NOT_EXIST);
+			throw new BizException(OAuth2Constants.TENANT_NOT_EXIST);
 		}
 	}
 
@@ -221,10 +222,10 @@ public class AuthA extends AggregateRoot {
 		if (isUseCaptcha()) {
 			Boolean validate = this.captchaValidator.validateCaptcha(getCaptchaCacheKey(), captcha.captcha());
 			if (ObjectUtils.isNull(validate)) {
-				throw new BizException(CAPTCHA_EXPIRED);
+				throw new BizException(OAuth2Constants.CAPTCHA_EXPIRED);
 			}
 			if (!validate) {
-				throw new BizException(CAPTCHA_ERROR);
+				throw new BizException(OAuth2Constants.CAPTCHA_ERROR);
 			}
 		}
 	}
@@ -237,30 +238,30 @@ public class AuthA extends AggregateRoot {
 
 	public void checkPassword() {
 		if (isUsePassword() && !this.passwordValidator.validatePassword(this.password, user.getPassword())) {
-			throw new BizException(USERNAME_PASSWORD_ERROR);
+			throw new BizException(OAuth2Constants.USERNAME_PASSWORD_ERROR);
 		}
 	}
 
 	public void checkUserStatus() {
 		if (ObjectUtils.equals(UserStatusEnum.DISABLE.getCode(), this.user.getStatus())) {
-			throw new BizException(USER_DISABLED);
+			throw new BizException(OAuth2Constants.USER_DISABLED);
 		}
 	}
 
 	public void checkMenuPermissions() {
 		if (CollectionUtils.isEmpty(this.permissions)) {
-			throw new BizException(FORBIDDEN);
+			throw new BizException(StatusCode.FORBIDDEN);
 		}
 	}
 
 	public void checkDeptPaths() {
 		if (CollectionUtils.isEmpty(this.deptPaths)) {
-			throw new BizException(FORBIDDEN);
+			throw new BizException(StatusCode.FORBIDDEN);
 		}
 	}
 
 	public String getLoginName() {
-		if (List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE, TEST).contains(grantTypeEnum)) {
+		if (List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.AUTHORIZATION_CODE, GrantTypeEnum.TEST).contains(grantTypeEnum)) {
 			return this.username;
 		}
 		return this.captcha.uuid();
@@ -271,11 +272,11 @@ public class AuthA extends AggregateRoot {
 	}
 
 	private boolean isUseCaptcha() {
-		return List.of(USERNAME_PASSWORD, MOBILE, MAIL).contains(grantTypeEnum);
+		return List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.MOBILE, GrantTypeEnum.MAIL).contains(grantTypeEnum);
 	}
 
 	private boolean isUsePassword() {
-		return List.of(USERNAME_PASSWORD, AUTHORIZATION_CODE, TEST).contains(grantTypeEnum);
+		return List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.AUTHORIZATION_CODE, GrantTypeEnum.TEST).contains(grantTypeEnum);
 	}
 
 	private Set<String> getPaths(List<String> list) {
@@ -306,12 +307,12 @@ public class AuthA extends AggregateRoot {
 			case MOBILE -> RedisKeyUtils.getMobileAuthCaptchaKey(captcha.uuid());
 			case MAIL -> RedisKeyUtils.getMailAuthCaptchaKey(captcha.uuid());
 			case USERNAME_PASSWORD -> RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(captcha.uuid());
-			case AUTHORIZATION_CODE, TEST -> EMPTY;
+			case AUTHORIZATION_CODE, TEST -> StringConstants.EMPTY;
 		};
 	}
 
 	private boolean isDefaultTenant() {
-		return ObjectUtils.equals(DEFAULT_TENANT, tenantCode);
+		return ObjectUtils.equals(Constants.DEFAULT_TENANT, tenantCode);
 	}
 
 	private void fillUserValue(String username, String mail, String mobile) throws Exception {

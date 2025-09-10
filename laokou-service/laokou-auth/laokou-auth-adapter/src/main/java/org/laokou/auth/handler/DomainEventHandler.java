@@ -29,6 +29,7 @@ import org.laokou.auth.dto.LoginLogSaveCmd;
 import org.laokou.auth.dto.NoticeLogSaveCmd;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
+import org.laokou.auth.model.MqEnum;
 import org.laokou.common.mail.service.MailService;
 import org.laokou.common.sms.service.SmsService;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -37,7 +38,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.auth.model.MqEnum.*;
 
 /**
  * @author laokou
@@ -55,7 +55,7 @@ public class DomainEventHandler {
 
 	private final NoticeLogServiceI noticeLogServiceI;
 
-	@KafkaListener(topics = LOGIN_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + LOGIN_LOG_CONSUMER_GROUP)
+	@KafkaListener(topics = MqEnum.LOGIN_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.LOGIN_LOG_CONSUMER_GROUP)
 	public void handleLoginLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
@@ -68,8 +68,8 @@ public class DomainEventHandler {
 		}
 	}
 
-	@KafkaListener(topics = MAIL_CAPTCHA_TOPIC,
-			groupId = "${spring.kafka.consumer.group-id}-" + MAIL_CAPTCHA_CONSUMER_GROUP)
+	@KafkaListener(topics = MqEnum.MAIL_CAPTCHA_TOPIC,
+			groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.MAIL_CAPTCHA_CONSUMER_GROUP)
 	public void handleMailCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
@@ -83,8 +83,8 @@ public class DomainEventHandler {
 		}
 	}
 
-	@KafkaListener(topics = MOBILE_CAPTCHA_TOPIC,
-			groupId = "${spring.kafka.consumer.group-id}-" + MOBILE_CAPTCHA_CONSUMER_GROUP)
+	@KafkaListener(topics = MqEnum.MOBILE_CAPTCHA_TOPIC,
+			groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.MOBILE_CAPTCHA_CONSUMER_GROUP)
 	public void handleMobileCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment)
 			throws JsonProcessingException {
 		try {

@@ -18,7 +18,7 @@
 package org.laokou.admin.ossLog.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.ossLog.gateway.*;
+import org.laokou.admin.ossLog.gateway.OssLogGateway;
 import org.laokou.admin.ossLog.model.OssLogE;
 import org.springframework.stereotype.Component;
 

@@ -17,7 +17,14 @@
 
 package org.laokou.admin.noticeLog.api;
 
-import org.laokou.admin.noticeLog.dto.*;
+
+import org.laokou.admin.noticeLog.dto.NoticeLogExportCmd;
+import org.laokou.admin.noticeLog.dto.NoticeLogGetQry;
+import org.laokou.admin.noticeLog.dto.NoticeLogImportCmd;
+import org.laokou.admin.noticeLog.dto.NoticeLogModifyCmd;
+import org.laokou.admin.noticeLog.dto.NoticeLogPageQry;
+import org.laokou.admin.noticeLog.dto.NoticeLogRemoveCmd;
+import org.laokou.admin.noticeLog.dto.NoticeLogSaveCmd;
 import org.laokou.admin.noticeLog.dto.clientobject.NoticeLogCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;

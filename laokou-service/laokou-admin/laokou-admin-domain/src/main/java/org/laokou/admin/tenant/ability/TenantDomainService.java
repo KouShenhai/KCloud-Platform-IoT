@@ -18,7 +18,6 @@
 package org.laokou.admin.tenant.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.tenant.gateway.*;
 import org.laokou.admin.tenant.model.TenantE;
 import org.springframework.stereotype.Component;
 

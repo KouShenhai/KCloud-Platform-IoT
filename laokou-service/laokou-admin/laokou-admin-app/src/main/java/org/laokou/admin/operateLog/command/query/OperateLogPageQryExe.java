@@ -24,13 +24,12 @@ import org.laokou.admin.operateLog.dto.OperateLogPageQry;
 import org.laokou.admin.operateLog.dto.clientobject.OperateLogCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.log.mapper.OperateLogMapper;
 import org.laokou.common.log.mapper.OperateLogDO;
+import org.laokou.common.log.mapper.OperateLogMapper;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * 分页查询操作日志请求执行器.
@@ -45,7 +44,7 @@ public class OperateLogPageQryExe {
 
 	public Result<Page<OperateLogCO>> execute(OperateLogPageQry qry) {
 		try {
-			DynamicDataSourceContextHolder.push(DOMAIN);
+			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			List<OperateLogDO> list = operateLogMapper.selectObjectPage(qry);
 			long total = operateLogMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(OperateLogConvertor.toClientObjects(list), total));

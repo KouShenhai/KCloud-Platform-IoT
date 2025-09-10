@@ -62,7 +62,7 @@ public class XssUtils extends HtmlUtils {
 	}
 
 	private static String clearHtml(String str, Safelist safelist) {
-		return Pattern.compile("\\n").matcher(Jsoup.clean(str, safelist)).replaceAll(EMPTY);
+		return Pattern.compile("\\n").matcher(Jsoup.clean(str, safelist)).replaceAll(StringConstants.EMPTY);
 	}
 
 	private static Safelist getSafelist() {

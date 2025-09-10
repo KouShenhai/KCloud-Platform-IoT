@@ -19,8 +19,6 @@ package org.laokou.admin.dict.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dict.api.DictsServiceI;
-import org.laokou.admin.dict.command.*;
-import org.laokou.admin.dict.dto.*;
 import org.laokou.admin.dict.command.query.DictGetQryExe;
 import org.laokou.admin.dict.command.query.DictPageQryExe;
 import org.laokou.admin.dict.dto.clientobject.DictCO;

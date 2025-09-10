@@ -21,10 +21,19 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.api.MenusServiceI;
-import org.laokou.admin.menu.dto.*;
+import org.laokou.admin.menu.dto.MenuExportCmd;
+import org.laokou.admin.menu.dto.MenuGetQry;
+import org.laokou.admin.menu.dto.MenuImportCmd;
+import org.laokou.admin.menu.dto.MenuModifyCmd;
+import org.laokou.admin.menu.dto.MenuPageQry;
+import org.laokou.admin.menu.dto.MenuRemoveCmd;
+import org.laokou.admin.menu.dto.MenuSaveCmd;
+import org.laokou.admin.menu.dto.MenuTreeListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuCO;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.constant.NameConstants;
+import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -33,13 +42,19 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-import static org.laokou.common.data.cache.constant.NameConstants.MENUS;
-import static org.laokou.common.data.cache.model.OperateTypeEnum.DEL;
 
 /**
  * 菜单管理控制器.
@@ -67,7 +82,7 @@ public class MenusControllerV3 {
 	@PreAuthorize("hasAuthority('sys:menu:modify')")
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
 	@Operation(summary = "修改菜单", description = "修改菜单")
-	@DataCache(name = MENUS, key = "#cmd.co.id", operateType = DEL)
+	@DataCache(name = NameConstants.MENUS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
 	public void modifyMenu(@RequestBody MenuModifyCmd cmd) {
 		menusServiceI.modifyMenu(cmd);
 	}
@@ -121,7 +136,7 @@ public class MenusControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
-	@DataCache(name = MENUS, key = "#id")
+	@DataCache(name = NameConstants.MENUS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:menu:detail')")
 	@Operation(summary = "查看菜单详情", description = "查看菜单详情")
 	public Result<MenuCO> getMenuById(@PathVariable("id") Long id) {

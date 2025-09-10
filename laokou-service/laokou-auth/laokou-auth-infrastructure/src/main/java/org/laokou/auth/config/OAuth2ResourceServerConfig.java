@@ -29,7 +29,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.laokou.common.security.config.OAuth2ResourceServerConfig.customizer;
+
 
 /**
  * 资源服务器配置.
@@ -74,7 +74,7 @@ class OAuth2ResourceServerConfig {
 					.includeSubDomains(true)
 					.preload(true)
 					.maxAgeInSeconds(31536000)))
-			.authorizeHttpRequests(customizer(oAuth2ResourceServerProperties, springUtils))
+			.authorizeHttpRequests(org.laokou.common.security.config.OAuth2ResourceServerConfig.customizer(oAuth2ResourceServerProperties, springUtils))
 			.cors(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)

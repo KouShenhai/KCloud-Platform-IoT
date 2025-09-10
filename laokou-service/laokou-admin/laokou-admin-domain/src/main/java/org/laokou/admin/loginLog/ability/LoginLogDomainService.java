@@ -18,7 +18,6 @@
 package org.laokou.admin.loginLog.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.loginLog.gateway.*;
 import org.laokou.admin.loginLog.model.LoginLogE;
 import org.springframework.stereotype.Component;
 

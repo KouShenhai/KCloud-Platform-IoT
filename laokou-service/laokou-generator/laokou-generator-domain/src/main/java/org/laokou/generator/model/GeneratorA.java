@@ -18,12 +18,12 @@
 package org.laokou.generator.model;
 
 import lombok.Getter;
-import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.util.JacksonUtils;
 
 import java.util.Map;
 
-import static org.laokou.common.i18n.common.constant.StringConstants.SLASH;
 
 /**
  * @author laokou
@@ -55,11 +55,11 @@ public class GeneratorA extends AggregateRoot {
 	}
 
 	public String getDomainPackagePath() {
-		return getPackagePath() + SLASH + tableV.instanceName();
+		return getPackagePath() + StringConstants.SLASH + tableV.instanceName();
 	}
 
 	public String getPackagePath() {
-		return packageName.replaceAll("\\.", SLASH);
+		return packageName.replaceAll("\\.", StringConstants.SLASH);
 	}
 
 	public void updateTable(TableV tableV) {

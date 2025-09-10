@@ -18,6 +18,7 @@
 package org.laokou.gateway.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,8 +33,6 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.TRUE;
 
 /**
  * 跨域配置.
@@ -71,7 +70,7 @@ public class CorsConfig {
 				responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, requestMethod.name());
 			}
 			// 允许证书
-			responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, TRUE);
+			responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, StringConstants.TRUE);
 			// 暴露响应头
 			responseHeaders.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, CorsConfiguration.ALL);
 			// 每1个小时发送一次预请求

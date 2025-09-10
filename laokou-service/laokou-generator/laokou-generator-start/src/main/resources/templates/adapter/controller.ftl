@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.http.MediaType;
 import ${packageName}.${instanceName}.dto.clientobject.${className}CO;
-import org.springframework.web.bind.annotation.*;
+
 import ${packageName}.${instanceName}.api.${className}sServiceI;
 import ${packageName}.${instanceName}.dto.*;
 import org.laokou.common.data.cache.annotation.DataCache;

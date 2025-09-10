@@ -27,7 +27,6 @@ import org.springframework.stereotype.Component;
 import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
 import org.laokou.iot.thingModel.ability.ThingModelDomainService;
 
-import static org.laokou.common.tenant.constant.DSConstants.IOT;
 
 /**
  *
@@ -46,7 +45,7 @@ public class ThingModelModifyCmdExe {
 	@CommandLog
 	public void executeVoid(ThingModelModifyCmd cmd) {
 		try {
-			DynamicDataSourceContextHolder.push(IOT);
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			// 校验参数
 			ThingModelE thingModelE = ThingModelConvertor.toEntity(cmd.getCo(), false);
 			transactionalUtils.executeInTransaction(() -> thingModelDomainService.updateThingModel(thingModelE));

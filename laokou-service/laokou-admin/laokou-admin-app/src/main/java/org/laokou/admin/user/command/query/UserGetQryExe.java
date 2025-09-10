@@ -29,8 +29,8 @@ import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;
-import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * 查看用户请求执行器.
@@ -54,7 +54,7 @@ public class UserGetQryExe {
 			UserCO userCO = UserConvertor.toClientObject(userMapper.selectById(qry.getId()));
 			userCO.setRoleIds(userRoleMapper.selectRoleIdsByUserId(qry.getId()));
 			userCO.setDeptIds(userDeptMapper.selectDeptIdsByUserId(qry.getId()));
-			DynamicDataSourceContextHolder.push(DOMAIN);
+			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			OssLogDO ossLogDO = ossLogMapper.selectById(userCO.getAvatar());
 			if (ObjectUtils.isNotNull(ossLogDO)) {
 				userCO.setAvatarUrl(ossLogDO.getUrl());

@@ -26,8 +26,8 @@ import org.laokou.admin.noticeLog.gatewayimpl.database.NoticeLogMapper;
 import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.excel.util.ExcelUtils;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;
-import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * 导出通知日志命令执行器.
@@ -44,7 +44,7 @@ public class NoticeLogExportCmdExe {
 	public void executeVoid(NoticeLogExportCmd cmd) {
 		// 校验参数
 		try {
-			DynamicDataSourceContextHolder.push(DOMAIN);
+			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			ExcelUtils.doExport("通知日志", "通知日志", ResponseUtils.getHttpServletResponse(), cmd, noticeLogMapper,
 					NoticeLogExcel.class, NoticeLogConvertor.INSTANCE);
 		}

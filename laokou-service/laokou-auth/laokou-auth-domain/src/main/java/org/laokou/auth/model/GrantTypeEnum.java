@@ -18,11 +18,7 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
-import org.laokou.auth.factory.DomainFactory;
 import org.laokou.common.i18n.common.exception.BizException;
-
-import static org.laokou.auth.model.OAuth2Constants.*;
-
 /**
  * 登录类型枚举.
  *
@@ -32,38 +28,38 @@ import static org.laokou.auth.model.OAuth2Constants.*;
 public enum GrantTypeEnum {
 
 	// @formatter:off
-	USERNAME_PASSWORD(DomainFactory.USERNAME_PASSWORD, "用户名密码登录") {
+	USERNAME_PASSWORD(Constants.USERNAME_PASSWORD, "用户名密码登录") {
 		@Override
 		public void checkUsernameNotExist() {
-			throw new BizException(USERNAME_PASSWORD_ERROR);
+			throw new BizException(OAuth2Constants.USERNAME_PASSWORD_ERROR);
 		}
 	},
 
-	AUTHORIZATION_CODE(DomainFactory.AUTHORIZATION_CODE, "授权码登录") {
+	AUTHORIZATION_CODE(Constants.AUTHORIZATION_CODE, "授权码登录") {
 		@Override
 		public void checkUsernameNotExist() {
-			throw new BizException(USERNAME_PASSWORD_ERROR);
+			throw new BizException(OAuth2Constants.USERNAME_PASSWORD_ERROR);
 		}
 	},
 
-	MOBILE(DomainFactory.MOBILE, "手机号登录") {
+	MOBILE(Constants.MOBILE, "手机号登录") {
 		@Override
 		public void checkUsernameNotExist() {
-			throw new BizException(MOBILE_NOT_REGISTERED);
+			throw new BizException(OAuth2Constants.MOBILE_NOT_REGISTERED);
 		}
 	},
 
-	MAIL(DomainFactory.MAIL, "邮箱登录") {
+	MAIL(Constants.MAIL, "邮箱登录") {
 		@Override
 		public void checkUsernameNotExist() {
-			throw new BizException(MAIL_NOT_REGISTERED);
+			throw new BizException(OAuth2Constants.MAIL_NOT_REGISTERED);
 		}
 	},
 
-	TEST(DomainFactory.TEST, "测试登录") {
+	TEST(Constants.TEST, "测试登录") {
 		@Override
 		public void checkUsernameNotExist() {
-			throw new BizException(USERNAME_PASSWORD_ERROR);
+			throw new BizException(OAuth2Constants.USERNAME_PASSWORD_ERROR);
 		}
 	};
 

@@ -19,6 +19,7 @@ package org.laokou.auth.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.laokou.auth.model.OAuth2Constants;
 import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.security.web.session.InvalidSessionStrategy;
@@ -26,7 +27,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static org.laokou.auth.model.OAuth2Constants.SESSION_INVALID;
 
 /**
  * @author laokou
@@ -36,7 +36,7 @@ public class SessionInvalidStrategy implements InvalidSessionStrategy {
 
 	@Override
 	public void onInvalidSessionDetected(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		ResponseUtils.responseOk(response, Result.fail(SESSION_INVALID));
+		ResponseUtils.responseOk(response, Result.fail(OAuth2Constants.SESSION_INVALID));
 	}
 
 }

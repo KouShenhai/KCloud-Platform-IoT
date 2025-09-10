@@ -27,7 +27,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.constant.StringConstants.DROP;
 
 /**
  * @author laokou
@@ -58,7 +57,7 @@ public class DecimalType implements Serializable {
 			}
 		}
 		return CollectionUtils.isEmpty(list) ? ParamValidator.validate()
-				: ParamValidator.invalidate(String.join(DROP, list));
+				: ParamValidator.invalidate(String.join(StringConstants.DROP, list));
 	}
 
 }

@@ -18,6 +18,7 @@
 package org.laokou.tool;
 
 import org.laokou.common.core.util.FileUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
@@ -28,7 +29,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.List;
 
-import static org.laokou.common.i18n.common.constant.StringConstants.SLASH;
 
 /**
  * @author laokou
@@ -55,11 +55,11 @@ final class ErrorInfoPrinter {
 		// 项目目录路径
 		String projectPath = System.getProperty("user.dir");
 		// 日志目录路径
-		String logPath = projectPath + SLASH + "logs";
+		String logPath = projectPath + StringConstants.SLASH + "logs";
 		// JSON文件路径
-		String jsonPath = logPath + SLASH + appName + SLASH + jsonName;
+		String jsonPath = logPath + StringConstants.SLASH + appName + StringConstants.SLASH + jsonName;
 		// 临时文件路径
-		String tempPath = projectPath + SLASH + "temp";
+		String tempPath = projectPath + StringConstants.SLASH + "temp";
 		// 创建临时文件
 		Path path = FileUtils.create(tempPath, jsonName);
 		FileUtils.write(path, FileUtils.getBytes(Path.of(jsonPath)));

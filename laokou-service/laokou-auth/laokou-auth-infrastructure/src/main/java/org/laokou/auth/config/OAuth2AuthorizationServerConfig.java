@@ -23,11 +23,13 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
-import org.laokou.auth.model.CaptchaValidator;
-import org.laokou.common.i18n.dto.IdGenerator;
-import org.laokou.auth.model.PasswordValidator;
 import org.laokou.auth.gatewayimpl.rpc.DistributedIdentifierRpc;
+import org.laokou.auth.model.CaptchaValidator;
+import org.laokou.auth.model.MqEnum;
+import org.laokou.auth.model.PasswordValidator;
+import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.fory.config.ForyFactory;
+import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.config.RedisOAuth2AuthorizationConsentService;
@@ -42,6 +44,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerJwtAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.core.KafkaAdmin;
@@ -62,7 +65,11 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
-import org.springframework.security.oauth2.server.authorization.token.*;
+import org.springframework.security.oauth2.server.authorization.token.DelegatingOAuth2TokenGenerator;
+import org.springframework.security.oauth2.server.authorization.token.JwtGenerator;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2AccessTokenGenerator;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2RefreshTokenGenerator;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.DelegatingAuthenticationConverter;
@@ -77,9 +84,6 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.laokou.auth.model.MqEnum.*;
-import static org.laokou.common.crypto.util.RSAUtils.RSA;
-import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 
 // @formatter:off
 /**
@@ -129,7 +133,7 @@ class OAuth2AuthorizationServerConfig {
 	 * @throws Exception 异常
 	 */
 	@Bean
-	@Order(HIGHEST_PRECEDENCE)
+	@Order(Ordered.HIGHEST_PRECEDENCE)
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
 			@Qualifier("usernamePasswordAuthenticationProvider") AuthenticationProvider usernamePasswordAuthenticationProvider,
 			@Qualifier("testAuthenticationProvider") AuthenticationProvider testAuthenticationProvider,
@@ -282,8 +286,8 @@ class OAuth2AuthorizationServerConfig {
 
 	@Bean("authNewTopics")
 	KafkaAdmin.NewTopics newTopics() {
-		return new KafkaAdmin.NewTopics(new NewTopic(LOGIN_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MAIL_CAPTCHA_TOPIC, 3, (short) 1), new NewTopic(MOBILE_CAPTCHA_TOPIC, 3, (short) 1));
+		return new KafkaAdmin.NewTopics(new NewTopic(MqEnum.LOGIN_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(MqEnum.MAIL_CAPTCHA_TOPIC, 3, (short) 1), new NewTopic(MqEnum.MOBILE_CAPTCHA_TOPIC, 3, (short) 1));
 	}
 
 	/**
@@ -303,7 +307,7 @@ class OAuth2AuthorizationServerConfig {
 	 */
 	private KeyPair generateRsaKey() {
 		try {
-			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(RSA);
+			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(RSAUtils.RSA);
 			keyPairGenerator.initialize(2048);
 			return keyPairGenerator.generateKeyPair();
 		}

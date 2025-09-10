@@ -25,7 +25,6 @@ import org.laokou.iot.productCategory.dto.ProductCategoryRemoveCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.productCategory.ability.ProductCategoryDomainService;
 
-import static org.laokou.common.tenant.constant.DSConstants.IOT;
 
 /**
  *
@@ -44,7 +43,7 @@ public class ProductCategoryRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(ProductCategoryRemoveCmd cmd) {
 		try {
-			DynamicDataSourceContextHolder.push(IOT);
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			// 校验参数
 			transactionalUtils
 				.executeInTransaction(() -> productCategoryDomainService.deleteProductCategory(cmd.getIds()));

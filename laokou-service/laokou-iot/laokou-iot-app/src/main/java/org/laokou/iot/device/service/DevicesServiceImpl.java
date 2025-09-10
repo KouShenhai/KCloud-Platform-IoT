@@ -18,14 +18,21 @@
 package org.laokou.iot.device.service;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.iot.device.api.DevicesServiceI;
-import org.laokou.iot.device.command.*;
-import org.laokou.iot.device.command.query.DeviceGetQryExe;
-import org.laokou.iot.device.command.query.DevicePageQryExe;
-import org.laokou.iot.device.dto.*;
-import org.laokou.iot.device.dto.clientobject.DeviceCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.device.api.DevicesServiceI;
+import org.laokou.iot.device.command.DeviceModifyCmdExe;
+import org.laokou.iot.device.command.DeviceSaveCmdExe;
+import org.laokou.iot.device.command.query.DeviceGetQryExe;
+import org.laokou.iot.device.command.query.DevicePageQryExe;
+import org.laokou.iot.device.dto.DeviceExportCmd;
+import org.laokou.iot.device.dto.DeviceGetQry;
+import org.laokou.iot.device.dto.DeviceImportCmd;
+import org.laokou.iot.device.dto.DeviceModifyCmd;
+import org.laokou.iot.device.dto.DevicePageQry;
+import org.laokou.iot.device.dto.DeviceRemoveCmd;
+import org.laokou.iot.device.dto.DeviceSaveCmd;
+import org.laokou.iot.device.dto.clientobject.DeviceCO;
 import org.springframework.stereotype.Service;
 
 /**

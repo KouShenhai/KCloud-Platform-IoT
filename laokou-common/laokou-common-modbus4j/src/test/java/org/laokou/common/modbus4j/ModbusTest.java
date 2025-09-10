@@ -20,18 +20,23 @@ package org.laokou.common.modbus4j;
 import com.serotonin.modbus4j.ModbusFactory;
 import com.serotonin.modbus4j.exception.ModbusInitException;
 import com.serotonin.modbus4j.exception.ModbusTransportException;
-import com.serotonin.modbus4j.msg.*;
+import com.serotonin.modbus4j.msg.ModbusResponse;
+import com.serotonin.modbus4j.msg.ReadCoilsResponse;
+import com.serotonin.modbus4j.msg.ReadDiscreteInputsResponse;
+import com.serotonin.modbus4j.msg.ReadHoldingRegistersResponse;
+import com.serotonin.modbus4j.msg.ReadInputRegistersResponse;
 import lombok.RequiredArgsConstructor;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ConvertUtils;
-import org.laokou.common.modbus4j.config.*;
+import org.laokou.common.modbus4j.config.Modbus;
+import org.laokou.common.modbus4j.config.ModbusTypeEnum;
+import org.laokou.common.modbus4j.config.SpringModbusProperties;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -68,25 +73,25 @@ class ModbusTest {
 	private void test(ModbusTypeEnum typeEnum) throws ModbusInitException, ModbusTransportException {
 		SpringModbusProperties properties = ConvertUtils.sourceToTarget(springModbusProperties,
 				SpringModbusProperties.class);
-		assertThat(properties).isNotNull();
+		Assertions.assertThat(properties).isNotNull();
 		properties.setType(typeEnum);
 		Modbus modbus = properties.getType().getModbus(modbusFactory, properties);
 		modbus.open();
 		ModbusResponse modbusResponse = modbus.sendReadHoldingRegistersRequest(1, 0, 1);
 		if (modbusResponse instanceof ReadHoldingRegistersResponse readRegistersResponse) {
-			assertThat(readRegistersResponse.getShortData()[0]).isEqualTo(1);
+			Assertions.assertThat(readRegistersResponse.getShortData()[0]).isEqualTo(1);
 		}
 		modbusResponse = modbus.sendReadCoilsRequest(1, 0, 1);
 		if (modbusResponse instanceof ReadCoilsResponse readCoilsResponse) {
-			assertThat(readCoilsResponse.getBooleanData()[0]).isTrue();
+			Assertions.assertThat(readCoilsResponse.getBooleanData()[0]).isTrue();
 		}
 		modbusResponse = modbus.sendReadInputRegistersRequest(1, 0, 1);
 		if (modbusResponse instanceof ReadInputRegistersResponse readInputRegistersResponse) {
-			assertThat(readInputRegistersResponse.getShortData()[0]).isEqualTo(1);
+			Assertions.assertThat(readInputRegistersResponse.getShortData()[0]).isEqualTo(1);
 		}
 		modbusResponse = modbus.sendReadDiscreteInputsRequest(1, 0, 1);
 		if (modbusResponse instanceof ReadDiscreteInputsResponse readDiscreteInputsResponse) {
-			assertThat(readDiscreteInputsResponse.getBooleanData()[0]).isTrue();
+			Assertions.assertThat(readDiscreteInputsResponse.getBooleanData()[0]).isTrue();
 		}
 		modbus.close();
 	}

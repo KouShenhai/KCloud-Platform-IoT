@@ -17,29 +17,44 @@
 
 package org.laokou.auth;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.auth.ability.DomainService;
-import org.laokou.auth.model.CaptchaValidator;
-import org.laokou.auth.model.PasswordValidator;
 import org.laokou.auth.factory.DomainFactory;
-import org.laokou.auth.gateway.*;
-import org.laokou.auth.model.*;
+import org.laokou.auth.gateway.DeptGateway;
+import org.laokou.auth.gateway.LoginLogGateway;
+import org.laokou.auth.gateway.MenuGateway;
+import org.laokou.auth.gateway.NoticeLogGateway;
+import org.laokou.auth.gateway.OssLogGateway;
+import org.laokou.auth.gateway.TenantGateway;
+import org.laokou.auth.gateway.UserGateway;
+import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.AuthParamValidator;
+import org.laokou.auth.model.CaptchaE;
+import org.laokou.auth.model.CaptchaParamValidator;
+import org.laokou.auth.model.CaptchaV;
+import org.laokou.auth.model.CaptchaValidator;
+import org.laokou.auth.model.GrantTypeEnum;
+import org.laokou.auth.model.LoginLogE;
+import org.laokou.auth.model.NoticeLogE;
+import org.laokou.auth.model.PasswordValidator;
+import org.laokou.auth.model.SendCaptchaStatusEnum;
+import org.laokou.auth.model.SendCaptchaTypeEnum;
+import org.laokou.auth.model.UserE;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.util.RedisKeyUtils;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.util.DigestUtils;
+
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThatNoException;
-import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA;
-import static org.laokou.auth.model.SendCaptchaTypeEnum.SEND_MOBILE_CAPTCHA;
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
-import static org.mockito.Mockito.*;
 
 /**
  * 领域服务测试.
@@ -107,182 +122,182 @@ class DomainServiceTest {
 	void test_usernamePasswordAuth() {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 创建用户【用户名密码】
-		assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
+		Assertions.assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
 		// 构造租户
-		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
+		Mockito.when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 构造验证码校验
-		doReturn(true).when(captchaValidator)
+		Mockito.doReturn(true).when(captchaValidator)
 			.validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
 		// 构造用户信息
 		UserE user = auth.getUser();
-		assertThatNoException().isThrownBy(() -> user
+		Assertions.assertThatNoException().isThrownBy(() -> user
 			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
-		when(userGateway.getUserProfile(user)).thenReturn(user);
+		Mockito.when(userGateway.getUserProfile(user)).thenReturn(user);
 		// 构造密码校验
-		doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
+		Mockito.doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		// 构造菜单
-		when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
+		Mockito.when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
 		// 构造部门
-		when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
+		Mockito.when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 用户名密码登录
-		assertThatNoException().isThrownBy(() -> domainService.auth(auth));
+		Assertions.assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
-		verify(deptGateway, times(1)).getDeptPaths(user);
-		verify(menuGateway, times(1)).getMenuPermissions(user);
-		verify(passwordValidator, times(1)).validatePassword("123", "202cb962ac59075b964b07152d234b70");
-		verify(captchaValidator, times(1)).validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"),
+		Mockito.verify(deptGateway, Mockito.times(1)).getDeptPaths(user);
+		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(user);
+		Mockito.verify(passwordValidator, Mockito.times(1)).validatePassword("123", "202cb962ac59075b964b07152d234b70");
+		Mockito.verify(captchaValidator, Mockito.times(1)).validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"),
 				"1234");
-		verify(userGateway, times(1)).getUserProfile(user);
-		verify(tenantGateway, times(1)).getTenantId("laokou");
+		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(user);
+		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId("laokou");
 	}
 
 	@Test
 	void test_mailAuth() {
-		AuthA auth = getAuth(EMPTY, EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
+		AuthA auth = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
 		// 创建用户【邮箱】
-		assertThatNoException().isThrownBy(auth::createUserByMail);
+		Assertions.assertThatNoException().isThrownBy(auth::createUserByMail);
 		// 构造租户
-		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
+		Mockito.when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 构造验证码校验
-		doReturn(true).when(captchaValidator)
+		Mockito.doReturn(true).when(captchaValidator)
 			.validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
 		// 构造用户信息
 		UserE user = auth.getUser();
-		when(userGateway.getUserProfile(user)).thenReturn(user);
+		Mockito.when(userGateway.getUserProfile(user)).thenReturn(user);
 		// 构造菜单
-		when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
+		Mockito.when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
 		// 构造部门
-		when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
+		Mockito.when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 邮箱登录
-		assertThatNoException().isThrownBy(() -> domainService.auth(auth));
+		Assertions.assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
-		verify(deptGateway, times(1)).getDeptPaths(user);
-		verify(menuGateway, times(1)).getMenuPermissions(user);
-		verify(userGateway, times(1)).getUserProfile(user);
-		verify(captchaValidator, times(1)).validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"),
+		Mockito.verify(deptGateway, Mockito.times(1)).getDeptPaths(user);
+		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(user);
+		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(user);
+		Mockito.verify(captchaValidator, Mockito.times(1)).validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"),
 				"123456");
-		verify(tenantGateway, times(1)).getTenantId("laokou");
+		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId("laokou");
 	}
 
 	@Test
 	void test_mobileAuth() {
-		AuthA auth = getAuth(EMPTY, EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
+		AuthA auth = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
 		// 创建用户【手机号】
-		assertThatNoException().isThrownBy(auth::createUserByMobile);
+		Assertions.assertThatNoException().isThrownBy(auth::createUserByMobile);
 		// 构造租户
-		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
+		Mockito.when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 构造验证码校验
-		doReturn(true).when(captchaValidator)
+		Mockito.doReturn(true).when(captchaValidator)
 			.validateCaptcha(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
 		// 构造用户信息
 		UserE user = auth.getUser();
-		when(userGateway.getUserProfile(user)).thenReturn(user);
+		Mockito.when(userGateway.getUserProfile(user)).thenReturn(user);
 		// 构造菜单
-		when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
+		Mockito.when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
 		// 构造部门
-		when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
+		Mockito.when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 手机号登录
-		assertThatNoException().isThrownBy(() -> domainService.auth(auth));
+		Assertions.assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
-		verify(deptGateway, times(1)).getDeptPaths(user);
-		verify(menuGateway, times(1)).getMenuPermissions(user);
-		verify(userGateway, times(1)).getUserProfile(user);
-		verify(tenantGateway, times(1)).getTenantId("laokou");
+		Mockito.verify(deptGateway, Mockito.times(1)).getDeptPaths(user);
+		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(user);
+		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(user);
+		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId("laokou");
 	}
 
 	@Test
 	void test_authorizationCodeAuth() {
-		AuthA auth = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, EMPTY, EMPTY);
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, StringConstants.EMPTY, StringConstants.EMPTY);
 		// 创建用户【授权码】
-		assertThatNoException().isThrownBy(auth::createUserByAuthorizationCode);
+		Assertions.assertThatNoException().isThrownBy(auth::createUserByAuthorizationCode);
 		// 构造租户
-		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
+		Mockito.when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 构造用户信息
 		UserE user = auth.getUser();
-		assertThatNoException().isThrownBy(() -> user
+		Assertions.assertThatNoException().isThrownBy(() -> user
 			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
-		when(userGateway.getUserProfile(user)).thenReturn(user);
+		Mockito.when(userGateway.getUserProfile(user)).thenReturn(user);
 		// 构造密码校验
-		doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
+		Mockito.doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		// 构造菜单
-		when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
+		Mockito.when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
 		// 构造部门
-		when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
+		Mockito.when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 授权码登录
-		assertThatNoException().isThrownBy(() -> domainService.auth(auth));
+		Assertions.assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
-		verify(deptGateway, times(1)).getDeptPaths(user);
-		verify(menuGateway, times(1)).getMenuPermissions(user);
-		verify(passwordValidator, times(1)).validatePassword("123", "202cb962ac59075b964b07152d234b70");
-		verify(userGateway, times(1)).getUserProfile(user);
-		verify(tenantGateway, times(1)).getTenantId("laokou");
+		Mockito.verify(deptGateway, Mockito.times(1)).getDeptPaths(user);
+		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(user);
+		Mockito.verify(passwordValidator, Mockito.times(1)).validatePassword("123", "202cb962ac59075b964b07152d234b70");
+		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(user);
+		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId("laokou");
 	}
 
 	@Test
 	void test_testAuth() {
-		AuthA auth = getAuth("admin", "123", GrantTypeEnum.TEST, EMPTY, EMPTY);
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.TEST, StringConstants.EMPTY, StringConstants.EMPTY);
 		// 创建用户【测试】
-		assertThatNoException().isThrownBy(auth::createUserByTest);
+		Assertions.assertThatNoException().isThrownBy(auth::createUserByTest);
 		// 构造租户
-		when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
+		Mockito.when(tenantGateway.getTenantId("laokou")).thenReturn(0L);
 		// 构造用户信息
 		UserE user = auth.getUser();
-		assertThatNoException().isThrownBy(() -> user
+		Assertions.assertThatNoException().isThrownBy(() -> user
 			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
-		when(userGateway.getUserProfile(user)).thenReturn(user);
+		Mockito.when(userGateway.getUserProfile(user)).thenReturn(user);
 		// 构造密码校验
-		doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
+		Mockito.doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		// 构造菜单
-		when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
+		Mockito.when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
 		// 构造部门
-		when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
+		Mockito.when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 测试登录
-		assertThatNoException().isThrownBy(() -> domainService.auth(auth));
+		Assertions.assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
-		verify(deptGateway, times(1)).getDeptPaths(user);
-		verify(menuGateway, times(1)).getMenuPermissions(user);
-		verify(passwordValidator, times(1)).validatePassword("123", "202cb962ac59075b964b07152d234b70");
-		verify(userGateway, times(1)).getUserProfile(user);
-		verify(tenantGateway, times(1)).getTenantId("laokou");
+		Mockito.verify(deptGateway, Mockito.times(1)).getDeptPaths(user);
+		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(user);
+		Mockito.verify(passwordValidator, Mockito.times(1)).validatePassword("123", "202cb962ac59075b964b07152d234b70");
+		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(user);
+		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId("laokou");
 	}
 
 	@Test
 	void test_createLoginLog() {
 		LoginLogE loginLog = DomainFactory.getLoginLog();
 		// 创建登录日志
-		assertThatNoException().isThrownBy(() -> domainService.createLoginLog(loginLog));
+		Assertions.assertThatNoException().isThrownBy(() -> domainService.createLoginLog(loginLog));
 	}
 
 	@Test
 	void test_createSendCaptchaInfoByMail() {
 		// 创建发送验证码信息
-		CaptchaE captcha = getCaptcha("2413176044@qq.com", SEND_MAIL_CAPTCHA.getCode());
-		assertThatNoException().isThrownBy(() -> domainService.createSendCaptchaInfo(captcha));
+		CaptchaE captcha = getCaptcha("2413176044@qq.com", SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode());
+		Assertions.assertThatNoException().isThrownBy(() -> domainService.createSendCaptchaInfo(captcha));
 	}
 
 	@Test
 	void test_createSendCaptchaInfoByMobile() {
 		// 创建发送验证码信息
-		CaptchaE captcha = getCaptcha("18888888888", SEND_MOBILE_CAPTCHA.getCode());
-		assertThatNoException().isThrownBy(() -> domainService.createSendCaptchaInfo(captcha));
+		CaptchaE captcha = getCaptcha("18888888888", SendCaptchaTypeEnum.SEND_MOBILE_CAPTCHA.getCode());
+		Assertions.assertThatNoException().isThrownBy(() -> domainService.createSendCaptchaInfo(captcha));
 	}
 
 	@Test
 	void test_createNoticeLogByMailCaptcha() {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
-		assertThatNoException().isThrownBy(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));
-		assertThatNoException().isThrownBy(() -> noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode()));
-		assertThatNoException().isThrownBy(() -> domainService.createNoticeLog(noticeLog));
+		Assertions.assertThatNoException().isThrownBy(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));
+		Assertions.assertThatNoException().isThrownBy(() -> noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode()));
+		Assertions.assertThatNoException().isThrownBy(() -> domainService.createNoticeLog(noticeLog));
 	}
 
 	@Test
 	void test_createNoticeLogByMobileCaptcha() {
 		// 创建通知日志
 		NoticeLogE noticeLog = DomainFactory.getNoticeLog();
-		assertThatNoException().isThrownBy(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));
-		assertThatNoException().isThrownBy(() -> noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode()));
-		assertThatNoException().isThrownBy(() -> domainService.createNoticeLog(noticeLog));
+		Assertions.assertThatNoException().isThrownBy(() -> noticeLog.setCode(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode()));
+		Assertions.assertThatNoException().isThrownBy(() -> noticeLog.setStatus(SendCaptchaStatusEnum.OK.getCode()));
+		Assertions.assertThatNoException().isThrownBy(() -> domainService.createNoticeLog(noticeLog));
 	}
 
 	private CaptchaE getCaptcha(String uuid, String tag) {

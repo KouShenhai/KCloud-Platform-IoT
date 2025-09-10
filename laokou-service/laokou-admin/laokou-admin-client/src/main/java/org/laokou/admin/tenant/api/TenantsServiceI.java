@@ -17,7 +17,7 @@
 
 package org.laokou.admin.tenant.api;
 
-import org.laokou.admin.tenant.dto.*;
+
 import org.laokou.admin.tenant.dto.clientobject.TenantCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;

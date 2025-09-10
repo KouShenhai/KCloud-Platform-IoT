@@ -17,7 +17,7 @@
 
 package org.laokou.admin.loginLog.dto;
 
-import lombok.*;
+
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**

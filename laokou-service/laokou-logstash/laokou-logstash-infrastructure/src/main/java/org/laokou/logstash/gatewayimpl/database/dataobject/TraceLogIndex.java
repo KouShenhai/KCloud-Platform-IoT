@@ -22,10 +22,10 @@ import org.laokou.common.elasticsearch.annotation.Field;
 import org.laokou.common.elasticsearch.annotation.Index;
 import org.laokou.common.elasticsearch.annotation.Setting;
 import org.laokou.common.elasticsearch.annotation.Type;
+import org.laokou.common.i18n.util.DateUtils;
 
 import java.io.Serializable;
 
-import static org.laokou.common.i18n.util.DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS;
 
 @Data
 @Index(setting = @Setting(refreshInterval = "1"))
@@ -37,7 +37,7 @@ public final class TraceLogIndex implements Serializable {
 	@Field(type = Type.KEYWORD)
 	private String profile;
 
-	@Field(type = Type.DATE, format = YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS)
+	@Field(type = Type.DATE, format = DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS)
 	private String dateTime;
 
 	@Field(type = Type.KEYWORD, index = true)

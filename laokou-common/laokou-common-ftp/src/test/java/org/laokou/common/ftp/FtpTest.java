@@ -18,6 +18,7 @@
 package org.laokou.common.ftp;
 
 import lombok.RequiredArgsConstructor;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.ftp.config.FtpProperties;
 import org.laokou.common.ftp.template.FtpTemplate;
@@ -28,9 +29,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 import java.io.IOException;
 import java.io.InputStream;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
  * @author laokou
@@ -48,13 +46,13 @@ class FtpTest {
 
 	@Test
 	void test_ftp() throws IOException {
-		assertThatNoException().isThrownBy(() -> ftpTemplate.upload(ftpProperties.getDirectory(), "测试中文文本.txt",
+		Assertions.assertThatNoException().isThrownBy(() -> ftpTemplate.upload(ftpProperties.getDirectory(), "测试中文文本.txt",
 				ResourceUtils.getResource("classpath:测试中文文本.txt").getInputStream()));
 		InputStream inputStream = ftpTemplate.download(ftpProperties.getDirectory(), "测试中文文本.txt");
-		assertThat(inputStream).isNotNull();
-		assertThat(new String(inputStream.readAllBytes()).trim()).isEqualTo("123");
-		assertThatNoException().isThrownBy(() -> ftpTemplate.delete(ftpProperties.getDirectory(), "测试中文文本.txt"));
-		assertThat(ftpTemplate.download(ftpProperties.getDirectory(), "测试中文文本.txt")).isNull();
+		Assertions.assertThat(inputStream).isNotNull();
+		Assertions.assertThat(new String(inputStream.readAllBytes()).trim()).isEqualTo("123");
+		Assertions.assertThatNoException().isThrownBy(() -> ftpTemplate.delete(ftpProperties.getDirectory(), "测试中文文本.txt"));
+		Assertions.assertThat(ftpTemplate.download(ftpProperties.getDirectory(), "测试中文文本.txt")).isNull();
 	}
 
 }

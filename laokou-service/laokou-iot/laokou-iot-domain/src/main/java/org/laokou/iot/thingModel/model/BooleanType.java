@@ -24,7 +24,6 @@ import org.laokou.common.i18n.util.StringUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
-import static org.laokou.common.i18n.util.ParamValidator.invalidate;
 
 /**
  * @author laokou
@@ -41,10 +40,10 @@ public class BooleanType implements Serializable {
 
 	public ParamValidator.Validate checkValue() {
 		if (StringUtils.isEmpty(trueText) || StringUtils.isEmpty(falseText)) {
-			return invalidate("1对应文本和0对应文本不能为空");
+			return ParamValidator.invalidate("1对应文本和0对应文本不能为空");
 		}
 		if (ObjectUtils.equals(trueText, falseText)) {
-			return invalidate("1对应文本和0对应文本不能相同");
+			return ParamValidator.invalidate("1对应文本和0对应文本不能相同");
 		}
 		return ParamValidator.validate();
 	}

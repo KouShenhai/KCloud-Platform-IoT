@@ -22,7 +22,6 @@ import org.laokou.common.i18n.util.ParamValidator;
 
 import java.io.Serial;
 import java.io.Serializable;
-import static org.laokou.common.i18n.util.ParamValidator.invalidate;
 
 /**
  * @author laokou
@@ -37,10 +36,10 @@ public class StringType implements Serializable {
 
 	public ParamValidator.Validate checkValue() {
 		if (length == null) {
-			return invalidate("长度不能为空");
+			return ParamValidator.invalidate("长度不能为空");
 		}
 		if (length < 1 || length > 2000) {
-			return invalidate("长度必须为1-2000");
+			return ParamValidator.invalidate("长度必须为1-2000");
 		}
 		return ParamValidator.validate();
 	}

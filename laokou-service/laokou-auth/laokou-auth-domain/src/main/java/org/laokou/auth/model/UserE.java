@@ -23,7 +23,6 @@ import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.ObjectUtils;
 
-import static org.laokou.auth.model.SuperAdminEnum.YES;
 
 /**
  * 用户实体.
@@ -90,7 +89,7 @@ public class UserE extends Identifier {
 	private Long tenantId;
 
 	public boolean isSuperAdministrator() {
-		return ObjectUtils.equals(YES.getCode(), this.superAdmin);
+		return ObjectUtils.equals(SuperAdminEnum.YES.getCode(), this.superAdmin);
 	}
 
 }

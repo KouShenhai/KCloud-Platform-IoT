@@ -20,8 +20,7 @@ package org.laokou.admin.user.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
-
-import static org.laokou.common.tenant.constant.DSConstants.Master.USER_TABLE;
+import org.laokou.common.tenant.constant.DSConstants;
 
 /**
  * 用户数据对象.
@@ -29,7 +28,7 @@ import static org.laokou.common.tenant.constant.DSConstants.Master.USER_TABLE;
  * @author laokou
  */
 @Data
-@TableName(USER_TABLE)
+@TableName(DSConstants.Master.USER_TABLE)
 public class UserDO extends BaseDO {
 
 	/**

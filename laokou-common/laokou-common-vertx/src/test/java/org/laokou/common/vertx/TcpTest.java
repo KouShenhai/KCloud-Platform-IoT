@@ -23,11 +23,10 @@ import io.vertx.core.net.NetClient;
 import io.vertx.core.net.NetClientOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
-
-import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
  * @author laokou
@@ -52,14 +51,14 @@ class TcpTest {
 			netClient.connect(connectOptions).onComplete(res -> {
 				if (res.succeeded()) {
 					log.info("【Vertx-TCP-Client】 => 连接成功，端口：{}", finalI);
-					assertThatNoException().isThrownBy(() -> res.result().write("发送数据，" + finalI + " ---> 123"));
+					Assertions.assertThatNoException().isThrownBy(() -> res.result().write("发送数据，" + finalI + " ---> 123"));
 				}
 				else {
 					log.info("【Vertx-TCP-Client】 => 连接失败，端口：{}", finalI);
 				}
 			});
 			Thread.sleep(2000);
-			assertThatNoException().isThrownBy(netClient::close);
+			Assertions.assertThatNoException().isThrownBy(netClient::close);
 		}
 	}
 

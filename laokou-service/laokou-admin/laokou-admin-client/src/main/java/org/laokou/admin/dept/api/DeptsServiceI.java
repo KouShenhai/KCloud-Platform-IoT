@@ -17,7 +17,14 @@
 
 package org.laokou.admin.dept.api;
 
-import org.laokou.admin.dept.dto.*;
+import org.laokou.admin.dept.dto.DeptExportCmd;
+import org.laokou.admin.dept.dto.DeptGetQry;
+import org.laokou.admin.dept.dto.DeptImportCmd;
+import org.laokou.admin.dept.dto.DeptModifyCmd;
+import org.laokou.admin.dept.dto.DeptPageQry;
+import org.laokou.admin.dept.dto.DeptRemoveCmd;
+import org.laokou.admin.dept.dto.DeptSaveCmd;
+import org.laokou.admin.dept.dto.DeptTreeListQry;
 import org.laokou.admin.dept.dto.clientobject.DeptCO;
 import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
 import org.laokou.common.i18n.dto.Page;

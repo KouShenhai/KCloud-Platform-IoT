@@ -17,7 +17,13 @@
 
 package org.laokou.admin.dict.api;
 
-import org.laokou.admin.dict.dto.*;
+import org.laokou.admin.dict.dto.DictExportCmd;
+import org.laokou.admin.dict.dto.DictGetQry;
+import org.laokou.admin.dict.dto.DictImportCmd;
+import org.laokou.admin.dict.dto.DictModifyCmd;
+import org.laokou.admin.dict.dto.DictPageQry;
+import org.laokou.admin.dict.dto.DictRemoveCmd;
+import org.laokou.admin.dict.dto.DictSaveCmd;
 import org.laokou.admin.dict.dto.clientobject.DictCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;

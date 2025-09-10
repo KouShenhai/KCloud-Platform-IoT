@@ -19,9 +19,11 @@ package org.laokou.auth.service.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.auth.model.OAuth2Constants;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.MessageUtils;
+import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
@@ -32,8 +34,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.laokou.auth.model.OAuth2Constants.INVALID_SCOPE;
-import static org.laokou.common.security.handler.OAuth2ExceptionHandler.*;
 
 /**
  * 抽象认证转换器.
@@ -68,7 +68,7 @@ abstract class AbstractOAuth2AuthenticationConverter implements AuthenticationCo
 		List<String> scopes = parameters.get(OAuth2ParameterNames.SCOPE);
 		// 判断scopes
 		if (CollectionUtils.isNotEmpty(scopes) && scopes.size() != 1) {
-			throw getOAuth2AuthenticationException(INVALID_SCOPE, MessageUtils.getMessage(INVALID_SCOPE), ERROR_URL);
+			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(OAuth2Constants.INVALID_SCOPE, MessageUtils.getMessage(OAuth2Constants.INVALID_SCOPE), OAuth2ExceptionHandler.ERROR_URL);
 		}
 		// 获取上下文认证信息
 		Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();

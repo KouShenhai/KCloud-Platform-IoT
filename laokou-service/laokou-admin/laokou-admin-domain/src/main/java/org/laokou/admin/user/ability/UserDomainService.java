@@ -18,7 +18,6 @@
 package org.laokou.admin.user.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.user.gateway.*;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.stereotype.Component;

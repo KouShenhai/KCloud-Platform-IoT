@@ -17,73 +17,17 @@
 
 package org.laokou.auth.factory;
 
-import org.laokou.auth.model.*;
+import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.CaptchaE;
+import org.laokou.auth.model.LoginLogE;
+import org.laokou.auth.model.NoticeLogE;
+import org.laokou.auth.model.UserE;
 import org.laokou.common.core.util.SpringContextUtils;
 
 /**
  * @author laokou
  */
 public final class DomainFactory {
-
-	/**
-	 * 邮箱.
-	 */
-	public static final String MAIL = "mail";
-
-	/**
-	 * 手机号.
-	 */
-	public static final String MOBILE = "mobile";
-
-	/**
-	 * 测试.
-	 */
-	public static final String TEST = "test";
-
-	/**
-	 * 用户名密码.
-	 */
-	public static final String USERNAME_PASSWORD = "username_password";
-
-	/**
-	 * 授权码.
-	 */
-	public static final String AUTHORIZATION_CODE = "authorization_code";
-
-	/**
-	 * 用户名.
-	 */
-	public static final String USERNAME = "username";
-
-	/**
-	 * 密码.
-	 */
-	public static final String PASSWORD = "password";
-
-	/**
-	 * 验证码.
-	 */
-	public static final String CAPTCHA = "captcha";
-
-	/**
-	 * UUID.
-	 */
-	public static final String UUID = "uuid";
-
-	/**
-	 * 验证码.
-	 */
-	public static final String CODE = "code";
-
-	/**
-	 * 租户编码.
-	 */
-	public static final String TENANT_CODE = "tenant_code";
-
-	/**
-	 * 默认租户.
-	 */
-	public static final String DEFAULT_TENANT = "laokouyun";
 
 	private DomainFactory() {
 	}

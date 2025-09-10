@@ -39,8 +39,6 @@ import org.laokou.common.websocket.model.WebSocketTypeEnum;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
-import static org.laokou.common.websocket.model.WebSocketTypeEnum.PING;
-import static org.laokou.common.websocket.model.WebSocketTypeEnum.PONG;
 
 /**
  * WebSocket自定义处理器.
@@ -107,11 +105,11 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 			String channelId = channel.id().asLongText();
 			int maxHeartBeatCount = springWebSocketServerProperties.getMaxHeartBeatCount();
 			if (WebSocketSessionHeartBeatManager.get(channelId) >= maxHeartBeatCount) {
-				log.info("【WebSocket-Server】 => 关闭连接，超过{}次未接收{}心跳{}", maxHeartBeatCount, channelId, PONG.getCode());
+				log.info("【WebSocket-Server】 => 关闭连接，超过{}次未接收{}心跳{}", maxHeartBeatCount, channelId, WebSocketTypeEnum.PONG.getCode());
 				ctx.close();
 				return;
 			}
-			String ping = PING.getCode();
+			String ping = WebSocketTypeEnum.PING.getCode();
 			log.info("【WebSocket-Server】 => 发送{}心跳{}", channelId, ping);
 			ctx.writeAndFlush(new TextWebSocketFrame(ping));
 			WebSocketSessionHeartBeatManager.increment(channelId);

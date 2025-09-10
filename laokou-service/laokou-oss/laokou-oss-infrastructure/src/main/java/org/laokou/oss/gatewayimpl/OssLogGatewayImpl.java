@@ -21,7 +21,10 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.constant.NameConstants;
+import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.oss.convertor.OssConvertor;
 import org.laokou.oss.convertor.OssLogConvertor;
 import org.laokou.oss.gateway.OssLogGateway;
@@ -31,9 +34,6 @@ import org.laokou.oss.model.OssLogE;
 import org.laokou.oss.model.OssUploadV;
 import org.springframework.stereotype.Component;
 
-import static org.laokou.common.data.cache.constant.NameConstants.OSS_LOG;
-import static org.laokou.common.data.cache.model.OperateTypeEnum.GET;
-import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * @author laokou
@@ -45,10 +45,10 @@ public class OssLogGatewayImpl implements OssLogGateway {
 	private final OssLogMapper ossLogMapper;
 
 	@Override
-	@DataCache(name = OSS_LOG, key = "#md5", operateType = GET)
+	@DataCache(name = NameConstants.OSS_LOG, key = "#md5", operateType = OperateTypeEnum.GET)
 	public OssUploadV getOssInfoByMd5(String md5) {
 		try {
-			DynamicDataSourceContextHolder.push(DOMAIN);
+			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			OssLogDO ossLogDO = ossLogMapper.selectOne(Wrappers.lambdaQuery(OssLogDO.class).select(OssLogDO::getId, OssLogDO::getUrl).eq(OssLogDO::getMd5, md5));
 			return ObjectUtils.isNotNull(ossLogDO) ? OssConvertor.toValueObject(ossLogDO) : null;
 		} finally {

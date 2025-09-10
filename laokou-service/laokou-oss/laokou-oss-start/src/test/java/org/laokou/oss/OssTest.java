@@ -18,6 +18,7 @@
 package org.laokou.oss;
 
 import lombok.RequiredArgsConstructor;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.core.util.UUIDGenerator;
@@ -29,7 +30,6 @@ import org.laokou.oss.dto.clientobject.OssUploadCO;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -46,7 +46,7 @@ class OssTest {
 		byte[] bytes = ResourceUtils.getResource("classpath:1.jpg").getInputStream().readAllBytes();
 		Result<OssUploadCO> result = ossUploadCmdExe.execute(new OssUploadCmd("image", bytes,
 				UUIDGenerator.generateUUID() + ".jpg", ".jpg", "image/jpeg", bytes.length));
-		assertThat(FileUtils.getBytesByUrl(result.getData().getUrl())).isEqualTo(bytes);
+		Assertions.assertThat(FileUtils.getBytesByUrl(result.getData().getUrl())).isEqualTo(bytes);
 	}
 
 }

@@ -17,7 +17,6 @@
 
 package org.laokou.iot.productCategory.api;
 
-import org.laokou.iot.productCategory.dto.*;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;

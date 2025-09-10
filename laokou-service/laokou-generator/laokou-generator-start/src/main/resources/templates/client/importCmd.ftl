@@ -18,7 +18,7 @@
 
 package ${packageName}.${instanceName}.dto;
 
-import lombok.*;
+
 import org.laokou.common.i18n.dto.CommonCommand;
 import org.springframework.web.multipart.MultipartFile;
 

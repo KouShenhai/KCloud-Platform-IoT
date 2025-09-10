@@ -17,12 +17,12 @@
 
 package org.laokou.auth.service.authentication;
 
+import org.laokou.auth.model.Constants;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static org.laokou.auth.factory.DomainFactory.MAIL;
 
 /**
  * 邮箱转换器.
@@ -34,7 +34,7 @@ final class OAuth2MailAuthenticationConverter extends AbstractOAuth2Authenticati
 
 	@Override
 	String getGrantType() {
-		return MAIL;
+		return Constants.MAIL;
 	}
 
 	@Override

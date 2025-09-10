@@ -30,7 +30,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.common.tenant.constant.DSConstants.IOT;
 
 /**
  * 分页物查询模型请求执行器.
@@ -45,7 +44,7 @@ public class ThingModelPageQryExe {
 
 	public Result<Page<ThingModelCO>> execute(ThingModelPageQry qry) {
 		try {
-			DynamicDataSourceContextHolder.push(IOT);
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			List<ThingModelDO> list = thingModelMapper.selectObjectPage(qry);
 			long total = thingModelMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(ThingModelConvertor.toClientObjects(list), total));

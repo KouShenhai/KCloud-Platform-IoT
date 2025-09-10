@@ -31,6 +31,7 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.network.mqtt.client.handler.MqttMessageHandler;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
+import org.laokou.common.network.mqtt.client.util.VertxMqttUtils;
 import reactor.core.Disposable;
 import reactor.core.publisher.Sinks;
 import reactor.core.scheduler.Schedulers;
@@ -38,8 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static org.laokou.common.network.mqtt.client.util.VertxMqttUtils.convertQos;
 
 /**
  * @author laokou
@@ -142,7 +141,7 @@ public final class VertxMqttClient {
 	 * @param isRetain if the message needs to be retained
 	 */
 	public void publish(String topic, int qos, String payload, boolean isDup, boolean isRetain) {
-		mqttClient.publish(topic, Buffer.buffer(payload), convertQos(qos), isDup, isRetain);
+		mqttClient.publish(topic, Buffer.buffer(payload), VertxMqttUtils.convertQos(qos), isDup, isRetain);
 	}
 
 	private void reconnect() {

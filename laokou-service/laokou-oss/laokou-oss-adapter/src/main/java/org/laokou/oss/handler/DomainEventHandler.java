@@ -24,6 +24,7 @@ import org.laokou.oss.api.OssLogsServiceI;
 import org.laokou.oss.convertor.OssLogConvertor;
 import org.laokou.oss.dto.OssLogSaveCmd;
 import org.laokou.oss.dto.domainevent.OssUploadEvent;
+import org.laokou.oss.model.MqEnum;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -31,8 +32,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static org.laokou.oss.model.MqEnum.OSS_LOG_CONSUMER_GROUP;
-import static org.laokou.oss.model.MqEnum.OSS_LOG_TOPIC;
 
 /**
  * @author laokou
@@ -44,7 +43,7 @@ public class DomainEventHandler {
 
 	private final OssLogsServiceI ossLogsServiceI;
 
-	@KafkaListener(topics = OSS_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + OSS_LOG_CONSUMER_GROUP)
+	@KafkaListener(topics = MqEnum.OSS_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.OSS_LOG_CONSUMER_GROUP)
 	public void handleLoginLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {

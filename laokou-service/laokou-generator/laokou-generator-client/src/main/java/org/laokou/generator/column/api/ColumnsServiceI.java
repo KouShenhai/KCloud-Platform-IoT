@@ -17,9 +17,15 @@
 
 package org.laokou.generator.column.api;
 
-import org.laokou.generator.column.dto.*;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.generator.column.dto.ColumnExportCmd;
+import org.laokou.generator.column.dto.ColumnGetQry;
+import org.laokou.generator.column.dto.ColumnImportCmd;
+import org.laokou.generator.column.dto.ColumnModifyCmd;
+import org.laokou.generator.column.dto.ColumnPageQry;
+import org.laokou.generator.column.dto.ColumnRemoveCmd;
+import org.laokou.generator.column.dto.ColumnSaveCmd;
 import org.laokou.generator.column.dto.clientobject.ColumnCO;
 
 /**

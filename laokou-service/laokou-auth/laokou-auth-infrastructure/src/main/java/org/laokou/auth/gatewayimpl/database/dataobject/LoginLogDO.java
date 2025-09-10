@@ -20,10 +20,9 @@ package org.laokou.auth.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.tenant.constant.DSConstants;
 
 import java.io.Serial;
-
-import static org.laokou.common.tenant.constant.DSConstants.Domain.LOGIN_LOG_TABLE;
 
 /**
  * 登录日志.
@@ -31,7 +30,7 @@ import static org.laokou.common.tenant.constant.DSConstants.Domain.LOGIN_LOG_TAB
  * @author laokou
  */
 @Data
-@TableName(LOGIN_LOG_TABLE)
+@TableName(DSConstants.Domain.LOGIN_LOG_TABLE)
 public class LoginLogDO extends BaseDO {
 
 	@Serial

@@ -20,6 +20,7 @@ package org.laokou.oss.convertor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.dubbo.rpc.RpcContext;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.StoragePolicyEnum;
@@ -37,8 +38,6 @@ import org.springframework.util.DigestUtils;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
-import static org.laokou.common.mybatisplus.mapper.BaseDO.CREATOR;
-import static org.laokou.common.mybatisplus.mapper.BaseDO.TENANT_ID;
 
 /**
  * @author laokou
@@ -84,8 +83,8 @@ public final class OssConvertor {
 	}
 
 	public static OssUploadEvent toDomainEvent(OssA ossA) {
-		String creator = RpcContext.getServerAttachment().getAttachment(CREATOR);
-		String tenantId = RpcContext.getServerAttachment().getAttachment(TENANT_ID);
+		String creator = RpcContext.getServerAttachment().getAttachment(BaseDO.CREATOR);
+		String tenantId = RpcContext.getServerAttachment().getAttachment(BaseDO.TENANT_ID);
 		FileFormatEnum fileFormatEnum = ossA.getFileFormatEnum();
 		return new OssUploadEvent(ossA.getId(), ossA.getName(), ossA.getMd5(), ossA.getUrl(), ossA.getSize(), ossA.getOssId(),
 				ossA.getContentType(), ossA.getExtName(), ossA.getCreateTime(), Long.valueOf(tenantId), Long.valueOf(creator), fileFormatEnum.getCode());

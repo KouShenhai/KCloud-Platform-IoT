@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.Constants;
 import org.laokou.auth.model.GrantTypeEnum;
 import org.laokou.common.security.config.OAuth2ModelMapper;
 import org.springframework.security.core.Authentication;
@@ -29,8 +30,6 @@ import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
-
-import static org.laokou.auth.factory.DomainFactory.*;
 
 /**
  * 密码处理器.
@@ -53,11 +52,11 @@ final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2A
 
 	@Override
 	Authentication getPrincipal(HttpServletRequest request) throws Exception {
-		String uuid = request.getParameter(UUID);
-		String captcha = request.getParameter(CAPTCHA);
-		String username = request.getParameter(USERNAME);
-		String password = request.getParameter(PASSWORD);
-		String tenantCode = request.getParameter(TENANT_CODE);
+		String uuid = request.getParameter(Constants.UUID);
+		String captcha = request.getParameter(Constants.CAPTCHA);
+		String username = request.getParameter(Constants.USERNAME);
+		String password = request.getParameter(Constants.PASSWORD);
+		String tenantCode = request.getParameter(Constants.TENANT_CODE);
 		AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.USERNAME_PASSWORD, uuid,
 				captcha);
 		authA.decryptUsernamePassword();

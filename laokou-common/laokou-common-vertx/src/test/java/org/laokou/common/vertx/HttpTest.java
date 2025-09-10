@@ -20,9 +20,16 @@ package org.laokou.common.vertx;
 import io.vertx.core.MultiMap;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
-import io.vertx.core.http.*;
+import io.vertx.core.http.HttpClientAgent;
+import io.vertx.core.http.HttpClientOptions;
+import io.vertx.core.http.HttpHeaders;
+import io.vertx.core.http.HttpMethod;
+import io.vertx.core.http.WebSocket;
+import io.vertx.core.http.WebSocketClient;
+import io.vertx.core.http.WebSocketConnectOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,8 +38,6 @@ import org.springframework.test.context.TestConstructor;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThatNoException;
 
 /**
  * @author laokou
@@ -65,7 +70,7 @@ class HttpTest {
 				}
 			});
 			Thread.sleep(2000);
-			assertThatNoException().isThrownBy(webSocketClient::close);
+			Assertions.assertThatNoException().isThrownBy(webSocketClient::close);
 		}
 	}
 
@@ -95,7 +100,7 @@ class HttpTest {
 				request.end();
 			});
 			Thread.sleep(1000);
-			assertThatNoException().isThrownBy(httpClient::close);
+			Assertions.assertThatNoException().isThrownBy(httpClient::close);
 		}
 	}
 

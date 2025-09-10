@@ -21,9 +21,17 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.source.api.SourcesServiceI;
-import org.laokou.admin.source.dto.*;
+import org.laokou.admin.source.dto.SourceExportCmd;
+import org.laokou.admin.source.dto.SourceGetQry;
+import org.laokou.admin.source.dto.SourceImportCmd;
+import org.laokou.admin.source.dto.SourceModifyCmd;
+import org.laokou.admin.source.dto.SourcePageQry;
+import org.laokou.admin.source.dto.SourceRemoveCmd;
+import org.laokou.admin.source.dto.SourceSaveCmd;
 import org.laokou.admin.source.dto.clientobject.SourceCO;
 import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.constant.NameConstants;
+import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -32,11 +40,16 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import static org.laokou.common.data.cache.constant.NameConstants.SOURCES;
-import static org.laokou.common.data.cache.model.OperateTypeEnum.DEL;
 
 /**
  * 数据源管理控制器.
@@ -64,7 +77,7 @@ public class SourcesControllerV3 {
 	@PreAuthorize("hasAuthority('sys:source:modify')")
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@Operation(summary = "修改数据源", description = "修改数据源")
-	@DataCache(name = SOURCES, key = "#cmd.co.id", operateType = DEL)
+	@DataCache(name = NameConstants.SOURCES, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
 	public void modifySource(@RequestBody SourceModifyCmd cmd) {
 		sourcesServiceI.modifySource(cmd);
 	}
@@ -103,7 +116,7 @@ public class SourcesControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
-	@DataCache(name = SOURCES, key = "#id")
+	@DataCache(name = NameConstants.SOURCES, key = "#id")
 	@PreAuthorize("hasAuthority('sys:source:detail')")
 	@Operation(summary = "查看数据源详情", description = "查看数据源详情")
 	public Result<SourceCO> getSourceById(@PathVariable("id") Long id) {

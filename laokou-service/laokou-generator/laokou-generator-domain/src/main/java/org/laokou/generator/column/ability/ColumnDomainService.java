@@ -18,7 +18,6 @@
 package org.laokou.generator.column.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.generator.column.gateway.*;
 import org.laokou.generator.column.model.ColumnE;
 import org.springframework.stereotype.Component;
 

@@ -22,12 +22,22 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.oss.dto.clientobject.OssUploadCO;
-import org.laokou.admin.user.dto.UserUploadAvatarCmd;
 import org.laokou.admin.user.api.UsersServiceI;
-import org.laokou.admin.user.dto.*;
+import org.laokou.admin.user.dto.UserExportCmd;
+import org.laokou.admin.user.dto.UserGetQry;
+import org.laokou.admin.user.dto.UserImportCmd;
+import org.laokou.admin.user.dto.UserModifyAuthorityCmd;
+import org.laokou.admin.user.dto.UserModifyCmd;
+import org.laokou.admin.user.dto.UserPageQry;
+import org.laokou.admin.user.dto.UserRemoveCmd;
+import org.laokou.admin.user.dto.UserResetPwdCmd;
+import org.laokou.admin.user.dto.UserSaveCmd;
+import org.laokou.admin.user.dto.UserUploadAvatarCmd;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.constant.NameConstants;
+import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -36,11 +46,17 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import static org.laokou.common.data.cache.constant.NameConstants.USERS;
-import static org.laokou.common.data.cache.model.OperateTypeEnum.DEL;
 
 /**
  * 用户管理控制器.
@@ -69,7 +85,7 @@ public class UsersControllerV3 {
 	@PreAuthorize("hasAuthority('sys:user:modify')")
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@Operation(summary = "修改用户", description = "修改用户")
-	@DataCache(name = USERS, key = "#cmd.co.id", operateType = DEL)
+	@DataCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
 	public void modifyUser(@RequestBody UserModifyCmd cmd) throws Exception {
 		usersServiceI.modifyUser(cmd);
 	}
@@ -108,7 +124,7 @@ public class UsersControllerV3 {
 
 	@PutMapping("authority")
 	@PreAuthorize("hasAuthority('sys:user:modify')")
-	@DataCache(name = USERS, key = "#cmd.co.id", operateType = DEL)
+	@DataCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
 	@OperateLog(module = "用户管理", operation = "修改用户权限")
 	@Operation(summary = "修改用户权限", description = "修改用户权限")
 	public void modifyUserAuthority(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {
@@ -125,7 +141,7 @@ public class UsersControllerV3 {
 
 	@TraceLog
 	@GetMapping("{id}")
-	@DataCache(name = USERS, key = "#id")
+	@DataCache(name = NameConstants.USERS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:user:detail')")
 	@Operation(summary = "查看用户详情", description = "查看用户详情")
 	public Result<UserCO> getUserById(@PathVariable("id") Long id) throws Exception {

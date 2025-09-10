@@ -26,7 +26,6 @@ import org.laokou.common.i18n.util.DateUtils;
 import org.laokou.common.mail.dto.MailResult;
 import org.laokou.common.sms.entity.SmsResult;
 
-import static org.laokou.common.i18n.util.StringUtils.truncate;
 
 /**
  * @author laokou
@@ -41,7 +40,7 @@ public final class NoticeLogConvertor {
 		noticeLogCO.setCode(result.getCode());
 		noticeLogCO.setName(result.getName());
 		noticeLogCO.setStatus(result.getStatus());
-		noticeLogCO.setErrorMessage(truncate(result.getErrorMessage(), 2000));
+		noticeLogCO.setErrorMessage(StringUtils.truncate(result.getErrorMessage(), 2000));
 		noticeLogCO.setParam(result.getParam());
 		noticeLogCO.setTenantId(evt.getTenantId());
 		noticeLogCO.setId(evt.getId());
@@ -56,7 +55,7 @@ public final class NoticeLogConvertor {
 		noticeLogCO.setCode(result.getCode());
 		noticeLogCO.setName(result.getName());
 		noticeLogCO.setStatus(result.getStatus());
-		noticeLogCO.setErrorMessage(truncate(result.getErrorMessage(), 2000));
+		noticeLogCO.setErrorMessage(StringUtils.truncate(result.getErrorMessage(), 2000));
 		noticeLogCO.setParam(result.getParam());
 		noticeLogCO.setTenantId(evt.getTenantId());
 		noticeLogCO.setId(evt.getId());

@@ -18,7 +18,6 @@
 package org.laokou.iot.productModel.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.iot.productModel.gateway.*;
 import org.laokou.iot.productModel.model.ProductModelE;
 import org.springframework.stereotype.Component;
 

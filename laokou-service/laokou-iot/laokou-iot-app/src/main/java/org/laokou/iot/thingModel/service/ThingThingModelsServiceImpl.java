@@ -21,10 +21,8 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.thingModel.api.ThingModelsServiceI;
-import org.laokou.iot.thingModel.command.*;
 import org.laokou.iot.thingModel.command.query.ThingModelGetQryExe;
 import org.laokou.iot.thingModel.command.query.ThingModelPageQryExe;
-import org.laokou.iot.thingModel.dto.*;
 import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
 import org.springframework.stereotype.Service;
 

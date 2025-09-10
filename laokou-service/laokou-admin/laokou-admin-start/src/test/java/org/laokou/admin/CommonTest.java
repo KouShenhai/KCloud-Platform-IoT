@@ -19,6 +19,7 @@ package org.laokou.admin;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.laokou.common.core.util.OkHttpUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
@@ -34,8 +35,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.security.Principal;
 import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author laokou
@@ -55,7 +54,7 @@ class CommonTest {
 	void setUp() throws JsonProcessingException {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(getToken(), OAuth2TokenType.ACCESS_TOKEN);
-		assertThat(authorization).isNotNull();
+		Assertions.assertThat(authorization).isNotNull();
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = authorization
 			.getAttribute(Principal.class.getName());
 		SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);

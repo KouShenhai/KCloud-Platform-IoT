@@ -20,14 +20,14 @@ package org.laokou.admin.role.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.tenant.constant.DSConstants;
 
-import static org.laokou.common.tenant.constant.DSConstants.Master.ROLE_DEPT_TABLE;
 
 /**
  * @author laokou
  */
 @Data
-@TableName(ROLE_DEPT_TABLE)
+@TableName(DSConstants.Master.ROLE_DEPT_TABLE)
 public class RoleDeptDO extends BaseDO {
 
 	private Long roleId;

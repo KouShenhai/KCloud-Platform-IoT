@@ -20,15 +20,16 @@ package org.laokou.logstash.consumer.handler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.laokou.common.log4j2.model.MqEnum;
 import org.laokou.logstash.api.TraceLogServiceI;
 import org.laokou.logstash.dto.TraceLogSaveCmd;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.KafkaListeners;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 
-import static org.laokou.common.log4j2.model.MqEnum.*;
 
 /**
  * @author laokou
@@ -41,18 +42,18 @@ public class TraceLogHandler {
 	private final TraceLogServiceI traceLogServiceI;
 
 	@KafkaListeners(value = {
-			@KafkaListener(topics = DISTRIBUTED_IDENTIFIER_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + DISTRIBUTED_IDENTIFIER_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = GATEWAY_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + GATEWAY_TRACE_LOG_COSUMER_GROUP),
-			@KafkaListener(topics = AUTH_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + AUTH_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = ADMIN_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + ADMIN_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = IOT_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + IOT_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = OSS_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + OSS_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = GENERATOR_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + GENERATOR_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = MQTT_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MQTT_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = UDP_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + UDP_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = HTTP_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + HTTP_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = TCP_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + TCP_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = REPORT_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + REPORT_TRACE_LOG_CONSUMER_GROUP)
+			@KafkaListener(topics = MqEnum.DISTRIBUTED_IDENTIFIER_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.DISTRIBUTED_IDENTIFIER_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = MqEnum.GATEWAY_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.GATEWAY_TRACE_LOG_COSUMER_GROUP),
+			@KafkaListener(topics = MqEnum.AUTH_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.AUTH_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = MqEnum.ADMIN_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.ADMIN_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = MqEnum.IOT_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.IOT_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = MqEnum.OSS_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.OSS_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = MqEnum.GENERATOR_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.GENERATOR_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = MqEnum.MQTT_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.MQTT_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = MqEnum.UDP_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.UDP_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = MqEnum.HTTP_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.HTTP_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = MqEnum.TCP_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.TCP_TRACE_LOG_CONSUMER_GROUP),
+			@KafkaListener(topics = MqEnum.REPORT_TRACE_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.REPORT_TRACE_LOG_CONSUMER_GROUP)
 		})
 	public void handleTraceLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {

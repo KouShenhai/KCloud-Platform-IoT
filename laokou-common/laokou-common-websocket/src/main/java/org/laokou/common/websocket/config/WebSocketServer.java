@@ -19,7 +19,11 @@ package org.laokou.common.websocket.config;
 
 import io.netty.bootstrap.AbstractBootstrap;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.MultiThreadIoEventLoopGroup;
+import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioIoHandler;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +32,6 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
-import static io.netty.channel.ChannelOption.SO_KEEPALIVE;
 
 /**
  * WebSocket服务器配置.
@@ -43,7 +46,7 @@ public final class WebSocketServer extends AbstractServer {
 	private final ExecutorService virtualThreadExecutor;
 
 	public WebSocketServer(ChannelHandler channelHandler, SpringWebSocketServerProperties properties,
-			ExecutorService virtualThreadExecutor) {
+						   ExecutorService virtualThreadExecutor) {
 		super(properties.getBindIp(), properties.getPort(), channelHandler, properties.getBossCorePoolSize(),
 				properties.getWorkerCorePoolSize());
 		this.properties = properties;
@@ -71,7 +74,7 @@ public final class WebSocketServer extends AbstractServer {
 			// 延迟发送
 			.childOption(ChannelOption.TCP_NODELAY, properties.isTcpNodelay())
 			// 开启心跳包活机制
-			.childOption(SO_KEEPALIVE, properties.isKeepAlive())
+			.childOption(ChannelOption.SO_KEEPALIVE, properties.isKeepAlive())
 			// WebSocket处理类
 			.childHandler(channelHandler);
 	}

@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.dto.IdGeneratorBatch;
 import org.laokou.common.i18n.dto.Identifier;
@@ -30,8 +31,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.laokou.common.i18n.common.constant.StringConstants.EMPTY;
 
 /**
  * 用户领域对象【实体】.
@@ -208,17 +207,17 @@ public class UserE extends Identifier {
 	}
 
 	public void encryptUsername() throws Exception {
-		this.usernamePhrase = StringUtils.isEmpty(username) ? EMPTY : encryptStr(username);
+		this.usernamePhrase = StringUtils.isEmpty(username) ? StringConstants.EMPTY : encryptStr(username);
 		this.username = AESUtils.encrypt(username);
 	}
 
 	public void encryptMail() throws Exception {
-		this.mailPhrase = StringUtils.isEmpty(mail) ? EMPTY : encryptStr(mail);
+		this.mailPhrase = StringUtils.isEmpty(mail) ? StringConstants.EMPTY : encryptStr(mail);
 		this.mail = AESUtils.encrypt(mail);
 	}
 
 	public void encryptMobile() throws Exception {
-		this.mobilePhrase = StringUtils.isEmpty(mobile) ? EMPTY : encryptMobile(mobile);
+		this.mobilePhrase = StringUtils.isEmpty(mobile) ? StringConstants.EMPTY : encryptMobile(mobile);
 		this.mobile = AESUtils.encrypt(mobile);
 	}
 

@@ -17,9 +17,15 @@
 
 package org.laokou.generator.info.api;
 
-import org.laokou.generator.info.dto.*;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.generator.info.dto.InfoExportCmd;
+import org.laokou.generator.info.dto.InfoGetQry;
+import org.laokou.generator.info.dto.InfoImportCmd;
+import org.laokou.generator.info.dto.InfoModifyCmd;
+import org.laokou.generator.info.dto.InfoPageQry;
+import org.laokou.generator.info.dto.InfoRemoveCmd;
+import org.laokou.generator.info.dto.InfoSaveCmd;
 import org.laokou.generator.info.dto.clientobject.InfoCO;
 
 /**

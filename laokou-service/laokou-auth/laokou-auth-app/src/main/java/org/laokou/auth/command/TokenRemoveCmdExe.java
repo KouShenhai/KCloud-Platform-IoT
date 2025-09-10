@@ -18,10 +18,12 @@
 package org.laokou.auth.command;
 
 import org.laokou.auth.dto.TokenRemoveCmd;
+import org.laokou.common.context.util.UserDetails;
+import org.laokou.common.data.cache.constant.NameConstants;
+import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
-import org.laokou.common.context.util.UserDetails;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.scheduling.annotation.Async;
@@ -33,8 +35,6 @@ import org.springframework.stereotype.Component;
 
 import java.security.Principal;
 
-import static org.laokou.common.data.cache.constant.NameConstants.USER_MENU;
-import static org.laokou.common.data.cache.model.OperateTypeEnum.getCache;
 
 /**
  * 退出登录执行器.
@@ -78,7 +78,7 @@ public class TokenRemoveCmdExe {
 		Object obj = authorization.getAttribute(Principal.class.getName());
 		if (ObjectUtils.isNotNull(obj)) {
 			UserDetails userDetails = (UserDetails) ((UsernamePasswordAuthenticationToken) obj).getPrincipal();
-			getCache(redissonCacheManager, USER_MENU).evict(userDetails.getId());
+			OperateTypeEnum.getCache(redissonCacheManager, NameConstants.USER_MENU).evict(userDetails.getId());
 		}
 	}
 

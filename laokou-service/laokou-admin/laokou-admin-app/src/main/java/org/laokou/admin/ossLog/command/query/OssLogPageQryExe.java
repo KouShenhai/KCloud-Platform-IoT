@@ -27,11 +27,10 @@ import org.laokou.admin.ossLog.gatewayimpl.database.OssLogMapper;
 import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static org.laokou.common.tenant.constant.DSConstants.DOMAIN;
 
 /**
  * 分页查询OSS日志请求执行器.
@@ -47,7 +46,7 @@ public class OssLogPageQryExe {
 
 	public Result<Page<OssLogCO>> execute(OssLogPageQry qry) {
 		try {
-			DynamicDataSourceContextHolder.push(DOMAIN);
+			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			List<OssLogDO> list = ossLogMapper.selectObjectPage(qry);
 			long total = ossLogMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(OssLogConvertor.toClientObjects(list), total));

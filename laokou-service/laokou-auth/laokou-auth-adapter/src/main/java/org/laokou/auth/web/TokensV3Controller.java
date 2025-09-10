@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.TokensServiceI;
 import org.laokou.auth.dto.TokenRemoveCmd;
-import org.springframework.web.bind.annotation.*;
+
 
 /**
  * @author laokou

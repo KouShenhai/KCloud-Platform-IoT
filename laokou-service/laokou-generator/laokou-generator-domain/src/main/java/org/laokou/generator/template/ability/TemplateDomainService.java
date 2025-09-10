@@ -18,7 +18,6 @@
 package org.laokou.generator.template.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.generator.template.gateway.*;
 import org.laokou.generator.template.model.TemplateE;
 import org.springframework.stereotype.Component;
 

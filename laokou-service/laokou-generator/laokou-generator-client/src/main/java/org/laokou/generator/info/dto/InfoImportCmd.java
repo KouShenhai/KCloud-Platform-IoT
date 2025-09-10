@@ -17,7 +17,9 @@
 
 package org.laokou.generator.info.dto;
 
-import lombok.*;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 import org.springframework.web.multipart.MultipartFile;
 

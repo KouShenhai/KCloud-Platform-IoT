@@ -20,8 +20,8 @@ package org.laokou.admin.dept.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.tenant.constant.DSConstants;
 
-import static org.laokou.common.tenant.constant.DSConstants.Master.DEPT_TABLE;
 
 /**
  * 部门数据对象.
@@ -29,7 +29,7 @@ import static org.laokou.common.tenant.constant.DSConstants.Master.DEPT_TABLE;
  * @author laokou
  */
 @Data
-@TableName(DEPT_TABLE)
+@TableName(DSConstants.Master.DEPT_TABLE)
 public class DeptDO extends BaseDO {
 
 	/**

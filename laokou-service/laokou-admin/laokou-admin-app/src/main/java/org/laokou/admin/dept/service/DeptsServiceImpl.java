@@ -19,11 +19,12 @@ package org.laokou.admin.dept.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.api.DeptsServiceI;
-import org.laokou.admin.dept.command.*;
+import org.laokou.admin.dept.command.DeptRemoveCmdExe;
+import org.laokou.admin.dept.command.DeptSaveCmdExe;
 import org.laokou.admin.dept.command.query.DeptGetQryExe;
 import org.laokou.admin.dept.command.query.DeptPageQryExe;
 import org.laokou.admin.dept.command.query.DeptTreeListQryExe;
-import org.laokou.admin.dept.dto.*;
+import org.laokou.admin.dept.dto.DeptPageQry;
 import org.laokou.admin.dept.dto.clientobject.DeptCO;
 import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
 import org.laokou.common.i18n.dto.Page;

@@ -17,7 +17,14 @@
 
 package org.laokou.admin.oss.api;
 
-import org.laokou.admin.oss.dto.*;
+
+import org.laokou.admin.oss.dto.OssExportCmd;
+import org.laokou.admin.oss.dto.OssGetQry;
+import org.laokou.admin.oss.dto.OssImportCmd;
+import org.laokou.admin.oss.dto.OssModifyCmd;
+import org.laokou.admin.oss.dto.OssPageQry;
+import org.laokou.admin.oss.dto.OssRemoveCmd;
+import org.laokou.admin.oss.dto.OssSaveCmd;
 import org.laokou.admin.oss.dto.clientobject.OssCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;

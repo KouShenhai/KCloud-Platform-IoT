@@ -20,6 +20,7 @@ package org.laokou.tool;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.laokou.common.core.util.FileUtils;
+import org.laokou.common.core.util.SystemUtils;
 import org.springframework.util.StopWatch;
 
 import java.io.File;
@@ -32,7 +33,6 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
-import static org.laokou.common.core.util.SystemUtils.isWindows;
 
 /**
  * 一键修改项目.
@@ -165,11 +165,11 @@ final class ModifyProjectBoot {
 	}
 
 	private static String getOldPackagePath() {
-		return isWindows() ? "\\\\org\\\\laokou\\\\" : "/org/laokou/";
+		return SystemUtils.isWindows() ? "\\\\org\\\\laokou\\\\" : "/org/laokou/";
 	}
 
 	private static String getNewPackagePath() {
-		return isWindows() ? NEW_PACKAGE_PATH_WINDOW : NEW_PACKAGE_PATH_LINUX;
+		return SystemUtils.isWindows() ? NEW_PACKAGE_PATH_WINDOW : NEW_PACKAGE_PATH_LINUX;
 	}
 
 }

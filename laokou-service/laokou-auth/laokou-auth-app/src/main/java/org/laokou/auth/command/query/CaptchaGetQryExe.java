@@ -26,9 +26,8 @@ import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
+import java.awt.Font;
 
-import static org.laokou.common.redis.util.RedisUtils.FIVE_MINUTE_EXPIRE;
 
 /**
  * 获取验证码执行器.
@@ -52,7 +51,7 @@ public class CaptchaGetQryExe {
 		String base64 = ca.toBase64();
 		String usernamePasswordAuthCaptchaKey = RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(qry.getUuid());
 		redisUtils.del(usernamePasswordAuthCaptchaKey);
-		redisUtils.set(usernamePasswordAuthCaptchaKey, captcha, FIVE_MINUTE_EXPIRE);
+		redisUtils.set(usernamePasswordAuthCaptchaKey, captcha, RedisUtils.FIVE_MINUTE_EXPIRE);
 		return Result.ok(base64);
 	}
 

@@ -17,7 +17,7 @@
 
 package org.laokou.generator.model;
 
-import lombok.*;
+
 
 /**
  * @author laokou

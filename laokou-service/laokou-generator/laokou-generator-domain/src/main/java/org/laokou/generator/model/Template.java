@@ -17,8 +17,8 @@
 
 package org.laokou.generator.model;
 
-import static org.laokou.common.i18n.common.constant.StringConstants.ROD;
-import static org.laokou.generator.model.Template.Constant.*;
+import org.laokou.common.i18n.common.constant.StringConstants;
+
 
 public enum Template {
 
@@ -30,7 +30,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_CLIENT + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/dto";
 		}
 
@@ -48,7 +48,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_CLIENT + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/dto";
 		}
 
@@ -66,7 +66,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_CLIENT + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/dto";
 		}
 
@@ -84,7 +84,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_CLIENT + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/dto";
 		}
 
@@ -102,7 +102,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_CLIENT + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/dto";
 		}
 
@@ -120,7 +120,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_CLIENT + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/dto";
 		}
 
@@ -138,7 +138,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_INFRASTRUCTURE + Constant.JAVA_PATH
 					+ generatorA.getDomainPackagePath() + "/convertor";
 		}
 
@@ -156,7 +156,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_CLIENT + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/dto";
 		}
 
@@ -174,7 +174,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_APP + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/command";
 		}
 
@@ -192,7 +192,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_APP + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/command";
 		}
 
@@ -210,7 +210,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_APP + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/command";
 		}
 
@@ -228,7 +228,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_APP + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/command/query";
 		}
 
@@ -246,7 +246,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_APP + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/command/query";
 		}
 
@@ -264,7 +264,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_APP + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/command";
 		}
 
@@ -282,7 +282,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_APP + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/command";
 		}
 
@@ -300,7 +300,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_DOMAIN + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_DOMAIN + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/model";
 		}
 
@@ -318,7 +318,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_CLIENT + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/api";
 		}
 
@@ -336,7 +336,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_APP + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_APP + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/service";
 		}
 
@@ -354,7 +354,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_DOMAIN + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_DOMAIN + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/ability";
 		}
 
@@ -389,7 +389,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_INFRASTRUCTURE + Constant.JAVA_PATH
 					+ generatorA.getDomainPackagePath() + "/gatewayimpl/database/dataobject";
 		}
 
@@ -407,7 +407,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_CLIENT + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_CLIENT + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/dto/clientobject";
 		}
 
@@ -425,7 +425,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_DOMAIN + JAVA_PATH + generatorA.getDomainPackagePath()
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_DOMAIN + Constant.JAVA_PATH + generatorA.getDomainPackagePath()
 					+ "/gateway";
 		}
 
@@ -443,7 +443,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_INFRASTRUCTURE + Constant.JAVA_PATH
 					+ generatorA.getDomainPackagePath() + "/gatewayimpl";
 		}
 
@@ -461,7 +461,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_ADAPTER + JAVA_PATH + generatorA.getPackagePath() + "/web";
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_ADAPTER + Constant.JAVA_PATH + generatorA.getPackagePath() + "/web";
 		}
 
 		@Override
@@ -478,7 +478,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + RESOURCE_PATH + "/mapper/"
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_INFRASTRUCTURE + Constant.RESOURCE_PATH + "/mapper/"
 					+ generatorA.getTableV().instanceName();
 		}
 
@@ -496,7 +496,7 @@ public enum Template {
 
 		@Override
 		public String getFileDirectory(GeneratorA generatorA) {
-			return generatorA.getModuleName() + ROD + COLA_INFRASTRUCTURE + JAVA_PATH
+			return generatorA.getModuleName() + StringConstants.ROD + Constant.COLA_INFRASTRUCTURE + Constant.JAVA_PATH
 					+ generatorA.getDomainPackagePath() + "/gatewayimpl/database";
 		}
 

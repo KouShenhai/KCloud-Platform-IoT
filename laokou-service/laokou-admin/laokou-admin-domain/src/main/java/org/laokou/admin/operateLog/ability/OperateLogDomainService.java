@@ -18,7 +18,7 @@
 package org.laokou.admin.operateLog.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.operateLog.gateway.*;
+import org.laokou.admin.operateLog.gateway.OperateLogGateway;
 import org.laokou.admin.operateLog.model.OperateLogE;
 import org.springframework.stereotype.Component;
 
