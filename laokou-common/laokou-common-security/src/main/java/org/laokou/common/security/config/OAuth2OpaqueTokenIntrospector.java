@@ -20,11 +20,12 @@ package org.laokou.common.security.config;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.context.util.UserDetails;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
-import org.laokou.common.context.util.UserDetails;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
@@ -33,7 +34,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
-import org.springframework.util.Assert;
+
 import java.security.Principal;
 
 /**
@@ -42,6 +43,7 @@ import java.security.Principal;
 @Slf4j
 @NonNullApi
 @RequiredArgsConstructor
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class OAuth2OpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
 	private final OAuth2AuthorizationService oAuth2AuthorizationService;
@@ -54,19 +56,19 @@ public class OAuth2OpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		if (ObjectUtils.isNull(authorization)) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 		}
-		OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken = authorization.getRefreshToken();
 		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
-		Assert.notNull(accessToken, "accessToken is null");
-		Assert.notNull(refreshToken, "refreshToken is null");
+		OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken = authorization.getRefreshToken();
+		if (ObjectUtils.isNull(accessToken) || ObjectUtils.isNull(refreshToken)) {
+			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
+		}
 		if (accessToken.isActive()) {
             Object obj = authorization.getAttribute(Principal.class.getName());
-            if (ObjectUtils.isNotNull(obj)) {
-                UserDetails userDetails = (UserDetails) ((UsernamePasswordAuthenticationToken) obj).getPrincipal();
+            if (obj instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
+                UserDetails userDetails = (UserDetails) usernamePasswordAuthenticationToken.getPrincipal();
                 // 解密
                 return decryptInfo(userDetails);
             }
-		}
-		if (!refreshToken.isActive()) {
+		} else {
 			oAuth2AuthorizationService.remove(authorization);
 		}
 		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);

@@ -23,7 +23,7 @@ import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnableRouter;
-import org.laokou.common.redis.annotation.EnableRedisRepository;
+import org.laokou.common.redis.annotation.EnableRedis;
 import org.laokou.common.security.config.TransmittableThreadLocalSecurityContextHolderStrategy;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -52,7 +52,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableRouter
 @EnableWarmUp
 @EnableScheduling
-@EnableRedisRepository
+@EnableRedis
 @EnableDiscoveryClient
 @EnableEncryptableProperties
 @EnableConfigurationProperties

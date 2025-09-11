@@ -17,7 +17,7 @@
 
 package org.laokou.common.redis.annotation;
 
-import org.laokou.common.redis.config.RedisAutoConfig;
+import org.laokou.common.redis.config.ReactiveRedisAutoConfig;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.Documented;
@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import(RedisAutoConfig.class)
-public @interface EnableRedisRepository {
+@Import(ReactiveRedisAutoConfig.class)
+public @interface EnableReactiveRedis {
 
 }

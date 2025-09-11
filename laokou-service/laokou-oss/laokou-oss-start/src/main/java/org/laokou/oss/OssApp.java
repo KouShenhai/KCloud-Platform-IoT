@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
-import org.laokou.common.redis.annotation.EnableRedisRepository;
+import org.laokou.common.redis.annotation.EnableRedis;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -48,7 +48,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableDubbo
 @EnableSecurity
 @EnableScheduling
-@EnableRedisRepository
+@EnableRedis
 @EnableAspectJAutoProxy
 @EnableEncryptableProperties
 @EnableConfigurationProperties

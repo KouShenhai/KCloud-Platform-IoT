@@ -19,6 +19,8 @@ package org.laokou.auth.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.laokou.auth.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,7 +32,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface MenuMapper {
+public interface MenuMapper extends CrudMapper<Long, Integer, MenuDO> {
 
 	/**
 	 * 获取菜单权限标识集合.

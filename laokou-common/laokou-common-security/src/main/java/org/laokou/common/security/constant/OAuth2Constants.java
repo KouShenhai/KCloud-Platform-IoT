@@ -15,36 +15,21 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.database;
-
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.auth.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
+package org.laokou.common.security.constant;
 
 /**
- * 部门.
+ * OAuth2常量.
  *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
+public final class OAuth2Constants {
+
+	private OAuth2Constants() {
+	}
 
 	/**
-	 * 查看部门PATHS.
-	 * @return 部门PATHS
+	 * 注册客户端不存在.
 	 */
-	List<String> selectDeptPaths();
-
-	/**
-	 * 根据用户ID查看部门PATHS.
-	 * @param userId 用户ID
-	 * @return 部门PATHS
-	 */
-	List<String> selectDeptPathsByUserId(@Param("userId") Long userId);
+	public static final String REGISTERED_CLIENT_NOT_EXIST = "B_OAuth2_RegisteredClientNotExist";
 
 }

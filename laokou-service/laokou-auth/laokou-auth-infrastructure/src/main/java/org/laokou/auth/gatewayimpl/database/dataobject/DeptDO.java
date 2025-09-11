@@ -15,36 +15,41 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl.database;
+package org.laokou.auth.gatewayimpl.database.dataobject;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.auth.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.springframework.stereotype.Repository;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.tenant.constant.DSConstants;
 
-import java.util.List;
 
 /**
- * 部门.
+ * 部门数据对象.
  *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
+@Data
+@TableName(DSConstants.Master.DEPT_TABLE)
+public class DeptDO extends BaseDO {
 
 	/**
-	 * 查看部门PATHS.
-	 * @return 部门PATHS
+	 * 部门父节点ID.
 	 */
-	List<String> selectDeptPaths();
+	private Long pid;
 
 	/**
-	 * 根据用户ID查看部门PATHS.
-	 * @param userId 用户ID
-	 * @return 部门PATHS
+	 * 部门名称.
 	 */
-	List<String> selectDeptPathsByUserId(@Param("userId") Long userId);
+	private String name;
+
+	/**
+	 * 部门节点.
+	 */
+	private String path;
+
+	/**
+	 * 部门排序.
+	 */
+	private Integer sort;
 
 }
