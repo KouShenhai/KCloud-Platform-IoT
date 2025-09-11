@@ -1,3 +1,5 @@
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FKouShenhai%2FKCloud-Platform-IoT.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FKouShenhai%2FKCloud-Platform-IoT?ref=badge_shield)
+
 === 📌 作者的话
 
 即使KCloud-Platform-IoT有诸多瑕疵，也掩盖不住它的光芒。  
@@ -382,3 +384,7 @@ https://mail.qq.com[邮箱：2413176044@qq.com]
 http://wpa.qq.com/msgrd?v=3&uin=2413176044&Site=gitee&Menu=yes[QQ：2413176044]
 
 image::https://starchart.cc/KouShenhai/KCloud-Platform-IoT.svg[GitHub Star 趋势]
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FKouShenhai%2FKCloud-Platform-IoT.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FKouShenhai%2FKCloud-Platform-IoT?ref=badge_large)
