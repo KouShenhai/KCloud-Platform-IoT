@@ -1,0 +1,34 @@
+server:
+  # 端口
+  port: ${SERVER_PORT:9095}
+  servlet:
+    encoding:
+      charset: UTF-8
+
+spring:
+  application:
+    name: ${SERVICE_ID:laokou-mcp-server}
+  profiles:
+    active: @PROFILE-ACTIVE@
+  threads:
+    virtual:
+      enabled: true
+  ai:
+    alibaba:
+      mcp:
+        nacos:
+          server-addr: @NACOS-DISCOVERY-ADDRESS@
+          namespace: @NACOS-NAMESPACE@
+          username: @NACOS-USERNAME@
+          password: @NACOS-PASSWORD@
+          register:
+            enabled: true
+            service-group: @NACOS-GROUP@
+            service-name: ${spring.application.name}
+    mcp:
+      server:
+        name: ${spring.application.name}
+        version: 3.5.4
+        type: async
+        sse-endpoint: /sse
+        sse-message-endpoint: /mcp/messages

@@ -9,8 +9,17 @@
     <version>3.5.4-SNAPSHOT</version>
   </parent>
 
-  <artifactId>laokou-mcp-client</artifactId>
+  <artifactId>laokou-mcp-server</artifactId>
   <version>3.5.4-SNAPSHOT</version>
   <packaging>pom</packaging>
+
+  <modules>
+    <module>laokou-mcp-server-start</module>
+    <module>laokou-mcp-server-infrastructure</module>
+    <module>laokou-mcp-server-adapter</module>
+    <module>laokou-mcp-server-app</module>
+    <module>laokou-mcp-server-client</module>
+    <module>laokou-mcp-server-domain</module>
+  </modules>
 
 </project>

@@ -9,11 +9,7 @@
   <version>3.5.4-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>laokou-mcp-start</module>
-    <module>laokou-mcp-infrastructure</module>
-    <module>laokou-mcp-adapter</module>
-    <module>laokou-mcp-app</module>
+    <module>laokou-mcp-server</module>
     <module>laokou-mcp-client</module>
-    <module>laokou-mcp-domain</module>
   </modules>
 </project>

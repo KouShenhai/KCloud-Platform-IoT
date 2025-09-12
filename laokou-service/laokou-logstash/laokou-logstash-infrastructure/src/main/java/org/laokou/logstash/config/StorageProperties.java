@@ -15,27 +15,36 @@
  *
  */
 
-package org.laokou.logstash.gatewayimpl;
+package org.laokou.logstash.config;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.logstash.support.TraceLogStorage;
-import org.laokou.logstash.gateway.TraceLogGateway;
+import lombok.Data;
+import lombok.Getter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
-/**
- * @author laokou
- */
+@Data
 @Component
-@RequiredArgsConstructor
-public class TraceLogGatewayImpl implements TraceLogGateway {
+@ConfigurationProperties(prefix = "storage")
+public class StorageProperties {
 
-	private final TraceLogStorage traceLogStorage;
+	private Type type = Type.ELASTICSEARCH;
 
-	@Override
-	public void createTraceLog(List<Object> messages) {
-		traceLogStorage.batchSave(messages);
+	@Getter
+	enum Type {
+
+		ELASTICSEARCH("elasticsearch", "Elasticsearch搜索引擎"),
+
+		LOKI("loki", "Loki日志聚合");
+
+		private final String code;
+
+		private final String desc;
+
+		Type(String code, String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
+
 	}
 
 }

@@ -159,8 +159,8 @@
     <minio.version>8.5.17</minio.version>
     <!--spring-security版本-->
     <spring-security.version>6.5.3</spring-security.version>
-    <!--spring-ai-alibaba-mcp-registry版本-->
-    <spring-ai-alibaba-mcp-registry.version>1.0.0.3</spring-ai-alibaba-mcp-registry.version>
+    <!--spring-ai-alibaba-starter-mcp-registry版本-->
+    <spring-ai-alibaba-starter-mcp-registry.version>1.0.0.3</spring-ai-alibaba-starter-mcp-registry.version>
     <!--spring-ai-starter-mcp-server-webflux版本-->
     <spring-ai-starter-mcp-server-webflux.version>1.0.1</spring-ai-starter-mcp-server-webflux.version>
     <!--mysql版本-->
@@ -204,8 +204,8 @@
       </dependency>
       <dependency>
         <groupId>com.alibaba.cloud.ai</groupId>
-        <artifactId>spring-ai-alibaba-mcp-registry</artifactId>
-        <version>${spring-ai-alibaba-mcp-registry.version}</version>
+        <artifactId>spring-ai-alibaba-starter-mcp-registry</artifactId>
+        <version>${spring-ai-alibaba-starter-mcp-registry.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
@@ -764,32 +764,32 @@
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-adapter</artifactId>
+        <artifactId>laokou-mcp-server-adapter</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-app</artifactId>
+        <artifactId>laokou-mcp-server-app</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-client</artifactId>
+        <artifactId>laokou-mcp-server-client</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-domain</artifactId>
+        <artifactId>laokou-mcp-server-domain</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-infrastructure</artifactId>
+        <artifactId>laokou-mcp-server-infrastructure</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-start</artifactId>
+        <artifactId>laokou-mcp-server-start</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>

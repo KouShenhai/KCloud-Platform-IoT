@@ -15,27 +15,23 @@
  *
  */
 
-package org.laokou.logstash.gatewayimpl;
+package org.laokou.mcp.server.config;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.logstash.support.TraceLogStorage;
-import org.laokou.logstash.gateway.TraceLogGateway;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
+import org.laokou.mcp.server.api.DeviceServiceI;
+import org.springframework.ai.tool.ToolCallbackProvider;
+import org.springframework.ai.tool.method.MethodToolCallbackProvider;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class TraceLogGatewayImpl implements TraceLogGateway {
+@Configuration
+public class McpConfig {
 
-	private final TraceLogStorage traceLogStorage;
-
-	@Override
-	public void createTraceLog(List<Object> messages) {
-		traceLogStorage.batchSave(messages);
+	@Bean
+	ToolCallbackProvider deviceTools(DeviceServiceI deviceServiceI) {
+		return MethodToolCallbackProvider.builder().toolObjects(deviceServiceI).build();
 	}
 
 }

@@ -15,27 +15,12 @@
  *
  */
 
-package org.laokou.logstash.gatewayimpl;
-
-import lombok.RequiredArgsConstructor;
-import org.laokou.logstash.support.TraceLogStorage;
-import org.laokou.logstash.gateway.TraceLogGateway;
-import org.springframework.stereotype.Component;
+package org.laokou.logstash.support;
 
 import java.util.List;
 
-/**
- * @author laokou
- */
-@Component
-@RequiredArgsConstructor
-public class TraceLogGatewayImpl implements TraceLogGateway {
+public interface TraceLogStorage {
 
-	private final TraceLogStorage traceLogStorage;
-
-	@Override
-	public void createTraceLog(List<Object> messages) {
-		traceLogStorage.batchSave(messages);
-	}
+	void batchSave(List<Object> messages);
 
 }

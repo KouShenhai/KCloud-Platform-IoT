@@ -15,27 +15,16 @@
  *
  */
 
-package org.laokou.logstash.gatewayimpl;
+package org.laokou.mcp.server.api;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.logstash.support.TraceLogStorage;
-import org.laokou.logstash.gateway.TraceLogGateway;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
+import org.laokou.common.i18n.dto.Result;
+import reactor.core.publisher.Mono;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class TraceLogGatewayImpl implements TraceLogGateway {
+public interface DeviceServiceI {
 
-	private final TraceLogStorage traceLogStorage;
-
-	@Override
-	public void createTraceLog(List<Object> messages) {
-		traceLogStorage.batchSave(messages);
-	}
+	Mono<Result<String>> getDevicePropertiesBySN(String sn);
 
 }
