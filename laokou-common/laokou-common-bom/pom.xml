@@ -166,7 +166,7 @@
     <!--mysql版本-->
     <mysql-connector-j.version>9.4.0</mysql-connector-j.version>
     <!--modbus4j版本-->
-    <modbus4j.version>3.1.0</modbus4j.version>
+    <modbus4j.version>v3.1.0</modbus4j.version>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
@@ -198,7 +198,7 @@
         <version>${spring-ai.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.infiniteautomation</groupId>
+        <groupId>com.github.infiniteautomation</groupId>
         <artifactId>modbus4j</artifactId>
         <version>${modbus4j.version}</version>
       </dependency>

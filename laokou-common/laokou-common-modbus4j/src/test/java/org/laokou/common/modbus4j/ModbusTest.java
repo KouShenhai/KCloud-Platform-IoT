@@ -32,17 +32,18 @@ import org.laokou.common.core.util.ConvertUtils;
 import org.laokou.common.modbus4j.config.Modbus;
 import org.laokou.common.modbus4j.config.ModbusTypeEnum;
 import org.laokou.common.modbus4j.config.SpringModbusProperties;
-import org.springframework.boot.WebApplicationType;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 
 /**
  * @author laokou
  */
-@SpringBootTest
+@TestConfiguration
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
+@ContextConfiguration(classes = { ModbusFactory.class, SpringModbusProperties.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class ModbusTest {
 
@@ -79,7 +80,7 @@ class ModbusTest {
 		modbus.open();
 		ModbusResponse modbusResponse = modbus.sendReadHoldingRegistersRequest(1, 0, 1);
 		if (modbusResponse instanceof ReadHoldingRegistersResponse readRegistersResponse) {
-			Assertions.assertThat(readRegistersResponse.getShortData()[0]).isEqualTo(1);
+			Assertions.assertThat(readRegistersResponse.getShortData()[0] == 1).isTrue();
 		}
 		modbusResponse = modbus.sendReadCoilsRequest(1, 0, 1);
 		if (modbusResponse instanceof ReadCoilsResponse readCoilsResponse) {
@@ -87,22 +88,13 @@ class ModbusTest {
 		}
 		modbusResponse = modbus.sendReadInputRegistersRequest(1, 0, 1);
 		if (modbusResponse instanceof ReadInputRegistersResponse readInputRegistersResponse) {
-			Assertions.assertThat(readInputRegistersResponse.getShortData()[0]).isEqualTo(1);
+			Assertions.assertThat(readInputRegistersResponse.getShortData()[0] == 1).isTrue();
 		}
 		modbusResponse = modbus.sendReadDiscreteInputsRequest(1, 0, 1);
 		if (modbusResponse instanceof ReadDiscreteInputsResponse readDiscreteInputsResponse) {
 			Assertions.assertThat(readDiscreteInputsResponse.getBooleanData()[0]).isTrue();
 		}
 		modbus.close();
-	}
-
-	@SpringBootApplication
-	static class AppTest {
-
-		public static void main(String[] args) {
-			new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
-		}
-
 	}
 
 }

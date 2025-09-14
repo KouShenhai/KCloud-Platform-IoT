@@ -17,7 +17,7 @@
       <artifactId>laokou-common-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.infiniteautomation</groupId>
+      <groupId>com.github.infiniteautomation</groupId>
       <artifactId>modbus4j</artifactId>
     </dependency>
     <dependency>
