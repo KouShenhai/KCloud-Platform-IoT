@@ -61,7 +61,7 @@ public class StarrocksContainer extends GenericContainer<StarrocksContainer> {
 				throw new SystemException("S_Starrocks_ExecuteShellFailed", String.format("执行Shell命令失败，错误信息：%s", execResult.getStderr()));
 			}
 			// 建立连接
-			connect();
+			openConnect();
 			// 运行脚本
 			runInitScriptIfRequired();
 		} catch (IOException | InterruptedException e) {
@@ -85,7 +85,7 @@ public class StarrocksContainer extends GenericContainer<StarrocksContainer> {
 		return this;
 	}
 
-	private void connect() {
+	private void openConnect() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			this.connection = DriverManager.getConnection(String.format("jdbc:mysql://%s:%s/%s", this.getHost() , this.getMappedPort(9030) , databaseName), "root", "");
