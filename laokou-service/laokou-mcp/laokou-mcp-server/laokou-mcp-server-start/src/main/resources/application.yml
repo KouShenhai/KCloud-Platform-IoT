@@ -30,5 +30,13 @@ spring:
         name: ${spring.application.name}
         version: 3.5.4
         type: async
+        instructions: "IoT intelligent assistant, providing tools, resources, and services for IoT developers."
         sse-endpoint: /sse
         sse-message-endpoint: /mcp/messages
+        capabilities:
+          tool: true
+          resource: true
+          prompt: true
+          completion: true
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml

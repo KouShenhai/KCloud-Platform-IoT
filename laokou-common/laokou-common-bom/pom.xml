@@ -159,10 +159,10 @@
     <minio.version>8.5.17</minio.version>
     <!--spring-security版本-->
     <spring-security.version>6.5.3</spring-security.version>
-    <!--spring-ai-alibaba-starter-mcp-registry版本-->
-    <spring-ai-alibaba-starter-mcp-registry.version>1.0.0.3</spring-ai-alibaba-starter-mcp-registry.version>
-    <!--spring-ai-starter-mcp-server-webflux版本-->
-    <spring-ai-starter-mcp-server-webflux.version>1.0.1</spring-ai-starter-mcp-server-webflux.version>
+    <!--spring-ai-alibaba版本-->
+    <spring-ai-alibaba.version>1.0.0.3</spring-ai-alibaba.version>
+    <!--spring-ai版本-->
+    <spring-ai.version>1.0.1</spring-ai.version>
     <!--mysql版本-->
     <mysql-connector-j.version>9.4.0</mysql-connector-j.version>
     <!--modbus4j版本-->
@@ -172,6 +172,31 @@
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+        <version>${spring-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis</artifactId>
+        <version>${spring-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.ai</groupId>
+        <artifactId>spring-ai-autoconfigure-model-openai</artifactId>
+        <version>${spring-ai.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.ai</groupId>
+        <artifactId>spring-ai-autoconfigure-model-chat-client</artifactId>
+        <version>${spring-ai.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.ai</groupId>
+        <artifactId>spring-ai-starter-mcp-client-webflux</artifactId>
+        <version>${spring-ai.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.infiniteautomation</groupId>
         <artifactId>modbus4j</artifactId>
@@ -200,12 +225,12 @@
       <dependency>
         <groupId>org.springframework.ai</groupId>
         <artifactId>spring-ai-starter-mcp-server-webflux</artifactId>
-        <version>${spring-ai-starter-mcp-server-webflux.version}</version>
+        <version>${spring-ai.version}</version>
       </dependency>
       <dependency>
         <groupId>com.alibaba.cloud.ai</groupId>
         <artifactId>spring-ai-alibaba-starter-mcp-registry</artifactId>
-        <version>${spring-ai-alibaba-starter-mcp-registry.version}</version>
+        <version>${spring-ai-alibaba.version}</version>
       </dependency>
       <dependency>
         <groupId>org.laokou</groupId>
@@ -760,6 +785,36 @@
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-cola-start</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-mcp-client-adapter</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-mcp-client-app</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-mcp-client-client</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-mcp-client-domain</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-mcp-client-infrastructure</artifactId>
+        <version>${laokou.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.laokou</groupId>
+        <artifactId>laokou-mcp-client-start</artifactId>
         <version>${laokou.version}</version>
       </dependency>
       <dependency>

@@ -15,23 +15,27 @@
  *
  */
 
-package org.laokou.common.kafka.config;
-import org.laokou.common.kafka.template.DefaultKafkaTemplate;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.core.KafkaTemplate;
+package org.laokou.mcp.client.service;
+
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.mcp.client.api.DeviceServiceI;
+import org.laokou.mcp.client.command.query.DevicePropertyGetQryExe;
+import org.laokou.mcp.client.dto.DevicePropertyGetQry;
+import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
-@Configuration
-public class KafkaAutoConfig {
+@Service
+@RequiredArgsConstructor
+public class DeviceServiceImpl implements DeviceServiceI {
 
-	@Bean("defaultKafkaTemplate")
-	@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-	public DefaultKafkaTemplate defaultKafkaTemplate(KafkaTemplate<String, Object> kafkaTemplate) {
-		return new DefaultKafkaTemplate(kafkaTemplate);
+	private final DevicePropertyGetQryExe devicePropertyGetQryExe;
+
+	@Override
+	public Result<String> getDevicePropertyBySn(DevicePropertyGetQry qry) {
+		return devicePropertyGetQryExe.execute(qry);
 	}
 
 }

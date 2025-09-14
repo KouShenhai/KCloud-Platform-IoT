@@ -101,6 +101,10 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-graalvm-js</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

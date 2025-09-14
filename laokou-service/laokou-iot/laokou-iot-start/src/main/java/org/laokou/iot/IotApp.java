@@ -22,7 +22,6 @@ import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnableRouter;
-import org.laokou.common.redis.annotation.EnableRedis;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.laokou.common.websocket.annotation.EnableWebSocketServer;
 import org.mybatis.spring.annotation.MapperScan;
@@ -55,7 +54,6 @@ import java.security.NoSuchAlgorithmException;
 @EnableSecurity
 @EnableScheduling
 @EnableWebSocketServer
-@EnableRedis
 @EnableDiscoveryClient
 @EnableAspectJAutoProxy
 @EnableConfigurationProperties

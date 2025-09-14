@@ -15,22 +15,16 @@
  *
  */
 
-package org.laokou.common.redis.annotation;
+package org.laokou.mcp.client.api;
 
-import org.laokou.common.redis.config.RedisAutoConfig;
-import org.springframework.context.annotation.Import;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.mcp.client.dto.DevicePropertyGetQry;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+/**
+ * @author laokou
+ */
+public interface DeviceServiceI {
 
-
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import(RedisAutoConfig.class)
-public @interface EnableRedis {
+	Result<String> getDevicePropertyBySn(DevicePropertyGetQry qry);
 
 }

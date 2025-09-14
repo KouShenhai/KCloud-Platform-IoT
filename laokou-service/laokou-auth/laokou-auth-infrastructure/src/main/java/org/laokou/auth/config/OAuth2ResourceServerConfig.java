@@ -21,7 +21,6 @@ import lombok.Data;
 import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.laokou.common.core.util.SpringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -40,7 +39,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Data
 @Configuration
 @ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.security.oauth2.authorization-server", name = "enabled")
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class OAuth2ResourceServerConfig {
 
 	/**

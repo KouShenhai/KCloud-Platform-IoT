@@ -23,6 +23,7 @@ import org.redisson.api.RedissonReactiveClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
@@ -33,11 +34,12 @@ import reactor.core.publisher.Flux;
 
 
 /**
+ * 响应式Redis配置.
  * @author laokou
  */
 @AutoConfiguration
-@ConditionalOnClass({ RedissonAutoConfig.class, ReactiveRedisConnectionFactory.class, ReactiveRedisTemplate.class,
-		Flux.class })
+@ConditionalOnClass({ReactiveRedisConnectionFactory.class, ReactiveRedisTemplate.class, Flux.class })
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
 public class ReactiveRedisAutoConfig {
 
 	@Bean("reactiveRedisTemplate")

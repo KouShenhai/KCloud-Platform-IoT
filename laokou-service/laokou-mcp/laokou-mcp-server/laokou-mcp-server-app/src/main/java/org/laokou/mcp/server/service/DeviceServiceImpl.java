@@ -17,12 +17,12 @@
 
 package org.laokou.mcp.server.service;
 
-import org.laokou.common.i18n.dto.Result;
 import org.laokou.mcp.server.api.DeviceServiceI;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -31,9 +31,9 @@ import reactor.core.publisher.Mono;
 public class DeviceServiceImpl implements DeviceServiceI {
 
 	@Override
-	@Tool(description = "根据设备序列号获取设备属性")
-	public Mono<Result<String>> getDevicePropertiesBySN(@ToolParam(description = "设备序列号") String sn) {
-		return Mono.create(sink -> sink.success(Result.ok(String.format("设备序列号：%s，设备类型：温度传感器，时间：2025-09-12 20:30:00，温度：50°C", sn))));
+	@Tool(name = "根据设备序列号获取设备属性")
+	public List<String> getDevicePropertyBySn(@ToolParam(description = "设备序列号") String sn) {
+		return List.of(String.format("设备序列号：%s，设备类型：温度传感器，时间：2025-09-12 20:30:00，温度：50°C", sn));
 	}
 
 }

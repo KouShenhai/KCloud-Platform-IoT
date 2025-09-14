@@ -17,14 +17,13 @@
 
 package org.laokou.mcp.server.api;
 
-import org.laokou.common.i18n.dto.Result;
-import reactor.core.publisher.Mono;
+import java.util.List;
 
 /**
  * @author laokou
  */
 public interface DeviceServiceI {
 
-	Mono<Result<String>> getDevicePropertiesBySN(String sn);
+	List<String> getDevicePropertyBySn(String sn);
 
 }

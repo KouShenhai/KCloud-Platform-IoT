@@ -21,7 +21,6 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.SslUtils;
-import org.laokou.common.redis.annotation.EnableReactiveRedis;
 import org.laokou.gateway.repository.NacosRouteDefinitionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
@@ -51,7 +50,6 @@ import java.util.concurrent.ExecutorService;
 @EnableDiscoveryClient
 @EnableEncryptableProperties
 @EnableConfigurationProperties
-@EnableReactiveRedis
 @RequiredArgsConstructor
 @EnableAspectJAutoProxy
 @SpringBootApplication(scanBasePackages = "org.laokou",

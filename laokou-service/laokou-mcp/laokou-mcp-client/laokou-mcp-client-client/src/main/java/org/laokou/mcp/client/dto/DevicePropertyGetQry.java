@@ -15,22 +15,19 @@
  *
  */
 
-package org.laokou.common.redis.annotation;
+package org.laokou.mcp.client.dto;
 
-import org.laokou.common.redis.config.ReactiveRedisAutoConfig;
-import org.springframework.context.annotation.Import;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+/**
+ * @author laokou
+ */
+@Getter
+@RequiredArgsConstructor
+public class DevicePropertyGetQry extends CommonCommand {
 
-
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import(ReactiveRedisAutoConfig.class)
-public @interface EnableReactiveRedis {
+	private final String sn;
 
 }

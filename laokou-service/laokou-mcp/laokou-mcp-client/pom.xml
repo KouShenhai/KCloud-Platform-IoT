@@ -13,4 +13,13 @@
   <version>3.5.4-SNAPSHOT</version>
   <packaging>pom</packaging>
 
+  <modules>
+    <module>laokou-mcp-client-start</module>
+    <module>laokou-mcp-client-infrastructure</module>
+    <module>laokou-mcp-client-adapter</module>
+    <module>laokou-mcp-client-app</module>
+    <module>laokou-mcp-client-client</module>
+    <module>laokou-mcp-client-domain</module>
+  </modules>
+
 </project>

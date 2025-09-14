@@ -1,0 +1,73 @@
+jasypt:
+  encryptor:
+    password: @JASYPT-ENCRYPTOR-PASSWORD@
+
+server:
+  # 端口
+  port: ${SERVER_PORT:9096}
+  servlet:
+    encoding:
+      charset: UTF-8
+
+spring:
+  application:
+    name: ${SERVICE_ID:laokou-mcp-client}
+  profiles:
+    active: @PROFILE-ACTIVE@
+  threads:
+    virtual:
+      enabled: true
+  data:
+    redis:
+      client-type: lettuce
+      host: redis
+      port: 6379
+      password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+      connect-timeout: 60000ms #连接超时时长（毫秒）
+      timeout: 60000ms #超时时长（毫秒）
+      lettuce:
+        pool:
+          max-active: -1 #连接池最大连接数（使用负值表示无极限）
+          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接
+  ai:
+    openai:
+      # Deepseek AI开放平台 => https://platform.deepseek.com
+      api-key: "xxx"
+      base-url: https://api.deepseek.com
+      chat:
+        options:
+          model: deepseek-chat
+          temperature: 0.7
+    mcp:
+      client:
+        enabled: true
+        name: ${spring.application.name}
+        version: 3.5.4
+        initialized: true
+        request-timeout: 60s
+        type: sync
+        toolcallback:
+          enabled: true
+        root-change-notification: true
+    alibaba:
+      mcp:
+        nacos:
+          server-addr: @NACOS-DISCOVERY-ADDRESS@
+          username: @NACOS-USERNAME@
+          password: @NACOS-PASSWORD@
+          namespace: @NACOS-NAMESPACE@
+          register:
+            service-group: @NACOS-GROUP@
+            service-name: ${spring.application.name}
+          client:
+            enabled: true
+            sse:
+              connections:
+                server1:
+                  service-name: laokou-mcp-server
+                  version: ${spring.ai.mcp.client.version}
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml
+
