@@ -68,7 +68,7 @@
     <!--hibernate-validator版本-->
     <hibernate-validator.version>9.0.1.Final</hibernate-validator.version>
     <!--ip2region版本-->
-    <ip2region.version>2.7.0</ip2region.version>
+    <ip2region.version>3.1.0</ip2region.version>
     <!--jackson版本-->
     <jackson.version>2.20.0</jackson.version>
     <!--jackson-annotations版本-->
