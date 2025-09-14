@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
 /**
+ * <a href="https://docs.starrocks.io/docs/loading/Stream_Load_transaction_interface">加载数据【事务】</a>.
  * @author laokou
  */
 @Component
@@ -30,8 +31,8 @@ public final class StarrocksUtils {
 
 	private final RestClient restClient;
 
-	public void streamLoad(String sql) {
-		restClient.put();
+	public void begin() {
+
 	}
 
 }

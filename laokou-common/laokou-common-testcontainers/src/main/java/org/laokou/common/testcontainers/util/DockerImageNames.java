@@ -55,4 +55,14 @@ public final class DockerImageNames {
 		return postgresql("latest");
 	}
 
+	public static DockerImageName starrocks(String tag) {
+		return DockerImageName.parse("starrocks/allin1-ubuntu")
+			.withTag(tag);
+	}
+
+	public static DockerImageName starrocks() {
+		return starrocks("latest");
+	}
+
+
 }

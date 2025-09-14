@@ -534,7 +534,7 @@ services:
     privileged: true
     ports:
       - "8123:8123"
-      - "9020:9000"
+      - "9080:9000"
     environment:
       # 设置用户名
       - CLICKHOUSE_USER=root
@@ -647,6 +647,8 @@ services:
   # 修改密码
   # mysql -h 127.0.0.1 -P 9030 -u root -p
   # SET PASSWORD = PASSWORD('laokou123');
+  # 添加节点
+  # ALTER SYSTEM ADD BACKEND "127.0.0.1:9050";
   starrocks-fe:
     image: starrocks/fe-ubuntu:3.5.5
     hostname: starrocks-fe
@@ -661,7 +663,7 @@ services:
       - FE_CIDR=0.0.0.0/0
     ports:
       - "8030:8030" # FE http port
-      - "9070:9020" # FE rpc port
+      - "9020:9020" # FE rpc port
       - "9030:9030" # FE mysql port
 #    volumes:
 #      - ./starrocks/fe/meta:/opt/starrocks/fe/meta  # 持久化元数据

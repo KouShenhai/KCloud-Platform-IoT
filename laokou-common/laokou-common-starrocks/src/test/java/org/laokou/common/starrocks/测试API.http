@@ -1,0 +1,6 @@
+POST http://localhost:8030/api/transaction/begin
+Authorization: Basic cm9vdDog
+Expect: 100-continue
+db: test
+table: user
+label: stream_load_test

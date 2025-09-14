@@ -15,25 +15,25 @@
  *
  */
 
-package org.laokou.mcp.server.service;
+package org.laokou.common.starrocks.config;
 
-import org.laokou.mcp.server.api.DeviceServiceI;
-import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.ai.tool.annotation.ToolParam;
-import org.springframework.stereotype.Service;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-@Service
-public class DeviceServiceImpl implements DeviceServiceI {
+@Data
+@Component
+@ConfigurationProperties(prefix = "spring.starrocks")
+public class SpringStarrocksProperties implements Serializable {
 
-	@Override
-	@Tool(name = "根据设备序列号查看设备属性")
-	public List<String> getDevicePropertyBySn(@ToolParam(description = "设备序列号") String sn) {
-		return List.of(String.format("设备序列号：%s，设备类型：温度传感器，时间：2025-09-12 20:30:00，温度：50°C", sn));
-	}
+	private String host;
+	private int port = 8030;
+	private String username;
+	private String password;
 
 }
