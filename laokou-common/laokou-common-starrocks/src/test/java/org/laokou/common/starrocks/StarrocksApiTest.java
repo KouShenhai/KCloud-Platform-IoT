@@ -17,26 +17,29 @@
 
 package org.laokou.common.starrocks;
 
+import lombok.RequiredArgsConstructor;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.testcontainers.container.StarrocksContainer;
 import org.laokou.common.testcontainers.util.DockerImageNames;
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.TestConstructor;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * @author laokou
  */
-@TestConfiguration
-@SpringBootConfiguration
+@RequiredArgsConstructor
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class StarrocksApiTest {
 
 	static final StarrocksContainer starrocks = new StarrocksContainer(DockerImageNames.starrocks())
-			.withDatabase("test")
-			.withPassword("laokou123")
+			.withDatabaseName("test")
 			.withScriptPaths("init.sql");
 
 	@BeforeAll
@@ -49,14 +52,17 @@ class StarrocksApiTest {
 		starrocks.stop();
 	}
 
-
-	@DynamicPropertySource
-	static void configureProperties(DynamicPropertyRegistry registry) {
-	}
-
 	@Test
-	void test() {
-
+	void test_sql() throws SQLException {
+		Connection connection = starrocks.getConnection();
+		Statement statement = connection.createStatement();
+		ResultSet rs = statement.executeQuery("SELECT id, name FROM user");
+		while (rs.next()) {
+			Assertions.assertThat(rs.getLong(1)).isEqualTo(1L);
+			Assertions.assertThat(rs.getString(2)).isEqualTo("laokou");
+		}
+		rs.close();
+		statement.close();
 	}
 
 }

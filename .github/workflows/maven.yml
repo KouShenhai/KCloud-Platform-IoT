@@ -47,19 +47,12 @@ jobs:
             ./laokou-common/laokou-common-excel/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-nacos/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-sensitive/target/site/jacoco/jacoco.xml,
-            ./laokou-common/laokou-common-ftp/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-secret/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-elasticsearch/target/site/jacoco/jacoco.xml,
-            ./laokou-common/laokou-common-vertx/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-graalvm-js/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-mybatis-plus/target/site/jacoco/jacoco.xml,
-            ./laokou-common/laokou-common-network/laokou-common-network-mqtt-client/target/site/jacoco/jacoco.xml,
-            ./laokou-service/laokou-admin/laokou-admin-start/target/site/jacoco/jacoco.xml,
-            ./laokou-service/laokou-auth/laokou-auth-start/target/site/jacoco/jacoco.xml,
-            ./laokou-service/laokou-generator/laokou-generator-start/target/site/jacoco/jacoco.xml,
-            ./laokou-service/laokou-logstash/laokou-logstash-start/target/site/jacoco/jacoco.xml,
-            ./laokou-service/laokou-auth/laokou-auth-domain/target/site/jacoco/jacoco.xml,
-            ./laokou-service/laokou-oss/laokou-oss-start/target/site/jacoco/jacoco.xml
+            ./laokou-common/laokou-common-starrocks/target/site/jacoco/jacoco.xml,
+            ./laokou-service/laokou-auth/laokou-auth-domain/target/site/jacoco/jacoco.xml
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Build with Maven Mvnd
         run: mvnd clean install -P dev -DskipTests -B

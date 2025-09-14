@@ -43,12 +43,14 @@ public abstract class GlobalException extends RuntimeException implements Serial
 	private final Object data;
 
 	protected GlobalException(String code) {
+		super(MessageUtils.getMessage(code));
 		this.code = code;
-		this.msg = MessageUtils.getMessage(code);
+		this.msg = super.getMessage();
 		this.data = null;
 	}
 
 	protected GlobalException(String code, String msg) {
+		super(msg);
 		this.code = code;
 		this.msg = msg;
 		this.data = null;
@@ -62,6 +64,7 @@ public abstract class GlobalException extends RuntimeException implements Serial
 	}
 
 	protected GlobalException(String code, String msg, Object data) {
+		super(msg);
 		this.code = code;
 		this.msg = msg;
 		this.data = data;

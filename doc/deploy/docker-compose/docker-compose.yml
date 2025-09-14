@@ -649,6 +649,8 @@ services:
   # SET PASSWORD = PASSWORD('laokou123');
   # 添加节点
   # ALTER SYSTEM ADD BACKEND "127.0.0.1:9050";
+  # 单机测试
+  # docker run -p 9030:9030 -p 8030:8030 -p 8040:8040 -itd --name quickstart starrocks/allin1-ubuntu
   starrocks-fe:
     image: starrocks/fe-ubuntu:3.5.5
     hostname: starrocks-fe

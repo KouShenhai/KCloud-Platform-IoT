@@ -24,6 +24,8 @@ import org.testcontainers.utility.DockerImageName;
  */
 public final class DockerImageNames {
 
+	private static final String LATEST = "latest";
+
 	private DockerImageNames() {
 	}
 
@@ -34,7 +36,7 @@ public final class DockerImageNames {
 	}
 
 	public static DockerImageName elasticsearch() {
-		return elasticsearch("latest");
+		return elasticsearch(LATEST);
 	}
 
 	public static DockerImageName nacos(String tag) {
@@ -52,7 +54,7 @@ public final class DockerImageNames {
 	}
 
 	public static DockerImageName postgresql() {
-		return postgresql("latest");
+		return postgresql(LATEST);
 	}
 
 	public static DockerImageName starrocks(String tag) {
@@ -61,7 +63,7 @@ public final class DockerImageNames {
 	}
 
 	public static DockerImageName starrocks() {
-		return starrocks("latest");
+		return starrocks(LATEST);
 	}
 
 

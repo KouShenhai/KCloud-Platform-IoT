@@ -45,6 +45,7 @@ class CsvUtilsTest {
 		String fileName = "test.csv";
 		String[] arr = { "1", "2", "3" };
 		File file = new File(testPath, fileName);
+		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.forceMkdir(file.getParentFile()));
 		Assertions.assertThatNoException().isThrownBy(() -> CsvUtils.execute(file, csvWriter -> csvWriter.writeNext(arr), false));
 		Assertions.assertThat(FileUtils.readFileToString(file, "UTF-8").trim()).isEqualTo("\"1\",\"2\",\"3\"");
 		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.forceDeleteOnExit(file));

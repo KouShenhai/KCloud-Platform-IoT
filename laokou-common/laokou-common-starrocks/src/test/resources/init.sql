@@ -6,3 +6,5 @@ CREATE TABLE `user`
 ENGINE=OLAP
 PRIMARY KEY(`id`)
 DISTRIBUTED BY HASH(`id`) BUCKETS 10;
+
+insert into test.user values (1, "laokou");
