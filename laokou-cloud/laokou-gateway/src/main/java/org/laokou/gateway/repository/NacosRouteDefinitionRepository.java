@@ -22,26 +22,33 @@ import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
 import io.micrometer.common.lang.NonNullApi;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.SpringContextUtils;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.JacksonUtils;
-import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
+import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.gateway.constant.GatewayConstants;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.core.ReactiveHashOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
+import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import javax.annotation.PostConstruct;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -98,9 +105,13 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			@Override
 			public void receiveConfigInfo(String routes) {
 				log.info("监听路由配置信息，开始同步路由配置：{}", routes);
-				virtualThreadExecutor.execute(() -> syncRouter(getRoutes(routes))
-					.subscribeOn(Schedulers.boundedElastic())
-					.subscribe());
+				virtualThreadExecutor.execute(() -> {
+					Disposable disposable = syncRouter(getRoutes(routes))
+						.subscribeOn(Schedulers.boundedElastic())
+						.subscribe();
+					// 发布关闭订阅事件
+					SpringContextUtils.publishEvent(new CloseSubscribeEvent(this, disposable));
+				});
 			}
 		});
 	}
@@ -196,5 +207,29 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		SpringContextUtils.publishEvent(new RefreshRoutesEvent(this));
 	}
 	// @formatter:on
+
+	@Getter
+	@Setter
+	public static class CloseSubscribeEvent extends ApplicationEvent {
+
+		private final Disposable disposable;
+
+		public CloseSubscribeEvent(Object source, Disposable disposable) {
+			super(source);
+			this.disposable = disposable;
+		}
+
+	}
+
+	@Async
+	@EventListener
+	public void onLogoutEvent(CloseSubscribeEvent evt) throws InterruptedException {
+		Thread.sleep(Duration.ofSeconds(15));
+		Disposable disposable = evt.getDisposable();
+		if (!disposable.isDisposed()) {
+			// 取消订阅
+			disposable.dispose();
+		}
+	}
 
 }

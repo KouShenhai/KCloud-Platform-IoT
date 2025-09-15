@@ -46,7 +46,7 @@ class SpringEventBusTest {
 	@Setter
 	static class LogoutEvent extends ApplicationEvent {
 
-		private String username;
+		private final String username;
 
 		public LogoutEvent(Object source, String username) {
 			super(source);
