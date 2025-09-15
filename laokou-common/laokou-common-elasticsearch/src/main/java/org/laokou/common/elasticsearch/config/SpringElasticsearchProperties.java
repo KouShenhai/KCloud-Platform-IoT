@@ -22,10 +22,12 @@ import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchPropert
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.net.URI;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author laokou
@@ -36,6 +38,7 @@ import java.util.Set;
 public class SpringElasticsearchProperties {
 
 	private Set<String> endpoints = new HashSet<>(Collections.singleton("localhost:9200"));
+	private Set<String> uris = new HashSet<>(Collections.singletonList("http://localhost:9200"));
 	private String username;
 	private String password;
 	private Duration connectionTimeout = Duration.ofSeconds(15L);
@@ -44,8 +47,26 @@ public class SpringElasticsearchProperties {
 	private String pathPrefix;
 	private String proxy;
 	private boolean useSsl = false;
+	private ProtocolEnum protocol;
 	private String version = "9.1.3";
 	private String clientVersion = "9.1.4";
 	private final ElasticsearchProperties.Restclient restclient = new ElasticsearchProperties.Restclient();
+
+	public record Node (String hostname, int port, ProtocolEnum protocol) {}
+
+	private Node createNode(String uri) {
+		if (!(uri.startsWith("http://") || uri.startsWith("https://"))) {
+			uri = "http://" + uri;
+		}
+		return createNode(URI.create(uri));
+	}
+
+	private Node createNode(URI uri) {
+		return new Node(uri.getHost(), uri.getPort(), ProtocolEnum.forScheme(uri.getScheme()));
+	}
+
+	public Set<Node> getNodes() {
+		return this.getUris().stream().map(this::createNode).collect(Collectors.toSet());
+	}
 
 }

@@ -37,6 +37,9 @@ import org.laokou.common.elasticsearch.annotation.Setting;
 import org.laokou.common.elasticsearch.annotation.Type;
 import org.laokou.common.elasticsearch.config.ElasticsearchAutoConfig;
 import org.laokou.common.elasticsearch.entity.Search;
+import org.laokou.common.elasticsearch.template.ElasticsearchDocumentTemplate;
+import org.laokou.common.elasticsearch.template.ElasticsearchIndexTemplate;
+import org.laokou.common.elasticsearch.template.ElasticsearchSearchTemplate;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.testcontainers.util.DockerImageNames;
@@ -68,6 +71,12 @@ import java.util.concurrent.Executors;
 class ElasticsearchApiTest {
 
 	private final ElasticsearchTemplate elasticsearchTemplate;
+
+	private final ElasticsearchIndexTemplate elasticsearchIndexTemplate;
+
+	private final ElasticsearchSearchTemplate elasticsearchSearchTemplate;
+
+	private final ElasticsearchDocumentTemplate elasticsearchDocumentTemplate;
 
 	static final ElasticsearchContainer elasticsearch = new ElasticsearchContainer(DockerImageNames.elasticsearch())
 		.withPassword("laokou123");
@@ -158,9 +167,7 @@ class ElasticsearchApiTest {
 				@Option(key = "none_chinese_pinyin_tokenize", value = "false") }) },
 		analyzers = {
 			@Analyzer(name = "ik_pinyin", args = @Args(filter = "pinyin_filter", tokenizer = "ik_max_word")) }))
-	record TestResource(@Field(type = Type.TEXT, searchAnalyzer = "ik_smart", analyzer = "ik_pinyin") String name)
-		implements
-		Serializable {
+	record TestResource(@Field(type = Type.TEXT, searchAnalyzer = "ik_smart", analyzer = "ik_pinyin") String name) implements Serializable {
 	}
 
 	@Data
@@ -179,8 +186,11 @@ class ElasticsearchApiTest {
 
 	@Data
 	static class TestResult implements Serializable {
+
 		private String id;
+
 		private String name;
+
 	}
 
 }

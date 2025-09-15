@@ -16,6 +16,7 @@
  */
 
 package org.laokou.common.elasticsearch.config;
+
 import co.elastic.clients.elasticsearch.ElasticsearchAsyncClient;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.json.JsonpMapper;
@@ -43,6 +44,9 @@ import org.apache.hc.core5.http.nio.ssl.BasicClientTlsStrategy;
 import org.apache.hc.core5.util.Timeout;
 import org.laokou.common.core.util.ArrayUtils;
 import org.laokou.common.core.util.Base64Utils;
+import org.laokou.common.elasticsearch.template.ElasticsearchDocumentTemplate;
+import org.laokou.common.elasticsearch.template.ElasticsearchIndexTemplate;
+import org.laokou.common.elasticsearch.template.ElasticsearchSearchTemplate;
 import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.SslUtils;
@@ -105,6 +109,27 @@ public class ElasticsearchAutoConfig {
 	@ConditionalOnClass({ElasticsearchAsyncClient.class, ElasticsearchClient.class})
 	ElasticsearchTemplate elasticsearchTemplate(ElasticsearchClient elasticsearchClient, ElasticsearchAsyncClient elasticsearchAsyncClient) {
 		return new ElasticsearchTemplate(elasticsearchClient, elasticsearchAsyncClient);
+	}
+
+	@Bean(name = "elasticsearchDocumentTemplate")
+	@ConditionalOnMissingBean(ElasticsearchDocumentTemplate.class)
+	@ConditionalOnClass({ElasticsearchAsyncClient.class, ElasticsearchClient.class})
+	ElasticsearchDocumentTemplate elasticsearchDocumentTemplate(ElasticsearchClient elasticsearchClient, ElasticsearchAsyncClient elasticsearchAsyncClient) {
+		return new ElasticsearchDocumentTemplate(elasticsearchClient, elasticsearchAsyncClient);
+	}
+
+	@Bean(name = "elasticsearchIndexTemplate")
+	@ConditionalOnMissingBean(ElasticsearchIndexTemplate.class)
+	@ConditionalOnClass({ElasticsearchAsyncClient.class, ElasticsearchClient.class})
+	ElasticsearchIndexTemplate elasticsearchIndexTemplate(ElasticsearchClient elasticsearchClient, ElasticsearchAsyncClient elasticsearchAsyncClient) {
+		return new ElasticsearchIndexTemplate(elasticsearchClient, elasticsearchAsyncClient);
+	}
+
+	@Bean(name = "elasticsearchSearchTemplate")
+	@ConditionalOnMissingBean(ElasticsearchTemplate.class)
+	@ConditionalOnClass({ElasticsearchSearchTemplate.class, ElasticsearchClient.class})
+	ElasticsearchSearchTemplate elasticsearchSearchTemplate(ElasticsearchClient elasticsearchClient, ElasticsearchAsyncClient elasticsearchAsyncClient) {
+		return new ElasticsearchSearchTemplate(elasticsearchClient, elasticsearchAsyncClient);
 	}
 
 	/**
