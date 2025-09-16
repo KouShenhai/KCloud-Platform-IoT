@@ -67,18 +67,18 @@ public final class ElasticsearchIndexTemplate {
 	public <TDocument> void createIndex(String name, String alias, Class<TDocument> clazz) throws IOException {
 		// 判断索引是否存在
 		if (exist(List.of(name))) {
-			log.debug("索引：【{}】 -> 同步创建索引失败，索引已存在", name);
+			log.debug("index name: 【{}】 -> Sync index create failed, index already exists", name);
 			return;
 		}
 		CreateIndexResponse createIndexResponse = elasticsearchClient.indices().create(getCreateIndexRequest(getDocument(name, alias, clazz)));
-		printLog(name, createIndexResponse.acknowledged() ? "同步创建索引成功" : "同步创建索引失败");
+		printLog(name, createIndexResponse.acknowledged() ? "Sync index create failed succeeded" : "Sync index create failed");
 	}
 
 	public <TDocument> CompletableFuture<Void> asyncCreateIndex(String name, String alias, Class<TDocument> clazz,
 																Executor executor) {
 		return asyncExist(List.of(name), executor).thenApplyAsync(resp -> {
 			if (resp) {
-				log.debug("索引：【{}】 -> 异步创建索引失败，索引已存在", name);
+				log.debug("index name: 【{}】 -> Async index create failed, index already exists", name);
 				return Boolean.FALSE;
 			}
 			return Boolean.TRUE;
@@ -86,31 +86,31 @@ public final class ElasticsearchIndexTemplate {
 			if (result) {
 				elasticsearchAsyncClient.indices()
 					.create(getCreateIndexRequest(getDocument(name, alias, clazz)))
-					.thenAcceptAsync(response -> printLog(name, response.acknowledged() ? "异步创建索引成功": "异步创建索引失败"));
+					.thenAcceptAsync(response -> printLog(name, response.acknowledged() ? "Async index create failed succeeded" : "Async index create failed"));
 			}
 		}, executor);
 	}
 
 	public void deleteIndex(List<String> names) throws IOException {
 		if (!exist(names)) {
-			log.debug("索引：【{}】 -> 同步删除索引失败，索引不存在", StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
+			log.debug("index name: 【{}】 -> Sync index delete failed, index already exists", StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
 			return;
 		}
 		DeleteIndexResponse deleteIndexResponse = elasticsearchClient.indices().delete(fn -> fn.index(names));
-		printLog(StringUtils.collectionToDelimitedString(names, StringConstants.DROP), deleteIndexResponse.acknowledged() ? "同步删除索引成功" : "同步删除索引失败");
+		printLog(StringUtils.collectionToDelimitedString(names, StringConstants.DROP), deleteIndexResponse.acknowledged() ? "Sync index delete succeeded" : "Sync index delete failed");
 	}
 
 	public CompletableFuture<Void> asyncDeleteIndex(List<String> names, Executor executor) {
 		return asyncExist(names, executor).thenApplyAsync(resp -> {
 			if (resp) {
-				log.debug("索引：【{}】 -> 异步删除索引失败，索引不存在", StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
+				log.debug("index name: 【{}】 -> Async index delete failed, index already exists", StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
 				return Boolean.FALSE;
 			}
 			return Boolean.TRUE;
 		}, executor).thenAcceptAsync(result -> {
 			if (result) {
 				elasticsearchAsyncClient.indices().delete(fn -> fn.index(names))
-					.thenAcceptAsync(response -> printLog(StringUtils.collectionToDelimitedString(names, StringConstants.DROP), response.acknowledged() ? "异步删除索引成功" : "异步删除索引失败"));
+					.thenAcceptAsync(response -> printLog(StringUtils.collectionToDelimitedString(names, StringConstants.DROP), response.acknowledged() ? "Async index delete succeeded" : "Async index delete failed"));
 			}
 		});
 	}
@@ -127,7 +127,7 @@ public final class ElasticsearchIndexTemplate {
 		try {
 			return elasticsearchClient.indices().exists(fn -> fn.index(names)).value();
 		} catch (Exception ex) {
-			log.error("索引：【{}】 -> 判断索引是否存在失败，错误信息：{}", StringUtils.collectionToDelimitedString(names, StringConstants.DROP), ex.getMessage(), ex);
+			log.error("index name: 【{}】 -> Failed to determine if the index exists, error message: {}", StringUtils.collectionToDelimitedString(names, StringConstants.DROP), ex.getMessage(), ex);
 			return false;
 		}
 	}
@@ -139,7 +139,7 @@ public final class ElasticsearchIndexTemplate {
 	}
 
 	public static void printLog(String indexNames, String msg) {
-		log.debug("索引：【{}】 -> {}", indexNames, msg);
+		log.debug("index name: 【{}】 -> {}", indexNames, msg);
 	}
 
 	private CreateIndexRequest getCreateIndexRequest(Document document) {
@@ -159,7 +159,7 @@ public final class ElasticsearchIndexTemplate {
 			alias = StringUtils.isNotEmpty(alias) ? alias : name;
 			return new Document(name, alias, getMappings(clazz), getSetting(index), getAnalysis(index));
 		}
-		throw new IllegalArgumentException("实体类未配置@Index注解");
+		throw new IllegalArgumentException("Entity class not configured with @Index annotation");
 	}
 
 	private IndexSettings getSettings(Document document) {

@@ -22,6 +22,7 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.Refresh;
 import co.elastic.clients.elasticsearch.core.BulkResponse;
 import co.elastic.clients.elasticsearch.core.DeleteResponse;
+import co.elastic.clients.elasticsearch.core.GetResponse;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
 import co.elastic.clients.elasticsearch.core.bulk.BulkOperation;
 import lombok.RequiredArgsConstructor;
@@ -53,21 +54,21 @@ public final class ElasticsearchDocumentTemplate {
 			.thenAcceptAsync(response -> ElasticsearchIndexTemplate.printLog(indexName, response.result().jsonValue()));
 	}
 
-	public <T> void bulkCreateDocument(String indexName, List<T> list) {
+	public <T> void bulkCreateDocuments(String indexName, List<T> list) {
 		try {
 			BulkResponse response = elasticsearchClient
 				.bulk(bulk -> bulk.index(indexName).refresh(Refresh.WaitFor).operations(getBulkOperations(list)));
-			ElasticsearchIndexTemplate.printLog(indexName, response.errors() ? "批量创建文档失败" : "批量创建文档成功");
+			ElasticsearchIndexTemplate.printLog(indexName, response.errors() ? "Sync Bulk create documents failed" : "Sync Bulk create documents succeeded");
 		}
 		catch (Throwable e) {
-			log.error("索引：【{}】 -> 批量创建文档失败，错误信息：{}", indexName, e.getMessage());
+			log.error("index name: 【{}】 -> Sync Bulk create documents failed, error message: {}", indexName, e.getMessage());
 		}
 	}
 
-	public <T> CompletableFuture<Void> asyncBulkCreateDocument(String indexName, List<T> list, Executor executor) {
+	public <T> CompletableFuture<Void> asyncBulkCreateDocuments(String indexName, List<T> list, Executor executor) {
 		return elasticsearchAsyncClient
 			.bulk(bulk -> bulk.index(indexName).refresh(Refresh.WaitFor).operations(getBulkOperations(list)))
-			.thenAcceptAsync(response -> ElasticsearchIndexTemplate.printLog(indexName, response.errors() ? "异步批量创建文档成功" : "异步批量创建文档失败"), executor);
+			.thenAcceptAsync(response -> ElasticsearchIndexTemplate.printLog(indexName, response.errors() ? "Async Bulk create documents failed" : "Async Bulk create documents succeeded"), executor);
 	}
 
 	public void deleteDocument(String indexName, String id) throws IOException {
@@ -75,9 +76,26 @@ public final class ElasticsearchDocumentTemplate {
 		ElasticsearchIndexTemplate.printLog(indexName, response.result().jsonValue());
 	}
 
-	public CompletableFuture<Void> asyncDeleteDocument(String indexName, String id) {
+	public CompletableFuture<Void> asyncDeleteDocument(String indexName, String id, Executor executor) {
 		return elasticsearchAsyncClient.delete(fn -> fn.index(indexName).id(id).refresh(Refresh.WaitFor))
-			.thenAcceptAsync(response -> ElasticsearchIndexTemplate.printLog(indexName, response.result().jsonValue()));
+			.thenAcceptAsync(response -> ElasticsearchIndexTemplate.printLog(indexName, response.result().jsonValue()), executor);
+	}
+
+	public <T> T getDocument(String indexName, String id, Class<T> clazz) throws IOException {
+		GetResponse<T> response = elasticsearchClient.get(fn -> fn.index(indexName).id(id), clazz);
+		if (response.found()) {
+			return response.source();
+		}
+		return null;
+	}
+
+	public <T> CompletableFuture<T> asyncGetDocument(String indexName, String id, Class<T> clazz, Executor executor) {
+		return elasticsearchAsyncClient.get(fn -> fn.index(indexName).id(id), clazz).thenApplyAsync(response -> {
+			if (response.found()) {
+				return response.source();
+			}
+			return null;
+		}, executor);
 	}
 
 	private <T> List<BulkOperation> getBulkOperations(List<T> list) {

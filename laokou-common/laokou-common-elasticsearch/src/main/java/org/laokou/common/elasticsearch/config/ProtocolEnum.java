@@ -44,7 +44,7 @@ public enum ProtocolEnum {
 				return protocol;
 			}
 		}
-		throw new IllegalArgumentException(String.format("未知协议：%s", scheme));
+		throw new IllegalArgumentException(String.format("Unknown protocol: %s", scheme));
 	}
 
 }

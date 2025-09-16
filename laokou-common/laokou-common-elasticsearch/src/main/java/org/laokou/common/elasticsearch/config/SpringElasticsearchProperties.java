@@ -37,7 +37,6 @@ import java.util.stream.Collectors;
 @ConfigurationProperties("spring.data.elasticsearch")
 public class SpringElasticsearchProperties {
 
-	private Set<String> endpoints = new HashSet<>(Collections.singleton("localhost:9200"));
 	private Set<String> uris = new HashSet<>(Collections.singletonList("http://localhost:9200"));
 	private String username;
 	private String password;
@@ -46,13 +45,15 @@ public class SpringElasticsearchProperties {
 	private boolean socketKeepAlive = false;
 	private String pathPrefix;
 	private String proxy;
-	private boolean useSsl = false;
-	private ProtocolEnum protocol;
 	private String version = "9.1.3";
 	private String clientVersion = "9.1.4";
 	private final ElasticsearchProperties.Restclient restclient = new ElasticsearchProperties.Restclient();
 
 	public record Node (String hostname, int port, ProtocolEnum protocol) {}
+
+	public Set<Node> getNodes() {
+		return this.getUris().stream().map(this::createNode).collect(Collectors.toSet());
+	}
 
 	private Node createNode(String uri) {
 		if (!(uri.startsWith("http://") || uri.startsWith("https://"))) {
@@ -63,10 +64,6 @@ public class SpringElasticsearchProperties {
 
 	private Node createNode(URI uri) {
 		return new Node(uri.getHost(), uri.getPort(), ProtocolEnum.forScheme(uri.getScheme()));
-	}
-
-	public Set<Node> getNodes() {
-		return this.getUris().stream().map(this::createNode).collect(Collectors.toSet());
 	}
 
 }

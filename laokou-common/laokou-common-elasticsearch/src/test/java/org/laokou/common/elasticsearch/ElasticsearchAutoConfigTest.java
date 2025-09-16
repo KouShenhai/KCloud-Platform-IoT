@@ -16,10 +16,13 @@
  */
 
 package org.laokou.common.elasticsearch;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.elasticsearch.config.ElasticsearchAutoConfig;
-import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
+import org.laokou.common.elasticsearch.template.ElasticsearchDocumentTemplate;
+import org.laokou.common.elasticsearch.template.ElasticsearchIndexTemplate;
+import org.laokou.common.elasticsearch.template.ElasticsearchSearchTemplate;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.ssl.DefaultSslBundleRegistry;
@@ -40,7 +43,11 @@ class ElasticsearchAutoConfigTest {
 
 	@Test
 	void test() {
-		contextRunner.run(context -> Assertions.assertThat(context).hasSingleBean(ElasticsearchTemplate.class));
+		contextRunner.run(context -> {
+			Assertions.assertThat(context).hasSingleBean(ElasticsearchDocumentTemplate.class);
+			Assertions.assertThat(context).hasSingleBean(ElasticsearchIndexTemplate.class);
+			Assertions.assertThat(context).hasSingleBean(ElasticsearchSearchTemplate.class);
+		});
 	}
 
 }

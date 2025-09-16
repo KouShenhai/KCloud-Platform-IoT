@@ -17,15 +17,17 @@
 
 package org.laokou.common.elasticsearch;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
 import co.elastic.clients.elasticsearch.indices.IndexState;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.elasticsearch.annotation.Analysis;
 import org.laokou.common.elasticsearch.annotation.Analyzer;
 import org.laokou.common.elasticsearch.annotation.Args;
@@ -40,7 +42,6 @@ import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.elasticsearch.template.ElasticsearchDocumentTemplate;
 import org.laokou.common.elasticsearch.template.ElasticsearchIndexTemplate;
 import org.laokou.common.elasticsearch.template.ElasticsearchSearchTemplate;
-import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.testcontainers.util.DockerImageNames;
 import org.springframework.boot.ssl.DefaultSslBundleRegistry;
@@ -57,8 +58,6 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.Executors;
 
 /**
  * @author laokou
@@ -69,8 +68,6 @@ import java.util.concurrent.Executors;
 @ContextConfiguration(classes = { ElasticsearchAutoConfig.class, DefaultSslBundleRegistry.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class ElasticsearchApiTest {
-
-	private final ElasticsearchTemplate elasticsearchTemplate;
 
 	private final ElasticsearchIndexTemplate elasticsearchIndexTemplate;
 
@@ -94,103 +91,126 @@ class ElasticsearchApiTest {
 
 	@DynamicPropertySource
 	static void configureProperties(DynamicPropertyRegistry registry) {
-		registry.add("spring.data.elasticsearch.endpoints", elasticsearch::getHttpHostAddress);
+		registry.add("spring.data.elasticsearch.uris", () -> "https://" + elasticsearch.getHttpHostAddress());
 		registry.add("spring.data.elasticsearch.username", () -> "elastic");
 		registry.add("spring.data.elasticsearch.password", () -> "laokou123");
 		registry.add("spring.data.elasticsearch.client-version", () -> "9.1.4");
 		registry.add("spring.data.elasticsearch.version", () -> "9.1.3");
 		registry.add("spring.data.elasticsearch.connection-timeout", () -> "60s");
 		registry.add("spring.data.elasticsearch.socket-timeout", () -> "60s");
-		registry.add("spring.data.elasticsearch.use-ssl", () -> "true");
 	}
 
 	@Test
-	void test_elasticsearch() throws IOException {
-		Assertions.assertThatNoException()
-			.isThrownBy(() -> elasticsearchTemplate.createIndex("iot_res_1", "iot_res", TestResource.class));
-
-		Assertions.assertThatNoException()
-			.isThrownBy(() -> elasticsearchTemplate.createIndex("iot_pro_1", "iot_pro", TestProject.class));
-
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchTemplate.asyncCreateIndex("iot_resp_1", "iot_resp",
-			TestResp.class, Executors.newSingleThreadExecutor()));
-
-		Assertions.assertThatNoException().isThrownBy(
-			() -> elasticsearchTemplate.asyncCreateDocument("iot_res_1", "222", new TestResource("8888")).join());
-
-		Assertions.assertThatNoException().isThrownBy(
-			() -> elasticsearchTemplate
-				.asyncBulkCreateDocument("iot_res_1", Map.of("555", new TestResource("6666")),
-					Executors.newSingleThreadExecutor())
-				.join());
-
-		Assertions.assertThatNoException().isThrownBy(
-			() -> elasticsearchTemplate
-				.asyncBulkCreateDocument("iot_res_1", List.of(new TestResource("6666")),
-					Executors.newSingleThreadExecutor())
-				.join());
-
-		Assertions.assertThatNoException()
-			.isThrownBy(() -> elasticsearchTemplate.createDocument("iot_res_1", "444", new TestResource("3333")));
-
-		Assertions.assertThatNoException().isThrownBy(
-			() -> elasticsearchTemplate.bulkCreateDocument("iot_res_1", Map.of("333", new TestResource("5555"))));
-
-		Assertions.assertThatNoException().isThrownBy(
-			() -> elasticsearchTemplate.bulkCreateDocument("iot_res_1", List.of(new TestResource("5555"))));
-
-		Assertions.assertThat(elasticsearchTemplate.exist(List.of("iot_res_1", "iot_pro_1", "iot_resp_1"))).isTrue();
-
-		Search.Highlight highlight = new Search.Highlight();
-		highlight.setFields(Set.of(new Search.HighlightField("name", 0, 0)));
-		Search search = new Search(highlight, 1, 10, null);
-		Page<TestResult> results = elasticsearchTemplate.search(List.of("iot_res", "iot_res_1"), search,
-			TestResult.class);
-		Assertions.assertThat(results.getTotal() > 0).isTrue();
-
-		Map<String, IndexState> result = elasticsearchTemplate
-			.getIndex(List.of("iot_res_1", "iot_pro_1", "iot_resp_1"));
-		Assertions.assertThat(result).isNotNull();
-		Assertions.assertThat(result.isEmpty()).isFalse();
-
-		Assertions.assertThatNoException().isThrownBy(
-			() -> elasticsearchTemplate.deleteIndex(List.of("laokou_res_1", "laokou_pro_1", "laokou_resp_1")));
+	void test_asyncApi() {
+		// 异步创建索引
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchIndexTemplate.asyncCreateIndex("iot_async_plugin_idx_1", "iot_async_plugin_idx", Test1.class, ThreadUtils.newVirtualTaskExecutor()).join());
+		// 异步查看索引
+		Map<String, IndexState> map = elasticsearchIndexTemplate.asyncGetIndex(List.of("iot_async_plugin_idx_1")).join().indices();
+		Assertions.assertThat(map).hasSize(1);
+		Assertions.assertThat(map.get("iot_async_plugin_idx_1")).isNotNull();
+		// 异步创建文档
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.asyncCreateDocument("iot_async_plugin_idx_1", new Test1(1L, "laokou")).join());
+		// 异步搜索文档【精准匹配】
+		Query.Builder queryBuilder = new Query.Builder();
+		TermQuery.Builder termQueryBuilder = new TermQuery.Builder();
+		termQueryBuilder.field("name").value("laokou");
+		queryBuilder.term(termQueryBuilder.build());
+		Search search = new Search(null, 1, 10, queryBuilder.build());
+		Page<Test1> page = elasticsearchSearchTemplate.asyncSearch(List.of("iot_async_plugin_idx_1"), search, Test1.class).join();
+		Assertions.assertThat(page.getTotal()).isEqualTo(1L);
+		Test1 test1 = page.getRecords().getFirst();
+		Assertions.assertThat(test1.name()).isEqualTo("laokou");
+		// 异步查看文档
+		Test1 test2 = elasticsearchDocumentTemplate.asyncGetDocument("iot_async_plugin_idx_1", test1.id().toString(), Test1.class, ThreadUtils.newVirtualTaskExecutor()).join();
+		Assertions.assertThat(test2).isNotNull();
+		Assertions.assertThat(test2.name()).isEqualTo("laokou");
+		// 异步删除文档
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.asyncDeleteDocument("iot_async_plugin_idx_1", test2.id().toString(), ThreadUtils.newVirtualTaskExecutor()).join());
+		// 异步查看文档
+		Test1 test3 = elasticsearchDocumentTemplate.asyncGetDocument("iot_async_plugin_idx_1", test1.id().toString(), Test1.class, ThreadUtils.newVirtualTaskExecutor()).join();
+		Assertions.assertThat(test3).isNull();
+		// 异步批量创建文档
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.asyncBulkCreateDocuments("iot_async_plugin_idx_1", List.of(new Test1(2L, "KK")), ThreadUtils.newVirtualTaskExecutor()).join());
+		// 异步搜索文档
+		Page<Test1> page2 = elasticsearchSearchTemplate.asyncSearch(List.of("iot_async_plugin_idx_1"), new Search(null, 1, 10, null), Test1.class).join();
+		Assertions.assertThat(page2.getTotal()).isEqualTo(1L);
+		// 异步删除索引
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchIndexTemplate.asyncDeleteIndex(List.of("iot_async_plugin_idx_1"), ThreadUtils.newVirtualTaskExecutor()).join());
+		// 异步判断索引是否存在
+		Assertions.assertThat(elasticsearchIndexTemplate.asyncExist(List.of("iot_async_plugin_idx_1"),  ThreadUtils.newVirtualTaskExecutor()).join()).isFalse();
 	}
 
-	@Index(setting = @Setting(refreshInterval = "-1"), analysis = @Analysis(
-		filters = { @Filter(name = "pinyin_filter",
-			options = { @Option(key = "type", value = "pinyin"), @Option(key = "keep_full_pinyin", value = "false"),
-				@Option(key = "keep_joined_full_pinyin", value = "true"),
-				@Option(key = "keep_original", value = "true"),
-				@Option(key = "limit_first_letter_length", value = "16"),
-				@Option(key = "remove_duplicated_term", value = "true"),
-				@Option(key = "none_chinese_pinyin_tokenize", value = "false") }) },
-		analyzers = {
-			@Analyzer(name = "ik_pinyin", args = @Args(filter = "pinyin_filter", tokenizer = "ik_max_word")) }))
-	record TestResource(@Field(type = Type.TEXT, searchAnalyzer = "ik_smart", analyzer = "ik_pinyin") String name) implements Serializable {
+	@Test
+	void test_syncApi() throws IOException {
+		// 同步创建索引
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchIndexTemplate.createIndex("iot_plugin_idx_1", "iot_plugin_idx", Test1.class));
+		// 同步查看索引
+		Map<String, IndexState> map = elasticsearchIndexTemplate.getIndex(List.of("iot_plugin_idx_1")).indices();
+		Assertions.assertThat(map).hasSize(1);
+		Assertions.assertThat(map.get("iot_plugin_idx_1")).isNotNull();
+		// 同步创建文档
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.createDocument("iot_plugin_idx_1", new Test1(1L, "laokou")));
+		// 同步搜索文档【精准匹配】
+		Query.Builder queryBuilder = new Query.Builder();
+		TermQuery.Builder termQueryBuilder = new TermQuery.Builder();
+		termQueryBuilder.field("name").value("laokou");
+		queryBuilder.term(termQueryBuilder.build());
+		Search search = new Search(null, 1, 10, queryBuilder.build());
+		Page<Test1> page = elasticsearchSearchTemplate.search(List.of("iot_plugin_idx_1"), search, Test1.class);
+		Assertions.assertThat(page.getTotal()).isEqualTo(1L);
+		Test1 test1 = page.getRecords().getFirst();
+		Assertions.assertThat(test1.name()).isEqualTo("laokou");
+		// 同步查看文档
+		Test1 test2 = elasticsearchDocumentTemplate.getDocument("iot_plugin_idx_1", test1.id().toString(), Test1.class);
+		Assertions.assertThat(test2).isNotNull();
+		Assertions.assertThat(test2.name()).isEqualTo("laokou");
+		// 同步删除文档
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.deleteDocument("iot_plugin_idx_1", test2.id().toString()));
+		// 同步查看文档
+		Test1 test3 = elasticsearchDocumentTemplate.getDocument("iot_plugin_idx_1", test1.id().toString(), Test1.class);
+		Assertions.assertThat(test3).isNull();
+		// 同步批量创建文档
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.bulkCreateDocuments("iot_plugin_idx_1", List.of(new Test1(2L, "KK"))));
+		// 同步搜索文档
+		Page<Test1> page2 = elasticsearchSearchTemplate.search(List.of("iot_plugin_idx_1"), new Search(null, 1, 10, null), Test1.class);
+		Assertions.assertThat(page2.getTotal()).isEqualTo(1L);
+		// 同步删除索引
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchIndexTemplate.deleteIndex(List.of("iot_plugin_idx_1")));
+		// 同步判断索引是否存在
+		Assertions.assertThat(elasticsearchIndexTemplate.exist(List.of("iot_plugin_idx_1"))).isFalse();
 	}
 
-	@Data
-	@Index
-	static class TestResp implements Serializable {
-		@Field(type = Type.KEYWORD) private String key;
+	@Index(setting = @Setting(refreshInterval = "-1"),
+		analysis = @Analysis(filters = {
+			@Filter(name = "pinyin_filter",
+				options = {
+					@Option(key = "type", value = "pinyin"),
+					@Option(key = "keep_full_pinyin", value = "false"),
+					@Option(key = "keep_joined_full_pinyin", value = "true"),
+					@Option(key = "keep_original", value = "true"),
+					@Option(key = "limit_first_letter_length", value = "16"),
+					@Option(key = "remove_duplicated_term", value = "true"),
+					@Option(key = "none_chinese_pinyin_tokenize", value = "false")}
+			)
+		},
+		analyzers = { @Analyzer(name = "ik_pinyin", args = @Args(filter = "pinyin_filter", tokenizer = "ik_max_word")) })
+	)
+	record Test1(
+		@JsonSerialize(using = ToStringSerializer.class) @Field(type = Type.LONG) Long id,
+		@Field(type = Type.TEXT, searchAnalyzer = "ik_smart", analyzer = "ik_pinyin") String name) implements Serializable {
 	}
 
-	@Data
-	@Index
-	static class TestProject implements Serializable {
-		@JsonSerialize(using = ToStringSerializer.class)
-		@Field(type = Type.LONG)
-		private Long businessKey;
-	}
-
-	@Data
-	static class TestResult implements Serializable {
-
-		private String id;
-
-		private String name;
-
-	}
+//	@Data
+//	@Index
+//	static class Test2 implements Serializable {
+//
+//		@JsonSerialize(using = ToStringSerializer.class)
+//		@Field(type = Type.LONG)
+//		private Long id;
+//
+//		@Field(type = Type.KEYWORD)
+//		private String name;
+//
+//	}
 
 }

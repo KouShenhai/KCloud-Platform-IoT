@@ -18,7 +18,8 @@
 package org.laokou.logstash.support;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.elasticsearch.template.ElasticsearchTemplate;
+import org.laokou.common.elasticsearch.template.ElasticsearchDocumentTemplate;
+import org.laokou.common.elasticsearch.template.ElasticsearchIndexTemplate;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
 import java.util.List;
@@ -28,13 +29,16 @@ import java.util.concurrent.ExecutorService;
 @Slf4j
 public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 
-	private final ElasticsearchTemplate elasticsearchTemplate;
+	private final ElasticsearchDocumentTemplate elasticsearchDocumentTemplate;
+
+	private final ElasticsearchIndexTemplate elasticsearchIndexTemplate;
 
 	private final ExecutorService virtualThreadExecutor;
 
-	public TraceLogElasticsearchStorage(ElasticsearchTemplate elasticsearchTemplate,
-			ExecutorService virtualThreadExecutor) {
-		this.elasticsearchTemplate = elasticsearchTemplate;
+	public TraceLogElasticsearchStorage(ElasticsearchDocumentTemplate elasticsearchDocumentTemplate, ElasticsearchIndexTemplate elasticsearchIndexTemplate,
+										ExecutorService virtualThreadExecutor) {
+		this.elasticsearchDocumentTemplate = elasticsearchDocumentTemplate;
+		this.elasticsearchIndexTemplate = elasticsearchIndexTemplate;
 		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
 
@@ -43,9 +47,9 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 		List<TraceLogIndex> list = messages.stream().map(this::getTraceLogIndex)
 			.filter(Objects::nonNull)
 			.toList();
-		elasticsearchTemplate
+		elasticsearchIndexTemplate
 				.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, virtualThreadExecutor)
-				.thenComposeAsync(result -> elasticsearchTemplate.asyncBulkCreateDocument(getIndexName(), list,
+				.thenComposeAsync(result -> elasticsearchDocumentTemplate.asyncBulkCreateDocuments(getIndexName(), list,
 						virtualThreadExecutor), virtualThreadExecutor)
 			.join();
 	}
