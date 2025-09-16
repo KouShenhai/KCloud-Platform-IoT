@@ -71,7 +71,7 @@ public final class ElasticsearchIndexTemplate {
 			return;
 		}
 		CreateIndexResponse createIndexResponse = elasticsearchClient.indices().create(getCreateIndexRequest(getDocument(name, alias, clazz)));
-		printLog(name, createIndexResponse.acknowledged() ? "Sync index create failed succeeded" : "Sync index create failed");
+		printLog(name, createIndexResponse.acknowledged() ? "Sync index create succeeded" : "Sync index create failed");
 	}
 
 	public <TDocument> CompletableFuture<Void> asyncCreateIndex(String name, String alias, Class<TDocument> clazz,
@@ -86,7 +86,7 @@ public final class ElasticsearchIndexTemplate {
 			if (result) {
 				elasticsearchAsyncClient.indices()
 					.create(getCreateIndexRequest(getDocument(name, alias, clazz)))
-					.thenAcceptAsync(response -> printLog(name, response.acknowledged() ? "Async index create failed succeeded" : "Async index create failed"));
+					.thenAcceptAsync(response -> printLog(name, response.acknowledged() ? "Async index create succeeded" : "Async index create failed"));
 			}
 		}, executor);
 	}
@@ -102,7 +102,7 @@ public final class ElasticsearchIndexTemplate {
 
 	public CompletableFuture<Void> asyncDeleteIndex(List<String> names, Executor executor) {
 		return asyncExist(names, executor).thenApplyAsync(resp -> {
-			if (resp) {
+			if (!resp) {
 				log.debug("index name: 【{}】 -> Async index delete failed, index already exists", StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
 				return Boolean.FALSE;
 			}
