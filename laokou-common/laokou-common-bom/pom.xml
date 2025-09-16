@@ -158,7 +158,7 @@
     <!--minio版本-->
     <minio.version>8.5.17</minio.version>
     <!--spring-security版本-->
-    <spring-security.version>6.5.3</spring-security.version>
+    <spring-security.version>6.5.4</spring-security.version>
     <!--spring-ai-alibaba版本-->
     <spring-ai-alibaba.version>1.0.0.3</spring-ai-alibaba.version>
     <!--spring-ai版本-->
