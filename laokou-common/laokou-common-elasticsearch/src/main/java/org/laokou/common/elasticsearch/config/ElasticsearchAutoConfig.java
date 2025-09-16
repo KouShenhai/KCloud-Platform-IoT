@@ -28,6 +28,7 @@ import org.laokou.common.elasticsearch.template.ElasticsearchSearchTemplate;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
@@ -38,7 +39,15 @@ import org.springframework.context.annotation.Import;
 @Slf4j
 @AutoConfiguration
 @RequiredArgsConstructor
-@Import({ ElasticsearchRest5ClientConfig.class })
+@Import({
+	ElasticsearchRest5ClientConfig.Rest5ClientBuilderConfig.class,
+	ElasticsearchRest5ClientConfig.Rest5ClientConfig.class,
+	ElasticsearchRest5ClientConfig.ElasticsearchTransportConfig.class,
+	ElasticsearchRest5ClientConfig.JacksonJsonpMapperConfig.class,
+	ElasticsearchRest5ClientConfig.Rest5ClientOptionsConfig.class
+})
+@ConditionalOnClass(SpringElasticsearchProperties.class)
+@EnableConfigurationProperties(SpringElasticsearchProperties.class)
 public class ElasticsearchAutoConfig {
 
 	/**
