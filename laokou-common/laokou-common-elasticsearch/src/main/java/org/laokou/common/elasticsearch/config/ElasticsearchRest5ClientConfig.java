@@ -109,7 +109,7 @@ class ElasticsearchRest5ClientConfig {
 			return springElasticsearchProperties.getNodes()
 				.stream()
 				.map(node -> new HttpHost(node.protocol().getScheme(), node.hostname(), node.port()))
-				.toArray(HttpHost[]::new);
+				.toArray(generator -> new  HttpHost[0]);
 		}
 	}
 
@@ -209,7 +209,7 @@ class ElasticsearchRest5ClientConfig {
 			if (StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(password)) {
 				headers.add(new BasicHeader(HttpHeaders.AUTHORIZATION, StandardAuthScheme.BASIC + StringConstants.SPACE + encodeBasicAuth(username, password)));
 			}
-			return headers.toArray(Header[]::new);
+			return headers.toArray(generator -> new  Header[0]);
 		}
 
 		private String encodeBasicAuth(String username, String password) {
