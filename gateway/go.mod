@@ -20,7 +20,7 @@ module network
 go 1.24
 
 require (
-	github.com/DeRuina/timberjack v1.3.4
+	github.com/DeRuina/timberjack v1.3.5
 	github.com/mattn/go-sqlite3 v1.14.32
 	go.uber.org/zap v1.27.0
 	gopkg.in/yaml.v3 v3.0.1
