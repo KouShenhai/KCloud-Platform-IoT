@@ -223,7 +223,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	@Async
 	@EventListener
-	public void onLogoutEvent(UnsubscribeEvent evt) throws InterruptedException {
+	public void onUnsubscribeEvent(UnsubscribeEvent evt) throws InterruptedException {
 		Thread.sleep(Duration.ofSeconds(15));
 		Disposable disposable = evt.getDisposable();
 		if (!disposable.isDisposed()) {
