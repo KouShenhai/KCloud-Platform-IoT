@@ -110,7 +110,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 						.subscribeOn(Schedulers.boundedElastic())
 						.subscribe();
 					// 发布关闭订阅事件
-					SpringContextUtils.publishEvent(new CloseSubscribeEvent(this, disposable));
+					SpringContextUtils.publishEvent(new UnsubscribeEvent(this, disposable));
 				});
 			}
 		});
@@ -210,11 +210,11 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	@Getter
 	@Setter
-	public static class CloseSubscribeEvent extends ApplicationEvent {
+	public static class UnsubscribeEvent extends ApplicationEvent {
 
 		private final Disposable disposable;
 
-		public CloseSubscribeEvent(Object source, Disposable disposable) {
+		public UnsubscribeEvent(Object source, Disposable disposable) {
 			super(source);
 			this.disposable = disposable;
 		}
@@ -223,7 +223,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	@Async
 	@EventListener
-	public void onLogoutEvent(CloseSubscribeEvent evt) throws InterruptedException {
+	public void onLogoutEvent(UnsubscribeEvent evt) throws InterruptedException {
 		Thread.sleep(Duration.ofSeconds(15));
 		Disposable disposable = evt.getDisposable();
 		if (!disposable.isDisposed()) {

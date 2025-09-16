@@ -19,7 +19,6 @@ package org.laokou.common.elasticsearch.template;
 
 import co.elastic.clients.elasticsearch.ElasticsearchAsyncClient;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
-import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
@@ -66,24 +65,27 @@ public final class ElasticsearchSearchTemplate {
 		});
 	}
 
-	private SearchRequest getSearchRequest(List<String> names, Search search) {
+	private SearchRequest getSearchRequest(List<String> indexNames, Search search) {
 		// 查询条件
 		Integer pageNo = search.getPageNo();
 		Integer pageSize = search.getPageSize();
 		Query query = search.getQuery();
 		SearchRequest.Builder builder = new SearchRequest.Builder();
-		builder.index(names);
+		builder.index(indexNames);
 		builder.from((pageNo - 1) * pageSize);
 		builder.size(pageSize);
 		// 获取真实总数
 		builder.trackTotalHits(fn -> fn.enabled(true));
 		// 追踪分数开启
-		builder.trackScores(true);
+		// builder.trackScores(true);
 		// 注解
-		builder.explain(true);
+		// builder.explain(true);
 		// 匹配度倒排，数值越大匹配度越高
-		builder.sort(fn -> fn.score(s -> s.order(SortOrder.Desc)));
-		builder.highlight(getHighlight(search.getHighlight()));
+		// builder.sort(fn -> fn.score(s -> s.order(SortOrder.Desc)));
+		Search.Highlight highlight = search.getHighlight();
+		if (ObjectUtils.isNotNull(highlight)) {
+			builder.highlight(getHighlight(highlight));
+		}
 		// bool查询 => 布尔查询，允许组合多个查询条件
 		// must查询类似and查询
 		// must_not查询类似not查询
@@ -99,9 +101,6 @@ public final class ElasticsearchSearchTemplate {
 	}
 
 	private co.elastic.clients.elasticsearch.core.search.Highlight getHighlight(Search.Highlight highlight) {
-		if (highlight == null) {
-			return new co.elastic.clients.elasticsearch.core.search.Highlight.Builder().build();
-		}
 		co.elastic.clients.elasticsearch.core.search.Highlight.Builder builder = new co.elastic.clients.elasticsearch.core.search.Highlight.Builder();
 		builder.preTags(highlight.getPreTags());
 		builder.postTags(highlight.getPostTags());
@@ -118,7 +117,8 @@ public final class ElasticsearchSearchTemplate {
 				.fragmentSize(item.getFragmentSize())
 				// numberOfFragments => 获取高亮片段位置
 				.numberOfFragments(item.getNumberOfFragments())
-				.build())).toList();
+				.build()))
+			.toList();
 	}
 
 }

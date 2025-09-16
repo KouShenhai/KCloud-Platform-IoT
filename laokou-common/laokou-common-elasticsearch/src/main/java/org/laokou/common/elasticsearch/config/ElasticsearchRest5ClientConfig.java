@@ -52,7 +52,6 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.boot.ssl.SslBundle;
 import org.springframework.boot.ssl.SslBundles;
@@ -75,7 +74,6 @@ import java.util.List;
  * @author spring project
  * @author laokou
  */
-@EnableConfigurationProperties(SpringElasticsearchProperties.class)
 class ElasticsearchRest5ClientConfig {
 
 	@Configuration(proxyBeanMethods = false)
@@ -109,7 +107,7 @@ class ElasticsearchRest5ClientConfig {
 			return springElasticsearchProperties.getNodes()
 				.stream()
 				.map(node -> new HttpHost(node.protocol().getScheme(), node.hostname(), node.port()))
-				.toArray(generator -> new  HttpHost[0]);
+				.toArray(HttpHost[]::new);
 		}
 	}
 
@@ -209,7 +207,7 @@ class ElasticsearchRest5ClientConfig {
 			if (StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(password)) {
 				headers.add(new BasicHeader(HttpHeaders.AUTHORIZATION, StandardAuthScheme.BASIC + StringConstants.SPACE + encodeBasicAuth(username, password)));
 			}
-			return headers.toArray(generator -> new  Header[0]);
+			return headers.toArray(Header[]::new);
 		}
 
 		private String encodeBasicAuth(String username, String password) {
@@ -230,7 +228,7 @@ class ElasticsearchRest5ClientConfig {
 	static class ElasticsearchTransportConfig {
 
 		@Bean
-		Rest5ClientTransport restClientTransport(Rest5Client restClient, JsonpMapper jsonMapper,
+		ElasticsearchTransport restClientTransport(Rest5Client restClient, JsonpMapper jsonMapper,
 												 ObjectProvider<Rest5ClientOptions> restClientOptions) {
 			return new Rest5ClientTransport(restClient, jsonMapper, restClientOptions.getIfAvailable());
 		}
@@ -243,7 +241,7 @@ class ElasticsearchRest5ClientConfig {
 	static class JacksonJsonpMapperConfig {
 
 		@Bean
-		JacksonJsonpMapper jacksonJsonpMapper() {
+		JsonpMapper jacksonJsonpMapper() {
 			return new JacksonJsonpMapper();
 		}
 
@@ -251,7 +249,7 @@ class ElasticsearchRest5ClientConfig {
 
 	@RequiredArgsConstructor
 	@Configuration(proxyBeanMethods = false)
-	@ConditionalOnMissingBean(ElasticsearchTransport.class)
+	@ConditionalOnClass(Rest5ClientOptions.class)
 	static class Rest5ClientOptionsConfig {
 
 		private final SpringElasticsearchProperties springElasticsearchProperties;
