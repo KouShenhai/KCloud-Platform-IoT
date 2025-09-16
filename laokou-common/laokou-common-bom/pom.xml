@@ -74,7 +74,7 @@
     <!--jackson-annotations版本-->
     <jackson-annotations.version>2.20</jackson-annotations.version>
     <!--spring-kafka版本-->
-    <spring-kafka.version>3.3.9</spring-kafka.version>
+    <spring-kafka.version>3.3.10</spring-kafka.version>
     <!--netty版本-->
     <netty.version>4.2.3.Final</netty.version>
     <!--gson版本-->
