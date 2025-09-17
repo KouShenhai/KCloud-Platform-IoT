@@ -2,91 +2,47 @@ package core
 
 import (
 	"fmt"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 	"testing"
 )
 
+type User struct {
+	ID       uint   `gorm:"primaryKey"`
+	Username string `gorm:"column:username;size:50;"`
+}
+
 func Test_SQLite(t *testing.T) {
-	sqLite := NewSQLite("./sqlite.db")
-
-	// 创建库
-	err := sqLite.CreateDatabase()
+	// 针对网关高并发场景的优化：启用WAL模式并设置超时
+	// _busy_timeout=5000 表示在遇到数据库锁定时，等待5000毫秒
+	// _journal_mode=WAL 开启预写日志模式，提高并发读写性能
+	dbPath := "d:/sqlite3/data/sqlite.db"
+	dsn := dbPath + "?_busy_timeout=5000&_journal_mode=WAL"
+	db, err := gorm.Open(sqlite.Open(dsn), &gorm.Config{})
 	if err != nil {
-		t.Error(err.Error())
+		fmt.Println("failed to connect database", err.Error())
 	}
-
-	// 创建表
-	sql := `
-		CREATE TABLE IF NOT EXISTS sys_user (
-		id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-		username TEXT NOT NULL
-	);
-	`
-	err = sqLite.ExecuteSql(sql)
+	// 自动迁移
+	err = db.AutoMigrate(&User{})
 	if err != nil {
-		t.Error(err.Error())
+		fmt.Println("自动迁移失败", err.Error())
 	}
 
 	// 新增
-	sql = `
-		INSERT INTO sys_user (id, username) VALUES (?,?);
-	`
-	_, err = sqLite.Save(sql, 1, "laokou")
-	if err != nil {
-		t.Error(err.Error())
-	}
+	db.Create(&User{ID: 1, Username: "laokou"})
 
 	// 查询
-	sql = `
-		SELECT * FROM sys_user;
-	`
-	rows, err := sqLite.Query(sql)
-	if err != nil {
-		t.Error(err.Error())
-	}
-	for rows.Next() {
-		var id int
-		var username string
-		err = rows.Scan(&id, &username)
-		if err != nil {
-			t.Error(err.Error())
-		}
-		fmt.Println("查询数据：", id, username)
-	}
+	var user User
+	db.First(&user, 1)
+	fmt.Println("查询结果：", user)
 
 	// 修改
-	sql = `
-		UPDATE sys_user SET username = ? WHERE id = ?;
-	`
-	err = sqLite.Modify(sql, "laokou2", 1)
-	if err != nil {
-		t.Error(err.Error())
-	}
+	db.Model(&User{}).Where("id = ?", 1).Update("username", "laokou2").First(&user, 1)
+	fmt.Println("修改结果：", user)
 
-	// 查看
-	sql = `
-		SELECT * FROM sys_user where id = ?;
-	`
-	row := sqLite.Get(sql, 1)
-	var id int
-	var username string
-	err = row.Scan(&id, &username)
-	if err != nil {
-		t.Error(err.Error())
-	}
-	fmt.Println("查询数据：", id, username)
-
+	var user2 User
 	// 删除
-	sql = `
-		DELETE FROM sys_user WHERE id = ?;
-	`
-	err = sqLite.Remove(sql, 1)
-	if err != nil {
-		t.Error(err.Error())
-	}
+	db.Delete(&User{}, 1).Find(&user2, 1)
+	fmt.Println("删除结果：", user2)
 
-	// 删除库
-	err = sqLite.DeleteDatabase()
-	if err != nil {
-		t.Error(err.Error())
-	}
 }
