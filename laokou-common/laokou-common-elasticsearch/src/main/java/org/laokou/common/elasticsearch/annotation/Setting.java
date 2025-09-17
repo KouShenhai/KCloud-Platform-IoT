@@ -16,7 +16,9 @@
  */
 
 package org.laokou.common.elasticsearch.annotation;
-
+/**
+ * @author laokou
+ */
 public @interface Setting {
 
 	short shards() default 1;

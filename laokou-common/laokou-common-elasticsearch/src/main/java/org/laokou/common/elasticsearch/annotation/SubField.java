@@ -19,13 +19,8 @@ package org.laokou.common.elasticsearch.annotation;
 /**
  * @author laokou
  */
-public final class Constants {
+public @interface SubField {
 
-	public static final String PRE_TAGS = "<font color='red'>";
-
-	public static final String POST_TAGS = "</font>";
-
-	private Constants() {
-	}
+	int ignoreAbove();
 
 }

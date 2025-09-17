@@ -17,9 +17,15 @@
 
 package org.laokou.common.elasticsearch;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.MultiMatchQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
 import co.elastic.clients.elasticsearch.indices.IndexState;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
@@ -34,11 +40,14 @@ import org.laokou.common.elasticsearch.annotation.Filter;
 import org.laokou.common.elasticsearch.annotation.Index;
 import org.laokou.common.elasticsearch.annotation.Option;
 import org.laokou.common.elasticsearch.annotation.Setting;
+import org.laokou.common.elasticsearch.annotation.SubField;
 import org.laokou.common.elasticsearch.annotation.Type;
 import org.laokou.common.elasticsearch.config.ElasticsearchAutoConfig;
+import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.elasticsearch.template.ElasticsearchDocumentTemplate;
 import org.laokou.common.elasticsearch.template.ElasticsearchIndexTemplate;
 import org.laokou.common.elasticsearch.template.ElasticsearchSearchTemplate;
+import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.testcontainers.util.DockerImageNames;
 import org.springframework.boot.ssl.DefaultSslBundleRegistry;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,6 +63,7 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author laokou
@@ -106,31 +116,37 @@ class ElasticsearchApiTest {
 		Assertions.assertThat(map).hasSize(1);
 		Assertions.assertThat(map.get("iot_async_plugin_idx_1")).isNotNull();
 		// 异步创建文档
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.asyncCreateDocument("iot_async_plugin_idx_1", "1", new Test1(1L, "laokou"), ThreadUtils.newVirtualTaskExecutor()).join());
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.asyncCreateDocument("iot_async_plugin_idx_1", "1", new Test1(1L, "我是老寇，你们好呀！"), ThreadUtils.newVirtualTaskExecutor()).join());
 		// 异步搜索文档【分词匹配】
-//		Query.Builder queryBuilder = new Query.Builder();
-//		TermQuery.Builder termQueryBuilder = new TermQuery.Builder();
-//		termQueryBuilder.field("name").value("laokou");
-//		queryBuilder.term(termQueryBuilder.build());
-//		Search search = new Search(null, 1, 10, queryBuilder.build());
-//		Page<Test1> page = elasticsearchSearchTemplate.asyncSearch(List.of("iot_async_plugin_idx_1"), search, Test1.class).join();
-//		Assertions.assertThat(page.getTotal()).isEqualTo(1L);
-//		Test1 test1 = page.getRecords().getFirst();
-//		Assertions.assertThat(test1.name()).isEqualTo("laokou");
+		Search.Highlight highlight = new Search.Highlight();
+		highlight.setFields(Set.of(new Search.HighlightField("name", 0, 0)));
+		Query.Builder queryBuilder = new Query.Builder();
+		MultiMatchQuery.Builder multiMatchQuery = new MultiMatchQuery.Builder();
+		multiMatchQuery.fields("name").query("我");
+		queryBuilder.multiMatch(multiMatchQuery.build());
+		Search search = new Search(highlight, 1, 10, queryBuilder.build());
+		Page<Test1> page = elasticsearchSearchTemplate.asyncSearch(List.of("iot_async_plugin_idx_1"), search, Test1.class).join();
+		Assertions.assertThat(page.getTotal()).isEqualTo(1L);
+		Test1 test1 = page.getRecords().getFirst();
+		Assertions.assertThat(test1.getName()).isEqualTo("<font color='red'>我</font>是老寇，你们好呀！");
 		// 异步查看文档
 		Test1 test2 = elasticsearchDocumentTemplate.asyncGetDocument("iot_async_plugin_idx_1", "1", Test1.class, ThreadUtils.newVirtualTaskExecutor()).join();
 		Assertions.assertThat(test2).isNotNull();
-		Assertions.assertThat(test2.name()).isEqualTo("laokou");
+		Assertions.assertThat(test2.getName()).isEqualTo("我是老寇，你们好呀！");
 		// 异步删除文档
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.asyncDeleteDocument("iot_async_plugin_idx_1", test2.id().toString(), ThreadUtils.newVirtualTaskExecutor()).join());
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.asyncDeleteDocument("iot_async_plugin_idx_1", test2.getId().toString(), ThreadUtils.newVirtualTaskExecutor()).join());
 		// 异步查看文档
 		Test1 test3 = elasticsearchDocumentTemplate.asyncGetDocument("iot_async_plugin_idx_1", "1", Test1.class, ThreadUtils.newVirtualTaskExecutor()).join();
 		Assertions.assertThat(test3).isNull();
 		// 异步批量创建文档
 		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.asyncBulkCreateDocuments("iot_async_plugin_idx_1", List.of(new Test1(2L, "KK")), ThreadUtils.newVirtualTaskExecutor()).join());
-		// 异步搜索文档
-//		Page<Test1> page2 = elasticsearchSearchTemplate.asyncSearch(List.of("iot_async_plugin_idx_1"), new Search(null, 1, 10, null), Test1.class).join();
-//		Assertions.assertThat(page2.getTotal()).isEqualTo(1L);
+		// 异步搜索文档【精准匹配】
+		Query.Builder queryBuilder2 = new Query.Builder();
+		TermQuery.Builder termQueryBuilder = new TermQuery.Builder();
+		termQueryBuilder.field("name.keyword").value("KK");
+		queryBuilder2.term(termQueryBuilder.build());
+		Page<Test1> page2 = elasticsearchSearchTemplate.asyncSearch(List.of("iot_async_plugin_idx_1"), new Search(null, 1, 10, queryBuilder2.build()), Test1.class).join();
+		Assertions.assertThat(page2.getTotal()).isEqualTo(1L);
 		// 异步删除索引
 		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchIndexTemplate.asyncDeleteIndex(List.of("iot_async_plugin_idx_1"), ThreadUtils.newVirtualTaskExecutor()).join());
 		Thread.sleep(Duration.ofSeconds(1));
@@ -147,33 +163,37 @@ class ElasticsearchApiTest {
 		Assertions.assertThat(map).hasSize(1);
 		Assertions.assertThat(map.get("iot_plugin_idx_1")).isNotNull();
 		// 同步创建文档
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.createDocument("iot_plugin_idx_1", "1", new Test1(1L, "laokou")));
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.createDocument("iot_plugin_idx_1", "1", new Test1(1L, "我是老寇，你们好呀！")));
 		// 同步搜索文档【分词匹配】
-//		Search.Highlight highlight = new Search.Highlight();
-//		highlight.setFields(Set.of(new Search.HighlightField("name", 0, 0)));
-//		Query.Builder queryBuilder = new Query.Builder();
-//		MatchQuery.Builder matchQueryBuilder = new MatchQuery.Builder();
-//		matchQueryBuilder.field("name").query("lao").fuzziness("AUTO");
-//		queryBuilder.match(matchQueryBuilder.build());
-//		Search search = new Search(highlight, 1, 10, queryBuilder.build());
-//		Page<Test1> page = elasticsearchSearchTemplate.search(List.of("iot_plugin_idx_1"), search, Test1.class);
-//		Assertions.assertThat(page.getTotal()).isEqualTo(1L);
-//		Test1 test1 = page.getRecords().getFirst();
-//		Assertions.assertThat(test1.name()).isEqualTo("laokou");
+		Search.Highlight highlight = new Search.Highlight();
+		highlight.setFields(Set.of(new Search.HighlightField("name", 0, 0)));
+		Query.Builder queryBuilder = new Query.Builder();
+		MultiMatchQuery.Builder multiMatchQuery = new MultiMatchQuery.Builder();
+		multiMatchQuery.fields("name").query("我");
+		queryBuilder.multiMatch(multiMatchQuery.build());
+		Search search = new Search(highlight, 1, 10, queryBuilder.build());
+		Page<Test1> page = elasticsearchSearchTemplate.search(List.of("iot_plugin_idx_1"), search, Test1.class);
+		Assertions.assertThat(page.getTotal()).isEqualTo(1L);
+		Test1 test1 = page.getRecords().getFirst();
+		Assertions.assertThat(test1.getName()).isEqualTo("<font color='red'>我</font>是老寇，你们好呀！");
 		// 同步查看文档
 		Test1 test2 = elasticsearchDocumentTemplate.getDocument("iot_plugin_idx_1", "1", Test1.class);
 		Assertions.assertThat(test2).isNotNull();
-		Assertions.assertThat(test2.name()).isEqualTo("laokou");
+		Assertions.assertThat(test2.getName()).isEqualTo("我是老寇，你们好呀！");
 		// 同步删除文档
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.deleteDocument("iot_plugin_idx_1", test2.id().toString()));
+		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.deleteDocument("iot_plugin_idx_1", test2.getId().toString()));
 		// 同步查看文档
 		Test1 test3 = elasticsearchDocumentTemplate.getDocument("iot_plugin_idx_1", "1", Test1.class);
 		Assertions.assertThat(test3).isNull();
 		// 同步批量创建文档
 		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.bulkCreateDocuments("iot_plugin_idx_1", List.of(new Test1(2L, "KK"))));
-		// 同步搜索文档
-//		Page<Test1> page2 = elasticsearchSearchTemplate.search(List.of("iot_plugin_idx_1"), new Search(null, 1, 10, null), Test1.class);
-//		Assertions.assertThat(page2.getTotal()).isEqualTo(1L);
+		// 同步搜索文档【精准匹配】
+		Query.Builder queryBuilder2 = new Query.Builder();
+		TermQuery.Builder termQueryBuilder = new TermQuery.Builder();
+		termQueryBuilder.field("name.keyword").value("KK");
+		queryBuilder2.term(termQueryBuilder.build());
+		Page<Test1> page2 = elasticsearchSearchTemplate.search(List.of("iot_plugin_idx_1"), new Search(null, 1, 10, queryBuilder2.build()), Test1.class);
+		Assertions.assertThat(page2.getTotal()).isEqualTo(1L);
 		// 同步删除索引
 		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchIndexTemplate.deleteIndex(List.of("iot_plugin_idx_1")));
 		// 同步判断索引是否存在
@@ -195,22 +215,18 @@ class ElasticsearchApiTest {
 		},
 		analyzers = { @Analyzer(name = "ik_pinyin", args = @Args(filter = "pinyin_filter", tokenizer = "ik_max_word")) })
 	)
-	record Test1(
-		@JsonSerialize(using = ToStringSerializer.class) @Field(type = Type.LONG) Long id,
-		@Field(type = Type.TEXT, searchAnalyzer = "ik_smart", analyzer = "ik_pinyin") String name) implements Serializable {
-	}
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	static class Test1 implements Serializable {
 
-//	@Data
-//	@Index
-//	static class Test2 implements Serializable {
-//
-//		@JsonSerialize(using = ToStringSerializer.class)
-//		@Field(type = Type.LONG)
-//		private Long id;
-//
-//		@Field(type = Type.KEYWORD)
-//		private String name;
-//
-//	}
+		@JsonSerialize(using = ToStringSerializer.class)
+		@Field(type = Type.LONG)
+		private Long id;
+
+		@Field(type = Type.TEXT, searchAnalyzer = "ik_smart", analyzer = "ik_pinyin" , index = true, subField = @SubField(ignoreAbove = 256))
+		private String name;
+
+	}
 
 }

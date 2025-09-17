@@ -17,118 +17,45 @@
 
 package org.laokou.common.elasticsearch.annotation;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 /**
  * @author laokou
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Document {
+public record Document(String name, String alias, List<Mapping> mappings,
+					   org.laokou.common.elasticsearch.annotation.Document.Setting setting,
+					   org.laokou.common.elasticsearch.annotation.Document.Analysis analysis) {
 
-	private String name;
-
-	private String alias;
-
-	private List<Mapping> mappings;
-
-	private Setting setting;
-
-	private Analysis analysis;
-
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class Mapping {
-
-		private String field;
-
-		private Type type;
-
-		private String searchAnalyzer;
-
-		private String analyzer;
-
-		private boolean fielddata;
-
-		private boolean eagerGlobalOrdinals;
-
-		private String format;
-
-		private boolean index;
+	public record Mapping(String field, Type type, String searchAnalyzer, String analyzer, boolean eagerGlobalOrdinals,
+							  String format, boolean index, SubField subField) {
 
 	}
 
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class Setting {
-
-		private short shards;
-
-		private short replicas;
-
-		private String refreshInterval;
+	public record SubField(Integer ignoreAbove) {
 
 	}
 
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class Analysis {
-
-		private List<Filter> filters;
-
-		private List<Analyzer> analyzers;
+	public record Setting(short shards, short replicas, String refreshInterval) {
 
 	}
 
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class Filter {
-
-		private String name;
-
-		private List<Option> options;
+	public record Analysis(List<Filter> filters, List<Analyzer> analyzers) {
 
 	}
 
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class Args {
-
-		private String filter;
-
-		private String tokenizer;
+	public record Filter(String name, List<Option> options) {
 
 	}
 
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class Option {
-
-		private String key;
-
-		private String value;
+	public record Args(String filter, String tokenizer) {
 
 	}
 
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class Analyzer {
+	public record Option(String key, String value) {
 
-		private String name;
+	}
 
-		private Args args;
+	public record Analyzer(String name, Args args) {
 
 	}
 

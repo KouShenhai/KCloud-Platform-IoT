@@ -17,6 +17,9 @@
 
 package org.laokou.common.elasticsearch.annotation;
 
+/**
+ * @author laokou
+ */
 public @interface Analysis {
 
 	Filter[] filters() default {};

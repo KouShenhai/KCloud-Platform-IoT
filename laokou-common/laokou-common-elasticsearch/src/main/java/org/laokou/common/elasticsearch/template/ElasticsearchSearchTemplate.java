@@ -19,9 +19,11 @@ package org.laokou.common.elasticsearch.template;
 
 import co.elastic.clients.elasticsearch.ElasticsearchAsyncClient;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.Highlight;
 import co.elastic.clients.elasticsearch.core.search.HighlightField;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
@@ -31,9 +33,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.StringUtils;
+import org.springframework.util.ReflectionUtils;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -53,7 +59,10 @@ public final class ElasticsearchSearchTemplate {
 		SearchResponse<S> response = elasticsearchClient.search(searchRequest, clazz);
 		HitsMetadata<S> hits = response.hits();
 		assert hits.total() != null;
-		return Page.create(hits.hits().stream().map(Hit::source).toList(), hits.total().value());
+		return Page.create(hits.hits().stream()
+			.map(this::processHit)
+			.filter(ObjectUtils::isNotNull)
+			.toList(), hits.total().value());
 	}
 
 	public <S> CompletableFuture<Page<S>> asyncSearch(List<String> names, Search search, Class<S> clazz) {
@@ -61,7 +70,10 @@ public final class ElasticsearchSearchTemplate {
 		return elasticsearchAsyncClient.search(searchRequest, clazz).thenApplyAsync(response -> {
 			HitsMetadata<S> hits = response.hits();
 			assert hits.total() != null;
-			return Page.create(hits.hits().stream().map(Hit::source).toList(), hits.total().value());
+			return Page.create(hits.hits().stream()
+				.map(this::processHit)
+				.filter(ObjectUtils::isNotNull)
+				.toList(), hits.total().value());
 		});
 	}
 
@@ -69,7 +81,6 @@ public final class ElasticsearchSearchTemplate {
 		// 查询条件
 		Integer pageNo = search.getPageNo();
 		Integer pageSize = search.getPageSize();
-		Query query = search.getQuery();
 		SearchRequest.Builder builder = new SearchRequest.Builder();
 		builder.index(indexNames);
 		builder.from((pageNo - 1) * pageSize);
@@ -77,11 +88,11 @@ public final class ElasticsearchSearchTemplate {
 		// 获取真实总数
 		builder.trackTotalHits(fn -> fn.enabled(true));
 		// 追踪分数开启
-		// builder.trackScores(true);
+		builder.trackScores(true);
 		// 注解
-		// builder.explain(true);
+		builder.explain(true);
 		// 匹配度倒排，数值越大匹配度越高
-		// builder.sort(fn -> fn.score(s -> s.order(SortOrder.Desc)));
+		builder.sort(fn -> fn.score(s -> s.order(SortOrder.Desc)));
 		Search.Highlight highlight = search.getHighlight();
 		if (ObjectUtils.isNotNull(highlight)) {
 			builder.highlight(getHighlight(highlight));
@@ -94,6 +105,7 @@ public final class ElasticsearchSearchTemplate {
 		// match_phrase查询text类型字段，顺序必须相同，而且必须都是连续的（分词）
 		// term精准匹配
 		// match模糊匹配（分词）
+		Query query = search.getQuery();
 		if (ObjectUtils.isNotNull(query)) {
 			builder.query(query);
 		}
@@ -101,24 +113,42 @@ public final class ElasticsearchSearchTemplate {
 	}
 
 	private co.elastic.clients.elasticsearch.core.search.Highlight getHighlight(Search.Highlight highlight) {
-		co.elastic.clients.elasticsearch.core.search.Highlight.Builder builder = new co.elastic.clients.elasticsearch.core.search.Highlight.Builder();
-		builder.preTags(highlight.getPreTags());
-		builder.postTags(highlight.getPostTags());
-		// 多个字段高亮，需要设置false
-		builder.requireFieldMatch(highlight.isRequireFieldMatch());
-		builder.fields(getHighlightFields(highlight.getFields()));
-		return builder.build();
+		return Highlight.of(h -> h.preTags(highlight.getPreTags())
+			.postTags(highlight.getPostTags())
+			// 多个字段高亮，需要设置false
+			.requireFieldMatch(highlight.isRequireFieldMatch())
+			.fields(getHighlightFields(highlight.getFields()))
+		);
 	}
 
 	private List<NamedValue<HighlightField>> getHighlightFields(Set<Search.HighlightField> fields) {
 		return fields.stream()
-			.map(item -> NamedValue.of(item.getName(), new co.elastic.clients.elasticsearch.core.search.HighlightField.Builder()
+			.map(item -> NamedValue.of(item.getName(), HighlightField.of(hf ->
 				// fragmentSize => 最大高亮分片数
-				.fragmentSize(item.getFragmentSize())
+				hf.fragmentSize(item.getFragmentSize())
 				// numberOfFragments => 获取高亮片段位置
-				.numberOfFragments(item.getNumberOfFragments())
-				.build()))
+				.numberOfFragments(item.getNumberOfFragments()))))
 			.toList();
+	}
+
+	private <S> S processHit(Hit<S> hit) {
+		S source = hit.source();
+		if (ObjectUtils.isNull(source)) {
+			return null;
+		}
+		Class<?> clazz = source.getClass();
+		Map<String, List<String>> highlightFields = hit.highlight();
+		for (Map.Entry<String, List<String>> entry : highlightFields.entrySet()) {
+			try {
+				Field field = clazz.getDeclaredField(entry.getKey());
+				field.setAccessible(true);
+				ReflectionUtils.setField(field, source, StringUtils.collectionToDelimitedString(entry.getValue(),"..."));
+			}
+			catch (NoSuchFieldException ex) {
+				throw new IllegalArgumentException(ex);
+			}
+		}
+		return source;
 	}
 
 }

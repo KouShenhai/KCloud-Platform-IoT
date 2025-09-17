@@ -35,25 +35,28 @@ public enum Type {
 	TEXT {
 		@Override
 		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
-			mappingBuilder.properties(mapping.getField(),
-					fn -> fn.text(t -> t.index(mapping.isIndex())
-						.fielddata(mapping.isFielddata())
-						.eagerGlobalOrdinals(mapping.isEagerGlobalOrdinals())
-						.searchAnalyzer(mapping.getSearchAnalyzer())
-						.analyzer(mapping.getAnalyzer())));
+			Document.SubField subField = mapping.subField();
+			mappingBuilder.properties(mapping.field(),
+				fn -> fn.text(t -> t.index(mapping.index())
+						.eagerGlobalOrdinals(mapping.eagerGlobalOrdinals())
+						.searchAnalyzer(mapping.searchAnalyzer())
+						.analyzer(mapping.analyzer())
+					.fields("keyword", f -> f.keyword(p -> p.ignoreAbove(subField.ignoreAbove())))
+				)
+			);
 		}
 	},
 	KEYWORD {
 		@Override
 		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
-			mappingBuilder.properties(mapping.getField(), fn -> fn
-				.keyword(t -> t.index(mapping.isIndex()).eagerGlobalOrdinals(mapping.isEagerGlobalOrdinals())));
+			mappingBuilder.properties(mapping.field(), fn -> fn
+				.keyword(t -> t.index(mapping.index()).eagerGlobalOrdinals(mapping.eagerGlobalOrdinals())));
 		}
 	},
 	LONG {
 		@Override
 		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
-			mappingBuilder.properties(mapping.getField(), fn -> fn.long_(t -> t.index(mapping.isIndex())));
+			mappingBuilder.properties(mapping.field(), fn -> fn.long_(t -> t.index(mapping.index())));
 		}
 	},
 	INTEGER {
@@ -89,8 +92,8 @@ public enum Type {
 	DATE {
 		@Override
 		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
-			mappingBuilder.properties(mapping.getField(),
-					fn -> fn.date(t -> t.index(mapping.isIndex()).format(mapping.getFormat())));
+			mappingBuilder.properties(mapping.field(),
+					fn -> fn.date(t -> t.index(mapping.index()).format(mapping.format())));
 		}
 	},
 	BOOLEAN {

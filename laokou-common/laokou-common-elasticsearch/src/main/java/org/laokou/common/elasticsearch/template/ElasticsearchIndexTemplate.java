@@ -38,6 +38,7 @@ import org.laokou.common.elasticsearch.annotation.Document;
 import org.laokou.common.elasticsearch.annotation.Filter;
 import org.laokou.common.elasticsearch.annotation.Index;
 import org.laokou.common.elasticsearch.annotation.Setting;
+import org.laokou.common.elasticsearch.annotation.SubField;
 import org.laokou.common.elasticsearch.annotation.Type;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.JacksonUtils;
@@ -145,8 +146,8 @@ public final class ElasticsearchIndexTemplate {
 	private CreateIndexRequest getCreateIndexRequest(Document document) {
 		CreateIndexRequest.Builder createIndexbuilder = new CreateIndexRequest.Builder();
 		// 别名
-		createIndexbuilder.aliases(document.getAlias(), fn -> fn.isWriteIndex(true));
-		return createIndexbuilder.index(document.getName())
+		createIndexbuilder.aliases(document.alias(), fn -> fn.isWriteIndex(true));
+		return createIndexbuilder.index(document.name())
 			.mappings(getMappings(document))
 			.settings(getSettings(document))
 			.build();
@@ -163,29 +164,29 @@ public final class ElasticsearchIndexTemplate {
 	}
 
 	private IndexSettings getSettings(Document document) {
-		Document.Setting setting = document.getSetting();
+		Document.Setting setting = document.setting();
 		IndexSettings.Builder settingBuilder = new IndexSettings.Builder();
-		settingBuilder.numberOfShards(String.valueOf(setting.getShards()));
-		settingBuilder.numberOfReplicas(String.valueOf(setting.getReplicas()));
-		settingBuilder.refreshInterval(fn -> fn.time(setting.getRefreshInterval()));
+		settingBuilder.numberOfShards(String.valueOf(setting.shards()));
+		settingBuilder.numberOfReplicas(String.valueOf(setting.replicas()));
+		settingBuilder.refreshInterval(fn -> fn.time(setting.refreshInterval()));
 		settingBuilder.analysis(getAnalysisBuilder(document));
 		return settingBuilder.build();
 	}
 
 	private IndexSettingsAnalysis getAnalysisBuilder(Document document) {
 		IndexSettingsAnalysis.Builder settingsAnalysisBuilder = new IndexSettingsAnalysis.Builder();
-		Document.Analysis analysis = document.getAnalysis();
-		List<Document.Filter> filters = analysis.getFilters();
-		List<Document.Analyzer> analyzers = analysis.getAnalyzers();
-		analyzers.forEach(item -> settingsAnalysisBuilder.analyzer(item.getName(), getAnalyzer(item.getArgs())));
-		filters.forEach(item -> settingsAnalysisBuilder.filter(item.getName(), getFilter(item.getOptions())));
+		Document.Analysis analysis = document.analysis();
+		List<Document.Filter> filters = analysis.filters();
+		List<Document.Analyzer> analyzers = analysis.analyzers();
+		analyzers.forEach(item -> settingsAnalysisBuilder.analyzer(item.name(), getAnalyzer(item.args())));
+		filters.forEach(item -> settingsAnalysisBuilder.filter(item.name(), getFilter(item.options())));
 		return settingsAnalysisBuilder.build();
 	}
 
 	private TokenFilter getFilter(List<Document.Option> options) {
 		TokenFilter.Builder filterBuilder = new TokenFilter.Builder();
 		Map<String, String> map = options.stream()
-			.collect(Collectors.toMap(Document.Option::getKey, Document.Option::getValue));
+			.collect(Collectors.toMap(Document.Option::key, Document.Option::value));
 		filterBuilder.definition(fn -> fn
 			.withJson(new ByteArrayInputStream(JacksonUtils.toBytes(map))));
 		return filterBuilder.build();
@@ -193,15 +194,15 @@ public final class ElasticsearchIndexTemplate {
 
 	private co.elastic.clients.elasticsearch._types.analysis.Analyzer getAnalyzer(Document.Args args) {
 		co.elastic.clients.elasticsearch._types.analysis.Analyzer.Builder analyzerBuilder = new co.elastic.clients.elasticsearch._types.analysis.Analyzer.Builder();
-		analyzerBuilder.custom(fn -> fn.filter(args.getFilter()).tokenizer(args.getTokenizer()));
+		analyzerBuilder.custom(fn -> fn.filter(args.filter()).tokenizer(args.tokenizer()));
 		return analyzerBuilder.build();
 	}
 
 	private TypeMapping getMappings(Document document) {
 		TypeMapping.Builder mappingBuilder = new TypeMapping.Builder();
 		mappingBuilder.dynamic(DynamicMapping.True);
-		List<Document.Mapping> mappings = document.getMappings();
-		mappings.forEach(item -> item.getType().setProperties(mappingBuilder, item));
+		List<Document.Mapping> mappings = document.mappings();
+		mappings.forEach(item -> item.type().setProperties(mappingBuilder, item));
 		return mappingBuilder.build();
 	}
 
@@ -248,12 +249,12 @@ public final class ElasticsearchIndexTemplate {
 		Type type = field.type();
 		String searchAnalyzer = field.searchAnalyzer();
 		String analyzer = field.analyzer();
-		boolean fieldData = field.fielddata();
 		boolean eagerGlobalOrdinals = field.eagerGlobalOrdinals();
 		String format = field.format();
 		boolean isIndex = field.index();
-		return new Document.Mapping(value, type, searchAnalyzer, analyzer, fieldData, eagerGlobalOrdinals, format,
-			isIndex);
+		SubField subField = field.subField();
+		return new Document.Mapping(value, type, searchAnalyzer, analyzer, eagerGlobalOrdinals, format,
+			isIndex, new Document.SubField(subField.ignoreAbove()));
 	}
 
 }

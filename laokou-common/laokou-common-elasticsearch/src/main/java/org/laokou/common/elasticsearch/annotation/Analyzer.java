@@ -16,7 +16,9 @@
  */
 
 package org.laokou.common.elasticsearch.annotation;
-
+/**
+ * @author laokou
+ */
 public @interface Analyzer {
 
 	String name();

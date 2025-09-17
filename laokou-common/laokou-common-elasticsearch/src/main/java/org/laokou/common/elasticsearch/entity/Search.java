@@ -51,7 +51,7 @@ public class Search {
 
 		private List<String> postTags = List.of(Constants.POST_TAGS);
 
-		private boolean requireFieldMatch;
+		private boolean requireFieldMatch = false;
 
 		private Set<HighlightField> fields;
 

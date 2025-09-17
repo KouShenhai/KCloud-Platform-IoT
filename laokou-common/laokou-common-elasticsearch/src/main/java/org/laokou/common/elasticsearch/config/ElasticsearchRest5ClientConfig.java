@@ -19,7 +19,6 @@ package org.laokou.common.elasticsearch.config;
 
 import co.elastic.clients.json.JsonpMapper;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
-import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.rest5_client.Rest5ClientOptions;
 import co.elastic.clients.transport.rest5_client.Rest5ClientTransport;
 import co.elastic.clients.transport.rest5_client.low_level.RequestOptions;
@@ -223,12 +222,12 @@ class ElasticsearchRest5ClientConfig {
 		}
 	}
 
-	@ConditionalOnMissingBean(ElasticsearchTransport.class)
+	@ConditionalOnMissingBean(Rest5ClientTransport.class)
 	@Configuration(proxyBeanMethods = false)
 	static class ElasticsearchTransportConfig {
 
 		@Bean
-		ElasticsearchTransport restClientTransport(Rest5Client restClient, JsonpMapper jsonMapper,
+		Rest5ClientTransport rest5ClientTransport(Rest5Client restClient, JsonpMapper jsonMapper,
 												 ObjectProvider<Rest5ClientOptions> restClientOptions) {
 			return new Rest5ClientTransport(restClient, jsonMapper, restClientOptions.getIfAvailable());
 		}

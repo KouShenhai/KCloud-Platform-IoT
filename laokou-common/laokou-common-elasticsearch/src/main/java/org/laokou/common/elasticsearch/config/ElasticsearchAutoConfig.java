@@ -20,6 +20,7 @@ package org.laokou.common.elasticsearch.config;
 import co.elastic.clients.elasticsearch.ElasticsearchAsyncClient;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.transport.ElasticsearchTransport;
+import co.elastic.clients.transport.rest5_client.Rest5ClientTransport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.elasticsearch.template.ElasticsearchDocumentTemplate;
@@ -53,25 +54,25 @@ public class ElasticsearchAutoConfig {
 	/**
 	 * Provides the {@link ElasticsearchClient} to be used.
 	 *
-	 * @param elasticsearchTransport the {@link ElasticsearchTransport} to use
+	 * @param rest5ClientTransport the {@link ElasticsearchTransport} to use
 	 * @return ElasticsearchClient instance
 	 */
 	@Bean(name = "elasticsearchClient", destroyMethod = "close")
 	@ConditionalOnMissingBean(ElasticsearchClient.class)
-	ElasticsearchClient elasticsearchClient(ElasticsearchTransport elasticsearchTransport) {
-		return new ElasticsearchClient(elasticsearchTransport);
+	ElasticsearchClient elasticsearchClient(Rest5ClientTransport rest5ClientTransport) {
+		return new ElasticsearchClient(rest5ClientTransport);
 	}
 
 	/**
 	 * Provides the {@link ElasticsearchAsyncClient} to be used.
 	 *
-	 * @param elasticsearchTransport the {@link ElasticsearchTransport} to use
+	 * @param rest5ClientTransport the {@link ElasticsearchTransport} to use
 	 * @return ElasticsearchAsyncClient instance
 	 */
 	@Bean(name = "elasticsearchAsyncClient", destroyMethod = "close")
 	@ConditionalOnMissingBean(ElasticsearchAsyncClient.class)
-	ElasticsearchAsyncClient elasticsearchAsyncClient(ElasticsearchTransport elasticsearchTransport) {
-		return new ElasticsearchAsyncClient(elasticsearchTransport);
+	ElasticsearchAsyncClient elasticsearchAsyncClient(Rest5ClientTransport rest5ClientTransport) {
+		return new ElasticsearchAsyncClient(rest5ClientTransport);
 	}
 
 	@Bean(name = "elasticsearchDocumentTemplate")
