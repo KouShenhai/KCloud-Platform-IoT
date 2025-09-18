@@ -79,7 +79,8 @@ module.exports = {
 							{text: 'Docker安装RabbitMQ 3.12.2', link: '/pages/552b64/'},
 							{text: 'Docker安装Postgresql 16.1', link: '/pages/d715cb/'},
 							{text: 'Ubuntu20.04安装Docker', link: '/pages/fade19/'},
-							{text: 'Ubuntu20.04忘记密码或指纹错误', link: '/pages/d0b936/'}
+							{text: 'Ubuntu20.04忘记密码或指纹错误', link: '/pages/d0b936/'},
+							{text: 'Linux搭建Go开发环境', link: '/pages/b580fb/'}
 						]
 					},
 					{
