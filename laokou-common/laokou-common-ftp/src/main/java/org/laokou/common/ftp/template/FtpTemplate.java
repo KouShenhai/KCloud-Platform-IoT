@@ -38,18 +38,18 @@ public class FtpTemplate {
 
 	private final FtpProperties ftpProperties;
 
-	public void upload(String directory, String fileName, InputStream in) throws IOException {
-		execute((ftpClient) -> {
+	public Boolean upload(String directory, String fileName, InputStream in) throws IOException {
+		return execute((ftpClient) -> {
 			try {
 				if (!ftpClient.changeWorkingDirectory(directory)) {
 					ftpClient.makeDirectory(directory);
 					ftpClient.changeWorkingDirectory(directory);
 				}
-				ftpClient.storeFile(new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1),
-						in);
-			}
-			catch (Exception e) {
+				return ftpClient.storeFile(new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1),
+					in);
+			} catch (Exception e) {
 				log.error("【FTP】 => 上传文件失败，错误信息：{}", e.getMessage(), e);
+				return false;
 			}
 		});
 	}
@@ -68,15 +68,16 @@ public class FtpTemplate {
 		});
 	}
 
-	public void delete(String directory, String fileName) throws IOException {
-		execute((ftpClient) -> {
+	public Boolean delete(String directory, String fileName) throws IOException {
+		return execute((ftpClient) -> {
 			try {
 				ftpClient.changeWorkingDirectory(directory);
-				ftpClient
+				return ftpClient
 					.deleteFile(new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
 			}
 			catch (Exception e) {
 				log.error("【FTP】 => 删除文件失败，错误信息：{}", e.getMessage(), e);
+				return false;
 			}
 		});
 	}
@@ -89,17 +90,6 @@ public class FtpTemplate {
 		}
 		catch (Exception e) {
 			return null;
-		}
-		finally {
-			close(ftpClient);
-		}
-	}
-
-	private void execute(FtpExecutorVoid executor) throws IOException {
-		FTPClient ftpClient = null;
-		try {
-			ftpClient = getFtpClient();
-			executor.execute(ftpClient);
 		}
 		finally {
 			close(ftpClient);
@@ -129,13 +119,6 @@ public class FtpTemplate {
 	public interface FtpExecutor<T> {
 
 		T execute(FTPClient ftpClient);
-
-	}
-
-	@FunctionalInterface
-	public interface FtpExecutorVoid {
-
-		void execute(FTPClient ftpClient);
 
 	}
 

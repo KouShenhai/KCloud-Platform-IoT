@@ -75,6 +75,8 @@ import java.util.List;
  */
 class ElasticsearchRest5ClientConfig {
 
+	private ElasticsearchRest5ClientConfig() {}
+
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnMissingBean(Rest5ClientBuilder.class)
 	@RequiredArgsConstructor

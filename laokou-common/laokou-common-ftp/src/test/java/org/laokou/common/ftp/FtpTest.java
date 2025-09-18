@@ -19,21 +19,28 @@ package org.laokou.common.ftp;
 
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.ftp.config.FtpProperties;
 import org.laokou.common.ftp.template.FtpTemplate;
 import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.common.testcontainers.container.FtpContainer;
+import org.laokou.common.testcontainers.util.DockerImageNames;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
+
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
  * @author laokou
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment =  SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
 @EnableConfigurationProperties
 @ContextConfiguration(classes = { FtpProperties.class, FtpTemplate.class })
@@ -44,14 +51,33 @@ class FtpTest {
 
 	private final FtpProperties ftpProperties;
 
+	static final FtpContainer ftp = new FtpContainer(DockerImageNames.ftp())
+		.withUsername("root")
+		.withPassword("laokou123");
+
+	@BeforeAll
+	static void beforeAll() {
+		ftp.start();
+	}
+
+	@AfterAll
+	static void afterAll() {
+		ftp.stop();
+	}
+
+	@DynamicPropertySource
+	static void configureProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.ftp.host", ftp::getHost);
+		registry.add("spring.ftp.port", () -> ftp.getMappedPort(21));
+	}
+
 	@Test
 	void test_ftp() throws IOException {
-		Assertions.assertThatNoException().isThrownBy(() -> ftpTemplate.upload(ftpProperties.getDirectory(), "测试中文文本.txt",
-				ResourceUtils.getResource("classpath:测试中文文本.txt").getInputStream()));
+		Assertions.assertThat(ftpTemplate.upload(ftpProperties.getDirectory(), "测试中文文本.txt", ResourceUtils.getResource("测试中文文本.txt").getInputStream())).isTrue();
 		InputStream inputStream = ftpTemplate.download(ftpProperties.getDirectory(), "测试中文文本.txt");
 		Assertions.assertThat(inputStream).isNotNull();
 		Assertions.assertThat(new String(inputStream.readAllBytes()).trim()).isEqualTo("123");
-		Assertions.assertThatNoException().isThrownBy(() -> ftpTemplate.delete(ftpProperties.getDirectory(), "测试中文文本.txt"));
+		Assertions.assertThat(ftpTemplate.delete(ftpProperties.getDirectory(), "测试中文文本.txt")).isTrue();
 		Assertions.assertThat(ftpTemplate.download(ftpProperties.getDirectory(), "测试中文文本.txt")).isNull();
 	}
 

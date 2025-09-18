@@ -15,20 +15,10 @@
  *
  */
 
-package org.laokou.common.ftp;
-
-import org.springframework.boot.WebApplicationType;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+package org.laokou.common.oss;
 
 /**
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = { "org.laokou" })
-class AppTest {
-
-	public static void main(String[] args) {
-		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
-	}
-
+class OssUploadTest {
 }

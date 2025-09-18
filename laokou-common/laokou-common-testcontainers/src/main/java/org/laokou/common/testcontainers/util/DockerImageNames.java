@@ -45,7 +45,16 @@ public final class DockerImageNames {
 	}
 
 	public static DockerImageName nacos() {
-		return elasticsearch("v3.0.3");
+		return nacos("v3.0.3");
+	}
+
+	public static DockerImageName ftp(String tag) {
+		return DockerImageName.parse("fauria/vsftpd")
+			.withTag(tag);
+	}
+
+	public static DockerImageName ftp() {
+		return ftp(LATEST);
 	}
 
 	public static DockerImageName postgresql(String tag) {
