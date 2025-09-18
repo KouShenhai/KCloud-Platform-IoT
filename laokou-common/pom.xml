@@ -86,6 +86,7 @@
     <module>laokou-common-starrocks</module>
     <module>laokou-common-modbus4j</module>
     <module>laokou-common-testcontainers</module>
+    <module>laokou-common-mongodb</module>
   </modules>
 
 </project>

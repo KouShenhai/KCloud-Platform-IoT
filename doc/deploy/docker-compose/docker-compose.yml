@@ -14,6 +14,25 @@
 #  * limitations under the License.
 #  */
 services:
+  mongodb:
+    image: mongo:8.0.13
+    container_name: mongodb
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "27017:27017"
+    environment:
+      - TZ=Asia/Shanghai
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=laokou123
+      - MONGO_INITDB_DATABASE=admin
+    volumes:
+      - ./mongodb/data:/data/db
+      - ./mongodb/logs:/var/log/mongodb
+    networks:
+      - iot_network
   minio:
     image: minio/minio:RELEASE.2025-04-22T22-12-26Z
     container_name: minio
