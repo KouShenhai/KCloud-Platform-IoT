@@ -15,17 +15,29 @@
  *
  */
 
-package org.laokou.common.oss.template;
+package org.laokou.common.testcontainers.container;
+
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.utility.DockerImageName;
 
 /**
  * @author laokou
  */
-public interface Storage {
+public class MinIOContainer extends GenericContainer<MinIOContainer> {
 
-	String uploadOss() throws Exception;
+	public MinIOContainer(DockerImageName dockerImageName) {
+		super(dockerImageName);
+		this.withExposedPorts(9000, 9001);
+	}
 
-	void createBucket() throws Exception;
+	public MinIOContainer withUsername (String username) {
+		this.withEnv("MINIO_ROOT_USER", username);
+		return this;
+	}
 
-	void deleteBucket() throws Exception;
+	public MinIOContainer withPassword (String password) {
+		this.withEnv("MINIO_ROOT_PASSWORD", password);
+		return this;
+	}
 
 }

@@ -107,4 +107,17 @@ public final class AmazonS3Storage extends AbstractStorage<S3Client> {
 		}
 	}
 
+	@Override
+	public void createBucket() {
+		S3Client s3Client = getObj();
+		String bucketName = amazonS3.getBucketName();
+		if (s3Client.listBuckets().buckets().stream().noneMatch(b -> b.name().equals(bucketName))) {
+			s3Client.createBucket(builder -> builder.bucket(bucketName));
+		}
+	}
+
+	@Override
+	public void deleteBucket() {
+		throw new UnsupportedOperationException();
+	}
 }

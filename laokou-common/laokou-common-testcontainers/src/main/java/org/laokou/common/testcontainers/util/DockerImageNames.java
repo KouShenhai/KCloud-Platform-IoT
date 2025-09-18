@@ -57,6 +57,15 @@ public final class DockerImageNames {
 		return ftp(LATEST);
 	}
 
+	public static DockerImageName minIO(String tag) {
+		return DockerImageName.parse("minio/minio")
+			.withTag(tag);
+	}
+
+	public static DockerImageName minIO() {
+		return minIO("RELEASE.2025-04-22T22-12-26Z");
+	}
+
 	public static DockerImageName postgresql(String tag) {
 		return DockerImageName.parse("postgres")
 			.withTag(tag);

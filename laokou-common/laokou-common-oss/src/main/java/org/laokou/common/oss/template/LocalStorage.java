@@ -57,4 +57,13 @@ public final class LocalStorage extends AbstractStorage<Path> {
 		return local.getDomain() + this.local.getDirectory() + StringConstants.SLASH + fileInfo.name();
 	}
 
+	@Override
+	public void createBucket() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void deleteBucket() {
+		throw new UnsupportedOperationException();
+	}
 }

@@ -36,4 +36,12 @@ public class StorageTemplate {
 		return new OssUploadCO(baseOss.getStoragePolicy().getStorage(fileInfo, baseOss).uploadOss(), baseOss.getId());
 	}
 
+	public void createBucket(BaseOss baseOss) throws Exception {
+		baseOss.getStoragePolicy().getStorage(null, baseOss).createBucket();
+	}
+
+	public void deleteBucket(BaseOss baseOss) throws Exception {
+		baseOss.getStoragePolicy().getStorage(null, baseOss).deleteBucket();
+	}
+
 }

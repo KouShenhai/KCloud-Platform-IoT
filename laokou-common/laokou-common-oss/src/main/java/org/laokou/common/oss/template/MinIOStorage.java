@@ -19,6 +19,7 @@ package org.laokou.common.oss.template;
 
 import io.minio.BucketExistsArgs;
 import io.minio.GetPresignedObjectUrlArgs;
+import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import io.minio.errors.ErrorResponseException;
@@ -95,6 +96,21 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 			.expiry(5, TimeUnit.DAYS)
 			.build();
 		return minioClient.getPresignedObjectUrl(objectUrlArgs);
+	}
+
+	@Override
+	public void createBucket() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+		MinioClient minioClient = getObj();
+		String bucketName = this.minIO.getBucketName();
+		boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
+		if (!isExist) {
+			minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
+		}
+	}
+
+	@Override
+	public void deleteBucket() {
+		throw new UnsupportedOperationException();
 	}
 
 }
