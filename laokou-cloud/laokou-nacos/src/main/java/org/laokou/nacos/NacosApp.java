@@ -49,13 +49,12 @@ import static com.alibaba.nacos.sys.env.Constants.STANDALONE_MODE_PROPERTY_NAME;
 @EnableEncryptableProperties
 public class NacosApp {
 
-	public static void main(String[] args) {
+	static void main(String[] args) {
 		// @formatter:off
 		// -Dnacos.home => Nacos的根目录
 		// Nacos控制台 => http://【ip:8848】/nacos
 		// -Dnacos.standalone=true
 		// -Dcom.google.protobuf.use_unsafe_pre22_gencode
-		// -XX:+UseG1GC
 		// @formatter:on
 		System.setProperty("com.google.protobuf.use_unsafe_pre22_gencode", "true");
 		String standalone = System.getProperty(STANDALONE_MODE_PROPERTY_NAME, "");

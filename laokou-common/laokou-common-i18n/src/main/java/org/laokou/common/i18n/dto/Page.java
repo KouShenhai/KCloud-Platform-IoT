@@ -17,10 +17,7 @@
 
 package org.laokou.common.i18n.dto;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -32,8 +29,6 @@ import java.util.List;
  * @author laokou
  */
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Page<T> implements Serializable {
 
 	/**
@@ -45,6 +40,11 @@ public final class Page<T> implements Serializable {
 	 * 数据项集合.
 	 */
 	private List<T> records;
+
+	private Page(long total, List<T> list) {
+		this.total = total;
+		this.records = list;
+	}
 
 	/**
 	 * 构建空对象集合.

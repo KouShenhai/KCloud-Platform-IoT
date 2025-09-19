@@ -40,7 +40,6 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.core.ReactiveHashOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
@@ -132,7 +131,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	public Flux<RouteDefinition> getRouteDefinitions() {
 		return reactiveHashOperations.entries(RedisKeyUtils.getRouteDefinitionHashKey())
 			.mapNotNull(Map.Entry::getValue)
-			.onErrorContinue((throwable, routeDefinition) -> {
+			.onErrorContinue((throwable, _) -> {
 				if (log.isErrorEnabled()) {
 					log.error("从Redis获取路由失败，错误信息：{}", throwable.getMessage(), throwable);
 				}
@@ -166,12 +165,12 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	private Mono<Void> syncRouter(Collection<RouteDefinition> routes) {
 		return reactiveHashOperations.delete(RedisKeyUtils.getRouteDefinitionHashKey())
 			.doOnError(throwable -> log.error("删除路由失败，错误信息：{}", throwable.getMessage(), throwable))
-			.doOnSuccess(removeFlag -> publishRefreshRoutesEvent())
+			.doOnSuccess(_ -> publishRefreshRoutesEvent())
 			.thenMany(Flux.fromIterable(routes))
 			.flatMap(router -> reactiveHashOperations.putIfAbsent(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router)
 				.doOnError(throwable -> log.error("保存路由失败，错误信息：{}", throwable.getMessage(), throwable)))
 			.then()
-			.doOnSuccess(saveFlag -> publishRefreshRoutesEvent());
+			.doOnSuccess(_ -> publishRefreshRoutesEvent());
 	}
 
 	// @formatter:off
@@ -221,7 +220,6 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	}
 
-	@Async
 	@EventListener
 	public void onUnsubscribeEvent(UnsubscribeEvent evt) throws InterruptedException {
 		Thread.sleep(Duration.ofSeconds(15));

@@ -62,7 +62,7 @@ import java.security.NoSuchAlgorithmException;
 public class AdminApp {
 
 	// @formatter:off
-	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
+	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		// undertow虚拟线程 => EmbeddedWebServerFactoryCustomizerAutoConfiguration#virtualThreadsUndertowDeploymentInfoCustomizer
 		StopWatch stopWatch = new StopWatch("Admin应用程序");
 		stopWatch.start();
