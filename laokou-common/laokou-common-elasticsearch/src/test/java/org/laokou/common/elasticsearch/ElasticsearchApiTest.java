@@ -101,7 +101,7 @@ class ElasticsearchApiTest {
 		registry.add("spring.data.elasticsearch.username", () -> "elastic");
 		registry.add("spring.data.elasticsearch.password", () -> "laokou123");
 		registry.add("spring.data.elasticsearch.client-version", () -> "9.1.4");
-		registry.add("spring.data.elasticsearch.version", () -> "9.1.3");
+		registry.add("spring.data.elasticsearch.version", () -> "9.1.4");
 		registry.add("spring.data.elasticsearch.connection-timeout", () -> "60s");
 		registry.add("spring.data.elasticsearch.socket-timeout", () -> "60s");
 	}
@@ -110,7 +110,7 @@ class ElasticsearchApiTest {
 	void test_asyncApi() throws InterruptedException {
 		// 异步创建索引
 		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchIndexTemplate.asyncCreateIndex("iot_async_plugin_idx_1", "iot_async_plugin_idx", Test1.class, ThreadUtils.newVirtualTaskExecutor()).join());
-		Thread.sleep(Duration.ofSeconds(1));
+		Thread.sleep(Duration.ofSeconds(3));
 		// 异步查看索引
 		Map<String, IndexState> map = elasticsearchIndexTemplate.asyncGetIndex(List.of("iot_async_plugin_idx_1")).join().indices();
 		Assertions.assertThat(map).hasSize(1);
@@ -149,7 +149,7 @@ class ElasticsearchApiTest {
 		Assertions.assertThat(page2.getTotal()).isEqualTo(1L);
 		// 异步删除索引
 		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchIndexTemplate.asyncDeleteIndex(List.of("iot_async_plugin_idx_1"), ThreadUtils.newVirtualTaskExecutor()).join());
-		Thread.sleep(Duration.ofSeconds(1));
+		Thread.sleep(Duration.ofSeconds(3));
 		// 异步判断索引是否存在
 		Assertions.assertThat(elasticsearchIndexTemplate.asyncExist(List.of("iot_async_plugin_idx_1"),  ThreadUtils.newVirtualTaskExecutor()).join()).isFalse();
 	}
