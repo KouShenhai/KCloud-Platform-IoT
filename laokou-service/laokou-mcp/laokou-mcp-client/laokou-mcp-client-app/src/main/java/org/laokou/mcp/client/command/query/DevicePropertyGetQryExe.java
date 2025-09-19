@@ -41,7 +41,7 @@ public class DevicePropertyGetQryExe {
 	private final List<LoadbalancedMcpSyncClient> loadbalancedMcpSyncClients;
 
 	public Result<String> execute(DevicePropertyGetQry qry) {
-		McpSchema.CallToolResult callToolResult = loadbalancedMcpSyncClients.getFirst().callTool(new McpSchema.CallToolRequest("根据设备序列号查看设备属性", Map.of("sn", qry.getSn())));
+		McpSchema.CallToolResult callToolResult = loadbalancedMcpSyncClients.getFirst().callTool(new McpSchema.CallToolRequest("get_device_property_by_sn", Map.of("sn", qry.getSn())));
 		List<String> list = callToolResult.content().stream().map(content -> {
 			if (content instanceof McpSchema.TextContent textContent) {
 				return textContent.text();
