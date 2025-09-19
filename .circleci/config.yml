@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/openjdk:21.0.6
+      - image: azul/zulu-openjdk:25-jre-latest
 
     environment:
       JVM_OPTS: -Xmx2048m

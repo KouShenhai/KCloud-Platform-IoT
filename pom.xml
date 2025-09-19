@@ -56,7 +56,7 @@
   </licenses>
   <properties>
     <laokou.version>3.5.4-SNAPSHOT</laokou.version>
-    <java.version>21</java.version>
+    <java.version>25</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -555,7 +555,6 @@
           <include>log4j2.xml</include>
           <!--suppress UnresolvedMavenProperty -->
           <include>log4j2-${PROFILE-ACTIVE}.xml</include>
-          <include>init_router.json</include>
           <include>log4j2.component.properties</include>
         </includes>
       </resource>
