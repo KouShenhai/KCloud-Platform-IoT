@@ -114,11 +114,11 @@
     <!--commons-text版本-->
     <commons-text.version>1.14.0</commons-text.version>
     <!--snail-job版本-->
-    <snail-job.version>1.7.2</snail-job.version>
+    <snail-job.version>1.8.0</snail-job.version>
     <!--archunit-junit5版本-->
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
     <!--opentelemetry-api-incubator版本-->
-    <opentelemetry-api-incubator.version>1.54.0-alpha</opentelemetry-api-incubator.version>
+    <opentelemetry-api-incubator.version>1.54.1-alpha</opentelemetry-api-incubator.version>
     <!--opentelemetry-exporter-jaeger版本-->
     <opentelemetry-exporter-jaeger.version>1.34.1</opentelemetry-exporter-jaeger.version>
     <!--caffeine版本-->
@@ -160,7 +160,7 @@
     <!--spring-security版本-->
     <spring-security.version>6.5.5</spring-security.version>
     <!--spring-ai-alibaba版本-->
-    <spring-ai-alibaba.version>1.0.0.3</spring-ai-alibaba.version>
+    <spring-ai-alibaba.version>1.0.0.4</spring-ai-alibaba.version>
     <!--spring-ai版本-->
     <spring-ai.version>1.0.2</spring-ai.version>
     <!--mysql版本-->
