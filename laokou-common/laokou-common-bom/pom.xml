@@ -88,13 +88,13 @@
     <!--mockito版本-->
     <mockito.version>5.20.0</mockito.version>
     <!--nacos版本-->
-    <nacos.version>3.0.3</nacos.version>
+    <nacos.version>3.1.0</nacos.version>
     <!--knife4j版本-->
     <knife4j.version>4.5.0</knife4j.version>
     <!--taos-jdbcdriver版本-->
     <taos-jdbcdriver.version>3.7.4</taos-jdbcdriver.version>
     <!--fory-core版本-->
-    <fory-core.version>0.12.2</fory-core.version>
+    <fory-core.version>0.12.3</fory-core.version>
     <!--browscap-java版本-->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!--liquibase-core版本-->
@@ -114,7 +114,7 @@
     <!--commons-text版本-->
     <commons-text.version>1.14.0</commons-text.version>
     <!--snail-job版本-->
-    <snail-job.version>1.7.2</snail-job.version>
+    <snail-job.version>1.8.0</snail-job.version>
     <!--archunit-junit5版本-->
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
     <!--opentelemetry-api-incubator版本-->
@@ -160,7 +160,7 @@
     <!--spring-security版本-->
     <spring-security.version>6.5.5</spring-security.version>
     <!--spring-ai-alibaba版本-->
-    <spring-ai-alibaba.version>1.0.0.3</spring-ai-alibaba.version>
+    <spring-ai-alibaba.version>1.0.0.4</spring-ai-alibaba.version>
     <!--spring-ai版本-->
     <spring-ai.version>1.0.2</spring-ai.version>
     <!--mysql版本-->
