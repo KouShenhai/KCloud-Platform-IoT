@@ -114,7 +114,7 @@
     <!--commons-text版本-->
     <commons-text.version>1.14.0</commons-text.version>
     <!--snail-job版本-->
-    <snail-job.version>1.7.2</snail-job.version>
+    <snail-job.version>1.8.0</snail-job.version>
     <!--archunit-junit5版本-->
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
     <!--opentelemetry-api-incubator版本-->
