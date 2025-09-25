@@ -160,7 +160,7 @@
     <!--spring-security版本-->
     <spring-security.version>6.5.5</spring-security.version>
     <!--spring-ai-alibaba版本-->
-    <spring-ai-alibaba.version>1.0.0.3</spring-ai-alibaba.version>
+    <spring-ai-alibaba.version>1.0.0.4</spring-ai-alibaba.version>
     <!--spring-ai版本-->
     <spring-ai.version>1.0.2</spring-ai.version>
     <!--mysql版本-->
