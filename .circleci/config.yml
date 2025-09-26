@@ -26,9 +26,16 @@ jobs:
             sudo echo "export PATH=${GRAALVM_HOME}/bin:$PATH" >> $BASH_ENV
             source $BASH_ENV
       - run:
-          name: "Build with Maven"
+          name: Install with Maven Mvnd
           command: |
-            mvn clean install -P dev -DskipTests -B
+            MVND_VERSION="2.0.0-rc-3"
+            wget https://downloads.apache.org/maven/mvnd/${MVND_VERSION}/maven-mvnd-${MVND_VERSION}-linux-amd64.zip
+            unzip maven-mvnd-${MVND_VERSION}-linux-amd64.zip
+            echo "${PWD}/maven-mvnd-${MVND_VERSION}-linux-amd64/bin" >> $GITHUB_PATH
+      - run:
+          name: "Build with Maven Mvnd"
+          command: |
+            mvnd clean install -P dev -DskipTests -B
 workflows:
   maven-build:
     jobs:
