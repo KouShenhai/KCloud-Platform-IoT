@@ -168,8 +168,8 @@ public final class FileUtils {
 			outChannel.transferFrom(inChannel, 0, size);
 		}
 		catch (IOException e) {
-			log.error("文件上传失败，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_Oss_UploadFailed", e.getMessage(), e);
+			log.error("文件写入失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_Oss_WriteFailed", e.getMessage(), e);
 		}
 	}
 
