@@ -410,6 +410,7 @@
         <configuration>
           <source>${maven.compiler.source}</source>
           <target>${maven.compiler.target}</target>
+          <release>${java.version}</release>
           <encoding>${project.build.sourceEncoding}</encoding>
           <compilerArgs>
             <!-- 关闭对不推荐使用的编译器选项的警告 -->
