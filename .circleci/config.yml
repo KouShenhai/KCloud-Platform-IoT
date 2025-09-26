@@ -24,8 +24,10 @@ jobs:
             sudo echo "export GRAALVM_HOME=${GRAALVM_HOME}" >> $BASH_ENV
             sudo echo "export PATH=${GRAALVM_HOME}/bin:$PATH" >> $BASH_ENV
             source $BASH_ENV
-      - checkout
-      - run: mvn clean install -P dev -DskipTests -B
+      - run:
+          name: "Build with Maven"
+          command: |
+            mvn clean install -P dev -DskipTests -B
 workflows:
   maven-build:
     jobs:
