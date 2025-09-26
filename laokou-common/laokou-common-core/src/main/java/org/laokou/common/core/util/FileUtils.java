@@ -173,7 +173,7 @@ public final class FileUtils {
 		}
 	}
 
-	public static void write(File file, List<Chunk> chunks) {
+	public static void chunkWrite(File file, List<Chunk> chunks) {
 		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
 			List<Callable<Boolean>> futures = new ArrayList<>(chunks.size());
 			for (Chunk chunk : chunks) {
@@ -186,8 +186,8 @@ public final class FileUtils {
 		}
 		catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
-			log.error("文件上传失败，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_Oss_UploadFailed", e.getMessage(), e);
+			log.error("文件分片写入失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_Oss_ChunkWriteFailed", e.getMessage(), e);
 		}
 	}
 

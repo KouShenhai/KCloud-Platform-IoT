@@ -58,7 +58,7 @@ class FileUtilsTest {
 			.isThrownBy(() -> FileUtils.write(Path.of(testPath, "upload", "test2.txt_b"), new ByteArrayInputStream("b".getBytes()), "b".getBytes().length));
 		Assertions.assertThatNoException()
 			.isThrownBy(() -> FileUtils.write(Path.of(testPath, "upload", "test2.txt_c"), new ByteArrayInputStream("c".getBytes()), "c".getBytes().length));
-		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.write(Path.of(testPath, "upload", "test2.txt").toFile(), List.of(
+		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.chunkWrite(Path.of(testPath, "upload", "test2.txt").toFile(), List.of(
 			new FileUtils.Chunk(Path.of(testPath, "upload", "test2.txt_a").toFile(), 0, 1),
 			new FileUtils.Chunk(Path.of(testPath, "upload", "test2.txt_b").toFile(), 1, 1),
 			new FileUtils.Chunk(Path.of(testPath, "upload", "test2.txt_c").toFile(), 2, 1)
