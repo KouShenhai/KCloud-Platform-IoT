@@ -25,6 +25,14 @@ jobs:
             sudo echo "export PATH=${GRAALVM_HOME}/bin:$PATH" >> $BASH_ENV
             source $BASH_ENV
       - run:
+          name: Install specific Maven version
+          command: |
+            MAVEN_VERSION="3.9.11"
+            sudo wget https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
+            sudo tar -zxvf apache-maven-${MAVEN_VERSION}-bin.tar.gz
+            sudo echo "export PATH=$PWD/apache-maven-${MAVEN_VERSION}/bin:$PATH" >> $BASH_ENV
+            source $BASH_ENV
+      - run:
           name: "Build with Maven"
           command: |
             mvn clean install -P dev -DskipTests -B
