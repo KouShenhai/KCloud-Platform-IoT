@@ -170,7 +170,7 @@
     <!--mongodb版本-->
     <mongodb.version>4.5.4</mongodb.version>
     <!--fastjson版本-->
-    <fastjson>2.0.56</fastjson>
+    <fastjson>2.0.59</fastjson>
   </properties>
 
   <!-- 定义全局jar版本,模块使用需要再次引入但不用写版本号 -->
