@@ -15,7 +15,7 @@
 #  */
 services:
   mongodb:
-    image: mongo:8.0.13
+    image: mongo:8.0.14
     container_name: mongodb
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -110,7 +110,7 @@ services:
   # 默认账号/密码 admin/admin
   # 新密码 laokou123
   grafana:
-    image: grafana/grafana:12.1.1
+    image: grafana/grafana:12.2.0
     container_name: grafana
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -671,7 +671,7 @@ services:
   # 单机测试
   # docker run -p 9030:9030 -p 8030:8030 -p 8040:8040 -itd --name quickstart starrocks/allin1-ubuntu
   starrocks-fe:
-    image: starrocks/fe-ubuntu:3.5.5
+    image: starrocks/fe-ubuntu:3.5.6
     hostname: starrocks-fe
     container_name: starrocks-fe
     # 保持容器在没有守护程序的情况下运行
@@ -694,7 +694,7 @@ services:
     networks:
       - iot_network
   starrocks-be:
-    image: starrocks/be-ubuntu:3.5.5
+    image: starrocks/be-ubuntu:3.5.6
     hostname: starrocks-be
     container_name: starrocks-be
     # 保持容器在没有守护程序的情况下运行

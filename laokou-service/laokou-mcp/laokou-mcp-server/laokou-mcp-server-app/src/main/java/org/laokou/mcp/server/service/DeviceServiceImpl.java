@@ -31,7 +31,7 @@ import java.util.List;
 public class DeviceServiceImpl implements DeviceServiceI {
 
 	@Override
-	@Tool(name = "根据设备序列号查看设备属性")
+	@Tool(name = "get_device_property_by_sn", description = "根据设备序列号查看设备属性")
 	public List<String> getDevicePropertyBySn(@ToolParam(description = "设备序列号") String sn) {
 		return List.of(String.format("设备序列号：%s，设备类型：温度传感器，时间：2025-09-12 20:30:00，温度：50°C", sn));
 	}

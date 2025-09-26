@@ -17,6 +17,9 @@
 
 package org.laokou.common.core.util;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.laokou.common.i18n.common.constant.StringConstants;
@@ -165,48 +168,26 @@ public final class FileUtils {
 			outChannel.transferFrom(inChannel, 0, size);
 		}
 		catch (IOException e) {
-			log.error("未知错误，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+			log.error("文件写入失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_Oss_WriteFailed", e.getMessage(), e);
 		}
 	}
 
-	public static void chunkWrite(File file, InputStream in, long start, long end, long size) {
-		if (in instanceof FileInputStream fis) {
-			try (FileChannel inChannel = fis.getChannel()) {
-				chunkWrite(file, inChannel, start, end, size);
+	public static void chunkWrite(File file, List<Chunk> chunks) {
+		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+			List<Callable<Boolean>> futures = new ArrayList<>(chunks.size());
+			for (Chunk chunk : chunks) {
+				futures.add(() -> {
+					chunkWrite(file, chunk.file, chunk.position, chunk.size);
+					return true;
+				});
 			}
-			catch (IOException e) {
-				log.error("未知错误，错误信息：{}", e.getMessage(), e);
-				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
-			}
+			virtualTaskExecutor.invokeAll(futures);
 		}
-	}
-
-	public static void write(File file, InputStream in, long size, long chunkSize) throws IOException {
-		if (in instanceof FileInputStream fis) {
-			// 最大偏移量2G【2^31】数据
-			assert chunkSize > 0L;
-			chunkSize = Math.min(chunkSize, 2L * 1024 * 1024 * 1024);
-			long chunkCount = (size / chunkSize) + (size % chunkSize == 0 ? 0 : 1);
-			try (FileChannel inChannel = fis.getChannel();
-					ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
-				List<Callable<Boolean>> futures = new ArrayList<>((int) chunkCount);
-				// start指针【position偏移量】
-				for (long index = 0, start = 0,
-						end = start + chunkSize; index < chunkCount; index++, start = index * chunkSize) {
-					long finalStart = start;
-					futures.add(() -> {
-						chunkWrite(file, inChannel, finalStart, end, size);
-						return true;
-					});
-				}
-				virtualTaskExecutor.invokeAll(futures);
-			}
-			catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-				log.error("未知错误，错误信息：{}", e.getMessage(), e);
-				throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
-			}
+		catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			log.error("文件分片写入失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_Oss_ChunkWriteFailed", e.getMessage(), e);
 		}
 	}
 
@@ -294,8 +275,8 @@ public final class FileUtils {
 			throw new SystemException("S_File_UnZipFailed", e.getMessage(), e);
 		}
 		catch (NoSuchAlgorithmException e) {
-			log.error("未知错误，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+			log.error("文件上传失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_Oss_UploadFailed", e.getMessage(), e);
 		}
 	}
 
@@ -367,29 +348,39 @@ public final class FileUtils {
 			}
 		}
 		catch (IOException e) {
-			log.error("未知错误，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+			log.error("文件上传失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_Oss_UploadFailed", e.getMessage(), e);
 		}
 	}
 
-	private static void chunkWrite(File file, FileChannel inChannel, long start, long end, long size) {
-		try (RandomAccessFile accessFile = new RandomAccessFile(file, "rw");
+	private static void chunkWrite(File targetFile, File sourceFile, long position, long size) {
+		try (FileInputStream in = new FileInputStream(sourceFile);
+			 FileChannel inChannel = in.getChannel();
+			 RandomAccessFile accessFile = new RandomAccessFile(targetFile, "rw");
 			 FileChannel outChannel = accessFile.getChannel()) {
 			// 零拷贝
 			// transferFrom 与 transferTo 区别
 			// transferTo 最多拷贝2gb，和源文件大小保持一致【发送，从当前通道读取数据并写入外部通道】
 			// transferFrom【接收，从外部通道读取数据并写入当前通道】
-			outChannel.position(start);
-			inChannel.transferTo(start, Math.min(end, size), outChannel);
+			outChannel.transferFrom(inChannel, position, size);
 		}
-		catch (IOException e) {
-			log.error("未知错误，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+		catch (Exception e) {
+			log.error("分片写入失败，错误信息：{}", e.getMessage(), e);
+			throw new SystemException("S_Oss_ChunkWriteFailed", e.getMessage(), e);
 		}
 	}
 
 	private static String getStr(Path path) throws IOException {
 		return Files.readString(path, StandardCharsets.UTF_8);
+	}
+
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class Chunk {
+		private File file;
+		private long position;
+		private long size;
 	}
 
 }
