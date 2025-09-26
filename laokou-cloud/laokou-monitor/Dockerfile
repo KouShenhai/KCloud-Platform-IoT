@@ -13,7 +13,7 @@
 #  * See the License for the specific language governing permissions and
 #  * limitations under the License.
 #  */
-FROM docker.io/domenicopiol/builder-graalvm21:latest
+FROM ghcr.io/graalvm/jdk-community:25.0.0
 LABEL maintainer="laokou"
 LABEL description="laokou-monitor"
 COPY target/laokou-monitor.jar app.jar

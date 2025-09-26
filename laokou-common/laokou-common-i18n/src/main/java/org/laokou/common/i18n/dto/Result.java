@@ -31,7 +31,7 @@ import java.io.Serializable;
  * @author laokou
  */
 @Data
-public class Result<T> implements Serializable {
+public final class Result<T> implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -1286769110881865369L;
@@ -51,34 +51,26 @@ public class Result<T> implements Serializable {
 	@Schema(name = "标签ID", description = "标签ID")
 	private String spanId;
 
+	private Result(String code, String msg, T data) {
+		this.code = code;
+		this.msg = msg;
+		this.data = data;
+	}
+
 	public static <T> Result<T> ok(T data) {
-		Result<T> result = new Result<>();
-		result.setData(data);
-		result.setCode(StatusCode.OK);
-		result.setMsg(MessageUtils.getMessage(StatusCode.OK));
-		return result;
+		return new Result<>(StatusCode.OK, MessageUtils.getMessage(StatusCode.OK), data);
 	}
 
 	public static <T> Result<T> fail(String code) {
-		Result<T> result = new Result<>();
-		result.setCode(code);
-		result.setMsg(MessageUtils.getMessage(code));
-		return result;
+		return new Result<>(code, MessageUtils.getMessage(code), null);
 	}
 
 	public static <T> Result<T> fail(String code, String msg) {
-		Result<T> result = new Result<>();
-		result.setCode(code);
-		result.setMsg(msg);
-		return result;
+		return new Result<>(code, msg, null);
 	}
 
 	public static <T> Result<T> fail(String code, String msg, T data) {
-		Result<T> result = new Result<>();
-		result.setCode(code);
-		result.setMsg(msg);
-		result.setData(data);
-		return result;
+		return new Result<>(code, msg, data);
 	}
 
 	public boolean success() {

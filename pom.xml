@@ -56,7 +56,7 @@
   </licenses>
   <properties>
     <laokou.version>3.5.4-SNAPSHOT</laokou.version>
-    <java.version>21</java.version>
+    <java.version>25</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -424,6 +424,8 @@
             <arg>-Xlint:deprecation</arg>
             <!-- 在编译的字节码中保留方法参数的名称，这对反射或序列化框架非常有用 -->
             <arg>-parameters</arg>
+            <!-- 启用注解处理器 -->
+            <arg>-proc:full</arg>
           </compilerArgs>
         </configuration>
       </plugin>

@@ -37,6 +37,7 @@ import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.context.ApplicationEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.core.ReactiveHashOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -46,6 +47,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import javax.annotation.PostConstruct;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -129,7 +131,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	public Flux<RouteDefinition> getRouteDefinitions() {
 		return reactiveHashOperations.entries(RedisKeyUtils.getRouteDefinitionHashKey())
 			.mapNotNull(Map.Entry::getValue)
-			.onErrorContinue((throwable, routeDefinition) -> {
+			.onErrorContinue((throwable, _) -> {
 				if (log.isErrorEnabled()) {
 					log.error("从Redis获取路由失败，错误信息：{}", throwable.getMessage(), throwable);
 				}
@@ -163,12 +165,12 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	private Mono<Void> syncRouter(Collection<RouteDefinition> routes) {
 		return reactiveHashOperations.delete(RedisKeyUtils.getRouteDefinitionHashKey())
 			.doOnError(throwable -> log.error("删除路由失败，错误信息：{}", throwable.getMessage(), throwable))
-			.doOnSuccess(removeFlag -> publishRefreshRoutesEvent())
+			.doOnSuccess(_ -> publishRefreshRoutesEvent())
 			.thenMany(Flux.fromIterable(routes))
 			.flatMap(router -> reactiveHashOperations.putIfAbsent(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router)
 				.doOnError(throwable -> log.error("保存路由失败，错误信息：{}", throwable.getMessage(), throwable)))
 			.then()
-			.doOnSuccess(saveFlag -> publishRefreshRoutesEvent());
+			.doOnSuccess(_ -> publishRefreshRoutesEvent());
 	}
 
 	// @formatter:off
@@ -216,6 +218,16 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			this.disposable = disposable;
 		}
 
+	}
+
+	@EventListener
+	public void onUnsubscribeEvent(UnsubscribeEvent evt) throws InterruptedException {
+		Thread.sleep(Duration.ofSeconds(15));
+		Disposable disposable = evt.getDisposable();
+		if (!disposable.isDisposed()) {
+			// 取消订阅
+			disposable.dispose();
+		}
 	}
 
 }
