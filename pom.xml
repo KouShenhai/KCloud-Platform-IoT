@@ -60,6 +60,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
     <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
     <spring-boot-maven-plugin.version>3.5.6</spring-boot-maven-plugin.version>
     <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
@@ -410,7 +411,7 @@
         <configuration>
           <source>${maven.compiler.source}</source>
           <target>${maven.compiler.target}</target>
-          <release>${java.version}</release>
+          <release>${maven.compiler.release}</release>
           <encoding>${project.build.sourceEncoding}</encoding>
           <compilerArgs>
             <!-- 关闭对不推荐使用的编译器选项的警告 -->
