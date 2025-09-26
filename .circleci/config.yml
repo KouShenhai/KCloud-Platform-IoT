@@ -14,6 +14,7 @@ jobs:
   jdk25:
     executor: ubuntu
     steps:
+      - checkout
       - run:
           name: "Install GraalVM JDK 25"
           command: |
