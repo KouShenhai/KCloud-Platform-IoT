@@ -14,8 +14,16 @@ jobs:
   jdk25:
     executor: ubuntu
     steps:
-      - run: sudo apt-get update
-      - run: sudo apt install openjdk-25-jdk
+      - run:
+          name: "Install GraalVM JDK 25"
+          command: |
+            GRAALVM_URL="https://download.oracle.com/graalvm/25/latest/graalvm-community-jdk-25_linux-x64_bin.tar.gz"
+            sudo wget ${GRAALVM_URL}
+            sudo tar -xzf graalvm-community-jdk-25_linux-x64_bin.tar.gz
+            GRAALVM_HOME=$(pwd)/graalvm-community-jdk-25*
+            sudo echo "export GRAALVM_HOME=${GRAALVM_HOME}" >> $BASH_ENV
+            sudo echo "export PATH=${GRAALVM_HOME}/bin:$PATH" >> $BASH_ENV
+            sudo source $BASH_ENV
       - checkout
       - run: mvn clean install -P dev -DskipTests -B
 workflows:
