@@ -23,7 +23,7 @@ jobs:
             GRAALVM_HOME=$(pwd)/graalvm-jdk-25*
             sudo echo "export GRAALVM_HOME=${GRAALVM_HOME}" >> $BASH_ENV
             sudo echo "export PATH=${GRAALVM_HOME}/bin:$PATH" >> $BASH_ENV
-            sudo source $BASH_ENV
+            source $BASH_ENV
       - checkout
       - run: mvn clean install -P dev -DskipTests -B
 workflows:
