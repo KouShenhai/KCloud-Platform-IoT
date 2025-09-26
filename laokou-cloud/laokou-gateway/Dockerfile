@@ -14,7 +14,7 @@
 #  * limitations under the License.
 #  */
 # 基础镜像
-FROM docker.io/domenicopiol/builder-graalvm21:latest
+FROM ghcr.io/graalvm/jdk-community:25.0.0
 # 信息
 LABEL maintainer="laokou"
 LABEL description="laokou-gateway"

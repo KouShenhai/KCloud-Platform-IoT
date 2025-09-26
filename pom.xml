@@ -424,6 +424,8 @@
             <arg>-Xlint:deprecation</arg>
             <!-- 在编译的字节码中保留方法参数的名称，这对反射或序列化框架非常有用 -->
             <arg>-parameters</arg>
+            <!-- 启用注解处理器 -->
+            <arg>-proc:full</arg>
           </compilerArgs>
         </configuration>
       </plugin>

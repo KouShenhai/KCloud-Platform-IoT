@@ -71,7 +71,6 @@
     <module>laokou-common-reactor</module>
     <module>laokou-common-ai</module>
     <module>laokou-common-csv</module>
-    <module>laokou-common-graalvm-js</module>
     <module>laokou-common-zookeeper</module>
     <module>laokou-common-ftp</module>
     <module>laokou-common-network</module>

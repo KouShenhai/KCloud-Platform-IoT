@@ -587,11 +587,6 @@
         <version>${wiremock.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-graalvm-js</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.opencsv</groupId>
         <artifactId>opencsv</artifactId>
         <version>${opencsv.version}</version>
