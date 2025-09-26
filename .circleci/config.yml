@@ -19,8 +19,8 @@ jobs:
           command: |
             GRAALVM_URL="https://download.oracle.com/graalvm/25/latest/graalvm-jdk-25_linux-x64_bin.tar.gz"
             sudo wget ${GRAALVM_URL}
-            sudo tar -xzf graalvm-community-jdk-25_linux-x64_bin.tar.gz
-            GRAALVM_HOME=$(pwd)/graalvm-community-jdk-25*
+            sudo tar -xzf graalvm-jdk-25_linux-x64_bin.tar.gz
+            GRAALVM_HOME=$(pwd)/graalvm-jdk-25*
             sudo echo "export GRAALVM_HOME=${GRAALVM_HOME}" >> $BASH_ENV
             sudo echo "export PATH=${GRAALVM_HOME}/bin:$PATH" >> $BASH_ENV
             sudo source $BASH_ENV
