@@ -7,7 +7,6 @@ executors:
       TERM: dumb
     machine:
       image: ubuntu-2404:2024.11.1
-      docker_layer_caching: true
     resource_class: large
 
 jobs:
@@ -28,7 +27,7 @@ jobs:
       - run:
           name: "Build with Maven"
           command: |
-            # mvn clean install -P dev -DskipTests -B
+            mvn clean install -P dev -DskipTests -B
 workflows:
   maven-build:
     jobs:
