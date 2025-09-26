@@ -16,7 +16,7 @@ importers:
         version: 6.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@ant-design/plots':
         specifier: ^2.4.0
-        version: 2.6.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 2.6.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@ant-design/pro-card':
         specifier: ^2.9.7
         version: 2.10.0(antd@5.27.4(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -191,12 +191,6 @@ packages:
   '@ant-design/moment-webpack-plugin@0.0.3':
     resolution: {integrity: sha512-MLm1FUpg02fP615ShQnCUN9la2E4RylDxKyolkGqAWTIHO4HyGM0A5x71AMALEyP/bC+UEEWBGSQ+D4/8hQ+ww==}
 
-  '@ant-design/plots@2.6.3':
-    resolution: {integrity: sha512-9V6QND7QESzAlPu5bE56xTlUi2ctfDkdRiNY8SgG5/IW8InqW9SFfhO0sW5mIpTslsI8o/MgmysnSWED8h6adg==}
-    peerDependencies:
-      react: '>=16.8.4'
-      react-dom: '>=16.8.4'
-
   '@ant-design/plots@2.6.5':
     resolution: {integrity: sha512-lzYMQdb5TWWfi/RnHpuJ9Iu3/WR8OJj2lYcyBlBOkCghOLstNw6sYSbGMGDIzPKp1AS1Fvomw5KwZzD/mdiykA==}
     peerDependencies:
@@ -339,9 +333,6 @@ packages:
   '@antv/algorithm@0.1.26':
     resolution: {integrity: sha512-DVhcFSQ8YQnMNW34Mk8BSsfc61iC1sAnmcfYoXTAshYHuU50p/6b7x3QYaGctDNKWGvi1ub7mPcSY0bK+aN0qg==}
 
-  '@antv/component@2.1.5':
-    resolution: {integrity: sha512-+Pqu6CLkGTvYZw+UQK03B/yiR0h2Zu65tyUGUQkNuPv49Zwe4WqDZqqu94bqT1F07OAAVjeXLCTvhBb954DLXQ==}
-
   '@antv/component@2.1.7':
     resolution: {integrity: sha512-vuSuSjKFsWZBD77ZjMoP9c+FhMQvkJvPJb0dFR8Ym5kr44gfc437QE9rhuemlcjN8KEpPtMZtnUk/p6WB5qdOQ==}
 
@@ -404,9 +395,6 @@ packages:
 
   '@antv/g2-extension-plot@0.2.2':
     resolution: {integrity: sha512-KJXCXO7as+h0hDqirGXf1omrNuYzQmY3VmBmp7lIvkepbQ7sz3pPwy895r1FWETGF3vTk5UeFcAF5yzzBHWgbw==}
-
-  '@antv/g2@5.3.5':
-    resolution: {integrity: sha512-Q2TPfWTf2fMwe02Uqk4Uvgy/RGXpGQXfSMPHKLkwTUh6WrFImpgzU4mHhUewKVu5ppPGGfvlwIbZcHeBnNb5ug==}
 
   '@antv/g2@5.4.1':
     resolution: {integrity: sha512-G6wJDqipFT79uU5pNYfm5itH+9XD6KWhlMufvUjFX7W4Dm+VWt6JtANFqumS7NiECAdqHPcJTLF/Xxm8AxzYeA==}
@@ -1620,8 +1608,8 @@ packages:
   '@types/babel__traverse@7.28.0':
     resolution: {integrity: sha512-8PvcXf70gTDZBgt9ptxJ8elBeBjcLOAcOtoO/mPJjtji1+CdGbHgm77om1GrsPxsiE+uXIpNSK64UYaIwQXd4Q==}
 
-  '@types/d3-array@3.2.1':
-    resolution: {integrity: sha512-Y2Jn2idRrLzUfAKV2LyRImR+y4oa2AntrgID95SHJxuMUrkNXmanDSed71sRNZysveJVt1hLLemQZIady0FpEg==}
+  '@types/d3-array@3.2.2':
+    resolution: {integrity: sha512-hOLWVbm7uRza0BYXpIIW5pxfrKe0W+D5lrFiAEYR+pb6w3N2SwSMaJbXdUfSEv+dT4MfHBLtn5js0LAWaO6otw==}
 
   '@types/d3-color@3.1.3':
     resolution: {integrity: sha512-iO90scth9WAbmgv7ogoq57O9YpKmFBbmoEoCHDB2xMBY0+/KVrqAaCDyCE16dUspeOvIxFFRI+0sEtqDqy2b4A==}
@@ -3807,9 +3795,6 @@ packages:
   git-hooks-list@4.1.1:
     resolution: {integrity: sha512-cmP497iLq54AZnv4YRAEMnEyQ1eIn4tGKbmswqwmFV4GBnAqE8NLtWxxdXa++AalfgL5EBH4IxTPyquEuGY/jA==}
 
-  gl-matrix@3.4.3:
-    resolution: {integrity: sha512-wcCp8vu8FT22BnvKVPjXa/ICBWRq/zjFfdofZy1WSpQZpphblv12/bOQLBC1rMM7SGOFS9ltVmKOHil5+Ml7gA==}
-
   gl-matrix@3.4.4:
     resolution: {integrity: sha512-latSnyDNt/8zYUB6VIJ6PCh2jBjJX6gnDsoCZ7LyW7GkqrD51EWwa9qCoGixj8YqBtETQK/xY7OmpTF8xz1DdQ==}
 
@@ -4126,8 +4111,8 @@ packages:
   is-arrayish@0.2.1:
     resolution: {integrity: sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==}
 
-  is-arrayish@0.3.2:
-    resolution: {integrity: sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ==}
+  is-arrayish@0.3.4:
+    resolution: {integrity: sha512-m6UrgzFVUYawGBh1dUsWR5M2Clqic9RVXC/9f8ceNlv2IcO9j9J/z8UoCLPqtsPBFNzEpfR3xftohbfqDx8EQA==}
 
   is-arrow-function@2.0.3:
     resolution: {integrity: sha512-iDStzcT1FJMzx+TjCOK//uDugSe/Mif/8a+T0htydQ3qkJGvSweTZpVYz4hpJH0baloSPiAFQdA8WslAgJphvQ==}
@@ -6520,8 +6505,8 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
-  simple-swizzle@0.2.2:
-    resolution: {integrity: sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==}
+  simple-swizzle@0.2.4:
+    resolution: {integrity: sha512-nAu1WFPQSMNr2Zn9PGSZK9AGn4t/y97lEm+MXTtUDwfP0ksAIX4nO+6ruD9Jwut4C49SB1Ws+fbXsm/yScWOHw==}
 
   single-spa@5.9.5:
     resolution: {integrity: sha512-9SQdmsyz4HSP+3gs6PJzhkaMEg+6zTlu9oxIghnwUX3eq+ajq4ft5egl0iyR55LAmO/UwvU8NgIWs/ZyQMa6dw==}
@@ -7443,17 +7428,6 @@ snapshots:
 
   '@ant-design/moment-webpack-plugin@0.0.3': {}
 
-  '@ant-design/plots@2.6.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@ant-design/charts-util': 0.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@antv/event-emitter': 0.1.3
-      '@antv/g': 6.1.28
-      '@antv/g2': 5.3.5
-      '@antv/g2-extension-plot': 0.2.2
-      lodash: 4.17.21
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-
   '@ant-design/plots@2.6.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@ant-design/charts-util': 0.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -7973,13 +7947,6 @@ snapshots:
       '@antv/util': 2.0.17
       tslib: 2.8.1
 
-  '@antv/component@2.1.5':
-    dependencies:
-      '@antv/g': 6.1.28
-      '@antv/scale': 0.4.16
-      '@antv/util': 3.3.11
-      svg-path-parser: 1.1.0
-
   '@antv/component@2.1.7':
     dependencies:
       '@antv/g': 6.1.28
@@ -7991,7 +7958,7 @@ snapshots:
     dependencies:
       '@antv/scale': 0.4.16
       '@antv/util': 2.0.17
-      gl-matrix: 3.4.3
+      gl-matrix: 3.4.4
 
   '@antv/event-emitter@0.1.3': {}
 
@@ -8002,7 +7969,7 @@ snapshots:
       '@antv/g-lite': 2.3.2
       '@antv/util': 3.3.11
       '@babel/runtime': 7.28.4
-      gl-matrix: 3.4.3
+      gl-matrix: 3.4.4
       tslib: 2.8.1
 
   '@antv/g-canvas@2.0.48':
@@ -8030,7 +7997,7 @@ snapshots:
       '@antv/vendor': 1.0.11
       '@babel/runtime': 7.28.4
       eventemitter3: 5.0.1
-      gl-matrix: 3.4.3
+      gl-matrix: 3.4.4
       rbush: 3.0.1
       tslib: 2.8.1
 
@@ -8038,7 +8005,7 @@ snapshots:
     dependencies:
       '@antv/util': 3.3.11
       '@babel/runtime': 7.28.4
-      gl-matrix: 3.4.3
+      gl-matrix: 3.4.4
       tslib: 2.8.1
 
   '@antv/g-plugin-canvas-path-generator@2.1.22':
@@ -8057,7 +8024,7 @@ snapshots:
       '@antv/g-plugin-canvas-renderer': 2.3.3
       '@antv/util': 3.3.11
       '@babel/runtime': 7.28.4
-      gl-matrix: 3.4.3
+      gl-matrix: 3.4.4
       tslib: 2.8.1
 
   '@antv/g-plugin-canvas-renderer@2.3.3':
@@ -8068,7 +8035,7 @@ snapshots:
       '@antv/g-plugin-image-loader': 2.1.26
       '@antv/util': 3.3.11
       '@babel/runtime': 7.28.4
-      gl-matrix: 3.4.3
+      gl-matrix: 3.4.4
       tslib: 2.8.1
 
   '@antv/g-plugin-dom-interaction@2.1.27':
@@ -8089,7 +8056,7 @@ snapshots:
       '@antv/g-lite': 2.3.2
       '@antv/util': 3.3.11
       '@babel/runtime': 7.28.4
-      gl-matrix: 3.4.3
+      gl-matrix: 3.4.4
       tslib: 2.8.1
 
   '@antv/g-plugin-image-loader@2.1.26':
@@ -8097,7 +8064,7 @@ snapshots:
       '@antv/g-lite': 2.3.2
       '@antv/util': 3.3.11
       '@babel/runtime': 7.28.4
-      gl-matrix: 3.4.3
+      gl-matrix: 3.4.4
       tslib: 2.8.1
 
   '@antv/g-plugin-svg-picker@2.0.42':
@@ -8134,24 +8101,9 @@ snapshots:
 
   '@antv/g2-extension-plot@0.2.2':
     dependencies:
-      '@antv/g2': 5.3.5
+      '@antv/g2': 5.4.1
       '@antv/util': 3.3.11
       '@antv/vendor': 1.0.11
-
-  '@antv/g2@5.3.5':
-    dependencies:
-      '@antv/component': 2.1.5
-      '@antv/coord': 0.4.7
-      '@antv/event-emitter': 0.1.3
-      '@antv/expr': 1.0.2
-      '@antv/g': 6.1.28
-      '@antv/g-canvas': 2.0.48
-      '@antv/g-plugin-dragndrop': 2.0.38
-      '@antv/scale': 0.4.16
-      '@antv/util': 3.3.11
-      '@antv/vendor': 1.0.11
-      flru: 1.0.2
-      pdfast: 0.2.0
 
   '@antv/g2@5.4.1':
     dependencies:
@@ -8251,12 +8203,12 @@ snapshots:
   '@antv/util@3.3.11':
     dependencies:
       fast-deep-equal: 3.1.3
-      gl-matrix: 3.4.3
+      gl-matrix: 3.4.4
       tslib: 2.8.1
 
   '@antv/vendor@1.0.11':
     dependencies:
-      '@types/d3-array': 3.2.1
+      '@types/d3-array': 3.2.2
       '@types/d3-color': 3.1.3
       '@types/d3-dispatch': 3.0.7
       '@types/d3-dsv': 3.0.7
@@ -9486,7 +9438,7 @@ snapshots:
     dependencies:
       '@babel/types': 7.28.4
 
-  '@types/d3-array@3.2.1': {}
+  '@types/d3-array@3.2.2': {}
 
   '@types/d3-color@3.1.3': {}
 
@@ -11253,7 +11205,7 @@ snapshots:
   color-string@1.9.1:
     dependencies:
       color-name: 1.1.4
-      simple-swizzle: 0.2.2
+      simple-swizzle: 0.2.4
 
   colord@2.9.3: {}
 
@@ -12515,8 +12467,6 @@ snapshots:
 
   git-hooks-list@4.1.1: {}
 
-  gl-matrix@3.4.3: {}
-
   gl-matrix@3.4.4: {}
 
   glob-parent@5.1.2:
@@ -12846,7 +12796,7 @@ snapshots:
 
   is-arrayish@0.2.1: {}
 
-  is-arrayish@0.3.2: {}
+  is-arrayish@0.3.4: {}
 
   is-arrow-function@2.0.3:
     dependencies:
@@ -15554,9 +15504,9 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
-  simple-swizzle@0.2.2:
+  simple-swizzle@0.2.4:
     dependencies:
-      is-arrayish: 0.3.2
+      is-arrayish: 0.3.4
 
   single-spa@5.9.5: {}
 
