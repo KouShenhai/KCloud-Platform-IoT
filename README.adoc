@@ -43,7 +43,7 @@ image:https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=20
 image:https://img.shields.io/static/v1?label=OAuth%202.1&message=1.5.2&color=blue[OAuth 2.1,link=https://spring.io/projects/spring-authorization-server]
 
 image:https://img.shields.io/badge/GraalVM-25.0.0-blue.svg[GraalVM,link=https://www.graalvm.org/downloads]
-image:https://img.shields.io/badge/Maven-3.9.4-blue[Maven,link=https://maven.apache.org/]
+image:https://img.shields.io/badge/Maven-3.9.11-blue[Maven,link=https://maven.apache.org/]
 
 image:https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT/branch/master/graph/badge.svg?token=49USEMX2MN[Codecov,https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT]
 image:https://cla-assistant.io/readme/badge/KouShenhai/KCloud-Platform-IoT[CLA assistant,link=https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT]

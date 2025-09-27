@@ -43,7 +43,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 <a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=OAuth%202.1&message=1.5.2&color=blue" alt="OAuth 2.1"/></a>
 
 <a href="https://www.graalvm.org/downloads" target="_blank"><img src="https://img.shields.io/badge/GraalVM-25.0.0-blue.svg" alt="GraalVM"/></a>
-<a href="https://maven.apache.org/" target="_blank"><img src="https://img.shields.io/badge/Maven-3.9.4-blue" alt="Maven"/></a>
+<a href="https://maven.apache.org/" target="_blank"><img src="https://img.shields.io/badge/Maven-3.9.11-blue" alt="Maven"/></a>
 
 <a href="https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT/branch/master/graph/badge.svg?token=49USEMX2MN" alt="Codecov"/></a>
 <a href="https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://cla-assistant.io/readme/badge/KouShenhai/KCloud-Platform-IoT" alt="CLA assistant"/></a>
