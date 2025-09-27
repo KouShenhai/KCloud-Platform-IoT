@@ -22,7 +22,6 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.common.i18n.util.StringUtils;
 
-
 /**
  * @author laokou
  */

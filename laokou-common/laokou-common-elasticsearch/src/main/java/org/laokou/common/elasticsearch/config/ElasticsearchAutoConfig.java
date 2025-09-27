@@ -40,20 +40,17 @@ import org.springframework.context.annotation.Import;
 @Slf4j
 @AutoConfiguration
 @RequiredArgsConstructor
-@Import({
-	ElasticsearchRest5ClientConfig.Rest5ClientBuilderConfig.class,
-	ElasticsearchRest5ClientConfig.Rest5ClientConfig.class,
-	ElasticsearchRest5ClientConfig.ElasticsearchTransportConfig.class,
-	ElasticsearchRest5ClientConfig.JacksonJsonpMapperConfig.class,
-	ElasticsearchRest5ClientConfig.Rest5ClientOptionsConfig.class
-})
+@Import({ ElasticsearchRest5ClientConfig.Rest5ClientBuilderConfig.class,
+		ElasticsearchRest5ClientConfig.Rest5ClientConfig.class,
+		ElasticsearchRest5ClientConfig.ElasticsearchTransportConfig.class,
+		ElasticsearchRest5ClientConfig.JacksonJsonpMapperConfig.class,
+		ElasticsearchRest5ClientConfig.Rest5ClientOptionsConfig.class })
 @ConditionalOnClass(SpringElasticsearchProperties.class)
 @EnableConfigurationProperties(SpringElasticsearchProperties.class)
 public class ElasticsearchAutoConfig {
 
 	/**
 	 * Provides the {@link ElasticsearchClient} to be used.
-	 *
 	 * @param rest5ClientTransport the {@link ElasticsearchTransport} to use
 	 * @return ElasticsearchClient instance
 	 */
@@ -65,7 +62,6 @@ public class ElasticsearchAutoConfig {
 
 	/**
 	 * Provides the {@link ElasticsearchAsyncClient} to be used.
-	 *
 	 * @param rest5ClientTransport the {@link ElasticsearchTransport} to use
 	 * @return ElasticsearchAsyncClient instance
 	 */
@@ -77,22 +73,25 @@ public class ElasticsearchAutoConfig {
 
 	@Bean(name = "elasticsearchDocumentTemplate")
 	@ConditionalOnMissingBean(ElasticsearchDocumentTemplate.class)
-	@ConditionalOnClass({ElasticsearchAsyncClient.class, ElasticsearchClient.class})
-	ElasticsearchDocumentTemplate elasticsearchDocumentTemplate(ElasticsearchClient elasticsearchClient, ElasticsearchAsyncClient elasticsearchAsyncClient) {
+	@ConditionalOnClass({ ElasticsearchAsyncClient.class, ElasticsearchClient.class })
+	ElasticsearchDocumentTemplate elasticsearchDocumentTemplate(ElasticsearchClient elasticsearchClient,
+			ElasticsearchAsyncClient elasticsearchAsyncClient) {
 		return new ElasticsearchDocumentTemplate(elasticsearchClient, elasticsearchAsyncClient);
 	}
 
 	@Bean(name = "elasticsearchIndexTemplate")
 	@ConditionalOnMissingBean(ElasticsearchIndexTemplate.class)
-	@ConditionalOnClass({ElasticsearchAsyncClient.class, ElasticsearchClient.class})
-	ElasticsearchIndexTemplate elasticsearchIndexTemplate(ElasticsearchClient elasticsearchClient, ElasticsearchAsyncClient elasticsearchAsyncClient) {
+	@ConditionalOnClass({ ElasticsearchAsyncClient.class, ElasticsearchClient.class })
+	ElasticsearchIndexTemplate elasticsearchIndexTemplate(ElasticsearchClient elasticsearchClient,
+			ElasticsearchAsyncClient elasticsearchAsyncClient) {
 		return new ElasticsearchIndexTemplate(elasticsearchClient, elasticsearchAsyncClient);
 	}
 
 	@Bean(name = "elasticsearchSearchTemplate")
 	@ConditionalOnMissingBean(ElasticsearchSearchTemplate.class)
-	@ConditionalOnClass({ElasticsearchAsyncClient.class, ElasticsearchClient.class})
-	ElasticsearchSearchTemplate elasticsearchSearchTemplate(ElasticsearchClient elasticsearchClient, ElasticsearchAsyncClient elasticsearchAsyncClient) {
+	@ConditionalOnClass({ ElasticsearchAsyncClient.class, ElasticsearchClient.class })
+	ElasticsearchSearchTemplate elasticsearchSearchTemplate(ElasticsearchClient elasticsearchClient,
+			ElasticsearchAsyncClient elasticsearchAsyncClient) {
 		return new ElasticsearchSearchTemplate(elasticsearchClient, elasticsearchAsyncClient);
 	}
 

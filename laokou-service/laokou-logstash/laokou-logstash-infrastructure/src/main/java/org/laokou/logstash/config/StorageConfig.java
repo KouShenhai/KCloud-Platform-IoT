@@ -36,8 +36,10 @@ public class StorageConfig {
 
 	@Bean("traceLogStorage")
 	@ConditionalOnProperty(prefix = "storage", matchIfMissing = true, name = "type", havingValue = "ELASTICSEARCH")
-	public TraceLogStorage traceLogElasticsearchStorage(ElasticsearchDocumentTemplate elasticsearchDocumentTemplate, ElasticsearchIndexTemplate elasticsearchIndexTemplate, ExecutorService virtualThreadExecutor) {
-		return new TraceLogElasticsearchStorage(elasticsearchDocumentTemplate, elasticsearchIndexTemplate, virtualThreadExecutor);
+	public TraceLogStorage traceLogElasticsearchStorage(ElasticsearchDocumentTemplate elasticsearchDocumentTemplate,
+			ElasticsearchIndexTemplate elasticsearchIndexTemplate, ExecutorService virtualThreadExecutor) {
+		return new TraceLogElasticsearchStorage(elasticsearchDocumentTemplate, elasticsearchIndexTemplate,
+				virtualThreadExecutor);
 	}
 
 	@Bean("traceLogStorage")

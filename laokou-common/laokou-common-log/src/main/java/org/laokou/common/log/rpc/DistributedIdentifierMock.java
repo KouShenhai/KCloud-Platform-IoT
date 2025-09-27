@@ -33,7 +33,8 @@ import java.util.List;
  * @author laokou
  */
 @Slf4j
-public class DistributedIdentifierMock extends DubboDistributedIdentifierServiceITriple.DistributedIdentifierServiceIImplBase {
+public class DistributedIdentifierMock
+		extends DubboDistributedIdentifierServiceITriple.DistributedIdentifierServiceIImplBase {
 
 	@Override
 	public DistributedIdentifierResult generateSnowflake(DistributedIdentifierCmd cmd) {

@@ -30,12 +30,12 @@ public class MinIOContainer extends GenericContainer<MinIOContainer> {
 		this.withExposedPorts(9000, 9001);
 	}
 
-	public MinIOContainer withUsername (String username) {
+	public MinIOContainer withUsername(String username) {
 		this.withEnv("MINIO_ROOT_USER", username);
 		return this;
 	}
 
-	public MinIOContainer withPassword (String password) {
+	public MinIOContainer withPassword(String password) {
 		this.withEnv("MINIO_ROOT_PASSWORD", password);
 		return this;
 	}

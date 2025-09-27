@@ -27,7 +27,6 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;
 
-
 /**
  * 查看通知日志请求执行器.
  *

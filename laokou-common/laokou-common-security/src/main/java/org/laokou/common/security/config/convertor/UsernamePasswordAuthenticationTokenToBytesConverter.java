@@ -48,7 +48,8 @@ import java.util.HashSet;
  * @author laokou
  */
 @WritingConverter
-public final class UsernamePasswordAuthenticationTokenToBytesConverter implements Converter<UsernamePasswordAuthenticationToken, byte[]> {
+public final class UsernamePasswordAuthenticationTokenToBytesConverter
+		implements Converter<UsernamePasswordAuthenticationToken, byte[]> {
 
 	private final Jackson2JsonRedisSerializer<UsernamePasswordAuthenticationToken> serializer;
 

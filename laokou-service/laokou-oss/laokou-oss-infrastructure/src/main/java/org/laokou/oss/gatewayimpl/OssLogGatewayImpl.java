@@ -34,7 +34,6 @@ import org.laokou.oss.model.OssLogE;
 import org.laokou.oss.model.OssUploadV;
 import org.springframework.stereotype.Component;
 
-
 /**
  * @author laokou
  */
@@ -49,9 +48,12 @@ public class OssLogGatewayImpl implements OssLogGateway {
 	public OssUploadV getOssInfoByMd5(String md5) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
-			OssLogDO ossLogDO = ossLogMapper.selectOne(Wrappers.lambdaQuery(OssLogDO.class).select(OssLogDO::getId, OssLogDO::getUrl).eq(OssLogDO::getMd5, md5));
+			OssLogDO ossLogDO = ossLogMapper.selectOne(Wrappers.lambdaQuery(OssLogDO.class)
+				.select(OssLogDO::getId, OssLogDO::getUrl)
+				.eq(OssLogDO::getMd5, md5));
 			return ObjectUtils.isNotNull(ossLogDO) ? OssConvertor.toValueObject(ossLogDO) : null;
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

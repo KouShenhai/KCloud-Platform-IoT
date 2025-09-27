@@ -71,7 +71,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-
 /**
  * 抽象认证处理器.
  *
@@ -103,7 +102,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		}
 		catch (GlobalException e) {
 			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
-			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(e.getCode(), e.getMsg(), OAuth2ExceptionHandler.ERROR_URL);
+			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(e.getCode(), e.getMsg(),
+					OAuth2ExceptionHandler.ERROR_URL);
 		}
 		catch (OAuth2AuthenticationException e) {
 			throw e;
@@ -145,7 +145,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			throws JsonProcessingException {
 		// 查看 OAuth2AuthorizationCodeAuthenticationProvider#authenticate(Authentication)
 		AbstractOAuth2AuthenticationToken abstractOAuth2Authentication = (AbstractOAuth2AuthenticationToken) authentication;
-		OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(abstractOAuth2Authentication);
+		OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(
+				abstractOAuth2Authentication);
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 		if (ObjectUtils.isNull(registeredClient)) {
 			throw OAuth2ExceptionHandler.getException(OAuth2Constants.REGISTERED_CLIENT_NOT_EXIST);
@@ -173,8 +174,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			tokenContextBuilder.put(OAuth2TokenContext.DPOP_PROOF_KEY, dPoPProof);
 		}
 
-		OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization
-			.withRegisteredClient(registeredClient)
+		OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization.withRegisteredClient(registeredClient)
 			.principalName(loginName)
 			.authorizedScopes(authorizedScopes)
 			.authorizationGrantType(grantType);
@@ -209,7 +209,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 					generatedIdToken.getExpiresAt(), ((Jwt) generatedIdToken).getClaims());
 			authorizationBuilder.token(idToken,
 					(metadata) -> metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, idToken.getClaims()));
-		} else {
+		}
+		else {
 			idToken = null;
 		}
 
@@ -222,7 +223,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			additionalParameters = new HashMap<>();
 			additionalParameters.put(OidcParameterNames.ID_TOKEN, idToken.getTokenValue());
 		}
-		return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken, refreshToken, additionalParameters);
+		return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken, refreshToken,
+				additionalParameters);
 	}
 
 	/**
@@ -272,7 +274,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	}
 
 	private <T extends OAuth2Token> OAuth2AccessToken accessToken(OAuth2Authorization.Builder builder, T token,
-																 OAuth2TokenContext accessTokenContext) {
+			OAuth2TokenContext accessTokenContext) {
 		OAuth2AccessToken.TokenType tokenType = OAuth2AccessToken.TokenType.BEARER;
 		if (token instanceof ClaimAccessor claimAccessor) {
 			Map<String, Object> cnfClaims = claimAccessor.getClaimAsMap("cnf");
@@ -281,7 +283,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			}
 		}
 		OAuth2AccessToken accessToken = new OAuth2AccessToken(tokenType, token.getTokenValue(), token.getIssuedAt(),
-			token.getExpiresAt(), accessTokenContext.getAuthorizedScopes());
+				token.getExpiresAt(), accessTokenContext.getAuthorizedScopes());
 		OAuth2TokenFormat accessTokenFormat = accessTokenContext.getRegisteredClient()
 			.getTokenSettings()
 			.getAccessTokenFormat();

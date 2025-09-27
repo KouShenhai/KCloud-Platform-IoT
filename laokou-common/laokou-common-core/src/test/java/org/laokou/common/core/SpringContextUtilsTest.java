@@ -30,7 +30,6 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 
-
 /**
  * @author laokou
  */
@@ -50,7 +49,8 @@ class SpringContextUtilsTest {
 		Assertions.assertThat(SpringContextUtils.getBean(TestEventListener.class)).isNotNull();
 		DefaultListableBeanFactory beanFactory = SpringContextUtils.getFactory();
 		Assertions.assertThat(beanFactory).isNotNull();
-		Assertions.assertThat(beanFactory.getBeanNamesForType(TestEventListener.class)[0]).isEqualTo("testEventListener");
+		Assertions.assertThat(beanFactory.getBeanNamesForType(TestEventListener.class)[0])
+			.isEqualTo("testEventListener");
 		Assertions.assertThat(beanFactory.containsBean("testEventListener")).isTrue();
 		Assertions.assertThat(beanFactory.containsBeanDefinition("testEventListener")).isTrue();
 		Assertions.assertThat(beanFactory.containsBeanDefinition("testEventListener1")).isFalse();
@@ -63,8 +63,9 @@ class SpringContextUtilsTest {
 		Assertions.assertThatNoException().isThrownBy(() -> SpringContextUtils.removeBean("testEventListener"));
 		Assertions.assertThat(beanFactory.containsBeanDefinition("testEventListener")).isFalse();
 		Assertions.assertThat(SpringContextUtils.getServiceId()).isEqualTo("laokou-common-core");
-		Assertions.assertThatNoException().isThrownBy(() -> beanFactory.registerBeanDefinition("testEventListener",
-				BeanDefinitionBuilder.genericBeanDefinition(TestEventListener.class).getBeanDefinition()));
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> beanFactory.registerBeanDefinition("testEventListener",
+					BeanDefinitionBuilder.genericBeanDefinition(TestEventListener.class).getBeanDefinition()));
 		Assertions.assertThat(SpringContextUtils.getBean(TestEventListener.class))
 			.isEqualTo(SpringContextUtils.getBean("testEventListener"));
 		Assertions.assertThat(SpringContextUtils.containsBean("testEventListener")).isTrue();

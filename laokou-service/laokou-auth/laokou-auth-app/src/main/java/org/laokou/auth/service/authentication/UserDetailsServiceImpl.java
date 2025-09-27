@@ -33,7 +33,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-
 /**
  * 用户认证.
  *
@@ -59,7 +58,7 @@ final class UserDetailsServiceImpl implements UserDetailsService {
 			String password = request.getParameter(Constants.PASSWORD);
 			String tenantCode = request.getParameter(Constants.TENANT_CODE);
 			AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.AUTHORIZATION_CODE,
-				StringConstants.EMPTY, StringConstants.EMPTY);
+					StringConstants.EMPTY, StringConstants.EMPTY);
 			authA.createUserByAuthorizationCode();
 			return (UserDetails) authenticationProcessor.authentication(authA, request).getPrincipal();
 		}

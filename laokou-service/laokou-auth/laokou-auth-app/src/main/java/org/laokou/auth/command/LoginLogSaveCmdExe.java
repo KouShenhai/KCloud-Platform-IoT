@@ -44,7 +44,8 @@ public class LoginLogSaveCmdExe {
 	public void executeVoid(LoginLogSaveCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
-			transactionalUtils.executeInTransaction(() -> domainService.createLoginLog(LoginLogConvertor.toEntity(cmd.getCo())));
+			transactionalUtils
+				.executeInTransaction(() -> domainService.createLoginLog(LoginLogConvertor.toEntity(cmd.getCo())));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

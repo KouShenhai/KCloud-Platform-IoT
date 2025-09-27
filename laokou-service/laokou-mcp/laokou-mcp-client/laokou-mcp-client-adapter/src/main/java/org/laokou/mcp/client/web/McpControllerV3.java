@@ -50,4 +50,5 @@ public class McpControllerV3 {
 	public Result<String> getDevicePropertyBySn(@PathVariable("sn") String sn) {
 		return deviceServiceI.getDevicePropertyBySn(new DevicePropertyGetQry(sn));
 	}
+
 }

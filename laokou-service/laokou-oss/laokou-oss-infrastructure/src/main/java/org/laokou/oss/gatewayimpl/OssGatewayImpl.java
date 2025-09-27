@@ -48,11 +48,11 @@ public class OssGatewayImpl implements OssGateway {
 	public OssUploadV uploadOssAndGetInfo(OssA ossA) {
 		try {
 			return OssConvertor.toValueObject(storageTemplate.uploadOss(
-				OssConvertor.toFileInfo(ossA.getBuffer(), ossA.getSize(), ossA.getContentType(), ossA.getName(),
-					ossA.getExtName()),
-				OssConvertor.toBaseOssList(ossMapper.selectList(Wrappers.lambdaQuery(OssDO.class)
-					.eq(OssDO::getStatus, OssStatusEnum.ENABLE.getCode())
-					.select(OssDO::getParam, OssDO::getType, OssDO::getName, OssDO::getId)))));
+					OssConvertor.toFileInfo(ossA.getBuffer(), ossA.getSize(), ossA.getContentType(), ossA.getName(),
+							ossA.getExtName()),
+					OssConvertor.toBaseOssList(ossMapper.selectList(Wrappers.lambdaQuery(OssDO.class)
+						.eq(OssDO::getStatus, OssStatusEnum.ENABLE.getCode())
+						.select(OssDO::getParam, OssDO::getType, OssDO::getName, OssDO::getId)))));
 		}
 		catch (GlobalException ex) {
 			throw ex;

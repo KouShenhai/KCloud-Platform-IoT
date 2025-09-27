@@ -229,7 +229,8 @@ public final class ExcelUtils {
 				validates = ValidatorUtils.validate(excel, groups);
 			}
 			if (CollectionUtils.isNotEmpty(validates)) {
-				ERRORS.add(getTemplate(currentRowNum, StringUtils.collectionToDelimitedString(validates, StringConstants.DROP)));
+				ERRORS.add(getTemplate(currentRowNum,
+						StringUtils.collectionToDelimitedString(validates, StringConstants.DROP)));
 			}
 			else {
 				CACHED_DATA_LIST.add(convertor.toDataObject(excel));

@@ -32,7 +32,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-
 /**
  * 测试处理器.
  *
@@ -43,7 +42,8 @@ import org.springframework.stereotype.Component;
 final class OAuth2TestAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2TestAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authenticationProcessor) {
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
+			OAuth2AuthenticationProcessor authenticationProcessor) {
 		super(authorizationService, tokenGenerator, authenticationProcessor);
 	}
 
@@ -57,7 +57,8 @@ final class OAuth2TestAuthenticationProvider extends AbstractOAuth2Authenticatio
 		String username = request.getParameter(Constants.USERNAME);
 		String password = request.getParameter(Constants.PASSWORD);
 		String tenantCode = request.getParameter(Constants.TENANT_CODE);
-		AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.TEST, StringConstants.EMPTY, StringConstants.EMPTY);
+		AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.TEST, StringConstants.EMPTY,
+				StringConstants.EMPTY);
 		authA.createUserByTest();
 		return authentication(authA, request);
 	}

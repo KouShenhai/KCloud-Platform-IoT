@@ -27,7 +27,6 @@ import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
 import org.laokou.iot.productCategory.gatewayimpl.database.ProductCategoryMapper;
 import org.springframework.stereotype.Component;
 
-
 /**
  * 查看产品类别请求执行器.
  *

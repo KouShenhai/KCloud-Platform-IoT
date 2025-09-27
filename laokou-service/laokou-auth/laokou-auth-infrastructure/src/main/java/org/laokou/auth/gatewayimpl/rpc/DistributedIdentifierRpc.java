@@ -26,8 +26,6 @@ import org.laokou.distributed.identifier.api.DistributedIdentifierResult;
 import org.laokou.distributed.identifier.api.DistributedIdentifierServiceI;
 import org.springframework.stereotype.Component;
 
-
-
 /**
  * @author laokou
  */
@@ -40,7 +38,8 @@ public class DistributedIdentifierRpc {
 	private DistributedIdentifierServiceI distributedIdentifierServiceI;
 
 	public Long getId() {
-		DistributedIdentifierResult result = distributedIdentifierServiceI.generateSnowflake(DistributedIdentifierCmd.newBuilder().build());
+		DistributedIdentifierResult result = distributedIdentifierServiceI
+			.generateSnowflake(DistributedIdentifierCmd.newBuilder().build());
 		if (ObjectUtils.equals(StatusCode.OK, result.getCode())) {
 			return result.getData();
 		}

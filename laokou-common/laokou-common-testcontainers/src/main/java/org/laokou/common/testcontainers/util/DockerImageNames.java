@@ -40,8 +40,7 @@ public final class DockerImageNames {
 	}
 
 	public static DockerImageName nacos(String tag) {
-		return DockerImageName.parse("nacos/nacos-server")
-			.withTag(tag);
+		return DockerImageName.parse("nacos/nacos-server").withTag(tag);
 	}
 
 	public static DockerImageName nacos() {
@@ -49,8 +48,7 @@ public final class DockerImageNames {
 	}
 
 	public static DockerImageName ftp(String tag) {
-		return DockerImageName.parse("fauria/vsftpd")
-			.withTag(tag);
+		return DockerImageName.parse("fauria/vsftpd").withTag(tag);
 	}
 
 	public static DockerImageName ftp() {
@@ -58,8 +56,7 @@ public final class DockerImageNames {
 	}
 
 	public static DockerImageName minIO(String tag) {
-		return DockerImageName.parse("minio/minio")
-			.withTag(tag);
+		return DockerImageName.parse("minio/minio").withTag(tag);
 	}
 
 	public static DockerImageName minIO() {
@@ -67,8 +64,7 @@ public final class DockerImageNames {
 	}
 
 	public static DockerImageName postgresql(String tag) {
-		return DockerImageName.parse("postgres")
-			.withTag(tag);
+		return DockerImageName.parse("postgres").withTag(tag);
 	}
 
 	public static DockerImageName postgresql() {
@@ -76,13 +72,11 @@ public final class DockerImageNames {
 	}
 
 	public static DockerImageName starrocks(String tag) {
-		return DockerImageName.parse("starrocks/allin1-ubuntu")
-			.withTag(tag);
+		return DockerImageName.parse("starrocks/allin1-ubuntu").withTag(tag);
 	}
 
 	public static DockerImageName starrocks() {
 		return starrocks(LATEST);
 	}
-
 
 }

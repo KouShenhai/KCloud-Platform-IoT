@@ -62,8 +62,8 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 
 	@Override
 	protected void checkBucket(MinioClient minioClient) throws ServerException, InsufficientDataException,
-		ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException,
-		InvalidResponseException, XmlParserException, InternalException {
+			ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException,
+			InvalidResponseException, XmlParserException, InternalException {
 		String bucketName = this.minIO.getBucketName();
 		boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
 		if (!isExist) {
@@ -99,7 +99,9 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 	}
 
 	@Override
-	public void createBucket() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+	public void createBucket() throws ServerException, InsufficientDataException, ErrorResponseException, IOException,
+			NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException,
+			InternalException {
 		MinioClient minioClient = getObj();
 		String bucketName = this.minIO.getBucketName();
 		boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());

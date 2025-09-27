@@ -23,7 +23,6 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 
 import java.util.Map;
 
-
 /**
  * 测试令牌.
  *

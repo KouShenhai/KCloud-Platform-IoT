@@ -46,8 +46,10 @@ public class OssLogSaveCmdExe {
 	public void executeVoid(OssLogSaveCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
-			transactionalUtils.executeInTransaction(() -> ossDomainService.createOssLog(OssLogConvertor.toEntity(cmd.getCo())));
-		} finally {
+			transactionalUtils
+				.executeInTransaction(() -> ossDomainService.createOssLog(OssLogConvertor.toEntity(cmd.getCo())));
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

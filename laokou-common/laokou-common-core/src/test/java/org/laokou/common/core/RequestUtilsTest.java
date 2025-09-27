@@ -32,7 +32,6 @@ import org.springframework.test.context.TestConstructor;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-
 /**
  * @author laokou
  */

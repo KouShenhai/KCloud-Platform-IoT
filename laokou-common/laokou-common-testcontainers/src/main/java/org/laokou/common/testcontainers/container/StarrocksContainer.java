@@ -47,27 +47,31 @@ public class StarrocksContainer extends GenericContainer<StarrocksContainer> {
 
 	public StarrocksContainer(DockerImageName dockerImageName) {
 		super(dockerImageName);
-        this.withExposedPorts(8030);
+		this.withExposedPorts(8030);
 		this.withExposedPorts(8040);
 		this.withExposedPorts(9030);
 	}
 
 	@Override
 	protected void containerIsStarted(InspectContainerResponse containerInfo) {
-        try {
+		try {
 			Thread.sleep(Duration.ofSeconds(10));
-			ExecResult execResult = this.execInContainer("/bin/sh", "-c", "mysql -h 127.0.0.1 -P 9030 -u root -p -e \"CREATE DATABASE " + databaseName + ";\"");
+			ExecResult execResult = this.execInContainer("/bin/sh", "-c",
+					"mysql -h 127.0.0.1 -P 9030 -u root -p -e \"CREATE DATABASE " + databaseName + ";\"");
 			if (execResult.getExitCode() != 0) {
-				throw new SystemException("S_Starrocks_ExecuteShellFailed", String.format("执行Shell命令失败，错误信息：%s", execResult.getStderr()));
+				throw new SystemException("S_Starrocks_ExecuteShellFailed",
+						String.format("执行Shell命令失败，错误信息：%s", execResult.getStderr()));
 			}
 			// 建立连接
 			openConnect();
 			// 运行脚本
 			runInitScriptIfRequired();
-		} catch (IOException | InterruptedException e) {
-            throw new SystemException("S_Starrocks_RunScriptFailed", String.format("运行脚本失败，错误信息：%s", e.getMessage()), e);
-        }
-    }
+		}
+		catch (IOException | InterruptedException e) {
+			throw new SystemException("S_Starrocks_RunScriptFailed", String.format("运行脚本失败，错误信息：%s", e.getMessage()),
+					e);
+		}
+	}
 
 	@Override
 	protected void containerIsStopped(InspectContainerResponse containerInfo) {
@@ -80,7 +84,7 @@ public class StarrocksContainer extends GenericContainer<StarrocksContainer> {
 		return this;
 	}
 
-	public StarrocksContainer withScriptPaths(String ...paths) {
+	public StarrocksContainer withScriptPaths(String... paths) {
 		this.initScriptPaths = List.of(paths);
 		return this;
 	}
@@ -88,8 +92,11 @@ public class StarrocksContainer extends GenericContainer<StarrocksContainer> {
 	private void openConnect() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			this.connection = DriverManager.getConnection(String.format("jdbc:mysql://%s:%s/%s", this.getHost() , this.getMappedPort(9030) , databaseName), "root", "");
-		} catch (SQLException | ClassNotFoundException ex) {
+			this.connection = DriverManager.getConnection(
+					String.format("jdbc:mysql://%s:%s/%s", this.getHost(), this.getMappedPort(9030), databaseName),
+					"root", "");
+		}
+		catch (SQLException | ClassNotFoundException ex) {
 			throw new SystemException("S_Mysql_ConnectFailed", String.format("连接Mysql失败，错误信息：%s", ex.getMessage()), ex);
 		}
 	}
@@ -97,16 +104,16 @@ public class StarrocksContainer extends GenericContainer<StarrocksContainer> {
 	private void closeConnect() {
 		try {
 			this.connection.close();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw new SystemException("S_Mysql_CloseFailed", String.format("关闭Mysql连接失败，错误信息：%s", e.getMessage()), e);
 		}
 	}
 
 	private void runInitScriptIfRequired() {
-		initScriptPaths
-				.stream()
-				.filter(Objects::nonNull)
-				.forEach(path -> ScriptUtils.runInitScript(new ContainerLessJdbcDelegate(this.connection), path));
+		initScriptPaths.stream()
+			.filter(Objects::nonNull)
+			.forEach(path -> ScriptUtils.runInitScript(new ContainerLessJdbcDelegate(this.connection), path));
 	}
 
 }

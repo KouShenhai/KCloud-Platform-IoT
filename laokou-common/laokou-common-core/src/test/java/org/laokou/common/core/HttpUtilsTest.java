@@ -32,7 +32,6 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
-
 /**
  * @author laokou
  */

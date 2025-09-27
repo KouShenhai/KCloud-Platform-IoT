@@ -54,7 +54,8 @@ public class DistributedIdentifierGenerateBatchCmdExe {
 			// 排序
 			Collections.sort(list);
 			return Result.ok(list);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}

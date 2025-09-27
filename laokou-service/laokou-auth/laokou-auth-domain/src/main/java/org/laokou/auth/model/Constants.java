@@ -22,7 +22,8 @@ package org.laokou.auth.model;
  */
 public final class Constants {
 
-	private Constants() {}
+	private Constants() {
+	}
 
 	/**
 	 * 邮箱.
@@ -83,6 +84,5 @@ public final class Constants {
 	 * 默认租户.
 	 */
 	public static final String DEFAULT_TENANT = "laokouyun";
-
 
 }

@@ -68,14 +68,18 @@ class CollectionUtilsTest {
 
 	@Test
 	void test_anyMatch() {
-		Assertions.assertThat(CollectionUtils.anyMatch(Arrays.asList("a", "b", "c"), Arrays.asList("c", "d", "e"))).isTrue();
-		Assertions.assertThat(CollectionUtils.anyMatch(Arrays.asList("c", "d", "e"), Arrays.asList("x", "y", "z"))).isFalse();
+		Assertions.assertThat(CollectionUtils.anyMatch(Arrays.asList("a", "b", "c"), Arrays.asList("c", "d", "e")))
+			.isTrue();
+		Assertions.assertThat(CollectionUtils.anyMatch(Arrays.asList("c", "d", "e"), Arrays.asList("x", "y", "z")))
+			.isFalse();
 	}
 
 	@Test
 	void test_containsAll() {
-		Assertions.assertThat(CollectionUtils.containsAll(Arrays.asList("a", "b"), Arrays.asList("a", "b", "c"))).isTrue();
-		Assertions.assertThat(CollectionUtils.containsAll(Arrays.asList("x", "y"), Arrays.asList("a", "b", "c"))).isFalse();
+		Assertions.assertThat(CollectionUtils.containsAll(Arrays.asList("a", "b"), Arrays.asList("a", "b", "c")))
+			.isTrue();
+		Assertions.assertThat(CollectionUtils.containsAll(Arrays.asList("x", "y"), Arrays.asList("a", "b", "c")))
+			.isFalse();
 	}
 
 }

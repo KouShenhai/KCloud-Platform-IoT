@@ -17,7 +17,6 @@
 
 package org.laokou.admin.tenant.dto;
 
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;

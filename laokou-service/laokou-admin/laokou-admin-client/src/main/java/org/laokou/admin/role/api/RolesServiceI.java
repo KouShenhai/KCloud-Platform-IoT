@@ -17,7 +17,6 @@
 
 package org.laokou.admin.role.api;
 
-
 import org.laokou.admin.role.dto.RoleExportCmd;
 import org.laokou.admin.role.dto.RoleGetQry;
 import org.laokou.admin.role.dto.RoleImportCmd;

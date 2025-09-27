@@ -108,7 +108,7 @@ public class RedisUtils {
 	}
 
 	public boolean rateLimiter(String key, RateType mode, long replenishRate, Duration rateInterval,
-							   Duration ttlInterval) {
+			Duration ttlInterval) {
 		RRateLimiter rateLimiter = redissonClient.getRateLimiter(key);
 		rateLimiter.trySetRate(mode, replenishRate, rateInterval, ttlInterval);
 		return rateLimiter.tryAcquire();

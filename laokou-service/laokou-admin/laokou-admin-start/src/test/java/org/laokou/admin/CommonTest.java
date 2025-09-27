@@ -53,7 +53,8 @@ class CommonTest {
 	@BeforeEach
 	void setUp() throws JsonProcessingException {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(getToken(), OAuth2TokenType.ACCESS_TOKEN);
+		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(getToken(),
+				OAuth2TokenType.ACCESS_TOKEN);
 		Assertions.assertThat(authorization).isNotNull();
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = authorization
 			.getAttribute(Principal.class.getName());

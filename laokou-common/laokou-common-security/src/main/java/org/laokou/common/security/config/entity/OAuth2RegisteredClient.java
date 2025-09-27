@@ -86,15 +86,13 @@ public final class OAuth2RegisteredClient {
 	private final TokenSettings tokenSettings;
 
 	public record ClientSettings(boolean requireProofKey, boolean requireAuthorizationConsent, String jwkSetUrl,
-									 JwsAlgorithm tokenEndpointAuthenticationSigningAlgorithm,
-									 String x509CertificateSubjectDN) {
+			JwsAlgorithm tokenEndpointAuthenticationSigningAlgorithm, String x509CertificateSubjectDN) {
 	}
 
 	public record TokenSettings(Duration authorizationCodeTimeToLive, Duration accessTokenTimeToLive,
-									OAuth2TokenFormat accessTokenFormat, Duration deviceCodeTimeToLive,
-									boolean reuseRefreshTokens, Duration refreshTokenTimeToLive,
-									SignatureAlgorithm idTokenSignatureAlgorithm,
-									boolean x509CertificateBoundAccessTokens) {
+			OAuth2TokenFormat accessTokenFormat, Duration deviceCodeTimeToLive, boolean reuseRefreshTokens,
+			Duration refreshTokenTimeToLive, SignatureAlgorithm idTokenSignatureAlgorithm,
+			boolean x509CertificateBoundAccessTokens) {
 	}
 
 }

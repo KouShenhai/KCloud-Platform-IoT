@@ -73,18 +73,9 @@ public class OssUploadEvent extends DomainEvent {
 	 */
 	private final Instant uploadTime;
 
-	public OssUploadEvent(final Long id,
-						  final String name,
-						  final String md5,
-						  final  String url,
-						  final  Long size,
-						  final  Long ossId,
-						  final  String contentType,
-						  final  String format,
-						  final Instant uploadTime,
-						  final Long tenantId,
-						  final Long userId,
-						  String type) {
+	public OssUploadEvent(final Long id, final String name, final String md5, final String url, final Long size,
+			final Long ossId, final String contentType, final String format, final Instant uploadTime,
+			final Long tenantId, final Long userId, String type) {
 		this.type = type;
 		this.id = id;
 		this.name = name;
@@ -98,4 +89,5 @@ public class OssUploadEvent extends DomainEvent {
 		this.tenantId = tenantId;
 		this.userId = userId;
 	}
+
 }

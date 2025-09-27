@@ -28,6 +28,7 @@ import java.io.Serializable;
 
 /**
  * 请求响应统一格式.
+ *
  * @author laokou
  */
 @Data

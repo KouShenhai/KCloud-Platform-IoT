@@ -67,13 +67,13 @@ public class OssConvertor {
 		Assert.notNull(name, "File name must not be null");
 		String extName = FileUtils.getFileExt(name);
 		return OssUploadCmd.newBuilder()
-				.setBuffer(ByteString.copyFrom(file.getBytes()))
-				.setName(UUIDGenerator.generateUUID() + extName)
-				.setExtName(extName)
-				.setContentType(file.getContentType())
-				.setSize(file.getSize())
-				.setFileType(fileType)
-				.build();
+			.setBuffer(ByteString.copyFrom(file.getBytes()))
+			.setName(UUIDGenerator.generateUUID() + extName)
+			.setExtName(extName)
+			.setContentType(file.getContentType())
+			.setSize(file.getSize())
+			.setFileType(fileType)
+			.build();
 	}
 
 	public static List<OssCO> toClientObjects(List<OssDO> list) {

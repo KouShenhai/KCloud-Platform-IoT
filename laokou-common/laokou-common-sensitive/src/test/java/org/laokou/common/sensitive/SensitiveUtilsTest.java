@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.sensitive.util.SensitiveUtils;
 
-
 /**
  * @author laokou
  */
@@ -42,9 +41,11 @@ class SensitiveUtilsTest {
 		Assertions.assertThat(SensitiveUtils.formatStr("1234567890", null, 3, 7)).isEqualTo("123890");
 		Assertions.assertThat(SensitiveUtils.formatStr("1234567890", StringConstants.EMPTY, 3, 7)).isEqualTo("123890");
 		Assertions.assertThat(SensitiveUtils.formatStr("1234567890", StringConstants.EMPTY, -1, 7)).isEqualTo("890");
-		Assertions.assertThat(SensitiveUtils.formatStr("1234567890", StringConstants.EMPTY, 11, 7)).isEqualTo("1234567");
+		Assertions.assertThat(SensitiveUtils.formatStr("1234567890", StringConstants.EMPTY, 11, 7))
+			.isEqualTo("1234567");
 		Assertions.assertThat(SensitiveUtils.formatStr("1234567890", StringConstants.EMPTY, 1, 12)).isEqualTo("1");
-		Assertions.assertThat(SensitiveUtils.formatStr("1234567890", StringConstants.EMPTY, 1, -1)).isEqualTo("234567890");
+		Assertions.assertThat(SensitiveUtils.formatStr("1234567890", StringConstants.EMPTY, 1, -1))
+			.isEqualTo("234567890");
 	}
 
 	@Test

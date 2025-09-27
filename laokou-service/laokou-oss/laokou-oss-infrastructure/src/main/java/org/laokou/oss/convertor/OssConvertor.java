@@ -38,7 +38,6 @@ import org.springframework.util.DigestUtils;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 
-
 /**
  * @author laokou
  */
@@ -69,10 +68,7 @@ public final class OssConvertor {
 		if (ObjectUtils.isNull(co)) {
 			return org.laokou.oss.api.OssUploadCO.newBuilder().build();
 		}
-		return org.laokou.oss.api.OssUploadCO.newBuilder()
-			.setId(co.getId())
-			.setUrl(co.getUrl())
-			.build();
+		return org.laokou.oss.api.OssUploadCO.newBuilder().setId(co.getId()).setUrl(co.getUrl()).build();
 	}
 
 	public static OssUploadCO toClientObject(OssA ossA) {
@@ -86,8 +82,9 @@ public final class OssConvertor {
 		String creator = RpcContext.getServerAttachment().getAttachment(BaseDO.CREATOR);
 		String tenantId = RpcContext.getServerAttachment().getAttachment(BaseDO.TENANT_ID);
 		FileFormatEnum fileFormatEnum = ossA.getFileFormatEnum();
-		return new OssUploadEvent(ossA.getId(), ossA.getName(), ossA.getMd5(), ossA.getUrl(), ossA.getSize(), ossA.getOssId(),
-				ossA.getContentType(), ossA.getExtName(), ossA.getCreateTime(), Long.valueOf(tenantId), Long.valueOf(creator), fileFormatEnum.getCode());
+		return new OssUploadEvent(ossA.getId(), ossA.getName(), ossA.getMd5(), ossA.getUrl(), ossA.getSize(),
+				ossA.getOssId(), ossA.getContentType(), ossA.getExtName(), ossA.getCreateTime(), Long.valueOf(tenantId),
+				Long.valueOf(creator), fileFormatEnum.getCode());
 	}
 
 	public static FileInfo toFileInfo(byte[] buffer, long size, String contentType, String name, String extName) {
@@ -108,7 +105,8 @@ public final class OssConvertor {
 
 	private static BaseOss toBaseOss(OssDO ossDO) {
 		try {
-			return StoragePolicyEnum.getByCode(ossDO.getType()).getOss(ossDO.getId(), ossDO.getName(), ossDO.getParam());
+			return StoragePolicyEnum.getByCode(ossDO.getType())
+				.getOss(ossDO.getId(), ossDO.getName(), ossDO.getParam());
 		}
 		catch (JsonProcessingException e) {
 			throw new RuntimeException(e);

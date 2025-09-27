@@ -17,8 +17,6 @@
 
 package org.laokou.generator.model;
 
-
-
 /**
  * @author laokou
  */

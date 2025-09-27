@@ -29,7 +29,6 @@ import org.springframework.test.context.TestConstructor;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
-
 /**
  * @author laokou
  */
@@ -70,8 +69,9 @@ class VertxMqttClient2Test {
 					mqttMessageHandlers);
 			Assertions.assertThatNoException().isThrownBy(vertxMqttClient::open);
 			Thread.sleep(1000);
-			Assertions.assertThatNoException().isThrownBy(() -> vertxMqttClient.publish("/1/2/up/property/report", qos,
-					"{\"id\":\"1\",\"name\":\"test\",\"value\":\"test\"}", false, false));
+			Assertions.assertThatNoException()
+				.isThrownBy(() -> vertxMqttClient.publish("/1/2/up/property/report", qos,
+						"{\"id\":\"1\",\"name\":\"test\",\"value\":\"test\"}", false, false));
 			Thread.sleep(1000);
 			Assertions.assertThatNoException().isThrownBy(vertxMqttClient::close);
 		}

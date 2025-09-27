@@ -23,7 +23,6 @@ import org.laokou.common.i18n.util.ParamValidator;
 import java.io.Serial;
 import java.io.Serializable;
 
-
 /**
  * @author laokou
  */

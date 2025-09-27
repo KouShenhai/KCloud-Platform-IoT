@@ -42,7 +42,8 @@ public class DistributedIdentifierRpc {
 	private DistributedIdentifierServiceI distributedIdentifierServiceI;
 
 	public Long getId() {
-		DistributedIdentifierResult result = distributedIdentifierServiceI.generateSnowflake(DistributedIdentifierCmd.newBuilder().build());
+		DistributedIdentifierResult result = distributedIdentifierServiceI
+			.generateSnowflake(DistributedIdentifierCmd.newBuilder().build());
 		if (ObjectUtils.equals(StatusCode.OK, result.getCode())) {
 			return result.getData();
 		}
@@ -50,7 +51,8 @@ public class DistributedIdentifierRpc {
 	}
 
 	public List<Long> getIds(int num) {
-		DistributedIdentifierBatchResult result = distributedIdentifierServiceI.generateSnowflakeBatch(DistributedIdentifierBatchCmd.newBuilder().setNum(num).build());
+		DistributedIdentifierBatchResult result = distributedIdentifierServiceI
+			.generateSnowflakeBatch(DistributedIdentifierBatchCmd.newBuilder().setNum(num).build());
 		if (ObjectUtils.equals(StatusCode.OK, result.getCode())) {
 			return result.getDataList();
 		}

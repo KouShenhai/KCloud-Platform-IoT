@@ -41,9 +41,9 @@ import java.io.InputStream;
 /**
  * @author laokou
  */
-@ContextConfiguration(classes = {StorageAutoConfig.class })
+@ContextConfiguration(classes = { StorageAutoConfig.class })
 @RequiredArgsConstructor
-@SpringBootTest(webEnvironment =  SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class OssUploadTest {
 
@@ -51,8 +51,7 @@ class OssUploadTest {
 
 	private FileInfo fileInfo;
 
-	static final MinIOContainer minIO = new MinIOContainer(DockerImageNames.minIO())
-		.withUsername("minio")
+	static final MinIOContainer minIO = new MinIOContainer(DockerImageNames.minIO()).withUsername("minio")
 		.withPassword("laokou123");
 
 	@BeforeAll

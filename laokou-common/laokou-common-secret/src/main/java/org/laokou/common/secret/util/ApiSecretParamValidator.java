@@ -39,7 +39,8 @@ public final class ApiSecretParamValidator {
 		if (StringUtils.isEmpty(appKey)) {
 			return ParamValidator.invalidate("appKey不为空");
 		}
-		return ObjectUtils.equals(SecretUtils.APP_KEY, appKey) ? ParamValidator.validate() : ParamValidator.invalidate("appKey不存在");
+		return ObjectUtils.equals(SecretUtils.APP_KEY, appKey) ? ParamValidator.validate()
+				: ParamValidator.invalidate("appKey不存在");
 	}
 
 	public static ParamValidator.Validate validateAppSecret(String appSecret) {

@@ -28,7 +28,6 @@ import org.springframework.stereotype.Component;
 
 import java.awt.Font;
 
-
 /**
  * 获取验证码执行器.
  *

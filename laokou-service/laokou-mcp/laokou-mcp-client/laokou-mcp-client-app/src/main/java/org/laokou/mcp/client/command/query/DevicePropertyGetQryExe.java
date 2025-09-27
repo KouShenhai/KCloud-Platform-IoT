@@ -32,6 +32,7 @@ import java.util.Map;
 
 /**
  * 查看设备属性请求执行器.
+ *
  * @author laokou
  */
 @Component
@@ -41,7 +42,8 @@ public class DevicePropertyGetQryExe {
 	private final List<LoadbalancedMcpSyncClient> loadbalancedMcpSyncClients;
 
 	public Result<String> execute(DevicePropertyGetQry qry) {
-		McpSchema.CallToolResult callToolResult = loadbalancedMcpSyncClients.getFirst().callTool(new McpSchema.CallToolRequest("get_device_property_by_sn", Map.of("sn", qry.getSn())));
+		McpSchema.CallToolResult callToolResult = loadbalancedMcpSyncClients.getFirst()
+			.callTool(new McpSchema.CallToolRequest("get_device_property_by_sn", Map.of("sn", qry.getSn())));
 		List<String> list = callToolResult.content().stream().map(content -> {
 			if (content instanceof McpSchema.TextContent textContent) {
 				return textContent.text();

@@ -22,7 +22,6 @@ import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.laokou.common.tenant.constant.DSConstants;
 
-
 /**
  * @author laokou
  */

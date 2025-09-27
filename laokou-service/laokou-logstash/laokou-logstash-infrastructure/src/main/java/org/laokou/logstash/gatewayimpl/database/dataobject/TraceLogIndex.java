@@ -26,7 +26,6 @@ import org.laokou.common.i18n.util.DateUtils;
 
 import java.io.Serializable;
 
-
 @Data
 @Index(setting = @Setting(refreshInterval = "1"))
 public final class TraceLogIndex implements Serializable {
