@@ -9,6 +9,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-common-idempotent</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
@@ -32,6 +33,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-redis</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>jakarta.servlet</groupId>

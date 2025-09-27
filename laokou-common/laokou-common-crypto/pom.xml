@@ -8,6 +8,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-common-crypto</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
@@ -44,6 +45,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-i18n</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>com.github.ulisesbocchio</groupId>
@@ -54,6 +56,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
+      <version>${laokou.version}</version>
       <optional>true</optional>
       <scope>test</scope>
     </dependency>

@@ -26,19 +26,23 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-admin-client</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-sensitive</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-excel</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-crypto</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>jakarta.servlet</groupId>

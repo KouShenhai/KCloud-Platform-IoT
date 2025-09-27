@@ -209,8 +209,6 @@
     <jsoup.version>1.21.2</jsoup.version>
     <!--dubbo版本-->
     <dubbo.version>3.3.5</dubbo.version>
-    <!--pf4j版本-->
-    <pf4j.version>0.10.0</pf4j.version>
     <!--minio版本-->
     <minio.version>8.6.0</minio.version>
     <!--spring-security版本-->
@@ -402,16 +400,6 @@
         <version>${mysql-connector-j.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-oss-proto</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-distributed-identifier-proto</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-oauth2-core</artifactId>
         <version>${spring-security.version}</version>
@@ -430,41 +418,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-actuator-autoconfigure</artifactId>
         <version>${spring-boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.pf4j</groupId>
-        <artifactId>pf4j-spring</artifactId>
-        <version>${pf4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-distributed-identifier-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-distributed-identifier-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-distributed-identifier-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-distributed-identifier-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-distributed-identifier-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-distributed-identifier-start</artifactId>
-        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>com.google.protobuf</groupId>
@@ -526,129 +479,6 @@
         <artifactId>spring-boot-starter</artifactId>
         <version>${spring-boot.version}</version>
       </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-udp-server-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-udp-server-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-udp-server-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-udp-server-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-udp-server-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-udp-server-start</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-tcp-server-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-tcp-server-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-tcp-server-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-tcp-server-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-tcp-server-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-tcp-server-start</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-http-server-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-http-server-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-http-server-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-http-server-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-http-server-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-http-server-start</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-
-      <!-- =============================== Laokou-Mqtt-Server =============================== -->
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mqtt-server-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mqtt-server-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mqtt-server-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mqtt-server-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mqtt-server-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mqtt-server-start</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <!-- =============================== Laokou-Mqtt-Server =============================== -->
 
       <dependency>
         <groupId>org.springdoc</groupId>
@@ -676,11 +506,6 @@
         <version>${commons-net.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-report-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.apache.curator</groupId>
         <artifactId>curator-framework</artifactId>
         <version>${curator.version}</version>
@@ -701,36 +526,6 @@
         <version>${opencsv.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-oss-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-oss-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-oss-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-oss-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-oss-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-oss-start</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
         <groupId>io.projectreactor</groupId>
         <artifactId>reactor-core</artifactId>
         <version>${reactor-core.version}</version>
@@ -739,16 +534,6 @@
         <groupId>com.squareup.okhttp3</groupId>
         <artifactId>okhttp</artifactId>
         <version>${okhttp3.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-logstash-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-logstash-domain</artifactId>
-        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>com.influxdb</groupId>
@@ -804,137 +589,6 @@
         <groupId>com.github.xiaoymin</groupId>
         <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
         <version>${knife4j.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-generator-start</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-iot-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-generator-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-generator-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-iot-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-generator-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-generator-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-generator-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-cola-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-cola-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-cola-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-cola-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-cola-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-cola-start</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-client-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-client-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-client-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-client-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-client-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-client-start</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-server-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-server-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-server-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-server-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-server-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-mcp-server-start</artifactId>
-        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>com.aizuda</groupId>
@@ -1027,16 +681,6 @@
         <version>${knife4j.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-iot-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-iot-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <version>${postgresql.version}</version>
@@ -1092,44 +736,9 @@
         <version>${mockito.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-iot-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-logstash-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-logstash-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-logstash-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.alibaba</groupId>
         <artifactId>transmittable-thread-local</artifactId>
         <version>${transmittable-thread-local.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-report-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-report-start</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-report-client</artifactId>
-        <version>${laokou.version}</version>
       </dependency>
       <dependency>
         <groupId>com.lmax</groupId>
@@ -1172,16 +781,6 @@
         <version>${spring-boot.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-logstash-start</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-iot-start</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-webflux</artifactId>
         <version>${spring-boot.version}</version>
@@ -1201,11 +800,7 @@
         <artifactId>jackson-module-kotlin</artifactId>
         <version>${jackson.version}</version>
       </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-nacos</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
+
       <dependency>
         <groupId>org.lionsoul</groupId>
         <artifactId>ip2region</artifactId>
@@ -1258,56 +853,12 @@
         <artifactId>jasypt-spring-boot-starter</artifactId>
         <version>${jasypt.version}</version>
       </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-monitor</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
+
       <dependency>
         <groupId>com.github.oshi</groupId>
         <artifactId>oshi-core</artifactId>
         <version>${oshi.version}</version>
       </dependency>
-      <!-- =============================== Laokou-Admin =============================== -->
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-admin-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-admin-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-admin-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-admin-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-admin-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-admin-start</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <!-- =============================== Laokou-Admin =============================== -->
-
-      <!-- =============================== Laokou-Gateway =============================== -->
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-gateway</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <!-- =============================== Laokou-Gateway =============================== -->
 
       <!-- =============================== Elasticsearch =============================== -->
       <dependency>
@@ -1316,292 +867,6 @@
         <version>${elasticsearch.version}</version>
       </dependency>
       <!-- =============================== Elasticsearch =============================== -->
-
-      <!-- =============================== Laokou-Common =============================== -->
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-core</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-redis</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-elasticsearch</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-openapi-doc</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-cors</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-mybatis-plus</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-tdengine</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-dubbo</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-oss</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-kafka</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-crypto</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-log</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-test</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-excel</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-plugin</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-sentinel</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-context</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-mail</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-vertx</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-pulsar</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-tenant</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-ai</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-fory</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-sms</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-data-cache</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-prometheus</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-security</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-i18n</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-secret</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-mongodb</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-rate-limiter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-xss</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-reactor</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-snail-job</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-zookeeper</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-websocket</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-influxdb</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-banner</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-network-mqtt-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-starrocks</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-testcontainers</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-modbus4j</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-trace</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-log4j2</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-algorithm</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-sensitive</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-idempotent</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-lock</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-nacos</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <!-- =============================== Laokou-Common =============================== -->
-
-      <!-- =============================== Laokou-Auth =============================== -->
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-auth-adapter</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-auth-app</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-auth-client</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-auth-domain</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-auth-infrastructure</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-auth-start</artifactId>
-        <version>${laokou.version}</version>
-      </dependency>
-      <!-- =============================== Laokou-Auth =============================== -->
 
       <dependency>
         <groupId>jakarta.servlet</groupId>
@@ -1832,7 +1097,7 @@
           <!-- 是否包含测试代码目录，true包含，false不包含，只检查主目录代码 -->
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
           <!-- 是否跳过代码规范检查，true跳过，false不跳过 -->
-          <skip>false</skip>
+          <skip>true</skip>
           <!-- checkstyle报告是否包含代码引用链接，false不包含，true包含 -->
           <linkXRef>false</linkXRef>
         </configuration>

@@ -8,11 +8,13 @@
   </parent>
 
   <artifactId>laokou-distributed-identifier-app</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-distributed-identifier-infrastructure</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
   </dependencies>
 

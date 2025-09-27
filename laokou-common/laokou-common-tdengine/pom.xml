@@ -7,10 +7,13 @@
     <version>3.5.4-SNAPSHOT</version>
   </parent>
   <artifactId>laokou-common-tdengine</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
+
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-mybatis-plus</artifactId>
+      <version>${laokou.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.postgresql</groupId>

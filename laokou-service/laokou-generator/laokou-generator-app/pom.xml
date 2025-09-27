@@ -8,11 +8,13 @@
   </parent>
 
   <artifactId>laokou-generator-app</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-generator-infrastructure</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
   </dependencies>
 

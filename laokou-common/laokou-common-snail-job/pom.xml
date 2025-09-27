@@ -10,6 +10,7 @@
   </parent>
 
   <artifactId>laokou-common-snail-job</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>

@@ -8,11 +8,13 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-common-elasticsearch</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
+      <version>${laokou.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework.boot</groupId>
@@ -33,18 +35,14 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
+      <version>${laokou.version}</version>
       <optional>true</optional>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-testcontainers</artifactId>
-      <optional>true</optional>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-testcontainers</artifactId>
+      <version>${laokou.version}</version>
       <optional>true</optional>
       <scope>test</scope>
     </dependency>

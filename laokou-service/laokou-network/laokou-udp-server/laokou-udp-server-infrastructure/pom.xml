@@ -8,15 +8,18 @@
   </parent>
 
   <artifactId>laokou-udp-server-infrastructure</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-udp-server-domain</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-vertx</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -25,14 +28,17 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-trace</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-prometheus</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-udp-server-client</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
   </dependencies>
 

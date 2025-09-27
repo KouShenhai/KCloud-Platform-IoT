@@ -10,11 +10,13 @@
   </parent>
 
   <artifactId>laokou-common-log</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-domain</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>jakarta.servlet</groupId>
@@ -24,10 +26,12 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-distributed-identifier-proto</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-tenant</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
   </dependencies>
 

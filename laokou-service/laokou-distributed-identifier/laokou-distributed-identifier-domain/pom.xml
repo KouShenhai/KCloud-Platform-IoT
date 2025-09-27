@@ -8,5 +8,6 @@
   </parent>
 
   <artifactId>laokou-distributed-identifier-domain</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
 </project>

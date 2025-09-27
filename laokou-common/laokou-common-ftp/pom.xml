@@ -10,6 +10,7 @@
   </parent>
 
   <artifactId>laokou-common-ftp</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
@@ -19,16 +20,19 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
+      <version>${laokou.version}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-testcontainers</artifactId>
+      <version>${laokou.version}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>

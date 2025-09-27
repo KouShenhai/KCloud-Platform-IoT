@@ -10,6 +10,7 @@
   </parent>
 
   <artifactId>laokou-common-test</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>

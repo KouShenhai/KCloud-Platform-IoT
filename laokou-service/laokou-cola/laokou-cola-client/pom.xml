@@ -10,5 +10,6 @@
   </parent>
 
   <artifactId>laokou-cola-client</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
 </project>

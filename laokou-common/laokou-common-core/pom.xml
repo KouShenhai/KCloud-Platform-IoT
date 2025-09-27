@@ -26,6 +26,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-common-core</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <!-- 解析客户端操作系统、浏览器等 -->
@@ -102,6 +103,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-i18n</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -129,6 +131,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
+      <version>${laokou.version}</version>
       <optional>true</optional>
       <scope>test</scope>
     </dependency>

@@ -8,15 +8,18 @@
   </parent>
 
   <artifactId>laokou-mcp-server-infrastructure</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-mcp-server-domain</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-mcp-server-client</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>com.alibaba.cloud.ai</groupId>
@@ -55,6 +58,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-log4j2</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
   </dependencies>
 

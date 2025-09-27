@@ -27,6 +27,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-common-nacos</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
@@ -146,18 +147,21 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
+      <version>${laokou.version}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-testcontainers</artifactId>
+      <version>${laokou.version}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-reactor</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
   </dependencies>
 

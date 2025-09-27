@@ -10,5 +10,6 @@
   </parent>
 
   <artifactId>laokou-common-banner</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
 </project>

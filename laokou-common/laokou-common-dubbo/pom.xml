@@ -10,6 +10,7 @@
   </parent>
 
   <artifactId>laokou-common-dubbo</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
@@ -39,10 +40,12 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-i18n</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-trace</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
   </dependencies>
 

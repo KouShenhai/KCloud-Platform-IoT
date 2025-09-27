@@ -8,6 +8,7 @@
   </parent>
 
   <artifactId>laokou-distributed-identifier-infrastructure</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
@@ -17,10 +18,12 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-distributed-identifier-domain</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-zookeeper</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -43,18 +46,22 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-log4j2</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-trace</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-distributed-identifier-client</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-distributed-identifier-proto</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
   </dependencies>
 

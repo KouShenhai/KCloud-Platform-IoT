@@ -10,11 +10,13 @@
     </parent>
 
     <artifactId>laokou-tcp-server-start</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>org.laokou</groupId>
             <artifactId>laokou-tcp-server-adapter</artifactId>
+          <version>${laokou.version}</version>
         </dependency>
     </dependencies>
 

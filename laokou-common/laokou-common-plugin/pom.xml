@@ -10,12 +10,6 @@
   </parent>
 
   <artifactId>laokou-common-plugin</artifactId>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.pf4j</groupId>
-      <artifactId>pf4j-spring</artifactId>
-    </dependency>
-  </dependencies>
+  <version>3.5.4-SNAPSHOT</version>
 
 </project>

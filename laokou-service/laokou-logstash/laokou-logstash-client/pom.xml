@@ -10,6 +10,7 @@
   </parent>
 
   <artifactId>laokou-logstash-client</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
@@ -19,6 +20,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-i18n</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
   </dependencies>
 

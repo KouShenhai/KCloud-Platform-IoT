@@ -8,11 +8,13 @@
   </parent>
 
   <artifactId>laokou-tcp-server-app</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-tcp-server-infrastructure</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
   </dependencies>
 

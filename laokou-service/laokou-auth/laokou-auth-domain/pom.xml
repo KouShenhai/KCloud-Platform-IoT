@@ -14,14 +14,17 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-crypto</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
+      <version>${laokou.version}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>

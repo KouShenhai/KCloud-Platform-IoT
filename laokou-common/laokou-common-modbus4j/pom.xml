@@ -10,11 +10,13 @@
   </parent>
 
   <artifactId>laokou-common-modbus4j</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>com.github.infiniteautomation</groupId>
@@ -27,6 +29,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
+      <version>${laokou.version}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>

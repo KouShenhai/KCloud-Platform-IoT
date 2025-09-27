@@ -10,11 +10,13 @@
   </parent>
 
   <artifactId>laokou-iot-adapter</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-iot-app</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
   </dependencies>
 

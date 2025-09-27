@@ -8,5 +8,6 @@
   </parent>
 
   <artifactId>laokou-http-server-domain</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
 </project>

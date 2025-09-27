@@ -10,6 +10,7 @@
   </parent>
 
   <artifactId>laokou-common-testcontainers</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
@@ -45,8 +46,9 @@
       </exclusions>
     </dependency>
     <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-common-i18n</artifactId>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-i18n</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
   </dependencies>
 

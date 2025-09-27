@@ -9,11 +9,13 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-common-rate-limiter</artifactId>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-redis</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
     <dependency>
       <groupId>jakarta.servlet</groupId>
@@ -23,6 +25,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-security</artifactId>
+      <version>${laokou.version}</version>
     </dependency>
   </dependencies>
 
