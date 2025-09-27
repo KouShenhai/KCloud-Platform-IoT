@@ -187,6 +187,29 @@
           <skip>true</skip>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.graalvm.buildtools</groupId>
+        <artifactId>native-maven-plugin</artifactId>
+        <version>${native-maven-plugin.version}</version>
+        <extensions>true</extensions>
+        <executions>
+          <execution>
+            <id>build-native</id>
+            <phase>package</phase>
+          </execution>
+          <execution>
+            <id>test-native</id>
+            <phase>test</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <imageName>${project.parent.artifactId}</imageName>
+          <mainClass>org.laokou.nacos.NacosApp</mainClass>
+          <fallback>false</fallback>
+          <!-- 快速构建 -->
+          <quickBuild>true</quickBuild>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 

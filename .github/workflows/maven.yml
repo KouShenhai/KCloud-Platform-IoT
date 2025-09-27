@@ -56,6 +56,11 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Build with Maven Mvnd
         run: mvnd clean install -P dev -DskipTests -B
+      - name: Build Nacos Native Image
+        run: |
+          cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-cloud/laokou-nacos
+          mvnd spring-boot:process-aot
+          mvnd -Pnative native:build -DskipTests -B
       - name: Build the Docker image
         run: |
           # 登录阿里云镜像仓库
