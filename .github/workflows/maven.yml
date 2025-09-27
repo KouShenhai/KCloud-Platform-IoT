@@ -27,6 +27,10 @@ jobs:
           wget https://downloads.apache.org/maven/mvnd/${MVND_VERSION}/maven-mvnd-${MVND_VERSION}-linux-amd64.zip
           unzip maven-mvnd-${MVND_VERSION}-linux-amd64.zip
           echo "${PWD}/maven-mvnd-${MVND_VERSION}-linux-amd64/bin" >> $GITHUB_PATH
+      - name: Build Nacos Native Image
+        run: |
+          cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-cloud/laokou-nacos
+          mvnd clean install -P dev -DskipTests -B native:build
       - name: Test with Maven Mvnd
         run: mvnd clean test -P dev
       - name: Upload coverage reports to Codecov
