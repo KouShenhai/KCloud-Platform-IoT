@@ -90,7 +90,7 @@ services:
   # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/down-property-write -p 4
   # bin/pulsar-admin topics create-partitioned-topic laokou/mqtt/up-property-write-reply -p 4
   pulsar:
-    image: apachepulsar/pulsar:4.1.0
+    image: apachepulsar/pulsar:4.1.1
     container_name: pulsar
     # 保持容器在没有守护程序的情况下运行
     tty: true
