@@ -64,11 +64,14 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <imageName>${project.parent.artifactId}</imageName>
-                    <mainClass>org.laokou.generator.GeneratorApp</mainClass>
-                    <fallback>false</fallback>
-                    <!-- 快速构建 -->
-                    <quickBuild>true</quickBuild>
+                  <imageName>${project.parent.artifactId}</imageName>
+                  <mainClass>org.laokou.generator.GeneratorApp</mainClass>
+                  <fallback>false</fallback>
+                  <!-- 快速构建 -->
+                  <quickBuild>true</quickBuild>
+                  <buildArgs>
+                    <buildArg>--verbose</buildArg>
+                  </buildArgs>
                 </configuration>
             </plugin>
             <plugin>

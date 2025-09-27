@@ -69,6 +69,9 @@
           <fallback>false</fallback>
           <!-- 快速构建 -->
           <quickBuild>true</quickBuild>
+          <buildArgs>
+            <buildArg>--verbose</buildArg>
+          </buildArgs>
         </configuration>
       </plugin>
       <plugin>
