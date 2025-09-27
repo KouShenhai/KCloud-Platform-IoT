@@ -21,7 +21,6 @@ import org.laokou.common.i18n.common.constant.StringConstants;
 
 import java.util.UUID;
 
-
 /**
  * @author laokou
  */

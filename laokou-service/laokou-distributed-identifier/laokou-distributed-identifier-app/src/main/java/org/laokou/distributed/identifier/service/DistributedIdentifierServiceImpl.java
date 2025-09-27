@@ -38,9 +38,11 @@ import java.util.List;
 @Service
 @DubboService(token = "3f7c5e45d6a7", group = "iot-distributed-identifier", version = "v3", timeout = 10000)
 @RequiredArgsConstructor
-public class DistributedIdentifierServiceImpl extends DubboDistributedIdentifierServiceITriple.DistributedIdentifierServiceIImplBase {
+public class DistributedIdentifierServiceImpl
+		extends DubboDistributedIdentifierServiceITriple.DistributedIdentifierServiceIImplBase {
 
 	private final DistributedIdentifierGenerateCmdExe distributedIdentifierGenerateCmdExe;
+
 	private final DistributedIdentifierGenerateBatchCmdExe distributedIdentifierGenerateBatchCmdExe;
 
 	@Override
@@ -55,11 +57,13 @@ public class DistributedIdentifierServiceImpl extends DubboDistributedIdentifier
 
 	@Override
 	public DistributedIdentifierBatchResult generateSnowflakeBatch(DistributedIdentifierBatchCmd cmd) {
-		Result<List<Long>> result = distributedIdentifierGenerateBatchCmdExe.execute(new DistributedIdentifierGenerateBatchCmd(cmd.getNum()));
+		Result<List<Long>> result = distributedIdentifierGenerateBatchCmdExe
+			.execute(new DistributedIdentifierGenerateBatchCmd(cmd.getNum()));
 		return DistributedIdentifierBatchResult.newBuilder()
 			.setCode(result.getCode())
 			.setMsg(result.getMsg())
 			.addAllData(result.getData())
 			.build();
 	}
+
 }

@@ -24,7 +24,6 @@ import org.laokou.common.i18n.util.JacksonUtils;
 
 import java.util.Map;
 
-
 /**
  * @author laokou
  */

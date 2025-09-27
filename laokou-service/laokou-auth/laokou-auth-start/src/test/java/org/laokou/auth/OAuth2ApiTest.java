@@ -457,7 +457,8 @@ class OAuth2ApiTest {
 	}
 
 	private Consumer<HttpHeaders> getHeaders() {
-		return headers -> headers.add(HttpHeaders.AUTHORIZATION, "Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
+		return headers -> headers.add(HttpHeaders.AUTHORIZATION,
+				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 	}
 
 	private String getOAuthApiUrl() {
@@ -465,7 +466,8 @@ class OAuth2ApiTest {
 	}
 
 	private String getDeviceCodeApiUrl() {
-		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort() + "/oauth2/device_authorization";
+		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort()
+				+ "/oauth2/device_authorization";
 	}
 
 	private String getCaptchaApiUrlV3() {
@@ -474,15 +476,17 @@ class OAuth2ApiTest {
 	}
 
 	private String getTokenUrlV3() {
-		return getSchema(disabledSsl()) + "auth" +StringConstants. RISK + serverProperties.getPort() + "/v3/tokens";
+		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort() + "/v3/tokens";
 	}
 
 	public String getSendMailCaptchaUrl() {
-		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort() + "/v3/captchas/send/mail";
+		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort()
+				+ "/v3/captchas/send/mail";
 	}
 
 	public String getSendMobileCaptchaUrl() {
-		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort() + "/v3/captchas/send/mobile";
+		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort()
+				+ "/v3/captchas/send/mobile";
 	}
 
 	private String getSchema(boolean disabled) {

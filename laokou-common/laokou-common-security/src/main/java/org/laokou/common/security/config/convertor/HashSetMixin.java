@@ -28,4 +28,5 @@ import java.util.HashSet;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
 @JsonDeserialize(as = HashSet.class)
 public interface HashSetMixin {
+
 }

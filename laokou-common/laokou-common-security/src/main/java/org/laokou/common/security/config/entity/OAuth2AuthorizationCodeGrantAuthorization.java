@@ -67,7 +67,6 @@ public class OAuth2AuthorizationCodeGrantAuthorization extends OAuth2Authorizati
 		this.state = state;
 	}
 
-
 	public static class AuthorizationCode extends AbstractToken {
 
 		public AuthorizationCode(String tokenValue, Instant issuedAt, Instant expiresAt, boolean invalidated) {

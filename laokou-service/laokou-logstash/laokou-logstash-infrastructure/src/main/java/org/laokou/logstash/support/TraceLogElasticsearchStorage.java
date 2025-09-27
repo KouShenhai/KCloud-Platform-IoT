@@ -35,8 +35,8 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 
 	private final ExecutorService virtualThreadExecutor;
 
-	public TraceLogElasticsearchStorage(ElasticsearchDocumentTemplate elasticsearchDocumentTemplate, ElasticsearchIndexTemplate elasticsearchIndexTemplate,
-										ExecutorService virtualThreadExecutor) {
+	public TraceLogElasticsearchStorage(ElasticsearchDocumentTemplate elasticsearchDocumentTemplate,
+			ElasticsearchIndexTemplate elasticsearchIndexTemplate, ExecutorService virtualThreadExecutor) {
 		this.elasticsearchDocumentTemplate = elasticsearchDocumentTemplate;
 		this.elasticsearchIndexTemplate = elasticsearchIndexTemplate;
 		this.virtualThreadExecutor = virtualThreadExecutor;
@@ -44,13 +44,11 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 
 	@Override
 	public void batchSave(List<Object> messages) {
-		List<TraceLogIndex> list = messages.stream().map(this::getTraceLogIndex)
-			.filter(Objects::nonNull)
-			.toList();
+		List<TraceLogIndex> list = messages.stream().map(this::getTraceLogIndex).filter(Objects::nonNull).toList();
 		elasticsearchIndexTemplate
-				.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, virtualThreadExecutor)
-				.thenComposeAsync(result -> elasticsearchDocumentTemplate.asyncBulkCreateDocuments(getIndexName(), list,
-						virtualThreadExecutor), virtualThreadExecutor)
+			.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, virtualThreadExecutor)
+			.thenComposeAsync(result -> elasticsearchDocumentTemplate.asyncBulkCreateDocuments(getIndexName(), list,
+					virtualThreadExecutor), virtualThreadExecutor)
 			.join();
 	}
 

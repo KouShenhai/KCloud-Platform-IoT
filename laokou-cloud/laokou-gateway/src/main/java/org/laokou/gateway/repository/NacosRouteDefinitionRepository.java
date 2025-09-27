@@ -54,7 +54,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
 // @formatter:off
 /**
  * nacos动态路由缓存库.
@@ -77,6 +76,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	private final String dataId = "router.json";
 
 	private final String group;
+
 	private final ConfigService configService;
 
 	private final ReactiveHashOperations<String, String, RouteDefinition> reactiveHashOperations;
@@ -84,8 +84,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	private final ExecutorService virtualThreadExecutor;
 
 	public NacosRouteDefinitionRepository(NacosConfigManager nacosConfigManager,
-										  ReactiveRedisTemplate<String, Object> reactiveRedisTemplate,
-										  ExecutorService virtualThreadExecutor) {
+			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate, ExecutorService virtualThreadExecutor) {
 		this.group = nacosConfigManager.getNacosConfigProperties().getGroup();
 		this.configService = nacosConfigManager.getConfigService();
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
@@ -105,8 +104,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			public void receiveConfigInfo(String routes) {
 				log.info("监听路由配置信息，开始同步路由配置：{}", routes);
 				virtualThreadExecutor.execute(() -> {
-					Disposable disposable = syncRouter(getRoutes(routes))
-						.subscribeOn(Schedulers.boundedElastic())
+					Disposable disposable = syncRouter(getRoutes(routes)).subscribeOn(Schedulers.boundedElastic())
 						.subscribe();
 					// 发布关闭订阅事件
 					SpringContextUtils.publishEvent(new UnsubscribeEvent(this, disposable));
@@ -167,7 +165,8 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			.doOnError(throwable -> log.error("删除路由失败，错误信息：{}", throwable.getMessage(), throwable))
 			.doOnSuccess(_ -> publishRefreshRoutesEvent())
 			.thenMany(Flux.fromIterable(routes))
-			.flatMap(router -> reactiveHashOperations.putIfAbsent(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router)
+			.flatMap(router -> reactiveHashOperations
+				.putIfAbsent(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router)
 				.doOnError(throwable -> log.error("保存路由失败，错误信息：{}", throwable.getMessage(), throwable)))
 			.then()
 			.doOnSuccess(_ -> publishRefreshRoutesEvent());

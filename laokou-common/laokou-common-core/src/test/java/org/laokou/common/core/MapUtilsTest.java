@@ -48,7 +48,8 @@ class MapUtilsTest {
 		Assertions.assertThat(MapUtils.initialCapacity(75)).isEqualTo(100);
 		Assertions.assertThat(MapUtils.isEmpty(map)).isFalse();
 		Assertions.assertThat(MapUtils.isNotEmpty(map)).isTrue();
-		map = MapUtils.toUriMap(Map.of("POST", Set.of("/test3=laokou-common-i18n")), "laokou-common-core", StringConstants.EQUAL);
+		map = MapUtils.toUriMap(Map.of("POST", Set.of("/test3=laokou-common-i18n")), "laokou-common-core",
+				StringConstants.EQUAL);
 		Assertions.assertThat(map).isNotNull();
 		Assertions.assertThat(map.size()).isEqualTo(1);
 		Assertions.assertThat(map.get("POST").size()).isEqualTo(0);
@@ -60,7 +61,8 @@ class MapUtilsTest {
 		Map<String, String> m = new LinkedHashMap<>(3);
 		m.put("a", "哈哈哈");
 		m.put("b", "嘻嘻");
-		Assertions.assertThat(MapUtils.parseParamterString(m)).isEqualTo("a=%E5%93%88%E5%93%88%E5%93%88&b=%E5%98%BB%E5%98%BB");
+		Assertions.assertThat(MapUtils.parseParamterString(m))
+			.isEqualTo("a=%E5%93%88%E5%93%88%E5%93%88&b=%E5%98%BB%E5%98%BB");
 		Assertions.assertThat(MapUtils.parseParamterString(m, false)).isEqualTo("a=哈哈哈&b=嘻嘻");
 		MultiValueMap<String, String> multiValueMap = MapUtils.getParameterMap(Map.of("a", new String[] { "1", "2" }));
 		Assertions.assertThat(multiValueMap.size()).isEqualTo(1);

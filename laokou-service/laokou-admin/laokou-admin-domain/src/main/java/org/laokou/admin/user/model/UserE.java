@@ -163,13 +163,12 @@ public class UserE extends Identifier {
 
 	private final IdGeneratorBatch idGeneratorBatch;
 
-	public UserE(IdGenerator idGenerator,
-				 IdGeneratorBatch idGeneratorBatch,
-				 @Qualifier("saveUserParamValidator") UserParamValidator saveUserParamValidator,
-				 @Qualifier("modifyUserParamValidator") UserParamValidator modifyUserParamValidator,
-				 @Qualifier("resetUserPwdParamValidator") UserParamValidator resetUserPwdParamValidator,
-				 @Qualifier("modifyUserAuthorityParamValidator") UserParamValidator modifyUserAuthorityParamValidator,
-				 PasswordEncoder passwordEncoder) {
+	public UserE(IdGenerator idGenerator, IdGeneratorBatch idGeneratorBatch,
+			@Qualifier("saveUserParamValidator") UserParamValidator saveUserParamValidator,
+			@Qualifier("modifyUserParamValidator") UserParamValidator modifyUserParamValidator,
+			@Qualifier("resetUserPwdParamValidator") UserParamValidator resetUserPwdParamValidator,
+			@Qualifier("modifyUserAuthorityParamValidator") UserParamValidator modifyUserAuthorityParamValidator,
+			PasswordEncoder passwordEncoder) {
 		this.idGenerator = idGenerator;
 		this.saveUserParamValidator = saveUserParamValidator;
 		this.modifyUserParamValidator = modifyUserParamValidator;

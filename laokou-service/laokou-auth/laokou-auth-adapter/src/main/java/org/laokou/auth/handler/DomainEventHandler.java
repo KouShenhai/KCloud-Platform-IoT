@@ -38,7 +38,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-
 /**
  * @author laokou
  */
@@ -55,7 +54,8 @@ public class DomainEventHandler {
 
 	private final NoticeLogServiceI noticeLogServiceI;
 
-	@KafkaListener(topics = MqEnum.LOGIN_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.LOGIN_LOG_CONSUMER_GROUP)
+	@KafkaListener(topics = MqEnum.LOGIN_LOG_TOPIC,
+			groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.LOGIN_LOG_CONSUMER_GROUP)
 	public void handleLoginLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
@@ -90,8 +90,8 @@ public class DomainEventHandler {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
 				SendCaptchaEvent evt = (SendCaptchaEvent) record.value();
-				noticeLogServiceI
-					.saveNoticeLog(new NoticeLogSaveCmd(NoticeLogConvertor.toClientObject(evt, smsService.send(evt.getUuid()))));
+				noticeLogServiceI.saveNoticeLog(
+						new NoticeLogSaveCmd(NoticeLogConvertor.toClientObject(evt, smsService.send(evt.getUuid()))));
 			}
 		}
 		finally {

@@ -56,20 +56,18 @@ public class OAuth2AuthorizationConfig {
 	 */
 	@Bean
 	@ConditionalOnMissingBean(OAuth2AuthorizationService.class)
-	OAuth2AuthorizationService auth2AuthorizationService(
-		RegisteredClientRepository registeredClientRepository,
-		OAuth2AuthorizationGrantAuthorizationRepository authorizationGrantAuthorizationRepository) {
-		return new RedisOAuth2AuthorizationService(registeredClientRepository, authorizationGrantAuthorizationRepository);
+	OAuth2AuthorizationService auth2AuthorizationService(RegisteredClientRepository registeredClientRepository,
+			OAuth2AuthorizationGrantAuthorizationRepository authorizationGrantAuthorizationRepository) {
+		return new RedisOAuth2AuthorizationService(registeredClientRepository,
+				authorizationGrantAuthorizationRepository);
 	}
 
 	@Bean
 	public RedisCustomConversions redisCustomConversions() {
 		return new RedisCustomConversions(Arrays.asList(new UsernamePasswordAuthenticationTokenToBytesConverter(),
-			new BytesToUsernamePasswordAuthenticationTokenConverter(),
-			new OAuth2AuthorizationRequestToBytesConverter(),
-			new BytesToOAuth2AuthorizationRequestConverter(),
-			new ClaimsHolderToBytesConverter(),
-			new BytesToClaimsHolderConverter()));
+				new BytesToUsernamePasswordAuthenticationTokenConverter(),
+				new OAuth2AuthorizationRequestToBytesConverter(), new BytesToOAuth2AuthorizationRequestConverter(),
+				new ClaimsHolderToBytesConverter(), new BytesToClaimsHolderConverter()));
 	}
 
 	/**

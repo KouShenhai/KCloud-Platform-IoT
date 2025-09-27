@@ -50,4 +50,5 @@ public class TraceLogLokiStorage extends AbstractTraceLogStorage {
 			.retrieve()
 			.toBodilessEntity();
 	}
+
 }

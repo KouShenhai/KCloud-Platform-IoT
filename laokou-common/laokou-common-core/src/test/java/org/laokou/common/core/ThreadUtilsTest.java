@@ -23,7 +23,6 @@ import org.laokou.common.core.util.ThreadUtils;
 
 import java.util.concurrent.ExecutorService;
 
-
 /**
  * @author laokou
  */

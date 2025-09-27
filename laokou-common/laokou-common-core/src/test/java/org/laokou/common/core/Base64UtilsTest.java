@@ -23,7 +23,6 @@ import org.laokou.common.core.util.Base64Utils;
 
 import java.nio.charset.StandardCharsets;
 
-
 /**
  * @author laokou
  */

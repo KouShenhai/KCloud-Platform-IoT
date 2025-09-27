@@ -26,7 +26,6 @@ import org.laokou.common.core.util.TreeUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-
 class TreeUtilsTest {
 
 	@Test

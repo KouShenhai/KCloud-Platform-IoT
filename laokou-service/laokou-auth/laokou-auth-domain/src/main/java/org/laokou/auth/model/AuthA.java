@@ -183,7 +183,8 @@ public class AuthA extends AggregateRoot {
 	public void getTenantId(Supplier<Long> supplier) {
 		if (isDefaultTenant()) {
 			this.user.setTenantId(0L);
-		} else {
+		}
+		else {
 			this.user.setTenantId(supplier.get());
 		}
 	}
@@ -261,7 +262,8 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public String getLoginName() {
-		if (List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.AUTHORIZATION_CODE, GrantTypeEnum.TEST).contains(grantTypeEnum)) {
+		if (List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.AUTHORIZATION_CODE, GrantTypeEnum.TEST)
+			.contains(grantTypeEnum)) {
 			return this.username;
 		}
 		return this.captcha.uuid();
@@ -272,11 +274,13 @@ public class AuthA extends AggregateRoot {
 	}
 
 	private boolean isUseCaptcha() {
-		return List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.MOBILE, GrantTypeEnum.MAIL).contains(grantTypeEnum);
+		return List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.MOBILE, GrantTypeEnum.MAIL)
+			.contains(grantTypeEnum);
 	}
 
 	private boolean isUsePassword() {
-		return List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.AUTHORIZATION_CODE, GrantTypeEnum.TEST).contains(grantTypeEnum);
+		return List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.AUTHORIZATION_CODE, GrantTypeEnum.TEST)
+			.contains(grantTypeEnum);
 	}
 
 	private Set<String> getPaths(List<String> list) {

@@ -17,7 +17,6 @@
 
 package org.laokou.admin.noticeLog.api;
 
-
 import org.laokou.admin.noticeLog.dto.NoticeLogExportCmd;
 import org.laokou.admin.noticeLog.dto.NoticeLogGetQry;
 import org.laokou.admin.noticeLog.dto.NoticeLogImportCmd;

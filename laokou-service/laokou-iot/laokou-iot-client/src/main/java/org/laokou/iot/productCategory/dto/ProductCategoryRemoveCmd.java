@@ -17,7 +17,6 @@
 
 package org.laokou.iot.productCategory.dto;
 
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;

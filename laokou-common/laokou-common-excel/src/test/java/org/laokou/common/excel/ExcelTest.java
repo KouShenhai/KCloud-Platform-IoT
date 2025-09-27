@@ -98,18 +98,22 @@ class ExcelTest {
 		List<TestUserDO> list = testUserMapper.selectList(Wrappers.emptyWrapper());
 		Assertions.assertThat(list.size()).isEqualTo(1);
 		Assertions.assertThat(list.stream().map(TestUserDO::getName).toList().contains("老寇")).isTrue();
-		Assertions.assertThatNoException().isThrownBy(() -> ExcelUtils.doImport(StringConstants.EMPTY, TestUserExcel.class,
-				TestUserConvertor.INSTANCE, ResourceUtils.getResource("classpath:test3.xlsx").getInputStream(),
-				TestUserMapper.class, TestUserMapper::insert, mybatisUtils));
-		Assertions.assertThatNoException().isThrownBy(() -> ExcelUtils.doImport("test", TestUserExcel.class,
-				TestUserConvertor.INSTANCE, ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(),
-				TestUserMapper.class, TestUserMapper::insert, mybatisUtils));
-		Assertions.assertThatNoException().isThrownBy(() -> ExcelUtils.doImport("test2", TestUserExcel.class,
-				TestUserConvertor.INSTANCE, ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(),
-				TestUserMapper.class, TestUserMapper::insert, mybatisUtils));
-		Assertions.assertThatNoException().isThrownBy(() -> ExcelUtils.doImport("test3", TestUserExcel.class,
-				TestUserConvertor.INSTANCE, ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(),
-				TestUserMapper.class, TestUserMapper::insert, mybatisUtils));
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> ExcelUtils.doImport(StringConstants.EMPTY, TestUserExcel.class,
+					TestUserConvertor.INSTANCE, ResourceUtils.getResource("classpath:test3.xlsx").getInputStream(),
+					TestUserMapper.class, TestUserMapper::insert, mybatisUtils));
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> ExcelUtils.doImport("test", TestUserExcel.class, TestUserConvertor.INSTANCE,
+					ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
+					TestUserMapper::insert, mybatisUtils));
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> ExcelUtils.doImport("test2", TestUserExcel.class, TestUserConvertor.INSTANCE,
+					ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
+					TestUserMapper::insert, mybatisUtils));
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> ExcelUtils.doImport("test3", TestUserExcel.class, TestUserConvertor.INSTANCE,
+					ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
+					TestUserMapper::insert, mybatisUtils));
 		long count = testUserMapper.selectObjectCount(new PageQuery());
 		Assertions.assertThat(count).isEqualTo(7);
 		Assertions.assertThatNoException()

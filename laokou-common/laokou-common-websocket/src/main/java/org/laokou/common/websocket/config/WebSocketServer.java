@@ -32,7 +32,6 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
-
 /**
  * WebSocket服务器配置.
  *
@@ -46,7 +45,7 @@ public final class WebSocketServer extends AbstractServer {
 	private final ExecutorService virtualThreadExecutor;
 
 	public WebSocketServer(ChannelHandler channelHandler, SpringWebSocketServerProperties properties,
-						   ExecutorService virtualThreadExecutor) {
+			ExecutorService virtualThreadExecutor) {
 		super(properties.getBindIp(), properties.getPort(), channelHandler, properties.getBossCorePoolSize(),
 				properties.getWorkerCorePoolSize());
 		this.properties = properties;

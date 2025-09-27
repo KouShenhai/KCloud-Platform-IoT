@@ -32,7 +32,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-
 /**
  * @author laokou
  */
@@ -43,13 +42,16 @@ public class DomainEventHandler {
 
 	private final OssLogsServiceI ossLogsServiceI;
 
-	@KafkaListener(topics = MqEnum.OSS_LOG_TOPIC, groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.OSS_LOG_CONSUMER_GROUP)
+	@KafkaListener(topics = MqEnum.OSS_LOG_TOPIC,
+			groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.OSS_LOG_CONSUMER_GROUP)
 	public void handleLoginLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
-				ossLogsServiceI.saveOssLog(new OssLogSaveCmd(OssLogConvertor.toClientObject((OssUploadEvent) record.value())));
+				ossLogsServiceI
+					.saveOssLog(new OssLogSaveCmd(OssLogConvertor.toClientObject((OssUploadEvent) record.value())));
 			}
-		} catch (DuplicateKeyException ex) {
+		}
+		catch (DuplicateKeyException ex) {
 			log.error("保存失败，oss日志重复：{}", ex.getMessage());
 		}
 		finally {

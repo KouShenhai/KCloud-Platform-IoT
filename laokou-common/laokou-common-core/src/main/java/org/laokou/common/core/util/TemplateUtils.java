@@ -37,7 +37,8 @@ public final class TemplateUtils extends FreeMarkerTemplateUtils {
 	/**
 	 * 模板配置.
 	 */
-	private static final Configuration CONFIGURATION = new Configuration(Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
+	private static final Configuration CONFIGURATION = new Configuration(
+			Configuration.DEFAULT_INCOMPATIBLE_IMPROVEMENTS);
 
 	private TemplateUtils() {
 	}

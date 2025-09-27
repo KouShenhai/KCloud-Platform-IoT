@@ -21,7 +21,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.network.mqtt.client.util.VertxMqttUtils;
 
-
 /**
  * @author laokou
  */

@@ -45,9 +45,10 @@ public class FtpTemplate {
 					ftpClient.makeDirectory(directory);
 					ftpClient.changeWorkingDirectory(directory);
 				}
-				return ftpClient.storeFile(new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1),
-					in);
-			} catch (Exception e) {
+				return ftpClient
+					.storeFile(new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1), in);
+			}
+			catch (Exception e) {
 				log.error("【FTP】 => 上传文件失败，错误信息：{}", e.getMessage(), e);
 				return false;
 			}

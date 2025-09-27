@@ -24,12 +24,12 @@ import org.laokou.distributed.identifier.api.DistributedIdentifierCmd;
 import org.laokou.distributed.identifier.api.DistributedIdentifierResult;
 import org.laokou.distributed.identifier.api.DubboDistributedIdentifierServiceITriple;
 
-
 /**
  * @author laokou
  */
 @Slf4j
-public class DistributedIdentifierMock extends DubboDistributedIdentifierServiceITriple.DistributedIdentifierServiceIImplBase {
+public class DistributedIdentifierMock
+		extends DubboDistributedIdentifierServiceITriple.DistributedIdentifierServiceIImplBase {
 
 	@Override
 	public DistributedIdentifierResult generateSnowflake(DistributedIdentifierCmd cmd) {
@@ -40,4 +40,5 @@ public class DistributedIdentifierMock extends DubboDistributedIdentifierService
 			.setData(System.nanoTime())
 			.build();
 	}
+
 }

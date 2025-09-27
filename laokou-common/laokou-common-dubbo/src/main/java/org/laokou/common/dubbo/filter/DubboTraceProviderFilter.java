@@ -48,10 +48,12 @@ public class DubboTraceProviderFilter implements Filter {
 			try {
 				MDCUtils.put(traceId, spanId);
 				return supplier.get();
-			} finally {
+			}
+			finally {
 				MDCUtils.clear();
 			}
-		} else {
+		}
+		else {
 			return supplier.get();
 		}
 	}

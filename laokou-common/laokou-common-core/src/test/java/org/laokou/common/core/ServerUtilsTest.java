@@ -16,11 +16,11 @@
  */
 
 package org.laokou.common.core;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ServerUtils;
 import java.net.UnknownHostException;
-
 
 /**
  * @author laokou

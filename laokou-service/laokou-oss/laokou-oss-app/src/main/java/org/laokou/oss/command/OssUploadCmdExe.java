@@ -42,14 +42,16 @@ public class OssUploadCmdExe {
 
 	public Result<OssUploadCO> execute(OssUploadCmd cmd) {
 		OssA ossA = OssConvertor.toEntity(cmd.getFileType(), cmd.getSize(), cmd.getExtName(), cmd.getBuffer(),
-			cmd.getContentType(), cmd.getName());
+				cmd.getContentType(), cmd.getName());
 		try {
 			// 上传文件
 			ossDomainService.uploadOss(ossA);
 			return Result.ok(OssConvertor.toClientObject(ossA));
-		} catch (GlobalException e) {
+		}
+		catch (GlobalException e) {
 			return Result.fail(e.getCode(), e.getMsg());
-		} finally {
+		}
+		finally {
 			// 发布领域事件
 			if (ossA.isPublishEvent()) {
 				domainEventPublisher.publish(MqEnum.OSS_LOG_TOPIC, OssConvertor.toDomainEvent(ossA));

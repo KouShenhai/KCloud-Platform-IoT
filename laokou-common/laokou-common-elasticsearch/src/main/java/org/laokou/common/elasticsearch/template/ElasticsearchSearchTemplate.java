@@ -59,10 +59,8 @@ public final class ElasticsearchSearchTemplate {
 		SearchResponse<S> response = elasticsearchClient.search(searchRequest, clazz);
 		HitsMetadata<S> hits = response.hits();
 		assert hits.total() != null;
-		return Page.create(hits.hits().stream()
-			.map(this::processHit)
-			.filter(ObjectUtils::isNotNull)
-			.toList(), hits.total().value());
+		return Page.create(hits.hits().stream().map(this::processHit).filter(ObjectUtils::isNotNull).toList(),
+				hits.total().value());
 	}
 
 	public <S> CompletableFuture<Page<S>> asyncSearch(List<String> names, Search search, Class<S> clazz) {
@@ -70,10 +68,8 @@ public final class ElasticsearchSearchTemplate {
 		return elasticsearchAsyncClient.search(searchRequest, clazz).thenApplyAsync(response -> {
 			HitsMetadata<S> hits = response.hits();
 			assert hits.total() != null;
-			return Page.create(hits.hits().stream()
-				.map(this::processHit)
-				.filter(ObjectUtils::isNotNull)
-				.toList(), hits.total().value());
+			return Page.create(hits.hits().stream().map(this::processHit).filter(ObjectUtils::isNotNull).toList(),
+					hits.total().value());
 		});
 	}
 
@@ -117,18 +113,15 @@ public final class ElasticsearchSearchTemplate {
 			.postTags(highlight.getPostTags())
 			// 多个字段高亮，需要设置false
 			.requireFieldMatch(highlight.isRequireFieldMatch())
-			.fields(getHighlightFields(highlight.getFields()))
-		);
+			.fields(getHighlightFields(highlight.getFields())));
 	}
 
 	private List<NamedValue<HighlightField>> getHighlightFields(Set<Search.HighlightField> fields) {
-		return fields.stream()
-			.map(item -> NamedValue.of(item.getName(), HighlightField.of(hf ->
-				// fragmentSize => 最大高亮分片数
-				hf.fragmentSize(item.getFragmentSize())
-				// numberOfFragments => 获取高亮片段位置
-				.numberOfFragments(item.getNumberOfFragments()))))
-			.toList();
+		return fields.stream().map(item -> NamedValue.of(item.getName(), HighlightField.of(hf ->
+		// fragmentSize => 最大高亮分片数
+		hf.fragmentSize(item.getFragmentSize())
+			// numberOfFragments => 获取高亮片段位置
+			.numberOfFragments(item.getNumberOfFragments())))).toList();
 	}
 
 	private <S> S processHit(Hit<S> hit) {
@@ -142,7 +135,8 @@ public final class ElasticsearchSearchTemplate {
 			try {
 				Field field = clazz.getDeclaredField(entry.getKey());
 				field.setAccessible(true);
-				ReflectionUtils.setField(field, source, StringUtils.collectionToDelimitedString(entry.getValue(),"..."));
+				ReflectionUtils.setField(field, source,
+						StringUtils.collectionToDelimitedString(entry.getValue(), "..."));
 			}
 			catch (NoSuchFieldException ex) {
 				throw new IllegalArgumentException(ex);

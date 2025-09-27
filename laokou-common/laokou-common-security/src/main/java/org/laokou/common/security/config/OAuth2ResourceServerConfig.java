@@ -58,10 +58,10 @@ public class OAuth2ResourceServerConfig {
 
 	@Bean
 	@ConditionalOnMissingBean(RegisteredClientRepository.class)
-	RegisteredClientRepository registeredClientRepository(OAuth2RegisteredClientRepository authRegisteredClientRepository) {
+	RegisteredClientRepository registeredClientRepository(
+			OAuth2RegisteredClientRepository authRegisteredClientRepository) {
 		return new RedisRegisteredClientRepository(authRegisteredClientRepository);
 	}
-
 
 	// @formatter:off
 	@NotNull

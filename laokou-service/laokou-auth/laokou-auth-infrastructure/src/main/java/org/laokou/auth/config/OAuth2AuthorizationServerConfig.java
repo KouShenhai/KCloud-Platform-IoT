@@ -83,7 +83,6 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.Set;
 import java.util.UUID;
 
-
 // @formatter:off
 /**
  * 认证服务器配置. 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}.
@@ -176,9 +175,11 @@ class OAuth2AuthorizationServerConfig {
 	 */
 	@Bean
 	@ConditionalOnMissingBean(RegisteredClientRepository.class)
-	RegisteredClientRepository registeredClientRepository(OAuth2RegisteredClientRepository authRegisteredClientRepository,
-														  OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
-		RedisRegisteredClientRepository redisRegisteredClientRepository = new RedisRegisteredClientRepository(authRegisteredClientRepository);
+	RegisteredClientRepository registeredClientRepository(
+			OAuth2RegisteredClientRepository authRegisteredClientRepository,
+			OAuth2AuthorizationServerPropertiesMapper propertiesMapper) {
+		RedisRegisteredClientRepository redisRegisteredClientRepository = new RedisRegisteredClientRepository(
+				authRegisteredClientRepository);
 		propertiesMapper.asRegisteredClients().forEach(redisRegisteredClientRepository::save);
 		return redisRegisteredClientRepository;
 	}
@@ -285,7 +286,8 @@ class OAuth2AuthorizationServerConfig {
 	@Bean("authNewTopics")
 	KafkaAdmin.NewTopics newTopics() {
 		return new KafkaAdmin.NewTopics(new NewTopic(MqEnum.LOGIN_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.MAIL_CAPTCHA_TOPIC, 3, (short) 1), new NewTopic(MqEnum.MOBILE_CAPTCHA_TOPIC, 3, (short) 1));
+				new NewTopic(MqEnum.MAIL_CAPTCHA_TOPIC, 3, (short) 1),
+				new NewTopic(MqEnum.MOBILE_CAPTCHA_TOPIC, 3, (short) 1));
 	}
 
 	/**

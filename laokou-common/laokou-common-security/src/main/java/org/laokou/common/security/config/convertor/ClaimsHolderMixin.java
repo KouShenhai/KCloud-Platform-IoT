@@ -33,7 +33,6 @@
 
 package org.laokou.common.security.config.convertor;
 
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -53,6 +52,7 @@ import java.util.Map;
 abstract class ClaimsHolderMixin {
 
 	@JsonCreator
-    ClaimsHolderMixin(@JsonProperty("claims") Map<String, Object> claims) {}
+	ClaimsHolderMixin(@JsonProperty("claims") Map<String, Object> claims) {
+	}
 
 }

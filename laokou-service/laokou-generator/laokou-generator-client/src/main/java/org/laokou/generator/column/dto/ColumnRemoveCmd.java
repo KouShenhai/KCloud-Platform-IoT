@@ -17,7 +17,6 @@
 
 package org.laokou.generator.column.dto;
 
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;

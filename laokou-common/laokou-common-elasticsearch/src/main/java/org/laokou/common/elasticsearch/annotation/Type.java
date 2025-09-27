@@ -37,20 +37,18 @@ public enum Type {
 		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
 			Document.SubField subField = mapping.subField();
 			mappingBuilder.properties(mapping.field(),
-				fn -> fn.text(t -> t.index(mapping.index())
+					fn -> fn.text(t -> t.index(mapping.index())
 						.eagerGlobalOrdinals(mapping.eagerGlobalOrdinals())
 						.searchAnalyzer(mapping.searchAnalyzer())
 						.analyzer(mapping.analyzer())
-					.fields("keyword", f -> f.keyword(p -> p.ignoreAbove(subField.ignoreAbove())))
-				)
-			);
+						.fields("keyword", f -> f.keyword(p -> p.ignoreAbove(subField.ignoreAbove())))));
 		}
 	},
 	KEYWORD {
 		@Override
 		public void setProperties(TypeMapping.Builder mappingBuilder, Document.Mapping mapping) {
-			mappingBuilder.properties(mapping.field(), fn -> fn
-				.keyword(t -> t.index(mapping.index()).eagerGlobalOrdinals(mapping.eagerGlobalOrdinals())));
+			mappingBuilder.properties(mapping.field(),
+					fn -> fn.keyword(t -> t.index(mapping.index()).eagerGlobalOrdinals(mapping.eagerGlobalOrdinals())));
 		}
 	},
 	LONG {

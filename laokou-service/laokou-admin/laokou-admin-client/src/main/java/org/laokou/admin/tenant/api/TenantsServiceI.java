@@ -17,7 +17,6 @@
 
 package org.laokou.admin.tenant.api;
 
-
 import org.laokou.admin.tenant.dto.TenantExportCmd;
 import org.laokou.admin.tenant.dto.TenantGetQry;
 import org.laokou.admin.tenant.dto.TenantImportCmd;

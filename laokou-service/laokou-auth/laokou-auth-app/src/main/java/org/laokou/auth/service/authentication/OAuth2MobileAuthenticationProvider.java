@@ -32,7 +32,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-
 /**
  * 手机号处理器.
  *
@@ -43,7 +42,8 @@ import org.springframework.stereotype.Component;
 final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2MobileAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authenticationProcessor) {
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
+			OAuth2AuthenticationProcessor authenticationProcessor) {
 		super(authorizationService, tokenGenerator, authenticationProcessor);
 	}
 
@@ -57,7 +57,8 @@ final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authenticat
 		String code = request.getParameter(Constants.CODE);
 		String mobile = request.getParameter(Constants.MOBILE);
 		String tenantCode = request.getParameter(Constants.TENANT_CODE);
-		AuthA authA = AuthConvertor.toEntity(StringConstants.EMPTY, StringConstants.EMPTY, tenantCode, GrantTypeEnum.MOBILE, code, mobile);
+		AuthA authA = AuthConvertor.toEntity(StringConstants.EMPTY, StringConstants.EMPTY, tenantCode,
+				GrantTypeEnum.MOBILE, code, mobile);
 		authA.createUserByMobile();
 		return authentication(authA, request);
 	}

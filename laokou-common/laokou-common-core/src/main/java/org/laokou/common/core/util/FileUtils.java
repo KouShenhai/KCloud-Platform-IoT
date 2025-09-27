@@ -163,8 +163,8 @@ public final class FileUtils {
 
 	public static void write(Path sourcePath, InputStream inputStream, long size) throws NoSuchAlgorithmException {
 		try (FileOutputStream fos = new FileOutputStream(sourcePath.toFile());
-			 FileChannel outChannel = fos.getChannel();
-			 ReadableByteChannel inChannel = Channels.newChannel(inputStream)) {
+				FileChannel outChannel = fos.getChannel();
+				ReadableByteChannel inChannel = Channels.newChannel(inputStream)) {
 			outChannel.transferFrom(inChannel, 0, size);
 		}
 		catch (IOException e) {
@@ -355,9 +355,9 @@ public final class FileUtils {
 
 	private static void chunkWrite(File targetFile, File sourceFile, long position, long size) {
 		try (FileInputStream in = new FileInputStream(sourceFile);
-			 FileChannel inChannel = in.getChannel();
-			 RandomAccessFile accessFile = new RandomAccessFile(targetFile, "rw");
-			 FileChannel outChannel = accessFile.getChannel()) {
+				FileChannel inChannel = in.getChannel();
+				RandomAccessFile accessFile = new RandomAccessFile(targetFile, "rw");
+				FileChannel outChannel = accessFile.getChannel()) {
 			// 零拷贝
 			// transferFrom 与 transferTo 区别
 			// transferTo 最多拷贝2gb，和源文件大小保持一致【发送，从当前通道读取数据并写入外部通道】
@@ -378,9 +378,13 @@ public final class FileUtils {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	public static class Chunk {
+
 		private File file;
+
 		private long position;
+
 		private long size;
+
 	}
 
 }

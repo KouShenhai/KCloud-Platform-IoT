@@ -21,7 +21,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.RegexUtils;
 
-
 /**
  * @author laokou
  */
@@ -45,7 +44,8 @@ class RegexUtilsTest {
 		Assertions.assertThat(RegexUtils.mobileRegex("1888888888")).isFalse();
 		Assertions.assertThat(RegexUtils.mobileRegex("1888888888x")).isFalse();
 		Assertions.assertThat(RegexUtils.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", "哈哈哈")).isFalse();
-		Assertions.assertThat(RegexUtils.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", "admin123")).isTrue();
+		Assertions.assertThat(RegexUtils.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", "admin123"))
+			.isTrue();
 		Assertions.assertThat(RegexUtils.getRegexValue("/v3/test", "/(v\\d+)/")).isEqualTo("v3");
 	}
 

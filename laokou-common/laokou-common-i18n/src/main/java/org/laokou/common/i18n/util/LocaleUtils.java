@@ -48,7 +48,10 @@ public final class LocaleUtils {
 	}
 
 	private static String getLanguage(String language) {
-		return Arrays.stream(language.split(StringConstants.COMMA)).filter(i -> i.contains(StringConstants.ROD)).findFirst().orElse(StringConstants.EMPTY);
+		return Arrays.stream(language.split(StringConstants.COMMA))
+			.filter(i -> i.contains(StringConstants.ROD))
+			.findFirst()
+			.orElse(StringConstants.EMPTY);
 	}
 
 }

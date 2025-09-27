@@ -34,17 +34,9 @@ import java.util.List;
 @Component
 public class HttpMessageHandler {
 
-
-	@PulsarListeners(
-			value = {
-					@PulsarListener(topicPattern = "persistent://laokouyun/http/up-property-report",
-							subscriptionName = "laokouyun-http-up-property-report",
-							schemaType = SchemaType.BYTES,
-							batch = true,
-							ackMode = AckMode.BATCH,
-							subscriptionType = SubscriptionType.Shared),
-			}
-	)
+	@PulsarListeners(value = { @PulsarListener(topicPattern = "persistent://laokouyun/http/up-property-report",
+			subscriptionName = "laokouyun-http-up-property-report", schemaType = SchemaType.BYTES, batch = true,
+			ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Shared), })
 	public void handlePropertyReportMessage(List<byte[]> messages) {
 		log.info("接收到HTTP消息：{}", messages);
 	}

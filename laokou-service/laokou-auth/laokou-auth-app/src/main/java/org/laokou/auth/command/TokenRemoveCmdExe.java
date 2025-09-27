@@ -35,7 +35,6 @@ import org.springframework.stereotype.Component;
 
 import java.security.Principal;
 
-
 /**
  * 退出登录执行器.
  *

@@ -105,11 +105,10 @@ public class RoleE extends Identifier {
 
 	private final RoleParamValidator modifyRoleAuthorityParamValidator;
 
-	public RoleE(IdGenerator idGenerator,
-				 IdGeneratorBatch idGeneratorBatch,
-				 @Qualifier("saveRoleParamValidator") RoleParamValidator saveRoleParamValidator,
-				 @Qualifier("modifyRoleParamValidator") RoleParamValidator modifyRoleParamValidator,
-				 @Qualifier("modifyRoleAuthorityParamValidator") RoleParamValidator modifyRoleAuthorityParamValidator) {
+	public RoleE(IdGenerator idGenerator, IdGeneratorBatch idGeneratorBatch,
+			@Qualifier("saveRoleParamValidator") RoleParamValidator saveRoleParamValidator,
+			@Qualifier("modifyRoleParamValidator") RoleParamValidator modifyRoleParamValidator,
+			@Qualifier("modifyRoleAuthorityParamValidator") RoleParamValidator modifyRoleAuthorityParamValidator) {
 		this.idGenerator = idGenerator;
 		this.idGeneratorBatch = idGeneratorBatch;
 		this.saveRoleParamValidator = saveRoleParamValidator;

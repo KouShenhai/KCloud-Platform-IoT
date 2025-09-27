@@ -23,7 +23,6 @@ import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.ObjectUtils;
 
-
 /**
  * 用户实体.
  *

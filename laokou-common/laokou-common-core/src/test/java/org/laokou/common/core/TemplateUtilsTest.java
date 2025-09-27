@@ -23,7 +23,6 @@ import org.laokou.common.core.util.TemplateUtils;
 
 import java.util.Map;
 
-
 /**
  * @author laokou
  */

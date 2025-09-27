@@ -75,21 +75,24 @@ class AuthParamValidatorTest {
 
 	@Test
 	void test_authorizationCodeAuthParamValidator() {
-		AuthA auth = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, StringConstants.EMPTY, StringConstants.EMPTY);
+		AuthA auth = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, StringConstants.EMPTY,
+				StringConstants.EMPTY);
 		// 校验授权码登录
 		Assertions.assertThatNoException().isThrownBy(() -> authorizationCodeAuthParamValidator.validateAuth(auth));
 	}
 
 	@Test
 	void test_mailAuthParamValidator() {
-		AuthA auth = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
+		AuthA auth = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com",
+				"123456");
 		// 校验邮箱登录
 		Assertions.assertThatNoException().isThrownBy(() -> mailAuthParamValidator.validateAuth(auth));
 	}
 
 	@Test
 	void test_mobileAuthParamValidator() {
-		AuthA auth = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
+		AuthA auth = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MOBILE, "18888888888",
+				"123456");
 		Assertions.assertThat(auth).isNotNull();
 		// 校验手机号登录
 		Assertions.assertThatNoException().isThrownBy(() -> mobileAuthParamValidator.validateAuth(auth));

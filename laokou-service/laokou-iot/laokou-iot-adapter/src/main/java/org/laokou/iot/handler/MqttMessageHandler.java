@@ -34,73 +34,37 @@ import java.util.List;
 @Component
 public class MqttMessageHandler {
 
-
-	@PulsarListeners(
-			value = {
-					@PulsarListener(topicPattern = "persistent://laokouyun/mqtt/up-property-report",
-							subscriptionName = "laokouyun-mqtt-up-property-report",
-							schemaType = SchemaType.BYTES,
-							batch = true,
-							ackMode = AckMode.BATCH,
-							subscriptionType = SubscriptionType.Shared),
-			}
-	)
+	@PulsarListeners(value = { @PulsarListener(topicPattern = "persistent://laokouyun/mqtt/up-property-report",
+			subscriptionName = "laokouyun-mqtt-up-property-report", schemaType = SchemaType.BYTES, batch = true,
+			ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Shared), })
 	public void handlePropertyReportMessage(List<byte[]> messages) {
 		log.info("接收到MQTT消息：{}", messages);
 	}
 
-	@PulsarListeners(
-			value = {
-					@PulsarListener(topicPattern = "persistent://laokouyun/mqtt/up-property-read-reply",
-							subscriptionName = "laokouyun-mqtt-up-property-read-reply",
-							schemaType = SchemaType.BYTES,
-							batch = true,
-							ackMode = AckMode.BATCH,
-							subscriptionType = SubscriptionType.Shared),
-			}
-	)
+	@PulsarListeners(value = { @PulsarListener(topicPattern = "persistent://laokouyun/mqtt/up-property-read-reply",
+			subscriptionName = "laokouyun-mqtt-up-property-read-reply", schemaType = SchemaType.BYTES, batch = true,
+			ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Shared), })
 	public void handlePropertyReadReplyMessage(List<byte[]> messages) {
 		log.info("接收到MQTT消息：{}", messages);
 	}
 
-	@PulsarListeners(
-			value = {
-					@PulsarListener(topicPattern = "persistent://laokouyun/mqtt/up-property-write-reply",
-							subscriptionName = "laokouyun-mqtt-up-property-write-reply",
-							schemaType = SchemaType.BYTES,
-							batch = true,
-							ackMode = AckMode.BATCH,
-							subscriptionType = SubscriptionType.Shared),
-			}
-	)
+	@PulsarListeners(value = { @PulsarListener(topicPattern = "persistent://laokouyun/mqtt/up-property-write-reply",
+			subscriptionName = "laokouyun-mqtt-up-property-write-reply", schemaType = SchemaType.BYTES, batch = true,
+			ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Shared), })
 	public void handlePropertyWriteReplyMessage(List<byte[]> messages) {
 		log.info("接收到MQTT消息：{}", messages);
 	}
 
-	@PulsarListeners(
-			value = {
-					@PulsarListener(topicPattern = "persistent://laokouyun/mqtt/up-ota-upgrade-report",
-							subscriptionName = "laokouyun-mqtt-up-ota-upgrade-report",
-							schemaType = SchemaType.BYTES,
-							batch = true,
-							ackMode = AckMode.BATCH,
-							subscriptionType = SubscriptionType.Shared),
-			}
-	)
+	@PulsarListeners(value = { @PulsarListener(topicPattern = "persistent://laokouyun/mqtt/up-ota-upgrade-report",
+			subscriptionName = "laokouyun-mqtt-up-ota-upgrade-report", schemaType = SchemaType.BYTES, batch = true,
+			ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Shared), })
 	public void handleOtaUpgradeReportMessage(List<byte[]> messages) {
 		log.info("接收到MQTT消息：{}", messages);
 	}
 
-	@PulsarListeners(
-			value = {
-					@PulsarListener(topicPattern = "persistent://laokouyun/mqtt/up-ota-upgrade-set",
-							subscriptionName = "laokouyun-mqtt-up-ota-upgrade-set",
-							schemaType = SchemaType.BYTES,
-							batch = true,
-							ackMode = AckMode.BATCH,
-							subscriptionType = SubscriptionType.Shared),
-			}
-	)
+	@PulsarListeners(value = { @PulsarListener(topicPattern = "persistent://laokouyun/mqtt/up-ota-upgrade-set",
+			subscriptionName = "laokouyun-mqtt-up-ota-upgrade-set", schemaType = SchemaType.BYTES, batch = true,
+			ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Shared), })
 	public void handleOtaUpgradeSetMessage(List<byte[]> messages) {
 		log.info("接收到MQTT消息：{}", messages);
 	}

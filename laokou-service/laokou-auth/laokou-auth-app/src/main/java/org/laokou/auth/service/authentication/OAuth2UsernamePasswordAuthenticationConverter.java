@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-
 /**
  * 用户名密码转换器.
  *

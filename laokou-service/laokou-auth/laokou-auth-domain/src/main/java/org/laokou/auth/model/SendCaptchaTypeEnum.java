@@ -21,7 +21,6 @@ import lombok.Getter;
 import org.laokou.common.i18n.util.EnumParser;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 
-
 /**
  * @author laokou
  */

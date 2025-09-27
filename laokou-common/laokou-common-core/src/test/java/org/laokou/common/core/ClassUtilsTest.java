@@ -47,7 +47,8 @@ class ClassUtilsTest {
 	@Test
 	void test_parseClass_NullClassName() {
 		// 测试解析null类名
-		Assertions.assertThat(Assertions.catchException(() -> ClassUtils.parseClass(null))).isInstanceOf(NullPointerException.class);
+		Assertions.assertThat(Assertions.catchException(() -> ClassUtils.parseClass(null)))
+			.isInstanceOf(NullPointerException.class);
 	}
 
 	@Test

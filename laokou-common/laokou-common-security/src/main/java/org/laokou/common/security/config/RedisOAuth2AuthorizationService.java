@@ -56,7 +56,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 	private final OAuth2AuthorizationGrantAuthorizationRepository authorizationGrantAuthorizationRepository;
 
 	public RedisOAuth2AuthorizationService(RegisteredClientRepository registeredClientRepository,
-										   OAuth2AuthorizationGrantAuthorizationRepository authorizationGrantAuthorizationRepository) {
+			OAuth2AuthorizationGrantAuthorizationRepository authorizationGrantAuthorizationRepository) {
 		Assert.notNull(registeredClientRepository, "RegisteredClientRepository cannot be null");
 		Assert.notNull(authorizationGrantAuthorizationRepository,
 				"AuthorizationGrantAuthorizationRepository cannot be null");
@@ -69,7 +69,7 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		Assert.notNull(authorization, "Authorization cannot be null");
 		OAuth2AuthorizationGrantAuthorization authorizationGrantAuthorization = OAuth2ModelMapper
 			.convertOAuth2AuthorizationGrantAuthorization(authorization);
-        Assert.notNull(authorizationGrantAuthorization, "AuthorizationGrantAuthorization cannot be null");
+		Assert.notNull(authorizationGrantAuthorization, "AuthorizationGrantAuthorization cannot be null");
 		this.authorizationGrantAuthorizationRepository.save(authorizationGrantAuthorization);
 	}
 
@@ -98,15 +98,15 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 				.findByStateOrAuthorizationCode_TokenValue(token, token);
 			if (authorizationGrantAuthorization == null) {
 				authorizationGrantAuthorization = this.authorizationGrantAuthorizationRepository
-						.findByAccessToken_TokenValueOrRefreshToken_TokenValue(token, token);
+					.findByAccessToken_TokenValueOrRefreshToken_TokenValue(token, token);
 			}
 			if (authorizationGrantAuthorization == null) {
 				authorizationGrantAuthorization = this.authorizationGrantAuthorizationRepository
-						.findByIdToken_TokenValue(token);
+					.findByIdToken_TokenValue(token);
 			}
 			if (authorizationGrantAuthorization == null) {
 				authorizationGrantAuthorization = this.authorizationGrantAuthorizationRepository
-						.findByDeviceStateOrDeviceCode_TokenValueOrUserCode_TokenValue(token, token, token);
+					.findByDeviceStateOrDeviceCode_TokenValueOrUserCode_TokenValue(token, token, token);
 			}
 		}
 		else if (OAuth2ParameterNames.STATE.equals(tokenType.getValue())) {
@@ -143,12 +143,15 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		return authorizationGrantAuthorization != null ? toOAuth2Authorization(authorizationGrantAuthorization) : null;
 	}
 
-	private OAuth2Authorization toOAuth2Authorization(OAuth2AuthorizationGrantAuthorization authorizationGrantAuthorization) {
-		RegisteredClient registeredClient = this.registeredClientRepository.findById(authorizationGrantAuthorization.getRegisteredClientId());
-        return toOAuth2Authorization(authorizationGrantAuthorization, registeredClient);
+	private OAuth2Authorization toOAuth2Authorization(
+			OAuth2AuthorizationGrantAuthorization authorizationGrantAuthorization) {
+		RegisteredClient registeredClient = this.registeredClientRepository
+			.findById(authorizationGrantAuthorization.getRegisteredClientId());
+		return toOAuth2Authorization(authorizationGrantAuthorization, registeredClient);
 	}
 
-	public static OAuth2Authorization toOAuth2Authorization(OAuth2AuthorizationGrantAuthorization authorizationGrantAuthorization, RegisteredClient registeredClient) {
+	public static OAuth2Authorization toOAuth2Authorization(
+			OAuth2AuthorizationGrantAuthorization authorizationGrantAuthorization, RegisteredClient registeredClient) {
 		Assert.notNull(registeredClient, "RegisteredClient cannot be null");
 		OAuth2Authorization.Builder builder = OAuth2Authorization.withRegisteredClient(registeredClient);
 		OAuth2ModelMapper.mapOAuth2AuthorizationGrantAuthorization(authorizationGrantAuthorization, builder);

@@ -38,18 +38,29 @@ import java.util.stream.Collectors;
 public class SpringElasticsearchProperties {
 
 	private Set<String> uris = new HashSet<>(Collections.singletonList("http://localhost:9200"));
+
 	private String username;
+
 	private String password;
+
 	private Duration connectionTimeout = Duration.ofSeconds(15L);
+
 	private Duration socketTimeout = Duration.ofSeconds(30L);
+
 	private boolean socketKeepAlive = false;
+
 	private String pathPrefix;
+
 	private String proxy;
+
 	private String version = "9.1.3";
+
 	private String clientVersion = "9.1.4";
+
 	private final ElasticsearchProperties.Restclient restclient = new ElasticsearchProperties.Restclient();
 
-	public record Node (String hostname, int port, ProtocolEnum protocol) {}
+	public record Node(String hostname, int port, ProtocolEnum protocol) {
+	}
 
 	public Set<Node> getNodes() {
 		return this.getUris().stream().map(this::createNode).collect(Collectors.toSet());

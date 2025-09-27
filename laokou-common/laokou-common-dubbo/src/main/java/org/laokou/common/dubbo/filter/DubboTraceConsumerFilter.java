@@ -30,7 +30,6 @@ import org.laokou.common.core.util.SpringContextUtils;
 import org.laokou.common.trace.util.MDCUtils;
 import org.laokou.common.trace.util.TraceUtils;
 
-
 /**
  * @author laokou
  */

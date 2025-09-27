@@ -34,4 +34,5 @@ public class OssMock extends DubboOssServiceITriple.OssServiceIImplBase {
 		log.error("调用上传文件失败，请检查Dubbo服务");
 		throw new BizException("B_Dubbo_CallOssUploadFailed", "调用上传文件失败，请检查Dubbo服务");
 	}
+
 }

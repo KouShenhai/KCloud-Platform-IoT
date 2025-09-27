@@ -58,9 +58,10 @@ public class UserGetQryExe {
 			OssLogDO ossLogDO = ossLogMapper.selectById(userCO.getAvatar());
 			if (ObjectUtils.isNotNull(ossLogDO)) {
 				userCO.setAvatarUrl(ossLogDO.getUrl());
-	 	    }
+			}
 			return Result.ok(userCO);
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

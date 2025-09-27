@@ -40,7 +40,7 @@ import java.io.InputStream;
 /**
  * @author laokou
  */
-@SpringBootTest(webEnvironment =  SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
 @EnableConfigurationProperties
 @ContextConfiguration(classes = { FtpProperties.class, FtpTemplate.class })
@@ -51,8 +51,7 @@ class FtpTest {
 
 	private final FtpProperties ftpProperties;
 
-	static final FtpContainer ftp = new FtpContainer(DockerImageNames.ftp())
-		.withUsername("root")
+	static final FtpContainer ftp = new FtpContainer(DockerImageNames.ftp()).withUsername("root")
 		.withPassword("laokou123");
 
 	@BeforeAll
@@ -73,7 +72,9 @@ class FtpTest {
 
 	@Test
 	void test_ftp() throws IOException {
-		Assertions.assertThat(ftpTemplate.upload(ftpProperties.getDirectory(), "测试中文文本.txt", ResourceUtils.getResource("测试中文文本.txt").getInputStream())).isTrue();
+		Assertions.assertThat(ftpTemplate.upload(ftpProperties.getDirectory(), "测试中文文本.txt",
+				ResourceUtils.getResource("测试中文文本.txt").getInputStream()))
+			.isTrue();
 		InputStream inputStream = ftpTemplate.download(ftpProperties.getDirectory(), "测试中文文本.txt");
 		Assertions.assertThat(inputStream).isNotNull();
 		Assertions.assertThat(new String(inputStream.readAllBytes()).trim()).isEqualTo("123");

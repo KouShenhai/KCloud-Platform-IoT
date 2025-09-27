@@ -19,6 +19,7 @@ package org.laokou.auth.model;
 
 import lombok.Getter;
 import org.laokou.common.i18n.common.exception.BizException;
+
 /**
  * 登录类型枚举.
  *
