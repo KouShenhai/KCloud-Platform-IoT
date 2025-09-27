@@ -1850,20 +1850,18 @@
               <goal>checkstyle</goal>
             </goals>
           </execution>
-<!--
           <execution>
             <id>checkstyle-validation</id>
             <phase>validate</phase>
             <inherited>true</inherited>
             <configuration>
-              <configLocation>io/spring/javaformat/checkstyle/checkstyle.xml</configLocation>
+              <configLocation>checkstyle/checkstyle.xml</configLocation>
               <includeTestSourceDirectory>true</includeTestSourceDirectory>
             </configuration>
             <goals>
               <goal>check</goal>
             </goals>
           </execution>
--->
         </executions>
         <dependencies>
           <dependency>
