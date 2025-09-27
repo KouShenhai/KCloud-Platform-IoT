@@ -332,15 +332,18 @@
       <!-- =============================== Mongodb =============================== -->
 
       <dependency>
-        <groupId>com.alibaba</groupId>
-        <artifactId>fastjson</artifactId>
-        <version>${fastjson.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-data-jpa</artifactId>
         <version>${spring-boot.version}</version>
       </dependency>
+
+      <!-- =============================== Fastjson =============================== -->
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>fastjson</artifactId>
+        <version>${fastjson.version}</version>
+      </dependency>
+      <!-- =============================== Fastjson =============================== -->
 
       <!-- =============================== Redis =============================== -->
       <dependency>
@@ -523,7 +526,6 @@
         <artifactId>spring-boot-starter</artifactId>
         <version>${spring-boot.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-udp-server-adapter</artifactId>
@@ -614,6 +616,8 @@
         <artifactId>laokou-http-server-start</artifactId>
         <version>${laokou.version}</version>
       </dependency>
+
+      <!-- =============================== Laokou-Mqtt-Server =============================== -->
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-mqtt-server-adapter</artifactId>
@@ -644,6 +648,8 @@
         <artifactId>laokou-mqtt-server-start</artifactId>
         <version>${laokou.version}</version>
       </dependency>
+      <!-- =============================== Laokou-Mqtt-Server =============================== -->
+
       <dependency>
         <groupId>org.springdoc</groupId>
         <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -764,7 +770,6 @@
         <artifactId>caffeine</artifactId>
         <version>${caffeine.version}</version>
       </dependency>
-
       <dependency>
         <groupId>com.baomidou</groupId>
         <artifactId>mybatis-plus-extension</artifactId>
@@ -821,7 +826,6 @@
         <artifactId>laokou-generator-app</artifactId>
         <version>${laokou.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-iot-client</artifactId>
@@ -947,7 +951,6 @@
         <artifactId>snail-job-client-job-core</artifactId>
         <version>${snail-job.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-text</artifactId>
@@ -1088,7 +1091,6 @@
         <artifactId>mockito-core</artifactId>
         <version>${mockito.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-iot-app</artifactId>
@@ -1169,7 +1171,6 @@
         <artifactId>spring-boot-starter-test</artifactId>
         <version>${spring-boot.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-logstash-start</artifactId>
@@ -1210,7 +1211,6 @@
         <artifactId>ip2region</artifactId>
         <version>${ip2region.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.hibernate.validator</groupId>
         <artifactId>hibernate-validator</artifactId>
@@ -1221,13 +1221,11 @@
         <artifactId>httpclient5</artifactId>
         <version>${httpclient5.version}</version>
       </dependency>
-
       <dependency>
         <groupId>com.baomidou</groupId>
         <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
         <version>${dynamic-datasource.version}</version>
       </dependency>
-
       <dependency>
         <groupId>software.amazon.awssdk</groupId>
         <artifactId>s3</artifactId>
@@ -1265,13 +1263,11 @@
         <artifactId>laokou-monitor</artifactId>
         <version>${laokou.version}</version>
       </dependency>
-
       <dependency>
         <groupId>com.github.oshi</groupId>
         <artifactId>oshi-core</artifactId>
         <version>${oshi.version}</version>
       </dependency>
-
       <!-- =============================== Laokou-Admin =============================== -->
       <dependency>
         <groupId>org.laokou</groupId>
