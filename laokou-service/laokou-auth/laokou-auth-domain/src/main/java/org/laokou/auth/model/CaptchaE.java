@@ -26,7 +26,6 @@ import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-
 /**
  * @author laokou
  */

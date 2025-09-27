@@ -39,6 +39,7 @@ import java.util.Set;
 
 import lombok.Getter;
 import org.springframework.data.redis.core.index.Indexed;
+
 /**
  * @author spring-authorization-server
  * @author laokou

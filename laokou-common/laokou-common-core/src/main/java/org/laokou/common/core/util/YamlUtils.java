@@ -16,6 +16,7 @@
  */
 
 package org.laokou.common.core.util;
+
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.io.ClassPathResource;
@@ -91,11 +92,13 @@ public final class YamlUtils {
 	}
 
 	private static final class NoTimestampResolver extends Resolver {
+
 		public void addImplicitResolver(Tag tag, Pattern regexp, String first, int limit) {
 			if (tag != Tag.TIMESTAMP) {
 				super.addImplicitResolver(tag, regexp, first, limit);
 			}
 		}
+
 	}
 
 }

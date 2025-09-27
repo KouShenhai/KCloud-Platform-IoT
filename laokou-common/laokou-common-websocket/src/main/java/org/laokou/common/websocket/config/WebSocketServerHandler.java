@@ -105,7 +105,8 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 			String channelId = channel.id().asLongText();
 			int maxHeartBeatCount = springWebSocketServerProperties.getMaxHeartBeatCount();
 			if (WebSocketSessionHeartBeatManager.get(channelId) >= maxHeartBeatCount) {
-				log.info("【WebSocket-Server】 => 关闭连接，超过{}次未接收{}心跳{}", maxHeartBeatCount, channelId, WebSocketTypeEnum.PONG.getCode());
+				log.info("【WebSocket-Server】 => 关闭连接，超过{}次未接收{}心跳{}", maxHeartBeatCount, channelId,
+						WebSocketTypeEnum.PONG.getCode());
 				ctx.close();
 				return;
 			}

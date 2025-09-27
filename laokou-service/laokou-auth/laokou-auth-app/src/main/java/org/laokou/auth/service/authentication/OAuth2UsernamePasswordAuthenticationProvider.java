@@ -41,7 +41,8 @@ import org.springframework.stereotype.Component;
 final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2UsernamePasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authenticationProcessor) {
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
+			OAuth2AuthenticationProcessor authenticationProcessor) {
 		super(authorizationService, tokenGenerator, authenticationProcessor);
 	}
 

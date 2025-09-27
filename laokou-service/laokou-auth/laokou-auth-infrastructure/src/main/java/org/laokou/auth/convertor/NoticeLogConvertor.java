@@ -27,7 +27,6 @@ import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.mail.dto.MailResult;
 import org.laokou.common.sms.entity.SmsResult;
 
-
 /**
  * @author laokou
  */

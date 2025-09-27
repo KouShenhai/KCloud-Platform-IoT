@@ -128,7 +128,8 @@ public final class JacksonUtils {
 	public static byte[] toBytes(Object obj) {
 		try {
 			return MAPPER.writeValueAsBytes(obj);
-		} catch (JsonProcessingException e) {
+		}
+		catch (JsonProcessingException e) {
 			throw new RuntimeException(e);
 		}
 	}

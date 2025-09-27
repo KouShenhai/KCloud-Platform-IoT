@@ -75,7 +75,8 @@ import java.util.List;
  */
 class ElasticsearchRest5ClientConfig {
 
-	private ElasticsearchRest5ClientConfig() {}
+	private ElasticsearchRest5ClientConfig() {
+	}
 
 	@Configuration(proxyBeanMethods = false)
 	@ConditionalOnMissingBean(Rest5ClientBuilder.class)
@@ -86,11 +87,13 @@ class ElasticsearchRest5ClientConfig {
 
 		@Bean
 		Rest5ClientBuilderCustomizer defaultRestClientBuilderCustomizer(ObjectProvider<SslBundles> objectProvider) {
-			return new DefaultRest5ClientBuilderCustomizer(springElasticsearchProperties, objectProvider.getIfAvailable());
+			return new DefaultRest5ClientBuilderCustomizer(springElasticsearchProperties,
+					objectProvider.getIfAvailable());
 		}
 
 		@Bean
-		Rest5ClientBuilder elasticsearchRest5ClientBuilder(ObjectProvider<Rest5ClientBuilderCustomizer> builderCustomizers) {
+		Rest5ClientBuilder elasticsearchRest5ClientBuilder(
+				ObjectProvider<Rest5ClientBuilderCustomizer> builderCustomizers) {
 			Rest5ClientBuilder builder = Rest5Client.builder(getHttpHosts());
 			builder.setHttpClientConfigCallback((httpClientBuilder) -> builderCustomizers.orderedStream()
 				.forEach((customizer) -> customizer.customize(httpClientBuilder)));
@@ -110,6 +113,7 @@ class ElasticsearchRest5ClientConfig {
 				.map(node -> new HttpHost(node.protocol().getScheme(), node.hostname(), node.port()))
 				.toArray(HttpHost[]::new);
 		}
+
 	}
 
 	@Configuration(proxyBeanMethods = false)
@@ -153,19 +157,26 @@ class ElasticsearchRest5ClientConfig {
 				try {
 					HttpRoutePlanner proxyRoutePlanner = new DefaultProxyRoutePlanner(HttpHost.create(proxy));
 					httpClientBuilder.setRoutePlanner(proxyRoutePlanner);
-				} catch (URISyntaxException ex) {
+				}
+				catch (URISyntaxException ex) {
 					throw new IllegalArgumentException("Could not create the proxy route planner", ex);
 				}
 			}
 			PropertyMapper map = PropertyMapper.get();
-			map.from(this.springElasticsearchProperties::isSocketKeepAlive).to((keepAlive) -> httpClientBuilder.setIOReactorConfig(IOReactorConfig.custom().setSoKeepAlive(keepAlive).build()));
+			map.from(this.springElasticsearchProperties::isSocketKeepAlive)
+				.to((keepAlive) -> httpClientBuilder
+					.setIOReactorConfig(IOReactorConfig.custom().setSoKeepAlive(keepAlive).build()));
 		}
 
 		@Override
 		public void customize(ConnectionConfig.Builder connectionConfigBuilder) {
 			PropertyMapper map = PropertyMapper.get();
-			map.from(this.springElasticsearchProperties::getConnectionTimeout).as(Timeout::of).to(connectionConfigBuilder::setConnectTimeout);
-			map.from(this.springElasticsearchProperties::getSocketTimeout).as(Timeout::of).to(connectionConfigBuilder::setSocketTimeout);
+			map.from(this.springElasticsearchProperties::getConnectionTimeout)
+				.as(Timeout::of)
+				.to(connectionConfigBuilder::setConnectTimeout);
+			map.from(this.springElasticsearchProperties::getSocketTimeout)
+				.as(Timeout::of)
+				.to(connectionConfigBuilder::setSocketTimeout);
 		}
 
 		@Override
@@ -175,13 +186,16 @@ class ElasticsearchRest5ClientConfig {
 				SSLContext sslContext = sslBundle.createSslContext();
 				SslOptions sslOptions = sslBundle.getOptions();
 				DefaultClientTlsStrategy tlsStrategy = new DefaultClientTlsStrategy(sslContext,
-					sslOptions.getEnabledProtocols(), sslOptions.getCiphers(), SSLBufferMode.STATIC,
-					NoopHostnameVerifier.INSTANCE);
+						sslOptions.getEnabledProtocols(), sslOptions.getCiphers(), SSLBufferMode.STATIC,
+						NoopHostnameVerifier.INSTANCE);
 				connectionManagerBuilder.setTlsStrategy(tlsStrategy);
-			} else {
+			}
+			else {
 				try {
-					connectionManagerBuilder.setTlsStrategy(new DefaultClientTlsStrategy(SslUtils.sslContext(), NoopHostnameVerifier.INSTANCE));
-				} catch (NoSuchAlgorithmException | KeyManagementException ex) {
+					connectionManagerBuilder.setTlsStrategy(
+							new DefaultClientTlsStrategy(SslUtils.sslContext(), NoopHostnameVerifier.INSTANCE));
+				}
+				catch (NoSuchAlgorithmException | KeyManagementException ex) {
 					throw new IllegalArgumentException("Could not create the default ssl context", ex);
 				}
 			}
@@ -206,7 +220,8 @@ class ElasticsearchRest5ClientConfig {
 			String username = springElasticsearchProperties.getUsername();
 			String password = springElasticsearchProperties.getPassword();
 			if (StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(password)) {
-				headers.add(new BasicHeader(HttpHeaders.AUTHORIZATION, StandardAuthScheme.BASIC + StringConstants.SPACE + encodeBasicAuth(username, password)));
+				headers.add(new BasicHeader(HttpHeaders.AUTHORIZATION,
+						StandardAuthScheme.BASIC + StringConstants.SPACE + encodeBasicAuth(username, password)));
 			}
 			return headers.toArray(Header[]::new);
 		}
@@ -219,9 +234,12 @@ class ElasticsearchRest5ClientConfig {
 				return Base64Utils.encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
 			}
 			else {
-				throw new IllegalArgumentException(String.format("The username or password contains characters that cannot be encoded：%s" , StandardCharsets.UTF_8.displayName()));
+				throw new IllegalArgumentException(
+						String.format("The username or password contains characters that cannot be encoded：%s",
+								StandardCharsets.UTF_8.displayName()));
 			}
 		}
+
 	}
 
 	@ConditionalOnMissingBean(Rest5ClientTransport.class)
@@ -230,7 +248,7 @@ class ElasticsearchRest5ClientConfig {
 
 		@Bean
 		Rest5ClientTransport rest5ClientTransport(Rest5Client restClient, JsonpMapper jsonMapper,
-												 ObjectProvider<Rest5ClientOptions> restClientOptions) {
+				ObjectProvider<Rest5ClientOptions> restClientOptions) {
 			return new Rest5ClientTransport(restClient, jsonMapper, restClientOptions.getIfAvailable());
 		}
 
@@ -257,7 +275,8 @@ class ElasticsearchRest5ClientConfig {
 
 		@Bean
 		Rest5ClientOptions rest5ClientOptions() {
-			Rest5ClientOptions.Builder rest5ClientOptionsBuilder = new Rest5ClientOptions(RequestOptions.DEFAULT, false).toBuilder();
+			Rest5ClientOptions.Builder rest5ClientOptionsBuilder = new Rest5ClientOptions(RequestOptions.DEFAULT, false)
+				.toBuilder();
 			rest5ClientOptionsBuilder.addHeader("Elasticsearch", getVersion());
 			return rest5ClientOptionsBuilder.build();
 		}

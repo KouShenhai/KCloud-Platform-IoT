@@ -66,4 +66,5 @@ public final class LocalStorage extends AbstractStorage<Path> {
 	public void deleteBucket() {
 		throw new UnsupportedOperationException();
 	}
+
 }

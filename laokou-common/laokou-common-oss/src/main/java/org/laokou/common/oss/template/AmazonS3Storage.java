@@ -120,4 +120,5 @@ public final class AmazonS3Storage extends AbstractStorage<S3Client> {
 	public void deleteBucket() {
 		throw new UnsupportedOperationException();
 	}
+
 }

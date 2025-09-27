@@ -26,7 +26,6 @@ import org.laokou.iot.thingModel.ability.ThingModelDomainService;
 import org.laokou.iot.thingModel.dto.ThingModelRemoveCmd;
 import org.springframework.stereotype.Component;
 
-
 /**
  *
  * 删除物模型命令执行器.

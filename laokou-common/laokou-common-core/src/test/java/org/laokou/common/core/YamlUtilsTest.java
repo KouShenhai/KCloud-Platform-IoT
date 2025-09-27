@@ -41,9 +41,11 @@ class YamlUtilsTest {
 
 	@Test
 	void test_getPropertyAndLoad() throws IOException {
-		Assertions.assertThat(YamlUtils.getProperty("application.yml", "spring.application.name")).isEqualTo("laokou-common-core");
+		Assertions.assertThat(YamlUtils.getProperty("application.yml", "spring.application.name"))
+			.isEqualTo("laokou-common-core");
 		Assertions.assertThat(YamlUtils.getProperty("application.yml", "spring.application.name2")).isEqualTo("");
-		Assertions.assertThat(YamlUtils.getProperty("application.yml", "spring.application.name2", "default")).isEqualTo("default");
+		Assertions.assertThat(YamlUtils.getProperty("application.yml", "spring.application.name2", "default"))
+			.isEqualTo("default");
 		YamlTest yamlTest = YamlUtils.load("name: laokou", YamlTest.class);
 		Assertions.assertThat(yamlTest.getName()).isEqualTo("laokou");
 		String str = YamlUtils.dumpAsMap(yamlTest).trim();
@@ -58,7 +60,9 @@ class YamlUtilsTest {
 
 	@Data
 	static class YamlTest implements Serializable {
+
 		private String name;
+
 	}
 
 }

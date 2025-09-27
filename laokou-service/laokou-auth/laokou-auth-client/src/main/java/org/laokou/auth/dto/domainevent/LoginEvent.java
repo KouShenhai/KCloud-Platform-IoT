@@ -79,18 +79,9 @@ public final class LoginEvent extends DomainEvent {
 	 */
 	private final Instant loginTime;
 
-	public LoginEvent(final Long id,
-					  final String username,
-					  final String ip,
-					  final String address,
-					  final String browser,
-					  final String os,
-					  final Integer status,
-					  final String errorMessage,
-					  final String type,
-					  final Instant loginTime,
-					  final Long tenantId,
-					  final Long userId) {
+	public LoginEvent(final Long id, final String username, final String ip, final String address, final String browser,
+			final String os, final Integer status, final String errorMessage, final String type,
+			final Instant loginTime, final Long tenantId, final Long userId) {
 		super.id = id;
 		super.userId = userId;
 		super.tenantId = tenantId;

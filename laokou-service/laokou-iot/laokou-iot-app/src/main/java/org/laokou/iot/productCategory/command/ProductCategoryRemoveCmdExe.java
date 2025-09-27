@@ -26,7 +26,6 @@ import org.laokou.iot.productCategory.ability.ProductCategoryDomainService;
 import org.laokou.iot.productCategory.dto.ProductCategoryRemoveCmd;
 import org.springframework.stereotype.Component;
 
-
 /**
  *
  * 删除产品类别命令执行器.

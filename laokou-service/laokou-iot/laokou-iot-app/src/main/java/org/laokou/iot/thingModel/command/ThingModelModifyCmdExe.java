@@ -28,7 +28,6 @@ import org.laokou.iot.thingModel.dto.ThingModelModifyCmd;
 import org.laokou.iot.thingModel.model.ThingModelE;
 import org.springframework.stereotype.Component;
 
-
 /**
  *
  * 修改物模型命令执行器.

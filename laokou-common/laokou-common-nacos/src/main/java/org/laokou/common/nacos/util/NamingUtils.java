@@ -16,6 +16,7 @@
  */
 
 package org.laokou.common.nacos.util;
+
 import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingService;

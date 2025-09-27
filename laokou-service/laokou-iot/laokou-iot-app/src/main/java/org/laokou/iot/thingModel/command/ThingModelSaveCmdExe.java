@@ -28,7 +28,6 @@ import org.laokou.iot.thingModel.dto.ThingModelSaveCmd;
 import org.laokou.iot.thingModel.model.ThingModelE;
 import org.springframework.stereotype.Component;
 
-
 /**
  *
  * 保存物模型命令执行器.

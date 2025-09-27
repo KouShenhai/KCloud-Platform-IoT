@@ -16,6 +16,7 @@
  */
 
 package org.laokou.common.oss.model;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.laokou.common.i18n.dto.ClientObject;

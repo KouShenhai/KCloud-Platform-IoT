@@ -16,6 +16,7 @@
  */
 
 package org.laokou.oss.convertor;
+
 import org.laokou.oss.dto.clientobject.OssLogCO;
 import org.laokou.oss.dto.domainevent.OssUploadEvent;
 import org.laokou.oss.factory.OssDomainFactory;

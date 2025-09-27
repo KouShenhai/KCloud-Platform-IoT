@@ -99,7 +99,8 @@ public class OssA extends AggregateRoot {
 			this.url = ossUploadV.url();
 			this.ossId = ossUploadV.id();
 			this.publishEvent = true;
-		} else {
+		}
+		else {
 			this.url = ossUploadV.url();
 			this.id = ossUploadV.id();
 		}

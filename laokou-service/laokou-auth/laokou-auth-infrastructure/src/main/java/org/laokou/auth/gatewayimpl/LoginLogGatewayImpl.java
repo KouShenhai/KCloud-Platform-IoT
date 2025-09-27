@@ -16,6 +16,7 @@
  */
 
 package org.laokou.auth.gatewayimpl;
+
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.gateway.LoginLogGateway;

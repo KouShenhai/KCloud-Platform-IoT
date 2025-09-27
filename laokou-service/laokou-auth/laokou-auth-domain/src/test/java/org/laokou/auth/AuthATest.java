@@ -49,7 +49,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-
 /**
  * 认证聚合根测试.
  *
@@ -124,7 +123,8 @@ class AuthATest {
 		String decryptPassword = RSAUtils.decryptByPrivateKey(encryptPassword);
 		Assertions.assertThat(username).isEqualTo(decryptUsername);
 		Assertions.assertThat(password).isEqualTo(decryptPassword);
-		AuthA authA = getAuth(encryptUsername, encryptPassword, GrantTypeEnum.USERNAME_PASSWORD, StringConstants.EMPTY, StringConstants.EMPTY);
+		AuthA authA = getAuth(encryptUsername, encryptPassword, GrantTypeEnum.USERNAME_PASSWORD, StringConstants.EMPTY,
+				StringConstants.EMPTY);
 		Assertions.assertThatNoException().isThrownBy(authA::decryptUsernamePassword);
 		Assertions.assertThat(authA.getUsername()).isEqualTo(username);
 		Assertions.assertThat(authA.getPassword()).isEqualTo(password);
@@ -152,7 +152,8 @@ class AuthATest {
 
 	@Test
 	void test_createUserByMobile() throws Exception {
-		AuthA authA = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
+		AuthA authA = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MOBILE, "18888888888",
+				"123456");
 		// 创建用户【手机号】
 		Assertions.assertThatNoException().isThrownBy(authA::createUserByMobile);
 		UserE user = authA.getUser();
@@ -162,7 +163,8 @@ class AuthATest {
 
 	@Test
 	void test_createUserByMail() throws Exception {
-		AuthA authA = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
+		AuthA authA = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com",
+				"123456");
 		// 创建用户【邮箱】
 		Assertions.assertThatNoException().isThrownBy(authA::createUserByMail);
 		UserE user = authA.getUser();
@@ -172,7 +174,8 @@ class AuthATest {
 
 	@Test
 	void test_createUserByAuthorizationCode() throws Exception {
-		AuthA authA = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE,StringConstants. EMPTY, StringConstants.EMPTY);
+		AuthA authA = getAuth("admin", "123", GrantTypeEnum.AUTHORIZATION_CODE, StringConstants.EMPTY,
+				StringConstants.EMPTY);
 		// 创建用户【授权码】
 		Assertions.assertThatNoException().isThrownBy(authA::createUserByAuthorizationCode);
 		UserE user = authA.getUser();
@@ -188,7 +191,8 @@ class AuthATest {
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		// 获取租户ID
 		Assertions.assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
-		Assertions.assertThatNoException().isThrownBy(() -> auth.getTenantId(() -> tenantGateway.getTenantId(auth.getTenantCode())));
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> auth.getTenantId(() -> tenantGateway.getTenantId(auth.getTenantCode())));
 		Assertions.assertThatNoException().isThrownBy(auth::checkTenantId);
 		// 校验调用次数
 		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId("laokou");
@@ -197,28 +201,33 @@ class AuthATest {
 	@Test
 	void test_checkCaptcha() {
 		// 构造验证码校验
-		Mockito.doReturn(true).when(captchaValidator)
+		Mockito.doReturn(true)
+			.when(captchaValidator)
 			.validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
-		Mockito.doReturn(true).when(captchaValidator)
+		Mockito.doReturn(true)
+			.when(captchaValidator)
 			.validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
-		Mockito.doReturn(true).when(captchaValidator)
+		Mockito.doReturn(true)
+			.when(captchaValidator)
 			.validateCaptcha(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
 		// 校验验证码【用户名密码登录】
 		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
 		Assertions.assertThatNoException().isThrownBy(auth::checkCaptcha);
 		// 校验验证码【邮箱登录】
-		AuthA auth1 = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com", "123456");
+		AuthA auth1 = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MAIL, "2413176044@qq.com",
+				"123456");
 		Assertions.assertThatNoException().isThrownBy(auth1::checkCaptcha);
 		// 校验验证码【手机号登录】
-		AuthA auth2 = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MOBILE, "18888888888", "123456");
+		AuthA auth2 = getAuth(StringConstants.EMPTY, StringConstants.EMPTY, GrantTypeEnum.MOBILE, "18888888888",
+				"123456");
 		Assertions.assertThatNoException().isThrownBy(auth2::checkCaptcha);
 		// 校验调用次数
-		Mockito.verify(captchaValidator, Mockito.times(1)).validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"),
-				"1234");
-		Mockito.verify(captchaValidator, Mockito.times(1)).validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"),
-				"123456");
-		Mockito.verify(captchaValidator, Mockito.times(1)).validateCaptcha(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"),
-				"123456");
+		Mockito.verify(captchaValidator, Mockito.times(1))
+			.validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("1"), "1234");
+		Mockito.verify(captchaValidator, Mockito.times(1))
+			.validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey("2413176044@qq.com"), "123456");
+		Mockito.verify(captchaValidator, Mockito.times(1))
+			.validateCaptcha(RedisKeyUtils.getMobileAuthCaptchaKey("18888888888"), "123456");
 	}
 
 	@Test
@@ -242,8 +251,9 @@ class AuthATest {
 		Assertions.assertThat(auth.getUser()).isNotNull();
 		// 构建密码
 		UserE user = auth.getUser();
-		Assertions.assertThatNoException().isThrownBy(() -> user
-			.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> user
+				.setPassword(DigestUtils.md5DigestAsHex(auth.getPassword().getBytes(StandardCharsets.UTF_8))));
 		// 校验密码
 		Assertions.assertThatNoException().isThrownBy(auth::checkPassword);
 	}
@@ -268,7 +278,8 @@ class AuthATest {
 		// 构造菜单
 		Mockito.when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
 		// 校验菜单权限集合
-		Assertions.assertThatNoException().isThrownBy(() -> auth.getMenuPermissions(menuGateway.getMenuPermissions(user)));
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> auth.getMenuPermissions(menuGateway.getMenuPermissions(user)));
 		Assertions.assertThatNoException().isThrownBy(auth::checkMenuPermissions);
 	}
 

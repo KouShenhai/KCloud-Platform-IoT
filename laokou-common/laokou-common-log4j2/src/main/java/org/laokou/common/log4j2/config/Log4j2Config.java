@@ -32,11 +32,16 @@ public class Log4j2Config {
 	@Bean("traceLogNewTopics")
 	public KafkaAdmin.NewTopics newTopics() {
 		return new KafkaAdmin.NewTopics(new NewTopic(MqEnum.GATEWAY_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.AUTH_TRACE_LOG_TOPIC, 3, (short) 1), new NewTopic(MqEnum.ADMIN_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.IOT_TRACE_LOG_TOPIC, 3, (short) 1), new NewTopic(MqEnum.OSS_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.GENERATOR_TRACE_LOG_TOPIC, 3, (short) 1), new NewTopic(MqEnum.MQTT_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.UDP_TRACE_LOG_TOPIC, 3, (short) 1), new NewTopic(MqEnum.HTTP_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.TCP_TRACE_LOG_TOPIC, 3, (short) 1), new NewTopic(MqEnum.REPORT_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(MqEnum.AUTH_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(MqEnum.ADMIN_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(MqEnum.IOT_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(MqEnum.OSS_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(MqEnum.GENERATOR_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(MqEnum.MQTT_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(MqEnum.UDP_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(MqEnum.HTTP_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(MqEnum.TCP_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(MqEnum.REPORT_TRACE_LOG_TOPIC, 3, (short) 1),
 				new NewTopic(MqEnum.DISTRIBUTED_IDENTIFIER_TRACE_LOG_TOPIC, 3, (short) 1));
 	}
 

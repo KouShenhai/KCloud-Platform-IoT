@@ -29,7 +29,6 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;
 
-
 /**
  * @author laokou
  */

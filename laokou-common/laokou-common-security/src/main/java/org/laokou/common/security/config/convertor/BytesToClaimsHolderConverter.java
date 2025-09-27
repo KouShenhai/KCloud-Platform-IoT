@@ -32,6 +32,7 @@
  */
 
 package org.laokou.common.security.config.convertor;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization;
@@ -46,8 +47,8 @@ import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2A
  * @author laokou
  */
 @ReadingConverter
-public final class BytesToClaimsHolderConverter implements Converter<byte[], OAuth2AuthorizationGrantAuthorization.ClaimsHolder> {
-
+public final class BytesToClaimsHolderConverter
+		implements Converter<byte[], OAuth2AuthorizationGrantAuthorization.ClaimsHolder> {
 
 	private final Jackson2JsonRedisSerializer<OAuth2AuthorizationGrantAuthorization.ClaimsHolder> serializer;
 
@@ -58,7 +59,7 @@ public final class BytesToClaimsHolderConverter implements Converter<byte[], OAu
 		objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
 		objectMapper.addMixIn(OAuth2AuthorizationGrantAuthorization.ClaimsHolder.class, ClaimsHolderMixin.class);
 		this.serializer = new Jackson2JsonRedisSerializer<>(objectMapper,
-			OAuth2AuthorizationGrantAuthorization.ClaimsHolder.class);
+				OAuth2AuthorizationGrantAuthorization.ClaimsHolder.class);
 	}
 
 	@Override

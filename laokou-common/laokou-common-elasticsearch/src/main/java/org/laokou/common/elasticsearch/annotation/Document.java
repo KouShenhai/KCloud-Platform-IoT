@@ -23,11 +23,11 @@ import java.util.List;
  * @author laokou
  */
 public record Document(String name, String alias, List<Mapping> mappings,
-					   org.laokou.common.elasticsearch.annotation.Document.Setting setting,
-					   org.laokou.common.elasticsearch.annotation.Document.Analysis analysis) {
+		org.laokou.common.elasticsearch.annotation.Document.Setting setting,
+		org.laokou.common.elasticsearch.annotation.Document.Analysis analysis) {
 
 	public record Mapping(String field, Type type, String searchAnalyzer, String analyzer, boolean eagerGlobalOrdinals,
-							  String format, boolean index, SubField subField) {
+			String format, boolean index, SubField subField) {
 
 	}
 

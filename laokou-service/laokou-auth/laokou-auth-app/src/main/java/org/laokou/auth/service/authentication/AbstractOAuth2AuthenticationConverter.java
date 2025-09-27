@@ -34,7 +34,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * 抽象认证转换器.
  *
@@ -68,7 +67,8 @@ abstract class AbstractOAuth2AuthenticationConverter implements AuthenticationCo
 		List<String> scopes = parameters.get(OAuth2ParameterNames.SCOPE);
 		// 判断scopes
 		if (CollectionUtils.isNotEmpty(scopes) && scopes.size() != 1) {
-			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(OAuth2Constants.INVALID_SCOPE, MessageUtils.getMessage(OAuth2Constants.INVALID_SCOPE), OAuth2ExceptionHandler.ERROR_URL);
+			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(OAuth2Constants.INVALID_SCOPE,
+					MessageUtils.getMessage(OAuth2Constants.INVALID_SCOPE), OAuth2ExceptionHandler.ERROR_URL);
 		}
 		// 获取上下文认证信息
 		Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();

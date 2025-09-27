@@ -16,6 +16,7 @@
  */
 
 package org.laokou.common.core;
+
 import org.assertj.core.api.Assertions;
 import org.springframework.context.event.EventListener;
 

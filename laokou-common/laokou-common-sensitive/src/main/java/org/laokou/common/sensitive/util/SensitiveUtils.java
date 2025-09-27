@@ -20,7 +20,6 @@ package org.laokou.common.sensitive.util;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.StringUtils;
 
-
 /**
  * @author laokou
  */

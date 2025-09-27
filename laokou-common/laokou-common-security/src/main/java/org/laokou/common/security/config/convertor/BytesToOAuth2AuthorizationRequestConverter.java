@@ -53,7 +53,7 @@ public final class BytesToOAuth2AuthorizationRequestConverter implements Convert
 	public BytesToOAuth2AuthorizationRequestConverter() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.registerModules(
-			SecurityJackson2Modules.getModules(BytesToOAuth2AuthorizationRequestConverter.class.getClassLoader()));
+				SecurityJackson2Modules.getModules(BytesToOAuth2AuthorizationRequestConverter.class.getClassLoader()));
 		objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
 		this.serializer = new Jackson2JsonRedisSerializer<>(objectMapper, OAuth2AuthorizationRequest.class);
 	}
@@ -62,6 +62,5 @@ public final class BytesToOAuth2AuthorizationRequestConverter implements Convert
 	public OAuth2AuthorizationRequest convert(@NotNull byte[] value) {
 		return this.serializer.deserialize(value);
 	}
-
 
 }

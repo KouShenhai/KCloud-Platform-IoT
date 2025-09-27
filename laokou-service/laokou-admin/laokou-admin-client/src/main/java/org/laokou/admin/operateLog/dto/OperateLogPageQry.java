@@ -21,7 +21,6 @@ import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.StringUtils;
 
-
 /**
  * 分页查询操作日志命令.
  *

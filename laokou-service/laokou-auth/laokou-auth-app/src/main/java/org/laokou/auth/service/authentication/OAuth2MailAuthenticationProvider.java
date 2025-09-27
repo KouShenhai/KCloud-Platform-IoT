@@ -32,7 +32,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.stereotype.Component;
 
-
 /**
  * 邮箱处理器.
  *
@@ -43,7 +42,8 @@ import org.springframework.stereotype.Component;
 final class OAuth2MailAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2MailAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator, OAuth2AuthenticationProcessor authenticationProcessor) {
+			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
+			OAuth2AuthenticationProcessor authenticationProcessor) {
 		super(authorizationService, tokenGenerator, authenticationProcessor);
 	}
 
@@ -57,7 +57,8 @@ final class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticatio
 		String code = request.getParameter(Constants.CODE);
 		String mail = request.getParameter(Constants.MAIL);
 		String tenantCode = request.getParameter(Constants.TENANT_CODE);
-		AuthA authA = AuthConvertor.toEntity(StringConstants.EMPTY, StringConstants.EMPTY, tenantCode, GrantTypeEnum.MAIL, code, mail);
+		AuthA authA = AuthConvertor.toEntity(StringConstants.EMPTY, StringConstants.EMPTY, tenantCode,
+				GrantTypeEnum.MAIL, code, mail);
 		authA.createUserByMail();
 		return authentication(authA, request);
 	}

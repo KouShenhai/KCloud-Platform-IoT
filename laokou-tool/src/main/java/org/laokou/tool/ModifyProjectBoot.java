@@ -33,7 +33,6 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
-
 /**
  * 一键修改项目.
  *
@@ -83,7 +82,8 @@ final class ModifyProjectBoot {
 
 			@NotNull
 			@Override
-			public FileVisitResult visitFile(@NotNull Path path, @NotNull BasicFileAttributes attrs) throws IOException {
+			public FileVisitResult visitFile(@NotNull Path path, @NotNull BasicFileAttributes attrs)
+					throws IOException {
 				String filePath = path.toAbsolutePath().toString();
 				String newPath = getNewPath(filePath);
 				// 创建目录或文件

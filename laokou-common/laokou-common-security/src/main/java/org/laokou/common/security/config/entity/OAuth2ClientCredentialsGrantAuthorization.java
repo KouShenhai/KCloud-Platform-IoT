@@ -34,6 +34,7 @@
 package org.laokou.common.security.config.entity;
 
 import java.util.Set;
+
 /**
  * @author spring-authorization-server
  * @author laokou

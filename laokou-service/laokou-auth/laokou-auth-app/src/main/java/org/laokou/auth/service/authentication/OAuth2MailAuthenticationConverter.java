@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-
 /**
  * 邮箱转换器.
  *

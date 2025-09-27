@@ -71,12 +71,13 @@ public final class ElasticsearchIndexTemplate {
 			log.debug("index name: 【{}】 -> Sync index create failed, index already exists", name);
 			return;
 		}
-		CreateIndexResponse createIndexResponse = elasticsearchClient.indices().create(getCreateIndexRequest(getDocument(name, alias, clazz)));
+		CreateIndexResponse createIndexResponse = elasticsearchClient.indices()
+			.create(getCreateIndexRequest(getDocument(name, alias, clazz)));
 		printLog(name, createIndexResponse.acknowledged() ? "Sync index create succeeded" : "Sync index create failed");
 	}
 
 	public <TDocument> CompletableFuture<Void> asyncCreateIndex(String name, String alias, Class<TDocument> clazz,
-																Executor executor) {
+			Executor executor) {
 		return asyncExist(List.of(name), executor).thenApplyAsync(resp -> {
 			if (resp) {
 				log.debug("index name: 【{}】 -> Async index create failed, index already exists", name);
@@ -87,31 +88,38 @@ public final class ElasticsearchIndexTemplate {
 			if (result) {
 				elasticsearchAsyncClient.indices()
 					.create(getCreateIndexRequest(getDocument(name, alias, clazz)))
-					.thenAcceptAsync(response -> printLog(name, response.acknowledged() ? "Async index create succeeded" : "Async index create failed"));
+					.thenAcceptAsync(response -> printLog(name,
+							response.acknowledged() ? "Async index create succeeded" : "Async index create failed"));
 			}
 		}, executor);
 	}
 
 	public void deleteIndex(List<String> names) throws IOException {
 		if (!exist(names)) {
-			log.debug("index name: 【{}】 -> Sync index delete failed, index already exists", StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
+			log.debug("index name: 【{}】 -> Sync index delete failed, index already exists",
+					StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
 			return;
 		}
 		DeleteIndexResponse deleteIndexResponse = elasticsearchClient.indices().delete(fn -> fn.index(names));
-		printLog(StringUtils.collectionToDelimitedString(names, StringConstants.DROP), deleteIndexResponse.acknowledged() ? "Sync index delete succeeded" : "Sync index delete failed");
+		printLog(StringUtils.collectionToDelimitedString(names, StringConstants.DROP),
+				deleteIndexResponse.acknowledged() ? "Sync index delete succeeded" : "Sync index delete failed");
 	}
 
 	public CompletableFuture<Void> asyncDeleteIndex(List<String> names, Executor executor) {
 		return asyncExist(names, executor).thenApplyAsync(resp -> {
 			if (!resp) {
-				log.debug("index name: 【{}】 -> Async index delete failed, index already exists", StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
+				log.debug("index name: 【{}】 -> Async index delete failed, index already exists",
+						StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
 				return Boolean.FALSE;
 			}
 			return Boolean.TRUE;
 		}, executor).thenAcceptAsync(result -> {
 			if (result) {
-				elasticsearchAsyncClient.indices().delete(fn -> fn.index(names))
-					.thenAcceptAsync(response -> printLog(StringUtils.collectionToDelimitedString(names, StringConstants.DROP), response.acknowledged() ? "Async index delete succeeded" : "Async index delete failed"));
+				elasticsearchAsyncClient.indices()
+					.delete(fn -> fn.index(names))
+					.thenAcceptAsync(response -> printLog(
+							StringUtils.collectionToDelimitedString(names, StringConstants.DROP),
+							response.acknowledged() ? "Async index delete succeeded" : "Async index delete failed"));
 			}
 		});
 	}
@@ -127,8 +135,10 @@ public final class ElasticsearchIndexTemplate {
 	public boolean exist(List<String> names) {
 		try {
 			return elasticsearchClient.indices().exists(fn -> fn.index(names)).value();
-		} catch (Exception ex) {
-			log.error("index name: 【{}】 -> Failed to determine if the index exists, error message: {}", StringUtils.collectionToDelimitedString(names, StringConstants.DROP), ex.getMessage(), ex);
+		}
+		catch (Exception ex) {
+			log.error("index name: 【{}】 -> Failed to determine if the index exists, error message: {}",
+					StringUtils.collectionToDelimitedString(names, StringConstants.DROP), ex.getMessage(), ex);
 			return false;
 		}
 	}
@@ -187,8 +197,7 @@ public final class ElasticsearchIndexTemplate {
 		TokenFilter.Builder filterBuilder = new TokenFilter.Builder();
 		Map<String, String> map = options.stream()
 			.collect(Collectors.toMap(Document.Option::key, Document.Option::value));
-		filterBuilder.definition(fn -> fn
-			.withJson(new ByteArrayInputStream(JacksonUtils.toBytes(map))));
+		filterBuilder.definition(fn -> fn.withJson(new ByteArrayInputStream(JacksonUtils.toBytes(map))));
 		return filterBuilder.build();
 	}
 
@@ -253,8 +262,8 @@ public final class ElasticsearchIndexTemplate {
 		String format = field.format();
 		boolean isIndex = field.index();
 		SubField subField = field.subField();
-		return new Document.Mapping(value, type, searchAnalyzer, analyzer, eagerGlobalOrdinals, format,
-			isIndex, new Document.SubField(subField.ignoreAbove()));
+		return new Document.Mapping(value, type, searchAnalyzer, analyzer, eagerGlobalOrdinals, format, isIndex,
+				new Document.SubField(subField.ignoreAbove()));
 	}
 
 }

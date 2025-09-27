@@ -87,13 +87,14 @@ class ConfigUtilsTest {
 
 		md5 = DigestUtils.md5DigestAsHex("test: 456".getBytes());
 		Assertions.assertThat(md5).isEqualTo("76e2eabbf24a8c90dc3b4372c20a72cf");
-		Assertions.assertThat(configService.publishConfigCas("test.yaml", "DEFAULT", "test: 789", md5, "yaml")).isTrue();
+		Assertions.assertThat(configService.publishConfigCas("test.yaml", "DEFAULT", "test: 789", md5, "yaml"))
+			.isTrue();
 		Thread.sleep(Duration.ofSeconds(1));
 		Assertions.assertThat(configService.getConfig("test.yaml", "DEFAULT", 5000)).isEqualTo("test: 789");
 
 		Assertions.assertThat(configService.publishConfig("test1.yaml", "DEFAULT", "test: 123")).isTrue();
 		Thread.sleep(Duration.ofSeconds(1));
-		Assertions.assertThat( configService.getConfig("test1.yaml", "DEFAULT", 5000)).isEqualTo("test: 123");
+		Assertions.assertThat(configService.getConfig("test1.yaml", "DEFAULT", 5000)).isEqualTo("test: 123");
 
 		Assertions.assertThat(configService.removeConfig("test1.yaml", "DEFAULT")).isTrue();
 		Thread.sleep(Duration.ofSeconds(1));

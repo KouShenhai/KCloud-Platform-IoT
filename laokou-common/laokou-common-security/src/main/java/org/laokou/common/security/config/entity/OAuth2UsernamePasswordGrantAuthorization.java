@@ -48,7 +48,7 @@ public final class OAuth2UsernamePasswordGrantAuthorization extends OAuth2Author
 	private final Principal principal;
 
 	public OAuth2UsernamePasswordGrantAuthorization(String id, String registeredClientId, String principalName,
-                                                    Set<String> authorizedScopes, AccessToken accessToken, RefreshToken refreshToken, Principal principal) {
+			Set<String> authorizedScopes, AccessToken accessToken, RefreshToken refreshToken, Principal principal) {
 		super(id, registeredClientId, principalName, authorizedScopes, accessToken, refreshToken);
 		this.principal = principal;
 	}

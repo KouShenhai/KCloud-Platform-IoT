@@ -58,7 +58,8 @@ public class LockAop {
 		String name = lock4j.name();
 		String key = lock4j.key();
 		if (StringUtils.isNotEmpty(key) && key.contains("#")) {
-			key = name + StringConstants.UNDER + SpringExpressionUtils.parse(key, parameterNames, joinPoint.getArgs(), String.class);
+			key = name + StringConstants.UNDER
+					+ SpringExpressionUtils.parse(key, parameterNames, joinPoint.getArgs(), String.class);
 		}
 		else {
 			key = name;

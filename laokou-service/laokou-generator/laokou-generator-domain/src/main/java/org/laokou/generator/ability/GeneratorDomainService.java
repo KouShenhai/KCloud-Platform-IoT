@@ -40,7 +40,6 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
-
 /**
  * @author laokou
  */
@@ -92,7 +91,8 @@ public class GeneratorDomainService {
 			List<Callable<Boolean>> list = templates.stream().map(item -> (Callable<Boolean>) () -> {
 				String content = getContent(generatorA.toMap(), item.getTemplatePath(TEMPLATE_PATH));
 				// 写入文件
-				String directory = SOURCE_PATH + generatorA.getModuleName() + StringConstants.SLASH + item.getFileDirectory(generatorA);
+				String directory = SOURCE_PATH + generatorA.getModuleName() + StringConstants.SLASH
+						+ item.getFileDirectory(generatorA);
 				Path path = FileUtils.create(directory, item.getFileName(generatorA));
 				FileUtils.write(path, content.getBytes(StandardCharsets.UTF_8));
 				return true;

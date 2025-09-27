@@ -51,7 +51,8 @@ class TcpTest {
 			netClient.connect(connectOptions).onComplete(res -> {
 				if (res.succeeded()) {
 					log.info("【Vertx-TCP-Client】 => 连接成功，端口：{}", finalI);
-					Assertions.assertThatNoException().isThrownBy(() -> res.result().write("发送数据，" + finalI + " ---> 123"));
+					Assertions.assertThatNoException()
+						.isThrownBy(() -> res.result().write("发送数据，" + finalI + " ---> 123"));
 				}
 				else {
 					log.info("【Vertx-TCP-Client】 => 连接失败，端口：{}", finalI);

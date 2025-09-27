@@ -80,7 +80,8 @@ public final class AddressUtils {
 		StringBuilder stringBuilder = new StringBuilder(address.length());
 		String[] info = address.split(StringConstants.BACKSLASH + StringConstants.ERECT);
 		Arrays.stream(info)
-			.forEach(str -> stringBuilder.append(ObjectUtils.equals(EMPTY_ADDR, str) ? StringConstants.EMPTY : str + StringConstants.SPACE));
+			.forEach(str -> stringBuilder
+				.append(ObjectUtils.equals(EMPTY_ADDR, str) ? StringConstants.EMPTY : str + StringConstants.SPACE));
 		return stringBuilder.toString().trim();
 	}
 

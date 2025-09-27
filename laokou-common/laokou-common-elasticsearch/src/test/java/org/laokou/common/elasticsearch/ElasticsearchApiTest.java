@@ -109,14 +109,24 @@ class ElasticsearchApiTest {
 	@Test
 	void test_asyncApi() throws InterruptedException {
 		// 异步创建索引
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchIndexTemplate.asyncCreateIndex("iot_async_plugin_idx_1", "iot_async_plugin_idx", Test1.class, ThreadUtils.newVirtualTaskExecutor()).join());
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> elasticsearchIndexTemplate
+				.asyncCreateIndex("iot_async_plugin_idx_1", "iot_async_plugin_idx", Test1.class,
+						ThreadUtils.newVirtualTaskExecutor())
+				.join());
 		Thread.sleep(Duration.ofSeconds(3));
 		// 异步查看索引
-		Map<String, IndexState> map = elasticsearchIndexTemplate.asyncGetIndex(List.of("iot_async_plugin_idx_1")).join().indices();
+		Map<String, IndexState> map = elasticsearchIndexTemplate.asyncGetIndex(List.of("iot_async_plugin_idx_1"))
+			.join()
+			.indices();
 		Assertions.assertThat(map).hasSize(1);
 		Assertions.assertThat(map.get("iot_async_plugin_idx_1")).isNotNull();
 		// 异步创建文档
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.asyncCreateDocument("iot_async_plugin_idx_1", "1", new Test1(1L, "我是老寇，你们好呀！"), ThreadUtils.newVirtualTaskExecutor()).join());
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> elasticsearchDocumentTemplate
+				.asyncCreateDocument("iot_async_plugin_idx_1", "1", new Test1(1L, "我是老寇，你们好呀！"),
+						ThreadUtils.newVirtualTaskExecutor())
+				.join());
 		// 异步搜索文档【分词匹配】
 		Search.Highlight highlight = new Search.Highlight();
 		highlight.setFields(Set.of(new Search.HighlightField("name", 0, 0)));
@@ -125,45 +135,72 @@ class ElasticsearchApiTest {
 		multiMatchQuery.fields("name").query("我");
 		queryBuilder.multiMatch(multiMatchQuery.build());
 		Search search = new Search(highlight, 1, 10, queryBuilder.build());
-		Page<Test1> page = elasticsearchSearchTemplate.asyncSearch(List.of("iot_async_plugin_idx_1"), search, Test1.class).join();
+		Page<Test1> page = elasticsearchSearchTemplate
+			.asyncSearch(List.of("iot_async_plugin_idx_1"), search, Test1.class)
+			.join();
 		Assertions.assertThat(page.getTotal()).isEqualTo(1L);
 		Test1 test1 = page.getRecords().getFirst();
 		Assertions.assertThat(test1.getName()).isEqualTo("<font color='red'>我</font>是老寇，你们好呀！");
 		// 异步查看文档
-		Test1 test2 = elasticsearchDocumentTemplate.asyncGetDocument("iot_async_plugin_idx_1", "1", Test1.class, ThreadUtils.newVirtualTaskExecutor()).join();
+		Test1 test2 = elasticsearchDocumentTemplate
+			.asyncGetDocument("iot_async_plugin_idx_1", "1", Test1.class, ThreadUtils.newVirtualTaskExecutor())
+			.join();
 		Assertions.assertThat(test2).isNotNull();
 		Assertions.assertThat(test2.getName()).isEqualTo("我是老寇，你们好呀！");
 		// 异步删除文档
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.asyncDeleteDocument("iot_async_plugin_idx_1", test2.getId().toString(), ThreadUtils.newVirtualTaskExecutor()).join());
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> elasticsearchDocumentTemplate
+				.asyncDeleteDocument("iot_async_plugin_idx_1", test2.getId().toString(),
+						ThreadUtils.newVirtualTaskExecutor())
+				.join());
 		// 异步查看文档
-		Test1 test3 = elasticsearchDocumentTemplate.asyncGetDocument("iot_async_plugin_idx_1", "1", Test1.class, ThreadUtils.newVirtualTaskExecutor()).join();
+		Test1 test3 = elasticsearchDocumentTemplate
+			.asyncGetDocument("iot_async_plugin_idx_1", "1", Test1.class, ThreadUtils.newVirtualTaskExecutor())
+			.join();
 		Assertions.assertThat(test3).isNull();
 		// 异步批量创建文档
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.asyncBulkCreateDocuments("iot_async_plugin_idx_1", List.of(new Test1(2L, "KK")), ThreadUtils.newVirtualTaskExecutor()).join());
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> elasticsearchDocumentTemplate
+				.asyncBulkCreateDocuments("iot_async_plugin_idx_1", List.of(new Test1(2L, "KK")),
+						ThreadUtils.newVirtualTaskExecutor())
+				.join());
 		// 异步搜索文档【精准匹配】
 		Query.Builder queryBuilder2 = new Query.Builder();
 		TermQuery.Builder termQueryBuilder = new TermQuery.Builder();
 		termQueryBuilder.field("name.keyword").value("KK");
 		queryBuilder2.term(termQueryBuilder.build());
-		Page<Test1> page2 = elasticsearchSearchTemplate.asyncSearch(List.of("iot_async_plugin_idx_1"), new Search(null, 1, 10, queryBuilder2.build()), Test1.class).join();
+		Page<Test1> page2 = elasticsearchSearchTemplate
+			.asyncSearch(List.of("iot_async_plugin_idx_1"), new Search(null, 1, 10, queryBuilder2.build()), Test1.class)
+			.join();
 		Assertions.assertThat(page2.getTotal()).isEqualTo(1L);
 		// 异步删除索引
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchIndexTemplate.asyncDeleteIndex(List.of("iot_async_plugin_idx_1"), ThreadUtils.newVirtualTaskExecutor()).join());
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> elasticsearchIndexTemplate
+				.asyncDeleteIndex(List.of("iot_async_plugin_idx_1"), ThreadUtils.newVirtualTaskExecutor())
+				.join());
 		Thread.sleep(Duration.ofSeconds(3));
 		// 异步判断索引是否存在
-		Assertions.assertThat(elasticsearchIndexTemplate.asyncExist(List.of("iot_async_plugin_idx_1"),  ThreadUtils.newVirtualTaskExecutor()).join()).isFalse();
+		Assertions
+			.assertThat(elasticsearchIndexTemplate
+				.asyncExist(List.of("iot_async_plugin_idx_1"), ThreadUtils.newVirtualTaskExecutor())
+				.join())
+			.isFalse();
 	}
 
 	@Test
 	void test_syncApi() throws IOException {
 		// 同步创建索引
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchIndexTemplate.createIndex("iot_plugin_idx_1", "iot_plugin_idx", Test1.class));
+		Assertions.assertThatNoException()
+			.isThrownBy(
+					() -> elasticsearchIndexTemplate.createIndex("iot_plugin_idx_1", "iot_plugin_idx", Test1.class));
 		// 同步查看索引
 		Map<String, IndexState> map = elasticsearchIndexTemplate.getIndex(List.of("iot_plugin_idx_1")).indices();
 		Assertions.assertThat(map).hasSize(1);
 		Assertions.assertThat(map.get("iot_plugin_idx_1")).isNotNull();
 		// 同步创建文档
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.createDocument("iot_plugin_idx_1", "1", new Test1(1L, "我是老寇，你们好呀！")));
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> elasticsearchDocumentTemplate.createDocument("iot_plugin_idx_1", "1",
+					new Test1(1L, "我是老寇，你们好呀！")));
 		// 同步搜索文档【分词匹配】
 		Search.Highlight highlight = new Search.Highlight();
 		highlight.setFields(Set.of(new Search.HighlightField("name", 0, 0)));
@@ -181,40 +218,43 @@ class ElasticsearchApiTest {
 		Assertions.assertThat(test2).isNotNull();
 		Assertions.assertThat(test2.getName()).isEqualTo("我是老寇，你们好呀！");
 		// 同步删除文档
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.deleteDocument("iot_plugin_idx_1", test2.getId().toString()));
+		Assertions.assertThatNoException()
+			.isThrownBy(
+					() -> elasticsearchDocumentTemplate.deleteDocument("iot_plugin_idx_1", test2.getId().toString()));
 		// 同步查看文档
 		Test1 test3 = elasticsearchDocumentTemplate.getDocument("iot_plugin_idx_1", "1", Test1.class);
 		Assertions.assertThat(test3).isNull();
 		// 同步批量创建文档
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchDocumentTemplate.bulkCreateDocuments("iot_plugin_idx_1", List.of(new Test1(2L, "KK"))));
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> elasticsearchDocumentTemplate.bulkCreateDocuments("iot_plugin_idx_1",
+					List.of(new Test1(2L, "KK"))));
 		// 同步搜索文档【精准匹配】
 		Query.Builder queryBuilder2 = new Query.Builder();
 		TermQuery.Builder termQueryBuilder = new TermQuery.Builder();
 		termQueryBuilder.field("name.keyword").value("KK");
 		queryBuilder2.term(termQueryBuilder.build());
-		Page<Test1> page2 = elasticsearchSearchTemplate.search(List.of("iot_plugin_idx_1"), new Search(null, 1, 10, queryBuilder2.build()), Test1.class);
+		Page<Test1> page2 = elasticsearchSearchTemplate.search(List.of("iot_plugin_idx_1"),
+				new Search(null, 1, 10, queryBuilder2.build()), Test1.class);
 		Assertions.assertThat(page2.getTotal()).isEqualTo(1L);
 		// 同步删除索引
-		Assertions.assertThatNoException().isThrownBy(() -> elasticsearchIndexTemplate.deleteIndex(List.of("iot_plugin_idx_1")));
+		Assertions.assertThatNoException()
+			.isThrownBy(() -> elasticsearchIndexTemplate.deleteIndex(List.of("iot_plugin_idx_1")));
 		// 同步判断索引是否存在
 		Assertions.assertThat(elasticsearchIndexTemplate.exist(List.of("iot_plugin_idx_1"))).isFalse();
 	}
 
 	@Index(setting = @Setting(refreshInterval = "-1"),
-		analysis = @Analysis(filters = {
-			@Filter(name = "pinyin_filter",
-				options = {
-					@Option(key = "type", value = "pinyin"),
-					@Option(key = "keep_full_pinyin", value = "false"),
-					@Option(key = "keep_joined_full_pinyin", value = "true"),
-					@Option(key = "keep_original", value = "true"),
-					@Option(key = "limit_first_letter_length", value = "16"),
-					@Option(key = "remove_duplicated_term", value = "true"),
-					@Option(key = "none_chinese_pinyin_tokenize", value = "false")}
-			)
-		},
-		analyzers = { @Analyzer(name = "ik_pinyin", args = @Args(filter = "pinyin_filter", tokenizer = "ik_max_word")) })
-	)
+			analysis = @Analysis(
+					filters = { @Filter(name = "pinyin_filter",
+							options = { @Option(key = "type", value = "pinyin"),
+									@Option(key = "keep_full_pinyin", value = "false"),
+									@Option(key = "keep_joined_full_pinyin", value = "true"),
+									@Option(key = "keep_original", value = "true"),
+									@Option(key = "limit_first_letter_length", value = "16"),
+									@Option(key = "remove_duplicated_term", value = "true"),
+									@Option(key = "none_chinese_pinyin_tokenize", value = "false") }) },
+					analyzers = { @Analyzer(name = "ik_pinyin",
+							args = @Args(filter = "pinyin_filter", tokenizer = "ik_max_word")) }))
 	@Data
 	@NoArgsConstructor
 	@AllArgsConstructor
@@ -224,7 +264,8 @@ class ElasticsearchApiTest {
 		@Field(type = Type.LONG)
 		private Long id;
 
-		@Field(type = Type.TEXT, searchAnalyzer = "ik_smart", analyzer = "ik_pinyin" , index = true, subField = @SubField(ignoreAbove = 256))
+		@Field(type = Type.TEXT, searchAnalyzer = "ik_smart", analyzer = "ik_pinyin", index = true,
+				subField = @SubField(ignoreAbove = 256))
 		private String name;
 
 	}

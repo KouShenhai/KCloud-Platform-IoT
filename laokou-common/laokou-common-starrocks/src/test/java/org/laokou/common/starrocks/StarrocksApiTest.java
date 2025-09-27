@@ -39,8 +39,8 @@ import java.sql.Statement;
 class StarrocksApiTest {
 
 	static final StarrocksContainer starrocks = new StarrocksContainer(DockerImageNames.starrocks())
-			.withDatabaseName("test")
-			.withScriptPaths("init.sql");
+		.withDatabaseName("test")
+		.withScriptPaths("init.sql");
 
 	@BeforeAll
 	static void beforeAll() {

@@ -28,6 +28,6 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 @TableName("t_user")
 class TestUserDO extends BaseDO {
 
-		private String name;
+	private String name;
 
 }

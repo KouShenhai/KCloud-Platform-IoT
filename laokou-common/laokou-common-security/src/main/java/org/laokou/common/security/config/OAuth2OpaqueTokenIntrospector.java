@@ -84,7 +84,8 @@ public class OAuth2OpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 			return userDetails.getDecryptInfo();
 		}
 		catch (GlobalException e) {
-			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(e.getCode(), e.getMsg(), OAuth2ExceptionHandler.ERROR_URL);
+			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(e.getCode(), e.getMsg(),
+					OAuth2ExceptionHandler.ERROR_URL);
 		}
 	}
 
