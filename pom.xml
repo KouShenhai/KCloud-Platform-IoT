@@ -1097,7 +1097,7 @@
           <!-- 是否包含测试代码目录，true包含，false不包含，只检查主目录代码 -->
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
           <!-- 是否跳过代码规范检查，true跳过，false不跳过 -->
-          <skip>true</skip>
+          <skip>false</skip>
           <!-- checkstyle报告是否包含代码引用链接，false不包含，true包含 -->
           <linkXRef>false</linkXRef>
         </configuration>
