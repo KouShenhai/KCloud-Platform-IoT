@@ -156,7 +156,7 @@
     <!--pf4j版本-->
     <pf4j.version>0.10.0</pf4j.version>
     <!--minio版本-->
-    <minio.version>8.5.17</minio.version>
+    <minio.version>8.6.0</minio.version>
     <!--spring-security版本-->
     <spring-security.version>6.5.5</spring-security.version>
     <!--spring-ai-alibaba版本-->
