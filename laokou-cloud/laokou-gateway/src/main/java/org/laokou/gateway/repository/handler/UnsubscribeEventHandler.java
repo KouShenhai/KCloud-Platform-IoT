@@ -34,7 +34,7 @@ public class UnsubscribeEventHandler {
 	@Async
 	@EventListener
 	public void onUnsubscribeEvent(NacosRouteDefinitionRepository.UnsubscribeEvent evt) throws InterruptedException {
-		Thread.sleep(Duration.ofSeconds(15));
+		Thread.sleep(Duration.ofMinutes(5));
 		Disposable disposable = evt.getDisposable();
 		if (!disposable.isDisposed()) {
 			// 取消订阅
