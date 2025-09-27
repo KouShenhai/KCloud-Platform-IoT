@@ -27,11 +27,6 @@ jobs:
           wget https://downloads.apache.org/maven/mvnd/${MVND_VERSION}/maven-mvnd-${MVND_VERSION}-linux-amd64.zip
           unzip maven-mvnd-${MVND_VERSION}-linux-amd64.zip
           echo "${PWD}/maven-mvnd-${MVND_VERSION}-linux-amd64/bin" >> $GITHUB_PATH
-      - name: Build Auth Native Image
-        run: |
-          mvnd clean install -P dev -DskipTests
-          cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-service/laokou-auth/laokou-auth-start
-          mvnd native:build
       - name: Test with Maven Mvnd
         run: mvnd clean test -P dev
       - name: Upload coverage reports to Codecov
