@@ -15,14 +15,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install GraalVM JDK 25
+          name: Install JDK 25
           command: |
-            GRAALVM_URL="https://download.oracle.com/graalvm/25/latest/graalvm-jdk-25_linux-x64_bin.tar.gz"
-            sudo wget ${GRAALVM_URL}
-            sudo tar -xzf graalvm-jdk-25_linux-x64_bin.tar.gz
-            sudo echo "export GRAALVM_HOME=$PWD/graalvm-jdk-25*" >> $BASH_ENV
-            sudo echo "export JAVA_HOME=$PWD/graalvm-jdk-25*" >> $BASH_ENV
-            sudo echo "export PATH=$PWD/graalvm-jdk-25*/bin:$PATH" >> $BASH_ENV
+            sudo wget https://download.oracle.com/java/25/latest/jdk-25_linux-x64_bin.tar.gz
+            sudo tar -zxvf jdk-25_linux-x64_bin.tar.gz
+            sudo echo "export JAVA_HOME=$PWD/jdk-25" >> $BASH_ENV
+            sudo echo "export PATH=$PWD/jdk-25/bin:$PATH" >> $BASH_ENV
             source $BASH_ENV
       - run:
           name: Install specific Maven version
@@ -36,8 +34,8 @@ jobs:
       - run:
           name: Build with Maven
           command: |
-            java -version
             mvn -v
+            java -version
             mvn clean install -P dev -DskipTests -B
 workflows:
   maven-build:
