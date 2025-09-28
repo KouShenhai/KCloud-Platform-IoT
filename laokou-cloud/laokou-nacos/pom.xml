@@ -30,8 +30,6 @@
   <properties>
     <!--pig-nacos版本-->
     <pig-nacos.version>3.0.2.OEM</pig-nacos.version>
-    <!--spring-boot版本-->
-    <spring-boot.version>3.5.6</spring-boot.version>
     <!--postgresql版本-->
     <postgresql.version>42.7.8</postgresql.version>
     <!--grpc版本-->
@@ -115,7 +113,6 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-undertow</artifactId>
-      <version>${spring-boot.version}</version>
     </dependency>
     <dependency>
       <groupId>com.github.ulisesbocchio</groupId>
@@ -130,7 +127,6 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
-      <version>${spring-boot.version}</version>
     </dependency>
   </dependencies>
 
