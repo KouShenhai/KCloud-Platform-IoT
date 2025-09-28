@@ -242,7 +242,7 @@
     <!--jacoco-maven-plugin版本-->
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
     <!--checkstyle版本-->
-    <checkstyle.version>11.0.1</checkstyle.version>
+    <checkstyle.version>11.1.0</checkstyle.version>
     <!--spring-javaformat-checkstyle版本-->
     <spring-javaformat-checkstyle.version>0.0.47</spring-javaformat-checkstyle.version>
     <!--docker主机-->
