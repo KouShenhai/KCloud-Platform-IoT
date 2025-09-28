@@ -28,8 +28,8 @@
   <artifactId>laokou-nacos</artifactId>
 
   <properties>
-    <!--nacos版本-->
-    <nacos.version>3.0.2.OEM</nacos.version>
+    <!--pig-nacos版本-->
+    <pig-nacos.version>3.0.2.OEM</pig-nacos.version>
     <!--spring-boot版本-->
     <spring-boot.version>3.5.6</spring-boot.version>
     <!--postgresql版本-->
@@ -50,7 +50,6 @@
     <dependency>
       <groupId>io.github.pig-mesh.nacos</groupId>
       <artifactId>nacos-console</artifactId>
-      <version>${nacos.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework.boot</groupId>
@@ -85,7 +84,6 @@
     <dependency>
       <groupId>io.github.pig-mesh.nacos</groupId>
       <artifactId>nacos-server</artifactId>
-      <version>${nacos.version}</version>
       <exclusions>
         <exclusion>
           <groupId>com.mysql</groupId>
@@ -135,6 +133,18 @@
       <version>${spring-boot.version}</version>
     </dependency>
   </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.github.pig-mesh.nacos</groupId>
+        <artifactId>nacos-all</artifactId>
+        <version>${pig-nacos.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <finalName>${project.artifactId}</finalName>
