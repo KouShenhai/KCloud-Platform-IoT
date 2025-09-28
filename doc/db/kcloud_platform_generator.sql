@@ -61,8 +61,8 @@ COMMENT ON COLUMN "public"."generator_column"."component_type" IS '组件类型'
 COMMENT ON COLUMN "public"."generator_column"."dict_type" IS '字典类型';
 COMMENT ON COLUMN "public"."generator_column"."field_name" IS '字段名称';
 COMMENT ON COLUMN "public"."generator_column"."field_type" IS '字段类型';
-COMMENT ON COLUMN "public"."generator_column"."info_id" IS '代码生成信息ID';
-COMMENT ON TABLE "public"."generator_column" IS '代码生成器字段';
+COMMENT ON COLUMN "public"."generator_column"."info_id" IS '信息ID';
+COMMENT ON TABLE "public"."generator_column" IS '字段';
 
 ALTER TABLE "public"."generator_column" ADD CONSTRAINT "generator_column_pkey" PRIMARY KEY ("id");
 
@@ -83,11 +83,10 @@ CREATE TABLE "public"."generator_info" (
 	"comment" varchar(50)  NOT NULL,
 	"package_name" varchar(50)  NOT NULL,
 	"path" varchar(200)  NOT NULL,
-	"version_number" varchar(10) NOT NULL,
+	"api_version" varchar(10) NOT NULL,
 	"table_prefix" varchar(50)  NOT NULL,
 	"module_name" varchar(50)  NOT NULL,
-	"app_id" varchar(50)  NOT NULL,
-	"source_id" varchar(50)  NOT NULL
+	"service_id" varchar(50)  NOT NULL
 )
 ;
 COMMENT ON COLUMN "public"."generator_info"."id" IS 'ID';
@@ -105,12 +104,11 @@ COMMENT ON COLUMN "public"."generator_info"."author" IS '作者';
 COMMENT ON COLUMN "public"."generator_info"."comment" IS '表描述';
 COMMENT ON COLUMN "public"."generator_info"."package_name" IS '包名';
 COMMENT ON COLUMN "public"."generator_info"."path" IS '生成路径';
-COMMENT ON COLUMN "public"."generator_info"."version_number" IS '版本号';
+COMMENT ON COLUMN "public"."generator_info"."api_version" IS 'API版本号';
 COMMENT ON COLUMN "public"."generator_info"."table_prefix" IS '数据库表前缀';
 COMMENT ON COLUMN "public"."generator_info"."module_name" IS '模块名称';
-COMMENT ON COLUMN "public"."generator_info"."app_id" IS '应用ID';
-COMMENT ON COLUMN "public"."generator_info"."source_id" IS '数据源ID';
-COMMENT ON TABLE "public"."generator_info" IS '代码生成器信息';
+COMMENT ON COLUMN "public"."generator_info"."service_id" IS '服务ID';
+COMMENT ON TABLE "public"."generator_info" IS '信息';
 
 ALTER TABLE "public"."generator_info" ADD CONSTRAINT "generator_info_pkey" PRIMARY KEY ("id");
 
@@ -124,34 +122,11 @@ CREATE TABLE "public"."generator_template" (
 	"del_flag" int2 NOT NULL DEFAULT 0,
 	"version" int4 NOT NULL DEFAULT 0,
 	"tenant_id" int8 NOT NULL DEFAULT 0,
-	"save_cmd" text  NOT NULL,
-	"modify_cmd" text  NOT NULL,
-	"remove_cmd" text  NOT NULL,
-	"page_qry" text  NOT NULL,
-	"get_qry" text  NOT NULL,
-	"import_cmd" text  NOT NULL,
-	"export_cmd" text  NOT NULL,
-	"convertor" text  NOT NULL,
-	"save_cmd_exe" text  NOT NULL,
-	"modify_cmd_exe" text  NOT NULL,
-	"remove_cmd_exe" text  NOT NULL,
-	"page_qry_exe" text  NOT NULL,
-	"get_qry_exe" text  NOT NULL,
-	"import_cmd_exe" text  NOT NULL,
-	"export_cmd_exe" text  NOT NULL,
-	"entity" text  NOT NULL,
-	"service_i" text  NOT NULL,
-	"service_impl" text  NOT NULL,
-	"domain_service" text  NOT NULL,
-	"data_object" text  NOT NULL,
-	"gateway" text  NOT NULL,
-	"gateway_impl" text  NOT NULL,
-	"controller" text  NOT NULL,
-	"mapper" text  NOT NULL,
-	"mapper_xml" text  NOT NULL,
-	"api" text  NOT NULL,
-	"view" text  NOT NULL,
-	"form_view" text  NOT NULL
+	"code" varchar(50)  NOT NULL,
+	"name" varchar(50)  NOT NULL,
+	"path_pattern" varchar(50) NOT NULL,
+	"content" text  NOT NULL,
+	"remark" varchar(400)
 )
 ;
 COMMENT ON COLUMN "public"."generator_template"."id" IS 'ID';
@@ -162,34 +137,65 @@ COMMENT ON COLUMN "public"."generator_template"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."generator_template"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."generator_template"."version" IS '版本号';
 COMMENT ON COLUMN "public"."generator_template"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."generator_template"."save_cmd" IS '保存命令';
-COMMENT ON COLUMN "public"."generator_template"."modify_cmd" IS '修改命令';
-COMMENT ON COLUMN "public"."generator_template"."remove_cmd" IS '删除命令';
-COMMENT ON COLUMN "public"."generator_template"."page_qry" IS '分页查询';
-COMMENT ON COLUMN "public"."generator_template"."get_qry" IS '查看';
-COMMENT ON COLUMN "public"."generator_template"."import_cmd" IS '导入命令';
-COMMENT ON COLUMN "public"."generator_template"."export_cmd" IS '导出命令';
-COMMENT ON COLUMN "public"."generator_template"."convertor" IS '转换器';
-COMMENT ON COLUMN "public"."generator_template"."save_cmd_exe" IS '保存命令执行器';
-COMMENT ON COLUMN "public"."generator_template"."modify_cmd_exe" IS '修改命令执行器';
-COMMENT ON COLUMN "public"."generator_template"."remove_cmd_exe" IS '删除命令执行器';
-COMMENT ON COLUMN "public"."generator_template"."page_qry_exe" IS '分页查询执行器';
-COMMENT ON COLUMN "public"."generator_template"."get_qry_exe" IS '查看执行器';
-COMMENT ON COLUMN "public"."generator_template"."import_cmd_exe" IS '导入命令执行器';
-COMMENT ON COLUMN "public"."generator_template"."export_cmd_exe" IS '导出命令执行器';
-COMMENT ON COLUMN "public"."generator_template"."entity" IS '实体';
-COMMENT ON COLUMN "public"."generator_template"."service_i" IS '服务';
-COMMENT ON COLUMN "public"."generator_template"."service_impl" IS '服务实现';
-COMMENT ON COLUMN "public"."generator_template"."domain_service" IS '领域服务';
-COMMENT ON COLUMN "public"."generator_template"."data_object" IS '数据对象';
-COMMENT ON COLUMN "public"."generator_template"."gateway" IS '网关';
-COMMENT ON COLUMN "public"."generator_template"."gateway_impl" IS '网关实现';
-COMMENT ON COLUMN "public"."generator_template"."controller" IS '控制器';
-COMMENT ON COLUMN "public"."generator_template"."mapper" IS '数据映射';
-COMMENT ON COLUMN "public"."generator_template"."mapper_xml" IS '数据映射XML';
-COMMENT ON COLUMN "public"."generator_template"."api" IS 'API';
-COMMENT ON COLUMN "public"."generator_template"."view" IS '页面';
-COMMENT ON COLUMN "public"."generator_template"."form_view" IS '表单页面';
-COMMENT ON TABLE "public"."generator_template" IS '代码生成器模板';
+COMMENT ON COLUMN "public"."generator_template"."code" IS '编码';
+COMMENT ON COLUMN "public"."generator_template"."name" IS '名称';
+COMMENT ON COLUMN "public"."generator_template"."path_pattern" IS '路径表达式';
+COMMENT ON COLUMN "public"."generator_template"."content" IS '内容';
+COMMENT ON COLUMN "public"."generator_template"."remark" IS '备注';
+COMMENT ON TABLE  "public"."generator_template" IS '模板';
 
 ALTER TABLE "public"."generator_template" ADD CONSTRAINT "generator_template_pkey" PRIMARY KEY ("id");
+
+DROP TABLE IF EXISTS "public"."generator_group";
+CREATE TABLE "public"."generator_group" (
+   "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+   "creator" int8 NOT NULL DEFAULT 0,
+   "editor" int8 NOT NULL DEFAULT 0,
+   "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   "del_flag" int2 NOT NULL DEFAULT 0,
+   "version" int4 NOT NULL DEFAULT 0,
+   "tenant_id" int8 NOT NULL DEFAULT 0,
+   "name" varchar(50)  NOT NULL
+)
+;
+COMMENT ON COLUMN "public"."generator_group"."id" IS 'ID';
+COMMENT ON COLUMN "public"."generator_group"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."generator_group"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."generator_group"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."generator_group"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."generator_group"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."generator_group"."version" IS '版本号';
+COMMENT ON COLUMN "public"."generator_group"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."generator_group"."name" IS '名称';
+COMMENT ON TABLE  "public"."generator_group" IS '组';
+
+ALTER TABLE "public"."generator_group" ADD CONSTRAINT "generator_group_pkey" PRIMARY KEY ("id");
+
+DROP TABLE IF EXISTS "public"."generator_template_group";
+CREATE TABLE "public"."generator_template_group" (
+	"id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+	"creator" int8 NOT NULL DEFAULT 0,
+	"editor" int8 NOT NULL DEFAULT 0,
+	"create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	"del_flag" int2 NOT NULL DEFAULT 0,
+	"version" int4 NOT NULL DEFAULT 0,
+	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"template_id" int8  NOT NULL,
+	"group_id" int8  NOT NULL
+)
+;
+COMMENT ON COLUMN "public"."generator_template_group"."id" IS 'ID';
+COMMENT ON COLUMN "public"."generator_template_group"."creator" IS '创建人';
+COMMENT ON COLUMN "public"."generator_template_group"."editor" IS '编辑人';
+COMMENT ON COLUMN "public"."generator_template_group"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."generator_template_group"."update_time" IS '修改时间';
+COMMENT ON COLUMN "public"."generator_template_group"."del_flag" IS '删除标识 0未删除 1已删除';
+COMMENT ON COLUMN "public"."generator_template_group"."version" IS '版本号';
+COMMENT ON COLUMN "public"."generator_template_group"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."generator_template_group"."template_id" IS '模板ID';
+COMMENT ON COLUMN "public"."generator_template_group"."group_id" IS '组ID';
+COMMENT ON TABLE  "public"."generator_template_group" IS '模板组';
+
+ALTER TABLE "public"."generator_template_group" ADD CONSTRAINT "generator_template_group_pkey" PRIMARY KEY ("id");

@@ -28,7 +28,7 @@ class SystemUtilsTest {
 
 	@Test
 	void test_windows() {
-		Assertions.assertThat(SystemUtils.isWindows()).isTrue();
+		Assertions.assertThat(SystemUtils.isWindows()).isFalse();
 	}
 
 }

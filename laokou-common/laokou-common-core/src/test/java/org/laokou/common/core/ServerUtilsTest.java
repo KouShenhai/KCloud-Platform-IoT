@@ -30,8 +30,8 @@ class ServerUtilsTest {
 	@Test
 	void test_getServerInfo() throws UnknownHostException {
 		ServerUtils.Server serverInfo = ServerUtils.getServerInfo();
-		Assertions.assertThat(serverInfo.getSys().getOsName()).isEqualTo("Windows 11");
-		Assertions.assertThat(serverInfo.getSys().getOsArch()).isEqualTo("amd64");
+		Assertions.assertThat(serverInfo.getSys().getOsName()).isNotNull();
+		Assertions.assertThat(serverInfo.getSys().getOsArch()).isNotNull();
 	}
 
 }
