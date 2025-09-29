@@ -20,7 +20,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-reactor</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -30,7 +30,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
       <scope>test</scope>
       <optional>true</optional>
       <exclusions>
@@ -49,12 +49,12 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-pulsar</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-vertx</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 

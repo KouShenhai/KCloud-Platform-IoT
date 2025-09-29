@@ -46,7 +46,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-redis</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.security</groupId>
@@ -55,7 +55,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-context</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>jakarta.servlet</groupId>
@@ -65,7 +65,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-reactor</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

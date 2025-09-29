@@ -14,7 +14,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-udp-server-infrastructure</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 
