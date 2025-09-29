@@ -40,6 +40,7 @@ server:
   servlet:
     encoding:
       charset: UTF-8
+    context-path: /api
   undertow:
     threads:
       # 设置IO线程数，来执行非阻塞任务，负责多个连接数

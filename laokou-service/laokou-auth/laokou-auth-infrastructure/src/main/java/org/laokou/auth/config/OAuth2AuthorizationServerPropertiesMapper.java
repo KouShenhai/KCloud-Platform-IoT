@@ -20,7 +20,6 @@ package org.laokou.auth.config;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;

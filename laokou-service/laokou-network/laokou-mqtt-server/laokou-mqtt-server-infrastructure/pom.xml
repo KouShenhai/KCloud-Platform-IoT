@@ -6,11 +6,11 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-mqtt-server</artifactId>
-    <version>3.5.4-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>laokou-mqtt-server-infrastructure</artifactId>
-  <version>3.5.4-SNAPSHOT</version>
+  <version>4.0.0-SNAPSHOT</version>
 
   <dependencies>
     <dependency>

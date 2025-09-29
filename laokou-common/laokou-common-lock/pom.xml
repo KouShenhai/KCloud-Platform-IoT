@@ -6,10 +6,10 @@
   <parent>
     <artifactId>laokou-common</artifactId>
     <groupId>org.laokou</groupId>
-    <version>3.5.4-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>laokou-common-lock</artifactId>
-  <version>3.5.4-SNAPSHOT</version>
+  <version>4.0.0-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
