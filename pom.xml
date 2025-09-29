@@ -100,7 +100,7 @@
     <!--mybatis-plus版本 -->
     <mybatis-plus.version>3.5.14</mybatis-plus.version>
     <!--protobuf版本-->
-    <protobuf.version>3.25.8</protobuf.version>
+    <protobuf.version>4.32.1</protobuf.version>
     <!--nacos版本-->
     <nacos.version>3.1.0</nacos.version>
     <!--lombok版本-->
