@@ -1185,7 +1185,6 @@
                 <requireEnvironmentVariable>
                   <variableName>JAVA_HOME</variableName>
                   <variableName>GRAALVM_HOME</variableName>
-                  <variableName>MAVEN_HOME</variableName>
                 </requireEnvironmentVariable>
 
                 <!-- 检查系统属性 -->
