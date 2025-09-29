@@ -127,6 +127,14 @@
     <protobuf.version>3.25.8</protobuf.version>
     <!--nacos版本-->
     <nacos.version>3.1.0</nacos.version>
+    <!--opentelemetry版本-->
+    <opentelemetry.version>1.54.1</opentelemetry.version>
+    <!--netty版本-->
+    <netty.version>4.2.3.Final</netty.version>
+    <!--grpc版本-->
+    <grpc.version>1.75.0</grpc.version>
+    <!--jackson版本-->
+    <jackson.version>3.0.0-rc10</jackson.version>
     <!--lombok版本-->
     <lombok.version>1.18.42</lombok.version>
     <!--postgresql版本-->
@@ -161,16 +169,8 @@
     <hibernate-validator.version>9.0.1.Final</hibernate-validator.version>
     <!--ip2region版本-->
     <ip2region.version>3.1.0</ip2region.version>
-    <!--jackson版本-->
-    <jackson.version>2.20.0</jackson.version>
-    <!--jackson-annotations版本-->
-    <jackson-annotations.version>2.20</jackson-annotations.version>
     <!--spring-kafka版本-->
     <spring-kafka.version>3.3.10</spring-kafka.version>
-    <!--netty版本-->
-    <netty.version>4.2.3.Final</netty.version>
-    <!--gson版本-->
-    <gson.version>2.13.2</gson.version>
     <!--swagger-annotations-jakarta版本-->
     <swagger-annotations-jakarta.version>2.2.37</swagger-annotations-jakarta.version>
     <!--disruptor版本-->
@@ -189,26 +189,14 @@
     <browscap-java.version>1.5.1</browscap-java.version>
     <!--liquibase-core版本-->
     <liquibase-core.version>4.33.0</liquibase-core.version>
-    <!--grpc版本-->
-    <grpc.version>1.75.0</grpc.version>
     <!--proto-google-common-protos版本-->
     <proto-google-common-protos.version>2.61.2</proto-google-common-protos.version>
-    <!--error_prone_annotations版本-->
-    <error_prone_annotations.version>2.42.0</error_prone_annotations.version>
     <!--checker-qual版本-->
     <checker-qual.version>3.51.0</checker-qual.version>
-    <!--commons-io版本-->
-    <commons-io.version>2.20.0</commons-io.version>
-    <!--commons-text版本-->
-    <commons-text.version>1.14.0</commons-text.version>
     <!--snail-job版本-->
     <snail-job.version>1.8.0</snail-job.version>
     <!--archunit-junit5版本-->
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
-    <!--opentelemetry-api-incubator版本-->
-    <opentelemetry-api-incubator.version>1.54.1-alpha</opentelemetry-api-incubator.version>
-    <!--opentelemetry-exporter-jaeger版本-->
-    <opentelemetry-exporter-jaeger.version>1.34.1</opentelemetry-exporter-jaeger.version>
     <!--caffeine版本-->
     <caffeine.version>3.2.2</caffeine.version>
     <!--jsqlparser版本-->
@@ -256,6 +244,7 @@
     <!--docker密码-->
     <docker.password>password</docker.password>
   </properties>
+
   <dependencyManagement>
     <dependencies>
 
@@ -409,6 +398,46 @@
       </dependency>
       <!-- =============================== 定义 Nacos 版本 =============================== -->
 
+      <!-- =============================== 定义 Opentelemetry 版本 =============================== -->
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-bom</artifactId>
+        <version>${opentelemetry.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- =============================== 定义 Opentelemetry 版本 =============================== -->
+
+      <!-- =============================== 定义 Netty 版本 =============================== -->
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-bom</artifactId>
+        <version>${netty.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- =============================== 定义 Netty 版本 =============================== -->
+
+      <!-- =============================== 定义 GRpc 版本 =============================== -->
+      <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-bom</artifactId>
+        <version>${grpc.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- =============================== 定义 GRpc 版本 =============================== -->
+
+      <!-- =============================== 定义 Jackson 版本 =============================== -->
+      <dependency>
+        <groupId>tools.jackson</groupId>
+        <artifactId>jackson-bom</artifactId>
+        <version>${jackson.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- =============================== 定义 Jackson 版本 =============================== -->
+
       <!-- =============================== Fastjson =============================== -->
       <dependency>
         <groupId>com.alibaba</groupId>
@@ -511,16 +540,6 @@
         <version>${caffeine.version}</version>
       </dependency>
       <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-exporter-jaeger</artifactId>
-        <version>${opentelemetry-exporter-jaeger.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-api-incubator</artifactId>
-        <version>${opentelemetry-api-incubator.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.tngtech.archunit</groupId>
         <artifactId>archunit-junit5</artifactId>
         <version>${archunit-junit5.version}</version>
@@ -546,49 +565,9 @@
         <version>${snail-job.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-text</artifactId>
-        <version>${commons-text.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>commons-io</groupId>
-        <artifactId>commons-io</artifactId>
-        <version>${commons-io.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.checkerframework</groupId>
         <artifactId>checker-qual</artifactId>
         <version>${checker-qual.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.google.errorprone</groupId>
-        <artifactId>error_prone_annotations</artifactId>
-        <version>${error_prone_annotations.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.google.api.grpc</groupId>
-        <artifactId>proto-google-common-protos</artifactId>
-        <version>${proto-google-common-protos.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
-        <artifactId>grpc-netty</artifactId>
-        <version>${grpc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
-        <artifactId>grpc-api</artifactId>
-        <version>${grpc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
-        <artifactId>grpc-core</artifactId>
-        <version>${grpc.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.grpc</groupId>
-        <artifactId>grpc-util</artifactId>
-        <version>${grpc.version}</version>
       </dependency>
       <dependency>
         <groupId>org.liquibase</groupId>
@@ -626,31 +605,6 @@
         <version>${postgresql.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>${jackson.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-annotations</artifactId>
-        <version>${jackson-annotations.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.fasterxml.jackson.datatype</groupId>
-        <artifactId>jackson-datatype-jsr310</artifactId>
-        <version>${jackson.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-core</artifactId>
-        <version>${jackson.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.fasterxml.jackson.dataformat</groupId>
-        <artifactId>jackson-dataformat-xml</artifactId>
-        <version>${jackson.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
         <version>${mockito.version}</version>
@@ -676,36 +630,10 @@
         <version>${swagger-annotations-jakarta.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.google.code.gson</groupId>
-        <artifactId>gson</artifactId>
-        <version>${gson.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.netty</groupId>
-        <artifactId>netty-all</artifactId>
-        <version>${netty.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.netty</groupId>
-        <artifactId>netty-transport</artifactId>
-        <version>${netty.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.netty</groupId>
-        <artifactId>netty-common</artifactId>
-        <version>${netty.version}</version>
-      </dependency>
-      <dependency>
         <groupId>org.springframework.kafka</groupId>
         <artifactId>spring-kafka</artifactId>
         <version>${spring-kafka.version}</version>
       </dependency>
-      <dependency>
-        <groupId>com.fasterxml.jackson.module</groupId>
-        <artifactId>jackson-module-kotlin</artifactId>
-        <version>${jackson.version}</version>
-      </dependency>
-
       <dependency>
         <groupId>org.lionsoul</groupId>
         <artifactId>ip2region</artifactId>
@@ -781,6 +709,7 @@
 
     </dependencies>
   </dependencyManagement>
+
   <repositories>
     <repository>
       <id>tencent-cloud-mirror</id>
@@ -837,14 +766,12 @@
     <profile>
       <id>dev</id>
       <properties>
-        <DATASOURCE-USERNAME-NACOS>ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)</DATASOURCE-USERNAME-NACOS>
-        <DATASOURCE-PASSWORD-NACOS>ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)</DATASOURCE-PASSWORD-NACOS>
-        <DATASOURCE-HOST>postgresql</DATASOURCE-HOST>
-        <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-nacos&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-NACOS>
-        <DATASOURCE-PORT>5432</DATASOURCE-PORT>
-        <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
-        <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
-        <DATASOURCE-DB-NACOS>kcloud_platform_nacos</DATASOURCE-DB-NACOS>
+        <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
+        <SSL-ENABLED>false</SSL-ENABLED>
+        <DS-HOST>postgresql</DS-HOST>
+        <DS-PORT>5432</DS-PORT>
+        <DS-DRIVER>org.postgresql.Driver</DS-DRIVER>
+        <DS-PLATFORM>postgresql</DS-PLATFORM>
         <NACOS-NAMESPACE>0dac1a68-2f01-40df-bd26-bf0cb199057a</NACOS-NAMESPACE>
         <NACOS-DISCOVERY-ADDRESS>nacos:8848</NACOS-DISCOVERY-ADDRESS>
         <NACOS-CONFIG-ADDRESS>nacos:8848</NACOS-CONFIG-ADDRESS>
@@ -852,9 +779,7 @@
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
         <NACOS-CLUSTER-NAME>nacos-cluster</NACOS-CLUSTER-NAME>
-        <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
-        <SSL-ENABLED>false</SSL-ENABLED>
-        <JASYPT-ENCRYPTOR-PASSWORD>laokou</JASYPT-ENCRYPTOR-PASSWORD>
+        <SECRET-KEY>laokou</SECRET-KEY>
       </properties>
       <activation>
         <activeByDefault>true</activeByDefault>
@@ -864,14 +789,12 @@
     <profile>
       <id>test</id>
       <properties>
-        <DATASOURCE-USERNAME-NACOS>ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)</DATASOURCE-USERNAME-NACOS>
-        <DATASOURCE-PASSWORD-NACOS>ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)</DATASOURCE-PASSWORD-NACOS>
-        <DATASOURCE-HOST>postgresql</DATASOURCE-HOST>
-        <DATASOURCE-PARAM-NACOS>tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-nacos&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified</DATASOURCE-PARAM-NACOS>
-        <DATASOURCE-PORT>5432</DATASOURCE-PORT>
-        <DATASOURCE-DRIVER-CLASS-NAME>org.postgresql.Driver</DATASOURCE-DRIVER-CLASS-NAME>
-        <DATASOURCE-PLATFORM>postgresql</DATASOURCE-PLATFORM>
-        <DATASOURCE-DB-NACOS>kcloud_platform_nacos</DATASOURCE-DB-NACOS>
+        <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
+        <SSL-ENABLED>false</SSL-ENABLED>
+        <DS-HOST>postgresql</DS-HOST>
+        <DS-PORT>5432</DS-PORT>
+        <DS-DRIVER>org.postgresql.Driver</DS-DRIVER>
+        <DS-PLATFORM>postgresql</DS-PLATFORM>
         <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
         <NACOS-DISCOVERY-ADDRESS>nacos:8848</NACOS-DISCOVERY-ADDRESS>
         <NACOS-CONFIG-ADDRESS>nacos:8848</NACOS-CONFIG-ADDRESS>
@@ -879,9 +802,7 @@
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
         <NACOS-CLUSTER-NAME>nacos-cluster</NACOS-CLUSTER-NAME>
-        <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
-        <SSL-ENABLED>false</SSL-ENABLED>
-        <JASYPT-ENCRYPTOR-PASSWORD>laokou</JASYPT-ENCRYPTOR-PASSWORD>
+        <SECRET-KEY>laokou</SECRET-KEY>
       </properties>
       <activation>
         <activeByDefault>false</activeByDefault>
@@ -891,30 +812,16 @@
     <profile>
       <id>prod</id>
       <properties>
+        <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
+        <SSL-ENABLED>false</SSL-ENABLED>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-USERNAME-NACOS>
-          ${DATASOURCE_USERNAME_NACOS:ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)}
-        </DATASOURCE-USERNAME-NACOS>
+        <DS-HOST>${DS_HOST:postgresql}</DS-HOST>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-PASSWORD-NACOS>
-          ${DATASOURCE_PASSWORD_NACOS:ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)}
-        </DATASOURCE-PASSWORD-NACOS>
+        <DS-PORT>${DS_PORT:5432}</DS-PORT>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-HOST>${DATASOURCE_HOST:postgresql}</DATASOURCE-HOST>
+        <DS-DRIVER>${DS_DRIVER:org.postgresql.Driver}</DS-DRIVER>
         <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-PARAM-NACOS>
-          ${DATASOURCE_PARAM_NACOS:tcpKeepAlive=true&amp;reWriteBatchedInserts=true&amp;ApplicationName=laokou-nacos&amp;useSSL=false&amp;reWriteBatchedInserts=true&amp;stringtype=unspecified}
-        </DATASOURCE-PARAM-NACOS>
-        <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-PORT>${DATASOURCE_PORT:5432}</DATASOURCE-PORT>
-        <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-DRIVER-CLASS-NAME>
-          ${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
-        </DATASOURCE-DRIVER-CLASS-NAME>
-        <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-PLATFORM>${DATASOURCE_PLATFORM:postgresql}</DATASOURCE-PLATFORM>
-        <!--suppress UnresolvedMavenProperty -->
-        <DATASOURCE-DB-NACOS>${DATASOURCE_DB_NACOS:kcloud_platform_nacos}</DATASOURCE-DB-NACOS>
+        <DS-PLATFORM>${DS_PLATFORM:postgresql}</DS-PLATFORM>
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-NAMESPACE>${NACOS_NAMESPACE:8140e92b-fb43-48f5-b63b-7506185206a5}</NACOS-NAMESPACE>
         <!--suppress UnresolvedMavenProperty -->
@@ -929,10 +836,8 @@
         <NACOS-PASSWORD>${NACOS_PASSWORD:nacos}</NACOS-PASSWORD>
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-CLUSTER-NAME>${NACOS_CLUSTER_NAME:nacos-cluster}</NACOS-CLUSTER-NAME>
-        <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
-        <SSL-ENABLED>false</SSL-ENABLED>
         <!--suppress UnresolvedMavenProperty -->
-        <JASYPT-ENCRYPTOR-PASSWORD>${JASYPT_ENCRYPTOR_PASSWORD:laokou}</JASYPT-ENCRYPTOR-PASSWORD>
+        <SECRET-KEY>${SECRET_KEY:laokou}</SECRET-KEY>
       </properties>
       <activation>
         <activeByDefault>false</activeByDefault>

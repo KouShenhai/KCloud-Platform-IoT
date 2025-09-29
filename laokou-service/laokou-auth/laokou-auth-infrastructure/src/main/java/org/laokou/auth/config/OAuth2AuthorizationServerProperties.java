@@ -147,6 +147,11 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 		 */
 		private String tokenIntrospectionUri = "/v1/oauth2/introspect";
 
+		/**
+		 * Authorization Server's OAuth 2.0 Pushed Authorization Request Endpoint.
+		 */
+		private String pushedAuthorizationRequestUri = "/v1/oauth2/par";
+
 	}
 
 	/**
@@ -220,11 +225,6 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 	 */
 	@Data
 	public static class Registration {
-
-		/**
-		 * ID.
-		 */
-		private String id;
 
 		/**
 		 * Client ID of the registration.

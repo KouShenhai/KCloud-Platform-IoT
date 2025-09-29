@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.PropertyMapper;
+import org.springframework.boot.web.server.autoconfigure.ServerProperties;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.jose.jws.JwsAlgorithm;
@@ -35,11 +36,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
- * Maps to Authorization Server types.
- * {@link org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerProperties}
+ * Maps {@link OAuth2AuthorizationServerProperties } to Authorization Server types.
+ * {@link org.springframework.boot.security.oauth2.server.authorization.autoconfigure.servlet.OAuth2AuthorizationServerProperties}
  *
  * @author Steve Riesenberg
  * @author laokou
@@ -55,7 +57,7 @@ final class OAuth2AuthorizationServerPropertiesMapper {
 	private final ServerProperties serverProperties;
 
 	AuthorizationServerSettings asAuthorizationServerSettings() {
-		PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
+		PropertyMapper map = PropertyMapper.get();
 		OAuth2AuthorizationServerProperties.Endpoint endpoint = this.properties.getEndpoint();
 		OAuth2AuthorizationServerProperties.OidcEndpoint oidc = endpoint.getOidc();
 		AuthorizationServerSettings.Builder builder = AuthorizationServerSettings.builder();
@@ -68,6 +70,7 @@ final class OAuth2AuthorizationServerPropertiesMapper {
 		map.from(endpoint::getJwkSetUri).to(builder::jwkSetEndpoint);
 		map.from(endpoint::getTokenRevocationUri).to(builder::tokenRevocationEndpoint);
 		map.from(endpoint::getTokenIntrospectionUri).to(builder::tokenIntrospectionEndpoint);
+		map.from(endpoint::getPushedAuthorizationRequestUri).to(builder::pushedAuthorizationRequestEndpoint);
 		map.from(oidc::getLogoutUri).to(builder::oidcLogoutEndpoint);
 		map.from(oidc::getClientRegistrationUri).to(builder::oidcClientRegistrationEndpoint);
 		map.from(oidc::getUserInfoUri).to(builder::oidcUserInfoEndpoint);
@@ -85,13 +88,12 @@ final class OAuth2AuthorizationServerPropertiesMapper {
 	private RegisteredClient getRegisteredClient(String registrationId,
 			OAuth2AuthorizationServerProperties.Client client) {
 		OAuth2AuthorizationServerProperties.Registration registration = client.getRegistration();
-		PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
+		PropertyMapper map = PropertyMapper.get();
 		RegisteredClient.Builder builder = RegisteredClient.withId(registrationId);
 		// 注册
 		// Base64编码
 		// ClientAuthenticationMethod.CLIENT_SECRET_BASIC => client_id:client_secret
 		map.from(registration::getClientId).to(builder::clientId);
-		map.from(registration::getId).to(builder::id);
 		map.from(registration::getClientSecret).to(builder::clientSecret);
 		map.from(registration::getClientName).to(builder::clientName);
 		registration.getClientAuthenticationMethods()
@@ -141,7 +143,7 @@ final class OAuth2AuthorizationServerPropertiesMapper {
 	}
 
 	private JwsAlgorithm jwsAlgorithm(String signingAlgorithm) {
-		String name = signingAlgorithm.toUpperCase();
+		String name = signingAlgorithm.toUpperCase(Locale.ROOT);
 		JwsAlgorithm jwsAlgorithm = SignatureAlgorithm.from(name);
 		if (ObjectUtils.isNull(jwsAlgorithm)) {
 			jwsAlgorithm = MacAlgorithm.from(name);
@@ -150,7 +152,7 @@ final class OAuth2AuthorizationServerPropertiesMapper {
 	}
 
 	private SignatureAlgorithm signatureAlgorithm(String signatureAlgorithm) {
-		return SignatureAlgorithm.from(signatureAlgorithm.toUpperCase());
+		return SignatureAlgorithm.from(signatureAlgorithm.toUpperCase(Locale.ROOT));
 	}
 
 }

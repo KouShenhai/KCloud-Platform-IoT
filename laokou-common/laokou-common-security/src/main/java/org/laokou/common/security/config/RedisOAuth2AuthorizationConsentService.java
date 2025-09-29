@@ -32,9 +32,9 @@
  */
 package org.laokou.common.security.config;
 
+import org.jspecify.annotations.Nullable;
 import org.laokou.common.security.config.entity.OAuth2UserConsent;
 import org.laokou.common.security.config.repository.OAuth2UserConsentRepository;
-import org.springframework.lang.Nullable;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsent;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.util.Assert;

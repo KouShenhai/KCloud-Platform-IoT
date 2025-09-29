@@ -112,8 +112,8 @@ public class OAuth2ResourceServerConfig {
 			// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
 			.oauth2ResourceServer(resource -> resource
 						.opaqueToken(token -> token.introspector(oAuth2OpaqueTokenIntrospector))
-						.accessDeniedHandler((request, response, ex) -> OAuth2ExceptionHandler.handleAccessDenied(response, ex))
-						.authenticationEntryPoint((request, response, ex) -> OAuth2ExceptionHandler.handleAuthentication(response, ex)))
+						.accessDeniedHandler((_, response, ex) -> OAuth2ExceptionHandler.handleAccessDenied(response, ex))
+						.authenticationEntryPoint((_, response, ex) -> OAuth2ExceptionHandler.handleAuthentication(response, ex)))
 			.build();
 	}
 	// @formatter:on

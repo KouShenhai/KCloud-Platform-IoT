@@ -51,20 +51,8 @@ class OAuth2ResourceServerConfig {
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
 		SpringUtils springUtils,
-		OAuth2ResourceServerProperties oAuth2ResourceServerProperties
-		// SessionExpiredStrategy sessionExpiredStrategy,
-        // SessionInvalidStrategy sessionInvalidStrategy,
-		// SessionRegistry springSessionBackedSessionRegistry
-	) throws Exception {
+		OAuth2ResourceServerProperties oAuth2ResourceServerProperties) throws Exception {
 		return http
-			//   // 只会在需要时创建 HttpSession【默认配置】
-			//  .sessionManagement(config -> config
-			// 	.sessionCreationPolicy(IF_REQUIRED)
-			// 	.invalidSessionStrategy(sessionInvalidStrategy)
-			// 	// 最大会话1
-			// 	.maximumSessions(1)
-			// 	.sessionRegistry(springSessionBackedSessionRegistry)
-			// 	.expiredSessionStrategy(sessionExpiredStrategy))
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer
 				.httpStrictTransportSecurity(hsts -> hsts
 					.includeSubDomains(true)
@@ -84,10 +72,5 @@ class OAuth2ResourceServerConfig {
 			.logout(logout -> logout.clearAuthentication(true).invalidateHttpSession(true))
 			.build();
 	}
-
-//	@Bean
-//	SessionRegistry springSessionBackedSessionRegistry(RedisIndexedSessionRepository redisIndexedSessionRepository) {
-//		return new SpringSessionBackedSessionRegistry<>(redisIndexedSessionRepository);
-//	}
 
 }

@@ -1,7 +1,7 @@
 # jasypt
 jasypt:
   encryptor:
-    password: @JASYPT-ENCRYPTOR-PASSWORD@
+    password: @SECRET-KEY@
 server:
   port: ${SERVER_PORT:10005}
   compression:
@@ -74,8 +74,8 @@ spring:
       datasource:
         master:
           type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
-          url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
+          driver-class-name: @DS-DRIVER@
+          url: jdbc:@DS-PLATFORM@://@DS-HOST@:@DS-PORT@/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
           username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
           password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -89,8 +89,8 @@ spring:
             is-read-only: false
         iot:
           type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
-          url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
+          driver-class-name: @DS-DRIVER@
+          url: jdbc:@DS-PLATFORM@://@DS-HOST@:@DS-PORT@/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
           username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
           password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -104,8 +104,8 @@ spring:
             is-read-only: false
         domain:
           type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
-          url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
+          driver-class-name: @DS-DRIVER@
+          url: jdbc:@DS-PLATFORM@://@DS-HOST@:@DS-PORT@/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
           username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
           password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
           # https://blog.csdn.net/u014644574/article/details/123680515

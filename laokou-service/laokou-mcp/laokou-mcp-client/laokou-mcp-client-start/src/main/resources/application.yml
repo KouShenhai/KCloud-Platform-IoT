@@ -1,6 +1,6 @@
 jasypt:
   encryptor:
-    password: @JASYPT-ENCRYPTOR-PASSWORD@
+    password: @SECRET-KEY@
 
 server:
   # 端口

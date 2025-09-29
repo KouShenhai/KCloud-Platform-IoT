@@ -44,6 +44,8 @@ import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.config.plugins.PluginBuilderAttribute;
 import org.apache.logging.log4j.core.config.plugins.PluginBuilderFactory;
 import org.apache.logging.log4j.core.config.plugins.PluginElement;
+import org.apache.logging.log4j.core.impl.Log4jLogEvent;
+import org.apache.logging.log4j.core.lookup.StrSubstitutor;
 import org.apache.logging.log4j.core.util.KeyValuePair;
 import org.springframework.util.ObjectUtils;
 
@@ -58,6 +60,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -343,6 +346,23 @@ public final class JsonLayout extends AbstractJacksonLayout {
 			throwable.printStackTrace(printWriter);
 			return stringWriter.toString();
 		}
+	}
+
+	private LogEvent convertMutableToLog4jEvent(final LogEvent event) {
+		return event instanceof Log4jLogEvent ? event : Log4jLogEvent.createMemento(event);
+	}
+
+	private Map<String, String> resolveAdditionalFields(final LogEvent logEvent) {
+		Map<String, String> additionalFieldsMap = new LinkedHashMap<>(this.additionalFields.length);
+		StrSubstitutor strSubstitutor = this.configuration.getStrSubstitutor();
+		for(ResolvableKeyValuePair pair : this.additionalFields) {
+			if (pair.valueNeedsLookup) {
+				additionalFieldsMap.put(pair.key, strSubstitutor.replace(logEvent, pair.value));
+			} else {
+				additionalFieldsMap.put(pair.key, pair.value);
+			}
+		}
+		return additionalFieldsMap;
 	}
 
 }

@@ -17,7 +17,7 @@
 
 package org.laokou.common.websocket.config;
 
-import com.fasterxml.jackson.core.JsonParseException;
+import tools.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;

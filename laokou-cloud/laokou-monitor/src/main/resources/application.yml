@@ -16,7 +16,7 @@
 #    */
 jasypt:
   encryptor:
-    password: @JASYPT-ENCRYPTOR-PASSWORD@
+    password: @SECRET-KEY@
 
 server:
   port: ${SERVER_PORT:5000}

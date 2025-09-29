@@ -33,9 +33,9 @@
 
 package org.laokou.common.security.config;
 
+import org.jspecify.annotations.Nullable;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization;
 import org.laokou.common.security.config.repository.OAuth2AuthorizationGrantAuthorizationRepository;
-import org.springframework.lang.Nullable;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
