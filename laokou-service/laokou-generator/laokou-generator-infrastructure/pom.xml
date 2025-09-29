@@ -15,37 +15,37 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-generator-domain</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-domain</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-security</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-idempotent</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-log</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-trace</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-nacos</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

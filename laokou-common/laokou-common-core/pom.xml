@@ -103,7 +103,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-i18n</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -131,7 +131,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
       <optional>true</optional>
       <scope>test</scope>
     </dependency>

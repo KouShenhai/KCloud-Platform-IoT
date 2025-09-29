@@ -16,7 +16,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-mqtt-server-adapter</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 

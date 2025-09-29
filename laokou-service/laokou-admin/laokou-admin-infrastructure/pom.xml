@@ -15,57 +15,57 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-security</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-cors</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-idempotent</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-trace</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-admin-domain</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-algorithm</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-mybatis-plus</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-log</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-nacos</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-rate-limiter</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-secret</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -88,17 +88,17 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-lock</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-data-cache</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-prometheus</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.github.ulisesbocchio</groupId>
@@ -153,32 +153,32 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-openapi-doc</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-admin-client</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-kafka</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-sentinel</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-oss-proto</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-tenant</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

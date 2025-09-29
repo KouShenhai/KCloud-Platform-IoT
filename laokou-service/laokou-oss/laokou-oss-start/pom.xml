@@ -14,12 +14,12 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-oss-adapter</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>

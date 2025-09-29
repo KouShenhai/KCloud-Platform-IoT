@@ -32,7 +32,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.baomidou</groupId>
@@ -51,7 +51,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-crypto</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.postgresql</groupId>
@@ -75,7 +75,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-fory</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.baomidou</groupId>
@@ -98,19 +98,19 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-context</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-testcontainers</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>

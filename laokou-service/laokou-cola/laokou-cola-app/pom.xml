@@ -16,7 +16,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-cola-infrastructure</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 

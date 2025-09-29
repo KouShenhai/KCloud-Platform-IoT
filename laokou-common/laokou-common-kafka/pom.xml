@@ -23,12 +23,12 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-fory</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 

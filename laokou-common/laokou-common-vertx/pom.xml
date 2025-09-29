@@ -46,7 +46,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-i18n</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>
@@ -57,21 +57,21 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-log4j2</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-pulsar</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 </project>

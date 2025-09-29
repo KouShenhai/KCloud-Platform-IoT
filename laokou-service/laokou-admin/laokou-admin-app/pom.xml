@@ -15,7 +15,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-admin-infrastructure</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 

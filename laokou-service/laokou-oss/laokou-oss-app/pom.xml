@@ -14,12 +14,12 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-oss-infrastructure</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-data-cache</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 

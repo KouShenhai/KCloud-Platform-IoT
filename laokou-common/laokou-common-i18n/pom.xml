@@ -53,7 +53,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-banner</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -70,7 +70,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
-      <version>${laokou.version}</version>
+      <version>${project.version}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
