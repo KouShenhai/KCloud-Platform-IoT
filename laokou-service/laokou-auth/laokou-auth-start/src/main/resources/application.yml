@@ -38,19 +38,13 @@ server:
   shutdown: graceful
   port: ${SERVER_PORT:1111}
   servlet:
-    encoding:
-      charset: UTF-8
     context-path: /api
-  undertow:
+  tomcat:
     threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 512
-    # 每块buffer的空间大小
-    buffer-size: 2048
-    # 分配堆外内存
-    direct-buffers: true
+      max: 500
+      min-spare: 50
+    max-connections: 10000
+    accept-count: 200
 spring:
   application:
     name: ${SERVICE_ID:laokou-auth}
@@ -61,11 +55,6 @@ spring:
       enabled: true
   lifecycle:
     timeout-per-shutdown-phase: 2m
-  session:
-    redis:
-      repository-type: indexed
-      namespace: spring:session:auth
-    timeout: 3600
   # mail
   mail:
     host: smtp.163.com
@@ -88,7 +77,6 @@ spring:
               device-code-time-to-live: 5m
             registration:
               # Base64编码 OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=
-              id: 95TxSsTPFA3tF12TBSMmUVK0da
               client-id: 95TxSsTPFA3tF12TBSMmUVK0da
               client-name: OAuth2.1认证【用户名密码/邮箱/手机号/测试/设备授权码/客户端】
               # 对client-secret进行加密【原值 => FpHwIfw4wY92dO】
@@ -120,7 +108,6 @@ spring:
               device-code-time-to-live: 5m
             registration:
               # Base64编码 ZWI3RGVkNWJiRmJkNzg5NmY4YTJjZmREYzk6RHBBa1BmejRlVzE4ZDI=
-              id: eb7Ded5bbFbd7896f8a2cfdDc9
               client-id: eb7Ded5bbFbd7896f8a2cfdDc9
               client-name: OAuth2.1认证【授权码】
               # 对client-secret进行加密【原值 => DpAkPfz4eW18d2】
