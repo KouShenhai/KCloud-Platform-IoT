@@ -230,7 +230,7 @@
     <!--swagger-annotations-jakarta版本-->
     <swagger-annotations-jakarta.version>2.2.38</swagger-annotations-jakarta.version>
     <!--jsqlparser版本-->
-    <jsqlparser.version>5.2</jsqlparser.version>
+    <jsqlparser.version>5.3</jsqlparser.version>
     <!--docker主机-->
     <docker.host>tcp://127.0.0.1:2375</docker.host>
     <!--docker仓库-->
