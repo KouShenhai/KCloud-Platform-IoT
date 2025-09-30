@@ -44,7 +44,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,15 +55,14 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/login-logs")
 @Tag(name = "登录日志管理", description = "登录日志管理")
-public class LoginLogsControllerV3 {
+public class LoginLogsController {
 
 	private final LoginLogsServiceI loginLogsServiceI;
 
 	@ApiSecret
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/login-logs")
 	@PreAuthorize("hasAuthority('sys:login-log:save')")
 	@OperateLog(module = "登录日志管理", operation = "保存登录日志")
 	@Operation(summary = "保存登录日志", description = "保存登录日志")
@@ -73,7 +71,7 @@ public class LoginLogsControllerV3 {
 	}
 
 	@ApiSecret
-	@PutMapping
+	@PutMapping("/v1/login-logs")
 	@PreAuthorize("hasAuthority('sys:login-log:modify')")
 	@OperateLog(module = "登录日志管理", operation = "修改登录日志")
 	@Operation(summary = "修改登录日志", description = "修改登录日志")
@@ -81,7 +79,7 @@ public class LoginLogsControllerV3 {
 		loginLogsServiceI.modifyLoginLog(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/login-logs")
 	@PreAuthorize("hasAuthority('sys:login-log:remove')")
 	@OperateLog(module = "登录日志管理", operation = "删除登录日志")
 	@Operation(summary = "删除登录日志", description = "删除登录日志")
@@ -90,7 +88,7 @@ public class LoginLogsControllerV3 {
 	}
 
 	@ApiSecret
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/login-logs/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:login-log:import')")
 	@OperateLog(module = "登录日志管理", operation = "导入登录日志")
 	@Operation(summary = "导入登录日志", description = "导入登录日志")
@@ -98,7 +96,7 @@ public class LoginLogsControllerV3 {
 		loginLogsServiceI.importLoginLog(new LoginLogImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/login-logs/export")
 	@PreAuthorize("hasAuthority('sys:login-log:export')")
 	@OperateLog(module = "登录日志管理", operation = "导出登录日志")
 	@Operation(summary = "导出登录日志", description = "导出登录日志")
@@ -107,7 +105,7 @@ public class LoginLogsControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/login-logs/page")
 	@PreAuthorize("hasAuthority('sys:login-log:page')")
 	@Operation(summary = "分页查询登录日志列表", description = "分页查询登录日志列表")
 	public Result<Page<LoginLogCO>> pageLoginLog(@Validated @RequestBody LoginLogPageQry qry) {
@@ -116,7 +114,7 @@ public class LoginLogsControllerV3 {
 
 	@TraceLog
 	@ApiSecret
-	@GetMapping("{id}")
+	@GetMapping("/v1/login-logs/{id}")
 	@PreAuthorize("hasAuthority('sys:login-log:detail')")
 	@Operation(summary = "查看登录日志详情", description = "查看登录日志详情")
 	public Result<LoginLogCO> getLoginLogById(@PathVariable("id") Long id) {

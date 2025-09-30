@@ -46,7 +46,7 @@ class RegexUtilsTest {
 		Assertions.assertThat(RegexUtils.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", "哈哈哈")).isFalse();
 		Assertions.assertThat(RegexUtils.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", "admin123"))
 			.isTrue();
-		Assertions.assertThat(RegexUtils.getRegexValue("/v3/test", "/(v\\d+)/")).isEqualTo("v3");
+		Assertions.assertThat(RegexUtils.getRegexValue("/v1/test", "/(v\\d+)/")).isEqualTo("v1");
 	}
 
 }

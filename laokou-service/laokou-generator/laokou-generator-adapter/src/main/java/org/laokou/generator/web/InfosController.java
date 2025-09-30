@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,14 +55,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/infos")
 @Tag(name = "代码生成器信息管理", description = "代码生成器信息管理")
-public class InfosControllerV3 {
+public class InfosController {
 
 	private final InfosServiceI infosServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/infos")
 	@PreAuthorize("hasAuthority('generator:info:save')")
 	@OperateLog(module = "代码生成器信息管理", operation = "保存代码生成器信息")
 	@Operation(summary = "保存代码生成器信息", description = "保存代码生成器信息")
@@ -71,7 +69,7 @@ public class InfosControllerV3 {
 		infosServiceI.saveInfo(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/infos")
 	@PreAuthorize("hasAuthority('generator:info:modify')")
 	@OperateLog(module = "代码生成器信息管理", operation = "修改代码生成器信息")
 	@Operation(summary = "修改代码生成器信息", description = "修改代码生成器信息")
@@ -79,7 +77,7 @@ public class InfosControllerV3 {
 		infosServiceI.modifyInfo(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/infos")
 	@PreAuthorize("hasAuthority('generator:info:remove')")
 	@OperateLog(module = "代码生成器信息管理", operation = "删除代码生成器信息")
 	@Operation(summary = "删除代码生成器信息", description = "删除代码生成器信息")
@@ -87,7 +85,7 @@ public class InfosControllerV3 {
 		infosServiceI.removeInfo(new InfoRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/infos/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('generator:info:import')")
 	@OperateLog(module = "代码生成器信息管理", operation = "导入代码生成器信息")
 	@Operation(summary = "导入代码生成器信息", description = "导入代码生成器信息")
@@ -95,7 +93,7 @@ public class InfosControllerV3 {
 		infosServiceI.importInfo(new InfoImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/infos/export")
 	@PreAuthorize("hasAuthority('generator:info:export')")
 	@OperateLog(module = "代码生成器信息管理", operation = "导出代码生成器信息")
 	@Operation(summary = "导出代码生成器信息", description = "导出代码生成器信息")
@@ -104,7 +102,7 @@ public class InfosControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/infos/page")
 	@PreAuthorize("hasAuthority('generator:info:page')")
 	@Operation(summary = "分页查询代码生成器信息列表", description = "分页查询代码生成器信息列表")
 	public Result<Page<InfoCO>> pageInfo(@Validated @RequestBody InfoPageQry qry) {
@@ -112,7 +110,7 @@ public class InfosControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/infos/{id}")
 	@Operation(summary = "查看代码生成器信息详情", description = "查看代码生成器信息详情")
 	public Result<InfoCO> getInfoById(@PathVariable("id") Long id) {
 		return infosServiceI.getInfoById(new InfoGetQry(id));

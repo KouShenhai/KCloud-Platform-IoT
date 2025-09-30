@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -55,14 +54,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/i18n-messages")
 @Tag(name = "国际化消息管理", description = "国际化消息管理")
-public class I18nMessagesControllerV3 {
+public class I18nMessagesController {
 
 	private final I18nMessagesServiceI i18nMessagesServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/i18n-messages")
 	@PreAuthorize("hasAuthority('sys:i18n-message:save')")
 	@OperateLog(module = "国际化消息管理", operation = "保存国际化消息")
 	@Operation(summary = "保存国际化消息", description = "保存国际化消息")
@@ -70,7 +68,7 @@ public class I18nMessagesControllerV3 {
 		i18nMessagesServiceI.saveI18nMessage(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/i18n-messages")
 	@PreAuthorize("hasAuthority('sys:i18n-message:modify')")
 	@OperateLog(module = "国际化消息管理", operation = "修改国际化消息")
 	@Operation(summary = "修改国际化消息", description = "修改国际化消息")
@@ -78,7 +76,7 @@ public class I18nMessagesControllerV3 {
 		i18nMessagesServiceI.modifyI18nMessage(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/i18n-messages")
 	@PreAuthorize("hasAuthority('sys:i18n-message:remove')")
 	@OperateLog(module = "国际化消息管理", operation = "删除国际化消息")
 	@Operation(summary = "删除国际化消息", description = "删除国际化消息")
@@ -86,7 +84,7 @@ public class I18nMessagesControllerV3 {
 		i18nMessagesServiceI.removeI18nMessage(new I18nMessageRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/i18n-messages/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:i18n-message:import')")
 	@OperateLog(module = "国际化消息管理", operation = "导入国际化消息")
 	@Operation(summary = "导入国际化消息", description = "导入国际化消息")
@@ -94,7 +92,7 @@ public class I18nMessagesControllerV3 {
 		i18nMessagesServiceI.importI18nMessage(new I18nMessageImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/i18n-messages/export")
 	@PreAuthorize("hasAuthority('sys:i18n-message:export')")
 	@OperateLog(module = "国际化消息管理", operation = "导出国际化消息")
 	@Operation(summary = "导出国际化消息", description = "导出国际化消息")
@@ -103,7 +101,7 @@ public class I18nMessagesControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/i18n-messages/page")
 	@PreAuthorize("hasAuthority('sys:i18n-message:page')")
 	@Operation(summary = "分页查询国际化消息列表", description = "分页查询国际化消息列表")
 	public Result<Page<I18nMessageCO>> pageI18nMessage(@Validated @RequestBody I18nMessagePageQry qry) {
@@ -111,7 +109,7 @@ public class I18nMessagesControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/i18n-messages/{id}")
 	@PreAuthorize("hasAuthority('sys:i18n-message:detail')")
 	@Operation(summary = "查看国际化消息详情", description = "查看国际化消息详情")
 	public Result<I18nMessageCO> getI18nMessageById(@PathVariable("id") Long id) {

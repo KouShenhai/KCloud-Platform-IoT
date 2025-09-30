@@ -60,6 +60,10 @@
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
+    <dependency>
+        <groupId>io.prometheus</groupId>
+        <artifactId>prometheus-metrics-tracer-common</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

@@ -1,4 +1,4 @@
-POST {{schema}}{{host}}/v3/captchas/send/mail
+POST {{schema}}{{host}}/api/v1/captchas/send/mail
 Content-Type: application/json
 
 {

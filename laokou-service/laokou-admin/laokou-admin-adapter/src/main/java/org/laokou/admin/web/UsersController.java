@@ -52,7 +52,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,14 +64,13 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/users")
 @Tag(name = "用户管理", description = "用户管理")
-public class UsersControllerV3 {
+public class UsersController {
 
 	private final UsersServiceI usersServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/users")
 	@PreAuthorize("hasAuthority('sys:user:save')")
 	@OperateLog(module = "用户管理", operation = "保存用户")
 	@Operation(summary = "保存用户", description = "保存用户")
@@ -80,7 +78,7 @@ public class UsersControllerV3 {
 		usersServiceI.saveUser(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/users")
 	@PreAuthorize("hasAuthority('sys:user:modify')")
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@Operation(summary = "修改用户", description = "修改用户")
@@ -89,7 +87,7 @@ public class UsersControllerV3 {
 		usersServiceI.modifyUser(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/users")
 	@PreAuthorize("hasAuthority('sys:user:remove')")
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@Operation(summary = "删除用户", description = "删除用户")
@@ -97,7 +95,7 @@ public class UsersControllerV3 {
 		usersServiceI.removeUser(new UserRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/users/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:user:import')")
 	@OperateLog(module = "用户管理", operation = "导入用户")
 	@Operation(summary = "导入用户", description = "导入用户")
@@ -105,7 +103,7 @@ public class UsersControllerV3 {
 		usersServiceI.importUser(new UserImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/users/export")
 	@PreAuthorize("hasAuthority('sys:user:export')")
 	@OperateLog(module = "用户管理", operation = "导出用户")
 	@Operation(summary = "导出用户", description = "导出用户")
@@ -113,7 +111,7 @@ public class UsersControllerV3 {
 		usersServiceI.exportUser(cmd);
 	}
 
-	@PutMapping("reset-pwd")
+	@PutMapping("/v1/users/reset-pwd")
 	@PreAuthorize("hasAuthority('sys:user:modify')")
 	@OperateLog(module = "用户管理", operation = "重置用户密码")
 	@Operation(summary = "重置用户密码", description = "重置用户密码")
@@ -121,7 +119,7 @@ public class UsersControllerV3 {
 		usersServiceI.resetUserPwd(cmd);
 	}
 
-	@PutMapping("authority")
+	@PutMapping("/v1/users/authority")
 	@PreAuthorize("hasAuthority('sys:user:modify')")
 	@DataCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
 	@OperateLog(module = "用户管理", operation = "修改用户权限")
@@ -131,7 +129,7 @@ public class UsersControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/users/page")
 	@PreAuthorize("hasAuthority('sys:user:page')")
 	@Operation(summary = "分页查询用户列表", description = "分页查询用户列表")
 	public Result<Page<UserCO>> pageUser(@Validated @RequestBody UserPageQry qry) {
@@ -139,7 +137,7 @@ public class UsersControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/users/{id}")
 	@DataCache(name = NameConstants.USERS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:user:detail')")
 	@Operation(summary = "查看用户详情", description = "查看用户详情")
@@ -148,14 +146,14 @@ public class UsersControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("profile")
+	@GetMapping("/v1/users/profile")
 	@Operation(summary = "查看个人信息", description = "查看个人信息")
 	public Result<UserProfileCO> getUserProfile() {
 		return usersServiceI.getUserProfile();
 	}
 
 	@TraceLog
-	@PostMapping(value = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/users/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("(hasAuthority('sys:oss:upload') or hasAuthority('sys:oss:save')) and hasAuthority('sys:user:modify')")
 	@Operation(summary = "上传用户头像", description = "上传用户头像")
 	@OperateLog(module = "用户管理", operation = "上传用户头像")

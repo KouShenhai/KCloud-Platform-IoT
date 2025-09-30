@@ -24,7 +24,6 @@ import org.laokou.auth.api.TokensServiceI;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -32,13 +31,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/tokens")
 @Tag(name = "令牌管理", description = "令牌管理")
-public class TokensV3Controller {
+public class TokensController {
 
 	private final TokensServiceI tokensServiceI;
 
-	@DeleteMapping
+	@DeleteMapping("/v1/tokens")
 	@Operation(summary = "删除令牌", description = "删除令牌")
 	public void removeToken(@RequestBody TokenRemoveCmd cmd) {
 		tokensServiceI.removeToken(cmd);

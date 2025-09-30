@@ -1,4 +1,4 @@
-POST {{schema}}/{{host}}/v3/menus/list-tree
+POST {{schema}}/{{host}}/api/v1/menus/list-tree
 Authorization: Bearer {{Authorization}}
 Content-Type: application/json
 

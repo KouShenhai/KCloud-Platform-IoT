@@ -193,7 +193,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 				String version = RegexUtils.getRegexValue(path, "/(v\\d+)/");
 				if (StringUtils.isNotEmpty(version)) {
 					serviceInstances = serviceInstances.stream()
-						.filter(item -> item.getMetadata().getOrDefault("version", "v3").equals(version))
+						.filter(item -> item.getMetadata().getOrDefault("version", "v1").equals(version))
 						.toList();
 				}
 			}

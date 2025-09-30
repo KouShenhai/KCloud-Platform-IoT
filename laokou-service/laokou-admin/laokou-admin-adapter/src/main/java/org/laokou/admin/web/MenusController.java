@@ -48,7 +48,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,14 +61,13 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/menus")
 @Tag(name = "菜单管理", description = "菜单管理")
-public class MenusControllerV3 {
+public class MenusController {
 
 	private final MenusServiceI menusServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/menus")
 	@PreAuthorize("hasAuthority('sys:menu:save')")
 	@OperateLog(module = "菜单管理", operation = "保存菜单")
 	@Operation(summary = "保存菜单", description = "保存菜单")
@@ -77,7 +75,7 @@ public class MenusControllerV3 {
 		menusServiceI.saveMenu(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/menus")
 	@PreAuthorize("hasAuthority('sys:menu:modify')")
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
 	@Operation(summary = "修改菜单", description = "修改菜单")
@@ -86,7 +84,7 @@ public class MenusControllerV3 {
 		menusServiceI.modifyMenu(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/menus")
 	@PreAuthorize("hasAuthority('sys:menu:remove')")
 	@OperateLog(module = "菜单管理", operation = "删除菜单")
 	@Operation(summary = "删除菜单", description = "删除菜单")
@@ -94,7 +92,7 @@ public class MenusControllerV3 {
 		menusServiceI.removeMenu(new MenuRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/menus/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:menu:import')")
 	@OperateLog(module = "菜单管理", operation = "导入菜单")
 	@Operation(summary = "导入菜单", description = "导入菜单")
@@ -102,7 +100,7 @@ public class MenusControllerV3 {
 		menusServiceI.importMenu(new MenuImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/menus/export")
 	@PreAuthorize("hasAuthority('sys:menu:export')")
 	@OperateLog(module = "菜单管理", operation = "导出菜单")
 	@Operation(summary = "导出菜单", description = "导出菜单")
@@ -111,7 +109,7 @@ public class MenusControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/menus/page")
 	@PreAuthorize("hasAuthority('sys:menu:page')")
 	@Operation(summary = "分页查询菜单列表", description = "分页查询菜单列表")
 	public Result<Page<MenuCO>> pageMenu(@Validated @RequestBody MenuPageQry qry) {
@@ -119,7 +117,7 @@ public class MenusControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("list-tree")
+	@PostMapping("/v1/menus/list-tree")
 	@PreAuthorize("hasAuthority('sys:menu:list-tree')")
 	@Operation(summary = "查询菜单树列表", description = "查询菜单树列表")
 	public Result<List<MenuTreeCO>> listTreeMenu(@RequestBody MenuTreeListQry qry) {
@@ -127,14 +125,14 @@ public class MenusControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("list-user-tree")
+	@PostMapping("/v1/menus/list-user-tree")
 	@Operation(summary = "查询用户菜单树列表", description = "查询用户菜单树列表")
 	public Result<List<MenuTreeCO>> listUserTreeMenu(@RequestBody MenuTreeListQry qry) {
 		return menusServiceI.listTreeMenu(qry);
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/menus/{id}")
 	@DataCache(name = NameConstants.MENUS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:menu:detail')")
 	@Operation(summary = "查看菜单详情", description = "查看菜单详情")

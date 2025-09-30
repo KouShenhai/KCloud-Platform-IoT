@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,14 +55,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/columns")
 @Tag(name = "代码生成器字段管理", description = "代码生成器字段管理")
-public class ColumnsControllerV3 {
+public class ColumnsController {
 
 	private final ColumnsServiceI columnsServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/columns")
 	@PreAuthorize("hasAuthority('generator:column:save')")
 	@OperateLog(module = "代码生成器字段管理", operation = "保存代码生成器字段")
 	@Operation(summary = "保存代码生成器字段", description = "保存代码生成器字段")
@@ -71,7 +69,7 @@ public class ColumnsControllerV3 {
 		columnsServiceI.saveColumn(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/columns")
 	@PreAuthorize("hasAuthority('generator:column:modify')")
 	@OperateLog(module = "代码生成器字段管理", operation = "修改代码生成器字段")
 	@Operation(summary = "修改代码生成器字段", description = "修改代码生成器字段")
@@ -79,7 +77,7 @@ public class ColumnsControllerV3 {
 		columnsServiceI.modifyColumn(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/columns/")
 	@PreAuthorize("hasAuthority('generator:column:remove')")
 	@OperateLog(module = "代码生成器字段管理", operation = "删除代码生成器字段")
 	@Operation(summary = "删除代码生成器字段", description = "删除代码生成器字段")
@@ -87,7 +85,7 @@ public class ColumnsControllerV3 {
 		columnsServiceI.removeColumn(new ColumnRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/columns/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('generator:column:import')")
 	@OperateLog(module = "代码生成器字段管理", operation = "导入代码生成器字段")
 	@Operation(summary = "导入代码生成器字段", description = "导入代码生成器字段")
@@ -95,7 +93,7 @@ public class ColumnsControllerV3 {
 		columnsServiceI.importColumn(new ColumnImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/columns/export")
 	@PreAuthorize("hasAuthority('generator:column:export')")
 	@OperateLog(module = "代码生成器字段管理", operation = "导出代码生成器字段")
 	@Operation(summary = "导出代码生成器字段", description = "导出代码生成器字段")
@@ -104,7 +102,7 @@ public class ColumnsControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/columns/page")
 	@PreAuthorize("hasAuthority('generator:column:page')")
 	@Operation(summary = "分页查询代码生成器字段列表", description = "分页查询代码生成器字段列表")
 	public Result<Page<ColumnCO>> pageColumn(@Validated @RequestBody ColumnPageQry qry) {
@@ -112,7 +110,7 @@ public class ColumnsControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/columns/{id}")
 	@Operation(summary = "查看代码生成器字段详情", description = "查看代码生成器字段详情")
 	public Result<ColumnCO> getColumnById(@PathVariable("id") Long id) {
 		return columnsServiceI.getColumnById(new ColumnGetQry(id));

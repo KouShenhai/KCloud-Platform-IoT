@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,14 +55,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/devices")
 @Tag(name = "设备管理", description = "设备管理")
-public class DevicesControllerV3 {
+public class DevicesController {
 
 	private final DevicesServiceI devicesServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/devices")
 	@PreAuthorize("hasAuthority('iot:device:save')")
 	@OperateLog(module = "设备管理", operation = "保存设备")
 	@Operation(summary = "保存设备", description = "保存设备")
@@ -71,7 +69,7 @@ public class DevicesControllerV3 {
 		devicesServiceI.saveDevice(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/devices")
 	@PreAuthorize("hasAuthority('iot:device:modify')")
 	@OperateLog(module = "设备管理", operation = "修改设备")
 	@Operation(summary = "修改设备", description = "修改设备")
@@ -79,7 +77,7 @@ public class DevicesControllerV3 {
 		devicesServiceI.modifyDevice(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/devices")
 	@PreAuthorize("hasAuthority('iot:device:remove')")
 	@OperateLog(module = "设备管理", operation = "删除设备")
 	@Operation(summary = "删除设备", description = "删除设备")
@@ -87,7 +85,7 @@ public class DevicesControllerV3 {
 		devicesServiceI.removeDevice(new DeviceRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/devices/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('iot:device:import')")
 	@OperateLog(module = "设备管理", operation = "导入设备")
 	@Operation(summary = "导入设备", description = "导入设备")
@@ -95,7 +93,7 @@ public class DevicesControllerV3 {
 		devicesServiceI.importDevice(new DeviceImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/devices/export")
 	@PreAuthorize("hasAuthority('iot:device:export')")
 	@OperateLog(module = "设备管理", operation = "导出设备")
 	@Operation(summary = "导出设备", description = "导出设备")
@@ -104,7 +102,7 @@ public class DevicesControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/devices/page")
 	@PreAuthorize("hasAuthority('iot:device:page')")
 	@Operation(summary = "分页查询设备列表", description = "分页查询设备列表")
 	public Result<Page<DeviceCO>> pageDevice(@Validated @RequestBody DevicePageQry qry) {
@@ -112,7 +110,7 @@ public class DevicesControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/devices/{id}")
 	@PreAuthorize("hasAuthority('iot:device:detail')")
 	@Operation(summary = "查看设备详情", description = "查看设备详情")
 	public Result<DeviceCO> getDeviceById(@PathVariable("id") Long id) {

@@ -3,9 +3,9 @@ import {request} from '@umijs/max';
 import {ExportAllToExcel} from "@/utils/export";
 import moment from "moment";
 
-/** 修改通知日志 修改通知日志 PUT /v3/notice-logs */
+/** 修改通知日志 修改通知日志 PUT /api/v1/notice-logs */
 export async function modifyNoticeLog(body: API.NoticeLogModifyCmd, options?: { [key: string]: any }) {
-	return request<any>('/api/admin/v3/notice-logs', {
+	return request<any>('/apis/admin/v1/notice-logs', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -15,9 +15,9 @@ export async function modifyNoticeLog(body: API.NoticeLogModifyCmd, options?: { 
 	});
 }
 
-/** 保存通知日志 保存通知日志 POST /v3/notice-logs */
+/** 保存通知日志 保存通知日志 POST /api/v1/notice-logs */
 export async function saveNoticeLog(body: API.NoticeLogSaveCmd, options?: { [key: string]: any }) {
-	return request<any>('/api/admin/v3/notice-logs', {
+	return request<any>('/apis/admin/v1/notice-logs', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -27,9 +27,9 @@ export async function saveNoticeLog(body: API.NoticeLogSaveCmd, options?: { [key
 	});
 }
 
-/** 删除通知日志 删除通知日志 DELETE /v3/notice-logs */
+/** 删除通知日志 删除通知日志 DELETE /api/v1/notice-logs */
 export async function removeNoticeLog(body: number[], options?: { [key: string]: any }) {
-	return request<any>('/api/admin/v3/notice-logs', {
+	return request<any>('/apis/admin/v1/notice-logs', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -39,26 +39,26 @@ export async function removeNoticeLog(body: number[], options?: { [key: string]:
 	});
 }
 
-/** 查看通知日志详情 查看通知日志详情 GET /v3/notice-logs/${param0} */
+/** 查看通知日志详情 查看通知日志详情 GET /api/v1/notice-logs/${param0} */
 export async function getNoticeLogById(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
 	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
-	return request<API.Result>(`/api/admin/v3/notice-logs/${param0}`, {
+	return request<API.Result>(`/apis/admin/v1/notice-logs/${param0}`, {
 		method: 'GET',
 		params: {...queryParams},
 		...(options || {}),
 	});
 }
 
-/** 导出通知日志 导出通知日志 POST /v3/notice-logs/export */
+/** 导出通知日志 导出通知日志 POST /api/v1/notice-logs/export */
 export async function exportNoticeLog(body: API.NoticeLogExportCmd, options?: { [key: string]: any }) {
-	return ExportAllToExcel("通知日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/api/admin/v3/notice-logs/export', 'POST', body, options)
+	return ExportAllToExcel("通知日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/apis/admin/v1/notice-logs/export', 'POST', body, options)
 }
 
-/** 导入通知日志 导入通知日志 POST /v3/notice-logs/import */
+/** 导入通知日志 导入通知日志 POST /api/v1/notice-logs/import */
 export async function importNoticeLog(body: {}, file?: File[], options?: { [key: string]: any }) {
 	const formData = new FormData();
 
@@ -82,7 +82,7 @@ export async function importNoticeLog(body: {}, file?: File[], options?: { [key:
 		}
 	});
 
-	return request<any>('/api/admin/v3/notice-logs/import', {
+	return request<any>('/apis/admin/v1/notice-logs/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -90,9 +90,9 @@ export async function importNoticeLog(body: {}, file?: File[], options?: { [key:
 	});
 }
 
-/** 分页查询通知日志列表 分页查询通知日志列表 POST /v3/notice-logs/page */
+/** 分页查询通知日志列表 分页查询通知日志列表 POST /api/v1/notice-logs/page */
 export async function pageNoticeLog(body: API.NoticeLogPageQry, options?: { [key: string]: any }) {
-	return request<API.Result>('/api/admin/v3/notice-logs/page', {
+	return request<API.Result>('/apis/admin/v1/notice-logs/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,14 +55,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/thing-models")
 @Tag(name = "物模型管理", description = "物模型管理")
-public class ThingModelsControllerV3 {
+public class ThingModelsController {
 
 	private final ThingModelsServiceI thingModelsServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/thing-models")
 	@PreAuthorize("hasAuthority('iot:thing-model:save')")
 	@OperateLog(module = "物模型管理", operation = "保存物模型")
 	@Operation(summary = "保存物模型", description = "保存物模型")
@@ -71,7 +69,7 @@ public class ThingModelsControllerV3 {
 		thingModelsServiceI.saveThingModel(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/thing-models")
 	@PreAuthorize("hasAuthority('iot:thing-model:modify')")
 	@OperateLog(module = "物模型管理", operation = "修改物模型")
 	@Operation(summary = "修改物模型", description = "修改物模型")
@@ -79,7 +77,7 @@ public class ThingModelsControllerV3 {
 		thingModelsServiceI.modifyThingModel(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/thing-models")
 	@PreAuthorize("hasAuthority('iot:thing-model:remove')")
 	@OperateLog(module = "物模型管理", operation = "删除物模型")
 	@Operation(summary = "删除物模型", description = "删除物模型")
@@ -87,7 +85,7 @@ public class ThingModelsControllerV3 {
 		thingModelsServiceI.removeThingModel(new ThingModelRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/thing-models/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('iot:thing-model:import')")
 	@OperateLog(module = "物模型管理", operation = "导入物模型")
 	@Operation(summary = "导入物模型", description = "导入物模型")
@@ -95,7 +93,7 @@ public class ThingModelsControllerV3 {
 		thingModelsServiceI.importThingModel(new ThingModelImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/thing-models/export")
 	@PreAuthorize("hasAuthority('iot:thing-model:export')")
 	@OperateLog(module = "物模型管理", operation = "导出物模型")
 	@Operation(summary = "导出物模型", description = "导出物模型")
@@ -104,7 +102,7 @@ public class ThingModelsControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/thing-models/page")
 	@PreAuthorize("hasAuthority('iot:thing-model:page')")
 	@Operation(summary = "分页查询物模型列表", description = "分页查询物模型列表")
 	public Result<Page<ThingModelCO>> pageThingModel(@Validated @RequestBody ThingModelPageQry qry) {
@@ -112,7 +110,7 @@ public class ThingModelsControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/thing-models/{id}")
 	@PreAuthorize("hasAuthority('iot:thing-model:detail')")
 	@Operation(summary = "查看物模型详情", description = "查看物模型详情")
 	public Result<ThingModelCO> getThingModelById(@PathVariable("id") Long id) {

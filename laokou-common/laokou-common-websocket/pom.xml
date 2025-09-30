@@ -37,7 +37,6 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-nacos</artifactId>
       <version>${project.version}</version>
-      <optional>true</optional>
     </dependency>
   </dependencies>
 

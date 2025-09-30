@@ -46,7 +46,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,14 +57,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/tenants")
 @Tag(name = "租户管理", description = "租户管理")
-public class TenantsControllerV3 {
+public class TenantsController {
 
 	private final TenantsServiceI tenantsServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/tenants")
 	@PreAuthorize("hasAuthority('sys:tenant:save')")
 	@OperateLog(module = "租户管理", operation = "保存租户")
 	@Operation(summary = "保存租户", description = "保存租户")
@@ -73,7 +71,7 @@ public class TenantsControllerV3 {
 		tenantsServiceI.saveTenant(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/tenants")
 	@PreAuthorize("hasAuthority('sys:tenant:modify')")
 	@OperateLog(module = "租户管理", operation = "修改租户")
 	@Operation(summary = "修改租户", description = "修改租户")
@@ -82,7 +80,7 @@ public class TenantsControllerV3 {
 		tenantsServiceI.modifyTenant(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/tenants")
 	@PreAuthorize("hasAuthority('sys:tenant:remove')")
 	@OperateLog(module = "租户管理", operation = "删除租户")
 	@Operation(summary = "删除租户", description = "删除租户")
@@ -90,7 +88,7 @@ public class TenantsControllerV3 {
 		tenantsServiceI.removeTenant(new TenantRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/tenants/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:tenant:import')")
 	@OperateLog(module = "租户管理", operation = "导入租户")
 	@Operation(summary = "导入租户", description = "导入租户")
@@ -98,7 +96,7 @@ public class TenantsControllerV3 {
 		tenantsServiceI.importTenant(new TenantImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/tenants/export")
 	@PreAuthorize("hasAuthority('sys:tenant:export')")
 	@OperateLog(module = "租户管理", operation = "导出租户")
 	@Operation(summary = "导出租户", description = "导出租户")
@@ -107,7 +105,7 @@ public class TenantsControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/tenants/page")
 	@PreAuthorize("hasAuthority('sys:tenant:page')")
 	@Operation(summary = "分页查询租户列表", description = "分页查询租户列表")
 	public Result<Page<TenantCO>> pageTenant(@Validated @RequestBody TenantPageQry qry) {
@@ -115,7 +113,7 @@ public class TenantsControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/tenants/{id}")
 	@DataCache(name = NameConstants.TENANTS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:tenant:detail')")
 	@Operation(summary = "查看租户详情", description = "查看租户详情")

@@ -44,7 +44,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,15 +55,14 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/notice-logs")
 @Tag(name = "通知日志管理", description = "通知日志管理")
-public class NoticeLogsControllerV3 {
+public class NoticeLogsController {
 
 	private final NoticeLogsServiceI noticeLogsServiceI;
 
 	@ApiSecret
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/notice-logs")
 	@PreAuthorize("hasAuthority('sys:notice-log:save')")
 	@OperateLog(module = "通知日志管理", operation = "保存通知日志")
 	@Operation(summary = "保存通知日志", description = "保存通知日志")
@@ -73,7 +71,7 @@ public class NoticeLogsControllerV3 {
 	}
 
 	@ApiSecret
-	@PutMapping
+	@PutMapping("/v1/notice-logs")
 	@PreAuthorize("hasAuthority('sys:notice-log:modify')")
 	@OperateLog(module = "通知日志管理", operation = "修改通知日志")
 	@Operation(summary = "修改通知日志", description = "修改通知日志")
@@ -81,7 +79,7 @@ public class NoticeLogsControllerV3 {
 		noticeLogsServiceI.modifyNoticeLog(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/notice-logs")
 	@PreAuthorize("hasAuthority('sys:notice-log:remove')")
 	@OperateLog(module = "通知日志管理", operation = "删除通知日志")
 	@Operation(summary = "删除通知日志", description = "删除通知日志")
@@ -90,7 +88,7 @@ public class NoticeLogsControllerV3 {
 	}
 
 	@ApiSecret
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/notice-logs/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:notice-log:import')")
 	@OperateLog(module = "通知日志管理", operation = "导入通知日志")
 	@Operation(summary = "导入通知日志", description = "导入通知日志")
@@ -98,7 +96,7 @@ public class NoticeLogsControllerV3 {
 		noticeLogsServiceI.importNoticeLog(new NoticeLogImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/notice-logs/export")
 	@PreAuthorize("hasAuthority('sys:notice-log:export')")
 	@OperateLog(module = "通知日志管理", operation = "导出通知日志")
 	@Operation(summary = "导出通知日志", description = "导出通知日志")
@@ -107,7 +105,7 @@ public class NoticeLogsControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/notice-logs/page")
 	@PreAuthorize("hasAuthority('sys:notice-log:page')")
 	@Operation(summary = "分页查询通知日志列表", description = "分页查询通知日志列表")
 	public Result<Page<NoticeLogCO>> pageNoticeLog(@Validated @RequestBody NoticeLogPageQry qry) {
@@ -115,7 +113,7 @@ public class NoticeLogsControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/notice-logs/{id}")
 	@PreAuthorize("hasAuthority('sys:notice-log:detail')")
 	@Operation(summary = "查看通知日志详情", description = "查看通知日志详情")
 	public Result<NoticeLogCO> getNoticeLogById(@PathVariable("id") Long id) {

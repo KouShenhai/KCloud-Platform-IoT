@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -55,14 +54,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/dicts")
 @Tag(name = "字典管理", description = "字典管理")
-public class DictsControllerV3 {
+public class DictsController {
 
 	private final DictsServiceI dictsServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/dicts")
 	@PreAuthorize("hasAuthority('sys:dict:save')")
 	@OperateLog(module = "字典管理", operation = "保存字典")
 	@Operation(summary = "保存字典", description = "保存字典")
@@ -70,7 +68,7 @@ public class DictsControllerV3 {
 		dictsServiceI.saveDict(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/dicts")
 	@PreAuthorize("hasAuthority('sys:dict:modify')")
 	@OperateLog(module = "字典管理", operation = "修改字典")
 	@Operation(summary = "修改字典", description = "修改字典")
@@ -78,7 +76,7 @@ public class DictsControllerV3 {
 		dictsServiceI.modifyDict(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/dicts")
 	@PreAuthorize("hasAuthority('sys:dict:remove')")
 	@OperateLog(module = "字典管理", operation = "删除字典")
 	@Operation(summary = "删除字典", description = "删除字典")
@@ -86,7 +84,7 @@ public class DictsControllerV3 {
 		dictsServiceI.removeDict(new DictRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/dicts/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:dict:import')")
 	@OperateLog(module = "字典管理", operation = "导入字典")
 	@Operation(summary = "导入字典", description = "导入字典")
@@ -94,7 +92,7 @@ public class DictsControllerV3 {
 		dictsServiceI.importDict(new DictImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/dicts/export")
 	@PreAuthorize("hasAuthority('sys:dict:export')")
 	@OperateLog(module = "字典管理", operation = "导出字典")
 	@Operation(summary = "导出字典", description = "导出字典")
@@ -103,7 +101,7 @@ public class DictsControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/dicts/page")
 	@PreAuthorize("hasAuthority('sys:dict:page')")
 	@Operation(summary = "分页查询字典列表", description = "分页查询字典列表")
 	public Result<Page<DictCO>> pageDict(@Validated @RequestBody DictPageQry qry) {
@@ -111,7 +109,7 @@ public class DictsControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/dicts/{id}")
 	@PreAuthorize("hasAuthority('sys:dict:detail')")
 	@Operation(summary = "查看字典详情", description = "查看字典详情")
 	public Result<DictCO> getDictById(@PathVariable("id") Long id) {

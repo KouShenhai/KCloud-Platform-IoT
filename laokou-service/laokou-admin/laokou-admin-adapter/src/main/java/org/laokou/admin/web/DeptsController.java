@@ -48,7 +48,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,14 +61,13 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/depts")
 @Tag(name = "部门管理", description = "部门管理")
-public class DeptsControllerV3 {
+public class DeptsController {
 
 	private final DeptsServiceI deptsServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/depts")
 	@PreAuthorize("hasAuthority('sys:dept:save')")
 	@OperateLog(module = "部门管理", operation = "保存部门")
 	@Operation(summary = "保存部门", description = "保存部门")
@@ -77,7 +75,7 @@ public class DeptsControllerV3 {
 		deptsServiceI.saveDept(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/depts")
 	@PreAuthorize("hasAuthority('sys:dept:modify')")
 	@OperateLog(module = "部门管理", operation = "修改部门")
 	@Operation(summary = "修改部门", description = "修改部门")
@@ -86,7 +84,7 @@ public class DeptsControllerV3 {
 		deptsServiceI.modifyDept(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/depts")
 	@PreAuthorize("hasAuthority('sys:dept:remove')")
 	@OperateLog(module = "部门管理", operation = "删除部门")
 	@Operation(summary = "删除部门", description = "删除部门")
@@ -94,7 +92,7 @@ public class DeptsControllerV3 {
 		deptsServiceI.removeDept(new DeptRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/depts/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:dept:import')")
 	@OperateLog(module = "部门管理", operation = "导入部门")
 	@Operation(summary = "导入部门", description = "导入部门")
@@ -102,7 +100,7 @@ public class DeptsControllerV3 {
 		deptsServiceI.importDept(new DeptImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/depts/export")
 	@PreAuthorize("hasAuthority('sys:dept:export')")
 	@OperateLog(module = "部门管理", operation = "导出部门")
 	@Operation(summary = "导出部门", description = "导出部门")
@@ -111,7 +109,7 @@ public class DeptsControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/depts/page")
 	@PreAuthorize("hasAuthority('sys:dept:page')")
 	@Operation(summary = "分页查询部门列表", description = "分页查询部门列表")
 	public Result<Page<DeptCO>> pageDept(@Validated @RequestBody DeptPageQry qry) {
@@ -119,7 +117,7 @@ public class DeptsControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("list-tree")
+	@PostMapping("/v1/depts/list-tree")
 	@PreAuthorize("hasAuthority('sys:dept:list-tree')")
 	@Operation(summary = "查询部门树列表", description = "查询部门树列表")
 	public Result<List<DeptTreeCO>> listTreeDept(@RequestBody DeptTreeListQry qry) {
@@ -127,7 +125,7 @@ public class DeptsControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/depts/{id}")
 	@DataCache(name = NameConstants.DEPTS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:dept:detail')")
 	@Operation(summary = "查看部门详情", description = "查看部门详情")

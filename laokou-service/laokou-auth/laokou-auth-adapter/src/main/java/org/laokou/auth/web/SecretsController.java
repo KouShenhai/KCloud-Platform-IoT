@@ -15,40 +15,36 @@
  *
  */
 
-package org.laokou.mcp.client.web;
+package org.laokou.auth.web;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.laokou.auth.api.SecretsServiceI;
+import org.laokou.auth.dto.clientobject.SecretCO;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.mcp.client.api.DeviceServiceI;
-import org.laokou.mcp.client.dto.DevicePropertyGetQry;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.laokou.common.ratelimiter.annotation.RateLimiter;
+import org.laokou.common.ratelimiter.aop.Type;
+import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 用户管理控制器.
- *
  * @author laokou
  */
-@Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/mcps")
-@Tag(name = "MCP管理", description = "MCP管理")
-public class McpControllerV3 {
+@Tag(name = "安全配置", description = "安全配置")
+public class SecretsController {
 
-	private final DeviceServiceI deviceServiceI;
+	private final SecretsServiceI secretsServiceI;
 
-	@GetMapping("/device/property/{sn}")
-	@PreAuthorize("hasAuthority('mcp:device:property')")
-	@Operation(summary = "根据设备序列号查看设备属性", description = "根据设备序列号查看设备属性")
-	public Result<String> getDevicePropertyBySn(@PathVariable("sn") String sn) {
-		return deviceServiceI.getDevicePropertyBySn(new DevicePropertyGetQry(sn));
+	@TraceLog
+	@GetMapping("/v1/secrets")
+	@Operation(summary = "获取密钥", description = "获取密钥")
+	@RateLimiter(key = "AUTH_SECRET", type = Type.IP)
+	public Result<SecretCO> getSecretInfo() {
+		return secretsServiceI.getSecretInfo();
 	}
 
 }

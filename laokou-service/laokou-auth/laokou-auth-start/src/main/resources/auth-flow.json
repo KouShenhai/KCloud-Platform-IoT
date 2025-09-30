@@ -1,6 +1,6 @@
 [
   {
-    "resource": "/v3/captchas/{uuid}",
+    "resource": "/api/v1/captchas/{uuid}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -8,7 +8,7 @@
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/captchas/send/mobile",
+    "resource": "/api/v1/captchas/send/mobile",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -16,7 +16,7 @@
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/captchas/send/mail",
+    "resource": "/api/v1/captchas/send/mail",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -24,7 +24,7 @@
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/secrets",
+    "resource": "/api/v1/secrets",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -32,7 +32,7 @@
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/tokens",
+    "resource": "/api/v1/tokens",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,

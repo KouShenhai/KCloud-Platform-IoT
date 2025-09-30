@@ -1,9 +1,9 @@
 /* eslint-disable */
 import {request} from '@umijs/max';
 
-/** 修改字典项 修改字典项 PUT /v3/dict-items */
+/** 修改字典项 修改字典项 PUT /api/v1/dict-items */
 export async function modifyDictItem(body: API.DictItemModifyCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/dict-items', {
+	return request<any>('/api/v1/dict-items', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -13,9 +13,9 @@ export async function modifyDictItem(body: API.DictItemModifyCmd, options?: { [k
 	});
 }
 
-/** 保存字典项 保存字典项 POST /v3/dict-items */
+/** 保存字典项 保存字典项 POST /api/v1/dict-items */
 export async function saveDictItem(body: API.DictItemSaveCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/dict-items', {
+	return request<any>('/api/v1/dict-items', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -25,9 +25,9 @@ export async function saveDictItem(body: API.DictItemSaveCmd, options?: { [key: 
 	});
 }
 
-/** 删除字典项 删除字典项 DELETE /v3/dict-items */
+/** 删除字典项 删除字典项 DELETE /api/v1/dict-items */
 export async function removeDictItem(body: number[], options?: { [key: string]: any }) {
-	return request<any>('/v3/dict-items', {
+	return request<any>('/api/v1/dict-items', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -37,23 +37,23 @@ export async function removeDictItem(body: number[], options?: { [key: string]: 
 	});
 }
 
-/** 查看字典项详情 查看字典项详情 GET /v3/dict-items/${param0} */
+/** 查看字典项详情 查看字典项详情 GET /api/v1/dict-items/${param0} */
 export async function getDictItemById(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
 	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
-	return request<API.Result>(`/v3/dict-items/${param0}`, {
+	return request<API.Result>(`/api/v1/dict-items/${param0}`, {
 		method: 'GET',
 		params: {...queryParams},
 		...(options || {}),
 	});
 }
 
-/** 导出字典项 导出字典项 POST /v3/dict-items/export */
+/** 导出字典项 导出字典项 POST /api/v1/dict-items/export */
 export async function exportDictItem(body: API.DictItemExportCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/dict-items/export', {
+	return request<any>('/api/v1/dict-items/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export async function exportDictItem(body: API.DictItemExportCmd, options?: { [k
 	});
 }
 
-/** 导入字典项 导入字典项 POST /v3/dict-items/import */
+/** 导入字典项 导入字典项 POST /api/v1/dict-items/import */
 export async function importDictItem(body: {}, file?: File[], options?: { [key: string]: any }) {
 	const formData = new FormData();
 
@@ -87,7 +87,7 @@ export async function importDictItem(body: {}, file?: File[], options?: { [key: 
 		}
 	});
 
-	return request<any>('/v3/dict-items/import', {
+	return request<any>('/api/v1/dict-items/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -95,9 +95,9 @@ export async function importDictItem(body: {}, file?: File[], options?: { [key: 
 	});
 }
 
-/** 分页查询字典项列表 分页查询字典项列表 POST /v3/dict-items/page */
+/** 分页查询字典项列表 分页查询字典项列表 POST /api/v1/dict-items/page */
 export async function pageDictItem(body: API.DictItemPageQry, options?: { [key: string]: any }) {
-	return request<API.Result>('/v3/dict-items/page', {
+	return request<API.Result>('/api/v1/dict-items/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

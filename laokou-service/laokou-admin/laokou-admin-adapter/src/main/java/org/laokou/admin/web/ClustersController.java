@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,14 +55,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/clusters")
 @Tag(name = "集群管理", description = "集群管理")
-public class ClustersControllerV3 {
+public class ClustersController {
 
 	private final ClustersServiceI clustersServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/clusters")
 	@PreAuthorize("hasAuthority('sys:cluster:save')")
 	@OperateLog(module = "集群管理", operation = "保存集群")
 	@Operation(summary = "保存集群", description = "保存集群")
@@ -71,7 +69,7 @@ public class ClustersControllerV3 {
 		clustersServiceI.saveCluster(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/clusters")
 	@PreAuthorize("hasAuthority('sys:cluster:modify')")
 	@OperateLog(module = "集群管理", operation = "修改集群")
 	@Operation(summary = "修改集群", description = "修改集群")
@@ -79,7 +77,7 @@ public class ClustersControllerV3 {
 		clustersServiceI.modifyCluster(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/clusters")
 	@PreAuthorize("hasAuthority('sys:cluster:remove')")
 	@OperateLog(module = "集群管理", operation = "删除集群")
 	@Operation(summary = "删除集群", description = "删除集群")
@@ -87,7 +85,7 @@ public class ClustersControllerV3 {
 		clustersServiceI.removeCluster(new ClusterRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/clusters/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:cluster:import')")
 	@OperateLog(module = "集群管理", operation = "导入集群")
 	@Operation(summary = "导入集群", description = "导入集群")
@@ -95,7 +93,7 @@ public class ClustersControllerV3 {
 		clustersServiceI.importCluster(new ClusterImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/clusters/export")
 	@PreAuthorize("hasAuthority('sys:cluster:export')")
 	@OperateLog(module = "集群管理", operation = "导出集群")
 	@Operation(summary = "导出集群", description = "导出集群")
@@ -104,7 +102,7 @@ public class ClustersControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/clusters/page")
 	@PreAuthorize("hasAuthority('sys:cluster:page')")
 	@Operation(summary = "分页查询集群列表", description = "分页查询集群列表")
 	public Result<Page<ClusterCO>> pageCluster(@Validated @RequestBody ClusterPageQry qry) {
@@ -112,7 +110,7 @@ public class ClustersControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/clusters/{id}")
 	@PreAuthorize("hasAuthority('sys:cluster:detail')")
 	@Operation(summary = "查看集群详情", description = "查看集群详情")
 	public Result<ClusterCO> getClusterById(@PathVariable("id") Long id) {

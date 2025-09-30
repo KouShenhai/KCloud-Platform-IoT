@@ -45,7 +45,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,14 +57,13 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/roles")
 @Tag(name = "角色管理", description = "角色管理")
-public class RolesControllerV3 {
+public class RolesController {
 
 	private final RolesServiceI rolesServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/roles")
 	@PreAuthorize("hasAuthority('sys:role:save')")
 	@OperateLog(module = "角色管理", operation = "保存角色")
 	@Operation(summary = "保存角色", description = "保存角色")
@@ -73,7 +71,7 @@ public class RolesControllerV3 {
 		rolesServiceI.saveRole(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/roles")
 	@PreAuthorize("hasAuthority('sys:role:modify')")
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@Operation(summary = "修改角色", description = "修改角色")
@@ -81,7 +79,7 @@ public class RolesControllerV3 {
 		rolesServiceI.modifyRole(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/roles")
 	@PreAuthorize("hasAuthority('sys:role:remove')")
 	@OperateLog(module = "角色管理", operation = "删除角色")
 	@Operation(summary = "删除角色", description = "删除角色")
@@ -89,7 +87,7 @@ public class RolesControllerV3 {
 		rolesServiceI.removeRole(new RoleRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/roles/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:role:import')")
 	@OperateLog(module = "角色管理", operation = "导入角色")
 	@Operation(summary = "导入角色", description = "导入角色")
@@ -97,7 +95,7 @@ public class RolesControllerV3 {
 		rolesServiceI.importRole(new RoleImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/roles/export")
 	@PreAuthorize("hasAuthority('sys:role:export')")
 	@OperateLog(module = "角色管理", operation = "导出角色")
 	@Operation(summary = "导出角色", description = "导出角色")
@@ -105,7 +103,7 @@ public class RolesControllerV3 {
 		rolesServiceI.exportRole(cmd);
 	}
 
-	@PutMapping("authority")
+	@PutMapping("/v1/roles/authority")
 	@PreAuthorize("hasAuthority('sys:role:modify')")
 	@OperateLog(module = "用户管理", operation = "修改角色权限")
 	@Operation(summary = "修改角色权限", description = "修改角色权限")
@@ -114,7 +112,7 @@ public class RolesControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/roles/page")
 	@PreAuthorize("hasAuthority('sys:role:page')")
 	@Operation(summary = "分页查询角色列表", description = "分页查询角色列表")
 	public Result<Page<RoleCO>> pageRole(@Validated @RequestBody RolePageQry qry) {
@@ -122,7 +120,7 @@ public class RolesControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/roles/{id}")
 	@PreAuthorize("hasAuthority('sys:role:detail')")
 	@Operation(summary = "查看角色详情", description = "查看角色详情")
 	public Result<RoleCO> getRoleById(@PathVariable("id") Long id) {

@@ -17,7 +17,7 @@
 
 package org.laokou.common.websocket.config;
 
-import com.fasterxml.jackson.JsonParseException;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
@@ -29,11 +29,11 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.context.util.UserDetails;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
-import org.laokou.common.context.util.UserDetails;
 import org.laokou.common.websocket.model.WebSocketMessageCO;
 import org.laokou.common.websocket.model.WebSocketTypeEnum;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;

@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -55,14 +54,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/dict-items")
 @Tag(name = "字典项管理", description = "字典项管理")
-public class DictItemsControllerV3 {
+public class DictItemsController {
 
 	private final DictItemsServiceI dictItemsServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/dict-items")
 	@PreAuthorize("hasAuthority('sys:dict-item:save')")
 	@OperateLog(module = "字典项管理", operation = "保存字典项")
 	@Operation(summary = "保存字典项", description = "保存字典项")
@@ -70,7 +68,7 @@ public class DictItemsControllerV3 {
 		dictItemsServiceI.saveDictItem(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/dict-items")
 	@PreAuthorize("hasAuthority('sys:dict-item:modify')")
 	@OperateLog(module = "字典项管理", operation = "修改字典项")
 	@Operation(summary = "修改字典项", description = "修改字典项")
@@ -78,7 +76,7 @@ public class DictItemsControllerV3 {
 		dictItemsServiceI.modifyDictItem(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/dict-items")
 	@PreAuthorize("hasAuthority('sys:dict-item:remove')")
 	@OperateLog(module = "字典项管理", operation = "删除字典项")
 	@Operation(summary = "删除字典项", description = "删除字典项")
@@ -86,7 +84,7 @@ public class DictItemsControllerV3 {
 		dictItemsServiceI.removeDictItem(new DictItemRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/dict-items/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:dict-item:import')")
 	@OperateLog(module = "字典项管理", operation = "导入字典项")
 	@Operation(summary = "导入字典项", description = "导入字典项")
@@ -94,7 +92,7 @@ public class DictItemsControllerV3 {
 		dictItemsServiceI.importDictItem(new DictItemImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/dict-items/export")
 	@PreAuthorize("hasAuthority('sys:dict-item:export')")
 	@OperateLog(module = "字典项管理", operation = "导出字典项")
 	@Operation(summary = "导出字典项", description = "导出字典项")
@@ -103,7 +101,7 @@ public class DictItemsControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/dict-items/page")
 	@PreAuthorize("hasAuthority('sys:dict-item:page')")
 	@Operation(summary = "分页查询字典项列表", description = "分页查询字典项列表")
 	public Result<Page<DictItemCO>> pageDictItem(@Validated @RequestBody DictItemPageQry qry) {
@@ -111,7 +109,7 @@ public class DictItemsControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/dict-items/{id}")
 	@PreAuthorize("hasAuthority('sys:dict-item:detail')")
 	@Operation(summary = "查看字典项详情", description = "查看字典项详情")
 	public Result<DictItemCO> getDictItemById(@PathVariable("id") Long id) {

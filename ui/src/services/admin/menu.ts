@@ -1,9 +1,9 @@
 /* eslint-disable */
 import {request} from '@umijs/max';
 
-/** 修改菜单 修改菜单 PUT /v3/menus */
+/** 修改菜单 修改菜单 PUT /api/v1/menus */
 export async function modifyMenu(body: API.MenuModifyCmd, options?: { [key: string]: any }) {
-	return request<any>('/api/admin/v3/menus', {
+	return request<any>('/apis/admin/v1/menus', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -13,9 +13,9 @@ export async function modifyMenu(body: API.MenuModifyCmd, options?: { [key: stri
 	});
 }
 
-/** 保存菜单 保存菜单 POST /v3/menus */
+/** 保存菜单 保存菜单 POST /api/v1/menus */
 export async function saveMenu(body: API.MenuSaveCmd, requestId: string, options?: { [key: string]: any }) {
-	return request<any>('/api/admin/v3/menus', {
+	return request<any>('/apis/admin/v1/menus', {
 		method: 'POST',
 		headers: {
 			'request-id': requestId,
@@ -26,9 +26,9 @@ export async function saveMenu(body: API.MenuSaveCmd, requestId: string, options
 	});
 }
 
-/** 删除菜单 删除菜单 DELETE /v3/menus */
+/** 删除菜单 删除菜单 DELETE /api/v1/menus */
 export async function removeMenu(body: number[], options?: { [key: string]: any }) {
-	return request<any>('/api/admin/v3/menus', {
+	return request<any>('/apis/admin/v1/menus', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -38,23 +38,23 @@ export async function removeMenu(body: number[], options?: { [key: string]: any 
 	});
 }
 
-/** 查看菜单详情 查看菜单详情 GET /v3/menus/${param0} */
+/** 查看菜单详情 查看菜单详情 GET /api/v1/menus/${param0} */
 export async function getMenuById(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
 	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
-	return request<API.Result>(`/api/admin/v3/menus/${param0}`, {
+	return request<API.Result>(`/apis/admin/v1/menus/${param0}`, {
 		method: 'GET',
 		params: {...queryParams},
 		...(options || {}),
 	});
 }
 
-/** 导出菜单 导出菜单 POST /v3/menus/export */
+/** 导出菜单 导出菜单 POST /api/v1/menus/export */
 export async function exportMenu(body: API.MenuExportCmd, options?: { [key: string]: any }) {
-	return request<any>('/api/admin/v3/menus/export', {
+	return request<any>('/apis/admin/v1/menus/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export async function exportMenu(body: API.MenuExportCmd, options?: { [key: stri
 	});
 }
 
-/** 导入菜单 导入菜单 POST /v3/menus/import */
+/** 导入菜单 导入菜单 POST /api/v1/menus/import */
 export async function importMenu(body: {}, file?: File[], options?: { [key: string]: any }) {
 	const formData = new FormData();
 
@@ -88,7 +88,7 @@ export async function importMenu(body: {}, file?: File[], options?: { [key: stri
 		}
 	});
 
-	return request<any>('/api/admin/v3/menus/import', {
+	return request<any>('/apis/admin/v1/menus/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -96,9 +96,9 @@ export async function importMenu(body: {}, file?: File[], options?: { [key: stri
 	});
 }
 
-/** 分页查询菜单列表 分页查询菜单列表 POST /v3/menus/page */
+/** 分页查询菜单列表 分页查询菜单列表 POST /api/v1/menus/page */
 export async function pageMenu(body: API.MenuPageQry, options?: { [key: string]: any }) {
-	return request<API.Result>('/api/admin/v3/menus/page', {
+	return request<API.Result>('/apis/admin/v1/menus/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ export async function pageMenu(body: API.MenuPageQry, options?: { [key: string]:
 }
 
 export async function listTreeMenu(body: any,options?: { [key: string]: any }) {
-	return request<API.Result>('/api/admin/v3/menus/list-tree', {
+	return request<API.Result>('/apis/admin/v1/menus/list-tree', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ export async function listTreeMenu(body: any,options?: { [key: string]: any }) {
 }
 
 export async function listUserTreeMenu(body: any,options?: { [key: string]: any }) {
-	return request<API.Result>('/api/admin/v3/menus/list-user-tree', {
+	return request<API.Result>('/apis/admin/v1/menus/list-user-tree', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

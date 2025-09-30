@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,14 +55,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/templates")
 @Tag(name = "代码生成器模板管理", description = "代码生成器模板管理")
-public class TemplatesControllerV3 {
+public class TemplatesController {
 
 	private final TemplatesServiceI templatesServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/templates")
 	@PreAuthorize("hasAuthority('generator:template:save')")
 	@OperateLog(module = "代码生成器模板管理", operation = "保存代码生成器模板")
 	@Operation(summary = "保存代码生成器模板", description = "保存代码生成器模板")
@@ -71,7 +69,7 @@ public class TemplatesControllerV3 {
 		templatesServiceI.saveTemplate(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/templates")
 	@PreAuthorize("hasAuthority('generator:template:modify')")
 	@OperateLog(module = "代码生成器模板管理", operation = "修改代码生成器模板")
 	@Operation(summary = "修改代码生成器模板", description = "修改代码生成器模板")
@@ -79,7 +77,7 @@ public class TemplatesControllerV3 {
 		templatesServiceI.modifyTemplate(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/templates")
 	@PreAuthorize("hasAuthority('generator:template:remove')")
 	@OperateLog(module = "代码生成器模板管理", operation = "删除代码生成器模板")
 	@Operation(summary = "删除代码生成器模板", description = "删除代码生成器模板")
@@ -87,7 +85,7 @@ public class TemplatesControllerV3 {
 		templatesServiceI.removeTemplate(new TemplateRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/templates/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('generator:template:import')")
 	@OperateLog(module = "代码生成器模板管理", operation = "导入代码生成器模板")
 	@Operation(summary = "导入代码生成器模板", description = "导入代码生成器模板")
@@ -95,7 +93,7 @@ public class TemplatesControllerV3 {
 		templatesServiceI.importTemplate(new TemplateImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/templates/export")
 	@PreAuthorize("hasAuthority('generator:template:export')")
 	@OperateLog(module = "代码生成器模板管理", operation = "导出代码生成器模板")
 	@Operation(summary = "导出代码生成器模板", description = "导出代码生成器模板")
@@ -104,7 +102,7 @@ public class TemplatesControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/templates/page")
 	@PreAuthorize("hasAuthority('generator:template:page')")
 	@Operation(summary = "分页查询代码生成器模板列表", description = "分页查询代码生成器模板列表")
 	public Result<Page<TemplateCO>> pageTemplate(@Validated @RequestBody TemplatePageQry qry) {
@@ -112,7 +110,7 @@ public class TemplatesControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/templates/{id}")
 	@Operation(summary = "查看代码生成器模板详情", description = "查看代码生成器模板详情")
 	public Result<TemplateCO> getTemplateById(@PathVariable("id") Long id) {
 		return templatesServiceI.getTemplateById(new TemplateGetQry(id));

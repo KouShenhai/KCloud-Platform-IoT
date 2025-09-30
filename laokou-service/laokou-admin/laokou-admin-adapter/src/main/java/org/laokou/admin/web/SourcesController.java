@@ -46,7 +46,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,14 +57,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/sources")
 @Tag(name = "数据源管理", description = "数据源管理")
-public class SourcesControllerV3 {
+public class SourcesController {
 
 	private final SourcesServiceI sourcesServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/sources")
 	@PreAuthorize("hasAuthority('sys:source:save')")
 	@OperateLog(module = "数据源管理", operation = "保存数据源")
 	@Operation(summary = "保存数据源", description = "保存数据源")
@@ -73,7 +71,7 @@ public class SourcesControllerV3 {
 		sourcesServiceI.saveSource(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/sources")
 	@PreAuthorize("hasAuthority('sys:source:modify')")
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@Operation(summary = "修改数据源", description = "修改数据源")
@@ -82,7 +80,7 @@ public class SourcesControllerV3 {
 		sourcesServiceI.modifySource(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/sources")
 	@PreAuthorize("hasAuthority('sys:source:remove')")
 	@OperateLog(module = "数据源管理", operation = "删除数据源")
 	@Operation(summary = "删除数据源", description = "删除数据源")
@@ -90,7 +88,7 @@ public class SourcesControllerV3 {
 		sourcesServiceI.removeSource(new SourceRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/sources/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:source:import')")
 	@OperateLog(module = "数据源管理", operation = "导入数据源")
 	@Operation(summary = "导入数据源", description = "导入数据源")
@@ -98,7 +96,7 @@ public class SourcesControllerV3 {
 		sourcesServiceI.importSource(new SourceImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/sources/export")
 	@PreAuthorize("hasAuthority('sys:source:export')")
 	@OperateLog(module = "数据源管理", operation = "导出数据源")
 	@Operation(summary = "导出数据源", description = "导出数据源")
@@ -107,7 +105,7 @@ public class SourcesControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/sources/page")
 	@PreAuthorize("hasAuthority('sys:source:page')")
 	@Operation(summary = "分页查询数据源列表", description = "分页查询数据源列表")
 	public Result<Page<SourceCO>> pageSource(@Validated @RequestBody SourcePageQry qry) {
@@ -115,7 +113,7 @@ public class SourcesControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/sources/{id}")
 	@DataCache(name = NameConstants.SOURCES, key = "#id")
 	@PreAuthorize("hasAuthority('sys:source:detail')")
 	@Operation(summary = "查看数据源详情", description = "查看数据源详情")

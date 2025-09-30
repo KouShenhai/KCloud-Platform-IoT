@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -55,14 +54,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/oss")
 @Tag(name = "OSS管理", description = "OSS管理")
-public class OssControllerV3 {
+public class OssController {
 
 	private final OssServiceI ossServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/oss")
 	@PreAuthorize("hasAuthority('sys:oss:save')")
 	@OperateLog(module = "OSS管理", operation = "保存OSS")
 	@Operation(summary = "保存OSS", description = "保存OSS")
@@ -70,7 +68,7 @@ public class OssControllerV3 {
 		ossServiceI.saveOss(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/oss")
 	@PreAuthorize("hasAuthority('sys:oss:modify')")
 	@OperateLog(module = "OSS管理", operation = "修改OSS")
 	@Operation(summary = "修改OSS", description = "修改OSS")
@@ -86,7 +84,7 @@ public class OssControllerV3 {
 		ossServiceI.removeOss(new OssRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/oss/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('sys:oss:import')")
 	@OperateLog(module = "OSS管理", operation = "导入OSS")
 	@Operation(summary = "导入OSS", description = "导入OSS")
@@ -94,7 +92,7 @@ public class OssControllerV3 {
 		ossServiceI.importOss(new OssImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/oss/export")
 	@PreAuthorize("hasAuthority('sys:oss:export')")
 	@OperateLog(module = "OSS管理", operation = "导出OSS")
 	@Operation(summary = "导出OSS", description = "导出OSS")
@@ -103,7 +101,7 @@ public class OssControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/oss/page")
 	@PreAuthorize("hasAuthority('sys:oss:page')")
 	@Operation(summary = "分页查询OSS列表", description = "分页查询OSS列表")
 	public Result<Page<OssCO>> pageOss(@Validated @RequestBody OssPageQry qry) {
@@ -111,7 +109,7 @@ public class OssControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/oss/{id}")
 	@PreAuthorize("hasAuthority('sys:oss:detail')")
 	@Operation(summary = "查看OSS详情", description = "查看OSS详情")
 	public Result<OssCO> getOssById(@PathVariable("id") Long id) {

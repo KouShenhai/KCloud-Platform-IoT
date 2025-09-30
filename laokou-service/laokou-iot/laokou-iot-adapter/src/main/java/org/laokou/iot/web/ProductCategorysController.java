@@ -44,7 +44,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,14 +58,13 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/product-categorys")
 @Tag(name = "产品类别管理", description = "产品类别管理")
-public class ProductCategorysControllerV3 {
+public class ProductCategorysController {
 
 	private final ProductCategorysServiceI productCategorysServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/product-categorys")
 	@PreAuthorize("hasAuthority('iot:product-category:save')")
 	@OperateLog(module = "产品类别管理", operation = "保存产品类别")
 	@Operation(summary = "保存产品类别", description = "保存产品类别")
@@ -74,7 +72,7 @@ public class ProductCategorysControllerV3 {
 		productCategorysServiceI.saveProductCategory(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/product-categorys")
 	@PreAuthorize("hasAuthority('iot:product-category:modify')")
 	@OperateLog(module = "产品类别管理", operation = "修改产品类别")
 	@Operation(summary = "修改产品类别", description = "修改产品类别")
@@ -82,7 +80,7 @@ public class ProductCategorysControllerV3 {
 		productCategorysServiceI.modifyProductCategory(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/product-categorys")
 	@PreAuthorize("hasAuthority('iot:product-category:remove')")
 	@OperateLog(module = "产品类别管理", operation = "删除产品类别")
 	@Operation(summary = "删除产品类别", description = "删除产品类别")
@@ -90,7 +88,7 @@ public class ProductCategorysControllerV3 {
 		productCategorysServiceI.removeProductCategory(new ProductCategoryRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/product-categorys/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('iot:product-category:import')")
 	@OperateLog(module = "产品类别管理", operation = "导入产品类别")
 	@Operation(summary = "导入产品类别", description = "导入产品类别")
@@ -98,7 +96,7 @@ public class ProductCategorysControllerV3 {
 		productCategorysServiceI.importProductCategory(new ProductCategoryImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/product-categorys/export")
 	@PreAuthorize("hasAuthority('iot:product-category:export')")
 	@OperateLog(module = "产品类别管理", operation = "导出产品类别")
 	@Operation(summary = "导出产品类别", description = "导出产品类别")
@@ -107,7 +105,7 @@ public class ProductCategorysControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/product-categorys/page")
 	@PreAuthorize("hasAuthority('sys:dept:page')")
 	@Operation(summary = "分页查询产品类别列表", description = "分页查询产品类别列表")
 	public Result<Page<ProductCategoryCO>> pageProductCategory(@Validated @RequestBody ProductCategoryPageQry qry) {
@@ -115,7 +113,7 @@ public class ProductCategorysControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("list-tree")
+	@PostMapping("/v1/product-categorys/list-tree")
 	@PreAuthorize("hasAuthority('iot:product-category:list-tree')")
 	@Operation(summary = "查询产品类别树列表", description = "查询产品类别树列表")
 	public Result<List<ProductCategoryCO>> listTreeProductCategory(
@@ -124,7 +122,7 @@ public class ProductCategorysControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/product-categorys/{id}")
 	@PreAuthorize("hasAuthority('iot:product-category:detail')")
 	@Operation(summary = "查看产品类别详情", description = "查看产品类别详情")
 	public Result<ProductCategoryCO> getProductCategoryById(@PathVariable("id") Long id) {

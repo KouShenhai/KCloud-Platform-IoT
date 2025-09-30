@@ -150,15 +150,15 @@ spring:
               - /swagger-ui/**=laokou-auth
               - /actuator/**=laokou-auth
               - /error=laokou-auth
-              - /v3/captchas/{uuid}=laokou-auth
-              - /v3/secrets=laokou-auth
+              - /v1/captchas/{uuid}=laokou-auth
+              - /v1/secrets=laokou-auth
               - /doc.html=laokou-auth
               - /webjars/**=laokou-auth
             POST:
-              - /v3/captchas/send/mail=laokou-auth
-              - /v3/captchas/send/mobile=laokou-auth
+              - /v1/captchas/send/mail=laokou-auth
+              - /v1/captchas/send/mobile=laokou-auth
             DELETE:
-              - /v3/tokens=laokou-auth
+              - /v1/tokens=laokou-auth
   datasource:
     dynamic:
       # 默认false,建议线上关闭

@@ -66,11 +66,6 @@ spring:
       max-parts: -1
       max-disk-usage-per-part: -1
       max-in-memory-size: 4096
-  # security
-  security:
-    oauth2:
-      resource-server:
-        enabled: true
   data:
     redis:
       client-type: lettuce

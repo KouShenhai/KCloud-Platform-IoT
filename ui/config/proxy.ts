@@ -11,11 +11,11 @@
  */
 export default {
 	dev: {
-		'/api/': {
+		'/apis/': {
 			// 要代理的地址
 			target: 'http://gateway:5555',
 			changeOrigin: true,
-			pathRewrite: {'^/api': ''}
+			pathRewrite: {'^/apis': ''}
 		},
 	},
 };

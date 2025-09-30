@@ -130,7 +130,7 @@
     <!--opentelemetry版本-->
     <opentelemetry.version>1.54.1</opentelemetry.version>
     <!--netty版本-->
-    <netty.version>4.2.3.Final</netty.version>
+    <netty.version>4.1.127.Final</netty.version>
     <!--grpc版本-->
     <grpc.version>1.75.0</grpc.version>
     <!--jackson版本-->
@@ -225,6 +225,12 @@
     <mongodb.version>4.5.4</mongodb.version>
     <!--fastjson版本-->
     <fastjson.version>2.0.59</fastjson.version>
+    <!--spring-security-oauth2-authorization-server版本-->
+    <spring-security-oauth2-authorization-server.version>1.5.2</spring-security-oauth2-authorization-server.version>
+    <!--swagger-annotations-jakarta版本-->
+    <swagger-annotations-jakarta.version>2.2.38</swagger-annotations-jakarta.version>
+    <!--jsqlparser版本-->
+    <jsqlparser.version>5.2</jsqlparser.version>
     <!--docker主机-->
     <docker.host>tcp://127.0.0.1:2375</docker.host>
     <!--docker仓库-->
@@ -682,6 +688,24 @@
         <groupId>com.github.whvcse</groupId>
         <artifactId>easy-captcha</artifactId>
         <version>${easy-captcha.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-oauth2-authorization-server</artifactId>
+        <version>${spring-security-oauth2-authorization-server.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-annotations-jakarta</artifactId>
+        <version>${swagger-annotations-jakarta.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.jsqlparser</groupId>
+        <artifactId>jsqlparser</artifactId>
+        <version>${jsqlparser.version}</version>
       </dependency>
 
     </dependencies>

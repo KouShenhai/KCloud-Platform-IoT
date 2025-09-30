@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -41,14 +40,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/captchas")
 @Tag(name = "验证码", description = "验证码")
-public class CaptchasV3Controller {
+public class CaptchasController {
 
 	private final CaptchasServiceI captchasServiceI;
 
 	@TraceLog
-	@GetMapping("{uuid}")
+	@GetMapping("/v1/captchas/{uuid}")
 	@RateLimiter(key = "GET_CAPTCHA", type = Type.IP)
 	@Operation(summary = "根据UUID获取验证码", description = "根据UUID获取验证码")
 	public Result<String> getCaptchaByUuid(@PathVariable("uuid") String uuid) {
@@ -56,7 +54,7 @@ public class CaptchasV3Controller {
 	}
 
 	@Idempotent
-	@PostMapping("send/mobile")
+	@PostMapping("/v1/captchas/send/mobile")
 	@RateLimiter(key = "SEND_MOBILE_CAPTCHA", type = Type.IP)
 	@Operation(summary = "根据UUID发送手机验证码", description = "根据UUID发送手机验证码")
 	public void sendMobileCaptchaByUuid(@RequestBody CaptchaSendCmd cmd) {
@@ -65,7 +63,7 @@ public class CaptchasV3Controller {
 	}
 
 	@Idempotent
-	@PostMapping("send/mail")
+	@PostMapping("/v1/captchas/send/mail")
 	@RateLimiter(key = "SEND_MAIL_CAPTCHA", type = Type.IP)
 	@Operation(summary = "根据UUID发送邮箱验证码", description = "根据UUID发送邮箱验证码")
 	public void sendMailCaptchaByUuid(@RequestBody CaptchaSendCmd cmd) {

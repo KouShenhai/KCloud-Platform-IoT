@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,14 +55,13 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/products")
 @Tag(name = "产品管理", description = "产品管理")
-public class ProductsControllerV3 {
+public class ProductsController {
 
 	private final ProductsServiceI productsServiceI;
 
 	@Idempotent
-	@PostMapping
+	@PostMapping("/v1/products")
 	@PreAuthorize("hasAuthority('iot:product:save')")
 	@OperateLog(module = "产品管理", operation = "保存产品")
 	@Operation(summary = "保存产品", description = "保存产品")
@@ -71,7 +69,7 @@ public class ProductsControllerV3 {
 		productsServiceI.saveProduct(cmd);
 	}
 
-	@PutMapping
+	@PutMapping("/v1/products")
 	@PreAuthorize("hasAuthority('iot:product:modify')")
 	@OperateLog(module = "产品管理", operation = "修改产品")
 	@Operation(summary = "修改产品", description = "修改产品")
@@ -79,7 +77,7 @@ public class ProductsControllerV3 {
 		productsServiceI.modifyProduct(cmd);
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/v1/products")
 	@PreAuthorize("hasAuthority('iot:product:remove')")
 	@OperateLog(module = "产品管理", operation = "删除产品")
 	@Operation(summary = "删除产品", description = "删除产品")
@@ -87,7 +85,7 @@ public class ProductsControllerV3 {
 		productsServiceI.removeProduct(new ProductRemoveCmd(ids));
 	}
 
-	@PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/products/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasAuthority('iot:product:import')")
 	@OperateLog(module = "产品管理", operation = "导入产品")
 	@Operation(summary = "导入产品", description = "导入产品")
@@ -95,7 +93,7 @@ public class ProductsControllerV3 {
 		productsServiceI.importProduct(new ProductImportCmd(files));
 	}
 
-	@PostMapping("export")
+	@PostMapping("/v1/products/export")
 	@PreAuthorize("hasAuthority('iot:product:export')")
 	@OperateLog(module = "产品管理", operation = "导出产品")
 	@Operation(summary = "导出产品", description = "导出产品")
@@ -104,7 +102,7 @@ public class ProductsControllerV3 {
 	}
 
 	@TraceLog
-	@PostMapping("page")
+	@PostMapping("/v1/products/page")
 	@PreAuthorize("hasAuthority('iot:product:page')")
 	@Operation(summary = "分页查询产品列表", description = "分页查询产品列表")
 	public Result<Page<ProductCO>> pageProduct(@Validated @RequestBody ProductPageQry qry) {
@@ -112,7 +110,7 @@ public class ProductsControllerV3 {
 	}
 
 	@TraceLog
-	@GetMapping("{id}")
+	@GetMapping("/v1/products/{id}")
 	@PreAuthorize("hasAuthority('iot:product:detail')")
 	@Operation(summary = "查看产品详情", description = "查看产品详情")
 	public Result<ProductCO> getProductById(@PathVariable("id") Long id) {

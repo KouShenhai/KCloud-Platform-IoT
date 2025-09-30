@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v3/generators")
+@RequestMapping("/v1/generators")
 @Tag(name = "生成器", description = "生成器")
-public class GeneratorsV3Controller {
+public class GeneratorsController {
 
 }
