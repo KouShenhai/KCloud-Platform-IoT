@@ -186,7 +186,7 @@
     <!--browscap-java版本-->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!--liquibase-core版本-->
-    <liquibase-core.version>4.33.0</liquibase-core.version>
+    <liquibase-core.version>5.0.0</liquibase-core.version>
     <!--snail-job版本-->
     <snail-job.version>1.8.0-jdk8</snail-job.version>
     <!--archunit-junit5版本-->
