@@ -3,7 +3,7 @@ import { request } from '@umijs/max';
 
 /** 修改设备 修改设备 PUT /api/v1/devices */
 export async function modifyDevice(body: API.DeviceModifyCmd, options?: { [key: string]: any }) {
-  return request<any>('/apis/iot/v1/devices', {
+  return request<any>('/apis/iot/api/v1/devices', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ export async function modifyDevice(body: API.DeviceModifyCmd, options?: { [key: 
 
 /** 保存设备 保存设备 POST /api/v1/devices */
 export async function saveDevice(body: API.DeviceSaveCmd, options?: { [key: string]: any }) {
-  return request<any>('/apis/iot/v1/devices', {
+  return request<any>('/apis/iot/api/v1/devices', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export async function saveDevice(body: API.DeviceSaveCmd, options?: { [key: stri
 
 /** 删除设备 删除设备 DELETE /api/v1/devices */
 export async function removeDevice(body: number[], options?: { [key: string]: any }) {
-  return request<any>('/apis/iot/v1/devices', {
+  return request<any>('/apis/iot/api/v1/devices', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export async function getDeviceById(
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<API.Result>(`/apis/iot/v1/devices/${param0}`, {
+  return request<API.Result>(`/apis/iot/api/v1/devices/${param0}`, {
     method: 'GET',
     params: { ...queryParams },
     ...(options || {}),
@@ -53,7 +53,7 @@ export async function getDeviceById(
 
 /** 导出设备 导出设备 POST /api/v1/devices/export */
 export async function exportDevice(body: API.DeviceExportCmd, options?: { [key: string]: any }) {
-  return request<any>('/apis/iot/v1/devices/export', {
+  return request<any>('/apis/iot/api/v1/devices/export', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ export async function importDevice(body: {}, file?: File[], options?: { [key: st
     }
   });
 
-  return request<any>('/apis/iot/v1/devices/import', {
+  return request<any>('/apis/iot/api/v1/devices/import', {
     method: 'POST',
     data: formData,
     requestType: 'form',
@@ -97,7 +97,7 @@ export async function importDevice(body: {}, file?: File[], options?: { [key: st
 
 /** 分页查询设备列表 分页查询设备列表 POST /api/v1/devices/page */
 export async function pageDevice(body: API.DevicePageQry, options?: { [key: string]: any }) {
-  return request<API.Result>('/apis/iot/v1/devices/page', {
+  return request<API.Result>('/apis/iot/api/v1/devices/page', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

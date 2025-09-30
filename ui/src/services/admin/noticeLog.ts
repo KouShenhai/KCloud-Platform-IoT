@@ -5,7 +5,7 @@ import moment from "moment";
 
 /** 修改通知日志 修改通知日志 PUT /api/v1/notice-logs */
 export async function modifyNoticeLog(body: API.NoticeLogModifyCmd, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/notice-logs', {
+	return request<any>('/apis/admin/api/v1/notice-logs', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ export async function modifyNoticeLog(body: API.NoticeLogModifyCmd, options?: { 
 
 /** 保存通知日志 保存通知日志 POST /api/v1/notice-logs */
 export async function saveNoticeLog(body: API.NoticeLogSaveCmd, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/notice-logs', {
+	return request<any>('/apis/admin/api/v1/notice-logs', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ export async function saveNoticeLog(body: API.NoticeLogSaveCmd, options?: { [key
 
 /** 删除通知日志 删除通知日志 DELETE /api/v1/notice-logs */
 export async function removeNoticeLog(body: number[], options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/notice-logs', {
+	return request<any>('/apis/admin/api/v1/notice-logs', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export async function getNoticeLogById(
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
-	return request<API.Result>(`/apis/admin/v1/notice-logs/${param0}`, {
+	return request<API.Result>(`/apis/admin/api/v1/notice-logs/${param0}`, {
 		method: 'GET',
 		params: {...queryParams},
 		...(options || {}),
@@ -55,7 +55,7 @@ export async function getNoticeLogById(
 
 /** 导出通知日志 导出通知日志 POST /api/v1/notice-logs/export */
 export async function exportNoticeLog(body: API.NoticeLogExportCmd, options?: { [key: string]: any }) {
-	return ExportAllToExcel("通知日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/apis/admin/v1/notice-logs/export', 'POST', body, options)
+	return ExportAllToExcel("通知日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/apis/admin/api/v1/notice-logs/export', 'POST', body, options)
 }
 
 /** 导入通知日志 导入通知日志 POST /api/v1/notice-logs/import */
@@ -82,7 +82,7 @@ export async function importNoticeLog(body: {}, file?: File[], options?: { [key:
 		}
 	});
 
-	return request<any>('/apis/admin/v1/notice-logs/import', {
+	return request<any>('/apis/admin/api/v1/notice-logs/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -92,7 +92,7 @@ export async function importNoticeLog(body: {}, file?: File[], options?: { [key:
 
 /** 分页查询通知日志列表 分页查询通知日志列表 POST /api/v1/notice-logs/page */
 export async function pageNoticeLog(body: API.NoticeLogPageQry, options?: { [key: string]: any }) {
-	return request<API.Result>('/apis/admin/v1/notice-logs/page', {
+	return request<API.Result>('/apis/admin/api/v1/notice-logs/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

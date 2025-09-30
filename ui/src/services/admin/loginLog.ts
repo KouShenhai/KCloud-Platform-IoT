@@ -5,7 +5,7 @@ import moment from "moment/moment";
 
 /** 修改登录日志 修改登录日志 PUT /api/v1/login-logs */
 export async function modifyLoginLog(body: API.LoginLogModifyCmd, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/login-logs', {
+	return request<any>('/apis/admin/api/v1/login-logs', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ export async function modifyLoginLog(body: API.LoginLogModifyCmd, options?: { [k
 
 /** 保存登录日志 保存登录日志 POST /api/v1/login-logs */
 export async function saveLoginLog(body: API.LoginLogSaveCmd, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/login-logs', {
+	return request<any>('/apis/admin/api/v1/login-logs', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ export async function saveLoginLog(body: API.LoginLogSaveCmd, options?: { [key: 
 
 /** 删除登录日志 删除登录日志 DELETE /api/v1/login-logs */
 export async function removeLoginLog(body: number[], options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/login-logs', {
+	return request<any>('/apis/admin/api/v1/login-logs', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export async function getLoginLogById(
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
-	return request<API.Result>(`/apis/admin/v1/login-logs/${param0}`, {
+	return request<API.Result>(`/apis/admin/api/v1/login-logs/${param0}`, {
 		method: 'GET',
 		params: {...queryParams},
 		...(options || {}),
@@ -55,7 +55,7 @@ export async function getLoginLogById(
 
 /** 导出登录日志 导出登录日志 POST /api/v1/login-logs/export */
 export async function exportLoginLog(body: API.LoginLogExportCmd, options?: { [key: string]: any }) {
-	return ExportAllToExcel("登录日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/apis/admin/v1/login-logs/export', 'POST', body, options)
+	return ExportAllToExcel("登录日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/apis/admin/api/v1/login-logs/export', 'POST', body, options)
 }
 
 /** 导入登录日志 导入登录日志 POST /api/v1/login-logs/import */
@@ -82,7 +82,7 @@ export async function importLoginLog(body: {}, file?: File[], options?: { [key: 
 		}
 	});
 
-	return request<any>('/apis/admin/v1/login-logs/import', {
+	return request<any>('/apis/admin/api/v1/login-logs/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -92,7 +92,7 @@ export async function importLoginLog(body: {}, file?: File[], options?: { [key: 
 
 /** 分页查询登录日志列表 分页查询登录日志列表 POST /api/v1/login-logs/page */
 export async function pageLoginLog(body: API.LoginLogPageQry, options?: { [key: string]: any }) {
-	return request<API.Result>('/apis/admin/v1/login-logs/page', {
+	return request<API.Result>('/apis/admin/api/v1/login-logs/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

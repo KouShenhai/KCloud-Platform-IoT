@@ -3,7 +3,7 @@ import {request} from '@umijs/max';
 
 /** 修改用户 修改用户 PUT /api/v1/users */
 export async function modifyUser(body: API.UserModifyCmd, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/users', {
+	return request<any>('/apis/admin/api/v1/users', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ export async function modifyUser(body: API.UserModifyCmd, options?: { [key: stri
 
 /** 保存用户 保存用户 POST /api/v1/users */
 export async function saveUser(body: API.UserSaveCmd, requestId: string, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/users', {
+	return request<any>('/apis/admin/api/v1/users', {
 		method: 'POST',
 		headers: {
 			'request-id': requestId,
@@ -28,7 +28,7 @@ export async function saveUser(body: API.UserSaveCmd, requestId: string, options
 
 /** 删除用户 删除用户 DELETE /api/v1/users */
 export async function removeUser(body: number[], options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/users', {
+	return request<any>('/apis/admin/api/v1/users', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export async function getUserById(
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
-	return request<API.Result>(`/apis/admin/v1/users/${param0}`, {
+	return request<API.Result>(`/apis/admin/api/v1/users/${param0}`, {
 		method: 'GET',
 		params: {...queryParams},
 		...(options || {}),
@@ -54,7 +54,7 @@ export async function getUserById(
 
 /** 导出用户 导出用户 POST /api/v1/users/export */
 export async function exportUser(body: API.UserExportCmd, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/users/export', {
+	return request<any>('/apis/admin/api/v1/users/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ export async function importUser(body: {}, file?: File[], options?: { [key: stri
 		}
 	});
 
-	return request<any>('/apis/admin/v1/users/import', {
+	return request<any>('/apis/admin/api/v1/users/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -98,7 +98,7 @@ export async function importUser(body: {}, file?: File[], options?: { [key: stri
 
 /** 分页查询用户列表 分页查询用户列表 POST /api/v1/users/page */
 export async function pageUser(body: API.UserPageQry, options?: { [key: string]: any }) {
-	return request<API.Result>('/apis/admin/v1/users/page', {
+	return request<API.Result>('/apis/admin/api/v1/users/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ export async function pageUser(body: API.UserPageQry, options?: { [key: string]:
 
 /** 查看个人信息 查看个人信息 GET /api/v1/users/profile */
 export async function getUserProfile(options?: { [key: string]: any }) {
-	return request<API.Result>('/apis/admin/v1/users/profile', {
+	return request<API.Result>('/apis/admin/api/v1/users/profile', {
 		method: 'GET',
 		...(options || {}),
 	});
@@ -118,7 +118,7 @@ export async function getUserProfile(options?: { [key: string]: any }) {
 
 /** 重置密码 重置密码 PUT /api/v1/users/reset-pwd */
 export async function resetUserPwd(body: API.ResetPwdCmd, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/users/reset-pwd', {
+	return request<any>('/apis/admin/api/v1/users/reset-pwd', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export async function resetUserPwd(body: API.ResetPwdCmd, options?: { [key: stri
 
 /** 修改用户权限 修改用户权限 PUT /api/v1/users/authority */
 export async function modifyUserAuthority(body: API.UserModifyAuthorityCmd, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/users/authority', {
+	return request<any>('/apis/admin/api/v1/users/authority', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -142,7 +142,7 @@ export async function modifyUserAuthority(body: API.UserModifyAuthorityCmd, opti
 
 /** 上传用户头像 上传用户头像 POST /api/v1/users/upload */
 export async function uploadUserAvatar(body: FormData, options?: { [key: string]: any }) {
-	return request<API.Result>('/apis/admin/v1/users/upload', {
+	return request<API.Result>('/apis/admin/api/v1/users/upload', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'multipart/form-data',

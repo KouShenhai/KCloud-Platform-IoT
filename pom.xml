@@ -231,6 +231,8 @@
     <swagger-annotations-jakarta.version>2.2.38</swagger-annotations-jakarta.version>
     <!--jsqlparser版本-->
     <jsqlparser.version>5.2</jsqlparser.version>
+    <!--gson版本-->
+    <gson.version>2.13.2</gson.version>
     <!--docker主机-->
     <docker.host>tcp://127.0.0.1:2375</docker.host>
     <!--docker仓库-->
@@ -451,6 +453,12 @@
         <version>${redisson.version}</version>
       </dependency>
       <!-- =============================== Redis =============================== -->
+
+      <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>${gson.version}</version>
+      </dependency>
 
       <dependency>
         <groupId>com.github.infiniteautomation</groupId>

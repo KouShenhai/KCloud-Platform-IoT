@@ -115,42 +115,42 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 		/**
 		 * Authorization Server's OAuth 2.0 Authorization Endpoint.
 		 */
-		private String authorizationUri = "/v1/oauth2/authorize";
+		private String authorizationUri = "/api/v1/oauth2/authorize";
 
 		/**
 		 * Authorization Server's OAuth 2.0 Device Authorization Endpoint.
 		 */
-		private String deviceAuthorizationUri = "/v1/oauth2/device_authorization";
+		private String deviceAuthorizationUri = "/api/v1/oauth2/device_authorization";
 
 		/**
 		 * Authorization Server's OAuth 2.0 Device Verification Endpoint.
 		 */
-		private String deviceVerificationUri = "/v1/oauth2/device_verification";
+		private String deviceVerificationUri = "/api/v1/oauth2/device_verification";
 
 		/**
 		 * Authorization Server's OAuth 2.0 Token Endpoint.
 		 */
-		private String tokenUri = "/v1/oauth2/token";
+		private String tokenUri = "/api/v1/oauth2/token";
 
 		/**
 		 * Authorization Server's JWK Set Endpoint.
 		 */
-		private String jwkSetUri = "/v1/oauth2/jwks";
+		private String jwkSetUri = "/api/v1/oauth2/jwks";
 
 		/**
 		 * Authorization Server's OAuth 2.0 Token Revocation Endpoint.
 		 */
-		private String tokenRevocationUri = "/v1/oauth2/revoke";
+		private String tokenRevocationUri = "/api/v1/oauth2/revoke";
 
 		/**
 		 * Authorization Server's OAuth 2.0 Token Introspection Endpoint.
 		 */
-		private String tokenIntrospectionUri = "/v1/oauth2/introspect";
+		private String tokenIntrospectionUri = "/api/v1/oauth2/introspect";
 
 		/**
 		 * Authorization Server's OAuth 2.0 Pushed Authorization Request Endpoint.
 		 */
-		private String pushedAuthorizationRequestUri = "/v1/oauth2/par";
+		private String pushedAuthorizationRequestUri = "/api/v1/oauth2/par";
 
 	}
 
@@ -163,17 +163,17 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 		/**
 		 * Authorization Server's OpenID Connect 1.0 Logout Endpoint.
 		 */
-		private String logoutUri = "/v1/oidc/connect/logout";
+		private String logoutUri = "/api/v1/oidc/connect/logout";
 
 		/**
 		 * Authorization Server's OpenID Connect 1.0 Client Registration Endpoint.
 		 */
-		private String clientRegistrationUri = "/v1/oidc/connect/register";
+		private String clientRegistrationUri = "/api/v1/oidc/connect/register";
 
 		/**
 		 * Authorization Server's OpenID Connect 1.0 UserInfo Endpoint.
 		 */
-		private String userInfoUri = "/v1/oidc/userinfo";
+		private String userInfoUri = "/api/v1/oidc/userinfo";
 
 	}
 

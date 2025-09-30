@@ -3,7 +3,7 @@ import {request} from '@umijs/max';
 
 /** 修改OSS日志 修改OSS日志 PUT /api/v1/oss-logs */
 export async function modifyOssLog(body: API.OssLogModifyCmd, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/oss-logs', {
+	return request<any>('/apis/admin/api/v1/oss-logs', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ export async function modifyOssLog(body: API.OssLogModifyCmd, options?: { [key: 
 
 /** 保存OSS日志 保存OSS日志 POST /api/v1/oss-logs */
 export async function saveOssLog(body: API.OssLogSaveCmd, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/oss-logs', {
+	return request<any>('/apis/admin/api/v1/oss-logs', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export async function saveOssLog(body: API.OssLogSaveCmd, options?: { [key: stri
 
 /** 删除OSS日志 删除OSS日志 DELETE /api/v1/oss-logs */
 export async function removeOssLog(body: number[], options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/oss-logs', {
+	return request<any>('/apis/admin/api/v1/oss-logs', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export async function getOssLogById(
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
-	return request<API.Result>(`/apis/admin/v1/oss-logs/${param0}`, {
+	return request<API.Result>(`/apis/admin/api/v1/oss-logs/${param0}`, {
 		method: 'GET',
 		params: {...queryParams},
 		...(options || {}),
@@ -53,7 +53,7 @@ export async function getOssLogById(
 
 /** 导出OSS日志 导出OSS日志 POST /api/v1/oss-logs/export */
 export async function exportOssLog(body: API.OssLogExportCmd, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/oss-logs/export', {
+	return request<any>('/apis/admin/api/v1/oss-logs/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ export async function importOssLog(body: {}, file?: File[], options?: { [key: st
 		}
 	});
 
-	return request<any>('/apis/admin/v1/oss-logs/import', {
+	return request<any>('/apis/admin/api/v1/oss-logs/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -97,7 +97,7 @@ export async function importOssLog(body: {}, file?: File[], options?: { [key: st
 
 /** 分页查询OSS日志列表 分页查询OSS日志列表 POST /api/v1/oss-logs/page */
 export async function pageOssLog(body: API.OssLogPageQry, options?: { [key: string]: any }) {
-	return request<API.Result>('/apis/admin/v1/oss-logs/page', {
+	return request<API.Result>('/apis/admin/api/v1/oss-logs/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

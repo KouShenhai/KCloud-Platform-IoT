@@ -43,7 +43,7 @@ export async function logout(
 	body: API.LogoutParam,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/auth/v1/tokens', {
+	return request<any>('/apis/auth/api/v1/tokens', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',

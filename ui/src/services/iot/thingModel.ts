@@ -3,7 +3,7 @@ import { request } from '@umijs/max';
 
 /** 修改物模型 修改物模型 PUT /api/v1/thing-models */
 export async function modifyThingModel(body: API.ThingModelModifyCmd, options?: { [key: string]: any }) {
-  return request<any>('/apis/iot/v1/thing-models', {
+  return request<any>('/apis/iot/api/v1/thing-models', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ export async function modifyThingModel(body: API.ThingModelModifyCmd, options?: 
 
 /** 保存物模型 保存物模型 POST /api/v1/thing-models */
 export async function saveThingModel(body: API.ThingModelSaveCmd, requestId: string, options?: { [key: string]: any }) {
-  return request<any>('/apis/iot/v1/thing-models', {
+  return request<any>('/apis/iot/api/v1/thing-models', {
     method: 'POST',
     headers: {
 		'request-id': requestId,
@@ -28,7 +28,7 @@ export async function saveThingModel(body: API.ThingModelSaveCmd, requestId: str
 
 /** 删除物模型 删除物模型 DELETE /api/v1/thing-models */
 export async function removeThingModel(body: number[], options?: { [key: string]: any }) {
-  return request<any>('/apis/iot/v1/thing-models', {
+  return request<any>('/apis/iot/api/v1/thing-models', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export async function getThingModelById(
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<API.Result>(`/apis/iot/v1/thing-models/${param0}`, {
+  return request<API.Result>(`/apis/iot/api/v1/thing-models/${param0}`, {
     method: 'GET',
     params: { ...queryParams },
     ...(options || {}),
@@ -57,7 +57,7 @@ export async function exportThingModel(
   body: API.ThingThingModelExportCmd,
   options?: { [key: string]: any },
 ) {
-  return request<any>('/apis/iot/v1/thing-models/export', {
+  return request<any>('/apis/iot/api/v1/thing-models/export', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ export async function importThingModel(body: {}, file?: File[], options?: { [key
     }
   });
 
-  return request<any>('/apis/iot/v1/thing-models/import', {
+  return request<any>('/apis/iot/api/v1/thing-models/import', {
     method: 'POST',
     data: formData,
     requestType: 'form',
@@ -101,7 +101,7 @@ export async function importThingModel(body: {}, file?: File[], options?: { [key
 
 /** 分页查询物模型列表 分页查询物模型列表 POST /api/v1/thing-models/page */
 export async function pageThingModel(body: API.ThingModelPageQry, options?: { [key: string]: any }) {
-  return request<API.Result>('/apis/iot/v1/thing-models/page', {
+  return request<API.Result>('/apis/iot/api/v1/thing-models/page', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

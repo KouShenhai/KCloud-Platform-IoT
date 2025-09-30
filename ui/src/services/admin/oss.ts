@@ -3,7 +3,7 @@ import {request} from '@umijs/max';
 
 /** 修改OSS 修改OSS PUT /api/v1/oss */
 export async function modifyOss(body: API.OssModifyCmd, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/oss', {
+	return request<any>('/apis/admin/api/v1/oss', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ export async function modifyOss(body: API.OssModifyCmd, options?: { [key: string
 
 /** 保存OSS 保存OSS POST /api/v1/oss */
 export async function saveOss(body: API.OssSaveCmd, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/oss', {
+	return request<any>('/apis/admin/api/v1/oss', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export async function saveOss(body: API.OssSaveCmd, options?: { [key: string]: a
 
 /** 删除OSS 删除OSS DELETE /api/v1/oss */
 export async function removeOss(body: number[], options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/oss', {
+	return request<any>('/apis/admin/api/v1/oss', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export async function getOssById(
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
-	return request<API.Result>(`/apis/admin/v1/oss/${param0}`, {
+	return request<API.Result>(`/apis/admin/api/v1/oss/${param0}`, {
 		method: 'GET',
 		params: {...queryParams},
 		...(options || {}),
@@ -53,7 +53,7 @@ export async function getOssById(
 
 /** 导出OSS 导出OSS POST /api/v1/oss/export */
 export async function exportOss(body: API.OssExportCmd, options?: { [key: string]: any }) {
-	return request<any>('/apis/admin/v1/oss/export', {
+	return request<any>('/apis/admin/api/v1/oss/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ export async function importOss(body: {}, file?: File[], options?: { [key: strin
 		}
 	});
 
-	return request<any>('/apis/admin/v1/oss/import', {
+	return request<any>('/apis/admin/api/v1/oss/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -97,7 +97,7 @@ export async function importOss(body: {}, file?: File[], options?: { [key: strin
 
 /** 分页查询OSS列表 分页查询OSS列表 POST /api/v1/oss/page */
 export async function pageOss(body: API.OssPageQry, options?: { [key: string]: any }) {
-	return request<API.Result>('/apis/admin/v1/oss/page', {
+	return request<API.Result>('/apis/admin/api/v1/oss/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

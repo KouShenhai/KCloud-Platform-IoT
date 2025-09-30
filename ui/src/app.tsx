@@ -173,6 +173,9 @@ export const request: {
 			if (response && response.status === 404) {
 				errorMessage = "无法找到 " + request.responseURL + " 请求的资源"
 			}
+			if (response && response.status === 401 && response.data.error === "invalid_client") {
+				errorMessage = "无效客户端，请检查认证服务器配置"
+			}
 			message.error(errorMessage).then();
 		},
 		errorThrower() {

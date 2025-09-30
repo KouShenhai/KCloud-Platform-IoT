@@ -8,7 +8,7 @@ export async function getCaptchaByUuid(
 	options?: { [key: string]: any },
 ) {
 	const {uuid: param0, ...queryParams} = params;
-	return request<API.Result>(`/apis/auth/v1/captchas/${param0}`, {
+	return request<API.Result>(`/apis/auth/api/v1/captchas/${param0}`, {
 		method: 'GET',
 		params: {...queryParams},
 		...(options || {}),
@@ -21,7 +21,7 @@ export async function sendCaptcha(
 	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>(`/apis/auth/v1/captchas/send/${type}`, {
+	return request<any>(`/apis/auth/api/v1/captchas/send/${type}`, {
 		method: 'POST',
 		headers: {
 			'request-id': requestId,
